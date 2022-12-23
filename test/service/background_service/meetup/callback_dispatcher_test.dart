@@ -5,19 +5,6 @@ import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/service/background_service/background_service.dart';
 
-
-class Functions {
-  Future<bool> showNotification(int id, String title, String body) async {
-    return Future.value(true);
-  }
-
-  Future<bool> cache(List<String> value) async {
-    return Future.value(true);
-  }
-}
-
-class MockFunctions extends Mock implements Functions {}
-
 class MockLocation extends Mock implements tz.Location {}
 
 void main() async {
@@ -28,13 +15,9 @@ void main() async {
 
   const channel = MethodChannel('flutter_timezone');
 
-  setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
-    });
-  });
+  setUp(() => channel.setMockMethodCallHandler((MethodCall methodCall) async => '42'));
 
-  test('notificationForLoop show notification 3, cache list=[]', () async {
+  test('executeTaskIsolate called', () async {
     await MeetupNotification.executeTaskIsolate(
       local,
       mockScheduleNotification,
