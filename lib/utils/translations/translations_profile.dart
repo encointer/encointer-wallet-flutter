@@ -640,7 +640,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get contactUs => 'Связаться с нами';
   @override
-  String get about => 'О';
+  String get about => 'О приложении';
   @override
   String get aboutBrief => 'Мобильный кошелек Encointer';
   @override
@@ -658,7 +658,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get addressBook => 'Адресная книга';
   @override
-  String get cantEndorseBootstrapper => 'Бутсреперы уже отмечены как надежные';
+  String get cantEndorseBootstrapper => 'Бутсреперы уже помечены как надежные';
   @override
   String get canEndorseInRegisteringPhaseOnly => 'Может быть одобрен только на этапе регистрации';
   @override
@@ -694,8 +694,8 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get exportMnemonicOk => 'Мнемоника скопирована в буфер обмена.';
   @override
-  String get exportWarn =>
-      'Запишите эти слова на бумаге. Храните бумагу в безопасном месте. Эти слова позволят восстановить этот аккаунт и получить доступ к его средствам.';
+  String get exportWarn => 'Запишите эти слова на бумаге. Храните бумагу в безопасном месте.'
+      'Эти слова позволят восстановить этот аккаунт и получить доступ к его средствам.';
   @override
   String get noMnemonicFound => 'Мнемоника не найдена';
   @override
@@ -722,13 +722,13 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get personalKeyEnter => 'Пожалуйста, введите секретный ключ (из 12 слов), чтобы импортировать аккаунт.';
   @override
-  String get reputationHistory => 'История репутции';
+  String get reputationHistory => 'История репутации';
   @override
   String get reputationOverall => 'Общая репутация';
   @override
   String get passOld => 'Текущий PIN-код';
   @override
-  String get passSuccess => 'Успешный';
+  String get passSuccess => 'Успех';
   @override
   String get passSuccessTxt => 'PIN-код иземенен успешно';
   @override
@@ -778,8 +778,8 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get pinHint => 'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи.';
   @override
-  String get pinInfo =>
-      'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить аккаунт невозможно, если только вы не сделали резервную копию в профиле.';
+  String get pinInfo => 'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить'
+      'аккаунт невозможно, если только вы не сделали резервную копию в профиле.';
   @override
   String get pinSecure => 'Защитите свой аккаунт с помощью PIN-кода.';
   @override
@@ -787,7 +787,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get reputation => 'Репутация';
   @override
-  String get shareLinkHint => 'Или вы можете поделиться ссылкой:';
+  String get shareLinkHint => 'Или Вы можете поделиться ссылкой:';
   @override
   String get tokenSend => 'Отправить SYMBOL';
   @override
@@ -805,8 +805,8 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get meetUpNotifications => 'Meetup - уведомления';
   @override
-  String get meetUpListTileTitle =>
-      'Если ваше устройство является телефоном Xiaomi или Honor, включите автозапуск, чтобы получать Meetup - уведомления.';
+  String get meetUpListTileTitle => 'Если ваше устройство является телефоном Xiaomi или Honor,'
+      'включите автозапуск, чтобы получать Meetup - уведомления.';
   @override
   String get openAppSettings => 'Открыть настройки приложения';
   @override
