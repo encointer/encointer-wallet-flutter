@@ -3,8 +3,6 @@ import 'dart:typed_data';
 
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 
-const String claimOfAttendanceJSRegistryName = 'ClaimOfAttendance';
-
 class CodecApi {
   CodecApi(this.jsApi);
 

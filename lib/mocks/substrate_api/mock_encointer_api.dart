@@ -3,7 +3,6 @@ import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
-import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
@@ -105,7 +104,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<DateTime?> getMeetupTime() async {
-    return DateTime.fromMillisecondsSinceEpoch(claim['timestamp'] as int);
+    return DateTime.fromMillisecondsSinceEpoch(testTimeStamp);
   }
 
   @override
@@ -113,24 +112,6 @@ class MockEncointerApi extends EncointerApi {
     return Future.value(Map<CommunityIdentifier, BalanceEntry>.of({
       store.encointer.chosenCid!: BalanceEntry.fromJson(testBalanceEntry),
     }));
-  }
-
-  @override
-  Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    final meetup = store.encointer.communityAccount!.meetup!;
-
-    final claim = ClaimOfAttendance(
-      store.account.currentAccountPubKey,
-      store.encointer.currentCeremonyIndex,
-      store.encointer.chosenCid,
-      meetup.index,
-      store.encointer.community!.meetupLocations![meetup.locationIndex],
-      meetup.time,
-      participants,
-    );
-
-    // skip signing for mocks.
-    return Future.value(claim);
   }
 
   @override
