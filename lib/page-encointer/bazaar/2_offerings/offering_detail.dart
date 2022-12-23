@@ -7,7 +7,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class OfferingDetail extends StatelessWidget {
   OfferingDetail(this.offering, {super.key});
-  
+
   final BazaarOfferingData offering;
   final productNewness = allProductNewnessOptions; // TODO state management
   final deliveryOptions = allDeliveryOptions; // TODO state management

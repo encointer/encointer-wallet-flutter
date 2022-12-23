@@ -17,7 +17,7 @@ class AddAccountForm extends StatelessWidget {
     this.submitting,
     required this.onSubmit,
   });
-  
+
   final Function onSubmit;
   final bool? submitting;
   final AppStore store;

@@ -21,7 +21,7 @@ import 'package:encointer_wallet/utils/ui.dart';
 
 class ReceivePage extends StatefulWidget {
   const ReceivePage({super.key});
-  
+
   static const String route = '/assets/receive';
 
   @override

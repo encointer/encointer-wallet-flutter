@@ -13,7 +13,7 @@ class AddressIcon extends StatelessWidget {
     this.size = 96,
     this.tapToCopy = true,
   });
-  
+
   final String address;
   final String pubKey;
   final double size;

@@ -15,7 +15,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ExportAccountPage extends StatelessWidget {
   ExportAccountPage({super.key});
-  
+
   static const String route = '/profile/export';
 
   final TextEditingController _passCtrl = TextEditingController();

@@ -19,7 +19,7 @@ class AddressInputField extends StatefulWidget {
     this.onChanged,
     this.hideIdenticon = false,
   });
-  
+
   final AppStore store;
   final String? label;
   final AccountData? initialValue;

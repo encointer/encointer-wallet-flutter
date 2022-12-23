@@ -12,7 +12,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class BazaarMain extends StatelessWidget {
   const BazaarMain({super.key});
-  
+
   static const String route = '/bazaar';
 
   @override
