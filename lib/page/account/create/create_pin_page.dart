@@ -16,7 +16,7 @@ class CreatePinPageParams {
 }
 
 class CreatePinPage extends StatefulWidget {
-  const CreatePinPage({Key? key}) : super(key: key);
+  const CreatePinPage({super.key});
 
   static const String route = '/account/createPin';
 

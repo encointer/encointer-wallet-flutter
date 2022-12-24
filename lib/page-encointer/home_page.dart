@@ -15,7 +15,7 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  const EncointerHomePage({Key? key}) : super(key: key);
+  const EncointerHomePage({super.key});
 
   static const String route = '/home';
 

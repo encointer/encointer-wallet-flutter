@@ -8,7 +8,7 @@ import 'package:encointer_wallet/utils/ui.dart';
 
 class TxDetail extends StatelessWidget {
   const TxDetail({
-    Key? key,
+    super.key,
     this.success,
     this.networkName,
     this.action,
@@ -17,7 +17,7 @@ class TxDetail extends StatelessWidget {
     this.blockTime,
     this.blockNum,
     this.info,
-  }) : super(key: key);
+  });
 
   final bool? success;
   final String? networkName;

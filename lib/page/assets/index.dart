@@ -38,7 +38,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class Assets extends StatefulWidget {
-  const Assets(this.store, {Key? key}) : super(key: key);
+  const Assets(this.store, {super.key});
 
   final AppStore store;
 

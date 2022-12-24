@@ -7,7 +7,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AboutPage extends StatelessWidget {
-  const AboutPage({Key? key}) : super(key: key);
+  const AboutPage({super.key});
 
   static const String route = '/profile/about';
 

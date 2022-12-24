@@ -4,7 +4,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertic
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 
 class Favorites extends StatelessWidget {
-  Favorites({Key? key}) : super(key: key);
+  Favorites({super.key});
 
   final data = favorites;
 

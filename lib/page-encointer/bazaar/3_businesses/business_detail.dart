@@ -8,12 +8,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/b
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class BusinessDetail extends StatelessWidget {
-  const BusinessDetail(
-    this.business, {
-    Key? key,
-    this.cardHeight = 200,
-    this.cardWidth = 160,
-  }) : super(key: key);
+  const BusinessDetail(this.business, {super.key, this.cardHeight = 200, this.cardWidth = 160});
 
   final BazaarBusinessData? business;
   final double cardHeight;
@@ -96,7 +91,7 @@ class BusinessDetail extends StatelessWidget {
 }
 
 class SmallLeaflet extends StatelessWidget {
-  const SmallLeaflet({Key? key}) : super(key: key);
+  const SmallLeaflet({super.key});
 
   @override
   Widget build(BuildContext context) {

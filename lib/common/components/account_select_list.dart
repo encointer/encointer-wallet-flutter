@@ -5,7 +5,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 
 class AccountSelectList extends StatelessWidget {
-  const AccountSelectList(this.store, this.list, {Key? key}) : super(key: key);
+  const AccountSelectList(this.store, this.list, {super.key});
 
   final AppStore store;
   final List<AccountData> list;

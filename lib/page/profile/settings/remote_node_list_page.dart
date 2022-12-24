@@ -8,7 +8,7 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
-  RemoteNodeListPage({Key? key}) : super(key: key);
+  RemoteNodeListPage({super.key});
 
   static const String route = '/profile/endpoint';
   final Api? api = webApi;

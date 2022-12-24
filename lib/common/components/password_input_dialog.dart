@@ -23,13 +23,13 @@ Widget showPasswordInputDialog(
 
 class PasswordInputDialog extends StatefulWidget {
   const PasswordInputDialog({
-    Key? key,
+    super.key,
     required this.account,
     required this.onOk,
     this.title,
     this.onCancel,
     this.onAccountSwitch,
-  }) : super(key: key);
+  });
 
   final AccountData account;
   final Function onOk;

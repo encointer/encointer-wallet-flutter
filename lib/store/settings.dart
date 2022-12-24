@@ -14,7 +14,7 @@ import 'package:encointer_wallet/utils/format.dart';
 part 'settings.g.dart';
 
 class SettingsStore extends _SettingsStore with _$SettingsStore {
-  SettingsStore(AppStore store) : super(store);
+  SettingsStore(super.store);
 }
 
 abstract class _SettingsStore with Store {
@@ -331,8 +331,7 @@ abstract class _SettingsStore with Store {
 
 @JsonSerializable(createFactory: false)
 class NetworkState extends _NetworkState {
-  NetworkState(String? endpoint, int? ss58Format, int? tokenDecimals, String? tokenSymbol)
-      : super(endpoint, ss58Format, tokenDecimals, tokenSymbol);
+  NetworkState(super.endpoint, super.ss58Format, super.tokenDecimals, super.tokenSymbol);
 
   // Todo: need to test after then fix by linter
   // ignore: prefer_constructors_over_static_methods

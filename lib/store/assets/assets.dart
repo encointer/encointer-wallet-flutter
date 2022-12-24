@@ -7,7 +7,7 @@ import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 part 'assets.g.dart';
 
 class AssetsStore extends _AssetsStore with _$AssetsStore {
-  AssetsStore(AppStore store) : super(store);
+  AssetsStore(super.store);
 }
 
 abstract class _AssetsStore with Store {

@@ -18,7 +18,7 @@ class VoucherQrCode extends QrCode<VoucherData> {
     return VoucherQrCode.withData(VoucherData.fromQrFields(fields.sublist(2)));
   }
 
-  VoucherQrCode.withData(VoucherData data) : super(data);
+  VoucherQrCode.withData(super.data);
 
   @override
   QrCodeContext? context = QrCodeContext.voucher;

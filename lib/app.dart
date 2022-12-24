@@ -11,7 +11,7 @@ import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class WalletApp extends StatelessWidget {
-  const WalletApp({Key? key}) : super(key: key);
+  const WalletApp({super.key});
 
   @override
   Widget build(BuildContext context) {

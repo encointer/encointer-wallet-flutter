@@ -31,7 +31,7 @@ class ReapVoucherParams {
 }
 
 class ReapVoucherPage extends StatefulWidget {
-  const ReapVoucherPage(this.api, {Key? key}) : super(key: key);
+  const ReapVoucherPage(this.api, {super.key});
 
   static const String route = '/qrcode/voucher';
   final Api api;

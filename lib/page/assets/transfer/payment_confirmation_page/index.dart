@@ -36,7 +36,7 @@ class PaymentConfirmationParams {
 }
 
 class PaymentConfirmationPage extends StatefulWidget {
-  const PaymentConfirmationPage(this.api, {Key? key}) : super(key: key);
+  const PaymentConfirmationPage(this.api, {super.key});
 
   static const String route = '/assets/paymentConfirmation';
   final Api api;

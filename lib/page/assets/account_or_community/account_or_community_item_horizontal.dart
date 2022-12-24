@@ -5,11 +5,11 @@ import 'package:encointer_wallet/page/assets/account_or_community/account_or_com
 
 class AccountOrCommunityItemHorizontal extends StatefulWidget {
   const AccountOrCommunityItemHorizontal({
-    Key? key,
+    super.key,
     required this.itemData,
     required this.index,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final AccountOrCommunityData itemData;
   final int index;

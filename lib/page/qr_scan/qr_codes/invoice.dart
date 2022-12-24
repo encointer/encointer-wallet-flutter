@@ -29,7 +29,7 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     }
   }
 
-  InvoiceQrCode.withData(InvoiceData data, {this.version = QrCodeVersion.v1_0}) : super(data);
+  InvoiceQrCode.withData(super.data, {this.version = QrCodeVersion.v1_0});
 
   @override
   QrCodeContext? context = QrCodeContext.invoice;

@@ -48,7 +48,7 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  const TransferPage({Key? key}) : super(key: key);
+  const TransferPage({super.key});
 
   static const String route = '/assets/transfer';
 
@@ -294,11 +294,11 @@ class _TransferPageState extends State<TransferPage> {
 
 class AccountBalanceWithMoreDigits extends StatelessWidget {
   const AccountBalanceWithMoreDigits({
-    Key? key,
+    super.key,
     required this.store,
     required this.available,
     required this.decimals,
-  }) : super(key: key);
+  });
 
   final AppStore store;
   final double? available;

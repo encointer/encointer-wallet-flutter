@@ -7,11 +7,11 @@ import 'package:encointer_wallet/utils/extensions/extensions.dart';
 
 class QrCodeImageWithButton extends StatelessWidget {
   const QrCodeImageWithButton({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.qrCode,
     required this.text,
-  }) : super(key: key);
+  });
 
   final VoidCallback onTap;
   final String qrCode;
@@ -39,10 +39,10 @@ class QrCodeImageWithButton extends StatelessWidget {
 
 class QrCodeImage extends StatelessWidget {
   const QrCodeImage({
-    Key? key,
+    super.key,
     required this.qrCode,
     this.errorCorrectionLevel = QrErrorCorrectLevel.L,
-  }) : super(key: key);
+  });
 
   final String qrCode;
   final int errorCorrectionLevel;

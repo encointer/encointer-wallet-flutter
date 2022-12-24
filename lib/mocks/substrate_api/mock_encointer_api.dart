@@ -8,7 +8,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
-import 'package:encointer_wallet/store/app.dart';
 
 /// The key rationale behind this mock is that all the getters do not alter the app state.
 ///
@@ -16,7 +15,7 @@ import 'package:encointer_wallet/store/app.dart';
 /// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
 class MockEncointerApi extends EncointerApi {
-  MockEncointerApi(AppStore store, MockJSApi js, MockSubstrateDartApi dartApi) : super(store, js, dartApi);
+  MockEncointerApi(super.store, MockJSApi super.js, MockSubstrateDartApi super.dartApi);
 
   @override
   Future<void> startSubscriptions() async {

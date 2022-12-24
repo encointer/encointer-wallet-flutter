@@ -21,11 +21,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyBox extends StatelessWidget {
-  const CeremonyBox(
-    this.store,
-    this.api, {
-    Key? key,
-  }) : super(key: key);
+  const CeremonyBox(this.store, this.api, {super.key});
 
   final AppStore store;
   final Api api;

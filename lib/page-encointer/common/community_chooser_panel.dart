@@ -12,7 +12,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CommunityChooserPanel extends StatefulWidget {
-  const CommunityChooserPanel(this.store, {Key? key}) : super(key: key);
+  const CommunityChooserPanel(this.store, {super.key});
 
   final AppStore store;
 
@@ -75,12 +75,13 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
 
 /// the CombinedCommunityAndAccountAvatar should be wrapped in an InkWell to provide the callback on a click
 class CombinedCommunityAndAccountAvatar extends StatefulWidget {
-  const CombinedCommunityAndAccountAvatar(this.store,
-      {Key? key,
-      this.showCommunityNameAndAccountName = true,
-      this.communityAvatarSize = 96,
-      this.accountAvatarSize = 34})
-      : super(key: key);
+  const CombinedCommunityAndAccountAvatar(
+    this.store, {
+    super.key,
+    this.showCommunityNameAndAccountName = true,
+    this.communityAvatarSize = 96,
+    this.accountAvatarSize = 34,
+  });
 
   final AppStore store;
   final double communityAvatarSize;
@@ -138,7 +139,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
 }
 
 class CommunityAvatar extends StatelessWidget {
-  const CommunityAvatar({Key? key, this.avatarSize = 120}) : super(key: key);
+  const CommunityAvatar({super.key, this.avatarSize = 120});
 
   final double avatarSize;
 

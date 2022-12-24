@@ -21,7 +21,7 @@ part 'account.g.dart';
 /// * https://github.com/encointer/encointer-wallet-flutter/issues/487
 
 class AccountStore extends _AccountStore with _$AccountStore {
-  AccountStore(AppStore appStore) : super(appStore);
+  AccountStore(super.appStore);
 
   static const String seedTypeMnemonic = 'mnemonic';
   static const String seedTypeRawSeed = 'rawSeed';

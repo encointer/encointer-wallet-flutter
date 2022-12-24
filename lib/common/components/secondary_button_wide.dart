@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SecondaryButtonWide extends StatelessWidget {
-  const SecondaryButtonWide({
-    Key? key,
-    required this.child,
-    this.onPressed,
-  }) : super(key: key);
+  const SecondaryButtonWide({super.key, required this.child, this.onPressed});
 
   final Widget child;
   final void Function()? onPressed;

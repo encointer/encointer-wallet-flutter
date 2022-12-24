@@ -6,11 +6,7 @@ import 'package:flutter/material.dart';
 ///
 /// Useful for sending transactions because it takes a while until we know the result.
 class SubmitButton extends StatefulWidget {
-  const SubmitButton({
-    Key? key,
-    required this.child,
-    this.onPressed,
-  }) : super(key: key);
+  const SubmitButton({super.key, required this.child, this.onPressed});
 
   final Widget child;
   final Future<void> Function(BuildContext)? onPressed;

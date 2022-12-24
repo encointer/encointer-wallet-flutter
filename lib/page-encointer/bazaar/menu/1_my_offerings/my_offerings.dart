@@ -6,7 +6,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class MyOfferings extends StatelessWidget {
-  MyOfferings({Key? key}) : super(key: key);
+  MyOfferings({super.key});
 
   final data = myOfferings;
 

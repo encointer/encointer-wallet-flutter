@@ -2,7 +2,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 
 class CeremonyProgressBar extends StatelessWidget {
-  const CeremonyProgressBar({required this.progress, Key? key}) : super(key: key);
+  const CeremonyProgressBar({required this.progress, super.key});
 
   final int progress;
 
@@ -31,9 +31,7 @@ class CeremonyProgressBar extends StatelessWidget {
 }
 
 class LightShadedBar extends StatelessWidget {
-  const LightShadedBar({
-    Key? key,
-  }) : super(key: key);
+  const LightShadedBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +45,7 @@ class LightShadedBar extends StatelessWidget {
 }
 
 class GradientBar extends StatelessWidget {
-  const GradientBar({
-    Key? key,
-  }) : super(key: key);
+  const GradientBar({super.key});
 
   @override
   Widget build(BuildContext context) {

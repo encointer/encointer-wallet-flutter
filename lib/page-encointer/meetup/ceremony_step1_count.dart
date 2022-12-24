@@ -1,3 +1,7 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -6,16 +10,9 @@ import 'package:encointer_wallet/page-encointer/meetup/ceremony_step2_scan2.dart
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class CeremonyStep1Count extends StatelessWidget {
-  CeremonyStep1Count(
-    this.store,
-    this.api, {
-    Key? key,
-  }) : super(key: key);
+  CeremonyStep1Count(this.store, this.api, {super.key});
 
   final AppStore store;
   final Api api;

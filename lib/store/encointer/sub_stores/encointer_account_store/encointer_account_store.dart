@@ -18,7 +18,7 @@ part 'encointer_account_store.g.dart';
 ///
 @JsonSerializable(explicitToJson: true)
 class EncointerAccountStore extends _EncointerAccountStore with _$EncointerAccountStore {
-  EncointerAccountStore(String network, String address) : super(network, address);
+  EncointerAccountStore(super.network, super.address);
 
   factory EncointerAccountStore.fromJson(Map<String, dynamic> json) => _$EncointerAccountStoreFromJson(json);
   Map<String, dynamic> toJson() => _$EncointerAccountStoreToJson(this);

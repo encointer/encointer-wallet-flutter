@@ -7,7 +7,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_wit
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Businesses extends StatelessWidget {
-  Businesses({Key? key}) : super(key: key);
+  Businesses({super.key});
 
   final data = allBusinesses;
 

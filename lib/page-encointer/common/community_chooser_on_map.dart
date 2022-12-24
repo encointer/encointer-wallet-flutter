@@ -11,7 +11,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CommunityChooserOnMap extends StatelessWidget {
-  CommunityChooserOnMap(this.store, {Key? key}) : super(key: key) {
+  CommunityChooserOnMap(this.store, {super.key}) {
     if (store.encointer.communities != null) {
       for (final community in store.encointer.communities!) {
         communityDataAt[coordinatesOf(community)] = community;
@@ -42,7 +42,7 @@ class CommunityChooserOnMap extends StatelessWidget {
 }
 
 class CommunityDetailsPopup extends StatefulWidget {
-  const CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
+  const CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {super.key});
 
   final AppStore store;
   final Marker marker;
