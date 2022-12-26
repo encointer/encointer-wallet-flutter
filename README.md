@@ -105,12 +105,9 @@ and find the output in `build/app/outputs/bundle/release/app-release.aab`
 #### Dev hints
 
 ### Flutter version
-The following two files contain the supported flutter version:
+The following file contains the supported flutter version:
 
-* [GitHub Action Config](./.github/action-config.json)
 * [install_flutter_wrapper.sh](./scripts/install_flutter_wrapper.sh)
-
-These versions must always be aligned!
 
 ### Run tests
 
