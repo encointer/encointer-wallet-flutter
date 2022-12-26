@@ -38,24 +38,11 @@ jobs:
       - name: "Run unit tests"
         run: ./flutterw test --exclude-tags encointer-node-e2e
 
-      - name: "Run the build_runner"
+      - name: "Run the build_runner and return an error if files are changed"
         run: |
           ./flutterw pub run build_runner build --delete-conflicting-outputs
           ./flutterw format . --line-length 120
-
-      - name: "Retrieve changed files after regenerating *.g files"
-        id: changed-files
-        uses: tj-actions/changed-files@v35
-        with:
-          files: |
-            **/*.g.dart
-
-      - name: "Check if files changed"
-        if: steps.changed-files.outputs.any_changed == 'true'
-        run: |
-          echo "Regenerated files have changed, please commit *.g.dart files that are up-to-date."
-          echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
-          exit 1
+          git diff --exit-code
 
     #  test-js:
     # Todo: Currently e2e tests are mixed with unit tests (although the amount of unit tests is really small)
