@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master, f-droid ]
 
+env:
+  NODE_VERSION: 16.13.1
+  JAVA_VERSION: 12.x
+
 jobs:
   cancel_previous_runs:
     name: Cancel Previous Runs
@@ -21,18 +25,10 @@ jobs:
     steps:
       # Setup Environment
       - uses: actions/checkout@v3
-        with:
-          # 2 to compare the last two revisions to check if JS changed
-          fetch-depth: 2
-
-      - uses: monorepo-actions/config-for-actions@main
-        id: config
-        with:
-          config_files: ./.github/action-config.json
 
       - uses: actions/setup-java@v3
         with:
-          java-version: ${{ steps.config.outputs.java-version }}
+          java-version: ${{ env.JAVA_VERSION }}
           distribution: 'zulu'
 
       - name: Install flutter wrapper
@@ -41,7 +37,7 @@ jobs:
       # JS Stuff
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.config.outputs.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: "Build JS"
         working-directory: ./scripts
