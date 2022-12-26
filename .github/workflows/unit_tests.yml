@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master, f-droid ]
 
+env:
+  JS_SERVICE_ENCOINTER_PATH: lib/js_service_encointer
+  JS_SERVICE_ENCOINTER_MAIN: lib/js_service_encointer/dist/main.js
+
 jobs:
   flutter:
     runs-on: ubuntu-latest
@@ -14,19 +18,14 @@ jobs:
       # Setup Environment
       - uses: actions/checkout@v3
 
-      - uses: monorepo-actions/config-for-actions@main
-        id: config
-        with:
-          config_files: ./.github/action-config.json
-
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
       # Analyzer throws an error if an asset is missing
       - name: "Make mock-main.js"
         run: |
-          mkdir -p ${{ steps.config.outputs.js-service-encointer-path }}/dist
-          touch ${{ steps.config.outputs.encointer-main-js-path }}
+          mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
+          touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
       # analyze and test
       - name: "Check fmt"
