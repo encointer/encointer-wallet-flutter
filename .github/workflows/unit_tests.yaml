@@ -53,8 +53,8 @@ jobs:
       - name: "Check if files changed"
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          echo "Regenerated files have changed, please commit *.g.dart files that are up-to-date"
-          echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
+          echo "Regenerated files have changed, please commit *.g.dart files that are up-to-date."
+          echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
           exit 1
 
     #  test-js:
