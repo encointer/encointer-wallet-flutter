@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import 'package:encointer_wallet/service/background_service/background_service.dart';
+import 'package:encointer_wallet/service/meetup/meetup.dart';
 
 class MockLocation extends Mock implements tz.Location {}
 
@@ -18,7 +18,7 @@ void main() async {
   setUp(() => channel.setMockMethodCallHandler((MethodCall methodCall) async => '42'));
 
   test('executeTaskIsolate called', () async {
-    await MeetupNotification.executeTaskIsolate(
+    await NotificationHandler.fetchMessagesAndScheduleNotifications(
       local,
       mockScheduleNotification,
       'en',

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/background_service/meetup/feed_model.dart';
+import 'package:encointer_wallet/service/meetup/feed_model.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 class FeedRepo {

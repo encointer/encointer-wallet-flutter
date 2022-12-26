@@ -9,8 +9,8 @@ import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
-import 'package:encointer_wallet/service/background_service/background_service.dart';
 import 'package:encointer_wallet/service/deep_link/deep_link.dart';
+import 'package:encointer_wallet/service/meetup/meetup.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -34,7 +34,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     if (context.read<AppStore>().appCast == null) NotificationPlugin.init(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await initialDeepLinks(context);
-      await MeetupNotification.executeTaskIsolate(
+      await NotificationHandler.fetchMessagesAndScheduleNotifications(
         tz.local,
         NotificationPlugin.scheduleNotification,
         Localizations.localeOf(context).languageCode,
