@@ -470,15 +470,17 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get newbieTitle => 'Enregistré comme Novice - Ta place n\'est pas encore garantie';
   @override
   String get reputableContent =>
-      'Tu as utilisé ta réputation pour obtenir une place garantie. Attention : si tu t\'enregistres,';
+      '"Tu as utilisé ta réputation pour obtenir une place garantie. Attention : si tu t\'enregistres,'
+      ' mais que tu ne te présentes pas à la réunion, tu redeviens un Novice".';
   @override
   String get reputableTitle => 'Enregistré en tant que Reputable. Ta place est garantie';
   @override
   String get remainingNewbieTicketsAsReputable => 'Comme Reputable les billets pour Novice restants:';
   @override
-  String get remainingNewbieTicketsAsBootStrapper => throw UnimplementedError();
+  String get remainingNewbieTicketsAsBootStrapper => 'Novice-Tickets restants en tant que bootstrapper';
   @override
-  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne => throw UnimplementedError();
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
+      'Seules les Reputables peuvent endosser. Participez à une réunion pour gagner de réputation!';
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
