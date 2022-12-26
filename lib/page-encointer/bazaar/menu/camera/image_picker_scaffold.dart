@@ -87,7 +87,7 @@ class ImagePickerScaffold extends StatelessWidget {
     );
   }
 
-  void _onImageButtonPressed(ImagePickerState state, ImageSource source, {BuildContext? context}) async {
+  Future<void> _onImageButtonPressed(ImagePickerState state, ImageSource source, {BuildContext? context}) async {
     try {
       final pickedFile = await _picker.pickImage(
         source: source,
