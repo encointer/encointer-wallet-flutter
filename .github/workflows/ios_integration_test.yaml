@@ -11,7 +11,7 @@ jobs:
     name: Cancel Previous Runs
     runs-on: ubuntu-20.04
     steps:
-      - uses: styfle/cancel-workflow-action@0.4.1
+      - uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -32,7 +32,7 @@ jobs:
       fail-fast: false
     steps:
       # Setup Environment
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # 2 to compare the last two revisions to check if JS changed
           fetch-depth: 2
@@ -46,7 +46,7 @@ jobs:
         working-directory: ./scripts
         run: ./ios_init_env.sh
 
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v3
         with:
           java-version: ${{ steps.config.outputs.java-version }}
 
@@ -68,7 +68,7 @@ jobs:
         run: source ./ios_emulator.sh
 
         # JS Stuff
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.config.outputs.node-version }}
 
@@ -85,7 +85,7 @@ jobs:
 
       - name: "Upload screenshots and recording"
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.device }}
           path: ${{ steps.config.outputs.temp-screenshots }}
