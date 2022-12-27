@@ -8,8 +8,13 @@ import '../../fixtures/fixture_reader.dart';
 
 void main() {
   test('Object is Feed model', () {
-    final feed = Feed(id: 'msg-1', title: 'Title', content: 'Cotent', showAt: DateTime.now());
+    final feed = Feed(id: '1', title: 'Title', content: 'Cotent', showAt: DateTime.now());
     expect(feed, isA<Feed>());
+  });
+
+  test('chack feed notificationID is integer', () {
+    final feed = Feed(id: '1', title: 'Title', content: 'Cotent', showAt: DateTime.now());
+    expect(feed.notificationId, 1);
   });
 
   test('feedFromJson return List<Feed>', () {

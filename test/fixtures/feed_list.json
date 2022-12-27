@@ -1,24 +1,24 @@
 [
     {
-        "id": "msg-1",
+        "id": "1",
         "title": "Test Community Message Title",
         "content": "Hello, this is a test community notification",
         "showAt": "2024-08-25T12:30:00.00+00:00"
     },
     {
-        "id": "msg-2",
+        "id": "2",
         "title": "Test Community Message Title",
         "content": "Hello, this is a test community notification",
         "showAt": "2024-08-25T12:30:00.00+00:00"
     },
     {
-        "id": "msg-3",
+        "id": "3",
         "title": "Test Community Message Title",
         "content": "Hello, this is a test community notification",
         "showAt": "2024-08-25T12:30:00.00+00:00"
     },
     {
-        "id": "msg-4",
+        "id": "4",
         "title": "Message that should never be shown because it is in the future.",
         "content": "Hello, this is a test community notification",
         "showAt": "2022-08-25T12:30:00.00+00:00"

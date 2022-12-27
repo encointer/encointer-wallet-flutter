@@ -23,4 +23,6 @@ class Feed {
   final String title;
   final String content;
   final DateTime showAt;
+
+  int get notificationId => int.parse(id);
 }
