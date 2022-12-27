@@ -19,15 +19,15 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ContactDetailPage extends StatelessWidget {
-  ContactDetailPage(this.api, {Key? key}) : super(key: key);
+  const ContactDetailPage(this.api, {super.key});
 
   static const String route = '/profile/contactDetail';
 
   final Api api;
 
   void _removeItem(BuildContext context, AccountData account, AppStore store) {
-    var dic = I18n.of(context)!.translationsForLocale();
-    showCupertinoDialog(
+    final dic = I18n.of(context)!.translationsForLocale();
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -57,8 +57,8 @@ class ContactDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AccountData account = ModalRoute.of(context)!.settings.arguments as AccountData;
-    var dic = I18n.of(context)!.translationsForLocale();
+    final account = ModalRoute.of(context)!.settings.arguments as AccountData;
+    final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
 
     return Scaffold(
@@ -100,7 +100,7 @@ class ContactDetailPage extends StatelessWidget {
                         Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
-                          color: ZurichLion.shade500,
+                          color: zurichLion.shade500,
                           onPressed: () => UI.copyAndNotify(context, account.address),
                         ),
                       ],
@@ -108,13 +108,10 @@ class ContactDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Observer(builder: (_) {
-                return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress)
-                    ? EndorseButton(_store, api, account)
-                    : Container();
-              }),
+              EndorseButton(_store, api, account),
               const SizedBox(height: 16),
               SecondaryButtonWide(
+                key: const Key('send-money-to-account'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -158,7 +155,7 @@ class ContactDetailPage extends StatelessWidget {
 }
 
 class EndorseButton extends StatelessWidget {
-  EndorseButton(this.store, this.api, this.contact, {Key? key}) : super(key: key);
+  const EndorseButton(this.store, this.api, this.contact, {super.key});
 
   final AppStore store;
   final Api api;
@@ -166,29 +163,92 @@ class EndorseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
-    return SubmitButtonSecondary(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Iconsax.verify),
-          const SizedBox(width: 12),
-          Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
-        ],
-      ),
-      onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
-          ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : store.encointer.currentPhase != CeremonyPhase.Registering
-              ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
-              : (BuildContext context) =>
-                  submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Observer(builder: (_) {
+          return store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
+              ? FittedBox(
+                  child: Row(children: [
+                    Text(dic.encointer.remainingNewbieTicketsAsBootStrapper),
+                    Text(
+                      ' ${store.encointer.communityAccount?.numberOfNewbieTicketsForBootstrapper ?? 0}',
+                      style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                    ),
+                  ]),
+                )
+              : const SizedBox();
+        }),
+        Observer(builder: (_) {
+          return FittedBox(
+            child: Row(
+              children: store.encointer.account != null && store.encointer.account!.reputations.isNotEmpty
+                  ? [
+                      Text(dic.encointer.remainingNewbieTicketsAsReputable),
+                      Text(
+                        ' ${store.encointer.account?.numberOfNewbieTicketsForReputable ?? 0}',
+                        style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                      ),
+                    ]
+                  : [
+                      Text(dic.encointer.onlyReputablesCanEndorseAttendGatheringToBecomeOne),
+                    ],
+            ),
+          );
+        }),
+        const SizedBox(height: 5),
+        Observer(builder: (_) {
+          return SubmitButtonSecondary(
+            key: const Key('tap-endorse-button'),
+            onPressed: hasNewbieTickets() ? onPressed : null,
+            child: FittedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Iconsax.verify),
+                  const SizedBox(width: 12),
+                  Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
+                ],
+              ),
+            ),
+          );
+        }),
+      ],
     );
+  }
+
+  bool hasNewbieTickets() {
+    if (store.encointer.account!.reputations.isNotEmpty &&
+        store.encointer.account!.numberOfNewbieTicketsForReputable > 0) {
+      return true;
+    }
+
+    if (store.encointer.community!.bootstrappers!.contains(store.account.currentAddress) &&
+        store.encointer.communityAccount!.numberOfNewbieTicketsForBootstrapper > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<void> onPressed(BuildContext context) async {
+    final community = store.encointer.community;
+    final bootstrappers = community?.bootstrappers;
+    final dic = I18n.of(context)!.translationsForLocale();
+    if (bootstrappers != null && bootstrappers.contains(contact.address)) {
+      _popupDialog(context, dic.profile.cantEndorseBootstrapper);
+    } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
+      _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
+    } else {
+      submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
+    }
   }
 }
 
 Future<void> _popupDialog(BuildContext context, String content) async {
-  showCupertinoDialog(
+  showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(

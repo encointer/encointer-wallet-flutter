@@ -21,21 +21,17 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyBox extends StatelessWidget {
-  const CeremonyBox(
-    this.store,
-    this.api, {
-    Key? key,
-  }) : super(key: key);
+  const CeremonyBox(this.store, this.api, {super.key});
 
   final AppStore store;
   final Api api;
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Observer(builder: (BuildContext context) {
-      int? meetupTime = store.encointer.community?.meetupTimeOverride ??
+      final meetupTime = store.encointer.community?.meetupTimeOverride ??
           store.encointer.community?.meetupTime ??
           store.encointer.attestingPhaseStart;
 
@@ -43,7 +39,7 @@ class CeremonyBox extends StatelessWidget {
       // we want to do too much again. So I hardcode the assigning phase duration to 30 minutes
       // if we have meetup time overrides. Before we do something more complex here, I want to
       // think some more, of what we want to do with the feed in the future.
-      int? assigningPhaseStart = store.encointer.community?.meetupTimeOverride != null
+      final assigningPhaseStart = store.encointer.community?.meetupTimeOverride != null
           ? store.encointer.community!.meetupTimeOverride! - const Duration(minutes: 30).inMilliseconds
           : store.encointer.assigningPhaseStart;
 
@@ -52,7 +48,7 @@ class CeremonyBox extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
-              color: ZurichLion.shade50,
+              color: zurichLion.shade50,
               borderRadius: BorderRadius.vertical(
                 top: const Radius.circular(15),
                 bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15),
@@ -72,12 +68,13 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
+                        key: const Key('registration-meetup-button'),
                         registerUntil: assigningPhaseStart,
                         onPressed: (context) async {
                           if (store.dataUpdate.expired) {
                             await awaitDataUpdateWithDialog(context, store);
                           }
-                          return submitRegisterParticipant(context, store, api);
+                          await submitRegisterParticipant(context, store, api);
                         }),
                   ),
                 if (store.encointer.showStartCeremonyButton)
@@ -86,7 +83,7 @@ class CeremonyBox extends StatelessWidget {
                     child: CeremonyStartButton(
                       key: const Key('start-meetup'),
                       onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
+                        MaterialPageRoute<void>(
                           builder: (context) => CeremonyStep1Count(store, api),
                         ),
                       ),
@@ -134,6 +131,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
     case CeremonyPhase.Registering:
       if (communityAccount?.isRegistered ?? false) {
         return CeremonyNotification(
+          key: const Key('is-registered-info'),
           notificationIconData: Iconsax.tick_square,
           notification: dic.encointer.youAreRegisteredAs.replaceAll(
             'PARTICIPANT_TYPE',
@@ -150,8 +148,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       }
     case CeremonyPhase.Assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
-        var meetup = store.encointer.communityAccount!.meetup!;
-        var location = store.encointer.community!.meetupLocations![meetup.locationIndex];
+        final meetup = store.encointer.communityAccount!.meetup!;
+        final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
         return MeetupInfo(
           meetup,
           location,
@@ -177,8 +175,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
                 .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString()),
           );
         } else {
-          var meetup = store.encointer.communityAccount!.meetup!;
-          var location = store.encointer.community!.meetupLocations![meetup.locationIndex];
+          final meetup = store.encointer.communityAccount!.meetup!;
+          final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
           return MeetupInfo(
             meetup,
             location,
@@ -193,7 +191,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
-  showCupertinoDialog(
+  showCupertinoDialog<void>(
     context: context,
     builder: (_) => CupertinoAlertDialog(
       title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),

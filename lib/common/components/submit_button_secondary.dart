@@ -7,11 +7,7 @@ import 'package:flutter/cupertino.dart';
 ///
 /// Same as `SubmitButton` but with the style of the secondary button.
 class SubmitButtonSecondary extends StatefulWidget {
-  const SubmitButtonSecondary({
-    Key? key,
-    required this.child,
-    this.onPressed,
-  }) : super(key: key);
+  const SubmitButtonSecondary({super.key, required this.child, this.onPressed});
 
   final Widget child;
   final Future<void> Function(BuildContext)? onPressed;
@@ -36,8 +32,8 @@ class _SubmitButtonSecondaryState extends State<SubmitButtonSecondary> {
   @override
   Widget build(BuildContext context) {
     return SecondaryButtonWide(
-      child: !_submitting ? widget.child : const CupertinoActivityIndicator(),
       onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
+      child: !_submitting ? widget.child : const CupertinoActivityIndicator(),
     );
   }
 }

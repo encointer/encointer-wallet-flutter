@@ -31,22 +31,18 @@ const encointerCacheVersion = 'v1.0';
 ///
 /// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
 class AppStore extends _AppStore with _$AppStore {
-  AppStore(
-    LocalStorage localStorage, {
-    required AppConfig config,
-    AppcastConfiguration? appcastConfiguration,
-  }) : super(localStorage, config: config, appcastConfiguration: appcastConfiguration);
+  AppStore(super.localStorage, {required super.config, super.appCast});
 }
 
 abstract class _AppStore with Store {
   _AppStore(
     this.localStorage, {
     required this.config,
-    this.appcastConfiguration,
+    this.appCast,
   });
 
   final AppConfig config;
-  final AppcastConfiguration? appcastConfiguration;
+  final AppcastConfiguration? appCast;
 
   // Note, following pattern of a nullable field with a non-nullable getter
   // is here because mobx can't handle `late` initialization:
@@ -113,7 +109,7 @@ abstract class _AppStore with Store {
     chain.loadCache();
 
     // need to call this after settings was initialized
-    String? networkInfo = settings.endpoint.info;
+    final networkInfo = settings.endpoint.info;
     await loadOrInitEncointerCache(networkInfo!);
 
     storeIsReady = true;
@@ -126,7 +122,7 @@ abstract class _AppStore with Store {
     Log.d('Is App Ready?: $appIsReady', '_AppStore');
   }
 
-  Future<void> cacheObject(String key, value) {
+  Future<void> cacheObject(String key, Object value) {
     return localStorage.setObject(getCacheKey(key), value);
   }
 
@@ -139,7 +135,7 @@ abstract class _AppStore with Store {
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
-    var cacheKey = '${settings.endpoint.info}_$key';
+    final cacheKey = '${settings.endpoint.info}_$key';
     return config.isTest ? 'test-$cacheKey' : cacheKey;
   }
 
@@ -148,7 +144,7 @@ abstract class _AppStore with Store {
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
-    var key = '$encointerCachePrefix-$networkInfo';
+    final key = '$encointerCachePrefix-$networkInfo';
     return config.isTest ? 'test-$key' : key;
   }
 
@@ -158,11 +154,11 @@ abstract class _AppStore with Store {
 
   Future<void> loadOrInitEncointerCache(String networkInfo) async {
     final cacheVersionFinalKey = getCacheKey(encointerCacheVersionPrefix);
-    var cacheVersion = await localStorage.getKV(cacheVersionFinalKey);
+    final cacheVersion = await localStorage.getKV(cacheVersionFinalKey);
 
-    String encointerFinalCacheKey = encointerCacheKey(networkInfo);
+    final encointerFinalCacheKey = encointerCacheKey(networkInfo);
 
-    var maybeStore;
+    EncointerStore? maybeStore;
 
     if (cacheVersion == encointerCacheVersion) {
       try {
@@ -192,12 +188,12 @@ abstract class _AppStore with Store {
   }
 
   Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) async {
-    var cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
+    final cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
 
     if (cachedEncointerStore != null) {
       Log.d('Found cached encointer store $cachedEncointerStore', '_AppStore');
 
-      var encointerStore = EncointerStore.fromJson(cachedEncointerStore);
+      final encointerStore = EncointerStore.fromJson(cachedEncointerStore);
 
       // Cache the entire encointer store at once: Check if this is too expensive,
       // when many accounts/cids exist in store. But as the caching future is in general not awaited,

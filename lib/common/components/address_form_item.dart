@@ -7,29 +7,28 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 class AddressFormItem extends StatelessWidget {
-  AddressFormItem(this.account, {Key? key, this.label, this.onTap}) : super(key: key);
+  const AddressFormItem(this.account, {super.key, this.label, this.onTap});
   final String? label;
   final AccountData account;
   final Future<void> Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    Color grey = Theme.of(context).unselectedWidgetColor;
+    final grey = Theme.of(context).unselectedWidgetColor;
 
-    String address = Fmt.addressOfAccount(account, context.watch<AppStore>());
+    final address = Fmt.addressOfAccount(account, context.watch<AppStore>());
 
-    Column content = Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        label != null
-            ? Container(
-                margin: const EdgeInsets.only(top: 4),
-                child: Text(
-                  label!,
-                  style: TextStyle(color: grey),
-                ),
-              )
-            : Container(),
+        if (label != null)
+          Container(
+            margin: const EdgeInsets.only(top: 4),
+            child: Text(
+              label!,
+              style: TextStyle(color: grey),
+            ),
+          ),
         Container(
           margin: const EdgeInsets.only(top: 4, bottom: 4),
           padding: const EdgeInsets.all(8),
@@ -60,13 +59,12 @@ class AddressFormItem extends StatelessWidget {
                   ],
                 ),
               ),
-              onTap == null
-                  ? Container()
-                  : Icon(
-                      Icons.arrow_forward_ios,
-                      size: 18,
-                      color: grey,
-                    )
+              if (onTap != null)
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 18,
+                  color: grey,
+                ),
             ],
           ),
         )

@@ -1,8 +1,11 @@
+// ignore_for_file: avoid_print
+
+import 'package:flutter_driver/flutter_driver.dart';
+import 'package:test/test.dart';
+
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
-import 'package:flutter_driver/flutter_driver.dart';
-import 'package:test/test.dart';
 
 void main() {
   FlutterDriver? driver;
@@ -18,15 +21,15 @@ void main() {
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
 
-      var ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
+      var ready = await driver!.requestData(TestCommands.waitUntilAppIsReady);
       while (ready == false.toString()) {
         print('Waiting for app to be ready: $ready');
-        await Future.delayed(const Duration(seconds: 1));
-        ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
+        await Future<void>.delayed(const Duration(seconds: 1));
+        ready = await driver!.requestData(TestCommands.waitUntilAppIsReady);
         log('app is ready ready $ready');
       }
 
-      await driver!.requestData(TestCommands.INIT);
+      await driver!.requestData(TestCommands.init);
     });
 
     tearDownAll(() async {
@@ -40,10 +43,10 @@ void main() {
 
       // put focus on text field
       await driver!.tap(find.byValueKey('account-source'));
-      await driver!.enterText(endoEncointer['mnemonic']);
+      await driver!.enterText(endoEncointer['mnemonic'] as String);
 
       await driver!.tap(find.byValueKey('create-account-name'));
-      await driver!.enterText(endoEncointer['name']);
+      await driver!.enterText(endoEncointer['name'] as String);
 
       await driver!.tap(find.byValueKey('account-import-next'));
 
@@ -65,7 +68,7 @@ void main() {
     test('print-screen of homepage', () async {
       // Here we get the metadata because it is reset to null in
       // the setChosenCid() method which is called, when a community is chosen
-      await driver!.requestData(TestCommands.HOME_PAGE);
+      await driver!.requestData(TestCommands.homePage);
 
       await dismissUpgradeDialogOnAndroid(driver!);
 
@@ -105,7 +108,7 @@ void main() {
 
     test('meetupPage', () async {
       // attesting phase
-      await driver!.requestData(TestCommands.READY_FOR_MEETUP);
+      await driver!.requestData(TestCommands.readyForMeetup);
 
       log('tapping startMeetup');
       await screenshot(driver!, config, 'debug-meetup-start');

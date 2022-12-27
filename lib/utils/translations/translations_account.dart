@@ -80,7 +80,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   String get observe => 'Observation';
   @override
   String get observeBrief =>
-      'Mark this address as observation, then you can select this address in account select page, to watch it\'s assets and actions';
+      "Mark this address as observation, then you can select this address in account select page, to watch it's assets and actions";
   @override
   String get observeProxyInvalid => 'Invalid proxy account';
   @override
@@ -231,4 +231,71 @@ class TranslationsFrAccount implements TranslationsAccount {
   String get uosSigner => throw UnimplementedError();
   @override
   String get uosTitle => throw UnimplementedError();
+}
+
+class TranslationsRuAccount implements TranslationsAccount {
+  @override
+  String get advanced => 'Дополнительные параметры';
+  @override
+  String get backupError =>
+      'Это устройство не поддерживает тип ключа sr25519. Чтобы продолжить, выберите [Дополнительные параметры -> Тип шифрования -> ed25519].';
+  @override
+  String get create => 'Создать аккаунт';
+  @override
+  String get createError => 'При создании аккаунта произошла ошибка';
+  @override
+  String get createHint => '(Пример: Алиса)';
+  @override
+  String get createPassword => 'PIN-код';
+  @override
+  String get createPassword2 => 'Подтвердите PIN-код';
+  @override
+  String get createPassword2Error => 'PIN-коды не совпадают';
+  @override
+  String get createPasswordError => 'PIN должен содержать не менее 4 цифр и никаких других знаков';
+  @override
+  String get importDuplicate => 'Учетная запись существует, вы хотите аннулировать существующий аккаунт?';
+  @override
+  String get importEncrypt => 'Тип шифрования';
+  @override
+  String get importInvalid => 'Недопустимый';
+  @override
+  String get importInvalidRawSeed => 'Предоставлен недопустимый raw seed';
+  @override
+  String get importInvalidMnemonic => 'Предоставлена недопустимая мнемоника';
+  @override
+  String get importMustNotBeEmpty => 'Входные данные не должны быть пустыми';
+  @override
+  String get importPrivateKeyUnsupported => 'Импорт аккаунта с помощью секретного ключа пока не поддерживается.';
+  @override
+  String get keystore => 'Хранилище ключей (json)';
+  @override
+  String get list => 'Выбрать аккаунт';
+  @override
+  String get mnemonic => 'Мнемоническая фраза';
+  @override
+  String get next => 'Следующий';
+  @override
+  String get observe => 'Мониторинг';
+  @override
+  String get observeBrief =>
+      'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот адрес на странице выбора аккаунта, для просмотра его активов и действий';
+  @override
+  String get observeProxyInvalid => 'Неверный прокси-аккаунт';
+  @override
+  String get path => 'Секретный путь вывода';
+  @override
+  String get qrScan => 'Сканируйте QR-код';
+  @override
+  String get rawSeed => 'Raw Seed';
+  @override
+  String get uosCanceled => 'Транзакция отменена';
+  @override
+  String get uosPush => 'Сканировать для публикации';
+  @override
+  String get uosScan => 'Сканируйте подписанное и отправьте';
+  @override
+  String get uosSigner => 'Подписавший';
+  @override
+  String get uosTitle => 'Оффлайн подпись';
 }

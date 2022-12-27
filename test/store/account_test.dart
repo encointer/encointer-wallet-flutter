@@ -9,14 +9,14 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('AccountStore test', () {
-    final AppStore root = AppStore(
+    final root = AppStore(
       MockLocalStorage(),
       config: const AppConfig(isTest: true, mockSubstrateApi: true),
     );
 
     test('account store test', () async {
       accList = [testAcc];
-      currentAccountPubKey = accList[0]['pubKey'];
+      currentAccountPubKey = accList[0]['pubKey'] as String;
 
       await root.init('_en');
       final store = root.account;
@@ -37,10 +37,10 @@ void main() {
       expect(store.newAccount.key, 'new_key');
 
       /// add account
-      String testPass = 'a111111';
+      const testPass = 'a111111';
       await store.addAccount(endoEncointer, testPass);
       expect(store.accountList.length, 2);
-      store.setCurrentAccount(endoEncointer['pubKey']);
+      store.setCurrentAccount(endoEncointer['pubKey'] as String);
       expect(store.currentAccountPubKey, endoEncointer['pubKey']);
       expect(store.currentAccount.name, 'test');
       expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
@@ -64,7 +64,7 @@ void main() {
       expect(store.currentAccount.address, endoEncointer['address']);
 
       /// change account
-      store.setCurrentAccount(accList[0]['pubKey']);
+      store.setCurrentAccount(accList[0]['pubKey'] as String);
       expect(store.currentAccountPubKey, accList[0]['pubKey']);
       expect(store.currentAccount.name, accList[0]['name']);
       expect(store.currentAccount.pubKey, accList[0]['pubKey']);
@@ -74,7 +74,7 @@ void main() {
       expect(store.optionalAccounts[0].pubKey, endoEncointer['pubKey']);
       expect(store.optionalAccounts[0].address, endoEncointer['address']);
 
-      store.setCurrentAccount(endoEncointer['pubKey']);
+      store.setCurrentAccount(endoEncointer['pubKey'] as String);
       expect(store.currentAccountPubKey, endoEncointer['pubKey']);
       expect(store.currentAccount.name, 'test-change');
       expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
@@ -90,7 +90,7 @@ void main() {
       expect(store.optionalAccounts.length, 0);
 
       /// add observation account
-      Map<String, dynamic> contact = {
+      final contact = <String, dynamic>{
         'name': 'gav',
         'address': 'FcxNWVy5RESDsErjwyZmPCW6Z8Y3fbfLzmou34YZTrbcraL',
         'pubKey': '0x86b7409a11700afb027924cb40fa43889d98709ea35319d48fea85dd35004e64',
@@ -101,7 +101,7 @@ void main() {
       expect(store.optionalAccounts.length, 1);
 
       /// change to observation account
-      store.setCurrentAccount(contact['pubKey']);
+      store.setCurrentAccount(contact['pubKey'] as String);
       expect(store.currentAccountPubKey, contact['pubKey']);
       expect(store.currentAccount.name, contact['name']);
       expect(store.currentAccount.pubKey, contact['pubKey']);
@@ -112,7 +112,7 @@ void main() {
       expect(store.optionalAccounts[0].address, accList[0]['address']);
 
       /// update observation account
-      Map<String, dynamic> contactNew = Map<String, dynamic>.of(contact);
+      final contactNew = Map<String, dynamic>.of(contact);
       contactNew['name'] = 'changed-observation';
       await root.settings.updateContact(contactNew);
       expect(store.currentAccount.name, 'changed-observation');

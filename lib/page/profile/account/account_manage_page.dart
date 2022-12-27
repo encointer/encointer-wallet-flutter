@@ -19,11 +19,10 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class AccountManagePage extends StatefulWidget {
-  AccountManagePage({Key? key}) : super(key: key);
+  const AccountManagePage({super.key});
 
   static const String route = '/profile/account';
 
@@ -52,7 +51,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   void _onDeleteAccount(BuildContext context, AccountData accountToBeEdited) {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -63,6 +62,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
+              key: const Key('delete-account'),
               child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () => {
                 _appStore.account.removeAccount(accountToBeEdited).then(
@@ -83,9 +83,9 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
-    final TextStyle h3 = Theme.of(context).textTheme.headline3!;
+    final h3 = Theme.of(context).textTheme.headline3!;
 
-    var community = _appStore.encointer.communityStores![cidFmt]!;
+    final community = _appStore.encointer.communityStores![cidFmt]!;
 
     Log.d('_getBalanceEntryListTile: $community', 'AccountManagePage');
 
@@ -99,28 +99,29 @@ class _AccountManagePageState extends State<AccountManagePage> {
       title: Text(community.name!, style: h3),
       subtitle: Text(community.symbol!, style: h3),
       trailing: Text(
-        '${Fmt.doubleFormat(community.applyDemurrage(entry))} ⵐ',
+        '${entry != null && community.applyDemurrage != null ? Fmt.doubleFormat(community.applyDemurrage!(entry)) : 0} ⵐ',
         style: h3.copyWith(color: encointerGrey),
       ),
     );
   }
 
   void _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    showCupertinoDialog(
+    final dic = I18n.of(context)!.translationsForLocale();
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
+        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin),
+            (String password) async {
           Log.d('password is: $password', 'AccountManagePage');
           setState(() {
             _appStore.settings.setPin(password);
           });
 
-          bool isMnemonic =
+          final isMnemonic =
               await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
           if (isMnemonic) {
-            String? seed =
+            final seed =
                 await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
@@ -129,7 +130,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
             });
           } else {
             // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
-            showCupertinoDialog(
+            showCupertinoDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(
@@ -152,13 +153,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    final TextStyle? h3 = Theme.of(context).textTheme.headline3;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final _store = context.watch<AppStore>();
 
-    String? accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeEdited = _store.account.getAccountData(accountToBeEditedPubKey);
+    final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
+    final accountToBeEdited = _store.account.getAccountData(accountToBeEditedPubKey);
     final addressSS58 = _store.account.getNetworkAddress(accountToBeEditedPubKey);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
@@ -169,34 +170,33 @@ class _AccountManagePageState extends State<AccountManagePage> {
         appBar: AppBar(
           title: _isEditingText
               ? TextFormField(
+                  key: const Key('account-name-field'),
                   controller: _nameCtrl,
-                  validator: (v) =>
-                      InputValidation.validateAccountName(context, v!, _appStore.account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(context, v, _appStore.account.optionalAccounts),
                 )
               : Text(_nameCtrl!.text),
           actions: <Widget>[
-            !_isEditingText
-                ? IconButton(
-                    icon: const Icon(
-                      Iconsax.edit,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isEditingText = true;
-                      });
-                    },
-                  )
-                : IconButton(
-                    icon: const Icon(
-                      Icons.check,
-                    ),
-                    onPressed: () {
-                      _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
-                      setState(() {
-                        _isEditingText = false;
-                      });
-                    },
-                  )
+            if (!_isEditingText)
+              IconButton(
+                key: const Key('account-name-edit'),
+                icon: const Icon(Iconsax.edit),
+                onPressed: () {
+                  setState(() {
+                    _isEditingText = true;
+                  });
+                },
+              )
+            else
+              IconButton(
+                key: const Key('account-name-edit-check'),
+                icon: const Icon(Icons.check),
+                onPressed: () {
+                  _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
+                  setState(() {
+                    _isEditingText = false;
+                  });
+                },
+              )
           ],
         ),
         body: SafeArea(
@@ -220,7 +220,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           Text(Fmt.address(addressSS58)!, style: const TextStyle(fontSize: 20)),
                           IconButton(
                             icon: const Icon(Iconsax.copy),
-                            color: ZurichLion.shade500,
+                            color: zurichLion.shade500,
                             onPressed: () => UI.copyAndNotify(context, addressSS58),
                           ),
                         ],
@@ -230,34 +230,35 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                _store.settings.developerMode
-                    ? Expanded(
-                        child: ListView.builder(
-                            // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                            itemCount: _store.encointer.accountStores!.containsKey(addressSS58)
-                                ? _store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
-                                : 0,
-                            itemBuilder: (BuildContext context, int index) {
-                              String community = _store.encointer.account!.balanceEntries.keys.elementAt(index);
-                              return _getBalanceEntryListTile(
-                                community,
-                                _store.encointer.accountStores![addressSS58]!.balanceEntries[community],
-                                addressSS58,
-                              );
-                            }),
-                      )
-                    : Expanded(
-                        child: ListView.builder(
-                            itemCount: _store.encointer.chosenCid != null ? 1 : 0,
-                            itemBuilder: (BuildContext context, int index) {
-                              return _getBalanceEntryListTile(
-                                _appStore.encointer.chosenCid!.toFmtString(),
-                                _appStore.encointer.communityBalanceEntry,
-                                addressSS58,
-                              );
-                            }),
-                      ),
-                Container(
+                if (_store.settings.developerMode)
+                  Expanded(
+                    child: ListView.builder(
+                        // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
+                        itemCount: _store.encointer.accountStores!.containsKey(addressSS58)
+                            ? _store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
+                            : 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          final community = _store.encointer.account!.balanceEntries.keys.elementAt(index);
+                          return _getBalanceEntryListTile(
+                            community,
+                            _store.encointer.accountStores![addressSS58]!.balanceEntries[community],
+                            addressSS58,
+                          );
+                        }),
+                  )
+                else
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: _store.encointer.chosenCid != null ? 1 : 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          return _getBalanceEntryListTile(
+                            _appStore.encointer.chosenCid!.toFmtString(),
+                            _appStore.encointer.communityBalanceEntry,
+                            addressSS58,
+                          );
+                        }),
+                  ),
+                DecoratedBox(
                   // width: double.infinity,
                   decoration: BoxDecoration(
                     gradient: primaryGradient,
@@ -266,6 +267,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   child: Row(
                     children: [
                       ElevatedButton(
+                        key: const Key('go-to-account-share'),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(16), // make splash animation as high as the container
                           backgroundColor: Colors.transparent,
@@ -284,45 +286,48 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             Navigator.pushNamed(context, AccountSharePage.route, arguments: accountToBeEditedPubKey),
                       ),
                       const Spacer(),
-                      Container(
-                        child: PopupMenuButton<AccountAction>(
-                            offset: const Offset(-10, -150),
-                            icon: const Icon(Iconsax.more, color: Colors.white),
-                            color: ZurichLion.shade50,
-                            padding: const EdgeInsets.all(20),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            onSelected: (AccountAction accountAction) {
-                              switch (accountAction) {
-                                case AccountAction.delete:
-                                  _onDeleteAccount(context, accountToBeEdited);
-                                  break;
-                                case AccountAction.export:
-                                  _showPasswordDialog(context, accountToBeEdited);
-                                  break;
-                              }
-                            },
-                            itemBuilder: (BuildContext context) => [
-                                  AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete),
-                                  AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
-                                ]
-                                    .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
-                                          value: data.accountAction,
-                                          // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
-                                          child: ListTileTheme(
-                                            textColor: ZurichLion.shade500,
-                                            iconColor: ZurichLion.shade500,
-                                            child: ListTile(
-                                              minLeadingWidth: 0,
-                                              title: Text(data.title),
-                                              leading: const Icon(Iconsax.trash),
-                                            ),
+                      PopupMenuButton<AccountAction>(
+                          offset: const Offset(-10, -150),
+                          icon: const Icon(
+                            Iconsax.more,
+                            key: Key('popup-menu-account-trash-export'),
+                            color: Colors.white,
+                          ),
+                          color: zurichLion.shade50,
+                          padding: const EdgeInsets.all(20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          onSelected: (AccountAction accountAction) {
+                            switch (accountAction) {
+                              case AccountAction.delete:
+                                _onDeleteAccount(context, accountToBeEdited);
+                                break;
+                              case AccountAction.export:
+                                _showPasswordDialog(context, accountToBeEdited);
+                                break;
+                            }
+                          },
+                          itemBuilder: (BuildContext context) => [
+                                AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete),
+                                AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
+                              ]
+                                  .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
+                                        key: Key(data.accountAction.name),
+                                        value: data.accountAction,
+                                        // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
+                                        child: ListTileTheme(
+                                          textColor: zurichLion.shade500,
+                                          iconColor: zurichLion.shade500,
+                                          child: ListTile(
+                                            minLeadingWidth: 0,
+                                            title: Text(data.title),
+                                            leading: const Icon(Iconsax.trash),
                                           ),
-                                        ))
-                                    .toList() //<PopupMenuEntry<AccountAction>>,
-                            ),
-                      ),
+                                        ),
+                                      ))
+                                  .toList() //<PopupMenuEntry<AccountAction>>,
+                          ),
                     ],
                   ),
                 ),
@@ -336,20 +341,19 @@ class _AccountManagePageState extends State<AccountManagePage> {
 }
 
 class AccountActionItemData {
+  AccountActionItemData(this.title, this.accountAction);
   // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
   final String title;
   final AccountAction accountAction;
-
-  AccountActionItemData(this.title, this.accountAction);
 }
 
 class CommunityIcon extends StatelessWidget {
   const CommunityIcon({
-    Key? key,
+    super.key,
     required this.store,
     required this.icon,
     required this.address,
-  }) : super(key: key);
+  });
 
   final AppStore store;
   final Widget icon;
@@ -375,7 +379,7 @@ class CommunityIcon extends StatelessWidget {
                 child: Icon(Iconsax.star, color: Colors.yellow),
               );
             } else {
-              return const SizedBox(width: 0, height: 0);
+              return const SizedBox.shrink();
             }
           },
         ),

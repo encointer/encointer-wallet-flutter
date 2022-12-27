@@ -1,25 +1,24 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 
 class OfferingForm extends StatefulWidget {
-  const OfferingForm({Key? key}) : super(key: key);
+  const OfferingForm({super.key});
 
   @override
   State<OfferingForm> createState() => _OfferingFormState();
 }
 
 class _OfferingFormState extends State<OfferingForm> {
-  var categories = allCategories; // TODO state management
-  var businesses = myBusinesses; // TODO state management
-  var productNewness = allProductNewnessOptions; // TODO state management
-  var deliveryOptions = allDeliveryOptions; // TODO state management
+  final categories = allCategories; // TODO state management
+  final businesses = myBusinesses; // TODO state management
+  final productNewness = allProductNewnessOptions; // TODO state management
+  final deliveryOptions = allDeliveryOptions; // TODO state management
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.bazaar.offeringAdd),

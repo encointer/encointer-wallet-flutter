@@ -1,13 +1,14 @@
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
 
 class MyBusinesses extends StatelessWidget {
-  final data = myBusinesses;
+  MyBusinesses({super.key});
 
-  MyBusinesses({Key? key}) : super(key: key);
+  final data = myBusinesses;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class MyBusinesses extends StatelessWidget {
           onPressed: () {
             Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<void>(
                   builder: (context) => BusinessFormScaffold(),
                 ));
           }),

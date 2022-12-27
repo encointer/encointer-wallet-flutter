@@ -8,12 +8,13 @@ import 'package:encointer_wallet/service/substrate_api/encointer/encointer_dart_
 void main() {
   group('encointerDartApi', () {
     test('gets aggregated account data', () async {
-      var substrateDartApi = SubstrateDartApi();
+      final substrateDartApi = SubstrateDartApi();
       await substrateDartApi.connect('ws://localhost:9944');
 
-      var encointerDartApi = EncointerDartApi(substrateDartApi);
+      final encointerDartApi = EncointerDartApi(substrateDartApi);
 
-      var data = await encointerDartApi.getAggregatedAccountData(mediterraneanTestCommunity, ALICE_ADDRESS);
+      final data = await encointerDartApi.getAggregatedAccountData(mediterraneanTestCommunity, aliceAddress);
+      // ignore: avoid_print
       print('data: ${data.toString()}');
 
       await substrateDartApi.close();

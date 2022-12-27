@@ -2,16 +2,21 @@ name: IOS CI
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
   pull_request:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
+
+env:
+  NODE_VERSION: 16.13.1
+  JAVA_VERSION: 12.x
+  TEMP_SCREENSHOTS: /tmp/screenshots
 
 jobs:
   cancel_previous_runs:
     name: Cancel Previous Runs
     runs-on: ubuntu-20.04
     steps:
-      - uses: styfle/cancel-workflow-action@0.4.1
+      - uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -31,28 +36,20 @@ jobs:
             record_video: false
       fail-fast: false
     steps:
-        # Setup Environment
-      - uses: actions/checkout@v2
-        with:
-          # 2 to compare the last two revisions to check if JS changed
-          fetch-depth: 2
-
-      - uses: monorepo-actions/config-for-actions@main
-        id: config
-        with:
-          config_files: ./.github/action-config.json
+      # Setup Environment
+      - uses: actions/checkout@v3
 
       - name: "Prepare environment for ios"
         working-directory: ./scripts
         run: ./ios_init_env.sh
 
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v3
         with:
-          java-version: ${{ steps.config.outputs.java-version }}
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'zulu'
 
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ steps.config.outputs.flutter-version }}
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
 
       - name: "Create Simulator if iPad Pro 2nd gen"
         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
@@ -69,9 +66,9 @@ jobs:
         run: source ./ios_emulator.sh
 
         # JS Stuff
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.config.outputs.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: "Build JS"
         working-directory: ./scripts
@@ -79,15 +76,14 @@ jobs:
 
         # Run Tests
       - name: "Flutter driver test and record video"
-        working-directory: ./scripts
-        run: ./ios_integration_test.sh
+        run: ./scripts/ios_integration_test.sh
         env:
-          TEMP_DIR:  ${{ steps.config.outputs.temp-screenshots }}
+          TEMP_DIR: ${{ env.TEMP_SCREENSHOTS }}
           RECORD: ${{ matrix.record_video }}
 
       - name: "Upload screenshots and recording"
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name:  ${{ matrix.device }}
-          path:  ${{ steps.config.outputs.temp-screenshots }}
+          name: ${{ matrix.device }}
+          path: ${{ env.TEMP_SCREENSHOTS }}

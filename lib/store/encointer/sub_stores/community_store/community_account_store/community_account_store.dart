@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -14,15 +15,15 @@ part 'community_account_store.g.dart';
 ///
 @JsonSerializable(explicitToJson: true)
 class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccountStore {
-  CommunityAccountStore(String network, CommunityIdentifier cid, String address) : super(network, cid, address);
+  CommunityAccountStore(super.network, super.cid, super.address);
+
+  factory CommunityAccountStore.fromJson(Map<String, dynamic> json) => _$CommunityAccountStoreFromJson(json);
+  Map<String, dynamic> toJson() => _$CommunityAccountStoreToJson(this);
 
   @override
   String toString() {
     return jsonEncode(this);
   }
-
-  factory CommunityAccountStore.fromJson(Map<String, dynamic> json) => _$CommunityAccountStoreFromJson(json);
-  Map<String, dynamic> toJson() => _$CommunityAccountStoreToJson(this);
 }
 
 abstract class _CommunityAccountStore with Store {
@@ -62,13 +63,16 @@ abstract class _CommunityAccountStore with Store {
   bool? meetupCompleted = false;
 
   @computed
-  get scannedAttendeesCount => attendees?.length ?? 0;
+  int get scannedAttendeesCount => attendees?.length ?? 0;
 
   @computed
   bool get isAssigned => meetup != null;
 
   @computed
   bool get isRegistered => participantType != null;
+
+  @observable
+  int numberOfNewbieTicketsForBootstrapper = 0;
 
   @action
   void setParticipantType([ParticipantType? type]) {
@@ -166,6 +170,13 @@ abstract class _CommunityAccountStore with Store {
     purgeParticipantType();
     purgeMeetup();
     clearMeetupCompleted();
+  }
+
+  @action
+  Future<void> getNumberOfNewbieTicketsForBootstrapper() async {
+    // Todo: #923 This returns 5 for non-bootstrappers as it naively calculates the amount of tickes based on
+    // the amount of burned tickets. This is essentially wrong and leads to workarounds that we need to do on dart side.
+    numberOfNewbieTicketsForBootstrapper = await webApi.encointer.getNumberOfNewbieTicketsForBootstrapper();
   }
 
   void initStore(Function? cacheFn) {

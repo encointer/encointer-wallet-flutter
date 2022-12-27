@@ -100,7 +100,6 @@ class TranslationsEnProfile implements TranslationsProfile {
   String get aboutBrief => 'Mobile Wallet for Encointer';
   @override
   String get aboutVersion => 'Version';
-  String get account => 'Manage Account';
   @override
   String get accounts => 'Accounts';
   @override
@@ -130,7 +129,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   @override
   String get contactAlreadyExists => 'Address exists already';
   @override
-  String get contactMemo => 'Memo';
+  String get contactMemo => 'Contact information';
   @override
   String get contactName => 'Name';
   @override
@@ -310,7 +309,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   String get contactAlreadyExists => 'Adresse existiert bereits';
   @override
-  String get contactMemo => 'Memo';
+  String get contactMemo => 'Kontaktinformationen';
   @override
   String get contactName => 'Name';
   @override
@@ -443,7 +442,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   String get meetUpNotifications => 'Meetup-Benachrichtigungen';
   @override
   String get meetUpListTileTitle =>
-      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen'
+      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen '
       'zu erhalten.';
   @override
   String get openAppSettings => 'App-Einstellungen öffnen';
@@ -624,4 +623,183 @@ class TranslationsFrProfile implements TranslationsProfile {
   String get openAppSettings => throw UnimplementedError();
   @override
   String get enableAutoStart => throw UnimplementedError();
+}
+
+class TranslationsRuProfile implements TranslationsProfile {
+  @override
+  String get checkEmailApp => 'Убедитесь, что вы загрузили приложение электронной почты';
+  @override
+  String get contactUs => 'Связаться с нами';
+  @override
+  String get about => 'О';
+  @override
+  String get aboutBrief => 'Мобильный кошелек Encointer';
+  @override
+  String get aboutVersion => 'Версия';
+  @override
+  String get accounts => 'Учетные записи';
+  @override
+  String get accountDelete => 'Вы уверены, что хотите удалить аккаунт?';
+  @override
+  String get accountsDelete => 'Вы уверены, что хотите удалить все аккаунты?';
+  @override
+  String get accountsDeleteAll => 'Удалить все аккаунты';
+  @override
+  String get accountShare => 'Поделиться аккаунтом';
+  @override
+  String get addressBook => 'Адресная книга';
+  @override
+  String get cantEndorseBootstrapper => 'Бутсреперы уже отмечены как надежные';
+  @override
+  String get canEndorseInRegisteringPhaseOnly => 'Может быть одобрен только на этапе регистрации';
+  @override
+  String get contactAddress => 'Адрес';
+  @override
+  String get contactAddressError => 'Неправильный адрес';
+  @override
+  String get contactDelete => 'Удалить';
+  @override
+  String get contactDeleteWarn => 'Вы уверены, что хотите удалить этот адрес?';
+  @override
+  String get contactEndorse => 'Утвердить в качестве доверенного контакта';
+  @override
+  String get contactAlreadyExists => 'Адрес уже существует';
+  @override
+  String get contactMemo => 'Контактная информация';
+  @override
+  String get contactName => 'Имя';
+  @override
+  String get contactNameError => 'Графа Имя не может быть пустой';
+  @override
+  String get contactNameAlreadyExists => 'Имя уже существует';
+  @override
+  String get contactSave => 'Сохранить';
+  @override
+  String get confirmPin => 'Для подтверждения введите свой PIN-код';
+  @override
+  String get developer => 'Режим разработчика';
+  @override
+  String get enableBazaar => 'Включить Базар';
+  @override
+  String get export => 'Экпорт аккаунта';
+  @override
+  String get exportMnemonicOk => 'Мнемоника скопирована в буфер обмена.';
+  @override
+  String get exportWarn =>
+      'Запишите эти слова на бумаге. Храните бумагу в безопасном месте. Эти слова позволят восстановить этот аккаунт и получить доступ к его средствам.';
+  @override
+  String get noMnemonicFound => 'Мнемоника не найдена';
+  @override
+  String get importedWithRawSeedHenceNoMnemonic =>
+      'Аккаунт был импортирован с необработанным исходным кодом и поэтому не имеет мнемоники';
+  @override
+  String get changeYourPin => 'Изменить PIN-код';
+  @override
+  String get wrongPin => 'Неправильный PIN-код';
+  @override
+  String get wrongPinHint => 'Не удалось разблокировать аккаунт, пожалуйста, проверьте PIN-код.';
+  @override
+  String get yourNewPin => 'Новый PIN-код';
+  @override
+  String get pleaseConfirmYourNewPin => 'Подтвердите PIN-код';
+  @override
+  String get hintEnterCurrentPin => 'Чтобы изменить PIN-код пожалуйста введите текущий.';
+  @override
+  String get hintThenEnterANewPin => 'Вы можете выбрать новый, и все готово.';
+  @override
+  String get personalKey => 'Секретный ключ';
+  @override
+  String get detailsEnter => 'Введите свои данные.';
+  @override
+  String get personalKeyEnter => 'Пожалуйста, введите секретный ключ (из 12 слов), чтобы импортировать аккаунт.';
+  @override
+  String get reputationHistory => 'История репутции';
+  @override
+  String get reputationOverall => 'Общая репутация';
+  @override
+  String get passOld => 'Текущий PIN-код';
+  @override
+  String get passSuccess => 'Успешный';
+  @override
+  String get passSuccessTxt => 'PIN-код иземенен успешно';
+  @override
+  String get qrScanHint => 'Введите сумму, которую хотите получить, и позвольте отправителю отсканировать QR-код.';
+  @override
+  String get qrScanHintAccount => 'Попросите получателя отсканировать QR-код в приложении Еncointer.';
+  @override
+  String get receiverAccount => 'Аккаунт получателя:';
+  @override
+  String get sendLink => 'Отправить ссылку';
+  @override
+  String get setting => 'Настройки';
+  @override
+  String get settingLang => 'Язык';
+  @override
+  String get settingLangAuto => 'Авто-определение';
+  @override
+  String get settingNode => 'Дистанционный режим';
+  @override
+  String get settingNodeList => 'Доступные режимы';
+  @override
+  String get settingPrefix => 'Префикс адреса';
+  @override
+  String get settingPrefixList => 'Доступные префиксы';
+  @override
+  String get share => 'Поделиться';
+  @override
+  String get title => 'Профиль';
+  @override
+  String get unlock => 'Вам необходимо ввести свой PIN-код, чтобы добавить новую учетную запись';
+  @override
+  String get addAccount => 'Добавить аккаунт';
+  @override
+  String get addCommunity => 'Добавить общину';
+  @override
+  String get accountCreate => 'Создать аккаунт';
+  @override
+  String get doYouAlreadyHaveAnAccount => 'У вас уже есть аккаунт?';
+  @override
+  String get accountNameChooseHint => 'Вы можете изменить его позже в настройках профиля.';
+  @override
+  String get accountNameChoose => 'Выберите имя Аккаунта';
+  @override
+  String get accountName => 'Имя Аккаунта';
+  @override
+  String get import => 'Импортировать';
+  @override
+  String get pinHint => 'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи.';
+  @override
+  String get pinInfo =>
+      'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить аккаунт невозможно, если только вы не сделали резервную копию в профиле.';
+  @override
+  String get pinSecure => 'Защитите свой аккаунт с помощью PIN-кода.';
+  @override
+  String get recoveryProxy => 'Прокси-сервер для восстановления';
+  @override
+  String get reputation => 'Репутация';
+  @override
+  String get shareLinkHint => 'Или вы можете поделиться ссылкой:';
+  @override
+  String get tokenSend => 'Отправить SYMBOL';
+  @override
+  String get addContact => 'Добавить контакт';
+  @override
+  String get deleteAccount => 'Удалить';
+  @override
+  String get exportAccount => 'Экспорт';
+  @override
+  String get errorUserNameIsRequired => 'Имя пользователя не может быть пустым';
+  @override
+  String get observedPendingExtrinsic => 'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
+  @override
+  String get appHints => 'Рекомендации по использованию приложения';
+  @override
+  String get meetUpNotifications => 'Meetup - уведомления';
+  @override
+  String get meetUpListTileTitle =>
+      'Если ваше устройство является телефоном Xiaomi или Honor, включите автозапуск, чтобы получать Meetup - уведомления.';
+  @override
+  String get openAppSettings => 'Открыть настройки приложения';
+  @override
+  String get enableAutoStart => 'Включить автозапуск';
 }

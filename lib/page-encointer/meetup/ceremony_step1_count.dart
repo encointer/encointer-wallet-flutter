@@ -1,3 +1,7 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -6,17 +10,9 @@ import 'package:encointer_wallet/page-encointer/meetup/ceremony_step2_scan2.dart
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class CeremonyStep1Count extends StatelessWidget {
-  CeremonyStep1Count(
-    this.store,
-    this.api, {
-    Key? key,
-  }) : super(key: key);
+  CeremonyStep1Count(this.store, this.api, {super.key});
 
   final AppStore store;
   final Api api;
@@ -26,7 +22,7 @@ class CeremonyStep1Count extends StatelessWidget {
   Future<void> _pushStep2ScanPage(BuildContext context, int count) async {
     store.encointer.communityAccount!.setParticipantCountVote(count);
     Navigator.of(context).push(
-      CupertinoPageRoute(
+      CupertinoPageRoute<void>(
         builder: (BuildContext context) => CeremonyStep2Scan(
           store,
           api,
@@ -39,7 +35,7 @@ class CeremonyStep1Count extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -66,7 +62,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.count,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: zurichLion.shade600),
                       ),
                     ),
                     Center(
@@ -96,7 +92,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     const SizedBox(width: 12),
                     Text(
                       dic.encointer.next,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                     ),
                   ],
                 ),

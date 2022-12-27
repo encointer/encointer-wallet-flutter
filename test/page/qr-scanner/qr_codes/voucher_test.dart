@@ -25,7 +25,7 @@ void main() {
     });
 
     test('fromQrPayload works', () async {
-      final payload = 'encointer-voucher\n'
+      const payload = 'encointer-voucher\n'
           'v2.0\n'
           'voucherUri\n'
           'sqm1v79dF6b\n'

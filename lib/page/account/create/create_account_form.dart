@@ -13,13 +13,9 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountForm extends StatelessWidget {
-  CreateAccountForm({
-    Key? key,
-    required this.store,
-  }) : super(key: key);
+  CreateAccountForm({super.key, required this.store});
 
   final AppStore store;
 
@@ -29,12 +25,12 @@ class CreateAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     Future<void> _createAndImportAccount() async {
       await webApi.account.generateAccount();
 
-      var acc = await webApi.account.importAccount(
+      final acc = await webApi.account.importAccount(
         cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
         derivePath: '',
       );
@@ -44,10 +40,10 @@ class CreateAccountForm extends StatelessWidget {
         return;
       }
 
-      var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+      final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
       await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
-      String? pubKey = acc['pubKey'];
+      final pubKey = acc['pubKey'] as String?;
       store.setCurrentAccount(pubKey);
 
       await store.loadAccountCache();
@@ -105,7 +101,7 @@ class CreateAccountForm extends StatelessWidget {
                   Text(
                     dic.account.next,
                     style: Theme.of(context).textTheme.headline3!.copyWith(
-                          color: ZurichLion.shade50,
+                          color: zurichLion.shade50,
                         ),
                   ),
                 ],
@@ -129,7 +125,7 @@ class CreateAccountForm extends StatelessWidget {
 }
 
 Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-  showCupertinoDialog(
+  showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(

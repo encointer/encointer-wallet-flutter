@@ -1,16 +1,16 @@
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/models/location/location.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/models/location/location.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+
 class EncointerMap extends StatelessWidget {
-  EncointerMap(this.store, {Key? key, this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0})
-      : super(key: key);
+  EncointerMap(this.store, {super.key, this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0});
 
   final AppStore store;
 
@@ -47,12 +47,10 @@ class EncointerMap extends StatelessWidget {
                 onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
               ),
               children: [
-                TileLayerWidget(
-                  options: TileLayerOptions(
-                    backgroundColor: Colors.white,
-                    urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    subdomains: ['a', 'b', 'c'],
-                  ),
+                TileLayer(
+                  backgroundColor: Colors.white,
+                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  subdomains: const ['a', 'b', 'c'],
                 ),
                 PopupMarkerLayerWidget(
                   options: PopupMarkerLayerOptions(
@@ -64,7 +62,7 @@ class EncointerMap extends StatelessWidget {
                 ),
               ],
             )
-          : Container(
+          : ColoredBox(
               color: Colors.white,
               child: noCommunityDialog(context),
             ),
@@ -73,7 +71,7 @@ class EncointerMap extends StatelessWidget {
 }
 
 Widget noCommunityDialog(BuildContext context) {
-  var translations = I18n.of(context)!.translationsForLocale();
+  final translations = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -95,7 +93,7 @@ Future<void> showOnEncointerMap(
   Location location, {
   double initialZoom = 14,
 }) {
-  var dic = I18n.of(context)!.translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return Navigator.push(
     context,
@@ -115,7 +113,7 @@ Future<void> showOnEncointerMap(
 }
 
 List<Marker> buildMarkers(Location meetupLocation) {
-  List<Marker> markers = <Marker>[];
+  final markers = <Marker>[];
   markers.add(
     Marker(
       // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).

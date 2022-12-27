@@ -1,12 +1,13 @@
+import 'package:mobx/mobx.dart';
+
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/balances_info.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
-import 'package:mobx/mobx.dart';
 
 part 'assets.g.dart';
 
 class AssetsStore extends _AssetsStore with _$AssetsStore {
-  AssetsStore(AppStore store) : super(store);
+  AssetsStore(super.store);
 }
 
 abstract class _AssetsStore with Store {
@@ -101,11 +102,11 @@ abstract class _AssetsStore with Store {
     if (rootStore.account.currentAccount.pubKey != pubKey) return;
 
     amt!.forEach((k, v) {
-      balances[k] = BalancesInfo.fromJson(v);
+      balances[k as String] = BalancesInfo.fromJson(v as Map<String, dynamic>);
     });
 
     if (!needCache) return;
-    Map? cache = await rootStore.localStorage.getAccountCache(
+    var cache = await rootStore.localStorage.getAccountCache(
       rootStore.account.currentAccount.pubKey,
       cacheBalanceKey,
     ) as Map?;
@@ -155,15 +156,15 @@ abstract class _AssetsStore with Store {
   Future<void> addTxs(Map res, String address, {bool shouldCache = false}) async {
     if (rootStore.account.currentAddress != address) return;
 
-    txsCount = res['count'];
+    txsCount = res['count'] as int?;
 
-    List? ls = res['transfers'];
+    final ls = res['transfers'] as List?;
     if (ls == null) return;
 
-    ls.forEach((i) {
-      TransferData tx = TransferData.fromJson(i);
+    for (final i in ls) {
+      final tx = TransferData.fromJson(i as Map<String, dynamic>);
       txs.add(tx);
-    });
+    }
 
     if (shouldCache) {
       rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls);
@@ -197,30 +198,31 @@ abstract class _AssetsStore with Store {
   @action
   Future<void> loadAccountCache() async {
     // return if currentAccount not exist
-    String? pubKey = rootStore.account.currentAccountPubKey;
+    final pubKey = rootStore.account.currentAccountPubKey;
     if (pubKey == null || pubKey.isEmpty) {
       return;
     }
 
-    List cache = await Future.wait([
+    final cache = await Future.wait([
       rootStore.localStorage.getAccountCache(pubKey, cacheBalanceKey),
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTxsKey)),
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTimeKey)),
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTokenBalanceKey)),
     ]);
     if (cache[0] != null) {
-      setAccountBalances(pubKey, cache[0], needCache: false);
+      setAccountBalances(pubKey, cache[0] as Map<String, dynamic>, needCache: false);
     }
     if (cache[1] != null) {
-      txs = ObservableList.of(List.of(cache[1]).map((i) => TransferData.fromJson(i)).toList());
+      txs = ObservableList.of(
+          List.of(cache[1] as Iterable).map((i) => TransferData.fromJson(i as Map<String, dynamic>)).toList());
     } else {
       txs = ObservableList();
     }
     if (cache[2] != null) {
-      cacheTxsTimestamp = cache[2];
+      cacheTxsTimestamp = cache[2] as int?;
     }
     if (cache[3] != null) {
-      setAccountTokenBalances(pubKey, cache[3], needCache: false);
+      setAccountTokenBalances(pubKey, cache[3] as Map<String, dynamic>, needCache: false);
     } else {
       setAccountTokenBalances(pubKey, {}, needCache: false);
     }
@@ -228,41 +230,43 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> loadCache() async {
-    List? ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
+    final ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
     if (ls != null) {
-      ls.forEach((i) {
+      for (final i in ls) {
         if (blockMap[i['id']] == null) {
-          blockMap[i['id']] = BlockData.fromJson(i);
+          blockMap[i['id'] as int] = BlockData.fromJson(i as Map<String, dynamic>);
         }
-      });
+      }
     }
 
     return loadAccountCache();
   }
 }
 
-class BlockData extends _BlockData {
-  static BlockData fromJson(Map<String, dynamic> json) {
-    BlockData block = BlockData();
-    block.id = json['id'];
-    block.hash = json['hash'];
-    block.time = DateTime.fromMillisecondsSinceEpoch(json['timestamp']);
-    return block;
+class BlockData {
+  const BlockData({
+    this.id = 0,
+    this.hash = '',
+    this.time,
+  });
+
+  factory BlockData.fromJson(Map<String, dynamic> json) {
+    return BlockData(
+      id: json['id'] as int?,
+      hash: json['hash'] as String?,
+      time: DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int),
+    );
   }
 
-  static Map<String, dynamic> toJson(BlockData block) {
+  final int? id;
+  final String? hash;
+  final DateTime? time;
+
+  Map<String, dynamic> toJson(BlockData block) {
     return {
       'id': block.id,
       'hash': block.hash,
-      'timestamp': block.time.millisecondsSinceEpoch,
+      'timestamp': block.time?.millisecondsSinceEpoch ?? DateTime.now(),
     };
   }
-}
-
-abstract class _BlockData {
-  int? id = 0;
-
-  String? hash = '';
-
-  DateTime time = DateTime.now();
 }

@@ -9,7 +9,7 @@ part 'data_update.g.dart';
 ///
 class DataUpdateStore extends _DataUpdateStore with _$DataUpdateStore {
   DataUpdateStore({
-    refreshPeriod = const Duration(seconds: 30),
+    Duration refreshPeriod = const Duration(seconds: 30),
   }) : super(refreshPeriod);
 }
 
@@ -33,7 +33,7 @@ abstract class _DataUpdateStore with Store {
   /// Time that is updated every second.
   @observable
   // ignore: prefer_final_fields
-  ObservableStream<DateTime> _time = Stream.periodic(const Duration(seconds: 1)).map((_) {
+  ObservableStream<DateTime> _time = Stream<dynamic>.periodic(const Duration(seconds: 1)).map((_) {
     // _log("updating time: ${DateTime.now()}");
     return DateTime.now();
   }).asObservable();
@@ -71,7 +71,7 @@ abstract class _DataUpdateStore with Store {
   }
 
   @action
-  setInvalidated() {
+  void setInvalidated() {
     invalidated = true;
   }
 
@@ -121,7 +121,7 @@ abstract class _DataUpdateStore with Store {
       // Data is valid and up-to-date again
       invalidated = false;
       lastUpdate = DateTime.now();
-    }).catchError((e, s) {
+    }).catchError((Object? e, StackTrace? s) {
       Log.e('Error while executing `updateFn`: $e', 'DataUpdateStore', s);
     }).whenComplete(() {
       _updateFuture = null;

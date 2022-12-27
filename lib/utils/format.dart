@@ -14,7 +14,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Fmt {
   static String passwordToEncryptKey(String password) {
-    String passHex = hex.encode(utf8.encode(password));
+    final passHex = hex.encode(utf8.encode(password));
     if (passHex.length > 32) {
       return passHex.substring(0, 32);
     }
@@ -33,14 +33,14 @@ class Fmt {
   }
 
   static String hhmmss(int seconds) {
-    Duration d = Duration(seconds: seconds);
+    final d = Duration(seconds: seconds);
     return d.toString().split('.').first.padLeft(8, '0');
   }
 
   /// number transform 1:
   /// from raw <String> of Api data to <BigInt>
   static BigInt balanceInt(String raw) {
-    if (raw.length == 0) {
+    if (raw.isEmpty) {
       return BigInt.zero;
     }
     if (raw.contains(',') || raw.contains('.')) {
@@ -67,7 +67,7 @@ class Fmt {
       return '~';
     }
     value.toStringAsFixed(3);
-    NumberFormat f = NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", 'en_US');
+    final f = NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", 'en_US');
     return f.format(value);
   }
 
@@ -92,7 +92,7 @@ class Fmt {
     int? decimals, {
     int? length = 3,
   }) {
-    if (raw == null || raw.length == 0) {
+    if (raw == null || raw.isEmpty) {
       return '~';
     }
     return doubleFormat(bigIntToDouble(balanceInt(raw), decimals), length: length);
@@ -117,12 +117,12 @@ class Fmt {
   /// number transform 4:
   /// from <String of double> to <BigInt>
   static BigInt tokenInt(String value, int decimals) {
-    double v = 0;
+    var v = 0;
     try {
       if (value.contains(',') || value.contains('.')) {
-        v = NumberFormat(",##0.${"0" * decimals}").parse(value) as double;
+        v = NumberFormat(",##0.${"0" * decimals}").parse(value) as int;
       } else {
-        v = double.parse(value);
+        v = double.parse(value) as int;
       }
     } catch (e, s) {
       Log.e('Fmt.tokenInt() error: $e', 'Fmt', s);
@@ -138,9 +138,9 @@ class Fmt {
     int lengthFixed = 2,
     int? lengthMax,
   }) {
-    final int x = pow(10, lengthMax ?? lengthFixed) as int;
-    final double price = (value * x).ceilToDouble() / x;
-    final String tailDecimals = lengthMax == null ? '' : '#' * (lengthMax - lengthFixed);
+    final x = pow(10, lengthMax ?? lengthFixed) as int;
+    final price = (value * x).ceilToDouble() / x;
+    final tailDecimals = lengthMax == null ? '' : '#' * (lengthMax - lengthFixed);
     return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", 'en_US').format(price);
   }
 
@@ -152,16 +152,16 @@ class Fmt {
     int lengthFixed = 2,
     int? lengthMax,
   }) {
-    final int x = pow(10, lengthMax ?? lengthFixed) as int;
-    final double price = (value * x).floorToDouble() / x;
-    final String tailDecimals = lengthMax == null ? '' : '#' * (lengthMax - lengthFixed);
+    final x = pow(10, lengthMax ?? lengthFixed) as int;
+    final price = (value * x).floorToDouble() / x;
+    final tailDecimals = lengthMax == null ? '' : '#' * (lengthMax - lengthFixed);
     return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", 'en_US').format(price);
   }
 
   /// number transform 7:
   /// from number to <String> in price format of ",##0.###%"
   static String ratio(dynamic number, {bool needSymbol = true}) {
-    NumberFormat f = NumberFormat(",##0.###${needSymbol ? '%' : ''}");
+    final f = NumberFormat(",##0.###${needSymbol ? '%' : ''}");
     return f.format(number ?? 0);
   }
 
@@ -184,29 +184,29 @@ class Fmt {
   }
 
   static bool isAddress(String txt) {
-    var reg = RegExp(r'^[A-z\d]{47,48}$');
+    final reg = RegExp(r'^[A-z\d]{47,48}$');
     return reg.hasMatch(txt);
   }
 
   static bool isHexString(String hex) {
-    var reg = RegExp(r'^[a-f0-9]+$');
+    final reg = RegExp(r'^[a-f0-9]+$');
     return reg.hasMatch(hex);
   }
 
   static bool checkPassword(String pass) {
-    var reg = RegExp(r'^([0-9]){4,20}$');
+    final reg = RegExp(r'^([0-9]){4,20}$');
     return reg.hasMatch(pass);
   }
 
   static List<List> filterCandidateList(List<List> ls, String filter, Map accIndexMap) {
     ls.retainWhere((i) {
-      String value = filter.trim().toLowerCase();
-      String accName = '';
-      Map? accInfo = accIndexMap[i[0]];
+      final value = filter.trim().toLowerCase();
+      var accName = '';
+      final accInfo = accIndexMap[i[0]] as Map?;
       if (accInfo != null) {
-        accName = accInfo['identity']['display'] ?? '';
+        accName = accInfo['identity']['display'] as String? ?? '';
       }
-      return i[0].toLowerCase().contains(value) || accName.toLowerCase().contains(value);
+      return (i[0] as String).toLowerCase().contains(value) || accName.toLowerCase().contains(value);
     });
     return ls;
   }
@@ -216,17 +216,17 @@ class Fmt {
   }
 
   static List<int> hexToBytes(String hex) {
-    const String _BYTE_ALPHABET = '0123456789abcdef';
+    const _byteAlphabet = '0123456789abcdef';
 
     hex = hex.replaceAll(' ', '');
     hex = hex.replaceAll('0x', '');
     hex = hex.toLowerCase();
     if (hex.length % 2 != 0) hex = '0$hex';
-    Uint8List result = Uint8List(hex.length ~/ 2);
-    for (int i = 0; i < result.length; i++) {
-      int value = (_BYTE_ALPHABET.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
+    final result = Uint8List(hex.length ~/ 2);
+    for (var i = 0; i < result.length; i++) {
+      final value = (_byteAlphabet.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
           +
-          _BYTE_ALPHABET.indexOf(hex[i * 2 + 1]);
+          _byteAlphabet.indexOf(hex[i * 2 + 1]);
       result[i] = value;
     }
     return result;
@@ -237,15 +237,15 @@ class Fmt {
   }
 
   static String? accountDisplayNameString(String? address, Map? accInfo) {
-    String? display = Fmt.address(address, pad: 6);
+    var display = Fmt.address(address, pad: 6);
     if (accInfo != null) {
       if (accInfo['identity']['display'] != null) {
-        display = accInfo['identity']['display'];
+        display = accInfo['identity']['display'] as String?;
         if (accInfo['identity']['displayParent'] != null) {
           display = '${accInfo['identity']['displayParent']}/$display';
         }
       } else if (accInfo['accountIndex'] != null) {
-        display = accInfo['accountIndex'];
+        display = accInfo['accountIndex'] as String?;
       }
       display = display!.toUpperCase();
     }
@@ -253,20 +253,21 @@ class Fmt {
   }
 
   static String tokenView(String? token) {
-    String tokenView = token ?? '';
+    final tokenView = token ?? '';
     return tokenView;
   }
 
   static Widget accountDisplayName(String address, Map accInfo) {
     return Row(
       children: <Widget>[
-        accInfo['identity']['judgements'].length > 0
-            ? Container(
-                width: 14,
-                margin: const EdgeInsets.only(right: 4),
-                child: Image.asset('assets/images/assets/success.png'),
-              )
-            : Container(height: 16),
+        if ((accInfo['identity']['judgements'] as List).isNotEmpty)
+          Container(
+            width: 14,
+            margin: const EdgeInsets.only(right: 4),
+            child: Image.asset('assets/images/assets/success.png'),
+          )
+        else
+          const SizedBox(height: 16),
         Expanded(
           child: Text(accountDisplayNameString(address, accInfo)!),
         )

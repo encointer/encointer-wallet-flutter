@@ -23,7 +23,7 @@ class ScanPageParams {
 }
 
 class ScanPage extends StatelessWidget {
-  ScanPage({Key? key}) : super(key: key);
+  ScanPage({super.key});
 
   static const String route = '/account/scan';
 
@@ -94,7 +94,7 @@ class ScanPage extends StatelessWidget {
 }
 
 /// Adds some buttons to activate the scanner with mock data.
-Widget mockQrDataRow(Translations dic, Function(String) onScan) {
+Widget mockQrDataRow(Translations dic, void Function(String) onScan) {
   return Row(children: [
     ElevatedButton(
       child: Text(dic.profile.addContact),

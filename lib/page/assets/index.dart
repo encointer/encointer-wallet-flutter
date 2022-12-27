@@ -38,18 +38,15 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class Assets extends StatefulWidget {
-  Assets(this.store, {Key? key}) : super(key: key);
+  const Assets(this.store, {super.key});
 
   final AppStore store;
 
   @override
-  State<Assets> createState() => _AssetsState(store);
+  State<Assets> createState() => _AssetsState();
 }
 
 class _AssetsState extends State<Assets> {
-  _AssetsState(this.store);
-
-  final AppStore store;
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
@@ -63,8 +60,8 @@ class _AssetsState extends State<Assets> {
   @override
   void initState() {
     // if network connected failed, reconnect
-    if (!store.settings.loading && store.settings.networkName == null) {
-      store.settings.setNetworkLoading(true);
+    if (!widget.store.settings.loading && widget.store.settings.networkName == null) {
+      widget.store.settings.setNetworkLoading(true);
       webApi.connectNodeAll();
     }
 
@@ -73,6 +70,11 @@ class _AssetsState extends State<Assets> {
     }
 
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
+        await context.read<AppStore>().encointer.community?.getCommunityIcon();
+      }
+    });
   }
 
   @override
@@ -96,8 +98,8 @@ class _AssetsState extends State<Assets> {
     _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
         panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
 
-    List<AccountOrCommunityData> allCommunities = [];
-    List<AccountOrCommunityData> allAccounts = [];
+    var allCommunities = <AccountOrCommunityData>[];
+    var allAccounts = <AccountOrCommunityData>[];
 
     balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
@@ -111,16 +113,18 @@ class _AssetsState extends State<Assets> {
       },
     )..start();
 
-    final appBar = AppBar(title: Text(dic!.assets.home));
-
+    final appBar = AppBar(
+      key: const Key('assets-index-appbar'),
+      title: Text(dic!.assets.home),
+    );
     return FocusDetector(
       onFocusLost: () {
-        print('[home:FocusDetector] Focus Lost.');
+        Log.d('[home:FocusDetector] Focus Lost.');
         balanceWatchdog!.pause();
       },
       onFocusGained: () {
-        print('[home:FocusDetector] Focus Gained.');
-        if (!store.settings.loading) {
+        Log.d('[home:FocusDetector] Focus Gained.');
+        if (!widget.store.settings.loading) {
           _refreshBalanceAndNotify(dic);
         }
         balanceWatchdog!.reset();
@@ -130,8 +134,9 @@ class _AssetsState extends State<Assets> {
         appBar: appBar,
         body: UpgradeAlert(
           upgrader: Upgrader(
-            appcastConfig: context.watch<AppStore>().appcastConfiguration,
-            debugLogging: context.select<AppStore, bool>((e) => e.appcastConfiguration != null),
+            appcastConfig: context.watch<AppStore>().appCast,
+            debugLogging: context.select<AppStore, bool>((e) => e.appCast != null),
+            shouldPopScope: () => true,
             canDismissDialog: true,
           ),
           child: SlidingUpPanel(
@@ -154,7 +159,9 @@ class _AssetsState extends State<Assets> {
                   children: [
                     Observer(builder: (_) {
                       if (ModalRoute.of(context)!.isCurrent &&
-                          !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
+                          !_enteredPin &
+                              widget.store.settings.cachedPin.isEmpty &
+                              !widget.store.settings.endpointIsNoTee) {
                         // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
                         // showing the dialog multiple times.
                         WidgetsBinding.instance.addPostFrameCallback(
@@ -164,33 +171,31 @@ class _AssetsState extends State<Assets> {
                         );
                       }
 
-                      AccountData accountData = store.account.currentAccount;
+                      final accountData = widget.store.account.currentAccount;
 
                       return Column(
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                  child: CombinedCommunityAndAccountAvatar(store),
-                                  onTap: () {
-                                    if (panelController != null && panelController!.isAttached) {
-                                      panelController!.open();
-                                    }
-                                  }),
-                            ],
+                          InkWell(
+                            key: const Key('panel-controller'),
+                            child: CombinedCommunityAndAccountAvatar(widget.store),
+                            onTap: () {
+                              if (panelController != null && panelController!.isAttached) {
+                                panelController!.open();
+                              }
+                            },
                           ),
                           Observer(
                             builder: (_) {
-                              return (store.encointer.community?.name != null) & (store.encointer.chosenCid != null)
+                              return (widget.store.encointer.community?.name != null) &
+                                      (widget.store.encointer.chosenCid != null)
                                   ? Column(
                                       children: [
                                         TextGradient(
-                                          text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
+                                          text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
                                           style: const TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          '${dic!.assets.balance}, ${store.encointer.community?.symbol}',
+                                          '${dic!.assets.balance}, ${widget.store.encointer.community?.symbol}',
                                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                                         ),
                                       ],
@@ -198,21 +203,21 @@ class _AssetsState extends State<Assets> {
                                   : Container(
                                       margin: const EdgeInsets.only(top: 16),
                                       padding: const EdgeInsets.symmetric(vertical: 8),
-                                      child: (store.encointer.chosenCid == null)
+                                      child: (widget.store.encointer.chosenCid == null)
                                           ? SizedBox(
                                               width: double.infinity,
                                               child:
                                                   Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
                                           : const SizedBox(
                                               width: double.infinity,
-                                              child: const CupertinoActivityIndicator(),
+                                              child: CupertinoActivityIndicator(),
                                             ),
                                     );
                             },
                           ),
-                          if (store.settings.developerMode)
+                          if (widget.store.settings.developerMode)
                             ElevatedButton(
-                              onPressed: store.dataUpdate.setInvalidated,
+                              onPressed: widget.store.dataUpdate.setInvalidated,
                               child: const Text('Invalidate data to trigger state update'),
                             ),
                           const SizedBox(
@@ -230,6 +235,12 @@ class _AssetsState extends State<Assets> {
                                           BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
                                     ),
                                   ),
+                                  key: const Key('qr-receive'),
+                                  onPressed: () {
+                                    if (accountData.address != '') {
+                                      Navigator.pushNamed(context, ReceivePage.route);
+                                    }
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Row(
@@ -241,12 +252,6 @@ class _AssetsState extends State<Assets> {
                                       ],
                                     ),
                                   ),
-                                  key: const Key('qr-receive'),
-                                  onPressed: () {
-                                    if (accountData.address != '') {
-                                      Navigator.pushNamed(context, ReceivePage.route);
-                                    }
-                                  },
                                 ),
                               ),
                               const SizedBox(width: 2),
@@ -259,6 +264,10 @@ class _AssetsState extends State<Assets> {
                                           BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
                                     ),
                                   ),
+                                  key: const Key('transfer'),
+                                  onPressed: widget.store.encointer.communityBalance != null
+                                      ? () => Navigator.pushNamed(context, TransferPage.route)
+                                      : null,
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Row(
@@ -270,10 +279,6 @@ class _AssetsState extends State<Assets> {
                                       ],
                                     ),
                                   ),
-                                  key: const Key('transfer'),
-                                  onPressed: store.encointer.communityBalance != null
-                                      ? () => Navigator.pushNamed(context, TransferPage.route)
-                                      : null,
                                 ),
                               ),
                             ],
@@ -285,35 +290,36 @@ class _AssetsState extends State<Assets> {
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
                     ),
                     Observer(builder: (_) {
-                      final Translations dic = I18n.of(context)!.translationsForLocale();
+                      final dic = I18n.of(context)!.translationsForLocale();
 
-                      final shouldFetch = store.encointer.currentPhase == CeremonyPhase.Registering ||
-                          (store.encointer.communityAccount?.meetupCompleted ?? false);
+                      final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
+                          (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
 
-                      return store.settings.isConnected && shouldFetch
+                      return widget.store.settings.isConnected && shouldFetch
                           ? FutureBuilder<bool?>(
                               future: webApi.encointer.hasPendingIssuance(),
                               builder: (_, AsyncSnapshot<bool?> snapshot) {
                                 if (snapshot.hasData) {
-                                  var hasPendingIssuance = snapshot.data!;
+                                  final hasPendingIssuance = snapshot.data!;
 
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
+                                      key: const Key('claim-pending-dev'),
                                       child: Text(dic.assets.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
-                                        store,
+                                        widget.store,
                                         webApi,
-                                        store.encointer.chosenCid!,
+                                        widget.store.encointer.chosenCid!,
                                       ),
                                     );
                                   } else {
-                                    return store.settings.developerMode
+                                    return widget.store.settings.developerMode
                                         ? ElevatedButton(
-                                            child: Text(dic.assets.issuanceClaimed),
                                             onPressed: null,
+                                            child: Text(dic.assets.issuanceClaimed),
                                           )
-                                        : Container();
+                                        : const SizedBox.shrink();
                                   }
                                 } else {
                                   return const CupertinoActivityIndicator();
@@ -323,7 +329,7 @@ class _AssetsState extends State<Assets> {
                           : Container();
                     }),
                     const SizedBox(height: 24),
-                    CeremonyBox(store, webApi),
+                    CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                   ],
                 ),
               ),
@@ -333,11 +339,10 @@ class _AssetsState extends State<Assets> {
               context: context,
               removeTop: true,
               child: ListView(
+                key: const Key('list-view-wallet'),
                 controller: scrollController,
                 children: <Widget>[
-                  const SizedBox(
-                    height: 12.0,
-                  ),
+                  const SizedBox(height: 12.0),
                   const DragHandle(),
                   Column(children: [
                     Observer(
@@ -348,8 +353,10 @@ class _AssetsState extends State<Assets> {
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)))
-                                  .then((_) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(widget.store)),
+                              ).then((_) {
                                 _refreshBalanceAndNotify(dic);
                               });
                             } else {
@@ -371,7 +378,7 @@ class _AssetsState extends State<Assets> {
                             Navigator.of(context).pushNamed(AddAccountPage.route);
                           } else {
                             setState(() {
-                              switchAccount(store.account.accountListAll[index]);
+                              switchAccount(widget.store.account.accountListAll[index]);
                               _refreshBalanceAndNotify(dic);
                             });
                           }
@@ -390,7 +397,7 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> initAllCommunities() {
-    List<AccountOrCommunityData> allCommunities = [];
+    final allCommunities = <AccountOrCommunityData>[];
     // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
     // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
     //     avatar: webApi.ipfs.getCommunityIcon(community),
@@ -400,7 +407,7 @@ class _AssetsState extends State<Assets> {
     allCommunities.add(
       AccountOrCommunityData(
         avatar: const CommunityAvatar(avatarSize: avatarSize),
-        name: store.encointer.community?.name ?? '...',
+        name: widget.store.encointer.community?.name ?? '...',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
     );
@@ -410,10 +417,14 @@ class _AssetsState extends State<Assets> {
           height: avatarSize,
           width: avatarSize,
           decoration: BoxDecoration(
-            color: ZurichLion.shade50,
+            color: zurichLion.shade50,
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.add, size: 36),
+          child: const Icon(
+            Icons.add,
+            key: Key('add-community'),
+            size: 36,
+          ),
         ),
         name: dic!.profile.addCommunity,
       ),
@@ -422,21 +433,22 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> initAllAccounts(Translations dic) {
-    List<AccountOrCommunityData> allAccounts = [];
-    allAccounts.addAll(store.account.accountListAll.map(
+    final allAccounts = <AccountOrCommunityData>[];
+    allAccounts.addAll(widget.store.account.accountListAll.map(
       (account) => AccountOrCommunityData(
-        avatar: AddressIcon('', account.pubKey, size: avatarSize, tapToCopy: false),
+        avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
         name: account.name,
-        isSelected: account.pubKey == store.account.currentAccountPubKey,
+        isSelected: account.pubKey == widget.store.account.currentAccountPubKey,
       ),
     ));
     allAccounts.add(
       AccountOrCommunityData(
         avatar: Container(
+          key: const Key('add-account-panel'),
           height: avatarSize,
           width: avatarSize,
           decoration: BoxDecoration(
-            color: ZurichLion.shade50,
+            color: zurichLion.shade50,
             shape: BoxShape.circle,
           ),
           child: const Icon(Icons.add, size: 36),
@@ -448,26 +460,26 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> switchAccount(AccountData account) async {
-    if (account.pubKey != store.account.currentAccountPubKey) {
-      store.setCurrentAccount(account.pubKey);
-      await store.loadAccountCache();
+    if (account.pubKey != widget.store.account.currentAccountPubKey) {
+      widget.store.setCurrentAccount(account.pubKey);
+      await widget.store.loadAccountCache();
 
       webApi.fetchAccountData();
     }
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return WillPopScope(
           child: showPasswordInputDialog(
             context,
-            store.account.currentAccount,
+            widget.store.account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().home.unlock),
-            (password) {
+            (String password) {
               setState(() {
-                store.settings.setPin(password);
+                widget.store.settings.setPin(password);
               });
             },
           ),
@@ -484,7 +496,7 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return CupertinoAlertDialog(
@@ -511,23 +523,32 @@ class _AssetsState extends State<Assets> {
         Log.d('[home:refreshBalanceAndNotify] no community selected', 'Assets');
         return;
       }
-      bool activeAccountHasBalance = false;
+      var activeAccountHasBalance = false;
       balances.forEach((cid, balanceEntry) {
-        String cidStr = cid.toFmtString();
+        final cidStr = cid.toFmtString();
         if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
-          var community = widget.store.encointer.communityStores![cidStr]!;
-          double demurrageRate = community.demurrage!;
-          double newBalance = community.applyDemurrage(balanceEntry);
-          double oldBalance = community.applyDemurrage(
-                  widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
-              0;
-          double delta = newBalance - oldBalance;
+          final community = widget.store.encointer.communityStores![cidStr]!;
+          final oldBalanceEntry =
+              widget.store.encointer.accountStores?[widget.store.account.currentAddress]?.balanceEntries[cidStr];
+          final demurrageRate = community.demurrage!;
+          final newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
+          final oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
+              ? community.applyDemurrage!(oldBalanceEntry) ?? 0
+              : 0;
+
+// =======
+//           double newBalance = community.applyDemurrage(balanceEntry) as double;
+//           double oldBalance = community.applyDemurrage(widget.store.encointer
+//                   .accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) as double? ??
+//               0;
+// >>>>>>> 9d4143d3262181f3ad0429032d40bcd3c94c1b9f
+          final delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
-              var msg = dic!.assets.incomingConfirmed
+              final msg = dic!.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
@@ -542,13 +563,13 @@ class _AssetsState extends State<Assets> {
       });
       if (!activeAccountHasBalance) {
         Log.d(
-          '[home:refreshBalanceAndNotify] didn\'t get any balance for active account. initialize store balance to zero',
+          "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero",
           'Assets',
         );
         widget.store.encointer.accountStores![widget.store.account.currentAddress]
             ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
-    }).catchError((e, s) {
+    }).catchError((Object? e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
   }

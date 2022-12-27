@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:json_annotation/json_annotation.dart';
+
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/utils/enum.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 part 'ceremonies.g.dart';
@@ -11,6 +12,9 @@ part 'ceremonies.g.dart';
 class AggregatedAccountData {
   AggregatedAccountData(this.global, this.personal);
 
+  factory AggregatedAccountData.fromJson(Map<String, dynamic> json) => _$AggregatedAccountDataFromJson(json);
+  Map<String, dynamic> toJson() => _$AggregatedAccountDataToJson(this);
+
   AggregatedAccountDataGlobal? global;
   AggregatedAccountDataPersonal? personal;
 
@@ -18,9 +22,6 @@ class AggregatedAccountData {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory AggregatedAccountData.fromJson(Map<String, dynamic> json) => _$AggregatedAccountDataFromJson(json);
-  Map<String, dynamic> toJson() => _$AggregatedAccountDataToJson(this);
 }
 
 @JsonSerializable()
@@ -28,27 +29,32 @@ class AggregatedAccountDataPersonal {
   AggregatedAccountDataPersonal(
       this.participantType, this.meetupIndex, this.meetupLocationIndex, this.meetupTime, this.meetupRegistry);
 
+  factory AggregatedAccountDataPersonal.fromJson(Map<String, dynamic> json) =>
+      _$AggregatedAccountDataPersonalFromJson(json);
+  Map<String, dynamic> toJson() => _$AggregatedAccountDataPersonalToJson(this);
+
   ParticipantType? participantType;
   int? meetupIndex;
   int? meetupLocationIndex;
   int? meetupTime;
   List<String>? meetupRegistry;
 
-  get meetup => meetupIndex != null ? Meetup(meetupIndex!, meetupLocationIndex!, meetupTime, meetupRegistry!) : null;
+  Meetup? get meetup =>
+      meetupIndex != null ? Meetup(meetupIndex!, meetupLocationIndex!, meetupTime, meetupRegistry!) : null;
 
   @override
   String toString() {
     return jsonEncode(this);
   }
-
-  factory AggregatedAccountDataPersonal.fromJson(Map<String, dynamic> json) =>
-      _$AggregatedAccountDataPersonalFromJson(json);
-  Map<String, dynamic> toJson() => _$AggregatedAccountDataPersonalToJson(this);
 }
 
 @JsonSerializable()
 class AggregatedAccountDataGlobal {
   AggregatedAccountDataGlobal(this.ceremonyPhase, this.ceremonyIndex);
+
+  factory AggregatedAccountDataGlobal.fromJson(Map<String, dynamic> json) =>
+      _$AggregatedAccountDataGlobalFromJson(json);
+  Map<String, dynamic> toJson() => _$AggregatedAccountDataGlobalToJson(this);
 
   CeremonyPhase ceremonyPhase;
   int ceremonyIndex;
@@ -57,17 +63,18 @@ class AggregatedAccountDataGlobal {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory AggregatedAccountDataGlobal.fromJson(Map<String, dynamic> json) =>
-      _$AggregatedAccountDataGlobalFromJson(json);
-  Map<String, dynamic> toJson() => _$AggregatedAccountDataGlobalToJson(this);
 }
 
+// For compatibility with substrate's naming convention.
+// ignore: constant_identifier_names
 enum ParticipantType { Bootstrapper, Reputable, Endorsee, Newbie }
 
 @JsonSerializable()
 class CommunityReputation {
   CommunityReputation(this.communityIdentifier, this.reputation);
+
+  factory CommunityReputation.fromJson(Map<String, dynamic> json) => _$CommunityReputationFromJson(json);
+  Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 
   CommunityIdentifier? communityIdentifier;
   Reputation? reputation;
@@ -76,14 +83,14 @@ class CommunityReputation {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory CommunityReputation.fromJson(Map<String, dynamic> json) => _$CommunityReputationFromJson(json);
-  Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 }
 
 @JsonSerializable()
 class Meetup {
   Meetup(this.index, this.locationIndex, this.time, this.registry);
+
+  factory Meetup.fromJson(Map<String, dynamic> json) => _$MeetupFromJson(json);
+  Map<String, dynamic> toJson() => _$MeetupToJson(this);
 
   int index;
   int locationIndex;
@@ -95,13 +102,14 @@ class Meetup {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory Meetup.fromJson(Map<String, dynamic> json) => _$MeetupFromJson(json);
-  Map<String, dynamic> toJson() => _$MeetupToJson(this);
 }
 
+// For compatibility with substrate's naming convention.
+// ignore: constant_identifier_names
 enum CeremonyPhase { Registering, Assigning, Attesting }
 
+// For compatibility with substrate's naming convention.
+// ignore: constant_identifier_names
 enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
 
 // -- Helper functions for above types

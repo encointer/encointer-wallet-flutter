@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,6 +12,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -31,7 +31,7 @@ class TransferPageParams {
     this.amount,
   });
 
-  static TransferPageParams fromInvoiceData(InvoiceData data) {
+  factory TransferPageParams.fromInvoiceData(InvoiceData data) {
     return TransferPageParams(
       cid: data.cid,
       recipient: data.account,
@@ -48,7 +48,7 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  TransferPage({Key? key}) : super(key: key);
+  const TransferPage({super.key});
 
   static const String route = '/assets/transfer';
 
@@ -61,8 +61,8 @@ class _TransferPageState extends State<TransferPage> {
 
   final TextEditingController _amountCtrl = TextEditingController();
 
-  var _communitySymbol;
-  var _cid;
+  String? _communitySymbol;
+  CommunityIdentifier? _cid;
 
   AccountData? _accountTo;
 
@@ -77,8 +77,8 @@ class _TransferPageState extends State<TransferPage> {
       if (params != null) {
         handleTransferPageParams(params, store);
       } else {
-        _communitySymbol = store.encointer.community!.symbol!;
-        _cid = store.encointer.chosenCid!;
+        _communitySymbol = store.encointer.community!.symbol;
+        _cid = store.encointer.chosenCid;
       }
 
       setState(() {});
@@ -90,16 +90,28 @@ class _TransferPageState extends State<TransferPage> {
   void handleTransferPageParams(TransferPageParams params, AppStore store) {
     _communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
     _cid = params.cid ?? store.encointer.chosenCid!;
+    if (params.cid != store.encointer.chosenCid!) {
+      showCupertinoDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          final dic = I18n.of(context)!.translationsForLocale().assets;
+          return CupertinoAlertDialog(
+            title: Text(dic.chosenRightCommunity),
+          );
+        },
+      );
+    } else {
+      if (params.amount != null) {
+        _amountCtrl.text = '${params.amount}';
+      }
 
-    if (params.amount != null) {
-      _amountCtrl.text = '${params.amount}';
-    }
-
-    if (params.recipient != null) {
-      final AccountData acc = AccountData();
-      acc.address = params.recipient!;
-      acc.name = params.label!;
-      _accountTo = acc;
+      if (params.recipient != null) {
+        final acc = AccountData();
+        acc.address = params.recipient!;
+        acc.name = params.label!;
+        _accountTo = acc;
+      }
     }
   }
 
@@ -108,8 +120,8 @@ class _TransferPageState extends State<TransferPage> {
     final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
 
-    int decimals = encointer_currencies_decimals;
-    double? available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
+    const decimals = encointerCurrenciesDecimals;
+    final available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
 
     Log.d('[transferPage]: available: $available', 'TransferPage');
 
@@ -137,16 +149,18 @@ class _TransferPageState extends State<TransferPage> {
                 children: [
                   Expanded(
                     child: ListView(
+                      key: const Key('transfer-listview'),
                       children: [
                         CombinedCommunityAndAccountAvatar(_store, showCommunityNameAndAccountName: false),
                         const SizedBox(height: 12),
-                        _store.encointer.communityBalance != null
-                            ? AccountBalanceWithMoreDigits(
-                                store: _store,
-                                available: available,
-                                decimals: decimals,
-                              )
-                            : const CupertinoActivityIndicator(),
+                        if (_store.encointer.communityBalance != null)
+                          AccountBalanceWithMoreDigits(
+                            store: _store,
+                            available: available,
+                            decimals: decimals,
+                          )
+                        else
+                          const CupertinoActivityIndicator(),
                         Text(
                           I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll(
                                 'ACCOUNT_NAME',
@@ -164,13 +178,13 @@ class _TransferPageState extends State<TransferPage> {
                               ScanPage.route,
                               arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
                             );
-
-                            handleTransferPageParams(
-                              TransferPageParams.fromInvoiceData(invoiceData as InvoiceData),
-                              _store,
-                            );
-
-                            setState(() {});
+                            if (invoiceData != null && invoiceData is InvoiceData) {
+                              handleTransferPageParams(
+                                TransferPageParams.fromInvoiceData(invoiceData),
+                                _store,
+                              );
+                              setState(() {});
+                            }
                           },
                         ),
                         const SizedBox(height: 24),
@@ -214,17 +228,23 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   const SizedBox(height: 48),
-                  _store.settings.developerMode
-                      ? Center(
-                          child: Text(
-                            '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
-                            style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
-                          ),
-                        )
-                      : Container(),
+                  if (_store.settings.developerMode)
+                    Center(
+                      child: Text(
+                        '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
+                        style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+                      ),
+                    ),
                   const SizedBox(height: 8),
                   PrimaryButton(
                     key: const Key('make-transfer'),
+                    onPressed: _accountTo != null
+                        ? () {
+                            if (_cid != null && _communitySymbol != null) {
+                              _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
+                            }
+                          }
+                        : null,
                     child: SizedBox(
                       height: 24,
                       child: Row(
@@ -236,7 +256,6 @@ class _TransferPageState extends State<TransferPage> {
                         ],
                       ),
                     ),
-                    onPressed: _accountTo != null ? () => _pushPaymentConfirmationPage(_cid, _communitySymbol) : null,
                   ),
                 ],
               ),
@@ -253,10 +272,11 @@ class _TransferPageState extends State<TransferPage> {
         context,
         PaymentConfirmationPage.route,
         arguments: PaymentConfirmationParams(
-            cid: cid,
-            communitySymbol: communitySymbol,
-            recipientAccount: _accountTo!,
-            amount: double.parse(_amountCtrl.text.trim())),
+          cid: cid,
+          communitySymbol: communitySymbol,
+          recipientAccount: _accountTo!,
+          amount: double.parse(_amountCtrl.text.trim()),
+        ),
       );
     }
   }
@@ -274,11 +294,11 @@ class _TransferPageState extends State<TransferPage> {
 
 class AccountBalanceWithMoreDigits extends StatelessWidget {
   const AccountBalanceWithMoreDigits({
-    Key? key,
+    super.key,
     required this.store,
     required this.available,
     required this.decimals,
-  }) : super(key: key);
+  });
 
   final AppStore store;
   final double? available;

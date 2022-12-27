@@ -11,10 +11,10 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
     required this.nextCeremonyDate,
     this.infoLink,
     this.devMode = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
-  final devMode;
+  final bool devMode;
 
   /// date for the next ceremony
   final DateTime nextCeremonyDate;
@@ -24,9 +24,9 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context)!.translationsForLocale();
-    Event calendarEventToAdd = CeremonyBoxService.createCalendarEvent(nextCeremonyDate, dic);
-    bool showAddToCalendarIconButton = CeremonyBoxService.showAddToCalendarIconButton();
+    final dic = I18n.of(context)!.translationsForLocale();
+    final calendarEventToAdd = CeremonyBoxService.createCalendarEvent(nextCeremonyDate, dic);
+    final showAddToCalendarIconButton = CeremonyBoxService.showAddToCalendarIconButton();
     return Column(
       children: [
         IconButton(

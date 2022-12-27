@@ -12,13 +12,13 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ScanClaimQrCode extends StatelessWidget {
-  ScanClaimQrCode(this.store, this.confirmedParticipantsCount, {Key? key}) : super(key: key);
+  const ScanClaimQrCode(this.store, this.confirmedParticipantsCount, {super.key});
 
   final AppStore store;
   final int confirmedParticipantsCount;
 
   void validateAndStoreParticipant(BuildContext context, String attendee, Translations dic) {
-    List<String> registry = store.encointer.communityAccount!.meetup!.registry;
+    final registry = store.encointer.communityAccount!.meetup!.registry;
 
     if (attendee == store.account.currentAddress) {
       RootSnackBar.showMsg(dic.encointer.meetupClaimantEqualToSelf);
@@ -37,7 +37,7 @@ class ScanClaimQrCode extends StatelessWidget {
         'ScanClaimQrCode',
       );
     } else {
-      String msg = store.encointer.communityAccount!.containsAttendee(attendee)
+      final msg = store.encointer.communityAccount!.containsAttendee(attendee)
           ? dic.encointer.claimsScannedAlready
           : dic.encointer.claimsScannedNew;
 
@@ -48,7 +48,7 @@ class ScanClaimQrCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     Future _onScan(String address) async {
       if (Fmt.isAddress(address)) {

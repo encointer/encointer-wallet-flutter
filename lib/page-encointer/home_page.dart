@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:workmanager/workmanager.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
@@ -11,14 +9,13 @@ import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
-import 'package:encointer_wallet/service/background_service/background_service.dart';
 import 'package:encointer_wallet/service/deep_link/deep_link.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/meetup/meetup.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  const EncointerHomePage({Key? key}) : super(key: key);
+  const EncointerHomePage({super.key});
 
   static const String route = '/home';
 
@@ -29,33 +26,19 @@ class EncointerHomePage extends StatefulWidget {
 class _EncointerHomePageState extends State<EncointerHomePage> {
   final PageController _pageController = PageController();
 
-  NotificationPlugin? _notificationPlugin;
-
   late List<TabData> _tabList;
   int _tabIndex = 0;
 
   @override
   void initState() {
-    if (_notificationPlugin == null) {
-      _notificationPlugin = NotificationPlugin();
-      _notificationPlugin!.init(context);
-    }
+    if (context.read<AppStore>().appCast == null) NotificationPlugin.init(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await initialDeepLinks(context);
-      if (Platform.isAndroid) {
-        // meetup notification only for android system
-        Log.d('Initializing Workmanager callback...', 'home_page');
-        await Workmanager().initialize(callbackDispatcher);
-        await Workmanager().registerPeriodicTask(
-          'background-service',
-          'pull-notification',
-          // Find a window where the app is in background because of #819.
-          initialDelay: const Duration(hours: 8),
-          frequency: const Duration(hours: 12),
-          inputData: {'langCode': Localizations.localeOf(context).languageCode},
-          existingWorkPolicy: ExistingWorkPolicy.replace,
-        );
-      }
+      await NotificationHandler.fetchMessagesAndScheduleNotifications(
+        tz.local,
+        NotificationPlugin.scheduleNotification,
+        Localizations.localeOf(context).languageCode,
+      );
     });
     super.initState();
   }
@@ -73,7 +56,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Icon(
                         i.iconData,
-                        key: Key(i.key.toString()),
+                        key: Key(i.key.name),
                       ),
                       Container(
                         height: 4,
@@ -88,8 +71,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                   )
                 : Icon(
                     i.iconData,
-                    key: Key(i.key.toString()),
-                    color: i.key == TabKey.Scan ? ZurichLion.shade900 : encointerGrey,
+                    key: Key(i.key.name),
+                    color: i.key == TabKey.scan ? zurichLion.shade900 : encointerGrey,
                   ),
             label: '',
           ),
@@ -102,24 +85,24 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     final _store = context.watch<AppStore>();
     _tabList = <TabData>[
       TabData(
-        TabKey.Wallet,
+        TabKey.wallet,
         Iconsax.home_2,
       ),
       if (context.select<AppStore, bool>((store) => store.settings.enableBazaar))
         TabData(
-          TabKey.Bazaar,
+          TabKey.bazaar,
           Iconsax.shop,
         ), // dart collection if
       TabData(
-        TabKey.Scan,
+        TabKey.scan,
         Iconsax.scan_barcode,
       ),
       TabData(
-        TabKey.Contacts,
+        TabKey.contacts,
         Iconsax.profile_2user,
       ),
       TabData(
-        TabKey.Profile,
+        TabKey.profile,
         Iconsax.profile_circle,
       ),
     ];
@@ -131,17 +114,17 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         controller: _pageController,
         children: [
           Assets(_store),
-          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) BazaarMain(),
+          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
           ScanPage(),
-          ContactsPage(),
-          Profile(),
+          const ContactsPage(),
+          const Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
         iconSize: 22.0,
         onTap: (index) async {
-          if (_tabList[index].key == TabKey.Scan) {
+          if (_tabList[index].key == TabKey.scan) {
             // Push `ScanPage.Route`instead of changing the Page.
             Navigator.of(context).pushNamed(
               ScanPage.route,
@@ -164,19 +147,19 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 }
 
 class TabData {
+  TabData(this.key, this.iconData);
+
   /// used for our integration tests to click on a UI element
   final TabKey key;
 
   /// used for our integration tests to click on a UI element
   final IconData iconData;
-
-  TabData(this.key, this.iconData);
 }
 
 enum TabKey {
-  Wallet,
-  Bazaar,
-  Scan,
-  Contacts,
-  Profile,
+  wallet,
+  bazaar,
+  scan,
+  contacts,
+  profile,
 }

@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/busi
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class OpeningHours extends StatelessWidget {
-  const OpeningHours({Key? key}) : super(key: key);
+  const OpeningHours({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,9 @@ class OpeningHours extends StatelessWidget {
 }
 
 class OpeningHoursViewForDay extends StatelessWidget {
-  OpeningHoursViewForDay(this.day, {Key? key}) : super(key: key);
-  final day;
+  const OpeningHoursViewForDay(this.day, {super.key});
+
+  final int day;
 
   @override
   Widget build(BuildContext context) {
@@ -126,8 +127,8 @@ class OpeningHoursViewForDay extends StatelessWidget {
 
             Observer(
               builder: (_) => Visibility(
-                child: AddOpeningIntervalForDay(day),
                 visible: day == openingHours.dayOnFocus,
+                child: AddOpeningIntervalForDay(day),
               ),
             ),
             // Text(openingHoursForThisDay.showTextField.toString()),
@@ -139,16 +140,16 @@ class OpeningHoursViewForDay extends StatelessWidget {
 }
 
 class AddOpeningIntervalForDay extends StatelessWidget {
-  final _textController = TextEditingController(text: '');
-  final day;
+  AddOpeningIntervalForDay(this.day, {super.key});
 
-  AddOpeningIntervalForDay(this.day, {Key? key}) : super(key: key);
+  final _textController = TextEditingController(text: '');
+  final int day;
 
   @override
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
     final openingHours = businessFormState.openingHours;
-    var openingHoursForDay = openingHours.getOpeningHoursFor(day);
+    final openingHoursForDay = openingHours.getOpeningHoursFor(day);
 
     return Observer(
       builder: (_) => TextField(

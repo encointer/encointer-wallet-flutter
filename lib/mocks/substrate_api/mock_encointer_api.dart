@@ -3,13 +3,11 @@ import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
-import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
-import 'package:encointer_wallet/store/app.dart';
 
 /// The key rationale behind this mock is that all the getters do not alter the app state.
 ///
@@ -17,7 +15,7 @@ import 'package:encointer_wallet/store/app.dart';
 /// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
 class MockEncointerApi extends EncointerApi {
-  MockEncointerApi(AppStore store, MockJSApi js, MockSubstrateDartApi dartApi) : super(store, js, dartApi);
+  MockEncointerApi(super.store, MockJSApi super.js, MockSubstrateDartApi super.dartApi);
 
   @override
   Future<void> startSubscriptions() async {
@@ -105,7 +103,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<DateTime?> getMeetupTime() async {
-    return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
+    return DateTime.fromMillisecondsSinceEpoch(testTimeStamp);
   }
 
   @override
@@ -113,24 +111,6 @@ class MockEncointerApi extends EncointerApi {
     return Future.value(Map<CommunityIdentifier, BalanceEntry>.of({
       store.encointer.chosenCid!: BalanceEntry.fromJson(testBalanceEntry),
     }));
-  }
-
-  @override
-  Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    Meetup meetup = store.encointer.communityAccount!.meetup!;
-
-    var claim = ClaimOfAttendance(
-      store.account.currentAccountPubKey,
-      store.encointer.currentCeremonyIndex,
-      store.encointer.chosenCid,
-      meetup.index,
-      store.encointer.community!.meetupLocations![meetup.locationIndex],
-      meetup.time,
-      participants,
-    );
-
-    // skip signing for mocks.
-    return Future.value(claim);
   }
 
   @override
@@ -142,5 +122,15 @@ class MockEncointerApi extends EncointerApi {
   Future<List<String>> pendingExtrinsics() {
     Log.d('calling mock `pendingExtrinsics', 'MockEncointerApi');
     return Future.value([]);
+  }
+
+  @override
+  Future<int> getNumberOfNewbieTicketsForBootstrapper() {
+    return Future.value(0);
+  }
+
+  @override
+  Future<int> getNumberOfNewbieTicketsForReputable() {
+    return Future.value(0);
   }
 }

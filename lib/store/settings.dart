@@ -14,7 +14,7 @@ import 'package:encointer_wallet/utils/format.dart';
 part 'settings.g.dart';
 
 class SettingsStore extends _SettingsStore with _$SettingsStore {
-  SettingsStore(AppStore store) : super(store);
+  SettingsStore(super.store);
 }
 
 abstract class _SettingsStore with Store {
@@ -117,14 +117,14 @@ abstract class _SettingsStore with Store {
 
   @computed
   List<EndpointData> get endpointList {
-    List<EndpointData> ls = List<EndpointData>.of(networkEndpoints);
+    final ls = List<EndpointData>.of(networkEndpoints);
     ls.retainWhere((i) => i.info == endpoint.info);
     return ls;
   }
 
   @computed
   List<AccountData> get contactListAll {
-    List<AccountData> ls = List<AccountData>.of(rootStore.account.accountList);
+    final ls = List<AccountData>.of(rootStore.account.accountList);
     ls.addAll(contactList);
     return ls;
   }
@@ -177,7 +177,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadLocalCode() async {
-    String? stored = await rootStore.localStorage.getObject(localStorageLocaleKey) as String?;
+    final stored = await rootStore.localStorage.getObject(localStorageLocaleKey) as String?;
     if (stored != null) {
       localeCode = stored;
     }
@@ -221,18 +221,18 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadNetworkStateCache() async {
-    final List data = await Future.wait([
+    final data = await Future.wait([
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkStateKey)),
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
     ]);
     if (data[0] != null) {
-      setNetworkState(Map<String, dynamic>.of(data[0]), needCache: false);
+      setNetworkState(Map<String, dynamic>.of(data[0] as Map<String, dynamic>), needCache: false);
     } else {
       setNetworkState({}, needCache: false);
     }
 
     if (data[1] != null) {
-      setNetworkConst(Map<String, dynamic>.of(data[1]), needCache: false);
+      setNetworkConst(Map<String, dynamic>.of(data[1] as Map<String, dynamic>), needCache: false);
     } else {
       setNetworkConst({}, needCache: false);
     }
@@ -255,7 +255,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadContacts() async {
-    List<Map<String, dynamic>> ls = await rootStore.localStorage.getContactList();
+    final ls = await rootStore.localStorage.getContactList();
     contactList = ObservableList.of(ls.map((i) => AccountData.fromJson(i)));
   }
 
@@ -285,8 +285,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadEndpoint(String sysLocaleCode) async {
-    Map<String, dynamic>? value =
-        await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
+    final value = await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
     if (value == null) {
       endpoint = networkEndpointEncointerMainnet;
     } else {
@@ -302,9 +301,9 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadCustomSS58Format() async {
-    Map<String, dynamic>? ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
+    final ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
 
-    customSS58Format = ss58 ?? default_ss58_prefix;
+    customSS58Format = ss58 ?? defaultSs58Prefix;
   }
 
   String getCacheKey(String key) {
@@ -332,19 +331,20 @@ abstract class _SettingsStore with Store {
 
 @JsonSerializable(createFactory: false)
 class NetworkState extends _NetworkState {
-  NetworkState(String? endpoint, int? ss58Format, int? tokenDecimals, String? tokenSymbol)
-      : super(endpoint, ss58Format, tokenDecimals, tokenSymbol);
+  NetworkState(super.endpoint, super.ss58Format, super.tokenDecimals, super.tokenSymbol);
 
+  // Todo: need to test after then fix by linter
+  // ignore: prefer_constructors_over_static_methods
   static NetworkState fromJson(Map<String, dynamic> json) {
     // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
     // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
     // `NetworkState` should use the first token.
-    int? decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] : json['tokenDecimals'];
-    String? symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] : json['tokenSymbol'];
+    final decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] as int? : json['tokenDecimals'] as int?;
+    final symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] as String? : json['tokenSymbol'] as String?;
 
-    NetworkState ns = NetworkState(json['endpoint'], json['ss58Format'], decimals, symbol);
+    final ns = NetworkState(json['endpoint'] as String?, json['ss58Format'] as int?, decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified
-    if (((ns.tokenSymbol?.length ?? 0) < 1)) {
+    if ((ns.tokenSymbol?.length ?? 0) < 1) {
       ns.tokenSymbol = 'ERT';
     }
     return ns;

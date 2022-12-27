@@ -5,16 +5,15 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AboutPage extends StatelessWidget {
-  static const String route = '/profile/about';
+  const AboutPage({super.key});
 
-  const AboutPage({Key? key}) : super(key: key);
+  static const String route = '/profile/about';
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
@@ -46,7 +45,7 @@ class AboutPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            JumpToBrowserLink('https://encointer.org'),
+            const JumpToBrowserLink('https://encointer.org'),
           ],
         ),
       ),

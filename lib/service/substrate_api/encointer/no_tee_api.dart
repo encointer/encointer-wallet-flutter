@@ -22,19 +22,19 @@ class Ceremonies {
   Future<int> participantIndex(CommunityIdentifier cid, int cIndex, String pubKey) async {
     return jsApi
         .evalJavascript('encointer.getParticipantIndex(${jsonEncode(cid)}, "$cIndex" ,"$pubKey")')
-        .then((value) => int.parse(value));
+        .then((value) => int.parse(value as String));
   }
 
   Future<int> meetupIndex(CommunityIdentifier cid, int cIndex, String pubKey) async {
     return jsApi
         .evalJavascript('encointer.getMeetupIndex(${jsonEncode(cid)}, "$cIndex","$pubKey")')
-        .then((value) => int.parse(value));
+        .then((value) => int.parse(value as String));
   }
 
   Future<List<String>> meetupRegistry(CommunityIdentifier cid, int cIndex, int mIndex) async {
     return jsApi
         .evalJavascript('encointer.getMeetupRegistry(${jsonEncode(cid)}, "$cIndex", "$mIndex")')
-        .then((value) => List<String>.from(value));
+        .then((value) => List<String>.from(value as Iterable));
   }
 }
 
@@ -44,7 +44,7 @@ class Balances {
   final JSApi jsApi;
 
   Future<BalanceEntry> balance(CommunityIdentifier cid, String? pubKey) async {
-    Map<String, dynamic> balance = await jsApi.evalJavascript('encointer.getBalance(${jsonEncode(cid)}, "$pubKey")');
-    return BalanceEntry.fromJson(balance);
+    final balance = await jsApi.evalJavascript('encointer.getBalance(${jsonEncode(cid)}, "$pubKey")');
+    return BalanceEntry.fromJson(balance as Map<String, dynamic>);
   }
 }

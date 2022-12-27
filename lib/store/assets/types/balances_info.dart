@@ -1,54 +1,64 @@
-class BalancesInfo extends _BalancesInfo {
-  static BalancesInfo fromJson(Map<String, dynamic> json) {
-    BalancesInfo data = BalancesInfo();
-    data.freeBalance = BigInt.parse(json['freeBalance'].toString());
-    data.transferable = BigInt.parse(json['availableBalance'].toString());
-    data.bonded = BigInt.parse(json['frozenFee'].toString());
-    data.reserved = BigInt.parse(json['reservedBalance'].toString());
-    data.lockedBalance = BigInt.parse(json['lockedBalance'].toString());
-    data.total = data.freeBalance + data.reserved;
-    data.lockedBreakdown = List.of(json['lockedBreakdown']).map((i) {
-      return BalanceLockedItemData.fromJson(i);
-    }).toList();
-    return data;
-  }
-}
+class BalancesInfo {
+  const BalancesInfo({
+    required this.freeBalance,
+    required this.transferable,
+    required this.reserved,
+    this.lockedBalance,
+    this.bonded,
+    this.lockedBreakdown,
+  });
 
-class _BalancesInfo {
+  factory BalancesInfo.fromJson(Map<String, dynamic> json) {
+    return BalancesInfo(
+      freeBalance: BigInt.parse(json['freeBalance'].toString()),
+      transferable: BigInt.parse(json['availableBalance'].toString()),
+      bonded: BigInt.parse(json['frozenFee'].toString()),
+      reserved: BigInt.parse(json['reservedBalance'].toString()),
+      lockedBalance: BigInt.parse(json['lockedBalance'].toString()),
+      lockedBreakdown: List.of(json['lockedBreakdown'] as Iterable).map((i) {
+        return BalanceLockedItemData.fromJson(i as Map<String, dynamic>);
+      }).toList(),
+    );
+  }
+
   /// votingBalance
-  BigInt? total;
+  BigInt? get total => freeBalance - reserved;
 
   /// freeBalance = total - reserved
-  late BigInt freeBalance;
+  final BigInt freeBalance;
 
   /// availableBalance
-  late BigInt transferable;
+  final BigInt transferable;
 
   /// frozenFee
-  BigInt? bonded;
+  final BigInt? bonded;
 
   /// reservedBalance
-  late BigInt reserved;
+  final BigInt reserved;
 
   /// lockedBalance
-  BigInt? lockedBalance;
+  final BigInt? lockedBalance;
 
   /// locked details
-  List<BalanceLockedItemData>? lockedBreakdown;
+  final List<BalanceLockedItemData>? lockedBreakdown;
 }
 
-class BalanceLockedItemData extends _BalanceLockedItemData {
-  static BalanceLockedItemData fromJson(Map<String, dynamic> json) {
-    BalanceLockedItemData data = BalanceLockedItemData();
-    data.amount = BigInt.parse(json['amount'].toString());
-    data.reasons = json['reasons'];
-    data.use = json['use'].toString().trim();
-    return data;
+class BalanceLockedItemData {
+  const BalanceLockedItemData({
+    this.amount,
+    this.reasons,
+    this.use,
+  });
+
+  factory BalanceLockedItemData.fromJson(Map<String, dynamic> json) {
+    return BalanceLockedItemData(
+      amount: BigInt.parse(json['amount'].toString()),
+      reasons: json['reasons'] as String?,
+      use: json['use'].toString().trim(),
+    );
   }
-}
 
-class _BalanceLockedItemData {
-  BigInt? amount;
-  String? reasons;
-  String? use;
+  final BigInt? amount;
+  final String? reasons;
+  final String? use;
 }

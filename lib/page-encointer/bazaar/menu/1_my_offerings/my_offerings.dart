@@ -6,9 +6,9 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class MyOfferings extends StatelessWidget {
-  final data = myOfferings;
+  MyOfferings({super.key});
 
-  MyOfferings({Key? key}) : super(key: key);
+  final data = myOfferings;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class MyOfferings extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<void>(
                 builder: (context) => const OfferingForm(),
               ),
             );

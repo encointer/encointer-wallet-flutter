@@ -7,12 +7,12 @@ import 'package:encointer_wallet/store/app.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final AppStore store = AppStore(
+  final store = AppStore(
     MockLocalStorage(),
     config: const AppConfig(isTest: true, mockSubstrateApi: true),
   );
   accList = [testAcc];
-  currentAccountPubKey = accList[0]['pubKey'];
+  currentAccountPubKey = accList[0]['pubKey'] as String;
 
   group('store test', () {
     test('app store created and not ready', () {
