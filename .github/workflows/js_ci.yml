@@ -6,23 +6,23 @@ on:
   pull_request:
     branches: [ master, f-droid ]
 
+env:
+  NODE_VERSION: 16.13.1
+  JAVA_VERSION: 12.x
+  TEMP_SCREENSHOTS: /tmp/screenshots
+
 jobs:
   integration-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       # Setup Environment
-      - uses: actions/checkout@v2
-
-      - uses: monorepo-actions/config-for-actions@main
-        id: config
-        with:
-          config_files: ./.github/action-config.json
+      - uses: actions/checkout@v3
 
       # JS Stuff
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.config.outputs.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Download encointer-node
         uses: dawidd6/action-download-artifact@v2
@@ -57,17 +57,12 @@ jobs:
         network: [ gesell ] # Todo: add cantillon once we support it again.
     steps:
       # Setup Environment
-      - uses: actions/checkout@v2
-
-      - uses: monorepo-actions/config-for-actions@main
-        id: config
-        with:
-          config_files: ./.github/action-config.json
+      - uses: actions/checkout@v3
 
       # JS Stuff
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.config.outputs.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Run e2e tests against  ${{ matrix.network }}
         run: |
