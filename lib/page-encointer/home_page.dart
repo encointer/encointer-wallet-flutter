@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:workmanager/workmanager.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
@@ -11,9 +9,8 @@ import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
-import 'package:encointer_wallet/service/background_service/background_service.dart';
 import 'package:encointer_wallet/service/deep_link/deep_link.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/meetup/meetup.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -29,34 +26,19 @@ class EncointerHomePage extends StatefulWidget {
 class _EncointerHomePageState extends State<EncointerHomePage> {
   final PageController _pageController = PageController();
 
-  NotificationPlugin? _notificationPlugin;
-
   late List<TabData> _tabList;
   int _tabIndex = 0;
 
   @override
   void initState() {
-    // if appCast == null the integration test doesn't show request notification permission.
-    if (_notificationPlugin == null && context.read<AppStore>().appCast == null) {
-      _notificationPlugin = NotificationPlugin();
-      _notificationPlugin!.init(context);
-    }
+    if (context.read<AppStore>().appCast == null) NotificationPlugin.init(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await initialDeepLinks(context);
-      if (Platform.isAndroid) {
-        // meetup notification only for android system
-        Log.d('Initializing Workmanager callback...', 'home_page');
-        await Workmanager().initialize(callbackDispatcher);
-        await Workmanager().registerPeriodicTask(
-          'background-service',
-          'pull-notification',
-          // Find a window where the app is in background because of #819.
-          initialDelay: const Duration(hours: 8),
-          frequency: const Duration(hours: 12),
-          inputData: {'langCode': Localizations.localeOf(context).languageCode},
-          existingWorkPolicy: ExistingWorkPolicy.replace,
-        );
-      }
+      await NotificationHandler.fetchMessagesAndScheduleNotifications(
+        tz.local,
+        NotificationPlugin.scheduleNotification,
+        Localizations.localeOf(context).languageCode,
+      );
     });
     super.initState();
   }

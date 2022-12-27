@@ -392,6 +392,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_timezone:
+    dependency: "direct main"
+    description:
+      name: flutter_timezone
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -1431,13 +1438,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  workmanager:
-    dependency: "direct main"
-    description:
-      name: workmanager
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.1"
   xdg_directories:
     dependency: transitive
     description:
