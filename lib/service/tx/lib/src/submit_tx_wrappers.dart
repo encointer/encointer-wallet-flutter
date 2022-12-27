@@ -189,6 +189,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
           textAlign: TextAlign.center,
         ),
         actions: <Widget>[
+          if (registrationType == ParticipantType.Newbie) const SizedBox(),
           CupertinoButton(
             key: const Key('close-educate-dialog'),
             child: Text(dic.home.ok),
@@ -202,7 +203,6 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
               ),
               onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
             ),
-          if (registrationType == ParticipantType.Newbie) const SizedBox(),
         ],
       );
     },
