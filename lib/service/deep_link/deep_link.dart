@@ -1,5 +1,5 @@
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_links/uni_links.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
@@ -12,12 +12,13 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 bool _initialURILinkHandled = false;
 
 Future<void> initialDeepLinks(BuildContext context) async {
+  final _appLinks = AppLinks();
   if (!_initialURILinkHandled) {
     _initialURILinkHandled = true;
-    final url = await getInitialLink();
+    final url = await _appLinks.getInitialAppLinkString();
     await _init(context, url);
   }
-  linkStream.listen((url) async {
+  _appLinks.stringLinkStream.listen((url) async {
     await _init(context, url);
   });
 }
