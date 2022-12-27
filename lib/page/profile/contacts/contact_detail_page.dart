@@ -240,7 +240,7 @@ class EndorseButton extends StatelessWidget {
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
       _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
     } else {
-      submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
+      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
     }
   }
 }
