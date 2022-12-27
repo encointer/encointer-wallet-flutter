@@ -11,14 +11,14 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyInfo extends StatelessWidget {
   const CeremonyInfo({
-    Key? key,
+    super.key,
     required this.currentTime,
     required this.assigningPhaseStart,
     required this.meetupTime,
     required this.ceremonyPhaseDurations,
     required this.meetupCompleted,
     this.devMode = false,
-  }) : super(key: key);
+  });
 
   final int currentTime;
   final int? assigningPhaseStart;
@@ -29,10 +29,10 @@ class CeremonyInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String languageCode = Localizations.localeOf(context).languageCode;
-    var dic = I18n.of(context)!.translationsForLocale();
+    final languageCode = Localizations.localeOf(context).languageCode;
+    final dic = I18n.of(context)!.translationsForLocale();
 
-    final String infoLink = ceremonyInfoLink(languageCode);
+    final infoLink = ceremonyInfoLink(languageCode);
 
     return Container(
       child: meetupTime != null
@@ -50,15 +50,16 @@ class CeremonyInfo extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    !meetupCompleted
-                        ? CeremonySchedule(
-                            nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
-                            languageCode: languageCode,
-                          )
-                        : Text(
-                            dic.encointer.gatheringSuccessfullyCompleted,
-                            style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerBlack),
-                          ),
+                    if (!meetupCompleted)
+                      CeremonySchedule(
+                        nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
+                        languageCode: languageCode,
+                      )
+                    else
+                      Text(
+                        dic.encointer.gatheringSuccessfullyCompleted,
+                        style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerBlack),
+                      ),
                     CeremonyInfoAndCalendar(
                       nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
                       infoLink: infoLink,
@@ -70,8 +71,8 @@ class CeremonyInfo extends StatelessWidget {
             )
           : Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const CupertinoActivityIndicator(),
+              children: const [
+                CupertinoActivityIndicator(),
               ],
             ),
     );

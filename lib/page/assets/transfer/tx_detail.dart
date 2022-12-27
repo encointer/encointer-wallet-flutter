@@ -4,12 +4,11 @@ import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class TxDetail extends StatelessWidget {
-  TxDetail({
-    Key? key,
+  const TxDetail({
+    super.key,
     this.success,
     this.networkName,
     this.action,
@@ -18,7 +17,7 @@ class TxDetail extends StatelessWidget {
     this.blockTime,
     this.blockNum,
     this.info,
-  }) : super(key: key);
+  });
 
   final bool? success;
   final String? networkName;
@@ -30,7 +29,7 @@ class TxDetail extends StatelessWidget {
   final List<DetailInfoItem>? info;
 
   List<Widget> _buildListView(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     Widget buildLabel(String name) {
       return Container(
           padding: const EdgeInsets.only(left: 8),
@@ -42,7 +41,7 @@ class TxDetail extends StatelessWidget {
               )));
     }
 
-    var list = <Widget>[
+    final list = <Widget>[
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -64,7 +63,7 @@ class TxDetail extends StatelessWidget {
       ),
       const Divider(),
     ];
-    info!.forEach((i) {
+    for (final i in info!) {
       list.add(ListTile(
         leading: buildLabel(i.label!),
         title: Text(i.title!),
@@ -76,7 +75,7 @@ class TxDetail extends StatelessWidget {
               )
             : null,
       ));
-    });
+    }
 
     String? pnLink = 'https://polkascan.io/pre/${networkName!.toLowerCase()}/transaction/$hash';
     String? snLink = 'https://${networkName!.toLowerCase()}.subscan.io/extrinsic/$hash';
@@ -107,12 +106,11 @@ class TxDetail extends StatelessWidget {
                 pnLink,
                 text: 'Polkascan',
               ),
-              snLink != null
-                  ? JumpToBrowserLink(
-                      snLink,
-                      text: 'Subscan',
-                    )
-                  : Container(),
+              if (snLink != null)
+                JumpToBrowserLink(
+                  snLink,
+                  text: 'Subscan',
+                ),
             ],
           ),
         ),

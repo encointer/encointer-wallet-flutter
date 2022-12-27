@@ -1,4 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -6,17 +9,21 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AddressInputField extends StatefulWidget {
-  AddressInputField(this.store, {Key? key, this.label, this.initialValue, this.onChanged, this.hideIdenticon = false})
-      : super(key: key);
+  const AddressInputField(
+    this.store, {
+    super.key,
+    this.label,
+    this.initialValue,
+    this.onChanged,
+    this.hideIdenticon = false,
+  });
+
   final AppStore store;
   final String? label;
   final AccountData? initialValue;
-  final Function(AccountData)? onChanged;
+  final void Function(AccountData)? onChanged;
   final bool hideIdenticon;
 
   @override
@@ -42,8 +49,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
     accountData.address = input;
     if (input.length < 47) {
       // check if input indices in local account list
-      final int indicesIndex = listLocal.indexWhere((e) {
-        final Map? accInfo = widget.store.account.addressIndexMap[e.address];
+      final indicesIndex = listLocal.indexWhere((e) {
+        final accInfo = widget.store.account.addressIndexMap[e.address];
         return accInfo != null && accInfo['accountIndex'] == input;
       });
       if (indicesIndex >= 0) {
@@ -52,12 +59,12 @@ class _AddressInputFieldState extends State<AddressInputField> {
       // query account address with account indices
       final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
       if (queryRes != null) {
-        accountData.address = queryRes[0];
+        accountData.address = queryRes[0] as String;
         accountData.name = input;
       }
     } else {
       // check if input address in local account list
-      final int addressIndex = listLocal.indexWhere((e) => _itemAsString(e).contains(input));
+      final addressIndex = listLocal.indexWhere((e) => _itemAsString(e).contains(input));
       if (addressIndex >= 0) {
         return [listLocal[addressIndex]];
       }
@@ -69,11 +76,11 @@ class _AddressInputFieldState extends State<AddressInputField> {
   }
 
   String _itemAsString(AccountData item) {
-    final String address = Fmt.addressOfAccount(item, widget.store);
-    final Map? accInfo = widget.store.account.addressIndexMap[item.address];
+    final address = Fmt.addressOfAccount(item, widget.store);
+    final accInfo = widget.store.account.addressIndexMap[item.address];
     String? idx = '';
     if (accInfo != null && accInfo['accountIndex'] != null) {
-      idx = accInfo['accountIndex'];
+      idx = accInfo['accountIndex'] as String?;
     }
     return '${item.name} $idx $address ${item.address}';
   }
@@ -84,8 +91,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
     }
     return Observer(
       builder: (_) {
-        final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
-        final String address = Fmt.addressOfAccount(item, widget.store);
+        final accInfo = widget.store.account.addressIndexMap[item.pubKey];
+        final address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           padding: const EdgeInsets.only(top: 8),
           child: Row(
@@ -120,8 +127,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
   Widget _listItemBuilder(BuildContext context, AccountData item, bool isSelected) {
     return Observer(
       builder: (_) {
-        final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
-        final String address = Fmt.addressOfAccount(item, widget.store);
+        final accInfo = widget.store.account.addressIndexMap[item.pubKey];
+        final address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 8),
           decoration: !isSelected
@@ -149,10 +156,10 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    return Container(
+    final dic = I18n.of(context)!.translationsForLocale();
+    return DecoratedBox(
       decoration: BoxDecoration(
-        color: ZurichLion.shade50,
+        color: zurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(

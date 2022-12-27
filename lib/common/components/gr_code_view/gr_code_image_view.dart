@@ -7,11 +7,11 @@ import 'package:encointer_wallet/utils/extensions/extensions.dart';
 
 class QrCodeImageWithButton extends StatelessWidget {
   const QrCodeImageWithButton({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.qrCode,
     required this.text,
-  }) : super(key: key);
+  });
 
   final VoidCallback onTap;
   final String qrCode;
@@ -25,7 +25,7 @@ class QrCodeImageWithButton extends StatelessWidget {
         const SizedBox(height: 10),
         TextButton.icon(
           onPressed: onTap,
-          icon: Icon(Icons.share, color: ZurichLion.shade500),
+          icon: Icon(Icons.share, color: zurichLion.shade500),
           label: Text(
             text,
             style: Theme.of(context).textTheme.headline3,
@@ -39,10 +39,10 @@ class QrCodeImageWithButton extends StatelessWidget {
 
 class QrCodeImage extends StatelessWidget {
   const QrCodeImage({
-    Key? key,
+    super.key,
     required this.qrCode,
     this.errorCorrectionLevel = QrErrorCorrectLevel.L,
-  }) : super(key: key);
+  });
 
   final String qrCode;
   final int errorCorrectionLevel;
@@ -57,7 +57,7 @@ class QrCodeImage extends StatelessWidget {
         minScale: context.isMobile ? 0.2 : 0.4,
         initialScale: context.isMobile ? 0.8 : 0.5,
         backgroundDecoration: BoxDecoration(
-          color: ZurichLion.shade50,
+          color: zurichLion.shade50,
         ),
         child: QrImage(
           backgroundColor: Theme.of(context).canvasColor,

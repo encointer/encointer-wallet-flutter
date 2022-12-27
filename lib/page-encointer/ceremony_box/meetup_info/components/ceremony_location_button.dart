@@ -5,28 +5,26 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyLocationButton extends StatelessWidget {
-  const CeremonyLocationButton({
-    this.onPressed,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyLocationButton({this.onPressed, super.key});
 
   final Future<void> Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 16),
         // make splash animation as high as the container
         backgroundColor: Colors.white,
-        foregroundColor: ZurichLion.shade500,
-        shadowColor: ZurichLion.shade500,
+        foregroundColor: zurichLion.shade500,
+        shadowColor: zurichLion.shade500,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
       ),
+      onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -35,7 +33,6 @@ class CeremonyLocationButton extends StatelessWidget {
           Text(dic.encointer.meetingPoint),
         ],
       ),
-      onPressed: onPressed,
     );
   }
 }

@@ -1,0 +1,3 @@
+tags:
+  encointer-node-e2e:
+    timeout: 2x

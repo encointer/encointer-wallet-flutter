@@ -28,7 +28,7 @@ void main() {
     });
 
     test('fromQrPayload V2 works', () async {
-      final payload = 'encointer-invoice\n'
+      const payload = 'encointer-invoice\n'
           'v2.0\n'
           'account\n'
           'sqm1v79dF6b\n'
@@ -69,7 +69,7 @@ void main() {
   });
 
   test('fromQrPayload V1 works', () async {
-    final payload = 'encointer-invoice\n'
+    const payload = 'encointer-invoice\n'
         'v1.0\n'
         'account\n'
         'sqm1v79dF6b\n'

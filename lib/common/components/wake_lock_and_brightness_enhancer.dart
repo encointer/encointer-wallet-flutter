@@ -9,10 +9,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 ///
 /// Useful when a QR-code is shown.
 class WakeLockAndBrightnessEnhancer extends StatefulWidget {
-  const WakeLockAndBrightnessEnhancer({
-    Key? key,
-    required this.brightness,
-  }) : super(key: key);
+  const WakeLockAndBrightnessEnhancer({super.key, required this.brightness});
 
   /// Brightness of the screen in the interval of [0,1].
   final double brightness;

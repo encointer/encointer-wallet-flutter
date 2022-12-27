@@ -10,6 +10,10 @@ part 'community_metadata.g.dart';
 class CommunityMetadata {
   CommunityMetadata(this.name, this.symbol, this.assets, this.url, this.theme);
 
+  factory CommunityMetadata.fromJson(Map<String, dynamic> json) => _$CommunityMetadataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CommunityMetadataToJson(this);
+
   String name;
   String symbol;
   String assets;
@@ -20,8 +24,4 @@ class CommunityMetadata {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory CommunityMetadata.fromJson(Map<String, dynamic> json) => _$CommunityMetadataFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CommunityMetadataToJson(this);
 }

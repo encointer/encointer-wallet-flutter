@@ -6,17 +6,17 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/busi
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_horizontal.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class BusinessDetail extends StatelessWidget {
-  BusinessDetail(this.business, {Key? key}) : super(key: key);
+  const BusinessDetail(this.business, {super.key, this.cardHeight = 200, this.cardWidth = 160});
+
   final BazaarBusinessData? business;
-  final double cardHeight = 200;
-  final double cardWidth = 160;
+  final double cardHeight;
+  final double cardWidth;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -91,9 +91,7 @@ class BusinessDetail extends StatelessWidget {
 }
 
 class SmallLeaflet extends StatelessWidget {
-  const SmallLeaflet({
-    Key? key,
-  }) : super(key: key);
+  const SmallLeaflet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +105,12 @@ class SmallLeaflet extends StatelessWidget {
               zoom: 15.0,
               maxZoom: 18.4,
             ),
-            layers: [
-              TileLayerOptions(
+            children: [
+              TileLayer(
                 urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                subdomains: ['a', 'b', 'c'],
+                subdomains: const ['a', 'b', 'c'],
               ),
-              MarkerLayerOptions(
+              MarkerLayer(
                 markers: [
                   Marker(
                     width: 20.0,
@@ -133,10 +131,11 @@ class SmallLeaflet extends StatelessWidget {
           child: GestureDetector(
             onTap: () => {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BusinessesOnMap(),
-                  ))
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => BusinessesOnMap(),
+                ),
+              )
             },
             child: const Icon(Icons.fullscreen, size: 40),
           ),

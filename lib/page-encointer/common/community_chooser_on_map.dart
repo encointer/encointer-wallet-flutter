@@ -1,33 +1,33 @@
 import 'dart:convert';
 
 import 'package:dart_geohash/dart_geohash.dart';
-import 'package:encointer_wallet/models/communities/cid_name.dart';
-import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'package:encointer_wallet/models/communities/cid_name.dart';
+import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+
 class CommunityChooserOnMap extends StatelessWidget {
+  CommunityChooserOnMap(this.store, {super.key}) {
+    if (store.encointer.communities != null) {
+      for (final community in store.encointer.communities!) {
+        communityDataAt[coordinatesOf(community)] = community;
+      }
+    }
+  }
+
   final AppStore store;
 
   final communityDataAt = <LatLng, CidName>{};
 
   List<Marker> get _markers => getMarkers(store);
 
-  CommunityChooserOnMap(this.store, {Key? key}) : super(key: key) {
-    if (store.encointer.communities != null) {
-      for (var community in store.encointer.communities!) {
-        communityDataAt[coordinatesOf(community)] = community;
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return EncointerMap(
       store,
@@ -42,31 +42,25 @@ class CommunityChooserOnMap extends StatelessWidget {
 }
 
 class CommunityDetailsPopup extends StatefulWidget {
+  const CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {super.key});
+
   final AppStore store;
   final Marker marker;
   final CidName? dataForThisMarker;
 
-  CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
-
   @override
-  State<CommunityDetailsPopup> createState() => _CommunityDetailsPopupState(store);
+  State<CommunityDetailsPopup> createState() => _CommunityDetailsPopupState();
 }
 
 class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
-  final AppStore store;
-
-  _CommunityDetailsPopupState(this.store);
-
   @override
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
         key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
-        onTap: () {
-          store.encointer.community?.clearCommunityIcon();
-          setState(() {
-            store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
-          });
+        onTap: () async {
+          setState(() {});
+          await widget.store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
           Navigator.pop(context);
         },
         child: Container(
@@ -105,10 +99,10 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
 }
 
 List<Marker> getMarkers(AppStore store) {
-  List<Marker> markers = [];
+  final markers = <Marker>[];
   if (store.encointer.communities != null) {
     for (num index = 0; index < store.encointer.communities!.length; index++) {
-      CidName community = store.encointer.communities![index as int];
+      final community = store.encointer.communities![index as int];
       markers.add(
         Marker(
           // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
@@ -133,6 +127,6 @@ List<Marker> getMarkers(AppStore store) {
 }
 
 LatLng coordinatesOf(CidName community) {
-  GeoHash coordinates = GeoHash(utf8.decode(community.cid.geohash));
+  final coordinates = GeoHash(utf8.decode(community.cid.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }

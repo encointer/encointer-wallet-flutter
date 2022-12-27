@@ -7,24 +7,23 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class TransferDetailPage extends StatelessWidget {
-  TransferDetailPage({Key? key}) : super(key: key);
+  const TransferDetailPage({super.key});
 
   static const String route = '/assets/tx';
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
-    final String? symbol = _store.settings.networkState!.tokenSymbol;
-    final int? decimals = _store.settings.networkState!.tokenDecimals;
-    final String tokenView = Fmt.tokenView(symbol);
+    final symbol = _store.settings.networkState!.tokenSymbol;
+    final decimals = _store.settings.networkState!.tokenDecimals;
+    final tokenView = Fmt.tokenView(symbol);
 
-    final TransferData tx = ModalRoute.of(context)!.settings.arguments as TransferData;
+    final tx = ModalRoute.of(context)!.settings.arguments as TransferData;
 
-    final String txType = tx.from == _store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
+    final txType = tx.from == _store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
 
     return TxDetail(
       success: true,

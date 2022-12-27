@@ -10,7 +10,7 @@ class TransferData extends _TransferData {
   Map<String, dynamic> toJson() => _$TransferDataToJson(this);
 
   bool concernsCurrentAccount(String currentAccount) {
-    return (currentAccount == from || currentAccount == to);
+    return currentAccount == from || currentAccount == to;
   }
 }
 

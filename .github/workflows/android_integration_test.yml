@@ -2,16 +2,21 @@ name: Android CI
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
   pull_request:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
+
+env:
+  NODE_VERSION: 16.13.1
+  JAVA_VERSION: 12.x
+  TEMP_SCREENSHOTS: /tmp/screenshots
 
 jobs:
   cancel_previous_runs:
     name: Cancel Previous Runs
     runs-on: ubuntu-20.04
     steps:
-      - uses: styfle/cancel-workflow-action@0.4.1
+      - uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -33,23 +38,15 @@ jobs:
       fail-fast: false
     steps:
       # Setup Environment
-      - uses: actions/checkout@v2
-        with:
-          # 2 to compare the last two revisions to check if JS changed
-          fetch-depth: 2
+      - uses: actions/checkout@v3
 
-      - uses: monorepo-actions/config-for-actions@main
-        id: config
+      - uses: actions/setup-java@v3
         with:
-          config_files: ./.github/action-config.json
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'zulu'
 
-      - uses: actions/setup-java@v1
-        with:
-          java-version: ${{ steps.config.outputs.java-version }}
-
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ steps.config.outputs.flutter-version }}
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
 
       - name: Setup Android SDK and accept licences
         uses: android-actions/setup-android@v2
@@ -58,16 +55,16 @@ jobs:
         run: sdkmanager --list | grep system-images
 
       # JS Stuff
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.config.outputs.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: "Build JS"
         working-directory: ./scripts
         run: source ./init_env.sh && ./build_js.sh
 
       - name: Gradle cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
@@ -75,7 +72,7 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
       - name: AVD cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: avd-cache
         with:
           path: |
@@ -99,7 +96,7 @@ jobs:
         env:
           ANDROID_DEBUG: "true"
           RECORD: ${{ matrix.record_video }}
-          TEMP_DIR:  ${{ steps.config.outputs.temp-screenshots }}
+          TEMP_DIR: ${{ env.TEMP_SCREENSHOTS }}
         with:
           api-level: ${{ matrix.api-level }}
           profile: ${{ matrix.device }}
@@ -111,7 +108,7 @@ jobs:
 
       - name: "Upload screenshots"
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name:  ${{ matrix.device }}
-          path:  ${{ steps.config.outputs.temp-screenshots }}
+          name: ${{ matrix.device }}
+          path: ${{ env.TEMP_SCREENSHOTS }}

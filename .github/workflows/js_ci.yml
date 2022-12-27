@@ -6,33 +6,33 @@ on:
   pull_request:
     branches: [ master, f-droid ]
 
+env:
+  NODE_VERSION: 16.13.1
+  JAVA_VERSION: 12.x
+  TEMP_SCREENSHOTS: /tmp/screenshots
+
 jobs:
   integration-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       # Setup Environment
-      - uses: actions/checkout@v2
-
-      - uses: monorepo-actions/config-for-actions@main
-        id: config
-        with:
-          config_files: ./.github/action-config.json
+      - uses: actions/checkout@v3
 
       # JS Stuff
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.config.outputs.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Download encointer-node
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: build-and-test.yml
-          name: encointer-node-notee-82d2d27e85930a41c402ac213be26335a792b6d9
+          name: encointer-node-notee-54cec8518e1213370c01bb58af0336508ef92ba1
           # in fact this action should download the latest artifact, but sometimes fails. Then we need to
           # set the `run_id` to force a download of an updated binary.
-          run_id: 3016606926
+          run_id: 3641963611
           path: node
           repo: encointer/encointer-node
 
@@ -54,20 +54,15 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        network: [gesell] # Todo: add cantillon once we support it again.
+        network: [ gesell ] # Todo: add cantillon once we support it again.
     steps:
       # Setup Environment
-      - uses: actions/checkout@v2
-
-      - uses: monorepo-actions/config-for-actions@main
-        id: config
-        with:
-          config_files: ./.github/action-config.json
+      - uses: actions/checkout@v3
 
       # JS Stuff
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.config.outputs.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Run e2e tests against  ${{ matrix.network }}
         run: |

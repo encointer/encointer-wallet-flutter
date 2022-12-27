@@ -65,17 +65,17 @@ const _$CeremonyPhaseEnumMap = {
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$EncointerStore on _EncointerStore, Store {
-  Computed<dynamic>? _$currentPhaseDurationComputed;
+  Computed<int?>? _$currentPhaseDurationComputed;
 
   @override
-  dynamic get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
-          Computed<dynamic>(() => super.currentPhaseDuration, name: '_EncointerStore.currentPhaseDuration'))
+  int? get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
+          Computed<int?>(() => super.currentPhaseDuration, name: '_EncointerStore.currentPhaseDuration'))
       .value;
-  Computed<dynamic>? _$communitiesContainsChosenCidComputed;
+  Computed<bool>? _$communitiesContainsChosenCidComputed;
 
   @override
-  dynamic get communitiesContainsChosenCid =>
-      (_$communitiesContainsChosenCidComputed ??= Computed<dynamic>(() => super.communitiesContainsChosenCid,
+  bool get communitiesContainsChosenCid =>
+      (_$communitiesContainsChosenCidComputed ??= Computed<bool>(() => super.communitiesContainsChosenCid,
               name: '_EncointerStore.communitiesContainsChosenCid'))
           .value;
   Computed<BazaarStore?>? _$bazaarComputed;
@@ -279,6 +279,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  late final _$setCommunityIdentifiersAsyncAction =
+      AsyncAction('_EncointerStore.setCommunityIdentifiers', context: context);
+
+  @override
+  Future<void> setCommunityIdentifiers(List<CommunityIdentifier> cids) {
+    return _$setCommunityIdentifiersAsyncAction.run(() => super.setCommunityIdentifiers(cids));
+  }
+
+  late final _$setChosenCidAsyncAction = AsyncAction('_EncointerStore.setChosenCid', context: context);
+
+  @override
+  Future<void> setChosenCid([CommunityIdentifier? cid]) {
+    return _$setChosenCidAsyncAction.run(() => super.setChosenCid(cid));
+  }
+
   late final _$updateStateAsyncAction = AsyncAction('_EncointerStore.updateState', context: context);
 
   @override
@@ -289,7 +304,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   late final _$initCommunityStoreAsyncAction = AsyncAction('_EncointerStore.initCommunityStore', context: context);
 
   @override
-  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {dynamic shouldCache = true}) {
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {bool shouldCache = true}) {
     return _$initCommunityStoreAsyncAction.run(() => super.initCommunityStore(cid, address, shouldCache: shouldCache));
   }
 
@@ -306,30 +321,10 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
-    try {
-      return super.setCommunityIdentifiers(cids);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setCommunities(List<CidName> c) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunities');
     try {
       return super.setCommunities(c);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setChosenCid([CommunityIdentifier? cid]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
-    try {
-      return super.setChosenCid(cid);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -356,7 +351,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCurrentCeremonyIndex(dynamic index) {
+  void setCurrentCeremonyIndex(int? index) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCurrentCeremonyIndex');
     try {
       return super.setCurrentCeremonyIndex(index);
@@ -388,7 +383,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  Future<void> initEncointerAccountStore(String address, {dynamic shouldCache = true}) {
+  Future<void> initEncointerAccountStore(String address, {bool shouldCache = true}) {
     final _$actionInfo =
         _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initEncointerAccountStore');
     try {
@@ -399,7 +394,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  Future<void> initBazaarStore(CommunityIdentifier cid, {dynamic shouldCache = true}) {
+  Future<void> initBazaarStore(CommunityIdentifier cid, {bool shouldCache = true}) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initBazaarStore');
     try {
       return super.initBazaarStore(cid, shouldCache: shouldCache);

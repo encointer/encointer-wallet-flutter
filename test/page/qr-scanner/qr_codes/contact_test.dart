@@ -26,7 +26,7 @@ void main() {
     });
 
     test('fromQrPayload V2 works', () async {
-      final payload = 'encointer-contact\n'
+      const payload = 'encointer-contact\n'
           'v2.0\n'
           'account\n'
           'sqm1v79dF6b\n'
@@ -62,7 +62,7 @@ void main() {
     });
 
     test('fromQrPayload V1 works', () async {
-      final payload = 'encointer-contact\n'
+      const payload = 'encointer-contact\n'
           'v1.0\n'
           'account\n'
           '\n'

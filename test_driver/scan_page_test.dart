@@ -26,7 +26,7 @@ void main() {
     test('scan-page-screenshot', () async {
       final file = File('test_driver/resources/encointer-receive-qr-1.jpg');
       final bytes = await file.readAsBytes();
-      String base64 = base64Encode(bytes);
+      final base64 = base64Encode(bytes);
 
       // set the background in the MockScanPage
       await driver!.requestData(base64);

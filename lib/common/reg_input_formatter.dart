@@ -1,14 +1,13 @@
 import 'package:flutter/services.dart';
 
 class RegExInputFormatter implements TextInputFormatter {
-  final RegExp _regExp;
-
-  RegExInputFormatter._(this._regExp);
-
   factory RegExInputFormatter.withRegex(String regexString) {
     final regex = RegExp(regexString);
     return RegExInputFormatter._(regex);
   }
+
+  RegExInputFormatter._(this._regExp);
+  final RegExp _regExp;
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -23,7 +22,7 @@ class RegExInputFormatter implements TextInputFormatter {
   bool _isValid(String value) {
     try {
       final matches = _regExp.allMatches(value);
-      for (Match match in matches) {
+      for (final Match match in matches) {
         if (match.start == 0 && match.end == value.length) {
           return true;
         }

@@ -10,11 +10,11 @@ class InputValidation {
       return dic.profile.contactNameError;
     }
 
-    String name = input.trim();
-    if (name.length == 0) {
+    final name = input.trim();
+    if (name.isEmpty) {
       return dic.profile.contactNameError;
     }
-    int exist = existingAccounts.indexWhere((i) => i.name == name);
+    final exist = existingAccounts.indexWhere((i) => i.name == name);
     if (exist > -1) {
       return dic.profile.contactNameAlreadyExists;
     }

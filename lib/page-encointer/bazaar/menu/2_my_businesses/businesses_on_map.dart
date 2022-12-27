@@ -1,14 +1,16 @@
-import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+
 class BusinessesOnMap extends StatelessWidget {
-  BusinessesOnMap({Key? key}) : super(key: key);
+  BusinessesOnMap({super.key});
+
   final data = allBusinesses;
 
   @override
@@ -23,19 +25,17 @@ class BusinessesOnMap extends StatelessWidget {
 }
 
 class BMap extends StatelessWidget {
+  BMap(List<BazaarItemData> data, {super.key})
+      // initializer (only use businesses, offerings do not have coordinates)
+      : businessData = data.whereType<BazaarBusinessData>().map((item) => item).toList() {
+    // construct a map using "collection for"
+    bazaarBusinessDataFor.addAll({for (var business in businessData) business.coordinates: business});
+  }
+
   /// Used to trigger showing/hiding of popups.
   final PopupController _popupLayerController = PopupController();
   final List<BazaarBusinessData> businessData;
   final bazaarBusinessDataFor = <LatLng, BazaarBusinessData>{};
-
-  BMap(List<BazaarItemData> data, {Key? key})
-      // initializer (only use businesses, offerings do not have coordinates)
-      : businessData =
-            data.where((item) => item is BazaarBusinessData).map((item) => item as BazaarBusinessData).toList(),
-        super(key: key) {
-    // construct a map using "collection for"
-    bazaarBusinessDataFor.addAll({for (var business in businessData) business.coordinates: business});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +47,9 @@ class BMap extends StatelessWidget {
         onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
       ),
       children: [
-        TileLayerWidget(
-          options: TileLayerOptions(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: ['a', 'b', 'c'],
-          ),
+        TileLayer(
+          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          subdomains: const ['a', 'b', 'c'],
         ),
         PopupMarkerLayerWidget(
           options: PopupMarkerLayerOptions(
@@ -79,6 +77,8 @@ class BMap extends StatelessWidget {
 }
 
 class BusinessDetailsPopup extends StatelessWidget {
+  const BusinessDetailsPopup(this.marker, this.dataForThisMarker, {super.key});
+
   final Marker marker;
   final BazaarBusinessData? dataForThisMarker;
 
@@ -89,7 +89,7 @@ class BusinessDetailsPopup extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
+            MaterialPageRoute<void>(
               builder: (context) => BusinessDetail(dataForThisMarker),
             ),
           );
@@ -127,6 +127,4 @@ class BusinessDetailsPopup extends StatelessWidget {
       ),
     );
   }
-
-  BusinessDetailsPopup(this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
 }

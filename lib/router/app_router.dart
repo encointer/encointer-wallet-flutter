@@ -51,12 +51,12 @@ class AppRoute {
         );
       case NetworkSelectPage.route:
         return CupertinoPageRoute(
-          builder: (_) => NetworkSelectPage(),
+          builder: (_) => const NetworkSelectPage(),
           settings: settings,
         );
       case CreateAccountEntryPage.route:
         return CupertinoPageRoute(
-          builder: (_) => CreateAccountEntryPage(),
+          builder: (_) => const CreateAccountEntryPage(),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -74,7 +74,7 @@ class AppRoute {
         );
       case AccountSharePage.route:
         return CupertinoPageRoute(
-          builder: (_) => AccountSharePage(),
+          builder: (_) => const AccountSharePage(),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -95,7 +95,7 @@ class AppRoute {
         );
       case TransferPage.route:
         return CupertinoPageRoute(
-          builder: (_) => TransferPage(),
+          builder: (_) => const TransferPage(),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -112,30 +112,30 @@ class AppRoute {
         );
       case ReceivePage.route:
         return CupertinoPageRoute(
-          builder: (_) => ReceivePage(),
+          builder: (_) => const ReceivePage(),
           settings: settings,
           fullscreenDialog: true,
         );
       case TransferDetailPage.route:
         return CupertinoPageRoute(
-          builder: (_) => TransferDetailPage(),
+          builder: (_) => const TransferDetailPage(),
           settings: settings,
           fullscreenDialog: true,
         );
       case AccountManagePage.route:
         return CupertinoPageRoute(
-          builder: (_) => AccountManagePage(),
+          builder: (_) => const AccountManagePage(),
           settings: settings,
           fullscreenDialog: true,
         );
       case ContactsPage.route:
         return CupertinoPageRoute(
-          builder: (_) => ContactsPage(),
+          builder: (_) => const ContactsPage(),
           settings: settings,
         );
       case ContactListPage.route:
         return CupertinoPageRoute(
-          builder: (_) => ContactListPage(),
+          builder: (_) => const ContactListPage(),
           settings: settings,
         );
       case ContactPage.route:
@@ -145,7 +145,7 @@ class AppRoute {
         );
       case ChangePasswordPage.route:
         return CupertinoPageRoute(
-          builder: (_) => ChangePasswordPage(),
+          builder: (_) => const ChangePasswordPage(),
           settings: settings,
         );
       case ContactDetailPage.route:
@@ -155,7 +155,7 @@ class AppRoute {
         );
       case SettingsPage.route:
         return CupertinoPageRoute(
-          builder: (_) => SettingsPage(),
+          builder: (_) => const SettingsPage(),
           settings: settings,
         );
       case ExportAccountPage.route:
@@ -165,7 +165,7 @@ class AppRoute {
         );
       case ExportResultPage.route:
         return CupertinoPageRoute(
-          builder: (_) => ExportResultPage(),
+          builder: (_) => const ExportResultPage(),
           settings: settings,
         );
       case RemoteNodeListPage.route:
@@ -185,12 +185,17 @@ class AppRoute {
         );
       case BazaarMain.route:
         return CupertinoPageRoute(
-          builder: (_) => BazaarMain(),
+          builder: (_) => const BazaarMain(),
           settings: settings,
         );
       case Instruction.route:
         return CupertinoPageRoute(
           builder: (_) => const Instruction(),
+          settings: settings,
+        );
+      case LangPage.route:
+        return CupertinoPageRoute(
+          builder: (_) => const LangPage(),
           settings: settings,
         );
       default:

@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
-  RoundedButton({
-    Key? key,
+  const RoundedButton({
+    super.key,
     required this.text,
     this.onPressed,
     this.icon,
     this.color,
     this.expand,
     this.submitting = false,
-  }) : super(key: key);
+  });
 
   final String text;
   final void Function()? onPressed;
@@ -21,7 +21,7 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> row = <Widget>[];
+    final row = <Widget>[];
     if (submitting) {
       row.add(const CupertinoActivityIndicator());
     }
@@ -45,11 +45,11 @@ class RoundedButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
+      onPressed: submitting ? null : onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: row,
       ),
-      onPressed: submitting ? null : onPressed,
     );
   }
 }

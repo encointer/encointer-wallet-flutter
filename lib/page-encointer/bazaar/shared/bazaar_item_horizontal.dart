@@ -5,7 +5,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_det
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 
 class HorizontalBazaarItemList extends StatelessWidget {
-  HorizontalBazaarItemList(this.data, this.rowTitle, this.cardHeight, this.cardWidth, {Key? key}) : super(key: key);
+  const HorizontalBazaarItemList(this.data, this.rowTitle, this.cardHeight, this.cardWidth, {super.key});
 
   final List<BazaarItemData> data;
   final double cardHeight;
@@ -33,11 +33,7 @@ class HorizontalBazaarItemList extends StatelessWidget {
 }
 
 class BazaarItemHorizontal extends StatelessWidget {
-  const BazaarItemHorizontal({
-    Key? key,
-    required this.data,
-    required this.index,
-  }) : super(key: key);
+  const BazaarItemHorizontal({super.key, required this.data, required this.index});
 
   final List<BazaarItemData> data;
   final int index;
@@ -54,7 +50,7 @@ class BazaarItemHorizontal extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
+            MaterialPageRoute<void>(
               builder: (context) => (data[index] is BazaarBusinessData)
                   ? BusinessDetail(data[index] as BazaarBusinessData?)
                   : OfferingDetail(data[index] as BazaarOfferingData),
@@ -87,11 +83,7 @@ class BazaarItemHorizontal extends StatelessWidget {
 }
 
 class _ImageWithOverlaidIcon extends StatelessWidget {
-  const _ImageWithOverlaidIcon({
-    Key? key,
-    required this.data,
-    required this.index,
-  }) : super(key: key);
+  const _ImageWithOverlaidIcon({required this.data, required this.index});
 
   final List<BazaarItemData> data;
   final int index;
@@ -100,19 +92,20 @@ class _ImageWithOverlaidIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(children: [
       ClipRRect(
-          child: data[index].image,
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(15),
             bottom: Radius.circular(0),
-          )),
+          ),
+          child: data[index].image),
       Positioned(
+          // opaque background to icon
+          right: 0,
           // opaque background to icon
           child: Opacity(
             opacity: .4,
             child: Container(height: 24, width: 24, color: Colors.white),
-          ),
-          right: 0),
-      Positioned(child: data[index].icon, right: 0),
+          )),
+      Positioned(right: 0, child: data[index].icon),
     ]);
   }
 }

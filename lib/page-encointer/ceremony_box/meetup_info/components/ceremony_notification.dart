@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class CeremonyNotification extends StatelessWidget {
   const CeremonyNotification({
-    Key? key,
+    super.key,
     required this.notificationIconData,
     required this.notification,
-  }) : super(key: key);
+  });
 
   final IconData notificationIconData;
   final String notification;

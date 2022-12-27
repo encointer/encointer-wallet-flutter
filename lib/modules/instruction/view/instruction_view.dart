@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Instruction extends StatelessWidget {
-  const Instruction({Key? key}) : super(key: key);
+  const Instruction({super.key});
 
   static const String route = '/instruction';
 
@@ -32,7 +32,7 @@ class Instruction extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: '1. ${dic.openAppSettings}',
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14, color: ZurichLion),
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14, color: zurichLion),
                             recognizer: TapGestureRecognizer()..onTap = () => openAppSettings(),
                           ),
                         ],

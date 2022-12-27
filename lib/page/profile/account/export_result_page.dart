@@ -1,21 +1,21 @@
-import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+
 class ExportResultPage extends StatelessWidget {
+  const ExportResultPage({super.key});
+
   static const String route = '/account/key';
 
-  ExportResultPage({Key? key}) : super(key: key);
-
   void _showExportDialog(BuildContext context, Map args) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     Clipboard.setData(ClipboardData(
-      text: args['key'],
+      text: args['key'] as String,
     ));
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -34,8 +34,8 @@ class ExportResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    final Map args = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final args = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
 
     return Scaffold(
       appBar: AppBar(title: Text(dic.profile.export)),
@@ -47,7 +47,7 @@ class ExportResultPage extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: <Widget>[
-                  args['type'] == AccountStore.seedTypeKeystore ? Container() : Text(dic.profile.exportWarn),
+                  if (args['type'] != AccountStore.seedTypeKeystore) Text(dic.profile.exportWarn),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -73,7 +73,8 @@ class ExportResultPage extends StatelessWidget {
                         borderRadius: const BorderRadius.all(Radius.circular(4))),
                     padding: const EdgeInsets.all(16),
                     child: Text(
-                      args['key'],
+                      args['key'] as String,
+                      key: const Key('account-mnemonic-key'),
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   ),

@@ -18,18 +18,18 @@ class SubstrateDartApi {
   String? _endpoint;
 
   /// Returns the rpc nodes of the connected node or an empty list otherwise.
-  get rpcMethods {
-    return _rpc != null ? _rpc!.methods : [];
+  List<String>? get rpcMethods {
+    return _rpc != null ? _rpc!.methods : <String>[];
   }
 
   /// Gets address of the node we connect to including ws(s).
-  get endpoint => _endpoint;
+  String? get endpoint => _endpoint;
 
   Future<void> connect(String endpoint) async {
     _connectAndListen(endpoint);
 
     try {
-      _rpc = await rpc('rpc_methods').then((m) => RpcMethods.fromJson(m));
+      _rpc = await rpc('rpc_methods').then((m) => RpcMethods.fromJson(m as Map<String, dynamic>));
 
       // Sanity check that we are running against valid node with offchain indexing enabled
       if (!_rpc!.methods!.contains('encointer_getReputations')) {
@@ -57,9 +57,9 @@ class SubstrateDartApi {
   ///
   /// Hints:
   /// * account ids must be passed as SS58.
-  Future rpc(String method, [params]) {
+  Future rpc(String method, [dynamic params]) {
     if (_client == null) {
-      throw ("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
+      throw "[dartApi] Can't call an rpc method because we are not connected to an endpoint";
     }
     if (_client!.isClosed) {
       Log.d('[dartApi] not connected. trying to reconnect to $endpoint', 'SubstrateDartApi');
@@ -70,14 +70,14 @@ class SubstrateDartApi {
   }
 
   /// Reconnect to the same endpoint if the connection was closed.
-  Future<void> reconnect() {
-    return _connectAndListen(endpoint);
+  Future<void> reconnect() async {
+    if (endpoint != null) await _connectAndListen(endpoint!);
   }
 
   /// Connects to and endpoint and starts listening on the input stream.
   Future<void> _connectAndListen(String endpoint) {
     _endpoint = endpoint;
-    var socket = WebSocketChannel.connect(Uri.parse(endpoint));
+    final socket = WebSocketChannel.connect(Uri.parse(endpoint));
     _client = Client(socket.cast<String>());
 
     // The client won't subscribe to the input stream until `listen` is called.

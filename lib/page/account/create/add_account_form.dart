@@ -9,15 +9,15 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountForm extends StatelessWidget {
   AddAccountForm({
-    Key? key,
+    super.key,
     required this.store,
     this.submitting,
     required this.onSubmit,
-  }) : super(key: key);
+  });
+
   final Function onSubmit;
   final bool? submitting;
   final AppStore store;
@@ -28,7 +28,7 @@ class AddAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Form(
       key: _formKey,
@@ -88,13 +88,13 @@ class AddAccountForm extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     I18n.of(context)!.translationsForLocale().profile.accountCreate,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                   ),
                 ],
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  var name = _nameCtrl.text.trim();
+                  final name = _nameCtrl.text.trim();
 
                   store.account.setNewAccountName(name);
                   store.account.setNewAccountPin(store.settings.cachedPin);

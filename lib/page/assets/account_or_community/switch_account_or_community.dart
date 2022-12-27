@@ -3,12 +3,7 @@ import 'package:encointer_wallet/page/assets/account_or_community/account_or_com
 import 'package:flutter/material.dart';
 
 class SwitchAccountOrCommunity extends StatefulWidget {
-  SwitchAccountOrCommunity({
-    Key? key,
-    this.rowTitle,
-    this.data,
-    this.onTap,
-  }) : super(key: key);
+  const SwitchAccountOrCommunity({super.key, this.rowTitle, this.data, this.onTap});
 
   final String? rowTitle;
   final List<AccountOrCommunityData>? data;
@@ -68,13 +63,14 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
                     height: identiconPlusTextHeight,
                     width: fadeWidth),
                 Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [whiteTransparent, Colors.white],
-                      ),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [whiteTransparent, Colors.white],
                     ),
-                    height: identiconPlusTextHeight,
-                    width: fadeWidth),
+                  ),
+                  height: identiconPlusTextHeight,
+                  width: fadeWidth,
+                ),
               ],
             ),
           ],

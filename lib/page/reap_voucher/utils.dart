@@ -3,6 +3,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/settings.dart';
 
 enum ChangeResult {
   ok,
@@ -16,7 +17,7 @@ Future<ChangeResult> changeNetworkAndCommunity(
   String? networkInfo,
   CommunityIdentifier cid,
 ) async {
-  var result = await changeNetwork(store, api, networkInfo, cid);
+  final result = await changeNetwork(store, api, networkInfo, cid);
 
   if (result != ChangeResult.ok) {
     return result;
@@ -31,12 +32,12 @@ Future<ChangeResult> changeNetwork(
   String? networkInfo,
   CommunityIdentifier cid,
 ) async {
-  var network;
+  EndpointData? network;
 
   try {
     network = networkEndpoints.firstWhere(
       (network) => network.info == networkInfo,
-      orElse: (() => throw FormatException('Invalid network in QrCode: $networkInfo')),
+      orElse: () => throw FormatException('Invalid network in QrCode: $networkInfo'),
     );
   } catch (e) {
     return ChangeResult.invalidNetwork;
@@ -62,10 +63,10 @@ Future<ChangeResult> changeCommunity(
   String? networkInfo,
   CommunityIdentifier cid,
 ) async {
-  var cids = await api.encointer.getCommunityIdentifiers();
+  final cids = await api.encointer.getCommunityIdentifiers();
 
   if (cids.contains(cid)) {
-    store.encointer.setChosenCid(cid);
+    await store.encointer.setChosenCid(cid);
     return ChangeResult.ok;
   } else {
     return ChangeResult.invalidCommunity;
