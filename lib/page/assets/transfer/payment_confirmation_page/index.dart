@@ -62,7 +62,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
+    final params = ModalRoute.of(context)!.settings.arguments! as PaymentConfirmationParams;
 
     final cid = params.cid;
     final recipientAccount = params.recipientAccount;
@@ -86,7 +86,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 const SizedBox(height: 10),
                 Flexible(
                   fit: FlexFit.tight,
-                  flex: 1,
                   child: TextGradient(
                     text: '${Fmt.doubleFormat(amount)} ⵐ',
                     style: const TextStyle(fontSize: 60),
@@ -279,7 +278,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
     _timer = Timer.periodic(
       const Duration(seconds: 2),
-      (_timer) => _animateTick(),
+      (timer) => _animateTick(),
     );
 
     _animationInitialized = true;

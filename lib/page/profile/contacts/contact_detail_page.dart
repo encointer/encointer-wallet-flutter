@@ -57,9 +57,9 @@ class ContactDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final account = ModalRoute.of(context)!.settings.arguments as AccountData;
+    final account = ModalRoute.of(context)!.settings.arguments! as AccountData;
     final dic = I18n.of(context)!.translationsForLocale();
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
 
     return Scaffold(
       appBar: AppBar(
@@ -88,7 +88,6 @@ class ContactDetailPage extends StatelessWidget {
                         account.address,
                         account.pubKey,
                         size: 130,
-                        tapToCopy: true,
                       )
                     ]),
                     const SizedBox(height: 20),
@@ -108,7 +107,7 @@ class ContactDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-              EndorseButton(_store, api, account),
+              EndorseButton(store, api, account),
               const SizedBox(height: 16),
               SecondaryButtonWide(
                 key: const Key('send-money-to-account'),
@@ -117,7 +116,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.send_sqaure_2),
                     const SizedBox(width: 12),
-                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', _store.encointer.community?.symbol ?? 'null'),
+                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? 'null'),
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
@@ -129,7 +128,6 @@ class ContactDetailPage extends StatelessWidget {
                       communitySymbol: context.read<AppStore>().encointer.community?.symbol,
                       recipient: account.address,
                       label: account.name,
-                      amount: null,
                     ),
                   );
                 },

@@ -35,7 +35,7 @@ class ExportResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final args = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
+    final args = ModalRoute.of(context)!.settings.arguments! as Map<dynamic, dynamic>;
 
     return Scaffold(
       appBar: AppBar(title: Text(dic.profile.export)),
@@ -68,7 +68,6 @@ class ExportResultPage extends StatelessWidget {
                         color: Colors.white,
                         border: Border.all(
                           color: Colors.black12,
-                          width: 1,
                         ),
                         borderRadius: const BorderRadius.all(Radius.circular(4))),
                     padding: const EdgeInsets.all(16),
