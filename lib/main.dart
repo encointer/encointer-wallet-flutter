@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,9 +24,6 @@ Future<void> main({AppcastConfiguration? appCast}) async {
     // this is enabled by default in IOS dev-builds.
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
-
-  // get_storage dependency
-  await GetStorage.init();
 
   HttpOverrides.global = MyHttpOverrides();
 
