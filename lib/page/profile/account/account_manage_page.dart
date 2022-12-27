@@ -64,16 +64,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
             CupertinoButton(
               key: const Key('delete-account'),
               child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-              onPressed: () => {
-                _appStore.account.removeAccount(accountToBeEdited).then(
-                  (_) async {
-                    // refresh balance
-                    await _appStore.loadAccountCache();
-                    webApi.fetchAccountData();
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  },
-                ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                _appStore.account
+                    .removeAccount(accountToBeEdited)
+                    .then((_) => _appStore.loadAccountCache())
+                    .then((_) => webApi.fetchAccountData());
               },
             ),
           ],
