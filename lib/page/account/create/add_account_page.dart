@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/add_account_form.dart';
@@ -46,10 +45,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     await webApi.account.generateAccount();
 
-    final acc = await webApi.account.importAccount(
-      cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
-      derivePath: '',
-    );
+    final acc = await webApi.account.importAccount();
 
     if (acc['error'] != null) {
       setState(() {

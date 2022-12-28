@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -30,9 +29,7 @@ class CreateAccountForm extends StatelessWidget {
     Future<void> createAndImportAccount() async {
       await webApi.account.generateAccount();
 
-      final acc = await webApi.account.importAccount(
-        cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
-      );
+      final acc = await webApi.account.importAccount();
 
       if (acc['error'] != null) {
         _showErrorCreatingAccountDialog(context);

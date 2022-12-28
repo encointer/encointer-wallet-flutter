@@ -126,7 +126,7 @@ class ExportAccountPage extends StatelessWidget {
               store.account.currentAccount.pubKey,
             ),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              if (snapshot.hasData && snapshot.data == true) {
+              if (snapshot.hasData && snapshot.data!) {
                 return ListTile(
                   title: Text(dic.account.mnemonic),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 18),
@@ -143,7 +143,7 @@ class ExportAccountPage extends StatelessWidget {
               store.account.currentAccount.pubKey,
             ),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              if (snapshot.hasData && snapshot.data == true) {
+              if (snapshot.hasData && snapshot.data!) {
                 return ListTile(
                   title: Text(dic.account.rawSeed),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 18),

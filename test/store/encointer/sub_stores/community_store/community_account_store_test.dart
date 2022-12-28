@@ -72,12 +72,11 @@ void main() {
         'My Test Network',
         mediterraneanTestCommunity,
         aliceAddress,
-      );
-      communityAccountStore.participantType = ParticipantType.Bootstrapper;
+      )..participantType = ParticipantType.Bootstrapper;
 
-      communityAccountStore.initStore(() => localStorage.setObject('hello', communityAccountStore.toJson()));
-
-      communityAccountStore.setMeetup(Meetup(2, 3, 10, [aliceAddress, bobAddress, charlieAddress]));
+      communityAccountStore
+        ..initStore(() => localStorage.setObject('hello', communityAccountStore.toJson()))
+        ..setMeetup(Meetup(2, 3, 10, [aliceAddress, bobAddress, charlieAddress]));
 
       final targetCachedJson = <String, dynamic>{
         'network': 'My Test Network',

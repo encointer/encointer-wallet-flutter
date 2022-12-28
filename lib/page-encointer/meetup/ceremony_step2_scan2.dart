@@ -1,8 +1,6 @@
-import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 
 import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -13,6 +11,7 @@ import 'package:encointer_wallet/page-encointer/meetup/ceremony_step3_finish.dar
 import 'package:encointer_wallet/page-encointer/meetup/scan_claim_qr_code.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyStep2Scan extends StatelessWidget {
@@ -70,10 +69,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(height: 12),
                   // Enhance brightness for the QR-code
                   const WakeLockAndBrightnessEnhancer(brightness: 1),
-                  QrCodeImage(
-                    qrCode: claimantAddress,
-                    errorCorrectionLevel: QrErrorCorrectLevel.L,
-                  ),
+                  QrCodeImage(qrCode: claimantAddress),
                 ],
               ),
             ),

@@ -111,7 +111,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
             SizedBox(
               height: 96,
               child: _voucherAddress != null
-                  ? AddressIcon(_voucherAddress!, _voucherAddress!, size: 96)
+                  ? AddressIcon(_voucherAddress!, _voucherAddress!)
                   : const CupertinoActivityIndicator(),
             ),
             const SizedBox(height: 8),

@@ -54,19 +54,16 @@ linter:
 
     cascade_invocations: true
     unnecessary_lambdas: true
-    use_build_context_synchronously: true
     avoid_redundant_argument_values: true
     cast_nullable_to_non_nullable: true
-    overridden_fields: true
     no_leading_underscores_for_local_identifiers: true
     avoid_renaming_method_parameters: true
     use_if_null_to_convert_nulls_to_bools: true
-    use_setters_to_change_properties: true
     avoid_single_cascade_in_expression_statements: true
     avoid_void_async: true
     prefer_conditional_assignment: true
     prefer_null_aware_method_calls: true
-    
+
     require_trailing_commas: false
     avoid_dynamic_calls: false
     unawaited_futures: false
@@ -76,9 +73,11 @@ linter:
     depend_on_referenced_packages: false
     avoid_equals_and_hash_code_on_mutable_classes: false
     join_return_with_assignment: false
+    use_build_context_synchronously: false
+    use_setters_to_change_properties: false
+    overridden_fields: false
 
 analyzer:
-
   language:
     strict-casts: true
     strict-inference: true

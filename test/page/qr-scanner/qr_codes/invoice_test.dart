@@ -54,7 +54,6 @@ void main() {
       cid: CommunityIdentifier.fromFmtString('sqm1v79dF6b'),
       amount: 1.001,
       label: 'label',
-      version: QrCodeVersion.v1_0,
     );
 
     expect(

@@ -479,6 +479,7 @@ class _AssetsState extends State<Assets> {
           ),
           onWillPop: () {
             // handles back button press
+            // ignore: cast_nullable_to_non_nullable
             return _showPasswordNotEnteredDialog(context).then((value) => value as bool);
           },
         );
