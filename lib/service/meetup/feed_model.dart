@@ -24,8 +24,5 @@ class Feed {
   final String content;
   final DateTime showAt;
 
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
+  int get notificationId => int.parse(id);
 }

@@ -113,16 +113,6 @@ const int dotReDenominateBlock = 1248328;
 const int secondOfDay = 24 * 60 * 60; // seconds of one day
 const int secondOfYear = 365 * 24 * 60 * 60; // seconds of one year
 
-/// test app versions
-const String appBetaVersion = '0.8.0';
-const int appBetaVersionCode = 800;
-
-/// js code versions
-const Map<String, int> jsCodeVersionMap = {
-  networkNameEncointerGesell: 10010,
-  networkNameEncointerCantillon: 10010,
-};
-
 // links
 const localePlaceHolder = 'LOCALE_PLACEHOLDER';
 const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';

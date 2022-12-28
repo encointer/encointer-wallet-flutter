@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:get_storage/get_storage.dart';
-
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/subscan.dart';
@@ -57,9 +55,6 @@ class Api {
 
   final AppStore store;
   final String _jsServiceEncointer;
-
-  // currently unused, should be removed.
-  final GetStorage jsStorage = GetStorage();
 
   final JSApi js;
   final SubstrateDartApi dartApi;

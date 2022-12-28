@@ -189,7 +189,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
           textAlign: TextAlign.center,
         ),
         actions: <Widget>[
-          const SizedBox(),
+          if (registrationType == ParticipantType.Newbie) const SizedBox(),
           CupertinoButton(
             key: const Key('close-educate-dialog'),
             child: Text(dic.home.ok),

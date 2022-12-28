@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/meetup/feed_model.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/background_service/meetup/feed_model.dart';
 
 class FeedRepo {
   FeedRepo([http.Client? client]) : _client = client ?? http.Client();
@@ -15,13 +15,7 @@ class FeedRepo {
     final uri = Uri.parse(replaceLocalePlaceholder(meetupNotificationLink, langCode));
     try {
       final response = await _client.get(uri);
-      try {
-        final feed = feedFromJson(response.body);
-        return feed;
-      } catch (e) {
-        Log.e('error transforming ${response.toString()}. ${e.toString()}', 'feed_repo.dart');
-        return null;
-      }
+      return feedFromJson(response.body);
     } catch (e) {
       Log.e(e.toString(), 'FeedRepo feed_repo.dart');
       return null;
