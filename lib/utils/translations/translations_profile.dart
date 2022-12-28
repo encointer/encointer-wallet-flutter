@@ -658,7 +658,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get addressBook => 'Адресная книга';
   @override
-  String get cantEndorseBootstrapper => 'Бутсреперы уже помечены как надежные';
+  String get cantEndorseBootstrapper => 'Бутсрепперы уже помечены как надежные';
   @override
   String get canEndorseInRegisteringPhaseOnly => 'Может быть одобрен только на этапе регистрации';
   @override

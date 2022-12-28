@@ -512,9 +512,9 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   String get transactionError => 'Ошибка транзакции';
   @override
-  String get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашей'
-      ' местной общины, как получить вознаграждение';
+  String get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите'
+      'на сайте вашей местной общины, как получить вознаграждение';
   @override
   String get chosenRightCommunity =>
-      'Данные относятся к другой общине. Пожалуйста, измените сообщество, чтобы отправить средства.';
+      'Данные относятся к другому сообществу. Пожалуйста, измените сообщество, чтобы отправить средства.';
 }

@@ -499,7 +499,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get nextCycleTimeLeft => 'Следующий цикл через ';
   @override
-  String get nextCycleDateLabel => 'Следующий цикл в процессе';
+  String get nextCycleDateLabel => 'Следующий цикл';
   @override
   String get claimQr => 'Мое заявление на участие';
   @override
@@ -515,10 +515,10 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get claimsSubmitDetail => 'Подача заявлений на сумму AMOUNT за недавнее собрание';
   @override
-  String get communities => 'Общины';
+  String get communities => 'Сообщества';
   @override
   String get noCommunitiesAreYouOffline =>
-      'Общины не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?';
+      'Сообщества не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?';
   @override
   String get meetupAttended => 'Присутствовал на последней встрече';
   @override
@@ -590,7 +590,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   String get leuZurichFAQ => 'ЧЗВ leu.zuerich';
   @override
   String get bootstrapperContent =>
-      'Рассмотрите возможность одобрения новичков, если у вас есть билеты на одобрение,это поможет общине расти.';
+      'Рассмотрите возможность одобрения новичков, если у вас есть билеты на одобрение,это поможет сообществу расти.';
   @override
   String get bootstrapperTitle => 'Зарегистрирован в качестве Бутсреппера - место гарантировано.';
   @override

@@ -258,8 +258,8 @@ class TranslationsRuAccount implements TranslationsAccount {
   @override
   String get observe => 'Мониторинг';
   @override
-  String get observeBrief =>
-      'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот адрес на странице выбора аккаунта, для просмотра его активов и действий';
+  String get observeBrief => 'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот'
+      'адрес на странице выбора аккаунта, для просмотра его активов и действий';
   @override
   String get observeProxyInvalid => 'Неверный прокси-аккаунт';
   @override

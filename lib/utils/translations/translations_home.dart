@@ -367,7 +367,7 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get notifySubmitted => 'Транзакция отправлена';
   @override
-  String get notifySubmittedQueued => 'Транзакция в очереди отправлена';
+  String get notifySubmittedQueued => 'Транзакция, в очереди, отправлена';
   @override
   String get ok => 'OK';
   @override
@@ -395,7 +395,7 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get switchAccount => 'Сменить аккаунт';
   @override
-  String get switchCommunity => 'Сменить общину';
+  String get switchCommunity => 'Сменить сообщество';
   @override
   String get transactionQueued => 'В очереди';
   @override

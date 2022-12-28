@@ -520,7 +520,7 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   String get businessDescriptionHint => 'Вызовите интерес к вашему предложению с помощью краткого описания';
   @override
-  String get businesses => 'Предприятия (Бизнесы)';
+  String get businesses => 'Предприятия (магазины)';
   @override
   String get businessesFound => 'Найденные магазины';
   @override
