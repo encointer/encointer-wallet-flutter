@@ -9,7 +9,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_preview
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ImagePickerScaffold extends StatelessWidget {
-  ImagePickerScaffold({Key? key}) : super(key: key);
+  ImagePickerScaffold({super.key});
 
   final ImagePicker _picker = ImagePicker();
 

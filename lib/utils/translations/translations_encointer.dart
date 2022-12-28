@@ -138,7 +138,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get youAreRegisteredAs => 'You have registered for the next gathering as PARTICIPANT_TYPE.';
   @override
   String get youAreNotRegisteredPleaseRegisterNextTime =>
-      'You haven\'t been assigned for this key-signing cycle. Please join the next cycle to receive your community income.';
+      "You haven't been assigned for this key-signing cycle. Please join the next cycle to receive your community income.";
   @override
   String get youAreAssignedToAGatheringWithNParticipants => 'You are assigned to a gathering with P_COUNT people.';
   @override
@@ -182,7 +182,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get endorseeTitle => 'Registered as endorsee - your seat is guaranteed';
   @override
   String get newbieContent =>
-      'You registered as a newbie without previous reputation. We can\'t guarantee that you will be assigned to a '
+      "You registered as a newbie without previous reputation. We can't guarantee that you will be assigned to a "
       'gathering this cycle if there are many newbies. Please check your assignment status on the day before the cycle '
       'to learn if and where your gathering will take place.';
   @override
@@ -417,7 +417,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get youAreRegisteredAs => 'Tu t\'es inscrit comme PARTICIPANT_TYPE a la prochain rencontre.';
   @override
-  String get youAreNotRegisteredPleaseRegisterNextTime => 'Tu n\'as pas été assigné à ce cycle de signature de clé.'
+  String get youAreNotRegisteredPleaseRegisterNextTime => 'Tu n\'as pas été assigné à ce cycle de signature de clé. '
       'Si\'il te plaît, inscris-toi pour le prochain cycle pour recevoir ton paiement de communauté.';
   @override
   String get youAreAssignedToAGatheringWithNParticipants =>
@@ -463,8 +463,8 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get endorseeTitle => 'Enregistré comme Endosser - Ta place est garantie.';
   @override
-  String get newbieContent => 'Tu t\'es enregistré en tant que Novice Il n\'est pas garanti que tu sois dans ce cycle'
-      'Si le nombre de Novices est élevé, tu ne seras pas assigné. S\'il te plaît, vérifie ton statut d\'assignation le jour précédant le cycle pour savoir'
+  String get newbieContent => 'Tu t\'es enregistré en tant que Novice Il n\'est pas garanti que tu sois dans ce cycle '
+      'Si le nombre de Novices est élevé, tu ne seras pas assigné. S\'il te plaît, vérifie ton statut d\'assignation le jour précédant le cycle pour savoir '
       'pour savoir si et où ta réunion aura lieu.';
   @override
   String get newbieTitle => 'Enregistré comme Novice - Ta place n\'est pas encore garantie';
@@ -594,20 +594,20 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get bootstrapperTitle => 'Зарегистрирован в качестве Бутсреппера - место гарантировано.';
   @override
-  String get endorseeContent => 'Вы былы одобрены, как заслуживающий доверия член общины.'
+  String get endorseeContent => 'Вы былы одобрены, как заслуживающий доверия член общины. '
       'Следовательно, Вы гарантированно будете назначены на этот цикл.';
   @override
   String get endorseeTitle => 'Зарегистрирован в качестве Индоссанта - ваше место гарантировано';
   @override
   String get newbieContent =>
       'Вы зарегистрировались в качестве новичка без репутации. Нет гарантии, что Вас назначат на '
-      'этот цикл, если в нем будет участвовать большое количество новичков. Пожалуйста,'
-      'проверьте статус вашего назначения за день до цикла'
+      'этот цикл, если в нем будет участвовать большое количество новичков. Пожалуйста, '
+      'проверьте статус вашего назначения за день до цикла '
       'чтобы узнать, состоится ли ваше собрание и где оно будет проходить.';
   @override
   String get newbieTitle => 'Зарегистрирован в качестве Новичка - место не гарантировано.';
   @override
-  String get reputableContent => 'Вы воспользовались своей репутаций для получения гарантированного места. Внимание:'
+  String get reputableContent => 'Вы воспользовались своей репутаций для получения гарантированного места. Внимание: '
       'Если вы зарегистрируетесь, но не явитесь на цикл, вы снова станете новичком.';
   @override
   String get reputableTitle => 'Зарегистрирован в качестве Уважаемого - ваше место гарантировано.';

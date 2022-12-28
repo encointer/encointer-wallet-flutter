@@ -5,7 +5,6 @@ import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
-import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
@@ -472,28 +471,6 @@ class EncointerApi {
     final res = await jsApi.evalJavascript('account.sendFaucetTx("$address", "$amount")');
     // Log.d("Faucet Result : $res", 'EncointerApi');
     return res;
-  }
-
-  // Below are functions that simply use the Scale-codec already implemented in polkadot-js/api such that we do not
-  // have to implement the codec ourselves.
-  Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    final meetup = store.encointer.communityAccount!.meetup!;
-
-    final claim = ClaimOfAttendance(
-      store.account.currentAccountPubKey,
-      store.encointer.currentCeremonyIndex,
-      store.encointer.chosenCid,
-      meetup.index,
-      store.encointer.community!.meetupLocations![meetup.locationIndex],
-      meetup.time,
-      participants,
-    );
-
-    final claimSigned = await jsApi
-        .evalJavascript('encointer.signClaimOfAttendance(${jsonEncode(claim)}, "$password")')
-        .then((c) => ClaimOfAttendance.fromJson(c as Map<String, dynamic>));
-
-    return claimSigned;
   }
 
   /// Gets a proof of attendance for the oldest attended ceremony, if available.

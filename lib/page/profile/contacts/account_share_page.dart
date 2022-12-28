@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
@@ -6,12 +5,14 @@ import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AccountSharePage extends StatefulWidget {
-  const AccountSharePage({Key? key}) : super(key: key);
+  const AccountSharePage({super.key});
+
   static const String route = '/profile/share';
 
   @override

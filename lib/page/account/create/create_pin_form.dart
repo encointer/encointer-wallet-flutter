@@ -1,29 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CreatePinForm extends StatefulWidget {
-  const CreatePinForm({
-    Key? key,
-    required this.store,
-    required this.onSubmit,
-  }) : super(key: key);
+  const CreatePinForm({super.key, required this.store, required this.onSubmit});
+
   final Function onSubmit;
   final AppStore store;
 
   @override
-  State<CreatePinForm> createState() => _CreatePinFormState(store);
+  State<CreatePinForm> createState() => _CreatePinFormState();
 }
 
 class _CreatePinFormState extends State<CreatePinForm> {
-  _CreatePinFormState(this.store);
-
-  final AppStore store;
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _passCtrl = TextEditingController();
@@ -144,9 +138,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  store.account.setNewAccountPin(_passCtrl.text);
+                  widget.store.account.setNewAccountPin(_passCtrl.text);
 
-                  store.settings.setPin(_passCtrl.text);
+                  widget.store.settings.setPin(_passCtrl.text);
 
                   widget.onSubmit();
                 }

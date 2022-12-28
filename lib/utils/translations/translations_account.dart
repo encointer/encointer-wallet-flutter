@@ -73,7 +73,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   String get observe => 'Observation';
   @override
   String get observeBrief =>
-      'Mark this address as observation, then you can select this address in account select page, to watch it\'s assets and actions';
+      "Mark this address as observation, then you can select this address in account select page, to watch it's assets and actions";
   @override
   String get observeProxyInvalid => 'Invalid proxy account';
   @override
@@ -258,7 +258,7 @@ class TranslationsRuAccount implements TranslationsAccount {
   @override
   String get observe => 'Мониторинг';
   @override
-  String get observeBrief => 'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот'
+  String get observeBrief => 'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот '
       'адрес на странице выбора аккаунта, для просмотра его активов и действий';
   @override
   String get observeProxyInvalid => 'Неверный прокси-аккаунт';

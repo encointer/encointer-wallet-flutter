@@ -59,7 +59,7 @@ class SubstrateDartApi {
   /// * account ids must be passed as SS58.
   Future rpc(String method, [dynamic params]) {
     if (_client == null) {
-      throw ("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
+      throw "[dartApi] Can't call an rpc method because we are not connected to an endpoint";
     }
     if (_client!.isClosed) {
       Log.d('[dartApi] not connected. trying to reconnect to $endpoint', 'SubstrateDartApi');

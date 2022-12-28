@@ -11,8 +11,8 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
     required this.nextCeremonyDate,
     this.infoLink,
     this.devMode = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final bool devMode;
 

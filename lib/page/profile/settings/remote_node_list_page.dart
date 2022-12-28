@@ -8,7 +8,7 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
-  RemoteNodeListPage({Key? key}) : super(key: key);
+  RemoteNodeListPage({super.key});
 
   static const String route = '/profile/endpoint';
   final Api? api = webApi;
@@ -31,12 +31,11 @@ class RemoteNodeListPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    context.select<AppStore, bool>((store) => store.settings.endpoint.value == i.value)
-                        ? Image.asset(
-                            'assets/images/assets/success.png',
-                            width: 16,
-                          )
-                        : Container(),
+                    if (context.select<AppStore, bool>((store) => store.settings.endpoint.value == i.value))
+                      Image.asset(
+                        'assets/images/assets/success.png',
+                        width: 16,
+                      ),
                     const Icon(Icons.arrow_forward_ios, size: 18)
                   ],
                 ),

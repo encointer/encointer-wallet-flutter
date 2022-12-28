@@ -14,7 +14,7 @@ import 'package:encointer_wallet/utils/format.dart';
 part 'settings.g.dart';
 
 class SettingsStore extends _SettingsStore with _$SettingsStore {
-  SettingsStore(AppStore store) : super(store);
+  SettingsStore(super.store);
 }
 
 abstract class _SettingsStore with Store {
@@ -331,10 +331,11 @@ abstract class _SettingsStore with Store {
 
 @JsonSerializable(createFactory: false)
 class NetworkState extends _NetworkState {
-  NetworkState(String? endpoint, int? ss58Format, int? tokenDecimals, String? tokenSymbol)
-      : super(endpoint, ss58Format, tokenDecimals, tokenSymbol);
+  NetworkState(super.endpoint, super.ss58Format, super.tokenDecimals, super.tokenSymbol);
 
-  factory NetworkState.fromJson(Map<String, dynamic> json) {
+  // Todo: need to test after then fix by linter
+  // ignore: prefer_constructors_over_static_methods
+  static NetworkState fromJson(Map<String, dynamic> json) {
     // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
     // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
     // `NetworkState` should use the first token.
@@ -343,7 +344,7 @@ class NetworkState extends _NetworkState {
 
     final ns = NetworkState(json['endpoint'] as String?, json['ss58Format'] as int?, decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified
-    if (((ns.tokenSymbol?.length ?? 0) < 1)) {
+    if ((ns.tokenSymbol?.length ?? 0) < 1) {
       ns.tokenSymbol = 'ERT';
     }
     return ns;

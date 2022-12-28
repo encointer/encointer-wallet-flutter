@@ -8,7 +8,7 @@ import 'package:encointer_wallet/utils/ui.dart';
 
 class TxDetail extends StatelessWidget {
   const TxDetail({
-    Key? key,
+    super.key,
     this.success,
     this.networkName,
     this.action,
@@ -17,7 +17,7 @@ class TxDetail extends StatelessWidget {
     this.blockTime,
     this.blockNum,
     this.info,
-  }) : super(key: key);
+  });
 
   final bool? success;
   final String? networkName;
@@ -63,7 +63,7 @@ class TxDetail extends StatelessWidget {
       ),
       const Divider(),
     ];
-    info!.forEach((i) {
+    for (final i in info!) {
       list.add(ListTile(
         leading: buildLabel(i.label!),
         title: Text(i.title!),
@@ -75,7 +75,7 @@ class TxDetail extends StatelessWidget {
               )
             : null,
       ));
-    });
+    }
 
     String? pnLink = 'https://polkascan.io/pre/${networkName!.toLowerCase()}/transaction/$hash';
     String? snLink = 'https://${networkName!.toLowerCase()}.subscan.io/extrinsic/$hash';
@@ -106,12 +106,11 @@ class TxDetail extends StatelessWidget {
                 pnLink,
                 text: 'Polkascan',
               ),
-              snLink != null
-                  ? JumpToBrowserLink(
-                      snLink,
-                      text: 'Subscan',
-                    )
-                  : Container(),
+              if (snLink != null)
+                JumpToBrowserLink(
+                  snLink,
+                  text: 'Subscan',
+                ),
             ],
           ),
         ),

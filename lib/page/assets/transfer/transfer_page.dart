@@ -48,7 +48,7 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  const TransferPage({Key? key}) : super(key: key);
+  const TransferPage({super.key});
 
   static const String route = '/assets/transfer';
 
@@ -77,8 +77,8 @@ class _TransferPageState extends State<TransferPage> {
       if (params != null) {
         handleTransferPageParams(params, store);
       } else {
-        _communitySymbol = store.encointer.community!.symbol!;
-        _cid = store.encointer.chosenCid!;
+        _communitySymbol = store.encointer.community!.symbol;
+        _cid = store.encointer.chosenCid;
       }
 
       setState(() {});
@@ -153,13 +153,14 @@ class _TransferPageState extends State<TransferPage> {
                       children: [
                         CombinedCommunityAndAccountAvatar(_store, showCommunityNameAndAccountName: false),
                         const SizedBox(height: 12),
-                        _store.encointer.communityBalance != null
-                            ? AccountBalanceWithMoreDigits(
-                                store: _store,
-                                available: available,
-                                decimals: decimals,
-                              )
-                            : const CupertinoActivityIndicator(),
+                        if (_store.encointer.communityBalance != null)
+                          AccountBalanceWithMoreDigits(
+                            store: _store,
+                            available: available,
+                            decimals: decimals,
+                          )
+                        else
+                          const CupertinoActivityIndicator(),
                         Text(
                           I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll(
                                 'ACCOUNT_NAME',
@@ -227,14 +228,13 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   const SizedBox(height: 48),
-                  _store.settings.developerMode
-                      ? Center(
-                          child: Text(
-                            '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
-                            style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
-                          ),
-                        )
-                      : Container(),
+                  if (_store.settings.developerMode)
+                    Center(
+                      child: Text(
+                        '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
+                        style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+                      ),
+                    ),
                   const SizedBox(height: 8),
                   PrimaryButton(
                     key: const Key('make-transfer'),
@@ -294,11 +294,11 @@ class _TransferPageState extends State<TransferPage> {
 
 class AccountBalanceWithMoreDigits extends StatelessWidget {
   const AccountBalanceWithMoreDigits({
-    Key? key,
+    super.key,
     required this.store,
     required this.available,
     required this.decimals,
-  }) : super(key: key);
+  });
 
   final AppStore store;
   final double? available;

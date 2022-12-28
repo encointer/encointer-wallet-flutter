@@ -15,6 +15,7 @@ class AccountBusinessTuple {
   AccountBusinessTuple(this.controller, this.businessData);
 
   factory AccountBusinessTuple.fromJson(Map<String, dynamic> json) => _$AccountBusinessTupleFromJson(json);
+
   Map<String, dynamic> toJson() => _$AccountBusinessTupleToJson(this);
 
   /// accountId of the business's controller

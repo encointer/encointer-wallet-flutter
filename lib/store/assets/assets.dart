@@ -1,12 +1,13 @@
+import 'package:mobx/mobx.dart';
+
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/balances_info.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
-import 'package:mobx/mobx.dart';
 
 part 'assets.g.dart';
 
 class AssetsStore extends _AssetsStore with _$AssetsStore {
-  AssetsStore(AppStore store) : super(store);
+  AssetsStore(super.store);
 }
 
 abstract class _AssetsStore with Store {
@@ -160,10 +161,10 @@ abstract class _AssetsStore with Store {
     final ls = res['transfers'] as List?;
     if (ls == null) return;
 
-    ls.forEach((i) {
+    for (final i in ls) {
       final tx = TransferData.fromJson(i as Map<String, dynamic>);
       txs.add(tx);
-    });
+    }
 
     if (shouldCache) {
       rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls);
@@ -231,39 +232,41 @@ abstract class _AssetsStore with Store {
   Future<void> loadCache() async {
     final ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
     if (ls != null) {
-      ls.forEach((i) {
+      for (final i in ls) {
         if (blockMap[i['id']] == null) {
           blockMap[i['id'] as int] = BlockData.fromJson(i as Map<String, dynamic>);
         }
-      });
+      }
     }
 
     return loadAccountCache();
   }
 }
 
-class BlockData extends _BlockData {
+class BlockData {
+  const BlockData({
+    this.id = 0,
+    this.hash = '',
+    this.time,
+  });
+
   factory BlockData.fromJson(Map<String, dynamic> json) {
-    final block = BlockData.fromJson(json);
-    block.id = json['id'] as int?;
-    block.hash = json['hash'] as String?;
-    block.time = DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);
-    return block;
+    return BlockData(
+      id: json['id'] as int?,
+      hash: json['hash'] as String?,
+      time: DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int),
+    );
   }
 
-  static Map<String, dynamic> toJson(BlockData block) {
+  final int? id;
+  final String? hash;
+  final DateTime? time;
+
+  Map<String, dynamic> toJson(BlockData block) {
     return {
       'id': block.id,
       'hash': block.hash,
-      'timestamp': block.time.millisecondsSinceEpoch,
+      'timestamp': block.time?.millisecondsSinceEpoch ?? DateTime.now(),
     };
   }
-}
-
-abstract class _BlockData {
-  int? id = 0;
-
-  String? hash = '';
-
-  DateTime time = DateTime.now();
 }

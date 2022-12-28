@@ -9,10 +9,11 @@ class AddressIcon extends StatelessWidget {
   const AddressIcon(
     this.address,
     this.pubKey, {
-    Key? key,
+    super.key,
     this.size = 96,
     this.tapToCopy = true,
-  }) : super(key: key);
+  });
+
   final String address;
   final String pubKey;
   final double size;
@@ -54,11 +55,11 @@ class AddressIconWithLabel extends StatelessWidget {
   const AddressIconWithLabel(
     this.address,
     this.pubKey, {
-    Key? key,
+    super.key,
     this.size = 96,
     this.tapToCopy = true,
     this.labelStyle,
-  }) : super(key: key);
+  });
 
   final String address;
   final String pubKey;

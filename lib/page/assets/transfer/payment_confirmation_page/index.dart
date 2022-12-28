@@ -36,7 +36,7 @@ class PaymentConfirmationParams {
 }
 
 class PaymentConfirmationPage extends StatefulWidget {
-  const PaymentConfirmationPage(this.api, {Key? key}) : super(key: key);
+  const PaymentConfirmationPage(this.api, {super.key});
 
   static const String route = '/assets/paymentConfirmation';
   final Api api;
@@ -109,32 +109,33 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                   flex: 2,
                   child: _txStateTextInfo(_transferState),
                 ),
-                !_transferState.isFinishedOrFailed()
-                    ? PrimaryButton(
-                        key: const Key('make-transfer-send'),
-                        child: SizedBox(
-                          height: 24,
-                          child: !_transferState.isSubmitting()
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Iconsax.send_sqaure_2),
-                                    const SizedBox(width: 12),
-                                    Text(dic.assets.transfer),
-                                  ],
-                                )
-                              : const CupertinoActivityIndicator(),
-                        ),
-                        onPressed: () => _submit(context, cid, recipientAddress, amount),
-                      )
-                    : PrimaryButton(
-                        key: const Key('transfer-done'),
-                        child: SizedBox(
-                          height: 24,
-                          child: Center(child: Text(dic.assets.done)),
-                        ),
-                        onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
-                      )
+                if (!_transferState.isFinishedOrFailed())
+                  PrimaryButton(
+                    key: const Key('make-transfer-send'),
+                    child: SizedBox(
+                      height: 24,
+                      child: !_transferState.isSubmitting()
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Iconsax.send_sqaure_2),
+                                const SizedBox(width: 12),
+                                Text(dic.assets.transfer),
+                              ],
+                            )
+                          : const CupertinoActivityIndicator(),
+                    ),
+                    onPressed: () => _submit(context, cid, recipientAddress, amount),
+                  )
+                else
+                  PrimaryButton(
+                    key: const Key('transfer-done'),
+                    child: SizedBox(
+                      height: 24,
+                      child: Center(child: Text(dic.assets.done)),
+                    ),
+                    onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+                  )
               ],
             ),
           ),
@@ -150,7 +151,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       _transferState = TransferState.submitting;
     });
 
-    final onFinish = (BuildContext txPageContext, Map res) {
+    void onFinish(BuildContext txPageContext, Map res) {
       Log.d('Transfer result $res', 'PaymentConfirmationPage');
 
       if (res['hash'] == null) {
@@ -160,7 +161,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         _transferState = TransferState.finished;
         _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
       }
-    };
+    }
 
     await submitTx(context, context.read<AppStore>(), widget.api, params, onFinish: onFinish);
 
@@ -192,7 +193,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             _initializeAnimation();
           }
 
-          return Container(
+          return DecoratedBox(
             decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.green),
             child: AnimatedCheck(
               progress: _animation!,
@@ -202,9 +203,9 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           );
         }
       case TransferState.failed:
-        return Container(
-          decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-          child: const Padding(
+        return const DecoratedBox(
+          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+          child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Icon(
               Icons.highlight_remove,

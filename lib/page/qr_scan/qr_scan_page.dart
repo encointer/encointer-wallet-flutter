@@ -23,7 +23,7 @@ class ScanPageParams {
 }
 
 class ScanPage extends StatelessWidget {
-  ScanPage({Key? key}) : super(key: key);
+  ScanPage({super.key});
 
   static const String route = '/account/scan';
 
@@ -79,9 +79,7 @@ class ScanPage extends StatelessWidget {
                     }
                   },
                 ),
-                context.select<AppStore, bool>((store) => store.settings.developerMode)
-                    ? mockQrDataRow(dic, onScan)
-                    : Container(),
+                if (context.select<AppStore, bool>((store) => store.settings.developerMode)) mockQrDataRow(dic, onScan),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(

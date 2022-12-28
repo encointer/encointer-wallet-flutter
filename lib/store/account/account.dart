@@ -21,7 +21,7 @@ part 'account.g.dart';
 /// * https://github.com/encointer/encointer-wallet-flutter/issues/487
 
 class AccountStore extends _AccountStore with _$AccountStore {
-  AccountStore(AppStore appStore) : super(appStore);
+  AccountStore(super.appStore);
 
   static const String seedTypeMnemonic = 'mnemonic';
   static const String seedTypeRawSeed = 'rawSeed';
@@ -176,7 +176,7 @@ abstract class _AccountStore with Store {
 
     Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
       if (await webApi.isConnected()) {
-        queuedTxs.forEach((args) async {
+        for (final args in queuedTxs) {
           final res = await webApi.account.sendTxAndShowNotification(
             args['txInfo'] as Map<dynamic, dynamic>?,
             args['params'] as List<dynamic>?,
@@ -197,7 +197,7 @@ abstract class _AccountStore with Store {
               rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
             }
           }
-        });
+        }
         rootStore.assets.setSubmitting(false);
         rootStore.account.clearTxStatus();
         timer.cancel();
@@ -281,7 +281,7 @@ abstract class _AccountStore with Store {
     if (acc.pubKey == currentAccountPubKey) {
       // set new currentAccount after currentAccount was removed
       final accounts = await rootStore.localStorage.getAccountList();
-      final newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] as String? : '';
+      final newCurrentAccountPubKey = accounts.isNotEmpty ? accounts[0]['pubKey'] as String? : '';
       Log.d('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey', 'AccountStore');
       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
     } else {
@@ -361,7 +361,7 @@ abstract class _AccountStore with Store {
 
   @action
   void setPubKeyAddressMap(Map<String, Map> data) {
-    data.keys.forEach((ss58) {
+    for (final ss58 in data.keys) {
       // get old data map
       final addresses = Map<String, String>.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
       // set new data
@@ -370,39 +370,39 @@ abstract class _AccountStore with Store {
       });
       // update state
       pubKeyAddressMap[int.parse(ss58)] = addresses;
-    });
+    }
   }
 
   @action
   void setPubKeyIconsMap(List list) {
-    list.forEach((i) {
+    for (final i in list) {
       pubKeyIconsMap[i[0] as String] = i[1] as String?;
-    });
+    }
   }
 
   @action
   void setAddressIconsMap(List list) {
     Log.d('Address Icons', 'AccountStore');
     Log.d('$list', 'AccountStore');
-    list.forEach((i) {
+    for (final i in list) {
       addressIconsMap[i[0] as String] = i[1] as String?;
-    });
+    }
   }
 
   @action
   void setAccountsIndex(List list) {
     final data = <String?, Map>{};
-    list.forEach((i) {
+    for (final i in list) {
       data[i['accountId'] as String] = i as Map;
-    });
+    }
     accountIndexMap = data;
   }
 
   @action
   void setAddressIndex(List list) {
-    list.forEach((i) {
+    for (final i in list) {
       addressIndexMap[i['accountId'] as String] = i as Map;
-    });
+    }
   }
 }
 

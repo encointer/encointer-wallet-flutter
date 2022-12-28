@@ -50,7 +50,7 @@ yarn run build
 
 ### Requirements
 - Dart sdk: ">=2.12.0 <3.0.0"
-- Flutter: "3.3.8"
+- Flutter: "3.3.10"
 - Android: minSdkVersion 17
 - iOS: --ios-language swift, Xcode version >= 14.0.0
 
@@ -105,12 +105,9 @@ and find the output in `build/app/outputs/bundle/release/app-release.aab`
 #### Dev hints
 
 ### Flutter version
-The following two files contain the supported flutter version:
+The following file contains the supported flutter version:
 
-* [GitHub Action Config](./.github/action-config.json)
 * [install_flutter_wrapper.sh](./scripts/install_flutter_wrapper.sh)
-
-These versions must always be aligned!
 
 ### Run tests
 

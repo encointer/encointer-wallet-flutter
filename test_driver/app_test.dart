@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 

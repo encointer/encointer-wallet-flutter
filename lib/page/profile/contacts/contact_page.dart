@@ -13,7 +13,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ContactPage extends StatefulWidget {
-  const ContactPage({Key? key}) : super(key: key);
+  const ContactPage({super.key});
 
   static const String route = '/profile/contact';
 
@@ -153,51 +153,49 @@ class _Contact extends State<ContactPage> {
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v!.trim().length > 0 ? null : dic.profile.contactNameError;
+                          return v!.trim().isNotEmpty ? null : dic.profile.contactNameError;
                         },
                       ),
                     ),
-                    context.select<AppStore, bool>((store) => store.settings.developerMode)
-                        ? Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 16),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                hintText: dic.profile.contactMemo,
-                                labelText: dic.profile.contactMemo,
-                              ),
-                              controller: _memoCtrl,
+                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: dic.profile.contactMemo,
+                            labelText: dic.profile.contactMemo,
+                          ),
+                          controller: _memoCtrl,
+                        ),
+                      ),
+                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                      Row(
+                        children: <Widget>[
+                          Checkbox(
+                            value: _isObservation,
+                            onChanged: (v) {
+                              setState(() {
+                                _isObservation = v;
+                              });
+                            },
+                          ),
+                          GestureDetector(
+                            child: Text(I18n.of(context)!.translationsForLocale().account.observe),
+                            onTap: () {
+                              setState(() {
+                                _isObservation = !_isObservation!;
+                              });
+                            },
+                          ),
+                          TapTooltip(
+                            message: I18n.of(context)!.translationsForLocale().account.observeBrief,
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 8),
+                              child: Icon(Icons.info_outline, size: 16),
                             ),
-                          )
-                        : Container(),
-                    context.select<AppStore, bool>((store) => store.settings.developerMode)
-                        ? Row(
-                            children: <Widget>[
-                              Checkbox(
-                                value: _isObservation,
-                                onChanged: (v) {
-                                  setState(() {
-                                    _isObservation = v;
-                                  });
-                                },
-                              ),
-                              GestureDetector(
-                                child: Text(I18n.of(context)!.translationsForLocale().account.observe),
-                                onTap: () {
-                                  setState(() {
-                                    _isObservation = !_isObservation!;
-                                  });
-                                },
-                              ),
-                              TapTooltip(
-                                message: I18n.of(context)!.translationsForLocale().account.observeBrief,
-                                child: const Padding(
-                                  padding: EdgeInsets.only(left: 8),
-                                  child: Icon(Icons.info_outline, size: 16),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Container(),
+                          ),
+                        ],
+                      ),
                     const SizedBox(height: 24),
                     IconButton(
                       iconSize: 48,

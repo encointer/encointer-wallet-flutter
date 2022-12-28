@@ -10,6 +10,10 @@ class ContactQrCode extends QrCode<ContactData> {
     this.version = QrCodeVersion.v1_0,
   }) : super(ContactData(account: account, cid: cid, network: network, label: label));
 
+  factory ContactQrCode.fromPayload(String payload) {
+    return ContactQrCode.fromQrFields(payload.split('\n'));
+  }
+
   factory ContactQrCode.fromQrFields(List<String> fields) {
     if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
       return ContactQrCode.withData(
@@ -24,13 +28,7 @@ class ContactQrCode extends QrCode<ContactData> {
     }
   }
 
-  factory ContactQrCode.fromPayload(String payload) {
-    return ContactQrCode.fromQrFields(payload.split('\n'));
-  }
-  ContactQrCode.withData(
-    ContactData data, {
-    this.version = QrCodeVersion.v1_0,
-  }) : super(data);
+  ContactQrCode.withData(super.data, {this.version = QrCodeVersion.v1_0});
 
   @override
   QrCodeContext? context = QrCodeContext.contact;
@@ -58,6 +56,10 @@ class ContactData implements ToQrFields {
     required this.label,
   });
 
+  factory ContactData.fromQrFieldsV1(List<String> fields) {
+    return ContactData(account: fields[0], label: fields[3]);
+  }
+
   factory ContactData.fromQrFieldsV2(List<String> fields) {
     return ContactData(
       account: fields[0],
@@ -65,10 +67,6 @@ class ContactData implements ToQrFields {
       network: fields[2],
       label: fields[3],
     );
-  }
-
-  factory ContactData.fromQrFieldsV1(List<String> fields) {
-    return ContactData(account: fields[0], label: fields[3]);
   }
 
   /// ss58 encoded public key of the account address.

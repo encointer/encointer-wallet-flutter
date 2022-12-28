@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 Widget showPasswordInputDialog(
   BuildContext context,
@@ -22,13 +23,13 @@ Widget showPasswordInputDialog(
 
 class PasswordInputDialog extends StatefulWidget {
   const PasswordInputDialog({
-    Key? key,
+    super.key,
     required this.account,
     required this.onOk,
     this.title,
     this.onCancel,
     this.onAccountSwitch,
-  }) : super(key: key);
+  });
 
   final AccountData account;
   final Function onOk;
@@ -112,32 +113,29 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         ),
       ),
       actions: <Widget>[
-        widget.onAccountSwitch != null
-            ? CupertinoButton(
-                child: Text(dic.home.switchAccount),
-                onPressed: () {
-                  widget.onAccountSwitch!();
-                },
-              )
-            : Container(),
-        widget.onCancel != null
-            ? CupertinoButton(
-                child: Text(dic.home.cancel),
-                onPressed: () {
-                  widget.onCancel!();
-                },
-              )
-            : Container(),
+        if (widget.onAccountSwitch != null)
+          CupertinoButton(
+            child: Text(dic.home.switchAccount),
+            onPressed: () {
+              widget.onAccountSwitch!();
+            },
+          ),
+        if (widget.onCancel != null)
+          CupertinoButton(
+            child: Text(dic.home.cancel),
+            onPressed: () {
+              widget.onCancel!();
+            },
+          ),
         CupertinoButton(
           key: const Key('password-ok'),
-          onPressed: _submitting
-              ? null
-              : () {
-                  _onOk(_passCtrl.text.trim());
-                },
+          onPressed: _submitting ? null : () => _onOk(_passCtrl.text.trim()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [_submitting ? const CupertinoActivityIndicator() : Container(), Text(dic.home.ok)],
+            children: [
+              if (_submitting) const CupertinoActivityIndicator(),
+              Text(dic.home.ok),
+            ],
           ),
         ),
       ],

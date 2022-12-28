@@ -1,12 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/create_account_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_page.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CreateAccountEntryPage extends StatelessWidget {
-  const CreateAccountEntryPage({Key? key}) : super(key: key);
+  const CreateAccountEntryPage({super.key});
+
   static const String route = '/account/entry';
 
   @override

@@ -6,7 +6,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/b
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class SearchResultsBusiness extends StatelessWidget {
-  const SearchResultsBusiness(this.results, {Key? key}) : super(key: key);
+  const SearchResultsBusiness(this.results, {super.key});
+
   final List<BazaarItemData> results;
 
   @override

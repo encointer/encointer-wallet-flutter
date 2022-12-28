@@ -237,7 +237,7 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get updatingAppState => 'App-Zustand wird aktualisiert...';
   @override
-  String get cameraPermissionError => 'Es gab einen Fehler beim überprüfen der Kameraerlaubnis.'
+  String get cameraPermissionError => 'Es gab einen Fehler beim überprüfen der Kameraerlaubnis. '
       'Du kannst die Erlaubnis für die Kamera auch über die App-Einstellungen erteilen.';
   @override
   String get appSettings => 'App-Einstellungen';
@@ -335,7 +335,7 @@ class TranslationsFrHome implements TranslationsHome {
   String get updatingAppState => 'L\'état de l\'app est mis à jour...';
   @override
   String get cameraPermissionError =>
-      'Une erreur s\'est produite lors de la vérification de l\'autorisation de la caméra'
+      'Une erreur s\'est produite lors de la vérification de l\'autorisation de la caméra '
       'Tu peux aussi donner l\'autorisation pour la caméra via les paramètres de l\'app.';
   @override
   String get appSettings => 'Paramètres de l\'app';
@@ -433,7 +433,7 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get updatingAppState => 'Обновление приложения';
   @override
-  String get cameraPermissionError => 'Произошла ошибка при получении разрешения камеры.'
+  String get cameraPermissionError => 'Произошла ошибка при получении разрешения камеры. '
       'Вы можете предоставить разрешение в настройках приложения.';
   @override
   String get appSettings => 'Настройки приложения';

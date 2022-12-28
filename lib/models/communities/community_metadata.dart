@@ -11,6 +11,7 @@ class CommunityMetadata {
   CommunityMetadata(this.name, this.symbol, this.assets, this.url, this.theme);
 
   factory CommunityMetadata.fromJson(Map<String, dynamic> json) => _$CommunityMetadataFromJson(json);
+
   Map<String, dynamic> toJson() => _$CommunityMetadataToJson(this);
 
   String name;

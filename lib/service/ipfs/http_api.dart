@@ -75,7 +75,7 @@ class Ipfs {
     } catch (e, s) {
       // otherwise we would have to adjust the return type.
       Log.e('$e', 'Ipfs', s);
-      throw (e.toString());
+      throw e.toString();
     }
   }
 
@@ -150,7 +150,7 @@ class IpfsDio {
 }
 
 class Object {
-  Object({
+  const Object({
     required this.links,
     required this.data,
   });
@@ -161,8 +161,8 @@ class Object {
 
   Map<String, dynamic> toJson() => <String, dynamic>{'links': links, 'data': data};
 
-  List links;
-  String data;
+  final List links;
+  final String data;
 
   @override
   String toString() {

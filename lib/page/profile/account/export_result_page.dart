@@ -1,11 +1,13 @@
-import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+
 class ExportResultPage extends StatelessWidget {
-  const ExportResultPage({Key? key}) : super(key: key);
+  const ExportResultPage({super.key});
+
   static const String route = '/account/key';
 
   void _showExportDialog(BuildContext context, Map args) {
@@ -45,7 +47,7 @@ class ExportResultPage extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: <Widget>[
-                  args['type'] == AccountStore.seedTypeKeystore ? Container() : Text(dic.profile.exportWarn),
+                  if (args['type'] != AccountStore.seedTypeKeystore) Text(dic.profile.exportWarn),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[

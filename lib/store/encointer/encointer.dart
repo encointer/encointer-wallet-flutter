@@ -41,7 +41,7 @@ part 'encointer.g.dart';
 /// later to the store.
 @JsonSerializable(explicitToJson: true)
 class EncointerStore extends _EncointerStore with _$EncointerStore {
-  EncointerStore(String network) : super(network);
+  EncointerStore(super.network);
 
   factory EncointerStore.fromJson(Map<String, dynamic> json) => _$EncointerStoreFromJson(json);
   Map<String, dynamic> toJson() => _$EncointerStoreToJson(this);
@@ -404,10 +404,9 @@ abstract class _EncointerStore with Store {
   /// Todo: Integrate used when #582 is tackled.
   Future<void> initCommunityStores(List<CommunityIdentifier> cids, String address, {bool shouldCache = true}) {
     final futures = <Future<void>>[];
-
-    cids.forEach((cid) {
+    for (final cid in cids) {
       futures.add(initCommunityStore(cid, address, shouldCache: shouldCache));
-    });
+    }
 
     return Future.wait(futures);
   }
@@ -534,13 +533,13 @@ abstract class _EncointerStore with Store {
 
   bool get showRegisterButton {
     final registered = communityAccount?.isRegistered ?? false;
-    return (currentPhase == CeremonyPhase.Registering && !registered);
+    return currentPhase == CeremonyPhase.Registering && !registered;
   }
 
   @computed
   bool get showStartCeremonyButton {
     final assigned = communityAccount?.isAssigned ?? false;
-    return (currentPhase == CeremonyPhase.Attesting && assigned);
+    return currentPhase == CeremonyPhase.Attesting && assigned;
   }
 
   @computed
@@ -548,7 +547,7 @@ abstract class _EncointerStore with Store {
     final assigned = communityAccount?.isAssigned ?? false;
     final hasClaims = (communityAccount?.scannedAttendeesCount ?? 0) > 0;
 
-    return (currentPhase == CeremonyPhase.Attesting && assigned && hasClaims);
+    return currentPhase == CeremonyPhase.Attesting && assigned && hasClaims;
   }
 
   @computed

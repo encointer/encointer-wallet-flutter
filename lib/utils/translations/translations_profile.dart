@@ -442,7 +442,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   String get meetUpNotifications => 'Meetup-Benachrichtigungen';
   @override
   String get meetUpListTileTitle =>
-      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen'
+      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen '
       'zu erhalten.';
   @override
   String get openAppSettings => 'App-Einstellungen öffnen';
@@ -505,7 +505,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get exportMnemonicOk => 'Mnémonique a été copié dans le clipboard.';
   @override
-  String get exportWarn => 'Écris ces mots sur un papier. Garde le papier dans un endroit sûr.'
+  String get exportWarn => 'Écris ces mots sur un papier. Garde le papier dans un endroit sûr. '
       'Ces mots donnent à n\'importe qui l\'accès au compte et à la fortune.';
   @override
   String get changeYourPin => 'Changer le NIP';
@@ -562,7 +562,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   String get pinHint =>
       'Tu auras besoin de ce code NIP pour effectuer des transactions ou ajouter de nouveaux comptes.';
   @override
-  String get pinInfo => 'Le code NIP doit contenir au moins 4 chiffres. En cas de perte du NIP, le compte n\'est'
+  String get pinInfo => 'Le code NIP doit contenir au moins 4 chiffres. En cas de perte du NIP, le compte n\'est '
       'pas récupérable, sauf si tu as fait une sauvegarde sur la page de profil.';
   @override
   String get pinSecure => 'Sécurise ton compte avec un NIP.';
@@ -579,7 +579,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get tokenSend => 'Envoyer SYMBOL';
   @override
-  String get qrScanHintAccount => 'Demande au destinataire de scanner le code QR dans l' 'application Encointer.';
+  String get qrScanHintAccount => 'Demande au destinataire de scanner le code QR dans l ' 'application Encointer.';
   @override
   String get receiverAccount => 'Compte de réception :';
   @override
@@ -626,7 +626,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   String get meetUpNotifications => 'Notifications Rencontre';
   @override
   String get meetUpListTileTitle =>
-      'Si ton appareil est un smartphone Xiaomi ou Honor, le démarrage automatique doit être activé pour recevoir les notifications rencontre'
+      'Si ton appareil est un smartphone Xiaomi ou Honor, le démarrage automatique doit être activé pour recevoir les notifications rencontre '
       'de recevoir des notifications.';
   @override
   String get openAppSettings => 'Ouvrir les paramètres de l\'application';
@@ -694,7 +694,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get exportMnemonicOk => 'Мнемоника скопирована в буфер обмена.';
   @override
-  String get exportWarn => 'Запишите эти слова на бумаге. Храните бумагу в безопасном месте.'
+  String get exportWarn => 'Запишите эти слова на бумаге. Храните бумагу в безопасном месте. '
       'Эти слова позволят восстановить этот аккаунт и получить доступ к его средствам.';
   @override
   String get noMnemonicFound => 'Мнемоника не найдена';
@@ -778,7 +778,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get pinHint => 'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи.';
   @override
-  String get pinInfo => 'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить'
+  String get pinInfo => 'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить '
       'аккаунт невозможно, если только вы не сделали резервную копию в профиле.';
   @override
   String get pinSecure => 'Защитите свой аккаунт с помощью PIN-кода.';
@@ -805,7 +805,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get meetUpNotifications => 'Meetup - уведомления';
   @override
-  String get meetUpListTileTitle => 'Если ваше устройство является телефоном Xiaomi или Honor,'
+  String get meetUpListTileTitle => 'Если ваше устройство является телефоном Xiaomi или Honor, '
       'включите автозапуск, чтобы получать Meetup - уведомления.';
   @override
   String get openAppSettings => 'Открыть настройки приложения';

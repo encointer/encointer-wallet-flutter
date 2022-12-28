@@ -1,17 +1,18 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:encointer_wallet/page-encointer/bazaar/2_offerings/offering_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical_state.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class BazaarItemVertical extends StatelessWidget {
   const BazaarItemVertical({
-    Key? key,
+    super.key,
     this.data,
     this.index,
     this.cardHeight,
-  }) : super(key: key);
+  });
 
   final List<BazaarItemData>? data;
   final int? index;
@@ -70,7 +71,7 @@ class BazaarItemVertical extends StatelessWidget {
                   child: _ItemDescription(
                     title: data![index!].title,
                     description: data![index!].description,
-                    info: data![index!].info.toString(),
+                    info: data![index!].info,
                   ),
                 ),
               )
@@ -83,12 +84,7 @@ class BazaarItemVertical extends StatelessWidget {
 }
 
 class _ItemDescription extends StatelessWidget {
-  const _ItemDescription({
-    Key? key,
-    this.title,
-    this.description,
-    this.info,
-  }) : super(key: key);
+  const _ItemDescription({this.title, this.description, this.info});
 
   final String? title;
   final String? description;

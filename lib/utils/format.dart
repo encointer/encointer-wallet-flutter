@@ -40,7 +40,7 @@ class Fmt {
   /// number transform 1:
   /// from raw <String> of Api data to <BigInt>
   static BigInt balanceInt(String raw) {
-    if (raw.length == 0) {
+    if (raw.isEmpty) {
       return BigInt.zero;
     }
     if (raw.contains(',') || raw.contains('.')) {
@@ -92,7 +92,7 @@ class Fmt {
     int? decimals, {
     int? length = 3,
   }) {
-    if (raw == null || raw.length == 0) {
+    if (raw == null || raw.isEmpty) {
       return '~';
     }
     return doubleFormat(bigIntToDouble(balanceInt(raw), decimals), length: length);
@@ -260,13 +260,14 @@ class Fmt {
   static Widget accountDisplayName(String address, Map accInfo) {
     return Row(
       children: <Widget>[
-        (accInfo['identity']['judgements'] as List).length > 0
-            ? Container(
-                width: 14,
-                margin: const EdgeInsets.only(right: 4),
-                child: Image.asset('assets/images/assets/success.png'),
-              )
-            : Container(height: 16),
+        if ((accInfo['identity']['judgements'] as List).isNotEmpty)
+          Container(
+            width: 14,
+            margin: const EdgeInsets.only(right: 4),
+            child: Image.asset('assets/images/assets/success.png'),
+          )
+        else
+          const SizedBox(height: 16),
         Expanded(
           child: Text(accountDisplayNameString(address, accInfo)!),
         )

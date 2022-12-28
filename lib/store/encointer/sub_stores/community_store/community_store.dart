@@ -18,7 +18,7 @@ part 'community_store.g.dart';
 /// It also contains sub-stores for account and community specific data.
 @JsonSerializable(explicitToJson: true)
 class CommunityStore extends _CommunityStore with _$CommunityStore {
-  CommunityStore(String network, CommunityIdentifier cid) : super(network, cid);
+  CommunityStore(super.network, super.cid);
 
   factory CommunityStore.fromJson(Map<String, dynamic> json) => _$CommunityStoreFromJson(json);
   Map<String, dynamic> toJson() => _$CommunityStoreToJson(this);
@@ -84,25 +84,15 @@ abstract class _CommunityStore with Store {
   @action
   Future<String?> getCommunityIcon() async {
     try {
-      if (assetsCid == null) {
-        return null;
-      } else {
-        final data = await webApi.ipfs.getCommunityIcon(assetsCid!);
-        if (data != null) {
-          communityIcon = data;
-          return communityIcon;
-        } else {
-          return null;
-        }
+      if (assetsCid != null) {
+        final maybeIcon = await webApi.ipfs.getCommunityIcon(assetsCid!);
+        if (maybeIcon != null) communityIcon = maybeIcon;
       }
     } catch (e) {
       Log.e('getCommunityIcon $e', 'App Store getCommunityIcon');
-      return null;
     }
+    return communityIcon;
   }
-
-  @action
-  void clearCommunityIcon() => communityIcon = null;
 
   @action
   Future<void> initCommunityAccountStore(String address) {
@@ -137,10 +127,11 @@ abstract class _CommunityStore with Store {
   }
 
   @action
-  void setCommunityMetadata(CommunityMetadata meta) {
+  Future<void> setCommunityMetadata(CommunityMetadata meta) async {
     Log.d('set metadata to $meta', 'CommunityStore');
 
     metadata = meta;
+    await getCommunityIcon();
     writeToCache();
   }
 

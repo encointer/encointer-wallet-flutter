@@ -11,6 +11,10 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     this.version = QrCodeVersion.v1_0,
   }) : super(InvoiceData(account: account, cid: cid, network: network, amount: amount, label: label));
 
+  factory InvoiceQrCode.fromPayload(String payload) {
+    return InvoiceQrCode.fromQrFields(payload.split('\n'));
+  }
+
   factory InvoiceQrCode.fromQrFields(List<String> fields) {
     if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
       return InvoiceQrCode.withData(
@@ -25,13 +29,7 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     }
   }
 
-  factory InvoiceQrCode.fromPayload(String payload) {
-    return InvoiceQrCode.fromQrFields(payload.split('\n'));
-  }
-  InvoiceQrCode.withData(
-    InvoiceData data, {
-    this.version = QrCodeVersion.v1_0,
-  }) : super(data);
+  InvoiceQrCode.withData(super.data, {this.version = QrCodeVersion.v1_0});
 
   @override
   QrCodeContext? context = QrCodeContext.invoice;
@@ -60,6 +58,15 @@ class InvoiceData implements ToQrFields {
     required this.label,
   });
 
+  factory InvoiceData.fromQrFieldsV1(List<String> fields) {
+    return InvoiceData(
+      account: fields[0],
+      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+      amount: fields[2].trim().isNotEmpty ? double.parse(fields[2]) : null,
+      label: fields[3],
+    );
+  }
+
   factory InvoiceData.fromQrFieldsV2(List<String> fields) {
     return InvoiceData(
       account: fields[0],
@@ -67,15 +74,6 @@ class InvoiceData implements ToQrFields {
       network: fields[2],
       amount: fields[3].trim().isNotEmpty ? double.parse(fields[3]) : null,
       label: fields[4],
-    );
-  }
-
-  factory InvoiceData.fromQrFieldsV1(List<String> fields) {
-    return InvoiceData(
-      account: fields[0],
-      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
-      amount: fields[2].trim().isNotEmpty ? double.parse(fields[2]) : null,
-      label: fields[3],
     );
   }
 

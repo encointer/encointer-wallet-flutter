@@ -3,12 +3,7 @@ import 'package:encointer_wallet/page/assets/account_or_community/account_or_com
 import 'package:flutter/material.dart';
 
 class SwitchAccountOrCommunity extends StatefulWidget {
-  const SwitchAccountOrCommunity({
-    Key? key,
-    this.rowTitle,
-    this.data,
-    this.onTap,
-  }) : super(key: key);
+  const SwitchAccountOrCommunity({super.key, this.rowTitle, this.data, this.onTap});
 
   final String? rowTitle;
   final List<AccountOrCommunityData>? data;

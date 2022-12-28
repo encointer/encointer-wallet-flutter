@@ -21,8 +21,8 @@ class CeremonyStep2Scan extends StatelessWidget {
     this.api, {
     required this.claimantAddress,
     required this.confirmedParticipantsCount,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final AppStore store;
   final Api api;
@@ -119,13 +119,12 @@ class CeremonyStep2Scan extends StatelessWidget {
                 },
               ),
             ),
-            store.settings.developerMode
-                ? ElevatedButton(
-                    key: const Key('attest-all-participants-dev'),
-                    child: const Text('DEV ONLY: attest all participants'),
-                    onPressed: () => attestAllParticipants(store, store.account.currentAddress),
-                  )
-                : Container(),
+            if (store.settings.developerMode)
+              ElevatedButton(
+                key: const Key('attest-all-participants-dev'),
+                child: const Text('DEV ONLY: attest all participants'),
+                onPressed: () => attestAllParticipants(store, store.account.currentAddress),
+              ),
             const SizedBox(height: 12)
           ],
         ),
@@ -141,7 +140,9 @@ void attestAllParticipants(AppStore store, String claimantAddress) {
   final registry = store.encointer.communityAccount!.meetup!.registry;
 
   registry.removeWhere((a) => a == claimantAddress);
-  registry.forEach((attendee) => store.encointer.communityAccount!.addAttendee(attendee));
+  for (final attendee in registry) {
+    store.encointer.communityAccount!.addAttendee(attendee);
+  }
 
   RootSnackBar.showMsg('Added all meetup participants to attendees');
 }

@@ -11,8 +11,9 @@ class PrimaryButton extends StatelessWidget {
     required this.child,
     this.onPressed,
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
+
   final void Function()? onPressed;
   final Widget child;
   final BorderRadiusGeometry borderRadius;
@@ -43,11 +44,7 @@ class PrimaryButton extends StatelessWidget {
 }
 
 class TextGradient extends StatelessWidget {
-  const TextGradient({
-    required this.text,
-    this.style,
-    Key? key,
-  }) : super(key: key);
+  const TextGradient({required this.text, this.style, super.key});
 
   final String text;
   final TextStyle? style;

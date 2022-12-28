@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -9,6 +8,7 @@ import 'package:encointer_wallet/common/components/encointer_text_form_field.dar
 import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
@@ -20,7 +20,8 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ReceivePage extends StatefulWidget {
-  const ReceivePage({Key? key}) : super(key: key);
+  const ReceivePage({super.key});
+
   static const String route = '/assets/receive';
 
   @override
@@ -218,8 +219,8 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
     final extrinsics = await api.encointer.pendingExtrinsics();
 
     Log.d('[receivePage] pendingExtrinsics $extrinsics', 'ReceivePage');
-    if (extrinsics.length > 0) {
-      for (var xt in extrinsics) {
+    if (extrinsics.isNotEmpty) {
+      for (final xt in extrinsics) {
         if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {
           RootSnackBar.showMsg(
             dic.profile.observedPendingExtrinsic,

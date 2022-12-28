@@ -26,6 +26,7 @@ class QrScanService {
     // FIXME: this is a hack to redirect old Leu community vouchers to new cid
     rawQrString = rawQrString.replaceAll('u0qj92QX9PQ', 'u0qj944rhWE');
     rawQrString = rawQrString.replaceAll('u0qj9QqA2Q', 'u0qj944rhWE');
+
     final data = rawQrString.split(qrCodeFieldSeparator);
 
     final context = QrCodeContextExt.fromQrField(data[0]);

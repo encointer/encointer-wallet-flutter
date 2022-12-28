@@ -13,7 +13,6 @@ import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/service/substrate_api/types/gen_external_links_params.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:get_storage/get_storage.dart';
 
 /// Global api instance
 ///
@@ -56,9 +55,6 @@ class Api {
 
   final AppStore store;
   final String _jsServiceEncointer;
-
-  // currently unused, should be removed.
-  final GetStorage jsStorage = GetStorage();
 
   final JSApi js;
   final SubstrateDartApi dartApi;

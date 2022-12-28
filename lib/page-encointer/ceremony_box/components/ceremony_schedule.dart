@@ -11,11 +11,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 ///
 /// If the current time is close to the meetup time, a countdown is shown.
 class CeremonySchedule extends StatelessWidget {
-  const CeremonySchedule({
-    required this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonySchedule({required this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime nextCeremonyDate;
   final String? languageCode;
@@ -27,24 +23,22 @@ class CeremonySchedule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        showCountDown
-            ? CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
-            : CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
+        if (showCountDown)
+          CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+        else
+          CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
         const SizedBox(height: 8),
-        showCountDown
-            ? CeremonyCountDown(nextCeremonyDate)
-            : CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+        if (showCountDown)
+          CeremonyCountDown(nextCeremonyDate)
+        else
+          CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
       ],
     );
   }
 }
 
 class CeremonyDateLabelAbsolute extends StatelessWidget {
-  const CeremonyDateLabelAbsolute({
-    required this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyDateLabelAbsolute({required this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime nextCeremonyDate;
   final String? languageCode;
@@ -72,11 +66,7 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
 }
 
 class CeremonyDateLabelRelative extends StatelessWidget {
-  const CeremonyDateLabelRelative({
-    required this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyDateLabelRelative({required this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime nextCeremonyDate;
   final String? languageCode;
@@ -104,11 +94,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 }
 
 class CeremonyDate extends StatelessWidget {
-  const CeremonyDate({
-    this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyDate({this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime? nextCeremonyDate;
   final String? languageCode;

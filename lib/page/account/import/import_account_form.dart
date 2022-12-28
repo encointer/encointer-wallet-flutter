@@ -10,24 +10,20 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/validate_keys.dart';
 
 class ImportAccountForm extends StatefulWidget {
-  const ImportAccountForm(this.store, this.onSubmit, {Key? key}) : super(key: key);
+  const ImportAccountForm(this.store, this.onSubmit, {super.key});
 
   final AppStore store;
   final Function onSubmit;
 
   @override
-  State<ImportAccountForm> createState() => _ImportAccountFormState(store);
+  State<ImportAccountForm> createState() => _ImportAccountFormState();
 }
 
 class _ImportAccountFormState extends State<ImportAccountForm> {
-  _ImportAccountFormState(this.store);
-
   // Todo: introduce enum/class for that
   String? _keyType;
 
   final _formKey = GlobalKey<FormState>();
-
-  final AppStore store;
 
   final TextEditingController _keyCtrl = TextEditingController();
   final TextEditingController _nameCtrl = TextEditingController();
@@ -102,7 +98,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     hintText: dic.account.createHint,
                     labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
-                    validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
+                    validator: (v) =>
+                        InputValidation.validateAccountName(context, v, widget.store.account.optionalAccounts),
                   ),
                   TextFormField(
                     key: const Key('account-source'),
@@ -123,8 +120,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             child: Text(I18n.of(context)!.translationsForLocale().home.next),
             onPressed: () async {
               if (_formKey.currentState!.validate() && !(_advanceOptions.error ?? false)) {
-                store.account.setNewAccountName(_nameCtrl.text.trim());
-                store.account.setNewAccountKey(_keyCtrl.text.trim());
+                widget.store.account.setNewAccountName(_nameCtrl.text.trim());
+                widget.store.account.setNewAccountKey(_keyCtrl.text.trim());
 
                 widget.onSubmit({
                   'keyType': _keyType,

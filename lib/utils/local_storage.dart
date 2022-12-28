@@ -146,7 +146,7 @@ class LocalStorage {
   }
 
   Future<List<String>> getShownMessages() async {
-    return await storage.getListString(meetUpNotificationKey);
+    return storage.getListString(meetUpNotificationKey);
   }
 }
 

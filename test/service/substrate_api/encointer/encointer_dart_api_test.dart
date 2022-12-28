@@ -14,6 +14,7 @@ void main() {
       final encointerDartApi = EncointerDartApi(substrateDartApi);
 
       final data = await encointerDartApi.getAggregatedAccountData(mediterraneanTestCommunity, aliceAddress);
+      // ignore: avoid_print
       print('data: ${data.toString()}');
 
       await substrateDartApi.close();
