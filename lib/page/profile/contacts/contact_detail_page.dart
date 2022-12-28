@@ -182,21 +182,19 @@ class EndorseButton extends StatelessWidget {
               : const SizedBox();
         }),
         Observer(builder: (_) {
-          return FittedBox(
-            child: Row(
-              children: store.encointer.account != null && store.encointer.account!.reputations.isNotEmpty
-                  ? [
-                      Text(dic.encointer.remainingNewbieTicketsAsReputable),
-                      Text(
-                        ' ${store.encointer.account?.numberOfNewbieTicketsForReputable ?? 0}',
-                        style: TextStyle(color: zurichLion.shade800, fontSize: 15),
-                      ),
-                    ]
-                  : [
-                      Text(dic.encointer.onlyReputablesCanEndorseAttendGatheringToBecomeOne),
-                    ],
-            ),
-          );
+          return store.encointer.account != null && store.encointer.account!.reputations.isNotEmpty
+              ? FittedBox(
+                  child: Row(children: [
+                    Text(dic.encointer.remainingNewbieTicketsAsReputable),
+                    Text(
+                      ' ${store.encointer.account?.numberOfNewbieTicketsForReputable ?? 0}',
+                      style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                    ),
+                  ]),
+                )
+              : !store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
+                  ? Text(dic.encointer.onlyReputablesCanEndorseAttendGatheringToBecomeOne)
+                  : const SizedBox();
         }),
         const SizedBox(height: 5),
         Observer(builder: (_) {
@@ -242,7 +240,7 @@ class EndorseButton extends StatelessWidget {
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
       _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
     } else {
-      submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
+      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
     }
   }
 }
