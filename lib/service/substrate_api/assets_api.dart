@@ -27,7 +27,6 @@ class AssetsApi {
       final address = currentAddress;
       final res = await jsApi.evalJavascript(
         'account.getBalance("$address")',
-        allowRepeat: true,
       );
       store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res as Map}));
     }

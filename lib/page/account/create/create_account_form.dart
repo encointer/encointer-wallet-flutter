@@ -27,12 +27,11 @@ class CreateAccountForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    Future<void> _createAndImportAccount() async {
+    Future<void> createAndImportAccount() async {
       await webApi.account.generateAccount();
 
       final acc = await webApi.account.importAccount(
         cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
-        derivePath: '',
       );
 
       if (acc['error'] != null) {
@@ -112,7 +111,7 @@ class CreateAccountForm extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     CreatePinPage.route,
-                    arguments: CreatePinPageParams(_createAndImportAccount),
+                    arguments: CreatePinPageParams(createAndImportAccount),
                   );
                 }
               },

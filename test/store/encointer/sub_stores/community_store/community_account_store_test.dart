@@ -12,9 +12,9 @@ void main() {
         'My Test Network',
         mediterraneanTestCommunity,
         aliceAddress,
-      );
-      communityAccountStore.participantType = ParticipantType.Bootstrapper;
-      communityAccountStore.setMeetup(Meetup(2, 3, 10, [aliceAddress, bobAddress, charlieAddress]));
+      )
+        ..participantType = ParticipantType.Bootstrapper
+        ..setMeetup(Meetup(2, 3, 10, [aliceAddress, bobAddress, charlieAddress]));
 
       final Map targetJson = <String, dynamic>{
         'network': 'My Test Network',

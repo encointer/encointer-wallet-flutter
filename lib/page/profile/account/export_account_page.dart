@@ -22,11 +22,11 @@ class ExportAccountPage extends StatelessWidget {
 
   void _showPasswordDialog(BuildContext context, String seedType) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final _store = context.read<AppStore>();
+    final store = context.read<AppStore>();
 
     Future<void> onOk() async {
       final res = await webApi.account.checkAccountPassword(
-        _store.account.currentAccount,
+        store.account.currentAccount,
         _passCtrl.text,
       );
       if (res == null) {
@@ -48,7 +48,7 @@ class ExportAccountPage extends StatelessWidget {
       } else {
         Navigator.of(context).pop();
         final seed =
-            await _store.account.decryptSeed(_store.account.currentAccount.pubKey, seedType, _passCtrl.text.trim());
+            await store.account.decryptSeed(store.account.currentAccount.pubKey, seedType, _passCtrl.text.trim());
         Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
           'key': seed!,
           'type': seedType,
@@ -101,7 +101,7 @@ class ExportAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.export),
@@ -112,8 +112,7 @@ class ExportAccountPage extends StatelessWidget {
             title: Text(dic.account.keystore),
             trailing: const Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
-              final json = AccountData.toJson(context.read<AppStore>().account.currentAccount);
-              json.remove('name');
+              final json = AccountData.toJson(context.read<AppStore>().account.currentAccount)..remove('name');
               json['meta']['name'] = context.read<AppStore>().account.currentAccount.name;
               Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
                 'key': jsonEncode(json),
@@ -122,9 +121,9 @@ class ExportAccountPage extends StatelessWidget {
             },
           ),
           FutureBuilder(
-            future: _store.account.checkSeedExist(
+            future: store.account.checkSeedExist(
               AccountStore.seedTypeMnemonic,
-              _store.account.currentAccount.pubKey,
+              store.account.currentAccount.pubKey,
             ),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData && snapshot.data == true) {
@@ -139,9 +138,9 @@ class ExportAccountPage extends StatelessWidget {
             },
           ),
           FutureBuilder(
-            future: _store.account.checkSeedExist(
+            future: store.account.checkSeedExist(
               AccountStore.seedTypeRawSeed,
-              _store.account.currentAccount.pubKey,
+              store.account.currentAccount.pubKey,
             ),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData && snapshot.data == true) {

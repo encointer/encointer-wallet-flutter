@@ -193,22 +193,22 @@ abstract class _AppStore with Store {
     if (cachedEncointerStore != null) {
       Log.d('Found cached encointer store $cachedEncointerStore', '_AppStore');
 
-      final encointerStore = EncointerStore.fromJson(cachedEncointerStore);
+      final encointerStore = EncointerStore.fromJson(cachedEncointerStore)
 
-      // Cache the entire encointer store at once: Check if this is too expensive,
-      // when many accounts/cids exist in store. But as the caching future is in general not awaited,
-      // it should be fine.
-      encointerStore.initStore(
-        this as AppStore,
-        () => localStorage.setObject(
-          encointerFinalCacheKey,
-          encointer.toJson(),
-        ),
-      );
+        // Cache the entire encointer store at once: Check if this is too expensive,
+        // when many accounts/cids exist in store. But as the caching future is in general not awaited,
+        // it should be fine.
+        ..initStore(
+          this as AppStore,
+          () => localStorage.setObject(
+            encointerFinalCacheKey,
+            encointer.toJson(),
+          ),
+        );
 
       return encointerStore;
     } else {
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -224,14 +224,14 @@ abstract class _AppStore with Store {
     if (account.currentAccountPubKey == pubKey) {
       Log.d('setCurrentAccount: currentAccount is already new account. returning', '_AppStore');
 
-      return Future.value(null);
+      return Future.value();
     }
 
     await account.setCurrentAccount(pubKey);
 
     if (pubKey == '') {
       // happens only if the last account in the storage has been deleted
-      return Future.value(null);
+      return Future.value();
     }
 
     final address = account.getNetworkAddress(pubKey);

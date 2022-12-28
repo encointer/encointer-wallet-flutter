@@ -72,17 +72,17 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
     final h4Grey = Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
-    final params = ModalRoute.of(context)!.settings.arguments as ReapVoucherParams;
+    final params = ModalRoute.of(context)!.settings.arguments! as ReapVoucherParams;
 
     final voucher = params.voucher;
     final voucherUri = voucher.voucherUri;
     final cid = voucher.cid;
     final networkInfo = voucher.network;
     final issuer = voucher.issuer;
-    final recipient = _store.account.currentAddress;
+    final recipient = store.account.currentAddress;
     final showFundVoucher = params.showFundVoucher;
 
     if (!_postFrameCallbackCalled) {
@@ -125,14 +125,14 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     )
                   : const CupertinoActivityIndicator(),
             ),
-            Text('${dic.assets.voucherBalance}, ${_store.encointer.community?.symbol}', style: h4Grey),
+            Text('${dic.assets.voucherBalance}, ${store.encointer.community?.symbol}', style: h4Grey),
             Expanded(
               // fit: FlexFit.tight,
               child: Center(
                 child: Text(
                   dic.assets.doYouWantToRedeemThisVoucher.replaceAll(
                     'ACCOUNT_PLACEHOLDER',
-                    _store.account.currentAccount.name,
+                    store.account.currentAccount.name,
                   ),
                   style: h2Grey,
                   textAlign: TextAlign.center,

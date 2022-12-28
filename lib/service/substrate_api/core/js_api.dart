@@ -152,7 +152,7 @@ class JSApi {
     Function callback,
   ) async {
     _msgHandlers[channel] = callback;
-    evalJavascript(code, allowRepeat: true);
+    evalJavascript(code);
   }
 
   Future<void> unsubscribeMessage(String channel) async {

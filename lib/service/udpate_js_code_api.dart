@@ -24,7 +24,7 @@ class UpdateJSCodeApi {
       return jsonDecode(utf8.decode(res.bodyBytes)) as Map?;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -34,7 +34,7 @@ class UpdateJSCodeApi {
       return jsonDecode(res.body) as Map;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -44,7 +44,7 @@ class UpdateJSCodeApi {
       return Map.of(jsonDecode(res.body) as Map)[networkName] as int?;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -54,7 +54,7 @@ class UpdateJSCodeApi {
       return utf8.decode(res.bodyBytes);
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -84,8 +84,9 @@ class UpdateJSCodeApi {
     String code,
     int version,
   ) {
-    jsStorage.write('$_jsCodeStorageKey$networkName', code);
-    jsStorage.write('$_jsCodeStorageVersionKey$networkName', version.toString());
+    jsStorage
+      ..write('$_jsCodeStorageKey$networkName', code)
+      ..write('$_jsCodeStorageVersionKey$networkName', version.toString());
   }
 
   static Future<List?> getAnnouncements() async {
@@ -94,7 +95,7 @@ class UpdateJSCodeApi {
       return jsonDecode(utf8.decode(res.bodyBytes)) as List?;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
-      return Future.value(null);
+      return Future.value();
     }
   }
 }

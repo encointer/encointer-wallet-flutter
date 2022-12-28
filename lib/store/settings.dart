@@ -117,15 +117,13 @@ abstract class _SettingsStore with Store {
 
   @computed
   List<EndpointData> get endpointList {
-    final ls = List<EndpointData>.of(networkEndpoints);
-    ls.retainWhere((i) => i.info == endpoint.info);
+    final ls = List<EndpointData>.of(networkEndpoints)..retainWhere((i) => i.info == endpoint.info);
     return ls;
   }
 
   @computed
   List<AccountData> get contactListAll {
-    final ls = List<AccountData>.of(rootStore.account.accountList);
-    ls.addAll(contactList);
+    final ls = List<AccountData>.of(rootStore.account.accountList)..addAll(contactList);
     return ls;
   }
 
@@ -226,13 +224,13 @@ abstract class _SettingsStore with Store {
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
     ]);
     if (data[0] != null) {
-      setNetworkState(Map<String, dynamic>.of(data[0] as Map<String, dynamic>), needCache: false);
+      setNetworkState(Map<String, dynamic>.of(data[0]! as Map<String, dynamic>), needCache: false);
     } else {
       setNetworkState({}, needCache: false);
     }
 
     if (data[1] != null) {
-      setNetworkConst(Map<String, dynamic>.of(data[1] as Map<String, dynamic>), needCache: false);
+      setNetworkConst(Map<String, dynamic>.of(data[1]! as Map<String, dynamic>), needCache: false);
     } else {
       setNetworkConst({}, needCache: false);
     }
@@ -256,7 +254,7 @@ abstract class _SettingsStore with Store {
   @action
   Future<void> loadContacts() async {
     final ls = await rootStore.localStorage.getContactList();
-    contactList = ObservableList.of(ls.map((i) => AccountData.fromJson(i)));
+    contactList = ObservableList.of(ls.map(AccountData.fromJson));
   }
 
   @action

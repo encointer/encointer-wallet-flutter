@@ -90,7 +90,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     Log.d('_getBalanceEntryListTile: $community', 'AccountManagePage');
 
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+      contentPadding: const EdgeInsets.symmetric(),
       leading: CommunityIcon(
         store: _appStore,
         address: address,
@@ -156,11 +156,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final dic = I18n.of(context)!.translationsForLocale();
     final h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    final accountToBeEdited = _store.account.getAccountData(accountToBeEditedPubKey);
-    final addressSS58 = _store.account.getNetworkAddress(accountToBeEditedPubKey);
+    final accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
+    final addressSS58 = store.account.getNetworkAddress(accountToBeEditedPubKey);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
@@ -230,18 +230,18 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                if (_store.settings.developerMode)
+                if (store.settings.developerMode)
                   Expanded(
                     child: ListView.builder(
                         // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                        itemCount: _store.encointer.accountStores!.containsKey(addressSS58)
-                            ? _store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
+                        itemCount: store.encointer.accountStores!.containsKey(addressSS58)
+                            ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
                             : 0,
                         itemBuilder: (BuildContext context, int index) {
-                          final community = _store.encointer.account!.balanceEntries.keys.elementAt(index);
+                          final community = store.encointer.account!.balanceEntries.keys.elementAt(index);
                           return _getBalanceEntryListTile(
                             community,
-                            _store.encointer.accountStores![addressSS58]!.balanceEntries[community],
+                            store.encointer.accountStores![addressSS58]!.balanceEntries[community],
                             addressSS58,
                           );
                         }),
@@ -249,7 +249,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 else
                   Expanded(
                     child: ListView.builder(
-                        itemCount: _store.encointer.chosenCid != null ? 1 : 0,
+                        itemCount: store.encointer.chosenCid != null ? 1 : 0,
                         itemBuilder: (BuildContext context, int index) {
                           return _getBalanceEntryListTile(
                             _appStore.encointer.chosenCid!.toFmtString(),
@@ -361,7 +361,7 @@ class CommunityIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
     return Stack(
       children: [
         SizedBox(
@@ -371,8 +371,8 @@ class CommunityIcon extends StatelessWidget {
         ),
         Observer(
           builder: (_) {
-            if (_store.encointer.community!.bootstrappers != null &&
-                _store.encointer.community!.bootstrappers!.contains(address)) {
+            if (store.encointer.community!.bootstrappers != null &&
+                store.encointer.community!.bootstrappers!.contains(address)) {
               return const Positioned(
                 bottom: 0,
                 right: 0, //give the values according to your requirement

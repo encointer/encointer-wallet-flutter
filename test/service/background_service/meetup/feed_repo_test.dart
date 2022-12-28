@@ -13,7 +13,7 @@ void main() async {
   final mockHttpClient = MockHttpClient();
   final feedRepo = FeedRepo(mockHttpClient);
 
-  void _httpClient(Uri uri) {
+  void httpClient(Uri uri) {
     when(() => mockHttpClient.get(uri)).thenAnswer(
       (_) async => Response(fixture('feed_list'), 200),
     );
@@ -28,14 +28,14 @@ void main() async {
   });
 
   test('Fetch Data Success langCone is null', () async {
-    _httpClient(getUri());
+    httpClient(getUri());
     final feeds = await feedRepo.fetchData();
     verify(() => mockHttpClient.get(getUri()));
     expect(feeds, isA<List<Feed>?>());
   });
 
   test('Fetch Data Fail langCone is "en" or "de"', () async {
-    _httpClient(getUri('de'));
+    httpClient(getUri('de'));
     final feeds = await feedRepo.fetchData('de');
     verify(() => mockHttpClient.get(getUri('de')));
     expect(feeds, isA<List<Feed>?>());
@@ -44,7 +44,7 @@ void main() async {
   test(
     'Fetch Data is Not Fail (becouse our replaceLocalePlaceholder methof if Lang code is not "en", "de", or null this mothod return "en" link) langCone is not "en" or "de" or not null',
     () async {
-      _httpClient(getUri('ky'));
+      httpClient(getUri('ky'));
       final feeds = await feedRepo.fetchData('ky');
       verify(() => mockHttpClient.get(getUri('ky')));
       expect(feeds, isA<List<Feed>?>());

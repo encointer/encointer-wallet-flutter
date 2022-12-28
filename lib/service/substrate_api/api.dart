@@ -232,7 +232,6 @@ class Api {
   Future<List?> getExternalLinks(GenExternalLinksParams params) async {
     final res = await evalJavascript(
       'settings.genLinks(${jsonEncode(GenExternalLinksParams.toJson(params))})',
-      allowRepeat: true,
     );
     return res as List?;
   }

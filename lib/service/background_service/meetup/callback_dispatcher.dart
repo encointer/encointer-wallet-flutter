@@ -15,31 +15,31 @@ Future<void> callbackDispatcher() async {
     final storage = LocalStorage();
     final repository = FeedRepo();
 
-    final _alreadyShownNotifications = await storage.getShownMessages();
+    final alreadyShownNotifications = await storage.getShownMessages();
     // for debugging;
-    // final _alreadyShownNotifications = <String>[];
-    final _feeds = await repository.fetchData(langCode);
+    // final alreadyShownNotifications= <String>[];
+    final feeds = await repository.fetchData(langCode);
 
-    if (_feeds == null) {
+    if (feeds == null) {
       Log.d('The result of the feed is null', 'callbackDispatcher');
       return Future.value(true);
     }
 
     // Todo: change the feed to a set instead of list
-    // final feedMap = Map.fromIterable(_feeds.map((e) => MapEntry(e.id, e)));
+    // final feedMap = Map.fromIterable(feeds.map((e) => MapEntry(e.id, e)));
     // remove all cached notifications that are no longer in the feed
     // todo: Fix #788. This it removes all the alreadyShownNotifications even if it should not.
-    // _alreadyShownNotifications.removeWhere((id) => !feedMap.containsKey(id));
+    // alreadyShownNotifications.removeWhere((id) => !feedMap.containsKey(id));
 
     final shownNotifications = await showAllNotificationsFromFeed(
-      _feeds,
-      _alreadyShownNotifications,
+      feeds,
+      alreadyShownNotifications,
       NotificationPlugin.showNotification,
     );
 
-    _alreadyShownNotifications.addAll(shownNotifications);
+    alreadyShownNotifications.addAll(shownNotifications);
 
-    await storage.setShownMessages(_alreadyShownNotifications);
+    await storage.setShownMessages(alreadyShownNotifications);
 
     return Future.value(true);
   });

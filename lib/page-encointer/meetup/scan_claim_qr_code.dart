@@ -50,7 +50,7 @@ class ScanClaimQrCode extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    Future _onScan(String address) async {
+    Future onScan(String address) async {
       if (Fmt.isAddress(address)) {
         validateAndStoreParticipant(context, address, dic);
       } else {
@@ -81,15 +81,13 @@ class ScanClaimQrCode extends StatelessWidget {
 
             return Stack(
               children: [
-                MobileScanner(
-                    allowDuplicates: false,
-                    onDetect: (barcode, args) {
-                      if (barcode.rawValue == null) {
-                        Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
-                      } else {
-                        _onScan(barcode.rawValue!);
-                      }
-                    }),
+                MobileScanner(onDetect: (barcode, args) {
+                  if (barcode.rawValue == null) {
+                    Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
+                  } else {
+                    onScan(barcode.rawValue!);
+                  }
+                }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(
@@ -146,8 +144,8 @@ Widget permissionErrorDialog(BuildContext context) {
         onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
       ),
       CupertinoButton(
+        onPressed: openAppSettings,
         child: Text(dic.home.appSettings),
-        onPressed: () => openAppSettings(),
       ),
     ],
   );

@@ -13,8 +13,7 @@ abstract class QrCode<QrCodeData extends ToQrFields> {
   QrCodeData data;
 
   String toQrPayload() {
-    final qrFields = [context.toQrField(), version.toVersionNumber()];
-    qrFields.addAll(data.toQrFields());
+    final qrFields = [context.toQrField(), version.toVersionNumber(), ...data.toQrFields()];
     return qrFields.join(qrCodeFieldSeparator);
   }
 }

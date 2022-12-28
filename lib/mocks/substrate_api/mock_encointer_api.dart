@@ -93,12 +93,12 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<void> getCommunityMetadata() {
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
   Future<void> getCommunityData() {
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
@@ -115,7 +115,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<void> getBootstrappers() {
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
