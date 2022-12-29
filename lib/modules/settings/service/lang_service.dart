@@ -15,7 +15,7 @@ class LangService {
       return Locale(code);
     } else {
       final deviceLocal = window.locale.languageCode;
-      if (deviceLocal == 'en' || deviceLocal == 'de' || deviceLocal == 'ru') {
+      if (deviceLocal == 'en' || deviceLocal == 'de' || deviceLocal == 'ru' || deviceLocal == 'fr') {
         return Locale(deviceLocal);
       } else {
         return const Locale('en');
