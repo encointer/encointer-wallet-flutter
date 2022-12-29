@@ -57,14 +57,14 @@ class ContactDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final account = ModalRoute.of(context)!.settings.arguments! as AccountData;
+    final account = ModalRoute.of(context)!.settings.arguments as AccountData?;
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          account.name,
+          account?.name ?? '',
           style: Theme.of(context).textTheme.headline3,
         ),
         iconTheme: const IconThemeData(
@@ -83,31 +83,30 @@ class ContactDetailPage extends StatelessWidget {
                 child: ListView(
                   children: <Widget>[
                     const SizedBox(height: 30),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      AddressIcon(
-                        account.address,
-                        account.pubKey,
-                        size: 130,
-                      )
-                    ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (account != null) AddressIcon(account.address, account.pubKey, size: 130),
+                      ],
+                    ),
                     const SizedBox(height: 20),
                     // The below is duplicate code of `accountManagePage`, but according to figma the design will
                     // change here.
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
+                        Text('${Fmt.address(account?.address)}', style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
                           color: zurichLion.shade500,
-                          onPressed: () => UI.copyAndNotify(context, account.address),
+                          onPressed: account != null ? () => UI.copyAndNotify(context, account.address) : null,
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              EndorseButton(store, api, account),
+              if (account != null) EndorseButton(store, api, account),
               const SizedBox(height: 16),
               SecondaryButtonWide(
                 key: const Key('send-money-to-account'),
@@ -126,14 +125,15 @@ class ContactDetailPage extends StatelessWidget {
                     arguments: TransferPageParams(
                       cid: context.read<AppStore>().encointer.chosenCid,
                       communitySymbol: context.read<AppStore>().encointer.community?.symbol,
-                      recipient: account.address,
-                      label: account.name,
+                      recipient: account?.address,
+                      label: account?.name,
                     ),
                   );
                 },
               ),
               const SizedBox(height: 16),
               SecondaryButtonWide(
+                onPressed: account != null ? () => _removeItem(context, account, context.read<AppStore>()) : null,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -142,7 +142,6 @@ class ContactDetailPage extends StatelessWidget {
                     Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
                   ],
                 ),
-                onPressed: () => _removeItem(context, account, context.read<AppStore>()),
               ),
             ],
           ),

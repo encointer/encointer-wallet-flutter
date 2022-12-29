@@ -25,16 +25,16 @@ class CreatePinPage extends StatefulWidget {
 }
 
 class _CreatePinPageState extends State<CreatePinPage> {
-  late Future<void> Function() onCreatePin;
+  Future<void> Function()? onCreatePin;
 
   bool _submitting = false;
 
   @override
   Widget build(BuildContext context) {
-    final params = ModalRoute.of(context)!.settings.arguments! as CreatePinPageParams;
+    final params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams?;
     final store = context.watch<AppStore>();
 
-    onCreatePin = params.onCreatePin;
+    onCreatePin = params?.onCreatePin;
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +62,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                     _submitting = true;
                   });
 
-                  await onCreatePin();
+                  if (onCreatePin != null) await onCreatePin!();
 
                   if (store.encointer.communityIdentifiers.length == 1) {
                     await store.encointer.setChosenCid(

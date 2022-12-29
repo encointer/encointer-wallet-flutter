@@ -100,9 +100,8 @@ abstract class _AccountStore with Store {
   /// accountList with observations
   @computed
   List<AccountData> get accountListAll {
-    final accList = accountList.toList();
     final contactList = rootStore.settings.contactList.toList()..retainWhere((i) => i.observation ?? false);
-    accList.addAll(contactList);
+    final accList = accountList.toList()..addAll(contactList);
     return accList;
   }
 

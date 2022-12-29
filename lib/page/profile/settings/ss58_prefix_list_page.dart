@@ -32,8 +32,8 @@ class SS58PrefixListPage extends StatelessWidget {
                 width: 36,
                 child: Image.asset('assets/images/public/${i['info']}.png'),
               ),
-              title: Text(i['info']! as String),
-              subtitle: Text(i['text']! as String),
+              title: Text((i['info'] as String?) ?? ''),
+              subtitle: Text((i['text'] as String?) ?? ''),
               trailing: const Icon(Icons.arrow_forward_ios, size: 18),
               onTap: () {
                 if (context.read<AppStore>().settings.customSS58Format['info'] == i['info']) {
