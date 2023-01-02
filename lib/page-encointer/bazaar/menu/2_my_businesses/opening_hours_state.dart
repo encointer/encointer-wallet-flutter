@@ -6,6 +6,8 @@ part 'opening_hours_state.g.dart';
 class OpeningHoursState = _OpeningHoursState with _$OpeningHoursState;
 
 abstract class _OpeningHoursState with Store {
+  _OpeningHoursState(this.mon, this.tue, this.wed, this.thu, this.fri, this.sat, this.sun);
+
   /// 0 -> Mon, 1 -> Tue, ... 6 -> Sun
 
   @observable
@@ -33,7 +35,7 @@ abstract class _OpeningHoursState with Store {
   int? dayToCopyFrom;
 
   @action
-  copyFrom(int day) {
+  void copyFrom(int day) {
     if (day == dayToCopyFrom) {
       // tapping the same button again turns copying off and clears clipboard
       dayToCopyFrom = null;
@@ -45,7 +47,7 @@ abstract class _OpeningHoursState with Store {
   }
 
   @action
-  setDayOnFocus(int day) {
+  void setDayOnFocus(int day) {
     if (day == dayOnFocus) {
       // turn editing off again
       dayOnFocus = null;
@@ -55,16 +57,14 @@ abstract class _OpeningHoursState with Store {
   }
 
   @action
-  pasteOpeningHoursTo(int day) {
-    var target = getOpeningHoursFor(day);
+  void pasteOpeningHoursTo(int day) {
+    final target = getOpeningHoursFor(day);
     if (copiedOpeningHours == null) return;
 
-    copiedOpeningHours!.openingIntervals.forEach(
-      (OpeningIntervalState interval) => target!.addInterval(interval),
-    );
+    for (final interval in copiedOpeningHours!.openingIntervals) {
+      target!.addInterval(interval);
+    }
   }
-
-  _OpeningHoursState(this.mon, this.tue, this.wed, this.thu, this.fri, this.sat, this.sun);
 
   // generic getter
   OpeningHoursForDayState? getOpeningHoursFor(int day) {
@@ -102,19 +102,18 @@ class OpeningHoursForDayState = _OpeningHoursForDayState with _$OpeningHoursForD
 /// EmptyList means closed
 /// You can have as many (disjoint) OpeningIntervals per day as you please.
 abstract class _OpeningHoursForDayState with Store {
+  _OpeningHoursForDayState(this.openingIntervals);
+
   @observable
   ObservableList<OpeningIntervalState> openingIntervals;
-
-  _OpeningHoursForDayState(this.openingIntervals);
 
   @observable
   String? timeFormatError;
 
   @action
-  addParsedIntervalIfValid(String startEnd) {
+  void addParsedIntervalIfValid(String startEnd) {
     try {
-      OpeningIntervalState openingIntervalState =
-          _OpeningIntervalState.parseOpeningIntervalState(startEnd) as OpeningIntervalState;
+      final openingIntervalState = _OpeningIntervalState.parseOpeningIntervalState(startEnd) as OpeningIntervalState;
       timeFormatError = null;
       openingIntervals.add(openingIntervalState);
     } catch (e) {
@@ -123,12 +122,12 @@ abstract class _OpeningHoursForDayState with Store {
   }
 
   @action
-  addInterval(OpeningIntervalState interval) {
+  void addInterval(OpeningIntervalState interval) {
     openingIntervals.add(interval);
   }
 
   @action
-  removeInterval(int index) {
+  void removeInterval(int index) {
     openingIntervals.removeAt(index);
   }
 
@@ -137,16 +136,16 @@ abstract class _OpeningHoursForDayState with Store {
   /// not not be wise, as it will not be called, but instead the toString of the
   /// actually used class with a similar name will be called.)
   String humanReadable() {
-    String asString = '';
-    if (openingIntervals.length == 0) {
-      asString += '(closed)';
+    final asString = StringBuffer();
+    if (openingIntervals.isEmpty) {
+      asString.write('(closed)');
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
-        asString += openingIntervals[i].humanReadable();
-        asString += i < openingIntervals.length - 1 ? ', ' : '';
+        asString.write(openingIntervals[i].humanReadable());
+        asString.write(i < openingIntervals.length - 1 ? ', ' : '');
       }
     }
-    return asString;
+    return asString.toString();
   }
 }
 
@@ -155,6 +154,8 @@ class OpeningIntervalState = _OpeningIntervalState with _$OpeningIntervalState;
 
 /// start and end in minutes since midnight of that day
 abstract class _OpeningIntervalState with Store {
+  _OpeningIntervalState(this.start, this.end);
+
   @observable
   int start;
   @observable
@@ -165,28 +166,26 @@ abstract class _OpeningIntervalState with Store {
     return OpeningIntervalState(_parseTimeInterval(startEndTime, 0), _parseTimeInterval(startEndTime, 1));
   }
 
-  _OpeningIntervalState(this.start, this.end);
-
   static int _parseTimeInterval(String startEndTime, int part) {
-    var startEnd = startEndTime.split('-');
-    List<int> parsed = [];
-    for (var value in startEnd) {
+    final startEnd = startEndTime.split('-');
+    final parsed = <int>[];
+    for (final value in startEnd) {
       parsed.add(_parseTime(value.trim()));
     }
     return (parsed[0] < parsed[1]) ? parsed[part % 2] : parsed[(part + 1) % 2];
   }
 
   static int _parseTime(String time) {
-    var timeLowerCase = time.toLowerCase();
-    var pm = timeLowerCase.contains('p') ? 12 * 60 : 0;
-    var indexOfMeridiem = timeLowerCase.indexOf(RegExp(r'a|p'));
-    var timeClean = indexOfMeridiem > 0 ? timeLowerCase.substring(0, indexOfMeridiem) : timeLowerCase;
-    var hoursMinutes = timeClean.split(':');
+    final timeLowerCase = time.toLowerCase();
+    final pm = timeLowerCase.contains('p') ? 12 * 60 : 0;
+    final indexOfMeridiem = timeLowerCase.indexOf(RegExp('a|p'));
+    final timeClean = indexOfMeridiem > 0 ? timeLowerCase.substring(0, indexOfMeridiem) : timeLowerCase;
+    final hoursMinutes = timeClean.split(':');
     var hours = int.parse(hoursMinutes[0].trim());
 
     // 12am is midnight, 12pm is noon.
-    hours = (hours == 12 && timeLowerCase.contains('m') ? 0 : hours);
-    var minutes = hoursMinutes.length > 1 ? int.parse(hoursMinutes[1].trim()) : 0;
+    hours = hours == 12 && timeLowerCase.contains('m') ? 0 : hours;
+    final minutes = hoursMinutes.length > 1 ? int.parse(hoursMinutes[1].trim()) : 0;
     return (hours * 60 + minutes + pm) % (24 * 60);
   }
 

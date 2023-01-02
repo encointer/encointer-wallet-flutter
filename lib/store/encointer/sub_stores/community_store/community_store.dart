@@ -18,15 +18,15 @@ part 'community_store.g.dart';
 /// It also contains sub-stores for account and community specific data.
 @JsonSerializable(explicitToJson: true)
 class CommunityStore extends _CommunityStore with _$CommunityStore {
-  CommunityStore(String network, CommunityIdentifier cid) : super(network, cid);
+  CommunityStore(super.network, super.cid);
+
+  factory CommunityStore.fromJson(Map<String, dynamic> json) => _$CommunityStoreFromJson(json);
+  Map<String, dynamic> toJson() => _$CommunityStoreToJson(this);
 
   @override
   String toString() {
     return jsonEncode(this);
   }
-
-  factory CommunityStore.fromJson(Map<String, dynamic> json) => _$CommunityStoreFromJson(json);
-  Map<String, dynamic> toJson() => _$CommunityStoreToJson(this);
 }
 
 abstract class _CommunityStore with Store {
@@ -79,37 +79,27 @@ abstract class _CommunityStore with Store {
   @observable
   String? communityIcon;
 
-  get applyDemurrage => _applyDemurrage;
+  double? Function(BalanceEntry)? get applyDemurrage => _applyDemurrage;
 
   @action
   Future<String?> getCommunityIcon() async {
     try {
-      if (assetsCid == null) {
-        return null;
-      } else {
-        final data = await webApi.ipfs.getCommunityIcon(assetsCid!);
-        if (data != null) {
-          communityIcon = data;
-          return communityIcon;
-        } else {
-          return null;
-        }
+      if (assetsCid != null) {
+        final maybeIcon = await webApi.ipfs.getCommunityIcon(assetsCid!);
+        if (maybeIcon != null) communityIcon = maybeIcon;
       }
     } catch (e) {
       Log.e('getCommunityIcon $e', 'App Store getCommunityIcon');
-      return null;
     }
+    return communityIcon;
   }
-
-  @action
-  void clearCommunityIcon() => communityIcon = null;
 
   @action
   Future<void> initCommunityAccountStore(String address) {
     if (!communityAccountStores!.containsKey(address)) {
       Log.d('Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address', 'CommunityStore');
 
-      var store = CommunityAccountStore(network, cid, address);
+      final store = CommunityAccountStore(network, cid, address);
       store.initStore(_cacheFn);
 
       communityAccountStores![address] = store;
@@ -130,17 +120,18 @@ abstract class _CommunityStore with Store {
   }
 
   @action
-  void setBootstrappers(List<String> bs) {
+  Future<void> setBootstrappers(List<String> bs) async {
     Log.d('set bootstrappers to $bs', 'CommunityStore');
     bootstrappers = bs;
     writeToCache();
   }
 
   @action
-  void setCommunityMetadata(CommunityMetadata meta) {
+  Future<void> setCommunityMetadata(CommunityMetadata meta) async {
     Log.d('set metadata to $meta', 'CommunityStore');
 
     metadata = meta;
+    await getCommunityIcon();
     writeToCache();
   }
 

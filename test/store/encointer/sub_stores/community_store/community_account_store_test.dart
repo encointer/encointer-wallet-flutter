@@ -8,91 +8,95 @@ import 'package:encointer_wallet/store/encointer/sub_stores/community_store/comm
 void main() {
   group('CommunityAccountStore', () {
     test('json serialization works', () {
-      var communityAccountStore = CommunityAccountStore(
+      final communityAccountStore = CommunityAccountStore(
         'My Test Network',
         mediterraneanTestCommunity,
-        ALICE_ADDRESS,
+        aliceAddress,
       );
       communityAccountStore.participantType = ParticipantType.Bootstrapper;
-      communityAccountStore.setMeetup(Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
+      communityAccountStore.setMeetup(Meetup(2, 3, 10, [aliceAddress, bobAddress, charlieAddress]));
 
-      Map<String, dynamic> targetJson = {
+      final Map targetJson = <String, dynamic>{
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
-        'address': ALICE_ADDRESS,
+        'address': aliceAddress,
         'participantType': 'Bootstrapper',
         'meetup': {
           'index': 2,
           'locationIndex': 3,
           'time': 10,
-          'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
+          'registry': [aliceAddress, bobAddress, charlieAddress]
         },
-        'attendees': [],
+        'attendees': <String>[],
         'participantCountVote': null,
-        'meetupCompleted': false
+        'meetupCompleted': false,
+        'numberOfNewbieTicketsForBootstrapper': 0,
       };
 
       expect(communityAccountStore.toJson(), targetJson);
     });
 
     test('json deserialization works', () {
-      Map<String, dynamic> sourceJson = {
+      final sourceJson = <String, dynamic>{
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
-        'address': ALICE_ADDRESS,
+        'address': aliceAddress,
         'participantType': 'Bootstrapper',
         'meetup': {
           'index': 2,
           'locationIndex': 3,
           'time': 10,
-          'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
+          'registry': [aliceAddress, bobAddress, charlieAddress]
         },
-        'attendees': []
+        'attendees': <String>[],
+        'numberOfNewbieTicketsForBootstrapper': 0,
       };
 
-      var store = CommunityAccountStore.fromJson(sourceJson);
+      final store = CommunityAccountStore.fromJson(sourceJson);
 
       expect(store.network, 'My Test Network');
       expect(store.cid, mediterraneanTestCommunity);
-      expect(store.address, ALICE_ADDRESS);
+      expect(store.address, aliceAddress);
       expect(store.participantType, ParticipantType.Bootstrapper);
       expect(store.meetup!.index, 2);
       expect(store.meetup!.locationIndex, 3);
       expect(store.meetup!.time, 10);
-      expect(store.meetup!.registry, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]);
+      expect(store.meetup!.registry, [aliceAddress, bobAddress, charlieAddress]);
+      expect(store.numberOfNewbieTicketsForBootstrapper, 0);
     });
 
     test('cacheFn injection works', () async {
-      var localStorage = MockLocalStorage();
+      final localStorage = MockLocalStorage();
 
-      var communityAccountStore = CommunityAccountStore(
+      final communityAccountStore = CommunityAccountStore(
         'My Test Network',
         mediterraneanTestCommunity,
-        ALICE_ADDRESS,
+        aliceAddress,
       );
       communityAccountStore.participantType = ParticipantType.Bootstrapper;
 
       communityAccountStore.initStore(() => localStorage.setObject('hello', communityAccountStore.toJson()));
 
-      communityAccountStore.setMeetup(Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
+      communityAccountStore.setMeetup(Meetup(2, 3, 10, [aliceAddress, bobAddress, charlieAddress]));
 
-      Map<String, dynamic> targetCachedJson = {
+      final targetCachedJson = <String, dynamic>{
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
-        'address': ALICE_ADDRESS,
+        'address': aliceAddress,
         'participantType': 'Bootstrapper',
         'meetup': {
           'index': 2,
           'locationIndex': 3,
           'time': 10,
-          'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
+          'registry': [aliceAddress, bobAddress, charlieAddress]
         },
-        'attendees': [],
+        'attendees': <String>[],
         'participantCountVote': null,
-        'meetupCompleted': false
+        'meetupCompleted': false,
+        'numberOfNewbieTicketsForBootstrapper': 0,
       };
 
-      var cachedValue = await localStorage.getObject('hello');
+      final cachedValue = await localStorage.getObject('hello');
       expect(cachedValue, targetCachedJson);
     });
   });

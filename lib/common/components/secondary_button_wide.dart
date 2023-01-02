@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SecondaryButtonWide extends StatelessWidget {
-  SecondaryButtonWide({
-    Key? key,
-    required this.child,
-    this.onPressed,
-  }) : super(key: key);
+  const SecondaryButtonWide({super.key, required this.child, this.onPressed});
 
   final Widget child;
   final void Function()? onPressed;
@@ -16,8 +12,8 @@ class SecondaryButtonWide extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
-        child: child,
         onPressed: onPressed,
+        child: child,
       ),
     );
   }

@@ -5,12 +5,12 @@ import 'package:intl/intl.dart';
 ///
 /// Useful because we have many cases where the time is first 'null' because it is still being fetched.
 class MaybeDateTime extends StatelessWidget {
-  MaybeDateTime(
+  const MaybeDateTime(
     this.meetupTime, {
-    Key? key,
+    super.key,
     required this.dateFormat,
     this.style,
-  }) : super(key: key);
+  });
 
   final int? meetupTime;
 

@@ -1,13 +1,18 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
 
 /// Helpers to submit transactions.
 
@@ -21,18 +26,18 @@ Future<void> submitTx(
   AppStore store,
   Api api,
   Map txParams, {
-  Function(BuildContext txPageContext, Map res)? onFinish,
+  dynamic Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
   if (store.settings.cachedPin.isEmpty) {
-    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
-    await showCupertinoDialog(
+    final unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
+    await showCupertinoDialog<void>(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
           context,
           store.account.currentAccount,
           Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (password) => store.settings.setPin(password),
+          (String password) => store.settings.setPin(password),
         );
       },
     );
@@ -62,7 +67,7 @@ Future<void> submitClaimRewards(
   Api api,
   CommunityIdentifier chosenCid,
 ) async {
-  var txParams = claimRewardsParams(chosenCid);
+  final txParams = claimRewardsParams(chosenCid);
 
   return submitTx(
     context,
@@ -85,29 +90,32 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier? chosenCid,
   String? newbie,
 ) async {
-  var txParams = endorseNewcomerParams(chosenCid!, newbie!);
+  final txParams = endorseNewcomerParams(chosenCid!, newbie!);
 
   return submitTx(
     context,
     store,
     api,
     txParams,
-    onFinish: (BuildContext txPageContext, Map res) => (res),
+    onFinish: (BuildContext txPageContext, Map res) {
+      store.encointer.account!.getNumberOfNewbieTicketsForReputable();
+      store.encointer.communityAccount!.getNumberOfNewbieTicketsForBootstrapper();
+    },
   );
 }
 
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   if (store.settings.cachedPin.isEmpty) {
-    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
-    await showCupertinoDialog(
+    final unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
+    await showCupertinoDialog<void>(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
           context,
           store.account.currentAccount,
           Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (password) => store.settings.setPin(password),
+          (String password) => store.settings.setPin(password),
         );
       },
     );
@@ -118,7 +126,16 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     store,
     api,
     registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
-    onFinish: (BuildContext txPageContext, Map res) {
+    onFinish: (BuildContext txPageContext, Map res) async {
+      final data = await webApi.encointer.getAggregatedAccountData(
+        store.encointer.chosenCid!,
+        store.account.currentAddress,
+      );
+      Log.d('$data', 'AggregatedAccountData from register participant');
+      final registrationType = data.personal?.participantType;
+      if (registrationType != null) {
+        _showEducationalDialog(registrationType, context);
+      }
       // Registering the participant burns the reputation.
       // Hence, we should fetch the new state afterwards.
       store.dataUpdate.setInvalidated();
@@ -153,4 +170,62 @@ Future<dynamic> submitReapVoucher(
   CommunityIdentifier cid,
 ) async {
   return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
+}
+
+void _showEducationalDialog(ParticipantType registrationType, BuildContext context) {
+  final dic = I18n.of(context)!.translationsForLocale();
+  final texts = _getEducationalDialogTexts(registrationType, context);
+  final languageCode = Localizations.localeOf(context).languageCode;
+
+  showCupertinoDialog<void>(
+    barrierDismissible: true,
+    context: context,
+    builder: (context) {
+      return CupertinoAlertDialog(
+        key: const Key('educate-dialog'),
+        title: Text('${texts['title']}'),
+        content: Text(
+          '${texts['content']}',
+          textAlign: TextAlign.center,
+        ),
+        actions: <Widget>[
+          if (registrationType == ParticipantType.Newbie) const SizedBox(),
+          CupertinoButton(
+            key: const Key('close-educate-dialog'),
+            child: Text(dic.home.ok),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          if (registrationType == ParticipantType.Newbie)
+            CupertinoButton(
+              child: Text(
+                dic.encointer.leuZurichFAQ,
+                textAlign: TextAlign.center,
+              ),
+              onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
+            ),
+        ],
+      );
+    },
+  );
+}
+
+Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
+  final dic = I18n.of(context)!.translationsForLocale().encointer;
+  switch (type) {
+    case ParticipantType.Newbie:
+      return {'title': dic.newbieTitle, 'content': dic.newbieContent};
+    case ParticipantType.Endorsee:
+      return {'title': dic.endorseeTitle, 'content': dic.endorseeContent};
+    case ParticipantType.Reputable:
+      return {'title': dic.reputableTitle, 'content': dic.reputableContent};
+    case ParticipantType.Bootstrapper:
+      return {'title': dic.bootstrapperTitle, 'content': dic.bootstrapperContent};
+  }
+}
+
+/// Calls `encointerScheduler.nextPhase()` with Alice.
+///
+/// This will only work on the local dev-setup.
+Future<dynamic> submitNextPhase(Api api) async {
+  return api.js.evalJavascript('encointer.sendNextPhaseTx()');
 }

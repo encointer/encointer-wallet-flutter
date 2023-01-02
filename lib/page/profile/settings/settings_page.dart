@@ -7,10 +7,9 @@ import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dar
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class SettingsPage extends StatefulWidget {
-  SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
   static const String route = '/profile/settings';
 
   @override
@@ -24,7 +23,7 @@ class _Settings extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
 
     String getLang(String code) {
@@ -39,7 +38,7 @@ class _Settings extends State<SettingsPage> {
     }
 
     void _onLanguageTap() {
-      showCupertinoModalPopup(
+      showCupertinoModalPopup<void>(
         context: context,
         builder: (_) => SizedBox(
           height: MediaQuery.of(context).copyWith().size.height / 3,
@@ -60,7 +59,7 @@ class _Settings extends State<SettingsPage> {
               },
             ),
             onWillPop: () async {
-              String code = _langOptions[_selected];
+              final code = _langOptions[_selected];
               if (code != context.read<AppStore>().settings.localeCode) {
                 context.read<AppStore>().settings.setLocalCode(code);
                 context.read<AppStore>().settings.changeLang(context, code);
@@ -97,7 +96,7 @@ class _Settings extends State<SettingsPage> {
                   child: Image.asset('assets/images/public/${_store.settings.customSS58Format['info']}.png'),
                 ),
                 title: Text(dic.profile.settingPrefix),
-                subtitle: Text(_store.settings.customSS58Format['text'] ?? ''),
+                subtitle: Text(_store.settings.customSS58Format['text'] as String? ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),

@@ -2,12 +2,9 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 
 class CeremonyProgressBar extends StatelessWidget {
-  final int progress;
+  const CeremonyProgressBar({required this.progress, super.key});
 
-  const CeremonyProgressBar({
-    required this.progress,
-    Key? key,
-  }) : super(key: key);
+  final int progress;
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +31,12 @@ class CeremonyProgressBar extends StatelessWidget {
 }
 
 class LightShadedBar extends StatelessWidget {
-  const LightShadedBar({
-    Key? key,
-  }) : super(key: key);
+  const LightShadedBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: ZurichLion.shade50, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+    return DecoratedBox(
+      decoration: BoxDecoration(color: zurichLion.shade50, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
       child: const SizedBox(
         height: 5,
       ),
@@ -50,13 +45,11 @@ class LightShadedBar extends StatelessWidget {
 }
 
 class GradientBar extends StatelessWidget {
-  const GradientBar({
-    Key? key,
-  }) : super(key: key);
+  const GradientBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         gradient: primaryGradient,

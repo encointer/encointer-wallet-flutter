@@ -21,8 +21,8 @@ class CeremonyStep2Scan extends StatelessWidget {
     this.api, {
     required this.claimantAddress,
     required this.confirmedParticipantsCount,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final AppStore store;
   final Api api;
@@ -54,7 +54,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   Center(
                     child: Text(
                       dic.encointer.scan,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(color: zurichLion.shade600),
                     ),
                   ),
                   Center(
@@ -81,6 +81,7 @@ class CeremonyStep2Scan extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: ElevatedButton(
+                key: const Key('close-meetup'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -90,7 +91,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (_) => CeremonyStep3Finish(store, api)));
+                  Navigator.push(context, CupertinoPageRoute<void>(builder: (_) => CeremonyStep3Finish(store, api)));
                 },
               ),
             ),
@@ -105,25 +106,25 @@ class CeremonyStep2Scan extends StatelessWidget {
                     const SizedBox(width: 12),
                     Text(
                       dic.encointer.scanOthers,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                     ),
                   ],
                 ),
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(
+                    MaterialPageRoute<void>(
                       builder: (_) => ScanClaimQrCode(store, confirmedParticipantsCount),
                     ),
                   );
                 },
               ),
             ),
-            store.settings.developerMode
-                ? ElevatedButton(
-                    child: const Text('DEV ONLY: attest all participants'),
-                    onPressed: () => attestAllParticipants(store, store.account.currentAddress),
-                  )
-                : Container(),
+            if (store.settings.developerMode)
+              ElevatedButton(
+                key: const Key('attest-all-participants-dev'),
+                child: const Text('DEV ONLY: attest all participants'),
+                onPressed: () => attestAllParticipants(store, store.account.currentAddress),
+              ),
             const SizedBox(height: 12)
           ],
         ),
@@ -136,10 +137,12 @@ class CeremonyStep2Scan extends StatelessWidget {
 ///
 /// Only intended for development purposes.
 void attestAllParticipants(AppStore store, String claimantAddress) {
-  List<String> registry = store.encointer.communityAccount!.meetup!.registry;
+  final registry = store.encointer.communityAccount!.meetup!.registry;
 
   registry.removeWhere((a) => a == claimantAddress);
-  registry.forEach((attendee) => store.encointer.communityAccount!.addAttendee(attendee));
+  for (final attendee in registry) {
+    store.encointer.communityAccount!.addAttendee(attendee);
+  }
 
   RootSnackBar.showMsg('Added all meetup participants to attendees');
 }

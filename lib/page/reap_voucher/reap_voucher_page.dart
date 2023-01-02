@@ -19,7 +19,6 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({
@@ -32,7 +31,7 @@ class ReapVoucherParams {
 }
 
 class ReapVoucherPage extends StatefulWidget {
-  const ReapVoucherPage(this.api, {Key? key}) : super(key: key);
+  const ReapVoucherPage(this.api, {super.key});
 
   static const String route = '/qrcode/voucher';
   final Api api;
@@ -57,11 +56,13 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     setState(() {});
 
-    var voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-    _voucherBalance = voucherBalanceEntry.applyDemurrage(
-      context.read<AppStore>().chain.latestHeaderNumber,
-      context.read<AppStore>().encointer.community!.demurrage!,
-    );
+    final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
+    if (context.read<AppStore>().chain.latestHeaderNumber != null) {
+      _voucherBalance = voucherBalanceEntry.applyDemurrage(
+        context.read<AppStore>().chain.latestHeaderNumber!,
+        context.read<AppStore>().encointer.community!.demurrage!,
+      );
+    }
 
     _isReady = true;
 
@@ -70,11 +71,11 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
     final h4Grey = Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
-    ReapVoucherParams params = ModalRoute.of(context)!.settings.arguments as ReapVoucherParams;
+    final params = ModalRoute.of(context)!.settings.arguments as ReapVoucherParams;
 
     final voucher = params.voucher;
     final voucherUri = voucher.voucherUri;
@@ -88,7 +89,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       _postFrameCallbackCalled = true;
       WidgetsBinding.instance.addPostFrameCallback(
         (_) async {
-          var result = await _changeNetworkAndCommunityIfNeeded(context, networkInfo, cid);
+          final result = await _changeNetworkAndCommunityIfNeeded(context, networkInfo, cid);
 
           if (result == ChangeResult.ok) {
             fetchVoucherData(widget.api, voucherUri, cid);
@@ -142,6 +143,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SecondaryButtonWide(
+                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress!) : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -150,10 +152,10 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                       Text(dic.assets.fundVoucher),
                     ],
                   ),
-                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress!) : null,
                 ),
               ),
             SubmitButton(
+              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri, cid, recipient) : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -162,7 +164,6 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   Text(dic.assets.redeemVoucher),
                 ],
               ),
-              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri, cid, recipient) : null,
             ),
           ],
         ),
@@ -176,11 +177,11 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
     String recipientAddress,
   ) async {
-    var res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
+    final res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
 
     if (res['hash'] == null) {
       Log.d('Error redeeming voucher: ${res['error']}', 'ReapVoucherPage');
-      showRedeemFailedDialog(context, res['error']);
+      showRedeemFailedDialog(context, res['error'] as String?);
     } else {
       showRedeemSuccessDialog(context);
     }

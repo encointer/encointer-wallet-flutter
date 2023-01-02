@@ -1,17 +1,14 @@
 import 'package:encointer_wallet/page-encointer/bazaar/menu/1_my_offerings/my_offerings.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/my_businesses.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 
 class BazaarMenu extends StatelessWidget {
-  const BazaarMenu({
-    Key? key,
-  }) : super(key: key);
+  const BazaarMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -31,7 +28,7 @@ class BazaarMenu extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<void>(
                   builder: (context) => MyOfferings(),
                 ),
               );
@@ -43,7 +40,7 @@ class BazaarMenu extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<void>(
                   builder: (context) => MyBusinesses(),
                 ),
               );

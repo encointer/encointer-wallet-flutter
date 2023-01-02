@@ -4,6 +4,21 @@ import 'package:flutter/services.dart';
 
 /// TextFormField styled for the encointer app
 class EncointerTextFormField extends StatelessWidget {
+  const EncointerTextFormField({
+    super.key,
+    this.labelText,
+    this.hintText,
+    this.textStyle,
+    this.inputFormatters,
+    this.controller,
+    this.textFormFieldKey,
+    this.validator,
+    this.suffixIcon,
+    this.onChanged,
+    this.keyboardType,
+    this.obscureText = false,
+  });
+
   final String? labelText;
   final String? hintText;
   final TextStyle? textStyle;
@@ -16,26 +31,11 @@ class EncointerTextFormField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final bool obscureText;
 
-  const EncointerTextFormField({
-    Key? key,
-    this.labelText,
-    this.hintText,
-    this.textStyle,
-    this.inputFormatters,
-    this.controller,
-    this.textFormFieldKey,
-    this.validator,
-    this.suffixIcon,
-    this.onChanged,
-    this.keyboardType,
-    this.obscureText = false,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
-        color: ZurichLion.shade50,
+        color: zurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextFormField(

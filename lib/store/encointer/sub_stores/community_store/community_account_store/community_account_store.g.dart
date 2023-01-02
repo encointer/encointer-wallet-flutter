@@ -17,7 +17,8 @@ CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json)
           ? ObservableSet<String>.of((json['attendees'] as List).map((e) => e as String))
           : null
       ..participantCountVote = json['participantCountVote'] as int?
-      ..meetupCompleted = json['meetupCompleted'] as bool?;
+      ..meetupCompleted = json['meetupCompleted'] as bool?
+      ..numberOfNewbieTicketsForBootstrapper = json['numberOfNewbieTicketsForBootstrapper'] as int;
 
 Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
       'network': instance.network,
@@ -28,6 +29,7 @@ Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instanc
       'attendees': instance.attendees?.toList(),
       'participantCountVote': instance.participantCountVote,
       'meetupCompleted': instance.meetupCompleted,
+      'numberOfNewbieTicketsForBootstrapper': instance.numberOfNewbieTicketsForBootstrapper,
     };
 
 const _$ParticipantTypeEnumMap = {
@@ -44,11 +46,11 @@ const _$ParticipantTypeEnumMap = {
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
-  Computed<dynamic>? _$scannedAttendeesCountComputed;
+  Computed<int>? _$scannedAttendeesCountComputed;
 
   @override
-  dynamic get scannedAttendeesCount => (_$scannedAttendeesCountComputed ??=
-          Computed<dynamic>(() => super.scannedAttendeesCount, name: '_CommunityAccountStore.scannedAttendeesCount'))
+  int get scannedAttendeesCount => (_$scannedAttendeesCountComputed ??=
+          Computed<int>(() => super.scannedAttendeesCount, name: '_CommunityAccountStore.scannedAttendeesCount'))
       .value;
   Computed<bool>? _$isAssignedComputed;
 
@@ -136,6 +138,31 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     _$meetupCompletedAtom.reportWrite(value, super.meetupCompleted, () {
       super.meetupCompleted = value;
     });
+  }
+
+  late final _$numberOfNewbieTicketsForBootstrapperAtom =
+      Atom(name: '_CommunityAccountStore.numberOfNewbieTicketsForBootstrapper', context: context);
+
+  @override
+  int get numberOfNewbieTicketsForBootstrapper {
+    _$numberOfNewbieTicketsForBootstrapperAtom.reportRead();
+    return super.numberOfNewbieTicketsForBootstrapper;
+  }
+
+  @override
+  set numberOfNewbieTicketsForBootstrapper(int value) {
+    _$numberOfNewbieTicketsForBootstrapperAtom.reportWrite(value, super.numberOfNewbieTicketsForBootstrapper, () {
+      super.numberOfNewbieTicketsForBootstrapper = value;
+    });
+  }
+
+  late final _$getNumberOfNewbieTicketsForBootstrapperAsyncAction =
+      AsyncAction('_CommunityAccountStore.getNumberOfNewbieTicketsForBootstrapper', context: context);
+
+  @override
+  Future<void> getNumberOfNewbieTicketsForBootstrapper() {
+    return _$getNumberOfNewbieTicketsForBootstrapperAsyncAction
+        .run(() => super.getNumberOfNewbieTicketsForBootstrapper());
   }
 
   late final _$_CommunityAccountStoreActionController =
@@ -269,6 +296,7 @@ meetup: ${meetup},
 attendees: ${attendees},
 participantCountVote: ${participantCountVote},
 meetupCompleted: ${meetupCompleted},
+numberOfNewbieTicketsForBootstrapper: ${numberOfNewbieTicketsForBootstrapper},
 scannedAttendeesCount: ${scannedAttendeesCount},
 isAssigned: ${isAssigned},
 isRegistered: ${isRegistered}

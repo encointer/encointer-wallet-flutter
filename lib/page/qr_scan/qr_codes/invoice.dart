@@ -2,11 +2,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
 class InvoiceQrCode extends QrCode<InvoiceData> {
-  InvoiceQrCode.withData(
-    InvoiceData data, {
-    this.version = QrCodeVersion.v1_0,
-  }) : super(data);
-
   InvoiceQrCode({
     required String account,
     CommunityIdentifier? cid,
@@ -15,6 +10,26 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     required String label,
     this.version = QrCodeVersion.v1_0,
   }) : super(InvoiceData(account: account, cid: cid, network: network, amount: amount, label: label));
+
+  factory InvoiceQrCode.fromPayload(String payload) {
+    return InvoiceQrCode.fromQrFields(payload.split('\n'));
+  }
+
+  factory InvoiceQrCode.fromQrFields(List<String> fields) {
+    if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
+      return InvoiceQrCode.withData(
+        InvoiceData.fromQrFieldsV1(fields.sublist(2)),
+        version: QrCodeVersion.v1_0,
+      );
+    } else {
+      return InvoiceQrCode.withData(
+        InvoiceData.fromQrFieldsV2(fields.sublist(2)),
+        version: QrCodeVersion.v2_0,
+      );
+    }
+  }
+
+  InvoiceQrCode.withData(super.data, {this.version = QrCodeVersion.v1_0});
 
   @override
   QrCodeContext? context = QrCodeContext.invoice;
@@ -30,25 +45,7 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     } else {
       qrFields.addAll(data.toQrFieldsV2());
     }
-    return qrFields.join(QR_CODE_FIELD_SEPARATOR);
-  }
-
-  static InvoiceQrCode fromPayload(String payload) {
-    return fromQrFields(payload.split('\n'));
-  }
-
-  static InvoiceQrCode fromQrFields(List<String> fields) {
-    if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
-      return InvoiceQrCode.withData(
-        InvoiceData.fromQrFieldsV1(fields.sublist(2)),
-        version: QrCodeVersion.v1_0,
-      );
-    } else {
-      return InvoiceQrCode.withData(
-        InvoiceData.fromQrFieldsV2(fields.sublist(2)),
-        version: QrCodeVersion.v2_0,
-      );
-    }
+    return qrFields.join(qrCodeFieldSeparator);
   }
 }
 
@@ -60,6 +57,25 @@ class InvoiceData implements ToQrFields {
     this.amount,
     required this.label,
   });
+
+  factory InvoiceData.fromQrFieldsV1(List<String> fields) {
+    return InvoiceData(
+      account: fields[0],
+      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+      amount: fields[2].trim().isNotEmpty ? double.parse(fields[2]) : null,
+      label: fields[3],
+    );
+  }
+
+  factory InvoiceData.fromQrFieldsV2(List<String> fields) {
+    return InvoiceData(
+      account: fields[0],
+      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+      network: fields[2],
+      amount: fields[3].trim().isNotEmpty ? double.parse(fields[3]) : null,
+      label: fields[4],
+    );
+  }
 
   /// ss58 encoded public key of the account address.
   final String account;
@@ -94,24 +110,5 @@ class InvoiceData implements ToQrFields {
       amount?.toString() ?? '',
       label,
     ];
-  }
-
-  static InvoiceData fromQrFieldsV1(List<String> fields) {
-    return InvoiceData(
-      account: fields[0],
-      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
-      amount: fields[2].trim().isNotEmpty ? double.parse(fields[2]) : null,
-      label: fields[3],
-    );
-  }
-
-  static InvoiceData fromQrFieldsV2(List<String> fields) {
-    return InvoiceData(
-      account: fields[0],
-      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
-      network: fields[2],
-      amount: fields[3].trim().isNotEmpty ? double.parse(fields[3]) : null,
-      label: fields[4],
-    );
   }
 }

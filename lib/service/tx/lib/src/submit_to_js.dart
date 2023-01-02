@@ -1,21 +1,22 @@
 import 'dart:core';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:encointer_wallet/utils/ui.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
-const INSUFFICIENT_FUNDS_ERROR = '1010';
+const insufficientFundsError = '1010';
 
 /// Inner function to submit a tx via the JS interface.
 ///
@@ -30,14 +31,14 @@ Future<void> submitToJS(
   String? password,
   BigInt? tip,
 }) async {
-  final Translations dic = I18n.of(context)!.translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
-  Map args = txParams;
+  final args = txParams;
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
 
-  Map txInfo = args['txInfo'];
+  final txInfo = args['txInfo'] as Map;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
@@ -49,7 +50,7 @@ Future<void> submitToJS(
   Log.d('$txInfo', 'submitToJS');
   Log.d('${args['params']}', 'submitToJS');
 
-  var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map)?);
+  final onTxFinishFn = args['onFinish'] as dynamic Function(BuildContext, Map)?;
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
@@ -59,10 +60,10 @@ Future<void> submitToJS(
       );
     }
 
-    final Map res = await _sendTx(context, api, args) as Map;
+    final res = await _sendTx(context, api, args) as Map;
 
     if (res['hash'] == null) {
-      _onTxError(context, store, res['error'], showStatusSnackBar);
+      _onTxError(context, store, res['error'] as String, showStatusSnackBar);
     } else {
       _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
@@ -77,18 +78,18 @@ Future<Map> getTxFee(
   AppStore store,
   Api api,
   Map args, {
-  proxyAccount,
+  AccountData? proxyAccount,
   bool reload = false,
 }) async {
-  Map txInfo = args['txInfo'];
+  var txInfo = args['txInfo'] as Map;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
 
   if (proxyAccount != null) {
-    txInfo = proxyAccount.pubKey;
+    txInfo = proxyAccount.pubKey as Map;
   }
 
-  return api.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
+  return api.account.estimateTxFees(txInfo, args['params'] as List<dynamic>?, rawParam: args['rawParam'] as String?);
 }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
@@ -97,7 +98,7 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
     RootSnackBar.removeCurrent();
   }
 
-  if (errorMsg.startsWith(INSUFFICIENT_FUNDS_ERROR)) {
+  if (errorMsg.startsWith(insufficientFundsError)) {
     showInsufficientFundsDialog(context);
   } else {
     showErrorDialog(context, errorMsg);
@@ -106,11 +107,11 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
 
 Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
   return api.account.sendTxAndShowNotification(
-    args['txInfo'],
-    args['params'],
-    args['title'],
+    args['txInfo'] as Map<dynamic, dynamic>?,
+    args['params'] as List<dynamic>?,
+    args['title'] as String?,
     I18n.of(context)!.translationsForLocale().home.notifySubmitted,
-    rawParam: args['rawParam'],
+    rawParam: args['rawParam'] as String?,
   );
 }
 
@@ -127,7 +128,13 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
   );
 }
 
-void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildContext, Map) onTxFinish, bool mounted) {
+void _onTxFinish(
+  BuildContext context,
+  AppStore store,
+  Map res,
+  void Function(BuildContext, Map) onTxFinish,
+  bool mounted,
+) {
   Log.d('callback triggered, blockHash: ${res['hash']}', '_onTxFinish');
   store.assets.setSubmitting(false);
 
@@ -168,7 +175,7 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
 }
 
 Future<void> showErrorDialog(BuildContext context, String errorMsg) {
-  final Translations dic = I18n.of(context)!.translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
     context: context,
@@ -188,8 +195,8 @@ Future<void> showErrorDialog(BuildContext context, String errorMsg) {
 }
 
 Future<void> showInsufficientFundsDialog(BuildContext context) {
-  final Translations dic = I18n.of(context)!.translationsForLocale();
-  String languageCode = Localizations.localeOf(context).languageCode;
+  final dic = I18n.of(context)!.translationsForLocale();
+  final languageCode = Localizations.localeOf(context).languageCode;
 
   return showCupertinoDialog(
     context: context,

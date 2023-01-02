@@ -12,10 +12,9 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountPage extends StatefulWidget {
-  const AddAccountPage({Key? key}) : super(key: key);
+  const AddAccountPage({super.key});
 
   static const String route = '/account/addAccount';
 
@@ -47,7 +46,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     await webApi.account.generateAccount();
 
-    var acc = await webApi.account.importAccount(
+    final acc = await webApi.account.importAccount(
       cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
       derivePath: '',
     );
@@ -60,13 +59,13 @@ class _AddAccountPageState extends State<AddAccountPage> {
       return;
     }
 
-    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     Log.d('Created new account with address: ${addresses[0]}', 'AddAccountPage');
 
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
     Log.d('added new account with address: ${addresses[0]}', 'AddAccountPage');
 
-    String? pubKey = acc['pubKey'];
+    final pubKey = acc['pubKey'] as String?;
     await store.setCurrentAccount(pubKey);
 
     await store.loadAccountCache();
@@ -82,7 +81,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -102,7 +101,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   Future<void> _showEnterPinDialog(AppStore store) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return Container(
@@ -110,7 +109,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
             context,
             store.account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().profile.unlock),
-            (password) {
+            (String password) {
               setState(() {
                 store.settings.setPin(password);
               });
@@ -123,7 +122,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(

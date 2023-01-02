@@ -5,15 +5,14 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:encointer_wallet/page-encointer/bazaar/shared/photo_tiles.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class BusinessFormScaffold extends StatelessWidget {
-  final categories = allCategories;
+  BusinessFormScaffold({super.key}); // TODO state management
 
-  BusinessFormScaffold({Key? key}) : super(key: key); // TODO state management
+  final categories = allCategories;
 
   @override
   Widget build(BuildContext context) => Provider<BusinessFormState>(
@@ -28,7 +27,7 @@ class BusinessFormScaffold extends StatelessWidget {
 }
 
 class BusinessForm extends StatelessWidget {
-  const BusinessForm({Key? key, required this.categories}) : super(key: key);
+  const BusinessForm({super.key, required this.categories});
 
   final List<String> categories;
 
@@ -42,8 +41,8 @@ class BusinessForm extends StatelessWidget {
           children: <Widget>[
             const PhotoTiles(),
             LimitedBox(
-              child: ImagePickerScaffold(),
               maxHeight: 250,
+              child: ImagePickerScaffold(),
             ),
             Observer(
               builder: (_) => TextField(
@@ -107,13 +106,11 @@ class BusinessForm extends StatelessWidget {
 }
 
 class BusinessAddress extends StatelessWidget {
-  const BusinessAddress({
-    Key? key,
-  }) : super(key: key);
+  const BusinessAddress({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     final businessFormState = Provider.of<BusinessFormState>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

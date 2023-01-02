@@ -6,13 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 
 class AddressIcon extends StatelessWidget {
-  AddressIcon(
+  const AddressIcon(
     this.address,
     this.pubKey, {
-    Key? key,
+    super.key,
     this.size = 96,
     this.tapToCopy = true,
-  }) : super(key: key);
+  });
+
   final String address;
   final String pubKey;
   final double size;
@@ -20,7 +21,7 @@ class AddressIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String rawSvg = Jdenticon.toSvg(pubKey,
+    final rawSvg = Jdenticon.toSvg(pubKey,
         colorSaturation: 0.78,
         grayscaleSaturation: 0.48,
         colorLightnessMinValue: 0.33,
@@ -30,6 +31,7 @@ class AddressIcon extends StatelessWidget {
         backColor: '#d4edf8ff',
         hues: [199]);
     return GestureDetector(
+      onTap: tapToCopy ? () => UI.copyAndNotify(context, address) : null,
       child: SizedBox(
         width: size,
         height: size,
@@ -45,20 +47,19 @@ class AddressIcon extends StatelessWidget {
           ),
         ),
       ),
-      onTap: tapToCopy ? () => UI.copyAndNotify(context, address) : null,
     );
   }
 }
 
 class AddressIconWithLabel extends StatelessWidget {
-  AddressIconWithLabel(
+  const AddressIconWithLabel(
     this.address,
     this.pubKey, {
-    Key? key,
+    super.key,
     this.size = 96,
     this.tapToCopy = true,
     this.labelStyle,
-  }) : super(key: key);
+  });
 
   final String address;
   final String pubKey;

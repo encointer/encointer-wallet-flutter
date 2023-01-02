@@ -11,40 +11,34 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 ///
 /// If the current time is close to the meetup time, a countdown is shown.
 class CeremonySchedule extends StatelessWidget {
-  const CeremonySchedule({
-    required this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonySchedule({required this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime nextCeremonyDate;
   final String? languageCode;
 
   @override
   Widget build(BuildContext context) {
-    bool showCountDown = CeremonyBoxService.shouldShowCountdown(nextCeremonyDate);
+    final showCountDown = CeremonyBoxService.shouldShowCountdown(nextCeremonyDate);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        showCountDown
-            ? CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
-            : CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
+        if (showCountDown)
+          CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+        else
+          CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
         const SizedBox(height: 8),
-        showCountDown
-            ? CeremonyCountDown(nextCeremonyDate)
-            : CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+        if (showCountDown)
+          CeremonyCountDown(nextCeremonyDate)
+        else
+          CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
       ],
     );
   }
 }
 
 class CeremonyDateLabelAbsolute extends StatelessWidget {
-  const CeremonyDateLabelAbsolute({
-    required this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyDateLabelAbsolute({required this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime nextCeremonyDate;
   final String? languageCode;
@@ -53,8 +47,8 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    String nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate);
-    String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
+    final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate);
+    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
 
     return RichText(
       text: TextSpan(
@@ -72,11 +66,7 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
 }
 
 class CeremonyDateLabelRelative extends StatelessWidget {
-  const CeremonyDateLabelRelative({
-    required this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyDateLabelRelative({required this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime nextCeremonyDate;
   final String? languageCode;
@@ -85,7 +75,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    String timeLeftUntilCeremonyStartsDaysHours =
+    final timeLeftUntilCeremonyStartsDaysHours =
         CeremonyBoxService.getTimeLeftUntilCeremonyStartsDaysHours(nextCeremonyDate);
 
     return RichText(
@@ -104,11 +94,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 }
 
 class CeremonyDate extends StatelessWidget {
-  const CeremonyDate({
-    this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyDate({this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime? nextCeremonyDate;
   final String? languageCode;
@@ -117,8 +103,8 @@ class CeremonyDate extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final h2BlackTheme = Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack);
-    String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
-    String nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
+    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
+    final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -135,7 +121,7 @@ class CeremonyDate extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         const Padding(
-          padding: const EdgeInsets.only(bottom: 2),
+          padding: EdgeInsets.only(bottom: 2),
           child: Icon(
             Iconsax.clock,
             color: encointerGrey,

@@ -38,6 +38,8 @@ installed on your computer to compile the project. check [Flutter Documentation]
 Encointer wallet connects to the chains with [polkadot-js/api](https://polkadot.js.org/api/), running in a hidden webview.
 You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
 
+See the js_service_encointer [Readme](lib/js_service_encointer/README.md) for more documentation.
+
 ```shell script
 cd lib/js_service_encointer/
 # install nodejs dependencies
@@ -46,12 +48,42 @@ yarn install
 yarn run build
 ```
 
+### Requirements
+- Dart sdk: ">=2.12.0 <3.0.0"
+- Flutter: "3.3.10"
+- Android: minSdkVersion 17
+- iOS: --ios-language swift, Xcode version >= 14.0.0
+
+### Flutter wrapper
+This project uses [flutter_wrapper](https://github.com/passsy/flutter_wrapper). Flutter wrapper is a tool that enables
+having the same flutter version across multiple developers. It installs automatically the flutter version form the
+pubspec.yml into the `.flutter` submodule.
+
+Vscode automatically uses the `.flutter` as we have checked in the `.vscode` folder. For setting up the Android Studio, 
+please refer to the [documentation](https://github.com/passsy/flutter_wrapper#ide-setup).
+
+Further info can be found in the [Medium Article](https://passsy.medium.com/flutter-wrapper-bind-your-project-to-an-explicit-flutter-release-4062cfe6dcaf).
+
+#### Linux and MacOs
+Linux and MacOs users can simply replace all `flutter` CLI commands with `./flutterw` and it will just work.
+
+#### Windows
+In windows, this does unfortunately not work, but you can still set up your IDE to use the flutter version in from the `.flutter` git submodule. And you can do the following workaround:
+
+```
+// initialize .flutter git submodule (also works on windows)
+./scripts/install_flutter_wrapper.sh
+
+// refer to the flutter installation in your git submodule
+./.flutter/bin/flutter doctor
+```
+
 ### Run App
 
 If you have an AVD or real device attached, you can do
 
 ```
-flutter run --flavor dev
+./flutterw run --flavor dev
 ```
 
 ### Build APK
@@ -60,34 +92,31 @@ You may build the App with Flutter's [Deployment Documentation](https://flutter.
 
 In order to build a fat APK, you can do 
 ```
-flutter build apk --flavor fdroid
+./flutterw build apk --flavor fdroid
 ```
 and find the output in `build/app/outputs/apk/fdroid/release/app-fdroid-release.apk`
 
 For the play store, an appbundle is preferred:
 ```
-flutter build appbundle
+./flutterw build appbundle
 ```
 and find the output in `build/app/outputs/bundle/release/app-release.aab`
 
 #### Dev hints
 
 ### Flutter version
-The following two files contain the supported flutter version:
+The following file contains the supported flutter version:
 
-* [GitHub Action Config](./.github/action-config.json)
-* [install_flutter.sh](./scripts/install_flutter.sh)
-
-These versions must always be aligned!
+* [install_flutter_wrapper.sh](./scripts/install_flutter_wrapper.sh)
 
 ### Run tests
 
-* run all tests from the command line:`flutter test`
-* exclude e2e-tests that need a running encointer node:`flutter test --exclude-tags encointer-node-e2e`
-* run e2e-tests that need a running encointer node:`flutter test --tags encointer-node-e2e`
+* run all tests from the command line:`./flutterw test`
+* exclude e2e-tests that need a running encointer node:`./flutterw test --exclude-tags encointer-node-e2e`
+* run e2e-tests that need a running encointer node:`./flutterw test --tags encointer-node-e2e`
 
 ### Integration tests
-* run all integration tests in `test_driver` directory: `flutter drive --target=test_driver/app.dart --flavor dev`
+* run all integration tests in `test_driver` directory: `./flutterw drive --target=test_driver/app.dart --flavor dev`
 
 ### Automated screenshots
 * Github actions is used to create automated screenshots for the specified devices there. However, running the integration tests locally will create screenshots for the currently running device.
@@ -139,7 +168,7 @@ widgets. This causes many unwanted linebreaks that reduce the readability of flu
 
 * Settings > Dart > Line length 120.
 * Autoformat on save: Settings > Languages and Frameworks > then tick: `Format code on save`, `Organize imports on save`.
-* Format the whole codebase with: `flutter format . --line-length 120`.
+* Format the whole codebase with: `./flutterw format . --line-length 120`.
 
 #### Other fmt hints:
 
@@ -152,7 +181,7 @@ The flutter build-runner is used to generate repetitive boiler-plate code that i
 e.g. `@JsonSerializable` or the mobx annotations. Whenever annotations are added, changed or removed, the following 
 command must be run to update the `*.g` files.
 
-*  `flutter pub run build_runner build --delete-conflicting-outputs` 
+*  `./flutterw pub run build_runner build --delete-conflicting-outputs` 
 
 ### App Release
 

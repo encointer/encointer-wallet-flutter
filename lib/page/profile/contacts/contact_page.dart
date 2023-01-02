@@ -11,10 +11,9 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ContactPage extends StatefulWidget {
-  const ContactPage({Key? key}) : super(key: key);
+  const ContactPage({super.key});
 
   static const String route = '/profile/contact';
 
@@ -40,11 +39,11 @@ class _Contact extends State<ContactPage> {
       setState(() {
         _submitting = true;
       });
-      final Translations dic = I18n.of(context)!.translationsForLocale();
-      String addr = _addressCtrl.text.replaceAll(' ', '');
-      Map pubKeyAddress = await webApi.account.decodeAddress([addr]);
-      String pubKey = pubKeyAddress.keys.toList()[0];
-      Map<String, dynamic> con = {
+      final dic = I18n.of(context)!.translationsForLocale();
+      final addr = _addressCtrl.text.replaceAll(' ', '');
+      final pubKeyAddress = await webApi.account.decodeAddress([addr]);
+      final pubKey = pubKeyAddress.keys.toList()[0] as String;
+      final con = {
         'address': addr,
         'name': _nameCtrl.text,
         'memo': _memoCtrl.text,
@@ -56,9 +55,9 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        int exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
+        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
-          showCupertinoDialog(
+          showCupertinoDialog<void>(
             context: context,
             builder: (BuildContext context) {
               return CupertinoAlertDialog(
@@ -106,8 +105,8 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    ContactData? qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
+    final dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
       _addressCtrl.text = qrScanData.account;
       _nameCtrl.text = qrScanData.label;
@@ -129,6 +128,7 @@ class _Contact extends State<ContactPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
+                        key: const Key('contact-address'),
                         decoration: InputDecoration(
                           hintText: dic.profile.contactAddress,
                           labelText: dic.profile.contactAddress,
@@ -146,57 +146,56 @@ class _Contact extends State<ContactPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
+                        key: const Key('contact-name'),
                         decoration: InputDecoration(
                           hintText: dic.profile.contactName,
                           labelText: dic.profile.contactName,
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v!.trim().length > 0 ? null : dic.profile.contactNameError;
+                          return v!.trim().isNotEmpty ? null : dic.profile.contactNameError;
                         },
                       ),
                     ),
-                    context.select<AppStore, bool>((store) => store.settings.developerMode)
-                        ? Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 16),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                hintText: dic.profile.contactMemo,
-                                labelText: dic.profile.contactMemo,
-                              ),
-                              controller: _memoCtrl,
+                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: dic.profile.contactMemo,
+                            labelText: dic.profile.contactMemo,
+                          ),
+                          controller: _memoCtrl,
+                        ),
+                      ),
+                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                      Row(
+                        children: <Widget>[
+                          Checkbox(
+                            value: _isObservation,
+                            onChanged: (v) {
+                              setState(() {
+                                _isObservation = v;
+                              });
+                            },
+                          ),
+                          GestureDetector(
+                            child: Text(I18n.of(context)!.translationsForLocale().account.observe),
+                            onTap: () {
+                              setState(() {
+                                _isObservation = !_isObservation!;
+                              });
+                            },
+                          ),
+                          TapTooltip(
+                            message: I18n.of(context)!.translationsForLocale().account.observeBrief,
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 8),
+                              child: Icon(Icons.info_outline, size: 16),
                             ),
-                          )
-                        : Container(),
-                    context.select<AppStore, bool>((store) => store.settings.developerMode)
-                        ? Row(
-                            children: <Widget>[
-                              Checkbox(
-                                value: _isObservation,
-                                onChanged: (v) {
-                                  setState(() {
-                                    _isObservation = v;
-                                  });
-                                },
-                              ),
-                              GestureDetector(
-                                child: Text(I18n.of(context)!.translationsForLocale().account.observe),
-                                onTap: () {
-                                  setState(() {
-                                    _isObservation = !_isObservation!;
-                                  });
-                                },
-                              ),
-                              TapTooltip(
-                                child: const Padding(
-                                  padding: EdgeInsets.only(left: 8),
-                                  child: Icon(Icons.info_outline, size: 16),
-                                ),
-                                message: I18n.of(context)!.translationsForLocale().account.observeBrief,
-                              ),
-                            ],
-                          )
-                        : Container(),
+                          ),
+                        ],
+                      ),
                     const SizedBox(height: 24),
                     IconButton(
                       iconSize: 48,
@@ -212,6 +211,7 @@ class _Contact extends State<ContactPage> {
             Container(
               margin: const EdgeInsets.all(16),
               child: RoundedButton(
+                key: const Key('contact-save'),
                 submitting: _submitting,
                 text: dic.profile.contactSave,
                 onPressed: () => _onSave(),

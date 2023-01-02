@@ -1,27 +1,30 @@
-import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
 import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
+import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
-  Profile({Key? key}) : super(key: key);
+  const Profile({super.key});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -31,12 +34,13 @@ class _ProfileState extends State<Profile> {
   EndpointData? _selectedNetwork;
 
   List<Widget> _buildAccountList() {
-    List<Widget> allAccountsAsWidgets = [];
+    final allAccountsAsWidgets = <Widget>[];
 
-    List<AccountData> accounts = context.read<AppStore>().account.accountListAll;
+    final accounts = context.read<AppStore>().account.accountListAll;
 
     allAccountsAsWidgets.addAll(accounts.map((account) {
       return InkWell(
+        key: Key(account.name),
         child: Column(
           children: [
             Stack(
@@ -50,7 +54,7 @@ class _ProfileState extends State<Profile> {
                 Positioned(
                   bottom: 0,
                   right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: ZurichLion.shade800),
+                  child: Icon(Iconsax.edit, color: zurichLion.shade800),
                 ),
               ],
             ),
@@ -78,7 +82,7 @@ class _ProfileState extends State<Profile> {
 
   Future<bool> _sendEmail() async {
     final dic = I18n.of(context)!.translationsForLocale().profile;
-    final Uri _emailLaunchUri = Uri(
+    final _emailLaunchUri = Uri(
       scheme: 'mailto',
       path: 'bugreports@mail.encointer.org',
     );
@@ -95,7 +99,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
+    final h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
     final _store = context.watch<AppStore>();
     _selectedNetwork = _store.settings.endpoint;
 
@@ -106,7 +110,7 @@ class _ProfileState extends State<Profile> {
         Navigator.pop(context);
       });
     }
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(
@@ -120,6 +124,7 @@ class _ProfileState extends State<Profile> {
         builder: (_) {
           if (_selectedNetwork == null) return Container();
           return ListView(
+            key: const Key('profile-list-view'),
             children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(16),
@@ -132,7 +137,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     IconButton(
                       icon: const Icon(Iconsax.add_square),
-                      color: ZurichLion.shade500,
+                      color: zurichLion.shade500,
                       onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route),
                     ),
                   ],
@@ -151,12 +156,12 @@ class _ProfileState extends State<Profile> {
                         Theme.of(context).scaffoldBackgroundColor,
                         Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
                       ],
-                      stops: [0.0, 0.1, 0.9, 1.0],
+                      stops: const [0.0, 0.1, 0.9, 1.0],
                     ).createShader(bounds);
                   },
                   child: ListView(
-                    children: _buildAccountList(),
                     scrollDirection: Axis.horizontal,
+                    children: _buildAccountList(),
                   ),
                   // blendMode: BlendMode.dstATop,
                 ),
@@ -170,6 +175,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
               ),
               ListTile(
+                key: const Key('remove-all-accounts'),
                 title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
                 onTap: () => showRemoveAccountsDialog(context, _store),
               ),
@@ -188,12 +194,17 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, Instruction.route),
               ),
               ListTile(
+                title: Text(dic.profile.settingLang, style: h3Grey),
+                onTap: () => Navigator.pushNamed(context, LangPage.route),
+              ),
+              ListTile(
                 title: Text(dic.profile.contactUs, style: h3Grey),
                 onTap: _sendEmail,
               ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
+                  key: const Key('dev-mode'),
                   value: _store.settings.developerMode,
                   onChanged: (_) => _store.settings.toggleDeveloperMode(),
                 ),
@@ -211,7 +222,7 @@ class _ProfileState extends State<Profile> {
                             style: Theme.of(context).textTheme.headline4,
                           ),
                         ),
-                        onTap: () => Navigator.of(context).pushNamed('/network'),
+                        onTap: () => Navigator.of(context).pushNamed(NetworkSelectPage.route),
                       ),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 13), // align with developer checkbox above
@@ -228,6 +239,24 @@ class _ProfileState extends State<Profile> {
                         // temporary, and a developer option. It is unnecessary to include the complexity to update
                         // the parent widget from here.
                         onChanged: (_) => _store.settings.toggleEnableBazaar(),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SubmitButton(
+                        key: const Key('next-phase-button'),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(Iconsax.login_1),
+                            SizedBox(width: 6),
+                            Text('Next-Phase (only works for local dev-network)'),
+                          ],
+                        ),
+                        onPressed: (_) async {
+                          final res = await submitNextPhase(webApi);
+                          RootSnackBar.showMsg(res.toString());
+                        },
                       ),
                     ),
                   ],
@@ -254,17 +283,18 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore _store) {
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoButton(
+            key: const Key('remove-all-accounts-check'),
             child: Text(dic.home.ok),
             onPressed: () async {
               final accounts = _store.account.accountListAll;
 
-              for (var acc in accounts) {
+              for (final acc in accounts) {
                 await _store.account.removeAccount(acc);
               }
 
               Navigator.pushAndRemoveUntil(
                 context,
-                CupertinoPageRoute(builder: (context) => CreateAccountEntryPage()),
+                CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()),
                 (route) => false,
               );
             },

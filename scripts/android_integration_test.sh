@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-flutter doctor -v
+./flutterw doctor -v
 
 avdmanager list device || echo "error displaying emulator devices"
 
@@ -14,8 +14,8 @@ then
   echo "Recording process up with pid: ${RECORDING_PID}"
 fi
 
-flutter drive --target=test_driver/app.dart --flavor dev
-flutter drive --target=test_driver/scan_page.dart --flavor dev
+./flutterw drive --target=test_driver/app.dart --flavor dev
+./flutterw drive --target=test_driver/scan_page.dart --flavor dev
 
 mkdir -p "$TEMP_DIR"
 

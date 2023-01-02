@@ -23,19 +23,19 @@ class Ceremonies {
   Future<int> participantIndex(CommunityIdentifier cid, String pubKey, String pin) async {
     return jsApi
         .evalJavascript('worker.getParticipantIndex(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
-        .then((value) => int.parse(value));
+        .then((value) => int.parse(value as String));
   }
 
   Future<int> meetupIndex(CommunityIdentifier cid, String pubKey, String pin) async {
     return jsApi
         .evalJavascript('worker.getMeetupIndex(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
-        .then((value) => int.parse(value));
+        .then((value) => int.parse(value as String));
   }
 
   Future<List<String>> meetupRegistry(CommunityIdentifier cid, String pubKey, String pin) async {
     return jsApi
         .evalJavascript('worker.getMeetupRegistry(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
-        .then((value) => List<String>.from(value));
+        .then((value) => List<String>.from(value as Iterable));
   }
 }
 
@@ -47,6 +47,6 @@ class Balances {
   Future<BalanceEntry> balance(CommunityIdentifier cid, String? pubKey, String pin) async {
     return jsApi
         .evalJavascript('worker.getBalance(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
-        .then((balance) => BalanceEntry.fromJson(balance));
+        .then((balance) => BalanceEntry.fromJson(balance as Map<String, dynamic>));
   }
 }

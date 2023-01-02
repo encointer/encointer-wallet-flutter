@@ -1,30 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CreatePinForm extends StatefulWidget {
-  CreatePinForm({
-    Key? key,
-    required this.store,
-    required this.onSubmit,
-  }) : super(key: key);
+  const CreatePinForm({super.key, required this.store, required this.onSubmit});
+
   final Function onSubmit;
   final AppStore store;
 
   @override
-  State<CreatePinForm> createState() => _CreatePinFormState(store);
+  State<CreatePinForm> createState() => _CreatePinFormState();
 }
 
 class _CreatePinFormState extends State<CreatePinForm> {
-  _CreatePinFormState(this.store);
-
-  final AppStore store;
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _passCtrl = TextEditingController();
@@ -39,7 +32,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Form(
       key: _formKey,
@@ -73,11 +66,11 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
                       // width: 0.0 produces a thin "hairline" border
-                      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                      borderSide: BorderSide(color: Colors.transparent, width: 0.0),
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
-                    fillColor: ZurichLion.shade50,
+                    fillColor: zurichLion.shade50,
                     hintText: dic.account.createPassword,
                     labelText: dic.account.createPassword,
                   ),
@@ -95,7 +88,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
                       // width: 0.0 produces a thin "hairline" border
-                      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                      borderSide: BorderSide(color: Colors.transparent, width: 0.0),
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
@@ -140,14 +133,14 @@ class _CreatePinFormState extends State<CreatePinForm> {
               child: Text(
                 I18n.of(context)!.translationsForLocale().account.create,
                 style: Theme.of(context).textTheme.headline3!.copyWith(
-                      color: ZurichLion.shade50,
+                      color: zurichLion.shade50,
                     ),
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  store.account.setNewAccountPin(_passCtrl.text);
+                  widget.store.account.setNewAccountPin(_passCtrl.text);
 
-                  store.settings.setPin(_passCtrl.text);
+                  widget.store.settings.setPin(_passCtrl.text);
 
                   widget.onSubmit();
                 }

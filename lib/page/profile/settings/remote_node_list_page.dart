@@ -6,20 +6,19 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
-  RemoteNodeListPage({Key? key}) : super(key: key);
+  RemoteNodeListPage({super.key});
 
   static const String route = '/profile/endpoint';
   final Api? api = webApi;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    List<EndpointData> endpoints = List<EndpointData>.of(networkEndpoints);
+    final dic = I18n.of(context)!.translationsForLocale();
+    final endpoints = List<EndpointData>.of(networkEndpoints);
     endpoints.retainWhere((i) => i.info == context.watch<AppStore>().settings.endpoint.info);
-    List<Widget> list = endpoints
+    final list = endpoints
         .map((i) => ListTile(
               leading: SizedBox(
                 width: 36,
@@ -32,12 +31,11 @@ class RemoteNodeListPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    context.select<AppStore, bool>((store) => store.settings.endpoint.value == i.value)
-                        ? Image.asset(
-                            'assets/images/assets/success.png',
-                            width: 16,
-                          )
-                        : Container(),
+                    if (context.select<AppStore, bool>((store) => store.settings.endpoint.value == i.value))
+                      Image.asset(
+                        'assets/images/assets/success.png',
+                        width: 16,
+                      ),
                     const Icon(Icons.arrow_forward_ios, size: 18)
                   ],
                 ),

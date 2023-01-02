@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -5,30 +7,23 @@ import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:encointer_wallet/utils/translations/translations_account.dart';
 import 'package:encointer_wallet/utils/validate_keys.dart';
-import 'package:flutter/material.dart';
 
 class ImportAccountForm extends StatefulWidget {
-  const ImportAccountForm(this.store, this.onSubmit, {Key? key}) : super(key: key);
+  const ImportAccountForm(this.store, this.onSubmit, {super.key});
 
   final AppStore store;
   final Function onSubmit;
 
   @override
-  State<ImportAccountForm> createState() => _ImportAccountFormState(store);
+  State<ImportAccountForm> createState() => _ImportAccountFormState();
 }
 
 class _ImportAccountFormState extends State<ImportAccountForm> {
-  _ImportAccountFormState(this.store);
-
   // Todo: introduce enum/class for that
   String? _keyType;
 
   final _formKey = GlobalKey<FormState>();
-
-  final AppStore store;
 
   final TextEditingController _keyCtrl = TextEditingController();
   final TextEditingController _nameCtrl = TextEditingController();
@@ -43,9 +38,9 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   }
 
   String? _validateAccountSource(BuildContext context, String v) {
-    final TranslationsAccount dic = I18n.of(context)!.translationsForLocale().account;
+    final dic = I18n.of(context)!.translationsForLocale().account;
 
-    String input = v.trim();
+    final input = v.trim();
 
     if (input.isEmpty) {
       return dic.importMustNotBeEmpty;
@@ -70,7 +65,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(32, 0, 16, 32),
@@ -103,7 +98,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     hintText: dic.account.createHint,
                     labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
-                    validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
+                    validator: (v) =>
+                        InputValidation.validateAccountName(context, v, widget.store.account.optionalAccounts),
                   ),
                   TextFormField(
                     key: const Key('account-source'),
@@ -124,8 +120,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             child: Text(I18n.of(context)!.translationsForLocale().home.next),
             onPressed: () async {
               if (_formKey.currentState!.validate() && !(_advanceOptions.error ?? false)) {
-                store.account.setNewAccountName(_nameCtrl.text.trim());
-                store.account.setNewAccountKey(_keyCtrl.text.trim());
+                widget.store.account.setNewAccountName(_nameCtrl.text.trim());
+                widget.store.account.setNewAccountKey(_keyCtrl.text.trim());
 
                 widget.onSubmit({
                   'keyType': _keyType,

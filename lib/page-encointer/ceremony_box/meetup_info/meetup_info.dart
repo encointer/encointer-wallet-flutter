@@ -1,18 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_location_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class MeetupInfo extends StatelessWidget {
-  MeetupInfo(
-    this.meetup,
-    this.meetupLocation, {
-    this.onLocationPressed,
-    Key? key,
-  }) : super(key: key);
+  const MeetupInfo(this.meetup, this.meetupLocation, {this.onLocationPressed, super.key});
 
   final Meetup meetup;
 
@@ -23,7 +19,7 @@ class MeetupInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    var info = dic.encointer.youAreAssignedToAGatheringWithNParticipants.replaceAll(
+    final info = dic.encointer.youAreAssignedToAGatheringWithNParticipants.replaceAll(
       'P_COUNT',
       meetup.registry.length.toString(),
     );

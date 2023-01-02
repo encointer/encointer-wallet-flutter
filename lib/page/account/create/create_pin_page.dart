@@ -16,7 +16,7 @@ class CreatePinPageParams {
 }
 
 class CreatePinPage extends StatefulWidget {
-  const CreatePinPage({Key? key}) : super(key: key);
+  const CreatePinPage({super.key});
 
   static const String route = '/account/createPin';
 
@@ -31,7 +31,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
   @override
   Widget build(BuildContext context) {
-    CreatePinPageParams params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams;
+    final params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams;
     final _store = context.watch<AppStore>();
 
     onCreatePin = params.onCreatePin;
@@ -65,13 +65,13 @@ class _CreatePinPageState extends State<CreatePinPage> {
                   await onCreatePin();
 
                   if (_store.encointer.communityIdentifiers.length == 1) {
-                    _store.encointer.setChosenCid(
+                    await _store.encointer.setChosenCid(
                       _store.encointer.communityIdentifiers[0],
                     );
                   } else {
                     await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(_store)),
+                      MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(_store)),
                     );
                   }
 

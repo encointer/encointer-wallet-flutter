@@ -1,19 +1,24 @@
+import 'dart:io';
+
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
-const String network_name_encointer_gesell = 'nctr-gsl';
-const String network_name_encointer_lietaer = 'nctr-r';
-const String network_name_encointer_mainnet = 'nctr-k';
-const String network_name_encointer_cantillon = 'nctr-ctln';
+const String networkNameEncointerGesell = 'nctr-gsl';
+const String networkNameEncointerLietaer = 'nctr-r';
+const String networkNameEncointerMainnet = 'nctr-k';
+const String networkNameEncointerCantillon = 'nctr-ctln';
+
+const String androidLocalHost = '10.0.2.2';
+const String iosLocalHost = 'localhost';
 
 EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
   'info': 'nctr-gsl',
   'ss58': 42,
   'text': 'Encointer Gesell (Hosted by Encointer Association)',
   'value': 'wss://gesell.encointer.org',
-  'overrideConfig': GesellConfig.toJson(),
-  'ipfsGateway': ipfs_gateway_encointer
+  'overrideConfig': gesellConfig.toJson(),
+  'ipfsGateway': ipfsGatewayEncointer
 });
 
 EndpointData networkEndpointEncointerLietaer = EndpointData.fromJson({
@@ -21,8 +26,8 @@ EndpointData networkEndpointEncointerLietaer = EndpointData.fromJson({
   'ss58': 42,
   'text': 'Encointer Lietaer on Rococo (Hosted by Encointer Association)',
   'value': 'wss://rococo.api.encointer.org',
-  'overrideConfig': GesellConfig.toJson(),
-  'ipfsGateway': ipfs_gateway_encointer
+  'overrideConfig': gesellConfig.toJson(),
+  'ipfsGateway': ipfsGatewayEncointer
 });
 
 EndpointData networkEndpointEncointerMainnet = EndpointData.fromJson({
@@ -30,16 +35,17 @@ EndpointData networkEndpointEncointerMainnet = EndpointData.fromJson({
   'ss58': 42, // Fixme: #567
   'text': 'Encointer Network on Kusama (Hosted by Encointer Association)',
   'value': 'wss://kusama.api.encointer.org',
-  'overrideConfig': GesellConfig.toJson(),
-  'ipfsGateway': ipfs_gateway_encointer
+  'overrideConfig': gesellConfig.toJson(),
+  'ipfsGateway': ipfsGatewayEncointer
 });
 
 EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson({
   'info': 'nctr-gsl-dev',
   'ss58': 42,
   'text': 'Encointer Gesell Local Devnet',
-  'value': 'ws://10.0.2.2:9944', // do not use the docker's address, use the host's
-  'overrideConfig': MasterBranchConfig.toJson(),
+  'value':
+      'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944', // do not use the docker's address, use the host's
+  'overrideConfig': masterBranchConfig.toJson(),
   'ipfsGateway': ipfs_gateway_local
 });
 
@@ -50,8 +56,8 @@ EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson({
   'value': 'wss://cantillon.encointer.org',
   'worker': 'wss://substratee03.scs.ch',
   'mrenclave': 'CbE3fPWjeYVo9LSNKgPPiCXThFBjfhP1GK6Y9S7t5WVe',
-  'overrideConfig': CantillonConfig.toJson(),
-  'ipfsGateway': ipfs_gateway_encointer
+  'overrideConfig': cantillonConfig.toJson(),
+  'ipfsGateway': ipfsGatewayEncointer
 });
 
 EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
@@ -61,8 +67,8 @@ EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
   'value': 'ws://10.0.0.134:9979', // do not use the docker's address, use the host's
   'worker': 'ws:/10.0.0.134:2079',
   'mrenclave': '4SkU25tusVChcrUprW8X22QoEgamCgj3HKQeje7j8Z4E',
-  'overrideConfig': SgxBranchConfig.toJson(),
-  'ipfsGateway': ipfs_gateway_encointer
+  'overrideConfig': sgxBranchConfig.toJson(),
+  'ipfsGateway': ipfsGatewayEncointer
 });
 
 List<EndpointData> networkEndpoints = [
@@ -74,7 +80,7 @@ List<EndpointData> networkEndpoints = [
   // networkEndpointEncointerCantillonDev,
 ];
 
-const network_ss58_map = {
+const networkSs58Map = {
   'encointer': 42,
   'nctr-gsl': 42,
   'nctr-r': 42,
@@ -86,60 +92,67 @@ const network_ss58_map = {
   'substrate': 42,
 };
 
-const fall_back_community_icon = 'assets/nctr_logo_faces_only_thick.svg';
-const community_icon_name = 'community_icon.svg';
+const fallBackCommunityIcon = 'assets/nctr_logo_faces_only_thick.svg';
+const communityIconName = 'community_icon.svg';
 
-const String ipfs_gateway_encointer = 'http://ipfs.encointer.org:8080'; // AVD: 10.0.2.2 = 127.0.0.1
-const String ipfs_gateway_local = 'http://10.0.2.2:8080';
+// AVD: ${Platform.isAndroid ? androidLocalHost : iosLocalHost} = 127.0.0.1
+const String ipfsGatewayEncointer = 'http://ipfs.encointer.org:8080';
+// ignore: non_constant_identifier_names
+final String ipfs_gateway_local = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:8080';
 
-const String encointer_feed = 'https://encointer.github.io/feed';
-const String encointer_feed_overrides = '$encointer_feed/overrides.json';
+const String encointerFeed = 'https://encointer.github.io/feed';
+const String encointerFeedOverrides = '$encointerFeed/overrides.json';
 
-const int ert_decimals = 12;
-const int encointer_currencies_decimals = 18;
+const int ertDecimals = 12;
+const int encointerCurrenciesDecimals = 18;
 
 const double faucetAmount = 0.1;
 
-const int dot_re_denominate_block = 1248328;
+const int dotReDenominateBlock = 1248328;
 
-const int SECONDS_OF_DAY = 24 * 60 * 60; // seconds of one day
-const int SECONDS_OF_YEAR = 365 * 24 * 60 * 60; // seconds of one year
-
-/// test app versions
-const String app_beta_version = '0.8.0';
-const int app_beta_version_code = 800;
-
-/// js code versions
-const Map<String, int> js_code_version_map = {
-  network_name_encointer_gesell: 10010,
-  network_name_encointer_cantillon: 10010,
-};
+const int secondOfDay = 24 * 60 * 60; // seconds of one day
+const int secondOfYear = 365 * 24 * 60 * 60; // seconds of one year
 
 // links
-const locale_place_holder = 'LOCALE_PLACEHOLDER';
-const ceremony_info_link_base = 'https://leu.zuerich/$locale_place_holder/#zeremonien';
-const leu_zurich_link = 'https://leu.zuerich/$locale_place_holder';
-const meetup_notification_link = 'https://encointer.github.io/feed/community_messages/$locale_place_holder/cm.json';
+const localePlaceHolder = 'LOCALE_PLACEHOLDER';
+const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';
+const _leuZurichLink = 'https://leu.zuerich/$localePlaceHolder';
+const meetupNotificationLink = 'https://encointer.github.io/feed/community_messages/$localePlaceHolder/cm.json';
 const encointerLink = 'https://wallet.encointer.org/app/';
 
 String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
 
 String ceremonyInfoLink(String locale) {
-  return replaceLocalePlaceholder(ceremony_info_link_base, locale);
+  return replaceLocalePlaceholder(ceremonyInfoLinkBase, locale);
 }
 
 String leuZurichLink(String locale) {
-  return replaceLocalePlaceholder(leu_zurich_link, locale);
+  return replaceLocalePlaceholder(_leuZurichLink, locale);
+}
+
+const assignmentFAQLinkEN = 'https://leu.zuerich/en/#why-have-i-not-been-assigned-to-a-cycle';
+const assignmentFAQLinkDE = 'https://leu.zuerich/#warum-wurde-ich-keinem-cycle-zugewiesen';
+
+String leuZurichCycleAssignmentFAQLink(String locale) {
+  switch (locale) {
+    case 'en':
+      return assignmentFAQLinkEN;
+    case 'de':
+      return assignmentFAQLinkDE;
+    default:
+      Log.d('[replaceLocale] unsupported locale, defaulting to english', 'consts.dart');
+      return assignmentFAQLinkEN;
+  }
 }
 
 String replaceLocalePlaceholder(String link, String locale) {
   switch (locale) {
     case 'en':
-      return link.replaceAll(locale_place_holder, 'en');
+      return link.replaceAll(localePlaceHolder, 'en');
     case 'de':
-      return link.replaceAll(locale_place_holder, '');
+      return link.replaceAll(localePlaceHolder, '');
     default:
       Log.d('[replaceLocale] unsupported locale, defaulting to english', 'consts.dart');
-      return link.replaceAll(locale_place_holder, 'en');
+      return link.replaceAll(localePlaceHolder, 'en');
   }
 }

@@ -8,10 +8,10 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class CeremonyBoxService {
   /// Returns a formatted date yMd or tomorrow or today
   static String formatYearMonthDay(DateTime input, Translations dic, String? languageCode) {
-    String formatted = DateFormat.yMd(languageCode).format(input);
-    String todayYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now());
-    String tomorrowYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now().add(const Duration(days: 1)));
-    bool ceremonyIsToday = (formatted == todayYearMonthDay);
+    var formatted = DateFormat.yMd(languageCode).format(input);
+    final todayYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now());
+    final tomorrowYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now().add(const Duration(days: 1)));
+    final ceremonyIsToday = formatted == todayYearMonthDay;
     if (ceremonyIsToday) {
       formatted = dic.encointer.today;
     }
@@ -23,14 +23,14 @@ class CeremonyBoxService {
 
   /// Returns a formatted string of days and hours till ceremony starts
   static String getTimeLeftUntilCeremonyStartsDaysHours(DateTime nextCeremonyDate) {
-    Duration timeLeftUntilCeremonyStarts = nextCeremonyDate.difference(DateTime.now());
+    final timeLeftUntilCeremonyStarts = nextCeremonyDate.difference(DateTime.now());
     return '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h';
   }
 
   /// If it is close to the ceremony show a countdown
   static bool shouldShowCountdown(DateTime nextCeremonyDate) {
-    Duration timeLeftUntilCeremonyStarts = nextCeremonyDate.difference(DateTime.now());
-    return (timeLeftUntilCeremonyStarts.compareTo(const Duration(days: 2)) < 0);
+    final timeLeftUntilCeremonyStarts = nextCeremonyDate.difference(DateTime.now());
+    return timeLeftUntilCeremonyStarts.compareTo(const Duration(days: 2)) < 0;
   }
 
   static Event createCalendarEvent(DateTime nextCeremonyDate, Translations dic) {
@@ -66,14 +66,14 @@ class CeremonyBoxService {
     double assigningFlex,
     double attestingFlex,
   ) {
-    var totalFlex = registerFlex + assigningFlex + attestingFlex;
-    var ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering]!;
+    final totalFlex = registerFlex + assigningFlex + attestingFlex;
+    final ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering]!;
 
     if (currentTime < ceremonyStart) {
       throw Exception('[CeremonyProgressBar] Current time was smaller than ceremony start');
     }
 
-    var progressUnormalized;
+    double? progressUnormalized;
 
     if (currentTime < assigningStart) {
       progressUnormalized =

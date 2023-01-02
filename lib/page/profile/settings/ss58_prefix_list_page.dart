@@ -4,30 +4,29 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
-const default_ss58_prefix = {
+const defaultSs58Prefix = {
   'info': 'default',
   'text': 'Default for the connected node',
   'value': 42,
 };
 const prefixList = [
-  default_ss58_prefix,
+  defaultSs58Prefix,
   {'info': 'substrate', 'text': 'Substrate (development)', 'value': 42},
   {'info': 'kusama', 'text': 'Kusama (canary)', 'value': 2},
   {'info': 'polkadot', 'text': 'Polkadot (live)', 'value': 0}
 ];
 
 class SS58PrefixListPage extends StatelessWidget {
-  SS58PrefixListPage({Key? key}) : super(key: key);
+  SS58PrefixListPage({super.key});
 
   static const String route = '/profile/ss58';
   final Api? api = webApi;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    List<Widget> list = prefixList
+    final dic = I18n.of(context)!.translationsForLocale();
+    final list = prefixList
         .map((i) => ListTile(
               leading: SizedBox(
                 width: 36,

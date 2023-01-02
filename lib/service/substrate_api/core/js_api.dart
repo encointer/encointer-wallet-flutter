@@ -5,7 +5,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 
-const EncointerJsService = 'EncointerJsService';
+const encointerJsService = 'EncointerJsService';
 
 /// Core interface to talk with our JS-service
 class JSApi {
@@ -33,22 +33,22 @@ class JSApi {
       onWebViewCreated: (controller) async {
         Log.d('Adding the PolkaWallet javascript handler', 'JSApi');
         controller.addJavaScriptHandler(
-            handlerName: EncointerJsService,
+            handlerName: encointerJsService,
             callback: (args) {
               Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
-              var res = args[0];
+              final res = args[0];
 
-              final String? path = res['path'];
+              final path = res['path'] as String?;
               if (_msgCompleters[path!] != null) {
-                Completer handler = _msgCompleters[path]!;
+                final handler = _msgCompleters[path]!;
                 handler.complete(res['data']);
                 if (path.contains('uid=')) {
                   _msgCompleters.remove(path);
                 }
               }
               if (_msgHandlers[path] != null) {
-                Function handler = _msgHandlers[path]!;
+                final handler = _msgHandlers[path]!;
                 handler(res['data']);
               }
             });
@@ -89,8 +89,8 @@ class JSApi {
   }) async {
     // check if there's a same request loading
     if (!allowRepeat) {
-      for (String i in _msgCompleters.keys) {
-        String call = code.split('(')[0];
+      for (final i in _msgCompleters.keys) {
+        final call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
           Log.d('request $call loading', 'JSApi');
           return _msgCompleters[i]!.future;
@@ -99,23 +99,23 @@ class JSApi {
     }
 
     if (!wrapPromise) {
-      String res = await _web!.webViewController.evaluateJavascript(source: code);
+      final res = await _web!.webViewController.evaluateJavascript(source: code);
       return res;
     }
 
-    Completer c = Completer();
+    final c = Completer<dynamic>();
 
-    String method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
+    final method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
 
     // Send the result from JS to dart after `code` completed.
-    String script = '''
+    final script = '''
         $code.then(function(res) {
           window.flutter_inappwebview
-            .callHandler("$EncointerJsService", { path: "$method", data: res });
+            .callHandler("$encointerJsService", { path: "$method", data: res });
         }).catch(function(err) {
           window.flutter_inappwebview
-            .callHandler("$EncointerJsService", { path: "$method:error", data: err.message  });
+            .callHandler("$encointerJsService", { path: "$method:error", data: err.message  });
         })''';
 
     try {

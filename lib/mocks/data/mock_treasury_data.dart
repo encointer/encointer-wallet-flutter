@@ -36,15 +36,15 @@ const Map<String, dynamic> councilProposalOf36 = {
       'DfiSM1qqP11ECaekbA64L2ENcsWEpGk8df8wf1LAfV2sBd4',
       'HSNBs8VHxcZiqz9NfSQq2YaznTa8BzSvuEWVe4uTihcGiQN'
     ],
-    'nays': [],
+    'nays': <dynamic>[],
     'end': 3212205
   }
 };
 final Map<String, dynamic> treasuryOverview = {
   'approvals': [
-    {'council': [], 'id': 33, 'proposal': treasuryProposal33},
+    {'council': <dynamic>[], 'id': 33, 'proposal': treasuryProposal33},
     {
-      'council': [],
+      'council': <dynamic>[],
       'id': 34,
       'proposal': {
         'proposer': 'FyLYnuNoMAVkz1VZMMGZFHDPghQQm1916fCon1CqNt2aXbX',
@@ -54,7 +54,7 @@ final Map<String, dynamic> treasuryOverview = {
       }
     },
     {
-      'council': [],
+      'council': <dynamic>[],
       'id': 35,
       'proposal': {
         'proposer': 'D3akXZ5Aawj7ZQMsvL5oTcxaWpJTLXQPJxhnG5HsBQSswBs',
@@ -99,7 +99,7 @@ const Map<String, dynamic> tip0xf2 = {
   'who': 'Gf7EzU2aHeaqFX7AWU93Pb4YDz3vn7fhdYRteNunXYPe9DP',
   'finder': null,
   'closes': null,
-  'tips': []
+  'tips': <dynamic>[]
 };
 
 const Map<String, dynamic> councilMotion0 = {
@@ -122,7 +122,7 @@ const Map<String, dynamic> councilMotion0 = {
     'index': 0,
     'threshold': 4,
     'ayes': ['5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'],
-    'nays': [],
+    'nays': <dynamic>[],
     'end': 146922
   }
 };
@@ -148,7 +148,7 @@ const List<Map<String, dynamic>> councilMotions = [
       'index': 1,
       'threshold': 4,
       'ayes': ['5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'],
-      'nays': [],
+      'nays': <dynamic>[],
       'end': 146996
     }
   }

@@ -110,7 +110,7 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
           CupertinoButton(
             child: Text(dic.home.ok),
             onPressed: () async {
-              var result =
+              final result =
                   await changeWithLoadingDialog(context, () => changeNetworkAndCommunity(store, api, network, cid));
               Navigator.of(context).pop(result);
             },
@@ -125,17 +125,17 @@ Future<ChangeResult> changeWithLoadingDialog(
   BuildContext context,
   Future<ChangeResult> Function() changeFn,
 ) async {
-  showCupertinoDialog(
+  showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
         title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-        content: const SizedBox(height: 64, child: const CupertinoActivityIndicator()),
+        content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
       );
     },
   );
 
-  var result = await changeFn();
+  final result = await changeFn();
 
   // pop loading dialog
   Navigator.of(context).pop();
@@ -168,7 +168,7 @@ Future<ChangeResult?> showChangeCommunityDialog(
           CupertinoButton(
             child: Text(dic.home.ok),
             onPressed: () async {
-              var result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
+              final result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
               Navigator.of(context).pop(result);
             },
           ),

@@ -4,7 +4,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
-const String LeuZurich = 'Leu Zurich';
+const String leuZurich = 'Leu Zurich';
 const String bernBaer = 'Bern Bär';
 const String buendnerBock = 'Bündner Bock';
 const String zul = 'ZUL';
@@ -19,7 +19,7 @@ List<CommunityIdentifier> testCommunityIdentifiers = [
 ];
 
 List<CidName> testCommunities = [
-  CidName(cid, LeuZurich),
+  CidName(cid, leuZurich),
   CidName(cid2, bernBaer),
   CidName(cid3, buendnerBock),
 ];
@@ -38,15 +38,7 @@ const Map<String, dynamic> communityMetadata = {
 
 const double demurrage = 1.1267607882072287e-7;
 
-Map<String, dynamic> claim = {
-  'claimant_public': '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-  'ceremony_index': 63,
-  'community_identifier': cid,
-  'meetup_index': 1,
-  'location': {'lat': '18.2341235412345', 'lon': '35.18324513451'},
-  'timestamp': 1592719549549,
-  'number_of_participants_confirmed': 3
-};
+const testTimeStamp = 1592719549549;
 
 const List<String> testMeetupRegistry = [
   '0xb67fe3812b469da5cac180161851120a45b6c6cf13f5be7062874bfa6cec381f',

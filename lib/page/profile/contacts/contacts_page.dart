@@ -10,7 +10,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ContactsPage extends StatelessWidget {
-  ContactsPage({Key? key}) : super(key: key);
+  const ContactsPage({super.key});
 
   static const String route = '/profile/contacts';
 
@@ -33,6 +33,7 @@ class ContactsPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: IconButton(
+                    key: const Key('add-contact'),
                     icon: const Icon(Icons.add, size: 28),
                     onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
                   ),
@@ -49,6 +50,7 @@ class ContactsPage extends StatelessWidget {
                     trailing: SizedBox(
                       width: 36,
                       child: IconButton(
+                        key: Key(i.name),
                         icon: const Icon(Icons.arrow_forward_ios, size: 18),
                         onPressed: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: i),
                       ),

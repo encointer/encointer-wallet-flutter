@@ -20,7 +20,6 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
@@ -37,7 +36,7 @@ class PaymentConfirmationParams {
 }
 
 class PaymentConfirmationPage extends StatefulWidget {
-  const PaymentConfirmationPage(this.api, {Key? key}) : super(key: key);
+  const PaymentConfirmationPage(this.api, {super.key});
 
   static const String route = '/assets/paymentConfirmation';
   final Api api;
@@ -62,13 +61,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    PaymentConfirmationParams params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
 
-    var cid = params.cid;
-    var recipientAccount = params.recipientAccount;
+    final cid = params.cid;
+    final recipientAccount = params.recipientAccount;
     final recipientAddress = Fmt.addressOfAccount(recipientAccount, context.read<AppStore>());
-    var amount = params.amount;
+    final amount = params.amount;
 
     return Observer(
       builder: (_) {
@@ -99,7 +98,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
                     transitionBuilder: (Widget child, Animation<double> animation) {
-                      return RotationTransition(child: child, turns: animation);
+                      return RotationTransition(turns: animation, child: child);
                       // return ScaleTransition(child: child, scale: animation);
                     },
                     child: _getTransferStateWidget(_transferState),
@@ -110,32 +109,33 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                   flex: 2,
                   child: _txStateTextInfo(_transferState),
                 ),
-                !_transferState.isFinishedOrFailed()
-                    ? PrimaryButton(
-                        key: const Key('make-transfer'),
-                        child: SizedBox(
-                          height: 24,
-                          child: !_transferState.isSubmitting()
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Iconsax.send_sqaure_2),
-                                    const SizedBox(width: 12),
-                                    Text(dic.assets.transfer),
-                                  ],
-                                )
-                              : const CupertinoActivityIndicator(),
-                        ),
-                        onPressed: () => _submit(context, cid, recipientAddress, amount),
-                      )
-                    : PrimaryButton(
-                        key: const Key('transfer-done'),
-                        child: SizedBox(
-                          height: 24,
-                          child: Center(child: Text(dic.assets.done)),
-                        ),
-                        onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
-                      )
+                if (!_transferState.isFinishedOrFailed())
+                  PrimaryButton(
+                    key: const Key('make-transfer-send'),
+                    child: SizedBox(
+                      height: 24,
+                      child: !_transferState.isSubmitting()
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Iconsax.send_sqaure_2),
+                                const SizedBox(width: 12),
+                                Text(dic.assets.transfer),
+                              ],
+                            )
+                          : const CupertinoActivityIndicator(),
+                    ),
+                    onPressed: () => _submit(context, cid, recipientAddress, amount),
+                  )
+                else
+                  PrimaryButton(
+                    key: const Key('transfer-done'),
+                    child: SizedBox(
+                      height: 24,
+                      child: Center(child: Text(dic.assets.done)),
+                    ),
+                    onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+                  )
               ],
             ),
           ),
@@ -145,13 +145,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double? amount) async {
-    var params = encointerBalanceTransferParams(cid, recipientAddress, amount);
+    final params = encointerBalanceTransferParams(cid, recipientAddress, amount);
 
     setState(() {
       _transferState = TransferState.submitting;
     });
 
-    var onFinish = (BuildContext txPageContext, Map res) {
+    void onFinish(BuildContext txPageContext, Map res) {
       Log.d('Transfer result $res', 'PaymentConfirmationPage');
 
       if (res['hash'] == null) {
@@ -159,9 +159,9 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         _transferState = TransferState.failed;
       } else {
         _transferState = TransferState.finished;
-        _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time']);
+        _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
       }
-    };
+    }
 
     await submitTx(context, context.read<AppStore>(), widget.api, params, onFinish: onFinish);
 
@@ -193,7 +193,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             _initializeAnimation();
           }
 
-          return Container(
+          return DecoratedBox(
             decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.green),
             child: AnimatedCheck(
               progress: _animation!,
@@ -203,10 +203,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           );
         }
       case TransferState.failed:
-        return Container(
-          decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-          child: const Padding(
-            padding: const EdgeInsets.all(10.0),
+        return const DecoratedBox(
+          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
             child: Icon(
               Icons.highlight_remove,
               size: 80.0,
@@ -223,7 +223,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     final h1Grey = Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
 
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     switch (state) {
       case TransferState.notStarted:
         {
@@ -235,8 +235,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         }
       case TransferState.finished:
         {
-          var date = DateFormat.yMd().format(_blockTimestamp);
-          var time = DateFormat.Hms().format(_blockTimestamp);
+          final date = DateFormat.yMd().format(_blockTimestamp);
+          final time = DateFormat.Hms().format(_blockTimestamp);
 
           return RichText(
             textAlign: TextAlign.center,

@@ -16,13 +16,13 @@ source ./scripts/init_env.sh
 
 DISTRO="linux-x64"
 NODE_VERSION="16.13.1" # should match the value from the CI.
-SHA_SUM="a3721f87cecc0b52b0be8587c20776ac7305db413751db02c55aa2bffac15198"
+SHA_SUM="5f80197d654fd0b749cdeddf1f07a5eac1fcf6b423a00ffc8f2d3bea9c6dc8d1"
 NODE="node-v${NODE_VERSION}-${DISTRO}"
 
-curl -Lo node.tar.xz "https://nodejs.org/dist/v${NODE_VERSION}/${NODE}.tar.xz"
-echo "${SHA_SUM} node.tar.xz" | sha256sum -c -
+curl -Lo node.tar.gz "https://nodejs.org/dist/v${NODE_VERSION}/${NODE}.tar.gz"
+echo "${SHA_SUM} node.tar.gz" | sha256sum -c -
 
-tar -vxf node.tar.xz && rm node.tar.xz
+tar -vxf node.tar.gz && rm node.tar.gz
 
 export PATH=$PATH:$PWD/${NODE}/bin
 

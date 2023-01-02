@@ -7,11 +7,11 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class SearchResults extends StatelessWidget {
+  SearchResults({super.key});
+
   // TODO implement state management with logic that takes the first of each list of search results
   final businessResults = searchResultsInBusinesses;
   final offeringsResults = searchResultsInOfferings;
-
-  SearchResults({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +43,10 @@ class SearchResults extends StatelessWidget {
 }
 
 class ResultSummaryListTile extends StatelessWidget {
-  final results;
-  final title;
+  const ResultSummaryListTile(this.results, this.title, {super.key});
 
-  const ResultSummaryListTile(
-    this.results,
-    this.title, {
-    Key? key,
-  }) : super(key: key);
+  final List<BazaarItemData> results;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +72,7 @@ class ResultSummaryListTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<void>(
             builder: (context) =>
                 (results[0] is BazaarBusinessData) ? SearchResultsBusiness(results) : SearchResultsOffering(results),
           ),

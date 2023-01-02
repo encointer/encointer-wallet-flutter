@@ -11,7 +11,7 @@ import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/opening_hours_state.dart';
 
 void main() {
-  List<List<String>> testCases = [
+  final testCases = <List<String>>[
     ['8:10-13:40', '8:10 - 13:40', 'base case'],
     ['  8 :  10 - 13: 40', '8:10 - 13:40', 'with spaces'],
     ['12:00-8:00', '8:00 - 12:00', 'sort'],
@@ -32,7 +32,7 @@ void main() {
     ['0:10-3pm', '0:10 - 15:00', 'afternoon 12:10'],
     ['12:10am-3pm', '0:10 - 15:00', 'afternoon 12:10pm'],
   ];
-  testCases.forEach((testCase) {
+  for (final testCase in testCases) {
     test('Should correctly parse time interval: ${testCase[2]}', () {
       final state = OpeningHoursForDayState(ObservableList<OpeningIntervalState>());
 
@@ -40,5 +40,5 @@ void main() {
 
       expect(state.humanReadable(), testCase[1]);
     });
-  });
+  }
 }
