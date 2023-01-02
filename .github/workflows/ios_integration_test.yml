@@ -78,7 +78,7 @@ jobs:
         run: ./scripts/run_encointer_node_notee_docker.sh &
 
       - name: Bootstrap Demo Community
-        run:  docker run encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
+        run:  docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
 
       - name: "Build JS"
         working-directory: ./scripts
