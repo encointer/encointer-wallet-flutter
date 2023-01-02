@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-docker run -it -p 30333 -p 9944:9944 -p 9933:9933 -p 9615:9615 \
+docker run -p 30333 -p 9944:9944 -p 9933:9933 -p 9615:9615 \
   encointer/encointer-node-notee:0.0.2 \
   --dev \
   --enable-offchain-indexing true \
