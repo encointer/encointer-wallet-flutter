@@ -69,7 +69,7 @@ jobs:
         run: source ./init_env.sh && ./build_js.sh
 
       - name: Start colima, a docker runtime for MacOs
-      - run: colima start
+        run: colima start
 
       - name: Run encointer-node
         run: ./scripts/run_encointer_node_notee_docker.sh &
