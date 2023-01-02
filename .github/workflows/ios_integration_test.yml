@@ -59,16 +59,14 @@ jobs:
         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (3rd generation)' }}
         run: xcrun simctl create "iPad Pro (12.9-inch) (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---3rd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-0"
 
-      - name: "Start Simulator"
-        working-directory: ./scripts
-        env:
-          DEVICE_ID: ${{ matrix.device }}
-        run: source ./ios_emulator.sh
-
-        # JS Stuff
+      # JS Stuff
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+
+      - name: "Build JS"
+        working-directory: ./scripts
+        run: source ./init_env.sh && ./build_js.sh
 
       # We have to install docker for MacOs VMs
       - uses: docker-practice/actions-setup-docker@master
@@ -78,11 +76,13 @@ jobs:
         run: ./scripts/run_encointer_node_notee_docker.sh &
 
       - name: Bootstrap Demo Community
-        run:  docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
+        run: docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
 
-      - name: "Build JS"
+      - name: "Start Simulator"
         working-directory: ./scripts
-        run: source ./init_env.sh && ./build_js.sh
+        env:
+          DEVICE_ID: ${{ matrix.device }}
+        run: source ./ios_emulator.sh
 
         # Run Tests
       - name: "Flutter driver test and record video"

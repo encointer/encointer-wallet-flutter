@@ -80,6 +80,16 @@ jobs:
             ~/.android/adb*
           key: avd-${{ matrix.api-level }}-${{ matrix.device }}
 
+      # We have to install docker for MacOs VMs
+      - uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
+
+      - name: Run encointer-node
+        run: ./scripts/run_encointer_node_notee_docker.sh &
+
+      - name: Bootstrap Demo Community
+        run: docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
+
       - name: "Create AVD and generate a clean snapshot for caching"
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
@@ -90,16 +100,6 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
-
-      # We have to install docker for MacOs VMs
-      - uses: docker-practice/actions-setup-docker@master
-        timeout-minutes: 12
-
-      - name: Run encointer-node
-        run: ./scripts/run_encointer_node_notee_docker.sh &
-
-      - name: Bootstrap Demo Community
-        run: docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
 
       - name: "Android Integration Tests"
         uses: reactivecircus/android-emulator-runner@v2
