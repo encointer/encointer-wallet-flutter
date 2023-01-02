@@ -70,6 +70,10 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      # We have to install docker for MacOs VMs
+      - uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
+
       - name: Run encointer-node
         run: ./scripts/run_encointer_node_notee_docker.sh &
 
