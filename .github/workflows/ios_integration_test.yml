@@ -68,7 +68,7 @@ jobs:
         working-directory: ./scripts
         run: source ./init_env.sh && ./build_js.sh
 
-      - name: Start docker engine for MacOs with colima
+      - name: Start colima, a docker runtime for MacOs
       - run: colima start
 
       - name: Run encointer-node

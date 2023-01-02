@@ -80,7 +80,7 @@ jobs:
             ~/.android/adb*
           key: avd-${{ matrix.api-level }}-${{ matrix.device }}
 
-      - name: Start docker engine for MacOs with colima
+      - name: Start colima, a docker runtime for MacOs
       - run: colima start
 
       - name: Run encointer-node
