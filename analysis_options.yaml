@@ -45,6 +45,7 @@ linter:
     avoid_function_literals_in_foreach_calls: true
     avoid_unnecessary_containers: true
     noop_primitive_operations: true
+    missing_whitespace_between_adjacent_strings: true
 
     avoid_dynamic_calls: false
     require_trailing_commas: false
@@ -60,7 +61,6 @@ linter:
     no_leading_underscores_for_local_identifiers: false
     avoid_renaming_method_parameters: false
     parameter_assignments: false
-    missing_whitespace_between_adjacent_strings: false
     depend_on_referenced_packages: false
     avoid_equals_and_hash_code_on_mutable_classes: false
     prefer_typing_uninitialized_variables: false
