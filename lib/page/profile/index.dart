@@ -84,7 +84,7 @@ class _ProfileState extends State<Profile> {
     final dic = I18n.of(context)!.translationsForLocale().profile;
     final _emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'bugreports@mail.encointer.org',
+      path: 'malikelbay1+np8u5ozogws6ijqbldun@boards.trello.com',
     );
     final _isSuccess = await launchUrl(_emailLaunchUri);
     if (!_isSuccess) {
