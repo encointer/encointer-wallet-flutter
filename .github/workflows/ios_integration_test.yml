@@ -68,9 +68,8 @@ jobs:
         working-directory: ./scripts
         run: source ./init_env.sh && ./build_js.sh
 
-      # We have to install docker for MacOs VMs
-      - uses: docker-practice/actions-setup-docker@master
-        timeout-minutes: 12
+      - name: Start docker engine for MacOs with colima
+      - run: colima start
 
       - name: Run encointer-node
         run: ./scripts/run_encointer_node_notee_docker.sh &
