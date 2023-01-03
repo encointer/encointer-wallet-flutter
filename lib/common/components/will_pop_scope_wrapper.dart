@@ -32,7 +32,7 @@ class WillPopScopeWrapper extends StatelessWidget {
                     ),
                   ],
                 ),
-              ).then((value) => value ?? true)
+              ).then((value) => value!)
             : Future.value(true);
       },
     );

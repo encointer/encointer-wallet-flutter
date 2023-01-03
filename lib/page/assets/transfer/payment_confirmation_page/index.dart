@@ -62,13 +62,12 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams?;
+    final params = ModalRoute.of(context)!.settings.arguments! as PaymentConfirmationParams;
 
-    final cid = params?.cid;
-    final recipientAccount = params?.recipientAccount;
-    final amount = params?.amount;
-    final recipientAddress =
-        recipientAccount != null ? Fmt.addressOfAccount(recipientAccount, context.read<AppStore>()) : null;
+    final cid = params.cid;
+    final recipientAccount = params.recipientAccount;
+    final amount = params.amount;
+    final recipientAddress = Fmt.addressOfAccount(recipientAccount, context.read<AppStore>());
 
     return Observer(
       builder: (_) {
@@ -80,9 +79,9 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
               children: [
                 PaymentOverview(
                   context.watch<AppStore>(),
-                  params?.communitySymbol,
-                  params?.recipientAccount,
-                  params?.amount,
+                  params.communitySymbol,
+                  params.recipientAccount,
+                  params.amount,
                 ),
                 const SizedBox(height: 10),
                 Flexible(
@@ -112,7 +111,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 if (!_transferState.isFinishedOrFailed())
                   PrimaryButton(
                     key: const Key('make-transfer-send'),
-                    onPressed: cid != null ? () => _submit(context, cid, recipientAddress!, amount) : null,
+                    onPressed: () => _submit(context, cid, recipientAddress, amount),
                     child: SizedBox(
                       height: 24,
                       child: !_transferState.isSubmitting()

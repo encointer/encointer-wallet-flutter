@@ -142,10 +142,9 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     final accounts = <AccountData>[
       context.read<AppStore>().account.currentAccount,
       ...context.read<AppStore>().account.optionalAccounts
-    ]
+    ];
 
-        /// add optional accounts
-        ;
+    /// add optional accounts
 
     res.addAll(accounts.map((i) {
       String? address = i.address;

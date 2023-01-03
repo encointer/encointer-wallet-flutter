@@ -35,7 +35,7 @@ class ExportResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final args = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>?;
+    final args = ModalRoute.of(context)!.settings.arguments! as Map<dynamic, dynamic>;
 
     return Scaffold(
       appBar: AppBar(title: Text(dic.profile.export)),
@@ -47,12 +47,12 @@ class ExportResultPage extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: <Widget>[
-                  if (args != null && args['type'] != AccountStore.seedTypeKeystore) Text(dic.profile.exportWarn),
+                  if (args['type'] != AccountStore.seedTypeKeystore) Text(dic.profile.exportWarn),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       GestureDetector(
-                        onTap: args != null ? () => _showExportDialog(context, args) : null,
+                        onTap: () => _showExportDialog(context, args),
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: Text(
@@ -72,7 +72,7 @@ class ExportResultPage extends StatelessWidget {
                         borderRadius: const BorderRadius.all(Radius.circular(4))),
                     padding: const EdgeInsets.all(16),
                     child: Text(
-                      args?['key'] as String,
+                      args['key'] as String,
                       key: const Key('account-mnemonic-key'),
                       style: Theme.of(context).textTheme.headline4,
                     ),

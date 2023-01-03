@@ -21,36 +21,36 @@ class TransferDetailPage extends StatelessWidget {
     final decimals = store.settings.networkState!.tokenDecimals;
     final tokenView = Fmt.tokenView(symbol);
 
-    final tx = ModalRoute.of(context)!.settings.arguments as TransferData?;
+    final tx = ModalRoute.of(context)!.settings.arguments! as TransferData;
 
-    final txType = tx?.from == store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
+    final txType = tx.from == store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
 
     return TxDetail(
       success: true,
       action: txType,
-      eventId: tx?.extrinsicIndex,
-      hash: tx?.hash,
-      blockTime: tx != null ? Fmt.dateTime(DateTime.fromMillisecondsSinceEpoch(tx.blockTimestamp! * 1000)) : '',
-      blockNum: tx?.blockNum,
+      eventId: tx.extrinsicIndex,
+      hash: tx.hash,
+      blockTime: Fmt.dateTime(DateTime.fromMillisecondsSinceEpoch(tx.blockTimestamp! * 1000)),
+      blockNum: tx.blockNum,
       networkName: store.settings.endpoint.info,
       info: <DetailInfoItem>[
         DetailInfoItem(
           label: dic.assets.value,
-          title: '${tx?.amount} $tokenView',
+          title: '${tx.amount} $tokenView',
         ),
         DetailInfoItem(
           label: dic.assets.fee,
-          title: '${Fmt.balance(tx?.fee, decimals, length: decimals)} $tokenView',
+          title: '${Fmt.balance(tx.fee, decimals, length: decimals)} $tokenView',
         ),
         DetailInfoItem(
           label: dic.assets.from,
-          title: Fmt.address(tx?.from),
-          address: tx?.from,
+          title: Fmt.address(tx.from),
+          address: tx.from,
         ),
         DetailInfoItem(
           label: dic.assets.to,
-          title: Fmt.address(tx?.to),
-          address: tx?.to,
+          title: Fmt.address(tx.to),
+          address: tx.to,
         )
       ],
     );

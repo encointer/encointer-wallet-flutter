@@ -31,10 +31,10 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
   @override
   Widget build(BuildContext context) {
-    final params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams?;
+    final params = ModalRoute.of(context)!.settings.arguments! as CreatePinPageParams;
     final store = context.watch<AppStore>();
 
-    onCreatePin = params?.onCreatePin;
+    onCreatePin = params.onCreatePin;
 
     return Scaffold(
       appBar: AppBar(

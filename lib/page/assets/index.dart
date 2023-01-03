@@ -415,15 +415,14 @@ class _AssetsState extends State<Assets> {
         ),
         name: dic!.profile.addCommunity,
       )
-    ]
-        // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
-        // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
-        //     avatar: webApi.ipfs.getCommunityIcon(community),
-        //     name: community.name)));
+    ];
+    // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
+    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
+    //     avatar: webApi.ipfs.getCommunityIcon(community),
+    //     name: community.name)));
 
-        // For now show the selected community if available and let the user add a community from the world map community chooser
+    // For now show the selected community if available and let the user add a community from the world map community chooser
 
-        ;
     return allCommunities;
   }
 
@@ -477,10 +476,10 @@ class _AssetsState extends State<Assets> {
               });
             },
           ),
-          onWillPop: () {
-            // handles back button press
-            // ignore: cast_nullable_to_non_nullable
-            return _showPasswordNotEnteredDialog(context).then((value) => value as bool);
+          // handles back button press
+          onWillPop: () async {
+            await _showPasswordNotEnteredDialog(context);
+            return false;
           },
         );
       },
