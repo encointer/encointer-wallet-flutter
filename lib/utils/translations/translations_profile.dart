@@ -452,177 +452,186 @@ class TranslationsDeProfile implements TranslationsProfile {
 
 class TranslationsFrProfile implements TranslationsProfile {
   @override
-  String get checkEmailApp => throw UnimplementedError();
+  String get checkEmailApp => 'Aucune application de Email installée';
   @override
-  String get contactUs => throw UnimplementedError();
+  String get contactUs => 'Contactez-nous';
   @override
-  String get about => throw UnimplementedError();
+  String get about => 'About';
   @override
-  String get aboutBrief => throw UnimplementedError();
+  String get aboutBrief => 'Wallet mobile pour Encointer';
   @override
-  String get aboutVersion => throw UnimplementedError();
+  String get aboutVersion => 'Version';
   @override
-  String get accounts => throw UnimplementedError();
+  String get accounts => 'Comptes';
   @override
-  String get accountDelete => throw UnimplementedError();
+  String get accountDelete => 'Es-tu certain de vouloir supprimer le compte?';
   @override
-  String get accountShare => throw UnimplementedError();
+  String get accountShare => 'Partager son compte';
   @override
-  String get addressBook => throw UnimplementedError();
+  String get addressBook => 'Contacts';
   @override
-  String get cantEndorseBootstrapper => throw UnimplementedError();
+  String get cantEndorseBootstrapper => 'Les Bootstrappers sont déjà marqués comme fiables';
   @override
-  String get canEndorseInRegisteringPhaseOnly => throw UnimplementedError();
+  String get canEndorseInRegisteringPhaseOnly =>
+      'Que pendant la phase d\'inscription tu peux marquer quelqu\'un comme crédible';
   @override
-  String get contactAddress => throw UnimplementedError();
+  String get contactAddress => 'Adresse';
   @override
-  String get contactAddressError => throw UnimplementedError();
+  String get contactAddressError => 'Adresse non valide';
   @override
-  String get contactDelete => throw UnimplementedError();
+  String get contactDelete => 'Supprimer';
   @override
-  String get contactDeleteWarn => throw UnimplementedError();
+  String get contactDeleteWarn => 'Es-tu certain de vouloir supprimer cette adresse?';
   @override
-  String get contactEndorse => throw UnimplementedError();
+  String get contactEndorse => 'Confirmer comme crédible';
   @override
-  String get contactAlreadyExists => throw UnimplementedError();
+  String get contactAlreadyExists => 'L\'adresse existe déjà';
   @override
-  String get contactMemo => throw UnimplementedError();
+  String get contactMemo => 'Mémo';
   @override
-  String get contactName => throw UnimplementedError();
+  String get contactName => 'Nom';
   @override
-  String get contactNameError => throw UnimplementedError();
+  String get contactNameError => 'Le nom doit être rempli\'.';
   @override
-  String get contactNameAlreadyExists => throw UnimplementedError();
+  String get contactNameAlreadyExists => 'Le nom existe déjà';
   @override
-  String get contactSave => throw UnimplementedError();
+  String get contactSave => 'Enregistrer';
   @override
-  String get confirmPin => throw UnimplementedError();
+  String get confirmPin => 'Veuillez confirmer le code NIP';
   @override
-  String get developer => throw UnimplementedError();
+  String get developer => 'Mode développeur';
   @override
-  String get export => throw UnimplementedError();
+  String get export => 'Activer le Bazaar';
   @override
-  String get exportMnemonicOk => throw UnimplementedError();
+  String get exportMnemonicOk => 'Mnémonique a été copié dans le clipboard.';
   @override
-  String get exportWarn => throw UnimplementedError();
+  String get exportWarn => 'Écris ces mots sur un papier. Garde le papier dans un endroit sûr. '
+      'Ces mots donnent à n\'importe qui l\'accès au compte et à la fortune.';
   @override
-  String get changeYourPin => throw UnimplementedError();
+  String get changeYourPin => 'Changer le NIP';
   @override
-  String get wrongPin => throw UnimplementedError();
+  String get wrongPin => 'Code NIP erroné';
   @override
-  String get wrongPinHint => throw UnimplementedError();
+  String get wrongPinHint => 'Le compte n\'a pas pu être débloqué. Veuillez vérifier le code NIP saisi.';
   @override
-  String get yourNewPin => throw UnimplementedError();
+  String get yourNewPin => 'Nouveau NIP';
   @override
-  String get pleaseConfirmYourNewPin => throw UnimplementedError();
+  String get pleaseConfirmYourNewPin => 'Confirme le nouveau NIP';
   @override
-  String get passOld => throw UnimplementedError();
+  String get passOld => 'NIP actuel';
   @override
-  String get passSuccess => throw UnimplementedError();
+  String get passSuccess => 'Réussi';
   @override
-  String get passSuccessTxt => throw UnimplementedError();
+  String get passSuccessTxt => 'Le code NIP a été modifié avec succès.';
   @override
-  String get qrScanHint => throw UnimplementedError();
+  String get qrScanHint =>
+      'Indique le montant que tu souhaites recevoir et demande à l\'expéditeur de scanner le code QR.';
   @override
-  String get setting => throw UnimplementedError();
+  String get setting => 'Paramètres';
   @override
-  String get settingLang => throw UnimplementedError();
+  String get settingLang => 'Langue';
   @override
-  String get settingLangAuto => throw UnimplementedError();
+  String get settingLangAuto => 'Automatiquement';
   @override
-  String get settingNode => throw UnimplementedError();
+  String get settingNode => 'Nœud supprimé';
   @override
-  String get settingNodeList => throw UnimplementedError();
+  String get settingNodeList => 'Nœuds disponibles';
   @override
-  String get settingPrefix => throw UnimplementedError();
+  String get settingPrefix => 'Préfixe d\'adresse';
   @override
-  String get settingPrefixList => throw UnimplementedError();
+  String get settingPrefixList => 'Préfixe disponible';
   @override
-  String get share => throw UnimplementedError();
+  String get share => 'Partager';
   @override
-  String get title => throw UnimplementedError();
+  String get title => 'Profil';
   @override
-  String get unlock => throw UnimplementedError();
+  String get unlock => 'Tu dois saisir ton code NIP pour ajouter un nouveau compte.';
   @override
-  String get accountCreate => throw UnimplementedError();
+  String get accountCreate => 'Créer un compte';
   @override
-  String get doYouAlreadyHaveAnAccount => throw UnimplementedError();
+  String get doYouAlreadyHaveAnAccount => 'Tu as déjà un compte?';
   @override
-  String get accountNameChooseHint => throw UnimplementedError();
+  String get accountNameChooseHint => 'Tu pourras le changer plus tard dans les paramètres du profil.';
   @override
-  String get accountNameChoose => throw UnimplementedError();
+  String get accountNameChoose => 'Choisis un nom de compte.';
   @override
-  String get accountName => throw UnimplementedError();
+  String get accountName => 'Nom de compte';
   @override
-  String get import => throw UnimplementedError();
+  String get import => 'Importer';
   @override
-  String get pinHint => throw UnimplementedError();
+  String get pinHint =>
+      'Tu auras besoin de ce code NIP pour effectuer des transactions ou ajouter de nouveaux comptes.';
   @override
-  String get pinInfo => throw UnimplementedError();
+  String get pinInfo => 'Le code NIP doit contenir au moins 4 chiffres. En cas de perte du NIP, le compte n\'est '
+      'pas récupérable, sauf si tu as fait une sauvegarde sur la page de profil.';
   @override
-  String get pinSecure => throw UnimplementedError();
+  String get pinSecure => 'Sécurise ton compte avec un NIP.';
   @override
-  String get addAccount => throw UnimplementedError();
+  String get addAccount => 'Ajouter un compte';
   @override
-  String get addCommunity => throw UnimplementedError();
+  String get addCommunity => 'Ajouter une communauté';
   @override
-  String get recoveryProxy => 'recovery proxy';
+  String get recoveryProxy => 'Proxy de récupération';
   @override
-  String get reputation => throw UnimplementedError();
+  String get reputation => 'Réputation';
   @override
-  String get sendLink => throw UnimplementedError();
+  String get sendLink => 'Envoyer un lien';
   @override
-  String get tokenSend => throw UnimplementedError();
+  String get tokenSend => 'Envoyer SYMBOL';
   @override
-  String get qrScanHintAccount => throw UnimplementedError();
+  String get qrScanHintAccount => 'Demande au destinataire de scanner le code QR dans l ' 'application Encointer.';
   @override
-  String get receiverAccount => throw UnimplementedError();
+  String get receiverAccount => 'Compte de réception :';
   @override
-  String get shareLinkHint => throw UnimplementedError();
+  String get shareLinkHint => 'Ou partager via un lien :';
   @override
-  String get hintEnterCurrentPin => throw UnimplementedError();
+  String get hintEnterCurrentPin => 'Entre ton code PIN actuel pour le modifier.';
   @override
-  String get hintThenEnterANewPin => throw UnimplementedError();
+  String get hintThenEnterANewPin => 'Tu peux ensuite saisir ton nouveau code NIP.';
   @override
-  String get reputationHistory => throw UnimplementedError();
+  String get reputationHistory => 'Historique de réputation';
   @override
-  String get reputationOverall => throw UnimplementedError();
+  String get reputationOverall => 'Réputation générale';
   @override
-  String get accountsDelete => throw UnimplementedError();
+  String get accountsDelete => 'Es-tu certain de vouloir supprimer tous les comptes?';
   @override
-  String get accountsDeleteAll => throw UnimplementedError();
+  String get accountsDeleteAll => 'Supprimer tous les comptes';
   @override
-  String get personalKeyEnter => throw UnimplementedError();
+  String get personalKeyEnter => 'Entre ta clé personnelle (12 mots) pour importer ton compte.';
   @override
-  String get detailsEnter => throw UnimplementedError();
+  String get detailsEnter => 'Entre tes détails.';
   @override
-  String get personalKey => throw UnimplementedError();
+  String get personalKey => 'Clé personnelle';
   @override
-  String get enableBazaar => throw UnimplementedError();
+  String get enableBazaar => 'Activer le Bazaar';
   @override
-  String get noMnemonicFound => throw UnimplementedError();
+  String get noMnemonicFound => 'Aucun mnémonique trouvé';
   @override
-  String get importedWithRawSeedHenceNoMnemonic => throw UnimplementedError();
+  String get importedWithRawSeedHenceNoMnemonic =>
+      'Le compte a été importé avec une graine brute et n\'a donc pas de mnémonique.';
   @override
-  String get addContact => throw UnimplementedError();
+  String get addContact => 'ajouter un contact';
   @override
-  String get deleteAccount => throw UnimplementedError();
+  String get deleteAccount => 'supprimer';
   @override
-  String get exportAccount => throw UnimplementedError();
+  String get exportAccount => 'exporter';
   @override
-  String get errorUserNameIsRequired => throw UnimplementedError();
+  String get errorUserNameIsRequired => 'Le nom d\'utilisateur ne doit pas être vide';
   @override
-  String get observedPendingExtrinsic => throw UnimplementedError();
+  String get observedPendingExtrinsic =>
+      'Une transaction non confirmée a été observée. Veuillez attendre la confirmation!';
   @override
-  String get appHints => throw UnimplementedError();
+  String get appHints => 'Conseils pour l\'app';
   @override
-  String get meetUpNotifications => throw UnimplementedError();
+  String get meetUpNotifications => 'Notifications Rencontre';
   @override
-  String get meetUpListTileTitle => throw UnimplementedError();
+  String get meetUpListTileTitle =>
+      'Si ton appareil est un smartphone Xiaomi ou Honor, le démarrage automatique doit être activé pour recevoir les notifications rencontre '
+      'de recevoir des notifications.';
   @override
-  String get openAppSettings => throw UnimplementedError();
+  String get openAppSettings => 'Ouvrir les paramètres de l\'application';
   @override
-  String get enableAutoStart => throw UnimplementedError();
+  String get enableAutoStart => 'Activer le démarrage automatique';
 }
 
 class TranslationsRuProfile implements TranslationsProfile {
@@ -631,7 +640,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get contactUs => 'Связаться с нами';
   @override
-  String get about => 'О';
+  String get about => 'О приложении';
   @override
   String get aboutBrief => 'Мобильный кошелек Encointer';
   @override
@@ -649,7 +658,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get addressBook => 'Адресная книга';
   @override
-  String get cantEndorseBootstrapper => 'Бутсреперы уже отмечены как надежные';
+  String get cantEndorseBootstrapper => 'Бутсрепперы уже помечены как надежные';
   @override
   String get canEndorseInRegisteringPhaseOnly => 'Может быть одобрен только на этапе регистрации';
   @override
@@ -685,8 +694,8 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get exportMnemonicOk => 'Мнемоника скопирована в буфер обмена.';
   @override
-  String get exportWarn =>
-      'Запишите эти слова на бумаге. Храните бумагу в безопасном месте. Эти слова позволят восстановить этот аккаунт и получить доступ к его средствам.';
+  String get exportWarn => 'Запишите эти слова на бумаге. Храните бумагу в безопасном месте. '
+      'Эти слова позволят восстановить этот аккаунт и получить доступ к его средствам.';
   @override
   String get noMnemonicFound => 'Мнемоника не найдена';
   @override
@@ -713,13 +722,13 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get personalKeyEnter => 'Пожалуйста, введите секретный ключ (из 12 слов), чтобы импортировать аккаунт.';
   @override
-  String get reputationHistory => 'История репутции';
+  String get reputationHistory => 'История репутации';
   @override
   String get reputationOverall => 'Общая репутация';
   @override
   String get passOld => 'Текущий PIN-код';
   @override
-  String get passSuccess => 'Успешный';
+  String get passSuccess => 'Успех';
   @override
   String get passSuccessTxt => 'PIN-код иземенен успешно';
   @override
@@ -769,8 +778,8 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get pinHint => 'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи.';
   @override
-  String get pinInfo =>
-      'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить аккаунт невозможно, если только вы не сделали резервную копию в профиле.';
+  String get pinInfo => 'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить '
+      'аккаунт невозможно, если только вы не сделали резервную копию в профиле.';
   @override
   String get pinSecure => 'Защитите свой аккаунт с помощью PIN-кода.';
   @override
@@ -778,7 +787,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get reputation => 'Репутация';
   @override
-  String get shareLinkHint => 'Или вы можете поделиться ссылкой:';
+  String get shareLinkHint => 'Или Вы можете поделиться ссылкой:';
   @override
   String get tokenSend => 'Отправить SYMBOL';
   @override
@@ -796,8 +805,8 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get meetUpNotifications => 'Meetup - уведомления';
   @override
-  String get meetUpListTileTitle =>
-      'Если ваше устройство является телефоном Xiaomi или Honor, включите автозапуск, чтобы получать Meetup - уведомления.';
+  String get meetUpListTileTitle => 'Если ваше устройство является телефоном Xiaomi или Honor, '
+      'включите автозапуск, чтобы получать Meetup - уведомления.';
   @override
   String get openAppSettings => 'Открыть настройки приложения';
   @override
