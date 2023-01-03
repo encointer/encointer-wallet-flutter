@@ -14,6 +14,7 @@ fi
 
 ./flutterw drive --target=test_driver/app.dart
 ./flutterw drive --target=test_driver/scan_page.dart
+./flutterw drive --target=test_driver/real_app.dart
 
 mkdir -p "$TEMP_DIR"
 
