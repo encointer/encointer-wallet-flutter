@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -13,6 +13,8 @@ import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/ui.dart';
+import 'package:encointer_wallet/service/notification.dart';
 
 /// Helpers to submit transactions.
 
@@ -135,6 +137,9 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       final registrationType = data.personal?.participantType;
       if (registrationType != null) {
         _showEducationalDialog(registrationType, context);
+        if (store.settings.endpoint == networkEndpointEncointerMainnet) {
+          await registerMeetupScheduleNotification(store.encointer.community!.meetupTime!);
+        }
       }
       // Registering the participant burns the reputation.
       // Hence, we should fetch the new state afterwards.
@@ -207,6 +212,28 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
       );
     },
   );
+}
+
+Future<void> registerMeetupScheduleNotification(int meetupTime) async {
+  final meetupDateTime = DateTime.fromMillisecondsSinceEpoch(meetupTime);
+  final beforeOneHour = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(hours: 1)), tz.local);
+  final beforeOneDay = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(days: 1)), tz.local);
+  if (beforeOneHour.isAfter(DateTime.now())) {
+    await NotificationPlugin.scheduleNotification(
+      60, // we need use unique id (1 hour = 60 min)
+      '1 hour left',
+      'Meetup starts in one hour',
+      beforeOneHour,
+    );
+  }
+  if (beforeOneDay.isAfter(DateTime.now())) {
+    await NotificationPlugin.scheduleNotification(
+      1440, // we need use unique id (24 hour = 1440 min)
+      '24 hours left',
+      'Meetup starts in 24 hours',
+      beforeOneDay,
+    );
+  }
 }
 
 Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
