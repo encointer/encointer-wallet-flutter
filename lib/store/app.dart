@@ -187,15 +187,15 @@ abstract class _AppStore with Store {
     }
   }
 
-  // Cache the entire encointer store at once: Check if this is too expensive,
-  // when many accounts/cids exist in store. But as the caching future is in general not awaited,
-  // it should be fine.
   Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) async {
     final cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
 
     if (cachedEncointerStore != null) {
       Log.d('Found cached encointer store $cachedEncointerStore', '_AppStore');
 
+      // Cache the entire encointer store at once: Check if this is too expensive,
+      // when many accounts/cids exist in store. But as the caching future is in general not awaited,
+      // it should be fine.
       final encointerStore = EncointerStore.fromJson(cachedEncointerStore)
         ..initStore(
           this as AppStore,

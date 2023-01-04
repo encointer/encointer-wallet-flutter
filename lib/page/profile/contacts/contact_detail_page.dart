@@ -95,7 +95,7 @@ class ContactDetailPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('${Fmt.address(account.address)}', style: const TextStyle(fontSize: 20)),
+                        Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
                           color: zurichLion.shade500,
