@@ -51,14 +51,14 @@ class _AssetsState extends State<Assets> {
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
 
-  bool _enteredPin = false;
-
   PanelController? panelController;
 
   PausableTimer? balanceWatchdog;
 
   @override
   void initState() {
+    super.initState();
+
     // if network connected failed, reconnect
     if (!widget.store.settings.loading && widget.store.settings.networkName == null) {
       widget.store.settings.setNetworkLoading(true);
@@ -69,10 +69,13 @@ class _AssetsState extends State<Assets> {
       panelController = PanelController();
     }
 
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.store.settings.cachedPin.isEmpty & !widget.store.settings.endpointIsNoTee) {
+        _showPasswordDialog(context);
+      }
+
       if (context.read<AppStore>().encointer.community?.communityIcon == null) {
-        await context.read<AppStore>().encointer.community?.getCommunityIcon();
+        context.read<AppStore>().encointer.community?.getCommunityIcon();
       }
     });
   }
@@ -95,8 +98,13 @@ class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
     dic = I18n.of(context)!.translationsForLocale();
-    _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
-        panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
+
+    // Should typically not be higher than panelHeight, but on really small devices
+    // it should not exceed fractionOfScreenHeight x the screen height.
+    _panelHeightOpen = min(
+      MediaQuery.of(context).size.height * fractionOfScreenHeight,
+      panelHeight,
+    );
 
     var allCommunities = <AccountOrCommunityData>[];
     var allAccounts = <AccountOrCommunityData>[];
@@ -158,19 +166,6 @@ class _AssetsState extends State<Assets> {
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
-                      if (ModalRoute.of(context)!.isCurrent &&
-                          !_enteredPin &
-                              widget.store.settings.cachedPin.isEmpty &
-                              !widget.store.settings.endpointIsNoTee) {
-                        // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
-                        // showing the dialog multiple times.
-                        WidgetsBinding.instance.addPostFrameCallback(
-                          (_) {
-                            _showPasswordDialog(context);
-                          },
-                        );
-                      }
-
                       final accountData = widget.store.account.currentAccount;
 
                       return Column(
@@ -490,9 +485,6 @@ class _AssetsState extends State<Assets> {
         );
       },
     );
-    setState(() {
-      _enteredPin = true;
-    });
   }
 
   Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {
