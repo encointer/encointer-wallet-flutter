@@ -107,7 +107,6 @@ class CeremonyDate extends StatelessWidget {
     final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Icon(
           Iconsax.calendar_1,

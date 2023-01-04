@@ -44,13 +44,14 @@ void main() {
       final bootstrappers = [aliceAddress, bobAddress, charlieAddress];
       final testLocations = [testLocation1, testLocation2, testLocation3];
 
-      communityStore.setCommunityMetadata(testMetadata);
-      communityStore.setDemurrage(1.1);
-      communityStore.setMeetupTime(10);
-      communityStore.setBootstrappers(bootstrappers);
-      communityStore.setMeetupLocations(testLocations);
-      communityStore.initCommunityAccountStore(aliceAddress);
-      communityStore.initCommunityAccountStore(bobAddress);
+      communityStore
+        ..setCommunityMetadata(testMetadata)
+        ..setDemurrage(1.1)
+        ..setMeetupTime(10)
+        ..setBootstrappers(bootstrappers)
+        ..setMeetupLocations(testLocations)
+        ..initCommunityAccountStore(aliceAddress)
+        ..initCommunityAccountStore(bobAddress);
       final aliceCommunityAccountStore = communityStore.communityAccountStores![aliceAddress]!;
       final bobCommunityAccountStore = communityStore.communityAccountStores![bobAddress]!;
 

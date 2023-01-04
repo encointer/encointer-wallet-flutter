@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
+
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class WillPopScopeWrapper extends StatelessWidget {
   const WillPopScopeWrapper({super.key, required this.child});
@@ -16,7 +17,7 @@ class WillPopScopeWrapper extends StatelessWidget {
       child: child,
       onWillPop: () {
         return Platform.isAndroid
-            ? showCupertinoDialog<void>(
+            ? showCupertinoDialog<bool>(
                 context: context,
                 builder: (context) => CupertinoAlertDialog(
                   title: Text(dic.home.exitConfirm),
@@ -31,7 +32,7 @@ class WillPopScopeWrapper extends StatelessWidget {
                     ),
                   ],
                 ),
-              ).then((value) => value as bool)
+              ).then((value) => value!)
             : Future.value(true);
       },
     );

@@ -94,7 +94,6 @@ class _ImageWithOverlaidIcon extends StatelessWidget {
       ClipRRect(
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(15),
-            bottom: Radius.circular(0),
           ),
           child: data[index].image),
       Positioned(

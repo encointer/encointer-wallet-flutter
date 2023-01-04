@@ -40,7 +40,6 @@ class CeremonyBoxService {
       location: 'yet unknown',
       startDate: nextCeremonyDate,
       endDate: nextCeremonyDate.add(const Duration(minutes: 60)),
-      allDay: false,
       iosParams: const IOSParams(
         reminder: Duration(minutes: 40),
       ),

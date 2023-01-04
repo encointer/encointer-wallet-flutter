@@ -113,8 +113,7 @@ Future<void> showOnEncointerMap(
 }
 
 List<Marker> buildMarkers(Location meetupLocation) {
-  final markers = <Marker>[];
-  markers.add(
+  final markers = <Marker>[
     Marker(
       // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
       // But we need the key to derive the popup key
@@ -129,7 +128,7 @@ List<Marker> buildMarkers(Location meetupLocation) {
         key: Key('meetup-location-icon'), // used for test_driver
       ),
       anchorPos: AnchorPos.align(AnchorAlign.top),
-    ),
-  );
+    )
+  ];
   return markers;
 }

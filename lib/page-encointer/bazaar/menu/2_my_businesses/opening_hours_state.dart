@@ -141,8 +141,9 @@ abstract class _OpeningHoursForDayState with Store {
       asString.write('(closed)');
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
-        asString.write(openingIntervals[i].humanReadable());
-        asString.write(i < openingIntervals.length - 1 ? ', ' : '');
+        asString
+          ..write(openingIntervals[i].humanReadable())
+          ..write(i < openingIntervals.length - 1 ? ', ' : '');
       }
     }
     return asString.toString();

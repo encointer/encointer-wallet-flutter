@@ -36,7 +36,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
     final dic = I18n.of(context)!.translationsForLocale();
 
     return PrimaryButton(
-      onPressed: !_submitting && widget.registerUntil != null ? () => _onPressed() : null,
+      onPressed: !_submitting && widget.registerUntil != null ? _onPressed : null,
       child: !_submitting
           ? FittedBox(
               child: Row(

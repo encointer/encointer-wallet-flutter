@@ -8,9 +8,7 @@ import 'package:flutter/cupertino.dart';
 Future<void> showRedeemSuccessDialog(BuildContext context) {
   return showCupertinoDialog(
     context: context,
-    builder: (BuildContext context) {
-      return redeemSuccessDialog(context);
-    },
+    builder: redeemSuccessDialog,
   );
 }
 
