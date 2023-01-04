@@ -23,7 +23,6 @@ class PaymentOverview extends StatelessWidget {
     return IntrinsicHeight(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
             children: [
@@ -42,11 +41,7 @@ class PaymentOverview extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AddressIcon(
-                '',
-                recipientAccount!.pubKey,
-                size: 96,
-              ),
+              AddressIcon('', recipientAccount!.pubKey),
               Text(
                 Fmt.address(recipientLabel)!,
                 style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),

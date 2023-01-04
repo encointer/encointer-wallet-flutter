@@ -25,16 +25,12 @@ class CreatePinPage extends StatefulWidget {
 }
 
 class _CreatePinPageState extends State<CreatePinPage> {
-  late Future<void> Function() onCreatePin;
-
   bool _submitting = false;
 
   @override
   Widget build(BuildContext context) {
-    final params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams;
-    final _store = context.watch<AppStore>();
-
-    onCreatePin = params.onCreatePin;
+    final params = ModalRoute.of(context)!.settings.arguments! as CreatePinPageParams;
+    final store = context.watch<AppStore>();
 
     return Scaffold(
       appBar: AppBar(
@@ -62,16 +58,16 @@ class _CreatePinPageState extends State<CreatePinPage> {
                     _submitting = true;
                   });
 
-                  await onCreatePin();
+                  await params.onCreatePin();
 
-                  if (_store.encointer.communityIdentifiers.length == 1) {
-                    await _store.encointer.setChosenCid(
-                      _store.encointer.communityIdentifiers[0],
+                  if (store.encointer.communityIdentifiers.length == 1) {
+                    await store.encointer.setChosenCid(
+                      store.encointer.communityIdentifiers[0],
                     );
                   } else {
                     await Navigator.push(
                       context,
-                      MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(_store)),
+                      MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(store)),
                     );
                   }
 
@@ -86,7 +82,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                     (route) => false,
                   );
                 },
-                store: _store,
+                store: store,
               )
             : const Center(child: CupertinoActivityIndicator()),
       ),

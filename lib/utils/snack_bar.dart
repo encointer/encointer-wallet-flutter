@@ -44,12 +44,11 @@ void showSnackBar(
 }) {
   rootScaffoldMessengerKey.currentState!.hideCurrentSnackBar();
   rootScaffoldMessengerKey.currentState!.removeCurrentSnackBar();
-  rootScaffoldMessengerKey.currentState!
-    ..showSnackBar(
-      SnackBar(
-        content: content,
-        backgroundColor: backgroundColor,
-        duration: Duration(milliseconds: durationMillis),
-      ),
-    );
+  rootScaffoldMessengerKey.currentState!.showSnackBar(
+    SnackBar(
+      content: content,
+      backgroundColor: backgroundColor,
+      duration: Duration(milliseconds: durationMillis),
+    ),
+  );
 }

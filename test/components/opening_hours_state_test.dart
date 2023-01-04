@@ -34,9 +34,8 @@ void main() {
   ];
   for (final testCase in testCases) {
     test('Should correctly parse time interval: ${testCase[2]}', () {
-      final state = OpeningHoursForDayState(ObservableList<OpeningIntervalState>());
-
-      state.addParsedIntervalIfValid(testCase[0]);
+      final state = OpeningHoursForDayState(ObservableList<OpeningIntervalState>())
+        ..addParsedIntervalIfValid(testCase[0]);
 
       expect(state.humanReadable(), testCase[1]);
     });

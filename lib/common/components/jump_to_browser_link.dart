@@ -29,6 +29,7 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: _launchUrl,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: widget.mainAxisAlignment ?? MainAxisAlignment.center,
@@ -43,9 +44,6 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
           Icon(Icons.open_in_new, size: 16, color: Theme.of(context).primaryColor)
         ],
       ),
-      onTap: () {
-        _launchUrl();
-      },
     );
   }
 }

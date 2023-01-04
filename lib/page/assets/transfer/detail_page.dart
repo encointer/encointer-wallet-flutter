@@ -16,14 +16,14 @@ class TransferDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final _store = context.watch<AppStore>();
-    final symbol = _store.settings.networkState!.tokenSymbol;
-    final decimals = _store.settings.networkState!.tokenDecimals;
+    final store = context.watch<AppStore>();
+    final symbol = store.settings.networkState!.tokenSymbol;
+    final decimals = store.settings.networkState!.tokenDecimals;
     final tokenView = Fmt.tokenView(symbol);
 
-    final tx = ModalRoute.of(context)!.settings.arguments as TransferData;
+    final tx = ModalRoute.of(context)!.settings.arguments! as TransferData;
 
-    final txType = tx.from == _store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
+    final txType = tx.from == store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
 
     return TxDetail(
       success: true,
@@ -32,7 +32,7 @@ class TransferDetailPage extends StatelessWidget {
       hash: tx.hash,
       blockTime: Fmt.dateTime(DateTime.fromMillisecondsSinceEpoch(tx.blockTimestamp! * 1000)),
       blockNum: tx.blockNum,
-      networkName: _store.settings.endpoint.info,
+      networkName: store.settings.endpoint.info,
       info: <DetailInfoItem>[
         DetailInfoItem(
           label: dic.assets.value,

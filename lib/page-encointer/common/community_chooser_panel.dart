@@ -97,7 +97,6 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Observer(
           builder: (_) => Column(

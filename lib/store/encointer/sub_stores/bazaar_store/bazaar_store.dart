@@ -53,7 +53,7 @@ abstract class _BazaarStore with Store {
     if (_cacheFn != null) {
       return _cacheFn!();
     } else {
-      return Future.value(null);
+      return Future.value();
     }
   }
 }

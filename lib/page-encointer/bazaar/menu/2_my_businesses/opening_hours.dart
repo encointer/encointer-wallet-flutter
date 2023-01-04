@@ -13,7 +13,7 @@ class OpeningHours extends StatelessWidget {
     return Column(
       children: [0, 1, 2, 3, 4, 5, 6]
           .map(
-            (int day) => OpeningHoursViewForDay(day),
+            OpeningHoursViewForDay.new,
           )
           .toList(),
     );

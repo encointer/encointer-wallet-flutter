@@ -70,7 +70,6 @@ class ScanPage extends StatelessWidget {
             return Stack(
               children: [
                 MobileScanner(
-                  allowDuplicates: false,
                   onDetect: (barcode, args) {
                     if (barcode.rawValue == null) {
                       Log.d('Failed to scan Barcode', 'ScanPage');
@@ -153,8 +152,8 @@ Widget permissionErrorDialog(BuildContext context) {
         onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
       ),
       CupertinoButton(
+        onPressed: openAppSettings,
         child: Text(dic.home.appSettings),
-        onPressed: () => openAppSettings(),
       ),
     ],
   );

@@ -95,7 +95,7 @@ class LocalStorage {
       final dynamic data = await compute(jsonDecode, value);
       return data as Object;
     }
-    return Future.value(null);
+    return Future.value();
   }
 
   Future<bool> removeKey(String key) {
@@ -113,14 +113,12 @@ class LocalStorage {
       final data = await compute(jsonDecode, value);
       return data as Map<String, dynamic>?;
     }
-    return Future.value(null);
+    return Future.value();
   }
 
   Future<void> setAccountCache(String? accPubKey, String key, Object? value) async {
     var data = await getObject(key) as Map?;
-    if (data == null) {
-      data = {};
-    }
+    data ??= {};
     data[accPubKey] = value;
     setObject(key, data);
   }
@@ -128,7 +126,7 @@ class LocalStorage {
   Future<Object?> getAccountCache(String? accPubKey, String key) async {
     final data = await getObject(key) as Map?;
     if (data == null) {
-      return Future.value(null);
+      return Future.value();
     }
     return data[accPubKey];
   }
@@ -181,8 +179,9 @@ class _LocalStorage {
   Future<void> updateItemInList(
       String storeKey, String itemKey, String? itemValue, Map<String, dynamic> itemNew) async {
     final ls = await getList(storeKey);
-    ls.removeWhere((item) => item[itemKey] == itemValue);
-    ls.add(itemNew);
+    ls
+      ..removeWhere((item) => item[itemKey] == itemValue)
+      ..add(itemNew);
     setKV(storeKey, jsonEncode(ls));
   }
 

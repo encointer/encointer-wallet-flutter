@@ -22,7 +22,6 @@ class AboutPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(48),

@@ -78,9 +78,7 @@ abstract class _DataUpdateStore with Store {
   void setupUpdateReaction(Future<void> Function() updateFn) {
     _updateFn = updateFn;
 
-    if (_disposer != null) {
-      _disposer!();
-    }
+    _disposer?.call();
 
     _disposer = reaction((_) => now, (_) {
       if (needsRefresh) {
@@ -98,9 +96,7 @@ abstract class _DataUpdateStore with Store {
   }
 
   void disposeReaction() {
-    if (_disposer != null) {
-      _disposer!();
-    }
+    _disposer?.call();
   }
 
   /// Execute the update and set the timestamp.

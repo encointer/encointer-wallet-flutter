@@ -124,7 +124,6 @@ class _ItemDescription extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 1,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,

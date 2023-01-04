@@ -24,7 +24,7 @@ void main() async {
   );
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
-  const _appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
-  final _cfg = AppcastConfiguration(url: _appcastURL, supportedOS: ['android']);
-  await app.main(appCast: _cfg);
+  const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
+  final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
+  await app.main(appCast: cfg);
 }
