@@ -138,7 +138,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       if (registrationType != null) {
         _showEducationalDialog(registrationType, context);
         if (store.settings.endpoint == networkEndpointEncointerMainnet) {
-          await registerMeetupScheduleNotification(store.encointer.community!.meetupTime!);
+          await registerMeetupScheduleNotification(store.encointer.community!.meetupTime!, context);
         }
       }
       // Registering the participant burns the reputation.
@@ -214,23 +214,24 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
   );
 }
 
-Future<void> registerMeetupScheduleNotification(int meetupTime) async {
+Future<void> registerMeetupScheduleNotification(int meetupTime, BuildContext context) async {
+  final dic = I18n.of(context)!.translationsForLocale().encointer;
   final meetupDateTime = DateTime.fromMillisecondsSinceEpoch(meetupTime);
   final beforeOneHour = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(hours: 1)), tz.local);
   final beforeOneDay = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(days: 1)), tz.local);
   if (beforeOneHour.isAfter(DateTime.now())) {
     await NotificationPlugin.scheduleNotification(
       1 + generateMeetupIdByTimeStamp(meetupTime),
-      '1 hour left',
-      'Meetup starts in one hour',
+      dic.scheduleNotificationBeforeOneHourTitle,
+      dic.scheduleNotificationBeforeOneHourContent,
       beforeOneHour,
     );
   }
   if (beforeOneDay.isAfter(DateTime.now())) {
     await NotificationPlugin.scheduleNotification(
       24 + generateMeetupIdByTimeStamp(meetupTime),
-      '24 hours left',
-      'Meetup starts in 24 hours',
+      dic.scheduleNotificationBeforeOneDayTitle,
+      dic.scheduleNotificationBeforeOneDayContent,
       beforeOneDay,
     );
   }
