@@ -290,113 +290,118 @@ class TranslationsDeAssets implements TranslationsAssets {
 
 class TranslationsFrAssets implements TranslationsAssets {
   @override
-  String get address => throw UnimplementedError();
+  String get address => 'Envoi à l\'adresse';
   @override
-  String get amountError => throw UnimplementedError();
+  String get amountError => 'Solde non valide';
   @override
-  String get insufficientBalance => throw UnimplementedError();
+  String get insufficientBalance => 'Solde insuffisant';
   @override
-  String get block => throw UnimplementedError();
+  String get block => 'Bloc';
   @override
-  String get communitiesNotFound => throw UnimplementedError();
+  String get communitiesNotFound => 'Aucune communauté trouvée';
   @override
-  String get communityChoose => throw UnimplementedError();
+  String get communityChoose => 'Veuilles choisir une communauté';
   @override
-  String get communityNotSelected => throw UnimplementedError();
+  String get communityNotSelected => 'Aucune communauté sélectionnée, clique sur l\'icône';
   @override
-  String get copy => throw UnimplementedError();
+  String get copy => 'Copier';
   @override
-  String get detail => throw UnimplementedError();
+  String get detail => 'Détail';
   @override
-  String get done => throw UnimplementedError();
+  String get done => 'Finit';
   @override
-  String get event => throw UnimplementedError();
+  String get event => 'ID d\'événement';
   @override
-  String get fail => throw UnimplementedError();
+  String get fail => 'Échec';
   @override
-  String get fee => throw UnimplementedError();
+  String get fee => 'Frais';
   @override
-  String get from => throw UnimplementedError();
+  String get from => 'De';
   @override
-  String get hash => throw UnimplementedError();
+  String get hash => 'Hachage de la transaction';
   @override
-  String get home => throw UnimplementedError();
+  String get home => 'Écran de démarrage';
   @override
-  String get issuanceClaimed => throw UnimplementedError();
+  String get issuanceClaimed => 'Pas de paiement communautaire à payer';
   @override
-  String get issuancePending => throw UnimplementedError();
+  String get issuancePending => 'Demander le paiement communautaire en cours';
   @override
-  String get receive => throw UnimplementedError();
+  String get receive => 'Demander';
   @override
-  String get scan => throw UnimplementedError();
+  String get scan => 'Scanner';
   @override
-  String get success => throw UnimplementedError();
+  String get success => 'Réussie';
   @override
-  String get tip => throw UnimplementedError();
+  String get tip => 'Pourboire';
   @override
-  String get tipHint => throw UnimplementedError();
+  String get tipHint =>
+      'Ajouter un pourboire pour cette transaction, payer le bloc auteur pour une priorité plus élevée';
   @override
-  String get to => throw UnimplementedError();
+  String get to => 'A';
   @override
-  String get transfer => throw UnimplementedError();
+  String get transfer => 'Envoyer';
   @override
-  String get payment => throw UnimplementedError();
+  String get payment => 'Paiement';
   @override
-  String get value => throw UnimplementedError();
+  String get value => 'Valeur';
   @override
-  String get amountToBeTransferred => throw UnimplementedError();
+  String get amountToBeTransferred => 'Montant';
   @override
-  String get invoiceAmount => throw UnimplementedError();
+  String get invoiceAmount => 'Montant de la facture';
   @override
-  String get shareInvoice => throw UnimplementedError();
+  String get shareInvoice => 'Partages la facture';
   @override
-  String get yourBalanceFor => throw UnimplementedError();
+  String get yourBalanceFor => 'Solde du compte, ACCOUNT_NAME';
   @override
-  String get balance => throw UnimplementedError();
+  String get balance => 'Solde du compte';
   @override
-  String get invoice => throw UnimplementedError();
+  String get invoice => 'Montant de la facture';
   @override
-  String get incomingConfirmed => throw UnimplementedError();
+  String get incomingConfirmed => 'Réception confirmée de AMOUNT CID_SYMBOL pour ACCOUNT_NAME';
   @override
-  String get fundsReceived => throw UnimplementedError();
+  String get fundsReceived => 'Réception du paiement';
   @override
-  String get paymentDoYouWantToProceed => throw UnimplementedError();
+  String get paymentDoYouWantToProceed => 'Continuer le paiement?';
   @override
-  String get paymentSubmitting => throw UnimplementedError();
+  String get paymentSubmitting => 'Le paiement est présenté';
   @override
-  String get paymentFinished => throw UnimplementedError();
+  String get paymentFinished => 'Paiement effectué';
   @override
-  String get paymentError => throw UnimplementedError();
+  String get paymentError => 'Erreur de paiement';
   @override
-  String get voucher => throw UnimplementedError();
+  String get voucher => 'Bon d\'achat';
   @override
-  String get voucherBalance => throw UnimplementedError();
+  String get voucherBalance => 'Valeur du bon';
   @override
-  String get voucherDifferentNetworkAndCommunity => throw UnimplementedError();
+  String get voucherDifferentNetworkAndCommunity => 'Le bon est pour un autre réseau. Veux-tu passer à '
+      'NETWORK_PLACEHOLDER et COMMUNITY_PLACEHOLDER? Tu peux changer de réseau sous Profil > Mode développeur';
   @override
-  String get voucherDifferentCommunity => throw UnimplementedError();
+  String get voucherDifferentCommunity =>
+      'Le bon est pour une autre communauté. Tu veux changer pour COMMUNITY_PLACEHOLDER?';
   @override
-  String get voucherContainsInexistentCommunity => throw UnimplementedError();
+  String get voucherContainsInexistentCommunity => 'Le bon contient une communauté inexistante:';
   @override
-  String get doYouWantToRedeemThisVoucher => throw UnimplementedError();
+  String get doYouWantToRedeemThisVoucher => 'Tu veux utiliser ce bon d\'achat pour ACCOUNT_PLACEHOLDER?';
   @override
-  String get fundVoucher => throw UnimplementedError();
+  String get fundVoucher => 'Recharger le bon';
   @override
-  String get redeemVoucher => throw UnimplementedError();
+  String get redeemVoucher => 'Valider un bon d\'achat';
   @override
-  String get redeemSuccess => throw UnimplementedError();
+  String get redeemSuccess => 'Bon validé avec succès';
   @override
-  String get redeemFailure => throw UnimplementedError();
+  String get redeemFailure => 'Une erreur s\'est produite lors de l\'utilisation du bon d\'achat. Cause de l\'erreur :';
   @override
-  String get invalidNetwork => throw UnimplementedError();
+  String get invalidNetwork => 'Réseau non valide';
   @override
-  String get invalidCommunity => throw UnimplementedError();
+  String get invalidCommunity => 'Communauté non valide.';
   @override
-  String get transactionError => throw UnimplementedError();
+  String get transactionError => 'Erreur de transaction.';
   @override
-  String get insufficientFundsExplanation => throw UnimplementedError();
+  String get insufficientFundsExplanation =>
+      'Tu n\'as pas assez d\'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.';
   @override
-  String get chosenRightCommunity => throw UnimplementedError();
+  String get chosenRightCommunity =>
+      'Les données sont destinées à une autre communauté. S\'il te plaît, change la communauté pour envoyer le payment.';
 }
 
 class TranslationsRuAssets implements TranslationsAssets {
@@ -507,9 +512,9 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   String get transactionError => 'Ошибка транзакции';
   @override
-  String get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашей'
-      ' местной общины, как получить вознаграждение';
+  String get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите '
+      'на сайте вашей местной общины, как получить вознаграждение';
   @override
   String get chosenRightCommunity =>
-      'Данные относятся к другой общине. Пожалуйста, измените сообщество, чтобы отправить средства.';
+      'Данные относятся к другому сообществу. Пожалуйста, измените сообщество, чтобы отправить средства.';
 }

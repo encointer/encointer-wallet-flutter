@@ -245,97 +245,100 @@ class TranslationsDeHome implements TranslationsHome {
 
 class TranslationsFrHome implements TranslationsHome {
   @override
-  String get cancel => throw UnimplementedError();
+  String get cancel => 'Annuler';
   @override
-  String get scan => throw UnimplementedError();
+  String get scan => 'Scanner';
   @override
-  String get contacts => throw UnimplementedError();
+  String get contacts => 'Contacts';
   @override
-  String get closeApp => throw UnimplementedError();
+  String get closeApp => 'Fermer l\'application';
   @override
-  String get copy => throw UnimplementedError();
+  String get copy => 'Copier dans le presse-papiers';
   @override
-  String get create => throw UnimplementedError();
+  String get create => 'Créer un compte';
   @override
-  String get detail => throw UnimplementedError();
+  String get detail => 'Détail';
   @override
-  String get exitConfirm => throw UnimplementedError();
+  String get exitConfirm => 'Tu veux quitter l\'application?';
   @override
-  String get errorOccurred => throw UnimplementedError();
+  String get errorOccurred => 'Une erreur est apparue:';
   @override
-  String get loading => throw UnimplementedError();
+  String get loading => 'Chargement…';
   @override
-  String get next => throw UnimplementedError();
+  String get next => 'Prochaine étape';
   @override
-  String get notifySubmitted => throw UnimplementedError();
+  String get notifySubmitted => 'Transaction soumise';
   @override
-  String get notifySubmittedQueued => throw UnimplementedError();
+  String get notifySubmittedQueued => 'La transaction dans la file d\'attente a été soumise';
   @override
-  String get ok => throw UnimplementedError();
+  String get ok => 'OK';
   @override
-  String get pinNeeded => throw UnimplementedError();
+  String get pinNeeded => 'Le code NIP est nécessaire pour utiliser l\'application';
   @override
-  String get settingNetwork => throw UnimplementedError();
+  String get settingNetwork => 'Choisir un wallet';
   @override
-  String get submit => throw UnimplementedError();
+  String get submit => 'Signer et envoyer';
   @override
-  String get submitCall => throw UnimplementedError();
+  String get submitCall => 'Appelant';
   @override
-  String get submitFees => throw UnimplementedError();
+  String get submitFees => 'Frais';
   @override
-  String get submitFeesOffline => throw UnimplementedError();
+  String get submitFeesOffline => 'Frais non disponibles (hors ligne)';
   @override
-  String get submitFrom => throw UnimplementedError();
+  String get submitFrom => 'Transaction signée par';
   @override
-  String get submitNoSign => throw UnimplementedError();
+  String get submitNoSign => 'Envoyer (sans signature)';
   @override
-  String get submitQr => throw UnimplementedError();
+  String get submitQr => 'Signer par QR';
   @override
-  String get submitTransaction => throw UnimplementedError();
+  String get submitTransaction => 'Envoyer la transaction';
   @override
-  String get success => throw UnimplementedError();
+  String get success => 'Réussite';
   @override
-  String get switchAccount => throw UnimplementedError();
+  String get switchAccount => 'Changer de compte';
   @override
-  String get switchCommunity => throw UnimplementedError();
+  String get switchCommunity => 'Changer de communauté';
   @override
-  String get transactionQueued => throw UnimplementedError();
+  String get transactionQueued => 'Dans la file d\'attente';
   @override
-  String get transactionQueuedOffline => throw UnimplementedError();
+  String get transactionQueuedOffline =>
+      'L\'application n\'est pas connectée à la blockchain. Les transactions dans la file d\'attente sont envoyées automatiquement en cas de connexion réussie.';
   @override
-  String get unlock => throw UnimplementedError();
+  String get unlock => 'Débloquer le compte avec le code NIP.';
   @override
-  String get unlockAccount => throw UnimplementedError();
+  String get unlockAccount => 'Débloquer le compte CURRENT_ACCOUNT_NAME avec un code NIP.';
   @override
-  String get updateDownload => throw UnimplementedError();
+  String get updateDownload => 'Téléchargement ...';
   @override
-  String get updateError => throw UnimplementedError();
+  String get updateError => 'Échec de la mise à jour';
   @override
-  String get updateJsUp => throw UnimplementedError();
+  String get updateJsUp => 'Les métadonnées doivent être mises à jour pour pouvoir continuer.';
   @override
-  String get updateLatest => throw UnimplementedError();
+  String get updateLatest => 'L\'application est à jour.';
   @override
-  String get updateToNewerVersionQ => throw UnimplementedError();
+  String get updateToNewerVersionQ => 'Nouvelle version trouvée, mettre à jour maintenant?';
   @override
-  String get accountImport => throw UnimplementedError();
+  String get accountImport => 'Importer un compte';
   @override
-  String get txQueued => throw UnimplementedError();
+  String get txQueued => 'La transaction est dans la file d\'attente.';
   @override
-  String get txQueuedOffline => throw UnimplementedError();
+  String get txQueuedOffline => 'Tu es hors ligne. La transaction sera envoyée lorsque tu seras en ligne.';
   @override
-  String get txReady => throw UnimplementedError();
+  String get txReady => 'La transaction est prête.';
   @override
-  String get txBroadcast => throw UnimplementedError();
+  String get txBroadcast => 'La transaction a été envoyée sur le réseau';
   @override
-  String get txInBlock => throw UnimplementedError();
+  String get txInBlock => 'Transaction est dans un bloc';
   @override
-  String get txError => throw UnimplementedError();
+  String get txError => 'Erreur de transaction';
   @override
-  String get updatingAppState => throw UnimplementedError();
+  String get updatingAppState => 'L\'état de l\'app est mis à jour...';
   @override
-  String get cameraPermissionError => throw UnimplementedError();
+  String get cameraPermissionError =>
+      'Une erreur s\'est produite lors de la vérification de l\'autorisation de la caméra '
+      'Tu peux aussi donner l\'autorisation pour la caméra via les paramètres de l\'app.';
   @override
-  String get appSettings => throw UnimplementedError();
+  String get appSettings => 'Paramètres de l\'app';
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -364,7 +367,7 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get notifySubmitted => 'Транзакция отправлена';
   @override
-  String get notifySubmittedQueued => 'Транзакция в очереди отправлена';
+  String get notifySubmittedQueued => 'Транзакция, в очереди, отправлена';
   @override
   String get ok => 'OK';
   @override
@@ -392,7 +395,7 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get switchAccount => 'Сменить аккаунт';
   @override
-  String get switchCommunity => 'Сменить общину';
+  String get switchCommunity => 'Сменить сообщество';
   @override
   String get transactionQueued => 'В очереди';
   @override
@@ -430,8 +433,8 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get updatingAppState => 'Обновление приложения';
   @override
-  String get cameraPermissionError =>
-      'Произошла ошибка при получении разрешения камеры. Вы можете предоставить разрешение в настройках приложения.';
+  String get cameraPermissionError => 'Произошла ошибка при получении разрешения камеры. '
+      'Вы можете предоставить разрешение в настройках приложения.';
   @override
   String get appSettings => 'Настройки приложения';
 }
