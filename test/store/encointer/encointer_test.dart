@@ -38,9 +38,10 @@ void main() {
       final testCidFmt = testCid.toFmtString();
       final testNetwork = unitTestEndpoint.info!;
 
-      encointerStore.setCurrentPhase(CeremonyPhase.Registering);
-      encointerStore.setCurrentCeremonyIndex(2);
-      encointerStore.setNextPhaseTimestamp(3);
+      encointerStore
+        ..setCurrentPhase(CeremonyPhase.Registering)
+        ..setCurrentCeremonyIndex(2)
+        ..setNextPhaseTimestamp(3);
       await encointerStore.setCommunityIdentifiers(testCommunityIdentifiers);
       encointerStore.setCommunities(testCommunities);
 
@@ -100,10 +101,10 @@ void main() {
       // should initialize a new encointer store
       await root.init('_en');
 
-      final expectedStore = EncointerStore(unitTestEndpoint.info!);
+      final expectedStore = EncointerStore(unitTestEndpoint.info!)
 
-      // This is due to side-effects of parallel executed tests and the global appStore...
-      expectedStore.chosenCid = testCommunityIdentifiers[0];
+        // This is due to side-effects of parallel executed tests and the global appStore...
+        ..chosenCid = testCommunityIdentifiers[0];
 
       expect(
         await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info!)),

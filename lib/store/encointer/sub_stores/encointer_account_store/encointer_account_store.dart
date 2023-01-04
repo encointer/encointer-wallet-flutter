@@ -64,7 +64,7 @@ abstract class _EncointerAccountStore with Store {
     if (reputations.isNotEmpty) {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
-      } catch (_e, s) {
+      } catch (e, s) {
         Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;
       }
@@ -102,7 +102,7 @@ abstract class _EncointerAccountStore with Store {
   Future<void> setTransferTxs(List list, String address, {bool reset = false, bool needCache = true}) async {
     if (this.address != address) {
       Log.d("Tried to cached transfer tx's for wrong account. This is a bug.", 'EncointerAccountStore');
-      return Future.value(null);
+      return Future.value();
     }
 
     final transfers = list.map((i) {
@@ -140,7 +140,7 @@ abstract class _EncointerAccountStore with Store {
     if (_cacheFn != null) {
       return _cacheFn!();
     } else {
-      return Future.value(null);
+      return Future.value();
     }
   }
 }

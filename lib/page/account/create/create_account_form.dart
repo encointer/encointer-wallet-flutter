@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -27,13 +26,10 @@ class CreateAccountForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    Future<void> _createAndImportAccount() async {
+    Future<void> createAndImportAccount() async {
       await webApi.account.generateAccount();
 
-      final acc = await webApi.account.importAccount(
-        cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
-        derivePath: '',
-      );
+      final acc = await webApi.account.importAccount();
 
       if (acc['error'] != null) {
         _showErrorCreatingAccountDialog(context);
@@ -112,7 +108,7 @@ class CreateAccountForm extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     CreatePinPage.route,
-                    arguments: CreatePinPageParams(_createAndImportAccount),
+                    arguments: CreatePinPageParams(createAndImportAccount),
                   );
                 }
               },

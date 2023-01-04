@@ -100,10 +100,8 @@ abstract class _AccountStore with Store {
   /// accountList with observations
   @computed
   List<AccountData> get accountListAll {
-    final accList = accountList.toList();
-    final contactList = rootStore.settings.contactList.toList();
-    contactList.retainWhere((i) => i.observation ?? false);
-    accList.addAll(contactList);
+    final contactList = rootStore.settings.contactList.toList()..retainWhere((i) => i.observation ?? false);
+    final accList = accountList.toList()..addAll(contactList);
     return accList;
   }
 
@@ -298,7 +296,7 @@ abstract class _AccountStore with Store {
   @action
   Future<void> loadAccount() async {
     final accList = await rootStore.localStorage.getAccountList();
-    accountList = ObservableList.of(accList.map((i) => AccountData.fromJson(i)));
+    accountList = ObservableList.of(accList.map(AccountData.fromJson));
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
     loading = false;
@@ -318,7 +316,7 @@ abstract class _AccountStore with Store {
     final Map stored = await rootStore.localStorage.getSeeds(seedType);
     final encrypted = stored[pubKey] as String?;
     if (encrypted == null) {
-      return Future.value(null);
+      return Future.value();
     }
     return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
   }

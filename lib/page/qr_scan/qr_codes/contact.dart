@@ -16,10 +16,7 @@ class ContactQrCode extends QrCode<ContactData> {
 
   factory ContactQrCode.fromQrFields(List<String> fields) {
     if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
-      return ContactQrCode.withData(
-        ContactData.fromQrFieldsV1(fields.sublist(2)),
-        version: QrCodeVersion.v1_0,
-      );
+      return ContactQrCode.withData(ContactData.fromQrFieldsV1(fields.sublist(2)));
     } else {
       return ContactQrCode.withData(
         ContactData.fromQrFieldsV2(fields.sublist(2)),

@@ -16,8 +16,8 @@ class RemoteNodeListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final endpoints = List<EndpointData>.of(networkEndpoints);
-    endpoints.retainWhere((i) => i.info == context.watch<AppStore>().settings.endpoint.info);
+    final endpoints = List<EndpointData>.of(networkEndpoints)
+      ..retainWhere((i) => i.info == context.watch<AppStore>().settings.endpoint.info);
     final list = endpoints
         .map((i) => ListTile(
               leading: SizedBox(

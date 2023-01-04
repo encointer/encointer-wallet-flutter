@@ -32,7 +32,6 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
         ),
         RangeSlider(
           values: _currentRangeValues,
-          min: 0,
           max: 100,
           divisions: 5,
           labels: RangeLabels(
@@ -49,7 +48,7 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
         ),
         ToggleButtons(
           isSelected: selectedDeliveryOptions,
-          children: deliveryOptions.map((option) => Text(option)).toList(),
+          children: deliveryOptions.map(Text.new).toList(),
         ),
         Text(
           dic.bazaar.productNewness,
@@ -57,7 +56,7 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
         ),
         ToggleButtons(
           isSelected: selectedProductNewnessOptions,
-          children: productNewnessOptions.map((option) => Text(option)).toList(),
+          children: productNewnessOptions.map(Text.new).toList(),
         ),
       ]),
       floatingActionButton: ButtonBar(

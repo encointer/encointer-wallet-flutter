@@ -216,7 +216,7 @@ class Fmt {
   }
 
   static List<int> hexToBytes(String hex) {
-    const _byteAlphabet = '0123456789abcdef';
+    const byteAlphabet = '0123456789abcdef';
 
     hex = hex.replaceAll(' ', '');
     hex = hex.replaceAll('0x', '');
@@ -224,9 +224,9 @@ class Fmt {
     if (hex.length % 2 != 0) hex = '0$hex';
     final result = Uint8List(hex.length ~/ 2);
     for (var i = 0; i < result.length; i++) {
-      final value = (_byteAlphabet.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
+      final value = (byteAlphabet.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
           +
-          _byteAlphabet.indexOf(hex[i * 2 + 1]);
+          byteAlphabet.indexOf(hex[i * 2 + 1]);
       result[i] = value;
     }
     return result;
@@ -237,7 +237,7 @@ class Fmt {
   }
 
   static String? accountDisplayNameString(String? address, Map? accInfo) {
-    var display = Fmt.address(address, pad: 6);
+    var display = Fmt.address(address);
     if (accInfo != null) {
       if (accInfo['identity']['display'] != null) {
         display = accInfo['identity']['display'] as String?;

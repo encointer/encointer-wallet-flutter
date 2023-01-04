@@ -82,7 +82,6 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     final timeLeftUntilCeremonyStarts = Duration(seconds: timeToMeetup);
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Icon(
           Iconsax.timer_start,
