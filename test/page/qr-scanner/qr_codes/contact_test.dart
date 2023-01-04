@@ -44,11 +44,7 @@ void main() {
     });
 
     test('toQrPayload V1 works', () async {
-      final qrCode = ContactQrCode(
-        account: 'account',
-        label: 'label',
-        version: QrCodeVersion.v1_0,
-      );
+      final qrCode = ContactQrCode(account: 'account', label: 'label');
 
       expect(
         qrCode.toQrPayload(),

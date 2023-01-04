@@ -41,8 +41,7 @@ class JSApi {
 
               final path = res['path'] as String?;
               if (_msgCompleters[path!] != null) {
-                final handler = _msgCompleters[path]!;
-                handler.complete(res['data']);
+                _msgCompleters[path]!.complete(res['data']);
                 if (path.contains('uid=')) {
                   _msgCompleters.remove(path);
                 }
@@ -152,7 +151,7 @@ class JSApi {
     Function callback,
   ) async {
     _msgHandlers[channel] = callback;
-    evalJavascript(code, allowRepeat: true);
+    evalJavascript(code);
   }
 
   Future<void> unsubscribeMessage(String channel) async {

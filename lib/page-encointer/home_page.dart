@@ -82,7 +82,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
     _tabList = <TabData>[
       TabData(
         TabKey.wallet,
@@ -113,7 +113,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          Assets(_store),
+          Assets(store),
           if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
           ScanPage(),
           const ContactsPage(),

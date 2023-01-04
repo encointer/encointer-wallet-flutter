@@ -30,7 +30,7 @@ Future<DateTime?> getMeetupTimeOverride(String network, CommunityIdentifier cid,
 
   if (networkOverride == null) {
     Log.d('No network specific override found', 'getMeetupTimeOverride');
-    return Future.value(null);
+    return Future.value();
   }
 
   if (networkOverride.communities!.contains(cid.toFmtString())) {
@@ -39,6 +39,6 @@ Future<DateTime?> getMeetupTimeOverride(String network, CommunityIdentifier cid,
     return meetupTimeOverride;
   } else {
     Log.d('No community specific override found', 'getMeetupTimeOverride');
-    return Future.value(null);
+    return Future.value();
   }
 }

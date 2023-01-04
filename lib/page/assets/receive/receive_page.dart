@@ -46,7 +46,6 @@ class _ReceivePageState extends State<ReceivePage> {
     invoice = InvoiceQrCode(
       account: _appStore.account.currentAddress,
       cid: _appStore.encointer.chosenCid,
-      amount: null,
       label: _appStore.account.currentAccount.name,
     );
   }
@@ -61,7 +60,7 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () async {
@@ -77,16 +76,16 @@ class _ReceivePageState extends State<ReceivePage> {
           }
         }
 
-        webApi.encointer.getAllBalances(_store.account.currentAddress).then((balances) {
-          final cid = _store.encointer.chosenCid;
+        webApi.encointer.getAllBalances(store.account.currentAddress).then((balances) {
+          final cid = store.encointer.chosenCid;
 
           if (cid == null) {
             return;
           }
 
-          final demurrageRate = _store.encointer.community!.demurrage;
-          final newBalance = _store.encointer.applyDemurrage(balances[cid]);
-          final oldBalance = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry) ?? 0;
+          final demurrageRate = store.encointer.community!.demurrage;
+          final newBalance = store.encointer.applyDemurrage(balances[cid]);
+          final oldBalance = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry) ?? 0;
 
           if (newBalance != null) {
             final delta = newBalance - oldBalance;
@@ -94,10 +93,10 @@ class _ReceivePageState extends State<ReceivePage> {
             if (delta > demurrageRate!) {
               final msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', _store.encointer.community?.metadata?.symbol ?? 'null')
-                  .replaceAll('ACCOUNT_NAME', _store.account.currentAccount.name);
+                  .replaceAll('CID_SYMBOL', store.encointer.community?.metadata?.symbol ?? 'null')
+                  .replaceAll('ACCOUNT_NAME', store.account.currentAccount.name);
               Log.d('[receivePage] $msg', 'ReceivePage');
-              _store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
+              store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
 
               NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
@@ -178,7 +177,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   ],
                 ),
                 Text(
-                  '${dic.profile.receiverAccount} ${_store.account.currentAccount.name}',
+                  '${dic.profile.receiverAccount} ${store.account.currentAccount.name}',
                   style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                   textAlign: TextAlign.center,
                 ),

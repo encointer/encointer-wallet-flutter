@@ -58,7 +58,6 @@ Future<void> _navigationWithWrScanContext(BuildContext context, QrCode<dynamic> 
         ReapVoucherPage.route,
         arguments: ReapVoucherParams(
           voucher: qrCode.data as VoucherData,
-          showFundVoucher: false,
         ),
       );
       break;

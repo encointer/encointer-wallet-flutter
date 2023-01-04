@@ -32,8 +32,7 @@ class AddressInputField extends StatefulWidget {
 
 class _AddressInputFieldState extends State<AddressInputField> {
   Future<List<AccountData>> _getAccountsFromInput(String input) async {
-    final listLocal = widget.store.account.accountList.toList();
-    listLocal.addAll(widget.store.settings.contactList);
+    final listLocal = widget.store.account.accountList.toList()..addAll(widget.store.settings.contactList);
     // return local account list if input empty
     if (input.isEmpty || input.trim().length < 3) {
       return listLocal;
@@ -45,8 +44,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
       return listLocal;
     }
 
-    final accountData = AccountData();
-    accountData.address = input;
+    final accountData = AccountData()..address = input;
     if (input.length < 47) {
       // check if input indices in local account list
       final indicesIndex = listLocal.indexWhere((e) {
@@ -59,8 +57,9 @@ class _AddressInputFieldState extends State<AddressInputField> {
       // query account address with account indices
       final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
       if (queryRes != null) {
-        accountData.address = queryRes[0] as String;
-        accountData.name = input;
+        accountData
+          ..address = queryRes[0] as String
+          ..name = input;
       }
     } else {
       // check if input address in local account list
@@ -185,7 +184,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? dic.profile.errorUserNameIsRequired : null,
-        asyncItems: (String filter) => _getAccountsFromInput(filter),
+        asyncItems: _getAccountsFromInput,
         itemAsString: _itemAsString,
         onChanged: (AccountData? data) {
           if (widget.onChanged != null && data != null) {

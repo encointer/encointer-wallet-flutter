@@ -37,7 +37,7 @@ class MockLocalStorage extends LocalStorage {
 
   @override
   Future<Object?> getAccountCache(String? accPubKey, String key) async {
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
@@ -48,20 +48,21 @@ class MockLocalStorage extends LocalStorage {
   @override
   Future<void> addContact(Map<String, dynamic> contact) async {
     contactList.add(contact);
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
   Future<void> removeContact(String address) async {
     contactList.removeWhere((i) => i['address'] == address);
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
   Future<void> updateContact(Map<String, dynamic> con) async {
-    contactList.removeWhere((i) => i['pubKey'] == con['pubKey']);
-    contactList.add(con);
-    return Future.value(null);
+    contactList
+      ..removeWhere((i) => i['pubKey'] == con['pubKey'])
+      ..add(con);
+    return Future.value();
   }
 
   @override
@@ -73,7 +74,7 @@ class MockLocalStorage extends LocalStorage {
       final data = jsonDecode(value);
       return data;
     }
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
@@ -99,6 +100,6 @@ class MockLocalStorage extends LocalStorage {
       final data = jsonDecode(value);
       if (data is Map<String, dynamic>?) return data;
     }
-    return Future.value(null);
+    return Future.value();
   }
 }
