@@ -12,13 +12,13 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 bool _initialURILinkHandled = false;
 
 Future<void> initialDeepLinks(BuildContext context) async {
-  final _appLinks = AppLinks();
+  final appLinks = AppLinks();
   if (!_initialURILinkHandled) {
     _initialURILinkHandled = true;
-    final url = await _appLinks.getInitialAppLinkString();
+    final url = await appLinks.getInitialAppLinkString();
     await _init(context, url);
   }
-  _appLinks.stringLinkStream.listen((url) async {
+  appLinks.stringLinkStream.listen((url) async {
     await _init(context, url);
   });
 }
