@@ -220,7 +220,7 @@ Future<void> registerMeetupScheduleNotification(int meetupTime) async {
   final beforeOneDay = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(days: 1)), tz.local);
   if (beforeOneHour.isAfter(DateTime.now())) {
     await NotificationPlugin.scheduleNotification(
-      60, // we need use unique id (1 hour = 60 min)
+      1 + generateMeetupIdByTimeStamp(meetupTime),
       '1 hour left',
       'Meetup starts in one hour',
       beforeOneHour,
@@ -228,7 +228,7 @@ Future<void> registerMeetupScheduleNotification(int meetupTime) async {
   }
   if (beforeOneDay.isAfter(DateTime.now())) {
     await NotificationPlugin.scheduleNotification(
-      1440, // we need use unique id (24 hour = 1440 min)
+      24 + generateMeetupIdByTimeStamp(meetupTime),
       '24 hours left',
       'Meetup starts in 24 hours',
       beforeOneDay,
@@ -255,4 +255,11 @@ Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContex
 /// This will only work on the local dev-setup.
 Future<dynamic> submitNextPhase(Api api) async {
   return api.js.evalJavascript('encointer.sendNextPhaseTx()');
+}
+
+int generateMeetupIdByTimeStamp(int meetupTime) {
+  final now = DateTime.now().millisecondsSinceEpoch;
+  // 1 day = 86400000 milliseconds
+  final id = ((meetupTime - now) / 86400000).ceil();
+  return id + 200;
 }
