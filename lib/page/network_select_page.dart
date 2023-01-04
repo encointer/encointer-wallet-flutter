@@ -143,7 +143,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       context.read<AppStore>().account.currentAccount,
       ...context.read<AppStore>().account.optionalAccounts
     ];
-    
+
     res.addAll(accounts.map((i) {
       String? address = i.address;
       if (context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
