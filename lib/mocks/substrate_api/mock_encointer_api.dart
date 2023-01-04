@@ -51,7 +51,7 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String address) {
     // ignore: null_argument_to_non_null_type
     return Future.value();
   }
@@ -60,7 +60,7 @@ class MockEncointerApi extends EncointerApi {
   Future<void> getReputations() async {}
 
   @override
-  Future<BalanceEntry> getEncointerBalance(String address, CommunityIdentifier cid) async {
+  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid) async {
     return BalanceEntry.fromJson(testBalanceEntry);
   }
 
@@ -93,12 +93,12 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<void> getCommunityMetadata() {
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
   Future<void> getCommunityData() {
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
@@ -115,7 +115,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<void> getBootstrappers() {
-    return Future.value(null);
+    return Future.value();
   }
 
   @override

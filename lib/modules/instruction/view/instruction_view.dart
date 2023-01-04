@@ -33,7 +33,7 @@ class Instruction extends StatelessWidget {
                           TextSpan(
                             text: '1. ${dic.openAppSettings}',
                             style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14, color: zurichLion),
-                            recognizer: TapGestureRecognizer()..onTap = () => openAppSettings(),
+                            recognizer: TapGestureRecognizer()..onTap = openAppSettings,
                           ),
                         ],
                       ),

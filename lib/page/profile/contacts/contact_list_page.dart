@@ -16,7 +16,7 @@ class ContactListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as List<AccountData>?;
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
     return Scaffold(
       appBar: AppBar(
         title: Text(args == null
@@ -37,7 +37,7 @@ class ContactListPage extends StatelessWidget {
       body: SafeArea(
         child: Observer(
           builder: (_) {
-            return AccountSelectList(_store, args ?? _store.settings.contactListAll.toList());
+            return AccountSelectList(store, args ?? store.settings.contactListAll.toList());
           },
         ),
       ),

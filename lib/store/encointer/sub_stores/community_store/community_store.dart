@@ -99,8 +99,7 @@ abstract class _CommunityStore with Store {
     if (!communityAccountStores!.containsKey(address)) {
       Log.d('Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address', 'CommunityStore');
 
-      final store = CommunityAccountStore(network, cid, address);
-      store.initStore(_cacheFn);
+      final store = CommunityAccountStore(network, cid, address)..initStore(_cacheFn);
 
       communityAccountStores![address] = store;
       return writeToCache();
@@ -109,7 +108,7 @@ abstract class _CommunityStore with Store {
         "Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address",
         'CommunityStore',
       );
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -186,7 +185,7 @@ abstract class _CommunityStore with Store {
     if (_cacheFn != null) {
       return _cacheFn!();
     } else {
-      return Future.value(null);
+      return Future.value();
     }
   }
 }

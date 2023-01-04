@@ -12,14 +12,14 @@ class CodecApi {
   ///
   /// [type] must exist in the polkadot-js/api's type registry.
   Future<dynamic> decodeHex(String type, String hexStr) {
-    return jsApi.evalJavascript('codec.decode("$type", $hexStr)', allowRepeat: true);
+    return jsApi.evalJavascript('codec.decode("$type", $hexStr)');
   }
 
   /// scale-decodes [bytes] with the codec of [type].
   ///
   /// [type] must exist in the polkadot-js/api's type registry.
   Future<dynamic> decodeBytes(String type, Uint8List bytes) async {
-    final res = await jsApi.evalJavascript('codec.decode("$type", $bytes)', allowRepeat: true);
+    final res = await jsApi.evalJavascript('codec.decode("$type", $bytes)');
 
     if (res['error'] != null) {
       throw Exception("Could not decode bytes into $type. Error: ${res["error"]}");
@@ -34,7 +34,7 @@ class CodecApi {
   /// [type] must exist in the polkadot-js/api's type registry.
   Future<String> encodeToHex(String type, dynamic obj) {
     return jsApi
-        .evalJavascript('codec.encodeToHex("$type", ${jsonEncode(obj)})', allowRepeat: true)
+        .evalJavascript('codec.encodeToHex("$type", ${jsonEncode(obj)})')
         .then((res) => res.toString()); // cast `dynamic` to `String`
   }
 
@@ -44,8 +44,8 @@ class CodecApi {
   /// [type] must exist in the polkadot-js/api's type registry.
   Future<Uint8List> encodeToBytes(String type, dynamic obj) {
     return jsApi
-        .evalJavascript('codec.encode("$type", ${jsonEncode(obj)})', allowRepeat: true)
+        .evalJavascript('codec.encode("$type", ${jsonEncode(obj)})')
         .then((res) => List<int>.from(res.values as Iterable))
-        .then((l) => Uint8List.fromList(l));
+        .then(Uint8List.fromList);
   }
 }

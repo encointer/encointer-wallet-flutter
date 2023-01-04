@@ -15,12 +15,12 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 void main() async {
-  const _appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
-  final _cfg = AppcastConfiguration(url: _appcastURL, supportedOS: ['android']);
-  final _globalAppStore = AppStore(
+  const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
+  final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
+  final globalAppStore = AppStore(
     MockLocalStorage(),
     config: const AppConfig(isTest: true, mockSubstrateApi: true),
-    appCast: _cfg,
+    appCast: cfg,
   );
 
   // the tests are run in a separate isolate from the app. The test isolate can only interact with
@@ -32,15 +32,15 @@ void main() async {
     var result = '';
     switch (msg) {
       case TestCommands.waitUntilAppIsReady:
-        return PrepareMockStorage.wait(_globalAppStore);
+        return PrepareMockStorage.wait(globalAppStore);
       case TestCommands.init:
-        await PrepareMockStorage.init(_globalAppStore);
+        await PrepareMockStorage.init(globalAppStore);
         break;
       case TestCommands.homePage:
-        PrepareMockStorage.homePage(_globalAppStore);
+        PrepareMockStorage.homePage(globalAppStore);
         break;
       case TestCommands.readyForMeetup:
-        PrepareMockStorage.readyForMeetup(_globalAppStore);
+        PrepareMockStorage.readyForMeetup(globalAppStore);
         break;
       case TestCommands.getPlatform:
         result = Platform.operatingSystem;
@@ -68,7 +68,7 @@ void main() async {
         ),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()
-          create: (context) => _globalAppStore,
+          create: (context) => globalAppStore,
         )
       ],
       child: const WalletApp(),

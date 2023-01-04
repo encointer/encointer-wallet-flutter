@@ -88,13 +88,9 @@ class BusinessForm extends StatelessWidget {
                   },
                 ),
                 ElevatedButton(
+                  onPressed: businessFormState.validateAll,
                   child: Row(
                       children: [const Icon(Icons.check), Text(I18n.of(context)!.translationsForLocale().bazaar.save)]),
-                  onPressed: () {
-                    businessFormState.validateAll();
-                    // TODO pop if valid
-                    // Navigator.pop(context);
-                  },
                 ),
               ],
             ),

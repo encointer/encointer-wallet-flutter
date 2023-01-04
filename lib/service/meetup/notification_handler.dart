@@ -11,8 +11,8 @@ class NotificationHandler {
     ScheduleNotification scheduleNotification,
     String langCode,
   ) async {
-    final _feeds = await FeedRepo().fetchData(langCode);
-    if (_feeds != null && _feeds.isNotEmpty) await _registerScheduleNotifications(_feeds, local, scheduleNotification);
+    final feeds = await FeedRepo().fetchData(langCode);
+    if (feeds != null && feeds.isNotEmpty) await _registerScheduleNotifications(feeds, local, scheduleNotification);
   }
 
   static Future<void> _registerScheduleNotifications(

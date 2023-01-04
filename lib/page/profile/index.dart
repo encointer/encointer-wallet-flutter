@@ -82,30 +82,30 @@ class _ProfileState extends State<Profile> {
 
   Future<bool> _sendEmail() async {
     final dic = I18n.of(context)!.translationsForLocale().profile;
-    final _emailLaunchUri = Uri(
+    final emailLaunchUri = Uri(
       scheme: 'mailto',
       path: 'bugreports@mail.encointer.org',
     );
-    final _isSuccess = await launchUrl(_emailLaunchUri);
-    if (!_isSuccess) {
+    final isSuccess = await launchUrl(emailLaunchUri);
+    if (!isSuccess) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(dic.checkEmailApp),
         ),
       );
     }
-    return _isSuccess;
+    return isSuccess;
   }
 
   @override
   Widget build(BuildContext context) {
     final h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
-    final _store = context.watch<AppStore>();
-    _selectedNetwork = _store.settings.endpoint;
+    final store = context.watch<AppStore>();
+    _selectedNetwork = store.settings.endpoint;
 
     // if all accounts are deleted, go to createAccountPage
-    if (_store.account.accountListAll.isEmpty) {
-      _store.settings.setPin('');
+    if (store.account.accountListAll.isEmpty) {
+      store.settings.setPin('');
       Future.delayed(Duration.zero, () {
         Navigator.pop(context);
       });
@@ -177,12 +177,12 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 key: const Key('remove-all-accounts'),
                 title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
-                onTap: () => showRemoveAccountsDialog(context, _store),
+                onTap: () => showRemoveAccountsDialog(context, store),
               ),
               ListTile(
                   title: Text(dic.profile.reputationOverall, style: h3Grey),
-                  trailing: _store.encointer.account?.reputations != null
-                      ? Text(_store.encointer.account?.reputations.length.toString() ?? 0.toString())
+                  trailing: store.encointer.account?.reputations != null
+                      ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
                       : Text(dic.encointer.fetchingReputations)),
               ListTile(
                 title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
@@ -205,11 +205,11 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
                   key: const Key('dev-mode'),
-                  value: _store.settings.developerMode,
-                  onChanged: (_) => _store.settings.toggleDeveloperMode(),
+                  value: store.settings.developerMode,
+                  onChanged: (_) => store.settings.toggleDeveloperMode(),
                 ),
               ),
-              if (_store.settings.developerMode)
+              if (store.settings.developerMode)
                 // Column in case we add more developer options
                 Column(
                   children: <Widget>[
@@ -218,7 +218,7 @@ class _ProfileState extends State<Profile> {
                         key: const Key('choose-network'),
                         child: Observer(
                           builder: (_) => Text(
-                            'Change network (current: ${_store.settings.endpoint.info})', // for devs only
+                            'Change network (current: ${store.settings.endpoint.info})', // for devs only
                             style: Theme.of(context).textTheme.headline4,
                           ),
                         ),
@@ -226,7 +226,7 @@ class _ProfileState extends State<Profile> {
                       ),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 13), // align with developer checkbox above
-                        child: _store.settings.isConnected
+                        child: store.settings.isConnected
                             ? const Icon(Icons.check, color: Colors.green)
                             : const CupertinoActivityIndicator(),
                       ),
@@ -234,11 +234,11 @@ class _ProfileState extends State<Profile> {
                     ListTile(
                       title: Text(dic.profile.enableBazaar, style: h3Grey),
                       trailing: Checkbox(
-                        value: _store.settings.enableBazaar,
+                        value: store.settings.enableBazaar,
                         // Fixme: Need to change the tab to update the tabList. But, do we care? This is only
                         // temporary, and a developer option. It is unnecessary to include the complexity to update
                         // the parent widget from here.
-                        onChanged: (_) => _store.settings.toggleEnableBazaar(),
+                        onChanged: (_) => store.settings.toggleEnableBazaar(),
                       ),
                     ),
                     Padding(
@@ -269,7 +269,7 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-Future<void> showRemoveAccountsDialog(BuildContext context, AppStore _store) {
+Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
@@ -286,10 +286,10 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore _store) {
             key: const Key('remove-all-accounts-check'),
             child: Text(dic.home.ok),
             onPressed: () async {
-              final accounts = _store.account.accountListAll;
+              final accounts = store.account.accountListAll;
 
               for (final acc in accounts) {
-                await _store.account.removeAccount(acc);
+                await store.account.removeAccount(acc);
               }
 
               Navigator.pushAndRemoveUntil(

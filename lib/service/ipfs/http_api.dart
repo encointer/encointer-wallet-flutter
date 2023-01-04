@@ -85,12 +85,12 @@ class Ipfs {
 
   Future<String> uploadImage(File image) async {
     try {
-      final _dio = Dio();
-      _dio.options.baseUrl = gateway;
-      _dio.options.connectTimeout = 5000; //5s
-      _dio.options.receiveTimeout = 3000;
+      final dio = Dio();
+      dio.options.baseUrl = gateway;
+      dio.options.connectTimeout = 5000; //5s
+      dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post<dynamic>('/ipfs/', data: image.openRead());
+      final response = await dio.post<dynamic>('/ipfs/', data: image.openRead());
       var imageHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
@@ -110,12 +110,12 @@ class Ipfs {
 
   Future<String> uploadJson(Map<String, dynamic> json) async {
     try {
-      final _dio = Dio();
-      _dio.options.baseUrl = gateway;
-      _dio.options.connectTimeout = 5000; //5s
-      _dio.options.receiveTimeout = 3000;
+      final dio = Dio();
+      dio.options.baseUrl = gateway;
+      dio.options.connectTimeout = 5000; //5s
+      dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post<dynamic>('/ipfs/', data: json);
+      final response = await dio.post<dynamic>('/ipfs/', data: json);
       var jsonHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution

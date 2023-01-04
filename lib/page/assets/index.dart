@@ -65,9 +65,7 @@ class _AssetsState extends State<Assets> {
       webApi.connectNodeAll();
     }
 
-    if (panelController == null) {
-      panelController = PanelController();
-    }
+    panelController ??= PanelController();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (widget.store.settings.cachedPin.isEmpty & !widget.store.settings.endpointIsNoTee) {
@@ -226,8 +224,7 @@ class _AssetsState extends State<Assets> {
                                   style: ElevatedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
-                                      borderRadius:
-                                          BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
+                                      borderRadius: BorderRadius.horizontal(left: Radius.circular(15)),
                                     ),
                                   ),
                                   key: const Key('qr-receive'),
@@ -255,8 +252,7 @@ class _AssetsState extends State<Assets> {
                                   style: ElevatedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
-                                      borderRadius:
-                                          BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
+                                      borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
                                     ),
                                   ),
                                   key: const Key('transfer'),
@@ -282,7 +278,7 @@ class _AssetsState extends State<Assets> {
                       );
                     }),
                     const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+                      padding: EdgeInsets.symmetric(vertical: 6),
                     ),
                     Observer(builder: (_) {
                       final dic = I18n.of(context)!.translationsForLocale();
@@ -392,21 +388,12 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> initAllCommunities() {
-    final allCommunities = <AccountOrCommunityData>[];
-    // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
-    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
-    //     avatar: webApi.ipfs.getCommunityIcon(community),
-    //     name: community.name)));
-
-    // For now show the selected community if available and let the user add a community from the world map community chooser
-    allCommunities.add(
+    final allCommunities = <AccountOrCommunityData>[
       AccountOrCommunityData(
         avatar: const CommunityAvatar(avatarSize: avatarSize),
         name: widget.store.encointer.community?.name ?? '...',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
-    );
-    allCommunities.add(
       AccountOrCommunityData(
         avatar: Container(
           height: avatarSize,
@@ -422,21 +409,27 @@ class _AssetsState extends State<Assets> {
           ),
         ),
         name: dic!.profile.addCommunity,
-      ),
-    );
+      )
+    ];
+    // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
+    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
+    //     avatar: webApi.ipfs.getCommunityIcon(community),
+    //     name: community.name)));
+
+    // For now show the selected community if available and let the user add a community from the world map community chooser
+
     return allCommunities;
   }
 
   List<AccountOrCommunityData> initAllAccounts(Translations dic) {
-    final allAccounts = <AccountOrCommunityData>[];
-    allAccounts.addAll(widget.store.account.accountListAll.map(
-      (account) => AccountOrCommunityData(
-        avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
-        name: account.name,
-        isSelected: account.pubKey == widget.store.account.currentAccountPubKey,
+    final allAccounts = <AccountOrCommunityData>[
+      ...widget.store.account.accountListAll.map(
+        (account) => AccountOrCommunityData(
+          avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
+          name: account.name,
+          isSelected: account.pubKey == widget.store.account.currentAccountPubKey,
+        ),
       ),
-    ));
-    allAccounts.add(
       AccountOrCommunityData(
         avatar: Container(
           key: const Key('add-account-panel'),
@@ -449,8 +442,8 @@ class _AssetsState extends State<Assets> {
           child: const Icon(Icons.add, size: 36),
         ),
         name: dic.profile.addAccount,
-      ),
-    );
+      )
+    ];
     return allAccounts;
   }
 
@@ -478,9 +471,10 @@ class _AssetsState extends State<Assets> {
               });
             },
           ),
-          onWillPop: () {
-            // handles back button press
-            return _showPasswordNotEnteredDialog(context).then((value) => value as bool);
+          // handles back button press
+          onWillPop: () async {
+            await _showPasswordNotEnteredDialog(context);
+            return false;
           },
         );
       },

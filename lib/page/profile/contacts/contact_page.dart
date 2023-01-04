@@ -214,7 +214,7 @@ class _Contact extends State<ContactPage> {
                 key: const Key('contact-save'),
                 submitting: _submitting,
                 text: dic.profile.contactSave,
-                onPressed: () => _onSave(),
+                onPressed: _onSave,
               ),
             ),
           ],
