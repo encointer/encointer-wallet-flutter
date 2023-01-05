@@ -47,19 +47,20 @@ linter:
     noop_primitive_operations: true
     missing_whitespace_between_adjacent_strings: true
 
+    avoid_dynamic_calls: true
+    prefer_int_literals: true
+    only_throw_errors: true
+    parameter_assignments: true
+    join_return_with_assignment: true
+    overridden_fields: true
+    avoid_escaping_inner_quotes: true
+    avoid_equals_and_hash_code_on_mutable_classes: true
+
     require_trailing_commas: false
-    avoid_dynamic_calls: false
     unawaited_futures: false
-    prefer_int_literals: false
-    only_throw_errors: false
-    parameter_assignments: false
     depend_on_referenced_packages: false
-    avoid_equals_and_hash_code_on_mutable_classes: false
-    join_return_with_assignment: false
     use_build_context_synchronously: false
     use_setters_to_change_properties: false
-    overridden_fields: false
-    avoid_escaping_inner_quotes: false
 
 analyzer:
   language:
