@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/common/components/launch/send_to_trello_with_email_sms.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -78,23 +78,6 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-  }
-
-  Future<bool> _sendEmail() async {
-    final dic = I18n.of(context)!.translationsForLocale().profile;
-    final emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: 'malikelbay1+np8u5ozogws6ijqbldun@boards.trello.com',
-    );
-    final isSuccess = await launchUrl(emailLaunchUri);
-    if (!isSuccess) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(dic.checkEmailApp),
-        ),
-      );
-    }
-    return isSuccess;
   }
 
   @override
@@ -197,10 +180,7 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
-              ListTile(
-                title: Text(dic.profile.contactUs, style: h3Grey),
-                onTap: _sendEmail,
-              ),
+              const SendToTrelleFromEmailSms(),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
