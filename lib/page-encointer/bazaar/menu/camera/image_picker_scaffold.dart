@@ -57,7 +57,7 @@ class ImagePickerScaffold extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 16.0),
+            padding: const EdgeInsets.only(top: 16),
             child: FloatingActionButton(
               onPressed: () {
                 _onImageButtonPressed(
@@ -72,7 +72,7 @@ class ImagePickerScaffold extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 16.0),
+            padding: const EdgeInsets.only(top: 16),
             child: FloatingActionButton(
               onPressed: () {
                 _onImageButtonPressed(imagePickerState, ImageSource.camera, context: context);

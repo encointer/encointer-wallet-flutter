@@ -151,10 +151,10 @@ class _ProfileState extends State<Profile> {
                       begin: Alignment.centerRight,
                       end: Alignment.centerLeft,
                       colors: [
-                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
+                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
                         Theme.of(context).scaffoldBackgroundColor,
                         Theme.of(context).scaffoldBackgroundColor,
-                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
+                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
                       ],
                       stops: const [0.0, 0.1, 0.9, 1.0],
                     ).createShader(bounds);
@@ -242,7 +242,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8),
                       child: SubmitButton(
                         key: const Key('next-phase-button'),
                         child: Row(

@@ -66,7 +66,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
                       // width: 0.0 produces a thin "hairline" border
-                      borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+                      borderSide: BorderSide(color: Colors.transparent, width: 0),
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
@@ -88,7 +88,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
                       // width: 0.0 produces a thin "hairline" border
-                      borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+                      borderSide: BorderSide(color: Colors.transparent, width: 0),
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
@@ -105,7 +105,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

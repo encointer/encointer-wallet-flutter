@@ -115,7 +115,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: <Widget>[
               Expanded(

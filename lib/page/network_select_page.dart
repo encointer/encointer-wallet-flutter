@@ -196,8 +196,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
-                  blurRadius: 8.0, // has the effect of softening the shadow
-                  spreadRadius: 2.0, // ha
+                  blurRadius: 8, // has the effect of softening the shadow
+                  spreadRadius: 2, // ha
                 )
               ],
             ),

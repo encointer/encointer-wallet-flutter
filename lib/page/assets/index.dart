@@ -239,7 +239,7 @@ class _AssetsState extends State<Assets> {
                                     }
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.all(16),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -265,7 +265,7 @@ class _AssetsState extends State<Assets> {
                                       ? () => Navigator.pushNamed(context, TransferPage.route)
                                       : null,
                                   child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.all(16),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -338,7 +338,7 @@ class _AssetsState extends State<Assets> {
                 key: const Key('list-view-wallet'),
                 controller: scrollController,
                 children: <Widget>[
-                  const SizedBox(height: 12.0),
+                  const SizedBox(height: 12),
                   const DragHandle(),
                   Column(children: [
                     Observer(
@@ -385,7 +385,7 @@ class _AssetsState extends State<Assets> {
                 ],
               ),
             ),
-            borderRadius: const BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
           ),
         ),
       ),

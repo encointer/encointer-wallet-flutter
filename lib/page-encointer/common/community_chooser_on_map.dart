@@ -79,14 +79,14 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(bottom: 2.0),
+                padding: EdgeInsets.only(bottom: 2),
               ),
               Text(
                 widget.dataForThisMarker!.cid.toFmtString(),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 12,
                   color: Colors.black54,
                 ),
               ),

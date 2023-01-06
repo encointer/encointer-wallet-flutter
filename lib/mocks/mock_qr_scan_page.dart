@@ -40,8 +40,8 @@ class MockQRScanPage extends StatelessWidget {
                 height: MediaQuery.of(context).size.width * 0.9,
                 decoration: BoxDecoration(
                   color: Colors.transparent,
-                  border: Border.all(color: Colors.white38, width: 2.0),
-                  borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+                  border: Border.all(color: Colors.white38, width: 2),
+                  borderRadius: const BorderRadius.all(Radius.circular(24)),
                 ),
               ),
               const Text(
