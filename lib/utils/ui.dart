@@ -27,14 +27,6 @@ class UI {
     });
   }
 
-  // static Future<void> launchURL(String url) async {
-  //   try {
-  //     await launchUrl(Uri.parse(url));
-  //   } catch (e, s) {
-  //     Log.e('Could not launch URL: $e', 'UI', s);
-  //   }
-  // }
-
   static TextInputFormatter decimalInputFormatter({int decimals = encointerCurrenciesDecimals}) {
     return RegExInputFormatter.withRegex('^[0-9]{0,$decimals}(\\.[0-9]{0,$decimals})?\$');
   }
