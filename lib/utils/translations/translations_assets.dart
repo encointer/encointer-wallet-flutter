@@ -290,7 +290,7 @@ class TranslationsDeAssets implements TranslationsAssets {
 
 class TranslationsFrAssets implements TranslationsAssets {
   @override
-  String get address => 'Envoi à l\'adresse';
+  String get address => "Envoi à l'adresse";
   @override
   String get amountError => 'Solde non valide';
   @override
@@ -302,7 +302,7 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get communityChoose => 'Veuilles choisir une communauté';
   @override
-  String get communityNotSelected => 'Aucune communauté sélectionnée, clique sur l\'icône';
+  String get communityNotSelected => "Aucune communauté sélectionnée, clique sur l'icône";
   @override
   String get copy => 'Copier';
   @override
@@ -310,7 +310,7 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get done => 'Finit';
   @override
-  String get event => 'ID d\'événement';
+  String get event => "ID d'événement";
   @override
   String get fail => 'Échec';
   @override
@@ -369,7 +369,7 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get paymentError => 'Erreur de paiement';
   @override
-  String get voucher => 'Bon d\'achat';
+  String get voucher => "Bon d'achat";
   @override
   String get voucherBalance => 'Valeur du bon';
   @override
@@ -381,15 +381,15 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get voucherContainsInexistentCommunity => 'Le bon contient une communauté inexistante:';
   @override
-  String get doYouWantToRedeemThisVoucher => 'Tu veux utiliser ce bon d\'achat pour ACCOUNT_PLACEHOLDER?';
+  String get doYouWantToRedeemThisVoucher => "Tu veux utiliser ce bon d'achat pour ACCOUNT_PLACEHOLDER?";
   @override
   String get fundVoucher => 'Recharger le bon';
   @override
-  String get redeemVoucher => 'Valider un bon d\'achat';
+  String get redeemVoucher => "Valider un bon d'achat";
   @override
   String get redeemSuccess => 'Bon validé avec succès';
   @override
-  String get redeemFailure => 'Une erreur s\'est produite lors de l\'utilisation du bon d\'achat. Cause de l\'erreur :';
+  String get redeemFailure => "Une erreur s'est produite lors de l'utilisation du bon d'achat. Cause de l'erreur :";
   @override
   String get invalidNetwork => 'Réseau non valide';
   @override
@@ -398,10 +398,10 @@ class TranslationsFrAssets implements TranslationsAssets {
   String get transactionError => 'Erreur de transaction.';
   @override
   String get insufficientFundsExplanation =>
-      'Tu n\'as pas assez d\'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.';
+      "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.";
   @override
   String get chosenRightCommunity =>
-      'Les données sont destinées à une autre communauté. S\'il te plaît, change la communauté pour envoyer le payment.';
+      "Les données sont destinées à une autre communauté. S'il te plaît, change la communauté pour envoyer le payment.";
 }
 
 class TranslationsRuAssets implements TranslationsAssets {
