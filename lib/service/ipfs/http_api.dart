@@ -75,7 +75,7 @@ class Ipfs {
     } catch (e, s) {
       // otherwise we would have to adjust the return type.
       Log.e('$e', 'Ipfs', s);
-      throw e.toString();
+      throw Exception(e.toString());
     }
   }
 

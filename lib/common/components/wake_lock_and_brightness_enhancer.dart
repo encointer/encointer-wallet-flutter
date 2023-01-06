@@ -24,7 +24,7 @@ class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnh
       await ScreenBrightness().setScreenBrightness(brightness);
     } catch (e, s) {
       Log.e('$e', 'WakeLockAndBrightnessEnhancer', s);
-      throw 'Failed to set brightness';
+      throw Exception('Failed to set brightness');
     }
   }
 
@@ -33,7 +33,7 @@ class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnh
       await ScreenBrightness().resetScreenBrightness();
     } catch (e, s) {
       Log.e('$e', 'WakeLockAndBrightnessEnhancer', s);
-      throw 'Failed to reset brightness';
+      throw Exception('Failed to reset brightness');
     }
   }
 
