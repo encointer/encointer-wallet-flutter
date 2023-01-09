@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -19,6 +21,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CeremonyBox extends StatelessWidget {
   const CeremonyBox(this.store, this.api, {super.key});
@@ -153,7 +156,17 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return MeetupInfo(
           meetup,
           location,
-          onLocationPressed: () => showOnEncointerMap(context, store, location),
+          // onLocationPressed: () => showOnEncointerMap(context, store, location),
+          onLocationPressed: () async {
+            final uri = Uri.parse(Platform.isIOS
+                ? 'https://maps.apple.com/?q=${location.lat},${location.lon}'
+                : 'https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lon}');
+            try {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            } catch (e) {
+              Log.e(e.toString());
+            }
+          },
         );
       } else {
         return CeremonyNotification(
