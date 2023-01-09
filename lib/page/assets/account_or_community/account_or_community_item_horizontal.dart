@@ -13,7 +13,7 @@ class AccountOrCommunityItemHorizontal extends StatefulWidget {
 
   final AccountOrCommunityData itemData;
   final int index;
-  final Function? onTap;
+  final void Function(int index)? onTap;
 
   @override
   State<AccountOrCommunityItemHorizontal> createState() => _AccountOrCommunityItemHorizontalState();

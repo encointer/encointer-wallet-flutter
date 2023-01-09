@@ -11,7 +11,7 @@ Widget showPasswordInputDialog(
   BuildContext context,
   AccountData account,
   Widget? title,
-  Function onOk,
+  void Function(String password) onOk,
 ) {
   return PasswordInputDialog(
     account: account,
@@ -32,10 +32,10 @@ class PasswordInputDialog extends StatefulWidget {
   });
 
   final AccountData account;
-  final Function onOk;
+  final void Function(String password) onOk;
   final Widget? title;
-  final Function? onCancel;
-  final Function? onAccountSwitch;
+  final VoidCallback? onCancel;
+  final VoidCallback? onAccountSwitch;
 
   @override
   State<PasswordInputDialog> createState() => _PasswordInputDialogState();

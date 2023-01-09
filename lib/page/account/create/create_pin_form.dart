@@ -10,7 +10,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 class CreatePinForm extends StatefulWidget {
   const CreatePinForm({super.key, required this.store, required this.onSubmit});
 
-  final Function onSubmit;
+  final VoidCallback onSubmit;
   final AppStore store;
 
   @override

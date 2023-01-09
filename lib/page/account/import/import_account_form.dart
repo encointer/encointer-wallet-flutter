@@ -13,7 +13,7 @@ class ImportAccountForm extends StatefulWidget {
   const ImportAccountForm(this.store, this.onSubmit, {super.key});
 
   final AppStore store;
-  final Function onSubmit;
+  final void Function(Map<String, dynamic>) onSubmit;
 
   @override
   State<ImportAccountForm> createState() => _ImportAccountFormState();
