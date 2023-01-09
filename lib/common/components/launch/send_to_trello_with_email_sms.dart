@@ -4,8 +4,8 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-class SendToTrelleFromEmailSms extends StatelessWidget {
-  const SendToTrelleFromEmailSms({super.key});
+class SendToTrelloListTile extends StatelessWidget {
+  const SendToTrelloListTile({super.key});
 
   @override
   Widget build(BuildContext context) {

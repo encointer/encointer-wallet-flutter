@@ -180,7 +180,7 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
-              const SendToTrelleFromEmailSms(),
+              const SendToTrelloListTile(),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
