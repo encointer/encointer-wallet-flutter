@@ -138,7 +138,11 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       if (registrationType != null) {
         _showEducationalDialog(registrationType, context);
         if (store.settings.endpoint == networkEndpointEncointerMainnet) {
-          await registerMeetupScheduleNotification(store.encointer.community!.meetupTime!, context);
+          await scheduleMeetupNotifications(
+            data.global!.ceremonyIndex,
+            store.encointer.community!.meetupTime!,
+            context,
+          );
         }
       }
       // Registering the participant burns the reputation.
@@ -214,24 +218,24 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
   );
 }
 
-Future<void> registerMeetupScheduleNotification(int meetupTime, BuildContext context) async {
+Future<void> scheduleMeetupNotifications(int notificationId, int meetupTime, BuildContext context) async {
   final dic = I18n.of(context)!.translationsForLocale().encointer;
   final meetupDateTime = DateTime.fromMillisecondsSinceEpoch(meetupTime);
   final beforeOneHour = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(hours: 1)), tz.local);
   final beforeOneDay = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(days: 1)), tz.local);
   if (beforeOneHour.isAfter(DateTime.now())) {
     await NotificationPlugin.scheduleNotification(
-      1 + generateMeetupIdByTimeStamp(meetupTime),
-      dic.scheduleNotificationBeforeOneHourTitle,
-      dic.scheduleNotificationBeforeOneHourContent,
+      notificationId,
+      dic.meetupNotificationOneHourBeforeTitle,
+      dic.meetupNotificationOneHourBeforeContent,
       beforeOneHour,
     );
   }
   if (beforeOneDay.isAfter(DateTime.now())) {
     await NotificationPlugin.scheduleNotification(
-      24 + generateMeetupIdByTimeStamp(meetupTime),
-      dic.scheduleNotificationBeforeOneDayTitle,
-      dic.scheduleNotificationBeforeOneDayContent,
+      24 + notificationId,
+      dic.meetupNotificationOneDayBeforeTitle,
+      dic.meetupNotificationOneDayBeforeContent,
       beforeOneDay,
     );
   }
@@ -256,11 +260,4 @@ Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContex
 /// This will only work on the local dev-setup.
 Future<dynamic> submitNextPhase(Api api) async {
   return api.js.evalJavascript('encointer.sendNextPhaseTx()');
-}
-
-int generateMeetupIdByTimeStamp(int meetupTime) {
-  final now = DateTime.now().millisecondsSinceEpoch;
-  // 1 day = 86400000 milliseconds
-  final id = ((meetupTime - now) / 86400000).ceil();
-  return id + 200;
 }
