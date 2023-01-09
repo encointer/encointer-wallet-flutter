@@ -113,7 +113,7 @@ class ExportAccountPage extends StatelessWidget {
             trailing: const Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
               final json = AccountData.toJson(context.read<AppStore>().account.currentAccount)..remove('name');
-              json['meta']['name'] = context.read<AppStore>().account.currentAccount.name;
+              (json['meta'] as Map<String, dynamic>)['name'] = context.read<AppStore>().account.currentAccount.name;
               Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
                 'key': jsonEncode(json),
                 'type': AccountStore.seedTypeKeystore,

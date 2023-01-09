@@ -239,7 +239,7 @@ class Fmt {
   static String? accountDisplayNameString(String? address, Map? accInfo) {
     var display = Fmt.address(address);
     if (accInfo != null) {
-      if (accInfo['identity']['display'] != null) {
+      if ((accInfo['identity'] as Map<String, dynamic>)['display'] != null) {
         display = accInfo['identity']['display'] as String?;
         if (accInfo['identity']['displayParent'] != null) {
           display = '${accInfo['identity']['displayParent']}/$display';
