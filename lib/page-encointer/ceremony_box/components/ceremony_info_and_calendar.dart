@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/ui.dart';
 
 class CeremonyInfoAndCalendar extends StatelessWidget {
   const CeremonyInfoAndCalendar({
@@ -34,7 +34,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
             quarterTurns: 2,
             child: Icon(Iconsax.info_circle),
           ),
-          onPressed: () => UI.launchURL(infoLink!),
+          onPressed: () => AppLaunch.launchURL(infoLink!),
         ),
         if (showAddToCalendarIconButton)
           IconButton(
@@ -42,6 +42,6 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
             onPressed: () => Add2Calendar.addEvent2Cal(calendarEventToAdd),
           ),
       ],
-    ); // 'info and cal widget'
+    );
   }
 }

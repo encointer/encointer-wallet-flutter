@@ -7,6 +7,7 @@ import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
@@ -210,7 +211,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
                 dic.encointer.leuZurichFAQ,
                 textAlign: TextAlign.center,
               ),
-              onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
+              onPressed: () => AppLaunch.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
             ),
         ],
       );
