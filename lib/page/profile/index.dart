@@ -5,7 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/common/components/launch/send_to_trello_with_email_sms.dart';
+import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
