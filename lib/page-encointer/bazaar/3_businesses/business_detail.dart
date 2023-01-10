@@ -102,7 +102,7 @@ class SmallLeaflet extends StatelessWidget {
           child: FlutterMap(
             options: MapOptions(
               center: LatLng(47.389712, 8.517076),
-              zoom: 15.0,
+              zoom: 15,
               maxZoom: 18.4,
             ),
             children: [
@@ -113,8 +113,8 @@ class SmallLeaflet extends StatelessWidget {
               MarkerLayer(
                 markers: [
                   Marker(
-                    width: 20.0,
-                    height: 20.0,
+                    width: 20,
+                    height: 20,
                     point: LatLng(47.389712, 8.517076),
                     builder: (ctx) => const Icon(
                       Icons.location_on,

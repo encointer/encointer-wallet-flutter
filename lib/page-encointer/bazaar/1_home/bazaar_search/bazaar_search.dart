@@ -18,7 +18,7 @@ class BazaarSearch extends StatelessWidget {
       transitionCurve: Curves.easeInOut,
       physics: const BouncingScrollPhysics(),
       axisAlignment: isPortrait ? 0.0 : -1.0,
-      openAxisAlignment: 0.0,
+      openAxisAlignment: 0,
       width: isPortrait ? 340 : 400,
       debounceDelay: const Duration(milliseconds: 500),
       onQueryChanged: (query) {
@@ -44,7 +44,7 @@ class BazaarSearch extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: Material(
             color: Colors.white,
-            elevation: 4.0,
+            elevation: 4,
             child: SearchResults(),
           ),
         );

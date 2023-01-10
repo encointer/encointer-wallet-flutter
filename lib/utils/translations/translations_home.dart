@@ -251,7 +251,7 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get contacts => 'Contacts';
   @override
-  String get closeApp => 'Fermer l\'application';
+  String get closeApp => "Fermer l'application";
   @override
   String get copy => 'Copier dans le presse-papiers';
   @override
@@ -259,7 +259,7 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get detail => 'Détail';
   @override
-  String get exitConfirm => 'Tu veux quitter l\'application?';
+  String get exitConfirm => "Tu veux quitter l'application?";
   @override
   String get errorOccurred => 'Une erreur est apparue:';
   @override
@@ -269,11 +269,11 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get notifySubmitted => 'Transaction soumise';
   @override
-  String get notifySubmittedQueued => 'La transaction dans la file d\'attente a été soumise';
+  String get notifySubmittedQueued => "La transaction dans la file d'attente a été soumise";
   @override
   String get ok => 'OK';
   @override
-  String get pinNeeded => 'Le code NIP est nécessaire pour utiliser l\'application';
+  String get pinNeeded => "Le code NIP est nécessaire pour utiliser l'application";
   @override
   String get settingNetwork => 'Choisir un wallet';
   @override
@@ -299,10 +299,10 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get switchCommunity => 'Changer de communauté';
   @override
-  String get transactionQueued => 'Dans la file d\'attente';
+  String get transactionQueued => "Dans la file d'attente";
   @override
   String get transactionQueuedOffline =>
-      'L\'application n\'est pas connectée à la blockchain. Les transactions dans la file d\'attente sont envoyées automatiquement en cas de connexion réussie.';
+      "L'application n'est pas connectée à la blockchain. Les transactions dans la file d'attente sont envoyées automatiquement en cas de connexion réussie.";
   @override
   String get unlock => 'Débloquer le compte avec le code NIP.';
   @override
@@ -314,13 +314,13 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get updateJsUp => 'Les métadonnées doivent être mises à jour pour pouvoir continuer.';
   @override
-  String get updateLatest => 'L\'application est à jour.';
+  String get updateLatest => "L'application est à jour.";
   @override
   String get updateToNewerVersionQ => 'Nouvelle version trouvée, mettre à jour maintenant?';
   @override
   String get accountImport => 'Importer un compte';
   @override
-  String get txQueued => 'La transaction est dans la file d\'attente.';
+  String get txQueued => "La transaction est dans la file d'attente.";
   @override
   String get txQueuedOffline => 'Tu es hors ligne. La transaction sera envoyée lorsque tu seras en ligne.';
   @override
@@ -332,13 +332,13 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get txError => 'Erreur de transaction';
   @override
-  String get updatingAppState => 'L\'état de l\'app est mis à jour...';
+  String get updatingAppState => "L'état de l'app est mis à jour...";
   @override
   String get cameraPermissionError =>
-      'Une erreur s\'est produite lors de la vérification de l\'autorisation de la caméra '
-      'Tu peux aussi donner l\'autorisation pour la caméra via les paramètres de l\'app.';
+      "Une erreur s'est produite lors de la vérification de l'autorisation de la caméra "
+      "Tu peux aussi donner l'autorisation pour la caméra via les paramètres de l'app.";
   @override
-  String get appSettings => 'Paramètres de l\'app';
+  String get appSettings => "Paramètres de l'app";
 }
 
 class TranslationsRuHome implements TranslationsHome {

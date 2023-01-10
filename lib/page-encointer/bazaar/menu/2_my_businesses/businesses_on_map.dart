@@ -42,7 +42,7 @@ class BMap extends StatelessWidget {
     return FlutterMap(
       options: MapOptions(
         center: LatLng(47.389712, 8.517076),
-        zoom: 15.0,
+        zoom: 15,
         maxZoom: 18.4,
         onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
       ),
@@ -110,14 +110,14 @@ class BusinessDetailsPopup extends StatelessWidget {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(bottom: 2.0),
+                padding: EdgeInsets.only(bottom: 2),
               ),
               Text(
                 dataForThisMarker!.description,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 12,
                   color: Colors.black54,
                 ),
               ),
