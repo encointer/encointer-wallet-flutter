@@ -91,7 +91,7 @@ class Ipfs {
       dio.options.receiveTimeout = 3000;
 
       final response = await dio.post<dynamic>('/ipfs/', data: image.openRead());
-      var imageHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
+      final imageHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
       // remove surrounding []
@@ -99,9 +99,8 @@ class Ipfs {
       var imageHashEnd = imageHash.length - 1;
       if (imageHash[imageHashBegin].compareTo('[') == 0) imageHashBegin++;
       if (imageHash[imageHashEnd].compareTo(']') == 0) imageHashEnd--;
-      imageHash = imageHash.substring(imageHashBegin, imageHashEnd + 1);
 
-      return imageHash;
+      return imageHash.substring(imageHashBegin, imageHashEnd + 1);
     } catch (e, s) {
       Log.e('Ipfs upload of Image error $e', 'Ipfs', s);
       return '';
@@ -116,7 +115,7 @@ class Ipfs {
       dio.options.receiveTimeout = 3000;
 
       final response = await dio.post<dynamic>('/ipfs/', data: json);
-      var jsonHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
+      final jsonHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
       // remove surrounding []
@@ -124,9 +123,8 @@ class Ipfs {
       var jsonHashEnd = jsonHash.length - 1;
       if (jsonHash[jsonHashBegin].compareTo('[') == 0) jsonHashBegin++;
       if (jsonHash[jsonHashEnd].compareTo(']') == 0) jsonHashEnd--;
-      jsonHash = jsonHash.substring(jsonHashBegin, jsonHashEnd + 1);
 
-      return jsonHash;
+      return jsonHash.substring(jsonHashBegin, jsonHashEnd + 1);
     } catch (e, s) {
       Log.e('Ipfs upload of json error $e', 'Ipfs', s);
       return '';
