@@ -181,6 +181,12 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
               const SendToTrelloListTile(),
+              SwitchListTile(
+                title: const Text('Send logs to Trello'),
+                subtitle: const Text('You can disable this function'),
+                value: context.watch<AppSettings>().sendToTrelloLog,
+                onChanged: context.read<AppSettings>().setSendToTrelloLog,
+              ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
