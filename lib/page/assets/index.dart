@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -555,7 +556,8 @@ class _AssetsState extends State<Assets> {
         widget.store.encointer.accountStores![widget.store.account.currentAddress]
             ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
-    }).catchError((Object? e, StackTrace? s) {
+    }).catchError((Object? e, StackTrace? s) async {
+      await context.read<AppSettings>().sendToTrello('$e', 'addBalanceEntry in index page', s);
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
   }
