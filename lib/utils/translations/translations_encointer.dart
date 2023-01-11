@@ -363,7 +363,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
 
 class TranslationsFrEncointer implements TranslationsEncointer {
   @override
-  String get registerParticipant => 'S\'inscrire';
+  String get registerParticipant => "S'inscrire";
   @override
   String get claimsSubmit => 'Déposer une demande';
   @override
@@ -379,14 +379,14 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get nextCycleDateLabel => 'Prochain cycle:';
   @override
-  String get claimQr => 'Ma demande d\'attestation de présence';
+  String get claimQr => "Ma demande d'attestation de présence";
   @override
   String get claimsScanned => 'Tu as scanné AMOUNT_PLACEHOLDER demandes.';
   @override
   String get claimsScannedAlready => 'La demande déjà scannée a été mise à jour';
   @override
   String get claimsScannedDecodeFailed =>
-      'La demande scannée n\'a pas pu être décodée. Ton vis-à-vis doit mettre à jour l\'application.';
+      "La demande scannée n'a pas pu être décodée. Ton vis-à-vis doit mettre à jour l'application.";
   @override
   String get claimsScannedNew => 'Nouvelle demande scannée';
   @override
@@ -397,10 +397,9 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get meetupAttended => 'A participé à la dernière rencontre';
   @override
   String get meetupClaimantInvalid =>
-      'L\'auteur de la demande ne fait pas partie de ton rencontre. La demande n\'a pas été enregistrée.';
+      "L'auteur de la demande ne fait pas partie de ton rencontre. La demande n'a pas été enregistrée.";
   @override
-  String get meetupClaimantEqualToSelf =>
-      'Erreur, l\'adresse est le compte actuel. La demande n\'a pas été enregistrée.';
+  String get meetupClaimantEqualToSelf => "Erreur, l'adresse est le compte actuel. La demande n'a pas été enregistrée.";
   @override
   String get meetupLocation => 'Point de rencontre';
   @override
@@ -411,7 +410,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get communities => 'Communautés';
   @override
   String get noCommunitiesAreYouOffline =>
-      'Aucune communauté n\'a été trouvée. Tu pourras en choisir une plus tard. Tu es hors ligne ?';
+      "Aucune communauté n'a été trouvée. Tu pourras en choisir une plus tard. Tu es hors ligne ?";
   @override
   String get registerUntil => 'Inscrive-toi avant le';
   @override
@@ -419,13 +418,13 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get gatheringIsOver => 'La rencontre est terminée';
   @override
-  String get today => 'Aujourd\'hui';
+  String get today => "Aujourd'hui";
   @override
   String get tomorrow => 'Demain';
   @override
   String get calendarEntryDescription => 'Participe à la rencontre pour recevoir ton paiement.';
   @override
-  String get youAreNotRegistered => 'Tu n\'as malheureusement pas été attribué à une rencontre le';
+  String get youAreNotRegistered => "Tu n'as malheureusement pas été attribué à une rencontre le";
   @override
   String get howManyParticipantsShowedUp => 'Combien de participants y a-t-il, toi y compris ';
   @override
@@ -435,10 +434,10 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get fetchingReputations => 'Vérifier si tu as une réputation';
   @override
-  String get youAreRegisteredAs => 'Tu t\'es inscrit comme PARTICIPANT_TYPE a la prochain rencontre.';
+  String get youAreRegisteredAs => "Tu t'es inscrit comme PARTICIPANT_TYPE a la prochain rencontre.";
   @override
-  String get youAreNotRegisteredPleaseRegisterNextTime => 'Tu n\'as pas été assigné à ce cycle de signature de clé. '
-      'Si\'il te plaît, inscris-toi pour le prochain cycle pour recevoir ton paiement de communauté.';
+  String get youAreNotRegisteredPleaseRegisterNextTime => "Tu n'as pas été assigné à ce cycle de signature de clé. "
+      "Si'il te plaît, inscris-toi pour le prochain cycle pour recevoir ton paiement de communauté.";
   @override
   String get youAreAssignedToAGatheringWithNParticipants =>
       'Tu es assigné à une rencontre avec des personnes de P_COUNT.';
@@ -474,7 +473,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get leuZurichFAQ => 'leu.zuerich FAQ';
   @override
   String get bootstrapperContent =>
-      'S\'il te reste des tickets d\'endossement, n\'oublie pas de confirmer Novice comme digne de confiance.';
+      "S'il te reste des tickets d'endossement, n'oublie pas de confirmer Novice comme digne de confiance.";
   @override
   String get bootstrapperTitle => 'Enregistré comme Bootstrapper - ta place est garantie.';
   @override
@@ -483,11 +482,11 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get endorseeTitle => 'Enregistré comme Endosser - Ta place est garantie.';
   @override
-  String get newbieContent => 'Tu t\'es enregistré en tant que Novice Il n\'est pas garanti que tu sois dans ce cycle '
-      'Si le nombre de Novices est élevé, tu ne seras pas assigné. S\'il te plaît, vérifie ton statut d\'assignation le jour précédant le cycle pour savoir '
+  String get newbieContent => "Tu t'es enregistré en tant que Novice Il n'est pas garanti que tu sois dans ce cycle "
+      "Si le nombre de Novices est élevé, tu ne seras pas assigné. S'il te plaît, vérifie ton statut d'assignation le jour précédant le cycle pour savoir "
       'pour savoir si et où ta réunion aura lieu.';
   @override
-  String get newbieTitle => 'Enregistré comme Novice - Ta place n\'est pas encore garantie';
+  String get newbieTitle => "Enregistré comme Novice - Ta place n'est pas encore garantie";
   @override
   String get reputableContent =>
       '"Tu as utilisé ta réputation pour obtenir une place garantie. Attention : si tu t\'enregistres,'

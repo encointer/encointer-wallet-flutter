@@ -72,15 +72,17 @@ class _ChangePassword extends State<ChangePasswordPage> {
         // we need to iterate over all active accounts and update there password
         store.settings.setPin(passNew);
         for (final account in store.account.accountListAll) {
-          final acc = await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
+          final acc = await api.evalJavascript(
+            'account.changePassword("${account.pubKey}", "$passOld", "$passNew")',
+          ) as Map<String, dynamic>;
 
           // update encrypted seed after password updated
           store.account.accountListAll.map((accountData) {
             // use local name, not webApi returned name
             final localAcc = AccountData.toJson(accountData);
             // make metadata the same as the polkadot-js/api's
-            acc['meta']['name'] = localAcc['name'];
-            store.account.updateAccount(acc as Map<String, dynamic>);
+            (acc['meta'] as Map<String, dynamic>)['name'] = localAcc['name'];
+            store.account.updateAccount(acc);
             store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
         }
@@ -115,7 +117,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: <Widget>[
               Expanded(

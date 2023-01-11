@@ -40,7 +40,7 @@ final List<BazaarOfferingData> allOfferings = [
       Image.network('https://picsum.photos/id/142/160/100')),
   BazaarOfferingData('Wholemeal Spelt Bread', 'Rich spelt bread made according to old rediscovered recipe', 3.75,
       Image.network('https://picsum.photos/id/223/160/100')),
-  BazaarOfferingData('White Bread', 'Good bread bla bla bla bla bla bla bla bla', 1.00,
+  BazaarOfferingData('White Bread', 'Good bread bla bla bla bla bla bla bla bla', 1,
       Image.network('https://picsum.photos/id/225/160/100')),
   BazaarOfferingData('Wholemeal Spelt Bread', 'Rich spelt bread made according to old rediscovered recipe', 3.75,
       Image.network('https://picsum.photos/id/225/160/100')),

@@ -36,7 +36,7 @@ class LightShadedBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(color: zurichLion.shade50, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+      decoration: BoxDecoration(color: zurichLion.shade50, borderRadius: const BorderRadius.all(Radius.circular(10))),
       child: const SizedBox(
         height: 5,
       ),

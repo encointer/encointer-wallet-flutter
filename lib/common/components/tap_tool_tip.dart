@@ -163,11 +163,11 @@ class TapTooltip extends StatefulWidget {
 }
 
 class _TooltipState extends State<TapTooltip> with SingleTickerProviderStateMixin {
-  static const double _defaultTooltipHeight = 32.0;
-  static const double _defaultVerticalOffset = 24.0;
+  static const double _defaultTooltipHeight = 32;
+  static const double _defaultVerticalOffset = 24;
   static const bool _defaultPreferBelow = true;
-  static const EdgeInsetsGeometry _defaultPadding = EdgeInsets.symmetric(horizontal: 16.0);
-  static const EdgeInsetsGeometry _defaultMargin = EdgeInsets.all(0.0);
+  static const EdgeInsetsGeometry _defaultPadding = EdgeInsets.symmetric(horizontal: 16);
+  static const EdgeInsetsGeometry _defaultMargin = EdgeInsets.all(0);
   static const Duration _fadeInDuration = Duration(milliseconds: 150);
   static const Duration _fadeOutDuration = Duration(milliseconds: 75);
   static const Duration _defaultShowDuration = Duration(milliseconds: 1500);
@@ -500,8 +500,8 @@ class _TooltipOverlay extends StatelessWidget {
                   padding: padding,
                   margin: margin,
                   child: Center(
-                    widthFactor: 1.0,
-                    heightFactor: 1.0,
+                    widthFactor: 1,
+                    heightFactor: 1,
                     child: Text(
                       message!,
                       style: textStyle,
