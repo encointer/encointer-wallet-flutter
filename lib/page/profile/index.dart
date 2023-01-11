@@ -182,8 +182,8 @@ class _ProfileState extends State<Profile> {
               ),
               const SendToTrelloListTile(),
               SwitchListTile(
-                title: const Text('Send logs to Trello'),
-                subtitle: const Text('You can disable this function'),
+                title: Text(dic.profile.sendLogsToTrello),
+                subtitle: Text(dic.profile.sendLogsToTrelloDes),
                 value: context.watch<AppSettings>().sendToTrelloLog,
                 onChanged: context.read<AppSettings>().setSendToTrelloLog,
               ),

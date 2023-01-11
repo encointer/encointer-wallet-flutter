@@ -87,6 +87,8 @@ abstract class TranslationsProfile {
   String get enableAutoStart;
   String get contactUs;
   String get checkEmailApp;
+  String get sendLogsToTrello;
+  String get sendLogsToTrelloDes;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -266,6 +268,10 @@ class TranslationsEnProfile implements TranslationsProfile {
   String get openAppSettings => 'Open App Settings';
   @override
   String get enableAutoStart => 'Enable autostart';
+  @override
+  String get sendLogsToTrello => 'Send error messages to Trello';
+  @override
+  String get sendLogsToTrelloDes => "If you don't want to send it, you can block it.";
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -448,6 +454,10 @@ class TranslationsDeProfile implements TranslationsProfile {
   String get openAppSettings => 'App-Einstellungen öffnen';
   @override
   String get enableAutoStart => 'Autostart aktivieren';
+  @override
+  String get sendLogsToTrello => 'Senden Fehlermeldungen an Trello';
+  @override
+  String get sendLogsToTrelloDes => 'Wenn Sie es nicht senden möchten, können Sie es blockieren.';
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
@@ -632,6 +642,10 @@ class TranslationsFrProfile implements TranslationsProfile {
   String get openAppSettings => "Ouvrir les paramètres de l'application";
   @override
   String get enableAutoStart => 'Activer le démarrage automatique';
+  @override
+  String get sendLogsToTrello => "Envoyer des messages d'erreur à Trello";
+  @override
+  String get sendLogsToTrelloDes => "Si vous ne voulez pas l'envoyer, vous pouvez le bloquer.";
 }
 
 class TranslationsRuProfile implements TranslationsProfile {
@@ -811,4 +825,8 @@ class TranslationsRuProfile implements TranslationsProfile {
   String get openAppSettings => 'Открыть настройки приложения';
   @override
   String get enableAutoStart => 'Включить автозапуск';
+  @override
+  String get sendLogsToTrello => 'Отправить сообщения об ошибках в Trello';
+  @override
+  String get sendLogsToTrelloDes => 'Если вы не хотите его отправлять, вы можете заблокировать его.';
 }
