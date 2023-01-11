@@ -9,7 +9,7 @@ import 'package:encointer_wallet/mocks/substrate_api/mock_chain_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_codec_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_encointer_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/log/log.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 

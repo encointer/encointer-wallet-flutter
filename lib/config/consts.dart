@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:encointer_wallet/config/node.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/log/log.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
 const String networkNameEncointerGesell = 'nctr-gsl';

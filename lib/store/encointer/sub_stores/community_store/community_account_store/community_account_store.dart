@@ -6,7 +6,7 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/log/log.dart';
 
 part 'community_account_store.g.dart';
 

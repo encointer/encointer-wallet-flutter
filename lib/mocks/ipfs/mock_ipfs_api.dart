@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/log/log.dart';
 
 class MockIpfs extends Ipfs {
   MockIpfs(String gateway) : super(gateway: gateway);
