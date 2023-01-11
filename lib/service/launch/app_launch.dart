@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 class AppLaunch {
@@ -24,6 +27,18 @@ class AppLaunch {
       }
     } catch (e, s) {
       Log.e('Could not launch URL: $e', 'UI', s);
+    }
+  }
+
+  static Future<void> launchMap(Location location) async {
+    final uri = Uri.parse(Platform.isIOS
+        ? 'https://maps.apple.com/?q=${location.lat},${location.lon}'
+        : 'https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lon}');
+    try {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      Log.e(e.toString());
+      await launchUrl(uri);
     }
   }
 }

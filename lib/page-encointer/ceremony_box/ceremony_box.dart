@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -14,14 +12,12 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/lower_ceremony_box_container.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/meetup_info.dart';
-import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step1_count.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CeremonyBox extends StatelessWidget {
   const CeremonyBox(this.store, this.api, {super.key});
@@ -153,21 +149,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       if (store.encointer.communityAccount?.isAssigned ?? false) {
         final meetup = store.encointer.communityAccount!.meetup!;
         final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
-        return MeetupInfo(
-          meetup,
-          location,
-          // onLocationPressed: () => showOnEncointerMap(context, store, location),
-          onLocationPressed: () async {
-            final uri = Uri.parse(Platform.isIOS
-                ? 'https://maps.apple.com/?q=${location.lat},${location.lon}'
-                : 'https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lon}');
-            try {
-              await launchUrl(uri, mode: LaunchMode.externalApplication);
-            } catch (e) {
-              Log.e(e.toString());
-            }
-          },
-        );
+        return MeetupInfo(meetup, location);
       } else {
         return CeremonyNotification(
           notificationIconData: Iconsax.close_square,
@@ -190,11 +172,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         } else {
           final meetup = store.encointer.communityAccount!.meetup!;
           final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
-          return MeetupInfo(
-            meetup,
-            location,
-            onLocationPressed: () => showOnEncointerMap(context, store, location),
-          );
+          return MeetupInfo(meetup, location);
         }
       }
     default:
