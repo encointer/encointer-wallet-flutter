@@ -59,10 +59,10 @@ class Log {
     );
   }
 
-  static const apiKey = '9644e85db9d8c2434f03e3480ac115fd';
-  static const token = 'd5b22a333469a0d6edf8986ce16f57c232d8f27780f0da7f3aeda1825852a5ef';
-  static const boardId = 'eQBsRhba';
-  static const listId = '63b2649af498dd01f87dd863';
+  static const apiKey = '<api-key>';
+  static const token = '<your-token>';
+  static const boardId = '<board-id>';
+  static const listId = '<list-id>';
 
   static Future<void> sendToTrelloWithHttp(
     BuildContext context,
