@@ -4,8 +4,16 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 class AppLaunch {
-  static Future<bool> sendEmail(String email, {String? snackBarText, BuildContext? context}) async {
-    final launchedEmailSuccessfully = await launchUrl(Uri(scheme: 'mailto', path: email));
+  static Future<bool> sendEmail(
+    String email, {
+    String? subject,
+    String? body,
+    String? snackBarText,
+    BuildContext? context,
+  }) async {
+    final launchedEmailSuccessfully = await launchUrl(
+      Uri(scheme: 'mailto', path: email, queryParameters: {'subject': subject, 'body': body}),
+    );
     if (!launchedEmailSuccessfully && snackBarText != null && context != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(snackBarText)),
