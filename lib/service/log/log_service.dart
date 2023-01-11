@@ -65,13 +65,12 @@ class Log {
   static const listId = '<list-id>';
 
   static Future<void> sendToTrelloWithHttp(
-    BuildContext context,
     String message, [
     String? description,
     StackTrace? stackTrace,
   ]) async {
     final url = Uri.parse(
-      'https://api.trello.com/1/cards?name=$description$message&idList=$listId&keepFromSource=all&key=$apiKey&token=$token',
+      'https://api.trello.com/1/cards?name=${description}error${message}stackTrace$stackTrace&idList=$listId&keepFromSource=all&key=$apiKey&token=$token',
     );
     final response = await http.post(url);
     if (response.statusCode != 200) {
