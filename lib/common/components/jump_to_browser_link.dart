@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/utils/ui.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:flutter/material.dart';
 
 class JumpToBrowserLink extends StatefulWidget {
@@ -20,7 +20,7 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
     setState(() {
       _loading = true;
     });
-    await UI.launchURL(widget.url!);
+    await AppLaunch.launchURL(widget.url!);
     setState(() {
       _loading = false;
     });

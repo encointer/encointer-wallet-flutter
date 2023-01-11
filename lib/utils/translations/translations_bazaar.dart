@@ -373,9 +373,9 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   @override
   String get businessCreate => 'Créer un nouveau magasin';
   @override
-  String get businessDescription => 'Description du magasin\'.';
+  String get businessDescription => "Description du magasin'.";
   @override
-  String get businessDescriptionHint => 'Éveille l\'intérêt pour ton offre avec une courte description.';
+  String get businessDescriptionHint => "Éveille l'intérêt pour ton offre avec une courte description.";
   @override
   String get businesses => 'Magasins';
   @override
@@ -395,7 +395,7 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   @override
   String get businessUrl => 'URL du magasin';
   @override
-  String get cameraDefault => 'Appareil photo\'.';
+  String get cameraDefault => "Appareil photo'.";
   @override
   String get cancelDefault => 'Abandon';
   @override
@@ -415,7 +415,7 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   @override
   String get delivery => 'Livraison';
   @override
-  String get deliveryOptions => 'Options d\'expédition';
+  String get deliveryOptions => "Options d'expédition";
   @override
   String get description => 'Description';
   @override
@@ -427,19 +427,19 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   @override
   String get imageChoose => 'Choisir une image';
   @override
-  String get imageNotPicked => 'Aucune image n\'a encore été sélectionnée.';
+  String get imageNotPicked => "Aucune image n'a encore été sélectionnée.";
   @override
   String get imagesAdded => 'Des images ont été ajoutées';
   @override
-  String get imagesAddRemove => 'Ajouter/supprimer des images\'.';
+  String get imagesAddRemove => "Ajouter/supprimer des images'.";
   @override
   String get imagesMultiplePick => 'Sélectionner plusieurs images dans la galerie';
   @override
-  String get imageVideoError => 'Erreur de sélection d\'image/vidéo';
+  String get imageVideoError => "Erreur de sélection d'image/vidéo";
   @override
   String get lastVisited => 'Dernière visite';
   @override
-  String get lookingFor => 'Qu\'est-ce que tu cherches?';
+  String get lookingFor => "Qu'est-ce que tu cherches?";
   @override
   String get map => 'Carte';
   @override
@@ -447,7 +447,7 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   @override
   String get no => 'Non';
   @override
-  String get noItems => 'Aucun objet trouvé\'.';
+  String get noItems => "Aucun objet trouvé'.";
   @override
   String get notifications => 'Notifications';
   @override
@@ -463,7 +463,7 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   @override
   String get offeringsResults => 'Offres trouvées';
   @override
-  String get openningHours => 'Heures d\'ouverture\'';
+  String get openningHours => "Heures d'ouverture'";
   @override
   String get openningHoursInputHint => 'par exemple 8:15-14:45 ou 9-5pm';
   @override

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -80,23 +80,6 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
-  Future<bool> _sendEmail() async {
-    final dic = I18n.of(context)!.translationsForLocale().profile;
-    final emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: 'bugreports@mail.encointer.org',
-    );
-    final isSuccess = await launchUrl(emailLaunchUri);
-    if (!isSuccess) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(dic.checkEmailApp),
-        ),
-      );
-    }
-    return isSuccess;
-  }
-
   @override
   Widget build(BuildContext context) {
     final h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
@@ -151,10 +134,10 @@ class _ProfileState extends State<Profile> {
                       begin: Alignment.centerRight,
                       end: Alignment.centerLeft,
                       colors: [
-                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
+                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
                         Theme.of(context).scaffoldBackgroundColor,
                         Theme.of(context).scaffoldBackgroundColor,
-                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
+                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
                       ],
                       stops: const [0.0, 0.1, 0.9, 1.0],
                     ).createShader(bounds);
@@ -197,10 +180,7 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
-              ListTile(
-                title: Text(dic.profile.contactUs, style: h3Grey),
-                onTap: _sendEmail,
-              ),
+              const SendToTrelloListTile(),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
@@ -242,7 +222,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8),
                       child: SubmitButton(
                         key: const Key('next-phase-button'),
                         child: Row(

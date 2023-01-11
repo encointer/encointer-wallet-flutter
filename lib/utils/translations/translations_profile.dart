@@ -473,7 +473,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   String get cantEndorseBootstrapper => 'Les Bootstrappers sont déjà marqués comme fiables';
   @override
   String get canEndorseInRegisteringPhaseOnly =>
-      'Que pendant la phase d\'inscription tu peux marquer quelqu\'un comme crédible';
+      "Que pendant la phase d'inscription tu peux marquer quelqu'un comme crédible";
   @override
   String get contactAddress => 'Adresse';
   @override
@@ -485,13 +485,13 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get contactEndorse => 'Confirmer comme crédible';
   @override
-  String get contactAlreadyExists => 'L\'adresse existe déjà';
+  String get contactAlreadyExists => "L'adresse existe déjà";
   @override
   String get contactMemo => 'Mémo';
   @override
   String get contactName => 'Nom';
   @override
-  String get contactNameError => 'Le nom doit être rempli\'.';
+  String get contactNameError => "Le nom doit être rempli'.";
   @override
   String get contactNameAlreadyExists => 'Le nom existe déjà';
   @override
@@ -506,13 +506,13 @@ class TranslationsFrProfile implements TranslationsProfile {
   String get exportMnemonicOk => 'Mnémonique a été copié dans le clipboard.';
   @override
   String get exportWarn => 'Écris ces mots sur un papier. Garde le papier dans un endroit sûr. '
-      'Ces mots donnent à n\'importe qui l\'accès au compte et à la fortune.';
+      "Ces mots donnent à n'importe qui l'accès au compte et à la fortune.";
   @override
   String get changeYourPin => 'Changer le NIP';
   @override
   String get wrongPin => 'Code NIP erroné';
   @override
-  String get wrongPinHint => 'Le compte n\'a pas pu être débloqué. Veuillez vérifier le code NIP saisi.';
+  String get wrongPinHint => "Le compte n'a pas pu être débloqué. Veuillez vérifier le code NIP saisi.";
   @override
   String get yourNewPin => 'Nouveau NIP';
   @override
@@ -525,7 +525,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   String get passSuccessTxt => 'Le code NIP a été modifié avec succès.';
   @override
   String get qrScanHint =>
-      'Indique le montant que tu souhaites recevoir et demande à l\'expéditeur de scanner le code QR.';
+      "Indique le montant que tu souhaites recevoir et demande à l'expéditeur de scanner le code QR.";
   @override
   String get setting => 'Paramètres';
   @override
@@ -537,7 +537,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get settingNodeList => 'Nœuds disponibles';
   @override
-  String get settingPrefix => 'Préfixe d\'adresse';
+  String get settingPrefix => "Préfixe d'adresse";
   @override
   String get settingPrefixList => 'Préfixe disponible';
   @override
@@ -562,7 +562,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   String get pinHint =>
       'Tu auras besoin de ce code NIP pour effectuer des transactions ou ajouter de nouveaux comptes.';
   @override
-  String get pinInfo => 'Le code NIP doit contenir au moins 4 chiffres. En cas de perte du NIP, le compte n\'est '
+  String get pinInfo => "Le code NIP doit contenir au moins 4 chiffres. En cas de perte du NIP, le compte n'est "
       'pas récupérable, sauf si tu as fait une sauvegarde sur la page de profil.';
   @override
   String get pinSecure => 'Sécurise ton compte avec un NIP.';
@@ -608,7 +608,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   String get noMnemonicFound => 'Aucun mnémonique trouvé';
   @override
   String get importedWithRawSeedHenceNoMnemonic =>
-      'Le compte a été importé avec une graine brute et n\'a donc pas de mnémonique.';
+      "Le compte a été importé avec une graine brute et n'a donc pas de mnémonique.";
   @override
   String get addContact => 'ajouter un contact';
   @override
@@ -616,12 +616,12 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get exportAccount => 'exporter';
   @override
-  String get errorUserNameIsRequired => 'Le nom d\'utilisateur ne doit pas être vide';
+  String get errorUserNameIsRequired => "Le nom d'utilisateur ne doit pas être vide";
   @override
   String get observedPendingExtrinsic =>
       'Une transaction non confirmée a été observée. Veuillez attendre la confirmation!';
   @override
-  String get appHints => 'Conseils pour l\'app';
+  String get appHints => "Conseils pour l'app";
   @override
   String get meetUpNotifications => 'Notifications Rencontre';
   @override
@@ -629,7 +629,7 @@ class TranslationsFrProfile implements TranslationsProfile {
       'Si ton appareil est un smartphone Xiaomi ou Honor, le démarrage automatique doit être activé pour recevoir les notifications rencontre '
       'de recevoir des notifications.';
   @override
-  String get openAppSettings => 'Ouvrir les paramètres de l\'application';
+  String get openAppSettings => "Ouvrir les paramètres de l'application";
   @override
   String get enableAutoStart => 'Activer le démarrage automatique';
 }

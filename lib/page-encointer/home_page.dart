@@ -63,7 +63,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                         width: 16,
                         decoration: const BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(width: 2.0),
+                            bottom: BorderSide(width: 2),
                           ),
                         ),
                       )
@@ -122,7 +122,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
-        iconSize: 22.0,
+        iconSize: 22,
         onTap: (index) async {
           if (_tabList[index].key == TabKey.scan) {
             // Push `ScanPage.Route`instead of changing the Page.

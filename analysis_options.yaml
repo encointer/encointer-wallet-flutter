@@ -10,76 +10,22 @@ linter:
     use_named_constants: false
     avoid_positional_boolean_parameters: false
     comment_references: false
-
-    invalid_assignment: true
-    omit_local_variable_types: true
-    prefer_final_locals: true
-    avoid_final_parameters: true
-    type_annotate_public_apis: true
-    always_declare_return_types: true
-    prefer_asserts_with_message: true
-    prefer_const_literals_to_create_immutables: true
-    prefer_const_constructors_in_immutables: true
-    prefer_const_declarations: true
-    unnecessary_const: true
-    constant_identifier_names: true
-    sort_child_properties_last: true
-    sort_constructors_first: true
-    prefer_constructors_over_static_methods: true
-    sort_unnamed_constructors_first: true
-    use_decorated_box: true
-    sized_box_shrink_expand: true
-    use_colored_box: true
-    prefer_if_elements_to_conditional_expressions: true
-    avoid_print: true
-    prefer_is_empty: true
-    unnecessary_raw_strings: true
-    one_member_abstracts: true
-    use_string_buffers: true
-    unnecessary_parenthesis: true
-    unnecessary_null_checks: true
-    unnecessary_await_in_return: true
-    prefer_final_in_for_each: true
-    void_checks: true
-    avoid_returning_null_for_void: true
-    avoid_function_literals_in_foreach_calls: true
-    avoid_unnecessary_containers: true
-    noop_primitive_operations: true
-    missing_whitespace_between_adjacent_strings: true
-
     require_trailing_commas: false
-    avoid_dynamic_calls: false
-    unawaited_futures: false
-    prefer_int_literals: false
-    only_throw_errors: false
-    parameter_assignments: false
     depend_on_referenced_packages: false
-    avoid_equals_and_hash_code_on_mutable_classes: false
-    join_return_with_assignment: false
+
+    unawaited_futures: false
     use_build_context_synchronously: false
     use_setters_to_change_properties: false
+    avoid_equals_and_hash_code_on_mutable_classes: false
     overridden_fields: false
-    avoid_escaping_inner_quotes: false
+    parameter_assignments: false
+    avoid_dynamic_calls: false
 
 analyzer:
   language:
-    strict-casts: true
-    strict-inference: true
     strict-raw-types: false
 
   errors:
-    invalid_assignment: true
-    argument_type_not_assignable: true
-    return_of_invalid_type: true
-    map_key_type_not_assignable: true
-    non_bool_operand: true
-    return_of_invalid_type_from_closure: true
-    list_element_type_not_assignable: true
-    non_bool_negation_expression: true
-    non_bool_condition: true
-    prefer_iterable_wheretype: true
-    prefer_for_elements_to_map_fromiterable: true
-    # todo and fixme
     todo: false
     fixme: false
 
@@ -88,4 +34,3 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "bin/cache/**"
-    - assets/translations

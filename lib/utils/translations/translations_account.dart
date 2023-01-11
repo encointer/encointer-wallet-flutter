@@ -162,7 +162,7 @@ class TranslationsFrAccount implements TranslationsAccount {
   @override
   String get create => 'Créer un compte';
   @override
-  String get createError => 'Une erreur s\'est produite lors de la création de ton compte';
+  String get createError => "Une erreur s'est produite lors de la création de ton compte";
   @override
   String get createHint => '(Exemple Alice)';
   @override
@@ -172,7 +172,7 @@ class TranslationsFrAccount implements TranslationsAccount {
   @override
   String get createPassword2Error => 'Les codes NIP ne correspondent pas';
   @override
-  String get createPasswordError => 'Le code NIP doit être composé d\'au moins 4 chiffres et d\'aucun autre caractère';
+  String get createPasswordError => "Le code NIP doit être composé d'au moins 4 chiffres et d'aucun autre caractère";
   @override
   String get importDuplicate => 'Ce compte existe déjà, veux-tu le remplacer?';
   @override
@@ -182,9 +182,9 @@ class TranslationsFrAccount implements TranslationsAccount {
   @override
   String get importInvalidMnemonic => 'Mnémonique invalide entré.';
   @override
-  String get importMustNotBeEmpty => 'L\'entrée ne peut pas être vide';
+  String get importMustNotBeEmpty => "L'entrée ne peut pas être vide";
   @override
-  String get importPrivateKeyUnsupported => 'Le compte d\'importation avec clé privée n\'est pas encore pris en charge';
+  String get importPrivateKeyUnsupported => "Le compte d'importation avec clé privée n'est pas encore pris en charge";
   @override
   String get keystore => 'Keystore (json)';
   @override
