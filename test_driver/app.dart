@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upgrader/upgrader.dart';
@@ -56,7 +57,7 @@ void main() async {
 
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
-  final localService = LangService(await SharedPreferences.getInstance());
+  final pref = await SharedPreferences.getInstance();
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
@@ -64,7 +65,7 @@ void main() async {
     MultiProvider(
       providers: [
         Provider<AppSettings>(
-          create: (context) => AppSettings(localService)..init(),
+          create: (context) => AppSettings(LangService(pref), LogService(pref, Client()))..init(),
         ),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()

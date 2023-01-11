@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,13 +28,13 @@ Future<void> main({AppcastConfiguration? appCast}) async {
 
   HttpOverrides.global = MyHttpOverrides();
 
-  final localService = LangService(await SharedPreferences.getInstance());
+  final pref = await SharedPreferences.getInstance();
 
   runApp(
     MultiProvider(
       providers: [
         Provider<AppSettings>(
-          create: (context) => AppSettings(localService)..init(),
+          create: (context) => AppSettings(LangService(pref), LogService(pref, Client()))..init(),
         ),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()

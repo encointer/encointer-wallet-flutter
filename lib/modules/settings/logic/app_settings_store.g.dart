@@ -14,6 +14,12 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   Locale get locale =>
       (_$localeComputed ??= Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale')).value;
+  Computed<bool>? _$sendToTrelloLogComputed;
+
+  @override
+  bool get sendToTrelloLog => (_$sendToTrelloLogComputed ??=
+          Computed<bool>(() => super.sendToTrelloLog, name: '_AppSettingsBase.sendToTrelloLog'))
+      .value;
 
   late final _$_localeAtom = Atom(name: '_AppSettingsBase._locale', context: context);
 
@@ -30,11 +36,33 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
+  late final _$_sendToTrelloLogAtom = Atom(name: '_AppSettingsBase._sendToTrelloLog', context: context);
+
+  @override
+  bool get _sendToTrelloLog {
+    _$_sendToTrelloLogAtom.reportRead();
+    return super._sendToTrelloLog;
+  }
+
+  @override
+  set _sendToTrelloLog(bool value) {
+    _$_sendToTrelloLogAtom.reportWrite(value, super._sendToTrelloLog, () {
+      super._sendToTrelloLog = value;
+    });
+  }
+
   late final _$setLocaleAsyncAction = AsyncAction('_AppSettingsBase.setLocale', context: context);
 
   @override
   Future<void> setLocale(int index) {
     return _$setLocaleAsyncAction.run(() => super.setLocale(index));
+  }
+
+  late final _$setSendToTrelloLogAsyncAction = AsyncAction('_AppSettingsBase.setSendToTrelloLog', context: context);
+
+  @override
+  Future<void> setSendToTrelloLog(bool value) {
+    return _$setSendToTrelloLogAsyncAction.run(() => super.setSendToTrelloLog(value));
   }
 
   late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
@@ -52,7 +80,8 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   String toString() {
     return '''
-locale: ${locale}
+locale: ${locale},
+sendToTrelloLog: ${sendToTrelloLog}
     ''';
   }
 }
