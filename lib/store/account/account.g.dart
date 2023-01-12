@@ -365,16 +365,6 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setAccountsIndex(List<dynamic> list) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAccountsIndex');
-    try {
-      return super.setAccountsIndex(list);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setAddressIndex(List<dynamic> list) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAddressIndex');
     try {

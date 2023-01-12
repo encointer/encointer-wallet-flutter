@@ -372,15 +372,6 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setAccountsIndex(List list) {
-    final data = <String?, Map>{};
-    for (final i in list) {
-      data[i['accountId'] as String] = i as Map;
-    }
-    accountIndexMap = data;
-  }
-
-  @action
   void setAddressIndex(List list) {
     for (final i in list) {
       addressIndexMap[(i as Map<String, dynamic>)['accountId'] as String] = i;
