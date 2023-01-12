@@ -7,7 +7,7 @@ class ContactQrCode extends QrCode<ContactData> {
     CommunityIdentifier? cid,
     String? network,
     required String label,
-    this.version = QrCodeVersion.v1_0,
+    this.qrCodeVersion = QrCodeVersion.v1_0,
   }) : super(ContactData(account: account, cid: cid, network: network, label: label));
 
   factory ContactQrCode.fromPayload(String payload) {
@@ -20,18 +20,14 @@ class ContactQrCode extends QrCode<ContactData> {
     } else {
       return ContactQrCode.withData(
         ContactData.fromQrFieldsV2(fields.sublist(2)),
-        version: QrCodeVersion.v2_0,
+        qrCodeVersion: QrCodeVersion.v2_0,
       );
     }
   }
 
-  ContactQrCode.withData(super.data, {this.version = QrCodeVersion.v1_0});
+  ContactQrCode.withData(super.data, {this.qrCodeVersion = QrCodeVersion.v1_0});
 
-  @override
-  QrCodeContext? context = QrCodeContext.contact;
-
-  @override
-  QrCodeVersion? version;
+  final QrCodeVersion qrCodeVersion;
 
   @override
   String toQrPayload() {
@@ -43,6 +39,12 @@ class ContactQrCode extends QrCode<ContactData> {
     }
     return qrFields.join(qrCodeFieldSeparator);
   }
+
+  @override
+  QrCodeContext get context => QrCodeContext.contact;
+
+  @override
+  QrCodeVersion get version => qrCodeVersion;
 }
 
 class ContactData implements ToQrFields {

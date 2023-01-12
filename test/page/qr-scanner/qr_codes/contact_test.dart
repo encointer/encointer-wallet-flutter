@@ -11,7 +11,7 @@ void main() {
         label: 'label',
         cid: CommunityIdentifier.fromFmtString('sqm1v79dF6b'),
         network: 'nctr-k',
-        version: QrCodeVersion.v2_0,
+        qrCodeVersion: QrCodeVersion.v2_0,
       );
 
       expect(
