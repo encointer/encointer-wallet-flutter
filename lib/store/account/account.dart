@@ -188,7 +188,7 @@ abstract class _AccountStore with Store {
             NotificationPlugin.showNotification(
               0,
               args['notificationTitle'] as String?,
-              'Failed to sendTx: ${args['title']} - ${args['txInfo']['module']}.${args['txInfo']['call']}',
+              'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
@@ -220,7 +220,7 @@ abstract class _AccountStore with Store {
   @action
   Future<void> updateAccountName(AccountData account, String newName) async {
     final acc = AccountData.toJson(account);
-    acc['meta']['name'] = newName;
+    (acc['meta'] as Map<String, dynamic>)['name'] = newName;
 
     await updateAccount(acc);
   }
