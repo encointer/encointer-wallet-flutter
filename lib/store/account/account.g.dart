@@ -365,26 +365,6 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setPubKeyIconsMap(List<dynamic> list) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setPubKeyIconsMap');
-    try {
-      return super.setPubKeyIconsMap(list);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setAddressIconsMap(List<dynamic> list) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAddressIconsMap');
-    try {
-      return super.setAddressIconsMap(list);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setAccountsIndex(List<dynamic> list) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAccountsIndex');
     try {

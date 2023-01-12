@@ -198,19 +198,6 @@ class Fmt {
     return reg.hasMatch(pass);
   }
 
-  static List<List> filterCandidateList(List<List> ls, String filter, Map accIndexMap) {
-    ls.retainWhere((i) {
-      final value = filter.trim().toLowerCase();
-      var accName = '';
-      final accInfo = accIndexMap[i[0]] as Map?;
-      if (accInfo != null) {
-        accName = accInfo['identity']['display'] as String? ?? '';
-      }
-      return (i[0] as String).toLowerCase().contains(value) || accName.toLowerCase().contains(value);
-    });
-    return ls;
-  }
-
   static String accountName(BuildContext context, AccountData acc) {
     return '${acc.name}${(acc.observation ?? false) ? ' (${I18n.of(context)!.translationsForLocale().account.observe})' : ''}';
   }
@@ -240,9 +227,9 @@ class Fmt {
     var display = Fmt.address(address);
     if (accInfo != null) {
       if ((accInfo['identity'] as Map<String, dynamic>)['display'] != null) {
-        display = accInfo['identity']['display'] as String?;
-        if (accInfo['identity']['displayParent'] != null) {
-          display = '${accInfo['identity']['displayParent']}/$display';
+        display = (accInfo['identity'] as Map<String, dynamic>)['display'] as String?;
+        if ((accInfo['identity'] as Map<String, dynamic>)['displayParent'] != null) {
+          display = '${(accInfo['identity'] as Map<String, dynamic>)['displayParent']}/$display';
         }
       } else if (accInfo['accountIndex'] != null) {
         display = accInfo['accountIndex'] as String?;
@@ -255,24 +242,6 @@ class Fmt {
   static String tokenView(String? token) {
     final tokenView = token ?? '';
     return tokenView;
-  }
-
-  static Widget accountDisplayName(String address, Map accInfo) {
-    return Row(
-      children: <Widget>[
-        if ((accInfo['identity']['judgements'] as List).isNotEmpty)
-          Container(
-            width: 14,
-            margin: const EdgeInsets.only(right: 4),
-            child: Image.asset('assets/images/assets/success.png'),
-          )
-        else
-          const SizedBox(height: 16),
-        Expanded(
-          child: Text(accountDisplayNameString(address, accInfo)!),
-        )
-      ],
-    );
   }
 
   static String addressOfAccount(AccountData acc, AppStore store) {
