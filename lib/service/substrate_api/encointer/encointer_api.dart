@@ -424,7 +424,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
     final cids = await jsApi.evalJavascript('encointer.getCommunityIdentifiers()').then(
-          (res) => List<dynamic>.from(res['cids'] as Iterable)
+          (res) => List<dynamic>.from((res as Map<String, dynamic>)['cids'] as Iterable)
               .map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>))
               .toList(),
         );
@@ -460,7 +460,8 @@ class EncointerApi {
     }
 
     final reputations = {
-      for (var cr in reputationsList as List) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
+      for (var cr in reputationsList as List<dynamic>)
+        (cr as List<dynamic>)[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
     };
 
     await store.encointer.account?.setReputations(reputations);

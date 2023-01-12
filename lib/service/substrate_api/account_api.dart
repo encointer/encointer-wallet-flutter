@@ -14,7 +14,8 @@ class AccountApi {
 
   final JSApi jsApi;
   final AppStore store;
-  Function? fetchAccountData;
+
+  void Function()? fetchAccountData;
 
   Future<void> initAccounts() async {
     if (store.account.accountList.isNotEmpty) {
@@ -35,7 +36,7 @@ class AccountApi {
     }
   }
 
-  void setFetchAccountData(Function fetchAccountData) {
+  void setFetchAccountData(void Function() fetchAccountData) {
     this.fetchAccountData = fetchAccountData;
   }
 
@@ -105,9 +106,6 @@ class AccountApi {
     await store.loadAccountCache();
     if (fetchData) {
       fetchAccountData?.call();
-      // if (fetchAccountData != null) {
-      //   fetchAccountData!();
-      // }
     }
   }
 

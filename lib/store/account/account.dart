@@ -34,11 +34,11 @@ abstract class _AccountStore with Store {
   final AppStore rootStore;
 
   Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc) {
-    acc['name'] = newAccount.name.isEmpty ? acc['meta']['name'] : newAccount.name;
-    if (acc['meta']['whenCreated'] == null) {
-      acc['meta']['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
+    acc['name'] = newAccount.name.isEmpty ? (acc['meta'] as Map<String, dynamic>)['name'] : newAccount.name;
+    if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
+      (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
     }
-    acc['meta']['whenEdited'] = DateTime.now().millisecondsSinceEpoch;
+    (acc['meta'] as Map<String, dynamic>)['whenEdited'] = DateTime.now().millisecondsSinceEpoch;
     return acc;
   }
 
