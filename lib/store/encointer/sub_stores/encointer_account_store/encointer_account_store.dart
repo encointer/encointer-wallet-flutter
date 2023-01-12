@@ -107,9 +107,9 @@ abstract class _EncointerAccountStore with Store {
 
     final transfers = list.map((i) {
       return {
-        // Here, for now, [setTransferTxs] is not called at all. 
-        // Because this function is related to transaction history and is not used at the moment, 
-        // but we will integrate it in the future, so we can't know the type of [List list] for now, 
+        // Here, for now, [setTransferTxs] is not called at all.
+        // Because this function is related to transaction history and is not used at the moment,
+        // but we will integrate it in the future, so we can't know the type of [List list] for now,
         // please check the type of [List list] again when integrated.
         'block_timestamp': (i as Map<String, dynamic>)['time'],
         'hash': i['hash'],
