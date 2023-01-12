@@ -6,9 +6,9 @@ const String qrCodeFieldSeparator = '\n';
 abstract class QrCode<QrCodeData extends ToQrFields> {
   QrCode(this.data);
 
-  QrCodeContext? context;
+  QrCodeContext get context;
 
-  QrCodeVersion? version;
+  QrCodeVersion get version;
 
   QrCodeData data;
 

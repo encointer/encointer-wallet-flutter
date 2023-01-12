@@ -12,7 +12,7 @@ void main() {
         network: 'nctr-k',
         amount: 1.001,
         label: 'label',
-        version: QrCodeVersion.v2_0,
+        qrCodeVersion: QrCodeVersion.v2_0,
       );
 
       expect(
