@@ -65,7 +65,7 @@ void main() async {
     MultiProvider(
       providers: [
         Provider<AppSettings>(
-          create: (context) => AppSettings(LangService(pref), LogService(pref, Client()))..init(),
+          create: (context) => AppSettings(LangService(pref), SendErrorMessagesService(pref, Client()))..init(),
         ),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()

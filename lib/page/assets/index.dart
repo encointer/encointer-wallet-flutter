@@ -557,7 +557,7 @@ class _AssetsState extends State<Assets> {
             ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
     }).catchError((Object? e, StackTrace? s) async {
-      await context.read<AppSettings>().sendToTrello('$e', 'addBalanceEntry in index page', s);
+      await context.read<AppSettings>().sendMessageToTrello('$e', 'addBalanceEntry in index page', s);
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
   }

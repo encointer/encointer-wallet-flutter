@@ -3,17 +3,17 @@ import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class LogService {
-  const LogService(this.pref, this.client);
+class SendErrorMessagesService {
+  const SendErrorMessagesService(this.pref, this.client);
 
   final SharedPreferences pref;
   final http.Client client;
 
   static const _sendToTrelloKey = 'send-trello';
 
-  bool getSendToTrello() => pref.getBool(_sendToTrelloKey) ?? true;
+  bool getShouldSendToTrello() => pref.getBool(_sendToTrelloKey) ?? true;
 
-  Future<bool> setSendToTrello(bool value) async {
+  Future<bool> setShouldSendToTrello(bool value) async {
     return pref.setBool(_sendToTrelloKey, value);
   }
 
@@ -23,7 +23,7 @@ class LogService {
   static const listId = '<list-id>';
   static const trelloBaseUrl = 'https://api.trello.com/1/';
 
-  Future<void> sendToTrelloLog(
+  Future<void> sendMessageToTrello(
     String message, [
     String? description,
     StackTrace? stackTrace,

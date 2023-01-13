@@ -14,11 +14,11 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   Locale get locale =>
       (_$localeComputed ??= Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale')).value;
-  Computed<bool>? _$sendToTrelloLogComputed;
+  Computed<bool>? _$shouldSendToTrelloComputed;
 
   @override
-  bool get sendToTrelloLog => (_$sendToTrelloLogComputed ??=
-          Computed<bool>(() => super.sendToTrelloLog, name: '_AppSettingsBase.sendToTrelloLog'))
+  bool get shouldSendToTrello => (_$shouldSendToTrelloComputed ??=
+          Computed<bool>(() => super.shouldSendToTrello, name: '_AppSettingsBase.shouldSendToTrello'))
       .value;
 
   late final _$_localeAtom = Atom(name: '_AppSettingsBase._locale', context: context);
@@ -36,18 +36,18 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$_sendToTrelloLogAtom = Atom(name: '_AppSettingsBase._sendToTrelloLog', context: context);
+  late final _$_shouldSendToTrelloAtom = Atom(name: '_AppSettingsBase._shouldSendToTrello', context: context);
 
   @override
-  bool get _sendToTrelloLog {
-    _$_sendToTrelloLogAtom.reportRead();
-    return super._sendToTrelloLog;
+  bool get _shouldSendToTrello {
+    _$_shouldSendToTrelloAtom.reportRead();
+    return super._shouldSendToTrello;
   }
 
   @override
-  set _sendToTrelloLog(bool value) {
-    _$_sendToTrelloLogAtom.reportWrite(value, super._sendToTrelloLog, () {
-      super._sendToTrelloLog = value;
+  set _shouldSendToTrello(bool value) {
+    _$_shouldSendToTrelloAtom.reportWrite(value, super._shouldSendToTrello, () {
+      super._shouldSendToTrello = value;
     });
   }
 
@@ -58,11 +58,12 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     return _$setLocaleAsyncAction.run(() => super.setLocale(index));
   }
 
-  late final _$setSendToTrelloLogAsyncAction = AsyncAction('_AppSettingsBase.setSendToTrelloLog', context: context);
+  late final _$setShouldSendToTrelloAsyncAction =
+      AsyncAction('_AppSettingsBase.setShouldSendToTrello', context: context);
 
   @override
-  Future<void> setSendToTrelloLog(bool value) {
-    return _$setSendToTrelloLogAsyncAction.run(() => super.setSendToTrelloLog(value));
+  Future<void> setShouldSendToTrello(bool value) {
+    return _$setShouldSendToTrelloAsyncAction.run(() => super.setShouldSendToTrello(value));
   }
 
   late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
@@ -81,7 +82,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   String toString() {
     return '''
 locale: ${locale},
-sendToTrelloLog: ${sendToTrelloLog}
+shouldSendToTrello: ${shouldSendToTrello}
     ''';
   }
 }

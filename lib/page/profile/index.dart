@@ -184,8 +184,8 @@ class _ProfileState extends State<Profile> {
               SwitchListTile(
                 title: Text(dic.profile.sendErrorMessages),
                 subtitle: Text(dic.profile.sendErrorMessagesDescription),
-                value: context.watch<AppSettings>().sendToTrelloLog,
-                onChanged: context.read<AppSettings>().setSendToTrelloLog,
+                value: context.watch<AppSettings>().shouldSendToTrello,
+                onChanged: context.read<AppSettings>().setShouldSendToTrello,
               ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),

@@ -11,16 +11,16 @@ part 'app_settings_store.g.dart';
 class AppSettings = _AppSettingsBase with _$AppSettings;
 
 abstract class _AppSettingsBase with Store {
-  _AppSettingsBase(this.langService, this.logService);
+  _AppSettingsBase(this.langService, this.sendErrorMessagesService);
 
   final LangService langService;
-  final LogService logService;
+  final SendErrorMessagesService sendErrorMessagesService;
 
   @observable
   Locale _locale = const Locale('en');
 
   @observable
-  bool _sendToTrelloLog = true;
+  bool _shouldSendToTrello = false;
 
   final locales = const <Locale>[
     Locale('en', ''),
@@ -33,12 +33,12 @@ abstract class _AppSettingsBase with Store {
   Locale get locale => _locale;
 
   @computed
-  bool get sendToTrelloLog => _sendToTrelloLog;
+  bool get shouldSendToTrello => _shouldSendToTrello;
 
   @action
   void init() {
     _locale = langService.init();
-    _sendToTrelloLog = logService.getSendToTrello();
+    _shouldSendToTrello = sendErrorMessagesService.getShouldSendToTrello();
   }
 
   @action
@@ -47,17 +47,19 @@ abstract class _AppSettingsBase with Store {
   }
 
   @action
-  Future<void> setSendToTrelloLog(bool value) async {
-    _sendToTrelloLog = value;
-    await logService.setSendToTrello(value);
+  Future<void> setShouldSendToTrello(bool value) async {
+    _shouldSendToTrello = value;
+    await sendErrorMessagesService.setShouldSendToTrello(value);
   }
 
-  Future<void> sendToTrello(
+  Future<void> sendMessageToTrello(
     String message, [
     String? description,
     StackTrace? stackTrace,
   ]) async {
-    if (_sendToTrelloLog) await logService.sendToTrelloLog(message, description, stackTrace);
+    if (_shouldSendToTrello) {
+      await sendErrorMessagesService.sendMessageToTrello(message, description, stackTrace);
+    }
   }
 
   String getName(String code) => langService.getName(code);
