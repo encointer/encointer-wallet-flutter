@@ -239,7 +239,11 @@ abstract class _AppStore with Store {
 
     if (!settings.loading) {
       dataUpdate.setInvalidated();
-      webApi.assets.subscribeBalance();
+      webApi.assets.startSubscriptions(
+        account.currentAccountPubKey,
+        account.currentAddress,
+        assets.setAccountBalances,
+      );
     }
   }
 

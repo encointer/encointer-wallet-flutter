@@ -98,14 +98,15 @@ abstract class _AssetsStore with Store {
 //  }
 
   @action
-  Future<void> setAccountBalances(String? pubKey, Map? amt, {bool needCache = true}) async {
+  Future<void> setAccountBalances(String? pubKey, Map<String, dynamic> data, {bool? needCache, bool? fromCache}) async {
     if (rootStore.account.currentAccount.pubKey != pubKey) return;
 
-    amt!.forEach((k, v) {
-      balances[k as String] = BalancesInfo.fromJson(v as Map<String, dynamic>);
-    });
+    final amt = ((fromCache ?? false) ? data : Map.of({rootStore.settings.networkState!.tokenSymbol: data}))
+      ..forEach((k, v) {
+        balances[k] = BalancesInfo.fromJson(v as Map<String, dynamic>);
+      });
 
-    if (!needCache) return;
+    if (!(needCache ?? true)) return;
     var cache = await rootStore.localStorage.getAccountCache(
       rootStore.account.currentAccount.pubKey,
       cacheBalanceKey,
@@ -210,7 +211,7 @@ abstract class _AssetsStore with Store {
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTokenBalanceKey)),
     ]);
     if (cache[0] != null) {
-      setAccountBalances(pubKey, cache[0]! as Map<String, dynamic>, needCache: false);
+      setAccountBalances(pubKey, cache[0]! as Map<String, dynamic>, needCache: false, fromCache: true);
     }
     if (cache[1] != null) {
       txs = ObservableList.of(

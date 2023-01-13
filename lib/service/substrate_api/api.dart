@@ -44,7 +44,7 @@ class Api {
       js,
       dartApi,
       AccountApi(store, js),
-      AssetsApi(store, js),
+      AssetsApi(js),
       ChainApi(js),
       CodecApi(js),
       EncointerApi(store, js, dartApi),
@@ -170,7 +170,11 @@ class Api {
   }
 
   void fetchAccountData() {
-    assets.fetchBalance();
+    assets.fetchBalance(
+      store.account.currentAccountPubKey,
+      store.account.currentAddress,
+      store.assets.setAccountBalances,
+    );
     encointer.getCommunityData();
   }
 
@@ -191,7 +195,11 @@ class Api {
   void startSubscriptions() {
     encointer.startSubscriptions();
     chain.startSubscriptions(store.chain.setLatestHeader);
-    assets.startSubscriptions();
+    assets.startSubscriptions(
+      store.account.currentAccountPubKey,
+      store.account.currentAddress,
+      store.assets.setAccountBalances,
+    );
   }
 
   Future<void> stopSubscriptions() async {
