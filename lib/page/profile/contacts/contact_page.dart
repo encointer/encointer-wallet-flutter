@@ -88,18 +88,13 @@ class _Contact extends State<ContactPage> {
 
       // get contact info
       if (_isObservation!) {
-        final res = await webApi.account.encodeAddress(
-          [pubKey],
-          // store.account.pubKeyAddressMap[store.settings.endpoint.ss58],
-          // setPubKeyAddressMap: store.account.setPubKeyAddressMap,
-        );
+        final res = await webApi.account.encodeAddress([pubKey]);
 
         store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
 
         final addresses = <String?>[];
 
         for (final key in [pubKey]) {
-          // Log.d('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}', 'AccountApi');
           addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![key]);
         }
       } else {

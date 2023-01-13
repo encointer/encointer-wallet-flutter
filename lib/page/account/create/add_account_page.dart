@@ -60,11 +60,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
       return;
     }
 
-    final res = await webApi.account.encodeAddress(
-      [acc['pubKey'] as String],
-      // store.account.pubKeyAddressMap[store.settings.endpoint.ss58],
-      // setPubKeyAddressMap: store.account.setPubKeyAddressMap,
-    );
+    final res = await webApi.account.encodeAddress([acc['pubKey'] as String]);
 
     store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
 

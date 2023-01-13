@@ -96,20 +96,15 @@ class Api {
       final keys = await account.initAccounts(
         store.account.accountList,
         store.settings.contactList,
-        // store.account.pubKeyAddressMap[store.settings.endpoint.ss58],
-        // setPubKeyAddressMap: store.account.setPubKeyAddressMap,
       );
 
       if (keys != null) store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
 
       final contactList = List<AccountData>.of(store.settings.contactList);
-      final contacts = List<AccountData>.of(contactList)
-        // set pubKeyAddressMap for observation accounts
-        ..retainWhere((i) => i.observation ?? false);
+      final contacts = List<AccountData>.of(contactList)..retainWhere((i) => i.observation ?? false);
       final observations = contacts.map((i) => i.pubKey).toList();
       if (observations.isNotEmpty) {
         account.encodeAddress(observations);
-        // encodeAddress(observations);
       }
 
       if (store.account.currentAddress.isNotEmpty) {
