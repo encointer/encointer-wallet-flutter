@@ -87,8 +87,8 @@ abstract class TranslationsProfile {
   String get enableAutoStart;
   String get contactUs;
   String get checkEmailApp;
-  String get sendLogsToTrello;
-  String get sendLogsToTrelloDes;
+  String get sendErrorMessages;
+  String get sendErrorMessagesDescription;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -269,9 +269,10 @@ class TranslationsEnProfile implements TranslationsProfile {
   @override
   String get enableAutoStart => 'Enable autostart';
   @override
-  String get sendLogsToTrello => 'Send error messages to Trello';
+  String get sendErrorMessages => 'Send error messages';
   @override
-  String get sendLogsToTrelloDes => "If you don't want to send it, you can block it.";
+  String get sendErrorMessagesDescription =>
+      'If enabled, we will anonymously collect critical error only and no other diagnostical data.';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -455,9 +456,10 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   String get enableAutoStart => 'Autostart aktivieren';
   @override
-  String get sendLogsToTrello => 'Senden Fehlermeldungen an Trello';
+  String get sendErrorMessages => 'Fehlermeldungen senden';
   @override
-  String get sendLogsToTrelloDes => 'Wenn Sie es nicht senden möchten, können Sie es blockieren.';
+  String get sendErrorMessagesDescription =>
+      'Falls aktiviert werden wir nur kritische Fehler anonym sammeln und keine anderen diagnosichen Daten.';
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
@@ -643,9 +645,9 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get enableAutoStart => 'Activer le démarrage automatique';
   @override
-  String get sendLogsToTrello => "Envoyer des messages d'erreur à Trello";
+  String get sendErrorMessages => "Envoyer des messages d'erreur";
   @override
-  String get sendLogsToTrelloDes => "Si vous ne voulez pas l'envoyer, vous pouvez le bloquer.";
+  String get sendErrorMessagesDescription => 'Ask malik :)';
 }
 
 class TranslationsRuProfile implements TranslationsProfile {
@@ -826,7 +828,8 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   String get enableAutoStart => 'Включить автозапуск';
   @override
-  String get sendLogsToTrello => 'Отправить сообщения об ошибках в Trello';
+  String get sendErrorMessages => 'Отправлять сообщения об ошибках';
   @override
-  String get sendLogsToTrelloDes => 'Если вы не хотите его отправлять, вы можете заблокировать его.';
+  String get sendErrorMessagesDescription =>
+      'Если этот параметр включен, мы будем анонимно собирать только критические ошибки и никакие другие диагностические данные.';
 }
