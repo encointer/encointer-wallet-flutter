@@ -34,7 +34,7 @@ class _Contact extends State<ContactPage> {
 
   bool _submitting = false;
 
-  Future<void> _onSave() async {
+  Future<void> _onSave(AppStore store) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
@@ -42,7 +42,12 @@ class _Contact extends State<ContactPage> {
       final dic = I18n.of(context)!.translationsForLocale();
       final addr = _addressCtrl.text.replaceAll(' ', '');
       final pubKeyAddress = await webApi.account.decodeAddress([addr]);
-      final pubKey = pubKeyAddress.keys.toList()[0] as String;
+      if (pubKeyAddress != null) {
+        store.account.setPubKeyAddressMap(
+          Map<String, Map>.from({store.settings.endpoint.ss58.toString(): pubKeyAddress}),
+        );
+      }
+      final pubKey = (pubKeyAddress ?? {}).keys.toList()[0] as String;
       final con = {
         'address': addr,
         'name': _nameCtrl.text,
@@ -55,7 +60,7 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
+        final exist = store.settings.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
           showCupertinoDialog<void>(
             context: context,
@@ -74,21 +79,40 @@ class _Contact extends State<ContactPage> {
           );
           return;
         } else {
-          context.read<AppStore>().settings.addContact(con);
+          store.settings.addContact(con);
         }
       } else {
         // edit contact
-        context.read<AppStore>().settings.updateContact(con);
+        store.settings.updateContact(con);
       }
 
       // get contact info
       if (_isObservation!) {
-        webApi.account.encodeAddress([pubKey]);
+        final res = await webApi.account.encodeAddress(
+          [pubKey],
+          // store.account.pubKeyAddressMap[store.settings.endpoint.ss58],
+          // setPubKeyAddressMap: store.account.setPubKeyAddressMap,
+        );
+
+        store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
+
+        final addresses = <String?>[];
+
+        for (final key in [pubKey]) {
+          // Log.d('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}', 'AccountApi');
+          addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![key]);
+        }
       } else {
         // if this address was used as observation and current account,
         // we need to change current account
-        if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {
-          webApi.account.changeCurrentAccount(fetchData: true);
+        if (pubKey == store.account.currentAccountPubKey) {
+          final current = await webApi.account.changeCurrentAccount(
+            accounts: store.account.accountListAll,
+          );
+          store.setCurrentAccount(current);
+          await store.loadAccountCache();
+
+          webApi.fetchAccountData();
         }
       }
       Navigator.of(context).pop();
@@ -214,7 +238,7 @@ class _Contact extends State<ContactPage> {
                 key: const Key('contact-save'),
                 submitting: _submitting,
                 text: dic.profile.contactSave,
-                onPressed: _onSave,
+                onPressed: () => _onSave(context.read<AppStore>()),
               ),
             ),
           ],

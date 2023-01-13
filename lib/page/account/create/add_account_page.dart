@@ -43,9 +43,14 @@ class _AddAccountPageState extends State<AddAccountPage> {
       _submitting = true;
     });
 
-    await webApi.account.generateAccount();
+    final account = await webApi.account.generateAccount();
 
-    final acc = await webApi.account.importAccount();
+    store.account.setNewAccountKey(account['mnemonic'] as String?);
+
+    final acc = await webApi.account.importAccount(
+      store.account.newAccount.key,
+      store.account.newAccount.password,
+    );
 
     if (acc['error'] != null) {
       setState(() {
@@ -55,7 +60,20 @@ class _AddAccountPageState extends State<AddAccountPage> {
       return;
     }
 
-    final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
+    final res = await webApi.account.encodeAddress(
+      [acc['pubKey'] as String],
+      // store.account.pubKeyAddressMap[store.settings.endpoint.ss58],
+      // setPubKeyAddressMap: store.account.setPubKeyAddressMap,
+    );
+
+    store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
+
+    final addresses = <String?>[];
+
+    for (final pubKey in [acc['pubKey'] as String]) {
+      addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey]);
+    }
+
     Log.d('Created new account with address: ${addresses[0]}', 'AddAccountPage');
 
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);

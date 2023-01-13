@@ -12,6 +12,7 @@ import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/service/substrate_api/types/gen_external_links_params.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 /// Global api instance
@@ -43,7 +44,7 @@ class Api {
       store,
       js,
       dartApi,
-      AccountApi(store, js),
+      AccountApi(js),
       AssetsApi(js),
       ChainApi(js),
       CodecApi(js),
@@ -71,7 +72,7 @@ class Api {
     dartApi.connect(store.settings.endpoint.value!);
 
     // need to do this from here as we can't access instance fields in constructor.
-    account.setFetchAccountData(fetchAccountData);
+    // account.setFetchAccountData(fetchAccountData);
 
     // launch the webView and connect to the endpoint
     Log.d('launch the webView', 'Api');
@@ -92,7 +93,24 @@ class Api {
 
     Future<void> postInitCallback() async {
       // load keyPairs from local data
-      await account.initAccounts();
+      final keys = await account.initAccounts(
+        store.account.accountList,
+        store.settings.contactList,
+        // store.account.pubKeyAddressMap[store.settings.endpoint.ss58],
+        // setPubKeyAddressMap: store.account.setPubKeyAddressMap,
+      );
+
+      if (keys != null) store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
+
+      final contactList = List<AccountData>.of(store.settings.contactList);
+      final contacts = List<AccountData>.of(contactList)
+        // set pubKeyAddressMap for observation accounts
+        ..retainWhere((i) => i.observation ?? false);
+      final observations = contacts.map((i) => i.pubKey).toList();
+      if (observations.isNotEmpty) {
+        account.encodeAddress(observations);
+        // encodeAddress(observations);
+      }
 
       if (store.account.currentAddress.isNotEmpty) {
         await store.encointer.initializeUninitializedStores(store.account.currentAddress);

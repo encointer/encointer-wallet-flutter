@@ -27,16 +27,33 @@ class CreateAccountForm extends StatelessWidget {
     final dic = I18n.of(context)!.translationsForLocale();
 
     Future<void> createAndImportAccount() async {
-      await webApi.account.generateAccount();
+      final account = await webApi.account.generateAccount();
+      store.account.setNewAccountKey(account['mnemonic'] as String?);
 
-      final acc = await webApi.account.importAccount();
+      final acc = await webApi.account.importAccount(
+        store.account.newAccount.key,
+        store.account.newAccount.password,
+      );
 
       if (acc['error'] != null) {
         _showErrorCreatingAccountDialog(context);
         return;
       }
 
-      final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
+      final res = await webApi.account.encodeAddress(
+        [acc['pubKey'] as String],
+        // store.account.pubKeyAddressMap[store.settings.endpoint.ss58],
+        // setPubKeyAddressMap: store.account.setPubKeyAddressMap,
+      );
+
+      store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
+
+      final addresses = <String?>[];
+      for (final key in [acc['pubKey'] as String]) {
+        // Log.d('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}', 'AccountApi');
+        addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![key]);
+      }
+
       await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
       final pubKey = acc['pubKey'] as String?;

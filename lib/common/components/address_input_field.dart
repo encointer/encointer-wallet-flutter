@@ -40,9 +40,12 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
     // check if user input is valid address or indices
     final checkAddress = await webApi.account.decodeAddress([input]);
-    if (checkAddress.isEmpty) {
-      return listLocal;
+    if (checkAddress != null) {
+      widget.store.account.setPubKeyAddressMap(
+        Map<String, Map>.from({widget.store.settings.endpoint.ss58.toString(): checkAddress}),
+      );
     }
+    if (checkAddress != null && checkAddress.isEmpty) return listLocal;
 
     final accountData = AccountData()..address = input;
     if (input.length < 47) {
@@ -51,11 +54,14 @@ class _AddressInputFieldState extends State<AddressInputField> {
         final accInfo = widget.store.account.addressIndexMap[e.address];
         return accInfo != null && accInfo['accountIndex'] == input;
       });
-      if (indicesIndex >= 0) {
-        return [listLocal[indicesIndex]];
-      }
+      if (indicesIndex >= 0) return [listLocal[indicesIndex]];
+
       // query account address with account indices
-      final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
+      final queryRes = await webApi.account.queryAddressWithAccountIndex(
+        input,
+        widget.store.settings.endpoint.ss58,
+      );
+
       if (queryRes != null) {
         accountData
           ..address = queryRes[0] as String
@@ -64,12 +70,15 @@ class _AddressInputFieldState extends State<AddressInputField> {
     } else {
       // check if input address in local account list
       final addressIndex = listLocal.indexWhere((e) => _itemAsString(e).contains(input));
-      if (addressIndex >= 0) {
-        return [listLocal[addressIndex]];
-      }
+      if (addressIndex >= 0) return [listLocal[addressIndex]];
     }
 
-    await webApi.account.fetchAddressIndex([accountData.address]);
+    final list = await webApi.account.fetchAddressIndex(
+      [accountData.address],
+      widget.store.account.addressIndexMap.keys,
+    );
+
+    widget.store.account.setAddressIndex(list);
 
     return [accountData];
   }

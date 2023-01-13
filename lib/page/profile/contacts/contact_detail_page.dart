@@ -40,11 +40,17 @@ class ContactDetailPage extends StatelessWidget {
             ),
             CupertinoButton(
               child: Text(dic.home.ok),
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop();
                 store.settings.removeContact(account);
                 if (store.account.currentAccountPubKey == account.pubKey) {
-                  webApi.account.changeCurrentAccount(fetchData: true);
+                  final current = await webApi.account.changeCurrentAccount(
+                    accounts: context.read<AppStore>().account.accountListAll,
+                  );
+                  context.read<AppStore>().setCurrentAccount(current);
+                  await context.read<AppStore>().loadAccountCache();
+
+                  webApi.fetchAccountData();
                 }
                 Navigator.of(context).pop();
               },

@@ -50,6 +50,8 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
     /// import account
     final acc = await webApi.account.importAccount(
+      context.read<AppStore>().account.newAccount.key,
+      context.read<AppStore>().account.newAccount.password,
       keyType: _keyType,
       cryptoType: _cryptoType,
       derivePath: _derivePath,
@@ -118,7 +120,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                 CupertinoButton(
                   child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () async {
-                    await _saveAccount(acc);
+                    await _saveAccount(acc, context.read<AppStore>());
                     Navigator.of(context).pop();
                   },
                 ),
@@ -128,19 +130,33 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         );
       }
     } else {
-      return _saveAccount(acc);
+      return _saveAccount(acc, context.read<AppStore>());
     }
   }
 
-  Future<void> _saveAccount(Map<String, dynamic> acc) async {
+  Future<void> _saveAccount(Map<String, dynamic> acc, AppStore store) async {
     Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
-    final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-    await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
+    final res = await webApi.account.encodeAddress(
+      [acc['pubKey'] as String],
+      // store.account.pubKeyAddressMap[store.settings.endpoint.ss58],
+      // setPubKeyAddressMap: store.account.setPubKeyAddressMap,
+    );
+
+    store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
+
+    final addresses = <String?>[];
+
+    for (final pubKey in [acc['pubKey'] as String]) {
+      // Log.d('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}', 'AccountApi');
+      addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey]);
+    }
+
+    await store.addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
 
     final pubKey = acc['pubKey'] as String?;
-    await context.read<AppStore>().setCurrentAccount(pubKey);
+    await store.setCurrentAccount(pubKey);
 
-    await context.read<AppStore>().loadAccountCache();
+    await store.loadAccountCache();
 
     // fetch info for the imported account
     webApi.fetchAccountData();
