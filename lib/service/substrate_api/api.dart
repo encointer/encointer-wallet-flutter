@@ -45,7 +45,7 @@ class Api {
       dartApi,
       AccountApi(store, js),
       AssetsApi(store, js),
-      ChainApi(store, js),
+      ChainApi(js),
       CodecApi(js),
       EncointerApi(store, js, dartApi),
       Ipfs(gateway: store.settings.ipfsGateway),
@@ -190,7 +190,7 @@ class Api {
 
   void startSubscriptions() {
     encointer.startSubscriptions();
-    chain.startSubscriptions();
+    chain.startSubscriptions(store.chain.setLatestHeader);
     assets.startSubscriptions();
   }
 

@@ -1,20 +1,24 @@
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
 
 class ChainApi {
-  ChainApi(this.store, this.jsApi);
+  const ChainApi(this.jsApi);
 
   final JSApi jsApi;
-  final AppStore store;
 
-  final String _timeStampSubscribeChannel = 'timestamp';
-  final String _newHeadsSubscribeChannel = 'latestHeader';
+  static const String _timeStampSubscribeChannel = 'timestamp';
+  static const String _newHeadsSubscribeChannel = 'latestHeader';
 
-  Future<void> startSubscriptions() async {
+  Future<void> startSubscriptions(void Function(Header latest) callback) async {
     Log.d('api: starting encointer subscriptions', 'ChainApi');
-    subscribeNewHeads();
+    jsApi.subscribeMessage(
+      'chain.subscribeNewHeads("$_newHeadsSubscribeChannel")',
+      _newHeadsSubscribeChannel,
+      (dynamic header) {
+        callback(Header.fromJson(header as Map<String, dynamic>));
+      },
+    );
   }
 
   Future<void> stopSubscriptions() async {
@@ -30,13 +34,5 @@ class ChainApi {
       _timeStampSubscribeChannel,
       (dynamic data) => {Log.d('timestamp: $data', 'ChainApi')},
     );
-  }
-
-  /// Subscribes to the latest headers
-  Future<void> subscribeNewHeads() async {
-    jsApi.subscribeMessage('chain.subscribeNewHeads("$_newHeadsSubscribeChannel")', _newHeadsSubscribeChannel,
-        (dynamic header) {
-      store.chain.setLatestHeader(Header.fromJson(header as Map<String, dynamic>));
-    });
   }
 }

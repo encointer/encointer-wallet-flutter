@@ -30,7 +30,7 @@ class MockApi extends Api {
           dartApi,
           MockAccountApi(store, js),
           MockAssetsApi(store, js),
-          MockChainApi(store, js),
+          MockChainApi(js),
           MockCodecApi(js),
           MockEncointerApi(store, js, dartApi),
           MockIpfs(ipfs_gateway_local),
