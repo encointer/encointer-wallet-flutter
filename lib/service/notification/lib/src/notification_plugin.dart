@@ -133,13 +133,13 @@ class NotificationPlugin {
     // Check if a notification with the specified id has already been scheduled
     final notificationAlreadyScheduled = pendingNotificationRequests.any((request) => request.id == id);
 
-    if (notificationAlreadyScheduled) {
-      if (overridePendingNotificationWithSameId) {
-        Log.p('Overriding pending notification with the same ID: $id');
-      } else {
-        Log.p('Found pending notification with the same ID: $id. Will not re-schedule notification.');
-        return;
-      }
+    if (notificationAlreadyScheduled && !overridePendingNotificationWithSameId) {
+      Log.p('Found pending notification with the same ID: $id. Will not re-schedule notification.');
+      return;
+    }
+
+    if (overridePendingNotificationWithSameId) {
+      Log.p('Overriding pending notification with the same ID: $id');
     }
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
