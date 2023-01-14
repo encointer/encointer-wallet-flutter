@@ -3,6 +3,8 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:encointer_wallet/utils/translations/translations_encointer.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
+// The difference between these offsets should be big enough, so that we can ensure
+// that we can schedule enough notification for each notification category.
 const int oneHourBeforeMeetupReminderOffset = 1000000; // one million
 const int oneDayBeforeMeetupReminderOffset = 2000000; // two millions
 
