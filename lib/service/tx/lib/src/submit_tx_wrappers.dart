@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -141,7 +140,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
           await scheduleMeetupNotifications(
             data.global!.ceremonyIndex,
             store.encointer.community!.meetupTime!,
-            context,
+            I18n.of(context)!.translationsForLocale().encointer,
           );
         }
       }
@@ -216,29 +215,6 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
       );
     },
   );
-}
-
-Future<void> scheduleMeetupNotifications(int notificationId, int meetupTime, BuildContext context) async {
-  final dic = I18n.of(context)!.translationsForLocale().encointer;
-  final meetupDateTime = DateTime.fromMillisecondsSinceEpoch(meetupTime);
-  final beforeOneHour = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(hours: 1)), tz.local);
-  final beforeOneDay = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(days: 1)), tz.local);
-  if (beforeOneHour.isAfter(DateTime.now())) {
-    await NotificationPlugin.scheduleNotification(
-      notificationId,
-      dic.meetupNotificationOneHourBeforeTitle,
-      dic.meetupNotificationOneHourBeforeContent,
-      beforeOneHour,
-    );
-  }
-  if (beforeOneDay.isAfter(DateTime.now())) {
-    await NotificationPlugin.scheduleNotification(
-      24 + notificationId,
-      dic.meetupNotificationOneDayBeforeTitle,
-      dic.meetupNotificationOneDayBeforeContent,
-      beforeOneDay,
-    );
-  }
 }
 
 Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
