@@ -13,6 +13,7 @@ import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Helpers to submit transactions.
 
@@ -135,6 +136,13 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       final registrationType = data.personal?.participantType;
       if (registrationType != null) {
         _showEducationalDialog(registrationType, context);
+        if (store.settings.endpoint == networkEndpointEncointerMainnet) {
+          await CeremonyNotifications.scheduleMeetupReminders(
+            data.global!.ceremonyIndex,
+            store.encointer.community!.meetupTime!,
+            I18n.of(context)!.translationsForLocale().encointer,
+          );
+        }
       }
       // Registering the participant burns the reputation.
       // Hence, we should fetch the new state afterwards.
