@@ -14,7 +14,7 @@ import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Helpers to submit transactions.
 
