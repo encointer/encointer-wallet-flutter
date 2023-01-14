@@ -1,5 +1,3 @@
-import 'package:timezone/timezone.dart' as tz;
-
 import 'package:encointer_wallet/utils/translations/translations_encointer.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
@@ -18,7 +16,7 @@ class CeremonyNotifications {
   static Future<void> scheduleMeetupReminders(int ceremonyIndex, int meetupTime, TranslationsEncointer dic) async {
     final meetupDateTime = DateTime.fromMillisecondsSinceEpoch(meetupTime);
 
-    final oneHourBeforeMeetup = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(hours: 1)), tz.local);
+    final oneHourBeforeMeetup = meetupDateTime.subtract(const Duration(hours: 1));
     if (oneHourBeforeMeetup.isAfter(DateTime.now())) {
       await NotificationPlugin.scheduleNotification(
         ceremonyIndex + oneHourBeforeMeetupReminderOffset,
@@ -28,7 +26,7 @@ class CeremonyNotifications {
       );
     }
 
-    final oneDayBeforeMeetup = tz.TZDateTime.from(meetupDateTime.subtract(const Duration(days: 1)), tz.local);
+    final oneDayBeforeMeetup = meetupDateTime.subtract(const Duration(days: 1));
     if (oneDayBeforeMeetup.isAfter(DateTime.now())) {
       await NotificationPlugin.scheduleNotification(
         ceremonyIndex + oneDayBeforeMeetupReminderOffset,

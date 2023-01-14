@@ -126,7 +126,7 @@ class NotificationPlugin {
     int id,
     String? title,
     String body,
-    tz.TZDateTime scheduledDate, {
+    DateTime scheduledDate, {
     String? payload,
     String? cid,
   }) async {
@@ -139,7 +139,7 @@ class NotificationPlugin {
         id,
         title,
         body,
-        scheduledDate,
+        tz.TZDateTime.from(scheduledDate, tz.local),
         platformChannelSpecifics(body),
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
         androidAllowWhileIdle: true,
