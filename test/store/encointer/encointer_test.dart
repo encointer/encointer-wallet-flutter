@@ -40,7 +40,7 @@ Future<AppStore> setupAppStore(String networkInfo) async {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('EncointerStore test', () {
+  group('Caching and serialization works', () {
     test('encointer store initialization, serialization and cache works', () async {
       final testNetwork = '${unitTestEndpoint.info!}-0';
       final appStore = await setupAppStore(testNetwork);
@@ -111,6 +111,56 @@ void main() {
         await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork)),
         expectedStore.toJson(),
       );
+    });
+  });
+
+  group('next phase computation', () {
+    test('works in registering phase', () async {
+      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final encointerStore = appStore.encointer
+        ..setPhaseDurations(Map<CeremonyPhase, int>.of({
+          CeremonyPhase.Registering: 1,
+          CeremonyPhase.Assigning: 1,
+          CeremonyPhase.Attesting: 1,
+        }))
+        ..setCurrentPhase(CeremonyPhase.Registering)
+        ..setNextPhaseTimestamp(1);
+
+      expect(encointerStore.assigningPhaseStart, 1);
+      expect(encointerStore.attestingPhaseStart, 2);
+      expect(encointerStore.nextRegisteringPhaseStart, 3);
+    });
+
+    test('works in assigning phase', () async {
+      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final encointerStore = appStore.encointer
+        ..setPhaseDurations(Map<CeremonyPhase, int>.of({
+          CeremonyPhase.Registering: 1,
+          CeremonyPhase.Assigning: 1,
+          CeremonyPhase.Attesting: 1,
+        }))
+        ..setCurrentPhase(CeremonyPhase.Assigning)
+        ..setNextPhaseTimestamp(2);
+
+      expect(encointerStore.assigningPhaseStart, 1);
+      expect(encointerStore.attestingPhaseStart, 2);
+      expect(encointerStore.nextRegisteringPhaseStart, 3);
+    });
+
+    test('works in attesting phase', () async {
+      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final encointerStore = appStore.encointer
+        ..setPhaseDurations(Map<CeremonyPhase, int>.of({
+          CeremonyPhase.Registering: 1,
+          CeremonyPhase.Assigning: 1,
+          CeremonyPhase.Attesting: 1,
+        }))
+        ..setCurrentPhase(CeremonyPhase.Attesting)
+        ..setNextPhaseTimestamp(3);
+
+      expect(encointerStore.assigningPhaseStart, 1);
+      expect(encointerStore.attestingPhaseStart, 2);
+      expect(encointerStore.nextRegisteringPhaseStart, 3);
     });
   });
 }
