@@ -3,9 +3,9 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/models/location/location.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_location_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
-import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class MeetupInfo extends StatelessWidget {
@@ -26,7 +26,15 @@ class MeetupInfo extends StatelessWidget {
       children: [
         CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),
         const SizedBox(height: 16),
-        CeremonyLocationButton(onPressed: () => AppLaunch.launchMap(meetupLocation)),
+        CeremonyLocationButton(
+          onPressed: () async {
+            Navigator.pushNamed(
+              context,
+              MeetupLocationPage.route,
+              arguments: Location('42.8413947', '74.5950957'),
+            );
+          },
+        ),
       ],
     );
   }

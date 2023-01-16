@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
+import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
+import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
 import 'package:encointer_wallet/page/account/create/create_account_page.dart';
@@ -196,6 +198,16 @@ class AppRoute {
       case LangPage.route:
         return CupertinoPageRoute(
           builder: (_) => const LangPage(),
+          settings: settings,
+        );
+      case MeetupLocationPage.route:
+        return CupertinoPageRoute(
+          builder: (_) => MeetupLocationPage(settings.arguments! as Location),
+          settings: settings,
+        );
+      case CommunityChooserOnMap.route:
+        return CupertinoPageRoute(
+          builder: (_) => const CommunityChooserOnMap(),
           settings: settings,
         );
       default:
