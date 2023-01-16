@@ -28,9 +28,6 @@ Future<AppStore> setupAppStore(String networkInfo) async {
   store.settings.setEndpoint(endpoint);
   await store.init('_en');
 
-  accList = [testAcc];
-  currentAccountPubKey = accList[0]['pubKey'] as String;
-
   webApi = getMockApi(store, withUI: false);
   await webApi.init();
 
