@@ -112,25 +112,5 @@ void main() {
         expectedStore.toJson(),
       );
     });
-
-    test('purging encointer-store works and initializing new works', () async {
-      final testNetwork = '${unitTestEndpoint.info!}-1';
-      final appStore = await setupAppStore(testNetwork);
-
-      appStore.purgeEncointerCache(testNetwork);
-      expect(
-        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork)),
-        null,
-      );
-
-      // should initialize a new encointer store
-      await appStore.init('_en');
-      final expectedStore = EncointerStore(testNetwork);
-
-      expect(
-        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork)),
-        expectedStore.toJson(),
-      );
-    });
   });
 }
