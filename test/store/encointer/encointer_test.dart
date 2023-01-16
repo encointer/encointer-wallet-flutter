@@ -2,7 +2,6 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
