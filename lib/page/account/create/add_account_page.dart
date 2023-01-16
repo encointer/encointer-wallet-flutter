@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/add_account_form.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+// import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -61,24 +61,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     }
 
     final res = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-
-    store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
-
-    final addresses = <String?>[];
-
-    for (final pubKey in [acc['pubKey'] as String]) {
-      addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey]);
-    }
-
-    Log.d('Created new account with address: ${addresses[0]}', 'AddAccountPage');
-
-    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
-    Log.d('added new account with address: ${addresses[0]}', 'AddAccountPage');
-
-    final pubKey = acc['pubKey'] as String?;
-    await store.setCurrentAccount(pubKey);
-
-    await store.loadAccountCache();
+    await webApi.setCurrentAccount(acc, res);
 
     // fetch info for the imported account
     webApi.fetchAccountData();

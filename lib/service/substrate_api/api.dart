@@ -251,4 +251,20 @@ class Api {
     );
     return res as List?;
   }
+
+  Future<void> setCurrentAccount(Map<String, dynamic> acc, Map<dynamic, dynamic> res) async {
+    store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
+
+    final addresses = <String?>[];
+    for (final key in [acc['pubKey'] as String]) {
+      addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![key]);
+    }
+
+    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+
+    final pubKey = acc['pubKey'] as String?;
+    store.setCurrentAccount(pubKey);
+
+    await store.loadAccountCache();
+  }
 }
