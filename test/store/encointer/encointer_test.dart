@@ -12,27 +12,34 @@ import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 
-void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-  final root = AppStore(
+Future<AppStore> setupAppStore() async {
+  final store = AppStore(
     MockLocalStorage(),
     config: const AppConfig(isTest: true, mockSubstrateApi: true),
   );
+  await store.init('_en');
+
+  // Todo: double-check if this is still necessary.
+  // re-initialize with cacheKey that does not mess with real cache
+  store.settings.setEndpoint(unitTestEndpoint);
+  await store.init('_en');
+
+  accList = [testAcc];
+  currentAccountPubKey = accList[0]['pubKey'] as String;
+
+  webApi = getMockApi(store, withUI: false);
+  await webApi.init();
+
+  return store;
+}
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
 
   group('EncointerStore test', () {
     test('encointer store initialization, serialization and cache works', () async {
-      await root.init('_en');
-      accList = [testAcc];
-      currentAccountPubKey = accList[0]['pubKey'] as String;
-
-      webApi = getMockApi(root, withUI: false);
-
-      // re-initialize with cacheKey that does not mess with real cache
-      root.settings.setEndpoint(unitTestEndpoint);
-      await root.init('_en');
-      await webApi.init();
-
-      final encointerStore = root.encointer;
+      final appStore = await setupAppStore();
+      final encointerStore = appStore.encointer;
 
       final testCid = testCommunityIdentifiers[0];
       final testCidFmt = testCid.toFmtString();
@@ -53,7 +60,7 @@ void main() {
       await encointerStore.setChosenCid(testCid);
 
       final testCommunityStore = CommunityStore(testNetwork, testCid);
-      await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
+      await testCommunityStore.initCommunityAccountStore(appStore.account.currentAddress);
 
       final targetJson = <String, dynamic>{
         'network': testNetwork,
@@ -78,36 +85,51 @@ void main() {
       final deserializedEncointerStore = EncointerStore.fromJson(targetJson);
       expect(deserializedEncointerStore.toJson(), targetJson);
 
-      final cachedEncointerStore = await root.loadEncointerCache(root.encointerCacheKey(unitTestEndpoint.info!));
+      final cachedEncointerStore =
+          await appStore.loadEncointerCache(appStore.encointerCacheKey(unitTestEndpoint.info!));
       expect(cachedEncointerStore!.toJson(), targetJson);
     });
 
     test('purging encointer-store works and initializing new works', () async {
-      accList = [testAcc];
-      currentAccountPubKey = accList[0]['pubKey'] as String;
+      final appStore = await setupAppStore();
 
-      webApi = getMockApi(root, withUI: false);
-      await root.init('_en');
-
-      // re-initialize with cacheKey that does not mess with real cache
-      root.settings.setEndpoint(unitTestEndpoint);
-
-      root.purgeEncointerCache(unitTestEndpoint.info!);
+      appStore.purgeEncointerCache(unitTestEndpoint.info!);
       expect(
-        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
+        await appStore.localStorage.getObject(appStore.encointerCacheKey(unitTestEndpoint.info!)),
         null,
       );
 
       // should initialize a new encointer store
-      await root.init('_en');
+      await appStore.init('_en');
 
       final expectedStore = EncointerStore(unitTestEndpoint.info!)
-
         // This is due to side-effects of parallel executed tests and the global appStore...
         ..chosenCid = testCommunityIdentifiers[0];
 
       expect(
-        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
+        await appStore.localStorage.getObject(appStore.encointerCacheKey(unitTestEndpoint.info!)),
+        expectedStore.toJson(),
+      );
+    });
+
+    test('purging encointer-store works and initializing new works', () async {
+      final appStore = await setupAppStore();
+
+      appStore.purgeEncointerCache(unitTestEndpoint.info!);
+      expect(
+        await appStore.localStorage.getObject(appStore.encointerCacheKey(unitTestEndpoint.info!)),
+        null,
+      );
+
+      // should initialize a new encointer store
+      await appStore.init('_en');
+
+      final expectedStore = EncointerStore(unitTestEndpoint.info!)
+        // This is due to side-effects of parallel executed tests and the global appStore...
+        ..chosenCid = testCommunityIdentifiers[0];
+
+      expect(
+        await appStore.localStorage.getObject(appStore.encointerCacheKey(unitTestEndpoint.info!)),
         expectedStore.toJson(),
       );
     });
