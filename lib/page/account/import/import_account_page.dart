@@ -138,7 +138,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
     final res = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     await webApi.setCurrentAccount(acc, res);
-    
+
     // fetch info for the imported account
     webApi.fetchAccountData();
 
