@@ -272,7 +272,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   String get sendErrorMessages => 'Send error messages';
   @override
   String get sendErrorMessagesDescription =>
-      'If enabled, we will anonymously collect critical error only and no other diagnostical data.';
+      'If enabled, we will anonymously collect critical errors only and no other diagnostical data.';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -459,7 +459,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   String get sendErrorMessages => 'Fehlermeldungen senden';
   @override
   String get sendErrorMessagesDescription =>
-      'Falls aktiviert werden wir nur kritische Fehler anonym sammeln und keine anderen diagnosichen Daten.';
+      'Falls aktiviert werden wir nur kritische Fehler anonym sammeln und keine anderen diagnosischen Daten.';
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
@@ -647,7 +647,8 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get sendErrorMessages => "Envoyer des messages d'erreur";
   @override
-  String get sendErrorMessagesDescription => 'Ask malik :)';
+  String get sendErrorMessagesDescription =>
+      'Si cette option est activée, nous ne collecterons que les erreurs critiques de manière anonyme et aucune autre donnée de diagnostic.';
 }
 
 class TranslationsRuProfile implements TranslationsProfile {
