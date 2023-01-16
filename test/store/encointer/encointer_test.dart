@@ -15,7 +15,7 @@ import 'package:encointer_wallet/store/encointer/sub_stores/community_store/comm
 
 /// Returns an initialized `AppStore`.
 ///
-/// The `endpoint` should be different for every test, so that the caching
+/// The `endpoint` should be different for every test if it involves serialization, so that the caching
 /// does not interfere with other tests.
 Future<AppStore> setupAppStore(String networkInfo) async {
   final store = AppStore(
