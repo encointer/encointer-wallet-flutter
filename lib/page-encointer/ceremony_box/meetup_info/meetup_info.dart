@@ -28,11 +28,7 @@ class MeetupInfo extends StatelessWidget {
         const SizedBox(height: 16),
         CeremonyLocationButton(
           onPressed: () async {
-            Navigator.pushNamed(
-              context,
-              MeetupLocationPage.route,
-              arguments: Location('42.8413947', '74.5950957'),
-            );
+            Navigator.pushNamed(context, MeetupLocationPage.route, arguments: meetupLocation);
           },
         ),
       ],

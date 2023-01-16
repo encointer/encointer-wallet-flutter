@@ -69,18 +69,22 @@ class PopupBuilder extends StatelessWidget {
     required this.description,
     this.inkWellKey,
     this.onTap,
+    this.width = 150,
+    this.height = 70,
   });
 
   final String title;
   final String description;
   final Key? inkWellKey;
+  final double width;
+  final double height;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
-      height: 70,
+      width: width,
+      height: height,
       padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.onBackground,

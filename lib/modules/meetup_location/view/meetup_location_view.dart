@@ -23,10 +23,12 @@ class MeetupLocationPage extends StatelessWidget {
       body: EncointerMap(
         locations: [meetupLocation.toLatLng()],
         center: meetupLocation.toLatLng(),
+        initialZoom: 10,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
-          title: 'Meetup',
-          description: 'MettupLocation',
+          title: dic.encointer.showRouteMeetupLocation,
+          description: '',
           onTap: () => AppLaunch.launchMap(meetupLocation),
+          height: 40,
         ),
       ),
     );
