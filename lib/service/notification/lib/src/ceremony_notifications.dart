@@ -32,10 +32,7 @@ class CeremonyNotifications {
   }
 }
 
-/// Returns notification IDs for different notification categories.
-///
-/// The difference between these offsets should be big enough, so that we can ensure
-/// that we can schedule enough notifications for each notification category.
+/// Handles notification IDs for different notification categories.
 enum NotificationId {
   /// ID for the notification when the registering phase starts.
   registeringPhaseStarted(1000000),
@@ -50,6 +47,9 @@ enum NotificationId {
   oneHourBeforeMeetupReminder(4000000);
 
   const NotificationId(this.offset);
+
+  /// The difference between these offsets should be big enough, so that we can ensure
+  /// that we can schedule enough notifications for each notification category.
   final int offset;
 
   int id(int ceremonyIndex) => ceremonyIndex + offset;
