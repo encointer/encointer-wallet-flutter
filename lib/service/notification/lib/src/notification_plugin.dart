@@ -126,25 +126,31 @@ class NotificationPlugin {
     int id,
     String? title,
     String body,
-    tz.TZDateTime scheduledDate, {
-    String? payload,
-    String? cid,
+    DateTime scheduledDate, {
+    bool overridePendingNotificationWithSameId = true,
   }) async {
     final pendingNotificationRequests = await flutterLocalNotificationsPlugin.pendingNotificationRequests();
     // Check if a notification with the specified id has already been scheduled
     final notificationAlreadyScheduled = pendingNotificationRequests.any((request) => request.id == id);
-    if (!notificationAlreadyScheduled) {
-      // Schedule the notification if it has not been scheduled already
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
-        title,
-        body,
-        scheduledDate,
-        platformChannelSpecifics(body),
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-        androidAllowWhileIdle: true,
-      );
+
+    if (notificationAlreadyScheduled && !overridePendingNotificationWithSameId) {
+      Log.p('Found pending notification with the same ID: $id. Will not re-schedule notification.');
+      return;
     }
+
+    if (overridePendingNotificationWithSameId) {
+      Log.p('Overriding pending notification with the same ID: $id');
+    }
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      platformChannelSpecifics(body),
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+    );
   }
 }
 

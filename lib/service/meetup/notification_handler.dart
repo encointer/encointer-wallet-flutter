@@ -3,7 +3,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/service/meetup/feed_model.dart';
 import 'package:encointer_wallet/service/meetup/feed_repo.dart';
-import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 class NotificationHandler {
   static Future<void> fetchMessagesAndScheduleNotifications(

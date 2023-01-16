@@ -63,6 +63,10 @@ abstract class TranslationsEncointer {
   String get remainingNewbieTicketsAsReputable;
   String get remainingNewbieTicketsAsBootStrapper;
   String get onlyReputablesCanEndorseAttendGatheringToBecomeOne;
+  String get meetupNotificationOneDayBeforeTitle;
+  String get meetupNotificationOneDayBeforeContent;
+  String get meetupNotificationOneHourBeforeTitle;
+  String get meetupNotificationOneHourBeforeContent;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -200,6 +204,14 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
       'Only reputables can endorse. Attend a gathering to get reputation!';
+  @override
+  String get meetupNotificationOneDayBeforeContent => 'Gathering starts in 24 hours';
+  @override
+  String get meetupNotificationOneDayBeforeTitle => '24 hours left';
+  @override
+  String get meetupNotificationOneHourBeforeContent => 'Gathering starts in one hour';
+  @override
+  String get meetupNotificationOneHourBeforeTitle => '1 hour left';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -339,6 +351,14 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
       'Nur Reputables können endorsen. Nimm an einem Treffen teil, um Reputation zu erhalten!';
+  @override
+  String get meetupNotificationOneDayBeforeContent => 'Treffen beginnt in 24 Stunden';
+  @override
+  String get meetupNotificationOneDayBeforeTitle => 'Noch 24 Stunden';
+  @override
+  String get meetupNotificationOneHourBeforeContent => 'Treffen beginnt in einer Stunde';
+  @override
+  String get meetupNotificationOneHourBeforeTitle => '1 Stunde übrig';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -480,6 +500,14 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
       'Seules les Reputables peuvent endosser. Participez à une réunion pour gagner de réputation!';
+  @override
+  String get meetupNotificationOneDayBeforeContent => 'Réunion commence dans 24h';
+  @override
+  String get meetupNotificationOneDayBeforeTitle => '24 heures restantes';
+  @override
+  String get meetupNotificationOneHourBeforeContent => 'Réunion commence dans une heure';
+  @override
+  String get meetupNotificationOneHourBeforeTitle => 'Encore 1 heure';
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -617,4 +645,12 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
       'Одобрять могут только люди со статусом Уважаемого. Для получения репутации, посетите собрание!';
+  @override
+  String get meetupNotificationOneDayBeforeContent => 'Встреча начнется через 24 часа';
+  @override
+  String get meetupNotificationOneDayBeforeTitle => 'Осталось 24 часа';
+  @override
+  String get meetupNotificationOneHourBeforeContent => 'Встреча начнется через час';
+  @override
+  String get meetupNotificationOneHourBeforeTitle => 'Остался 1 час';
 }

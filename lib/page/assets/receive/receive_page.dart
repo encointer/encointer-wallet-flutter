@@ -11,7 +11,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/log/log.dart';
-import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
