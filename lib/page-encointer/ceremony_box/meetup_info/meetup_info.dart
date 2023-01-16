@@ -12,7 +12,6 @@ class MeetupInfo extends StatelessWidget {
   const MeetupInfo(this.meetup, this.meetupLocation, {super.key});
 
   final Meetup meetup;
-
   final Location meetupLocation;
 
   @override
@@ -27,7 +26,7 @@ class MeetupInfo extends StatelessWidget {
       children: [
         CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),
         const SizedBox(height: 16),
-        CeremonyLocationButton(onPressed: () async => AppLaunch.launchMap(meetupLocation))
+        CeremonyLocationButton(onPressed: () => AppLaunch.launchMap(meetupLocation)),
       ],
     );
   }
