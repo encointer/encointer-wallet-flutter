@@ -71,9 +71,6 @@ class Api {
   Future<void> init() async {
     dartApi.connect(store.settings.endpoint.value!);
 
-    // need to do this from here as we can't access instance fields in constructor.
-    // account.setFetchAccountData(fetchAccountData);
-
     // launch the webView and connect to the endpoint
     Log.d('launch the webView', 'Api');
 
@@ -86,9 +83,7 @@ class Api {
     await encointer.close();
   }
 
-  Future<void> launchWebview({
-    bool customNode = false,
-  }) async {
+  Future<void> launchWebview({bool customNode = false}) async {
     final connectFunc = customNode ? connectNode : connectNodeAll;
 
     Future<void> postInitCallback() async {
