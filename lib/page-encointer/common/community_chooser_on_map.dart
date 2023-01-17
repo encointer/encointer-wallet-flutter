@@ -29,7 +29,7 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
   @override
   void initState() {
     locations = getLocations(context.read<AppStore>());
-    communityDataAt = getcommunityDataAt(context.read<AppStore>());
+    communityDataAt = getCommunityDataAt(context.read<AppStore>());
     super.initState();
   }
 
@@ -96,7 +96,7 @@ LatLng coordinatesOf(CidName community) {
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }
 
-Map<LatLng, CidName> getcommunityDataAt(AppStore store) {
+Map<LatLng, CidName> getCommunityDataAt(AppStore store) {
   final communityDataAt = <LatLng, CidName>{};
   if (store.encointer.communities != null) {
     for (final community in store.encointer.communities!) {
