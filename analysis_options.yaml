@@ -18,7 +18,7 @@ linter:
     use_setters_to_change_properties: false
     avoid_equals_and_hash_code_on_mutable_classes: false
     overridden_fields: true
-    parameter_assignments: false
+    parameter_assignments: true
     avoid_dynamic_calls: false
 
 analyzer:
