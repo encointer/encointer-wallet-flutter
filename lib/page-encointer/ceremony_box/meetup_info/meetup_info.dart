@@ -8,13 +8,16 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/compone
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class MeetupInfo extends StatelessWidget {
-  const MeetupInfo(this.meetup, this.meetupLocation, {this.onLocationPressed, super.key});
+  const MeetupInfo(
+    this.meetup,
+    this.meetupLocation, {
+    super.key,
+    this.onPressed,
+  });
 
   final Meetup meetup;
-
   final Location meetupLocation;
-
-  final Future<void> Function()? onLocationPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class MeetupInfo extends StatelessWidget {
       children: [
         CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),
         const SizedBox(height: 16),
-        CeremonyLocationButton(onPressed: onLocationPressed)
+        CeremonyLocationButton(onPressed: onPressed),
       ],
     );
   }
