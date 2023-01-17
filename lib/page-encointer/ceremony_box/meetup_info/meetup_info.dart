@@ -3,16 +3,21 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/models/location/location.dart';
-import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_location_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class MeetupInfo extends StatelessWidget {
-  const MeetupInfo(this.meetup, this.meetupLocation, {super.key});
+  const MeetupInfo(
+    this.meetup,
+    this.meetupLocation, {
+    super.key,
+    this.onPressed,
+  });
 
   final Meetup meetup;
   final Location meetupLocation;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +31,7 @@ class MeetupInfo extends StatelessWidget {
       children: [
         CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),
         const SizedBox(height: 16),
-        CeremonyLocationButton(
-          onPressed: () async {
-            Navigator.pushNamed(context, MeetupLocationPage.route, arguments: meetupLocation);
-          },
-        ),
+        CeremonyLocationButton(onPressed: onPressed),
       ],
     );
   }

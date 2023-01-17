@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_info.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_register_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_start_button.dart';
@@ -149,7 +150,13 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       if (store.encointer.communityAccount?.isAssigned ?? false) {
         final meetup = store.encointer.communityAccount!.meetup!;
         final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
-        return MeetupInfo(meetup, location);
+        return MeetupInfo(
+          meetup,
+          location,
+          onPressed: () {
+            Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
+          },
+        );
       } else {
         return CeremonyNotification(
           notificationIconData: Iconsax.close_square,
@@ -172,7 +179,13 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         } else {
           final meetup = store.encointer.communityAccount!.meetup!;
           final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
-          return MeetupInfo(meetup, location);
+          return MeetupInfo(
+            meetup,
+            location,
+            onPressed: () {
+              Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
+            },
+          );
         }
       }
     default:
