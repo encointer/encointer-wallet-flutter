@@ -13,6 +13,7 @@ import 'package:encointer_wallet/service/deep_link/deep_link.dart';
 import 'package:encointer_wallet/service/meetup/meetup.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class EncointerHomePage extends StatefulWidget {
   const EncointerHomePage({super.key});
@@ -40,13 +41,12 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         Localizations.localeOf(context).languageCode,
       );
 
-      final nextRegisteringPhase = context.read<AppStore>().encointer.nextRegisteringPhaseStart;
-      final currentCeremonyIndex = context.read<AppStore>().encointer.currentCeremonyIndex;
-      final currentPhaseDuration = context.read<AppStore>().encointer.currentPhaseDuration;
+      final encointer = context.read<AppStore>().encointer;
       await CeremonyNotifications.scheduleCeremoniesReminders(
-        nextRegisteringPhase,
-        currentCeremonyIndex,
-        currentPhaseDuration,
+        encointer.nextRegisteringPhaseStart,
+        encointer.currentCeremonyIndex,
+        encointer.ceremonyCycleDuration,
+        I18n.of(context)!.translationsForLocale().encointer,
       );
     });
     super.initState();

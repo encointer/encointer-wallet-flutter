@@ -34,12 +34,18 @@ class CeremonyNotifications {
   static Future<void> scheduleCeremoniesReminders(
     int? nextRegisteringPhase,
     int? currentCeremonyIndex,
-    int? currentPhaseDuration,
+    int? ceremonyCycleDuration,
+    TranslationsEncointer dic,
   ) async {
-    if (nextRegisteringPhase != null && currentCeremonyIndex != null && currentPhaseDuration != null) {
+    if (nextRegisteringPhase != null && currentCeremonyIndex != null && ceremonyCycleDuration != null) {
       for (var i = 0; i < 10; i++) {
-        print('Notification ID => ${currentCeremonyIndex + i}');
-        print('Notification TIME => ${nextRegisteringPhase + i * 864000000}');
+        final scheduledDate = DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase + i * ceremonyCycleDuration);
+        await NotificationPlugin.scheduleNotification(
+          currentCeremonyIndex + i,
+          dic.meetupNotificationOneDayBeforeTitle,
+          dic.meetupNotificationOneDayBeforeContent,
+          scheduledDate,
+        );
       }
     }
   }
