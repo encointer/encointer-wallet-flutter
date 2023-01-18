@@ -125,6 +125,12 @@ mixin _$EncointerStore on _EncointerStore, Store {
   int? get attestingPhaseStart => (_$attestingPhaseStartComputed ??=
           Computed<int?>(() => super.attestingPhaseStart, name: '_EncointerStore.attestingPhaseStart'))
       .value;
+  Computed<int?>? _$nextRegisteringPhaseStartComputed;
+
+  @override
+  int? get nextRegisteringPhaseStart => (_$nextRegisteringPhaseStartComputed ??=
+          Computed<int?>(() => super.nextRegisteringPhaseStart, name: '_EncointerStore.nextRegisteringPhaseStart'))
+      .value;
   Computed<bool>? _$showStartCeremonyButtonComputed;
 
   @override
@@ -425,6 +431,7 @@ communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
 assigningPhaseStart: ${assigningPhaseStart},
 attestingPhaseStart: ${attestingPhaseStart},
+nextRegisteringPhaseStart: ${nextRegisteringPhaseStart},
 showStartCeremonyButton: ${showStartCeremonyButton},
 showSubmitClaimsButton: ${showSubmitClaimsButton},
 showMeetupInfo: ${showMeetupInfo}
