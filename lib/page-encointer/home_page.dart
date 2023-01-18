@@ -41,7 +41,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       );
 
       final nextRegisteringPhase = context.read<AppStore>().encointer.nextRegisteringPhaseStart;
-      // final ceremonyCycleDuration = context.read<AppStore>().encointer.cerem;
+      final currentCeremonyIndex = context.read<AppStore>().encointer.currentCeremonyIndex;
+      final currentPhaseDuration = context.read<AppStore>().encointer.currentPhaseDuration;
+      await CeremonyNotifications.scheduleCeremoniesReminders(
+        nextRegisteringPhase,
+        currentCeremonyIndex,
+        currentPhaseDuration,
+      );
     });
     super.initState();
   }

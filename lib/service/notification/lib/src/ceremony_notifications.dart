@@ -31,7 +31,18 @@ class CeremonyNotifications {
     }
   }
 
-  static Future<void> scheduleCeremoniesReminders(int nextRegisteringPhase, ) async {}
+  static Future<void> scheduleCeremoniesReminders(
+    int? nextRegisteringPhase,
+    int? currentCeremonyIndex,
+    int? currentPhaseDuration,
+  ) async {
+    if (nextRegisteringPhase != null && currentCeremonyIndex != null && currentPhaseDuration != null) {
+      for (var i = 0; i < 10; i++) {
+        print('Notification ID => ${currentCeremonyIndex + i}');
+        print('Notification TIME => ${nextRegisteringPhase + i * 864000000}');
+      }
+    }
+  }
 }
 
 /// Handles notification IDs for different notification categories.
