@@ -67,6 +67,7 @@ abstract class TranslationsEncointer {
   String get meetupNotificationOneDayBeforeContent;
   String get meetupNotificationOneHourBeforeTitle;
   String get meetupNotificationOneHourBeforeContent;
+  String get showRouteMeetupLocation;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -212,6 +213,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get meetupNotificationOneHourBeforeContent => 'Gathering starts in one hour';
   @override
   String get meetupNotificationOneHourBeforeTitle => '1 hour left';
+  @override
+  String get showRouteMeetupLocation => 'Show route';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -359,6 +362,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get meetupNotificationOneHourBeforeContent => 'Treffen beginnt in einer Stunde';
   @override
   String get meetupNotificationOneHourBeforeTitle => '1 Stunde übrig';
+  @override
+  String get showRouteMeetupLocation => 'Route anzeigen';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -508,6 +513,8 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get meetupNotificationOneHourBeforeContent => 'Réunion commence dans une heure';
   @override
   String get meetupNotificationOneHourBeforeTitle => 'Encore 1 heure';
+  @override
+  String get showRouteMeetupLocation => 'Afficher la route';
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -653,4 +660,6 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   String get meetupNotificationOneHourBeforeContent => 'Встреча начнется через час';
   @override
   String get meetupNotificationOneHourBeforeTitle => 'Остался 1 час';
+  @override
+  String get showRouteMeetupLocation => 'Показать маршрут';
 }

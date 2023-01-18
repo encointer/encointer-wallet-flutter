@@ -345,10 +345,7 @@ class _AssetsState extends State<Assets> {
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(widget.store)),
-                              ).then((_) {
+                              Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
                                 _refreshBalanceAndNotify(dic);
                               });
                             } else {
