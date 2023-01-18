@@ -522,6 +522,14 @@ abstract class _EncointerStore with Store {
     return assigningPhaseStart! + phaseDurations[CeremonyPhase.Assigning]!;
   }
 
+  @computed
+  int? get nextRegisteringPhaseStart {
+    if (attestingPhaseStart == null) {
+      return null;
+    }
+    return attestingPhaseStart! + phaseDurations[CeremonyPhase.Attesting]!;
+  }
+
   bool get showRegisterButton {
     final registered = communityAccount?.isRegistered ?? false;
     return currentPhase == CeremonyPhase.Registering && !registered;
