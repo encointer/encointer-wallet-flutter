@@ -1,4 +1,4 @@
-/// My new Translation  package
+/// My new translation package
 library translation_package;
 
 export 'src/index.dart';

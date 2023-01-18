@@ -1,5 +1,5 @@
 /// {@template translation_package}
-/// My new Translation  package
+/// My new translation package
 /// {@endtemplate}
 class TranslationPackage {
   /// {@macro translation_package}
