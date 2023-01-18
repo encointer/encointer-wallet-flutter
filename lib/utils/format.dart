@@ -224,11 +224,8 @@ class Fmt {
     const byteAlphabet = '0123456789abcdef';
 
     // The function first removes any spaces and "0x" prefixes from the input string,
-    final hexWithOutSpaces = hexString.replaceAll(' ', '');
-    final hexWithOut0x = hexWithOutSpaces.replaceAll('0x', '');
-
     // then converts the input string to lowercase.
-    var hex = hexWithOut0x.toLowerCase();
+    var hex = hexString.replaceAll(' ', '').replaceAll('0x', '').toLowerCase();
 
     // If the input string contains an odd number of characters, it adds a "0" to the beginning.
     if (hex.length % 2 != 0) hex = '0$hex';
