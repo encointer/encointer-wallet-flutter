@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/menu/1_my_offerings/my_offerings.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/my_businesses.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 import 'package:flutter/material.dart';
 
 class BazaarMenu extends StatelessWidget {

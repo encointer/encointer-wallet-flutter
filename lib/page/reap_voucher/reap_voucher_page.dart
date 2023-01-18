@@ -18,7 +18,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({

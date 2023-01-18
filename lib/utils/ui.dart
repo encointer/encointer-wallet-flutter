@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:encointer_wallet/common/reg_input_formatter.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 
 class UI {
   static void copyAndNotify(BuildContext context, String? text) {

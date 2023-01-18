@@ -4,7 +4,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_picker_
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/photo_tiles.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';

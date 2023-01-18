@@ -6,8 +6,9 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+
 import 'package:encointer_wallet/utils/validate_keys.dart';
+import 'package:translation_package/translation_package.dart';
 
 class ImportAccountForm extends StatefulWidget {
   const ImportAccountForm(this.store, this.onSubmit, {super.key});

@@ -11,7 +11,7 @@ import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 
 class ExportAccountPage extends StatelessWidget {
   ExportAccountPage({super.key});

@@ -19,7 +19,7 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({

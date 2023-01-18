@@ -11,7 +11,7 @@ import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({super.key, required this.store});

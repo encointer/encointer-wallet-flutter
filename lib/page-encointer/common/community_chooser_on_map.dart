@@ -10,8 +10,9 @@ import 'package:encointer_wallet/common/components/map/encointer_map.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+
 import 'package:provider/provider.dart';
+import 'package:translation_package/translation_package.dart';
 
 class CommunityChooserOnMap extends StatefulWidget {
   const CommunityChooserOnMap({super.key});

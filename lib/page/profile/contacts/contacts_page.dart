@@ -7,7 +7,7 @@ import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart'
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 
 class ContactsPage extends StatelessWidget {
   const ContactsPage({super.key});

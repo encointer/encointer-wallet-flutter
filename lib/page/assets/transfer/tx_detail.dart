@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class TxDetail extends StatelessWidget {

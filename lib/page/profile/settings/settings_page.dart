@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

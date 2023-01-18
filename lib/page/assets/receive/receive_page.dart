@@ -15,8 +15,7 @@ import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:translation_package/translation_package.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ReceivePage extends StatefulWidget {

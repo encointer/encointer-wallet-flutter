@@ -9,7 +9,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 
 class CommunityChooserPanel extends StatefulWidget {
   const CommunityChooserPanel(this.store, {super.key});

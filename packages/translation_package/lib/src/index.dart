@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
+import 'package:translation_package/src/translations.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   const AppLocalizationsDelegate(this.overriddenLocale);

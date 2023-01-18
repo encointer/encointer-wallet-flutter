@@ -5,7 +5,7 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:translation_package/translation_package.dart';
 
 class CreatePinForm extends StatefulWidget {
   const CreatePinForm({super.key, required this.store, required this.onSubmit});

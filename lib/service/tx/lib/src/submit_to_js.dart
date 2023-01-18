@@ -11,8 +11,7 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations_home.dart';
+import 'package:translation_package/translation_package.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 

@@ -10,6 +10,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:translation_package/translation_package.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
@@ -34,8 +35,6 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class Assets extends StatefulWidget {
   const Assets(this.store, {super.key});
