@@ -65,10 +65,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                       store.encointer.communityIdentifiers[0],
                     );
                   } else {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(store)),
-                    );
+                    await Navigator.pushNamed(context, CommunityChooserOnMap.route);
                   }
 
                   setState(() {
