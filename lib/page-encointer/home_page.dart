@@ -39,6 +39,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         NotificationPlugin.scheduleNotification,
         Localizations.localeOf(context).languageCode,
       );
+
+      final nextRegisteringPhase = context.read<AppStore>().encointer.nextRegisteringPhaseStart;
+      // final ceremonyCycleDuration = context.read<AppStore>().encointer.cerem;
     });
     super.initState();
   }

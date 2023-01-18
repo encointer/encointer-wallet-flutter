@@ -30,6 +30,8 @@ class CeremonyNotifications {
       );
     }
   }
+
+  static Future<void> scheduleCeremoniesReminders(int nextRegisteringPhase, ) async {}
 }
 
 /// Handles notification IDs for different notification categories.
