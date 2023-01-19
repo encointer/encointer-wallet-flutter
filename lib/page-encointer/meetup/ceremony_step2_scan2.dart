@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -12,7 +13,6 @@ import 'package:encointer_wallet/page-encointer/meetup/scan_claim_qr_code.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:translation_package/translation_package.dart';
 
 class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
@@ -31,11 +31,10 @@ class CeremonyStep2Scan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.encointer.keySigningCycle),
+        title: Text(context.dic.encointer.keySigningCycle),
       ),
       body: SafeArea(
         child: Column(
@@ -52,7 +51,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(height: 48),
                   Center(
                     child: Text(
-                      dic.encointer.scan,
+                      context.dic.encointer.scan,
                       style: Theme.of(context).textTheme.headline2!.copyWith(color: zurichLion.shade600),
                     ),
                   ),
@@ -60,7 +59,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Text(
-                        dic.encointer.scanDescriptionForMeetup,
+                        context.dic.encointer.scanDescriptionForMeetup,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.25),
                       ),
@@ -83,7 +82,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.arrow_right_2),
                     const SizedBox(width: 12, height: 60),
-                    Text(dic.encointer.closeGathering, style: Theme.of(context).textTheme.headline3),
+                    Text(context.dic.encointer.closeGathering, style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
                 onPressed: () {
@@ -101,7 +100,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                     const Icon(Iconsax.scan_barcode),
                     const SizedBox(width: 12),
                     Text(
-                      dic.encointer.scanOthers,
+                      context.dic.encointer.scanOthers,
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                     ),
                   ],

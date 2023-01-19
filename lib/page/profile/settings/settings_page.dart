@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:translation_package/translation_package.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -23,7 +23,6 @@ class _Settings extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
 
     String getLang(String code) {
@@ -33,7 +32,7 @@ class _Settings extends State<SettingsPage> {
         case 'de':
           return 'Deutsch';
         default:
-          return dic.profile.settingLangAuto;
+          return context.dic.profile.settingLangAuto;
       }
     }
 
@@ -73,7 +72,7 @@ class _Settings extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context)!.translationsForLocale().profile.setting),
+        title: Text(context.dic.profile.setting),
         centerTitle: true,
       ),
       body: Observer(
@@ -85,7 +84,7 @@ class _Settings extends State<SettingsPage> {
                   width: 36,
                   child: Image.asset('assets/images/public/${store.settings.endpoint.info}.png'),
                 ),
-                title: Text(dic.profile.settingNode),
+                title: Text(context.dic.profile.settingNode),
                 subtitle: Text(store.settings.endpoint.text ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
@@ -95,13 +94,13 @@ class _Settings extends State<SettingsPage> {
                   width: 36,
                   child: Image.asset('assets/images/public/${store.settings.customSS58Format['info']}.png'),
                 ),
-                title: Text(dic.profile.settingPrefix),
+                title: Text(context.dic.profile.settingPrefix),
                 subtitle: Text(store.settings.customSS58Format['text'] as String? ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
-                title: Text(dic.profile.settingLang),
+                title: Text(context.dic.profile.settingLang),
                 subtitle: Text(getLang(store.settings.localeCode)),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: onLanguageTap,

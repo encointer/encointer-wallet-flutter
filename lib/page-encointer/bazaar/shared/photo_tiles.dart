@@ -1,5 +1,5 @@
-import 'package:translation_package/translation_package.dart';
 import 'package:flutter/material.dart';
+import 'package:translation/translation.dart';
 
 class PhotoTiles extends StatelessWidget {
   const PhotoTiles({super.key});
@@ -13,16 +13,14 @@ class PhotoTiles extends StatelessWidget {
           width: 150,
           color: Colors.green,
         ),
-        const SizedBox(
-          width: 16,
-        ),
+        const SizedBox(width: 16),
         Container(
           height: 150,
           width: 150,
           color: Colors.grey,
           child: ListTile(
             leading: const Icon(Icons.add_a_photo),
-            title: Text(I18n.of(context)!.translationsForLocale().bazaar.photoAdd),
+            title: Text(context.dic.bazaar.photoAdd),
           ),
         ),
       ],

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -11,7 +12,6 @@ import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:translation_package/translation_package.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({super.key, required this.store});
@@ -24,8 +24,6 @@ class CreateAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-
     Future<void> createAndImportAccount() async {
       await webApi.account.generateAccount();
 
@@ -58,27 +56,27 @@ class CreateAccountForm extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
                 Center(
-                  child: Text(I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
-                      style: Theme.of(context).textTheme.headline2),
+                  child: Text(
+                    context.dic.profile.accountNameChoose,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Center(
                   child: SizedBox(
                     width: 300,
                     child: Text(
-                      I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
+                      context.dic.profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
-                            color: encointerBlack,
-                          ),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                     ),
                   ),
                 ),
                 const SizedBox(height: 50),
                 EncointerTextFormField(
                   key: const Key('create-account-name'),
-                  hintText: dic.account.createHint,
-                  labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
+                  hintText: context.dic.account.createHint,
+                  labelText: context.dic.profile.accountName,
                   controller: _nameCtrl,
                   validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                 ),
@@ -95,10 +93,8 @@ class CreateAccountForm extends StatelessWidget {
                   const Icon(Iconsax.login_1),
                   const SizedBox(width: 12),
                   Text(
-                    dic.account.next,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
-                          color: zurichLion.shade50,
-                        ),
+                    context.dic.account.next,
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                   ),
                 ],
               ),
@@ -126,10 +122,10 @@ Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
         title: Container(),
-        content: Text(I18n.of(context)!.translationsForLocale().account.createError),
+        content: Text(context.dic.account.createError),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+            child: Text(context.dic.home.ok),
             onPressed: () {
               Navigator.of(context).pop();
             },

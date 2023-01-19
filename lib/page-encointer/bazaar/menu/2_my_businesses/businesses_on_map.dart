@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:translation_package/translation_package.dart';
 
 class BusinessesOnMap extends StatelessWidget {
   BusinessesOnMap({super.key});
@@ -17,7 +17,7 @@ class BusinessesOnMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context)!.translationsForLocale().bazaar.businesses),
+        title: Text(context.dic.bazaar.businesses),
       ),
       body: BMap(data),
     );
@@ -105,21 +105,14 @@ class BusinessDetailsPopup extends StatelessWidget {
                 dataForThisMarker!.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 2),
-              ),
+              const Padding(padding: EdgeInsets.only(bottom: 2)),
               Text(
                 dataForThisMarker!.description,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.black54,
-                ),
+                style: const TextStyle(fontSize: 12, color: Colors.black54),
               ),
             ],
           ),

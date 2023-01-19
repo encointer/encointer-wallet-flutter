@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
-import 'package:translation_package/translation_package.dart';
 
 class SearchResultsOfferingFiltered extends StatelessWidget {
   SearchResultsOfferingFiltered(this.results, {super.key});
@@ -19,17 +19,13 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const titleStyle = TextStyle(fontWeight: FontWeight.bold, height: 2.5);
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Filter ${dic.bazaar.found} ${dic.bazaar.offerings}'),
+        title: Text('Filter ${context.dic.bazaar.found} ${context.dic.bazaar.offerings}'),
       ),
       body: ListView(children: [
-        ToggleButtonsWithTitle(dic.bazaar.categories, categories, null),
-        Text(
-          dic.bazaar.price,
-          style: titleStyle,
-        ),
+        ToggleButtonsWithTitle(context.dic.bazaar.categories, categories, null),
+        Text(context.dic.bazaar.price, style: titleStyle),
         RangeSlider(
           values: _currentRangeValues,
           max: 100,
@@ -42,18 +38,12 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
             // TODO state management
           },
         ),
-        Text(
-          dic.bazaar.delivery,
-          style: titleStyle,
-        ),
+        Text(context.dic.bazaar.delivery, style: titleStyle),
         ToggleButtons(
           isSelected: selectedDeliveryOptions,
           children: deliveryOptions.map(Text.new).toList(),
         ),
-        Text(
-          dic.bazaar.productNewness,
-          style: titleStyle,
-        ),
+        Text(context.dic.bazaar.productNewness, style: titleStyle),
         ToggleButtons(
           isSelected: selectedProductNewnessOptions,
           children: productNewnessOptions.map(Text.new).toList(),
@@ -63,10 +53,10 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
         children: [
           ElevatedButton(
               onPressed: () {}, // TODO state management
-              child: Text(dic.bazaar.reset)),
+              child: Text(context.dic.bazaar.reset)),
           ElevatedButton(
               onPressed: () {}, //TODO state management
-              child: Text(dic.bazaar.apply)),
+              child: Text(context.dic.bazaar.apply)),
         ],
       ),
     );

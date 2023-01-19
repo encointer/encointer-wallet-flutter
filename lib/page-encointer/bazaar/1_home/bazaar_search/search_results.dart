@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:translation/translation.dart';
+
 import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results_business.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results_offering.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:translation_package/translation_package.dart';
-import 'package:flutter/material.dart';
 
 class SearchResults extends StatelessWidget {
   SearchResults({super.key});
@@ -19,10 +20,10 @@ class SearchResults extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ResultSummaryListTile(businessResults, I18n.of(context)!.translationsForLocale().bazaar.businessesResults),
-        ResultSummaryListTile(offeringsResults, I18n.of(context)!.translationsForLocale().bazaar.offeringsResults),
+        ResultSummaryListTile(businessResults, context.dic.bazaar.businessesResults),
+        ResultSummaryListTile(offeringsResults, context.dic.bazaar.offeringsResults),
         Text(
-          I18n.of(context)!.translationsForLocale().bazaar.topResults,
+          context.dic.bazaar.topResults,
           style: const TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Column(

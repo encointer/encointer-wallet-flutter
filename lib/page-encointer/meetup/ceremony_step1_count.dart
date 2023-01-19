@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -9,7 +10,6 @@ import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dar
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step2_scan2.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:translation_package/translation_package.dart';
 
 class CeremonyStep1Count extends StatelessWidget {
   CeremonyStep1Count(this.store, this.api, {super.key});
@@ -35,11 +35,10 @@ class CeremonyStep1Count extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.encointer.keySigningCycle),
+        title: Text(context.dic.encointer.keySigningCycle),
         leading: Container(),
         actions: [
           IconButton(
@@ -61,20 +60,20 @@ class CeremonyStep1Count extends StatelessWidget {
                     const SizedBox(height: 48),
                     Center(
                       child: Text(
-                        dic.encointer.count,
+                        context.dic.encointer.count,
                         style: Theme.of(context).textTheme.headline2!.copyWith(color: zurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
-                        dic.encointer.howManyParticipantsShowedUp,
+                        context.dic.encointer.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 2),
                       ),
                     ),
                     const SizedBox(height: 48),
                     EncointerTextFormField(
-                      labelText: dic.encointer.numberOfAttendees,
+                      labelText: context.dic.encointer.numberOfAttendees,
                       textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
                       controller: _attendeesCountController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -91,7 +90,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     const Icon(Iconsax.arrow_right_2),
                     const SizedBox(width: 12),
                     Text(
-                      dic.encointer.next,
+                      context.dic.encointer.next,
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                     ),
                   ],

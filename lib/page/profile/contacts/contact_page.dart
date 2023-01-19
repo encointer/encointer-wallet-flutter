@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/rounded_button.dart';
 import 'package:encointer_wallet/common/components/tap_tool_tip.dart';
@@ -10,7 +11,6 @@ import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -39,7 +39,6 @@ class _Contact extends State<ContactPage> {
       setState(() {
         _submitting = true;
       });
-      final dic = I18n.of(context)!.translationsForLocale();
       final addr = _addressCtrl.text.replaceAll(' ', '');
       final pubKeyAddress = await webApi.account.decodeAddress([addr]);
       final pubKey = pubKeyAddress.keys.toList()[0] as String;
@@ -62,10 +61,10 @@ class _Contact extends State<ContactPage> {
             builder: (BuildContext context) {
               return CupertinoAlertDialog(
                 title: Container(),
-                content: Text(dic.profile.contactAlreadyExists),
+                content: Text(context.dic.profile.contactAlreadyExists),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                    child: Text(context.dic.home.ok),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
@@ -106,7 +105,6 @@ class _Contact extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
     final qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
-    final dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
       _addressCtrl.text = qrScanData.account;
       _nameCtrl.text = qrScanData.label;
@@ -114,7 +112,7 @@ class _Contact extends State<ContactPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.profile.addressBook),
+        title: Text(context.dic.profile.addressBook),
       ),
       body: SafeArea(
         child: Column(
@@ -130,13 +128,13 @@ class _Contact extends State<ContactPage> {
                       child: TextFormField(
                         key: const Key('contact-address'),
                         decoration: InputDecoration(
-                          hintText: dic.profile.contactAddress,
-                          labelText: dic.profile.contactAddress,
+                          hintText: context.dic.profile.contactAddress,
+                          labelText: context.dic.profile.contactAddress,
                         ),
                         controller: _addressCtrl,
                         validator: (v) {
                           if (!Fmt.isAddress(v!.replaceAll(' ', ''))) {
-                            return dic.profile.contactAddressError;
+                            return context.dic.profile.contactAddressError;
                           }
                           return null;
                         },
@@ -148,12 +146,12 @@ class _Contact extends State<ContactPage> {
                       child: TextFormField(
                         key: const Key('contact-name'),
                         decoration: InputDecoration(
-                          hintText: dic.profile.contactName,
-                          labelText: dic.profile.contactName,
+                          hintText: context.dic.profile.contactName,
+                          labelText: context.dic.profile.contactName,
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v!.trim().isNotEmpty ? null : dic.profile.contactNameError;
+                          return v!.trim().isNotEmpty ? null : context.dic.profile.contactNameError;
                         },
                       ),
                     ),
@@ -162,8 +160,8 @@ class _Contact extends State<ContactPage> {
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            hintText: dic.profile.contactMemo,
-                            labelText: dic.profile.contactMemo,
+                            hintText: context.dic.profile.contactMemo,
+                            labelText: context.dic.profile.contactMemo,
                           ),
                           controller: _memoCtrl,
                         ),
@@ -180,7 +178,7 @@ class _Contact extends State<ContactPage> {
                             },
                           ),
                           GestureDetector(
-                            child: Text(I18n.of(context)!.translationsForLocale().account.observe),
+                            child: Text(context.dic.account.observe),
                             onTap: () {
                               setState(() {
                                 _isObservation = !_isObservation!;
@@ -188,7 +186,7 @@ class _Contact extends State<ContactPage> {
                             },
                           ),
                           TapTooltip(
-                            message: I18n.of(context)!.translationsForLocale().account.observeBrief,
+                            message: context.dic.account.observeBrief,
                             child: const Padding(
                               padding: EdgeInsets.only(left: 8),
                               child: Icon(Icons.info_outline, size: 16),
@@ -213,7 +211,7 @@ class _Contact extends State<ContactPage> {
               child: RoundedButton(
                 key: const Key('contact-save'),
                 submitting: _submitting,
-                text: dic.profile.contactSave,
+                text: context.dic.profile.contactSave,
                 onPressed: _onSave,
               ),
             ),

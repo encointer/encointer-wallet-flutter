@@ -5,14 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/store/app.dart';
-
-import 'package:provider/provider.dart';
-import 'package:translation_package/translation_package.dart';
 
 class CommunityChooserOnMap extends StatefulWidget {
   const CommunityChooserOnMap({super.key});
@@ -36,11 +35,10 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          dic.assets.communityChoose,
+          context.dic.assets.communityChoose,
           maxLines: 2,
           textAlign: TextAlign.center,
         ),
@@ -75,10 +73,10 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
               color: Colors.white,
               child: CupertinoAlertDialog(
                 title: Container(),
-                content: Text(dic.encointer.noCommunitiesAreYouOffline),
+                content: Text(context.dic.encointer.noCommunitiesAreYouOffline),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(dic.home.ok),
+                    child: Text(context.dic.home.ok),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],

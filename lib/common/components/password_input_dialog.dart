@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 
 Widget showPasswordInputDialog(
   BuildContext context,
@@ -59,14 +59,13 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       showCupertinoDialog<void>(
         context: context,
         builder: (BuildContext context) {
-          final dic = I18n.of(context)!.translationsForLocale();
           return CupertinoAlertDialog(
-            title: Text(dic.profile.wrongPin),
-            content: Text(dic.profile.wrongPinHint),
+            title: Text(context.dic.profile.wrongPin),
+            content: Text(context.dic.profile.wrongPinHint),
             actions: <Widget>[
               CupertinoButton(
                 key: const Key('error-dialog-ok'),
-                child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                child: Text(context.dic.home.ok),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],
@@ -87,8 +86,6 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-
     return CupertinoAlertDialog(
       title: widget.title ?? Container(),
       content: Padding(
@@ -99,11 +96,11 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
           padding: EdgeInsets.zero,
           autofocus: true,
           keyboardType: TextInputType.number,
-          placeholder: dic.profile.passOld,
+          placeholder: context.dic.profile.passOld,
           controller: _passCtrl,
           validator: (v) {
             if (v == null || !Fmt.checkPassword(v.trim())) {
-              return dic.account.createPasswordError;
+              return context.dic.account.createPasswordError;
             }
             return null;
           },
@@ -115,14 +112,14 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       actions: <Widget>[
         if (widget.onAccountSwitch != null)
           CupertinoButton(
-            child: Text(dic.home.switchAccount),
+            child: Text(context.dic.home.switchAccount),
             onPressed: () {
               widget.onAccountSwitch!();
             },
           ),
         if (widget.onCancel != null)
           CupertinoButton(
-            child: Text(dic.home.cancel),
+            child: Text(context.dic.home.cancel),
             onPressed: () {
               widget.onCancel!();
             },
@@ -134,7 +131,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (_submitting) const CupertinoActivityIndicator(),
-              Text(dic.home.ok),
+              Text(context.dic.home.ok),
             ],
           ),
         ),

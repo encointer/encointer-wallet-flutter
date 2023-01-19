@@ -7,6 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -19,10 +20,9 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 
 class PaymentConfirmationParams {
-  PaymentConfirmationParams({
+  const PaymentConfirmationParams({
     required this.cid,
     required this.communitySymbol,
     required this.recipientAccount,
@@ -61,7 +61,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     final params = ModalRoute.of(context)!.settings.arguments! as PaymentConfirmationParams;
 
     final cid = params.cid;
@@ -72,7 +71,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     return Observer(
       builder: (_) {
         return Scaffold(
-          appBar: AppBar(title: Text(dic.assets.payment)),
+          appBar: AppBar(title: Text(context.dic.assets.payment)),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: Column(
@@ -120,7 +119,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                               children: [
                                 const Icon(Iconsax.send_sqaure_2),
                                 const SizedBox(width: 12),
-                                Text(dic.assets.transfer),
+                                Text(context.dic.assets.transfer),
                               ],
                             )
                           : const CupertinoActivityIndicator(),
@@ -131,7 +130,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                     key: const Key('transfer-done'),
                     child: SizedBox(
                       height: 24,
-                      child: Center(child: Text(dic.assets.done)),
+                      child: Center(child: Text(context.dic.assets.done)),
                     ),
                     onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
                   )
@@ -222,15 +221,14 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     final h1Grey = Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
 
-    final dic = I18n.of(context)!.translationsForLocale();
     switch (state) {
       case TransferState.notStarted:
         {
-          return Text(dic.assets.paymentDoYouWantToProceed, style: h2Grey);
+          return Text(context.dic.assets.paymentDoYouWantToProceed, style: h2Grey);
         }
       case TransferState.submitting:
         {
-          return Text(dic.assets.paymentSubmitting, style: h2Grey);
+          return Text(context.dic.assets.paymentSubmitting, style: h2Grey);
         }
       case TransferState.finished:
         {
@@ -240,7 +238,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           return RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: '${dic.assets.paymentFinished}: $date\n\n',
+              text: '${context.dic.assets.paymentFinished}: $date\n\n',
               style: h2Grey,
               children: [
                 TextSpan(
@@ -254,7 +252,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       case TransferState.failed:
         {
           return Text(
-            "${dic.assets.paymentError}: ${_transactionResult['error']?.toString() ?? "Unknown Error"}",
+            "${context.dic.assets.paymentError}: ${_transactionResult['error']?.toString() ?? "Unknown Error"}",
             style: h2Grey,
           );
         }

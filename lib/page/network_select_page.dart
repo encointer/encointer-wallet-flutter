@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
@@ -13,7 +14,6 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 
 class NetworkSelectPage extends StatefulWidget {
   const NetworkSelectPage({super.key});
@@ -47,7 +47,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context)!.translationsForLocale().home.loading),
+          title: Text(context.dic.home.loading),
           content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
@@ -99,7 +99,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
           child: showPasswordInputDialog(
             context,
             context.read<AppStore>().account.currentAccount,
-            Text(I18n.of(context)!.translationsForLocale().profile.unlock),
+            Text(context.dic.profile.unlock),
             (String password) {
               setState(() {
                 context.read<AppStore>().settings.setPin(password);
@@ -180,10 +180,9 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.home.settingNetwork),
+        title: Text(context.dic.home.settingNetwork),
         centerTitle: true,
       ),
       body: Row(

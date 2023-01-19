@@ -49,9 +49,9 @@ dependencies:
   flutter_timezone: ^1.0.4
 
   # Subpackage for translations of the Encointer-Wallet-Flutter
-  translation_package: 
-    path: packages/translation_package
-    
+  translation:
+    path: packages/translation
+
   # Adjust screen brightness and keep awake for qrcodes
   wakelock: ^0.6.2
   screen_brightness: ^0.2.2

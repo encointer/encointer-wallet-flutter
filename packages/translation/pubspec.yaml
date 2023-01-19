@@ -1,5 +1,5 @@
-name: translation_package
-description: My new Translation  package
+name: translation
+description: My new Flutter package
 version: 0.1.0+1
 publish_to: none
 

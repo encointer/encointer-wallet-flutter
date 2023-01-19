@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-
 import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results.dart';
-import 'package:translation_package/translation_package.dart';
 
 class BazaarSearch extends StatelessWidget {
   const BazaarSearch({super.key});
@@ -12,7 +10,6 @@ class BazaarSearch extends StatelessWidget {
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return FloatingSearchBar(
-      hint: I18n.of(context)!.translationsForLocale().bazaar.search,
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
       transitionDuration: const Duration(milliseconds: 800),
       transitionCurve: Curves.easeInOut,

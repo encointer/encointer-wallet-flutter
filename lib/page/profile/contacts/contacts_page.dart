@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 
 class ContactsPage extends StatelessWidget {
   const ContactsPage({super.key});
@@ -20,12 +20,10 @@ class ContactsPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                I18n.of(context)!.translationsForLocale().profile.addressBook,
+                context.dic.profile.addressBook,
                 style: Theme.of(context).textTheme.headline3,
               ),
-              iconTheme: const IconThemeData(
-                color: Color(0xff666666), //change your color here
-              ),
+              iconTheme: const IconThemeData(color: Color(0xff666666)), //change your color here
               centerTitle: true,
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,

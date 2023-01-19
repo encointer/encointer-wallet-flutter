@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page/assets/transfer/tx_detail.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 
 class TransferDetailPage extends StatelessWidget {
   const TransferDetailPage({super.key});
@@ -15,7 +15,6 @@ class TransferDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
     final symbol = store.settings.networkState!.tokenSymbol;
     final decimals = store.settings.networkState!.tokenDecimals;
@@ -23,7 +22,7 @@ class TransferDetailPage extends StatelessWidget {
 
     final tx = ModalRoute.of(context)!.settings.arguments! as TransferData;
 
-    final txType = tx.from == store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
+    final txType = tx.from == store.account.currentAddress ? context.dic.assets.transfer : context.dic.assets.receive;
 
     return TxDetail(
       success: true,
@@ -35,20 +34,20 @@ class TransferDetailPage extends StatelessWidget {
       networkName: store.settings.endpoint.info,
       info: <DetailInfoItem>[
         DetailInfoItem(
-          label: dic.assets.value,
+          label: context.dic.assets.value,
           title: '${tx.amount} $tokenView',
         ),
         DetailInfoItem(
-          label: dic.assets.fee,
+          label: context.dic.assets.fee,
           title: '${Fmt.balance(tx.fee, decimals, length: decimals)} $tokenView',
         ),
         DetailInfoItem(
-          label: dic.assets.from,
+          label: context.dic.assets.from,
           title: Fmt.address(tx.from),
           address: tx.from,
         ),
         DetailInfoItem(
-          label: dic.assets.to,
+          label: context.dic.assets.to,
           title: Fmt.address(tx.to),
           address: tx.to,
         )

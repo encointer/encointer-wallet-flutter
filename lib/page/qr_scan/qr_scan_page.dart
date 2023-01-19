@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page/qr_scan/qr_scan_service.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:translation_package/translation_package.dart';
 
 export 'qr_codes/qr_code_base.dart';
 export 'qr_scan_service.dart';
@@ -35,7 +35,6 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     final params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
     void onScan(String data) {
       try {
@@ -77,7 +76,8 @@ class ScanPage extends StatelessWidget {
                     }
                   },
                 ),
-                if (context.select<AppStore, bool>((store) => store.settings.developerMode)) mockQrDataRow(dic, onScan),
+                if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                  mockQrDataRow(context.dic, onScan),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(
@@ -93,7 +93,7 @@ class ScanPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        I18n.of(context)!.translationsForLocale().account.qrScan,
+                        context.dic.account.qrScan,
                         style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
                       ),
                     ],
@@ -140,19 +140,17 @@ Widget mockQrDataRow(Translations dic, void Function(String) onScan) {
 }
 
 Widget permissionErrorDialog(BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale();
-
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text(dic.home.cameraPermissionError),
+    content: Text(context.dic.home.cameraPermissionError),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(dic.home.ok),
+        child: Text(context.dic.home.ok),
         onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
       ),
       CupertinoButton(
         onPressed: openAppSettings,
-        child: Text(dic.home.appSettings),
+        child: Text(context.dic.home.appSettings),
       ),
     ],
   );

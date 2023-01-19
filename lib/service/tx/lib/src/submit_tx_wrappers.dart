@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -8,13 +9,11 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
-
-import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:translation_package/translation_package.dart';
 
 /// Helpers to submit transactions.
 
@@ -31,7 +30,7 @@ Future<void> submitTx(
   dynamic Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
   if (store.settings.cachedPin.isEmpty) {
-    final unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
+    final unlockText = context.dic.home.unlockAccount;
     await showCupertinoDialog<void>(
       context: context,
       builder: (context) {
@@ -109,7 +108,7 @@ Future<void> submitEndorseNewcomer(
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   if (store.settings.cachedPin.isEmpty) {
-    final unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
+    final unlockText = context.dic.home.unlockAccount;
     await showCupertinoDialog<void>(
       context: context,
       builder: (context) {
@@ -141,7 +140,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
           await CeremonyNotifications.scheduleMeetupReminders(
             data.global!.ceremonyIndex,
             store.encointer.community!.meetupTime!,
-            I18n.of(context)!.translationsForLocale().encointer,
+            context.dic.encointer,
           );
         }
       }
@@ -182,7 +181,6 @@ Future<dynamic> submitReapVoucher(
 }
 
 void _showEducationalDialog(ParticipantType registrationType, BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale();
   final texts = _getEducationalDialogTexts(registrationType, context);
   final languageCode = Localizations.localeOf(context).languageCode;
 
@@ -201,13 +199,13 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
           if (registrationType == ParticipantType.Newbie) const SizedBox(),
           CupertinoButton(
             key: const Key('close-educate-dialog'),
-            child: Text(dic.home.ok),
+            child: Text(context.dic.home.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
           if (registrationType == ParticipantType.Newbie)
             CupertinoButton(
               child: Text(
-                dic.encointer.leuZurichFAQ,
+                context.dic.encointer.leuZurichFAQ,
                 textAlign: TextAlign.center,
               ),
               onPressed: () => AppLaunch.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
@@ -219,7 +217,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
 }
 
 Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale().encointer;
+  final dic = context.dic.encointer;
   switch (type) {
     case ParticipantType.Newbie:
       return {'title': dic.newbieTitle, 'content': dic.newbieContent};

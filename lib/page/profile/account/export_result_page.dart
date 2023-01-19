@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/store/account/account.dart';
-import 'package:translation_package/translation_package.dart';
 
 class ExportResultPage extends StatelessWidget {
   const ExportResultPage({super.key});
@@ -11,7 +11,6 @@ class ExportResultPage extends StatelessWidget {
   static const String route = '/account/key';
 
   void _showExportDialog(BuildContext context, Map args) {
-    final dic = I18n.of(context)!.translationsForLocale();
     Clipboard.setData(ClipboardData(
       text: args['key'] as String,
     ));
@@ -19,11 +18,11 @@ class ExportResultPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(dic.profile.export),
-          content: Text(dic.profile.exportMnemonicOk),
+          title: Text(context.dic.profile.export),
+          content: Text(context.dic.profile.exportMnemonicOk),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+              child: Text(context.dic.home.ok),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
@@ -34,11 +33,10 @@ class ExportResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     final args = ModalRoute.of(context)!.settings.arguments! as Map<dynamic, dynamic>;
 
     return Scaffold(
-      appBar: AppBar(title: Text(dic.profile.export)),
+      appBar: AppBar(title: Text(context.dic.profile.export)),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,7 +45,7 @@ class ExportResultPage extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: <Widget>[
-                  if (args['type'] != AccountStore.seedTypeKeystore) Text(dic.profile.exportWarn),
+                  if (args['type'] != AccountStore.seedTypeKeystore) Text(context.dic.profile.exportWarn),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -56,7 +54,7 @@ class ExportResultPage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: Text(
-                            I18n.of(context)!.translationsForLocale().home.copy,
+                            context.dic.home.copy,
                             style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
                           ),
                         ),
@@ -65,11 +63,10 @@ class ExportResultPage extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.black12,
-                        ),
-                        borderRadius: const BorderRadius.all(Radius.circular(4))),
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black12),
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    ),
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       args['key'] as String,

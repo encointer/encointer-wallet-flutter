@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -18,7 +19,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:translation_package/translation_package.dart';
 
 class CeremonyBox extends StatelessWidget {
   const CeremonyBox(this.store, this.api, {super.key});
@@ -28,8 +28,6 @@ class CeremonyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-
     return Observer(builder: (BuildContext context) {
       final meetupTime = store.encointer.community?.meetupTimeOverride ??
           store.encointer.community?.meetupTime ??
@@ -100,7 +98,7 @@ class CeremonyBox extends StatelessWidget {
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 6),
                           Text(
-                            dic.encointer.claimsSubmitN.replaceAll(
+                            context.dic.encointer.claimsSubmitN.replaceAll(
                               'N_COUNT',
                               store.encointer.communityAccount!.scannedAttendeesCount.toString(),
                             ),
@@ -124,7 +122,6 @@ class CeremonyBox extends StatelessWidget {
 }
 
 Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
-  final dic = I18n.of(context)!.translationsForLocale();
   final communityAccount = store.encointer.communityAccount;
 
   switch (store.encointer.currentPhase) {
@@ -133,7 +130,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return CeremonyNotification(
           key: const Key('is-registered-info'),
           notificationIconData: Iconsax.tick_square,
-          notification: dic.encointer.youAreRegisteredAs.replaceAll(
+          notification: context.dic.encointer.youAreRegisteredAs.replaceAll(
             'PARTICIPANT_TYPE',
             store.encointer.communityAccount!.participantType!.toValue(),
           ),
@@ -160,20 +157,20 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       } else {
         return CeremonyNotification(
           notificationIconData: Iconsax.close_square,
-          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+          notification: context.dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
       }
     case CeremonyPhase.Attesting:
       if (!(store.encointer.communityAccount?.isAssigned ?? false)) {
         return CeremonyNotification(
           notificationIconData: Iconsax.close_square,
-          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+          notification: context.dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
       } else {
         if (store.encointer.communityAccount?.meetupCompleted ?? false) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
-            notification: dic.encointer.successfullySentNAttestations
+            notification: context.dic.encointer.successfullySentNAttestations
                 .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString()),
           );
         } else {
@@ -198,7 +195,7 @@ Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) asy
   showCupertinoDialog<void>(
     context: context,
     builder: (_) => CupertinoAlertDialog(
-      title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),
+      title: Text(context.dic.home.updatingAppState),
       content: const CupertinoActivityIndicator(),
     ),
   );

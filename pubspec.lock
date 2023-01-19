@@ -1228,10 +1228,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  translation_package:
+  translation:
     dependency: "direct main"
     description:
-      path: "packages/translation_package"
+      path: "packages/translation"
       relative: true
     source: path
     version: "0.1.0+1"

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
-import 'package:translation_package/translation_package.dart';
 
 class OfferingDetail extends StatelessWidget {
   OfferingDetail(this.offering, {super.key});
@@ -37,10 +37,9 @@ class OfferingDetail extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.state, productNewness, null),
+              ToggleButtonsWithTitle(context.dic.bazaar.state, productNewness, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
-              ToggleButtonsWithTitle(
-                  I18n.of(context)!.translationsForLocale().bazaar.deliveryOptions, deliveryOptions, null),
+              ToggleButtonsWithTitle(context.dic.bazaar.deliveryOptions, deliveryOptions, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
             ],
           ),

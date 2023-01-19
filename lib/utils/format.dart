@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:translation_package/translation_package.dart';
+import 'package:translation/translation.dart';
 
 class Fmt {
   static String passwordToEncryptKey(String password) {
@@ -212,7 +212,7 @@ class Fmt {
   }
 
   static String accountName(BuildContext context, AccountData acc) {
-    return '${acc.name}${(acc.observation ?? false) ? ' (${I18n.of(context)!.translationsForLocale().account.observe})' : ''}';
+    return '${acc.name}${(acc.observation ?? false) ? ' (${context.dic.account.observe})' : ''}';
   }
 
   /// The hexToBytes function converts a hexadecimal string to a byte array.

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -8,7 +9,6 @@ import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dar
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:translation_package/translation_package.dart';
 
 class CeremonyStep3Finish extends StatelessWidget {
   const CeremonyStep3Finish(this.store, this.api, {super.key});
@@ -18,11 +18,10 @@ class CeremonyStep3Finish extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.encointer.keySigningCycle),
+        title: Text(context.dic.encointer.keySigningCycle),
       ),
       body: SafeArea(
         child: Padding(
@@ -38,13 +37,13 @@ class CeremonyStep3Finish extends StatelessWidget {
                     const CommunityAvatar(avatarSize: 96),
                     Center(
                       child: Text(
-                        dic.encointer.thankYou,
+                        context.dic.encointer.thankYou,
                         style: Theme.of(context).textTheme.headline2!.copyWith(color: zurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
-                        dic.encointer.weHopeToSeeYouAtTheNextGathering,
+                        context.dic.encointer.weHopeToSeeYouAtTheNextGathering,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.5),
                       ),
@@ -59,7 +58,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                     const Icon(Iconsax.arrow_right_2),
                     const SizedBox(width: 12, height: 60),
                     Text(
-                      dic.encointer.finish,
+                      context.dic.encointer.finish,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                   ],
@@ -80,7 +79,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                       const Icon(Iconsax.login_1),
                       const SizedBox(width: 6),
                       Text(
-                        dic.encointer.claimsSubmitN.replaceAll(
+                        context.dic.encointer.claimsSubmitN.replaceAll(
                           'N_COUNT',
                           store.encointer.communityAccount!.scannedAttendeesCount.toString(),
                         ),

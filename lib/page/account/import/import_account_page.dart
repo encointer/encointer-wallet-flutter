@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
@@ -9,7 +10,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 
 class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage({super.key});
@@ -42,7 +42,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context)!.translationsForLocale().home.loading),
+          title: Text(context.dic.home.loading),
           content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
@@ -61,7 +61,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       var msg = acc['error'];
 
       if (acc['error'] == 'unreachable') {
-        msg = '${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType';
+        msg = '${context.dic.account.importInvalid}: $_keyType';
       }
 
       showCupertinoDialog<void>(
@@ -72,7 +72,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
             content: Text('$msg'),
             actions: <Widget>[
               CupertinoButton(
-                child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                child: Text(context.dic.home.ok),
                 onPressed: () {
                   setState(() {
                     _submitting = false;
@@ -103,10 +103,10 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
               title: Text(Fmt.address(address)!),
-              content: Text(I18n.of(context)!.translationsForLocale().account.importDuplicate),
+              content: Text(context.dic.account.importDuplicate),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
+                  child: Text(context.dic.home.cancel),
                   onPressed: () {
                     setState(() {
                       _submitting = false;
@@ -116,7 +116,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   },
                 ),
                 CupertinoButton(
-                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                  child: Text(context.dic.home.ok),
                   onPressed: () async {
                     await _saveAccount(acc);
                     Navigator.of(context).pop();
@@ -153,7 +153,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context)!.translationsForLocale().home.accountImport)),
+      appBar: AppBar(title: Text(context.dic.home.accountImport)),
       body: SafeArea(
         child: !_submitting ? _getImportForm() : const Center(child: CupertinoActivityIndicator()),
       ),

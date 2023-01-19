@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
@@ -21,7 +22,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:translation_package/translation_package.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -93,11 +93,10 @@ class _ProfileState extends State<Profile> {
         Navigator.pop(context);
       });
     }
-    final dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.profile.title),
+        title: Text(context.dic.profile.title),
         iconTheme: const IconThemeData(color: encointerGrey), //change your color here,
         centerTitle: true,
         backgroundColor: Colors.transparent,
@@ -115,7 +114,7 @@ class _ProfileState extends State<Profile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      dic.profile.accounts,
+                      context.dic.profile.accounts,
                       style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                     ),
                     IconButton(
@@ -151,7 +150,7 @@ class _ProfileState extends State<Profile> {
               ),
               ListTile(
                 title: Text(
-                  dic.profile.changeYourPin,
+                  context.dic.profile.changeYourPin,
                   style: Theme.of(context).textTheme.headline3,
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
@@ -159,30 +158,30 @@ class _ProfileState extends State<Profile> {
               ),
               ListTile(
                 key: const Key('remove-all-accounts'),
-                title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
+                title: Text(context.dic.profile.accountsDeleteAll, style: h3Grey),
                 onTap: () => showRemoveAccountsDialog(context, store),
               ),
               ListTile(
-                  title: Text(dic.profile.reputationOverall, style: h3Grey),
+                  title: Text(context.dic.profile.reputationOverall, style: h3Grey),
                   trailing: store.encointer.account?.reputations != null
                       ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
-                      : Text(dic.encointer.fetchingReputations)),
+                      : Text(context.dic.encointer.fetchingReputations)),
               ListTile(
-                title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
+                title: Text(context.dic.profile.about, style: Theme.of(context).textTheme.headline3),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
-                title: Text(dic.profile.appHints, style: h3Grey),
+                title: Text(context.dic.profile.appHints, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, Instruction.route),
               ),
               ListTile(
-                title: Text(dic.profile.settingLang, style: h3Grey),
+                title: Text(context.dic.profile.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
               const SendToTrelloListTile(),
               ListTile(
-                title: Text(dic.profile.developer, style: h3Grey),
+                title: Text(context.dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
                   key: const Key('dev-mode'),
                   value: store.settings.developerMode,
@@ -212,7 +211,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     ListTile(
-                      title: Text(dic.profile.enableBazaar, style: h3Grey),
+                      title: Text(context.dic.profile.enableBazaar, style: h3Grey),
                       trailing: Checkbox(
                         value: store.settings.enableBazaar,
                         // Fixme: Need to change the tab to update the tabList. But, do we care? This is only
@@ -250,21 +249,19 @@ class _ProfileState extends State<Profile> {
 }
 
 Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
-  final dic = I18n.of(context)!.translationsForLocale();
-
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text(dic.profile.accountsDelete),
+        title: Text(context.dic.profile.accountsDelete),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(dic.home.cancel),
+            child: Text(context.dic.home.cancel),
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoButton(
             key: const Key('remove-all-accounts-check'),
-            child: Text(dic.home.ok),
+            child: Text(context.dic.home.ok),
             onPressed: () async {
               final accounts = store.account.accountListAll;
 

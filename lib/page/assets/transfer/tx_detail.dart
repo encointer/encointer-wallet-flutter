@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class TxDetail extends StatelessWidget {
@@ -29,7 +29,6 @@ class TxDetail extends StatelessWidget {
   final List<DetailInfoItem>? info;
 
   List<Widget> _buildListView(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     Widget buildLabel(String name) {
       return Container(
           padding: const EdgeInsets.only(left: 8),
@@ -51,7 +50,7 @@ class TxDetail extends StatelessWidget {
                 : Image.asset('assets/images/staking/error.png'),
           ),
           Text(
-            '$action ${success! ? dic.assets.success : dic.assets.fail}',
+            '$action ${success! ? context.dic.assets.success : context.dic.assets.fail}',
             style: Theme.of(context).textTheme.headline4,
           ),
           Padding(
@@ -86,15 +85,15 @@ class TxDetail extends StatelessWidget {
     }
     list.addAll(<Widget>[
       ListTile(
-        leading: buildLabel(dic.assets.event),
+        leading: buildLabel(context.dic.assets.event),
         title: Text(eventId!),
       ),
       ListTile(
-        leading: buildLabel(dic.assets.block),
+        leading: buildLabel(context.dic.assets.block),
         title: Text('#$blockNum'),
       ),
       ListTile(
-        leading: buildLabel(dic.assets.hash),
+        leading: buildLabel(context.dic.assets.hash),
         title: Text(Fmt.address(hash)!),
         trailing: SizedBox(
           width: 140,
@@ -122,7 +121,7 @@ class TxDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context)!.translationsForLocale().assets.detail),
+        title: Text(context.dic.assets.detail),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -136,7 +135,12 @@ class TxDetail extends StatelessWidget {
 }
 
 class DetailInfoItem {
-  DetailInfoItem({this.label, this.title, this.subtitle, this.address});
+  const DetailInfoItem({
+    this.label,
+    this.title,
+    this.subtitle,
+    this.address,
+  });
 
   final String? label;
   final String? title;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businesses_on_map.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_horizontal.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:translation_package/translation_package.dart';
 
 class BusinessDetail extends StatelessWidget {
   const BusinessDetail(this.business, {super.key, this.cardHeight = 200, this.cardWidth = 160});
@@ -16,16 +16,13 @@ class BusinessDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
             Text(business!.title),
-            const SizedBox(
-              width: 6,
-            ),
-            business!.icon
+            const SizedBox(width: 6),
+            business!.icon,
           ],
         ),
       ),
@@ -55,8 +52,8 @@ class BusinessDetail extends StatelessWidget {
                         margin: const EdgeInsets.fromLTRB(4, 0, 2, 0),
                         child: DataTable(
                           columns: [
-                            DataColumn(label: Text(dic.bazaar.day)),
-                            DataColumn(label: Text(dic.bazaar.openningHours))
+                            DataColumn(label: Text(context.dic.bazaar.day)),
+                            DataColumn(label: Text(context.dic.bazaar.openningHours))
                           ],
                           headingRowHeight: 32,
                           columnSpacing: 4,
@@ -81,7 +78,7 @@ class BusinessDetail extends StatelessWidget {
                   )
                 ],
               ),
-              HorizontalBazaarItemList(business!.offerings, dic.bazaar.offerings, cardHeight, cardWidth),
+              HorizontalBazaarItemList(business!.offerings, context.dic.bazaar.offerings, cardHeight, cardWidth),
             ],
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -18,10 +19,9 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 
 class ReapVoucherParams {
-  ReapVoucherParams({
+  const ReapVoucherParams({
     required this.voucher,
     this.showFundVoucher = false,
   });
@@ -71,7 +71,6 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
     final h4Grey = Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
@@ -94,16 +93,16 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
           if (result == ChangeResult.ok && cid != null) {
             fetchVoucherData(widget.api, voucherUri!, cid);
           } else if (result == ChangeResult.invalidNetwork) {
-            await showErrorDialog(context, dic.assets.invalidNetwork);
+            await showErrorDialog(context, context.dic.assets.invalidNetwork);
           } else if (result == ChangeResult.invalidCommunity) {
-            await showErrorDialog(context, dic.assets.invalidCommunity);
+            await showErrorDialog(context, context.dic.assets.invalidCommunity);
           }
         },
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(dic.assets.voucher)),
+      appBar: AppBar(title: Text(context.dic.assets.voucher)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
@@ -125,12 +124,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     )
                   : const CupertinoActivityIndicator(),
             ),
-            Text('${dic.assets.voucherBalance}, ${store.encointer.community?.symbol}', style: h4Grey),
+            Text('${context.dic.assets.voucherBalance}, ${store.encointer.community?.symbol}', style: h4Grey),
             Expanded(
               // fit: FlexFit.tight,
               child: Center(
                 child: Text(
-                  dic.assets.doYouWantToRedeemThisVoucher.replaceAll(
+                  context.dic.assets.doYouWantToRedeemThisVoucher.replaceAll(
                     'ACCOUNT_PLACEHOLDER',
                     store.account.currentAccount.name,
                   ),
@@ -149,7 +148,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     children: [
                       const Icon(Iconsax.login_1),
                       const SizedBox(width: 6),
-                      Text(dic.assets.fundVoucher),
+                      Text(context.dic.assets.fundVoucher),
                     ],
                   ),
                 ),
@@ -161,7 +160,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                 children: [
                   const Icon(Iconsax.login_1),
                   const SizedBox(width: 6),
-                  Text(dic.assets.redeemVoucher),
+                  Text(context.dic.assets.redeemVoucher),
                 ],
               ),
             ),

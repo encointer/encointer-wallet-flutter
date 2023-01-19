@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:translation_package/translation_package.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -13,11 +13,10 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
-        title: Text(dic.profile.about),
+        title: Text(context.dic.profile.about),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -28,7 +27,7 @@ class AboutPage extends StatelessWidget {
               child: Image.asset('assets/images/public/logo_about.png'),
             ),
             Text(
-              dic.profile.aboutBrief,
+              context.dic.profile.aboutBrief,
               style: Theme.of(context).textTheme.headline4,
             ),
             const SizedBox(height: 8),
@@ -37,7 +36,9 @@ class AboutPage extends StatelessWidget {
               builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
                 Log.d('$snapshot', 'AboutPage');
                 if (snapshot.hasData) {
-                  return Text('${dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
+                  return Text(
+                    '${context.dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}',
+                  );
                 } else {
                   return const CupertinoActivityIndicator();
                 }

@@ -5,9 +5,9 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:translation_package/translation_package.dart';
 
 typedef ScheduleNotification = Future<void> Function(int id, String title, String body, tz.TZDateTime scheduledDate);
 
@@ -69,7 +69,7 @@ class NotificationPlugin {
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
-              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+              child: Text(context.dic.home.ok),
               onPressed: () async {
                 Navigator.of(context, rootNavigator: true).pop();
               },

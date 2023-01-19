@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -8,7 +9,6 @@ import 'package:encointer_wallet/page/account/import/import_account_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:translation_package/translation_package.dart';
 
 class AddAccountForm extends StatelessWidget {
   AddAccountForm({
@@ -28,8 +28,6 @@ class AddAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-
     return Form(
       key: _formKey,
       child: Padding(
@@ -41,7 +39,7 @@ class AddAccountForm extends StatelessWidget {
                 children: <Widget>[
                   const SizedBox(height: 80),
                   Text(
-                    I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
+                    context.dic.profile.accountNameChoose,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2,
                   ),
@@ -49,7 +47,7 @@ class AddAccountForm extends StatelessWidget {
                   SizedBox(
                     width: 300,
                     child: Text(
-                      I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
+                      context.dic.profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                     ),
@@ -57,8 +55,8 @@ class AddAccountForm extends StatelessWidget {
                   const SizedBox(height: 30),
                   EncointerTextFormField(
                     key: const Key('create-account-name'),
-                    hintText: dic.account.createHint,
-                    labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
+                    hintText: context.dic.account.createHint,
+                    labelText: context.dic.profile.accountName,
                     controller: _nameCtrl,
                     validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
@@ -73,8 +71,7 @@ class AddAccountForm extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.import_2),
                     const SizedBox(width: 10),
-                    Text(I18n.of(context)!.translationsForLocale().home.accountImport,
-                        style: Theme.of(context).textTheme.headline3),
+                    Text(context.dic.home.accountImport, style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
                 onPressed: () => Navigator.pushNamed(context, ImportAccountPage.route)),
@@ -87,7 +84,7 @@ class AddAccountForm extends StatelessWidget {
                   const Icon(Iconsax.add_square),
                   const SizedBox(width: 12),
                   Text(
-                    I18n.of(context)!.translationsForLocale().profile.accountCreate,
+                    context.dic.profile.accountCreate,
                     style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                   ),
                 ],

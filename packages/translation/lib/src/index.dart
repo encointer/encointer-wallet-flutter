@@ -1,8 +1,6 @@
-import 'dart:async';
-
-import 'package:flutter/foundation.dart' show SynchronousFuture;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation_package/src/translations.dart';
+import 'package:translation/translation.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   const AppLocalizationsDelegate(this.overriddenLocale);
@@ -22,12 +20,12 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
 }
 
 class I18n {
-  I18n(this.locale);
+  const I18n(this.locale);
 
   final Locale locale;
 
-  static I18n? of(BuildContext context) {
-    return Localizations.of<I18n>(context, I18n);
+  static I18n of(BuildContext context) {
+    return Localizations.of<I18n>(context, I18n)!;
   }
 
   /// this will be used in different places, also supportedLocales.keys
@@ -42,4 +40,9 @@ class I18n {
     final translations = supportedLocales[locale];
     return translations ?? TranslationsEn();
   }
+}
+
+extension LocalizationsX on BuildContext {
+  // Returns the translations object for the current locale
+  Translations get dic => I18n.of(this).translationsForLocale();
 }

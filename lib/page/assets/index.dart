@@ -10,7 +10,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:translation_package/translation_package.dart';
+import 'package:translation/translation.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
@@ -85,7 +85,6 @@ class _AssetsState extends State<Assets> {
 
   late double _panelHeightOpen;
   final double _panelHeightClosed = 0;
-  Translations? dic;
 
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
@@ -94,8 +93,6 @@ class _AssetsState extends State<Assets> {
 
   @override
   Widget build(BuildContext context) {
-    dic = I18n.of(context)!.translationsForLocale();
-
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
     _panelHeightOpen = min(
@@ -111,7 +108,7 @@ class _AssetsState extends State<Assets> {
       () {
         Log.d('[balanceWatchdog] triggered', 'Assets');
 
-        _refreshBalanceAndNotify(dic);
+        _refreshBalanceAndNotify(context.dic);
         balanceWatchdog!
           ..reset()
           ..start();
@@ -120,7 +117,7 @@ class _AssetsState extends State<Assets> {
 
     final appBar = AppBar(
       key: const Key('assets-index-appbar'),
-      title: Text(dic!.assets.home),
+      title: Text(context.dic.assets.home),
     );
     return FocusDetector(
       onFocusLost: () {
@@ -130,7 +127,7 @@ class _AssetsState extends State<Assets> {
       onFocusGained: () {
         Log.d('[home:FocusDetector] Focus Gained.');
         if (!widget.store.settings.loading) {
-          _refreshBalanceAndNotify(dic);
+          _refreshBalanceAndNotify(context.dic);
         }
         balanceWatchdog!.reset();
         balanceWatchdog!.start();
@@ -187,7 +184,7 @@ class _AssetsState extends State<Assets> {
                                           style: const TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          '${dic!.assets.balance}, ${widget.store.encointer.community?.symbol}',
+                                          '${context.dic.assets.balance}, ${widget.store.encointer.community?.symbol}',
                                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                                         ),
                                       ],
@@ -198,8 +195,11 @@ class _AssetsState extends State<Assets> {
                                       child: (widget.store.encointer.chosenCid == null)
                                           ? SizedBox(
                                               width: double.infinity,
-                                              child:
-                                                  Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
+                                              child: Text(
+                                                context.dic.assets.communityNotSelected,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            )
                                           : const SizedBox(
                                               width: double.infinity,
                                               child: CupertinoActivityIndicator(),
@@ -239,7 +239,7 @@ class _AssetsState extends State<Assets> {
                                       children: [
                                         const Icon(Iconsax.receive_square_2),
                                         const SizedBox(width: 12),
-                                        Text(dic!.assets.receive),
+                                        Text(context.dic.assets.receive),
                                       ],
                                     ),
                                   ),
@@ -263,7 +263,7 @@ class _AssetsState extends State<Assets> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Text(dic!.assets.transfer),
+                                        Text(context.dic.assets.transfer),
                                         const SizedBox(width: 12),
                                         const Icon(Iconsax.send_sqaure_2),
                                       ],
@@ -280,8 +280,6 @@ class _AssetsState extends State<Assets> {
                       padding: EdgeInsets.symmetric(vertical: 6),
                     ),
                     Observer(builder: (_) {
-                      final dic = I18n.of(context)!.translationsForLocale();
-
                       final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
                           (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
 
@@ -295,7 +293,7 @@ class _AssetsState extends State<Assets> {
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
                                       key: const Key('claim-pending-dev'),
-                                      child: Text(dic.assets.issuancePending),
+                                      child: Text(context.dic.assets.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
                                         widget.store,
@@ -307,7 +305,7 @@ class _AssetsState extends State<Assets> {
                                     return widget.store.settings.developerMode
                                         ? ElevatedButton(
                                             onPressed: null,
-                                            child: Text(dic.assets.issuanceClaimed),
+                                            child: Text(context.dic.assets.issuanceClaimed),
                                           )
                                         : const SizedBox.shrink();
                                   }
@@ -339,12 +337,12 @@ class _AssetsState extends State<Assets> {
                       builder: (BuildContext context) {
                         allCommunities = initAllCommunities();
                         return SwitchAccountOrCommunity(
-                          rowTitle: dic!.home.switchCommunity,
+                          rowTitle: context.dic.home.switchCommunity,
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
                               Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-                                _refreshBalanceAndNotify(dic);
+                                _refreshBalanceAndNotify(context.dic);
                               });
                             } else {
                               setState(() {
@@ -356,9 +354,9 @@ class _AssetsState extends State<Assets> {
                       },
                     ),
                     Observer(builder: (BuildContext context) {
-                      allAccounts = initAllAccounts(dic!);
+                      allAccounts = initAllAccounts(context.dic);
                       return SwitchAccountOrCommunity(
-                        rowTitle: dic!.home.switchAccount,
+                        rowTitle: context.dic.home.switchAccount,
                         data: allAccounts,
                         onTap: (int index) {
                           if (index == allAccounts.length - 1) {
@@ -366,7 +364,7 @@ class _AssetsState extends State<Assets> {
                           } else {
                             setState(() {
                               switchAccount(widget.store.account.accountListAll[index]);
-                              _refreshBalanceAndNotify(dic);
+                              _refreshBalanceAndNotify(context.dic);
                             });
                           }
                         },
@@ -404,7 +402,7 @@ class _AssetsState extends State<Assets> {
             size: 36,
           ),
         ),
-        name: dic!.profile.addCommunity,
+        name: context.dic.profile.addCommunity,
       )
     ];
     // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
@@ -460,7 +458,7 @@ class _AssetsState extends State<Assets> {
           child: showPasswordInputDialog(
             context,
             widget.store.account.currentAccount,
-            Text(I18n.of(context)!.translationsForLocale().home.unlock),
+            Text(context.dic.home.unlock),
             (String password) {
               setState(() {
                 widget.store.settings.setPin(password);
@@ -482,14 +480,14 @@ class _AssetsState extends State<Assets> {
       context: context,
       builder: (_) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context)!.translationsForLocale().home.pinNeeded),
+          title: Text(context.dic.home.pinNeeded),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
+              child: Text(context.dic.home.cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.closeApp),
+              child: Text(context.dic.home.closeApp),
               onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
             ),
           ],

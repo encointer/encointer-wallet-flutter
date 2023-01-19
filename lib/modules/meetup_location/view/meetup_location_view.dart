@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
-import 'package:translation_package/translation_package.dart';
 
 class MeetupLocationPage extends StatelessWidget {
   const MeetupLocationPage(this.meetupLocation, {super.key});
@@ -15,17 +15,16 @@ class MeetupLocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.encointer.meetupLocation),
+        title: Text(context.dic.encointer.meetupLocation),
       ),
       body: EncointerMap(
         locations: [meetupLocation.toLatLng()],
         center: meetupLocation.toLatLng(),
         initialZoom: 10,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
-          title: dic.encointer.showRouteMeetupLocation,
+          title: context.dic.encointer.showRouteMeetupLocation,
           description: '',
           onTap: () => AppLaunch.launchMap(meetupLocation),
           height: 40,

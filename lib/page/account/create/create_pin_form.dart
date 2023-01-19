@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 
 class CreatePinForm extends StatefulWidget {
   const CreatePinForm({super.key, required this.store, required this.onSubmit});
@@ -32,8 +32,6 @@ class _CreatePinFormState extends State<CreatePinForm> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-
     return Form(
       key: _formKey,
       child: Column(
@@ -44,18 +42,16 @@ class _CreatePinFormState extends State<CreatePinForm> {
               children: <Widget>[
                 const SizedBox(height: 80),
                 Center(
-                  child: Text(dic.profile.pinSecure, style: Theme.of(context).textTheme.headline2),
+                  child: Text(context.dic.profile.pinSecure, style: Theme.of(context).textTheme.headline2),
                 ),
                 const SizedBox(height: 10),
                 Center(
                   child: SizedBox(
                     width: 250,
                     child: Text(
-                      dic.profile.pinHint,
+                      context.dic.profile.pinHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
-                            color: encointerBlack,
-                          ),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                     ),
                   ),
                 ),
@@ -71,12 +67,12 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     ),
                     filled: true,
                     fillColor: zurichLion.shade50,
-                    hintText: dic.account.createPassword,
-                    labelText: dic.account.createPassword,
+                    hintText: context.dic.account.createPassword,
+                    labelText: context.dic.account.createPassword,
                   ),
                   controller: _passCtrl,
                   validator: (v) {
-                    return Fmt.checkPassword(v!.trim()) ? null : dic.account.createPasswordError;
+                    return Fmt.checkPassword(v!.trim()) ? null : context.dic.account.createPasswordError;
                   },
                   obscureText: true,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -94,13 +90,13 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     filled: true,
                     //todo define color
                     fillColor: const Color(0xffF4F8F9),
-                    hintText: dic.account.createPassword2,
-                    labelText: dic.account.createPassword2,
+                    hintText: context.dic.account.createPassword2,
+                    labelText: context.dic.account.createPassword2,
                   ),
                   controller: _pass2Ctrl,
                   obscureText: true,
                   validator: (v) {
-                    return _passCtrl.text != v ? dic.account.createPassword2Error : null;
+                    return _passCtrl.text != v ? context.dic.account.createPassword2Error : null;
                   },
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
@@ -114,10 +110,8 @@ class _CreatePinFormState extends State<CreatePinForm> {
                       SizedBox(
                         width: 250,
                         child: Text(
-                          dic.profile.pinInfo,
-                          style: Theme.of(context).textTheme.headline4!.copyWith(
-                                color: encointerGrey,
-                              ),
+                          context.dic.profile.pinInfo,
+                          style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                         ),
                       ),
                     ],
@@ -131,10 +125,8 @@ class _CreatePinFormState extends State<CreatePinForm> {
             padding: const EdgeInsets.all(16),
             child: PrimaryButton(
               child: Text(
-                I18n.of(context)!.translationsForLocale().account.create,
-                style: Theme.of(context).textTheme.headline3!.copyWith(
-                      color: zurichLion.shade50,
-                    ),
+                context.dic.account.create,
+                style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {

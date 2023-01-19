@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:translation_package/translation_package.dart';
 
 class Instruction extends StatelessWidget {
   const Instruction({super.key});
@@ -12,17 +12,15 @@ class Instruction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().profile;
-
     return Scaffold(
-      appBar: AppBar(title: Text(dic.appHints)),
+      appBar: AppBar(title: Text(context.dic.profile.appHints)),
       body: ListView(
         children: [
           ExpansionTile(
-            title: Text(dic.meetUpNotifications),
+            title: Text(context.dic.profile.meetUpNotifications),
             children: <Widget>[
               ListTile(
-                title: Text(dic.meetUpListTileTitle),
+                title: Text(context.dic.profile.meetUpListTileTitle),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -31,14 +29,14 @@ class Instruction extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: '1. ${dic.openAppSettings}',
+                            text: '1. ${context.dic.profile.openAppSettings}',
                             style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14, color: zurichLion),
                             recognizer: TapGestureRecognizer()..onTap = openAppSettings,
                           ),
                         ],
                       ),
                     ),
-                    Text('2. ${dic.enableAutoStart}'),
+                    Text('2. ${context.dic.profile.enableAutoStart}'),
                   ],
                 ),
               ),

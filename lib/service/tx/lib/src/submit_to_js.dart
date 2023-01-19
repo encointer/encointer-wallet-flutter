@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
@@ -11,7 +12,6 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:translation_package/translation_package.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
@@ -30,8 +30,6 @@ Future<void> submitToJS(
   String? password,
   BigInt? tip,
 }) async {
-  final dic = I18n.of(context)!.translationsForLocale();
-
   final args = txParams;
 
   store.assets.setSubmitting(true);
@@ -54,7 +52,7 @@ Future<void> submitToJS(
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
       _showTxStatusSnackBar(
-        getTxStatusTranslation(dic.home, store.account.txStatus),
+        getTxStatusTranslation(context.dic.home, store.account.txStatus),
         const CupertinoActivityIndicator(),
       );
     }
@@ -67,8 +65,8 @@ Future<void> submitToJS(
       _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
   } else {
-    _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
-    args['notificationTitle'] = dic.home.notifySubmittedQueued;
+    _showTxStatusSnackBar(context.dic.home.txQueuedOffline, null);
+    args['notificationTitle'] = context.dic.home.notifySubmittedQueued;
     store.account.queueTx(args as Map<String, dynamic>);
   }
 }
@@ -109,7 +107,7 @@ Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
     args['txInfo'] as Map<dynamic, dynamic>?,
     args['params'] as List<dynamic>?,
     args['title'] as String?,
-    I18n.of(context)!.translationsForLocale().home.notifySubmitted,
+    context.dic.home.notifySubmitted,
     rawParam: args['rawParam'] as String?,
   );
 }
@@ -144,7 +142,7 @@ void _onTxFinish(
       ListTile(
         leading: SizedBox(width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
-          I18n.of(context)!.translationsForLocale().assets.success,
+          context.dic.assets.success,
           style: const TextStyle(color: Colors.black54),
         ),
       ),
@@ -174,17 +172,15 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
 }
 
 Future<void> showErrorDialog(BuildContext context, String errorMsg) {
-  final dic = I18n.of(context)!.translationsForLocale();
-
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text(dic.assets.transactionError),
+        title: Text(context.dic.assets.transactionError),
         content: Text(errorMsg),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(dic.home.ok),
+            child: Text(context.dic.home.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],
@@ -194,23 +190,22 @@ Future<void> showErrorDialog(BuildContext context, String errorMsg) {
 }
 
 Future<void> showInsufficientFundsDialog(BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale();
   final languageCode = Localizations.localeOf(context).languageCode;
 
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text(dic.assets.transactionError),
-        content: Text(dic.assets.insufficientFundsExplanation),
+        title: Text(context.dic.assets.transactionError),
+        content: Text(context.dic.assets.insufficientFundsExplanation),
         actions: <Widget>[
           Container(),
           CupertinoButton(
-            child: Text(dic.encointer.goToLeuZurich),
+            child: Text(context.dic.encointer.goToLeuZurich),
             onPressed: () => AppLaunch.launchURL(leuZurichLink(languageCode)),
           ),
           CupertinoButton(
-            child: Text(dic.home.ok),
+            child: Text(context.dic.home.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],

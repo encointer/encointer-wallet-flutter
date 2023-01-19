@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
@@ -19,11 +20,10 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:translation_package/translation_package.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class TransferPageParams {
-  TransferPageParams({
+  const TransferPageParams({
     this.cid,
     this.communitySymbol,
     this.recipient,
@@ -95,9 +95,8 @@ class _TransferPageState extends State<TransferPage> {
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          final dic = I18n.of(context)!.translationsForLocale().assets;
           return CupertinoAlertDialog(
-            title: Text(dic.chosenRightCommunity),
+            title: Text(context.dic.assets.chosenRightCommunity),
           );
         },
       );
@@ -117,9 +116,7 @@ class _TransferPageState extends State<TransferPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
-
     const decimals = encointerCurrenciesDecimals;
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
@@ -131,7 +128,7 @@ class _TransferPageState extends State<TransferPage> {
           key: _formKey,
           child: Scaffold(
             appBar: AppBar(
-              title: Text(dic.assets.transfer),
+              title: Text(context.dic.assets.transfer),
               leading: Container(),
               actions: [
                 IconButton(
@@ -162,10 +159,10 @@ class _TransferPageState extends State<TransferPage> {
                         else
                           const CupertinoActivityIndicator(),
                         Text(
-                          I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll(
-                                'ACCOUNT_NAME',
-                                Fmt.accountName(context, store.account.currentAccount),
-                              ),
+                          context.dic.assets.yourBalanceFor.replaceAll(
+                            'ACCOUNT_NAME',
+                            Fmt.accountName(context, store.account.currentAccount),
+                          ),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
@@ -189,7 +186,7 @@ class _TransferPageState extends State<TransferPage> {
                         ),
                         const SizedBox(height: 24),
                         EncointerTextFormField(
-                          labelText: dic.assets.amountToBeTransferred,
+                          labelText: context.dic.assets.amountToBeTransferred,
                           textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -197,10 +194,10 @@ class _TransferPageState extends State<TransferPage> {
                           textFormFieldKey: const Key('transfer-amount-input'),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return dic.assets.amountError;
+                              return context.dic.assets.amountError;
                             }
                             if (balanceTooLow(value, available!, decimals)) {
-                              return dic.assets.insufficientBalance;
+                              return context.dic.assets.insufficientBalance;
                             }
                             return null;
                           },
@@ -212,7 +209,7 @@ class _TransferPageState extends State<TransferPage> {
                             Expanded(
                               child: AddressInputField(
                                 store,
-                                label: dic.assets.address,
+                                label: context.dic.assets.address,
                                 initialValue: _accountTo,
                                 onChanged: (AccountData acc) {
                                   setState(() {
@@ -231,7 +228,7 @@ class _TransferPageState extends State<TransferPage> {
                   if (store.settings.developerMode)
                     Center(
                       child: Text(
-                        '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
+                        '${context.dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
                         style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                       ),
                     ),
@@ -252,7 +249,7 @@ class _TransferPageState extends State<TransferPage> {
                         children: [
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 12),
-                          Text(dic.account.next),
+                          Text(context.dic.account.next),
                         ],
                       ),
                     ),
