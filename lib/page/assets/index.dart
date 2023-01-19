@@ -93,6 +93,7 @@ class _AssetsState extends State<Assets> {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
     _panelHeightOpen = min(
@@ -108,7 +109,7 @@ class _AssetsState extends State<Assets> {
       () {
         Log.d('[balanceWatchdog] triggered', 'Assets');
 
-        _refreshBalanceAndNotify(context.dic);
+        _refreshBalanceAndNotify(dic);
         balanceWatchdog!
           ..reset()
           ..start();

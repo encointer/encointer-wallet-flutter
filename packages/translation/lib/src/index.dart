@@ -1,23 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:translation/translation.dart';
-
-class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
-  const AppLocalizationsDelegate(this.overriddenLocale);
-
-  final Locale overriddenLocale;
-
-  @override
-  bool isSupported(Locale locale) => ['en', 'de', 'fr', 'ru'].contains(locale.languageCode);
-
-  @override
-  Future<I18n> load(Locale locale) {
-    return SynchronousFuture<I18n>(I18n(overriddenLocale));
-  }
-
-  @override
-  bool shouldReload(AppLocalizationsDelegate old) => true;
-}
 
 class I18n {
   const I18n(this.locale);
@@ -36,10 +20,33 @@ class I18n {
     const Locale('ru', ''): TranslationsRu(),
   };
 
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
+
   Translations translationsForLocale() {
     final translations = supportedLocales[locale];
     return translations ?? TranslationsEn();
   }
+}
+
+class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
+  const AppLocalizationsDelegate(this.overriddenLocale);
+
+  final Locale overriddenLocale;
+
+  @override
+  bool isSupported(Locale locale) => ['en', 'de', 'fr', 'ru'].contains(locale.languageCode);
+
+  @override
+  Future<I18n> load(Locale locale) {
+    return SynchronousFuture<I18n>(I18n(overriddenLocale));
+  }
+
+  @override
+  bool shouldReload(AppLocalizationsDelegate old) => true;
 }
 
 extension LocalizationsX on BuildContext {
