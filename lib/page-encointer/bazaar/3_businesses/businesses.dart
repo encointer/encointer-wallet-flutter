@@ -1,4 +1,4 @@
-import 'package:ew_translation/translation.dart';
+import 'package:ew_translations/translation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businesses_on_map.dart';

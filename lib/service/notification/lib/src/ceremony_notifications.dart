@@ -1,4 +1,4 @@
-import 'package:ew_translation/translation.dart';
+import 'package:ew_translations/translation.dart';
 
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 

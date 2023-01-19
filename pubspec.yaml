@@ -81,7 +81,7 @@ dependencies:
   app_links: ^3.4.1
 
   # Subpackage for translations of the Encointer-Wallet-Flutter
-  ew_translation:
+  ew_translations:
     path: packages/translation
 
 dev_dependencies:

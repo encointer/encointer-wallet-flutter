@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dart_geohash/dart_geohash.dart';
-import 'package:ew_translation/translation.dart';
+import 'package:ew_translations/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';

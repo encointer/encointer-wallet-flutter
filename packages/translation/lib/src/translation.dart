@@ -1,9 +1,9 @@
-import 'package:ew_translation/src/translations/translations_account.dart';
-import 'package:ew_translation/src/translations/translations_assets.dart';
-import 'package:ew_translation/src/translations/translations_bazaar.dart';
-import 'package:ew_translation/src/translations/translations_encointer.dart';
-import 'package:ew_translation/src/translations/translations_home.dart';
-import 'package:ew_translation/src/translations/translations_profile.dart';
+import 'package:ew_translations/src/translations/translations_account.dart';
+import 'package:ew_translations/src/translations/translations_assets.dart';
+import 'package:ew_translations/src/translations/translations_bazaar.dart';
+import 'package:ew_translations/src/translations/translations_encointer.dart';
+import 'package:ew_translations/src/translations/translations_home.dart';
+import 'package:ew_translations/src/translations/translations_profile.dart';
 
 /// top level contains groups like 'account', 'profile' etc.
 /// (when you add a new group the compiler will force you to add it in all implementations, too.)

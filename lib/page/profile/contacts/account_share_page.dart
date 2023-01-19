@@ -1,4 +1,4 @@
-import 'package:ew_translation/translation.dart';
+import 'package:ew_translations/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';

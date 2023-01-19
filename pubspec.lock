@@ -288,7 +288,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.5"
-  ew_translation:
+  ew_translations:
     dependency: "direct main"
     description:
       path: "packages/translation"

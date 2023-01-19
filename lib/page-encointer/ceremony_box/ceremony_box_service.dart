@@ -1,5 +1,5 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
-import 'package:ew_translation/translation.dart';
+import 'package:ew_translations/translation.dart';
 import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/models/index.dart';

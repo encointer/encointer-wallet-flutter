@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:animated_check/animated_check.dart';
-import 'package:ew_translation/translation.dart';
+import 'package:ew_translations/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
