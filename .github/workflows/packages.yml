@@ -1,0 +1,30 @@
+name: packages
+
+on:
+  push:
+    branches: [master, f-droid]
+  pull_request:
+    branches: [master, f-droid]
+
+jobs:
+  examples:
+    strategy:
+      matrix:
+        folder: ["packages/translation"]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2.8.0
+      - name: Install Dependencies
+        working-directory: ${{ matrix.folder }}
+        run: flutter pub get
+      - name: Format
+        working-directory: ${{ matrix.folder }}
+        run: flutter format . --line-length 120 --set-exit-if-changed
+      - name: Analyze
+        working-directory: ${{ matrix.folder }}
+        run: flutter analyze  --fatal-warnings
+      - name: Run tests
+        working-directory: ${{ matrix.folder }}
+        run: flutter test
