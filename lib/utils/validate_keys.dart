@@ -2,33 +2,33 @@ import 'package:bip39/bip39.dart' as bip39;
 
 class ValidateKeys {
   static bool isPrivateKey(String privateKey) {
-    privateKey = privateKey.trim();
+    final privateKeyTrimmed = privateKey.trim();
 
-    if (privateKey.length == 1) {
-      return privateKey.startsWith('0');
+    if (privateKeyTrimmed.length == 1) {
+      return privateKeyTrimmed.startsWith('0');
     }
 
-    return (privateKey.length >= 2) && privateKey.startsWith('0x');
+    return (privateKeyTrimmed.length >= 2) && privateKeyTrimmed.startsWith('0x');
   }
 
   static bool validatePrivateKey(String privateKey) {
-    privateKey = privateKey.trim();
-    return isPrivateKey(privateKey) && privateKey.length == 66; // 64-byte key plus '0x'
+    final privateKeyTrimmed = privateKey.trim();
+    return isPrivateKey(privateKeyTrimmed) && privateKeyTrimmed.length == 66; // 64-byte key plus '0x'
   }
 
   static bool isRawSeed(String seed) {
-    seed = seed.trim();
+    final seedTrimmed = seed.trim();
 
-    if (seed.length == 1) {
-      return seed.startsWith('/');
+    if (seedTrimmed.length == 1) {
+      return seedTrimmed.startsWith('/');
     }
 
-    return (seed.length >= 2) && seed.startsWith('//');
+    return (seedTrimmed.length >= 2) && seedTrimmed.startsWith('//');
   }
 
   static bool validateRawSeed(String seed) {
-    seed = seed.trim();
-    return isRawSeed(seed) && (seed.length > 2) && (seed.length <= 32);
+    final seedTrimmed = seed.trim();
+    return isRawSeed(seedTrimmed) && (seedTrimmed.length > 2) && (seedTrimmed.length <= 32);
   }
 
   static bool validateMnemonic(String mnemonic) {
