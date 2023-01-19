@@ -7,7 +7,7 @@ on:
     branches: [master, f-droid]
 
 jobs:
-  examples:
+  packages:
     strategy:
       matrix:
         folder: ["packages/translation"]
