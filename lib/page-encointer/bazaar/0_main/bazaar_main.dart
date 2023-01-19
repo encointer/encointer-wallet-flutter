@@ -1,6 +1,6 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main_state.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_menu.dart';
@@ -16,35 +16,38 @@ class BazaarMain extends StatelessWidget {
   static const String route = '/bazaar';
 
   @override
-  Widget build(BuildContext context) => Provider<BazaarMainState>(
-        create: (_) => BazaarMainState(),
-        child: DefaultTabController(
-          length: bazaarTabBar.length,
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(context.dic.bazaar.bazaarTitle),
-              centerTitle: true,
-              // leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => _chooseCommunity()), // TODO
-              leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () {}),
-              bottom: TabBar(
-                tabs: <Widget>[
-                  const Tab(icon: Icon(Icons.home), text: 'Home'),
-                  Tab(icon: const Icon(Icons.local_offer), text: context.dic.bazaar.offerings),
-                  Tab(icon: const Icon(Icons.business), text: context.dic.bazaar.businesses),
-                  Tab(icon: const Icon(Icons.favorite, color: Colors.pink), text: context.dic.bazaar.favorites),
-                ],
-              ),
-            ),
-            endDrawer: const BazaarMenu(),
-            body: TabBarView(
-              children: [
-                const Home(),
-                Offerings(),
-                Businesses(),
-                Favorites(),
+  Widget build(BuildContext context) {
+    final dic = context.dic;
+    return Provider<BazaarMainState>(
+      create: (_) => BazaarMainState(),
+      child: DefaultTabController(
+        length: bazaarTabBar.length,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(dic.bazaar.bazaarTitle),
+            centerTitle: true,
+            // leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => _chooseCommunity()), // TODO
+            leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () {}),
+            bottom: TabBar(
+              tabs: <Widget>[
+                const Tab(icon: Icon(Icons.home), text: 'Home'),
+                Tab(icon: const Icon(Icons.local_offer), text: dic.bazaar.offerings),
+                Tab(icon: const Icon(Icons.business), text: dic.bazaar.businesses),
+                Tab(icon: const Icon(Icons.favorite, color: Colors.pink), text: dic.bazaar.favorites),
               ],
             ),
           ),
+          endDrawer: const BazaarMenu(),
+          body: TabBarView(
+            children: [
+              const Home(),
+              Offerings(),
+              Businesses(),
+              Favorites(),
+            ],
+          ),
         ),
-      );
+      ),
+    );
+  }
 }

@@ -1,9 +1,9 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
@@ -51,19 +51,20 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   void _onDeleteAccount(BuildContext context, AccountData accountToBeEdited) {
+    final dic = context.dic;
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(context.dic.profile.accountDelete),
+          title: Text(dic.profile.accountDelete),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(context.dic.home.cancel),
+              child: Text(dic.home.cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
               key: const Key('delete-account'),
-              child: Text(context.dic.home.ok),
+              child: Text(dic.home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
@@ -103,10 +104,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   void _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) {
+    final dic = context.dic;
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(context, accountToBeEdited, Text(context.dic.profile.confirmPin),
+        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin),
             (String password) async {
           Log.d('password is: $password', 'AccountManagePage');
           setState(() {
@@ -130,11 +132,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
               context: context,
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(
-                  title: Text(context.dic.profile.noMnemonicFound),
-                  content: Text(context.dic.profile.importedWithRawSeedHenceNoMnemonic),
+                  title: Text(dic.profile.noMnemonicFound),
+                  content: Text(dic.profile.importedWithRawSeedHenceNoMnemonic),
                   actions: <Widget>[
                     CupertinoButton(
-                      child: Text(context.dic.home.ok),
+                      child: Text(dic.home.ok),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],
@@ -149,6 +151,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     final h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
@@ -221,7 +224,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         ],
                       ),
                       Text(
-                        context.dic.encointer.communities,
+                        dic.encointer.communities,
                         style: h3!.copyWith(color: encointerGrey),
                         textAlign: TextAlign.left,
                       ),
@@ -277,7 +280,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           children: [
                             const Icon(Iconsax.share),
                             const SizedBox(width: 12),
-                            Text(context.dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
+                            Text(dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
                           ],
                         ),
                         onPressed: () =>
@@ -307,8 +310,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             }
                           },
                           itemBuilder: (BuildContext context) => [
-                                AccountActionItemData(context.dic.profile.deleteAccount, AccountAction.delete),
-                                AccountActionItemData(context.dic.profile.exportAccount, AccountAction.export),
+                                AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete),
+                                AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
                               ]
                                   .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
                                         key: Key(data.accountAction.name),

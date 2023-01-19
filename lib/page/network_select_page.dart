@@ -1,8 +1,8 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
@@ -40,6 +40,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   bool _networkChanging = false;
 
   Future<void> _reloadNetwork() async {
+    final dic = context.dic;
     setState(() {
       _networkChanging = true;
     });
@@ -47,7 +48,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(context.dic.home.loading),
+          title: Text(dic.home.loading),
           content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
@@ -92,6 +93,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
+    final dic = context.dic;
     await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
@@ -99,7 +101,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
           child: showPasswordInputDialog(
             context,
             context.read<AppStore>().account.currentAccount,
-            Text(context.dic.profile.unlock),
+            Text(dic.profile.unlock),
             (String password) {
               setState(() {
                 context.read<AppStore>().settings.setPin(password);
@@ -180,9 +182,10 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.home.settingNetwork),
+        title: Text(dic.home.settingNetwork),
         centerTitle: true,
       ),
       body: Row(

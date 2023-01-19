@@ -47,15 +47,9 @@ dependencies:
   animated_check: ^1.0.5
   share_plus: ^6.3.0
   flutter_timezone: ^1.0.4
-
-  # Subpackage for translations of the Encointer-Wallet-Flutter
-  translation:
-    path: packages/translation
-
   # Adjust screen brightness and keep awake for qrcodes
   wakelock: ^0.6.2
   screen_brightness: ^0.2.2
-
   # encointer dart api
   json_rpc_2: ^3.0.2
   web_socket_channel: ^2.2.0
@@ -85,6 +79,10 @@ dependencies:
   photo_view: ^0.14.0
   upgrader: ^5.0.0
   app_links: ^3.4.1
+
+  # Subpackage for translations of the Encointer-Wallet-Flutter
+  ew_translation:
+    path: packages/translation
 
 dev_dependencies:
   build_runner: ^2.3.0

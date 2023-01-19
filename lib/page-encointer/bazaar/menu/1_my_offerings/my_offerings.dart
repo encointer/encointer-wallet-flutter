@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/1_my_offerings/offering_form.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
@@ -13,12 +13,13 @@ class MyOfferings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.bazaar.offeringsMy),
+        title: Text(dic.bazaar.offeringsMy),
       ),
       body: Column(children: [
-        ToggleButtonsWithTitle(context.dic.bazaar.categories, allCategories, null),
+        ToggleButtonsWithTitle(dic.bazaar.categories, allCategories, null),
         Expanded(
           child: ListView.builder(
             itemCount: data.length,

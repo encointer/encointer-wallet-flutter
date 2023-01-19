@@ -1,6 +1,6 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:test/test.dart';
-import 'package:translation/translation.dart';
 
 void main() {
   test('AppLocalizationsDelegate should support en, de, fr, and ru', () {

@@ -1,7 +1,7 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
 
@@ -150,6 +150,7 @@ class AddOpeningIntervalForDay extends StatelessWidget {
     final businessFormState = Provider.of<BusinessFormState>(context);
     final openingHours = businessFormState.openingHours;
     final openingHoursForDay = openingHours.getOpeningHoursFor(day);
+    final dic = context.dic;
 
     return Observer(
       builder: (_) => TextField(
@@ -159,8 +160,8 @@ class AddOpeningIntervalForDay extends StatelessWidget {
         // ],
         autofocus: true,
         decoration: InputDecoration(
-            labelText: context.dic.bazaar.timeIntervalAdd,
-            hintText: context.dic.bazaar.openningHoursInputHint,
+            labelText: dic.bazaar.timeIntervalAdd,
+            hintText: dic.bazaar.openningHoursInputHint,
             contentPadding: const EdgeInsets.all(8),
             errorText: openingHoursForDay!.timeFormatError),
         controller: _textController,

@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -33,6 +33,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
   bool _submitting = false;
 
   Future<void> _onSave(AppStore store) async {
+    final dic = context.dic;
     if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
@@ -50,11 +51,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(context.dic.profile.wrongPin),
-              content: Text(context.dic.profile.wrongPinHint),
+              title: Text(dic.profile.wrongPin),
+              content: Text(dic.profile.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(context.dic.home.ok),
+                  child: Text(dic.home.ok),
                   onPressed: () {
                     _passOldCtrl.clear();
                     setState(() {
@@ -89,11 +90,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(context.dic.profile.passSuccess),
-              content: Text(context.dic.profile.passSuccessTxt),
+              title: Text(dic.profile.passSuccess),
+              content: Text(dic.profile.passSuccessTxt),
               actions: <Widget>[
                 CupertinoButton(
-                    child: Text(context.dic.home.ok),
+                    child: Text(dic.home.ok),
                     onPressed: () {
                       // moving back to profile page after changing password
                       Navigator.of(context).popUntil((route) => route.isFirst);
@@ -108,9 +109,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.profile.changeYourPin),
+        title: Text(dic.profile.changeYourPin),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -126,23 +128,23 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       shrinkWrap: true,
                       children: <Widget>[
                         Text(
-                          context.dic.profile.hintEnterCurrentPin,
+                          dic.profile.hintEnterCurrentPin,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          context.dic.profile.hintThenEnterANewPin,
+                          dic.profile.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                         ),
                         const SizedBox(height: 30),
                         EncointerTextFormField(
-                          labelText: context.dic.profile.passOld,
+                          labelText: dic.profile.passOld,
                           controller: _passOldCtrl,
                           validator: (v) {
                             if (v == null || !Fmt.checkPassword(v.trim())) {
-                              return context.dic.account.createPasswordError;
+                              return dic.account.createPasswordError;
                             }
                             return null;
                           },
@@ -152,11 +154,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         ),
                         const SizedBox(height: 20),
                         EncointerTextFormField(
-                          labelText: context.dic.profile.yourNewPin,
+                          labelText: dic.profile.yourNewPin,
                           controller: _passCtrl,
                           validator: (v) {
                             if (v == null || !Fmt.checkPassword(v.trim())) {
-                              return context.dic.account.createPasswordError;
+                              return dic.account.createPasswordError;
                             }
                             return null;
                           },
@@ -166,11 +168,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         ),
                         const SizedBox(height: 20),
                         EncointerTextFormField(
-                          labelText: context.dic.profile.pleaseConfirmYourNewPin,
+                          labelText: dic.profile.pleaseConfirmYourNewPin,
                           controller: _pass2Ctrl,
                           validator: (v) {
                             if (v == null || v.trim() != _passCtrl.text) {
-                              return context.dic.account.createPassword2Error;
+                              return dic.account.createPassword2Error;
                             }
                             return null;
                           },
@@ -190,7 +192,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                   children: [
                     if (_submitting) const CupertinoActivityIndicator(),
                     Text(
-                      context.dic.profile.contactSave,
+                      dic.profile.contactSave,
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                     ),
                   ],

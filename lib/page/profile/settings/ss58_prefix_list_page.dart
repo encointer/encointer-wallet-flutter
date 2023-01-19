@@ -1,6 +1,6 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -25,6 +25,7 @@ class SS58PrefixListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     final list = prefixList
         .map((i) => ListTile(
               leading: SizedBox(
@@ -52,7 +53,7 @@ class SS58PrefixListPage extends StatelessWidget {
         .toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.profile.settingPrefixList),
+        title: Text(dic.profile.settingPrefixList),
         centerTitle: true,
       ),
       body: SafeArea(

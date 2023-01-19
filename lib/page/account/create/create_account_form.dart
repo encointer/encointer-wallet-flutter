@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -24,6 +24,7 @@ class CreateAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     Future<void> createAndImportAccount() async {
       await webApi.account.generateAccount();
 
@@ -57,7 +58,7 @@ class CreateAccountForm extends StatelessWidget {
               children: <Widget>[
                 Center(
                   child: Text(
-                    context.dic.profile.accountNameChoose,
+                    dic.profile.accountNameChoose,
                     style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
@@ -66,7 +67,7 @@ class CreateAccountForm extends StatelessWidget {
                   child: SizedBox(
                     width: 300,
                     child: Text(
-                      context.dic.profile.accountNameChooseHint,
+                      dic.profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                     ),
@@ -75,8 +76,8 @@ class CreateAccountForm extends StatelessWidget {
                 const SizedBox(height: 50),
                 EncointerTextFormField(
                   key: const Key('create-account-name'),
-                  hintText: context.dic.account.createHint,
-                  labelText: context.dic.profile.accountName,
+                  hintText: dic.account.createHint,
+                  labelText: dic.profile.accountName,
                   controller: _nameCtrl,
                   validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                 ),
@@ -93,7 +94,7 @@ class CreateAccountForm extends StatelessWidget {
                   const Icon(Iconsax.login_1),
                   const SizedBox(width: 12),
                   Text(
-                    context.dic.account.next,
+                    dic.account.next,
                     style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                   ),
                 ],
@@ -117,15 +118,16 @@ class CreateAccountForm extends StatelessWidget {
 }
 
 Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
+  final dic = context.dic;
   showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
         title: Container(),
-        content: Text(context.dic.account.createError),
+        content: Text(dic.account.createError),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(context.dic.home.ok),
+            child: Text(dic.home.ok),
             onPressed: () {
               Navigator.of(context).pop();
             },

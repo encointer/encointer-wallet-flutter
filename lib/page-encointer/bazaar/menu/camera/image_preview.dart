@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
 
@@ -15,6 +15,7 @@ class ImagePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
     final imagePickerState = businessFormState.imagePickerState;
+    final dic = context.dic;
 
     return Observer(
       builder: (_) => ListView(
@@ -27,10 +28,10 @@ class ImagePreview extends StatelessWidget {
             ),
           if (imagePickerState.images.isEmpty)
             Text(
-              context.dic.bazaar.imageNotPicked,
+              dic.bazaar.imageNotPicked,
               textAlign: TextAlign.center,
             ),
-          Text('${imagePickerState.images.length} ${context.dic.bazaar.imagesAdded}'),
+          Text('${imagePickerState.images.length} ${dic.bazaar.imagesAdded}'),
           Column(
             children: imagePickerState.images
                 .map(

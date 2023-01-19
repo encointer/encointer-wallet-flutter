@@ -1,8 +1,8 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
@@ -15,9 +15,10 @@ class BusinessesOnMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.bazaar.businesses),
+        title: Text(dic.bazaar.businesses),
       ),
       body: BMap(data),
     );

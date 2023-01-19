@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -29,6 +29,7 @@ class TxDetail extends StatelessWidget {
   final List<DetailInfoItem>? info;
 
   List<Widget> _buildListView(BuildContext context) {
+    final dic = context.dic;
     Widget buildLabel(String name) {
       return Container(
           padding: const EdgeInsets.only(left: 8),
@@ -50,7 +51,7 @@ class TxDetail extends StatelessWidget {
                 : Image.asset('assets/images/staking/error.png'),
           ),
           Text(
-            '$action ${success! ? context.dic.assets.success : context.dic.assets.fail}',
+            '$action ${success! ? dic.assets.success : dic.assets.fail}',
             style: Theme.of(context).textTheme.headline4,
           ),
           Padding(
@@ -85,15 +86,15 @@ class TxDetail extends StatelessWidget {
     }
     list.addAll(<Widget>[
       ListTile(
-        leading: buildLabel(context.dic.assets.event),
+        leading: buildLabel(dic.assets.event),
         title: Text(eventId!),
       ),
       ListTile(
-        leading: buildLabel(context.dic.assets.block),
+        leading: buildLabel(dic.assets.block),
         title: Text('#$blockNum'),
       ),
       ListTile(
-        leading: buildLabel(context.dic.assets.hash),
+        leading: buildLabel(dic.assets.hash),
         title: Text(Fmt.address(hash)!),
         trailing: SizedBox(
           width: 140,
@@ -119,9 +120,10 @@ class TxDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.assets.detail),
+        title: Text(dic.assets.detail),
         centerTitle: true,
       ),
       body: SafeArea(

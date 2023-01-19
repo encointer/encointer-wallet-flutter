@@ -1,7 +1,7 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
@@ -31,10 +31,11 @@ class _CreatePinPageState extends State<CreatePinPage> {
   Widget build(BuildContext context) {
     final params = ModalRoute.of(context)!.settings.arguments! as CreatePinPageParams;
     final store = context.watch<AppStore>();
+    final dic = context.dic;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.home.create),
+        title: Text(dic.home.create),
         iconTheme: const IconThemeData(
           color: encointerGrey, //change your color here
         ),

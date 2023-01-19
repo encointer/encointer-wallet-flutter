@@ -1,7 +1,7 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businesses_on_map.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_horizontal.dart';
@@ -16,6 +16,7 @@ class BusinessDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -52,8 +53,8 @@ class BusinessDetail extends StatelessWidget {
                         margin: const EdgeInsets.fromLTRB(4, 0, 2, 0),
                         child: DataTable(
                           columns: [
-                            DataColumn(label: Text(context.dic.bazaar.day)),
-                            DataColumn(label: Text(context.dic.bazaar.openningHours))
+                            DataColumn(label: Text(dic.bazaar.day)),
+                            DataColumn(label: Text(dic.bazaar.openningHours))
                           ],
                           headingRowHeight: 32,
                           columnSpacing: 4,
@@ -78,7 +79,7 @@ class BusinessDetail extends StatelessWidget {
                   )
                 ],
               ),
-              HorizontalBazaarItemList(business!.offerings, context.dic.bazaar.offerings, cardHeight, cardWidth),
+              HorizontalBazaarItemList(business!.offerings, dic.bazaar.offerings, cardHeight, cardWidth),
             ],
           ),
         ],

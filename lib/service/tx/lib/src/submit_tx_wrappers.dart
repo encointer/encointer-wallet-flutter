@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -181,6 +181,7 @@ Future<dynamic> submitReapVoucher(
 }
 
 void _showEducationalDialog(ParticipantType registrationType, BuildContext context) {
+  final dic = context.dic;
   final texts = _getEducationalDialogTexts(registrationType, context);
   final languageCode = Localizations.localeOf(context).languageCode;
 
@@ -199,13 +200,13 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
           if (registrationType == ParticipantType.Newbie) const SizedBox(),
           CupertinoButton(
             key: const Key('close-educate-dialog'),
-            child: Text(context.dic.home.ok),
+            child: Text(dic.home.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
           if (registrationType == ParticipantType.Newbie)
             CupertinoButton(
               child: Text(
-                context.dic.encointer.leuZurichFAQ,
+                dic.encointer.leuZurichFAQ,
                 textAlign: TextAlign.center,
               ),
               onPressed: () => AppLaunch.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),

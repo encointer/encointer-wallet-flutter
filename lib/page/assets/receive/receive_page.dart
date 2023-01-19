@@ -1,9 +1,9 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
@@ -59,11 +59,12 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<AppStore>();
+    final dic = context.dic;
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(_appStore, webApi, context.dic);
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(_appStore, webApi, dic);
 
           resetObservedPendingExtrinsicCounter = 0;
         } else {
@@ -89,14 +90,14 @@ class _ReceivePageState extends State<ReceivePage> {
             final delta = newBalance - oldBalance;
             Log.d('[receivePage] balance was $oldBalance, changed by $delta', 'ReceivePage');
             if (delta > demurrageRate!) {
-              final msg = context.dic.assets.incomingConfirmed
+              final msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', store.encointer.community?.metadata?.symbol ?? 'null')
                   .replaceAll('ACCOUNT_NAME', store.account.currentAccount.name);
               Log.d('[receivePage] $msg', 'ReceivePage');
               store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
 
-              NotificationPlugin.showNotification(44, context.dic.assets.fundsReceived, msg, cid: cid.toFmtString());
+              NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
         });
@@ -120,7 +121,7 @@ class _ReceivePageState extends State<ReceivePage> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: Text(context.dic.assets.receive),
+            title: Text(dic.assets.receive),
             leading: Container(),
             actions: [
               IconButton(
@@ -140,7 +141,7 @@ class _ReceivePageState extends State<ReceivePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 48),
                       child: Text(
-                        context.dic.profile.qrScanHint,
+                        dic.profile.qrScanHint,
                         style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerBlack),
                         textAlign: TextAlign.center,
                       ),
@@ -149,7 +150,7 @@ class _ReceivePageState extends State<ReceivePage> {
                     Padding(
                       padding: const EdgeInsets.all(30),
                       child: EncointerTextFormField(
-                        labelText: context.dic.assets.invoiceAmount,
+                        labelText: dic.assets.invoiceAmount,
                         textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
@@ -175,7 +176,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   ],
                 ),
                 Text(
-                  '${context.dic.profile.receiverAccount} ${store.account.currentAccount.name}',
+                  '${dic.profile.receiverAccount} ${store.account.currentAccount.name}',
                   style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                   textAlign: TextAlign.center,
                 ),
@@ -187,7 +188,7 @@ class _ReceivePageState extends State<ReceivePage> {
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
                     QrCodeImageWithButton(
                       qrCode: invoice.toQrPayload(),
-                      text: context.dic.assets.shareInvoice,
+                      text: dic.assets.shareInvoice,
                       onTap: () => {
                         if (_formKey.currentState!.validate())
                           {

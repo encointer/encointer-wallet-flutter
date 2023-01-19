@@ -1,6 +1,6 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -31,6 +31,7 @@ class CeremonyInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final languageCode = Localizations.localeOf(context).languageCode;
     final infoLink = ceremonyInfoLink(languageCode);
+    final dic = context.dic;
 
     return Container(
       child: meetupTime != null
@@ -55,7 +56,7 @@ class CeremonyInfo extends StatelessWidget {
                       )
                     else
                       Text(
-                        context.dic.encointer.gatheringSuccessfullyCompleted,
+                        dic.encointer.gatheringSuccessfullyCompleted,
                         style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerBlack),
                       ),
                     CeremonyInfoAndCalendar(

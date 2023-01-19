@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:animated_check/animated_check.dart';
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -61,6 +61,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     final params = ModalRoute.of(context)!.settings.arguments! as PaymentConfirmationParams;
 
     final cid = params.cid;
@@ -71,7 +72,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     return Observer(
       builder: (_) {
         return Scaffold(
-          appBar: AppBar(title: Text(context.dic.assets.payment)),
+          appBar: AppBar(title: Text(dic.assets.payment)),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: Column(
@@ -119,7 +120,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                               children: [
                                 const Icon(Iconsax.send_sqaure_2),
                                 const SizedBox(width: 12),
-                                Text(context.dic.assets.transfer),
+                                Text(dic.assets.transfer),
                               ],
                             )
                           : const CupertinoActivityIndicator(),
@@ -130,7 +131,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                     key: const Key('transfer-done'),
                     child: SizedBox(
                       height: 24,
-                      child: Center(child: Text(context.dic.assets.done)),
+                      child: Center(child: Text(dic.assets.done)),
                     ),
                     onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
                   )
@@ -220,15 +221,16 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   Widget _txStateTextInfo(TransferState state) {
     final h1Grey = Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
+    final dic = context.dic;
 
     switch (state) {
       case TransferState.notStarted:
         {
-          return Text(context.dic.assets.paymentDoYouWantToProceed, style: h2Grey);
+          return Text(dic.assets.paymentDoYouWantToProceed, style: h2Grey);
         }
       case TransferState.submitting:
         {
-          return Text(context.dic.assets.paymentSubmitting, style: h2Grey);
+          return Text(dic.assets.paymentSubmitting, style: h2Grey);
         }
       case TransferState.finished:
         {
@@ -238,7 +240,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           return RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: '${context.dic.assets.paymentFinished}: $date\n\n',
+              text: '${dic.assets.paymentFinished}: $date\n\n',
               style: h2Grey,
               children: [
                 TextSpan(
@@ -252,7 +254,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       case TransferState.failed:
         {
           return Text(
-            "${context.dic.assets.paymentError}: ${_transactionResult['error']?.toString() ?? "Unknown Error"}",
+            "${dic.assets.paymentError}: ${_transactionResult['error']?.toString() ?? "Unknown Error"}",
             style: h2Grey,
           );
         }

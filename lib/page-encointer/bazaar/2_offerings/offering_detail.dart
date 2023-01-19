@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
@@ -14,6 +14,7 @@ class OfferingDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -37,9 +38,9 @@ class OfferingDetail extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              ToggleButtonsWithTitle(context.dic.bazaar.state, productNewness, null),
+              ToggleButtonsWithTitle(dic.bazaar.state, productNewness, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
-              ToggleButtonsWithTitle(context.dic.bazaar.deliveryOptions, deliveryOptions, null),
+              ToggleButtonsWithTitle(dic.bazaar.deliveryOptions, deliveryOptions, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
             ],
           ),

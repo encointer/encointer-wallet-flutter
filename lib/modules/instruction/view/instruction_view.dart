@@ -1,7 +1,7 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 
@@ -12,15 +12,16 @@ class Instruction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
-      appBar: AppBar(title: Text(context.dic.profile.appHints)),
+      appBar: AppBar(title: Text(dic.profile.appHints)),
       body: ListView(
         children: [
           ExpansionTile(
-            title: Text(context.dic.profile.meetUpNotifications),
+            title: Text(dic.profile.meetUpNotifications),
             children: <Widget>[
               ListTile(
-                title: Text(context.dic.profile.meetUpListTileTitle),
+                title: Text(dic.profile.meetUpListTileTitle),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -29,14 +30,14 @@ class Instruction extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: '1. ${context.dic.profile.openAppSettings}',
+                            text: '1. ${dic.profile.openAppSettings}',
                             style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14, color: zurichLion),
                             recognizer: TapGestureRecognizer()..onTap = openAppSettings,
                           ),
                         ],
                       ),
                     ),
-                    Text('2. ${context.dic.profile.enableAutoStart}'),
+                    Text('2. ${dic.profile.enableAutoStart}'),
                   ],
                 ),
               ),

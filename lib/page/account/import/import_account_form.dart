@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
@@ -38,31 +38,33 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   }
 
   String? _validateAccountSource(BuildContext context, String v) {
+    final dic = context.dic;
     final input = v.trim();
 
     if (input.isEmpty) {
-      return context.dic.account.importMustNotBeEmpty;
+      return dic.account.importMustNotBeEmpty;
     }
 
     if (ValidateKeys.isRawSeed(input)) {
       setState(() {
         _keyType = AccountStore.seedTypeRawSeed;
       });
-      return ValidateKeys.validateRawSeed(input) ? null : context.dic.account.importInvalidRawSeed;
+      return ValidateKeys.validateRawSeed(input) ? null : dic.account.importInvalidRawSeed;
     } else if (ValidateKeys.isPrivateKey(input)) {
       // Todo: #426
-      return context.dic.account.importPrivateKeyUnsupported;
+      return dic.account.importPrivateKeyUnsupported;
       // return ValidateKeys.validatePrivateKey(input);
     } else {
       setState(() {
         _keyType = AccountStore.seedTypeMnemonic;
       });
-      return ValidateKeys.validateMnemonic(input) ? null : context.dic.account.importInvalidMnemonic;
+      return ValidateKeys.validateMnemonic(input) ? null : dic.account.importInvalidMnemonic;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Padding(
       padding: const EdgeInsets.fromLTRB(32, 0, 16, 32),
       child: Column(
@@ -75,7 +77,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                 children: <Widget>[
                   const SizedBox(height: 80),
                   Text(
-                    context.dic.profile.detailsEnter,
+                    dic.profile.detailsEnter,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2,
                   ),
@@ -83,7 +85,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      context.dic.profile.personalKeyEnter,
+                      dic.profile.personalKeyEnter,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                     ),
@@ -91,8 +93,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                   const SizedBox(height: 30),
                   EncointerTextFormField(
                     key: const Key('create-account-name'),
-                    hintText: context.dic.account.createHint,
-                    labelText: context.dic.profile.accountName,
+                    hintText: dic.account.createHint,
+                    labelText: dic.profile.accountName,
                     controller: _nameCtrl,
                     validator: (v) =>
                         InputValidation.validateAccountName(context, v, widget.store.account.optionalAccounts),
@@ -100,8 +102,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                   TextFormField(
                     key: const Key('account-source'),
                     decoration: InputDecoration(
-                      hintText: context.dic.account.mnemonic,
-                      labelText: context.dic.profile.personalKey,
+                      hintText: dic.account.mnemonic,
+                      labelText: dic.profile.personalKey,
                     ),
                     controller: _keyCtrl,
                     maxLines: 2,
@@ -113,7 +115,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
           ),
           PrimaryButton(
             key: const Key('account-import-next'),
-            child: Text(context.dic.home.next),
+            child: Text(dic.home.next),
             onPressed: () async {
               if (_formKey.currentState!.validate() && !(_advanceOptions.error ?? false)) {
                 widget.store.account.setNewAccountName(_nameCtrl.text.trim());

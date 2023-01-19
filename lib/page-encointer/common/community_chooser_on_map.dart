@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:dart_geohash/dart_geohash.dart';
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -35,10 +35,11 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          context.dic.assets.communityChoose,
+          dic.assets.communityChoose,
           maxLines: 2,
           textAlign: TextAlign.center,
         ),
@@ -73,10 +74,10 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
               color: Colors.white,
               child: CupertinoAlertDialog(
                 title: Container(),
-                content: Text(context.dic.encointer.noCommunitiesAreYouOffline),
+                content: Text(dic.encointer.noCommunitiesAreYouOffline),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(context.dic.home.ok),
+                    child: Text(dic.home.ok),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],

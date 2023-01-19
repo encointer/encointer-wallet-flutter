@@ -1,14 +1,15 @@
 import 'dart:async';
 
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/reg_input_formatter.dart';
 import 'package:encointer_wallet/config/consts.dart';
 
 class UI {
   static void copyAndNotify(BuildContext context, String? text) {
+    final dic = context.dic;
     Clipboard.setData(ClipboardData(text: text ?? ''));
 
     showCupertinoDialog<void>(
@@ -16,7 +17,7 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text('${context.dic.assets.copy} ${context.dic.assets.success}'),
+          content: Text('${dic.assets.copy} ${dic.assets.success}'),
         );
       },
     );

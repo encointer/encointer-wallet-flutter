@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results_business.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results_offering.dart';
@@ -16,14 +16,15 @@ class SearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ResultSummaryListTile(businessResults, context.dic.bazaar.businessesResults),
-        ResultSummaryListTile(offeringsResults, context.dic.bazaar.offeringsResults),
+        ResultSummaryListTile(businessResults, dic.bazaar.businessesResults),
+        ResultSummaryListTile(offeringsResults, dic.bazaar.offeringsResults),
         Text(
-          context.dic.bazaar.topResults,
+          dic.bazaar.topResults,
           style: const TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Column(

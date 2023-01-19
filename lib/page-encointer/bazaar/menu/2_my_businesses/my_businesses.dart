@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
@@ -12,9 +12,10 @@ class MyBusinesses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.bazaar.businessesMy),
+        title: Text(dic.bazaar.businessesMy),
       ),
       body: Column(children: [
         Expanded(

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/models/index.dart';
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +10,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:translation/translation.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
@@ -20,6 +19,7 @@ import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
+import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
@@ -118,7 +118,7 @@ class _AssetsState extends State<Assets> {
 
     final appBar = AppBar(
       key: const Key('assets-index-appbar'),
-      title: Text(context.dic.assets.home),
+      title: Text(dic.assets.home),
     );
     return FocusDetector(
       onFocusLost: () {
@@ -128,7 +128,7 @@ class _AssetsState extends State<Assets> {
       onFocusGained: () {
         Log.d('[home:FocusDetector] Focus Gained.');
         if (!widget.store.settings.loading) {
-          _refreshBalanceAndNotify(context.dic);
+          _refreshBalanceAndNotify(dic);
         }
         balanceWatchdog!.reset();
         balanceWatchdog!.start();
@@ -185,7 +185,7 @@ class _AssetsState extends State<Assets> {
                                           style: const TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          '${context.dic.assets.balance}, ${widget.store.encointer.community?.symbol}',
+                                          '${dic.assets.balance}, ${widget.store.encointer.community?.symbol}',
                                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                                         ),
                                       ],
@@ -197,7 +197,7 @@ class _AssetsState extends State<Assets> {
                                           ? SizedBox(
                                               width: double.infinity,
                                               child: Text(
-                                                context.dic.assets.communityNotSelected,
+                                                dic.assets.communityNotSelected,
                                                 textAlign: TextAlign.center,
                                               ),
                                             )
@@ -240,7 +240,7 @@ class _AssetsState extends State<Assets> {
                                       children: [
                                         const Icon(Iconsax.receive_square_2),
                                         const SizedBox(width: 12),
-                                        Text(context.dic.assets.receive),
+                                        Text(dic.assets.receive),
                                       ],
                                     ),
                                   ),
@@ -264,7 +264,7 @@ class _AssetsState extends State<Assets> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Text(context.dic.assets.transfer),
+                                        Text(dic.assets.transfer),
                                         const SizedBox(width: 12),
                                         const Icon(Iconsax.send_sqaure_2),
                                       ],
@@ -294,7 +294,7 @@ class _AssetsState extends State<Assets> {
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
                                       key: const Key('claim-pending-dev'),
-                                      child: Text(context.dic.assets.issuancePending),
+                                      child: Text(dic.assets.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
                                         widget.store,
@@ -306,7 +306,7 @@ class _AssetsState extends State<Assets> {
                                     return widget.store.settings.developerMode
                                         ? ElevatedButton(
                                             onPressed: null,
-                                            child: Text(context.dic.assets.issuanceClaimed),
+                                            child: Text(dic.assets.issuanceClaimed),
                                           )
                                         : const SizedBox.shrink();
                                   }
@@ -338,12 +338,12 @@ class _AssetsState extends State<Assets> {
                       builder: (BuildContext context) {
                         allCommunities = initAllCommunities();
                         return SwitchAccountOrCommunity(
-                          rowTitle: context.dic.home.switchCommunity,
+                          rowTitle: dic.home.switchCommunity,
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
                               Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-                                _refreshBalanceAndNotify(context.dic);
+                                _refreshBalanceAndNotify(dic);
                               });
                             } else {
                               setState(() {
@@ -355,9 +355,9 @@ class _AssetsState extends State<Assets> {
                       },
                     ),
                     Observer(builder: (BuildContext context) {
-                      allAccounts = initAllAccounts(context.dic);
+                      allAccounts = initAllAccounts(dic);
                       return SwitchAccountOrCommunity(
-                        rowTitle: context.dic.home.switchAccount,
+                        rowTitle: dic.home.switchAccount,
                         data: allAccounts,
                         onTap: (int index) {
                           if (index == allAccounts.length - 1) {
@@ -365,7 +365,7 @@ class _AssetsState extends State<Assets> {
                           } else {
                             setState(() {
                               switchAccount(widget.store.account.accountListAll[index]);
-                              _refreshBalanceAndNotify(context.dic);
+                              _refreshBalanceAndNotify(dic);
                             });
                           }
                         },
@@ -477,18 +477,19 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {
+    final dic = context.dic;
     await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return CupertinoAlertDialog(
-          title: Text(context.dic.home.pinNeeded),
+          title: Text(dic.home.pinNeeded),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(context.dic.home.cancel),
+              child: Text(dic.home.cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
-              child: Text(context.dic.home.closeApp),
+              child: Text(dic.home.closeApp),
               onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
             ),
           ],

@@ -1,6 +1,6 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/models/location/location.dart';
@@ -21,7 +21,8 @@ class MeetupInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final info = context.dic.encointer.youAreAssignedToAGatheringWithNParticipants.replaceAll(
+    final dic = context.dic;
+    final info = dic.encointer.youAreAssignedToAGatheringWithNParticipants.replaceAll(
       'P_COUNT',
       meetup.registry.length.toString(),
     );

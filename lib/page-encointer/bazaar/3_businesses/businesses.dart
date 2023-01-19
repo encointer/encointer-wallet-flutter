@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businesses_on_map.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
@@ -13,8 +13,9 @@ class Businesses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Column(children: [
-      ToggleButtonsWithTitle(context.dic.bazaar.categories, allCategories, null),
+      ToggleButtonsWithTitle(dic.bazaar.categories, allCategories, null),
       Expanded(
         child: ListView.builder(
           itemCount: data.length,
@@ -37,7 +38,7 @@ class Businesses extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.map),
-            Text(context.dic.bazaar.map),
+            Text(dic.bazaar.map),
           ],
         ),
       )

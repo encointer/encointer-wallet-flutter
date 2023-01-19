@@ -1,7 +1,7 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/opening_hours.dart';
@@ -35,6 +35,7 @@ class BusinessForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
+    final dic = context.dic;
     return Form(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -50,7 +51,7 @@ class BusinessForm extends StatelessWidget {
                 onChanged: (value) => businessFormState.name = value,
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  hintText: context.dic.bazaar.businessNameHint,
+                  hintText: dic.bazaar.businessNameHint,
                   errorText: businessFormState.errors.name,
                 ),
               ),
@@ -62,24 +63,24 @@ class BusinessForm extends StatelessWidget {
                 // maxLines: 3,
                 onChanged: (value) => businessFormState.description = value,
                 decoration: InputDecoration(
-                    labelText: context.dic.bazaar.description,
-                    hintText: context.dic.bazaar.businessDescriptionHint,
+                    labelText: dic.bazaar.description,
+                    hintText: dic.bazaar.businessDescriptionHint,
                     errorText: businessFormState.errors.description),
               ),
             ),
 
-            ToggleButtonsWithTitle(context.dic.bazaar.categories, categories, null),
+            ToggleButtonsWithTitle(dic.bazaar.categories, categories, null),
             // TODO state mananagement
             const BusinessAddress(),
             Text(
-              context.dic.bazaar.openningHours,
+              dic.bazaar.openningHours,
               style: const TextStyle(height: 2, fontWeight: FontWeight.bold),
             ),
             const OpeningHours(),
             ButtonBar(
               children: <Widget>[
                 ElevatedButton(
-                  child: Row(children: [const Icon(Icons.delete), Text(context.dic.bazaar.delete)]),
+                  child: Row(children: [const Icon(Icons.delete), Text(dic.bazaar.delete)]),
                   onPressed: () {
                     // TODO modify state
                     Navigator.pop(context);
@@ -89,7 +90,7 @@ class BusinessForm extends StatelessWidget {
                   onPressed: businessFormState.validateAll,
                   child: Row(children: [
                     const Icon(Icons.check),
-                    Text(context.dic.bazaar.save),
+                    Text(dic.bazaar.save),
                   ]),
                 ),
               ],
@@ -107,11 +108,12 @@ class BusinessAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
+    final dic = context.dic;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.dic.bazaar.address,
+          dic.bazaar.address,
           style: const TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Row(
@@ -123,7 +125,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.street = value,
                   decoration: InputDecoration(
-                    labelText: context.dic.bazaar.street,
+                    labelText: dic.bazaar.street,
                     errorText: businessFormState.errors.street,
                   ),
                 ),
@@ -137,7 +139,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.streetAddendum = value,
                   decoration: InputDecoration(
-                    labelText: context.dic.bazaar.no,
+                    labelText: dic.bazaar.no,
                     errorText: businessFormState.errors.streetAddendum,
                   ),
                 ),
@@ -153,7 +155,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.zipCode = value,
                   decoration: InputDecoration(
-                    labelText: context.dic.bazaar.zipCode,
+                    labelText: dic.bazaar.zipCode,
                     errorText: businessFormState.errors.zipCode,
                   ),
                 ),
@@ -168,7 +170,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.city = value,
                   decoration: InputDecoration(
-                    labelText: context.dic.bazaar.city,
+                    labelText: dic.bazaar.city,
                     errorText: businessFormState.errors.city,
                   ),
                 ),

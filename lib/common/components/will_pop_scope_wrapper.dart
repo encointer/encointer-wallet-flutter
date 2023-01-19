@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:translation/translation.dart';
 
 class WillPopScopeWrapper extends StatelessWidget {
   const WillPopScopeWrapper({super.key, required this.child});
@@ -10,6 +10,7 @@ class WillPopScopeWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return WillPopScope(
       child: child,
       onWillPop: () {
@@ -17,15 +18,15 @@ class WillPopScopeWrapper extends StatelessWidget {
             ? showCupertinoDialog<bool>(
                 context: context,
                 builder: (context) => CupertinoAlertDialog(
-                  title: Text(context.dic.home.exitConfirm),
+                  title: Text(dic.home.exitConfirm),
                   actions: <Widget>[
                     CupertinoButton(
                       onPressed: () => Navigator.of(context).pop(false),
-                      child: Text(context.dic.home.cancel),
+                      child: Text(dic.home.cancel),
                     ),
                     CupertinoButton(
                       onPressed: () => Navigator.of(context).pop(true),
-                      child: Text(context.dic.home.ok),
+                      child: Text(dic.home.ok),
                     ),
                   ],
                 ),

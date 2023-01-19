@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results_offering_filtered.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
@@ -12,9 +12,10 @@ class SearchResultsOffering extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
-        title: Text('${results.length} ${context.dic.bazaar.offeringsFound}'),
+        title: Text('${results.length} ${dic.bazaar.offeringsFound}'),
       ),
       body: Column(
         children: [
@@ -22,7 +23,7 @@ class SearchResultsOffering extends StatelessWidget {
             aspectRatio: 6,
             child: ListTile(
               leading: const Icon(Icons.filter_alt),
-              title: Text(context.dic.bazaar.filter),
+              title: Text(dic.bazaar.filter),
               onTap: () {
                 Navigator.push(
                   context,

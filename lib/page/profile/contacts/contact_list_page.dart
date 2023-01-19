@@ -1,7 +1,7 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/account_select_list.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
@@ -15,11 +15,12 @@ class ContactListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     final args = ModalRoute.of(context)!.settings.arguments as List<AccountData>?;
     final store = context.watch<AppStore>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(args == null ? context.dic.profile.addressBook : context.dic.account.list),
+        title: Text(args == null ? dic.profile.addressBook : dic.account.list),
         centerTitle: true,
         actions: <Widget>[
           if (args == null)

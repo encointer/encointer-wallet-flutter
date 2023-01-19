@@ -1,7 +1,7 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -13,10 +13,11 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
-        title: Text(context.dic.profile.about),
+        title: Text(dic.profile.about),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -27,7 +28,7 @@ class AboutPage extends StatelessWidget {
               child: Image.asset('assets/images/public/logo_about.png'),
             ),
             Text(
-              context.dic.profile.aboutBrief,
+              dic.profile.aboutBrief,
               style: Theme.of(context).textTheme.headline4,
             ),
             const SizedBox(height: 8),
@@ -37,7 +38,7 @@ class AboutPage extends StatelessWidget {
                 Log.d('$snapshot', 'AboutPage');
                 if (snapshot.hasData) {
                   return Text(
-                    '${context.dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}',
+                    '${dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}',
                   );
                 } else {
                   return const CupertinoActivityIndicator();

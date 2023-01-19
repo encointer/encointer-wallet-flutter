@@ -1,8 +1,8 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -28,6 +28,7 @@ class CeremonyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Observer(builder: (BuildContext context) {
       final meetupTime = store.encointer.community?.meetupTimeOverride ??
           store.encointer.community?.meetupTime ??
@@ -98,7 +99,7 @@ class CeremonyBox extends StatelessWidget {
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 6),
                           Text(
-                            context.dic.encointer.claimsSubmitN.replaceAll(
+                            dic.encointer.claimsSubmitN.replaceAll(
                               'N_COUNT',
                               store.encointer.communityAccount!.scannedAttendeesCount.toString(),
                             ),
@@ -123,6 +124,7 @@ class CeremonyBox extends StatelessWidget {
 
 Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
   final communityAccount = store.encointer.communityAccount;
+  final dic = context.dic;
 
   switch (store.encointer.currentPhase) {
     case CeremonyPhase.Registering:
@@ -130,7 +132,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return CeremonyNotification(
           key: const Key('is-registered-info'),
           notificationIconData: Iconsax.tick_square,
-          notification: context.dic.encointer.youAreRegisteredAs.replaceAll(
+          notification: dic.encointer.youAreRegisteredAs.replaceAll(
             'PARTICIPANT_TYPE',
             store.encointer.communityAccount!.participantType!.toValue(),
           ),
@@ -157,20 +159,20 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       } else {
         return CeremonyNotification(
           notificationIconData: Iconsax.close_square,
-          notification: context.dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
       }
     case CeremonyPhase.Attesting:
       if (!(store.encointer.communityAccount?.isAssigned ?? false)) {
         return CeremonyNotification(
           notificationIconData: Iconsax.close_square,
-          notification: context.dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
       } else {
         if (store.encointer.communityAccount?.meetupCompleted ?? false) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
-            notification: context.dic.encointer.successfullySentNAttestations
+            notification: dic.encointer.successfullySentNAttestations
                 .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString()),
           );
         } else {
@@ -192,10 +194,11 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
+  final dic = context.dic;
   showCupertinoDialog<void>(
     context: context,
     builder: (_) => CupertinoAlertDialog(
-      title: Text(context.dic.home.updatingAppState),
+      title: Text(dic.home.updatingAppState),
       content: const CupertinoActivityIndicator(),
     ),
   );

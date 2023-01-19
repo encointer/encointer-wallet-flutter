@@ -1,7 +1,7 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
@@ -23,18 +23,19 @@ class CommunityChooserPanel extends StatefulWidget {
 class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return SizedBox(
       width: double.infinity,
       child: RoundedCard(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Column(
           children: <Widget>[
-            Text(context.dic.assets.communityChoose),
+            Text(dic.assets.communityChoose),
             Observer(
               builder: (_) => (widget.store.encointer.communities == null)
                   ? const CupertinoActivityIndicator()
                   : (widget.store.encointer.communities!.isEmpty)
-                      ? Text(context.dic.assets.communitiesNotFound)
+                      ? Text(dic.assets.communitiesNotFound)
                       : DropdownButton<CidName>(
                           key: const Key('cid-dropdown'),
                           // todo find out, why adding the hint breaks the integration test walkthrough when choosing community #225

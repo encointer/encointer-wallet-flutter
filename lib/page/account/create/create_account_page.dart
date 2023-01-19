@@ -1,6 +1,6 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/create_account_form.dart';
@@ -18,9 +18,10 @@ class CreateAccountPage extends StatefulWidget {
 class _CreateAccountPageState extends State<CreateAccountPage> {
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.home.create),
+        title: Text(dic.home.create),
         leading: Container(),
         actions: <Widget>[
           IconButton(

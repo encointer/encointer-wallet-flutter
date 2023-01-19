@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
@@ -18,26 +18,26 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const titleStyle = TextStyle(fontWeight: FontWeight.bold);
-
+    final dic = context.dic;
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            '${context.dic.bazaar.filter} ${context.dic.bazaar.businessesFound}',
+            '${dic.bazaar.filter} ${dic.bazaar.businessesFound}',
             style: titleStyle,
           ),
         ),
         body: ListView(children: [
-          ToggleButtonsWithTitle(context.dic.bazaar.categories, categories, null),
+          ToggleButtonsWithTitle(dic.bazaar.categories, categories, null),
         ]),
         floatingActionButton: ButtonBar(
           children: [
             ElevatedButton(
               onPressed: () {}, // TODO state management
-              child: Text(context.dic.bazaar.reset),
+              child: Text(dic.bazaar.reset),
             ),
             ElevatedButton(
               onPressed: () {}, //TODO state management
-              child: Text(context.dic.bazaar.apply),
+              child: Text(dic.bazaar.apply),
             ),
           ],
         ));

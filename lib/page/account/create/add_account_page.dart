@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -77,15 +77,16 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
+    final dic = context.dic;
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(context.dic.account.createError),
+          content: Text(dic.account.createError),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(context.dic.home.ok),
+              child: Text(dic.home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -97,6 +98,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   Future<void> _showEnterPinDialog(AppStore store) async {
+    final dic = context.dic;
     await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
@@ -104,7 +106,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
           child: showPasswordInputDialog(
             context,
             store.account.currentAccount,
-            Text(context.dic.profile.unlock),
+            Text(dic.profile.unlock),
             (String password) {
               setState(() {
                 store.settings.setPin(password);
@@ -118,9 +120,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.profile.addAccount),
+        title: Text(dic.profile.addAccount),
         leading: Container(),
         actions: <Widget>[
           IconButton(

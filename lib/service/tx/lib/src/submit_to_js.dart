@@ -1,8 +1,8 @@
 import 'dart:core';
 
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
@@ -31,6 +31,7 @@ Future<void> submitToJS(
   BigInt? tip,
 }) async {
   final args = txParams;
+  final dic = context.dic;
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
@@ -52,7 +53,7 @@ Future<void> submitToJS(
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
       _showTxStatusSnackBar(
-        getTxStatusTranslation(context.dic.home, store.account.txStatus),
+        getTxStatusTranslation(dic.home, store.account.txStatus),
         const CupertinoActivityIndicator(),
       );
     }
@@ -65,8 +66,8 @@ Future<void> submitToJS(
       _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
   } else {
-    _showTxStatusSnackBar(context.dic.home.txQueuedOffline, null);
-    args['notificationTitle'] = context.dic.home.notifySubmittedQueued;
+    _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
+    args['notificationTitle'] = dic.home.notifySubmittedQueued;
     store.account.queueTx(args as Map<String, dynamic>);
   }
 }
@@ -103,11 +104,12 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
 }
 
 Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
+  final dic = context.dic;
   return api.account.sendTxAndShowNotification(
     args['txInfo'] as Map<dynamic, dynamic>?,
     args['params'] as List<dynamic>?,
     args['title'] as String?,
-    context.dic.home.notifySubmitted,
+    dic.home.notifySubmitted,
     rawParam: args['rawParam'] as String?,
   );
 }
@@ -172,15 +174,16 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
 }
 
 Future<void> showErrorDialog(BuildContext context, String errorMsg) {
+  final dic = context.dic;
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text(context.dic.assets.transactionError),
+        title: Text(dic.assets.transactionError),
         content: Text(errorMsg),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(context.dic.home.ok),
+            child: Text(dic.home.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],
@@ -190,22 +193,23 @@ Future<void> showErrorDialog(BuildContext context, String errorMsg) {
 }
 
 Future<void> showInsufficientFundsDialog(BuildContext context) {
+  final dic = context.dic;
   final languageCode = Localizations.localeOf(context).languageCode;
 
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text(context.dic.assets.transactionError),
-        content: Text(context.dic.assets.insufficientFundsExplanation),
+        title: Text(dic.assets.transactionError),
+        content: Text(dic.assets.insufficientFundsExplanation),
         actions: <Widget>[
           Container(),
           CupertinoButton(
-            child: Text(context.dic.encointer.goToLeuZurich),
+            child: Text(dic.encointer.goToLeuZurich),
             onPressed: () => AppLaunch.launchURL(leuZurichLink(languageCode)),
           ),
           CupertinoButton(
-            child: Text(context.dic.home.ok),
+            child: Text(dic.home.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],

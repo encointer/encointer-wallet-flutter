@@ -1,8 +1,8 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -22,6 +22,7 @@ class AccountSharePage extends StatefulWidget {
 class _AccountSharePageState extends State<AccountSharePage> {
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     final textTheme = Theme.of(context).textTheme;
     final store = context.watch<AppStore>();
 
@@ -37,7 +38,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(context.dic.profile.share),
+        title: Text(dic.profile.share),
         leading: Container(),
         actions: [
           IconButton(
@@ -58,7 +59,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                 shrinkWrap: true,
                 children: <Widget>[
                   Text(
-                    context.dic.profile.qrScanHintAccount,
+                    dic.profile.qrScanHintAccount,
                     style: textTheme.headline2!.copyWith(color: encointerBlack),
                     textAlign: TextAlign.center,
                   ),
@@ -79,7 +80,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
               ),
               const Spacer(),
               Text(
-                context.dic.profile.shareLinkHint,
+                dic.profile.shareLinkHint,
                 textAlign: TextAlign.center,
                 style: textTheme.headline4!.copyWith(color: encointerGrey),
               ),
@@ -91,7 +92,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   children: [
                     Icon(Icons.share, color: zurichLion.shade500),
                     const SizedBox(width: 12),
-                    Text(context.dic.profile.sendLink, style: textTheme.headline3),
+                    Text(dic.profile.sendLink, style: textTheme.headline3),
                   ],
                 ),
                 onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),

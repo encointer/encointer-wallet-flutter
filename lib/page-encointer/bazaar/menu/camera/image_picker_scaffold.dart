@@ -1,8 +1,8 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_picker_state.dart';
@@ -15,12 +15,13 @@ class ImagePickerScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     final businessFormState = Provider.of<BusinessFormState>(context);
     final imagePickerState = businessFormState.imagePickerState;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.bazaar.imagesAddRemove),
+        title: Text(dic.bazaar.imagesAddRemove),
       ),
       body: Center(
         child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
@@ -31,7 +32,7 @@ class ImagePickerScaffold extends StatelessWidget {
                     case ConnectionState.none:
                     case ConnectionState.waiting:
                       return Text(
-                        context.dic.bazaar.waiting,
+                        dic.bazaar.waiting,
                         textAlign: TextAlign.center,
                       );
                     case ConnectionState.done:
@@ -44,7 +45,7 @@ class ImagePickerScaffold extends StatelessWidget {
                         );
                       } else {
                         return Text(
-                          context.dic.bazaar.imageNotPicked,
+                          dic.bazaar.imageNotPicked,
                           textAlign: TextAlign.center,
                         );
                       }
@@ -67,7 +68,7 @@ class ImagePickerScaffold extends StatelessWidget {
                 );
               },
               heroTag: 'image1',
-              tooltip: context.dic.bazaar.imagesMultiplePick,
+              tooltip: dic.bazaar.imagesMultiplePick,
               child: const Icon(Icons.photo_library),
             ),
           ),
@@ -78,7 +79,7 @@ class ImagePickerScaffold extends StatelessWidget {
                 _onImageButtonPressed(imagePickerState, ImageSource.camera, context: context);
               },
               heroTag: 'image2',
-              tooltip: context.dic.bazaar.photoTake,
+              tooltip: dic.bazaar.photoTake,
               child: const Icon(Icons.camera_alt),
             ),
           ),

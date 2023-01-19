@@ -1,8 +1,8 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/rounded_button.dart';
 import 'package:encointer_wallet/common/components/tap_tool_tip.dart';
@@ -35,6 +35,7 @@ class _Contact extends State<ContactPage> {
   bool _submitting = false;
 
   Future<void> _onSave() async {
+    final dic = context.dic;
     if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
@@ -61,10 +62,10 @@ class _Contact extends State<ContactPage> {
             builder: (BuildContext context) {
               return CupertinoAlertDialog(
                 title: Container(),
-                content: Text(context.dic.profile.contactAlreadyExists),
+                content: Text(dic.profile.contactAlreadyExists),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(context.dic.home.ok),
+                    child: Text(dic.home.ok),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
@@ -104,6 +105,7 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dic = context.dic;
     final qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
     if (qrScanData != null) {
       _addressCtrl.text = qrScanData.account;
@@ -112,7 +114,7 @@ class _Contact extends State<ContactPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.dic.profile.addressBook),
+        title: Text(dic.profile.addressBook),
       ),
       body: SafeArea(
         child: Column(
@@ -128,13 +130,13 @@ class _Contact extends State<ContactPage> {
                       child: TextFormField(
                         key: const Key('contact-address'),
                         decoration: InputDecoration(
-                          hintText: context.dic.profile.contactAddress,
-                          labelText: context.dic.profile.contactAddress,
+                          hintText: dic.profile.contactAddress,
+                          labelText: dic.profile.contactAddress,
                         ),
                         controller: _addressCtrl,
                         validator: (v) {
                           if (!Fmt.isAddress(v!.replaceAll(' ', ''))) {
-                            return context.dic.profile.contactAddressError;
+                            return dic.profile.contactAddressError;
                           }
                           return null;
                         },
@@ -146,12 +148,12 @@ class _Contact extends State<ContactPage> {
                       child: TextFormField(
                         key: const Key('contact-name'),
                         decoration: InputDecoration(
-                          hintText: context.dic.profile.contactName,
-                          labelText: context.dic.profile.contactName,
+                          hintText: dic.profile.contactName,
+                          labelText: dic.profile.contactName,
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v!.trim().isNotEmpty ? null : context.dic.profile.contactNameError;
+                          return v!.trim().isNotEmpty ? null : dic.profile.contactNameError;
                         },
                       ),
                     ),
@@ -160,8 +162,8 @@ class _Contact extends State<ContactPage> {
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            hintText: context.dic.profile.contactMemo,
-                            labelText: context.dic.profile.contactMemo,
+                            hintText: dic.profile.contactMemo,
+                            labelText: dic.profile.contactMemo,
                           ),
                           controller: _memoCtrl,
                         ),
@@ -178,7 +180,7 @@ class _Contact extends State<ContactPage> {
                             },
                           ),
                           GestureDetector(
-                            child: Text(context.dic.account.observe),
+                            child: Text(dic.account.observe),
                             onTap: () {
                               setState(() {
                                 _isObservation = !_isObservation!;
@@ -186,7 +188,7 @@ class _Contact extends State<ContactPage> {
                             },
                           ),
                           TapTooltip(
-                            message: context.dic.account.observeBrief,
+                            message: dic.account.observeBrief,
                             child: const Padding(
                               padding: EdgeInsets.only(left: 8),
                               child: Icon(Icons.info_outline, size: 16),
@@ -211,7 +213,7 @@ class _Contact extends State<ContactPage> {
               child: RoundedButton(
                 key: const Key('contact-save'),
                 submitting: _submitting,
-                text: context.dic.profile.contactSave,
+                text: dic.profile.contactSave,
                 onPressed: _onSave,
               ),
             ),

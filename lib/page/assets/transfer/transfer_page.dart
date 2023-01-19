@@ -1,9 +1,9 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
@@ -119,6 +119,7 @@ class _TransferPageState extends State<TransferPage> {
     final store = context.watch<AppStore>();
     const decimals = encointerCurrenciesDecimals;
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
+    final dic = context.dic;
 
     Log.d('[transferPage]: available: $available', 'TransferPage');
 
@@ -128,7 +129,7 @@ class _TransferPageState extends State<TransferPage> {
           key: _formKey,
           child: Scaffold(
             appBar: AppBar(
-              title: Text(context.dic.assets.transfer),
+              title: Text(dic.assets.transfer),
               leading: Container(),
               actions: [
                 IconButton(
@@ -159,7 +160,7 @@ class _TransferPageState extends State<TransferPage> {
                         else
                           const CupertinoActivityIndicator(),
                         Text(
-                          context.dic.assets.yourBalanceFor.replaceAll(
+                          dic.assets.yourBalanceFor.replaceAll(
                             'ACCOUNT_NAME',
                             Fmt.accountName(context, store.account.currentAccount),
                           ),
@@ -186,7 +187,7 @@ class _TransferPageState extends State<TransferPage> {
                         ),
                         const SizedBox(height: 24),
                         EncointerTextFormField(
-                          labelText: context.dic.assets.amountToBeTransferred,
+                          labelText: dic.assets.amountToBeTransferred,
                           textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -194,10 +195,10 @@ class _TransferPageState extends State<TransferPage> {
                           textFormFieldKey: const Key('transfer-amount-input'),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return context.dic.assets.amountError;
+                              return dic.assets.amountError;
                             }
                             if (balanceTooLow(value, available!, decimals)) {
-                              return context.dic.assets.insufficientBalance;
+                              return dic.assets.insufficientBalance;
                             }
                             return null;
                           },
@@ -209,7 +210,7 @@ class _TransferPageState extends State<TransferPage> {
                             Expanded(
                               child: AddressInputField(
                                 store,
-                                label: context.dic.assets.address,
+                                label: dic.assets.address,
                                 initialValue: _accountTo,
                                 onChanged: (AccountData acc) {
                                   setState(() {
@@ -228,7 +229,7 @@ class _TransferPageState extends State<TransferPage> {
                   if (store.settings.developerMode)
                     Center(
                       child: Text(
-                        '${context.dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
+                        '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
                         style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                       ),
                     ),
@@ -249,7 +250,7 @@ class _TransferPageState extends State<TransferPage> {
                         children: [
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 12),
-                          Text(context.dic.account.next),
+                          Text(dic.account.next),
                         ],
                       ),
                     ),

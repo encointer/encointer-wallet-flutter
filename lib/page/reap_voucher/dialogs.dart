@@ -1,5 +1,5 @@
+import 'package:ew_translation/translation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:translation/translation.dart';
 
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/reap_voucher/utils.dart';
@@ -14,12 +14,13 @@ Future<void> showRedeemSuccessDialog(BuildContext context) {
 }
 
 Widget redeemSuccessDialog(BuildContext context) {
+  final dic = context.dic;
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text(context.dic.assets.redeemSuccess),
+    content: Text(dic.assets.redeemSuccess),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(context.dic.home.ok),
+        child: Text(dic.home.ok),
         onPressed: () {
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
@@ -38,12 +39,13 @@ Future<void> showRedeemFailedDialog(BuildContext context, String? error) {
 }
 
 Widget redeemFailedDialog(BuildContext context, String? error) {
+  final dic = context.dic;
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text('${context.dic.assets.redeemFailure} $error'),
+    content: Text('${dic.assets.redeemFailure} $error'),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(context.dic.home.ok),
+        child: Text(dic.home.ok),
         onPressed: () {
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
@@ -62,12 +64,13 @@ Future<void> showErrorDialog(BuildContext context, String error) {
 }
 
 Widget errorDialog(BuildContext context, String errorMsg) {
+  final dic = context.dic;
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text('${context.dic.home.errorOccurred} $errorMsg'),
+    content: Text('${dic.home.errorOccurred} $errorMsg'),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(context.dic.home.ok),
+        child: Text(dic.home.ok),
         onPressed: () {
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
@@ -83,10 +86,11 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
   String network,
   CommunityIdentifier cid,
 ) {
+  final dic = context.dic;
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      final dialogContent = context.dic.assets.voucherDifferentNetworkAndCommunity
+      final dialogContent = dic.assets.voucherDifferentNetworkAndCommunity
           .replaceAll('NETWORK_PLACEHOLDER', network)
           .replaceAll('COMMUNITY_PLACEHOLDER', cid.toFmtString());
 
@@ -95,11 +99,11 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
         content: Text(dialogContent),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(context.dic.home.cancel),
+            child: Text(dic.home.cancel),
             onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
           ),
           CupertinoButton(
-            child: Text(context.dic.home.ok),
+            child: Text(dic.home.ok),
             onPressed: () async {
               final result =
                   await changeWithLoadingDialog(context, () => changeNetworkAndCommunity(store, api, network, cid));
@@ -116,11 +120,12 @@ Future<ChangeResult> changeWithLoadingDialog(
   BuildContext context,
   Future<ChangeResult> Function() changeFn,
 ) async {
+  final dic = context.dic;
   showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text(context.dic.home.loading),
+        title: Text(dic.home.loading),
         content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
       );
     },
@@ -141,22 +146,22 @@ Future<ChangeResult?> showChangeCommunityDialog(
   String network,
   CommunityIdentifier cid,
 ) {
+  final dic = context.dic;
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      final dialogContent =
-          context.dic.assets.voucherDifferentCommunity.replaceAll('COMMUNITY_PLACEHOLDER', cid.toFmtString());
+      final dialogContent = dic.assets.voucherDifferentCommunity.replaceAll('COMMUNITY_PLACEHOLDER', cid.toFmtString());
 
       return CupertinoAlertDialog(
         title: Container(),
         content: Text(dialogContent),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(context.dic.home.cancel),
+            child: Text(dic.home.cancel),
             onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
           ),
           CupertinoButton(
-            child: Text(context.dic.home.ok),
+            child: Text(dic.home.ok),
             onPressed: () async {
               final result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
               Navigator.of(context).pop(result);
@@ -178,12 +183,13 @@ Future<void> showInvalidCommunityDialog(BuildContext context, CommunityIdentifie
 }
 
 Widget invalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
+  final dic = context.dic;
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text('${context.dic.assets.voucherContainsInexistentCommunity} ${cid.toFmtString()}'),
+    content: Text('${dic.assets.voucherContainsInexistentCommunity} ${cid.toFmtString()}'),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(context.dic.home.ok),
+        child: Text(dic.home.ok),
         onPressed: () {
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
