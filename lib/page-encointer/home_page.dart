@@ -126,7 +126,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         onTap: (index) async {
           if (_tabList[index].key == TabKey.scan) {
             // Push `ScanPage.Route`instead of changing the Page.
-            Navigator.of(context).pushNamed(
+            await Navigator.of(context).pushNamed(
               ScanPage.route,
               arguments: ScanPageParams(scannerContext: QrScannerContext.mainPage),
             );

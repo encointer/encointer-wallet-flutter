@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 /// CommunityIdentifier consisting of a geohash and a 4-bytes crc code.
+@immutable
 class CommunityIdentifier {
   const CommunityIdentifier(this.geohash, this.digest);
 
