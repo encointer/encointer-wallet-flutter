@@ -68,6 +68,8 @@ abstract class TranslationsEncointer {
   String get meetupNotificationOneHourBeforeTitle;
   String get meetupNotificationOneHourBeforeContent;
   String get showRouteMeetupLocation;
+  String get registeringPhaseReminderTitle;
+  String get registeringPhaseReminderContent;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -215,6 +217,10 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get meetupNotificationOneHourBeforeTitle => '1 hour left';
   @override
   String get showRouteMeetupLocation => 'Show route';
+  @override
+  String get registeringPhaseReminderContent => 'Registration for the gathering has started';
+  @override
+  String get registeringPhaseReminderTitle => 'Register now, hurry up!';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -364,6 +370,10 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get meetupNotificationOneHourBeforeTitle => '1 Stunde übrig';
   @override
   String get showRouteMeetupLocation => 'Route anzeigen';
+  @override
+  String get registeringPhaseReminderContent => 'Die Anmeldung für das Treffen hat begonnen';
+  @override
+  String get registeringPhaseReminderTitle => 'Melden Sie sich jetzt an, verpassen Sie keine Gelegenheit!';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -515,6 +525,10 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get meetupNotificationOneHourBeforeTitle => 'Encore 1 heure';
   @override
   String get showRouteMeetupLocation => 'Afficher la route';
+  @override
+  String get registeringPhaseReminderContent => "L'inscription pour la réunion a commencé";
+  @override
+  String get registeringPhaseReminderTitle => 'Inscrivez-vous maintenant, ne manquez pas cette occasion!';
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -662,4 +676,8 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   String get meetupNotificationOneHourBeforeTitle => 'Остался 1 час';
   @override
   String get showRouteMeetupLocation => 'Показать маршрут';
+  @override
+  String get registeringPhaseReminderContent => 'Регистрация на встречу началась';
+  @override
+  String get registeringPhaseReminderTitle => 'Зарегистрируйтесь сейчас, не упустите шанс!';
 }
