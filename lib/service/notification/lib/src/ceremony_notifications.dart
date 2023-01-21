@@ -52,23 +52,29 @@ class CeremonyNotifications {
   }
 
   /// Schedules notifications that the registering phase ends for the next [numberOfCyclesToSchedule] cycles.
+  ///
+  /// Shows the notification [showBeforeAssigningPhaseHours] before the [assigningPhaseStart].
   static Future<void> scheduleLastDayOfRegisteringReminders(
-    int assigningPhaseStarts,
+    int assigningPhaseStart,
     int currentCeremonyIndex,
     int ceremonyCycleDuration,
     TranslationsEncointer dic, {
     int numberOfCyclesToSchedule = 5,
+    int showBeforeAssigningPhaseHours = 24,
   }) async {
     for (var i = 0; i < numberOfCyclesToSchedule; i++) {
-      // calculate the scheduled date by adding i*ceremonyCycleDuration to assigningPhaseStarts
-      final scheduledDate = DateTime.fromMillisecondsSinceEpoch(assigningPhaseStarts + i * ceremonyCycleDuration)
-          .subtract(const Duration(hours: 24));
-      await NotificationPlugin.scheduleNotification(
-        Notification.lastDayOfRegisteringReminder.id(currentCeremonyIndex) + i,
-        dic.registeringPhaseReminderTitle,
-        dic.registeringPhaseReminderContent,
-        scheduledDate,
-      );
+      // Scheduled date is 24 hours before the assigning phase starts.
+      final scheduledDate = DateTime.fromMillisecondsSinceEpoch(assigningPhaseStart + i * ceremonyCycleDuration)
+          .subtract(Duration(hours: showBeforeAssigningPhaseHours));
+
+      if (scheduledDate.isAfter(DateTime.now())) {
+        await NotificationPlugin.scheduleNotification(
+          Notification.lastDayOfRegisteringReminder.id(currentCeremonyIndex) + i,
+          dic.registeringPhaseReminderTitle,
+          dic.registeringPhaseReminderContent,
+          scheduledDate,
+        );
+      }
     }
   }
 }
