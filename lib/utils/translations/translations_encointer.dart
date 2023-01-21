@@ -218,9 +218,9 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get showRouteMeetupLocation => 'Show route';
   @override
-  String get registeringPhaseReminderContent => 'Registration for the gathering has started';
+  String get registeringPhaseReminderContent => 'Registration for the next gathering has started.';
   @override
-  String get registeringPhaseReminderTitle => 'Register now, hurry up!';
+  String get registeringPhaseReminderTitle => 'Register now!';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -371,9 +371,9 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get showRouteMeetupLocation => 'Route anzeigen';
   @override
-  String get registeringPhaseReminderContent => 'Die Anmeldung für das Treffen hat begonnen';
+  String get registeringPhaseReminderContent => 'Die Anmeldung für das nächste Treffen hat begonnen.';
   @override
-  String get registeringPhaseReminderTitle => 'Melden Sie sich jetzt an, verpassen Sie keine Gelegenheit!';
+  String get registeringPhaseReminderTitle => 'Registrierung ist offen';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -526,9 +526,9 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get showRouteMeetupLocation => 'Afficher la route';
   @override
-  String get registeringPhaseReminderContent => "L'inscription pour la réunion a commencé";
+  String get registeringPhaseReminderContent => "L'inscription pour la réunion prochaine a commencé.";
   @override
-  String get registeringPhaseReminderTitle => 'Inscrivez-vous maintenant, ne manquez pas cette occasion!';
+  String get registeringPhaseReminderTitle => 'Inscription possible';
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -677,7 +677,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get showRouteMeetupLocation => 'Показать маршрут';
   @override
-  String get registeringPhaseReminderContent => 'Регистрация на встречу началась';
+  String get registeringPhaseReminderContent => 'Регистрация на встречу началась.';
   @override
   String get registeringPhaseReminderTitle => 'Зарегистрируйтесь сейчас, не упустите шанс!';
 }
