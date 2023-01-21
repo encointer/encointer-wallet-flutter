@@ -43,7 +43,7 @@ class CeremonyNotifications {
       // calculate the scheduled date by adding i*ceremonyCycleDuration to nextRegisteringPhase
       final scheduledDate = DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase + i * ceremonyCycleDuration);
       await NotificationPlugin.scheduleNotification(
-        currentCeremonyIndex + i,
+        Notification.registeringPhaseStarted.id(currentCeremonyIndex) + i,
         dic.registeringPhaseReminderTitle,
         dic.registeringPhaseReminderContent,
         scheduledDate,
