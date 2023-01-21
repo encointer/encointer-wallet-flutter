@@ -63,7 +63,6 @@ class CeremonyNotifications {
     Duration showBeforeAssigningPhase = const Duration(hours: 24),
   }) async {
     for (var i = 0; i < numberOfCyclesToSchedule; i++) {
-      // Scheduled date is 24 hours before the assigning phase starts.
       final scheduledDate = DateTime.fromMillisecondsSinceEpoch(assigningPhaseStart + i * ceremonyCycleDuration)
           .subtract(showBeforeAssigningPhase);
 
