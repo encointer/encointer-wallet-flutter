@@ -60,7 +60,7 @@ class CeremonyNotifications {
     int numberOfCyclesToSchedule = 5,
   }) async {
     for (var i = 0; i < numberOfCyclesToSchedule; i++) {
-      // calculate the scheduled date by adding i*ceremonyCycleDuration to nextRegisteringPhase
+      // calculate the scheduled date by adding i*ceremonyCycleDuration to assigningPhaseStarts
       final scheduledDate = DateTime.fromMillisecondsSinceEpoch(assigningPhaseStarts + i * ceremonyCycleDuration)
           .subtract(const Duration(hours: 24));
       await NotificationPlugin.scheduleNotification(
