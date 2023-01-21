@@ -373,7 +373,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get registeringPhaseReminderContent => 'Die Anmeldung für das nächste Treffen hat begonnen.';
   @override
-  String get registeringPhaseReminderTitle => 'Registrierung ist offen';
+  String get registeringPhaseReminderTitle => 'Melde dich jetzt an!';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -528,7 +528,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get registeringPhaseReminderContent => "L'inscription pour la réunion prochaine a commencé.";
   @override
-  String get registeringPhaseReminderTitle => 'Inscription possible';
+  String get registeringPhaseReminderTitle => 'Inscrives-tois maintenant!';
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
