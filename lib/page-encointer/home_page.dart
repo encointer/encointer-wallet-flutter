@@ -42,7 +42,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       );
 
       final encointer = context.read<AppStore>().encointer;
-      await CeremonyNotifications.scheduleCeremoniesReminders(
+      await CeremonyNotifications.scheduleRegisteringReminders(
         encointer.nextRegisteringPhaseStart,
         encointer.currentCeremonyIndex,
         encointer.ceremonyCycleDuration,
