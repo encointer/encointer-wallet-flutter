@@ -41,13 +41,20 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         Localizations.localeOf(context).languageCode,
       );
 
+      // Todo: Double-check if this schedules reminders based on an outdated store
+      // if we start the app after a long time. Maybe we need to ensure that the store
+      // is updated before.
       final encointer = context.read<AppStore>().encointer;
-      await CeremonyNotifications.scheduleRegisteringReminders(
-        encointer.nextRegisteringPhaseStart,
-        encointer.currentCeremonyIndex,
-        encointer.ceremonyCycleDuration,
-        I18n.of(context)!.translationsForLocale().encointer,
-      );
+      if (encointer.nextRegisteringPhaseStart != null &&
+          encointer.currentCeremonyIndex != null &&
+          encointer.ceremonyCycleDuration != null) {
+        await CeremonyNotifications.scheduleRegisteringReminders(
+          encointer.nextRegisteringPhaseStart!,
+          encointer.currentCeremonyIndex!,
+          encointer.ceremonyCycleDuration!,
+          I18n.of(context)!.translationsForLocale().encointer,
+        );
+      }
     });
     super.initState();
   }

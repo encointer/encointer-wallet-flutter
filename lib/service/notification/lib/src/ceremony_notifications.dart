@@ -33,23 +33,20 @@ class CeremonyNotifications {
 
   /// This method schedules reminders for ceremonies that will occur in a certain period of time.
   static Future<void> scheduleRegisteringReminders(
-    int? nextRegisteringPhase,
-    int? currentCeremonyIndex,
-    int? ceremonyCycleDuration,
+    int nextRegisteringPhase,
+    int currentCeremonyIndex,
+    int ceremonyCycleDuration,
     TranslationsEncointer dic,
   ) async {
-    // Check if all required variables are defined
-    if (nextRegisteringPhase != null && currentCeremonyIndex != null && ceremonyCycleDuration != null) {
-      for (var i = 0; i < 10; i++) {
-        // calculate the scheduled date by adding i*ceremonyCycleDuration to nextRegisteringPhase
-        final scheduledDate = DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase + i * ceremonyCycleDuration);
-        await NotificationPlugin.scheduleNotification(
-          currentCeremonyIndex + i,
-          dic.registeringPhaseReminderTitle,
-          dic.registeringPhaseReminderContent,
-          scheduledDate,
-        );
-      }
+    for (var i = 0; i < 10; i++) {
+      // calculate the scheduled date by adding i*ceremonyCycleDuration to nextRegisteringPhase
+      final scheduledDate = DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase + i * ceremonyCycleDuration);
+      await NotificationPlugin.scheduleNotification(
+        currentCeremonyIndex + i,
+        dic.registeringPhaseReminderTitle,
+        dic.registeringPhaseReminderContent,
+        scheduledDate,
+      );
     }
   }
 }
