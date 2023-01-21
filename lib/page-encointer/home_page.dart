@@ -41,9 +41,10 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         Localizations.localeOf(context).languageCode,
       );
 
-      // Todo: Double-check if this schedules reminders based on an outdated store
-      // if we start the app after a long time. Maybe we need to ensure that the store
-      // is updated before.
+      // Should never be null, we either come from the splash screen, and hence we had
+      // enough time to connect to the blockchain or we already have a populated store.
+      //
+      // Hence, can only be null if someone uses the app for the first time and is offline.
       final encointer = context.read<AppStore>().encointer;
       if (encointer.nextRegisteringPhaseStart != null &&
           encointer.currentCeremonyIndex != null &&
