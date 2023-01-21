@@ -49,8 +49,15 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       if (encointer.nextRegisteringPhaseStart != null &&
           encointer.currentCeremonyIndex != null &&
           encointer.ceremonyCycleDuration != null) {
-        await CeremonyNotifications.scheduleRegisteringReminders(
+        await CeremonyNotifications.scheduleRegisteringStartsReminders(
           encointer.nextRegisteringPhaseStart!,
+          encointer.currentCeremonyIndex!,
+          encointer.ceremonyCycleDuration!,
+          I18n.of(context)!.translationsForLocale().encointer,
+        );
+
+        await CeremonyNotifications.scheduleLastDayOfRegisteringReminders(
+          encointer.assigningPhaseStart!,
           encointer.currentCeremonyIndex!,
           encointer.ceremonyCycleDuration!,
           I18n.of(context)!.translationsForLocale().encointer,

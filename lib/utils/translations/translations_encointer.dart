@@ -70,6 +70,8 @@ abstract class TranslationsEncointer {
   String get showRouteMeetupLocation;
   String get registeringPhaseReminderTitle;
   String get registeringPhaseReminderContent;
+  String get registeringLastDayOfRegisteringReminderTitle;
+  String get registeringLastDayOfRegisteringReminderContent;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -221,6 +223,10 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get registeringPhaseReminderContent => 'Registration for the next gathering has started.';
   @override
   String get registeringPhaseReminderTitle => 'Register now!';
+  @override
+  String get registeringLastDayOfRegisteringReminderContent => 'Registration for the next gathering ends today.';
+  @override
+  String get registeringLastDayOfRegisteringReminderTitle => 'Register now!';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -374,6 +380,10 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get registeringPhaseReminderContent => 'Die Anmeldung für das nächste Treffen hat begonnen.';
   @override
   String get registeringPhaseReminderTitle => 'Melde dich jetzt an!';
+  @override
+  String get registeringLastDayOfRegisteringReminderContent => 'Die Anmeldung für das nächste Treffen endet heute.';
+  @override
+  String get registeringLastDayOfRegisteringReminderTitle => 'Melde dich jetzt an!';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -526,9 +536,14 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get showRouteMeetupLocation => 'Afficher la route';
   @override
-  String get registeringPhaseReminderContent => "L'inscription pour la réunion prochaine a commencé.";
+  String get registeringPhaseReminderContent => "L'inscription pour la prochaine réunion a commencé.";
   @override
-  String get registeringPhaseReminderTitle => 'Inscrives-tois maintenant!';
+  String get registeringPhaseReminderTitle => 'Inscris-tois maintenant!';
+  @override
+  String get registeringLastDayOfRegisteringReminderContent =>
+      "L'inscription pour la prochaine réunion se termine aujourd'hui.";
+  @override
+  String get registeringLastDayOfRegisteringReminderTitle => 'Inscris-tois maintenant!';
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -680,4 +695,8 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   String get registeringPhaseReminderContent => 'Регистрация на встречу началась.';
   @override
   String get registeringPhaseReminderTitle => 'Зарегистрируйтесь сейчас, не упустите шанс!';
+  @override
+  String get registeringLastDayOfRegisteringReminderContent => 'todo :)';
+  @override
+  String get registeringLastDayOfRegisteringReminderTitle => 'todo :)';
 }

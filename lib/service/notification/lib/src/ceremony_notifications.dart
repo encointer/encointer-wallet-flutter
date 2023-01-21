@@ -31,8 +31,8 @@ class CeremonyNotifications {
     }
   }
 
-  /// Schedules registering reminders for the nex [numberOfCyclesToSchedule] cycles.
-  static Future<void> scheduleRegisteringReminders(
+  /// Schedules notifications that the registering phase starts for the next [numberOfCyclesToSchedule] cycles.
+  static Future<void> scheduleRegisteringStartsReminders(
     int nextRegisteringPhase,
     int currentCeremonyIndex,
     int ceremonyCycleDuration,
@@ -44,6 +44,27 @@ class CeremonyNotifications {
       final scheduledDate = DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase + i * ceremonyCycleDuration);
       await NotificationPlugin.scheduleNotification(
         Notification.registeringPhaseStarted.id(currentCeremonyIndex) + i,
+        dic.registeringPhaseReminderTitle,
+        dic.registeringPhaseReminderContent,
+        scheduledDate,
+      );
+    }
+  }
+
+  /// Schedules notifications that the registering phase ends for the next [numberOfCyclesToSchedule] cycles.
+  static Future<void> scheduleLastDayOfRegisteringReminders(
+    int assigningPhaseStarts,
+    int currentCeremonyIndex,
+    int ceremonyCycleDuration,
+    TranslationsEncointer dic, {
+    int numberOfCyclesToSchedule = 5,
+  }) async {
+    for (var i = 0; i < numberOfCyclesToSchedule; i++) {
+      // calculate the scheduled date by adding i*ceremonyCycleDuration to nextRegisteringPhase
+      final scheduledDate = DateTime.fromMillisecondsSinceEpoch(assigningPhaseStarts + i * ceremonyCycleDuration)
+          .subtract(const Duration(hours: 24));
+      await NotificationPlugin.scheduleNotification(
+        Notification.lastDayOfRegisteringReminder.id(currentCeremonyIndex) + i,
         dic.registeringPhaseReminderTitle,
         dic.registeringPhaseReminderContent,
         scheduledDate,
