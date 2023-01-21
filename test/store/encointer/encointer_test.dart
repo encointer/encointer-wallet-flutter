@@ -166,9 +166,7 @@ void main() {
           CeremonyPhase.Registering: 1,
           CeremonyPhase.Assigning: 1,
           CeremonyPhase.Attesting: 1,
-        }))
-        ..setCurrentPhase(CeremonyPhase.Attesting)
-        ..setNextPhaseTimestamp(3);
+        }));
 
       expect(encointerStore.ceremonyCycleDuration, 3);
     });
