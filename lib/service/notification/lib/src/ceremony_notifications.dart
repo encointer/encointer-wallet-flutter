@@ -53,19 +53,19 @@ class CeremonyNotifications {
 
   /// Schedules notifications that the registering phase ends for the next [numberOfCyclesToSchedule] cycles.
   ///
-  /// Shows the notification [showBeforeAssigningPhaseHours] before the [assigningPhaseStart].
+  /// Shows the notification [showBeforeAssigningPhase] before the [assigningPhaseStart].
   static Future<void> scheduleLastDayOfRegisteringReminders(
     int assigningPhaseStart,
     int currentCeremonyIndex,
     int ceremonyCycleDuration,
     TranslationsEncointer dic, {
     int numberOfCyclesToSchedule = 5,
-    int showBeforeAssigningPhaseHours = 24,
+    Duration showBeforeAssigningPhase = const Duration(hours: 24),
   }) async {
     for (var i = 0; i < numberOfCyclesToSchedule; i++) {
       // Scheduled date is 24 hours before the assigning phase starts.
       final scheduledDate = DateTime.fromMillisecondsSinceEpoch(assigningPhaseStart + i * ceremonyCycleDuration)
-          .subtract(Duration(hours: showBeforeAssigningPhaseHours));
+          .subtract(showBeforeAssigningPhase);
 
       if (scheduledDate.isAfter(DateTime.now())) {
         await NotificationPlugin.scheduleNotification(
