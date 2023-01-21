@@ -36,9 +36,10 @@ class CeremonyNotifications {
     int nextRegisteringPhase,
     int currentCeremonyIndex,
     int ceremonyCycleDuration,
-    TranslationsEncointer dic,
-  ) async {
-    for (var i = 0; i < 10; i++) {
+    TranslationsEncointer dic, {
+    int numberOfCyclesToSchedule = 5,
+  }) async {
+    for (var i = 0; i < numberOfCyclesToSchedule; i++) {
       // calculate the scheduled date by adding i*ceremonyCycleDuration to nextRegisteringPhase
       final scheduledDate = DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase + i * ceremonyCycleDuration);
       await NotificationPlugin.scheduleNotification(
