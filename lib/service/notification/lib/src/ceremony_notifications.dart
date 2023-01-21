@@ -31,7 +31,7 @@ class CeremonyNotifications {
     }
   }
 
-  /// This method schedules reminders for ceremonies that will occur in a certain period of time.
+  /// Schedules registering reminders for the nex [numberOfCyclesToSchedule] cycles.
   static Future<void> scheduleRegisteringReminders(
     int nextRegisteringPhase,
     int currentCeremonyIndex,
