@@ -20,15 +20,17 @@ class VoucherQrCode extends QrCode<VoucherData> {
 
   VoucherQrCode.withData(super.data);
 
-  @override
-  QrCodeContext? context = QrCodeContext.voucher;
+  final QrCodeVersion qrCodeVersion = QrCodeVersion.v2_0;
 
   @override
-  QrCodeVersion? version = QrCodeVersion.v2_0;
+  QrCodeContext get context => QrCodeContext.voucher;
+
+  @override
+  QrCodeVersion get version => qrCodeVersion;
 }
 
 class VoucherData implements ToQrFields {
-  VoucherData({
+  const VoucherData({
     required this.voucherUri,
     required this.cid,
     required this.network,

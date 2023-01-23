@@ -43,7 +43,6 @@ class TxDetail extends StatelessWidget {
 
     final list = <Widget>[
       Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(24),

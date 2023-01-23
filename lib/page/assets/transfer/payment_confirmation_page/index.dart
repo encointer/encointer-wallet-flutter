@@ -62,12 +62,12 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
+    final params = ModalRoute.of(context)!.settings.arguments! as PaymentConfirmationParams;
 
     final cid = params.cid;
     final recipientAccount = params.recipientAccount;
-    final recipientAddress = Fmt.addressOfAccount(recipientAccount, context.read<AppStore>());
     final amount = params.amount;
+    final recipientAddress = Fmt.addressOfAccount(recipientAccount, context.read<AppStore>());
 
     return Observer(
       builder: (_) {
@@ -86,7 +86,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 const SizedBox(height: 10),
                 Flexible(
                   fit: FlexFit.tight,
-                  flex: 1,
                   child: TextGradient(
                     text: '${Fmt.doubleFormat(amount)} ⵐ',
                     style: const TextStyle(fontSize: 60),
@@ -112,6 +111,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 if (!_transferState.isFinishedOrFailed())
                   PrimaryButton(
                     key: const Key('make-transfer-send'),
+                    onPressed: () => _submit(context, cid, recipientAddress, amount),
                     child: SizedBox(
                       height: 24,
                       child: !_transferState.isSubmitting()
@@ -125,7 +125,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                             )
                           : const CupertinoActivityIndicator(),
                     ),
-                    onPressed: () => _submit(context, cid, recipientAddress, amount),
                   )
                 else
                   PrimaryButton(
@@ -206,10 +205,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         return const DecoratedBox(
           decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
           child: Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10),
             child: Icon(
               Icons.highlight_remove,
-              size: 80.0,
+              size: 80,
               color: Colors.white,
             ),
           ),
@@ -279,7 +278,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
     _timer = Timer.periodic(
       const Duration(seconds: 2),
-      (_timer) => _animateTick(),
+      (timer) => _animateTick(),
     );
 
     _animationInitialized = true;

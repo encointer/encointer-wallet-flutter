@@ -6,15 +6,14 @@ const String qrCodeFieldSeparator = '\n';
 abstract class QrCode<QrCodeData extends ToQrFields> {
   QrCode(this.data);
 
-  QrCodeContext? context;
+  QrCodeContext get context;
 
-  QrCodeVersion? version;
+  QrCodeVersion get version;
 
   QrCodeData data;
 
   String toQrPayload() {
-    final qrFields = [context.toQrField(), version.toVersionNumber()];
-    qrFields.addAll(data.toQrFields());
+    final qrFields = [context.toQrField(), version.toVersionNumber(), ...data.toQrFields()];
     return qrFields.join(qrCodeFieldSeparator);
   }
 }

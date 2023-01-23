@@ -215,18 +215,26 @@ class Fmt {
     return '${acc.name}${(acc.observation ?? false) ? ' (${I18n.of(context)!.translationsForLocale().account.observe})' : ''}';
   }
 
-  static List<int> hexToBytes(String hex) {
-    const _byteAlphabet = '0123456789abcdef';
+  /// The hexToBytes function converts a hexadecimal string to a byte array.
+  /// It takes a hexadecimal string as input and returns a Uint8List type array as output.
+  /// ```dart
+  /// print(hexToBytes1('#ffffff')); // [255, 255, 255, 255]
+  /// ```
+  static List<int> hexToBytes(String hexString) {
+    const byteAlphabet = '0123456789abcdef';
 
-    hex = hex.replaceAll(' ', '');
-    hex = hex.replaceAll('0x', '');
-    hex = hex.toLowerCase();
+    // The function first removes any spaces and "0x" prefixes from the input string,
+    // then converts the input string to lowercase.
+    var hex = hexString.replaceAll(' ', '').replaceAll('0x', '').toLowerCase();
+
+    // If the input string contains an odd number of characters, it adds a "0" to the beginning.
     if (hex.length % 2 != 0) hex = '0$hex';
     final result = Uint8List(hex.length ~/ 2);
     for (var i = 0; i < result.length; i++) {
-      final value = (_byteAlphabet.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
+      // Finally, it adds every two characters of the input string as a byte value to the array.
+      final value = (byteAlphabet.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
           +
-          _byteAlphabet.indexOf(hex[i * 2 + 1]);
+          byteAlphabet.indexOf(hex[i * 2 + 1]);
       result[i] = value;
     }
     return result;
@@ -237,9 +245,9 @@ class Fmt {
   }
 
   static String? accountDisplayNameString(String? address, Map? accInfo) {
-    var display = Fmt.address(address, pad: 6);
+    var display = Fmt.address(address);
     if (accInfo != null) {
-      if (accInfo['identity']['display'] != null) {
+      if ((accInfo['identity'] as Map<String, dynamic>)['display'] != null) {
         display = accInfo['identity']['display'] as String?;
         if (accInfo['identity']['displayParent'] != null) {
           display = '${accInfo['identity']['displayParent']}/$display';

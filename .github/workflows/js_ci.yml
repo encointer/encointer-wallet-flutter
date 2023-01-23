@@ -24,23 +24,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Download encointer-node
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow: build-and-test.yml
-          name: encointer-node-notee-54cec8518e1213370c01bb58af0336508ef92ba1
-          # in fact this action should download the latest artifact, but sometimes fails. Then we need to
-          # set the `run_id` to force a download of an updated binary.
-          run_id: 3641963611
-          path: node
-          repo: encointer/encointer-node
-
       - name: Run encointer-node
-        run: |
-          ls -alt node
-          chmod +x node/encointer-node-notee
-          ./node/encointer-node-notee --tmp --dev --enable-offchain-indexing true --rpc-methods unsafe &
+        run: ./scripts/run_encointer_node_notee_docker.sh &
 
       - name: Test JS
         # We don't really have unit tests in the JS part. Most tests need a local node running.

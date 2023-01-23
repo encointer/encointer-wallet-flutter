@@ -115,7 +115,7 @@ class _ItemDescription extends StatelessWidget {
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 12.0,
+                    fontSize: 12,
                     color: Colors.black54,
                   ),
                 ),
@@ -124,7 +124,6 @@ class _ItemDescription extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 1,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
@@ -132,7 +131,7 @@ class _ItemDescription extends StatelessWidget {
               Text(
                 info!,
                 style: const TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 12,
                   color: Colors.black87,
                 ),
               ),

@@ -21,7 +21,7 @@ abstract class _AppSettingsBase with Store {
   final locales = const <Locale>[
     Locale('en', ''),
     Locale('de', ''),
-    // Locale('fr', ''),
+    Locale('fr', ''),
     Locale('ru', ''),
   ];
 

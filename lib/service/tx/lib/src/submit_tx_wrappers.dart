@@ -1,18 +1,19 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Helpers to submit transactions.
 
@@ -135,6 +136,13 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       final registrationType = data.personal?.participantType;
       if (registrationType != null) {
         _showEducationalDialog(registrationType, context);
+        if (store.settings.endpoint == networkEndpointEncointerMainnet) {
+          await CeremonyNotifications.scheduleMeetupReminders(
+            data.global!.ceremonyIndex,
+            store.encointer.community!.meetupTime!,
+            I18n.of(context)!.translationsForLocale().encointer,
+          );
+        }
       }
       // Registering the participant burns the reputation.
       // Hence, we should fetch the new state afterwards.
@@ -201,7 +209,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
                 dic.encointer.leuZurichFAQ,
                 textAlign: TextAlign.center,
               ),
-              onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
+              onPressed: () => AppLaunch.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
             ),
         ],
       );

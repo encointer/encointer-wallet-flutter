@@ -28,7 +28,7 @@ import 'package:encointer_wallet/page/assets/account_or_community/switch_account
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -51,28 +51,29 @@ class _AssetsState extends State<Assets> {
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
 
-  bool _enteredPin = false;
-
   PanelController? panelController;
 
   PausableTimer? balanceWatchdog;
 
   @override
   void initState() {
+    super.initState();
+
     // if network connected failed, reconnect
     if (!widget.store.settings.loading && widget.store.settings.networkName == null) {
       widget.store.settings.setNetworkLoading(true);
       webApi.connectNodeAll();
     }
 
-    if (panelController == null) {
-      panelController = PanelController();
-    }
+    panelController ??= PanelController();
 
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.store.settings.cachedPin.isEmpty & !widget.store.settings.endpointIsNoTee) {
+        _showPasswordDialog(context);
+      }
+
       if (context.read<AppStore>().encointer.community?.communityIcon == null) {
-        await context.read<AppStore>().encointer.community?.getCommunityIcon();
+        context.read<AppStore>().encointer.community?.getCommunityIcon();
       }
     });
   }
@@ -95,8 +96,13 @@ class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
     dic = I18n.of(context)!.translationsForLocale();
-    _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
-        panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
+
+    // Should typically not be higher than panelHeight, but on really small devices
+    // it should not exceed fractionOfScreenHeight x the screen height.
+    _panelHeightOpen = min(
+      MediaQuery.of(context).size.height * fractionOfScreenHeight,
+      panelHeight,
+    );
 
     var allCommunities = <AccountOrCommunityData>[];
     var allAccounts = <AccountOrCommunityData>[];
@@ -158,19 +164,6 @@ class _AssetsState extends State<Assets> {
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
-                      if (ModalRoute.of(context)!.isCurrent &&
-                          !_enteredPin &
-                              widget.store.settings.cachedPin.isEmpty &
-                              !widget.store.settings.endpointIsNoTee) {
-                        // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
-                        // showing the dialog multiple times.
-                        WidgetsBinding.instance.addPostFrameCallback(
-                          (_) {
-                            _showPasswordDialog(context);
-                          },
-                        );
-                      }
-
                       final accountData = widget.store.account.currentAccount;
 
                       return Column(
@@ -231,8 +224,7 @@ class _AssetsState extends State<Assets> {
                                   style: ElevatedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
-                                      borderRadius:
-                                          BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
+                                      borderRadius: BorderRadius.horizontal(left: Radius.circular(15)),
                                     ),
                                   ),
                                   key: const Key('qr-receive'),
@@ -242,7 +234,7 @@ class _AssetsState extends State<Assets> {
                                     }
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.all(16),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -260,8 +252,7 @@ class _AssetsState extends State<Assets> {
                                   style: ElevatedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
-                                      borderRadius:
-                                          BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
+                                      borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
                                     ),
                                   ),
                                   key: const Key('transfer'),
@@ -269,7 +260,7 @@ class _AssetsState extends State<Assets> {
                                       ? () => Navigator.pushNamed(context, TransferPage.route)
                                       : null,
                                   child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.all(16),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -287,7 +278,7 @@ class _AssetsState extends State<Assets> {
                       );
                     }),
                     const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+                      padding: EdgeInsets.symmetric(vertical: 6),
                     ),
                     Observer(builder: (_) {
                       final dic = I18n.of(context)!.translationsForLocale();
@@ -342,7 +333,7 @@ class _AssetsState extends State<Assets> {
                 key: const Key('list-view-wallet'),
                 controller: scrollController,
                 children: <Widget>[
-                  const SizedBox(height: 12.0),
+                  const SizedBox(height: 12),
                   const DragHandle(),
                   Column(children: [
                     Observer(
@@ -353,10 +344,7 @@ class _AssetsState extends State<Assets> {
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(widget.store)),
-                              ).then((_) {
+                              Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
                                 _refreshBalanceAndNotify(dic);
                               });
                             } else {
@@ -389,7 +377,7 @@ class _AssetsState extends State<Assets> {
                 ],
               ),
             ),
-            borderRadius: const BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
           ),
         ),
       ),
@@ -397,21 +385,12 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> initAllCommunities() {
-    final allCommunities = <AccountOrCommunityData>[];
-    // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
-    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
-    //     avatar: webApi.ipfs.getCommunityIcon(community),
-    //     name: community.name)));
-
-    // For now show the selected community if available and let the user add a community from the world map community chooser
-    allCommunities.add(
+    final allCommunities = <AccountOrCommunityData>[
       AccountOrCommunityData(
         avatar: const CommunityAvatar(avatarSize: avatarSize),
         name: widget.store.encointer.community?.name ?? '...',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
-    );
-    allCommunities.add(
       AccountOrCommunityData(
         avatar: Container(
           height: avatarSize,
@@ -427,21 +406,27 @@ class _AssetsState extends State<Assets> {
           ),
         ),
         name: dic!.profile.addCommunity,
-      ),
-    );
+      )
+    ];
+    // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
+    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
+    //     avatar: webApi.ipfs.getCommunityIcon(community),
+    //     name: community.name)));
+
+    // For now show the selected community if available and let the user add a community from the world map community chooser
+
     return allCommunities;
   }
 
   List<AccountOrCommunityData> initAllAccounts(Translations dic) {
-    final allAccounts = <AccountOrCommunityData>[];
-    allAccounts.addAll(widget.store.account.accountListAll.map(
-      (account) => AccountOrCommunityData(
-        avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
-        name: account.name,
-        isSelected: account.pubKey == widget.store.account.currentAccountPubKey,
+    final allAccounts = <AccountOrCommunityData>[
+      ...widget.store.account.accountListAll.map(
+        (account) => AccountOrCommunityData(
+          avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
+          name: account.name,
+          isSelected: account.pubKey == widget.store.account.currentAccountPubKey,
+        ),
       ),
-    ));
-    allAccounts.add(
       AccountOrCommunityData(
         avatar: Container(
           key: const Key('add-account-panel'),
@@ -454,8 +439,8 @@ class _AssetsState extends State<Assets> {
           child: const Icon(Icons.add, size: 36),
         ),
         name: dic.profile.addAccount,
-      ),
-    );
+      )
+    ];
     return allAccounts;
   }
 
@@ -483,16 +468,14 @@ class _AssetsState extends State<Assets> {
               });
             },
           ),
-          onWillPop: () {
-            // handles back button press
-            return _showPasswordNotEnteredDialog(context).then((value) => value as bool);
+          // handles back button press
+          onWillPop: () async {
+            await _showPasswordNotEnteredDialog(context);
+            return false;
           },
         );
       },
     );
-    setState(() {
-      _enteredPin = true;
-    });
   }
 
   Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {

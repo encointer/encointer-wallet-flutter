@@ -370,17 +370,11 @@ abstract class _EncointerStore with Store {
     // These are merely safety guards, and should never be needed. A null reference error occurred here only because
     // a store was added in the development process after it has been written to cache. Hence, deserialization
     // initialized it with null.
-    if (accountStores == null) {
-      accountStores = ObservableMap();
-    }
+    accountStores ??= ObservableMap();
 
-    if (bazaarStores == null) {
-      bazaarStores = ObservableMap();
-    }
+    bazaarStores ??= ObservableMap();
 
-    if (communityStores == null) {
-      communityStores = ObservableMap();
-    }
+    communityStores ??= ObservableMap();
 
     accountStores!.forEach((cid, store) => store.initStore(cacheFn));
     bazaarStores!.forEach((cid, store) => store.initStore(cacheFn));
@@ -393,7 +387,7 @@ abstract class _EncointerStore with Store {
     if (_cacheFn != null) {
       return _cacheFn!();
     } else {
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -417,16 +411,15 @@ abstract class _EncointerStore with Store {
     if (!communityStores!.containsKey(cidFmt)) {
       Log.d('Adding new communityStore for cid: ${cid.toFmtString()}', 'EncointerStore');
 
-      final communityStore = CommunityStore(network, cid);
-      communityStore.initStore(_cacheFn, applyDemurrage);
+      final communityStore = CommunityStore(network, cid)..initStore(_cacheFn, applyDemurrage);
       await communityStore.initCommunityAccountStore(address);
 
       communityStores![cidFmt] = communityStore;
-      return shouldCache ? writeToCache() : Future.value(null);
+      return shouldCache ? writeToCache() : Future.value();
     } else {
       Log.d("Don't add already existing communityStore for cid: ${cid.toFmtString()}", 'EncointerStore');
       await communityStores![cidFmt]!.initCommunityAccountStore(address);
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -435,14 +428,13 @@ abstract class _EncointerStore with Store {
     if (!accountStores!.containsKey(address)) {
       Log.d('Adding new encointerAccountStore for: $address', 'EncointerStore');
 
-      final encointerAccountStore = EncointerAccountStore(network, address);
-      encointerAccountStore.initStore(_cacheFn);
+      final encointerAccountStore = EncointerAccountStore(network, address)..initStore(_cacheFn);
 
       accountStores![address] = encointerAccountStore;
-      return shouldCache ? writeToCache() : Future.value(null);
+      return shouldCache ? writeToCache() : Future.value();
     } else {
       Log.d("Don't add already existing encointerAccountStore for address: $address", 'EncointerStore');
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -451,14 +443,13 @@ abstract class _EncointerStore with Store {
     final cidFmt = cid.toFmtString();
     if (!bazaarStores!.containsKey(cidFmt)) {
       Log.d('Adding new bazaarStore for cid: ${cid.toFmtString()}', 'EncointerStore');
-      final bazaarStore = BazaarStore(network, cid);
-      bazaarStore.initStore(_cacheFn);
+      final bazaarStore = BazaarStore(network, cid)..initStore(_cacheFn);
 
       bazaarStores![cidFmt] = bazaarStore;
-      return shouldCache ? writeToCache() : Future.value(null);
+      return shouldCache ? writeToCache() : Future.value();
     } else {
       Log.d("Don't add already existing bazaarStore for cid: ${cid.toFmtString()}", 'EncointerStore');
-      return Future.value(null);
+      return Future.value();
     }
   }
 
@@ -488,7 +479,7 @@ abstract class _EncointerStore with Store {
     final maybeCids = await _rootStore.localStorage.getList(trackedCidsCacheKey(network));
     Log.d('Initializing previously tracked communities: $maybeCids', 'EncointerStore');
     if (maybeCids.isNotEmpty) {
-      final cids = maybeCids.map((cid) => CommunityIdentifier.fromJson(cid)).toList();
+      final cids = maybeCids.map(CommunityIdentifier.fromJson).toList();
       communityIdentifiers = cids;
     }
   }
@@ -529,6 +520,25 @@ abstract class _EncointerStore with Store {
       return null;
     }
     return assigningPhaseStart! + phaseDurations[CeremonyPhase.Assigning]!;
+  }
+
+  @computed
+  int? get nextRegisteringPhaseStart {
+    if (attestingPhaseStart == null) {
+      return null;
+    }
+    return attestingPhaseStart! + phaseDurations[CeremonyPhase.Attesting]!;
+  }
+
+  @computed
+  int? get ceremonyCycleDuration {
+    if (phaseDurations[CeremonyPhase.Registering] == null ||
+        phaseDurations[CeremonyPhase.Assigning] == null ||
+        phaseDurations[CeremonyPhase.Attesting] == null) return null;
+
+    return phaseDurations[CeremonyPhase.Registering]! +
+        phaseDurations[CeremonyPhase.Assigning]! +
+        phaseDurations[CeremonyPhase.Attesting]!;
   }
 
   bool get showRegisterButton {

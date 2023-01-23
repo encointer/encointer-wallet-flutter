@@ -133,8 +133,9 @@ class OpeningHoursForDay {
       asString.write('(closed)');
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
-        asString.write(openingIntervals[i].toString());
-        asString.write(i < openingIntervals.length - 1 ? ', ' : '');
+        asString
+          ..write(openingIntervals[i].toString())
+          ..write(i < openingIntervals.length - 1 ? ', ' : '');
       }
     }
     return asString.toString();

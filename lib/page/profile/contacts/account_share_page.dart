@@ -24,11 +24,11 @@ class _AccountSharePageState extends State<AccountSharePage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
 
     final accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    final accountToBeShared = _store.account.getAccountData(accountToBeSharedPubKey);
-    final addressSS58 = _store.account.getNetworkAddress(accountToBeSharedPubKey);
+    final accountToBeShared = store.account.getAccountData(accountToBeSharedPubKey);
+    final addressSS58 = store.account.getNetworkAddress(accountToBeSharedPubKey);
 
     final contactQrCode = ContactQrCode(
       account: addressSS58,

@@ -62,9 +62,10 @@ class EncointerApi {
 
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping encointer subscriptions', 'EncointerApi');
-    jsApi.unsubscribeMessage(_currentPhaseSubscribeChannel);
-    jsApi.unsubscribeMessage(_communityIdentifiersChannel);
-    jsApi.unsubscribeMessage(_businessRegistryChannel);
+    jsApi
+      ..unsubscribeMessage(_currentPhaseSubscribeChannel)
+      ..unsubscribeMessage(_communityIdentifiersChannel)
+      ..unsubscribeMessage(_businessRegistryChannel);
 
     if (store.settings.endpointIsNoTee) {
       jsApi.unsubscribeMessage(_businessRegistryChannel);
@@ -255,7 +256,7 @@ class EncointerApi {
 
     if (mLocation == null) {
       Log.d("No meetup locations found, can't get meetup time.", 'EncointerApi');
-      return Future.value(null);
+      return Future.value();
     }
 
     final time = await jsApi
@@ -455,7 +456,7 @@ class EncointerApi {
 
     Log.d('api: getReputations: $reputationsList', 'EncointerApi');
     if (reputationsList is List && reputationsList.isEmpty) {
-      return Future.value(null);
+      return Future.value();
     }
 
     final reputations = {
@@ -481,7 +482,7 @@ class EncointerApi {
     final cIndex = store.encointer.account?.ceremonyIndexForProofOfAttendance;
 
     if (cIndex == null || cIndex == 0) {
-      return Future.value(null);
+      return Future.value();
     }
 
     final cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
@@ -517,7 +518,7 @@ class EncointerApi {
   }
 
   Future<int> getNumberOfNewbieTicketsForBootstrapper() async {
-    var _remainingTickets = 0;
+    var remainingTickets = 0;
     final address = store.account.currentAddress;
     final cid = store.encointer.chosenCid;
     try {
@@ -525,11 +526,11 @@ class EncointerApi {
         'encointer.remainingNewbieTicketsBootstrapper(${jsonEncode(cid)},"$address")',
       );
       Log.d('Encointer Api', 'numberOfBootstrapperTickets: $numberOfTickets');
-      _remainingTickets += numberOfTickets as int;
+      remainingTickets += numberOfTickets as int;
     } catch (e, s) {
       Log.e('Encointer Api', '$e', s);
     }
-    return _remainingTickets;
+    return remainingTickets;
   }
 
   /// Get all the registered businesses for the current `chosenCid`

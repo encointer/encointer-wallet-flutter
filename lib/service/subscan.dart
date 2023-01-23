@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
@@ -44,13 +45,14 @@ class SubScanApi {
   final String moduleDemocracy = 'Democracy';
 
   static String getSnEndpoint(String network) {
+    var networkScheme = network;
     if (network.contains('polkadot')) {
-      network = 'polkadot';
+      networkScheme = 'polkadot';
     }
     if (network.contains('acala')) {
-      network = 'acala-testnet';
+      networkScheme = 'acala-testnet';
     }
-    return 'https://$network.subscan.io/api/scan';
+    return 'https://$networkScheme.subscan.io/api/scan';
   }
 
   /// do the request in an isolate to avoid UI stall
@@ -144,7 +146,7 @@ class SubScanApi {
       'address': params.address,
     });
     final res = await post(Uri.parse(url), headers: headers, body: body);
-    final obj = await compute(jsonDecode, res.body);
+    final obj = await compute(jsonDecode, res.body) as Map<String, dynamic>;
     if (params.sendPort != null) {
       params.sendPort!.send(obj['data']);
     }
@@ -167,7 +169,7 @@ class SubScanApi {
     }
     final body = jsonEncode(params);
     final res = await post(Uri.parse(url), headers: headers, body: body);
-    final obj = await compute(jsonDecode, res.body);
+    final obj = await compute(jsonDecode, res.body) as Map<String, dynamic>;
     if (para.sendPort != null) {
       para.sendPort!.send(obj['data']);
     }
@@ -184,7 +186,7 @@ class SubScanApi {
     };
     final body = jsonEncode(params);
     final res = await post(Uri.parse(url), headers: headers, body: body);
-    final obj = await compute(jsonDecode, res.body);
+    final obj = await compute(jsonDecode, res.body) as Map<String, dynamic>;
     if (para.sendPort != null) {
       para.sendPort!.send(obj['data']);
     }
@@ -214,12 +216,13 @@ class SubScanApi {
 
     final res = await post(Uri.parse(url), headers: headers);
     try {
-      final obj = await compute(jsonDecode, res.body);
+      final obj = await compute(jsonDecode, res.body) as Map<String, dynamic>;
       if (para.sendPort != null) {
         para.sendPort!.send(obj['data']);
       }
       return obj['data'] as Map?;
-    } catch (err) {
+    } catch (e, s) {
+      Log.e('$e', 'sunbscan', s);
       // ignore error
     }
     if (para.sendPort != null) {

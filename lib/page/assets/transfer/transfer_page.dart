@@ -107,9 +107,9 @@ class _TransferPageState extends State<TransferPage> {
       }
 
       if (params.recipient != null) {
-        final acc = AccountData();
-        acc.address = params.recipient!;
-        acc.name = params.label!;
+        final acc = AccountData()
+          ..address = params.recipient!
+          ..name = params.label!;
         _accountTo = acc;
       }
     }
@@ -118,10 +118,10 @@ class _TransferPageState extends State<TransferPage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
 
     const decimals = encointerCurrenciesDecimals;
-    final available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
+    final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
     Log.d('[transferPage]: available: $available', 'TransferPage');
 
@@ -151,11 +151,11 @@ class _TransferPageState extends State<TransferPage> {
                     child: ListView(
                       key: const Key('transfer-listview'),
                       children: [
-                        CombinedCommunityAndAccountAvatar(_store, showCommunityNameAndAccountName: false),
+                        CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
                         const SizedBox(height: 12),
-                        if (_store.encointer.communityBalance != null)
+                        if (store.encointer.communityBalance != null)
                           AccountBalanceWithMoreDigits(
-                            store: _store,
+                            store: store,
                             available: available,
                             decimals: decimals,
                           )
@@ -164,7 +164,7 @@ class _TransferPageState extends State<TransferPage> {
                         Text(
                           I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll(
                                 'ACCOUNT_NAME',
-                                Fmt.accountName(context, _store.account.currentAccount),
+                                Fmt.accountName(context, store.account.currentAccount),
                               ),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
@@ -181,7 +181,7 @@ class _TransferPageState extends State<TransferPage> {
                             if (invoiceData != null && invoiceData is InvoiceData) {
                               handleTransferPageParams(
                                 TransferPageParams.fromInvoiceData(invoiceData),
-                                _store,
+                                store,
                               );
                               setState(() {});
                             }
@@ -191,7 +191,7 @@ class _TransferPageState extends State<TransferPage> {
                         EncointerTextFormField(
                           labelText: dic.assets.amountToBeTransferred,
                           textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
-                          inputFormatters: [UI.decimalInputFormatter(decimals: decimals)],
+                          inputFormatters: [UI.decimalInputFormatter()],
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           controller: _amountCtrl,
                           textFormFieldKey: const Key('transfer-amount-input'),
@@ -211,7 +211,7 @@ class _TransferPageState extends State<TransferPage> {
                           children: [
                             Expanded(
                               child: AddressInputField(
-                                _store,
+                                store,
                                 label: dic.assets.address,
                                 initialValue: _accountTo,
                                 onChanged: (AccountData acc) {
@@ -228,7 +228,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   const SizedBox(height: 48),
-                  if (_store.settings.developerMode)
+                  if (store.settings.developerMode)
                     Center(
                       child: Text(
                         '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589

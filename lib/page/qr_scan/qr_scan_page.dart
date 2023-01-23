@@ -132,8 +132,8 @@ Widget permissionErrorDialog(BuildContext context) {
         onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
       ),
       CupertinoButton(
+        onPressed: openAppSettings,
         child: Text(dic.home.appSettings),
-        onPressed: () => openAppSettings(),
       ),
     ],
   );

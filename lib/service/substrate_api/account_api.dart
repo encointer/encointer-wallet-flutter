@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -18,7 +18,7 @@ class AccountApi {
 
   Future<void> initAccounts() async {
     if (store.account.accountList.isNotEmpty) {
-      final accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
+      final accounts = jsonEncode(store.account.accountList.map(AccountData.toJson).toList());
 
       final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
       final keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
@@ -26,9 +26,9 @@ class AccountApi {
     }
 
     // and contacts icons
-    final contacts = List<AccountData>.of(store.settings.contactList);
-    // set pubKeyAddressMap for observation accounts
-    contacts.retainWhere((i) => i.observation ?? false);
+    final contacts = List<AccountData>.of(store.settings.contactList)
+      // set pubKeyAddressMap for observation accounts
+      ..retainWhere((i) => i.observation ?? false);
     final observations = contacts.map((i) => i.pubKey).toList();
     if (observations.isNotEmpty) {
       encodeAddress(observations);
@@ -44,7 +44,6 @@ class AccountApi {
     final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
     final res = await jsApi.evalJavascript(
       'account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)',
-      allowRepeat: true,
     );
 
     store.account.setPubKeyAddressMap(Map<String, Map>.from(res as Map));
@@ -65,7 +64,6 @@ class AccountApi {
     }
     final res = await jsApi.evalJavascript(
       'account.decodeAddress(${jsonEncode(addresses)})',
-      allowRepeat: true,
     );
     if (res != null) {
       store.account.setPubKeyAddressMap(Map<String, Map>.from({store.settings.endpoint.ss58.toString(): res as Map}));
@@ -76,7 +74,6 @@ class AccountApi {
   Future<String> addressFromUri(String uri) async {
     final address = await jsApi.evalJavascript(
       'account.addressFromUri("$uri")',
-      allowRepeat: true,
     );
 
     Log.d('addressFromUri: $address', 'AccountApi');
@@ -87,7 +84,6 @@ class AccountApi {
   Future<List?> queryAddressWithAccountIndex(String index) async {
     final res = await jsApi.evalJavascript(
       'account.queryAddressWithAccountIndex("$index", ${store.settings.endpoint.ss58})',
-      allowRepeat: true,
     );
     return res as List?;
   }
@@ -108,16 +104,17 @@ class AccountApi {
 
     await store.loadAccountCache();
     if (fetchData) {
-      if (fetchAccountData != null) {
-        fetchAccountData!();
-      }
+      fetchAccountData?.call();
+      // if (fetchAccountData != null) {
+      //   fetchAccountData!();
+      // }
     }
   }
 
   Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
     final param = rawParam ?? jsonEncode(params);
     Log.d('$txInfo', 'AccountApi');
-    final res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
+    final res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)');
     return res as Map;
   }
 
@@ -145,7 +142,7 @@ class AccountApi {
     final param = rawParam ?? jsonEncode(params);
     final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
     Log.d('sendTx call: $call', 'AccountApi');
-    return jsApi.evalJavascript(call, allowRepeat: true);
+    return jsApi.evalJavascript(call);
   }
 
   Future<void> generateAccount() async {
@@ -162,7 +159,7 @@ class AccountApi {
     final pass = store.account.newAccount.password;
     var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
-    final acc = await jsApi.evalJavascript(code, allowRepeat: true);
+    final acc = await jsApi.evalJavascript(code);
     return acc as Map<String, dynamic>;
   }
 
@@ -171,7 +168,6 @@ class AccountApi {
     Log.d('checkpass: $pubKey, $pass', 'AccountApi');
     return jsApi.evalJavascript(
       'account.checkPassword("$pubKey", "$pass")',
-      allowRepeat: true,
     );
   }
 
@@ -186,7 +182,6 @@ class AccountApi {
 
     final res = await jsApi.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
-      allowRepeat: true,
     );
     store.account.setAddressIndex(res as List<dynamic>);
     return res;
@@ -200,7 +195,6 @@ class AccountApi {
 
     final res = await jsApi.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
-      allowRepeat: true,
     );
     store.account.setAccountsIndex(res as List<dynamic>);
     return res;
