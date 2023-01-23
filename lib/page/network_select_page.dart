@@ -139,10 +139,10 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     ];
 
     /// first item is current account
-    final accounts = <AccountData>[context.read<AppStore>().account.currentAccount];
-
-    /// add optional accounts
-    accounts.addAll(context.read<AppStore>().account.optionalAccounts);
+    final accounts = <AccountData>[
+      context.read<AppStore>().account.currentAccount,
+      ...context.read<AppStore>().account.optionalAccounts
+    ];
 
     res.addAll(accounts.map((i) {
       String? address = i.address;
@@ -196,8 +196,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
-                  blurRadius: 8.0, // has the effect of softening the shadow
-                  spreadRadius: 2.0, // ha
+                  blurRadius: 8, // has the effect of softening the shadow
+                  spreadRadius: 2, // ha
                 )
               ],
             ),
@@ -216,7 +216,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                       : null,
                   child: IconButton(
                     key: Key(i.info ?? '$i'),
-                    padding: const EdgeInsets.all(8),
                     icon: Image.asset(img),
                     onPressed: () {
                       if (!isCurrent) {

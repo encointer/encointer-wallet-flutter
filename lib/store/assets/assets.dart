@@ -210,11 +210,11 @@ abstract class _AssetsStore with Store {
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTokenBalanceKey)),
     ]);
     if (cache[0] != null) {
-      setAccountBalances(pubKey, cache[0] as Map<String, dynamic>, needCache: false);
+      setAccountBalances(pubKey, cache[0]! as Map<String, dynamic>, needCache: false);
     }
     if (cache[1] != null) {
       txs = ObservableList.of(
-          List.of(cache[1] as Iterable).map((i) => TransferData.fromJson(i as Map<String, dynamic>)).toList());
+          List.of(cache[1]! as Iterable).map((i) => TransferData.fromJson(i as Map<String, dynamic>)).toList());
     } else {
       txs = ObservableList();
     }
@@ -222,7 +222,7 @@ abstract class _AssetsStore with Store {
       cacheTxsTimestamp = cache[2] as int?;
     }
     if (cache[3] != null) {
-      setAccountTokenBalances(pubKey, cache[3] as Map<String, dynamic>, needCache: false);
+      setAccountTokenBalances(pubKey, cache[3]! as Map<String, dynamic>, needCache: false);
     } else {
       setAccountTokenBalances(pubKey, {}, needCache: false);
     }

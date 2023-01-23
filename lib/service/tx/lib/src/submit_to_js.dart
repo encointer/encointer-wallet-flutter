@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -12,7 +13,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
-import 'package:encointer_wallet/utils/ui.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
@@ -208,7 +208,7 @@ Future<void> showInsufficientFundsDialog(BuildContext context) {
           Container(),
           CupertinoButton(
             child: Text(dic.encointer.goToLeuZurich),
-            onPressed: () => UI.launchURL(leuZurichLink(languageCode)),
+            onPressed: () => AppLaunch.launchURL(leuZurichLink(languageCode)),
           ),
           CupertinoButton(
             child: Text(dic.home.ok),

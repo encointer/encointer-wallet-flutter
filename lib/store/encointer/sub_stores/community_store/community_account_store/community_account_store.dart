@@ -151,9 +151,7 @@ abstract class _CommunityAccountStore with Store {
   void addAttendee(String attendee) {
     Log.d('adding participantsClaims.', 'CommunityAccountStore');
 
-    if (attendees == null) {
-      attendees = ObservableSet();
-    }
+    attendees ??= ObservableSet();
 
     // Is a noop if the attendee is already in the set.
     attendees!.add(attendee);
@@ -187,7 +185,7 @@ abstract class _CommunityAccountStore with Store {
     if (_cacheFn != null) {
       return _cacheFn!();
     } else {
-      return Future.value(null);
+      return Future.value();
     }
   }
 }

@@ -14,7 +14,6 @@ class CeremonyNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Icon(notificationIconData, color: encointerGrey, size: 18),
         const SizedBox(width: 12),

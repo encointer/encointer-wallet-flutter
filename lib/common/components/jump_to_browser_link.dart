@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/utils/ui.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:flutter/material.dart';
 
 class JumpToBrowserLink extends StatefulWidget {
@@ -20,7 +20,7 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
     setState(() {
       _loading = true;
     });
-    await UI.launchURL(widget.url!);
+    await AppLaunch.launchURL(widget.url!);
     setState(() {
       _loading = false;
     });
@@ -29,6 +29,7 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: _launchUrl,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: widget.mainAxisAlignment ?? MainAxisAlignment.center,
@@ -43,9 +44,6 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
           Icon(Icons.open_in_new, size: 16, color: Theme.of(context).primaryColor)
         ],
       ),
-      onTap: () {
-        _launchUrl();
-      },
     );
   }
 }

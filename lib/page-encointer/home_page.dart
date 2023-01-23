@@ -11,8 +11,9 @@ import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/deep_link/deep_link.dart';
 import 'package:encointer_wallet/service/meetup/meetup.dart';
-import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class EncointerHomePage extends StatefulWidget {
   const EncointerHomePage({super.key});
@@ -39,6 +40,29 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         NotificationPlugin.scheduleNotification,
         Localizations.localeOf(context).languageCode,
       );
+
+      // Should never be null, we either come from the splash screen, and hence we had
+      // enough time to connect to the blockchain or we already have a populated store.
+      //
+      // Hence, can only be null if someone uses the app for the first time and is offline.
+      final encointer = context.read<AppStore>().encointer;
+      if (encointer.nextRegisteringPhaseStart != null &&
+          encointer.currentCeremonyIndex != null &&
+          encointer.ceremonyCycleDuration != null) {
+        await CeremonyNotifications.scheduleRegisteringStartsReminders(
+          encointer.nextRegisteringPhaseStart!,
+          encointer.currentCeremonyIndex!,
+          encointer.ceremonyCycleDuration!,
+          I18n.of(context)!.translationsForLocale().encointer,
+        );
+
+        await CeremonyNotifications.scheduleLastDayOfRegisteringReminders(
+          encointer.assigningPhaseStart!,
+          encointer.currentCeremonyIndex!,
+          encointer.ceremonyCycleDuration!,
+          I18n.of(context)!.translationsForLocale().encointer,
+        );
+      }
     });
     super.initState();
   }
@@ -63,7 +87,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                         width: 16,
                         decoration: const BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(width: 2.0),
+                            bottom: BorderSide(width: 2),
                           ),
                         ),
                       )
@@ -82,7 +106,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _store = context.watch<AppStore>();
+    final store = context.watch<AppStore>();
     _tabList = <TabData>[
       TabData(
         TabKey.wallet,
@@ -113,7 +137,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          Assets(_store),
+          Assets(store),
           if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
           ScanPage(),
           const ContactsPage(),
@@ -122,7 +146,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
-        iconSize: 22.0,
+        iconSize: 22,
         onTap: (index) async {
           if (_tabList[index].key == TabKey.scan) {
             // Push `ScanPage.Route`instead of changing the Page.

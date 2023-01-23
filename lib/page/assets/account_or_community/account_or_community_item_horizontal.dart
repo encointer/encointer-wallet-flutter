@@ -13,7 +13,7 @@ class AccountOrCommunityItemHorizontal extends StatefulWidget {
 
   final AccountOrCommunityData itemData;
   final int index;
-  final Function? onTap;
+  final void Function(int index)? onTap;
 
   @override
   State<AccountOrCommunityItemHorizontal> createState() => _AccountOrCommunityItemHorizontalState();
@@ -41,7 +41,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             widget.itemData.name!,
             style: Theme.of(context).textTheme.headline4,

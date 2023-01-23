@@ -11,7 +11,7 @@ void main() {
         label: 'label',
         cid: CommunityIdentifier.fromFmtString('sqm1v79dF6b'),
         network: 'nctr-k',
-        version: QrCodeVersion.v2_0,
+        qrCodeVersion: QrCodeVersion.v2_0,
       );
 
       expect(
@@ -44,11 +44,7 @@ void main() {
     });
 
     test('toQrPayload V1 works', () async {
-      final qrCode = ContactQrCode(
-        account: 'account',
-        label: 'label',
-        version: QrCodeVersion.v1_0,
-      );
+      final qrCode = ContactQrCode(account: 'account', label: 'label');
 
       expect(
         qrCode.toQrPayload(),

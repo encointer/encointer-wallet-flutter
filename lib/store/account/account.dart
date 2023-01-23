@@ -5,7 +5,7 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
@@ -100,10 +100,8 @@ abstract class _AccountStore with Store {
   /// accountList with observations
   @computed
   List<AccountData> get accountListAll {
-    final accList = accountList.toList();
-    final contactList = rootStore.settings.contactList.toList();
-    contactList.retainWhere((i) => i.observation ?? false);
-    accList.addAll(contactList);
+    final contactList = rootStore.settings.contactList.toList()..retainWhere((i) => i.observation ?? false);
+    final accList = accountList.toList()..addAll(contactList);
     return accList;
   }
 
@@ -229,11 +227,11 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> updateAccount(Map<String, dynamic> acc) async {
-    acc = _formatMetaData(acc);
+    final formattedAcc = _formatMetaData(acc);
 
-    final accNew = AccountData.fromJson(acc);
+    final accNew = AccountData.fromJson(formattedAcc);
     await rootStore.localStorage.removeAccount(accNew.pubKey);
-    await rootStore.localStorage.addAccount(acc);
+    await rootStore.localStorage.addAccount(formattedAcc);
 
     await loadAccount();
   }
@@ -254,14 +252,14 @@ abstract class _AccountStore with Store {
     saveSeed(AccountStore.seedTypeRawSeed);
 
     // format meta data of acc
-    acc = _formatMetaData(acc);
+    final formattedAcc = _formatMetaData(acc);
 
     final index = accountList.indexWhere((i) => i.pubKey == pubKey);
     if (index > -1) {
       await rootStore.localStorage.removeAccount(pubKey);
       Log.d('removed acc: $pubKey', 'AccountStore');
     }
-    await rootStore.localStorage.addAccount(acc);
+    await rootStore.localStorage.addAccount(formattedAcc);
 
     // update account list
     await loadAccount();
@@ -298,7 +296,7 @@ abstract class _AccountStore with Store {
   @action
   Future<void> loadAccount() async {
     final accList = await rootStore.localStorage.getAccountList();
-    accountList = ObservableList.of(accList.map((i) => AccountData.fromJson(i)));
+    accountList = ObservableList.of(accList.map(AccountData.fromJson));
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
     loading = false;
@@ -318,7 +316,7 @@ abstract class _AccountStore with Store {
     final Map stored = await rootStore.localStorage.getSeeds(seedType);
     final encrypted = stored[pubKey] as String?;
     if (encrypted == null) {
-      return Future.value(null);
+      return Future.value();
     }
     return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
   }

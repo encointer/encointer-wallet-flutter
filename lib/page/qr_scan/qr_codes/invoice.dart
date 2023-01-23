@@ -8,7 +8,7 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     String? network,
     num? amount,
     required String label,
-    this.version = QrCodeVersion.v1_0,
+    this.qrCodeVersion = QrCodeVersion.v1_0,
   }) : super(InvoiceData(account: account, cid: cid, network: network, amount: amount, label: label));
 
   factory InvoiceQrCode.fromPayload(String payload) {
@@ -17,25 +17,18 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
 
   factory InvoiceQrCode.fromQrFields(List<String> fields) {
     if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
-      return InvoiceQrCode.withData(
-        InvoiceData.fromQrFieldsV1(fields.sublist(2)),
-        version: QrCodeVersion.v1_0,
-      );
+      return InvoiceQrCode.withData(InvoiceData.fromQrFieldsV1(fields.sublist(2)));
     } else {
       return InvoiceQrCode.withData(
         InvoiceData.fromQrFieldsV2(fields.sublist(2)),
-        version: QrCodeVersion.v2_0,
+        qrCodeVersion: QrCodeVersion.v2_0,
       );
     }
   }
 
-  InvoiceQrCode.withData(super.data, {this.version = QrCodeVersion.v1_0});
+  InvoiceQrCode.withData(super.data, {this.qrCodeVersion = QrCodeVersion.v1_0});
 
-  @override
-  QrCodeContext? context = QrCodeContext.invoice;
-
-  @override
-  QrCodeVersion? version;
+  final QrCodeVersion qrCodeVersion;
 
   @override
   String toQrPayload() {
@@ -47,6 +40,12 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     }
     return qrFields.join(qrCodeFieldSeparator);
   }
+
+  @override
+  QrCodeContext get context => QrCodeContext.invoice;
+
+  @override
+  QrCodeVersion get version => qrCodeVersion;
 }
 
 class InvoiceData implements ToQrFields {

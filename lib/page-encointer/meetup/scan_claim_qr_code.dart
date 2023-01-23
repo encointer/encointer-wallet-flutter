@@ -50,7 +50,7 @@ class ScanClaimQrCode extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    Future _onScan(String address) async {
+    Future onScan(String address) async {
       if (Fmt.isAddress(address)) {
         validateAndStoreParticipant(context, address, dic);
       } else {
@@ -81,15 +81,13 @@ class ScanClaimQrCode extends StatelessWidget {
 
             return Stack(
               children: [
-                MobileScanner(
-                    allowDuplicates: false,
-                    onDetect: (barcode, args) {
-                      if (barcode.rawValue == null) {
-                        Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
-                      } else {
-                        _onScan(barcode.rawValue!);
-                      }
-                    }),
+                MobileScanner(onDetect: (barcode, args) {
+                  if (barcode.rawValue == null) {
+                    Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
+                  } else {
+                    onScan(barcode.rawValue!);
+                  }
+                }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(
@@ -100,8 +98,8 @@ class ScanClaimQrCode extends StatelessWidget {
                         height: MediaQuery.of(context).size.width * 0.7,
                         decoration: BoxDecoration(
                           color: Colors.transparent,
-                          border: Border.all(color: Colors.white38, width: 2.0),
-                          borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+                          border: Border.all(color: Colors.white38, width: 2),
+                          borderRadius: const BorderRadius.all(Radius.circular(24)),
                         ),
                       ),
                       Observer(builder: (_) {
@@ -146,8 +144,8 @@ Widget permissionErrorDialog(BuildContext context) {
         onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
       ),
       CupertinoButton(
+        onPressed: openAppSettings,
         child: Text(dic.home.appSettings),
-        onPressed: () => openAppSettings(),
       ),
     ],
   );
