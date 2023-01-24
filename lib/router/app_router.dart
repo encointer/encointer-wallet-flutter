@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -208,6 +209,14 @@ class AppRoute {
       case CommunityChooserOnMap.route:
         return CupertinoPageRoute(
           builder: (_) => const CommunityChooserOnMap(),
+          settings: settings,
+        );
+      case TransferHistoryView.route:
+        return CupertinoPageRoute(
+          builder: (_) => Provider(
+            create: (context) => TransferHistoryStore()..getTransfers(),
+            child: const TransferHistoryView(),
+          ),
           settings: settings,
         );
       default:
