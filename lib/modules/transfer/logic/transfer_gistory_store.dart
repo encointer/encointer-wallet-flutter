@@ -13,6 +13,7 @@ abstract class _TransferHistoryStoreBase with Store {
 
   @action
   Future<void> getTransfers() async {
+    await Future<void>.delayed(const Duration(seconds: 1));
     final data = transferHistoryMockData['transfer_history'];
     transfers = data?.map(TransferHistory.fromJson).toList();
   }
