@@ -16,8 +16,8 @@ void main() async {
     });
   });
 
-  test('create account by name Bin', () async {
-    await createAccount(driver, 'Bin');
+  test('create account by name Tom', () async {
+    await createAccount(driver, 'Tom');
   });
 
   test('choosing cid', () async {
@@ -56,7 +56,7 @@ void main() async {
     await driver.tap(find.byValueKey('choose-network'));
 
     await driver.tap(find.byValueKey('nctr-gsl-dev'));
-    await driver.tap(find.text('Bin'));
+    await driver.tap(find.text('Tom'));
 
     await driver.waitFor(find.byValueKey('profile-list-view'));
 
@@ -88,15 +88,15 @@ void main() async {
     await importAccountAndRegisterMeetup(driver, 'Alice');
   }, timeout: const Timeout(Duration(seconds: 60)));
 
-  test('send money to Bin', () async {
+  test('send money to Tom', () async {
     await driver.tap(find.byValueKey('transfer'));
     await driver.waitFor(find.byValueKey('transfer-listview'));
     await driver.tap(find.byValueKey('transfer-amount-input'));
 
     await driver.enterText('0.1');
     await driver.tap(find.byValueKey('transfer-select-account'));
-    await driver.waitFor(find.byValueKey('Bin'));
-    await driver.tap(find.byValueKey('Bin'));
+    await driver.waitFor(find.byValueKey('Tom'));
+    await driver.tap(find.byValueKey('Tom'));
     await addDelay(2000);
 
     await driver.runUnsynchronized(() async {
@@ -111,100 +111,133 @@ void main() async {
     });
   }, timeout: const Timeout(Duration(seconds: 60)));
 
-  // test('import and register-Bob', () async {
-  //   await importAccountAndRegisterMeetup(driver, 'Bob');
-  // }, timeout: const Timeout(Duration(seconds: 60)));
+  test('register Tom', () async {
+    await changeAccountFromPanel(driver, 'Tom');
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver);
+    await scrollToPanelController(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('import and register-Charlie', () async {
-  //   await importAccountAndRegisterMeetup(driver, 'Charlie');
-  // }, timeout: const Timeout(Duration(seconds: 60)));
+  test('import and register-Bob', () async {
+    await importAccountAndRegisterMeetup(driver, 'Bob');
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
-  // test('get attesting-phase', () async {
-  //   await driver.tap(find.byValueKey('profile'));
+  test('import and register-Charlie', () async {
+    await importAccountAndRegisterMeetup(driver, 'Charlie');
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
-  //   await scrollToNextPhaseButton(driver);
+  test('get attesting-phase', () async {
+    await driver.tap(find.byValueKey('profile'));
 
-  //   await tapAndWaitNextPhase(driver);
+    await scrollToNextPhaseButton(driver);
 
-  //   await tapAndWaitNextPhase(driver);
+    await tapAndWaitNextPhase(driver);
 
-  //   await driver.tap(find.byValueKey('wallet'));
-  //   await addDelay(1000);
-  // }, timeout: const Timeout(Duration(seconds: 40)));
+    await tapAndWaitNextPhase(driver);
 
-  // test('start meetup-Cahrlie', () async {
-  //   await addDelay(1000);
-  //   await startMeetupTest(driver);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+    await driver.tap(find.byValueKey('wallet'));
+    await addDelay(1000);
+  }, timeout: const Timeout(Duration(seconds: 40)));
 
-  // test('start meetup-Bob', () async {
-  //   await addDelay(1000);
-  //   await changeAccountFromPanel(driver, 'Bob');
-  //   await startMeetupTest(driver);
-  //   await addDelay(1000);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('start meetup-Cahrlie', () async {
+    await addDelay(1000);
+    await startMeetupTest(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('start meetup-Alice', () async {
-  //   await addDelay(1000);
-  //   await changeAccountFromPanel(driver, 'Alice');
-  //   await startMeetupTest(driver);
-  //   await driver.waitFor(find.byValueKey('claim-pending-dev'));
-  //   await driver.tap(find.byValueKey('claim-pending-dev'));
-  //   await addDelay(20000);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('start meetup-Bob', () async {
+    await addDelay(1000);
+    await changeAccountFromPanel(driver, 'Bob');
+    await startMeetupTest(driver);
+    await addDelay(1000);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('Go to Profile Page and Check reputation count', () async {
-  //   await driver.tap(find.byValueKey('profile'));
-  //   await driver.waitFor(find.text('2'));
-  //   await addDelay(1000);
-  //   await scrollToNextPhaseButton(driver);
-  //   await tapAndWaitNextPhase(driver);
-  //   await driver.tap(find.byValueKey('wallet'));
-  // });
+  test('start meetup-Tom', () async {
+    await addDelay(1000);
+    await changeAccountFromPanel(driver, 'Tom');
+    await startMeetupTest(driver);
+    await addDelay(1000);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('contact-page add account', () async {
-  //   await driver.tap(find.byValueKey('contacts'));
-  //   await driver.tap(find.byValueKey('add-contact'));
+  test('start meetup-Alice', () async {
+    await addDelay(1000);
+    await changeAccountFromPanel(driver, 'Alice');
+    await startMeetupTest(driver);
+    await driver.waitFor(find.byValueKey('claim-pending-dev'));
+    await driver.tap(find.byValueKey('claim-pending-dev'));
+    await addDelay(20000);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  //   await driver.tap(find.byValueKey('contact-address'));
-  //   await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
-  //   await driver.tap(find.byValueKey('contact-name'));
-  //   await driver.enterText('Sezar');
+  test('Go to Profile Page and Check reputation count', () async {
+    await driver.tap(find.byValueKey('profile'));
+    await driver.waitFor(find.text('2'));
+    await addDelay(1000);
+    await scrollToNextPhaseButton(driver);
+    await tapAndWaitNextPhase(driver);
+    await driver.tap(find.byValueKey('wallet'));
+  });
 
-  //   await driver.tap(find.byValueKey('contact-save'));
-  //   await addDelay(1000);
-  // });
+  test('contact-page add account', () async {
+    await driver.tap(find.byValueKey('contacts'));
+    await driver.tap(find.byValueKey('add-contact'));
 
-  // test('send endorse to account', () async {
-  //   await driver.waitFor(find.byValueKey('Sezar'));
-  //   await driver.tap(find.byValueKey('Sezar'));
+    await driver.tap(find.byValueKey('contact-address'));
+    await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
+    await driver.tap(find.byValueKey('contact-name'));
+    await driver.enterText('Sezar');
 
-  //   await driver.waitFor(find.byValueKey('tap-endorse-button'));
-  //   await driver.tap(find.byValueKey('tap-endorse-button'));
-  //   await addDelay(1000);
-  // });
+    await driver.tap(find.byValueKey('contact-save'));
+    await addDelay(1000);
+  });
 
-  // test('send money to account', () async {
-  //   await driver.waitFor(find.byValueKey('send-money-to-account'));
-  //   await driver.tap(find.byValueKey('send-money-to-account'));
+  test('send endorse to account', () async {
+    await driver.waitFor(find.byValueKey('Sezar'));
+    await driver.tap(find.byValueKey('Sezar'));
 
-  //   await sendMoneyToAccount(driver);
-  //   await driver.tap(find.byValueKey('wallet'));
-  // });
+    await driver.waitFor(find.byValueKey('tap-endorse-button'));
+    await driver.tap(find.byValueKey('tap-endorse-button'));
+    await addDelay(1000);
+  });
 
-  // test('create newbie account', () async {
-  //   await createNewbieAccountAndSendMoney(driver, 'Tom');
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('send money to account from Bootstraper account', () async {
+    await driver.waitFor(find.byValueKey('send-money-to-account'));
+    await driver.tap(find.byValueKey('send-money-to-account'));
 
-  // test('account share and change name', () async {
-  //   await shareAccountAndChangeNameTest(driver, 'Tom', 'Jerry');
-  //   await addDelay(2500);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+    await sendMoneyToAccount(driver);
+    await driver.tap(find.byValueKey('wallet'));
+  });
 
-  // test('delete all account ad show create account page', () async {
-  //   await rmAllAccountsFromProfilePage(driver);
-  //   await addDelay(2000);
-  // });
+  test('send endorse to account from Reputable account', () async {
+    await addDelay(1000);
+    await changeAccountFromPanel(driver, 'Tom');
+
+    await driver.tap(find.byValueKey('contacts'));
+    await driver.tap(find.byValueKey('add-contact'));
+
+    await driver.tap(find.byValueKey('contact-address'));
+    await driver.enterText('5Hdfd7KhGQeXCMXRud5Jg7R5RDuzpNQZmmvsQRfHqmhLP3ZD');
+    await driver.tap(find.byValueKey('contact-name'));
+    await driver.enterText('Li');
+
+    await driver.tap(find.byValueKey('contact-save'));
+    await driver.waitFor(find.byValueKey('Li'));
+    await driver.tap(find.byValueKey('Li'));
+
+    await driver.waitFor(find.byValueKey('tap-endorse-button'));
+    await driver.tap(find.byValueKey('tap-endorse-button'));
+    await addDelay(1000);
+    await driver.tap(find.pageBack());
+    await driver.tap(find.byValueKey('wallet'));
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('account share and change name', () async {
+    await shareAccountAndChangeNameTest(driver, 'Tom', 'Jerry');
+    await addDelay(2500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('delete all account ad show create account page', () async {
+    await rmAllAccountsFromProfilePage(driver);
+    await addDelay(2000);
+  });
 
   tearDownAll(() async {
     await driver.close();

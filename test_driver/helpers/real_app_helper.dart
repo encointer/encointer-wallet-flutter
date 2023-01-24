@@ -85,7 +85,7 @@ Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account
 
   await scrollToCeremonyBox(driver);
 
-  // await registerAndWait(driver);
+  await registerAndWait(driver);
 
   await scrollToPanelController(driver);
   await addDelay(1000);
@@ -103,7 +103,7 @@ Future<void> startMeetupTest(FlutterDriver driver) async {
 
   await driver.waitFor(find.byValueKey('attendees-count'));
   await driver.tap(find.byValueKey('attendees-count'));
-  await driver.enterText('3');
+  await driver.enterText('4');
   await addDelay(500);
   await driver.tap(find.byValueKey('ceremony-step-1-next'));
 
