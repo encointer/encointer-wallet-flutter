@@ -11,6 +11,23 @@ Future<void> scrollToSendAddress(FlutterDriver driver) async {
   );
 }
 
+Future<void> createAccount(FlutterDriver driver, String account) async {
+  await driver.tap(find.byValueKey('create-account'));
+  await driver.waitFor(find.byValueKey('create-account-name'));
+  await driver.tap(find.byValueKey('create-account-name'));
+  await driver.enterText(account);
+  await driver.tap(find.byValueKey('create-account-next'));
+
+  await driver.waitFor(find.byValueKey('create-account-pin'));
+  await driver.tap(find.byValueKey('create-account-pin'));
+  await driver.enterText('0001');
+
+  await driver.tap(find.byValueKey('create-account-pin2'));
+  await driver.enterText('0001');
+
+  await driver.tap(find.byValueKey('create-account-confirm'));
+}
+
 Future<void> createNewbieAccountAndSendMoney(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('panel-controller'));
   await driver.tap(find.byValueKey('add-account-panel'));

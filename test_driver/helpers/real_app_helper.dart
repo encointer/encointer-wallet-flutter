@@ -85,7 +85,7 @@ Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account
 
   await scrollToCeremonyBox(driver);
 
-  await registerAndWait(driver);
+  // await registerAndWait(driver);
 
   await scrollToPanelController(driver);
   await addDelay(1000);

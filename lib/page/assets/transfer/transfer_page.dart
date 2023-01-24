@@ -207,27 +207,21 @@ class _TransferPageState extends State<TransferPage> {
                           suffixIcon: const Text('ⵐ', style: TextStyle(color: encointerGrey, fontSize: 44)),
                         ),
                         const SizedBox(height: 24),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: AddressInputField(
-                                store,
-                                label: dic.assets.address,
-                                initialValue: _accountTo,
-                                onChanged: (AccountData acc) {
-                                  setState(() {
-                                    _accountTo = acc;
-                                  });
-                                },
-                                hideIdenticon: true,
-                              ),
-                            ),
-                          ],
+                        AddressInputField(
+                          store,
+                          label: dic.assets.address,
+                          initialValue: _accountTo,
+                          onChanged: (AccountData acc) {
+                            setState(() {
+                              _accountTo = acc;
+                            });
+                          },
+                          hideIdenticon: true,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 20),
                   if (store.settings.developerMode)
                     Center(
                       child: Text(
