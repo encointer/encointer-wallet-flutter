@@ -32,7 +32,7 @@ class CreateAccountForm extends StatelessWidget {
       final acc = await webApi.account.importAccount();
 
       if (acc['error'] != null) {
-        _showErrorCreatingAccountDialog(context);
+        unawaited(_showErrorCreatingAccountDialog(context));
         return;
       }
 
@@ -40,7 +40,7 @@ class CreateAccountForm extends StatelessWidget {
       await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
       final pubKey = acc['pubKey'] as String?;
-      store.setCurrentAccount(pubKey);
+      await store.setCurrentAccount(pubKey);
 
       await store.loadAccountCache();
 
@@ -121,7 +121,7 @@ class CreateAccountForm extends StatelessWidget {
 }
 
 Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-  showCupertinoDialog<void>(
+  unawaited(showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
@@ -137,5 +137,5 @@ Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
         ],
       );
     },
-  );
+  ));
 }

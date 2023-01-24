@@ -51,7 +51,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
       setState(() {
         _submitting = false;
       });
-      _showErrorCreatingAccountDialog(context);
+
+      unawaited(_showErrorCreatingAccountDialog(context));
       return;
     }
 
@@ -77,7 +78,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-    showCupertinoDialog<void>(
+    unawaited(showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -93,7 +94,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
           ],
         );
       },
-    );
+    ));
   }
 
   Future<void> _showEnterPinDialog(AppStore store) async {

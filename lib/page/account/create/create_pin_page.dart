@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -73,7 +75,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                   });
 
                   // Even if we do not choose a community, we go back to the home screen.
-                  Navigator.pushAndRemoveUntil<void>(
+                  await Navigator.pushAndRemoveUntil<void>(
                     context,
                     CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()),
                     (route) => false,

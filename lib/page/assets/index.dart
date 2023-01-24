@@ -446,7 +446,7 @@ class _AssetsState extends State<Assets> {
 
   Future<void> switchAccount(AccountData account) async {
     if (account.pubKey != widget.store.account.currentAccountPubKey) {
-      widget.store.setCurrentAccount(account.pubKey);
+      await widget.store.setCurrentAccount(account.pubKey);
       await widget.store.loadAccountCache();
 
       webApi.fetchAccountData();
