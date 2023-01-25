@@ -146,9 +146,9 @@ class JSApi {
     return _evalJavascriptUID++;
   }
 
-  Future<void> subscribeMessage<T>(String code, String channel, Function callback) async {
+  Future<void> subscribeMessage(String code, String channel, Function callback) async {
     _msgHandlers[channel] = callback;
-    evalJavascript<T>(code);
+    evalJavascript<dynamic>(code);
   }
 
   Future<void> unsubscribeMessage(String channel) async {

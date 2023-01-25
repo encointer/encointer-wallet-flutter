@@ -205,7 +205,7 @@ class Api {
     String channel,
     Function callback,
   ) async {
-    js.subscribeMessage<void>(code, channel, callback);
+    js.subscribeMessage(code, channel, callback);
   }
 
   Future<void> unsubscribeMessage(String channel) async {

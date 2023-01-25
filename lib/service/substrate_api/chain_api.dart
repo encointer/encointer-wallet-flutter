@@ -35,8 +35,8 @@ class ChainApi {
   /// Subscribes to the latest headers
   Future<void> subscribeNewHeads() async {
     jsApi.subscribeMessage('chain.subscribeNewHeads("$_newHeadsSubscribeChannel")', _newHeadsSubscribeChannel,
-        (dynamic header) {
-      store.chain.setLatestHeader(Header.fromJson(header as Map<String, dynamic>));
+        (Map<String, dynamic> header) {
+      store.chain.setLatestHeader(Header.fromJson(header));
     });
   }
 }

@@ -38,7 +38,7 @@ class AssetsApi {
     if (pubKey != null && pubKey.isNotEmpty) {
       final address = store.account.currentAddress;
 
-      jsApi.subscribeMessage<Map<String, dynamic>>(
+      jsApi.subscribeMessage(
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
         _balanceSubscribeChannel,
         (Map<String, dynamic> data) async {
