@@ -530,6 +530,17 @@ abstract class _EncointerStore with Store {
     return attestingPhaseStart! + phaseDurations[CeremonyPhase.Attesting]!;
   }
 
+  @computed
+  int? get ceremonyCycleDuration {
+    if (phaseDurations[CeremonyPhase.Registering] == null ||
+        phaseDurations[CeremonyPhase.Assigning] == null ||
+        phaseDurations[CeremonyPhase.Attesting] == null) return null;
+
+    return phaseDurations[CeremonyPhase.Registering]! +
+        phaseDurations[CeremonyPhase.Assigning]! +
+        phaseDurations[CeremonyPhase.Attesting]!;
+  }
+
   bool get showRegisterButton {
     final registered = communityAccount?.isRegistered ?? false;
     return currentPhase == CeremonyPhase.Registering && !registered;
