@@ -10,7 +10,7 @@ const encointerJsService = 'EncointerJsService';
 /// Core interface to talk with our JS-service
 class JSApi {
   Map<String, Function> _msgHandlers = {};
-  Map<String, Completer> _msgCompleters = {};
+  Map<String, Completer<dynamic>> _msgCompleters = {};
 
   HeadlessInAppWebView? _web;
 
@@ -92,7 +92,8 @@ class JSApi {
         final call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
           Log.d('request $call loading', 'JSApi');
-          return _msgCompleters[i]!.future as T;
+          final value = await _msgCompleters[i]!.future;
+          return value as T;
         }
       }
     }
@@ -102,7 +103,7 @@ class JSApi {
       return res as T;
     }
 
-    final c = Completer<dynamic>();
+    final c = Completer<T>();
 
     final method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
@@ -137,18 +138,17 @@ class JSApi {
       final v = await _web!.webViewController.evaluateJavascript(source: script);
       Log.d('EvaluateJavascript result after re-init of webView: $v', 'js_api');
     }
-    final value = await c.future;
 
-    return value as T;
+    return c.future;
   }
 
   int _getEvalJavascriptUID() {
     return _evalJavascriptUID++;
   }
 
-  Future<void> subscribeMessage(String code, String channel, Function callback) async {
+  Future<void> subscribeMessage<T>(String code, String channel, Function callback) async {
     _msgHandlers[channel] = callback;
-    await evalJavascript<dynamic>(code);
+    evalJavascript<T>(code);
   }
 
   Future<void> unsubscribeMessage(String channel) async {

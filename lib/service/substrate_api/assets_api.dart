@@ -38,11 +38,11 @@ class AssetsApi {
     if (pubKey != null && pubKey.isNotEmpty) {
       final address = store.account.currentAddress;
 
-      jsApi.subscribeMessage(
+      jsApi.subscribeMessage<Map<String, dynamic>>(
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
         _balanceSubscribeChannel,
-        (dynamic data) => {
-          store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data})),
+        (Map<String, dynamic> data) async {
+          store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data}));
         },
       );
     }
