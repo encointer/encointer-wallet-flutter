@@ -337,14 +337,17 @@ class NetworkState extends _NetworkState {
     // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
     // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
     // `NetworkState` should use the first token.
-    final decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] as int? : json['tokenDecimals'] as int?;
-    final symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] as String? : json['tokenSymbol'] as String?;
+    final decimals = (json['tokenDecimals'] is List)
+        ? (json['tokenDecimals'] as List<dynamic>)[0] as int?
+        : json['tokenDecimals'] as int?;
+    final symbol = (json['tokenSymbol'] is List)
+        ? (json['tokenSymbol'] as List<dynamic>)[0] as String?
+        : json['tokenSymbol'] as String?;
 
     final ns = NetworkState(json['endpoint'] as String?, json['ss58Format'] as int?, decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified
-    if ((ns.tokenSymbol?.length ?? 0) < 1) {
-      ns.tokenSymbol = 'ERT';
-    }
+    if ((ns.tokenSymbol?.length ?? 0) < 1) ns.tokenSymbol = 'ERT';
+
     return ns;
   }
 

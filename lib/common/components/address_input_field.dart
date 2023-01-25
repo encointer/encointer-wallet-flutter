@@ -147,6 +147,10 @@ class _AddressInputFieldState extends State<AddressInputField> {
             leading: CircleAvatar(
               child: AddressIcon(item.address, item.pubKey),
             ),
+            onTap: () {
+              widget.onChanged?.call(item);
+              Navigator.pop(context);
+            },
           ),
         );
       },
@@ -167,6 +171,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
           showSearchBox: true,
           showSelectedItems: true,
           itemBuilder: _listItemBuilder,
+          interceptCallBacks: true,
         ),
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(

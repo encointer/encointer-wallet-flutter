@@ -37,7 +37,7 @@ class JSApi {
             callback: (args) {
               Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
-              final res = args[0];
+              final res = args[0]; // List<Map<String, dynamic>>
 
               final path = res['path'] as String?;
               if (_msgCompleters[path!] != null) {
@@ -48,7 +48,7 @@ class JSApi {
               }
               if (_msgHandlers[path] != null) {
                 final handler = _msgHandlers[path]!;
-                handler(res['data']);
+                handler(res['data']); // res['data'] Map<String, dynamic>, List, int, String
               }
             });
       },
@@ -137,21 +137,18 @@ class JSApi {
       final v = await _web!.webViewController.evaluateJavascript(source: script);
       Log.d('EvaluateJavascript result after re-init of webView: $v', 'js_api');
     }
+    final value = await c.future;
 
-    return c.future as T;
+    return value as T;
   }
 
   int _getEvalJavascriptUID() {
     return _evalJavascriptUID++;
   }
 
-  Future<void> subscribeMessage(
-    String code,
-    String channel,
-    Function callback,
-  ) async {
+  Future<void> subscribeMessage(String code, String channel, Function callback) async {
     _msgHandlers[channel] = callback;
-    evalJavascript(code);
+    await evalJavascript<dynamic>(code);
   }
 
   Future<void> unsubscribeMessage(String channel) async {
