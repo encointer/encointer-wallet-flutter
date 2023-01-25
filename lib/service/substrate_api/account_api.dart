@@ -62,7 +62,7 @@ class AccountApi {
 
     final res = await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
     if (res != null) {
-      store.account.setPubKeyAddressMap(Map<String, Map>.from({store.settings.endpoint.ss58.toString(): res as Map}));
+      store.account.setPubKeyAddressMap(Map<String, Map>.from({store.settings.endpoint.ss58.toString(): res}));
     }
     return res ?? {};
   }
@@ -163,8 +163,8 @@ class AccountApi {
     addresses.retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));
     if (addresses.isEmpty) return [];
 
-    final res = await jsApi.evalJavascript('account.getAccountIndex(${jsonEncode(addresses)})');
-    store.account.setAddressIndex(res as List<dynamic>);
+    final res = await jsApi.evalJavascript<List<dynamic>>('account.getAccountIndex(${jsonEncode(addresses)})');
+    store.account.setAddressIndex(res);
     return res;
   }
 }

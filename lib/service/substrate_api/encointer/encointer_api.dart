@@ -44,7 +44,6 @@ class EncointerApi {
   final AppStore store;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
   final String _communityIdentifiersChannel = 'communityIdentifiers';
-  final String _encointerBalanceChannel = 'encointerBalance';
   final String _businessRegistryChannel = 'businessRegistry';
 
   final NoTeeApi _noTee;
@@ -384,6 +383,7 @@ class EncointerApi {
   /// Subscribes to storage changes in the EncointerBalances pallet: encointerBalances.balance(cid, address).
   ///
   /// This is off-chain in Cantillon. Hence, subscriptions are not supported.
+  // final String _encointerBalanceChannel = 'encointerBalance';
   // Future<void> subscribeEncointerBalance() async {
   //   // unsubscribe from potentially other community updates
   //   Log.d('Subscribe encointer balance', 'EncointerApi');
@@ -457,8 +457,7 @@ class EncointerApi {
   Future<dynamic> sendFaucetTx() async {
     final address = store.account.currentAddress;
     final amount = Fmt.tokenInt(faucetAmount.toString(), ertDecimals);
-    final res = await jsApi.evalJavascript('account.sendFaucetTx("$address", "$amount")');
-    // Log.d("Faucet Result : $res", 'EncointerApi');
+    final res = await jsApi.evalJavascript<dynamic>('account.sendFaucetTx("$address", "$amount")');
     return res;
   }
 

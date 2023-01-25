@@ -220,7 +220,7 @@ abstract class _AccountStore with Store {
   @action
   Future<void> updateAccountName(AccountData account, String newName) async {
     final acc = AccountData.toJson(account);
-    acc['meta']['name'] = newName;
+    (acc['meta'] as Map<String, dynamic>)['name'] = newName;
 
     await updateAccount(acc);
   }
@@ -374,7 +374,7 @@ abstract class _AccountStore with Store {
   @action
   void setAddressIndex(List list) {
     for (final i in list) {
-      addressIndexMap[i['accountId'] as String] = i as Map;
+      addressIndexMap[(i as Map<String, dynamic>)['accountId'] as String] = i;
     }
   }
 }
