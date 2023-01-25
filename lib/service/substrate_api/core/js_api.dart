@@ -79,7 +79,7 @@ class JSApi {
   /// Otherwise, a future is created and put into the list of pending JS-calls.
   /// If [allowRepeat] is true, a call to the same JS-method can be made repeatedly. Otherwise, subsequent calls will
   /// not have any effect.
-  Future<dynamic> evalJavascript(
+  Future<T> evalJavascript<T>(
     String code, {
     bool wrapPromise = true,
     // True is the safe approach; otherwise a crashing (and therefore not returning) JS-call, will prevent subsequent
@@ -92,14 +92,14 @@ class JSApi {
         final call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
           Log.d('request $call loading', 'JSApi');
-          return _msgCompleters[i]!.future;
+          return _msgCompleters[i]!.future as T;
         }
       }
     }
 
     if (!wrapPromise) {
       final res = await _web!.webViewController.evaluateJavascript(source: code);
-      return res;
+      return res as T;
     }
 
     final c = Completer<dynamic>();
@@ -138,7 +138,7 @@ class JSApi {
       Log.d('EvaluateJavascript result after re-init of webView: $v', 'js_api');
     }
 
-    return c.future;
+    return c.future as T;
   }
 
   int _getEvalJavascriptUID() {
