@@ -100,12 +100,12 @@ class AccountApi {
     if (fetchData) fetchAccountData?.call();
   }
 
-  Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
-    final param = rawParam ?? jsonEncode(params);
-    Log.d('$txInfo', 'AccountApi');
-    final res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)');
-    return res as Map;
-  }
+  // Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
+  //   final param = rawParam ?? jsonEncode(params);
+  //   Log.d('$txInfo', 'AccountApi');
+  //   final res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)');
+  //   return res as Map;
+  // }
 
   Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
     Map? txInfo,
