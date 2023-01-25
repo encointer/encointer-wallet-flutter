@@ -372,31 +372,6 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setPubKeyIconsMap(List list) {
-    for (final i in list) {
-      pubKeyIconsMap[i[0] as String] = i[1] as String?;
-    }
-  }
-
-  @action
-  void setAddressIconsMap(List list) {
-    Log.d('Address Icons', 'AccountStore');
-    Log.d('$list', 'AccountStore');
-    for (final i in list) {
-      addressIconsMap[i[0] as String] = i[1] as String?;
-    }
-  }
-
-  @action
-  void setAccountsIndex(List list) {
-    final data = <String?, Map>{};
-    for (final i in list) {
-      data[i['accountId'] as String] = i as Map;
-    }
-    accountIndexMap = data;
-  }
-
-  @action
   void setAddressIndex(List list) {
     for (final i in list) {
       addressIndexMap[i['accountId'] as String] = i as Map;

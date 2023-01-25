@@ -105,9 +105,6 @@ class AccountApi {
     await store.loadAccountCache();
     if (fetchData) {
       fetchAccountData?.call();
-      // if (fetchAccountData != null) {
-      //   fetchAccountData!();
-      // }
     }
   }
 
@@ -184,19 +181,6 @@ class AccountApi {
       'account.getAccountIndex(${jsonEncode(addresses)})',
     );
     store.account.setAddressIndex(res as List<dynamic>);
-    return res;
-  }
-
-  Future<List> fetchAccountsIndex() async {
-    final addresses = store.account.accountListAll.map((e) => e.address).toList();
-    if (addresses.isEmpty) {
-      return [];
-    }
-
-    final res = await jsApi.evalJavascript(
-      'account.getAccountIndex(${jsonEncode(addresses)})',
-    );
-    store.account.setAccountsIndex(res as List<dynamic>);
     return res;
   }
 }
