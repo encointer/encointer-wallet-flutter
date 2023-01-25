@@ -9,7 +9,6 @@ import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dar
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 
 part 'settings.g.dart';
 
@@ -125,25 +124,6 @@ abstract class _SettingsStore with Store {
   List<AccountData> get contactListAll {
     final ls = List<AccountData>.of(rootStore.account.accountList)..addAll(contactList);
     return ls;
-  }
-
-  @computed
-  String get existentialDeposit {
-    return Fmt.token(
-        BigInt.parse(networkConst!['balances']['existentialDeposit'].toString()), networkState!.tokenDecimals);
-  }
-
-  @computed
-  String get transactionBaseFee {
-    return Fmt.token(BigInt.parse(networkConst!['transactionPayment']['transactionBaseFee'].toString()),
-        networkState!.tokenDecimals);
-  }
-
-  @computed
-  String get transactionByteFee {
-    return Fmt.token(
-        BigInt.parse(networkConst!['transactionPayment']['transactionByteFee'].toString()), networkState!.tokenDecimals,
-        length: networkState!.tokenDecimals);
   }
 
   @action

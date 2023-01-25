@@ -79,24 +79,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   List<AccountData> get contactListAll => (_$contactListAllComputed ??=
           Computed<List<AccountData>>(() => super.contactListAll, name: '_SettingsStore.contactListAll'))
       .value;
-  Computed<String>? _$existentialDepositComputed;
-
-  @override
-  String get existentialDeposit => (_$existentialDepositComputed ??=
-          Computed<String>(() => super.existentialDeposit, name: '_SettingsStore.existentialDeposit'))
-      .value;
-  Computed<String>? _$transactionBaseFeeComputed;
-
-  @override
-  String get transactionBaseFee => (_$transactionBaseFeeComputed ??=
-          Computed<String>(() => super.transactionBaseFee, name: '_SettingsStore.transactionBaseFee'))
-      .value;
-  Computed<String>? _$transactionByteFeeComputed;
-
-  @override
-  String get transactionByteFee => (_$transactionByteFeeComputed ??=
-          Computed<String>(() => super.transactionByteFee, name: '_SettingsStore.transactionByteFee'))
-      .value;
   Computed<bool>? _$isConnectedComputed;
 
   @override
@@ -496,9 +478,6 @@ endpointIsTeeProxy: ${endpointIsTeeProxy},
 ipfsGateway: ${ipfsGateway},
 endpointList: ${endpointList},
 contactListAll: ${contactListAll},
-existentialDeposit: ${existentialDeposit},
-transactionBaseFee: ${transactionBaseFee},
-transactionByteFee: ${transactionByteFee},
 isConnected: ${isConnected}
     ''';
   }
