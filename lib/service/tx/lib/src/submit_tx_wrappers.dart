@@ -171,7 +171,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
 }
 
 // todo: replace this with `encointerBalances.transfer_all`, when we have it in the runtime.
-Future<dynamic> submitReapVoucher(
+Future<Map<String, dynamic>> submitReapVoucher(
   Api api,
   String voucherUri,
   String recipientAddress,

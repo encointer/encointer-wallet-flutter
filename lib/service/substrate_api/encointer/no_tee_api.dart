@@ -10,7 +10,9 @@ class NoTeeApi {
   final JSApi jsApi;
 
   Future<BalanceEntry> balance(CommunityIdentifier cid, String? pubKey) async {
-    final balance = await jsApi.evalJavascript('encointer.getBalance(${jsonEncode(cid)}, "$pubKey")');
-    return BalanceEntry.fromJson(balance as Map<String, dynamic>);
+    final balance = await jsApi.evalJavascript<Map<String, dynamic>>(
+      'encointer.getBalance(${jsonEncode(cid)}, "$pubKey")',
+    );
+    return BalanceEntry.fromJson(balance);
   }
 }

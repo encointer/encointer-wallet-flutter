@@ -11,9 +11,9 @@ class TeeProxyApi {
   final JSApi jsApi;
 
   Future<BalanceEntry> balance(CommunityIdentifier cid, String? pubKey, String pin) async {
-    final balance = await jsApi.evalJavascript(
+    final balance = await jsApi.evalJavascript<Map<String, dynamic>>(
       'worker.getBalance(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})',
     );
-    return BalanceEntry.fromJson(balance as Map<String, dynamic>);
+    return BalanceEntry.fromJson(balance);
   }
 }

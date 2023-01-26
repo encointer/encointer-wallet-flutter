@@ -68,18 +68,18 @@ class AccountApi {
   }
 
   Future<String> addressFromUri(String uri) async {
-    final address = await jsApi.evalJavascript('account.addressFromUri("$uri")');
+    final address = await jsApi.evalJavascript<String>('account.addressFromUri("$uri")');
 
     Log.d('addressFromUri: $address', 'AccountApi');
-    return address as String;
+    return address;
   }
 
   /// query address with account index
-  Future<List?> queryAddressWithAccountIndex(String index) async {
-    final res = await jsApi.evalJavascript(
+  Future<List<dynamic>?> queryAddressWithAccountIndex(String index) async {
+    final res = await jsApi.evalJavascript<List<dynamic>?>(
       'account.queryAddressWithAccountIndex("$index", ${store.settings.endpoint.ss58})',
     );
-    return res as List?;
+    return res;
   }
 
   Future<void> changeCurrentAccount({
