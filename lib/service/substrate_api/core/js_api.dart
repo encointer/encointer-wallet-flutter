@@ -37,7 +37,7 @@ class JSApi {
             callback: (args) {
               Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
-              final res = args[0]; // List<Map<String, dynamic>>
+              final res = args[0] as Map<String, dynamic>;
 
               final path = res['path'] as String?;
               if (_msgCompleters[path!] != null) {

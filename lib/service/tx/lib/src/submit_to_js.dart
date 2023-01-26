@@ -42,10 +42,6 @@ Future<void> submitToJS(
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
   txInfo['tip'] = tip.toString();
-  // if (_proxyAccount != null) {
-  //   txInfo['proxy'] = _proxyAccount.pubKey;
-  //   txInfo['ss58'] = store.settings.endpoint.ss58.toString();
-  // }
   Log.d('$txInfo', 'submitToJS');
   Log.d('${args['params']}', 'submitToJS');
 
@@ -72,24 +68,6 @@ Future<void> submitToJS(
     store.account.queueTx(args as Map<String, dynamic>);
   }
 }
-
-// Future<Map> getTxFee(
-//   AppStore store,
-//   Api api,
-//   Map args, {
-//   AccountData? proxyAccount,
-//   bool reload = false,
-// }) async {
-//   var txInfo = args['txInfo'] as Map;
-//   txInfo['pubKey'] = store.account.currentAccount.pubKey;
-//   txInfo['address'] = store.account.currentAddress;
-
-//   if (proxyAccount != null) {
-//     txInfo = proxyAccount.pubKey as Map;
-//   }
-
-//   return api.account.estimateTxFees(txInfo, args['params'] as List<dynamic>?, rawParam: args['rawParam'] as String?);
-// }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);

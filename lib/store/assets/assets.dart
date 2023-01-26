@@ -230,11 +230,12 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> loadCache() async {
-    final ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
+    final ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List<dynamic>?;
     if (ls != null) {
       for (final i in ls) {
-        if (blockMap[i['id']] == null) {
-          blockMap[i['id'] as int] = BlockData.fromJson(i as Map<String, dynamic>);
+        // for now ls always returns null, when integrated transaction history please check type
+        if (i is Map<String, dynamic> && blockMap[i['id']] == null) {
+          blockMap[i['id'] as int] = BlockData.fromJson(i);
         }
       }
     }
