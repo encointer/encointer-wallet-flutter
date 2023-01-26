@@ -9,12 +9,12 @@ class TransferHistoryStore = _TransferHistoryStoreBase with _$TransferHistorySto
 
 abstract class _TransferHistoryStoreBase with Store {
   @observable
-  List<TransferHistory>? transfers;
+  List<Transaction>? transactions;
 
   @action
   Future<void> getTransfers() async {
     await Future<void>.delayed(const Duration(seconds: 1));
     final data = transferHistoryMockData['transfer_history'];
-    transfers = data?.map(TransferHistory.fromJson).toList();
+    transactions = data?.map(Transaction.fromJson).toList();
   }
 }

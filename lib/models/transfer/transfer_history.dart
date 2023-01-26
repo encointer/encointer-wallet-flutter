@@ -3,8 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'transfer_history.g.dart';
 
 @JsonSerializable()
-class TransferHistory {
-  const TransferHistory({
+class Transaction {
+  const Transaction({
     required this.id,
     required this.accountName,
     required this.accountAddress,
@@ -13,8 +13,8 @@ class TransferHistory {
     required this.amount,
   });
 
-  factory TransferHistory.fromJson(Map<String, dynamic> json) => _$TransferHistoryFromJson(json);
-  Map<String, dynamic> toJson() => _$TransferHistoryToJson(this);
+  factory Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
+  Map<String, dynamic> toJson() => _$TransactionToJson(this);
 
   final String id;
   final String accountName;

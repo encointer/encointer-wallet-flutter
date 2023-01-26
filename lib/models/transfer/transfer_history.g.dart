@@ -6,7 +6,7 @@ part of 'transfer_history.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TransferHistory _$TransferHistoryFromJson(Map<String, dynamic> json) => TransferHistory(
+Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       id: json['id'] as String,
       accountName: json['accountName'] as String,
       accountAddress: json['accountAddress'] as String,
@@ -15,7 +15,7 @@ TransferHistory _$TransferHistoryFromJson(Map<String, dynamic> json) => Transfer
       amount: (json['amount'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$TransferHistoryToJson(TransferHistory instance) => <String, dynamic>{
+Map<String, dynamic> _$TransactionToJson(Transaction instance) => <String, dynamic>{
       'id': instance.id,
       'accountName': instance.accountName,
       'accountAddress': instance.accountAddress,
