@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/models/transfer/transfer_history.dart';
 
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -118,9 +119,13 @@ class TransferHistoryView extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final transfer = store.transfers![index];
               return ListTile(
-                // leading: Icon(),
+                leading: const Icon(
+                  Icons.arrow_upward,
+                  color: Colors.green,
+                ),
                 title: Text(transfer.accountName),
                 subtitle: Text(transfer.accountAddress),
+                trailing: Text(transfer.amount.toString()),
               );
             },
           );
