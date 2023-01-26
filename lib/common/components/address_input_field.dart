@@ -138,6 +138,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
                   color: Colors.white,
                 ),
           child: ListTile(
+            key: Key(item.name),
             selected: isSelected,
             dense: true,
             title: Text(Fmt.address(address)!),
@@ -147,6 +148,10 @@ class _AddressInputFieldState extends State<AddressInputField> {
             leading: CircleAvatar(
               child: AddressIcon(item.address, item.pubKey),
             ),
+            onTap: () {
+              widget.onChanged?.call(item);
+              Navigator.pop(context);
+            },
           ),
         );
       },
@@ -162,11 +167,13 @@ class _AddressInputFieldState extends State<AddressInputField> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(
+        key: const Key('transfer-select-account'),
         popupProps: PopupProps.modalBottomSheet(
           isFilterOnline: true,
           showSearchBox: true,
           showSelectedItems: true,
           itemBuilder: _listItemBuilder,
+          interceptCallBacks: true,
         ),
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
@@ -174,10 +181,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
             labelStyle: Theme.of(context).textTheme.headline4,
             contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
             border: const UnderlineInputBorder(
-              borderSide: BorderSide(
-                width: 0,
-                style: BorderStyle.none,
-              ),
+              borderSide: BorderSide(width: 0, style: BorderStyle.none),
             ),
           ),
         ),
