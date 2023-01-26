@@ -116,7 +116,7 @@ void main() async {
   test('register Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver);
+    await registerAndWait(driver, 'Newbie');
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -265,14 +265,14 @@ void main() async {
 
   test('register Tom (check status as Reputable)', () async {
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver);
+    await registerAndWait(driver, 'Reputable');
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
-  test('register Li (check status as newbie)', () async {
+  test('register Li (check status as Endorsee)', () async {
     await changeAccountFromPanel(driver, 'Li');
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver);
+    await registerAndWait(driver, 'Endorsee');
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 

@@ -51,9 +51,9 @@ Future<void> tapAndWaitNextPhase(FlutterDriver driver) async {
   await driver.waitFor(find.byType('SnackBar'));
 }
 
-Future<void> registerAndWait(FlutterDriver driver) async {
+Future<void> registerAndWait(FlutterDriver driver, String registrationType) async {
   await driver.tap(find.byValueKey('registration-meetup-button'));
-  await driver.waitFor(find.byValueKey('educate-dialog'));
+  await driver.waitFor(find.byValueKey('educate-dialog-$registrationType'));
   await driver.tap(find.byValueKey('close-educate-dialog'));
   await driver.waitFor(find.byValueKey('is-registered-info'));
   await addDelay(1000);
@@ -85,7 +85,7 @@ Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account
 
   await scrollToCeremonyBox(driver);
 
-  await registerAndWait(driver);
+  await registerAndWait(driver, 'Bootstrapper');
 
   await scrollToPanelController(driver);
   await addDelay(1000);
