@@ -312,8 +312,8 @@ class EncointerApi {
     Log.d('Getting encointer balance for $pubKeyOrAddress and ${cid.toFmtString()}', 'EncointerApi');
 
     final balanceEntry = store.settings.endpointIsNoTee
-        ? await _noTee.balances.balance(cid, pubKeyOrAddress)
-        : await _teeProxy.balances.balance(cid, pubKeyOrAddress, store.settings.cachedPin);
+        ? await _noTee.balance(cid, pubKeyOrAddress)
+        : await _teeProxy.balance(cid, pubKeyOrAddress, store.settings.cachedPin);
 
     Log.d('balanceEntryJson: $balanceEntry', 'EncointerApi');
 
