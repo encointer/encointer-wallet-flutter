@@ -11,7 +11,7 @@ Future<void> scrollToSendAddress(FlutterDriver driver) async {
   );
 }
 
-Future<void> createAccount(FlutterDriver driver, String account) async {
+Future<void> createAccountAndSetPin(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('create-account'));
   await driver.waitFor(find.byValueKey('create-account-name'));
   await driver.tap(find.byValueKey('create-account-name'));
@@ -28,7 +28,7 @@ Future<void> createAccount(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('create-account-confirm'));
 }
 
-Future<void> createNewbieAccountAndSendMoney(FlutterDriver driver, String account) async {
+Future<void> createNewbieAccount(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('panel-controller'));
   await driver.tap(find.byValueKey('add-account-panel'));
 
@@ -95,9 +95,42 @@ Future<void> shareAccountAndChangeNameTest(FlutterDriver driver, String account,
   await driver.tap(find.byValueKey('delete-account'));
 }
 
+Future<void> deleteAccountFromAccountManagePage(FlutterDriver driver, String account) async {
+  await driver.waitFor(find.byValueKey(account));
+  await driver.tap(find.byValueKey(account));
+
+  await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
+  await driver.tap(find.byValueKey('delete'));
+  await driver.waitFor(find.byValueKey('delete-account'));
+  await driver.tap(find.byValueKey('delete-account'));
+}
+
 Future<void> rmAllAccountsFromProfilePage(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('remove-all-accounts'));
   await driver.waitFor(find.byValueKey('remove-all-accounts-check'));
   await driver.tap(find.byValueKey('remove-all-accounts-check'));
   await driver.waitFor(find.byValueKey('import-account'));
+}
+
+Future<void> sendMoney(FlutterDriver driver, String account) async {
+  await driver.tap(find.byValueKey('transfer'));
+  await driver.waitFor(find.byValueKey('transfer-listview'));
+  await driver.tap(find.byValueKey('transfer-amount-input'));
+
+  await driver.enterText('0.1');
+  await driver.tap(find.byValueKey('transfer-select-account'));
+  await driver.waitFor(find.byValueKey(account));
+  await driver.tap(find.byValueKey(account));
+  await addDelay(2000);
+
+  await driver.runUnsynchronized(() async {
+    await driver.waitFor(find.byValueKey('make-transfer'));
+    await driver.tap(find.byValueKey('make-transfer'));
+
+    await driver.waitFor(find.byValueKey('make-transfer-send'));
+    await driver.tap(find.byValueKey('make-transfer-send'));
+    await driver.waitFor(find.byValueKey('transfer-done'));
+    await driver.tap(find.byValueKey('transfer-done'));
+    await addDelay(1000);
+  });
 }

@@ -8,6 +8,8 @@ import 'helpers/real_app_helper.dart';
 void main() async {
   late FlutterDriver driver;
 
+  var publicKey = '';
+
   group('EncointerWallet App', () {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
@@ -17,7 +19,7 @@ void main() async {
   });
 
   test('create account by name Tom', () async {
-    await createAccount(driver, 'Tom');
+    await createAccountAndSetPin(driver, 'Tom');
   });
 
   test('choosing cid', () async {
@@ -206,30 +208,76 @@ void main() async {
     await driver.tap(find.byValueKey('wallet'));
   });
 
-  test('send endorse to account from Reputable account', () async {
-    await addDelay(1000);
-    await changeAccountFromPanel(driver, 'Tom');
+  test('delete account Bob', () async {
+    await driver.tap(find.byValueKey('profile'));
+    await deleteAccountFromAccountManagePage(driver, 'Bob');
+  });
 
+  test('delete account Charlie', () async {
+    await deleteAccountFromAccountManagePage(driver, 'Charlie');
+    await driver.tap(find.byValueKey('wallet'));
+  });
+
+  test('create niewbie Account', () async {
+    await addDelay(1000);
+    await createNewbieAccount(driver, 'Li');
+    await changeAccountFromPanel(driver, 'Tom');
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('get public key', () async {
+    await driver.tap(find.byValueKey('profile'));
+    await driver.waitFor(find.byValueKey('Li'));
+    await driver.tap(find.byValueKey('Li'));
+    await addDelay(2000);
+    await driver.waitFor(find.byValueKey('accont-public-key'));
+    await addDelay(2000);
+    publicKey = await driver.getText(find.byValueKey('accont-public-key'));
+    await driver.tap(find.byValueKey('close-account-manage'));
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('contact-page add account Li', () async {
     await driver.tap(find.byValueKey('contacts'));
     await driver.tap(find.byValueKey('add-contact'));
 
     await driver.tap(find.byValueKey('contact-address'));
-    await driver.enterText('5Hdfd7KhGQeXCMXRud5Jg7R5RDuzpNQZmmvsQRfHqmhLP3ZD');
+    await driver.enterText(publicKey);
     await driver.tap(find.byValueKey('contact-name'));
     await driver.enterText('Li');
 
     await driver.tap(find.byValueKey('contact-save'));
+  }, timeout: const Timeout(Duration(seconds: 60)));
+
+  test('send endorse to account from Reputable', () async {
     await driver.waitFor(find.byValueKey('Li'));
     await driver.tap(find.byValueKey('Li'));
 
     await driver.waitFor(find.byValueKey('tap-endorse-button'));
     await driver.tap(find.byValueKey('tap-endorse-button'));
-    await addDelay(1000);
-    await driver.tap(find.pageBack());
+  }, timeout: const Timeout(Duration(seconds: 60)));
+
+  test('send money to account from Reputable account', () async {
+    await driver.waitFor(find.byValueKey('send-money-to-account'));
+    await driver.tap(find.byValueKey('send-money-to-account'));
+
+    await sendMoneyToAccount(driver);
     await driver.tap(find.byValueKey('wallet'));
+  });
+
+  test('register Tom (check status as Reputable)', () async {
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver);
+    await scrollToPanelController(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('register Li (check status as newbie)', () async {
+    await changeAccountFromPanel(driver, 'Li');
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver);
+    await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('account share and change name', () async {
+    await changeAccountFromPanel(driver, 'Tom');
     await shareAccountAndChangeNameTest(driver, 'Tom', 'Jerry');
     await addDelay(2500);
   }, timeout: const Timeout(Duration(seconds: 120)));

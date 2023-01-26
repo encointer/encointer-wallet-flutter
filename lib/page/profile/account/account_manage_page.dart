@@ -165,6 +165,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            key: const Key('close-account-manage'),
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.close),
+          ),
           title: _isEditingText
               ? TextFormField(
                   key: const Key('account-name-field'),
@@ -214,7 +219,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(Fmt.address(addressSS58)!, style: const TextStyle(fontSize: 20)),
+                          Text(
+                            store.appCast == null ? Fmt.address(addressSS58)! : addressSS58,
+                            style: const TextStyle(fontSize: 20),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            key: const Key('accont-public-key'),
+                          ),
                           IconButton(
                             icon: const Icon(Iconsax.copy),
                             color: zurichLion.shade500,
