@@ -380,29 +380,6 @@ class EncointerApi {
     });
   }
 
-  /// Subscribes to storage changes in the EncointerBalances pallet: encointerBalances.balance(cid, address).
-  ///
-  /// This is off-chain in Cantillon. Hence, subscriptions are not supported.
-  // final String _encointerBalanceChannel = 'encointerBalance';
-  // Future<void> subscribeEncointerBalance() async {
-  //   // unsubscribe from potentially other community updates
-  //   Log.d('Subscribe encointer balance', 'EncointerApi');
-  //   jsApi.unsubscribeMessage(_encointerBalanceChannel);
-
-  //   final account = store.account.currentAccountPubKey;
-  //   final cid = store.encointer.chosenCid;
-  //   if (cid == null) return;
-
-  //   jsApi.subscribeMessage(
-  //     'encointer.subscribeBalance("$_encointerBalanceChannel", ${jsonEncode(cid)}, "$account")',
-  //     _encointerBalanceChannel,
-  //     (Map<String, dynamic> data) {
-  //       final balance = BalanceEntry.fromJson(data);
-  //       store.encointer.account?.addBalanceEntry(cid, balance);
-  //     },
-  //   );
-  // }
-
   Future<void> subscribeBusinessRegistry() async {
     // todo: implement subscribing
   }

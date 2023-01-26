@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 
 const encointerJsService = 'EncointerJsService';
 
@@ -48,7 +47,8 @@ class JSApi {
               }
               if (_msgHandlers[path] != null) {
                 final handler = _msgHandlers[path]!;
-                handler(res['data']); // res['data'] Map<String, dynamic>, List, int, String
+                // ignore: avoid_dynamic_calls
+                handler(res['data']);
               }
             });
       },
@@ -118,26 +118,7 @@ class JSApi {
             .callHandler("$encointerJsService", { path: "$method:error", data: err.message  });
         })''';
 
-    try {
-      // ignore: unused_local_variable
-      final v = await _web!.webViewController.evaluateJavascript(source: script);
-    } catch (e, s) {
-      // Executing a background task with the workmanager when the app is in
-      // foreground kills the platform channel and we get a `MissingPluginException`
-      // error. Hence, we must recreate the platform channel.
-      //
-      // See: https://github.com/encointer/encointer-wallet-flutter/issues/801.
-
-      Log.e(' $e', 'js_api', s);
-      Log.d('Re-initializing webView because the platform channel broke down', 'js_api');
-      await webApi.init().timeout(
-            const Duration(seconds: 20),
-            onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
-          );
-
-      final v = await _web!.webViewController.evaluateJavascript(source: script);
-      Log.d('EvaluateJavascript result after re-init of webView: $v', 'js_api');
-    }
+    await _web!.webViewController.evaluateJavascript(source: script);
 
     return c.future;
   }
