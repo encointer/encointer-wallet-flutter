@@ -228,10 +228,9 @@ void main() async {
     await driver.tap(find.byValueKey('profile'));
     await driver.waitFor(find.byValueKey('Li'));
     await driver.tap(find.byValueKey('Li'));
-    await addDelay(2000);
-    await driver.waitFor(find.byValueKey('accont-public-key'));
-    await addDelay(2000);
-    publicKey = await driver.getText(find.byValueKey('accont-public-key'));
+    await driver.waitFor(find.byValueKey('account-public-key'));
+    await addDelay(1000);
+    publicKey = await driver.getText(find.byValueKey('account-public-key'));
     await driver.tap(find.byValueKey('close-account-manage'));
   }, timeout: const Timeout(Duration(seconds: 120)));
 

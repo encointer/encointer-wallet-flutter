@@ -224,7 +224,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             style: const TextStyle(fontSize: 20),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            key: const Key('accont-public-key'),
+                            key: const Key('account-public-key'),
                           ),
                           IconButton(
                             icon: const Icon(Iconsax.copy),
