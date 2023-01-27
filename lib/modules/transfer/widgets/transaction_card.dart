@@ -17,7 +17,7 @@ class TransactionCard extends StatelessWidget {
         leading: Icon(
           transaction.type == TransactionType.incoming ? Icons.call_received_sharp : Icons.call_made_sharp,
           color:
-              transaction.type == TransactionType.incoming ? colorScheme.errorContainer : colorScheme.primaryContainer,
+              transaction.type == TransactionType.incoming ? colorScheme.primaryContainer : colorScheme.errorContainer,
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
