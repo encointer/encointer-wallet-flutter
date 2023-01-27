@@ -24,7 +24,7 @@ class Transaction {
   final double amount;
 }
 
-enum TransactionType { expense, income }
+enum TransactionType { outgoing, incoming }
 
 const transferHistoryMockData = {
   'transfer_history': [
@@ -32,7 +32,7 @@ const transferHistoryMockData = {
       'id': '1',
       'accountName': 'John Doe',
       'accountAddress': '0x1234567890abcdef',
-      'type': 'income',
+      'type': 'incoming',
       'currency': 'Leu',
       'amount': 0.005
     },
@@ -40,7 +40,7 @@ const transferHistoryMockData = {
       'id': '2',
       'accountName': 'Jane Smith',
       'accountAddress': '0x0987654321fedcba',
-      'type': 'expense',
+      'type': 'outgoing',
       'currency': 'Leu',
       'amount': 0.0125
     },
@@ -48,7 +48,7 @@ const transferHistoryMockData = {
       'id': '3',
       'accountName': 'Bob Johnson',
       'accountAddress': '0xabcdef0123456789',
-      'type': 'income',
+      'type': 'incoming',
       'currency': 'Leu',
       'amount': 0.1
     }

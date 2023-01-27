@@ -15,8 +15,9 @@ class TransactionCard extends StatelessWidget {
       child: ListTile(
         minLeadingWidth: 7,
         leading: Icon(
-          transaction.type == TransactionType.income ? Icons.call_received_sharp : Icons.call_made_sharp,
-          color: transaction.type == TransactionType.income ? colorScheme.errorContainer : colorScheme.primaryContainer,
+          transaction.type == TransactionType.incoming ? Icons.call_received_sharp : Icons.call_made_sharp,
+          color:
+              transaction.type == TransactionType.incoming ? colorScheme.errorContainer : colorScheme.primaryContainer,
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
