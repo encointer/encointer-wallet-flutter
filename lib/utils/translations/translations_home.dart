@@ -47,6 +47,9 @@ abstract class TranslationsHome {
   String get updatingAppState;
   String get cameraPermissionError;
   String get appSettings;
+  String get transferHistory;
+  String get noTransactions;
+  String get unknownError;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -144,6 +147,12 @@ class TranslationsEnHome implements TranslationsHome {
       'Alternatively, you can grant permission in the app settings.';
   @override
   String get appSettings => 'App settings';
+  @override
+  String get noTransactions => 'No Transactions';
+  @override
+  String get transferHistory => 'Transfer History';
+  @override
+  String get unknownError => 'Unknown Error';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -241,6 +250,12 @@ class TranslationsDeHome implements TranslationsHome {
       'Du kannst die Erlaubnis für die Kamera auch über die App-Einstellungen erteilen.';
   @override
   String get appSettings => 'App-Einstellungen';
+  @override
+  String get noTransactions => 'Keine Transaktionen';
+  @override
+  String get transferHistory => 'Übertragungshistorie';
+  @override
+  String get unknownError => 'Unbekannter Fehler';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -339,6 +354,12 @@ class TranslationsFrHome implements TranslationsHome {
       "Tu peux aussi donner l'autorisation pour la caméra via les paramètres de l'app.";
   @override
   String get appSettings => "Paramètres de l'app";
+  @override
+  String get noTransactions => 'Aucune transaction';
+  @override
+  String get transferHistory => 'Historique de transfert';
+  @override
+  String get unknownError => 'Erreur inconnue';
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -437,4 +458,10 @@ class TranslationsRuHome implements TranslationsHome {
       'Вы можете предоставить разрешение в настройках приложения.';
   @override
   String get appSettings => 'Настройки приложения';
+  @override
+  String get noTransactions => 'Нет транзакций';
+  @override
+  String get transferHistory => 'История переводов';
+  @override
+  String get unknownError => 'Неизвестная ошибка';
 }

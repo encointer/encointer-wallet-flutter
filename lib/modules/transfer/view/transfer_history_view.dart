@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class TransferHistoryView extends StatelessWidget {
   const TransferHistoryView({super.key});
@@ -14,19 +15,20 @@ class TransferHistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<TransferHistoryStore>();
+    final dic = I18n.of(context)!.translationsForLocale().home;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Transfer History'),
+        title: Text(dic.transferHistory),
       ),
       body: Observer(builder: (_) {
         if (store.transactions == null) {
           return const Center(child: CupertinoActivityIndicator());
         } else if (store.transactions!.isEmpty) {
-          return const Center(child: Text('No Transactions'));
+          return Center(child: Text(dic.noTransactions));
         } else if (store.transactions!.isNotEmpty) {
           return TransactionsList(transactions: store.transactions!);
         } else {
-          return const Center(child: Text('Unknown Error'));
+          return Center(child: Text(dic.unknownError));
         }
       }),
     );
