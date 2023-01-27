@@ -222,7 +222,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           Text(
                             // In the tests, we have to read the address from the field, but `Fmt.address` does only return parts of it `5Hdf...P3ZD`.
                             // Additionally, we can't paste from the clipboard in flutter driver tests, which is why we have to read it from the text field.
-                            store.config.isIntegrationTest ? Fmt.address(addressSS58)! : addressSS58,
+                            store.config.isIntegrationTest ? addressSS58 : Fmt.address(addressSS58)!,
                             style: const TextStyle(fontSize: 20),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
