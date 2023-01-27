@@ -11,6 +11,7 @@ class Transaction {
     required this.type,
     required this.currency,
     required this.amount,
+    required this.timestamp,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
@@ -22,6 +23,7 @@ class Transaction {
   final TransactionType type;
   final String currency;
   final double amount;
+  final int timestamp;
 }
 
 enum TransactionType { outgoing, incoming }
@@ -34,7 +36,8 @@ const transferHistoryMockData = {
       'accountAddress': '0x1234567890abcdef',
       'type': 'incoming',
       'currency': 'Leu',
-      'amount': 0.005
+      'amount': 0.005,
+      'timestamp': 1674783247953
     },
     {
       'id': '2',
@@ -42,7 +45,8 @@ const transferHistoryMockData = {
       'accountAddress': '0x0987654321fedcba',
       'type': 'outgoing',
       'currency': 'Leu',
-      'amount': 0.0125
+      'amount': 0.0125,
+      'timestamp': 1674783247953
     },
     {
       'id': '3',
@@ -50,7 +54,8 @@ const transferHistoryMockData = {
       'accountAddress': '0xabcdef0123456789',
       'type': 'incoming',
       'currency': 'Leu',
-      'amount': 0.1
+      'amount': 0.1,
+      'timestamp': 1674783247953
     }
   ]
 };
