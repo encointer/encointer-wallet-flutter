@@ -32,7 +32,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    if (context.read<AppStore>().appCast == null) NotificationPlugin.init(context);
+    if (context.read<AppStore>().config.isIntegrationTest) NotificationPlugin.init(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await initialDeepLinks(context);
       await NotificationHandler.fetchMessagesAndScheduleNotifications(

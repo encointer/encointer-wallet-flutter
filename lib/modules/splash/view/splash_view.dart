@@ -35,7 +35,7 @@ class _SplashViewState extends State<SplashView> {
     await initWebApi(context, store);
 
     // We don't poll updates in tests because we mock the backend anyhow.
-    if (!store.config.isTest) {
+    if (!store.config.isTestMode) {
       // must be set after api is initialized.
       store.dataUpdate.setupUpdateReaction(() async {
         await store.encointer.updateState();
