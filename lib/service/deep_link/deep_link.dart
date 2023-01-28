@@ -41,8 +41,8 @@ Future<void> _navigationWithWrScanContext(BuildContext context, QrCode<dynamic> 
       await Navigator.of(context).pushNamed(
         TransferPage.route,
         arguments: TransferPageParams(
-          recipient: qrCode.data.account as String,
-          label: qrCode.data.label as String?,
+          recipient: (qrCode as InvoiceQrCode).data.account,
+          label: qrCode.data.label,
           amount: qrCode.data.amount as double?,
         ),
       );
@@ -56,9 +56,7 @@ Future<void> _navigationWithWrScanContext(BuildContext context, QrCode<dynamic> 
     case QrCodeContext.voucher:
       await Navigator.of(context).pushNamed(
         ReapVoucherPage.route,
-        arguments: ReapVoucherParams(
-          voucher: qrCode.data as VoucherData,
-        ),
+        arguments: ReapVoucherParams(voucher: qrCode.data as VoucherData),
       );
       break;
     default:

@@ -34,11 +34,11 @@ abstract class _AccountStore with Store {
   final AppStore rootStore;
 
   Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc) {
-    acc['name'] = newAccount.name.isEmpty ? acc['meta']['name'] : newAccount.name;
-    if (acc['meta']['whenCreated'] == null) {
-      acc['meta']['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
+    acc['name'] = newAccount.name.isEmpty ? (acc['meta'] as Map<String, dynamic>)['name'] : newAccount.name;
+    if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
+      (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
     }
-    acc['meta']['whenEdited'] = DateTime.now().millisecondsSinceEpoch;
+    (acc['meta'] as Map<String, dynamic>)['whenEdited'] = DateTime.now().millisecondsSinceEpoch;
     return acc;
   }
 
@@ -188,7 +188,7 @@ abstract class _AccountStore with Store {
             NotificationPlugin.showNotification(
               0,
               args['notificationTitle'] as String?,
-              'Failed to sendTx: ${args['title']} - ${args['txInfo']['module']}.${args['txInfo']['call']}',
+              'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
@@ -220,7 +220,7 @@ abstract class _AccountStore with Store {
   @action
   Future<void> updateAccountName(AccountData account, String newName) async {
     final acc = AccountData.toJson(account);
-    acc['meta']['name'] = newName;
+    (acc['meta'] as Map<String, dynamic>)['name'] = newName;
 
     await updateAccount(acc);
   }
@@ -372,34 +372,9 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setPubKeyIconsMap(List list) {
-    for (final i in list) {
-      pubKeyIconsMap[i[0] as String] = i[1] as String?;
-    }
-  }
-
-  @action
-  void setAddressIconsMap(List list) {
-    Log.d('Address Icons', 'AccountStore');
-    Log.d('$list', 'AccountStore');
-    for (final i in list) {
-      addressIconsMap[i[0] as String] = i[1] as String?;
-    }
-  }
-
-  @action
-  void setAccountsIndex(List list) {
-    final data = <String?, Map>{};
-    for (final i in list) {
-      data[i['accountId'] as String] = i as Map;
-    }
-    accountIndexMap = data;
-  }
-
-  @action
   void setAddressIndex(List list) {
     for (final i in list) {
-      addressIndexMap[i['accountId'] as String] = i as Map;
+      addressIndexMap[(i as Map<String, dynamic>)['accountId'] as String] = i;
     }
   }
 }
