@@ -227,11 +227,11 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> updateAccount(Map<String, dynamic> acc) async {
-    acc = _formatMetaData(acc);
+    final formattedAcc = _formatMetaData(acc);
 
-    final accNew = AccountData.fromJson(acc);
+    final accNew = AccountData.fromJson(formattedAcc);
     await rootStore.localStorage.removeAccount(accNew.pubKey);
-    await rootStore.localStorage.addAccount(acc);
+    await rootStore.localStorage.addAccount(formattedAcc);
 
     await loadAccount();
   }
@@ -252,14 +252,14 @@ abstract class _AccountStore with Store {
     saveSeed(AccountStore.seedTypeRawSeed);
 
     // format meta data of acc
-    acc = _formatMetaData(acc);
+    final formattedAcc = _formatMetaData(acc);
 
     final index = accountList.indexWhere((i) => i.pubKey == pubKey);
     if (index > -1) {
       await rootStore.localStorage.removeAccount(pubKey);
       Log.d('removed acc: $pubKey', 'AccountStore');
     }
-    await rootStore.localStorage.addAccount(acc);
+    await rootStore.localStorage.addAccount(formattedAcc);
 
     // update account list
     await loadAccount();

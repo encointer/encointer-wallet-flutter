@@ -190,7 +190,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
     context: context,
     builder: (context) {
       return CupertinoAlertDialog(
-        key: const Key('educate-dialog'),
+        key: Key('educate-dialog-${registrationType.name}'),
         title: Text('${texts['title']}'),
         content: Text(
           '${texts['content']}',

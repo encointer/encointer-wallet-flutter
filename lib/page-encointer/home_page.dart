@@ -13,6 +13,7 @@ import 'package:encointer_wallet/service/deep_link/deep_link.dart';
 import 'package:encointer_wallet/service/meetup/meetup.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class EncointerHomePage extends StatefulWidget {
   const EncointerHomePage({super.key});
@@ -39,6 +40,29 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         NotificationPlugin.scheduleNotification,
         Localizations.localeOf(context).languageCode,
       );
+
+      // Should never be null, we either come from the splash screen, and hence we had
+      // enough time to connect to the blockchain or we already have a populated store.
+      //
+      // Hence, can only be null if someone uses the app for the first time and is offline.
+      final encointer = context.read<AppStore>().encointer;
+      if (encointer.nextRegisteringPhaseStart != null &&
+          encointer.currentCeremonyIndex != null &&
+          encointer.ceremonyCycleDuration != null) {
+        await CeremonyNotifications.scheduleRegisteringStartsReminders(
+          encointer.nextRegisteringPhaseStart!,
+          encointer.currentCeremonyIndex!,
+          encointer.ceremonyCycleDuration!,
+          I18n.of(context)!.translationsForLocale().encointer,
+        );
+
+        await CeremonyNotifications.scheduleLastDayOfRegisteringReminders(
+          encointer.assigningPhaseStart!,
+          encointer.currentCeremonyIndex!,
+          encointer.ceremonyCycleDuration!,
+          I18n.of(context)!.translationsForLocale().encointer,
+        );
+      }
     });
     super.initState();
   }
