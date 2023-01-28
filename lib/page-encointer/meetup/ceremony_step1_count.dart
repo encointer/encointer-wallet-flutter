@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -21,7 +23,7 @@ class CeremonyStep1Count extends StatelessWidget {
 
   Future<void> _pushStep2ScanPage(BuildContext context, int count) async {
     store.encointer.communityAccount!.setParticipantCountVote(count);
-    Navigator.of(context).push(
+    unawaited(Navigator.of(context).push(
       CupertinoPageRoute<void>(
         builder: (BuildContext context) => CeremonyStep2Scan(
           store,
@@ -30,7 +32,7 @@ class CeremonyStep1Count extends StatelessWidget {
           confirmedParticipantsCount: count,
         ),
       ),
-    );
+    ));
   }
 
   @override

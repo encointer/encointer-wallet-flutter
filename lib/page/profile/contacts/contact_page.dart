@@ -57,7 +57,7 @@ class _Contact extends State<ContactPage> {
         // create new contact
         final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
-          showCupertinoDialog<void>(
+          await showCupertinoDialog<void>(
             context: context,
             builder: (BuildContext context) {
               return CupertinoAlertDialog(
@@ -74,21 +74,21 @@ class _Contact extends State<ContactPage> {
           );
           return;
         } else {
-          context.read<AppStore>().settings.addContact(con);
+          await context.read<AppStore>().settings.addContact(con);
         }
       } else {
         // edit contact
-        context.read<AppStore>().settings.updateContact(con);
+        await context.read<AppStore>().settings.updateContact(con);
       }
 
       // get contact info
       if (_isObservation!) {
-        webApi.account.encodeAddress([pubKey]);
+        await webApi.account.encodeAddress([pubKey]);
       } else {
         // if this address was used as observation and current account,
         // we need to change current account
         if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {
-          webApi.account.changeCurrentAccount(fetchData: true);
+          await webApi.account.changeCurrentAccount(fetchData: true);
         }
       }
       Navigator.of(context).pop();

@@ -121,13 +121,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
             final seed =
                 await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
-            Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+            await Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
               'key': seed,
               'type': AccountStore.seedTypeMnemonic,
             });
           } else {
             // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
-            showCupertinoDialog<void>(
+            await showCupertinoDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(

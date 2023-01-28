@@ -233,9 +233,9 @@ class EndorseButton extends StatelessWidget {
     final bootstrappers = community?.bootstrappers;
     final dic = I18n.of(context)!.translationsForLocale();
     if (bootstrappers != null && bootstrappers.contains(contact.address)) {
-      _popupDialog(context, dic.profile.cantEndorseBootstrapper);
+      await _popupDialog(context, dic.profile.cantEndorseBootstrapper);
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
-      _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
+      await _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
     } else {
       await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
     }
@@ -243,7 +243,7 @@ class EndorseButton extends StatelessWidget {
 }
 
 Future<void> _popupDialog(BuildContext context, String content) async {
-  showCupertinoDialog<void>(
+  await showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
