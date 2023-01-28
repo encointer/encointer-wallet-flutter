@@ -452,19 +452,16 @@ class EncointerApi {
   Future<void> getReputations() async {
     final address = store.account.currentAddress;
 
-    final reputationsList = await jsApi.evalJavascript('encointer.getReputations("$address")');
+    final reputationsList = await jsApi
+        .evalJavascript('encointer.getReputations("$address")')
+        .then((r) => reputationsFromList(r as List<dynamic>));
 
     Log.d('api: getReputations: $reputationsList', 'EncointerApi');
-    if (reputationsList is List && reputationsList.isEmpty) {
+    if (reputationsList.isEmpty) {
       return Future.value();
     }
 
-    final reputations = {
-      for (var cr in reputationsList as List<dynamic>)
-        (cr as List<dynamic>)[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
-    };
-
-    await store.encointer.account?.setReputations(reputations);
+    await store.encointer.account?.setReputations(reputationsList);
   }
 
   Future<dynamic> sendFaucetTx() async {
