@@ -210,7 +210,7 @@ abstract class _SettingsStore with Store {
     networkState = NetworkState.fromJson(data);
 
     if (needCache) {
-      rootStore.localStorage.setObject(
+      await rootStore.localStorage.setObject(
         _getCacheKeyOfNetwork(cacheNetworkStateKey),
         data,
       );
