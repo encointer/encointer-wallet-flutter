@@ -150,7 +150,7 @@ class TranslationsEnHome implements TranslationsHome {
   @override
   String get noTransactions => 'No Transactions';
   @override
-  String get transferHistory => 'Transfer History';
+  String get transferHistory => 'Transactions';
   @override
   String get unknownError => 'Unknown Error';
 }
@@ -253,7 +253,7 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get noTransactions => 'Keine Transaktionen';
   @override
-  String get transferHistory => 'Übertragungshistorie';
+  String get transferHistory => 'Transaktionen';
   @override
   String get unknownError => 'Unbekannter Fehler';
 }
@@ -357,7 +357,7 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get noTransactions => 'Aucune transaction';
   @override
-  String get transferHistory => 'Historique de transfert';
+  String get transferHistory => 'Transactions';
   @override
   String get unknownError => 'Erreur inconnue';
 }
