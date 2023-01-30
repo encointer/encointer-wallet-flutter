@@ -9,10 +9,10 @@
             "name": "encointer-wallet-flutter",
             "request": "launch",
             "type": "dart",
-            // "args": [
-            //     "--flavor",
-            //     "dev",
-            // ]
+            "args": [
+                "--flavor",
+                "dev",
+            ]
         },
         {
             "name": "encointer-wallet-flutter (profile mode)",
