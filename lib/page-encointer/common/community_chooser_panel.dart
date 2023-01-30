@@ -126,7 +126,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
               if (widget.showCommunityNameAndAccountName)
                 Text(
                   '${widget.store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, widget.store.account.currentAccount)}',
-                  style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey, height: 1.5),
                   textAlign: TextAlign.center,
                 ),
             ],

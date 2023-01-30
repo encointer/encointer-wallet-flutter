@@ -61,7 +61,7 @@ class _ProfileState extends State<Profile> {
             const SizedBox(height: 6),
             Text(
               Fmt.accountName(context, account),
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             // This sizedBox is here to define a distance between the accounts
             const SizedBox(width: 100),
@@ -82,7 +82,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
+    final h3Grey = Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey);
     final store = context.watch<AppStore>();
     _selectedNetwork = store.settings.endpoint;
 
@@ -116,7 +116,7 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     Text(
                       dic.profile.accounts,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
                     ),
                     IconButton(
                       icon: const Icon(Iconsax.add_square),
@@ -152,7 +152,7 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text(
                   dic.profile.changeYourPin,
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
@@ -168,7 +168,7 @@ class _ProfileState extends State<Profile> {
                       ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
                       : Text(dic.encointer.fetchingReputations)),
               ListTile(
-                title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
+                title: Text(dic.profile.about, style: Theme.of(context).textTheme.displaySmall),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
@@ -199,7 +199,7 @@ class _ProfileState extends State<Profile> {
                         child: Observer(
                           builder: (_) => Text(
                             'Change network (current: ${store.settings.endpoint.info})', // for devs only
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),
                         onTap: () => Navigator.of(context).pushNamed(NetworkSelectPage.route),

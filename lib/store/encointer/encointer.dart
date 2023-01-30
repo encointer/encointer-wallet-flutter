@@ -50,7 +50,7 @@ class EncointerStore extends _EncointerStore with _$EncointerStore {
 abstract class _EncointerStore with Store {
   _EncointerStore(this.network);
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true)
   late AppStore _rootStore;
 
   // Note: In synchronous code, every modification of an @observable is tracked by mobx and
@@ -62,7 +62,7 @@ abstract class _EncointerStore with Store {
   // declared as `ObservableList/-Map`.
 
   /// Caches the store to local storage.
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true)
   Future<void> Function()? _cacheFn;
 
   /// The encointer network this store belongs to
@@ -71,7 +71,7 @@ abstract class _EncointerStore with Store {
   /// In order to prevent multiple simultaneous update calls.
   ///
   /// It does not need to be an observable, as we only read it actively.
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true)
   Future<void>? _updateStateFuture;
 
   @observable

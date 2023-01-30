@@ -32,7 +32,7 @@ class EncointerAccountStore extends _EncointerAccountStore with _$EncointerAccou
 abstract class _EncointerAccountStore with Store {
   _EncointerAccountStore(this.network, this.address);
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true)
   Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.

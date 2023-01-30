@@ -73,8 +73,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
-    final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
-    final h4Grey = Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
+    final h2Grey = Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerGrey);
+    final h4Grey = Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey);
     final params = ModalRoute.of(context)?.settings.arguments as ReapVoucherParams?;
 
     final voucher = params?.voucher;

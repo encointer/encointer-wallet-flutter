@@ -91,7 +91,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
         const SizedBox(width: 8),
         Text(
           '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h ${timeLeftUntilCeremonyStarts.inMinutes.remainder(60)}min ${timeLeftUntilCeremonyStarts.inSeconds.remainder(60)}s',
-          style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
         ),
       ],
     );

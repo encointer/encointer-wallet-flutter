@@ -10,7 +10,7 @@ class SendToTrelloListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale().profile;
-    final h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
+    final h3Grey = Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey);
     return ListTile(
       title: Text(dic.contactUs, style: h3Grey),
       onTap: () async => AppLaunch.sendEmail(

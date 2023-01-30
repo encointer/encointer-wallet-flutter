@@ -298,7 +298,7 @@ class _TooltipState extends State<TapTooltip> with SingleTickerProviderStateMixi
       ),
     );
     _entry = OverlayEntry(builder: (BuildContext context) => overlay);
-    Overlay.of(context, debugRequiredFor: widget)!.insert(_entry!);
+    Overlay.of(context, debugRequiredFor: widget).insert(_entry!);
     SemanticsService.tooltip(widget.message);
   }
 
@@ -347,13 +347,12 @@ class _TooltipState extends State<TapTooltip> with SingleTickerProviderStateMixi
 
   @override
   Widget build(BuildContext context) {
-    assert(Overlay.of(context, debugRequiredFor: widget) != null, 'widget != null');
     final theme = Theme.of(context);
     final tooltipTheme = TooltipTheme.of(context);
     TextStyle defaultTextStyle;
     BoxDecoration defaultDecoration;
     if (theme.brightness == Brightness.dark) {
-      defaultTextStyle = theme.textTheme.bodyText1!.copyWith(
+      defaultTextStyle = theme.textTheme.bodyMedium!.copyWith(
         color: Colors.black,
       );
       defaultDecoration = BoxDecoration(
@@ -361,7 +360,7 @@ class _TooltipState extends State<TapTooltip> with SingleTickerProviderStateMixi
         borderRadius: const BorderRadius.all(Radius.circular(4)),
       );
     } else {
-      defaultTextStyle = theme.textTheme.bodyText1!.copyWith(
+      defaultTextStyle = theme.textTheme.bodyMedium!.copyWith(
         color: Colors.white,
       );
       defaultDecoration = BoxDecoration(
@@ -494,7 +493,7 @@ class _TooltipOverlay extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: height!),
               child: DefaultTextStyle(
-                style: Theme.of(context).textTheme.bodyText1!,
+                style: Theme.of(context).textTheme.bodyMedium!,
                 child: Container(
                   decoration: decoration,
                   padding: padding,

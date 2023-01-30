@@ -26,7 +26,7 @@ abstract class _BazaarStore with Store {
   _BazaarStore(this.network, this.cid);
 
   /// Function that writes the store to local storage.
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true)
   Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.

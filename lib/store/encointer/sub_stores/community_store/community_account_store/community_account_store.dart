@@ -30,7 +30,7 @@ abstract class _CommunityAccountStore with Store {
   _CommunityAccountStore(this.network, this.cid, this.address);
 
   /// Function that writes the store to local storage.
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true)
   Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.
