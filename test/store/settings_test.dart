@@ -12,7 +12,7 @@ void main() {
   group('SettingsStore test', () {
     final root = AppStore(
       MockLocalStorage(),
-      config: const AppConfig(mockSubstrateApi: true),
+      config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
     );
     final store = SettingsStore(root);
 

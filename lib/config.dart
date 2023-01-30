@@ -1,21 +1,20 @@
 import 'package:upgrader/upgrader.dart';
 
-import 'package:encointer_wallet/modules/modules.dart';
-
 class AppConfig {
   const AppConfig({
-    this.initialRoute = SplashView.route,
     this.mockSubstrateApi = false,
+    this.isTestMode = false,
     this.appCast,
   });
 
-  final String initialRoute;
+  /// [mockSubstrateApi] indicates whether the app uses a mocked api `MockApi` or the real api `Api`.
   final bool mockSubstrateApi;
-  final AppcastConfiguration? appCast;
 
-  /// If [mockSubstrateApi] is set to `true`, the app uses [LocalStorage] instead of a [MockLocalStorage].
-  /// By default, it is set to `false`. It is used for unit test and integration test that uses [MockLocalStorage].
-  bool get isTestMode => mockSubstrateApi;
+  /// [isTestMode] indicates whether the app is running in test mode.
+  final bool isTestMode;
+
+  /// [appCast] is used to provide fake information about the app version for `Upgrader` package.
+  final AppcastConfiguration? appCast;
 
   /// If [AppcastConfiguration] variable is not null, the app is running real integration test.
   /// If [isIntegrationTest] value is `true`, test will close upgrader alert and won't ask notifications permission.
