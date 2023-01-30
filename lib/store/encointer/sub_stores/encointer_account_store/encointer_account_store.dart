@@ -107,13 +107,18 @@ abstract class _EncointerAccountStore with Store {
 
     final transfers = list.map((i) {
       return {
-        'block_timestamp': i['time'],
+        // Here, for now, [setTransferTxs] is not called at all.
+        // Because this function is related to transaction history and is not used at the moment,
+        // but we will integrate it in the future, so we can't know the type of [List list] for now,
+        // please check the type of [List list] again when integrated.
+        'block_timestamp': (i as Map<String, dynamic>)['time'],
         'hash': i['hash'],
         'success': true,
         'from': address,
-        'to': i['params'][0],
-        'token': CommunityIdentifier.fromJson(i['params'][1] as Map<String, dynamic>).toFmtString(),
-        'amount': Fmt.numberFormat(i['params'][2] as String?),
+        'to': (i['params'] as Map<String, dynamic>)[0],
+        'token': CommunityIdentifier.fromJson((i['params'] as Map<String, dynamic>)[1] as Map<String, dynamic>)
+            .toFmtString(),
+        'amount': Fmt.numberFormat((i['params'] as Map<String, dynamic>)[2] as String?),
       };
     }).toList();
     if (reset) {
