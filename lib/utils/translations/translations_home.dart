@@ -461,7 +461,7 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get noTransactions => 'Нет транзакций';
   @override
-  String get transferHistory => 'История переводов';
+  String get transferHistory => 'Транзакции';
   @override
   String get unknownError => 'Неизвестная ошибка';
 }

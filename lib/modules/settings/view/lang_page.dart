@@ -21,22 +21,20 @@ class _LangPageState extends State<LangPage> {
     final settings = context.watch<AppSettings>();
     return Scaffold(
       appBar: AppBar(title: Text(dic.settingLang)),
-      body: Observer(builder: (_) {
-        return ListView.builder(
-          itemCount: settings.locales.length,
-          itemBuilder: (BuildContext context, int index) {
-            final lang = settings.getName(settings.locales[index].languageCode);
-            return RadioListTile(
-              title: Text(lang),
-              value: settings.locales[index],
-              groupValue: settings.locale,
-              onChanged: (v) async {
-                await context.read<AppSettings>().setLocale(index);
-              },
-            );
-          },
-        );
-      }),
+      body: ListView.builder(
+        itemCount: settings.locales.length,
+        itemBuilder: (BuildContext context, int index) {
+          final lang = settings.getName(settings.locales[index].languageCode);
+          return RadioListTile(
+            title: Text(lang),
+            value: settings.locales[index],
+            groupValue: settings.locale,
+            onChanged: (v) async {
+              await context.read<AppSettings>().setLocale(index);
+            },
+          );
+        },
+      ),
     );
   }
 }
