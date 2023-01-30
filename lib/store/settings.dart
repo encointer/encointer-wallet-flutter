@@ -9,7 +9,6 @@ import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dar
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 
 part 'settings.g.dart';
 
@@ -125,25 +124,6 @@ abstract class _SettingsStore with Store {
   List<AccountData> get contactListAll {
     final ls = List<AccountData>.of(rootStore.account.accountList)..addAll(contactList);
     return ls;
-  }
-
-  @computed
-  String get existentialDeposit {
-    return Fmt.token(
-        BigInt.parse(networkConst!['balances']['existentialDeposit'].toString()), networkState!.tokenDecimals);
-  }
-
-  @computed
-  String get transactionBaseFee {
-    return Fmt.token(BigInt.parse(networkConst!['transactionPayment']['transactionBaseFee'].toString()),
-        networkState!.tokenDecimals);
-  }
-
-  @computed
-  String get transactionByteFee {
-    return Fmt.token(
-        BigInt.parse(networkConst!['transactionPayment']['transactionByteFee'].toString()), networkState!.tokenDecimals,
-        length: networkState!.tokenDecimals);
   }
 
   @action
@@ -337,8 +317,12 @@ class NetworkState extends _NetworkState {
     // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
     // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
     // `NetworkState` should use the first token.
-    final decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] as int? : json['tokenDecimals'] as int?;
-    final symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] as String? : json['tokenSymbol'] as String?;
+    final decimals = (json['tokenDecimals'] is List)
+        ? (json['tokenDecimals'] as List<dynamic>)[0] as int?
+        : json['tokenDecimals'] as int?;
+    final symbol = (json['tokenSymbol'] is List)
+        ? (json['tokenSymbol'] as List<dynamic>)[0] as String?
+        : json['tokenSymbol'] as String?;
 
     final ns = NetworkState(json['endpoint'] as String?, json['ss58Format'] as int?, decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified

@@ -14,7 +14,8 @@ class AccountApi {
 
   final JSApi jsApi;
   final AppStore store;
-  Function? fetchAccountData;
+
+  void Function()? fetchAccountData;
 
   Future<void> initAccounts() async {
     if (store.account.accountList.isNotEmpty) {
@@ -35,7 +36,7 @@ class AccountApi {
     }
   }
 
-  void setFetchAccountData(Function fetchAccountData) {
+  void setFetchAccountData(void Function() fetchAccountData) {
     this.fetchAccountData = fetchAccountData;
   }
 
@@ -105,9 +106,6 @@ class AccountApi {
     await store.loadAccountCache();
     if (fetchData) {
       fetchAccountData?.call();
-      // if (fetchAccountData != null) {
-      //   fetchAccountData!();
-      // }
     }
   }
 
@@ -184,19 +182,6 @@ class AccountApi {
       'account.getAccountIndex(${jsonEncode(addresses)})',
     );
     store.account.setAddressIndex(res as List<dynamic>);
-    return res;
-  }
-
-  Future<List> fetchAccountsIndex() async {
-    final addresses = store.account.accountListAll.map((e) => e.address).toList();
-    if (addresses.isEmpty) {
-      return [];
-    }
-
-    final res = await jsApi.evalJavascript(
-      'account.getAccountIndex(${jsonEncode(addresses)})',
-    );
-    store.account.setAccountsIndex(res as List<dynamic>);
     return res;
   }
 }

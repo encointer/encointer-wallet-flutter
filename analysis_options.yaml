@@ -19,7 +19,7 @@ linter:
     avoid_equals_and_hash_code_on_mutable_classes: true
     overridden_fields: true
     parameter_assignments: true
-    avoid_dynamic_calls: false
+    avoid_dynamic_calls: true
 
 analyzer:
   language:

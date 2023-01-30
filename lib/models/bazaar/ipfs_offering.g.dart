@@ -14,8 +14,7 @@ IpfsOffering _$IpfsOfferingFromJson(Map<String, dynamic> json) => IpfsOffering(
       json['imagesCid'] as String?,
     );
 
-Map<String, dynamic> _$IpfsOfferingToJson(IpfsOffering instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$IpfsOfferingToJson(IpfsOffering instance) => <String, dynamic>{
       'name': instance.name,
       'price': instance.price,
       'description': instance.description,

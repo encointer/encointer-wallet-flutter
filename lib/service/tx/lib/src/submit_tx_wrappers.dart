@@ -47,7 +47,7 @@ Future<void> submitTx(
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
   if (txPaymentAsset != null) {
-    txParams['txInfo']['txPaymentAsset'] = txPaymentAsset;
+    (txParams['txInfo'] as Map<String, dynamic>)['txPaymentAsset'] = txPaymentAsset;
   }
 
   txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
@@ -190,7 +190,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
     context: context,
     builder: (context) {
       return CupertinoAlertDialog(
-        key: const Key('educate-dialog'),
+        key: Key('educate-dialog-${registrationType.name}'),
         title: Text('${texts['title']}'),
         content: Text(
           '${texts['content']}',
