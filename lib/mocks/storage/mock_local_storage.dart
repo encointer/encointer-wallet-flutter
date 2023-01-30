@@ -102,4 +102,14 @@ class MockLocalStorage extends LocalStorage {
     }
     return Future.value();
   }
+
+  @override
+  Future<String?> getKV(String cacheKey) {
+    return Future.value();
+  }
+
+  @override
+  Future<void> setKV(String cacheKey, String value) {
+    return Future.value();
+  }
 }
