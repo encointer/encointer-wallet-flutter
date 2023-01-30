@@ -37,7 +37,7 @@ class JSApi {
             callback: (args) {
               Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
-              final res = args[0];
+              final res = args[0] as Map<dynamic, dynamic>;
 
               final path = res['path'] as String?;
               if (_msgCompleters[path!] != null) {
@@ -48,6 +48,7 @@ class JSApi {
               }
               if (_msgHandlers[path] != null) {
                 final handler = _msgHandlers[path]!;
+                // ignore: avoid_dynamic_calls
                 handler(res['data']);
               }
             });
