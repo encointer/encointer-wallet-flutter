@@ -93,7 +93,8 @@ void main() {
       final testNetwork = '${unitTestEndpoint.info!}-1';
       final appStore = await setupAppStore(testNetwork);
 
-      appStore.purgeEncointerCache(testNetwork);
+      await appStore.purgeEncointerCache(testNetwork);
+
       expect(
         await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork)),
         null,

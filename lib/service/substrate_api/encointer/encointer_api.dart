@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -62,10 +63,12 @@ class EncointerApi {
 
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping encointer subscriptions', 'EncointerApi');
-    jsApi
-      ..unsubscribeMessage(_currentPhaseSubscribeChannel)
-      ..unsubscribeMessage(_communityIdentifiersChannel)
-      ..unsubscribeMessage(_businessRegistryChannel);
+
+    unawaited(Future.wait<void>([
+      jsApi.unsubscribeMessage(_currentPhaseSubscribeChannel),
+      jsApi.unsubscribeMessage(_communityIdentifiersChannel),
+      jsApi.unsubscribeMessage(_businessRegistryChannel)
+    ]));
 
     if (store.settings.endpointIsNoTee) {
       await jsApi.unsubscribeMessage(_businessRegistryChannel);

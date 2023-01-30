@@ -47,7 +47,7 @@ void main() {
     });
 
     test('set network state properly', () async {
-      store.setNetworkState(Map<String, dynamic>.of({
+      await store.setNetworkState(Map<String, dynamic>.of({
         'ss58Format': 2,
         'tokenDecimals': 12,
         'tokenSymbol': 'KSM',
