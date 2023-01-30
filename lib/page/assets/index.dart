@@ -189,7 +189,10 @@ class _AssetsState extends State<Assets> {
                                         ),
                                         Text(
                                           '${dic!.assets.balance}, ${widget.store.encointer.community?.symbol}',
-                                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium!
+                                              .copyWith(color: encointerGrey),
                                         ),
                                       ],
                                     )
