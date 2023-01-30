@@ -33,7 +33,7 @@ const transferHistoryMockData = {
     {
       'id': '1',
       'accountName': 'John Doe',
-      'accountAddress': '0x1234567890abcdef',
+      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW',
       'type': 'incoming',
       'currency': 'Leu',
       'amount': 0.005,
@@ -42,7 +42,7 @@ const transferHistoryMockData = {
     {
       'id': '2',
       'accountName': 'Jane Smith',
-      'accountAddress': '0x0987654321fedcba',
+      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW',
       'type': 'outgoing',
       'currency': 'Leu',
       'amount': 0.0125,
@@ -51,7 +51,7 @@ const transferHistoryMockData = {
     {
       'id': '3',
       'accountName': 'Bob Johnson',
-      'accountAddress': '0xabcdef0123456789',
+      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW',
       'type': 'incoming',
       'currency': 'Leu',
       'amount': 0.1,
