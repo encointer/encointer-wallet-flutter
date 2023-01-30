@@ -10,6 +10,7 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -132,15 +133,21 @@ class _TransferPageState extends State<TransferPage> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(dic.assets.transfer),
-              leading: Container(),
+              leading: const SizedBox.shrink(),
               actions: [
+                if (store.settings.developerMode)
+                  IconButton(
+                    key: const Key('go-transfer-history'),
+                    icon: const Icon(Icons.swap_vert_sharp),
+                    onPressed: () {
+                      Navigator.pushNamed(context, TransferHistoryView.route);
+                    },
+                  ),
                 IconButton(
                   key: const Key('close-transfer-page'),
                   icon: const Icon(Icons.close),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
+                  onPressed: () => Navigator.pop(context),
+                ),
               ],
             ),
             body: Padding(

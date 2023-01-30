@@ -6,3 +6,4 @@ library models;
 export 'ceremonies/ceremonies.dart';
 export 'commons/commons.dart';
 export 'encointer_feed/meetup_overrides.dart';
+export 'transfer/transfer_history.dart';
