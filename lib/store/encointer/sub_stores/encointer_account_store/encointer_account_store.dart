@@ -83,7 +83,7 @@ abstract class _EncointerAccountStore with Store {
   @action
   Future<void> setReputations(Map<int, CommunityReputation> reps) async {
     reputations = reps;
-    writeToCache();
+    await writeToCache();
     await getNumberOfNewbieTicketsForReputable();
   }
 
@@ -123,7 +123,7 @@ abstract class _EncointerAccountStore with Store {
     }
 
     if (needCache && txsTransfer.isNotEmpty) {
-      writeToCache();
+      await writeToCache();
     }
   }
 

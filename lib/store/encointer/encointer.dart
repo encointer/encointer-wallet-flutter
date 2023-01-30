@@ -211,7 +211,7 @@ abstract class _EncointerStore with Store {
     Log.d('set communityIdentifiers to $cids', 'EncointerStore');
 
     communityIdentifiers = cids;
-    writeToCache();
+    await writeToCache();
 
     if (communities != null && communitiesContainsChosenCid && !communitiesContainsChosenCid) {
       // inconsistency found, reset state
@@ -231,19 +231,19 @@ abstract class _EncointerStore with Store {
   Future<void> setChosenCid([CommunityIdentifier? cid]) async {
     if (chosenCid != cid) {
       chosenCid = cid;
-      writeToCache();
+      await writeToCache();
 
       if (cid != null) {
-        _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
-        initBazaarStore(cid);
+        await _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
+        await initBazaarStore(cid);
         await initCommunityStore(cid, _rootStore.account.currentAddress);
       } else {
-        _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
+        await _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
     }
 
     if (_rootStore.settings.endpointIsNoTee) {
-      webApi.encointer.subscribeBusinessRegistry();
+      await webApi.encointer.subscribeBusinessRegistry();
     }
 
     // update depending values without awaiting

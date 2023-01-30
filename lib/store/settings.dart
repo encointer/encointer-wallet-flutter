@@ -224,15 +224,15 @@ abstract class _SettingsStore with Store {
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
     ]);
     if (data[0] != null) {
-      setNetworkState(Map<String, dynamic>.of(data[0]! as Map<String, dynamic>), needCache: false);
+      await setNetworkState(Map<String, dynamic>.of(data[0]! as Map<String, dynamic>), needCache: false);
     } else {
-      setNetworkState({}, needCache: false);
+      await setNetworkState({}, needCache: false);
     }
 
     if (data[1] != null) {
-      setNetworkConst(Map<String, dynamic>.of(data[1]! as Map<String, dynamic>), needCache: false);
+      await setNetworkConst(Map<String, dynamic>.of(data[1]! as Map<String, dynamic>), needCache: false);
     } else {
-      setNetworkConst({}, needCache: false);
+      await setNetworkConst({}, needCache: false);
     }
   }
 
@@ -244,7 +244,7 @@ abstract class _SettingsStore with Store {
     networkConst = data;
 
     if (needCache) {
-      rootStore.localStorage.setObject(
+      await rootStore.localStorage.setObject(
         _getCacheKeyOfNetwork(cacheNetworkConstKey),
         data,
       );
@@ -266,13 +266,13 @@ abstract class _SettingsStore with Store {
   @action
   Future<void> removeContact(AccountData con) async {
     await rootStore.localStorage.removeContact(con.address);
-    loadContacts();
+    await loadContacts();
   }
 
   @action
   Future<void> updateContact(Map<String, dynamic> con) async {
     await rootStore.localStorage.updateContact(con);
-    loadContacts();
+    await loadContacts();
   }
 
   @action
