@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -26,7 +28,7 @@ class SubstrateDartApi {
   String? get endpoint => _endpoint;
 
   Future<void> connect(String endpoint) async {
-    _connectAndListen(endpoint);
+    unawaited(_connectAndListen(endpoint));
 
     try {
       _rpc = await rpc('rpc_methods').then((m) => RpcMethods.fromJson(m as Map<String, dynamic>));

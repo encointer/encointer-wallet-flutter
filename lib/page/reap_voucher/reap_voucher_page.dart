@@ -92,7 +92,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
           final result = cid != null ? await _changeNetworkAndCommunityIfNeeded(context, networkInfo!, cid) : null;
 
           if (result == ChangeResult.ok && cid != null) {
-            fetchVoucherData(widget.api, voucherUri!, cid);
+            await fetchVoucherData(widget.api, voucherUri!, cid);
           } else if (result == ChangeResult.invalidNetwork) {
             await showErrorDialog(context, dic.assets.invalidNetwork);
           } else if (result == ChangeResult.invalidCommunity) {
@@ -181,9 +181,9 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     if (res['hash'] == null) {
       Log.d('Error redeeming voucher: ${res['error']}', 'ReapVoucherPage');
-      showRedeemFailedDialog(context, res['error'] as String?);
+      await showRedeemFailedDialog(context, res['error'] as String?);
     } else {
-      showRedeemSuccessDialog(context);
+      await showRedeemSuccessDialog(context);
     }
   }
 

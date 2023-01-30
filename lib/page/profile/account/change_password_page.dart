@@ -47,7 +47,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
         passOld,
       );
       if (passChecked == null) {
-        showCupertinoDialog<void>(
+        await showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
@@ -86,7 +86,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
             store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
         }
-        showCupertinoDialog<void>(
+        await showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(

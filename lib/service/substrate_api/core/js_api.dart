@@ -22,7 +22,7 @@ class JSApi {
     _evalJavascriptUID = 0;
 
     if (_web != null) {
-      closeWebView();
+      await closeWebView();
     }
 
     final initWebViewCompleter = Completer<void>();
@@ -151,12 +151,12 @@ class JSApi {
     Function callback,
   ) async {
     _msgHandlers[channel] = callback;
-    evalJavascript(code);
+    await evalJavascript(code);
   }
 
   Future<void> unsubscribeMessage(String channel) async {
     if (_msgHandlers[channel] != null) {
-      _web!.webViewController.evaluateJavascript(source: 'unsub$channel()');
+      await _web!.webViewController.evaluateJavascript(source: 'unsub$channel()');
     }
   }
 

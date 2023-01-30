@@ -52,11 +52,11 @@ class EncointerApi {
 
   Future<void> startSubscriptions() async {
     Log.d('api: starting encointer subscriptions', 'EncointerApi');
-    getPhaseDurations();
-    subscribeCurrentPhase();
-    subscribeCommunityIdentifiers();
+    await getPhaseDurations();
+    await subscribeCurrentPhase();
+    await subscribeCommunityIdentifiers();
     if (store.settings.endpointIsNoTee) {
-      subscribeBusinessRegistry();
+      await subscribeBusinessRegistry();
     }
   }
 
@@ -68,7 +68,7 @@ class EncointerApi {
       ..unsubscribeMessage(_businessRegistryChannel);
 
     if (store.settings.endpointIsNoTee) {
-      jsApi.unsubscribeMessage(_businessRegistryChannel);
+      await jsApi.unsubscribeMessage(_businessRegistryChannel);
     }
   }
 
@@ -203,7 +203,7 @@ class EncointerApi {
         .then((m) => CommunityMetadata.fromJson(m as Map<String, dynamic>));
 
     Log.d('api: community metadata: $meta', 'EncointerApi');
-    store.encointer.community?.setCommunityMetadata(meta);
+    await store.encointer.community?.setCommunityMetadata(meta);
   }
 
   /// Queries the Communities and the Balances pallet:
@@ -332,7 +332,7 @@ class EncointerApi {
   }
 
   Future<void> subscribeCurrentPhase() async {
-    jsApi.subscribeMessage(
+    await jsApi.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
         (String data) async {
       final phase = ceremonyPhaseFromString(data.toUpperCase())!;
@@ -346,7 +346,7 @@ class EncointerApi {
       }
 
       store.encointer.setCurrentPhase(phase);
-      getNextPhaseTimestamp();
+      await getNextPhaseTimestamp();
     });
   }
 
@@ -379,7 +379,7 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon.
   Future<void> subscribeCommunityIdentifiers() async {
-    jsApi.subscribeMessage(
+    await jsApi.subscribeMessage(
         'encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")', _communityIdentifiersChannel,
         (Iterable<dynamic> data) async {
       final cids =
@@ -397,7 +397,7 @@ class EncointerApi {
   Future<void> subscribeEncointerBalance() async {
     // unsubscribe from potentially other community updates
     Log.d('Subscribe encointer balance', 'EncointerApi');
-    jsApi.unsubscribeMessage(_encointerBalanceChannel);
+    await jsApi.unsubscribeMessage(_encointerBalanceChannel);
 
     final account = store.account.currentAccountPubKey;
     final cid = store.encointer.chosenCid;
@@ -405,7 +405,7 @@ class EncointerApi {
       return;
     }
 
-    jsApi.subscribeMessage(
+    await jsApi.subscribeMessage(
       'encointer.subscribeBalance("$_encointerBalanceChannel", ${jsonEncode(cid)}, "$account")',
       _encointerBalanceChannel,
       (Map<String, dynamic> data) {
@@ -445,7 +445,7 @@ class EncointerApi {
 
     Log.d('api: bootstrappers $bootstrappers', 'EncointerApi');
     if (store.encointer.community != null) {
-      store.encointer.community!.setBootstrappers(bootstrappers);
+      await store.encointer.community!.setBootstrappers(bootstrappers);
     }
   }
 

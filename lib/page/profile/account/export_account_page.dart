@@ -30,7 +30,7 @@ class ExportAccountPage extends StatelessWidget {
         _passCtrl.text,
       );
       if (res == null) {
-        showCupertinoDialog<void>(
+        await showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
@@ -49,7 +49,7 @@ class ExportAccountPage extends StatelessWidget {
         Navigator.of(context).pop();
         final seed =
             await store.account.decryptSeed(store.account.currentAccount.pubKey, seedType, _passCtrl.text.trim());
-        Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+        await Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
           'key': seed!,
           'type': seedType,
         });
