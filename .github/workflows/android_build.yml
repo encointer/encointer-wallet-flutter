@@ -40,7 +40,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: melos install
-        run: dart pub global activate melos
+        run: ./flutterw pub global activate melos
 
       - name: melos bootstrap
         run: melos bootstrap

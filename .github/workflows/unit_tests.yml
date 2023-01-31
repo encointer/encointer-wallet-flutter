@@ -28,7 +28,7 @@ jobs:
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
       - name: melos install
-        run: dart pub global activate melos
+        run: ./flutterw pub global activate melos
 
       - name: melos bootstrap
         run: melos bootstrap
