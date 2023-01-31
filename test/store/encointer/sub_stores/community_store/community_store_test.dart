@@ -23,7 +23,7 @@ void main() {
         AppStore(MockLocalStorage(), config: const AppConfig()),
         withUI: false,
       );
-      
+
       await webApi.init();
 
       final communityStore = CommunityStore(

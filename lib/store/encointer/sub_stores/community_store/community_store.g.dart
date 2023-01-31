@@ -6,29 +6,35 @@ part of 'community_store.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityStore(
+CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) =>
+    CommunityStore(
       json['network'] as String,
       CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
     )
-      ..metadata =
-          json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
+      ..metadata = json['metadata'] == null
+          ? null
+          : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
       ..demurrage = (json['demurrage'] as num?)?.toDouble()
       ..meetupTime = json['meetupTime'] as int?
       ..meetupTimeOverride = json['meetupTimeOverride'] as int?
-      ..bootstrappers = (json['bootstrappers'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..bootstrappers = (json['bootstrappers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
       ..meetupLocations = json['meetupLocations'] != null
-          ? ObservableList<Location>.of(
-              (json['meetupLocations'] as List).map((e) => Location.fromJson(e as Map<String, dynamic>)))
+          ? ObservableList<Location>.of((json['meetupLocations'] as List)
+              .map((e) => Location.fromJson(e as Map<String, dynamic>)))
           : null
       ..communityAccountStores = json['communityAccountStores'] != null
           ? ObservableMap<String, CommunityAccountStore>.of(
               (json['communityAccountStores'] as Map<String, dynamic>).map(
-              (k, e) => MapEntry(k, CommunityAccountStore.fromJson(e as Map<String, dynamic>)),
+              (k, e) => MapEntry(
+                  k, CommunityAccountStore.fromJson(e as Map<String, dynamic>)),
             ))
           : null
       ..communityIcon = json['communityIcon'] as String?;
 
-Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String, dynamic>{
+Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) =>
+    <String, dynamic>{
       'network': instance.network,
       'cid': instance.cid.toJson(),
       'metadata': instance.metadata?.toJson(),
@@ -36,8 +42,10 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
       'meetupTime': instance.meetupTime,
       'meetupTimeOverride': instance.meetupTimeOverride,
       'bootstrappers': instance.bootstrappers,
-      'meetupLocations': instance.meetupLocations?.map((e) => e.toJson()).toList(),
-      'communityAccountStores': instance.communityAccountStores?.map((k, e) => MapEntry(k, e.toJson())),
+      'meetupLocations':
+          instance.meetupLocations?.map((e) => e.toJson()).toList(),
+      'communityAccountStores': instance.communityAccountStores
+          ?.map((k, e) => MapEntry(k, e.toJson())),
       'communityIcon': instance.communityIcon,
     };
 
@@ -51,19 +59,25 @@ mixin _$CommunityStore on _CommunityStore, Store {
   Computed<String?>? _$nameComputed;
 
   @override
-  String? get name => (_$nameComputed ??= Computed<String?>(() => super.name, name: '_CommunityStore.name')).value;
+  String? get name => (_$nameComputed ??=
+          Computed<String?>(() => super.name, name: '_CommunityStore.name'))
+      .value;
   Computed<String?>? _$symbolComputed;
 
   @override
-  String? get symbol =>
-      (_$symbolComputed ??= Computed<String?>(() => super.symbol, name: '_CommunityStore.symbol')).value;
+  String? get symbol => (_$symbolComputed ??=
+          Computed<String?>(() => super.symbol, name: '_CommunityStore.symbol'))
+      .value;
   Computed<String?>? _$assetsCidComputed;
 
   @override
   String? get assetsCid =>
-      (_$assetsCidComputed ??= Computed<String?>(() => super.assetsCid, name: '_CommunityStore.assetsCid')).value;
+      (_$assetsCidComputed ??= Computed<String?>(() => super.assetsCid,
+              name: '_CommunityStore.assetsCid'))
+          .value;
 
-  late final _$metadataAtom = Atom(name: '_CommunityStore.metadata', context: context);
+  late final _$metadataAtom =
+      Atom(name: '_CommunityStore.metadata', context: context);
 
   @override
   CommunityMetadata? get metadata {
@@ -78,7 +92,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
-  late final _$demurrageAtom = Atom(name: '_CommunityStore.demurrage', context: context);
+  late final _$demurrageAtom =
+      Atom(name: '_CommunityStore.demurrage', context: context);
 
   @override
   double? get demurrage {
@@ -93,7 +108,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
-  late final _$meetupTimeAtom = Atom(name: '_CommunityStore.meetupTime', context: context);
+  late final _$meetupTimeAtom =
+      Atom(name: '_CommunityStore.meetupTime', context: context);
 
   @override
   int? get meetupTime {
@@ -108,7 +124,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
-  late final _$meetupTimeOverrideAtom = Atom(name: '_CommunityStore.meetupTimeOverride', context: context);
+  late final _$meetupTimeOverrideAtom =
+      Atom(name: '_CommunityStore.meetupTimeOverride', context: context);
 
   @override
   int? get meetupTimeOverride {
@@ -123,7 +140,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
-  late final _$bootstrappersAtom = Atom(name: '_CommunityStore.bootstrappers', context: context);
+  late final _$bootstrappersAtom =
+      Atom(name: '_CommunityStore.bootstrappers', context: context);
 
   @override
   List<String>? get bootstrappers {
@@ -138,7 +156,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
-  late final _$meetupLocationsAtom = Atom(name: '_CommunityStore.meetupLocations', context: context);
+  late final _$meetupLocationsAtom =
+      Atom(name: '_CommunityStore.meetupLocations', context: context);
 
   @override
   ObservableList<Location>? get meetupLocations {
@@ -153,7 +172,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
-  late final _$communityAccountStoresAtom = Atom(name: '_CommunityStore.communityAccountStores', context: context);
+  late final _$communityAccountStoresAtom =
+      Atom(name: '_CommunityStore.communityAccountStores', context: context);
 
   @override
   ObservableMap<String, CommunityAccountStore>? get communityAccountStores {
@@ -162,13 +182,16 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
-  set communityAccountStores(ObservableMap<String, CommunityAccountStore>? value) {
-    _$communityAccountStoresAtom.reportWrite(value, super.communityAccountStores, () {
+  set communityAccountStores(
+      ObservableMap<String, CommunityAccountStore>? value) {
+    _$communityAccountStoresAtom
+        .reportWrite(value, super.communityAccountStores, () {
       super.communityAccountStores = value;
     });
   }
 
-  late final _$communityIconAtom = Atom(name: '_CommunityStore.communityIcon', context: context);
+  late final _$communityIconAtom =
+      Atom(name: '_CommunityStore.communityIcon', context: context);
 
   @override
   String? get communityIcon {
@@ -183,33 +206,38 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
-  late final _$getCommunityIconAsyncAction = AsyncAction('_CommunityStore.getCommunityIcon', context: context);
+  late final _$getCommunityIconAsyncAction =
+      AsyncAction('_CommunityStore.getCommunityIcon', context: context);
 
   @override
   Future<String?> getCommunityIcon() {
     return _$getCommunityIconAsyncAction.run(() => super.getCommunityIcon());
   }
 
-  late final _$setBootstrappersAsyncAction = AsyncAction('_CommunityStore.setBootstrappers', context: context);
+  late final _$setBootstrappersAsyncAction =
+      AsyncAction('_CommunityStore.setBootstrappers', context: context);
 
   @override
   Future<void> setBootstrappers(List<String> bs) {
     return _$setBootstrappersAsyncAction.run(() => super.setBootstrappers(bs));
   }
 
-  late final _$setCommunityMetadataAsyncAction = AsyncAction('_CommunityStore.setCommunityMetadata', context: context);
+  late final _$setCommunityMetadataAsyncAction =
+      AsyncAction('_CommunityStore.setCommunityMetadata', context: context);
 
   @override
   Future<void> setCommunityMetadata(CommunityMetadata meta) {
-    return _$setCommunityMetadataAsyncAction.run(() => super.setCommunityMetadata(meta));
+    return _$setCommunityMetadataAsyncAction
+        .run(() => super.setCommunityMetadata(meta));
   }
 
-  late final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore', context: context);
+  late final _$_CommunityStoreActionController =
+      ActionController(name: '_CommunityStore', context: context);
 
   @override
   Future<void> initCommunityAccountStore(String address) {
-    final _$actionInfo =
-        _$_CommunityStoreActionController.startAction(name: '_CommunityStore.initCommunityAccountStore');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.initCommunityAccountStore');
     try {
       return super.initCommunityAccountStore(address);
     } finally {
@@ -219,7 +247,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void setDemurrage(double? d) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setDemurrage');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.setDemurrage');
     try {
       return super.setDemurrage(d);
     } finally {
@@ -229,7 +258,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void setMeetupTime([int? time]) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupTime');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.setMeetupTime');
     try {
       return super.setMeetupTime(time);
     } finally {
@@ -239,7 +269,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void setMeetupTimeOverride([int? time]) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupTimeOverride');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.setMeetupTimeOverride');
     try {
       return super.setMeetupTimeOverride(time);
     } finally {
@@ -249,7 +280,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void setMeetupLocations(List<Location> locations) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupLocations');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.setMeetupLocations');
     try {
       return super.setMeetupLocations(locations);
     } finally {
@@ -259,8 +291,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void purgeCeremonySpecificState() {
-    final _$actionInfo =
-        _$_CommunityStoreActionController.startAction(name: '_CommunityStore.purgeCeremonySpecificState');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.purgeCeremonySpecificState');
     try {
       return super.purgeCeremonySpecificState();
     } finally {
