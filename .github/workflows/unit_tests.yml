@@ -27,6 +27,9 @@ jobs:
           mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
+      - name: pub global activated
+        run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+
       - name: melos install
         run: ./flutterw pub global activate melos
 
@@ -50,7 +53,7 @@ jobs:
         run: melos unit-test-encointer-node-e2e
 
       - name: "Run unit tests packages"
-        run: melos unit-test-packages 
+        run: melos unit-test-packages
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |

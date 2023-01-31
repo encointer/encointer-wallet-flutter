@@ -39,6 +39,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: pub global activated
+        run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+
       - name: melos install
         run: ./flutterw pub global activate melos
 
