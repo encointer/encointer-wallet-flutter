@@ -181,7 +181,14 @@ The flutter build-runner is used to generate repetitive boiler-plate code that i
 e.g. `@JsonSerializable` or the mobx annotations. Whenever annotations are added, changed or removed, the following 
 command must be run to update the `*.g` files.
 
-*  `./flutterw pub run build_runner build --delete-conflicting-outputs` 
+* `./flutterw pub run build_runner build --delete-conflicting-outputs`
+
+## GitHub Actions Hints
+
+### IOS
+Sometimes after a Github Actions Runner update, the Xcode version is updated, which changes the available IOS runtimes.
+This makes the IPad simulator creation fail because our runtime is no longer available. We can simply replace the
+runtime with one of the available runtimes printed in the `Prepare environment for IOS` stage.
 
 ### App Release
 
