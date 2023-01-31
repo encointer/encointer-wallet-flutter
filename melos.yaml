@@ -7,12 +7,13 @@ packages:
   - packages/**
 
 scripts:
+  # encointer-wallet
   format:
-    run: melos exec -- ./flutterw format . --line-length 120
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw format . --line-length 120
     description: "format dart code"
 
   analyze:
-    run: melos exec -- ./flutterw analyze
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw analyze
     description: "analyze dart code"
 
   run-android:
@@ -31,12 +32,12 @@ scripts:
     run: melos exec --file-exists="lib/main.dart" -- ./flutterw build appbundle
     description: "build appbundle file"
 
-  pub-clean:
-    run: melos exec -- ./flutterw clean
+  clean:
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw clean
     description: "clean pub dependencies"
 
   pub-get:
-    run: melos exec -- ./flutterw pub get
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw pub get
     description: "pub get dependencies"
 
   integration-app-test-android:
@@ -71,14 +72,31 @@ scripts:
     run: melos exec --dir-exists="test_driver" -- ./flutterw test --tags encointer-node-e2e
     description: "test encointer wallet with tag node-e2e"
 
-  unit-test-packages:
-    run: melos exec --ignore="encointer_wallet" -- ./flutterw test
-    description: "run unit test all packages"
-
   yarn-build:
     run: melos exec --dir-exists="lib/js_service_encointer" "cd lib/js_service_encointer/ && yarn install && yarn run build"
     description: "instrall yarn dependencies and build"
 
   doctor:
-    run: melos exec -- ./flutterw doctor
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw doctor
     description: "run flutter doctor"
+
+  # packages
+  clean-packages:
+    run: melos exec --ignore="encointer_wallet" -- ../../flutterw clean
+    description: "run unit test all packages"
+
+  pub-get-packages:
+    run: melos exec --ignore="encointer_wallet" -- ../../flutterw pub get
+    description: "run unit test all packages"
+
+  format-packages:
+    run: melos exec --ignore="encointer_wallet" -- ../../flutterw format . --line-length 120
+    description: "run unit test all packages"
+
+  analyze-packages:
+    run: melos exec --ignore="encointer_wallet" -- ../../flutterw analyze
+    description: "run unit test all packages"
+
+  unit-test-packages:
+    run: melos exec --ignore="encointer_wallet" -- ../../flutterw test
+    description: "run unit test all packages"
