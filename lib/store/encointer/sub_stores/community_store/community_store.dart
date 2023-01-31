@@ -32,13 +32,13 @@ class CommunityStore extends _CommunityStore with _$CommunityStore {
 abstract class _CommunityStore with Store {
   _CommunityStore(this.network, this.cid);
 
-  @JsonKey(includeFromJson: false)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   Future<void> Function()? _cacheFn;
 
   /// Applies demurrage to the `BalanceEntry`
   ///
   /// It is initialized as a field to prevent a cyclic dependency with the rootStore.
-  @JsonKey(includeFromJson: false)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   double? Function(BalanceEntry)? _applyDemurrage;
 
   final String network;
