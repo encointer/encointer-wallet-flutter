@@ -137,7 +137,7 @@ class EncointerApi {
       );
       return accountData;
     } catch (e) {
-      throw Exception('[EncointerApi]: Error getting aggregated account data ${e.toString()}');
+      throw Exception('[EncointerApi]: Error getting aggregated account data $e');
     }
   }
 

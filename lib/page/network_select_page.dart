@@ -119,7 +119,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         children: <Widget>[
           Text(
             _selectedNetwork.info!.toUpperCase(),
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           IconButton(
               icon: Image.asset('assets/images/assets/plus_indigo.png'),

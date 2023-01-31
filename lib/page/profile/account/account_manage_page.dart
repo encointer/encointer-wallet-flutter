@@ -80,7 +80,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
-    final h3 = Theme.of(context).textTheme.headline3!;
+    final h3 = Theme.of(context).textTheme.displaySmall!;
 
     final community = _appStore.encointer.communityStores![cidFmt]!;
 
@@ -151,7 +151,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final h3 = Theme.of(context).textTheme.headline3;
+    final h3 = Theme.of(context).textTheme.displaySmall;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
 

@@ -52,7 +52,7 @@ class CeremonyProgressBar extends StatelessWidget {
         attestingPhaseFractionalWidth,
       );
     } catch (e, s) {
-      Log.e('Error getting ceremony progress ${e.toString()}', 'CeremonyProgressBar', s);
+      Log.e('Error getting ceremony progress $e', 'CeremonyProgressBar', s);
       return 0;
     }
   }

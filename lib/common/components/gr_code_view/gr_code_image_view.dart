@@ -28,7 +28,7 @@ class QrCodeImageWithButton extends StatelessWidget {
           icon: Icon(Icons.share, color: zurichLion.shade500),
           label: Text(
             text,
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         const SizedBox(height: 20),
