@@ -27,11 +27,11 @@ jobs:
           mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
-      - name: pub global activated
-        run: export PATH="$PATH":"$HOME/.pub-cache/bin"
-
       - name: melos install
         run: ./flutterw pub global activate melos
+
+      - name: pub global activated
+        run: export PATH="$PATH":"$HOME/.pub-cache/bin"
 
       # - name: melos bootstrap
       #   run: melos bootstrap

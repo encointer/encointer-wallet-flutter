@@ -45,6 +45,9 @@ jobs:
       - name: melos install
         run: ./flutterw pub global activate melos
 
+      - name: pub global activated 02
+        run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+
       # - name: melos bootstrap
       #   run: melos bootstrap
 
