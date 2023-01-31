@@ -29,7 +29,7 @@ class PaymentOverview extends StatelessWidget {
               CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
               Text(
                 Fmt.accountName(context, store.account.currentAccount),
-                style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -44,7 +44,7 @@ class PaymentOverview extends StatelessWidget {
               AddressIcon('', recipientAccount!.pubKey),
               Text(
                 Fmt.address(recipientLabel)!,
-                style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
             ],

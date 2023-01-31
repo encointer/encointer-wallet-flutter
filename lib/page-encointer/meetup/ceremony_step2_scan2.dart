@@ -53,7 +53,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   Center(
                     child: Text(
                       dic.encointer.scan,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(color: zurichLion.shade600),
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(color: zurichLion.shade600),
                     ),
                   ),
                   Center(
@@ -62,7 +62,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                       child: Text(
                         dic.encointer.scanDescriptionForMeetup,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.25),
+                        style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.25),
                       ),
                     ),
                   ),
@@ -83,7 +83,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.arrow_right_2),
                     const SizedBox(width: 12, height: 60),
-                    Text(dic.encointer.closeGathering, style: Theme.of(context).textTheme.headline3),
+                    Text(dic.encointer.closeGathering, style: Theme.of(context).textTheme.displaySmall),
                   ],
                 ),
                 onPressed: () {
@@ -102,7 +102,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                     const SizedBox(width: 12),
                     Text(
                       dic.encointer.scanOthers,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
                     ),
                   ],
                 ),

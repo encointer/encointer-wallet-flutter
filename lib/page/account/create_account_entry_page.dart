@@ -45,7 +45,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                       style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
                       key: const Key('create-account'),
                       child: Text(I18n.of(context)!.translationsForLocale().home.create,
-                          style: Theme.of(context).textTheme.headline3),
+                          style: Theme.of(context).textTheme.displaySmall),
                       onPressed: () {
                         Navigator.pushNamed(context, CreateAccountPage.route);
                       },
