@@ -27,7 +27,10 @@ jobs:
           mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
-      - name: melos
+      - name: melos install
+        run: dart pub global activate melos
+
+      - name: melos bootstrap
         run: melos bootstrap
 
       # analyze and test

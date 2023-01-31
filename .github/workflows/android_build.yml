@@ -39,7 +39,10 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: melos
+      - name: melos install
+        run: dart pub global activate melos
+
+      - name: melos bootstrap
         run: melos bootstrap
 
       - name: "Build JS"
