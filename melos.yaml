@@ -1,0 +1,84 @@
+name: encointer
+
+sdkPath: ".flutter"
+
+packages:
+  - "*"
+  - packages/**
+
+scripts:
+  format:
+    run: melos exec -- ./flutterw format . --line-length 120
+    description: "format dart code"
+
+  analyze:
+    run: melos exec -- ./flutterw analyze
+    description: "analyze dart code"
+
+  run-android:
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw run --flavor dev
+    description: "run encointer wallet android system"
+
+  run-ios:
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw run
+    description: "run encointer wallet ios system"
+
+  build-apk:
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw build apk --flavor fdroid
+    description: "build apk file"
+
+  build-appbundle:
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw build appbundle
+    description: "build appbundle file"
+
+  pub-clean:
+    run: melos exec -- ./flutterw clean
+    description: "clean pub dependencies"
+
+  pub-get:
+    run: melos exec -- ./flutterw pub get
+    description: "pub get dependencies"
+
+  integration-app-test-android:
+    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/app.dart --flavor dev
+    description: "Integration test app.dart for android system"
+
+  integration-app-test-ios:
+    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/app.dart
+    description: "Integration test app.dart for ios system"
+
+  integration-real-app-test-android:
+    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/real_app.dart --flavor dev
+    description: "Integration test real_app.dart for android system"
+
+  integration-real-app-test-ios:
+    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/real_app.dart
+    description: "Integration test real_app.dart for ios system"
+
+  integration-scan-test-android:
+    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/scan_page.dart --flavor dev
+    description: "Integration test qr scan for android system"
+
+  integration-scan-test-ios:
+    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/scan_page.dart
+    description: "Integration test qr scan for ios system"
+
+  unit-test-encointer-exclude-node-e2e:
+    run: melos exec --dir-exists="test_driver" -- ./flutterw test --exclude-tags encointer-node-e2e
+    description: "test encointer wallet with exclude tag node-e2e"
+
+  unit-test-encointer-node-e2e:
+    run: melos exec --dir-exists="test_driver" -- ./flutterw test --tags encointer-node-e2e
+    description: "test encointer wallet with tag node-e2e"
+
+  unit-test-packages:
+    run: melos exec --ignore="encointer_wallet" -- ./flutterw test
+    description: "run unit test all packages"
+
+  yarn-build:
+    run: melos exec --dir-exists="lib/js_service_encointer" "cd lib/js_service_encointer/ && yarn install && yarn run build"
+    description: "instrall yarn dependencies and build"
+
+  doctor:
+    run: melos exec -- ./flutterw doctor
+    description: "run flutter doctor"

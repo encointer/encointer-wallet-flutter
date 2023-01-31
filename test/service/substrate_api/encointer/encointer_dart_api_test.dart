@@ -15,7 +15,7 @@ void main() {
 
       final data = await encointerDartApi.getAggregatedAccountData(mediterraneanTestCommunity, aliceAddress);
       // ignore: avoid_print
-      print('data: ${data.toString()}');
+      print('data: $data');
 
       await substrateDartApi.close();
     }, tags: encointerNodeE2E);
