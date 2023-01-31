@@ -235,9 +235,9 @@ class Fmt {
     var display = Fmt.address(address);
     if (accInfo != null) {
       if ((accInfo['identity'] as Map<String, dynamic>)['display'] != null) {
-        display = accInfo['identity']['display'] as String?;
-        if (accInfo['identity']['displayParent'] != null) {
-          display = '${accInfo['identity']['displayParent']}/$display';
+        display = (accInfo['identity'] as Map<String, dynamic>)['display'] as String?;
+        if ((accInfo['identity'] as Map<String, dynamic>)['displayParent'] != null) {
+          display = '${(accInfo['identity'] as Map<String, dynamic>)['displayParent']}/$display';
         }
       } else if (accInfo['accountIndex'] != null) {
         display = accInfo['accountIndex'] as String?;

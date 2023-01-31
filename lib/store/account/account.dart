@@ -188,7 +188,7 @@ abstract class _AccountStore with Store {
             NotificationPlugin.showNotification(
               0,
               args['notificationTitle'] as String?,
-              'Failed to sendTx: ${args['title']} - ${args['txInfo']['module']}.${args['txInfo']['call']}',
+              'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {

@@ -158,6 +158,7 @@ class AccountApi {
 
     final res = await jsApi.evalJavascript<List<dynamic>>('account.getAccountIndex(${jsonEncode(addresses)})');
     store.account.setAddressIndex(res);
+
     return res;
   }
 }

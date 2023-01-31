@@ -57,9 +57,7 @@ Future<void> _navigationWithWrScanContext(BuildContext context, QrCode<dynamic> 
     case QrCodeContext.voucher:
       await Navigator.of(context).pushNamed(
         ReapVoucherPage.route,
-        arguments: ReapVoucherParams(
-          voucher: qrCode.data as VoucherData,
-        ),
+        arguments: ReapVoucherParams(voucher: qrCode.data as VoucherData),
       );
       break;
     default:
