@@ -6,6 +6,11 @@ packages:
   - "*"
   - packages/**
 
+command:
+  bootstrap:
+    runPubGetInParallel: false
+    usePubspecOverrides: true  
+
 scripts:
   # encointer-wallet
   format:
