@@ -2,9 +2,9 @@ name: Unit Tests & Code Quality
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
   pull_request:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
 
 env:
   JS_SERVICE_ENCOINTER_PATH: lib/js_service_encointer
@@ -27,24 +27,33 @@ jobs:
           mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
+      - name: melos
+        run: melos bootstrap
+
       # analyze and test
-      - name: "Check fmt"
-        run: ./flutterw format . --line-length 120 --set-exit-if-changed
+      - name: "Check fmt Encointer"
+        run: melos format-check
 
-      - name: "Analyze Code"
-        run: ./flutterw pub get && ./flutterw analyze  --fatal-warnings
+      - name: "Check fmt packages"
+        run: melos format-check-packages
 
-      - name: "Run unit tests"
-        run: ./flutterw test --exclude-tags encointer-node-e2e
+      - name: "Analyze Code Encointer"
+        run: melos analyze-check
+
+      - name: "Analyze Code packages"
+        run: melos analyze-check-packages
+
+      - name: "Run unit tests Encointer"
+        run: melos unit-test-encointer-node-e2e
+
+      - name: "Run unit tests packages"
+        run: melos unit-test-packages 
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
-          ./flutterw pub run build_runner build --delete-conflicting-outputs
-          ./flutterw format . --line-length 120
+          melos ganarate
+          melos format
           git diff --exit-code
 
     #  test-js:
     # Todo: Currently e2e tests are mixed with unit tests (although the amount of unit tests is really small)
-
-
-

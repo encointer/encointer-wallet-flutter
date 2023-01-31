@@ -12,8 +12,16 @@ scripts:
     run: melos exec --file-exists="lib/main.dart" -- ./flutterw format . --line-length 120
     description: "format dart code"
 
+  format-check:
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw format . --line-length 120 --set-exit-if-changed
+    description: "format dart code"
+
   analyze:
     run: melos exec --file-exists="lib/main.dart" -- ./flutterw analyze
+    description: "analyze dart code"
+
+  analyze-check:
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw analyze --fatal-warnings
     description: "analyze dart code"
 
   run-android:
@@ -80,6 +88,10 @@ scripts:
     run: melos exec --file-exists="lib/main.dart" -- ./flutterw doctor
     description: "run flutter doctor"
 
+  ganarate:
+    run: melos exec --file-exists="lib/main.dart" -- ./flutterw pub run build_runner build --delete-conflicting-outputs
+    description: "run flutter doctor"
+
   # packages
   clean-packages:
     run: melos exec --ignore="encointer_wallet" -- ../../flutterw clean
@@ -93,8 +105,16 @@ scripts:
     run: melos exec --ignore="encointer_wallet" -- ../../flutterw format . --line-length 120
     description: "run unit test all packages"
 
+  format-check-packages:
+    run: melos exec --ignore="encointer_wallet" -- ../../flutterw format . --line-length 120 --set-exit-if-changed
+    description: "run unit test all packages"
+
   analyze-packages:
     run: melos exec --ignore="encointer_wallet" -- ../../flutterw analyze
+    description: "run unit test all packages"
+
+  analyze-check-packages:
+    run: melos exec --ignore="encointer_wallet" -- ../../flutterw analyze --fatal-warnings
     description: "run unit test all packages"
 
   unit-test-packages:

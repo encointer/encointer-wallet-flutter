@@ -2,9 +2,9 @@ name: Android Build
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
   pull_request:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
 
 env:
   NODE_VERSION: 16.13.1
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          distribution: 'zulu'
+          distribution: "zulu"
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
@@ -39,9 +39,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: melos
+        run: melos bootstrap
+
       - name: "Build JS"
         working-directory: ./scripts
         run: source ./init_env.sh && ./build_js.sh
 
       - name: "Build apk"
-        run: ./flutterw build apk --flavor fdroid
+        run: melos build-apk
