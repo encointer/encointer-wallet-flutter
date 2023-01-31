@@ -53,11 +53,11 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: '${dic.encointer.nextCycleDateLabel} ',
-        style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
         children: [
           TextSpan(
             text: '$nextCeremonyYearMonthDay $nextCeremonyHourMinute',
-            style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerBlack),
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerBlack),
           ),
         ],
       ),
@@ -81,11 +81,11 @@ class CeremonyDateLabelRelative extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: '${dic.encointer.nextCycleTimeLeft} ',
-        style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
         children: [
           TextSpan(
             text: timeLeftUntilCeremonyStartsDaysHours,
-            style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerBlack),
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerBlack),
           ),
         ],
       ),
@@ -102,7 +102,7 @@ class CeremonyDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final h2BlackTheme = Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack);
+    final h2BlackTheme = Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack);
     final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
     final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
 

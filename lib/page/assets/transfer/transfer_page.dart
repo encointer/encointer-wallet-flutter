@@ -173,7 +173,7 @@ class _TransferPageState extends State<TransferPage> {
                                 'ACCOUNT_NAME',
                                 Fmt.accountName(context, store.account.currentAccount),
                               ),
-                          style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 24),
@@ -197,7 +197,7 @@ class _TransferPageState extends State<TransferPage> {
                         const SizedBox(height: 24),
                         EncointerTextFormField(
                           labelText: dic.assets.amountToBeTransferred,
-                          textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
+                          textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           controller: _amountCtrl,
@@ -233,7 +233,7 @@ class _TransferPageState extends State<TransferPage> {
                     Center(
                       child: Text(
                         '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
-                        style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
                       ),
                     ),
                   const SizedBox(height: 8),
@@ -315,7 +315,7 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
             available,
             length: 6,
           )} ',
-          style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
           children: const <TextSpan>[
             TextSpan(
               text: 'ⵐ',

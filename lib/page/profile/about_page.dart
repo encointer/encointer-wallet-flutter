@@ -29,7 +29,7 @@ class AboutPage extends StatelessWidget {
             ),
             Text(
               dic.profile.aboutBrief,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 8),
             FutureBuilder<PackageInfo>(

@@ -43,7 +43,7 @@ class AddAccountForm extends StatelessWidget {
                   Text(
                     I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                   const SizedBox(height: 10),
                   SizedBox(
@@ -51,7 +51,7 @@ class AddAccountForm extends StatelessWidget {
                     child: Text(
                       I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -74,7 +74,7 @@ class AddAccountForm extends StatelessWidget {
                     const Icon(Iconsax.import_2),
                     const SizedBox(width: 10),
                     Text(I18n.of(context)!.translationsForLocale().home.accountImport,
-                        style: Theme.of(context).textTheme.headline3),
+                        style: Theme.of(context).textTheme.displaySmall),
                   ],
                 ),
                 onPressed: () => Navigator.pushNamed(context, ImportAccountPage.route)),
@@ -88,7 +88,7 @@ class AddAccountForm extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     I18n.of(context)!.translationsForLocale().profile.accountCreate,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
                   ),
                 ],
               ),
