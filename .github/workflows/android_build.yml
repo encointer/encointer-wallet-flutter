@@ -42,8 +42,8 @@ jobs:
       - name: melos install
         run: ./flutterw pub global activate melos
 
-      - name: melos bootstrap
-        run: melos bootstrap
+      # - name: melos bootstrap
+      #   run: melos bootstrap
 
       - name: "Build JS"
         working-directory: ./scripts

@@ -30,8 +30,8 @@ jobs:
       - name: melos install
         run: ./flutterw pub global activate melos
 
-      - name: melos bootstrap
-        run: melos bootstrap
+      # - name: melos bootstrap
+      #   run: melos bootstrap
 
       # analyze and test
       - name: "Check fmt Encointer"
