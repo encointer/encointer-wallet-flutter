@@ -118,9 +118,8 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon.
   Future<void> getPhaseDurations() async {
-    final phaseDurations = await jsApi
-        .evalJavascript<Map<String, dynamic>>('encointer.getPhaseDurations()')
-        .then((m) => Map<String, dynamic>.from(m).map(
+    final phaseDurations =
+        await jsApi.evalJavascript<Map<String, dynamic>>('encointer.getPhaseDurations()').then((m) => m.map(
               (key, value) => MapEntry(ceremonyPhaseFromString(key)!, int.parse(value as String)),
             ));
 
@@ -177,7 +176,7 @@ class EncointerApi {
 
     final locs = await jsApi
         .evalJavascript<List<dynamic>>('encointer.getAllMeetupLocations(${jsonEncode(cid)})')
-        .then((list) => List<dynamic>.from(list).map((e) => Location.fromJson(e as Map<String, dynamic>)).toList());
+        .then((list) => list.map((e) => Location.fromJson(e as Map<String, dynamic>)).toList());
 
     Log.d('api: getAllMeetupLocations: $locs ' 'EncointerApi');
     if (store.encointer.community != null) {
@@ -224,7 +223,7 @@ class EncointerApi {
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
   Future<void> communitiesGetAll() async {
     final cn = await jsApi.evalJavascript<List<dynamic>>('encointer.communitiesGetAll()').then(
-          (list) => List<dynamic>.from(list).map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList(),
+          (list) => list.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList(),
         );
 
     Log.d('api: CidNames: $cn', 'EncointerApi');
@@ -418,7 +417,7 @@ class EncointerApi {
   Future<void> getReputations() async {
     final address = store.account.currentAddress;
 
-    final reputationsList = await jsApi.evalJavascript<List<dynamic>>('encointer.getReputations("$address")'); // List
+    final reputationsList = await jsApi.evalJavascript<List<dynamic>>('encointer.getReputations("$address")');
 
     Log.d('api: getReputations: $reputationsList', 'EncointerApi');
     if (reputationsList.isEmpty) return Future.value();

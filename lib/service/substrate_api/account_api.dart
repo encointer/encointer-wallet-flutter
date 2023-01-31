@@ -62,7 +62,7 @@ class AccountApi {
 
     final res = await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
     if (res != null) {
-      store.account.setPubKeyAddressMap(Map<String, Map>.from({store.settings.endpoint.ss58.toString(): res}));
+      store.account.setPubKeyAddressMap(Map<String, Map>.from({'${store.settings.endpoint.ss58}': res}));
     }
     return res ?? {};
   }
@@ -150,7 +150,7 @@ class AccountApi {
     return jsApi.evalJavascript('account.checkPassword("$pubKey", "$pass")');
   }
 
-  Future<List> fetchAddressIndex(List addresses) async {
+  Future<List<dynamic>> fetchAddressIndex(List addresses) async {
     if (addresses.isEmpty) return [];
 
     addresses.retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));

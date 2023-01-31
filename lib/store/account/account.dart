@@ -372,9 +372,9 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setAddressIndex(List<Map<String, dynamic>> list) {
+  void setAddressIndex(List<dynamic> list) {
     for (final i in list) {
-      addressIndexMap[i['accountId'] as String] = i;
+      addressIndexMap[(i as Map<String, dynamic>)['accountId'] as String] = i;
     }
   }
 }
