@@ -9,3 +9,5 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/passsy/flutter_wrapper/mas
 # `precache` ensures that the correct Dart SDK and binaries for IOS and android exist.
 
 ./flutterw doctor
+
+./flutterw pub global activate melos

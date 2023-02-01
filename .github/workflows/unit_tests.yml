@@ -27,26 +27,11 @@ jobs:
           mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
-      - name: pub global activated
-        run: export PATH="$PATH":"$HOME/.pub-cache/bin"
-
-      - name: echp PATH
-        run: echo $PATH
-
-      - name: melos install
-        run: ./flutterw pub global activate melos
-
-      - name: pub global activated 2
-        run: export PATH="$PATH":"$HOME/.pub-cache/bin"
-
-      - name: echp PATH 2
-        run: echo $PATH
-
       - name: flutter pub global list
         run: ./flutterw pub global list
 
       - name: melos bootstrap
-        run: ./flutterw pub global run melos --version && ./flutterw pub global run melos bootstrap        
+        run: ./flutterw pub global run melos bootstrap        
 
       # analyze and test
       - name: "Check fmt"
