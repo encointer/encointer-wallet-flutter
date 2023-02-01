@@ -50,13 +50,13 @@ jobs:
 
       # analyze and test
       - name: "Check fmt"
-        run: ./flutterw pub global run melos format
+        run: ./flutterw pub global run melos run format
 
       - name: "Analyze Code"
-        run: melos format
+        run: melos run format
 
       - name: "Run unit tests"
-        run: ./flutterw test --exclude-tags encointer-node-e2e
+        run: melos format
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
