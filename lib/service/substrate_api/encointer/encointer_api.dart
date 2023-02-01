@@ -406,7 +406,7 @@ class EncointerApi {
 
     final bootstrappers = await jsApi
         .evalJavascript<List<dynamic>>('encointer.getBootstrappers($cid)')
-        .then((e) => List<String>.generate(e.length, (index) => e[index] as String));
+        .then((list) => list.cast<String>());
 
     Log.d('api: bootstrappers $bootstrappers', 'EncointerApi');
     if (store.encointer.community != null) {
@@ -417,17 +417,11 @@ class EncointerApi {
   Future<void> getReputations() async {
     final address = store.account.currentAddress;
 
-    final reputationsList = await jsApi.evalJavascript<List<dynamic>>('encointer.getReputations("$address")');
+    final reputations =
+        await jsApi.evalJavascript<List<dynamic>>('encointer.getReputations("$address")').then(reputationsFromList);
 
-    Log.d('api: getReputations: $reputationsList', 'EncointerApi');
-    if (reputationsList.isEmpty) return Future.value();
-
-    final reputations = {
-      for (var cr in reputationsList)
-        (cr as List<dynamic>)[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
-    };
-
-    await store.encointer.account?.setReputations(reputations);
+    Log.d('api: getReputations: $reputations', 'EncointerApi');
+    if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {
@@ -451,10 +445,11 @@ class EncointerApi {
     final cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
     final pin = store.settings.cachedPin;
     Log.d('getProofOfAttendance: cachedPin: $pin', 'EncointerApi');
-    final proofJs = await jsApi.evalJavascript<Map<String, dynamic>>(
-      'encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "$cIndex", "$pin")',
-    );
-    final proof = ProofOfAttendance.fromJson(proofJs);
+    final proof = await jsApi
+        .evalJavascript<Map<String, dynamic>>(
+            'encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "$cIndex", "$pin")')
+        .then(ProofOfAttendance.fromJson);
+
     Log.d('Proof: $proof', 'EncointerApi');
     return proof;
   }
