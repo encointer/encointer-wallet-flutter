@@ -10,6 +10,7 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -132,15 +133,21 @@ class _TransferPageState extends State<TransferPage> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(dic.assets.transfer),
-              leading: Container(),
+              leading: const SizedBox.shrink(),
               actions: [
+                if (store.settings.developerMode)
+                  IconButton(
+                    key: const Key('go-transfer-history'),
+                    icon: const Icon(Icons.swap_vert_sharp),
+                    onPressed: () {
+                      Navigator.pushNamed(context, TransferHistoryView.route);
+                    },
+                  ),
                 IconButton(
                   key: const Key('close-transfer-page'),
                   icon: const Icon(Icons.close),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
+                  onPressed: () => Navigator.pop(context),
+                ),
               ],
             ),
             body: Padding(
@@ -166,7 +173,7 @@ class _TransferPageState extends State<TransferPage> {
                                 'ACCOUNT_NAME',
                                 Fmt.accountName(context, store.account.currentAccount),
                               ),
-                          style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 24),
@@ -190,7 +197,7 @@ class _TransferPageState extends State<TransferPage> {
                         const SizedBox(height: 24),
                         EncointerTextFormField(
                           labelText: dic.assets.amountToBeTransferred,
-                          textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
+                          textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           controller: _amountCtrl,
@@ -207,32 +214,26 @@ class _TransferPageState extends State<TransferPage> {
                           suffixIcon: const Text('ⵐ', style: TextStyle(color: encointerGrey, fontSize: 44)),
                         ),
                         const SizedBox(height: 24),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: AddressInputField(
-                                store,
-                                label: dic.assets.address,
-                                initialValue: _accountTo,
-                                onChanged: (AccountData acc) {
-                                  setState(() {
-                                    _accountTo = acc;
-                                  });
-                                },
-                                hideIdenticon: true,
-                              ),
-                            ),
-                          ],
+                        AddressInputField(
+                          store,
+                          label: dic.assets.address,
+                          initialValue: _accountTo,
+                          onChanged: (AccountData acc) {
+                            setState(() {
+                              _accountTo = acc;
+                            });
+                          },
+                          hideIdenticon: true,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 20),
                   if (store.settings.developerMode)
                     Center(
                       child: Text(
                         '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
-                        style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
                       ),
                     ),
                   const SizedBox(height: 8),
@@ -314,7 +315,7 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
             available,
             length: 6,
           )} ',
-          style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
           children: const <TextSpan>[
             TextSpan(
               text: 'ⵐ',

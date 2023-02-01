@@ -139,3 +139,13 @@ extension CeremonyPhaseExtension on CeremonyPhase {
     return toEnumValue(this);
   }
 }
+
+/// Takes a `List<dynamic>` which contains a `List<List<[int, Map<String, dynamic>]>` and
+/// transforms it into a `Map<int, CommunityReputation>`.
+Map<int, CommunityReputation> reputationsFromList(List<dynamic> reputationsList) {
+  final reputations = reputationsList.cast<List<dynamic>>();
+
+  return {
+    for (var cr in reputations) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>),
+  };
+}

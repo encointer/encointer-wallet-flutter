@@ -44,7 +44,7 @@ class EncointerTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,
-          labelStyle: Theme.of(context).textTheme.headline4,
+          labelStyle: Theme.of(context).textTheme.headlineMedium,
           contentPadding: const EdgeInsets.only(top: 16, bottom: 16, left: 25),
           border: const UnderlineInputBorder(
             borderSide: BorderSide(

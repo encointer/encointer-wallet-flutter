@@ -19,7 +19,7 @@ import 'package:encointer_wallet/store/encointer/sub_stores/community_store/comm
 Future<AppStore> setupAppStore(String networkInfo) async {
   final store = AppStore(
     MockLocalStorage(),
-    config: const AppConfig(isTest: true, mockSubstrateApi: true),
+    config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
   );
   await store.init('_en');
 
@@ -157,6 +157,18 @@ void main() {
       expect(encointerStore.assigningPhaseStart, 1);
       expect(encointerStore.attestingPhaseStart, 2);
       expect(encointerStore.nextRegisteringPhaseStart, 3);
+    });
+
+    test('get ceremony cycle duration', () async {
+      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final encointerStore = appStore.encointer
+        ..setPhaseDurations(Map<CeremonyPhase, int>.of({
+          CeremonyPhase.Registering: 1,
+          CeremonyPhase.Assigning: 1,
+          CeremonyPhase.Attesting: 1,
+        }));
+
+      expect(encointerStore.ceremonyCycleDuration, 3);
     });
   });
 }

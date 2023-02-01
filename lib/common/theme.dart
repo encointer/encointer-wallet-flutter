@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 final appThemeEncointer = ThemeData(
   primarySwatch: zurichLion,
   textTheme: TextTheme(
-    headline1: TextStyle(
+    displayLarge: TextStyle(
       fontSize: 66,
       color: zurichLion.shade500,
     ),
-    headline2: TextStyle(
+    displayMedium: TextStyle(
       fontSize: 22,
       color: zurichLion.shade500,
     ),
-    headline3: TextStyle(
+    displaySmall: TextStyle(
       fontSize: 19,
       color: zurichLion.shade500,
     ),
-    headline4: TextStyle(
+    headlineMedium: TextStyle(
       fontSize: 14,
       color: zurichLion.shade500,
     ),
@@ -44,19 +44,19 @@ final appThemeEncointer = ThemeData(
     shadowColor: Colors.transparent,
     centerTitle: true,
     toolbarTextStyle: TextTheme(
-      headline6: TextStyle(
+      titleLarge: TextStyle(
         // it's not obvious but appBar uses headline6
         fontSize: 19,
         color: zurichLion.shade500,
       ),
-    ).bodyText2,
+    ).bodyMedium,
     titleTextStyle: TextTheme(
-      headline6: TextStyle(
+      titleLarge: TextStyle(
         // it's not obvious but appBar uses headline6
         fontSize: 19,
         color: zurichLion.shade500,
       ),
-    ).headline6,
+    ).titleLarge,
   ),
   scaffoldBackgroundColor: Colors.white,
 );

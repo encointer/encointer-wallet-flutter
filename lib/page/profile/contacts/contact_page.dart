@@ -4,7 +4,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/rounded_button.dart';
-import 'package:encointer_wallet/common/components/tap_tool_tip.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -101,7 +100,7 @@ class _Contact extends State<ContactPage> {
         // if this address was used as observation and current account,
         // we need to change current account
         if (pubKey == store.account.currentAccountPubKey) {
-          final current = await webApi.account.changeCurrentAccount(
+          final current = webApi.account.changeCurrentAccount(
             accounts: store.account.accountListAll,
           );
           store.setCurrentAccount(current);
@@ -206,7 +205,8 @@ class _Contact extends State<ContactPage> {
                               });
                             },
                           ),
-                          TapTooltip(
+                          Tooltip(
+                            triggerMode: TooltipTriggerMode.tap,
                             message: I18n.of(context)!.translationsForLocale().account.observeBrief,
                             child: const Padding(
                               padding: EdgeInsets.only(left: 8),

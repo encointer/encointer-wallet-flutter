@@ -30,6 +30,52 @@ class CeremonyNotifications {
       );
     }
   }
+
+  /// Schedules notifications that the registering phase starts for the next [numberOfCyclesToSchedule] cycles.
+  static Future<void> scheduleRegisteringStartsReminders(
+    int nextRegisteringPhase,
+    int currentCeremonyIndex,
+    int ceremonyCycleDuration,
+    TranslationsEncointer dic, {
+    int numberOfCyclesToSchedule = 5,
+  }) async {
+    for (var i = 0; i < numberOfCyclesToSchedule; i++) {
+      // calculate the scheduled date by adding i*ceremonyCycleDuration to nextRegisteringPhase
+      final scheduledDate = DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase + i * ceremonyCycleDuration);
+      await NotificationPlugin.scheduleNotification(
+        Notification.registeringPhaseStarted.id(currentCeremonyIndex) + i,
+        dic.registeringPhaseReminderTitle,
+        dic.registeringPhaseReminderContent,
+        scheduledDate,
+      );
+    }
+  }
+
+  /// Schedules notifications that the registering phase ends for the next [numberOfCyclesToSchedule] cycles.
+  ///
+  /// Shows the notification [showBeforeAssigningPhase] before the [assigningPhaseStart].
+  static Future<void> scheduleLastDayOfRegisteringReminders(
+    int assigningPhaseStart,
+    int currentCeremonyIndex,
+    int ceremonyCycleDuration,
+    TranslationsEncointer dic, {
+    int numberOfCyclesToSchedule = 5,
+    Duration showBeforeAssigningPhase = const Duration(hours: 24),
+  }) async {
+    for (var i = 0; i < numberOfCyclesToSchedule; i++) {
+      final scheduledDate = DateTime.fromMillisecondsSinceEpoch(assigningPhaseStart + i * ceremonyCycleDuration)
+          .subtract(showBeforeAssigningPhase);
+
+      if (scheduledDate.isAfter(DateTime.now())) {
+        await NotificationPlugin.scheduleNotification(
+          Notification.lastDayOfRegisteringReminder.id(currentCeremonyIndex) + i,
+          dic.registeringPhaseReminderTitle,
+          dic.registeringPhaseReminderContent,
+          scheduledDate,
+        );
+      }
+    }
+  }
 }
 
 /// Handles notification IDs for different notification categories.

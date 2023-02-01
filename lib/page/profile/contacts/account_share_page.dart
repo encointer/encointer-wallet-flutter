@@ -60,7 +60,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                 children: <Widget>[
                   Text(
                     dic.profile.qrScanHintAccount,
-                    style: textTheme.headline2!.copyWith(color: encointerBlack),
+                    style: textTheme.displayMedium!.copyWith(color: encointerBlack),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
@@ -73,7 +73,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   ),
                   Text(
                     accountToBeShared.name,
-                    style: textTheme.headline3!.copyWith(color: encointerGrey),
+                    style: textTheme.displaySmall!.copyWith(color: encointerGrey),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -82,7 +82,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
               Text(
                 dic.profile.shareLinkHint,
                 textAlign: TextAlign.center,
-                style: textTheme.headline4!.copyWith(color: encointerGrey),
+                style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
               ),
               const SizedBox(height: 8),
               ElevatedButton(
@@ -92,7 +92,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   children: [
                     Icon(Icons.share, color: zurichLion.shade500),
                     const SizedBox(width: 12),
-                    Text(dic.profile.sendLink, style: textTheme.headline3),
+                    Text(dic.profile.sendLink, style: textTheme.displaySmall),
                   ],
                 ),
                 onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/router/app_router.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -36,7 +35,7 @@ class WalletApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
           ],
           supportedLocales: context.watch<AppSettings>().locales,
-          initialRoute: context.watch<AppStore>().config.initialRoute,
+          initialRoute: SplashView.route,
           theme: appThemeEncointer,
           scaffoldMessengerKey: rootScaffoldMessengerKey,
           onGenerateRoute: AppRoute.onGenerateRoute,

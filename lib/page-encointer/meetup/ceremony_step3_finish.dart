@@ -39,14 +39,14 @@ class CeremonyStep3Finish extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.thankYou,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(color: zurichLion.shade600),
+                        style: Theme.of(context).textTheme.displayMedium!.copyWith(color: zurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.weHopeToSeeYouAtTheNextGathering,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.5),
+                        style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.5),
                       ),
                     ),
                   ],
@@ -60,7 +60,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                     const SizedBox(width: 12, height: 60),
                     Text(
                       dic.encointer.finish,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ],
                 ),

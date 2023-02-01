@@ -52,7 +52,7 @@ class TxDetail extends StatelessWidget {
           ),
           Text(
             '$action ${success! ? dic.assets.success : dic.assets.fail}',
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 32),

@@ -139,7 +139,7 @@ class EncointerApi {
       );
       return accountData;
     } catch (e) {
-      throw Exception('[EncointerApi]: Error getting aggregated account data ${e.toString()}');
+      throw Exception('[EncointerApi]: Error getting aggregated account data $e');
     }
   }
 
@@ -424,7 +424,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
     final cids = await jsApi.evalJavascript('encointer.getCommunityIdentifiers()').then(
-          (res) => List<dynamic>.from(res['cids'] as Iterable)
+          (res) => List<dynamic>.from((res as Map<String, dynamic>)['cids'] as Iterable)
               .map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>))
               .toList(),
         );
@@ -452,18 +452,16 @@ class EncointerApi {
   Future<void> getReputations() async {
     final address = store.account.currentAddress;
 
-    final reputationsList = await jsApi.evalJavascript('encointer.getReputations("$address")');
+    final reputationsList = await jsApi
+        .evalJavascript('encointer.getReputations("$address")')
+        .then((r) => reputationsFromList(r as List<dynamic>));
 
     Log.d('api: getReputations: $reputationsList', 'EncointerApi');
-    if (reputationsList is List && reputationsList.isEmpty) {
+    if (reputationsList.isEmpty) {
       return Future.value();
     }
 
-    final reputations = {
-      for (var cr in reputationsList as List) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
-    };
-
-    await store.encointer.account?.setReputations(reputations);
+    await store.encointer.account?.setReputations(reputationsList);
   }
 
   Future<dynamic> sendFaucetTx() async {

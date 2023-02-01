@@ -57,16 +57,12 @@ class AccountApi {
     return res as List?;
   }
 
-  Future<String?> changeCurrentAccount({String? pubKey, required List<AccountData> accounts}) async {
-    var current = pubKey;
-    if (pubKey == null) {
-      if (accounts.isNotEmpty) {
-        current = accounts[0].pubKey;
-      } else {
-        current = '';
-      }
+  String changeCurrentAccount({String? pubKey, required List<AccountData> accounts}) {
+    if (pubKey == null && accounts.isNotEmpty) {
+      return accounts[0].pubKey;
+    } else {
+      return '';
     }
-    return current;
   }
 
   Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {

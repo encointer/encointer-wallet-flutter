@@ -140,8 +140,8 @@ class _AssetsState extends State<Assets> {
         appBar: appBar,
         body: UpgradeAlert(
           upgrader: Upgrader(
-            appcastConfig: context.watch<AppStore>().appCast,
-            debugLogging: context.select<AppStore, bool>((e) => e.appCast != null),
+            appcastConfig: context.watch<AppStore>().config.appCast,
+            debugLogging: context.watch<AppStore>().config.isIntegrationTest,
             shouldPopScope: () => true,
             canDismissDialog: true,
           ),
@@ -189,7 +189,10 @@ class _AssetsState extends State<Assets> {
                                         ),
                                         Text(
                                           '${dic!.assets.balance}, ${widget.store.encointer.community?.symbol}',
-                                          style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium!
+                                              .copyWith(color: encointerGrey),
                                         ),
                                       ],
                                     )
