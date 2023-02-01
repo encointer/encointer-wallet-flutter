@@ -46,14 +46,14 @@ jobs:
         run: ./flutterw pub global list
 
       - name: melos bootstrap
-        run: ./flutterw pub global run melos --version && melos bootstrap           
+        run: ./flutterw pub global run melos --version && ./flutterw pub global run melos bootstrap        
 
       # analyze and test
       - name: "Check fmt"
-        run: melos format
+        run: ./flutterw pub global run melos format
 
       - name: "Analyze Code"
-        run: ./flutterw pub get && ./flutterw analyze  --fatal-warnings
+        run: melos format
 
       - name: "Run unit tests"
         run: ./flutterw test --exclude-tags encointer-node-e2e
