@@ -236,12 +236,11 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> loadCache() async {
-    final ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
-    // Here, for now, ls always gives us a null value. Because this function is related to transaction history.
-    // Currently obsolete but we will integrate it in the future and then check the [ls] type again
+    final ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List<dynamic>?;
     if (ls != null) {
       for (final i in ls) {
-        if (blockMap[(i as Map<String, dynamic>)['id']] == null) {
+        // for now ls always returns null, when integrated transaction history please check type
+        if (i is Map<String, dynamic> && blockMap[i['id']] == null) {
           blockMap[i['id'] as int] = BlockData.fromJson(i);
         }
       }

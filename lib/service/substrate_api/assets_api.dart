@@ -37,9 +37,8 @@ class AssetsApi {
   ) async {
     if (pubKey != null && pubKey.isNotEmpty) {
       final address = currentAddress;
-      final res = await jsApi.evalJavascript('account.getBalance("$address")');
-      callback(pubKey, res as Map<String, dynamic>);
+      final res = await jsApi.evalJavascript<Map<String, dynamic>>('account.getBalance("$address")');
+      callback(pubKey, res);
     }
-    Log.d('Fetch marketprice not implemented for Encointer networks', 'AssetsApi');
   }
 }

@@ -21,8 +21,8 @@ class AccountApi {
       final accounts = jsonEncode(accountList.map(AccountData.toJson).toList());
 
       final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
-      final keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
-      return keys as Map<dynamic, dynamic>;
+      final keys = await jsApi.evalJavascript<Map<String, dynamic>>('account.initKeys($accounts, $ss58)');
+      return keys;
     } else {
       return null;
     }
@@ -31,45 +31,36 @@ class AccountApi {
   /// Encodes publicKeys to SS58-addresses
   Future<Map<dynamic, dynamic>> encodeAddress(List<String?> pubKeys) async {
     final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
-    final res = await jsApi.evalJavascript('account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)');
-
-    return res as Map<dynamic, dynamic>;
+    return jsApi.evalJavascript<Map<dynamic, dynamic>>('account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)');
   }
 
   /// decode addresses to publicKeys
-  Future<Map?> decodeAddress(List<String> addresses) async {
+  Future<Map<String, dynamic>?> decodeAddress(List<String> addresses) async {
     if (addresses.isEmpty) return {};
-    final res = await jsApi.evalJavascript('account.decodeAddress(${jsonEncode(addresses)})');
+    final res = await jsApi.evalJavascript<Map<String, dynamic>>('account.decodeAddress(${jsonEncode(addresses)})');
 
-    return res as Map?;
+    return res;
   }
 
   Future<String> addressFromUri(String uri) async {
-    final address = await jsApi.evalJavascript('account.addressFromUri("$uri")');
+    final address = await jsApi.evalJavascript<String>('account.addressFromUri("$uri")');
 
     Log.d('addressFromUri: $address', 'AccountApi');
-    return address as String;
+    return address;
   }
 
   /// query address with account index
-  Future<List?> queryAddressWithAccountIndex(String index, int? ss58) async {
-    final res = await jsApi.evalJavascript('account.queryAddressWithAccountIndex("$index", $ss58)');
-    return res as List?;
+  Future<List<dynamic>?> queryAddressWithAccountIndex(String index, int? ss58) async {
+    final res = await jsApi.evalJavascript<List<dynamic>?>('account.queryAddressWithAccountIndex("$index", $ss58)');
+    return res;
   }
 
-  String changeCurrentAccount({String? pubKey, required List<AccountData> accounts}) {
-    if (pubKey == null && accounts.isNotEmpty) {
-      return accounts[0].pubKey;
+  String? changeCurrentAccount({String? pubKey, required List<AccountData> accounts}) {
+    if (pubKey == null) {
+      return accounts.isNotEmpty ? accounts[0].pubKey : '';
     } else {
-      return '';
+      return null;
     }
-  }
-
-  Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
-    final param = rawParam ?? jsonEncode(params);
-    Log.d('$txInfo', 'AccountApi');
-    final res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)');
-    return res as Map;
   }
 
   Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
@@ -99,9 +90,8 @@ class AccountApi {
     return jsApi.evalJavascript(call);
   }
 
-  Future<Map<String, dynamic>> generateAccount() async {
-    final acc = await jsApi.evalJavascript('account.gen()') as Map<String, dynamic>;
-    return acc;
+  Future<Map<String, dynamic>> generateAccount() {
+    return jsApi.evalJavascript<Map<String, dynamic>>('account.gen()');
   }
 
   Future<Map<String, dynamic>> importAccount(
@@ -113,8 +103,7 @@ class AccountApi {
   }) async {
     var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
-    final acc = await jsApi.evalJavascript(code);
-    return acc as Map<String, dynamic>;
+    return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }
 
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
@@ -123,13 +112,13 @@ class AccountApi {
     return jsApi.evalJavascript('account.checkPassword("$pubKey", "$pass")');
   }
 
-  Future<List> fetchAddressIndex(List addresses, Iterable<String?> keys) async {
+  Future<List<dynamic>> fetchAddressIndex(List addresses, Iterable<String?> keys) async {
     if (addresses.isEmpty) return [];
 
     addresses.retainWhere((element) => !keys.contains(element));
     if (addresses.isEmpty) return [];
 
-    final res = await jsApi.evalJavascript('account.getAccountIndex(${jsonEncode(addresses)})');
-    return res as List<dynamic>;
+    final res = await jsApi.evalJavascript<List<dynamic>>('account.getAccountIndex(${jsonEncode(addresses)})');
+    return res;
   }
 }

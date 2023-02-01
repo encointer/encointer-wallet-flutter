@@ -46,7 +46,7 @@ class _Contact extends State<ContactPage> {
           Map<String, Map>.from({store.settings.endpoint.ss58.toString(): pubKeyAddress}),
         );
       }
-      final pubKey = (pubKeyAddress ?? {}).keys.toList()[0] as String;
+      final pubKey = (pubKeyAddress ?? {}).keys.toList()[0];
       final con = {
         'address': addr,
         'name': _nameCtrl.text,

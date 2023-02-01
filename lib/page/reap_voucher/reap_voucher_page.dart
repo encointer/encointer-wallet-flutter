@@ -177,7 +177,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
     String recipientAddress,
   ) async {
-    final res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid) as Map<String, dynamic>;
+    final res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
 
     if (res['hash'] == null) {
       Log.d('Error redeeming voucher: ${res['error']}', 'ReapVoucherPage');
