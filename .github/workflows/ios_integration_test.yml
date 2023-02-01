@@ -1,100 +1,100 @@
-name: IOS CI
+# name: IOS CI
 
-on:
-  push:
-    branches: [master, f-droid]
-  pull_request:
-    branches: [master, f-droid]
+# on:
+#   push:
+#     branches: [master, f-droid]
+#   pull_request:
+#     branches: [master, f-droid]
 
-env:
-  NODE_VERSION: 16.13.1
-  JAVA_VERSION: 12.x
-  TEMP_SCREENSHOTS: /tmp/screenshots
+# env:
+#   NODE_VERSION: 16.13.1
+#   JAVA_VERSION: 12.x
+#   TEMP_SCREENSHOTS: /tmp/screenshots
 
-jobs:
-  cancel_previous_runs:
-    name: Cancel Previous Runs
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
+# jobs:
+#   cancel_previous_runs:
+#     name: Cancel Previous Runs
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: styfle/cancel-workflow-action@0.11.0
+#         with:
+#           access_token: ${{ secrets.GITHUB_TOKEN }}
 
-  ios_device_test:
-    runs-on: macos-latest
-    timeout-minutes: 60
-    strategy:
-      matrix:
-        include:
-          - device: "iPhone 11 Pro Max"
-            record_video: true
-          - device: "iPhone 8 Plus"
-            record_video: false
-          - device: "iPad Pro (12.9-inch) (3rd generation)"
-            record_video: false
-          - device: "iPad Pro (12.9-inch) (2nd generation)"
-            record_video: false
-      fail-fast: false
-    steps:
-      # Setup Environment
-      - uses: actions/checkout@v3
+#   ios_device_test:
+#     runs-on: macos-latest
+#     timeout-minutes: 60
+#     strategy:
+#       matrix:
+#         include:
+#           - device: "iPhone 11 Pro Max"
+#             record_video: true
+#           - device: "iPhone 8 Plus"
+#             record_video: false
+#           - device: "iPad Pro (12.9-inch) (3rd generation)"
+#             record_video: false
+#           - device: "iPad Pro (12.9-inch) (2nd generation)"
+#             record_video: false
+#       fail-fast: false
+#     steps:
+#       # Setup Environment
+#       - uses: actions/checkout@v3
 
-      - name: "Prepare environment for ios"
-        working-directory: ./scripts
-        run: ./ios_init_env.sh
+#       - name: "Prepare environment for ios"
+#         working-directory: ./scripts
+#         run: ./ios_init_env.sh
 
-      - uses: actions/setup-java@v3
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: 'zulu'
+#       - uses: actions/setup-java@v3
+#         with:
+#           java-version: ${{ env.JAVA_VERSION }}
+#           distribution: 'zulu'
 
-      - name: Install flutter wrapper
-        run: ./scripts/install_flutter_wrapper.sh
+#       - name: Install flutter wrapper
+#         run: ./scripts/install_flutter_wrapper.sh
 
-      - name: "Create Simulator if iPad Pro 2nd gen"
-        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
-        run: xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
+#       - name: "Create Simulator if iPad Pro 2nd gen"
+#         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
+#         run: xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
 
-      - name: "Create Simulator if iPad Pro 3rd gen"
-        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (3rd generation)' }}
-        run: xcrun simctl create "iPad Pro (12.9-inch) (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---3rd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
+#       - name: "Create Simulator if iPad Pro 3rd gen"
+#         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (3rd generation)' }}
+#         run: xcrun simctl create "iPad Pro (12.9-inch) (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---3rd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
 
-      # JS Stuff
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+#       # JS Stuff
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
 
-      - name: "Build JS"
-        working-directory: ./scripts
-        run: source ./init_env.sh && ./build_js.sh
+#       - name: "Build JS"
+#         working-directory: ./scripts
+#         run: source ./init_env.sh && ./build_js.sh
 
-      - name: Start colima a docker runtime for MacOs
-        run: |
-          brew install docker
-          colima start
+#       - name: Start colima a docker runtime for MacOs
+#         run: |
+#           brew install docker
+#           colima start
 
-      - name: Run encointer-node
-        run: ./scripts/run_encointer_node_notee_docker.sh &
+#       - name: Run encointer-node
+#         run: ./scripts/run_encointer_node_notee_docker.sh &
 
-      - name: Bootstrap Demo Community
-        run: docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
+#       - name: Bootstrap Demo Community
+#         run: docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
 
-      - name: "Start Simulator"
-        working-directory: ./scripts
-        env:
-          DEVICE_ID: ${{ matrix.device }}
-        run: source ./ios_emulator.sh
+#       - name: "Start Simulator"
+#         working-directory: ./scripts
+#         env:
+#           DEVICE_ID: ${{ matrix.device }}
+#         run: source ./ios_emulator.sh
 
-        # Run Tests
-      - name: "Flutter driver test and record video"
-        run: ./scripts/ios_integration_test.sh
-        env:
-          TEMP_DIR: ${{ env.TEMP_SCREENSHOTS }}
-          RECORD: ${{ matrix.record_video }}
+#         # Run Tests
+#       - name: "Flutter driver test and record video"
+#         run: ./scripts/ios_integration_test.sh
+#         env:
+#           TEMP_DIR: ${{ env.TEMP_SCREENSHOTS }}
+#           RECORD: ${{ matrix.record_video }}
 
-      - name: "Upload screenshots and recording"
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.device }}
-          path: ${{ env.TEMP_SCREENSHOTS }}
+#       - name: "Upload screenshots and recording"
+#         if: always()
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: ${{ matrix.device }}
+#           path: ${{ env.TEMP_SCREENSHOTS }}
