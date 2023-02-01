@@ -42,11 +42,17 @@ jobs:
       - name: pub global activated
         run: export PATH="$PATH":"$HOME/.pub-cache/bin"
 
+      - name: echp PATH
+        run: echo $PATH  
+
       - name: melos install
         run: ./flutterw pub global activate melos
 
-      - name: pub global activated 02
+      - name: pub global activated 2
         run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+      - name: echp PATH 2
+        run: echo $PATH    
 
       # - name: melos bootstrap
       #   run: melos bootstrap
