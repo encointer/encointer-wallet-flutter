@@ -184,7 +184,7 @@ mixin _$AssetsStore on _AssetsStore, Store {
   late final _$setAccountBalancesAsyncAction = AsyncAction('_AssetsStore.setAccountBalances', context: context);
 
   @override
-  Future<void> setAccountBalances(String? pubKey, Map<String, dynamic> data, {bool? needCache, bool? fromCache}) {
+  Future<void> setAccountBalances(String? pubKey, Map<String, dynamic> data, {bool needCache = true, bool? fromCache}) {
     return _$setAccountBalancesAsyncAction
         .run(() => super.setAccountBalances(pubKey, data, needCache: needCache, fromCache: fromCache));
   }

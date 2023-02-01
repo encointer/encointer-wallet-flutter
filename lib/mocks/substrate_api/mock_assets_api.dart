@@ -9,7 +9,7 @@ class MockAssetsApi extends AssetsApi {
   Future<void> startSubscriptions(
     String? pubKey,
     String currentAddress,
-    Future<void> Function(String? pubKey, Map<String, dynamic> data, {bool? needCache, bool? fromCache}) callback,
+    Future<void> Function(String? pubKey, Map<String, dynamic> data, {bool needCache, bool? fromCache}) callback,
   ) async {
     Log.d('api: unimplemented startSubscription stub', 'MockAssetsApi');
   }
@@ -23,7 +23,7 @@ class MockAssetsApi extends AssetsApi {
   Future<void> fetchBalance(
     String? pubKey,
     String currentAddress,
-    Future<void> Function(String? pubKey, Map<String, dynamic> data, {bool? needCache, bool? fromCache}) callback,
+    Future<void> Function(String? pubKey, Map<String, dynamic> data, {bool needCache, bool? fromCache}) callback,
   ) async {
     Log.d('api: fetching mock balance', 'MockAssetsApi');
   }

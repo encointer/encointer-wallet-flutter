@@ -11,7 +11,7 @@ class AssetsApi {
   Future<void> startSubscriptions(
     String? pubKey,
     String currentAddress,
-    Future<void> Function(String? pubKey, Map<String, dynamic> data, {bool? needCache, bool? fromCache}) callback,
+    Future<void> Function(String? pubKey, Map<String, dynamic> data, {bool needCache, bool? fromCache}) callback,
   ) async {
     Log.d('api: starting assets subscriptions', 'AssetsApi');
     jsApi.unsubscribeMessage(_balanceSubscribeChannel);
@@ -33,7 +33,7 @@ class AssetsApi {
   Future<void> fetchBalance(
     String? pubKey,
     String currentAddress,
-    Future<void> Function(String? pubKey, Map<String, dynamic> data, {bool? needCache, bool? fromCache}) callback,
+    Future<void> Function(String? pubKey, Map<String, dynamic> data, {bool needCache, bool? fromCache}) callback,
   ) async {
     if (pubKey != null && pubKey.isNotEmpty) {
       final address = currentAddress;
