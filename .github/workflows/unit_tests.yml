@@ -39,6 +39,9 @@ jobs:
       - name: echp PATH 2
         run: echo $PATH
 
+      - name: flutter pub global list
+        run: ./flutterw pub global list 
+
       - name: melos bootstrap
         run: melos bootstrap
 

@@ -43,7 +43,7 @@ jobs:
         run: export PATH="$PATH":"$HOME/.pub-cache/bin"
 
       - name: echp PATH
-        run: echo $PATH  
+        run: echo $PATH
 
       - name: melos install
         run: ./flutterw pub global activate melos
@@ -52,10 +52,13 @@ jobs:
         run: export PATH="$PATH":"$HOME/.pub-cache/bin"
 
       - name: echp PATH 2
-        run: echo $PATH    
+        run: echo $PATH
 
-      # - name: melos bootstrap
-      #   run: melos bootstrap
+      - name: flutter pub global list
+        run: ./flutterw pub global list
+
+      - name: melos bootstrap
+        run: melos bootstrap
 
       - name: "Build JS"
         working-directory: ./scripts
