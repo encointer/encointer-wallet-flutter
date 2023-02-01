@@ -46,11 +46,11 @@ jobs:
         run: ./flutterw pub global list
 
       - name: melos bootstrap
-        run: flutter pub global run melos --version && melos bootstrap           
+        run: ./flutterw pub global run melos --version && melos bootstrap           
 
       # analyze and test
       - name: "Check fmt"
-        run: ./flutterw format . --line-length 120 --set-exit-if-changed
+        run: melos format
 
       - name: "Analyze Code"
         run: ./flutterw pub get && ./flutterw analyze  --fatal-warnings
