@@ -12,6 +12,4 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/passsy/flutter_wrapper/mas
 
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
-export PATH="$PATH":"$FLUTTER_ROOT/bin"
-
 ./flutterw pub global activate melos
