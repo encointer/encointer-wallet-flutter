@@ -50,4 +50,6 @@ jobs:
         run: source ./init_env.sh && ./build_js.sh
 
       - name: "Build apk"
-        run: ./flutterw pub global run melos build-apk
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos build-apk

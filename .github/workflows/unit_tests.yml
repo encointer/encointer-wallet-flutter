@@ -28,14 +28,18 @@ jobs:
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
       - name: Melos Install
-        run: chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: melos bootstrap
         run: ./flutterw pub global run melos bootstrap
 
       # analyze and test
       - name: "Check fmt"
-        run: melos run format
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          melos run format
 
       - name: "Analyze Code"
         run: melos run analyze-check
