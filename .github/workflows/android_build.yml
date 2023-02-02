@@ -39,8 +39,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: flutter pub global list
-        run: ./flutterw pub global list
+      - name: Melos Install
+        run: ./scripts/melos_install.sh
 
       - name: melos bootstrap
         run: ./flutterw pub global run melos bootstrap
