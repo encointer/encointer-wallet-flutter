@@ -2,15 +2,17 @@
 
 Encointer wallet and client for mobile phones
 
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Get it on F-Droid"
-     height="55">](https://f-droid.org/packages/org.encointer.wallet/)
-     
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
-     alt="Get it on Google Play"
-     height="55">](https://play.google.com/store/apps/details?id=org.encointer.wallet)
-     
-<a href="https://apps.apple.com/us/app/encointer-wallet/id1535471655?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 150px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1619049600&h=f616bcfbdbf4c04f0ca6524a2a683d4b" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
+<p align="left">
+  <a href="https://f-droid.org/packages/org.encointer.wallet/">
+    <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="55">
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=org.encointer.wallet">
+    <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="55">
+  </a>
+  <a href="https://apps.apple.com/us/app/encointer-wallet/id1535471655?itsct=apps_box_badge&itscg=30200">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1619049600&h=f616bcfbdbf4c04f0ca6524a2a683d4b" alt="Download on the App Store" height="55">
+  </a>
+</p>
 
 [![Build](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_build.yml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_build.yml)
 [![Android](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_integration_test.yml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_integration_test.yml)
@@ -19,42 +21,29 @@ Encointer wallet and client for mobile phones
 
 ## Overview
 
-<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=300>
-<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width=300>
-<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=300>
-<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width=300>
-<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width=300>
+<p align="left">
+  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=300>
+  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width=300>
+  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=300>
+  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width=300>
+  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width=300>
+</p>
 
-## Build Instructions
-
-### Install Flutter
-
-Built with [Flutter](https://flutter.dev/), you need to have `Flutter` dev tools
-installed on your computer to compile the project. check [Flutter Documentation](https://flutter.dev/docs)
- to learn how to install `Flutter` and initialize a Flutter App.
-
-### Build js dependencies
-
-Encointer wallet connects to the chains with [polkadot-js/api](https://polkadot.js.org/api/), running in a hidden webview.
-You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
-
-See the js_service_encointer [Readme](lib/js_service_encointer/README.md) for more documentation.
-
-```shell script
-cd lib/js_service_encointer/
-# install nodejs dependencies
-yarn install
-# build main.js
-yarn run build
-```
-
-### Requirements
+## Requirements
 - Dart sdk: ">=2.12.0 <3.0.0"
 - Flutter: "3.7.0"
 - Android: minSdkVersion 17
 - iOS: --ios-language swift, Xcode version >= 14.0.0
 
-### Flutter wrapper
+# Build Instructions
+
+## Install Flutter
+
+Built with [Flutter](https://flutter.dev/), you need to have `Flutter` dev tools
+installed on your computer to compile the project. check [Flutter Documentation](https://flutter.dev/docs)
+ to learn how to install `Flutter` and initialize a Flutter App.
+
+## Flutter wrapper
 This project uses [flutter_wrapper](https://github.com/passsy/flutter_wrapper). Flutter wrapper is a tool that enables
 having the same flutter version across multiple developers. It installs automatically the flutter version form the
 pubspec.yml into the `.flutter` submodule.
@@ -70,39 +59,64 @@ Linux and MacOs users can simply replace all `flutter` CLI commands with `./flut
 #### Windows
 In windows, this does unfortunately not work, but you can still set up your IDE to use the flutter version in from the `.flutter` git submodule. And you can do the following workaround:
 
-```
-// initialize .flutter git submodule (also works on windows)
+```bash
+# initialize .flutter git submodule (also works on windows)
 ./scripts/install_flutter_wrapper.sh
 
-// refer to the flutter installation in your git submodule
+# refer to the flutter installation in your git submodule
 ./.flutter/bin/flutter doctor
+``` 
+
+## Install Melos
+
+[Melos](https://melos.invertase.dev/) splitting up large code bases into separate independently versioned packages is extremely useful for code sharing. However, making changes across many repositories is messy and difficult to track, and testing across repositories gets complicated really fast.
+To solve these (and many other) problems, some projects will organize their code bases into multi-package repositories (sometimes called [monorepos](https://en.wikipedia.org/wiki/Monorepo)).
+
+Install
+```bash
+dart pub global activate melos
+```
+Setup
+```bash
+melos bootstrap
 ```
 
+## Build js dependencies
+
+Encointer wallet connects to the chains with [polkadot-js/api](https://polkadot.js.org/api/), running in a hidden webview.
+You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
+
+See the js_service_encointer [Readme](lib/js_service_encointer/README.md) for more documentation.
+
+```shell script
+melos yarn-build
+```
 ### Run App
-
-If you have an AVD or real device attached, you can do
-
+Run Android platform
 ```
-./flutterw run --flavor dev
+melos run-android
 ```
-
+Run IOS platform
+```
+melos run-ios
+```
 ### Build APK
 
 You may build the App with Flutter's [Deployment Documentation](https://flutter.dev/docs).
 
 In order to build a fat APK, you can do 
 ```
-./flutterw build apk --flavor fdroid
+melos build-apk
 ```
 and find the output in `build/app/outputs/apk/fdroid/release/app-fdroid-release.apk`
 
 For the play store, an appbundle is preferred:
 ```
-./flutterw build appbundle
+melos build-appbundle
 ```
 and find the output in `build/app/outputs/bundle/release/app-release.aab`
 
-#### Dev hints
+## Dev hints
 
 ### Flutter version
 The following file contains the supported flutter version:
@@ -112,11 +126,25 @@ The following file contains the supported flutter version:
 ### Run tests
 
 * run all tests from the command line:`./flutterw test`
-* exclude e2e-tests that need a running encointer node:`./flutterw test --exclude-tags encointer-node-e2e`
-* run e2e-tests that need a running encointer node:`./flutterw test --tags encointer-node-e2e`
+* exclude e2e-tests that need a running encointer node:
+```bash
+melos unit-test-encointer-exclude-node-e2e
+```
+* run e2e-tests that need a running encointer node:
+```bash
+melos unit-test-encointer-node-e2e
+```
 
 ### Integration tests
-* run all integration tests in `test_driver` directory: `./flutterw drive --target=test_driver/app.dart --flavor dev`
+* run all integration tests in `test_driver` directory:
+Integration test app.dart for Android system
+```bash
+melos integration-app-test-android
+```
+Integration test app.dart for IOS system
+```bash
+melos integration-app-test-ios
+```
 
 ### Automated screenshots
 * Github actions is used to create automated screenshots for the specified devices there. However, running the integration tests locally will create screenshots for the currently running device.
@@ -168,7 +196,15 @@ widgets. This causes many unwanted linebreaks that reduce the readability of flu
 
 * Settings > Dart > Line length 120.
 * Autoformat on save: Settings > Languages and Frameworks > then tick: `Format code on save`, `Organize imports on save`.
-* Format the whole codebase with: `./flutterw format . --line-length 120`.
+* Format the whole codebase with: 
+format encointer_wallet
+```bash
+melos format
+```
+format packages
+```bash
+melos format-packages
+```
 
 #### Other fmt hints:
 
@@ -181,7 +217,9 @@ The flutter build-runner is used to generate repetitive boiler-plate code that i
 e.g. `@JsonSerializable` or the mobx annotations. Whenever annotations are added, changed or removed, the following 
 command must be run to update the `*.g` files.
 
-* `./flutterw pub run build_runner build --delete-conflicting-outputs`
+```bash
+./flutterw pub run build_runner build --delete-conflicting-outputs
+```
 
 ## GitHub Actions Hints
 
