@@ -36,20 +36,35 @@ jobs:
         run: ./flutterw pub global run melos bootstrap
 
       # analyze and test
-      - name: "Check fmt"
+      - name: "Check fmt Encointer"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos format-check
 
-      - name: "Analyze Code"
+      - name: "Check fmt Packages"
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos format-check-packages   
+
+      - name: "Analyze Code Encointer"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos analyze-check
 
-      - name: "Run unit tests"
+      - name: "Analyze Code Packages"
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos analyze-check-packages    
+
+      - name: "Run unit tests Encointer"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
+
+      - name: "Run unit tests Packages"
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos unit-test-packages   
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |

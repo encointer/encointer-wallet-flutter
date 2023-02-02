@@ -14,8 +14,8 @@ jobs:
       # Setup Environment
       - uses: actions/checkout@v3
 
-#       - name: Check fdroid setup
-#         run: ./scripts/fdroid_init.sh
+      - name: Check fdroid setup
+        run: ./scripts/fdroid_init.sh
 
-#       - name: Check froid build
-#         run: ./scripts/fdroid_build.sh
+      - name: Check froid build
+        run: ./scripts/fdroid_build.sh
