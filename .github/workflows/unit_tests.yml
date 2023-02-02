@@ -28,7 +28,9 @@ jobs:
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
       - name: Melos Install
-        run: chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: melos bootstrap
         run: ./flutterw pub global run melos bootstrap
@@ -40,7 +42,9 @@ jobs:
           ./flutterw pub global run melos format-check
 
       - name: "Analyze Code"
-        run: ./flutterw pub global run melos analyze-check
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos analyze-check
 
       - name: "Run unit tests"
         run: |
