@@ -14,7 +14,6 @@ class AccountApi {
 
   final JSApi jsApi;
   final AppStore store;
-
   void Function()? fetchAccountData;
 
   Future<void> initAccounts() async {
@@ -22,8 +21,8 @@ class AccountApi {
       final accounts = jsonEncode(store.account.accountList.map(AccountData.toJson).toList());
 
       final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
-      final keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
-      store.account.setPubKeyAddressMap(Map<String, Map>.from(keys as Map));
+      final keys = await jsApi.evalJavascript<Map<String, dynamic>>('account.initKeys($accounts, $ss58)');
+      store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
     }
 
     // and contacts icons
@@ -36,18 +35,17 @@ class AccountApi {
     }
   }
 
-  void setFetchAccountData(void Function() fetchAccountData) {
+  void setFetchAccountData(void Function()? fetchAccountData) {
     this.fetchAccountData = fetchAccountData;
   }
 
   /// Encodes publicKeys to SS58-addresses
   Future<List<String?>> encodeAddress(List<String?> pubKeys) async {
     final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
-    final res = await jsApi.evalJavascript(
-      'account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)',
-    );
+    final res =
+        await jsApi.evalJavascript<Map<String, dynamic>>('account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)');
 
-    store.account.setPubKeyAddressMap(Map<String, Map>.from(res as Map));
+    store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
     final addresses = <String?>[];
 
     for (final pubKey in pubKeys) {
@@ -60,33 +58,28 @@ class AccountApi {
 
   /// decode addresses to publicKeys
   Future<Map> decodeAddress(List<String> addresses) async {
-    if (addresses.isEmpty) {
-      return {};
-    }
-    final res = await jsApi.evalJavascript(
-      'account.decodeAddress(${jsonEncode(addresses)})',
-    );
+    if (addresses.isEmpty) return {};
+
+    final res = await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
     if (res != null) {
-      store.account.setPubKeyAddressMap(Map<String, Map>.from({store.settings.endpoint.ss58.toString(): res as Map}));
+      store.account.setPubKeyAddressMap(Map<String, Map>.from({'${store.settings.endpoint.ss58}': res}));
     }
-    return res as Map? ?? {};
+    return res ?? {};
   }
 
   Future<String> addressFromUri(String uri) async {
-    final address = await jsApi.evalJavascript(
-      'account.addressFromUri("$uri")',
-    );
+    final address = await jsApi.evalJavascript<String>('account.addressFromUri("$uri")');
 
     Log.d('addressFromUri: $address', 'AccountApi');
-    return address as String;
+    return address;
   }
 
   /// query address with account index
-  Future<List?> queryAddressWithAccountIndex(String index) async {
-    final res = await jsApi.evalJavascript(
+  Future<List<dynamic>?> queryAddressWithAccountIndex(String index) async {
+    final res = await jsApi.evalJavascript<List<dynamic>?>(
       'account.queryAddressWithAccountIndex("$index", ${store.settings.endpoint.ss58})',
     );
-    return res as List?;
+    return res;
   }
 
   Future<void> changeCurrentAccount({
@@ -104,16 +97,7 @@ class AccountApi {
     store.setCurrentAccount(current);
 
     await store.loadAccountCache();
-    if (fetchData) {
-      fetchAccountData?.call();
-    }
-  }
-
-  Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
-    final param = rawParam ?? jsonEncode(params);
-    Log.d('$txInfo', 'AccountApi');
-    final res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)');
-    return res as Map;
+    if (fetchData) fetchAccountData?.call();
   }
 
   Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
@@ -144,8 +128,8 @@ class AccountApi {
   }
 
   Future<void> generateAccount() async {
-    final acc = await jsApi.evalJavascript('account.gen()') as Map<String, dynamic>;
-    store.account.setNewAccountKey(acc['mnemonic'] as String?);
+    final acc = await jsApi.evalJavascript<Map<String, dynamic>>('account.gen()');
+    store.account.setNewAccountKey(acc['mnemonic'] as String);
   }
 
   Future<Map<String, dynamic>> importAccount({
@@ -157,31 +141,24 @@ class AccountApi {
     final pass = store.account.newAccount.password;
     var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
-    final acc = await jsApi.evalJavascript(code);
-    return acc as Map<String, dynamic>;
+    return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }
 
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
     final pubKey = account.pubKey;
     Log.d('checkpass: $pubKey, $pass', 'AccountApi');
-    return jsApi.evalJavascript(
-      'account.checkPassword("$pubKey", "$pass")',
-    );
+    return jsApi.evalJavascript('account.checkPassword("$pubKey", "$pass")');
   }
 
-  Future<List> fetchAddressIndex(List addresses) async {
-    if (addresses.isEmpty) {
-      return [];
-    }
-    addresses.retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));
-    if (addresses.isEmpty) {
-      return [];
-    }
+  Future<List<dynamic>> fetchAddressIndex(List addresses) async {
+    if (addresses.isEmpty) return [];
 
-    final res = await jsApi.evalJavascript(
-      'account.getAccountIndex(${jsonEncode(addresses)})',
-    );
-    store.account.setAddressIndex(res as List<dynamic>);
+    addresses.retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));
+    if (addresses.isEmpty) return [];
+
+    final res = await jsApi.evalJavascript<List<dynamic>>('account.getAccountIndex(${jsonEncode(addresses)})');
+    store.account.setAddressIndex(res);
+
     return res;
   }
 }

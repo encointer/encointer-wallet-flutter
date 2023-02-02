@@ -29,7 +29,7 @@ class SubstrateDartApi {
     _connectAndListen(endpoint);
 
     try {
-      _rpc = await rpc('rpc_methods').then((m) => RpcMethods.fromJson(m as Map<String, dynamic>));
+      _rpc = await rpc<Map<String, dynamic>>('rpc_methods').then(RpcMethods.fromJson);
 
       // Sanity check that we are running against valid node with offchain indexing enabled
       if (!_rpc!.methods!.contains('encointer_getReputations')) {
@@ -57,7 +57,7 @@ class SubstrateDartApi {
   ///
   /// Hints:
   /// * account ids must be passed as SS58.
-  Future rpc(String method, [dynamic params]) {
+  Future<T> rpc<T>(String method, [dynamic params]) async {
     if (_client == null) {
       throw Exception("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
     }
@@ -66,7 +66,8 @@ class SubstrateDartApi {
       reconnect();
       Log.d('[dartApi] connection status: isclosed? ${_client?.isClosed}', 'SubstrateDartApi');
     }
-    return _client!.sendRequest(method, params);
+    final value = await _client!.sendRequest(method, params);
+    return value as T;
   }
 
   /// Reconnect to the same endpoint if the connection was closed.

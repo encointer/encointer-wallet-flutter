@@ -326,9 +326,8 @@ class NetworkState extends _NetworkState {
 
     final ns = NetworkState(json['endpoint'] as String?, json['ss58Format'] as int?, decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified
-    if ((ns.tokenSymbol?.length ?? 0) < 1) {
-      ns.tokenSymbol = 'ERT';
-    }
+    if ((ns.tokenSymbol?.length ?? 0) < 1) ns.tokenSymbol = 'ERT';
+
     return ns;
   }
 
