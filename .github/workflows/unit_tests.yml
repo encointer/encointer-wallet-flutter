@@ -35,10 +35,10 @@ jobs:
 
       # analyze and test
       - name: "Check fmt"
-        run: ./flutterw pub global run melos run format
+        run: melos run format
 
       - name: "Analyze Code"
-        run: ./flutterw pub global run melos analyze-check
+        run: melos run analyze-check
 
       - name: "Run unit tests"
         run: ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
