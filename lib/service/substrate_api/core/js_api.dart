@@ -3,14 +3,13 @@ import 'dart:async';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 
 const encointerJsService = 'EncointerJsService';
 
 /// Core interface to talk with our JS-service
 class JSApi {
   Map<String, Function> _msgHandlers = {};
-  Map<String, Completer> _msgCompleters = {};
+  Map<String, Completer<dynamic>> _msgCompleters = {};
 
   HeadlessInAppWebView? _web;
 
@@ -37,7 +36,7 @@ class JSApi {
             callback: (args) {
               Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
-              final res = args[0] as Map<dynamic, dynamic>;
+              final res = args[0] as Map<String, dynamic>;
 
               final path = res['path'] as String?;
               if (_msgCompleters[path!] != null) {
@@ -80,7 +79,7 @@ class JSApi {
   /// Otherwise, a future is created and put into the list of pending JS-calls.
   /// If [allowRepeat] is true, a call to the same JS-method can be made repeatedly. Otherwise, subsequent calls will
   /// not have any effect.
-  Future<dynamic> evalJavascript(
+  Future<T> evalJavascript<T>(
     String code, {
     bool wrapPromise = true,
     // True is the safe approach; otherwise a crashing (and therefore not returning) JS-call, will prevent subsequent
@@ -93,17 +92,18 @@ class JSApi {
         final call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
           Log.d('request $call loading', 'JSApi');
-          return _msgCompleters[i]!.future;
+          final value = await _msgCompleters[i]!.future;
+          return value as T;
         }
       }
     }
 
     if (!wrapPromise) {
       final res = await _web!.webViewController.evaluateJavascript(source: code);
-      return res;
+      return res as T;
     }
 
-    final c = Completer<dynamic>();
+    final c = Completer<T>();
 
     final method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
@@ -118,26 +118,7 @@ class JSApi {
             .callHandler("$encointerJsService", { path: "$method:error", data: err.message  });
         })''';
 
-    try {
-      // ignore: unused_local_variable
-      final v = await _web!.webViewController.evaluateJavascript(source: script);
-    } catch (e, s) {
-      // Executing a background task with the workmanager when the app is in
-      // foreground kills the platform channel and we get a `MissingPluginException`
-      // error. Hence, we must recreate the platform channel.
-      //
-      // See: https://github.com/encointer/encointer-wallet-flutter/issues/801.
-
-      Log.e(' $e', 'js_api', s);
-      Log.d('Re-initializing webView because the platform channel broke down', 'js_api');
-      await webApi.init().timeout(
-            const Duration(seconds: 20),
-            onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
-          );
-
-      final v = await _web!.webViewController.evaluateJavascript(source: script);
-      Log.d('EvaluateJavascript result after re-init of webView: $v', 'js_api');
-    }
+    await _web!.webViewController.evaluateJavascript(source: script);
 
     return c.future;
   }
@@ -146,13 +127,9 @@ class JSApi {
     return _evalJavascriptUID++;
   }
 
-  Future<void> subscribeMessage(
-    String code,
-    String channel,
-    Function callback,
-  ) async {
+  Future<void> subscribeMessage(String code, String channel, Function callback) async {
     _msgHandlers[channel] = callback;
-    evalJavascript(code);
+    evalJavascript<dynamic>(code);
   }
 
   Future<void> unsubscribeMessage(String channel) async {

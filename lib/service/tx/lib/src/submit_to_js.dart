@@ -7,7 +7,6 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
@@ -43,10 +42,6 @@ Future<void> submitToJS(
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
   txInfo['tip'] = tip.toString();
-  // if (_proxyAccount != null) {
-  //   txInfo['proxy'] = _proxyAccount.pubKey;
-  //   txInfo['ss58'] = store.settings.endpoint.ss58.toString();
-  // }
   Log.d('$txInfo', 'submitToJS');
   Log.d('${args['params']}', 'submitToJS');
 
@@ -72,24 +67,6 @@ Future<void> submitToJS(
     args['notificationTitle'] = dic.home.notifySubmittedQueued;
     store.account.queueTx(args as Map<String, dynamic>);
   }
-}
-
-Future<Map> getTxFee(
-  AppStore store,
-  Api api,
-  Map args, {
-  AccountData? proxyAccount,
-  bool reload = false,
-}) async {
-  var txInfo = args['txInfo'] as Map;
-  txInfo['pubKey'] = store.account.currentAccount.pubKey;
-  txInfo['address'] = store.account.currentAddress;
-
-  if (proxyAccount != null) {
-    txInfo = proxyAccount.pubKey as Map;
-  }
-
-  return api.account.estimateTxFees(txInfo, args['params'] as List<dynamic>?, rawParam: args['rawParam'] as String?);
 }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {

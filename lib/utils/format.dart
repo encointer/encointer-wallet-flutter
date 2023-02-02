@@ -231,7 +231,7 @@ class Fmt {
     return '0x${hex.encode(bytes)}';
   }
 
-  static String? accountDisplayNameString(String? address, Map? accInfo) {
+  static String? accountDisplayNameString(String? address, Map<dynamic, dynamic>? accInfo) {
     var display = Fmt.address(address);
     if (accInfo != null) {
       if ((accInfo['identity'] as Map<String, dynamic>)['display'] != null) {

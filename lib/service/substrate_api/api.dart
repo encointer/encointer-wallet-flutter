@@ -7,7 +7,6 @@ import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrate_api/account_api.dart';
 import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
 import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
-import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
@@ -27,7 +26,6 @@ class Api {
     this.account,
     this.assets,
     this.chain,
-    this.codec,
     this.encointer,
     this.ipfs,
     this._jsServiceEncointer,
@@ -46,7 +44,6 @@ class Api {
       AccountApi(store, js),
       AssetsApi(store, js),
       ChainApi(store, js),
-      CodecApi(js),
       EncointerApi(store, js, dartApi),
       Ipfs(gateway: store.settings.ipfsGateway),
       jsServiceEncointer,
@@ -61,7 +58,6 @@ class Api {
   final AccountApi account;
   final AssetsApi assets;
   final ChainApi chain;
-  final CodecApi codec;
   final EncointerApi encointer;
   final Ipfs ipfs;
 
