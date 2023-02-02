@@ -1,24 +1,24 @@
-# name: Android CI
+name: Android CI
 
-# on:
-#   push:
-#     branches: [master, f-droid]
-#   pull_request:
-#     branches: [master, f-droid]
+on:
+  push:
+    branches: [master, f-droid]
+  pull_request:
+    branches: [master, f-droid]
 
-# env:
-#   NODE_VERSION: 16.13.1
-#   JAVA_VERSION: 12.x
-#   TEMP_SCREENSHOTS: /tmp/screenshots
+env:
+  NODE_VERSION: 16.13.1
+  JAVA_VERSION: 12.x
+  TEMP_SCREENSHOTS: /tmp/screenshots
 
-# jobs:
-#   cancel_previous_runs:
-#     name: Cancel Previous Runs
-#     runs-on: ubuntu-20.04
-#     steps:
-#       - uses: styfle/cancel-workflow-action@0.11.0
-#         with:
-#           access_token: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  cancel_previous_runs:
+    name: Cancel Previous Runs
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
 
 #   build-android:
 #     # use macos to have hardware acceleration https://github.com/ReactiveCircus/android-emulator-runner/issues/46

@@ -28,9 +28,7 @@ jobs:
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
       - name: Melos Install
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
+        run: chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: melos bootstrap
         run: ./flutterw pub global run melos bootstrap
@@ -39,13 +37,15 @@ jobs:
       - name: "Check fmt"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          melos run format
+          ./flutterw pub global run melos format-check
 
       - name: "Analyze Code"
-        run: melos run analyze-check
+        run: ./flutterw pub global run melos analyze-check
 
       - name: "Run unit tests"
-        run: ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
