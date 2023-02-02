@@ -143,7 +143,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 48),
                       child: Text(
                         dic.profile.qrScanHint,
-                        style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerBlack),
+                        style: Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerBlack),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -152,7 +152,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       padding: const EdgeInsets.all(30),
                       child: EncointerTextFormField(
                         labelText: dic.assets.invoiceAmount,
-                        textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
+                        textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -178,7 +178,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 ),
                 Text(
                   '${dic.profile.receiverAccount} ${store.account.currentAccount.name}',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),

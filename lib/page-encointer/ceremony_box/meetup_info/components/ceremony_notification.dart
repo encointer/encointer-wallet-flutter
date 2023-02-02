@@ -20,7 +20,7 @@ class CeremonyNotification extends StatelessWidget {
         Flexible(
           child: Text(
             notification,
-            style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
           ),
         ),
       ],

@@ -102,5 +102,7 @@
 		</dict>
 	</array>
 	<!-- ... other tags -->
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>

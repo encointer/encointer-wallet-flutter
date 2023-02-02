@@ -178,7 +178,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
             labelText: widget.label,
-            labelStyle: Theme.of(context).textTheme.headline4,
+            labelStyle: Theme.of(context).textTheme.headlineMedium,
             contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
             border: const UnderlineInputBorder(
               borderSide: BorderSide(width: 0, style: BorderStyle.none),

@@ -59,7 +59,7 @@ class CreateAccountForm extends StatelessWidget {
               children: <Widget>[
                 Center(
                   child: Text(I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
-                      style: Theme.of(context).textTheme.headline2),
+                      style: Theme.of(context).textTheme.displayMedium),
                 ),
                 const SizedBox(height: 10),
                 Center(
@@ -68,7 +68,7 @@ class CreateAccountForm extends StatelessWidget {
                     child: Text(
                       I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(
                             color: encointerBlack,
                           ),
                     ),
@@ -96,7 +96,7 @@ class CreateAccountForm extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     dic.account.next,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
                           color: zurichLion.shade50,
                         ),
                   ),

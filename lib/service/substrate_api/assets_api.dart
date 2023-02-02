@@ -25,10 +25,8 @@ class AssetsApi {
     final currentAddress = store.account.currentAddress;
     if (pubKey != null && pubKey.isNotEmpty) {
       final address = currentAddress;
-      final res = await jsApi.evalJavascript(
-        'account.getBalance("$address")',
-      );
-      await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res as Map}));
+      final res = await jsApi.evalJavascript<Map<String, dynamic>>('account.getBalance("$address")');
+      await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res}));
     }
     await _fetchMarketPrice();
   }
@@ -43,8 +41,8 @@ class AssetsApi {
       await jsApi.subscribeMessage(
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
         _balanceSubscribeChannel,
-        (dynamic data) => {
-          store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data})),
+        (Map<String, dynamic> data) async {
+          await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data}));
         },
       );
     }

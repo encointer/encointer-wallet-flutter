@@ -1,6 +1,6 @@
-import 'package:encointer_wallet/config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -12,7 +12,7 @@ void main() {
   group('SettingsStore test', () {
     final root = AppStore(
       MockLocalStorage(),
-      config: const AppConfig(isTest: true, mockSubstrateApi: true),
+      config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
     );
     final store = SettingsStore(root);
 

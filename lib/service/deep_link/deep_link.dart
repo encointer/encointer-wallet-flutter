@@ -38,10 +38,11 @@ Future<void> _init(BuildContext context, String? link) async {
 Future<void> _navigationWithWrScanContext(BuildContext context, QrCode<dynamic> qrCode) async {
   switch (qrCode.context) {
     case QrCodeContext.invoice:
+      qrCode as QrCode<InvoiceData>;
       await Navigator.of(context).pushNamed(
         TransferPage.route,
         arguments: TransferPageParams(
-          recipient: (qrCode as InvoiceQrCode).data.account,
+          recipient: qrCode.data.account,
           label: qrCode.data.label,
           amount: qrCode.data.amount as double?,
         ),

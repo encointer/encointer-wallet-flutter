@@ -44,7 +44,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
               children: <Widget>[
                 const SizedBox(height: 80),
                 Center(
-                  child: Text(dic.profile.pinSecure, style: Theme.of(context).textTheme.headline2),
+                  child: Text(dic.profile.pinSecure, style: Theme.of(context).textTheme.displayMedium),
                 ),
                 const SizedBox(height: 10),
                 Center(
@@ -53,7 +53,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     child: Text(
                       dic.profile.pinHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(
                             color: encointerBlack,
                           ),
                     ),
@@ -115,7 +115,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                         width: 250,
                         child: Text(
                           dic.profile.pinInfo,
-                          style: Theme.of(context).textTheme.headline4!.copyWith(
+                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 color: encointerGrey,
                               ),
                         ),
@@ -132,7 +132,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
             child: PrimaryButton(
               child: Text(
                 I18n.of(context)!.translationsForLocale().account.create,
-                style: Theme.of(context).textTheme.headline3!.copyWith(
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       color: zurichLion.shade50,
                     ),
               ),

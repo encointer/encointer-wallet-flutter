@@ -1,5 +1,4 @@
 import 'package:mobx/mobx.dart';
-import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -31,18 +30,13 @@ const encointerCacheVersion = 'v1.0';
 ///
 /// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
 class AppStore extends _AppStore with _$AppStore {
-  AppStore(super.localStorage, {required super.config, super.appCast});
+  AppStore(super.localStorage, {required super.config});
 }
 
 abstract class _AppStore with Store {
-  _AppStore(
-    this.localStorage, {
-    required this.config,
-    this.appCast,
-  });
+  _AppStore(this.localStorage, {required this.config});
 
   final AppConfig config;
-  final AppcastConfiguration? appCast;
 
   // Note, following pattern of a nullable field with a non-nullable getter
   // is here because mobx can't handle `late` initialization:
@@ -136,7 +130,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
     final cacheKey = '${settings.endpoint.info}_$key';
-    return config.isTest ? 'test-$cacheKey' : cacheKey;
+    return config.isTestMode ? 'test-$cacheKey' : cacheKey;
   }
 
   /// Returns the cache key for the encointer-storage.
@@ -145,7 +139,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
     final key = '$encointerCachePrefix-$networkInfo';
-    return config.isTest ? 'test-$key' : key;
+    return config.isTestMode ? 'test-$key' : key;
   }
 
   Future<bool> purgeEncointerCache(String networkInfo) async {

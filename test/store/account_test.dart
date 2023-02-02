@@ -11,7 +11,7 @@ void main() {
   group('AccountStore test', () {
     final root = AppStore(
       MockLocalStorage(),
-      config: const AppConfig(isTest: true, mockSubstrateApi: true),
+      config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
     );
 
     test('account store test', () async {

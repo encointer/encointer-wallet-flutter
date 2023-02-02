@@ -14,7 +14,7 @@ class CommunityIconObserver extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = context.watch<AppStore>();
     return CircleAvatar(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       child: Observer(
         builder: (_) {
           if (store.encointer.community != null && store.encointer.community!.assetsCid != null) {

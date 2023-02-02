@@ -28,7 +28,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
       Center(
         child: Text(
           widget.rowTitle!,
-          style: Theme.of(context).textTheme.headline2,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
       ),
       const SizedBox(height: 15),

@@ -65,7 +65,7 @@ class ContactDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           account.name,
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         iconTheme: const IconThemeData(
           color: Color(0xff666666), //change your color here
@@ -116,7 +116,7 @@ class ContactDetailPage extends StatelessWidget {
                     const Icon(Iconsax.send_sqaure_2),
                     const SizedBox(width: 12),
                     Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? 'null'),
-                        style: Theme.of(context).textTheme.headline3),
+                        style: Theme.of(context).textTheme.displaySmall),
                   ],
                 ),
                 onPressed: () {
@@ -139,7 +139,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.trash),
                     const SizedBox(width: 12),
-                    Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
+                    Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.displaySmall)
                   ],
                 ),
               ),
@@ -204,7 +204,7 @@ class EndorseButton extends StatelessWidget {
                 children: [
                   const Icon(Iconsax.verify),
                   const SizedBox(width: 12),
-                  Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
+                  Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.displaySmall)
                 ],
               ),
             ),

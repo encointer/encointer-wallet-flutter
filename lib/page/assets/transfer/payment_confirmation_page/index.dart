@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:animated_check/animated_check.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -69,77 +68,73 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     final amount = params.amount;
     final recipientAddress = Fmt.addressOfAccount(recipientAccount, context.read<AppStore>());
 
-    return Observer(
-      builder: (_) {
-        return Scaffold(
-          appBar: AppBar(title: Text(dic.assets.payment)),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            child: Column(
-              children: [
-                PaymentOverview(
-                  context.watch<AppStore>(),
-                  params.communitySymbol,
-                  params.recipientAccount,
-                  params.amount,
-                ),
-                const SizedBox(height: 10),
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: TextGradient(
-                    text: '${Fmt.doubleFormat(amount)} ⵐ',
-                    style: const TextStyle(fontSize: 60),
-                  ),
-                ),
-                Flexible(
-                  fit: FlexFit.tight,
-                  flex: 2,
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 500),
-                    transitionBuilder: (Widget child, Animation<double> animation) {
-                      return RotationTransition(turns: animation, child: child);
-                      // return ScaleTransition(child: child, scale: animation);
-                    },
-                    child: _getTransferStateWidget(_transferState),
-                  ),
-                ),
-                Flexible(
-                  fit: FlexFit.tight,
-                  flex: 2,
-                  child: _txStateTextInfo(_transferState),
-                ),
-                if (!_transferState.isFinishedOrFailed())
-                  PrimaryButton(
-                    key: const Key('make-transfer-send'),
-                    onPressed: () => _submit(context, cid, recipientAddress, amount),
-                    child: SizedBox(
-                      height: 24,
-                      child: !_transferState.isSubmitting()
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Iconsax.send_sqaure_2),
-                                const SizedBox(width: 12),
-                                Text(dic.assets.transfer),
-                              ],
-                            )
-                          : const CupertinoActivityIndicator(),
-                    ),
-                  )
-                else
-                  PrimaryButton(
-                    key: const Key('transfer-done'),
-                    child: SizedBox(
-                      height: 24,
-                      child: Center(child: Text(dic.assets.done)),
-                    ),
-                    onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
-                  )
-              ],
+    return Scaffold(
+      appBar: AppBar(title: Text(dic.assets.payment)),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        child: Column(
+          children: [
+            PaymentOverview(
+              context.watch<AppStore>(),
+              params.communitySymbol,
+              params.recipientAccount,
+              params.amount,
             ),
-          ),
-        );
-      },
+            const SizedBox(height: 10),
+            Flexible(
+              fit: FlexFit.tight,
+              child: TextGradient(
+                text: '${Fmt.doubleFormat(amount)} ⵐ',
+                style: const TextStyle(fontSize: 60),
+              ),
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 2,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return RotationTransition(turns: animation, child: child);
+                  // return ScaleTransition(child: child, scale: animation);
+                },
+                child: _getTransferStateWidget(_transferState),
+              ),
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 2,
+              child: _txStateTextInfo(_transferState),
+            ),
+            if (!_transferState.isFinishedOrFailed())
+              PrimaryButton(
+                key: const Key('make-transfer-send'),
+                onPressed: () => _submit(context, cid, recipientAddress, amount),
+                child: SizedBox(
+                  height: 24,
+                  child: !_transferState.isSubmitting()
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Iconsax.send_sqaure_2),
+                            const SizedBox(width: 12),
+                            Text(dic.assets.transfer),
+                          ],
+                        )
+                      : const CupertinoActivityIndicator(),
+                ),
+              )
+            else
+              PrimaryButton(
+                key: const Key('transfer-done'),
+                child: SizedBox(
+                  height: 24,
+                  child: Center(child: Text(dic.assets.done)),
+                ),
+                onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+              )
+          ],
+        ),
+      ),
     );
   }
 
@@ -219,8 +214,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   Widget _txStateTextInfo(TransferState state) {
-    final h1Grey = Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
-    final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
+    final h1Grey = Theme.of(context).textTheme.displayLarge!.copyWith(color: encointerGrey);
+    final h2Grey = Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerGrey);
 
     final dic = I18n.of(context)!.translationsForLocale();
     switch (state) {

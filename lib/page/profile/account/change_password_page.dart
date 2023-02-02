@@ -130,13 +130,13 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         Text(
                           dic.profile.hintEnterCurrentPin,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline2,
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
                         const SizedBox(height: 16),
                         Text(
                           dic.profile.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
+                          style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black),
                         ),
                         const SizedBox(height: 30),
                         EncointerTextFormField(
@@ -193,7 +193,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     if (_submitting) const CupertinoActivityIndicator(),
                     Text(
                       dic.profile.contactSave,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
                     ),
                   ],
                 ),
