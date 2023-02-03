@@ -22,12 +22,6 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
-      # Analyzer throws an error if an asset is missing
-      - name: "Make mock-main.js"
-        run: |
-          mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
-          touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
-
       - name: Melos Install
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
@@ -36,7 +30,13 @@ jobs:
       - name: Melos Bootstrap
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos bootstrap
+          ./flutterw pub global run melos bootstrap        
+
+      # Analyzer throws an error if an asset is missing
+      - name: "Make mock-main.js"
+        run: |
+          mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
+          touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
       # analyze and test
       - name: "Check fmt Encointer"
