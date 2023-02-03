@@ -29,7 +29,7 @@ jobs:
       - name: Melos Bootstrap
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos bootstrap        
+          ./flutterw pub global run melos bootstrap
 
       # Analyzer throws an error if an asset is missing
       - name: "Make mock-main.js"
@@ -41,12 +41,12 @@ jobs:
       - name: "Check fmt"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos format-check  
+          ./flutterw pub global run melos format-check
 
       - name: "Analyze Code"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos analyze-check   
+          ./flutterw pub global run melos analyze-check
 
       - name: "Run unit tests Encointer"
         run: |
@@ -60,6 +60,7 @@ jobs:
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos generate-build-runner
           ./flutterw pub global run melos format
           git diff --exit-code
