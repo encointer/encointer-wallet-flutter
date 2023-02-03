@@ -33,7 +33,7 @@ jobs:
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
-      - name: melos bootstrap
+      - name: Melos Bootstrap
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos bootstrap
