@@ -9,6 +9,7 @@ on:
 env:
   NODE_VERSION: 16.13.1
   JAVA_VERSION: 12.x
+  MELOS_SDK_PATH: $HOME/.pub-cache/bin
 
 jobs:
   cancel_previous_runs:
@@ -39,21 +40,13 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Melos Install
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
+        run: chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: Melos Bootstrap
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos bootstrap
+        run: ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos yarn-build
+        run: ./flutterw pub global run melos yarn-build
 
       - name: "Build apk"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos build-apk
+        run: ./flutterw pub global run melos build-apk
