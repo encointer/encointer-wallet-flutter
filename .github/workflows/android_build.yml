@@ -50,8 +50,9 @@ jobs:
           ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
-        working-directory: ./scripts
-        run: source ./init_env.sh && ./build_js.sh
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos yarn-build
 
       - name: "Build apk"
         run: |

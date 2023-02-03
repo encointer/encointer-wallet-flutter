@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [master, f-droid, el-melos-packages]
 
-env:
-  JS_SERVICE_ENCOINTER_PATH: lib/js_service_encointer
-  JS_SERVICE_ENCOINTER_MAIN: lib/js_service_encointer/dist/main.js
-
 jobs:
   flutter:
     runs-on: ubuntu-latest
@@ -32,10 +28,10 @@ jobs:
           ./flutterw pub global run melos bootstrap
 
       # Analyzer throws an error if an asset is missing
-      - name: "Make mock-main.js"
+      - name: "Build JS"
         run: |
-          mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
-          touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos yarn-build
 
       # analyze and test
       - name: "Check fmt"
