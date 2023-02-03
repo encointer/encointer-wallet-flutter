@@ -38,25 +38,15 @@ jobs:
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
       # analyze and test
-      - name: "Check fmt Encointer"
+      - name: "Check fmt"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos format-check
+          ./flutterw pub global run melos format-check  
 
-      - name: "Check fmt Packages"
+      - name: "Analyze Code"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos format-check-packages   
-
-      - name: "Analyze Code Encointer"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos analyze-check
-
-      - name: "Analyze Code Packages"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos analyze-check-packages    
+          ./flutterw pub global run melos analyze-check   
 
       - name: "Run unit tests Encointer"
         run: |
@@ -66,12 +56,12 @@ jobs:
       - name: "Run unit tests Packages"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos unit-test-packages   
+          ./flutterw pub global run melos unit-test-packages
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
-          ./flutterw pub run build_runner build --delete-conflicting-outputs
-          ./flutterw format . --line-length 120
+          ./flutterw pub global run melos generate-build-runner
+          ./flutterw pub global run melos format
           git diff --exit-code
 
     #  test-js:
