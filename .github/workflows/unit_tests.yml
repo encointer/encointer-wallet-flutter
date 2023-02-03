@@ -2,9 +2,12 @@ name: Unit Tests & Code Quality
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el-melos-packages]
   pull_request:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el-melos-packages]
+
+env:
+  MELOS_SDK_PATH: "$HOME/.pub-cache/bin"
 
 jobs:
   flutter:
@@ -18,43 +21,28 @@ jobs:
         run: ./scripts/install_flutter_wrapper.sh
 
       - name: Melos Install
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
+        run: chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: Melos Bootstrap
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos bootstrap
+        run: ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos yarn-build
+        run: ./flutterw pub global run melos yarn-build
 
       - name: "Check fmt"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos format-check
+        run: ./flutterw pub global run melos format-check
 
       - name: "Analyze Code"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos analyze-check
+        run: ./flutterw pub global run melos analyze-check
 
       - name: "Run unit tests Encointer"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
+        run: ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
 
       - name: "Run unit tests Packages"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos unit-test-packages
+        run: ./flutterw pub global run melos unit-test-packages
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos generate-build-runner
           ./flutterw pub global run melos format
           git diff --exit-code
