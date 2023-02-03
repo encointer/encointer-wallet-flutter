@@ -2,9 +2,9 @@ name: Android Build
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el-melos-packages]
   pull_request:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el-melos-packages]
 
 env:
   NODE_VERSION: 16.13.1
@@ -44,8 +44,10 @@ jobs:
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
-      - name: melos bootstrap
-        run: ./flutterw pub global run melos bootstrap
+      - name: Melos Bootstrap
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
         working-directory: ./scripts

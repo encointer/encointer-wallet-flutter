@@ -2,9 +2,9 @@ name: Unit Tests & Code Quality
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el-melos-packages]
   pull_request:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el-melos-packages]
 
 env:
   JS_SERVICE_ENCOINTER_PATH: lib/js_service_encointer
@@ -21,40 +21,32 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
+      - name: Melos Install
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
+
+      - name: Melos Bootstrap
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos bootstrap
+
       # Analyzer throws an error if an asset is missing
       - name: "Make mock-main.js"
         run: |
           mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
           touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
 
-      - name: Melos Install
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
-
-      - name: melos bootstrap
-        run: ./flutterw pub global run melos bootstrap
-
       # analyze and test
-      - name: "Check fmt Encointer"
+      - name: "Check fmt"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos format-check
 
-      - name: "Check fmt Packages"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos format-check-packages   
-
-      - name: "Analyze Code Encointer"
+      - name: "Analyze Code"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos analyze-check
-
-      - name: "Analyze Code Packages"
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos analyze-check-packages    
 
       - name: "Run unit tests Encointer"
         run: |
@@ -64,12 +56,13 @@ jobs:
       - name: "Run unit tests Packages"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos unit-test-packages   
+          ./flutterw pub global run melos unit-test-packages
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
-          ./flutterw pub run build_runner build --delete-conflicting-outputs
-          ./flutterw format . --line-length 120
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos generate-build-runner
+          ./flutterw pub global run melos format
           git diff --exit-code
 
     #  test-js:

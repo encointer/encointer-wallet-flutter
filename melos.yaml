@@ -9,119 +9,101 @@ packages:
 command:
   bootstrap:
     runPubGetInParallel: false
-    usePubspecOverrides: true  
+    usePubspecOverrides: true
 
 scripts:
-  # encointer-wallet
   format:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw format . --line-length 120
-    description: "Format Dart code (encointer_wallet)"
+    exec: flutter format . --line-length 120
+    description: "Format all Dart code"
 
   format-check:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw format . --line-length 120 --set-exit-if-changed
-    description: "Check format Dart code (encointer_wallet)"
+    exec: flutter format . --line-length 120 --set-exit-if-changed
+    description: "Check format all Dart code"
 
   analyze:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw analyze
-    description: "Analyze Dart code (encointer_wallet)"
+    exec: flutter analyze
+    description: "Analyze all Dart code"
 
   analyze-check:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw analyze --fatal-warnings
-    description: "Analyze Dart code and exit if there are any fatal warnings (encointer_wallet)"
-
-  run-android:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw run --flavor dev
-    description: "Run encointer_wallet on an Android platform"
-
-  run-ios:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw run
-    description: "Run encointer_wallet on an iOS platform"
-
-  build-apk:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw build apk --flavor fdroid
-    description: "Build an APK file (encointer_wallet)"
-
-  build-appbundle:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw build appbundle
-    description: "Build an appbundle file (encointer_wallet)"
+    exec: flutter analyze --fatal-warnings
+    description: "Analyze all Dart code and exit if there are any fatal warnings"
 
   clean:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw clean
-    description: "Clean pub dependencies (encointer_wallet)"
+    exec: flutter clean
+    description: "Clean pub dependencies"
 
   pub-get:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw pub get
-    description: "Get pub dependencies (encointer_wallet)"
+    exec: flutter pub get
+    description: "Get pub dependencies"
 
-  integration-app-test-android:
-    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/app.dart --flavor dev
-    description: "Run integration tests for the `app.dart` file on Android"
+  unit-test:
+    exec: flutter test
+    description: "Run unit tests (all packages)"
 
-  integration-app-test-ios:
-    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/app.dart
-    description: "Run integration tests for the `app.dart` file on iOS"
+  doctor:
+    exec: flutter doctor
+    description: "Run Flutter doctor"
 
-  integration-real-app-test-android:
-    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/real_app.dart --flavor dev
-    description: "Run integration tests for the `real_app.dart`` file on Android"
-
-  integration-real-app-test-ios:
-    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/real_app.dart
-    description: "Run integration tests for the `real_app.dart`` file on IOS"
-
-  integration-scan-test-android:
-    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/scan_page.dart --flavor dev
-    description: "Run integration test for QR scan on Android"
-
-  integration-scan-test-ios:
-    run: melos exec --dir-exists="test_driver" -- ./flutterw drive --target=test_driver/scan_page.dart
-    description: "Run integration test for QR scan on iOS"
-
-  unit-test-encointer-exclude-node-e2e:
-    run: melos exec --dir-exists="test_driver" -- ./flutterw test --exclude-tags encointer-node-e2e
-    description: "Run unit tests for encointer_wallet excluding the `encointer-node-e2e` tag"
-
-  unit-test-encointer-node-e2e:
-    run: melos exec --dir-exists="test_driver" -- ./flutterw test --tags encointer-node-e2e
-    description: "Run unit tests for encointer_wallet with the `encointer-node-e2e` tag"
+  generate-build-runner:
+    run: melos exec --depends-on="build_runner"  flutter pub run build_runner build --delete-conflicting-outputs
+    description: "Generate code with build_runner"
 
   yarn-build:
     run: melos exec --dir-exists="lib/js_service_encointer" "cd lib/js_service_encointer/ && yarn install && yarn run build"
     description: "Install yarn dependencies and build"
 
-  doctor:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw doctor
-    description: "Run Flutter doctor (encointer_wallet-packages)"
+  # Unit test Encointer Wallet with tag
+  unit-test-encointer-exclude-node-e2e:
+    run: melos exec --scope="encointer_wallet" -- flutter test --exclude-tags encointer-node-e2e
+    description: "Run unit tests excluding the `encointer-node-e2e` tag"
 
-  ganarate:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw pub run build_runner build --delete-conflicting-outputs
-    description: "Generate code with build_runner"
-
-  # packages
-  clean-packages:
-    run: melos exec --ignore="encointer_wallet" -- ../../flutterw clean
-    description: "Clean pub dependencies (all packages)"
-
-  pub-get-packages:
-    run: melos exec --ignore="encointer_wallet" -- ../../flutterw pub get
-    description: "Get pub dependencies (all packages)"
-
-  format-packages:
-    run: melos exec --ignore="encointer_wallet" -- ../../flutterw format . --line-length 120
-    description: "Format Dart code (app packages)"
-
-  format-check-packages:
-    run: melos exec --ignore="encointer_wallet" -- ../../flutterw format . --line-length 120 --set-exit-if-changed
-    description: "Check format Dart code (all packages)"
-
-  analyze-packages:
-    run: melos exec --ignore="encointer_wallet" -- ../../flutterw analyze
-    description: "Analyze Dart code (all packages)"
-
-  analyze-check-packages:
-    run: melos exec --ignore="encointer_wallet" -- ../../flutterw analyze --fatal-warnings
-    description: "Analyze Dart code and exit if there are any fatal warnings (all packages)"
+  unit-test-encointer-node-e2e:
+    run: melos exec --scope="encointer_wallet" -- flutter test --tags encointer-node-e2e
+    description: "Run unit tests with the `encointer-node-e2e` tag"
 
   unit-test-packages:
-    run: melos exec --ignore="encointer_wallet" -- ../../flutterw test
-    description: "Run unit tests (all packages)"
+    run: melos exec --ignore="encointer_wallet" -- flutter test
+    description: "Run unit tests with the `encointer-node-e2e` tag"  
+
+  # Run Encointer Wallet
+  run-android:
+    run: melos exec --scope="encointer_wallet" -- flutter run --flavor dev
+    description: "Run encointer_wallet on an Android platform"
+
+  run-ios:
+    run: melos exec --scope="encointer_wallet" -- flutter run
+    description: "Run encointer_wallet on an iOS platform"
+
+  # Build apk and appbundle Encointer Wallet
+  build-apk:
+    run: melos exec --scope="encointer_wallet" -- flutter build apk --flavor fdroid
+    description: "Build an APK file"
+
+  build-appbundle:
+    run: melos exec --scope="encointer_wallet" -- flutter build appbundle
+    description: "Build an appbundle file"
+
+  # Integration test Encointer Wallet
+  integration-app-test-android:
+    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/app.dart --flavor dev
+    description: "Run integration tests for the `app.dart` file on Android"
+
+  integration-app-test-ios:
+    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/app.dart
+    description: "Run integration tests for the `app.dart` file on iOS"
+
+  integration-real-app-test-android:
+    run: melos exec --scope="encointer_wallet"-- flutter drive --target=test_driver/real_app.dart --flavor dev
+    description: "Run integration tests for the `real_app.dart`` file on Android"
+
+  integration-real-app-test-ios:
+    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/real_app.dart
+    description: "Run integration tests for the `real_app.dart`` file on IOS"
+
+  integration-scan-test-android:
+    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/scan_page.dart --flavor dev
+    description: "Run integration test for QR scan on Android"
+
+  integration-scan-test-ios:
+    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/scan_page.dart
+    description: "Run integration test for QR scan on iOS"
