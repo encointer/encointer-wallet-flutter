@@ -7,7 +7,7 @@ on:
     branches: [master, f-droid, el-melos-packages]
 
 env:
-  MELOS_SDK_PATH: "flutter/.pub-cache/bin"
+  MELOS_SDK_PATH: .pub-cache/bin"
 
 jobs:
   flutter:

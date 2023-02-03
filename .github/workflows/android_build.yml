@@ -9,7 +9,7 @@ on:
 env:
   NODE_VERSION: 16.13.1
   JAVA_VERSION: 12.x
-  MELOS_SDK_PATH: flutter/.pub-cache/bin/bin/dart
+  MELOS_SDK_PATH: .pub-cache/bin/bin/dart
 
 jobs:
   cancel_previous_runs:
