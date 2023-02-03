@@ -34,7 +34,9 @@ jobs:
           chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: melos bootstrap
-        run: ./flutterw pub global run melos bootstrap
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos bootstrap
 
       # analyze and test
       - name: "Check fmt Encointer"
