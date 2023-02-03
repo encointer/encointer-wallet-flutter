@@ -9,13 +9,18 @@ packages:
 command:
   bootstrap:
     runPubGetInParallel: false
-    usePubspecOverrides: true  
+    usePubspecOverrides: true
 
 scripts:
+  format-all:
+    exec: "./flutterw format ."
+    description: "Format Dart code"
+
   # encointer-wallet
   format:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw format . --line-length 120
+    exec: ./flutterw format . --line-length 120
     description: "Format Dart code (encointer_wallet)"
+    select-package: { "encointer_wallet" }
 
   format-check:
     run: melos exec --file-exists="lib/main.dart" -- ./flutterw format . --line-length 120 --set-exit-if-changed
