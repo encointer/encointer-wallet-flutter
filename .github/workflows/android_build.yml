@@ -2,9 +2,9 @@ name: Android Build
 
 on:
   push:
-    branches: [master, f-droid, el-melos-packages]
+    branches: [master, f-droid]
   pull_request:
-    branches: [master, f-droid, el-melos-packages]
+    branches: [master, f-droid]
 
 env:
   NODE_VERSION: 16.13.1
@@ -34,7 +34,6 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
-      # JS Stuff
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -50,8 +49,9 @@ jobs:
           ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
-        working-directory: ./scripts
-        run: source ./init_env.sh && ./build_js.sh
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos yarn-build
 
       - name: "Build apk"
         run: |
