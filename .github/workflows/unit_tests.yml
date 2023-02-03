@@ -9,7 +9,6 @@ on:
 env:
   JS_SERVICE_ENCOINTER_PATH: lib/js_service_encointer
   JS_SERVICE_ENCOINTER_MAIN: lib/js_service_encointer/dist/main.js
-  MELOS_SDK_PATH: "$HOME/.pub-cache/bin"
 
 jobs:
   flutter:
