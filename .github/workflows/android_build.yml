@@ -34,7 +34,6 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
-      # JS Stuff
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}

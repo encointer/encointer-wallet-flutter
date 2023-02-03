@@ -27,13 +27,11 @@ jobs:
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos bootstrap
 
-      # Analyzer throws an error if an asset is missing
       - name: "Build JS"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos yarn-build
 
-      # analyze and test
       - name: "Check fmt"
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
