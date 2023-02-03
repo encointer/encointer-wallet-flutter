@@ -18,44 +18,43 @@ scripts:
 
   # encointer-wallet
   format:
-    exec: ./flutterw format . --line-length 120
+    run: melos exec --scope="encointer_wallet" -- ./flutterw format . --line-length 120
     description: "Format Dart code (encointer_wallet)"
-    select-package: { "encointer_wallet" }
 
   format-check:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw format . --line-length 120 --set-exit-if-changed
+    run: melos exec  --scope="encointer_wallet" -- ./flutterw format . --line-length 120 --set-exit-if-changed
     description: "Check format Dart code (encointer_wallet)"
 
   analyze:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw analyze
+    run: melos exec  --scope="encointer_wallet" -- ./flutterw analyze
     description: "Analyze Dart code (encointer_wallet)"
 
   analyze-check:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw analyze --fatal-warnings
+    run: melos exec --scope="encointer_wallet" -- ./flutterw analyze --fatal-warnings
     description: "Analyze Dart code and exit if there are any fatal warnings (encointer_wallet)"
 
   run-android:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw run --flavor dev
+    run: melos exec --scope="encointer_wallet" -- ./flutterw run --flavor dev
     description: "Run encointer_wallet on an Android platform"
 
   run-ios:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw run
+    run: melos exec --scope="encointer_wallet" -- ./flutterw run
     description: "Run encointer_wallet on an iOS platform"
 
   build-apk:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw build apk --flavor fdroid
+    run: melos exec --scope="encointer_wallet" -- ./flutterw build apk --flavor fdroid
     description: "Build an APK file (encointer_wallet)"
 
   build-appbundle:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw build appbundle
+    run: melos exec --scope="encointer_wallet" -- ./flutterw build appbundle
     description: "Build an appbundle file (encointer_wallet)"
 
   clean:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw clean
+    run: melos exec --scope="encointer_wallet" -- ./flutterw clean
     description: "Clean pub dependencies (encointer_wallet)"
 
   pub-get:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw pub get
+    run: melos exec --scope="encointer_wallet" -- ./flutterw pub get
     description: "Get pub dependencies (encointer_wallet)"
 
   integration-app-test-android:
@@ -95,11 +94,11 @@ scripts:
     description: "Install yarn dependencies and build"
 
   doctor:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw doctor
+    run: melos exec --scope="encointer_wallet" -- ./flutterw doctor
     description: "Run Flutter doctor (encointer_wallet-packages)"
 
-  ganarate:
-    run: melos exec --file-exists="lib/main.dart" -- ./flutterw pub run build_runner build --delete-conflicting-outputs
+  generate-build-runner:
+    run: melos exec --scope="encointer_wallet" -- ./flutterw pub run build_runner build --delete-conflicting-outputs
     description: "Generate code with build_runner"
 
   # packages

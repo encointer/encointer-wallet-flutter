@@ -9,7 +9,8 @@ part of 'business_form_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BusinessFormState on _BusinessFormState, Store {
-  late final _$nameAtom = Atom(name: '_BusinessFormState.name', context: context);
+  late final _$nameAtom =
+      Atom(name: '_BusinessFormState.name', context: context);
 
   @override
   String? get name {
@@ -24,7 +25,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
     });
   }
 
-  late final _$descriptionAtom = Atom(name: '_BusinessFormState.description', context: context);
+  late final _$descriptionAtom =
+      Atom(name: '_BusinessFormState.description', context: context);
 
   @override
   String? get description {
@@ -39,7 +41,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
     });
   }
 
-  late final _$streetAtom = Atom(name: '_BusinessFormState.street', context: context);
+  late final _$streetAtom =
+      Atom(name: '_BusinessFormState.street', context: context);
 
   @override
   String? get street {
@@ -54,7 +57,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
     });
   }
 
-  late final _$streetAddendumAtom = Atom(name: '_BusinessFormState.streetAddendum', context: context);
+  late final _$streetAddendumAtom =
+      Atom(name: '_BusinessFormState.streetAddendum', context: context);
 
   @override
   String? get streetAddendum {
@@ -69,7 +73,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
     });
   }
 
-  late final _$zipCodeAtom = Atom(name: '_BusinessFormState.zipCode', context: context);
+  late final _$zipCodeAtom =
+      Atom(name: '_BusinessFormState.zipCode', context: context);
 
   @override
   String? get zipCode {
@@ -84,7 +89,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
     });
   }
 
-  late final _$cityAtom = Atom(name: '_BusinessFormState.city', context: context);
+  late final _$cityAtom =
+      Atom(name: '_BusinessFormState.city', context: context);
 
   @override
   String? get city {
@@ -99,11 +105,13 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
     });
   }
 
-  late final _$_BusinessFormStateActionController = ActionController(name: '_BusinessFormState', context: context);
+  late final _$_BusinessFormStateActionController =
+      ActionController(name: '_BusinessFormState', context: context);
 
   @override
   void validateName(String? value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateName');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
+        name: '_BusinessFormState.validateName');
     try {
       return super.validateName(value);
     } finally {
@@ -113,8 +121,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateDescription(String? value) {
-    final _$actionInfo =
-        _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateDescription');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
+        name: '_BusinessFormState.validateDescription');
     try {
       return super.validateDescription(value);
     } finally {
@@ -124,7 +132,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateStreet(String? value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateStreet');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
+        name: '_BusinessFormState.validateStreet');
     try {
       return super.validateStreet(value);
     } finally {
@@ -134,8 +143,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateStreetAddendum(String? value) {
-    final _$actionInfo =
-        _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateStreetAddendum');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
+        name: '_BusinessFormState.validateStreetAddendum');
     try {
       return super.validateStreetAddendum(value);
     } finally {
@@ -145,7 +154,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateZipCode(String? value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateZipCode');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
+        name: '_BusinessFormState.validateZipCode');
     try {
       return super.validateZipCode(value);
     } finally {
@@ -155,7 +165,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateCity(String? value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateCity');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
+        name: '_BusinessFormState.validateCity');
     try {
       return super.validateCity(value);
     } finally {
@@ -181,9 +192,12 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
 
   @override
   bool get hasErrors =>
-      (_$hasErrorsComputed ??= Computed<bool>(() => super.hasErrors, name: '_BusinessFormErrorState.hasErrors')).value;
+      (_$hasErrorsComputed ??= Computed<bool>(() => super.hasErrors,
+              name: '_BusinessFormErrorState.hasErrors'))
+          .value;
 
-  late final _$nameAtom = Atom(name: '_BusinessFormErrorState.name', context: context);
+  late final _$nameAtom =
+      Atom(name: '_BusinessFormErrorState.name', context: context);
 
   @override
   String? get name {
@@ -198,7 +212,8 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
     });
   }
 
-  late final _$descriptionAtom = Atom(name: '_BusinessFormErrorState.description', context: context);
+  late final _$descriptionAtom =
+      Atom(name: '_BusinessFormErrorState.description', context: context);
 
   @override
   String? get description {
@@ -213,7 +228,8 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
     });
   }
 
-  late final _$streetAtom = Atom(name: '_BusinessFormErrorState.street', context: context);
+  late final _$streetAtom =
+      Atom(name: '_BusinessFormErrorState.street', context: context);
 
   @override
   String? get street {
@@ -228,7 +244,8 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
     });
   }
 
-  late final _$streetAddendumAtom = Atom(name: '_BusinessFormErrorState.streetAddendum', context: context);
+  late final _$streetAddendumAtom =
+      Atom(name: '_BusinessFormErrorState.streetAddendum', context: context);
 
   @override
   String? get streetAddendum {
@@ -243,7 +260,8 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
     });
   }
 
-  late final _$zipCodeAtom = Atom(name: '_BusinessFormErrorState.zipCode', context: context);
+  late final _$zipCodeAtom =
+      Atom(name: '_BusinessFormErrorState.zipCode', context: context);
 
   @override
   String? get zipCode {
@@ -258,7 +276,8 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
     });
   }
 
-  late final _$cityAtom = Atom(name: '_BusinessFormErrorState.city', context: context);
+  late final _$cityAtom =
+      Atom(name: '_BusinessFormErrorState.city', context: context);
 
   @override
   String? get city {
