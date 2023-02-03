@@ -2,9 +2,9 @@ name: Android Build
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el-melos-packages]
   pull_request:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el-melos-packages]
 
 env:
   NODE_VERSION: 16.13.1
