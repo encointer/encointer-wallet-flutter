@@ -197,13 +197,9 @@ widgets. This causes many unwanted linebreaks that reduce the readability of flu
 * Settings > Dart > Line length 120.
 * Autoformat on save: Settings > Languages and Frameworks > then tick: `Format code on save`, `Organize imports on save`.
 * Format the whole codebase with: 
-format encointer_wallet
+format all Dart code
 ```bash
 melos format
-```
-format packages
-```bash
-melos format-packages
 ```
 
 #### Other fmt hints:
@@ -218,7 +214,7 @@ e.g. `@JsonSerializable` or the mobx annotations. Whenever annotations are added
 command must be run to update the `*.g` files.
 
 ```bash
-./flutterw pub run build_runner build --delete-conflicting-outputs
+melos generate-build-runner
 ```
 
 ## GitHub Actions Hints
