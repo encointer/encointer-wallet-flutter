@@ -20,10 +20,11 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
+      - name: Export Path
+        run: export PATH="$PATH":"$HOME/.pub-cache/bin"
+
       - name: Melos Install
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
+        run: chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: Melos Bootstrap
         run: ./flutterw pub global run melos bootstrap
