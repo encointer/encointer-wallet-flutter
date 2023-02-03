@@ -9,7 +9,7 @@ on:
 env:
   NODE_VERSION: 16.13.1
   JAVA_VERSION: 12.x
-  MELOS_SDK_PATH: .pub-cache
+  MELOS_SDK_PATH: .flutter
 
 jobs:
   cancel_previous_runs:
@@ -40,13 +40,21 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Melos Install
-        run: chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: Melos Bootstrap
-        run: ./flutterw pub global run melos bootstrap
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
-        run: ./flutterw pub global run melos yarn-build
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          ./flutterw pub global run melos yarn-build
 
       - name: "Build apk"
-        run: ./flutterw pub global run melos build-apk
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          ./flutterw pub global run melos build-apk
