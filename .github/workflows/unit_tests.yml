@@ -17,35 +17,44 @@ jobs:
       # Setup Environment
       - uses: actions/checkout@v3
 
-      - name: Install flutter wrapper
-        run: ./scripts/install_flutter_wrapper.sh
-
-      - name: Export Path
-        run: export PATH="$PATH":"$HOME/.pub-cache/bin"
-
       - name: Melos Install
-        run: chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: Melos Bootstrap
-        run: ./flutterw pub global run melos bootstrap
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
-        run: ./flutterw pub global run melos yarn-build
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          ./flutterw pub global run melos yarn-build
 
       - name: "Check fmt"
-        run: ./flutterw pub global run melos format-check
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          ./flutterw pub global run melos format-check
 
       - name: "Analyze Code"
-        run: ./flutterw pub global run melos analyze-check
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          ./flutterw pub global run melos analyze-check
 
       - name: "Run unit tests Encointer"
-        run: ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
 
       - name: "Run unit tests Packages"
-        run: ./flutterw pub global run melos unit-test-packages
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          ./flutterw pub global run melos unit-test-packages
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
           ./flutterw pub global run melos generate-build-runner
           ./flutterw pub global run melos format
           git diff --exit-code

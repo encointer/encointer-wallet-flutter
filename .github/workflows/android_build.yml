@@ -39,22 +39,22 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Export Path
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin" 
-
       - name: Melos Install
         run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
           chmod +x ./scripts/melos_install.sh && ./scripts/melos_install.sh
 
       - name: Melos Bootstrap
         run: |
-          ./flutterw pub global run melos bootstrap
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          melos bootstrap
 
       - name: "Build JS"
         run: |
-          ./flutterw pub global run melos yarn-build
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          melos yarn-build
 
       - name: "Build apk"
         run: |
-          ./flutterw pub global run melos build-apk
+          export PATH="$PATH":"$HOME/.pub-cache/bin" 
+          melos build-apk
