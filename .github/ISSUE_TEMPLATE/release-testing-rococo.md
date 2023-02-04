@@ -29,6 +29,7 @@ Tested on commit <enter-commit>
    - [ ] Add contact with contact qr-code works
    - [ ] Add contact with invoice qr-code works
    - [ ] Endorsing newcomer works
+   - [ ] Endorsing newcomer with reputable works
 - [ ] Profile Page
   - [ ] Add account works:
      - [ ] With import account flow
@@ -44,3 +45,6 @@ This needs two bootstrappers on a rococo test community, and preferably three sm
    - [ ]  early rewards payout in attesting phase
    - [ ] regular rewards payout in next registering phase
 - [ ] Registering 2 bootstrappers and a reputable and performing meetup works. (This needs the rococo single councillor account to call next phase.)
+
+## Other
+- [ ] inform slack channel about new release
