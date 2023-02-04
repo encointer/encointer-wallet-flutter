@@ -40,7 +40,7 @@ You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
 
 See the js_service_encointer [Readme](lib/js_service_encointer/README.md) for more documentation.
 
-```shell script
+```shell
 cd lib/js_service_encointer/
 # install nodejs dependencies
 yarn install
@@ -65,7 +65,7 @@ please refer to the [documentation](https://github.com/passsy/flutter_wrapper#id
 Further info can be found in the [Medium Article](https://passsy.medium.com/flutter-wrapper-bind-your-project-to-an-explicit-flutter-release-4062cfe6dcaf).
 
 **Note:** Git sometimes fails to update the flutter submodule, when it has changed on remote. This can be fixed with:
-```bash
+```shell
 git submodule update --init
 ```
 
@@ -75,7 +75,7 @@ Linux and MacOs users can simply replace all `flutter` CLI commands with `./flut
 #### Windows
 In windows, this does unfortunately not work, but you can still set up your IDE to use the flutter version in from the `.flutter` git submodule. And you can do the following workaround:
 
-```
+```shell
 // initialize .flutter git submodule (also works on windows)
 ./scripts/install_flutter_wrapper.sh
 
@@ -87,7 +87,7 @@ In windows, this does unfortunately not work, but you can still set up your IDE 
 
 If you have an AVD or real device attached, you can do
 
-```
+```shell
 ./flutterw run --flavor dev
 ```
 
@@ -96,13 +96,13 @@ If you have an AVD or real device attached, you can do
 You may build the App with Flutter's [Deployment Documentation](https://flutter.dev/docs).
 
 In order to build a fat APK, you can do
-```
+```shell
 ./flutterw build apk --flavor fdroid
 ```
 and find the output in `build/app/outputs/apk/fdroid/release/app-fdroid-release.apk`
 
 For the play store, an appbundle is preferred:
-```
+```shell
 ./flutterw build appbundle
 ```
 and find the output in `build/app/outputs/bundle/release/app-release.aab`
@@ -117,21 +117,21 @@ The following file contains the supported flutter version:
 ### Run tests
 
 * run all tests from the command line:
-```
+```shell
 ./flutterw test
 ```
 * exclude e2e-tests that need a running encointer node:
-```
+```shell
 ./flutterw test --exclude-tags encointer-node-e2e
 ```
 * run e2e-tests that need a running encointer node:
-```
+```shell
 ./flutterw test --tags encointer-node-e2e
 ```
 
 ### Integration tests
 * run all integration tests in `test_driver` directory:
-```
+```shell
 ./flutterw drive --target=test_driver/app.dart --flavor dev
 ```
 
@@ -161,7 +161,7 @@ OS fixes are needed to get this working. I don't know if all of these steps are 
 3. Find your local IP in the network and enter it in the encointer-wallet's [config](https://github.com/encointer/encointer-wallet-flutter/blob/1abb8a1f54ef551f19598fb809dfd6378cf1ac43/lib/config/consts.dart#L16-L23).
 4. Restart the computer to be sure that the new configs are active.
 5. Run the node with the flags:
-```
+```shell
 ./target/release/encointer-node-notee --dev --enable-offchain-indexing true --rpc-methods unsafe -lencointer=debug --ws-external --rpc-external
 ```
 
@@ -189,7 +189,7 @@ length of the code to 120.
 * Settings > Dart > Line length 120.
 * Autoformat on save: Settings > Languages and Frameworks > then tick: `Format code on save`, `Organize imports on save`.
 * Format the whole codebase with:
-```
+```shell
 ./flutterw format . --line-length 120
 ```
 
@@ -203,7 +203,7 @@ length of the code to 120.
 The flutter build-runner is used to generate repetitive boiler-plate code that is generated based on code annotations,
 e.g. `@JsonSerializable` or the mobx annotations. Whenever annotations are added, changed or removed, the following
 command must be run to update the `*.g` files:
-```
+```shell
 ./flutterw pub run build_runner build --delete-conflicting-outputs
 ```
 
