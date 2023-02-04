@@ -64,6 +64,11 @@ please refer to the [documentation](https://github.com/passsy/flutter_wrapper#id
 
 Further info can be found in the [Medium Article](https://passsy.medium.com/flutter-wrapper-bind-your-project-to-an-explicit-flutter-release-4062cfe6dcaf).
 
+**Note:** Git sometimes fails to update the flutter submodule, when it has changed on remote. This can be fixed with:
+```bash
+git submodule update --init
+```
+
 #### Linux and MacOs
 Linux and MacOs users can simply replace all `flutter` CLI commands with `./flutterw` and it will just work.
 
