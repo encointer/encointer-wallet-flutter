@@ -111,24 +111,12 @@ The following file contains the supported flutter version:
 
 ### Run tests
 
-* run all tests from the command line:
-```
-./flutterw test
-```
-* exclude e2e-tests that need a running encointer node:
-```
-./flutterw test --exclude-tags encointer-node-e2e
-```
-* run e2e-tests that need a running encointer node:
-```
-./flutterw test --tags encointer-node-e2e
-```
+* run all tests from the command line:`./flutterw test`
+* exclude e2e-tests that need a running encointer node:`./flutterw test --exclude-tags encointer-node-e2e`
+* run e2e-tests that need a running encointer node:`./flutterw test --tags encointer-node-e2e`
 
 ### Integration tests
-* run all integration tests in `test_driver` directory: 
-```
-./flutterw drive --target=test_driver/app.dart --flavor dev
-```
+* run all integration tests in `test_driver` directory: `./flutterw drive --target=test_driver/app.dart --flavor dev`
 
 ### Automated screenshots
 * Github actions is used to create automated screenshots for the specified devices there. However, running the integration tests locally will create screenshots for the currently running device.
@@ -155,10 +143,7 @@ Setup to talk from emulators and/or cellphones with an encointer-node in the sam
     * Double check if the rule is activated.
 3. Find your local IP in the network and enter it in the encointer-wallet's [config](https://github.com/encointer/encointer-wallet-flutter/blob/1abb8a1f54ef551f19598fb809dfd6378cf1ac43/lib/config/consts.dart#L16-L23).
 4. Restart the computer to be sure that the new configs are active.
-5. Run the node with the flags: 
-```
-./target/release/encointer-node-notee --dev --enable-offchain-indexing true --rpc-methods unsafe -lencointer=debug --ws-external --rpc-external
-```
+5. Run the node with the flags: `./target/release/encointer-node-notee --dev --enable-offchain-indexing true --rpc-methods unsafe -lencointer=debug --ws-external --rpc-external`
 
 If the node is run in WSL2 (WSL1 should be fine), some extra steps are needed:
 
@@ -183,10 +168,7 @@ widgets. This causes many unwanted linebreaks that reduce the readability of flu
 
 * Settings > Dart > Line length 120.
 * Autoformat on save: Settings > Languages and Frameworks > then tick: `Format code on save`, `Organize imports on save`.
-* Format the whole codebase with: 
-```
-./flutterw format . --line-length 120
-```
+* Format the whole codebase with: `./flutterw format . --line-length 120`.
 
 #### Other fmt hints:
 
@@ -197,10 +179,9 @@ widgets. This causes many unwanted linebreaks that reduce the readability of flu
 ### Update generated files.
 The flutter build-runner is used to generate repetitive boiler-plate code that is generated based on code annotations,
 e.g. `@JsonSerializable` or the mobx annotations. Whenever annotations are added, changed or removed, the following 
-command must be run to update the `*.g` files:
-```
-./flutterw pub run build_runner build --delete-conflicting-outputs
-```
+command must be run to update the `*.g` files.
+
+* `./flutterw pub run build_runner build --delete-conflicting-outputs`
 
 ## GitHub Actions Hints
 
