@@ -48,10 +48,15 @@ This project uses [flutter_wrapper](https://github.com/passsy/flutter_wrapper). 
 having the same flutter version across multiple developers. It installs automatically the flutter version form the
 pubspec.yml into the `.flutter` submodule.
 
-Vscode automatically uses the `.flutter` as we have checked in the `.vscode` folder. For setting up the Android Studio, 
+Vscode automatically uses the `.flutter` as we have checked in the `.vscode` folder. For setting up the Android Studio,
 please refer to the [documentation](https://github.com/passsy/flutter_wrapper#ide-setup).
 
 Further info can be found in the [Medium Article](https://passsy.medium.com/flutter-wrapper-bind-your-project-to-an-explicit-flutter-release-4062cfe6dcaf).
+
+**Note:** On windows, Git fails to update the flutter submodule when it has been changed on remote. This can be fixed with:
+```shell
+git submodule update --init
+```
 
 #### Linux and MacOs
 Linux and MacOs users can simply replace all `flutter` CLI commands with `./flutterw` and it will just work.
@@ -99,6 +104,10 @@ melos run-android
 Run IOS platform
 ```
 melos run-ios
+```
+If you have an AVD or real device attached, you can do
+```shell
+./flutterw run --flavor dev
 ```
 ### Build APK
 
@@ -161,7 +170,7 @@ To run the in Android Studio a build flavor must be specified. Go to Run/Debug c
 
 ### Windows Local Dev-setup
 Setup to talk from emulators and/or cellphones with an encointer-node in the same local network. In windows 10/11 some
- OS fixes are needed to get this working. I don't know if all of these steps are required.
+OS fixes are needed to get this working. I don't know if all of these steps are required.
 
 1. Make PC discoverable in local network.
 2. Enable inbound connections in windows firewall:
@@ -171,12 +180,15 @@ Setup to talk from emulators and/or cellphones with an encointer-node in the sam
     * Double check if the rule is activated.
 3. Find your local IP in the network and enter it in the encointer-wallet's [config](https://github.com/encointer/encointer-wallet-flutter/blob/1abb8a1f54ef551f19598fb809dfd6378cf1ac43/lib/config/consts.dart#L16-L23).
 4. Restart the computer to be sure that the new configs are active.
-5. Run the node with the flags: `./target/release/encointer-node-notee --dev --enable-offchain-indexing true --rpc-methods unsafe -lencointer=debug --ws-external --rpc-external`
+5. Run the node with the flags:
+```shell
+./target/release/encointer-node-notee --dev --enable-offchain-indexing true --rpc-methods unsafe -lencointer=debug --ws-external --rpc-external
+```
 
 If the node is run in WSL2 (WSL1 should be fine), some extra steps are needed:
 
-6. WSL2 does only expose ports on the local interface, which means they only listen to `127.0.0.1`, hence WSL2 can't be 
-accessed on `hostname/-ip` on other devices in the LAN. This can be fixed with a simple tool [WSLHostPatcher](https://github.com/CzBiX/WSLHostPatcher).
+6. WSL2 does only expose ports on the local interface, which means they only listen to `127.0.0.1`, hence WSL2 can't be
+   accessed on `hostname/-ip` on other devices in the LAN. This can be fixed with a simple tool [WSLHostPatcher](https://github.com/CzBiX/WSLHostPatcher).
     * Download the release.zip
     * Run `WSLHostPatcher.exe`
     * (Re-)start the service in WSL2. A firewall warning will pop-up the first time and access must be granted.
@@ -189,10 +201,10 @@ accessed on `hostname/-ip` on other devices in the LAN. This can be fixed with a
 * Add a shortcut to the `WSLHostPatcher.exe` in the windows startup folder.
 
 ### Fmt
-`dartfmt` lacks config file support, which implies that customizations need to be done by users individually. The default 
-limit of 80 characters line length conflicts with the deeply nested structure of flutter's declarative code for designing 
+`dartfmt` lacks config file support, which implies that customizations need to be done by users individually. The default
+limit of 80 characters line length conflicts with the deeply nested structure of flutter's declarative code for designing
 widgets. This causes many unwanted linebreaks that reduce the readability of flutter code. Hence, we increase the line
- length of the code to 120.
+length of the code to 120.
 
 * Settings > Dart > Line length 120.
 * Autoformat on save: Settings > Languages and Frameworks > then tick: `Format code on save`, `Organize imports on save`.
