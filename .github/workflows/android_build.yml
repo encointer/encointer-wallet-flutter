@@ -39,9 +39,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Melos Install
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./scripts/melos_install.sh
+        run: ./scripts/melos_install.sh
 
       - name: Melos Bootstrap
         run: |
