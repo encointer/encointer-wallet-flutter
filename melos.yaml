@@ -93,8 +93,8 @@ scripts:
     description: "Run integration tests for the `app.dart` file on iOS"
 
   integration-real-app-test-android:
-    run: melos exec --scope="encointer_wallet"-- flutter drive --target=test_driver/real_app.dart --flavor dev
-    description: "Run integration tests for the `real_app.dart`` file on Android"
+    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/real_app.dart --flavor dev
+    description: "Run integration tests for the `real_app.dart` file on Android"
 
   integration-real-app-test-ios:
     run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/real_app.dart
