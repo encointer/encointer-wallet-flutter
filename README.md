@@ -30,7 +30,7 @@ Encointer wallet and client for mobile phones
 </p>
 
 ## Requirements
-- Dart sdk: ">=2.12.0 <3.0.0"
+- Dart sdk: ">=2.18.0 <3.0.0"
 - Flutter: "3.7.0"
 - Android: minSdkVersion 17
 - iOS: --ios-language swift, Xcode version >= 14.0.0
@@ -64,7 +64,7 @@ Linux and MacOs users can simply replace all `flutter` CLI commands with `./flut
 #### Windows
 In windows, this does unfortunately not work, but you can still set up your IDE to use the flutter version in from the `.flutter` git submodule. And you can do the following workaround:
 
-```bash
+```shell
 # initialize .flutter git submodule (also works on windows)
 ./scripts/install_flutter_wrapper.sh
 
@@ -78,11 +78,11 @@ In windows, this does unfortunately not work, but you can still set up your IDE 
 To solve these (and many other) problems, some projects will organize their code bases into multi-package repositories (sometimes called [monorepos](https://en.wikipedia.org/wiki/Monorepo)).
 
 Install
-```bash
+```shell
 dart pub global activate melos
 ```
 Setup
-```bash
+```shell
 melos bootstrap
 ```
 
@@ -93,16 +93,16 @@ You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
 
 See the js_service_encointer [Readme](lib/js_service_encointer/README.md) for more documentation.
 
-```shell script
+```shell
 melos yarn-build
 ```
 ### Run App
 Run Android platform
-```
+```shell
 melos run-android
 ```
 Run IOS platform
-```
+```shell
 melos run-ios
 ```
 If you have an AVD or real device attached, you can do
@@ -114,13 +114,13 @@ If you have an AVD or real device attached, you can do
 You may build the App with Flutter's [Deployment Documentation](https://flutter.dev/docs).
 
 In order to build a fat APK, you can do 
-```
+```shell
 melos build-apk
 ```
 and find the output in `build/app/outputs/apk/fdroid/release/app-fdroid-release.apk`
 
 For the play store, an appbundle is preferred:
-```
+```shell
 melos build-appbundle
 ```
 and find the output in `build/app/outputs/bundle/release/app-release.aab`
@@ -136,22 +136,22 @@ The following file contains the supported flutter version:
 
 * run all tests from the command line:`./flutterw test`
 * exclude e2e-tests that need a running encointer node:
-```bash
+```shell
 melos unit-test-encointer-exclude-node-e2e
 ```
 * run e2e-tests that need a running encointer node:
-```bash
+```shell
 melos unit-test-encointer-node-e2e
 ```
 
 ### Integration tests
 * run all integration tests in `test_driver` directory:
 Integration test app.dart for Android system
-```bash
+```shell
 melos integration-app-test-android
 ```
 Integration test app.dart for IOS system
-```bash
+```shell
 melos integration-app-test-ios
 ```
 
@@ -210,7 +210,7 @@ length of the code to 120.
 * Autoformat on save: Settings > Languages and Frameworks > then tick: `Format code on save`, `Organize imports on save`.
 * Format the whole codebase with: 
 format all Dart code
-```bash
+```shell
 melos format
 ```
 
@@ -225,7 +225,7 @@ The flutter build-runner is used to generate repetitive boiler-plate code that i
 e.g. `@JsonSerializable` or the mobx annotations. Whenever annotations are added, changed or removed, the following 
 command must be run to update the `*.g` files.
 
-```bash
+```shell
 melos generate-build-runner
 ```
 
