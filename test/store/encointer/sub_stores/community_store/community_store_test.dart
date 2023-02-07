@@ -21,7 +21,7 @@ void main() {
         AppStore(MockLocalStorage(), config: const AppConfig()),
         withUI: false,
       );
-      webApi.init();
+      await webApi.init();
 
       final communityStore = CommunityStore(
         'My Test Network',
@@ -45,13 +45,17 @@ void main() {
       final testLocations = [testLocation1, testLocation2, testLocation3];
 
       communityStore
-        ..setCommunityMetadata(testMetadata)
         ..setDemurrage(1.1)
         ..setMeetupTime(10)
-        ..setBootstrappers(bootstrappers)
-        ..setMeetupLocations(testLocations)
-        ..initCommunityAccountStore(aliceAddress)
-        ..initCommunityAccountStore(bobAddress);
+        ..setMeetupLocations(testLocations);
+
+      await Future.wait<void>([
+        communityStore.setCommunityMetadata(testMetadata),
+        communityStore.setBootstrappers(bootstrappers),
+        communityStore.initCommunityAccountStore(aliceAddress),
+        communityStore.initCommunityAccountStore(bobAddress)
+      ]);
+
       final aliceCommunityAccountStore = communityStore.communityAccountStores![aliceAddress]!;
       final bobCommunityAccountStore = communityStore.communityAccountStores![bobAddress]!;
 

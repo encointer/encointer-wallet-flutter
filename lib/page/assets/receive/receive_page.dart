@@ -76,7 +76,7 @@ class _ReceivePageState extends State<ReceivePage> {
           }
         }
 
-        webApi.encointer.getAllBalances(store.account.currentAddress).then((balances) {
+        await webApi.encointer.getAllBalances(store.account.currentAddress).then((balances) {
           final cid = store.encointer.chosenCid;
 
           if (cid == null) {

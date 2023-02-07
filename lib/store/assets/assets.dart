@@ -117,7 +117,7 @@ abstract class _AssetsStore with Store {
         cache![k] = v;
       });
     }
-    rootStore.localStorage.setAccountCache(
+    await rootStore.localStorage.setAccountCache(
       rootStore.account.currentAccount.pubKey,
       cacheBalanceKey,
       cache,
@@ -135,7 +135,7 @@ abstract class _AssetsStore with Store {
     tokenBalances = Map<String, String>.from(amt!);
 
     if (!needCache) return;
-    rootStore.localStorage.setAccountCache(
+    await rootStore.localStorage.setAccountCache(
       pubKey,
       _getCacheKey(cacheTokenBalanceKey),
       amt,
@@ -210,7 +210,7 @@ abstract class _AssetsStore with Store {
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTokenBalanceKey)),
     ]);
     if (cache[0] != null) {
-      setAccountBalances(pubKey, cache[0]! as Map<String, dynamic>, needCache: false);
+      await setAccountBalances(pubKey, cache[0]! as Map<String, dynamic>, needCache: false);
     }
     if (cache[1] != null) {
       txs = ObservableList.of(
@@ -222,9 +222,9 @@ abstract class _AssetsStore with Store {
       cacheTxsTimestamp = cache[2] as int?;
     }
     if (cache[3] != null) {
-      setAccountTokenBalances(pubKey, cache[3]! as Map<String, dynamic>, needCache: false);
+      await setAccountTokenBalances(pubKey, cache[3]! as Map<String, dynamic>, needCache: false);
     } else {
-      setAccountTokenBalances(pubKey, {}, needCache: false);
+      await setAccountTokenBalances(pubKey, {}, needCache: false);
     }
   }
 

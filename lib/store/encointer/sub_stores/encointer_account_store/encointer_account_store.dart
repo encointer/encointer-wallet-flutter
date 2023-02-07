@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -83,7 +84,7 @@ abstract class _EncointerAccountStore with Store {
   @action
   Future<void> setReputations(Map<int, CommunityReputation> reps) async {
     reputations = reps;
-    writeToCache();
+    unawaited(writeToCache());
     await getNumberOfNewbieTicketsForReputable();
   }
 
@@ -128,7 +129,7 @@ abstract class _EncointerAccountStore with Store {
     }
 
     if (needCache && txsTransfer.isNotEmpty) {
-      writeToCache();
+      unawaited(writeToCache());
     }
   }
 
