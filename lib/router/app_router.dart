@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
@@ -46,7 +47,10 @@ class AppRoute {
     switch (settings.name) {
       case SplashView.route:
         return CupertinoPageRoute(
-          builder: (_) => const SplashView(),
+          builder: (_) => Provider(
+            create: (context) => SplashViewStore(LocalAuthentication()),
+            child: const SplashView(),
+          ),
         );
       case EncointerHomePage.route:
         return CupertinoPageRoute(

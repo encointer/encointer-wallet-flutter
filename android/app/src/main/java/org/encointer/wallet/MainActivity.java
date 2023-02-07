@@ -1,6 +1,8 @@
-  import io.flutter.embedding.android.FlutterFragmentActivity;
+package org.encointer.wallet;
 
-  public class MainActivity extends FlutterFragmentActivity {
+import io.flutter.embedding.android.FlutterFragmentActivity;
+
+public class MainActivity extends FlutterFragmentActivity {
   
-  }
+}
   
