@@ -13,19 +13,27 @@ command:
 
 scripts:
   format:
-    exec: flutter format . --line-length 120
+    run: |
+      flutter pub global run melos exec \
+      dart format . --line-length 120
     description: "Format all Dart code"
 
   format-check:
-    exec: flutter format . --line-length 120 --set-exit-if-changed
+    run: |
+      flutter pub global run melos exec \
+      dart format . --line-length 120 --set-exit-if-changed
     description: "Check format all Dart code"
 
   analyze:
-    exec: flutter analyze
+    run: |
+      flutter pub global run melos exec \
+      flutter analyze
     description: "Analyze all Dart code"
 
   analyze-check:
-    exec: flutter analyze --fatal-warnings
+    run: |
+      flutter pub global run melos exec \
+      flutter analyze --fatal-warnings
     description: "Analyze all Dart code and exit if there are any fatal warnings"
 
   clean:
@@ -45,7 +53,7 @@ scripts:
     description: "Run Flutter doctor"
 
   generate-build-runner:
-    run: melos exec --depends-on="build_runner"  flutter pub run build_runner build --delete-conflicting-outputs
+    run: flutter pub run build_runner build --delete-conflicting-outputs
     description: "Generate code with build_runner"
 
   yarn-build:
@@ -54,15 +62,21 @@ scripts:
 
   # Unit test Encointer Wallet with tag
   unit-test-encointer-exclude-node-e2e:
-    run: melos exec --scope="encointer_wallet" -- flutter test --exclude-tags encointer-node-e2e
+    run: | 
+      flutter pub global run melos exec \
+      --scope="encointer_wallet" -- flutter test --exclude-tags encointer-node-e2e
     description: "Run unit tests excluding the `encointer-node-e2e` tag"
 
   unit-test-encointer-node-e2e:
-    run: melos exec --scope="encointer_wallet" -- flutter test --tags encointer-node-e2e
+    run: |
+      flutter pub global run melos exec \
+      --scope="encointer_wallet" -- flutter test --tags encointer-node-e2e
     description: "Run unit tests with the `encointer-node-e2e` tag"
 
   unit-test-packages:
-    run: melos exec --ignore="encointer_wallet" -- flutter test
+    run: |
+      flutter pub global run melos exec \
+      --ignore="encointer_wallet" -- flutter test
     description: "Run unit tests with the `encointer-node-e2e` tag"  
 
   # Run Encointer Wallet
