@@ -57,7 +57,9 @@ scripts:
     description: "Generate code with build_runner"
 
   yarn-build:
-    run: melos exec --dir-exists="lib/js_service_encointer" "cd lib/js_service_encointer/ && yarn install && yarn run build"
+    run: | 
+      cd lib/js_service_encointer
+      yarn install && yarn run build
     description: "Install yarn dependencies and build"
 
   # Unit test Encointer Wallet with tag
