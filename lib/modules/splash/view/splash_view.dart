@@ -6,7 +6,6 @@ import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -45,10 +44,7 @@ class _SplashViewState extends State<SplashView> {
     store.setApiReady(true);
 
     if (store.account.accountListAll.isNotEmpty) {
-      final didAuthenticate = await context.read<SplashViewStore>().authinticate();
-      if (didAuthenticate) {
-        await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
-      }
+      await Navigator.pushNamedAndRemoveUntil(context, LoginView.route, (route) => false);
     } else {
       await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryPage.route, (route) => false);
     }
