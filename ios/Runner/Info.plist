@@ -101,6 +101,9 @@
 		</array>
 		</dict>
 	</array>
+	<!-- local_auth -->
+	<key>NSFaceIDUsageDescription</key>
+	<string>Why is my app authenticating using face id?</string>
 	<!-- ... other tags -->
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
