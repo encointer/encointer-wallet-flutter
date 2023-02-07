@@ -29,21 +29,6 @@ Encointer wallet and client for mobile phones
   <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width=300>
 </p>
 
-### Build js dependencies
-
-Encointer wallet connects to the chains with [polkadot-js/api](https://polkadot.js.org/api/), running in a hidden webview.
-You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
-
-See the js_service_encointer [Readme](lib/js_service_encointer/README.md) for more documentation.
-
-```shell
-cd lib/js_service_encointer/
-# install nodejs dependencies
-yarn install
-# build main.js
-yarn run build
-```
-
 ### Requirements
 - Dart sdk: ">=2.19.0 <3.0.0"
 - Flutter: "3.7.1"
