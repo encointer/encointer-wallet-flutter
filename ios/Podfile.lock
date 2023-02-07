@@ -207,7 +207,7 @@ SPEC CHECKSUMS:
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences_foundation: 297b3ebca31b34ec92be11acd7fb0ba932c822ca
-  url_launcher_ios: ae1517e5e344f5544fb090b079e11f399dfbe4d2
+  url_launcher_ios: fb12c43172927bb5cf75aeebd073f883801f1993
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: 90aee035b683484f7e14ac9a57b7dc9185377dcb
