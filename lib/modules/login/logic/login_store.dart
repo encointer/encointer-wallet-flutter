@@ -12,10 +12,25 @@ part 'login_store.g.dart';
 class LoginStore = _LoginStoreBase with _$LoginStore;
 
 abstract class _LoginStoreBase with Store {
-  const _LoginStoreBase(this.localAuth, this.accountApi);
+  _LoginStoreBase(this.localAuth, this.accountApi);
 
   final LocalAuthentication localAuth;
   final AccountApi accountApi;
+
+  @observable
+  bool isLoading = false;
+
+  final pincode = ObservableList<int>();
+
+  @action
+  void addPin(int value) {
+    if (pincode.length < 20 && !isLoading) pincode.add(value);
+  }
+
+  @action
+  void removeLast() {
+    if (pincode.isNotEmpty && !isLoading) pincode.removeLast();
+  }
 
   Future<bool> authinticate() async {
     try {
@@ -40,8 +55,16 @@ abstract class _LoginStoreBase with Store {
     }
   }
 
-  Future<void> checkAccountPassword(AccountData account, String pass) async {
+  @action
+  Future<bool> checkAccountPassword(AccountData account) async {
+    isLoading = true;
+    final pass = pincode.map((e) => e.toString()).join();
     final value = await accountApi.checkAccountPassword(account, pass);
-    print(value);
+    isLoading = false;
+    if (value != null && value['success'] == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
