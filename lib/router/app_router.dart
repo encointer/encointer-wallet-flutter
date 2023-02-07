@@ -3,7 +3,6 @@ import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
-import 'package:encointer_wallet/modules/login/logic/login_store.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
