@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -45,11 +44,9 @@ class _SplashViewState extends State<SplashView> {
     store.setApiReady(true);
 
     if (store.account.accountListAll.isNotEmpty) {
-      await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
+      await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
-      await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()), (route) => false);
+      await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryPage.route, (route) => false);
     }
   }
 

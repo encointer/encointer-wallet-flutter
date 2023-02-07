@@ -12,7 +12,7 @@
         android:allowBackup="false"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:name="io.flutter.embedding.android.FlutterFragmentActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/LaunchTheme"
@@ -41,6 +41,8 @@
             android:value="2" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- local_auth -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <queries>
         <!-- Needed to open URLs as of Android 11 -->
         <intent>

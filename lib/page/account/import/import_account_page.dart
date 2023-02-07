@@ -173,11 +173,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       } else {
         context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
         await _importAccount();
-        Navigator.pushAndRemoveUntil<void>(
-          context,
-          CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()),
-          (route) => false,
-        );
+        Navigator.pushNamedAndRemoveUntil<void>(context, EncointerHomePage.route, (route) => false);
       }
     });
   }
