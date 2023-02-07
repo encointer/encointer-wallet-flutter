@@ -51,24 +51,31 @@ class EncointerApi {
 
   Future<void> startSubscriptions() async {
     Log.d('api: starting encointer subscriptions', 'EncointerApi');
-    getPhaseDurations();
-    subscribeCurrentPhase();
-    subscribeCommunityIdentifiers();
+
+    final futures = [
+      getPhaseDurations(),
+      subscribeCurrentPhase(),
+      subscribeCommunityIdentifiers(),
+    ];
+
     if (store.settings.endpointIsNoTee) {
-      subscribeBusinessRegistry();
+      futures.add(subscribeBusinessRegistry());
     }
+    await Future.wait(futures);
   }
 
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping encointer subscriptions', 'EncointerApi');
-    jsApi
-      ..unsubscribeMessage(_currentPhaseSubscribeChannel)
-      ..unsubscribeMessage(_communityIdentifiersChannel)
-      ..unsubscribeMessage(_businessRegistryChannel);
 
+    final futures = [
+      jsApi.unsubscribeMessage(_currentPhaseSubscribeChannel),
+      jsApi.unsubscribeMessage(_communityIdentifiersChannel),
+      jsApi.unsubscribeMessage(_businessRegistryChannel)
+    ];
     if (store.settings.endpointIsNoTee) {
-      jsApi.unsubscribeMessage(_businessRegistryChannel);
+      futures.add(jsApi.unsubscribeMessage(_businessRegistryChannel));
     }
+    await Future.wait(futures);
   }
 
   Future<void> close() async {

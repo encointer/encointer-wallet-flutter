@@ -64,15 +64,18 @@ class Api {
   SubScanApi subScanApi = SubScanApi();
 
   Future<void> init() async {
-    dartApi.connect(store.settings.endpoint.value!);
+    await Future.wait([dartApi.connect(store.settings.endpoint.value!), launchWebview()]);
+
+    Log.d('launch the webView', 'Api');
+    // dartApi.connect(store.settings.endpoint.value!);
 
     // need to do this from here as we can't access instance fields in constructor.
     account.setFetchAccountData(fetchAccountData);
 
     // launch the webView and connect to the endpoint
-    Log.d('launch the webView', 'Api');
+    // Log.d('launch the webView', 'Api');
 
-    await launchWebview();
+    // await launchWebview();
   }
 
   Future<void> close() async {
@@ -177,8 +180,12 @@ class Api {
       evalJavascript('api.rpc.system.properties()'),
       evalJavascript('api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever
     ]);
-    store.settings.setNetworkConst(info[0] as Map<String, dynamic>);
-    store.settings.setNetworkState(info[1] as Map<String, dynamic>);
+
+    await Future.wait([
+      store.settings.setNetworkConst(info[0] as Map<String, dynamic>),
+      store.settings.setNetworkState(info[1] as Map<String, dynamic>)
+    ]);
+
     store.settings.setNetworkName(info[2] as String?);
 
     startSubscriptions();

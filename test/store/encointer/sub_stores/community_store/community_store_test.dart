@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:encointer_wallet/config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -49,12 +51,12 @@ void main() {
         ..setMeetupTime(10)
         ..setMeetupLocations(testLocations);
 
-      await Future.wait<void>([
+      unawaited(Future.wait<void>([
         communityStore.setCommunityMetadata(testMetadata),
         communityStore.setBootstrappers(bootstrappers),
         communityStore.initCommunityAccountStore(aliceAddress),
         communityStore.initCommunityAccountStore(bobAddress)
-      ]);
+      ]));
 
       final aliceCommunityAccountStore = communityStore.communityAccountStores![aliceAddress]!;
       final bobCommunityAccountStore = communityStore.communityAccountStores![bobAddress]!;

@@ -236,10 +236,11 @@ abstract class _EncointerStore with Store {
       unawaited(writeToCache());
 
       if (cid != null) {
-        await Future.wait([]);
-        _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
-        initBazaarStore(cid);
-        await initCommunityStore(cid, _rootStore.account.currentAddress);
+        await Future.wait([
+          _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson()),
+          initBazaarStore(cid),
+          initCommunityStore(cid, _rootStore.account.currentAddress)
+        ]);
       } else {
         await _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
