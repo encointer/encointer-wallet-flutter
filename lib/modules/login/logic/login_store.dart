@@ -60,6 +60,7 @@ abstract class _LoginStoreBase with Store {
     isLoading = true;
     final pass = pincode.map((e) => e.toString()).join();
     final value = await accountApi.checkAccountPassword(account, pass);
+    pincode.clear();
     isLoading = false;
     if (value != null && value['success'] == true) {
       return true;

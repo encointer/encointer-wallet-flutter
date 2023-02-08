@@ -9,6 +9,7 @@ import 'package:encointer_wallet/modules/login/widget/widget.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -31,7 +32,8 @@ class _LoginViewState extends State<LoginView> {
       final value = await context.read<LoginStore>().authinticate();
       if (value) Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
-      RootSnackBar.showMsg('It is device s not support local auth');
+      final dic = I18n.of(context)!.translationsForLocale();
+      RootSnackBar.showMsg(dic.account.biometricError);
     }
   }
 
@@ -39,14 +41,15 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final store = context.watch<LoginStore>();
     final appStore = context.watch<AppStore>();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Encointer Wallet'),
+        title: const Text('Encointer'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text('Wellcome ${appStore.account.currentAccount.name}'),
+          Text('${dic.account.welcome} ${appStore.account.currentAccount.name}'),
           Observer(builder: (_) {
             return PinDots(store.pincode.length, maxLengt: store.pincode.length < 4 ? 4 : store.pincode.length);
           }),
@@ -66,6 +69,7 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = context.watch<LoginStore>();
     final appStore = context.watch<AppStore>();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: Observer(builder: (_) {
@@ -76,11 +80,11 @@ class LoginButton extends StatelessWidget {
                   if (value) {
                     Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
                   } else {
-                    RootSnackBar.showMsg('It is device s not support local auth');
+                    RootSnackBar.showMsg(dic.account.passwordError);
                   }
                 }
               : null,
-          child: !store.isLoading ? const Text('Login') : const CupertinoActivityIndicator(),
+          child: !store.isLoading ? Text(dic.account.signIn) : const CupertinoActivityIndicator(),
         );
       }),
     );
