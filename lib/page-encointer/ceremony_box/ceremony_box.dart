@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -195,13 +197,13 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
-  await showCupertinoDialog<void>(
+  unawaited(showCupertinoDialog<void>(
     context: context,
     builder: (_) => CupertinoAlertDialog(
       title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),
       content: const CupertinoActivityIndicator(),
     ),
-  );
+  ));
 
   await store.dataUpdate.executeUpdate().whenComplete(() => Navigator.of(context).pop());
 }
