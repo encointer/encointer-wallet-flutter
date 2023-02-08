@@ -95,15 +95,21 @@ See the js_service_encointer [Readme](lib/js_service_encointer/README.md) for mo
 
 ```shell
 melos yarn-build
+# windows
+pub global run melos yarn-build
 ```
 ### Run App
 Run Android platform
 ```shell
 melos run-android
+# windows
+pub global run melos run-android
 ```
 Run IOS platform
 ```shell
 melos run-ios
+# windows
+pub global run melos run-ios
 ```
 If you have an AVD or real device attached, you can do
 ```shell
@@ -116,12 +122,16 @@ You may build the App with Flutter's [Deployment Documentation](https://flutter.
 In order to build a fat APK, you can do 
 ```shell
 melos build-apk
+# windows
+pub global run melos build-apk
 ```
 and find the output in `build/app/outputs/apk/fdroid/release/app-fdroid-release.apk`
 
 For the play store, an appbundle is preferred:
 ```shell
 melos build-appbundle
+# windows
+pub global run melos build-appbundle
 ```
 and find the output in `build/app/outputs/bundle/release/app-release.aab`
 
@@ -142,6 +152,8 @@ melos unit-test-encointer-exclude-node-e2e
 * run e2e-tests that need a running encointer node:
 ```shell
 melos unit-test-encointer-node-e2e
+# windows
+pub global run melos unit-test-encointer-node-e2e
 ```
 
 ### Integration tests
@@ -149,10 +161,14 @@ melos unit-test-encointer-node-e2e
 Integration test app.dart for Android system
 ```shell
 melos integration-app-test-android
+# windows
+pub global run melos integration-app-test-android
 ```
 Integration test app.dart for IOS system
 ```shell
 melos integration-app-test-ios
+# windows
+pub global run melos integration-app-test-ios
 ```
 
 ### Automated screenshots
@@ -212,6 +228,8 @@ length of the code to 120.
 format all Dart code
 ```shell
 melos format
+# windows
+pub global run melos format
 ```
 
 #### Other fmt hints:
@@ -227,6 +245,8 @@ command must be run to update the `*.g` files.
 
 ```shell
 melos generate-build-runner
+# windows
+pub global run melos generate-build-runner
 ```
 
 ## GitHub Actions Hints
