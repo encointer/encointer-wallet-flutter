@@ -52,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
         children: [
           Text(
             '${dic.account.welcome} ${appStore.account.currentAccount.name}',
-            style:  textTheme.displaySmall,
+            style: textTheme.displaySmall,
           ),
           Observer(builder: (_) {
             return PinDots(store.pincode.length, maxLengt: store.pincode.length < 4 ? 4 : store.pincode.length);
