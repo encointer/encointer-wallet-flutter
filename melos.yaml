@@ -49,7 +49,7 @@ scripts:
     description: "Run unit tests (all packages)"
 
   doctor:
-    exec: flutter doctor
+    run: flutter doctor
     description: "Run Flutter doctor"
 
   generate-build-runner:
@@ -59,14 +59,14 @@ scripts:
     description: "Generate code with build_runner"
 
   yarn-build:
-    run: | 
+    run: |
       cd lib/js_service_encointer
       yarn install && yarn run build
     description: "Install yarn dependencies and build"
 
   # Unit test Encointer Wallet with tag
   unit-test-encointer-exclude-node-e2e:
-    run: | 
+    run: |
       flutter pub global run melos exec \
       --scope="encointer_wallet" -- flutter test --exclude-tags encointer-node-e2e
     description: "Run unit tests excluding the `encointer-node-e2e` tag"
@@ -81,47 +81,47 @@ scripts:
     run: |
       flutter pub global run melos exec \
       --ignore="encointer_wallet" -- flutter test
-    description: "Run unit tests with the `encointer-node-e2e` tag"  
+    description: "Run unit tests with the `encointer-node-e2e` tag"
 
   # Run Encointer Wallet
   run-android:
-    run: melos exec --scope="encointer_wallet" -- flutter run --flavor dev
+    run: flutter run --flavor dev
     description: "Run encointer_wallet on an Android platform"
 
   run-ios:
-    run: melos exec --scope="encointer_wallet" -- flutter run
+    run: flutter run
     description: "Run encointer_wallet on an iOS platform"
 
   # Build apk and appbundle Encointer Wallet
   build-apk:
-    run: melos exec --scope="encointer_wallet" -- flutter build apk --flavor fdroid
+    run: flutter build apk --flavor fdroid
     description: "Build an APK file"
 
   build-appbundle:
-    run: melos exec --scope="encointer_wallet" -- flutter build appbundle
+    run: flutter build appbundle
     description: "Build an appbundle file"
 
   # Integration test Encointer Wallet
   integration-app-test-android:
-    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/app.dart --flavor dev
+    run: flutter drive --target=test_driver/app.dart --flavor dev
     description: "Run integration tests for the `app.dart` file on Android"
 
   integration-app-test-ios:
-    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/app.dart
+    run: flutter drive --target=test_driver/app.dart
     description: "Run integration tests for the `app.dart` file on iOS"
 
   integration-real-app-test-android:
-    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/real_app.dart --flavor dev
+    run: flutter drive --target=test_driver/real_app.dart --flavor dev
     description: "Run integration tests for the `real_app.dart` file on Android"
 
   integration-real-app-test-ios:
-    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/real_app.dart
+    run: flutter drive --target=test_driver/real_app.dart
     description: "Run integration tests for the `real_app.dart`` file on IOS"
 
   integration-scan-test-android:
-    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/scan_page.dart --flavor dev
+    run: flutter drive --target=test_driver/scan_page.dart --flavor dev
     description: "Run integration test for QR scan on Android"
 
   integration-scan-test-ios:
-    run: melos exec --scope="encointer_wallet" -- flutter drive --target=test_driver/scan_page.dart
+    run: flutter drive --target=test_driver/scan_page.dart
     description: "Run integration test for QR scan on iOS"
