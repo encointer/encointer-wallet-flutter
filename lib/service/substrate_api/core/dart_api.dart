@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -26,7 +28,10 @@ class SubstrateDartApi {
   String? get endpoint => _endpoint;
 
   Future<void> connect(String endpoint) async {
-    _connectAndListen(endpoint);
+    // I tried to wait with await, but I found that the application opened too late before I used it. 
+    // That's why I used unwaited. However, I couldn't catch errors with either of them, 
+    // only a small delay when I used that await.   
+    unawaited(_connectAndListen(endpoint));
 
     try {
       _rpc = await rpc<Map<String, dynamic>>('rpc_methods').then(RpcMethods.fromJson);
