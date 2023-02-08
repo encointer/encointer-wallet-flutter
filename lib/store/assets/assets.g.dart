@@ -204,13 +204,6 @@ mixin _$AssetsStore on _AssetsStore, Store {
     return _$clearTxsAsyncAction.run(() => super.clearTxs());
   }
 
-  late final _$addTxsAsyncAction = AsyncAction('_AssetsStore.addTxs', context: context);
-
-  @override
-  Future<void> addTxs(Map<dynamic, dynamic> res, String address, {bool shouldCache = false}) {
-    return _$addTxsAsyncAction.run(() => super.addTxs(res, address, shouldCache: shouldCache));
-  }
-
   late final _$loadAccountCacheAsyncAction = AsyncAction('_AssetsStore.loadAccountCache', context: context);
 
   @override

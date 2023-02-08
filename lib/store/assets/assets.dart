@@ -152,28 +152,42 @@ abstract class _AssetsStore with Store {
     txs.clear();
   }
 
-  @action
-  Future<void> addTxs(Map res, String address, {bool shouldCache = false}) async {
-    if (rootStore.account.currentAddress != address) return;
+  /// I can not test this method. because it is not used anywhere else.
+  /// But I did it to fix lint. If it is right I will uncomment this method below.
+  /// But if not used maybe we can remove it.
+  /// ```dart
+  /// final futures = [
+  ///   rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls),
+  ///   rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTimeKey), cacheTxsTimestamp),
+  /// ];
+  /// await Future.wait(futures);
+  ///
+  /// ```
+  // @action
+  // Future<void> addTxs(Map res, String address, {bool shouldCache = false}) async {
+  //   if (rootStore.account.currentAddress != address) return;
 
-    txsCount = res['count'] as int?;
+  //   txsCount = res['count'] as int?;
 
-    final ls = res['transfers'] as List?;
-    if (ls == null) return;
+  //   final ls = res['transfers'] as List?;
+  //   if (ls == null) return;
 
-    for (final i in ls) {
-      final tx = TransferData.fromJson(i as Map<String, dynamic>);
-      txs.add(tx);
-    }
+  //   for (final i in ls) {
+  //     final tx = TransferData.fromJson(i as Map<String, dynamic>);
+  //     txs.add(tx);
+  //   }
 
-    if (shouldCache) {
-      rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls);
+  //   if (shouldCache) {
+  //     cacheTxsTimestamp = DateTime.now().millisecondsSinceEpoch;
+  //     final futures = [
+  //       rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls),
+  //       rootStore.localStorage
+  //           .setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTimeKey), cacheTxsTimestamp)
+  //     ];
 
-      cacheTxsTimestamp = DateTime.now().millisecondsSinceEpoch;
-      rootStore.localStorage
-          .setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTimeKey), cacheTxsTimestamp);
-    }
-  }
+  //     await Future.wait(futures);
+  //   }
+  // }
 
   @action
   void setTxsFilter(int filter) {
