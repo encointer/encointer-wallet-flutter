@@ -12,10 +12,12 @@ part 'login_store.g.dart';
 class LoginStore = _LoginStoreBase with _$LoginStore;
 
 abstract class _LoginStoreBase with Store {
-  _LoginStoreBase(this.localAuth, this.accountApi);
+  _LoginStoreBase(LocalAuthentication localAuth, AccountApi accountApi)
+      : _localAuth = localAuth,
+        _accountApi = accountApi;
 
-  final LocalAuthentication localAuth;
-  final AccountApi accountApi;
+  final LocalAuthentication _localAuth;
+  final AccountApi _accountApi;
 
   @observable
   bool isLoading = false;
@@ -23,35 +25,33 @@ abstract class _LoginStoreBase with Store {
   final pincode = ObservableList<int>();
 
   @action
-  void addPin(int value) {
+  void addPinCode(int value) {
     if (pincode.length < 20 && !isLoading) pincode.add(value);
   }
 
   @action
-  void removeLast() {
+  void removeLastPinCode() {
     if (pincode.isNotEmpty && !isLoading) pincode.removeLast();
   }
 
-  Future<bool> authinticate() async {
+  Future<bool> authinticate() {
     try {
-      final didAuthenticate = await localAuth.authenticate(
+      return _localAuth.authenticate(
         localizedReason: 'Please authenticate to show account balance',
         options: const AuthenticationOptions(useErrorDialogs: false),
       );
-      return didAuthenticate;
     } catch (e, s) {
       Log.e('$e', 'SplashViewState', s);
-      return false;
+      return Future.value(false);
     }
   }
 
-  Future<bool> isDeviceSupported() async {
+  Future<bool> isDeviceSupported() {
     try {
-      final isDeviceSupported = await localAuth.isDeviceSupported();
-      return isDeviceSupported;
+      return _localAuth.isDeviceSupported();
     } catch (e, s) {
       Log.e('$e', 'SplashViewState', s);
-      return false;
+      return Future.value(false);
     }
   }
 
@@ -59,13 +59,9 @@ abstract class _LoginStoreBase with Store {
   Future<bool> checkAccountPassword(AccountData account) async {
     isLoading = true;
     final pass = pincode.map((e) => e.toString()).join();
-    final value = await accountApi.checkAccountPassword(account, pass);
+    final result = await _accountApi.checkAccountPassword(account, pass);
     pincode.clear();
     isLoading = false;
-    if (value != null && value['success'] == true) {
-      return true;
-    } else {
-      return false;
-    }
+    return result?['success'] == true;
   }
 }

@@ -34,20 +34,20 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   late final _$_LoginStoreBaseActionController = ActionController(name: '_LoginStoreBase', context: context);
 
   @override
-  void addPin(int value) {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.addPin');
+  void addPinCode(int value) {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.addPinCode');
     try {
-      return super.addPin(value);
+      return super.addPinCode(value);
     } finally {
       _$_LoginStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void removeLast() {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.removeLast');
+  void removeLastPinCode() {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.removeLastPinCode');
     try {
-      return super.removeLast();
+      return super.removeLastPinCode();
     } finally {
       _$_LoginStoreBaseActionController.endAction(_$actionInfo);
     }

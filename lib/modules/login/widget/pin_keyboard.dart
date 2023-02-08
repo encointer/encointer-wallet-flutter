@@ -15,7 +15,7 @@ class PinKeyboard extends StatelessWidget {
       children: List.generate(9, (i) {
         return CircleButton(
           child: Text('${i + 1}'),
-          onPressed: () => context.read<LoginStore>().addPin(i + 1),
+          onPressed: () => context.read<LoginStore>().addPinCode(i + 1),
         );
       })
         ..addAll(
@@ -26,10 +26,10 @@ class PinKeyboard extends StatelessWidget {
             ),
             CircleButton(
               child: const Text('0'),
-              onPressed: () => context.read<LoginStore>().addPin(0),
+              onPressed: () => context.read<LoginStore>().addPinCode(0),
             ),
             CircleButton(
-              onPressed: context.read<LoginStore>().removeLast,
+              onPressed: context.read<LoginStore>().removeLastPinCode,
               child: const Icon(Icons.backspace),
             ),
           ],
