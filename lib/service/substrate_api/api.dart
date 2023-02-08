@@ -64,18 +64,17 @@ class Api {
   SubScanApi subScanApi = SubScanApi();
 
   Future<void> init() async {
-    await Future.wait([dartApi.connect(store.settings.endpoint.value!), launchWebview()]);
+    await Future.wait([
+      dartApi.connect(store.settings.endpoint.value!),
+
+      // launch the webView and connect to the endpoint
+      launchWebview(),
+    ]);
 
     Log.d('launch the webView', 'Api');
-    // dartApi.connect(store.settings.endpoint.value!);
 
     // need to do this from here as we can't access instance fields in constructor.
     account.setFetchAccountData(fetchAccountData);
-
-    // launch the webView and connect to the endpoint
-    // Log.d('launch the webView', 'Api');
-
-    // await launchWebview();
   }
 
   Future<void> close() async {
