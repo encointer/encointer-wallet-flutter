@@ -14,7 +14,7 @@ class PinDots extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
-      height: 30,
+      height: 25,
       child: Wrap(
         alignment: WrapAlignment.center,
         children: List.generate(maxLengt, (i) {

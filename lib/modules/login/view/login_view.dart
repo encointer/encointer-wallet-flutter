@@ -42,6 +42,7 @@ class _LoginViewState extends State<LoginView> {
     final store = context.watch<LoginStore>();
     final appStore = context.watch<AppStore>();
     final dic = I18n.of(context)!.translationsForLocale();
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Encointer'),
@@ -49,11 +50,14 @@ class _LoginViewState extends State<LoginView> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text('${dic.account.welcome} ${appStore.account.currentAccount.name}'),
+          Text(
+            '${dic.account.welcome} ${appStore.account.currentAccount.name}',
+            style:  textTheme.displaySmall,
+          ),
           Observer(builder: (_) {
             return PinDots(store.pincode.length, maxLengt: store.pincode.length < 4 ? 4 : store.pincode.length);
           }),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           PinKeyboard(useLocalAuth: useLocalAuth),
           const LoginButton(),
         ],
