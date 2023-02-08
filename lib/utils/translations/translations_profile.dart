@@ -579,7 +579,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get tokenSend => 'Envoyer SYMBOL';
   @override
-  String get qrScanHintAccount => 'Demande au destinataire de scanner le code QR dans l application Encointer.';
+  String get qrScanHintAccount => "Demande au destinataire de scanner le code QR dans l'application Encointer.";
   @override
   String get receiverAccount => 'Compte de réception :';
   @override
