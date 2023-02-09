@@ -82,7 +82,7 @@ class LoginButton extends StatelessWidget {
               ? () async {
                   final value = await context.read<LoginStore>().checkAccountPassword(appStore.account.currentAccount);
                   if (value) {
-                    Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
+                    await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
                   } else {
                     RootSnackBar.showMsg(dic.account.passwordError);
                   }
