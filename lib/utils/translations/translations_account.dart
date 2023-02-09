@@ -34,6 +34,7 @@ abstract class TranslationsAccount {
   String get welcome;
   String get passwordError;
   String get signIn;
+  String get localizedReason;
 }
 
 class TranslationsEnAccount implements TranslationsAccount {
@@ -104,6 +105,8 @@ class TranslationsEnAccount implements TranslationsAccount {
   String get passwordError => 'Password is incorrect';
   @override
   String get signIn => 'Sign in';
+  @override
+  String get localizedReason => 'Login to your account using the security feature on your device.';
 }
 
 class TranslationsDeAccount implements TranslationsAccount {
@@ -174,6 +177,8 @@ class TranslationsDeAccount implements TranslationsAccount {
   String get passwordError => 'Das Passwort ist falsch';
   @override
   String get signIn => 'Anmelden';
+  @override
+  String get localizedReason => 'Melden Sie sich mit der Sicherheitsfunktion Ihres Geräts an Ihrem Konto an.';
 }
 
 class TranslationsFrAccount implements TranslationsAccount {
@@ -244,6 +249,8 @@ class TranslationsFrAccount implements TranslationsAccount {
   String get passwordError => 'Le mot de passe est incorrect';
   @override
   String get signIn => 'Se connecter';
+  @override
+  String get localizedReason => 'Connectez-vous à votre compte en utilisant la fonction de sécurité de votre appareil.';
 }
 
 class TranslationsRuAccount implements TranslationsAccount {
@@ -314,4 +321,6 @@ class TranslationsRuAccount implements TranslationsAccount {
   String get passwordError => 'Неверный пароль';
   @override
   String get signIn => 'Войти';
+  @override
+  String get localizedReason => 'Войдите в свой аккаунт, используя безопасную функцию вашего устройства.';
 }

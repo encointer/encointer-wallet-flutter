@@ -34,10 +34,10 @@ abstract class _LoginStoreBase with Store {
     if (pincode.isNotEmpty && !isLoading) pincode.removeLast();
   }
 
-  Future<bool> authinticate() {
+  Future<bool> authinticate(String localizedReason) {
     try {
       return _localAuth.authenticate(
-        localizedReason: 'Please authenticate to show account balance',
+        localizedReason: localizedReason,
         options: const AuthenticationOptions(useErrorDialogs: false),
       );
     } catch (e, s) {
