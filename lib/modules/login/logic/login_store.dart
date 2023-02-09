@@ -24,16 +24,23 @@ abstract class _LoginStoreBase with Store {
 
   final pincode = ObservableList<int>();
 
+  /// [addPinCode] is an action method that adds an integer value to the pincode list.
+  /// If the length of the [pincode] list is less than 20 and the app is not in a `loading` state,
   @action
   void addPinCode(int value) {
     if (pincode.length < 20 && !isLoading) pincode.add(value);
   }
 
+  /// [removeLastPinCode] is an action method that removes the last element from the [pincode] list
+  /// if the list is not empty and [isLoading] is `false`.
   @action
   void removeLastPinCode() {
     if (pincode.isNotEmpty && !isLoading) pincode.removeLast();
   }
 
+  /// Authenticates the user with biometrics or device authentication options available on the device.
+  /// Returns a `Future<bool>` which is `true` if successful, `false` otherwise.
+  /// [localizedReason] is the message displayed to the user during the authentication prompt.
   Future<bool> authinticate(String localizedReason) {
     try {
       return _localAuth.authenticate(
@@ -46,6 +53,9 @@ abstract class _LoginStoreBase with Store {
     }
   }
 
+  /// Check if local authentication is supported on the device. 
+  /// Returns a `future` with `true` if supported, `false` otherwise. 
+  /// Returns `false` and logs errors if a `PlatformException` occurs.
   Future<bool> isDeviceSupported() {
     try {
       return _localAuth.isDeviceSupported();
@@ -55,6 +65,9 @@ abstract class _LoginStoreBase with Store {
     }
   }
 
+  /// [checkAccountPassword] is an asynchronous action method that checks if the given password
+  /// is correct for the given account. It returns a `future` that resolves to a boolean value
+  /// indicating whether the password is correct or not.
   @action
   Future<bool> checkAccountPassword(AccountData account) async {
     isLoading = true;
