@@ -22,9 +22,9 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
     useLocalAuth();
+    super.didChangeDependencies();
   }
 
   Future<void> useLocalAuth() async {

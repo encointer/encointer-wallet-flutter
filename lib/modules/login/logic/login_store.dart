@@ -53,8 +53,8 @@ abstract class _LoginStoreBase with Store {
     }
   }
 
-  /// Check if local authentication is supported on the device. 
-  /// Returns a `future` with `true` if supported, `false` otherwise. 
+  /// Check if local authentication is supported on the device.
+  /// Returns a `future` with `true` if supported, `false` otherwise.
   /// Returns `false` and logs errors if a `PlatformException` occurs.
   Future<bool> isDeviceSupported() {
     try {
