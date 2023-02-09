@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -110,9 +111,12 @@ class ScanClaimQrCode extends StatelessWidget {
                               'TOTAL_COUNT',
                               (confirmedParticipantsCount - 1).toString(),
                             );
-                        return Text(txt,
-                            style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
+                        return Text(
+                          txt,
+                          style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                        );
                       }),
+                      const ParticipantAvatar()
                     ],
                   ),
                 ),
