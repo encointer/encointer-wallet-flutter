@@ -18,7 +18,10 @@ class ParticipantAvatar extends StatelessWidget {
       backgroundColor: isActive ? Colors.green : Colors.grey,
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: SvgPicture.asset('assets/avatars/participant$index.svg'),
+        child: SvgPicture.asset(
+          'assets/avatars/participant$index.svg',
+          colorFilter: isActive ? const ColorFilter.srgbToLinearGamma() : const ColorFilter.linearToSrgbGamma(),
+        ),
       ),
     );
   }

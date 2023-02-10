@@ -117,14 +117,23 @@ class ScanClaimQrCode extends StatelessWidget {
                         );
                       }),
                       const SizedBox(height: 10),
-                      Wrap(
-                        spacing: 6,
-                        runSpacing: 6,
-                        children: List.generate(
-                          confirmedParticipantsCount,
-                          (index) => ParticipantAvatar(index: index, isActive: index < 4),
-                        ),
-                      ),
+                      Observer(builder: (_) {
+                        return Wrap(
+                          spacing: 6,
+                          runSpacing: 6,
+                          children: List.generate(
+                            store.encointer.communityAccount!.meetup!.registry.length,
+                            (index) {
+                              if (store.encointer.communityAccount!.attendees!
+                                  .contains(store.encointer.communityAccount!.meetup!.registry[index])) {
+                                return ParticipantAvatar(index: index);
+                              } else {
+                                return ParticipantAvatar(index: index, isActive: false);
+                              }
+                            },
+                          ),
+                        );
+                      }),
                     ],
                   ),
                 ),
