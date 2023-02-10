@@ -47,10 +47,11 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     final acc = await webApi.account.importAccount();
 
-    if (acc['error'] != null) {
+    if (acc['error'] != null && mounted) {
       setState(() {
         _submitting = false;
       });
+
       _showErrorCreatingAccountDialog(context);
       return;
     }
@@ -72,6 +73,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     setState(() {
       _submitting = false;
     });
+    if (!mounted) return;
     // go to home page
     Navigator.pop(context);
   }

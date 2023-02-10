@@ -60,7 +60,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
                   await params.onCreatePin();
 
-                  if (store.encointer.communityIdentifiers.length == 1) {
+                  if (store.encointer.communityIdentifiers.length == 1 && mounted) {
                     await store.encointer.setChosenCid(
                       store.encointer.communityIdentifiers[0],
                     );
@@ -71,7 +71,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                   setState(() {
                     _submitting = false;
                   });
-
+                  if (context.mounted) return;
                   // Even if we do not choose a community, we go back to the home screen.
                   Navigator.pushAndRemoveUntil<void>(
                     context,

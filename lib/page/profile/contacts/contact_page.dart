@@ -52,10 +52,11 @@ class _Contact extends State<ContactPage> {
       setState(() {
         _submitting = false;
       });
-      if (qrScanData == null) {
+      if (qrScanData == null && mounted) {
         // create new contact
         final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
+          if (!mounted) return;
           showCupertinoDialog<void>(
             context: context,
             builder: (BuildContext context) {
@@ -73,15 +74,17 @@ class _Contact extends State<ContactPage> {
           );
           return;
         } else {
+          if (!mounted) return;
           context.read<AppStore>().settings.addContact(con);
         }
       } else {
+        if (!mounted) return;
         // edit contact
         context.read<AppStore>().settings.updateContact(con);
       }
 
       // get contact info
-      if (_isObservation!) {
+      if (_isObservation! && mounted) {
         webApi.account.encodeAddress([pubKey]);
       } else {
         // if this address was used as observation and current account,
@@ -90,6 +93,7 @@ class _Contact extends State<ContactPage> {
           webApi.account.changeCurrentAccount(fetchData: true);
         }
       }
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }

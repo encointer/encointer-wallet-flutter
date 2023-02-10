@@ -32,6 +32,7 @@ class _SplashViewState extends State<SplashView> {
     await store.init(Localizations.localeOf(context).toString());
 
     // initialize it **after** the store was initialized.
+    if (!mounted) return;
     await initWebApi(context, store);
 
     // We don't poll updates in tests because we mock the backend anyhow.
@@ -44,7 +45,7 @@ class _SplashViewState extends State<SplashView> {
 
     store.setApiReady(true);
 
-    if (store.account.accountListAll.isNotEmpty) {
+    if (store.account.accountListAll.isNotEmpty && mounted) {
       await Navigator.pushAndRemoveUntil(
           context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
     } else {

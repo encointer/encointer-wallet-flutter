@@ -120,12 +120,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
           if (isMnemonic) {
             final seed =
                 await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
-
+            if (!mounted) return;
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
               'key': seed,
               'type': AccountStore.seedTypeMnemonic,
             });
           } else {
+            if (!mounted) return;
             // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
             showCupertinoDialog<void>(
               context: context,

@@ -74,6 +74,7 @@ class CeremonyBox extends StatelessWidget {
                           if (store.dataUpdate.expired) {
                             await awaitDataUpdateWithDialog(context, store);
                           }
+                          if (context.mounted) return;
                           await submitRegisterParticipant(context, store, api);
                         }),
                   ),

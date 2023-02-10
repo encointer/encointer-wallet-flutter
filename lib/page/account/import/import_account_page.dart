@@ -57,7 +57,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     Log.d('imported account to JS.', 'ImportAccountPage');
 
     // check if account duplicate
-    if (acc['error'] != null) {
+    if (acc['error'] != null && mounted) {
       var msg = acc['error'];
 
       if (acc['error'] == 'unreachable') {
@@ -119,6 +119,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () async {
                     await _saveAccount(acc);
+                    if (!mounted) return;
                     Navigator.of(context).pop();
                   },
                 ),
@@ -135,11 +136,13 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
     Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
     final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
+    if (!mounted) return;
     await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
 
     final pubKey = acc['pubKey'] as String?;
+    if (!mounted) return;
     await context.read<AppStore>().setCurrentAccount(pubKey);
-
+    if (!mounted) return;
     await context.read<AppStore>().loadAccountCache();
 
     // fetch info for the imported account
@@ -173,6 +176,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       } else {
         context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
         await _importAccount();
+        if (!mounted) return;
         Navigator.pushAndRemoveUntil<void>(
           context,
           CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()),

@@ -55,7 +55,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         _submitting = false;
       });
     }
-    if (res == null) {
+    if (res == null && context.mounted) {
       showCupertinoDialog<void>(
         context: context,
         builder: (BuildContext context) {

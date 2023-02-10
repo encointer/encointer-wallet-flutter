@@ -57,7 +57,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     setState(() {});
 
     final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-    if (context.read<AppStore>().chain.latestHeaderNumber != null) {
+    if (context.read<AppStore>().chain.latestHeaderNumber != null && mounted) {
       _voucherBalance = voucherBalanceEntry.applyDemurrage(
         context.read<AppStore>().chain.latestHeaderNumber!,
         context.read<AppStore>().encointer.community!.demurrage!,
@@ -93,7 +93,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
           if (result == ChangeResult.ok && cid != null) {
             fetchVoucherData(widget.api, voucherUri!, cid);
-          } else if (result == ChangeResult.invalidNetwork) {
+          } else if (result == ChangeResult.invalidNetwork && mounted) {
             await showErrorDialog(context, dic.assets.invalidNetwork);
           } else if (result == ChangeResult.invalidCommunity) {
             await showErrorDialog(context, dic.assets.invalidCommunity);
@@ -179,7 +179,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   ) async {
     final res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
 
-    if (res['hash'] == null) {
+    if (res['hash'] == null && mounted) {
       Log.d('Error redeeming voucher: ${res['error']}', 'ReapVoucherPage');
       showRedeemFailedDialog(context, res['error'] as String?);
     } else {
@@ -209,7 +209,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       return result;
     }
 
-    if (store.encointer.chosenCid != cid) {
+    if (store.encointer.chosenCid != cid && mounted) {
       result = await showChangeCommunityDialog(
         context,
         store,

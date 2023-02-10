@@ -31,7 +31,8 @@ class CreateAccountForm extends StatelessWidget {
 
       final acc = await webApi.account.importAccount();
 
-      if (acc['error'] != null) {
+      if (acc['error'] != null && context.mounted) {
+        // if (context.mounted) return;
         _showErrorCreatingAccountDialog(context);
         return;
       }

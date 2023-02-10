@@ -9,7 +9,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 class AppLaunch {
   static Future<bool> sendEmail(String email, {String? snackBarText, BuildContext? context}) async {
     final launchedEmailSuccessfully = await launchUrl(Uri(scheme: 'mailto', path: email));
-    if (!launchedEmailSuccessfully && snackBarText != null && context != null) {
+    if (!launchedEmailSuccessfully && snackBarText != null && context != null && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(snackBarText)),
       );
@@ -20,7 +20,7 @@ class AppLaunch {
   static Future<void> launchURL(String url, {String? snackBarText, BuildContext? context}) async {
     try {
       final launchedUrlSuccessfully = await launchUrl(Uri.parse(url));
-      if (!launchedUrlSuccessfully && snackBarText != null && context != null) {
+      if (!launchedUrlSuccessfully && snackBarText != null && context != null && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(snackBarText)),
         );

@@ -54,10 +54,10 @@ Future<void> submitToJS(
         const CupertinoActivityIndicator(),
       );
     }
-
+    if (context.mounted) return;
     final res = await _sendTx(context, api, args) as Map;
 
-    if (res['hash'] == null) {
+    if (res['hash'] == null && context.mounted) {
       _onTxError(context, store, res['error'] as String, showStatusSnackBar);
     } else {
       _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);

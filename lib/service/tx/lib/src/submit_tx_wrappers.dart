@@ -51,8 +51,8 @@ Future<void> submitTx(
   }
 
   txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
-
-  return submitToJS(
+  if (context.mounted) return;
+  submitToJS(
     context,
     store,
     api,
@@ -121,8 +121,8 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       },
     );
   }
-
-  return submitTx(
+  if (context.mounted) return;
+  submitTx(
     context,
     store,
     api,
@@ -134,7 +134,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       );
       Log.d('$data', 'AggregatedAccountData from register participant');
       final registrationType = data.personal?.participantType;
-      if (registrationType != null) {
+      if (registrationType != null && context.mounted) {
         _showEducationalDialog(registrationType, context);
         if (store.settings.endpoint == networkEndpointEncointerMainnet) {
           await CeremonyNotifications.scheduleMeetupReminders(

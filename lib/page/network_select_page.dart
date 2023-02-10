@@ -54,7 +54,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     );
 
     await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork);
-
+    if (!mounted) return;
     context.read<AppStore>().settings.changeTheme();
 
     if (mounted) {
@@ -80,6 +80,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         await _reloadNetwork();
       }
     }
+    if (!mounted) return;
     Navigator.of(context).pop();
   }
 
@@ -88,6 +89,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     if (!isCurrentNetwork) {
       await _reloadNetwork();
     }
+    if (!mounted) return;
     Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
   }
 

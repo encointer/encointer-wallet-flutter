@@ -65,6 +65,7 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
                   description: communityDataAt[marker.point]!.cid.toFmtString(),
                   onTap: () async {
                     await context.read<AppStore>().encointer.setChosenCid(communityDataAt[marker.point]!.cid);
+                    if (context.mounted) return;
                     Navigator.pop(context);
                   },
                 );

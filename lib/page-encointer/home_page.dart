@@ -35,12 +35,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     if (!context.read<AppStore>().config.isIntegrationTest) NotificationPlugin.init(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await initialDeepLinks(context);
+      if (context.mounted) return;
       await NotificationHandler.fetchMessagesAndScheduleNotifications(
         tz.local,
         NotificationPlugin.scheduleNotification,
         Localizations.localeOf(context).languageCode,
       );
-
+      if (context.mounted) return;
       // Should never be null, we either come from the splash screen, and hence we had
       // enough time to connect to the blockchain or we already have a populated store.
       //
@@ -55,7 +56,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           encointer.ceremonyCycleDuration!,
           I18n.of(context)!.translationsForLocale().encointer,
         );
-
+        if (context.mounted) return;
         await CeremonyNotifications.scheduleLastDayOfRegisteringReminders(
           encointer.assigningPhaseStart!,
           encointer.currentCeremonyIndex!,
