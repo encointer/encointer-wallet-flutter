@@ -109,7 +109,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (_) => ScanClaimQrCode(store, confirmedParticipantsCount),
+                      builder: (_) => ScanClaimQrCode(confirmedParticipantsCount),
                     ),
                   );
                 },
@@ -133,9 +133,9 @@ class CeremonyStep2Scan extends StatelessWidget {
 ///
 /// Only intended for development purposes.
 void attestAllParticipants(AppStore store, String claimantAddress) {
-  final registry = store.encointer.communityAccount!.meetup!.registry..removeWhere((a) => a == claimantAddress);
+  final registry = store.encointer.communityAccount!.meetup!.registry;
   for (final attendee in registry) {
-    store.encointer.communityAccount!.addAttendee(attendee);
+    if (attendee != claimantAddress) store.encointer.communityAccount!.addAttendee(attendee);
   }
 
   RootSnackBar.showMsg('Added all meetup participants to attendees');

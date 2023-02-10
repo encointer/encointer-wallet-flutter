@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -12,57 +13,64 @@ import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-class ScanClaimQrCode extends StatelessWidget {
-  const ScanClaimQrCode(this.store, this.confirmedParticipantsCount, {super.key});
+class ScanClaimQrCode extends StatefulWidget {
+  const ScanClaimQrCode(this.confirmedParticipantsCount, {super.key});
 
-  final AppStore store;
   final int confirmedParticipantsCount;
 
+  @override
+  State<ScanClaimQrCode> createState() => _ScanClaimQrCodeState();
+}
+
+class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
+  late final List<String> allParticipants;
+  late final String currenAddres;
+
+  @override
+  void initState() {
+    final store = context.read<AppStore>();
+    currenAddres = store.account.currentAddress;
+    allParticipants = store.encointer.communityAccount?.meetup?.registry ?? [];
+    super.initState();
+  }
+
   void validateAndStoreParticipant(BuildContext context, String attendee, Translations dic) {
-    final registry = store.encointer.communityAccount!.meetup!.registry;
-
-    if (attendee == store.account.currentAddress) {
+    final store = context.read<AppStore>();
+    if (attendee == currenAddres) {
       RootSnackBar.showMsg(dic.encointer.meetupClaimantEqualToSelf);
-      Log.d(
-        'Claimant: $attendee is equal to self',
-        'ScanClaimQrCode',
-      );
-      return;
-    }
-
-    if (!registry.contains(attendee)) {
-      // this is important because the runtime checks if there are too many claims trying to be registered.
-      RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
-      Log.d(
-        'Claimant: $attendee is not part of registry: $registry',
-        'ScanClaimQrCode',
-      );
+      Log.d('Claimant: $attendee is equal to self', 'ScanClaimQrCode');
     } else {
-      final msg = store.encointer.communityAccount!.containsAttendee(attendee)
-          ? dic.encointer.claimsScannedAlready
-          : dic.encointer.claimsScannedNew;
+      if (!allParticipants.contains(attendee)) {
+        // this is important because the runtime checks if there are too many claims trying to be registered.
+        RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
+        Log.d('Claimant: $attendee is not part of registry: $allParticipants', 'ScanClaimQrCode');
+      } else {
+        final msg = store.encointer.communityAccount!.containsAttendee(attendee)
+            ? dic.encointer.claimsScannedAlready
+            : dic.encointer.claimsScannedNew;
 
-      store.encointer.communityAccount!.addAttendee(attendee);
-      RootSnackBar.showMsg(msg);
+        store.encointer.communityAccount!.addAttendee(attendee);
+        RootSnackBar.showMsg(msg);
+      }
+    }
+  }
+
+  void onScan(BuildContext context, Translations dic, String address) {
+    if (Fmt.isAddress(address)) {
+      validateAndStoreParticipant(context, address, dic);
+    } else {
+      Log.e('Claim is not an address: $address', 'ScanClaimQrCode');
+      RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed, durationMillis: 3000);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-
-    Future onScan(String address) async {
-      if (Fmt.isAddress(address)) {
-        validateAndStoreParticipant(context, address, dic);
-      } else {
-        Log.e('Claim is not an address: $address', 'ScanClaimQrCode');
-        RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed, durationMillis: 3000);
-      }
-    }
-
+    final store = context.watch<AppStore>();
     return Scaffold(
       appBar: AppBar(
-        leading: Container(),
+        leading: const SizedBox.shrink(),
         actions: [
           IconButton(
             key: const Key('close-scanner'),
@@ -79,14 +87,13 @@ class ScanClaimQrCode extends StatelessWidget {
               Log.d('[scanPage] Permission Status: ${snapshot.data}', 'ScanClaimQrCode');
               return permissionErrorDialog(context);
             }
-
             return Stack(
               children: [
                 MobileScanner(onDetect: (barcode, args) {
                   if (barcode.rawValue == null) {
                     Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
                   } else {
-                    onScan(barcode.rawValue!);
+                    onScan(context, dic, barcode.rawValue!);
                   }
                 }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
@@ -109,7 +116,7 @@ class ScanClaimQrCode extends StatelessWidget {
                                 'SCANNED_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString())
                             .replaceAll(
                               'TOTAL_COUNT',
-                              (confirmedParticipantsCount - 1).toString(),
+                              (widget.confirmedParticipantsCount - 1).toString(),
                             );
                         return Text(
                           txt,
@@ -122,10 +129,12 @@ class ScanClaimQrCode extends StatelessWidget {
                           spacing: 6,
                           runSpacing: 6,
                           children: List.generate(
-                            store.encointer.communityAccount!.meetup!.registry.length,
+                            allParticipants.length,
                             (index) {
-                              if (store.encointer.communityAccount!.attendees!
-                                  .contains(store.encointer.communityAccount!.meetup!.registry[index])) {
+                              if (allParticipants[index] == currenAddres) {
+                                return const SizedBox.shrink();
+                              } else if (store.encointer.communityAccount!.attendees!
+                                  .contains(allParticipants[index])) {
                                 return ParticipantAvatar(index: index);
                               } else {
                                 return ParticipantAvatar(index: index, isActive: false);
@@ -148,7 +157,7 @@ class ScanClaimQrCode extends StatelessWidget {
   }
 }
 
-Future<PermissionStatus> canOpenCamera() async {
+Future<PermissionStatus> canOpenCamera() {
   // will do nothing if already granted
   return Permission.camera.request();
 }
