@@ -137,7 +137,7 @@ Future<ChangeResult> changeWithLoadingDialog(
   final result = await changeFn();
 
   // pop loading dialog
-  Navigator.of(context).pop();
+  if (context.mounted) Navigator.of(context).pop();
 
   return result;
 }
