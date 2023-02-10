@@ -132,6 +132,9 @@ void _onTxFinish(
 }
 
 String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
+  if (status == null) {
+    return '';
+  }
   switch (status) {
     case TxStatus.Queued:
       return dic.txQueued;
@@ -145,9 +148,6 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
       return dic.txInBlock;
     case TxStatus.Error:
       return dic.txError;
-    default:
-      Log.d('Illegal TxStatus supplied to translation: $status', 'getTxStatusTranslation');
-      return '';
   }
 }
 
