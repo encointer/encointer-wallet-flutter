@@ -122,34 +122,35 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       },
     );
   }
-  if (context.mounted) return;
-  submitTx(
-    context,
-    store,
-    api,
-    registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
-    onFinish: (BuildContext txPageContext, Map res) async {
-      final data = await webApi.encointer.getAggregatedAccountData(
-        store.encointer.chosenCid!,
-        store.account.currentAddress,
-      );
-      Log.d('$data', 'AggregatedAccountData from register participant');
-      final registrationType = data.personal?.participantType;
-      if (registrationType != null && context.mounted) {
-        _showEducationalDialog(registrationType, context);
-        if (store.settings.endpoint == networkEndpointEncointerMainnet) {
-          await CeremonyNotifications.scheduleMeetupReminders(
-            data.global!.ceremonyIndex,
-            store.encointer.community!.meetupTime!,
-            I18n.of(context)!.translationsForLocale().encointer,
-          );
+  if (context.mounted) {
+    submitTx(
+      context,
+      store,
+      api,
+      registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
+      onFinish: (BuildContext txPageContext, Map res) async {
+        final data = await webApi.encointer.getAggregatedAccountData(
+          store.encointer.chosenCid!,
+          store.account.currentAddress,
+        );
+        Log.d('$data', 'AggregatedAccountData from register participant');
+        final registrationType = data.personal?.participantType;
+        if (registrationType != null && context.mounted) {
+          _showEducationalDialog(registrationType, context);
+          if (store.settings.endpoint == networkEndpointEncointerMainnet) {
+            await CeremonyNotifications.scheduleMeetupReminders(
+              data.global!.ceremonyIndex,
+              store.encointer.community!.meetupTime!,
+              I18n.of(context)!.translationsForLocale().encointer,
+            );
+          }
         }
-      }
-      // Registering the participant burns the reputation.
-      // Hence, we should fetch the new state afterwards.
-      store.dataUpdate.setInvalidated();
-    },
-  );
+        // Registering the participant burns the reputation.
+        // Hence, we should fetch the new state afterwards.
+        store.dataUpdate.setInvalidated();
+      },
+    );
+  }
 }
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
