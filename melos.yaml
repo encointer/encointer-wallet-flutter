@@ -37,22 +37,28 @@ scripts:
     description: "Analyze all Dart code and exit if there are any fatal warnings"
 
   clean:
-    exec: flutter clean
+    run: |
+      flutter pub global run melos exec \
+      flutter clean
     description: "Clean pub dependencies"
 
   pub-get:
-    exec: flutter pub get
+    run: |
+      flutter pub global run melos exec \
+      flutter pub get
     description: "Get pub dependencies"
 
   unit-test:
-    exec: flutter test
+    run: |
+      flutter pub global run melos exec \
+      flutter test
     description: "Run unit tests (all packages)"
 
   doctor:
     run: flutter doctor
     description: "Run Flutter doctor"
 
-  generate-build-runner:
+  run-build-runner:
     run: |
       flutter pub global run melos exec --depends-on="build_runner" -- \
       flutter pub run build_runner build --delete-conflicting-outputs

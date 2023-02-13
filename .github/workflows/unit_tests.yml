@@ -42,7 +42,7 @@ jobs:
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
-          ./flutterw pub global run melos generate-build-runner
+          ./flutterw pub global run melos run-build-runner
           ./flutterw pub global run melos format
           git diff --exit-code
 
