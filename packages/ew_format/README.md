@@ -1,3 +1,3 @@
 # Ew Format
 
-Encointer Fromat Package
+Encointer Format Package
