@@ -73,9 +73,9 @@ class _AddAccountPageState extends State<AddAccountPage> {
     setState(() {
       _submitting = false;
     });
-    if (!mounted) return;
+
     // go to home page
-    Navigator.pop(context);
+    if (mounted) Navigator.pop(context);
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {

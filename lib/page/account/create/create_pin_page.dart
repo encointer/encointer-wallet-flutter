@@ -71,13 +71,10 @@ class _CreatePinPageState extends State<CreatePinPage> {
                   setState(() {
                     _submitting = false;
                   });
-                  if (context.mounted) return;
                   // Even if we do not choose a community, we go back to the home screen.
-                  Navigator.pushAndRemoveUntil<void>(
-                    context,
-                    CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()),
-                    (route) => false,
-                  );
+                  if (context.mounted) {
+                    Navigator.pushNamedAndRemoveUntil<void>(context, EncointerHomePage.route, (route) => false);
+                  }
                 },
                 store: store,
               )

@@ -110,8 +110,7 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
             onPressed: () async {
               final result =
                   await changeWithLoadingDialog(context, () => changeNetworkAndCommunity(store, api, network, cid));
-              if (context.mounted) return;
-              Navigator.of(context).pop(result);
+              if (context.mounted) Navigator.of(context).pop(result);
             },
           ),
         ],
@@ -168,8 +167,7 @@ Future<ChangeResult?> showChangeCommunityDialog(
             child: Text(dic.home.ok),
             onPressed: () async {
               final result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
-              if (context.mounted) return;
-              Navigator.of(context).pop(result);
+              if (context.mounted) Navigator.of(context).pop(result);
             },
           ),
         ],

@@ -68,15 +68,14 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
-                        key: const Key('registration-meetup-button'),
-                        registerUntil: assigningPhaseStart,
-                        onPressed: (context) async {
-                          if (store.dataUpdate.expired) {
-                            await awaitDataUpdateWithDialog(context, store);
-                          }
-                          if (context.mounted) return;
-                          await submitRegisterParticipant(context, store, api);
-                        }),
+                      key: const Key('registration-meetup-button'),
+                      registerUntil: assigningPhaseStart,
+                      onPressed: (context) async {
+                        if (store.dataUpdate.expired) await awaitDataUpdateWithDialog(context, store);
+
+                        if (context.mounted) await submitRegisterParticipant(context, store, api);
+                      },
+                    ),
                   ),
                 if (store.encointer.showStartCeremonyButton)
                   Padding(

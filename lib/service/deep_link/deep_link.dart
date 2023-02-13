@@ -16,8 +16,7 @@ Future<void> initialDeepLinks(BuildContext context) async {
   if (!_initialURILinkHandled) {
     _initialURILinkHandled = true;
     final url = await appLinks.getInitialAppLinkString();
-    if (context.mounted) return;
-    await _init(context, url);
+    if (context.mounted) await _init(context, url);
   }
   appLinks.stringLinkStream.listen((url) async {
     await _init(context, url);
@@ -60,8 +59,6 @@ Future<void> _navigationWithWrScanContext(BuildContext context, QrCode<dynamic> 
         ReapVoucherPage.route,
         arguments: ReapVoucherParams(voucher: qrCode.data as VoucherData),
       );
-      break;
-    default:
       break;
   }
 }

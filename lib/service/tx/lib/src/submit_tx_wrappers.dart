@@ -51,15 +51,16 @@ Future<void> submitTx(
   }
 
   txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
-  if (context.mounted) return;
-  submitToJS(
-    context,
-    store,
-    api,
-    false,
-    txParams: txParams,
-    password: store.settings.cachedPin,
-  );
+  if (context.mounted) {
+    return submitToJS(
+      context,
+      store,
+      api,
+      false,
+      txParams: txParams,
+      password: store.settings.cachedPin,
+    );
+  }
 }
 
 Future<void> submitClaimRewards(

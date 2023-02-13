@@ -21,7 +21,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ReapVoucherParams {
-  ReapVoucherParams({
+  const ReapVoucherParams({
     required this.voucher,
     this.showFundVoucher = false,
   });
@@ -51,19 +51,20 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
     Log.d('Fetching voucher data...', 'ReapVoucherPage');
+    final store = context.read<AppStore>();
 
     _voucherAddress = await api.account.addressFromUri(voucherUri);
 
     setState(() {});
 
     final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-    if (context.read<AppStore>().chain.latestHeaderNumber != null && mounted) {
+
+    if (store.chain.latestHeaderNumber != null) {
       _voucherBalance = voucherBalanceEntry.applyDemurrage(
-        context.read<AppStore>().chain.latestHeaderNumber!,
-        context.read<AppStore>().encointer.community!.demurrage!,
+        store.chain.latestHeaderNumber!,
+        store.encointer.community!.demurrage!,
       );
     }
-
     _isReady = true;
 
     setState(() {});
@@ -205,9 +206,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       );
     }
 
-    if (result != ChangeResult.ok) {
-      return result;
-    }
+    if (result != ChangeResult.ok) return result;
 
     if (store.encointer.chosenCid != cid && mounted) {
       result = await showChangeCommunityDialog(

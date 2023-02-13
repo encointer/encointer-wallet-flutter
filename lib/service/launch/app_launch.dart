@@ -10,9 +10,7 @@ class AppLaunch {
   static Future<bool> sendEmail(String email, {String? snackBarText, BuildContext? context}) async {
     final launchedEmailSuccessfully = await launchUrl(Uri(scheme: 'mailto', path: email));
     if (!launchedEmailSuccessfully && snackBarText != null && context != null && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(snackBarText)),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(snackBarText)));
     }
     return launchedEmailSuccessfully;
   }
@@ -21,9 +19,7 @@ class AppLaunch {
     try {
       final launchedUrlSuccessfully = await launchUrl(Uri.parse(url));
       if (!launchedUrlSuccessfully && snackBarText != null && context != null && context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(snackBarText)),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(snackBarText)));
       }
     } catch (e, s) {
       Log.e('Could not launch URL: $e', 'UI', s);

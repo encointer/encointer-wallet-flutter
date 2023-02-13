@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,8 +55,7 @@ Future<void> submitToJS(
         const CupertinoActivityIndicator(),
       );
     }
-    if (context.mounted) return;
-    final res = await _sendTx(context, api, args) as Map;
+    final res = await _sendTx(dic, api, args) as Map;
 
     if (res['hash'] == null && context.mounted) {
       _onTxError(context, store, res['error'] as String, showStatusSnackBar);
@@ -71,9 +71,7 @@ Future<void> submitToJS(
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);
-  if (mounted) {
-    RootSnackBar.removeCurrent();
-  }
+  if (mounted) RootSnackBar.removeCurrent();
 
   if (errorMsg.startsWith(insufficientFundsError)) {
     showInsufficientFundsDialog(context);
@@ -82,12 +80,12 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
   }
 }
 
-Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
+Future<dynamic> _sendTx(Translations dic, Api api, Map args) async {
   return api.account.sendTxAndShowNotification(
     args['txInfo'] as Map<dynamic, dynamic>?,
     args['params'] as List<dynamic>?,
     args['title'] as String?,
-    I18n.of(context)!.translationsForLocale().home.notifySubmitted,
+    dic.home.notifySubmitted,
     rawParam: args['rawParam'] as String?,
   );
 }

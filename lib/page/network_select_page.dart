@@ -54,8 +54,9 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     );
 
     await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork);
-    if (!mounted) return;
-    context.read<AppStore>().settings.changeTheme();
+    // For now changeTheme() is an empty function.
+    // When changeTheme()’s logic will be written, please check this.
+    // context.read<AppStore>().settings.changeTheme();
 
     if (mounted) {
       Navigator.of(context).pop();
@@ -80,17 +81,14 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         await _reloadNetwork();
       }
     }
-    if (!mounted) return;
-    Navigator.of(context).pop();
+    if (mounted) Navigator.of(context).pop();
   }
 
   Future<void> _onCreateAccount() async {
     final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
-    if (!isCurrentNetwork) {
-      await _reloadNetwork();
-    }
-    if (!mounted) return;
-    Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
+    if (!isCurrentNetwork) await _reloadNetwork();
+
+    if (mounted) Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {

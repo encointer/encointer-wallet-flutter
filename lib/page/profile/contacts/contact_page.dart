@@ -40,6 +40,7 @@ class _Contact extends State<ContactPage> {
       });
       final dic = I18n.of(context)!.translationsForLocale();
       final addr = _addressCtrl.text.replaceAll(' ', '');
+      final store = context.read<AppStore>();
       final pubKeyAddress = await webApi.account.decodeAddress([addr]);
       final pubKey = pubKeyAddress.keys.toList()[0] as String;
       final con = {
@@ -52,11 +53,10 @@ class _Contact extends State<ContactPage> {
       setState(() {
         _submitting = false;
       });
-      if (qrScanData == null && mounted) {
+      if (qrScanData == null) {
         // create new contact
-        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
-        if (exist > -1) {
-          if (!mounted) return;
+        final exist = store.settings.contactList.indexWhere((i) => i.address == addr);
+        if (exist > -1 && mounted) {
           showCupertinoDialog<void>(
             context: context,
             builder: (BuildContext context) {
@@ -74,27 +74,24 @@ class _Contact extends State<ContactPage> {
           );
           return;
         } else {
-          if (!mounted) return;
-          context.read<AppStore>().settings.addContact(con);
+          store.settings.addContact(con);
         }
       } else {
-        if (!mounted) return;
         // edit contact
-        context.read<AppStore>().settings.updateContact(con);
+        store.settings.updateContact(con);
       }
 
       // get contact info
-      if (_isObservation! && mounted) {
+      if (_isObservation!) {
         webApi.account.encodeAddress([pubKey]);
       } else {
         // if this address was used as observation and current account,
         // we need to change current account
-        if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {
+        if (pubKey == store.account.currentAccountPubKey) {
           webApi.account.changeCurrentAccount(fetchData: true);
         }
       }
-      if (!mounted) return;
-      Navigator.of(context).pop();
+      if (mounted) Navigator.of(context).pop();
     }
   }
 

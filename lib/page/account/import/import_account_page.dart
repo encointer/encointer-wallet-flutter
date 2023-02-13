@@ -58,10 +58,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
     // check if account duplicate
     if (acc['error'] != null && mounted) {
+      final dic = I18n.of(context)!.translationsForLocale();
       var msg = acc['error'];
 
       if (acc['error'] == 'unreachable') {
-        msg = '${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType';
+        msg = '${dic.account.importInvalid}: $_keyType';
       }
 
       showCupertinoDialog<void>(
@@ -72,7 +73,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
             content: Text('$msg'),
             actions: <Widget>[
               CupertinoButton(
-                child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                child: Text(dic.home.ok),
                 onPressed: () {
                   setState(() {
                     _submitting = false;
@@ -87,8 +88,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       );
       return;
     }
-    await _checkAccountDuplicate(acc);
-    return;
+    return _checkAccountDuplicate(acc);
   }
 
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
@@ -119,8 +119,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () async {
                     await _saveAccount(acc);
-                    if (!mounted) return;
-                    Navigator.of(context).pop();
+                    if (mounted) Navigator.of(context).pop();
                   },
                 ),
               ],
@@ -137,13 +136,13 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
     final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     if (!mounted) return;
-    await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
+    final store = context.read<AppStore>();
+    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
     final pubKey = acc['pubKey'] as String?;
-    if (!mounted) return;
-    await context.read<AppStore>().setCurrentAccount(pubKey);
-    if (!mounted) return;
-    await context.read<AppStore>().loadAccountCache();
+    await store.setCurrentAccount(pubKey);
+
+    await store.loadAccountCache();
 
     // fetch info for the imported account
     webApi.fetchAccountData();
@@ -176,12 +175,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       } else {
         context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
         await _importAccount();
-        if (!mounted) return;
-        Navigator.pushAndRemoveUntil<void>(
-          context,
-          CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()),
-          (route) => false,
-        );
+        if (mounted) Navigator.pushNamedAndRemoveUntil<void>(context, EncointerHomePage.route, (route) => false);
       }
     });
   }

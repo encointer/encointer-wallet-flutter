@@ -34,19 +34,18 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   void initState() {
     if (!context.read<AppStore>().config.isIntegrationTest) NotificationPlugin.init(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final dic = I18n.of(context)!;
+      final encointer = context.read<AppStore>().encointer;
       await initialDeepLinks(context);
-      if (context.mounted) return;
       await NotificationHandler.fetchMessagesAndScheduleNotifications(
         tz.local,
         NotificationPlugin.scheduleNotification,
-        Localizations.localeOf(context).languageCode,
+        dic.locale.languageCode,
       );
-      if (context.mounted) return;
       // Should never be null, we either come from the splash screen, and hence we had
       // enough time to connect to the blockchain or we already have a populated store.
       //
       // Hence, can only be null if someone uses the app for the first time and is offline.
-      final encointer = context.read<AppStore>().encointer;
       if (encointer.nextRegisteringPhaseStart != null &&
           encointer.currentCeremonyIndex != null &&
           encointer.ceremonyCycleDuration != null) {
@@ -54,14 +53,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           encointer.nextRegisteringPhaseStart!,
           encointer.currentCeremonyIndex!,
           encointer.ceremonyCycleDuration!,
-          I18n.of(context)!.translationsForLocale().encointer,
+          dic.translationsForLocale().encointer,
         );
-        if (context.mounted) return;
         await CeremonyNotifications.scheduleLastDayOfRegisteringReminders(
           encointer.assigningPhaseStart!,
           encointer.currentCeremonyIndex!,
           encointer.ceremonyCycleDuration!,
-          I18n.of(context)!.translationsForLocale().encointer,
+          dic.translationsForLocale().encointer,
         );
       }
     });
