@@ -52,7 +52,7 @@ scripts:
     run: flutter doctor
     description: "Run Flutter doctor"
 
-  generate-build-runner:
+  run-build-runner:
     run: |
       flutter pub global run melos exec --depends-on="build_runner" -- \
       flutter pub run build_runner build --delete-conflicting-outputs
