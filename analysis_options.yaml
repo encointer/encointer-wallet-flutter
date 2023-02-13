@@ -6,7 +6,6 @@ linter:
     directives_ordering: false
     sort_pub_dependencies: false
     flutter_style_todos: false
-    no_default_cases: false
     use_named_constants: false
     avoid_positional_boolean_parameters: false
     comment_references: false
@@ -14,12 +13,8 @@ linter:
     depend_on_referenced_packages: false
 
     unawaited_futures: false
-    use_build_context_synchronously: true
     use_setters_to_change_properties: false
     avoid_equals_and_hash_code_on_mutable_classes: false
-    overridden_fields: true
-    parameter_assignments: true
-    avoid_dynamic_calls: true
 
 analyzer:
   language:

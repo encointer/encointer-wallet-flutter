@@ -1,6 +1,5 @@
 import 'dart:core';
 
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +11,7 @@ import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
@@ -130,6 +130,7 @@ void _onTxFinish(
 }
 
 String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
+  if (status == null) return '';
   switch (status) {
     case TxStatus.Queued:
       return dic.txQueued;
@@ -143,9 +144,6 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
       return dic.txInBlock;
     case TxStatus.Error:
       return dic.txError;
-    default:
-      Log.d('Illegal TxStatus supplied to translation: $status', 'getTxStatusTranslation');
-      return '';
   }
 }
 

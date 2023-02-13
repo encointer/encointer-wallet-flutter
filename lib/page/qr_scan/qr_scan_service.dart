@@ -37,8 +37,6 @@ class QrScanService {
         return InvoiceQrCode.fromQrFields(data);
       case QrCodeContext.voucher:
         return VoucherQrCode.fromQrFields(data);
-      default:
-        throw const FormatException('[parseQrScan] Unhandled qr scan context');
     }
   }
 
@@ -50,8 +48,6 @@ class QrScanService {
         return handleInvoiceQrCodeScan(context, scanContext, qrCode as InvoiceQrCode);
       case QrCodeContext.voucher:
         return handleVoucherQrCodeScan(context, scanContext, qrCode as VoucherQrCode);
-      default:
-        throw const FormatException('[handleQrScan] Unhandled qr scan context');
     }
   }
 }

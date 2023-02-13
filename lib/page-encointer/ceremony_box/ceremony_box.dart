@@ -188,9 +188,6 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           );
         }
       }
-    default:
-      Log.d("'getMeetupInfoWidget' trapped in an unexpected default case", 'CeremonyBox');
-      return Container();
   }
 }
 
