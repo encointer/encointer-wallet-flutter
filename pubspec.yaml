@@ -40,12 +40,12 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   base58check: ^2.0.0
-  package_info_plus: ^3.0.2
+  package_info_plus: ^3.0.3
   quiver: ^3.2.1
   dio: ^4.0.6
   image_picker: ^0.8.6+1
   animated_check: ^1.0.5
-  share_plus: ^6.3.0
+  share_plus: ^6.3.1
   flutter_timezone: ^1.0.4
 
   # Adjust screen brightness and keep awake for qrcodes
