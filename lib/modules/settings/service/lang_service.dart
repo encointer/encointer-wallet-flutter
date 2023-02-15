@@ -2,12 +2,13 @@ import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LangService {
-  const LangService(this.storage);
+class AppService {
+  const AppService(this.storage);
 
   final SharedPreferences storage;
 
   static const String localStorageLocaleKey = 'locale';
+  static const String authenticationEnabled = 'authentication-enabled';
 
   Locale init() {
     final code = storage.getString(localStorageLocaleKey);
@@ -28,6 +29,12 @@ class LangService {
     await storage.setString(localStorageLocaleKey, locales[index].languageCode);
     return locales[index];
   }
+
+  Future<void> toggleAuthentication(bool value) async {
+    await storage.setBool(authenticationEnabled, value);
+  }
+
+  bool? getAuthenticationEnabled() => storage.getBool(authenticationEnabled);
 
   String getName(String code) {
     switch (code) {

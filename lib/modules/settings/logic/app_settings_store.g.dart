@@ -30,11 +30,33 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
+  late final _$authenticationEnabledAtom = Atom(name: '_AppSettingsBase.authenticationEnabled', context: context);
+
+  @override
+  bool get authenticationEnabled {
+    _$authenticationEnabledAtom.reportRead();
+    return super.authenticationEnabled;
+  }
+
+  @override
+  set authenticationEnabled(bool value) {
+    _$authenticationEnabledAtom.reportWrite(value, super.authenticationEnabled, () {
+      super.authenticationEnabled = value;
+    });
+  }
+
   late final _$setLocaleAsyncAction = AsyncAction('_AppSettingsBase.setLocale', context: context);
 
   @override
   Future<void> setLocale(int index) {
     return _$setLocaleAsyncAction.run(() => super.setLocale(index));
+  }
+
+  late final _$toggleAuthenticationAsyncAction = AsyncAction('_AppSettingsBase.toggleAuthentication', context: context);
+
+  @override
+  Future<void> toggleAuthentication(bool value) {
+    return _$toggleAuthenticationAsyncAction.run(() => super.toggleAuthentication(value));
   }
 
   late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
@@ -50,8 +72,20 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   }
 
   @override
+  bool getAuthenticationEnabled() {
+    final _$actionInfo =
+        _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.getAuthenticationEnabled');
+    try {
+      return super.getAuthenticationEnabled();
+    } finally {
+      _$_AppSettingsBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+authenticationEnabled: ${authenticationEnabled},
 locale: ${locale}
     ''';
   }

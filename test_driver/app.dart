@@ -55,7 +55,7 @@ void main() async {
 
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
-  final localService = LangService(await SharedPreferences.getInstance());
+  final localService = AppService(await SharedPreferences.getInstance());
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.

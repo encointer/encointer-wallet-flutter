@@ -13,10 +13,13 @@ class AppSettings = _AppSettingsBase with _$AppSettings;
 abstract class _AppSettingsBase with Store {
   _AppSettingsBase(this._service);
 
-  final LangService _service;
+  final AppService _service;
 
   @observable
   Locale _locale = const Locale('en');
+
+  @observable
+  bool authenticationEnabled = true;
 
   final locales = const <Locale>[
     Locale('en', ''),
@@ -32,8 +35,20 @@ abstract class _AppSettingsBase with Store {
   void init() => _locale = _service.init();
 
   @action
+  bool getAuthenticationEnabled() {
+    final value = _service.getAuthenticationEnabled();
+    if (value != null) authenticationEnabled = value;
+    return authenticationEnabled;
+  }
+
+  @action
   Future<void> setLocale(int index) async {
     _locale = await _service.setLocale(index, locales);
+  }
+
+  @action
+  Future<void> toggleAuthentication(bool value) async {
+    await _service.toggleAuthentication(value);
   }
 
   String getName(String code) => _service.getName(code);

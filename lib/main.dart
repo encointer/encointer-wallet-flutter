@@ -27,7 +27,7 @@ Future<void> main({AppcastConfiguration? appCast}) async {
 
   HttpOverrides.global = MyHttpOverrides();
 
-  final localService = LangService(await SharedPreferences.getInstance());
+  final localService = AppService(await SharedPreferences.getInstance());
 
   runApp(
     MultiProvider(
