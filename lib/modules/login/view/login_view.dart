@@ -55,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
             style: textTheme.displaySmall,
           ),
           Observer(builder: (_) {
-            return PinDots(store.pincode.length, maxLengt: store.pincode.length < 4 ? 4 : store.pincode.length);
+            return PinDots(store.pincode.length, maxLength: store.pincode.length < 4 ? 4 : store.pincode.length);
           }),
           const SizedBox(height: 5),
           PinKeyboard(useLocalAuth: useLocalAuth),

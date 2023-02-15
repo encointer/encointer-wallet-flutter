@@ -4,11 +4,11 @@ class PinDots extends StatelessWidget {
   const PinDots(
     this.itemLength, {
     super.key,
-    this.maxLengt = 4,
+    this.maxLength = 4,
   });
 
   final int itemLength;
-  final int maxLengt;
+  final int maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class PinDots extends StatelessWidget {
       height: 25,
       child: Wrap(
         alignment: WrapAlignment.center,
-        children: List.generate(maxLengt, (i) {
+        children: List.generate(maxLength, (i) {
           final active = itemLength > i;
           return Padding(
             padding: const EdgeInsets.all(8),

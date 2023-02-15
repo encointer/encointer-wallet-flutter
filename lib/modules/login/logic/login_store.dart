@@ -31,10 +31,10 @@ abstract class _LoginStoreBase with Store {
     if (pincode.length < 20 && !isLoading) pincode.add(value);
   }
 
-  /// [removeLastPinCode] is an action method that removes the last element from the [pincode] list
+  /// [removeLastDigit] is an action method that removes the last element from the [pincode] list
   /// if the list is not empty and [isLoading] is `false`.
   @action
-  void removeLastPinCode() {
+  void removeLastDigit() {
     if (pincode.isNotEmpty && !isLoading) pincode.removeLast();
   }
 

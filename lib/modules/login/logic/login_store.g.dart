@@ -44,10 +44,10 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
-  void removeLastPinCode() {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.removeLastPinCode');
+  void removeLastDigit() {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.removeLastDigit');
     try {
-      return super.removeLastPinCode();
+      return super.removeLastDigit();
     } finally {
       _$_LoginStoreBaseActionController.endAction(_$actionInfo);
     }

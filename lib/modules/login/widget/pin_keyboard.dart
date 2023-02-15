@@ -29,7 +29,7 @@ class PinKeyboard extends StatelessWidget {
               onPressed: () => context.read<LoginStore>().addPinCode(0),
             ),
             CircleButton(
-              onPressed: context.read<LoginStore>().removeLastPinCode,
+              onPressed: context.read<LoginStore>().removeLastDigit,
               child: const Icon(Icons.backspace),
             ),
           ],
