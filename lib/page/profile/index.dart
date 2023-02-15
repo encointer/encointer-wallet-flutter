@@ -84,6 +84,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final h3Grey = Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey);
     final store = context.watch<AppStore>();
+    final appSettings = context.watch<AppSettings>();
     _selectedNetwork = store.settings.endpoint;
 
     // if all accounts are deleted, go to createAccountPage
@@ -179,6 +180,11 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text(dic.profile.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
+              ),
+              SwitchListTile(
+                title: Text('Auth', style: h3Grey),
+                onChanged: context.read<AppSettings>().toggleAuthentication,
+                value: appSettings.authenticationEnabled,
               ),
               const SendToTrelloListTile(),
               ListTile(

@@ -48,6 +48,7 @@ abstract class _AppSettingsBase with Store {
 
   @action
   Future<void> toggleAuthentication(bool value) async {
+    authenticationEnabled = value;
     await _service.toggleAuthentication(value);
   }
 
