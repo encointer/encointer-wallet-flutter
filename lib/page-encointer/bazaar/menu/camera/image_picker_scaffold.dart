@@ -36,18 +36,12 @@ class ImagePickerScaffold extends StatelessWidget {
                       );
                     case ConnectionState.done:
                       return const ImagePreview();
-                    default:
-                      if (snapshot.hasError) {
-                        return Text(
-                          'Pick image/video error: ${snapshot.error}}',
-                          textAlign: TextAlign.center,
-                        );
-                      } else {
-                        return Text(
-                          I18n.of(context)!.translationsForLocale().bazaar.imageNotPicked,
-                          textAlign: TextAlign.center,
-                        );
-                      }
+                    //Here I'll need your help
+                    case ConnectionState.active:
+                      return Text(
+                        I18n.of(context)!.translationsForLocale().bazaar.imageNotPicked,
+                        textAlign: TextAlign.center,
+                      );
                   }
                 },
               )

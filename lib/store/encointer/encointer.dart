@@ -513,8 +513,6 @@ abstract class _EncointerStore with Store {
         return nextPhaseTimestamp! -
             phaseDurations[CeremonyPhase.Attesting]! -
             phaseDurations[CeremonyPhase.Assigning]!;
-      default:
-        return null;
     }
   }
 

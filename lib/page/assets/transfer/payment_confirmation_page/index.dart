@@ -208,8 +208,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             ),
           ),
         );
-      default:
-        return const Text('Unknown transfer state');
     }
   }
 
@@ -253,8 +251,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             style: h2Grey,
           );
         }
-      default:
-        return const Text('Unknown transfer state');
     }
   }
 

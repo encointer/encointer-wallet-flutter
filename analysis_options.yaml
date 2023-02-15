@@ -6,7 +6,7 @@ linter:
     directives_ordering: false
     sort_pub_dependencies: false
     flutter_style_todos: false
-    no_default_cases: false
+    no_default_cases: true
     use_named_constants: false
     avoid_positional_boolean_parameters: false
     comment_references: false
