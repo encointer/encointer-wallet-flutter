@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class Instruction extends StatelessWidget {
   const Instruction({super.key});

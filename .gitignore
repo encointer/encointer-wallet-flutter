@@ -47,3 +47,6 @@ lib/generated_plugin_registrant.dart
 
 # printscreens generated in tests
 /screenshots
+
+# fvm
+.fvm/

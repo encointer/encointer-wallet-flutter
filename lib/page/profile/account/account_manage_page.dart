@@ -1,25 +1,25 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class AccountManagePage extends StatefulWidget {
   const AccountManagePage({super.key});
@@ -222,7 +222,9 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           Text(
                             // In the tests, we have to read the address from the field, but `Fmt.address` does only return parts of it `5Hdf...P3ZD`.
                             // Additionally, we can't paste from the clipboard in flutter driver tests, which is why we have to read it from the text field.
-                            store.config.isIntegrationTest ? addressSS58 : Fmt.address(addressSS58)!,
+                            buildConfig == BuildConfig.integrationTest || buildConfig == BuildConfig.unitTest
+                                ? addressSS58
+                                : Fmt.address(addressSS58)!,
                             style: const TextStyle(fontSize: 20),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

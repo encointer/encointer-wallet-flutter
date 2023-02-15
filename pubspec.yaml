@@ -82,6 +82,9 @@ dependencies:
   upgrader: ^6.0.1
   app_links: ^3.4.1
 
+  # Service Locator
+  get_it: ^7.2.0
+
 dev_dependencies:
   build_runner: ^2.3.3
   json_serializable: ^6.6.1
@@ -111,7 +114,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     # js service
-    - lib/js_service_encointer/dist/main.js
+    - js_service_encointer/dist/main.js
 
     #svg
     - assets/nctr_logo.svg

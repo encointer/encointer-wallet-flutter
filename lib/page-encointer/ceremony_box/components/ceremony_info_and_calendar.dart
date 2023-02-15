@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class CeremonyInfoAndCalendar extends StatelessWidget {
   const CeremonyInfoAndCalendar({

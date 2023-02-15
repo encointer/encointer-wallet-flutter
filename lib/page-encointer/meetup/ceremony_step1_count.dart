@@ -7,9 +7,9 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step2_scan2.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class CeremonyStep1Count extends StatelessWidget {
   CeremonyStep1Count(this.store, this.api, {super.key});

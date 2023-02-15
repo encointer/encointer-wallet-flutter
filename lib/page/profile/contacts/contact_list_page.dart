@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/components/account_select_list.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class ContactListPage extends StatelessWidget {
   const ContactListPage({super.key});

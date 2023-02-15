@@ -5,10 +5,10 @@ import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class AccountSharePage extends StatefulWidget {
   const AccountSharePage({super.key});

@@ -18,7 +18,7 @@ before_script:
  | sha256sum -c -
 - tar zvxf yarn.tar.gz
 - export PATH=$PATH:$PWD/node-v12.18.2-linux-x64/bin:$PWD/yarn-v1.22.4/bin
-- pushd ./lib/js_service_encointer
+- pushd ./js_service_encointer
 - yarn install
 - yarn run build
 - popd

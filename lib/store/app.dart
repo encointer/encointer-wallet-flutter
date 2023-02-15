@@ -1,15 +1,17 @@
-import 'package:mobx/mobx.dart';
+import 'dart:async';
 
-import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/common/services/preferences/local_data.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
 import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/utils/local_storage.dart';
+import 'package:mobx/mobx.dart';
 
 part 'app.g.dart';
 
@@ -26,17 +28,21 @@ const encointerCacheVersionPrefix = 'encointer-cache-version-key';
 /// Should be increased if cache incompatibilities have been introduced.
 const encointerCacheVersion = 'v1.0';
 
+const _tag = 'app_store';
+
 /// Global aggregated storage for the app.
 ///
 /// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
 class AppStore extends _AppStore with _$AppStore {
-  AppStore(super.localStorage, {required super.config});
+  AppStore();
 }
 
 abstract class _AppStore with Store {
-  _AppStore(this.localStorage, {required this.config});
+  _AppStore() : localStorage = sl();
 
-  final AppConfig config;
+  // final AppConfig config;
+
+  late final LocalData localStorage;
 
   // Note, following pattern of a nullable field with a non-nullable getter
   // is here because mobx can't handle `late` initialization:
@@ -83,10 +89,10 @@ abstract class _AppStore with Store {
   @computed
   bool get appIsReady => storeIsReady && webApiIsReady;
 
-  LocalStorage localStorage;
-
   @action
   Future<void> init(String sysLocaleCode) async {
+    Log.d(_tag, '_init');
+
     // wait settings store loaded
     _settings = SettingsStore(this as AppStore);
     await settings.init(sysLocaleCode);
@@ -130,7 +136,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
     final cacheKey = '${settings.endpoint.info}_$key';
-    return config.isTestMode ? 'test-$cacheKey' : cacheKey;
+    return buildConfig == BuildConfig.unitTest ? 'test-$cacheKey' : cacheKey;
   }
 
   /// Returns the cache key for the encointer-storage.
@@ -139,7 +145,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
     final key = '$encointerCachePrefix-$networkInfo';
-    return config.isTestMode ? 'test-$key' : key;
+    return buildConfig == BuildConfig.unitTest ? 'test-$key' : key;
   }
 
   Future<bool> purgeEncointerCache(String networkInfo) async {

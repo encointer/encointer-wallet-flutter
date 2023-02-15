@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
   RemoteNodeListPage({super.key});

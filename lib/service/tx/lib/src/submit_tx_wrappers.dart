@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
-import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Helpers to submit transactions.

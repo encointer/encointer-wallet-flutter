@@ -1,21 +1,21 @@
 import 'dart:io';
 
+import 'package:encointer_wallet/app/presentation/splash/store/splash_view_store.dart';
+import 'package:encointer_wallet/app/wallet_app.dart';
+import 'package:encointer_wallet/common/services/preferences/preferences_service.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
+import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:encointer_wallet/service/subscan.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart' as service_locator;
+import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:provider/provider.dart';
-import 'package:upgrader/upgrader.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:encointer_wallet/app.dart';
-import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/subscan.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/local_storage.dart' as util;
-
-Future<void> main({AppcastConfiguration? appCast}) async {
+Future<void> main({Environment? environment}) async {
+  setEnvironment(environment ?? Environment.dev);
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationPlugin.setup();
   // var notificationAppLaunchDetails =
@@ -25,20 +25,26 @@ Future<void> main({AppcastConfiguration? appCast}) async {
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
-  HttpOverrides.global = MyHttpOverrides();
+  await PreferencesService.instance.init();
 
-  final localService = LangService(await SharedPreferences.getInstance());
+  service_locator.init();
+  await service_locator.sl.allReady();
+
+  HttpOverrides.global = MyHttpOverrides();
 
   runApp(
     MultiProvider(
       providers: [
         Provider<AppSettings>(
-          create: (context) => AppSettings(localService)..init(),
+          create: (context) => AppSettings(),
         ),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()
-          create: (context) => AppStore(util.LocalStorage(), config: AppConfig(appCast: appCast)),
-        )
+          create: (context) => AppStore(),
+        ),
+        Provider<SplashViewStore>(
+          create: (context) => SplashViewStore(),
+        ),
       ],
       child: const WalletApp(),
     ),

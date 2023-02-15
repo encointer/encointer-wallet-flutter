@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:http/http.dart' as http;
 
-import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';

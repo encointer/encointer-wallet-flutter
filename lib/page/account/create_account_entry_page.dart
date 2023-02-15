@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/extras/utils/extensions/context_extensions.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/page/account/create/create_account_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_page.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CreateAccountEntryPage extends StatelessWidget {
   const CreateAccountEntryPage({super.key});
@@ -15,7 +15,7 @@ class CreateAccountEntryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     const nctrLogo = 'assets/nctr_logo.svg';
     const mosaicBackground = 'assets/nctr_mosaic_background.svg';
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.localization.translationsForLocale();
 
     return Scaffold(
       body: SafeArea(

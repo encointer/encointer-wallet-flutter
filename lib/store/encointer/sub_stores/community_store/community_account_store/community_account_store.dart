@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 

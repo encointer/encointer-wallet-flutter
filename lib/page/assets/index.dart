@@ -1,24 +1,18 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/models/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:focus_detector/focus_detector.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:pausable_timer/pausable_timer.dart';
-import 'package:provider/provider.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:upgrader/upgrader.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
+import 'package:encointer_wallet/extras/utils/extensions/context_extensions.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
+import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
@@ -29,13 +23,20 @@ import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:focus_detector/focus_detector.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:pausable_timer/pausable_timer.dart';
+import 'package:provider/provider.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:upgrader/upgrader.dart';
 
 class Assets extends StatefulWidget {
   const Assets(this.store, {super.key});
@@ -95,7 +96,7 @@ class _AssetsState extends State<Assets> {
 
   @override
   Widget build(BuildContext context) {
-    dic = I18n.of(context)!.translationsForLocale();
+    dic = context.localization.translationsForLocale();
 
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
@@ -140,8 +141,8 @@ class _AssetsState extends State<Assets> {
         appBar: appBar,
         body: UpgradeAlert(
           upgrader: Upgrader(
-            appcastConfig: context.watch<AppStore>().config.appCast,
-            debugLogging: context.watch<AppStore>().config.isIntegrationTest,
+            appcastConfig: buildConfig.appCast,
+            debugLogging: buildConfig == BuildConfig.integrationTest,
             shouldPopScope: () => true,
             canDismissDialog: true,
           ),

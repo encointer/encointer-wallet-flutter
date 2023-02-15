@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/service/ipfs/http_api.dart';
+import 'package:encointer_wallet/common/data/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 class MockIpfs extends Ipfs {

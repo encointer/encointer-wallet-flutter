@@ -8,8 +8,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations.dart';
 
 class ScanClaimQrCode extends StatelessWidget {
   const ScanClaimQrCode(this.store, this.confirmedParticipantsCount, {super.key});

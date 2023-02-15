@@ -1,8 +1,7 @@
+import 'package:encointer_wallet/extras/utils/extensions/context_extensions.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 
 class LangPage extends StatefulWidget {
   const LangPage({super.key});
@@ -16,7 +15,7 @@ class LangPage extends StatefulWidget {
 class _LangPageState extends State<LangPage> {
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().profile;
+    final dic = context.localization.translationsForLocale().profile;
     final settings = context.watch<AppSettings>();
     return Scaffold(
       appBar: AppBar(title: Text(dic.settingLang)),

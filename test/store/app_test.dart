@@ -1,16 +1,12 @@
-import 'package:encointer_wallet/config.dart';
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
-import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart' as service_locator;
 import 'package:encointer_wallet/store/app.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final store = AppStore(
-    MockLocalStorage(),
-    config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
-  );
+  service_locator.init(isTest: true);
+  final store = AppStore();
   accList = [testAcc];
   currentAccountPubKey = accList[0]['pubKey'] as String;
 

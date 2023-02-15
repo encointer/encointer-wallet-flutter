@@ -1,18 +1,19 @@
 import 'dart:async';
 
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
-import 'package:mobx/mobx.dart';
-
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:mobx/mobx.dart';
 
 part 'account.g.dart';
+
+const _tag = 'account_store';
 
 /// Mobx-store containing account related data.
 ///
@@ -81,6 +82,7 @@ abstract class _AccountStore with Store {
   }
 
   AccountData getAccountData(String? requestedPubKey) {
+    Log.d('$_tag, getAccountData');
     final i = accountListAll.indexWhere((i) => i.pubKey == requestedPubKey);
     if (i < 0) {
       if (accountListAll.isNotEmpty) {
@@ -295,7 +297,9 @@ abstract class _AccountStore with Store {
   /// Tackle this in #574.
   @action
   Future<void> loadAccount() async {
+    Log.d('$_tag, loadAccount');
     final accList = await rootStore.localStorage.getAccountList();
+    Log.d('$_tag, loadAccount: accList $accList');
     accountList = ObservableList.of(accList.map(AccountData.fromJson));
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();

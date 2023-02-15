@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-
+import 'package:encointer_wallet/app/presentation/home/ui/views/home_view.dart';
+import 'package:encointer_wallet/app/presentation/language/ui/views/language_view.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
@@ -31,7 +31,8 @@ import 'package:encointer_wallet/page/profile/settings/settings_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class AppRoute {
   const AppRoute._();
@@ -47,6 +48,10 @@ class AppRoute {
       case SplashView.route:
         return CupertinoPageRoute(
           builder: (_) => const SplashView(),
+        );
+      case HomeView.route:
+        return CupertinoPageRoute(
+          builder: (_) => const HomeView(),
         );
       case EncointerHomePage.route:
         return CupertinoPageRoute(
@@ -199,6 +204,11 @@ class AppRoute {
       case LangPage.route:
         return CupertinoPageRoute(
           builder: (_) => const LangPage(),
+          settings: settings,
+        );
+      case LanguageView.route:
+        return CupertinoPageRoute(
+          builder: (_) => const LanguageView(),
           settings: settings,
         );
       case MeetupLocationPage.route:

@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page/assets/transfer/tx_detail.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class TransferDetailPage extends StatelessWidget {
   const TransferDetailPage({super.key});

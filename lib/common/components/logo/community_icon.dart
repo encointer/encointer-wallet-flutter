@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class CommunityIconObserver extends StatelessWidget {

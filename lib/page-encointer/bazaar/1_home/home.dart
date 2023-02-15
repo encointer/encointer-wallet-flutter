@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/bazaar_search.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_horizontal.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key, this.cardHeight = 200, this.cardWidth = 160});

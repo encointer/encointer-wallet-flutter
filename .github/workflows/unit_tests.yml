@@ -7,8 +7,8 @@ on:
     branches: [ master, f-droid ]
 
 env:
-  JS_SERVICE_ENCOINTER_PATH: lib/js_service_encointer
-  JS_SERVICE_ENCOINTER_MAIN: lib/js_service_encointer/dist/main.js
+  JS_SERVICE_ENCOINTER_PATH: js_service_encointer
+  JS_SERVICE_ENCOINTER_MAIN: js_service_encointer/dist/main.js
 
 jobs:
   flutter:

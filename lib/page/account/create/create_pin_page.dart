@@ -7,7 +7,7 @@ import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_form.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class CreatePinPageParams {
   CreatePinPageParams(this.onCreatePin);

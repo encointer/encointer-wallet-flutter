@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import 'package:encointer_wallet/common/reg_input_formatter.dart';
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class UI {
   static void copyAndNotify(BuildContext context, String? text) {

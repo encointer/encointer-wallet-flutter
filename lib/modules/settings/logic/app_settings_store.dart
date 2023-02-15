@@ -2,34 +2,36 @@
 
 import 'dart:ui';
 
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/modules/settings/settings.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
+import 'package:mobx/mobx.dart';
 
 part 'app_settings_store.g.dart';
 
 class AppSettings = _AppSettingsBase with _$AppSettings;
 
 abstract class _AppSettingsBase with Store {
-  _AppSettingsBase(this._service);
+  _AppSettingsBase() : _service = sl();
 
   final LangService _service;
+
+  static const enLocale = Locale('en', '');
+  static const deLocale = Locale('de', '');
+  static const frLocale = Locale('fr', '');
+  static const ruLocale = Locale('ru', '');
 
   @observable
   Locale _locale = const Locale('en');
 
   final locales = const <Locale>[
-    Locale('en', ''),
-    Locale('de', ''),
-    Locale('fr', ''),
-    Locale('ru', ''),
+    enLocale,
+    deLocale,
+    frLocale,
+    ruLocale,
   ];
 
   @computed
   Locale get locale => _locale;
-
-  @action
-  void init() => _locale = _service.init();
 
   @action
   Future<void> setLocale(int index) async {

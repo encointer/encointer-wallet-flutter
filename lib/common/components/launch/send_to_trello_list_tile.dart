@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class SendToTrelloListTile extends StatelessWidget {
   const SendToTrelloListTile({super.key});

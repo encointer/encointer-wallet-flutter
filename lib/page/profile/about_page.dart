@@ -4,7 +4,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});

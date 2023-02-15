@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/create_account_form.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});

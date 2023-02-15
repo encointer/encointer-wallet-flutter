@@ -1,16 +1,19 @@
+import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/common/nodes/node.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
+import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/config/node.dart';
-import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
-
 part 'settings.g.dart';
+
+const _tag = 'settings_store';
 
 class SettingsStore extends _SettingsStore with _$SettingsStore {
   SettingsStore(super.store);
@@ -128,6 +131,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> init(String sysLocaleCode) async {
+    Log.d('$_tag, _init');
     await loadLocalCode();
     await loadEndpoint(sysLocaleCode);
     await Future.wait([
@@ -155,6 +159,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadLocalCode() async {
+    Log.d('$_tag, loadLocalCode');
     final stored = await rootStore.localStorage.getObject(localStorageLocaleKey) as String?;
     if (stored != null) {
       localeCode = stored;
@@ -163,6 +168,7 @@ abstract class _SettingsStore with Store {
 
   @action
   void setNetworkLoading(bool isLoading) {
+    Log.d('$_tag, setNetworkLoading: isLoading: $isLoading');
     loading = isLoading;
   }
 
@@ -199,6 +205,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadNetworkStateCache() async {
+    Log.d('$_tag, loadNetworkStateCache');
     final data = await Future.wait([
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkStateKey)),
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
@@ -233,6 +240,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadContacts() async {
+    Log.d('$_tag, loadContacts');
     final ls = await rootStore.localStorage.getContactList();
     contactList = ObservableList.of(ls.map(AccountData.fromJson));
   }
@@ -263,9 +271,12 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadEndpoint(String sysLocaleCode) async {
+    Log.d(
+      '$_tag, loadEndpoint: sysLocaleCode = $sysLocaleCode, buildConfig = $buildConfig',
+    );
     final value = await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
     if (value == null) {
-      endpoint = networkEndpointEncointerMainnet;
+      endpoint = buildConfig.endpoint;
     } else {
       endpoint = EndpointData.fromJson(value);
     }
@@ -279,16 +290,19 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadCustomSS58Format() async {
+    Log.d('$_tag, loadCustomSS58Format');
     final ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
 
     customSS58Format = ss58 ?? defaultSs58Prefix;
   }
 
   String getCacheKey(String key) {
+    Log.d('$_tag, getCacheKey');
     return '${endpoint.info}_$key';
   }
 
   Future<void> reloadNetwork(EndpointData network) async {
+    Log.d('$_tag, reloadNetwork');
     setNetworkLoading(true);
     await setNetworkConst({}, needCache: false);
     setEndpoint(network);

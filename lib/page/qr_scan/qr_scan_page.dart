@@ -8,8 +8,8 @@ import 'package:encointer_wallet/page/qr_scan/qr_scan_service.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations.dart';
 
 export 'qr_codes/qr_code_base.dart';
 export 'qr_scan_service.dart';

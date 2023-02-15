@@ -1,22 +1,21 @@
+import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
+import 'package:encointer_wallet/common/components/submit_button_secondary.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-
-import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
-import 'package:encointer_wallet/common/components/submit_button_secondary.dart';
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/tx/lib/tx.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/ui.dart';
 
 class ContactDetailPage extends StatelessWidget {
   const ContactDetailPage(this.api, {super.key});

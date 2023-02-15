@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-import 'package:timezone/timezone.dart' as tz;
-
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
+import 'package:encointer_wallet/extras/utils/extensions/context_extensions.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
@@ -13,7 +10,10 @@ import 'package:encointer_wallet/service/deep_link/deep_link.dart';
 import 'package:encointer_wallet/service/meetup/meetup.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class EncointerHomePage extends StatefulWidget {
   const EncointerHomePage({super.key});
@@ -32,7 +32,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    if (!context.read<AppStore>().config.isIntegrationTest) NotificationPlugin.init(context);
+    if (buildConfig != BuildConfig.integrationTest) NotificationPlugin.init(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await initialDeepLinks(context);
       await NotificationHandler.fetchMessagesAndScheduleNotifications(
@@ -53,14 +53,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           encointer.nextRegisteringPhaseStart!,
           encointer.currentCeremonyIndex!,
           encointer.ceremonyCycleDuration!,
-          I18n.of(context)!.translationsForLocale().encointer,
+          context.localization.translationsForLocale().encointer,
         );
 
         await CeremonyNotifications.scheduleLastDayOfRegisteringReminders(
           encointer.assigningPhaseStart!,
           encointer.currentCeremonyIndex!,
           encointer.ceremonyCycleDuration!,
-          I18n.of(context)!.translationsForLocale().encointer,
+          context.localization.translationsForLocale().encointer,
         );
       }
     });

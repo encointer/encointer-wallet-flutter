@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
 import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
@@ -15,13 +12,16 @@ import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -181,14 +181,18 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
               const SendToTrelloListTile(),
-              ListTile(
-                title: Text(dic.profile.developer, style: h3Grey),
-                trailing: Checkbox(
-                  key: const Key('dev-mode'),
-                  value: store.settings.developerMode,
-                  onChanged: (_) => store.settings.toggleDeveloperMode(),
-                ),
-              ),
+              // Show only if on dev mode,
+              // hide it on production
+              if (buildConfig == BuildConfig.dev) ...[
+                ListTile(
+                  title: Text(dic.profile.developer, style: h3Grey),
+                  trailing: Checkbox(
+                    key: const Key('dev-mode'),
+                    value: store.settings.developerMode,
+                    onChanged: (_) => store.settings.toggleDeveloperMode(),
+                  ),
+                )
+              ],
               if (store.settings.developerMode)
                 // Column in case we add more developer options
                 Column(

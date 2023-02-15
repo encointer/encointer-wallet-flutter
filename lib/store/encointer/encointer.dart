@@ -1,19 +1,22 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
+import 'dart:async';
 
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/encointer_account_store/encointer_account_store.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'encointer.g.dart';
+
+const _tag = 'encointer_store';
 
 /// Mobx-Store containing all encointer specific data.
 ///
@@ -203,7 +206,7 @@ abstract class _EncointerStore with Store {
     Log.d('set phase duration to $phaseDurations', 'EncointerStore');
 
     this.phaseDurations = phaseDurations;
-    writeToCache();
+    unawaited(writeToCache());
   }
 
   @action
@@ -211,7 +214,7 @@ abstract class _EncointerStore with Store {
     Log.d('set communityIdentifiers to $cids', 'EncointerStore');
 
     communityIdentifiers = cids;
-    writeToCache();
+    await writeToCache();
 
     if (communities != null && communitiesContainsChosenCid && !communitiesContainsChosenCid) {
       // inconsistency found, reset state
@@ -231,19 +234,19 @@ abstract class _EncointerStore with Store {
   Future<void> setChosenCid([CommunityIdentifier? cid]) async {
     if (chosenCid != cid) {
       chosenCid = cid;
-      writeToCache();
+      await writeToCache();
 
       if (cid != null) {
-        _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
-        initBazaarStore(cid);
+        await _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
+        await initBazaarStore(cid);
         await initCommunityStore(cid, _rootStore.account.currentAddress);
       } else {
-        _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
+        await _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
     }
 
     if (_rootStore.settings.endpointIsNoTee) {
-      webApi.encointer.subscribeBusinessRegistry();
+      await webApi.encointer.subscribeBusinessRegistry();
     }
 
     // update depending values without awaiting

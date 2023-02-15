@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businesses_on_map.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_horizontal.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 
 class BusinessDetail extends StatelessWidget {
   const BusinessDetail(this.business, {super.key, this.cardHeight = 200, this.cardWidth = 160});

@@ -1,18 +1,17 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
-
 class LocalStorage {
-  final accountsKey = 'wallet_account_list';
-  final currentAccountKey = 'wallet_current_account';
-  final encointerCommunityKey = 'wallet_encointer_community';
-  final contactsKey = 'wallet_contact_list';
-  final seedKey = 'wallet_seed';
-  final customKVKey = 'wallet_kv';
-  final meetUpNotificationKey = 'meet_up_notification';
+  static const accountsKey = 'wallet_account_list';
+  static const currentAccountKey = 'wallet_current_account';
+  static const encointerCommunityKey = 'wallet_encointer_community';
+  static const contactsKey = 'wallet_contact_list';
+  static const seedKey = 'wallet_seed';
+  static const customKVKey = 'wallet_kv';
+  static const meetUpNotificationKey = 'meet_up_notification';
 
   final storage = _LocalStorage();
 
