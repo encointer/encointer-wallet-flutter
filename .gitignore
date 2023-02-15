@@ -31,6 +31,12 @@
 .pub/
 /build/
 
+# Ignore all toolchain files from all sub-packages.
+**/.dart_tool/
+**/.packages
+**/build/
+**/pubspec.lock 
+
 # Web related
 lib/generated_plugin_registrant.dart
 
