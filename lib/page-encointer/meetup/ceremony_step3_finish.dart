@@ -50,6 +50,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                         style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.5),
                       ),
                     ),
+                    const SizedBox(height: 10),
                     Wrap(
                       spacing: 6,
                       runSpacing: 6,
