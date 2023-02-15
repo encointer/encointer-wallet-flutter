@@ -135,9 +135,9 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                                 return const SizedBox.shrink();
                               } else if (store.encointer.communityAccount!.attendees!
                                   .contains(allParticipants[index])) {
-                                return ParticipantAvatar(index: index);
+                                return ParticipantAvatar(index: index, isActive: true);
                               } else {
-                                return ParticipantAvatar(index: index, isActive: false);
+                                return ParticipantAvatar(index: index);
                               }
                             },
                           ),

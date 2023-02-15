@@ -58,7 +58,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                         (index) {
                           if (store.encointer.communityAccount!.attendees!
                               .contains(store.encointer.communityAccount!.meetup!.registry[index])) {
-                            return ParticipantAvatar(index: index);
+                            return ParticipantAvatar(index: index, isActive: true);
                           } else {
                             return const SizedBox.shrink();
                           }

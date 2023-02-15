@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 class ParticipantAvatar extends StatelessWidget {
   const ParticipantAvatar({
     required this.index,
-    this.isActive = true,
+    this.isActive = false,
     super.key,
   });
 
