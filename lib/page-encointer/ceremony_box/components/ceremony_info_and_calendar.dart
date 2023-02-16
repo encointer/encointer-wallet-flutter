@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
-import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyInfoAndCalendar extends StatelessWidget {
   const CeremonyInfoAndCalendar({
     required this.nextCeremonyDate,
-    this.infoLink,
+    this.onPressedInfo,
     this.devMode = false,
     super.key,
   });
@@ -20,7 +19,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
   final DateTime nextCeremonyDate;
 
   /// open this Uri in a browser to give the user background information
-  final String? infoLink;
+  final void Function()? onPressedInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
             quarterTurns: 2,
             child: Icon(Iconsax.info_circle),
           ),
-          onPressed: () => AppLaunch.launchURL(infoLink!),
+          onPressed: onPressedInfo,
         ),
         if (showAddToCalendarIconButton)
           IconButton(

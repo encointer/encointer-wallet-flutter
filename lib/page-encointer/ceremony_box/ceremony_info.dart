@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -7,6 +8,8 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_info_and_calendar.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_schedule.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyInfo extends StatelessWidget {
@@ -31,8 +34,6 @@ class CeremonyInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final languageCode = Localizations.localeOf(context).languageCode;
     final dic = I18n.of(context)!.translationsForLocale();
-
-    final infoLink = ceremonyInfoLink(languageCode);
 
     return Container(
       child: meetupTime != null
@@ -62,8 +63,14 @@ class CeremonyInfo extends StatelessWidget {
                       ),
                     CeremonyInfoAndCalendar(
                       nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
-                      infoLink: infoLink,
                       devMode: devMode,
+                      onPressedInfo: () async {
+                        final infoLink = ceremonyInfoLink(
+                          languageCode,
+                          context.read<AppStore>().encointer.community?.cid.toFmtString() ?? '',
+                        );
+                        await AppLaunch.launchURL(infoLink);
+                      },
                     ),
                   ],
                 ),
