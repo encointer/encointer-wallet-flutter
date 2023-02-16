@@ -1,9 +1,9 @@
-name: encointer
+name: encointer_workspace
 
 sdkPath: ".flutter"
 
 packages:
-  - "*"
+  - app
   - packages/**
 
 command:
@@ -36,7 +36,7 @@ scripts:
       flutter analyze --fatal-warnings
     description: "Analyze all Dart code and exit if there are any fatal warnings"
 
-  clean:
+  flutter-clean:
     run: |
       flutter pub global run melos exec \
       flutter clean
