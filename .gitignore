@@ -35,7 +35,8 @@
 **/.dart_tool/
 **/.packages
 **/build/
-**/pubspec.lock 
+# keep the .lock file from the workspace and the app.
+packages/**/pubspec.lock
 
 # Web related
 lib/generated_plugin_registrant.dart
