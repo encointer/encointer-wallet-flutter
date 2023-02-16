@@ -24,19 +24,18 @@ class ScanClaimQrCode extends StatefulWidget {
 
 class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
   late final List<String> allParticipants;
-  late final String currenAddres;
+  late final String currentAddress;
 
   @override
   void initState() {
     final store = context.read<AppStore>();
-    currenAddres = store.account.currentAddress;
+    currentAddress = store.account.currentAddress;
     allParticipants = store.encointer.communityAccount?.meetup?.registry ?? [];
     super.initState();
   }
 
-  void validateAndStoreParticipant(BuildContext context, String attendee, Translations dic) {
-    final store = context.read<AppStore>();
-    if (attendee == currenAddres) {
+  void validateAndStoreParticipant(AppStore store, String attendee, Translations dic) {
+    if (attendee == currentAddress) {
       RootSnackBar.showMsg(dic.encointer.meetupClaimantEqualToSelf);
       Log.d('Claimant: $attendee is equal to self', 'ScanClaimQrCode');
     } else {
@@ -55,9 +54,9 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
     }
   }
 
-  void onScan(BuildContext context, Translations dic, String address) {
+  void onScan(AppStore store, Translations dic, String address) {
     if (Fmt.isAddress(address)) {
-      validateAndStoreParticipant(context, address, dic);
+      validateAndStoreParticipant(store, address, dic);
     } else {
       Log.e('Claim is not an address: $address', 'ScanClaimQrCode');
       RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed, durationMillis: 3000);
@@ -93,7 +92,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                   if (barcode.rawValue == null) {
                     Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
                   } else {
-                    onScan(context, dic, barcode.rawValue!);
+                    onScan(context.read<AppStore>(), dic, barcode.rawValue!);
                   }
                 }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
@@ -131,7 +130,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                           children: List.generate(
                             allParticipants.length,
                             (index) {
-                              if (allParticipants[index] == currenAddres) {
+                              if (allParticipants[index] == currentAddress) {
                                 return const SizedBox.shrink();
                               } else if (store.encointer.communityAccount!.attendees!
                                   .contains(allParticipants[index])) {
