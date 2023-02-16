@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -69,7 +70,13 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(height: 12),
                   // Enhance brightness for the QR-code
                   const WakeLockAndBrightnessEnhancer(brightness: 1),
-                  QrCodeImage(qrCode: claimantAddress),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      QrCodeImage(qrCode: claimantAddress),
+                      MeetupAvatar(index: getCurrentAccountIndex()),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -126,6 +133,12 @@ class CeremonyStep2Scan extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  int getCurrentAccountIndex() {
+    final currentAddress = store.account.currentAddress;
+    final participiants = store.encointer.communityAccount!.meetup!.registry;
+    return participiants.indexOf(currentAddress);
   }
 }
 

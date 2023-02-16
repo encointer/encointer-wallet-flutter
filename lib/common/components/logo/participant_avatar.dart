@@ -26,3 +26,24 @@ class ParticipantAvatar extends StatelessWidget {
     );
   }
 }
+
+class MeetupAvatar extends StatelessWidget {
+  const MeetupAvatar({required this.index, super.key});
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: 0.8,
+      child: CircleAvatar(
+        radius: 27,
+        backgroundColor: Colors.white,
+        child: SvgPicture.asset(
+          'assets/avatars/participant$index.svg',
+          width: 40,
+        ),
+      ),
+    );
+  }
+}
