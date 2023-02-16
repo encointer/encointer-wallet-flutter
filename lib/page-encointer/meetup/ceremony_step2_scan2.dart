@@ -74,7 +74,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                     alignment: Alignment.center,
                     children: [
                       QrCodeImage(qrCode: claimantAddress),
-                      MeetupAvatar(index: getCurrentAccountIndex()),
+                      UserMeetupAvatar(index: getCurrentAccountIndex()),
                     ],
                   ),
                 ],

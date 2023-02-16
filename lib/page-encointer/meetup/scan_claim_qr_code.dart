@@ -125,8 +125,9 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                       const SizedBox(height: 10),
                       Observer(builder: (_) {
                         return Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
+                          spacing: 5,
+                          runSpacing: 5,
+                          alignment: WrapAlignment.center,
                           children: List.generate(
                             allParticipants.length,
                             (index) {

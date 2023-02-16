@@ -14,7 +14,7 @@ class ParticipantAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 30,
+      radius: 20,
       backgroundColor: isActive ? Colors.green : Colors.grey,
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -27,8 +27,8 @@ class ParticipantAvatar extends StatelessWidget {
   }
 }
 
-class MeetupAvatar extends StatelessWidget {
-  const MeetupAvatar({required this.index, super.key});
+class UserMeetupAvatar extends StatelessWidget {
+  const UserMeetupAvatar({required this.index, super.key});
 
   final int index;
 
@@ -36,13 +36,9 @@ class MeetupAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: 0.8,
-      child: CircleAvatar(
-        radius: 27,
-        backgroundColor: Colors.white,
-        child: SvgPicture.asset(
-          'assets/avatars/participant$index.svg',
-          width: 40,
-        ),
+      child: SvgPicture.asset(
+        'assets/avatars/participant$index.svg',
+        width: 70,
       ),
     );
   }

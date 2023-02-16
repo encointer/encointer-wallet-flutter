@@ -52,8 +52,9 @@ class CeremonyStep3Finish extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
+                      spacing: 5,
+                      runSpacing: 5,
+                      alignment: WrapAlignment.center,
                       children: List.generate(
                         store.encointer.communityAccount!.meetup!.registry.length,
                         (index) {
