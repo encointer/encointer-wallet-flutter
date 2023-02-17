@@ -64,7 +64,7 @@ class CeremonyInfo extends StatelessWidget {
                     CeremonyInfoAndCalendar(
                       nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
                       devMode: devMode,
-                      onPressedInfo: () async {
+                      onInfoPressed: () async {
                         final infoLink = ceremonyInfoLink(
                           languageCode,
                           context.read<AppStore>().encointer.community?.cid.toFmtString() ?? '',

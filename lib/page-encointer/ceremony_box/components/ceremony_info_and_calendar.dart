@@ -8,7 +8,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 class CeremonyInfoAndCalendar extends StatelessWidget {
   const CeremonyInfoAndCalendar({
     required this.nextCeremonyDate,
-    this.onPressedInfo,
+    this.onInfoPressed,
     this.devMode = false,
     super.key,
   });
@@ -19,7 +19,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
   final DateTime nextCeremonyDate;
 
   /// open this Uri in a browser to give the user background information
-  final void Function()? onPressedInfo;
+  final void Function()? onInfoPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
             quarterTurns: 2,
             child: Icon(Iconsax.info_circle),
           ),
-          onPressed: onPressedInfo,
+          onPressed: onInfoPressed,
         ),
         if (showAddToCalendarIconButton)
           IconButton(
