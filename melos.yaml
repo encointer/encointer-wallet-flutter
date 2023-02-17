@@ -66,7 +66,7 @@ scripts:
 
   yarn-build:
     run: |
-      cd lib/js_service_encointer
+      cd app/lib/js_service_encointer 
       yarn install && yarn run build
     description: "Install yarn dependencies and build"
 
