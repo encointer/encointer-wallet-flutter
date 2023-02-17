@@ -17,5 +17,13 @@ jobs:
       - name: Check fdroid setup
         run: ./scripts/fdroid_init.sh
 
+      - name: Melos Install
+        run: ./scripts/melos_install.sh
+
+      - name: Melos Bootstrap
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          ./flutterw pub global run melos bootstrap
+
       - name: Check froid build
         run: ./scripts/fdroid_build.sh
