@@ -11,45 +11,61 @@ command:
     runPubGetInParallel: false
     usePubspecOverrides: true
 
+# Notes:
+# 1.  On windows the multiline operator doesn't work in most cases, so we should try to have one liner scripts commands
+#     connected with '&&'.
+# 2.  Using `flutter pub global run melos` will make the scripts find melos even if the `pub-cache` is not on the path.
+#     The `exec:` directive isn't found either if the `pub-cache` is not on the path, which is why we only use the `run:`
+#     directive here. (This is a hack, but devs need less set up then).
+#
+# Cross platform linebreaks:
+# * Can only be used with a `melos exec` command, which must be after directly before the command to be executed. So
+#   after the `--` if a filter is used.
+# * Only works with the `>-` multiline operator for windows support.
+#
+# For more complex scenarios, we can consider writing cross-platform dart scripts:
+# https://github.com/invertase/melos/issues/122
+
+
 scripts:
   format:
-    run: |
+    run: >-
       flutter pub global run melos exec \
       dart format . --line-length 120
     description: "Format all Dart code"
 
   format-check:
-    run: |
+    run: >-
       flutter pub global run melos exec \
       dart format . --line-length 120 --set-exit-if-changed
     description: "Check format all Dart code"
 
   analyze:
-    run: |
+    run: >-
       flutter pub global run melos exec \
       flutter analyze
     description: "Analyze all Dart code"
 
   analyze-check:
-    run: |
+    run: >-
       flutter pub global run melos exec \
       flutter analyze --fatal-warnings
     description: "Analyze all Dart code and exit if there are any fatal warnings"
 
   flutter-clean:
-    run: |
+    run: >-
       flutter pub global run melos exec \
       flutter clean
     description: "Clean pub dependencies"
 
   pub-get:
-    run: |
+    run: >-
       flutter pub global run melos exec \
       flutter pub get
     description: "Get pub dependencies"
 
   unit-test:
-    run: |
+    run: >-
       flutter pub global run melos exec \
       flutter test
     description: "Run unit tests (all packages)"
@@ -59,99 +75,77 @@ scripts:
     description: "Run Flutter doctor"
 
   run-build-runner:
-    run: |
+    run: >-
       flutter pub global run melos exec --depends-on="build_runner" -- \
       flutter pub run build_runner build --delete-conflicting-outputs
     description: "Generate code with build_runner"
 
   yarn-build:
-    run: "cd app/lib/js_service_encointer && yarn install && yarn run build"
+    run: cd app/lib/js_service_encointer && yarn install && yarn run build
     description: "Install yarn dependencies and build"
 
   # Unit test Encointer Wallet with tag
-  unit-test-encointer-exclude-node-e2e:
-    run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter test --exclude-tags encointer-node-e2e
+  unit-test-app-exclude-encointer-node-e2e:
+    run: >-
+      flutter pub global run melos exec --scope="encointer_wallet" -- \
+      flutter test --exclude-tags encointer-node-e2e
     description: "Run unit tests excluding the `encointer-node-e2e` tag"
 
-  unit-test-encointer-node-e2e:
-    run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter test --tags encointer-node-e2e
+  unit-test-with-encointer-node-e2e:
+    run: >-
+      flutter pub global run melos exec --scope="encointer_wallet" -- \
+      flutter test --tags encointer-node-e2e
     description: "Run unit tests with the `encointer-node-e2e` tag"
 
   unit-test-packages:
-    run: |
-      flutter pub global run melos exec \
-      --ignore="encointer_wallet" -- flutter test
+    run: >-
+      flutter pub global run melos exec --ignore="encointer_wallet" -- \
+      flutter test
     description: "Run unit tests with the `encointer-node-e2e` tag"
 
   # Run Encointer Wallet
   run-android:
-    run: |
-      cd app
-      flutter run --flavor dev
+    run: cd app && flutter run --flavor dev
     description: "Run encointer_wallet on an Android platform"
 
   run-ios:
-    run: |
-      cd app
-      flutter run
+    run: cd app && flutter run
     description: "Run encointer_wallet on an iOS platform"
 
   # Build apk and appbundle Encointer Wallet
   build-apk:
-    run: |
-      cd app
-      flutter build apk --flavor fdroid
+    run: cd app && flutter build apk --flavor fdroid
     description: "Build an APK file"
 
   build-appbundle:
-    run: |
-      cd app
-      flutter build appbundle
+    run: cd app && flutter build appbundle
     description: "Build an appbundle file"
 
   # Integration test Encointer Wallet
   integration-app-test-android:
-    run: |
-      cd app
-      flutter drive --target=test_driver/app.dart --flavor dev
+    run: cd app && flutter drive --target=test_driver/app.dart --flavor dev
     description: "Run integration tests for the `app.dart` file on Android"
 
   integration-app-test-ios:
-    run: |
-      cd app
-      flutter drive --target=test_driver/app.dart
+    run: cd app && flutter drive --target=test_driver/app.dart
     description: "Run integration tests for the `app.dart` file on iOS"
 
   integration-real-app-test-android:
-    run: |
-      cd app
-      flutter drive --target=test_driver/real_app.dart --flavor dev
+    run: cd app && flutter drive --target=test_driver/real_app.dart --flavor dev
     description: "Run integration tests for the `real_app.dart` file on Android"
 
   integration-real-app-test-ios:
-    run: |
-      cd app
-      flutter drive --target=test_driver/real_app.dart
+    run: cd app && flutter drive --target=test_driver/real_app.dart
     description: "Run integration tests for the `real_app.dart`` file on IOS"
 
   integration-scan-test-android:
-    run: |
-      cd app
-      flutter drive --target=test_driver/scan_page.dart --flavor dev
+    run: cd app && flutter drive --target=test_driver/scan_page.dart --flavor dev
     description: "Run integration test for QR scan on Android"
 
   integration-scan-test-ios:
-    run: |
-      cd app
-      flutter drive --target=test_driver/scan_page.dart
+    run: cd app && flutter drive --target=test_driver/scan_page.dart
     description: "Run integration test for QR scan on iOS"
 
   flutter-config-no-analytics:
-    run: |
-      cd app
-      flutter config --no-analytics
+    run: cd app && flutter config --no-analytics
     description: "Disables the analytics data in the local configuration file of the Flutter tool"
