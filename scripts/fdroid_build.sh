@@ -8,5 +8,5 @@
 
 set -exuo pipefail
 
-./flutterw config --no-analytics
-./flutterw build apk --flavor fdroid
+./flutterw pub global run melos flutter-config-no-analytics
+./flutterw pub global run melos build-apk
