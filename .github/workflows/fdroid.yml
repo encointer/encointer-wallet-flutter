@@ -2,9 +2,9 @@ name: Fdroid test
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid, cl/fix-melos-for-android-studio]
   pull_request:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid, cl/fix-melos-for-android-studio]
 
 jobs:
   setup-works:

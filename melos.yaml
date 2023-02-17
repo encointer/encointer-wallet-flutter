@@ -145,3 +145,9 @@ scripts:
       flutter pub global run melos exec \
       --scope="encointer_wallet" -- flutter drive --target=test_driver/scan_page.dart
     description: "Run integration test for QR scan on iOS"
+
+  flutter-config-no-analytics:
+    run: |
+      flutter pub global run melos exec \
+      --scope="encointer_wallet" -- flutter config --no-analytics
+    description: "Disables the analytics data in the local configuration file of the Flutter tool"
