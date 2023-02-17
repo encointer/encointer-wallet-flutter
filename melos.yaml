@@ -89,65 +89,69 @@ scripts:
 
   # Run Encointer Wallet
   run-android:
-    run: flutter run --flavor dev
+    run: |
+      cd app
+      flutter run --flavor dev
     description: "Run encointer_wallet on an Android platform"
 
   run-ios:
-    run: flutter run
+    run: |
+      cd app
+      flutter run
     description: "Run encointer_wallet on an iOS platform"
 
   # Build apk and appbundle Encointer Wallet
   build-apk:
     run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter build apk --flavor fdroid
+      cd app
+      flutter build apk --flavor fdroid
     description: "Build an APK file"
 
   build-appbundle:
     run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter build appbundle
+      cd app
+      flutter build appbundle
     description: "Build an appbundle file"
 
   # Integration test Encointer Wallet
   integration-app-test-android:
     run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter drive --target=test_driver/app.dart --flavor dev
+      cd app
+      flutter drive --target=test_driver/app.dart --flavor dev
     description: "Run integration tests for the `app.dart` file on Android"
 
   integration-app-test-ios:
     run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter drive --target=test_driver/app.dart
+      cd app
+      flutter drive --target=test_driver/app.dart
     description: "Run integration tests for the `app.dart` file on iOS"
 
   integration-real-app-test-android:
     run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter drive --target=test_driver/real_app.dart --flavor dev
+      cd app
+      flutter drive --target=test_driver/real_app.dart --flavor dev
     description: "Run integration tests for the `real_app.dart` file on Android"
 
   integration-real-app-test-ios:
     run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter drive --target=test_driver/real_app.dart
+      cd app
+      flutter drive --target=test_driver/real_app.dart
     description: "Run integration tests for the `real_app.dart`` file on IOS"
 
   integration-scan-test-android:
     run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter drive --target=test_driver/scan_page.dart --flavor dev
+      cd app
+      flutter drive --target=test_driver/scan_page.dart --flavor dev
     description: "Run integration test for QR scan on Android"
 
   integration-scan-test-ios:
     run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter drive --target=test_driver/scan_page.dart
+      cd app
+      flutter drive --target=test_driver/scan_page.dart
     description: "Run integration test for QR scan on iOS"
 
   flutter-config-no-analytics:
     run: |
-      flutter pub global run melos exec \
-      --scope="encointer_wallet" -- flutter config --no-analytics
+      cd app
+      flutter config --no-analytics
     description: "Disables the analytics data in the local configuration file of the Flutter tool"
