@@ -23,7 +23,7 @@ command:
 #   after the `--` if a filter is used.
 # * Only works with the `>-` multiline operator for windows support.
 #
-# For more complex scenarios, we can consider writing cross-platform dart scripts:
+# For more complex scenarios, we can consider writing cross-platform dart scripts as mentioned in this issue:
 # https://github.com/invertase/melos/issues/122
 
 
