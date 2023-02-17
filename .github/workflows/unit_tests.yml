@@ -35,7 +35,7 @@ jobs:
         run: ./flutterw pub global run melos analyze-check
 
       - name: "Run unit tests Encointer"
-        run: ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
+        run: ./flutterw pub global run melos unit-test-app-exclude-encointer-node-e2e
 
       - name: "Run unit tests Packages"
         run: ./flutterw pub global run melos unit-test-packages
