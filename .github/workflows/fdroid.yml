@@ -21,7 +21,7 @@ jobs:
         run: ./scripts/install_flutter_wrapper.sh
 
       - name: Melos Install
-        run: ./scripts/melos_install.sh
+        run: ./scripts/install_melos.sh
 
       - name: Melos Bootstrap
         run: |

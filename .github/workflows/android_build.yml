@@ -39,7 +39,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Melos Install
-        run: ./scripts/melos_install.sh
+        run: ./scripts/install_melos.sh
 
       - name: Melos Bootstrap
         run: ./flutterw pub global run melos bootstrap
