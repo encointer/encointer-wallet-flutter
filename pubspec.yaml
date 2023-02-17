@@ -99,6 +99,7 @@ dev_dependencies:
   test: ^1.22.0
   mocktail: ^0.3.0
   very_good_analysis: ^3.1.0
+  melos: ^2.9.0
 
 flutter_icons:
   android: "launcher_icon"
