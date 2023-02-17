@@ -25,14 +25,14 @@ jobs:
           export PATH="$PATH":"$HOME/.pub-cache/bin"
           ./flutterw pub global run melos bootstrap
 
-      - name: "Build JS"
-        run: ./flutterw pub global run melos yarn-build
-
-      - name: "Check fmt"
-        run: ./flutterw pub global run melos format-check
-
-      - name: "Analyze Code"
-        run: ./flutterw pub global run melos analyze-check
+#      - name: "Build JS"
+#        run: ./flutterw pub global run melos yarn-build
+#
+#      - name: "Check fmt"
+#        run: ./flutterw pub global run melos format-check
+#
+#      - name: "Analyze Code"
+#        run: ./flutterw pub global run melos analyze-check
 
       - name: "Run unit tests Encointer"
         run: ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e

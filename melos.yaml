@@ -71,8 +71,8 @@ scripts:
   # Unit test Encointer Wallet with tag
   unit-test-encointer-exclude-node-e2e:
     run: >-
-      flutter pub global run melos exec --scope="encointer_wallet" \
-      -- flutter test --exclude-tags encointer-node-e2e
+      flutter pub global run melos exec --scope="encointer_wallet" -- \
+      flutter test --exclude-tags encointer-node-e2e
     description: "Run unit tests excluding the `encointer-node-e2e` tag"
 
   unit-test-encointer-node-e2e:
