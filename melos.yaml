@@ -98,7 +98,9 @@ scripts:
 
   # Build apk and appbundle Encointer Wallet
   build-apk:
-    run: flutter build apk --flavor fdroid
+    run: |
+      flutter pub global run melos exec \
+      --scope="encointer_wallet" -- flutter build apk --flavor fdroid
     description: "Build an APK file"
 
   build-appbundle:
