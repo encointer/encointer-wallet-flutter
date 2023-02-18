@@ -18,9 +18,11 @@ fi;
 
 pod setup
 
-# place this script in project/ios/
-cd ..
+# place this script in project/app/ios/
+cd ../../
 
 source ./scripts/app_center_post_clone_setup.sh
 
-./flutterw build ios --release --no-codesign
+cd app
+
+../flutterw build ios --release --no-codesign
