@@ -113,7 +113,7 @@ scripts:
     description: "Run encointer_wallet on an iOS platform"
 
   # Build apk and appbundle Encointer Wallet
-  build-apk:
+  build-apk-fdroid:
     run: cd app && flutter build apk --flavor fdroid
     description: "Build an APK file"
 

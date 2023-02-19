@@ -2,13 +2,15 @@
 
 set -exuo pipefail
 
-# place this script in project/android/app/
-cd ../../
+# place this script in <project_root>/app/android/app/
+cd ../../../
 
 source ./scripts/app_center_post_clone_setup.sh
 
-./flutterw build apk --release --flavor play
-./flutterw build appbundle --release --flavor play
+cd app
+
+../flutterw build apk --release --flavor play
+../flutterw build appbundle --release --flavor play
 
 # copy the APK where AppCenter will find it
 mkdir -p android/app/build/outputs/apk/; cp build/app/outputs/flutter-apk/app-play-release.apk $_
