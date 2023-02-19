@@ -17,8 +17,5 @@ jobs:
       - name: Check fdroid setup
         run: ./scripts/fdroid_init.sh
 
-      - name: Install flutter wrapper
-        run: ./scripts/install_flutter_wrapper.sh
-
       - name: Check froid build
         run: ./scripts/fdroid_build.sh

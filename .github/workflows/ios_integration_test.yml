@@ -68,9 +68,7 @@ jobs:
         run: ./scripts/install_melos.sh
 
       - name: Melos Bootstrap
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos bootstrap
+        run: ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
         run: ./flutterw pub global run melos yarn-build
