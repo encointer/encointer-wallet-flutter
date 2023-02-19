@@ -48,4 +48,4 @@ jobs:
         run: ./flutterw pub global run melos yarn-build
 
       - name: "Build apk"
-        run: ./flutterw pub global run melos build-apk
+        run: ./flutterw pub global run melos build-apk-fdroid
