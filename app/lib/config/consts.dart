@@ -125,6 +125,7 @@ String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('
 
 String ceremonyInfoLink(String locale, String cid) {
   switch (cid) {
+    case 'dpcmj33LUs9':
     case 'dpcm5272THU':
       return _greenbayLink;
     default:
