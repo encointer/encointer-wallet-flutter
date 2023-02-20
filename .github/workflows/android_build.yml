@@ -39,7 +39,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Melos Install
-        run: ./scripts/melos_install.sh
+        run: ./scripts/install_melos.sh
 
       - name: Melos Bootstrap
         run: ./flutterw pub global run melos bootstrap
@@ -48,4 +48,4 @@ jobs:
         run: ./flutterw pub global run melos yarn-build
 
       - name: "Build apk"
-        run: ./flutterw pub global run melos build-apk
+        run: ./flutterw pub global run melos build-apk-fdroid
