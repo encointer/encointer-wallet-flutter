@@ -117,13 +117,20 @@ const int secondOfYear = 365 * 24 * 60 * 60; // seconds of one year
 const localePlaceHolder = 'LOCALE_PLACEHOLDER';
 const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';
 const _leuZurichLink = 'https://leu.zuerich/$localePlaceHolder';
+const _greenbayLink = 'http://greenbaydollar.com/';
 const meetupNotificationLink = 'https://encointer.github.io/feed/community_messages/$localePlaceHolder/cm.json';
 const encointerLink = 'https://wallet.encointer.org/app/';
 
 String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
 
-String ceremonyInfoLink(String locale) {
-  return replaceLocalePlaceholder(ceremonyInfoLinkBase, locale);
+String ceremonyInfoLink(String locale, String cid) {
+  switch (cid) {
+    case 'dpcmj33LUs9':
+    case 'dpcm5272THU':
+      return _greenbayLink;
+    default:
+      return replaceLocalePlaceholder(ceremonyInfoLinkBase, locale);
+  }
 }
 
 String leuZurichLink(String locale) {
