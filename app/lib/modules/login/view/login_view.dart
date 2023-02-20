@@ -30,7 +30,7 @@ class _LoginViewState extends State<LoginView> {
   Future<void> useLocalAuth() async {
     final dic = I18n.of(context)!.translationsForLocale();
     if (await context.read<LoginStore>().isDeviceSupported()) {
-      final value = await context.read<LoginStore>().authinticate(dic.account.localizedReason);
+      final value = await context.read<LoginStore>().authenticate(dic.account.localizedReason);
       if (value) await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
       RootSnackBar.showMsg(dic.account.biometricError);

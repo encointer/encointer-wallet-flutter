@@ -41,7 +41,7 @@ abstract class _LoginStoreBase with Store {
   /// Authenticates the user with biometrics or device authentication options available on the device.
   /// Returns a `Future<bool>` which is `true` if successful, `false` otherwise.
   /// [localizedReason] is the message displayed to the user during the authentication prompt.
-  Future<bool> authinticate(String localizedReason) {
+  Future<bool> authenticate(String localizedReason) {
     try {
       return _localAuth.authenticate(
         localizedReason: localizedReason,
