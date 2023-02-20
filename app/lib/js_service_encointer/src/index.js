@@ -5,7 +5,6 @@ import account from './service/account.js';
 import encointer from './service/encointer.js';
 import settings from './service/settings.js';
 import chain from './service/chain.js';
-import codec from './service/scale-codec.js';
 
 window.addEventListener('flutterInAppWebViewPlatformReady', function (event) {
 
@@ -14,7 +13,6 @@ window.addEventListener('flutterInAppWebViewPlatformReady', function (event) {
   window.account = account;
   window.chain = chain;
   window.encointer = encointer;
-  window.codec = codec;
   window.settings = settings;
 
   console.log('Initialized Window');
