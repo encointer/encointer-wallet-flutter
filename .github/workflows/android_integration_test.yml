@@ -43,7 +43,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          distribution: 'zulu'
+          distribution: "zulu"
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
@@ -59,9 +59,14 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Melos Install
+        run: ./scripts/install_melos.sh
+
+      - name: Melos Bootstrap
+        run: ./flutterw pub global run melos bootstrap
+
       - name: "Build JS"
-        working-directory: ./scripts
-        run: source ./init_env.sh && ./build_js.sh
+        run: ./flutterw pub global run melos yarn-build
 
       - name: Gradle cache
         uses: actions/cache@v3
