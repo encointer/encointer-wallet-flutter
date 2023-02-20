@@ -1,11 +1,27 @@
-name: encointer_workspace
+name: encointer_wallet
 description: EncointerWallet made with Flutter.
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+
+# bump version already while working on new release, bumping build number at the same time
+# bump build number even more, if needed to clarify what's deployed
+version: 1.9.0+860
+
+publish_to: none
 
 environment:
   sdk: ">=2.19.0 <3.0.0"
   flutter: "3.7.3"
 
-<<<<<<< HEAD
 dependencies:
   # intl - format numbers
   intl: ^0.17.0
@@ -48,7 +64,7 @@ dependencies:
   mobile_scanner: ^2.1.0
   aes_ecb_pkcs5_flutter: ^0.1.2
   permission_handler: ^10.2.0
-  flutter_svg: ^2.0.1
+  flutter_svg: ^1.1.6
   url_launcher: ^6.1.9
   dropdown_search: ^5.0.5
   material_floating_search_bar: ^0.3.7
@@ -82,7 +98,6 @@ dev_dependencies:
   test: ^1.22.0
   mocktail: ^0.3.0
   very_good_analysis: ^3.1.0
-  melos: ^2.9.0
 
 flutter_icons:
   android: "launcher_icon"
@@ -99,7 +114,6 @@ flutter:
     - lib/js_service_encointer/dist/main.js
 
     #svg
-    - assets/avatars/
     - assets/nctr_logo.svg
     - assets/nctr_mosaic_background.svg
     - assets/nctr_logo_faces_only_thick.svg
@@ -203,7 +217,3 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-=======
-dev_dependencies:
-  melos: "2.9.0"
->>>>>>> 9576853e1111118933294f1586ff5e5c85e4aa12
