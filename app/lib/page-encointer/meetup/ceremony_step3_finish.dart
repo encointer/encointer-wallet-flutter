@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
@@ -47,6 +48,23 @@ class CeremonyStep3Finish extends StatelessWidget {
                         dic.encointer.weHopeToSeeYouAtTheNextGathering,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.5),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Wrap(
+                      spacing: 5,
+                      runSpacing: 5,
+                      alignment: WrapAlignment.center,
+                      children: List.generate(
+                        store.encointer.communityAccount!.meetup!.registry.length,
+                        (index) {
+                          if (store.encointer.communityAccount!.attendees!
+                              .contains(store.encointer.communityAccount!.meetup!.registry[index])) {
+                            return ParticipantAvatar(index: index, isActive: true);
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
                       ),
                     ),
                   ],

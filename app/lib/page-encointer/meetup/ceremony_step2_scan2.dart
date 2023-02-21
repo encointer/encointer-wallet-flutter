@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -69,7 +70,13 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(height: 12),
                   // Enhance brightness for the QR-code
                   const WakeLockAndBrightnessEnhancer(brightness: 1),
-                  QrCodeImage(qrCode: claimantAddress),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      QrCodeImage(qrCode: claimantAddress),
+                      UserMeetupAvatar(index: getCurrentAccountIndex()),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -109,7 +116,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (_) => ScanClaimQrCode(store, confirmedParticipantsCount),
+                      builder: (_) => ScanClaimQrCode(confirmedParticipantsCount),
                     ),
                   );
                 },
@@ -127,15 +134,21 @@ class CeremonyStep2Scan extends StatelessWidget {
       ),
     );
   }
+
+  int getCurrentAccountIndex() {
+    final currentAddress = store.account.currentAddress;
+    final participiants = store.encointer.communityAccount!.meetup!.registry;
+    return participiants.indexOf(currentAddress);
+  }
 }
 
 /// Attest all assigned meetup participants.
 ///
 /// Only intended for development purposes.
 void attestAllParticipants(AppStore store, String claimantAddress) {
-  final registry = store.encointer.communityAccount!.meetup!.registry..removeWhere((a) => a == claimantAddress);
+  final registry = store.encointer.communityAccount!.meetup!.registry;
   for (final attendee in registry) {
-    store.encointer.communityAccount!.addAttendee(attendee);
+    if (attendee != claimantAddress) store.encointer.communityAccount!.addAttendee(attendee);
   }
 
   RootSnackBar.showMsg('Added all meetup participants to attendees');
