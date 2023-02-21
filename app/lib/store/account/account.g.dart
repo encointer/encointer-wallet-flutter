@@ -160,36 +160,6 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  late final _$pubKeyIconsMapAtom = Atom(name: '_AccountStore.pubKeyIconsMap', context: context);
-
-  @override
-  ObservableMap<String?, String?> get pubKeyIconsMap {
-    _$pubKeyIconsMapAtom.reportRead();
-    return super.pubKeyIconsMap;
-  }
-
-  @override
-  set pubKeyIconsMap(ObservableMap<String?, String?> value) {
-    _$pubKeyIconsMapAtom.reportWrite(value, super.pubKeyIconsMap, () {
-      super.pubKeyIconsMap = value;
-    });
-  }
-
-  late final _$addressIconsMapAtom = Atom(name: '_AccountStore.addressIconsMap', context: context);
-
-  @override
-  ObservableMap<String?, String?> get addressIconsMap {
-    _$addressIconsMapAtom.reportRead();
-    return super.addressIconsMap;
-  }
-
-  @override
-  set addressIconsMap(ObservableMap<String?, String?> value) {
-    _$addressIconsMapAtom.reportWrite(value, super.addressIconsMap, () {
-      super.addressIconsMap = value;
-    });
-  }
-
   late final _$queuedTxsAtom = Atom(name: '_AccountStore.queuedTxs', context: context);
 
   @override
@@ -385,8 +355,6 @@ accountList: ${accountList},
 addressIndexMap: ${addressIndexMap},
 accountIndexMap: ${accountIndexMap},
 pubKeyAddressMap: ${pubKeyAddressMap},
-pubKeyIconsMap: ${pubKeyIconsMap},
-addressIconsMap: ${addressIconsMap},
 queuedTxs: ${queuedTxs},
 currentAccount: ${currentAccount},
 optionalAccounts: ${optionalAccounts},

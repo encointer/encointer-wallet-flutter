@@ -121,9 +121,9 @@ You may build the App with Flutter's [Deployment Documentation](https://flutter.
 
 In order to build a fat APK, you can do 
 ```shell
-melos build-apk
+melos build-apk-fdroid
 # windows
-pub global run melos build-apk
+pub global run melos build-apk-fdroid
 ```
 and find the output in `build/app/outputs/apk/fdroid/release/app-fdroid-release.apk`
 
@@ -147,13 +147,13 @@ The following file contains the supported flutter version:
 * run all tests from the command line:`./flutterw test`
 * exclude e2e-tests that need a running encointer node:
 ```shell
-melos unit-test-encointer-exclude-node-e2e
+melos unit-test-app-exclude-encointer-node-e2e
 ```
 * run e2e-tests that need a running encointer node:
 ```shell
-melos unit-test-encointer-node-e2e
+melos unit-test-app-with-encointer-node-e2e
 # windows
-pub global run melos unit-test-encointer-node-e2e
+pub global run melos unit-test-app-with-encointer-node-e2e
 ```
 
 ### Integration tests
@@ -244,9 +244,9 @@ e.g. `@JsonSerializable` or the mobx annotations. Whenever annotations are added
 command must be run to update the `*.g` files.
 
 ```shell
-melos generate-build-runner
+melos run-build-runner
 # windows
-pub global run melos generate-build-runner
+pub global run melos run-build-runner
 ```
 
 ## GitHub Actions Hints

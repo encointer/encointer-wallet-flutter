@@ -67,12 +67,6 @@ abstract class _AccountStore with Store {
   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
 
   @observable
-  ObservableMap<String?, String?> pubKeyIconsMap = ObservableMap<String?, String?>();
-
-  @observable
-  ObservableMap<String?, String?> addressIconsMap = ObservableMap<String?, String?>();
-
-  @observable
   List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
 
   @computed
