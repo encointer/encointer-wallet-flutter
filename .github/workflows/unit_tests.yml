@@ -18,12 +18,10 @@ jobs:
         run: ./scripts/install_flutter_wrapper.sh
 
       - name: Melos Install
-        run: ./scripts/melos_install.sh
+        run: ./scripts/install_melos.sh
 
       - name: Melos Bootstrap
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          ./flutterw pub global run melos bootstrap
+        run: ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
         run: ./flutterw pub global run melos yarn-build
@@ -35,7 +33,7 @@ jobs:
         run: ./flutterw pub global run melos analyze-check
 
       - name: "Run unit tests Encointer"
-        run: ./flutterw pub global run melos unit-test-encointer-exclude-node-e2e
+        run: ./flutterw pub global run melos unit-test-app-exclude-encointer-node-e2e
 
       - name: "Run unit tests Packages"
         run: ./flutterw pub global run melos unit-test-packages
