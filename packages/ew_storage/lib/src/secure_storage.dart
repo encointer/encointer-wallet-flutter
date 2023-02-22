@@ -28,8 +28,8 @@ class SecureStorage implements EwStorage {
   Future<String?> readAsync({required String key}) async {
     try {
       return await _secureStorage.read(key: key);
-    } on Exception catch (error, stackTrace) {
-      Error.throwWithStackTrace(StorageException(error), stackTrace);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
     }
   }
 
@@ -37,8 +37,8 @@ class SecureStorage implements EwStorage {
   Future<void> write({required String key, required String value}) async {
     try {
       await _secureStorage.write(key: key, value: value);
-    } on Exception catch (error, stackTrace) {
-      Error.throwWithStackTrace(StorageException(error), stackTrace);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
     }
   }
 
@@ -46,8 +46,8 @@ class SecureStorage implements EwStorage {
   Future<void> delete({required String key}) async {
     try {
       await _secureStorage.delete(key: key);
-    } on Exception catch (error, stackTrace) {
-      Error.throwWithStackTrace(StorageException(error), stackTrace);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
     }
   }
 
@@ -55,8 +55,8 @@ class SecureStorage implements EwStorage {
   Future<void> clear() async {
     try {
       await _secureStorage.deleteAll();
-    } on Exception catch (error, stackTrace) {
-      Error.throwWithStackTrace(StorageException(error), stackTrace);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
     }
   }
 

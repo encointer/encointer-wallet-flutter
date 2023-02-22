@@ -29,7 +29,7 @@ class PreferencesStorage implements EwStorage {
     try {
       return _sharedPreferences.getString(key);
     } catch (error, stackTrace) {
-      Error.throwWithStackTrace(StorageException(error), stackTrace);
+      throw StorageException(error, stackTrace);
     }
   }
 
@@ -38,7 +38,7 @@ class PreferencesStorage implements EwStorage {
     try {
       await _sharedPreferences.setString(key, value);
     } catch (error, stackTrace) {
-      Error.throwWithStackTrace(StorageException(error), stackTrace);
+      throw StorageException(error, stackTrace);
     }
   }
 
@@ -47,7 +47,7 @@ class PreferencesStorage implements EwStorage {
     try {
       await _sharedPreferences.remove(key);
     } catch (error, stackTrace) {
-      Error.throwWithStackTrace(StorageException(error), stackTrace);
+      throw StorageException(error, stackTrace);
     }
   }
 
@@ -56,7 +56,7 @@ class PreferencesStorage implements EwStorage {
     try {
       await _sharedPreferences.clear();
     } catch (error, stackTrace) {
-      Error.throwWithStackTrace(StorageException(error), stackTrace);
+      throw StorageException(error, stackTrace);
     }
   }
 
