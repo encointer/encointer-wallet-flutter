@@ -64,7 +64,7 @@ dependencies:
   mobile_scanner: ^2.1.0
   aes_ecb_pkcs5_flutter: ^0.1.2
   permission_handler: ^10.2.0
-  flutter_svg: ^1.1.6
+  flutter_svg: ^2.0.1
   url_launcher: ^6.1.9
   dropdown_search: ^5.0.5
   material_floating_search_bar: ^0.3.7
@@ -115,6 +115,7 @@ flutter:
     - lib/js_service_encointer/dist/main.js
 
     #svg
+    - assets/avatars/
     - assets/nctr_logo.svg
     - assets/nctr_mosaic_background.svg
     - assets/nctr_logo_faces_only_thick.svg
