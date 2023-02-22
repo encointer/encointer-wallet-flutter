@@ -25,18 +25,49 @@ class PreferencesStorage implements EwStorage {
   }
 
   @override
-  String? read({required String key}) {
+  T? read<T>({required String key}) {
     try {
-      return _sharedPreferences.getString(key);
+      switch (T) {
+        case String:
+          return _sharedPreferences.getString(key) as T?;
+        case bool:
+          return _sharedPreferences.getBool(key) as T?;
+        case double:
+          return _sharedPreferences.getDouble(key) as T?;
+        case int:
+          return _sharedPreferences.getInt(key) as T?;
+        case List<String>:
+          return _sharedPreferences.getStringList(key) as T?;
+        default:
+          throw const StorageException('Type is not subtype of `String`, `bool`, `double`, `int`, `List<String>`');
+      }
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
   @override
-  Future<void> write({required String key, required String value}) async {
+  Future<void> write<T>({required String key, required T value}) async {
     try {
-      await _sharedPreferences.setString(key, value);
+      switch (value.runtimeType) {
+        case String:
+          await _sharedPreferences.setString(key, value as String);
+          break;
+        case bool:
+          await _sharedPreferences.setBool(key, value as bool);
+          break;
+        case double:
+          await _sharedPreferences.setDouble(key, value as double);
+          break;
+        case int:
+          await _sharedPreferences.setInt(key, value as int);
+          break;
+        case List<String>:
+          await _sharedPreferences.setStringList(key, value as List<String>);
+          break;
+        default:
+          throw const StorageException('Type is not subtype of `String`, `bool`, `double`, `int`, `List<String>`');
+      }
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }

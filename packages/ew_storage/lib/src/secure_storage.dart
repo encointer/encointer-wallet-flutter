@@ -34,9 +34,13 @@ class SecureStorage implements EwStorage {
   }
 
   @override
-  Future<void> write({required String key, required String value}) async {
+  Future<void> write<T>({required String key, required T value}) async {
     try {
-      await _secureStorage.write(key: key, value: value);
+      if (value is String) {
+        await _secureStorage.write(key: key, value: value);
+      } else {
+        throw StorageException('${value.runtimeType} is not subtype of String');
+      }
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
@@ -62,5 +66,5 @@ class SecureStorage implements EwStorage {
 
   @Deprecated('This mehtod should use by preferance storage')
   @override
-  String? read({required String key}) => throw UnimplementedError();
+  T? read<T>({required String key}) => throw UnimplementedError();
 }
