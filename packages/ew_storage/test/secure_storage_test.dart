@@ -56,7 +56,9 @@ void main() {
       test('throw `StorageException` fails', () async {
         when(() => flutterSecureStorage.write(key: mockKey, value: mockValue)).thenThrow(mockException);
         expect(
-            () async => secureStorage.write<String>(key: mockKey, value: mockValue), throwsA(isA<StorageException>()));
+          () async => secureStorage.write<String>(key: mockKey, value: mockValue),
+          throwsA(isA<StorageException>()),
+        );
       });
     });
 
