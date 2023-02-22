@@ -20,7 +20,7 @@ class PreferencesStorage implements EwStorage {
 
   final SharedPreferences _sharedPreferences;
 
-  static Future<PreferencesStorage> getInstance(SharedPreferences? pref) async {
+  static Future<PreferencesStorage> getInstance([SharedPreferences? pref]) async {
     return PreferencesStorage._(pref ?? await SharedPreferences.getInstance());
   }
 
