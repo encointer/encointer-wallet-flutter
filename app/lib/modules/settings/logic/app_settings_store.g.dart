@@ -30,18 +30,18 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$authenticationEnabledAtom = Atom(name: '_AppSettingsBase.authenticationEnabled', context: context);
+  late final _$enableBiometricAuthAtom = Atom(name: '_AppSettingsBase.enableBiometricAuth', context: context);
 
   @override
-  bool get authenticationEnabled {
-    _$authenticationEnabledAtom.reportRead();
-    return super.authenticationEnabled;
+  bool get enableBiometricAuth {
+    _$enableBiometricAuthAtom.reportRead();
+    return super.enableBiometricAuth;
   }
 
   @override
-  set authenticationEnabled(bool value) {
-    _$authenticationEnabledAtom.reportWrite(value, super.authenticationEnabled, () {
-      super.authenticationEnabled = value;
+  set enableBiometricAuth(bool value) {
+    _$enableBiometricAuthAtom.reportWrite(value, super.enableBiometricAuth, () {
+      super.enableBiometricAuth = value;
     });
   }
 
@@ -85,7 +85,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   String toString() {
     return '''
-authenticationEnabled: ${authenticationEnabled},
+enableBiometricAuth: ${enableBiometricAuth},
 locale: ${locale}
     ''';
   }

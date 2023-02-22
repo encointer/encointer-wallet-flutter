@@ -19,7 +19,7 @@ abstract class _AppSettingsBase with Store {
   Locale _locale = const Locale('en');
 
   @observable
-  bool authenticationEnabled = true;
+  bool enableBiometricAuth = true;
 
   final locales = const <Locale>[
     Locale('en', ''),
@@ -37,8 +37,8 @@ abstract class _AppSettingsBase with Store {
   @action
   bool getAuthenticationEnabled() {
     final value = _service.getAuthenticationEnabled();
-    if (value != null) authenticationEnabled = value;
-    return authenticationEnabled;
+    if (value != null) enableBiometricAuth = value;
+    return enableBiometricAuth;
   }
 
   @action
@@ -48,7 +48,7 @@ abstract class _AppSettingsBase with Store {
 
   @action
   Future<void> toggleAuthentication(bool value) async {
-    authenticationEnabled = value;
+    enableBiometricAuth = value;
     await _service.toggleAuthentication(value);
   }
 
