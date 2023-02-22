@@ -13,6 +13,8 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/store/app.dart';
 
+const _tag = 'web_api';
+
 /// Global api instance
 ///
 /// `late final` because it will be initialized exactly once in lib/app.dart.
@@ -37,6 +39,7 @@ class Api {
     SubstrateDartApi dartApi,
     String jsServiceEncointer,
   ) {
+    Log.d('Api.create', _tag);
     return Api(
       store,
       js,
@@ -64,18 +67,18 @@ class Api {
   SubScanApi subScanApi = SubScanApi();
 
   Future<void> init() async {
+    Log.d('init', _tag);
     await dartApi.connect(store.settings.endpoint.value!);
 
     // need to do this from here as we can't access instance fields in constructor.
     account.setFetchAccountData(fetchAccountData);
 
     // launch the webView and connect to the endpoint
-    Log.d('launch the webView', 'Api');
-
     await launchWebview();
   }
 
   Future<void> close() async {
+    Log.d('close', _tag);
     await stopSubscriptions();
     await closeWebView();
     await encointer.close();
@@ -84,20 +87,23 @@ class Api {
   Future<void> launchWebview({
     bool customNode = false,
   }) async {
-    final connectFunc = customNode ? connectNode : connectNodeAll;
+    Log.d('launchWebview: customNode = $customNode', _tag);
 
-    Future<void> postInitCallback() async {
-      // load keyPairs from local data
-      await account.initAccounts();
+    return js.launchWebView(_jsServiceEncointer, () => _postInitCallback(customNode: customNode));
+  }
 
-      if (store.account.currentAddress.isNotEmpty) {
-        await store.encointer.initializeUninitializedStores(store.account.currentAddress);
-      }
+  Future<void> _postInitCallback({
+    bool customNode = false,
+  }) async {
+    Log.d('_postInitCallback: customNode = $customNode', _tag);
+    // load keyPairs from local data
+    await account.initAccounts();
 
-      return connectFunc();
+    if (store.account.currentAddress.isNotEmpty) {
+      await store.encointer.initializeUninitializedStores(store.account.currentAddress);
     }
-
-    return js.launchWebView(_jsServiceEncointer, postInitCallback);
+    final connectFunc = customNode ? connectNode : connectNodeAll;
+    return connectFunc();
   }
 
   /// Evaluate javascript [code] in the webView.
@@ -166,6 +172,7 @@ class Api {
   }
 
   void fetchAccountData() {
+    Log.d('fetchAccountData', _tag);
     assets.fetchBalance();
     encointer.getCommunityData();
   }
@@ -191,6 +198,7 @@ class Api {
   }
 
   Future<void> stopSubscriptions() async {
+    Log.d('stopSubscriptions', _tag);
     await encointer.stopSubscriptions();
     await chain.stopSubscriptions();
     await assets.stopSubscriptions();
@@ -201,10 +209,12 @@ class Api {
     String channel,
     Function callback,
   ) async {
+    Log.d('subscribeMessage', _tag);
     js.subscribeMessage(code, channel, callback);
   }
 
   Future<void> unsubscribeMessage(String channel) async {
+    Log.d('unsubscribeMessage', _tag);
     js.unsubscribeMessage(channel);
   }
 
@@ -216,6 +226,7 @@ class Api {
   }
 
   Future<void> closeWebView() async {
+    Log.d('closeWebView', _tag);
     await stopSubscriptions();
     return js.closeWebView();
   }

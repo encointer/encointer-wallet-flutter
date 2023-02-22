@@ -3,15 +3,20 @@
 import 'dart:ui';
 
 import 'package:encointer_wallet/modules/settings/settings.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:mobx/mobx.dart';
 
 part 'app_settings_store.g.dart';
 
+const _tag = 'app_settins_store';
+
 class AppSettings = _AppSettingsBase with _$AppSettings;
 
 abstract class _AppSettingsBase with Store {
-  _AppSettingsBase() : _service = sl();
+  _AppSettingsBase() : _service = sl() {
+    _init();
+  }
 
   final LangService _service;
 
@@ -34,7 +39,14 @@ abstract class _AppSettingsBase with Store {
   Locale get locale => _locale;
 
   @action
+  Future<void> _init() async {
+    Log.d('_init', _tag);
+    _locale = await _service.init();
+  }
+
+  @action
   Future<void> setLocale(int index) async {
+    Log.d('setLocale(): index = $index', _tag);
     _locale = await _service.setLocale(index, locales);
   }
 

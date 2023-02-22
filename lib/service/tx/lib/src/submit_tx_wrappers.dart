@@ -1,19 +1,18 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
-import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:flutter/cupertino.dart';
 
 /// Helpers to submit transactions.
 
@@ -35,10 +34,10 @@ Future<void> submitTx(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
-          context,
-          store.account.currentAccount,
-          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (String password) => store.settings.setPin(password),
+          context: context,
+          account: store.account.currentAccount,
+          title: Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          onOk: (String password) => store.settings.setPin(password),
         );
       },
     );
@@ -113,10 +112,10 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
-          context,
-          store.account.currentAccount,
-          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (String password) => store.settings.setPin(password),
+          context: context,
+          account: store.account.currentAccount,
+          title: Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          onOk: (String password) => store.settings.setPin(password),
         );
       },
     );

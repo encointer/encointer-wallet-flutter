@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'community_account_store.g.dart';
+
+const _tag = 'community_account_store';
 
 /// Stores data specific to an account **and** an encointer community.
 ///
@@ -178,11 +179,14 @@ abstract class _CommunityAccountStore with Store {
   }
 
   void initStore(Function? cacheFn) {
+    Log.d('initStore', _tag);
     _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {
+    Log.d('writeToCache', _tag);
     if (_cacheFn != null) {
+      Log.d('writeToCache: called()', _tag);
       return _cacheFn!();
     } else {
       return Future.value();

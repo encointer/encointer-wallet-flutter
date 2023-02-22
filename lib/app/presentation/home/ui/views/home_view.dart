@@ -1,19 +1,21 @@
+import 'package:encointer_wallet/app/presentation/assets/ui/views/assets_view.dart';
+import 'package:encointer_wallet/app/presentation/home/store/home_view_store.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/extras/config/build_options.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
-import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/deep_link/deep_link.dart';
-import 'package:encointer_wallet/service/meetup/meetup.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/encointer_state_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/timezone.dart' as tz;
+
+const _tag = 'home_view';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -24,47 +26,95 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView> with EncointerStateMixin {
   final PageController _pageController = PageController();
+
+  late final HomeViewStore _store;
 
   late List<TabData> _tabList;
   int _tabIndex = 0;
 
   @override
   void initState() {
+    _store = HomeViewStore();
     if (buildConfig != BuildConfig.integrationTest) NotificationPlugin.init(context);
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await initialDeepLinks(context);
-      await NotificationHandler.fetchMessagesAndScheduleNotifications(
-        tz.local,
-        NotificationPlugin.scheduleNotification,
-        Localizations.localeOf(context).languageCode,
-      );
-
-      // Should never be null, we either come from the splash screen, and hence we had
-      // enough time to connect to the blockchain or we already have a populated store.
-      //
-      // Hence, can only be null if someone uses the app for the first time and is offline.
-      final encointer = context.read<AppStore>().encointer;
-      if (encointer.nextRegisteringPhaseStart != null &&
-          encointer.currentCeremonyIndex != null &&
-          encointer.ceremonyCycleDuration != null) {
-        await CeremonyNotifications.scheduleRegisteringStartsReminders(
-          encointer.nextRegisteringPhaseStart!,
-          encointer.currentCeremonyIndex!,
-          encointer.ceremonyCycleDuration!,
-          I18n.of(context)!.translationsForLocale().encointer,
-        );
-
-        await CeremonyNotifications.scheduleLastDayOfRegisteringReminders(
-          encointer.assigningPhaseStart!,
-          encointer.currentCeremonyIndex!,
-          encointer.ceremonyCycleDuration!,
-          I18n.of(context)!.translationsForLocale().encointer,
-        );
-      }
+      await _store.init(context);
     });
     super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _getTabLists(context);
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: _pageController,
+        children: [
+          const AssetsView(),
+          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) ...[
+            const BazaarMain(),
+          ],
+          ScanPage(),
+          const ContactsPage(),
+          const Profile(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _tabIndex,
+        iconSize: 22,
+        onTap: (index) async {
+          if (_tabList[index].key == TabKey.scan) {
+            // Push `ScanPage.Route`instead of changing the Page.
+            Navigator.of(context).pushNamed(
+              ScanPage.route,
+              arguments: ScanPageParams(scannerContext: QrScannerContext.mainPage),
+            );
+          } else {
+            setState(() {
+              _tabIndex = index;
+              _pageController.jumpToPage(index);
+            });
+          }
+        },
+        type: BottomNavigationBarType.fixed,
+        items: _navBarItems(_tabIndex),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+      ),
+    );
+  }
+
+  void _getTabLists(BuildContext context) {
+    _tabList = <TabData>[
+      TabData(
+        TabKey.wallet,
+        Iconsax.home_2,
+      ),
+      if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) ...[
+        TabData(
+          TabKey.bazaar,
+          Iconsax.shop,
+        ),
+      ],
+      // dart collection if
+      TabData(
+        TabKey.scan,
+        Iconsax.scan_barcode,
+      ),
+      TabData(
+        TabKey.contacts,
+        Iconsax.profile_2user,
+      ),
+      TabData(
+        TabKey.profile,
+        Iconsax.profile_circle,
+      ),
+    ];
   }
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
@@ -104,69 +154,9 @@ class _HomeViewState extends State<HomeView> {
         .toList();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final store = context.watch<AppStore>();
-    _tabList = <TabData>[
-      TabData(
-        TabKey.wallet,
-        Iconsax.home_2,
-      ),
-      if (context.select<AppStore, bool>((store) => store.settings.enableBazaar))
-        TabData(
-          TabKey.bazaar,
-          Iconsax.shop,
-        ), // dart collection if
-      TabData(
-        TabKey.scan,
-        Iconsax.scan_barcode,
-      ),
-      TabData(
-        TabKey.contacts,
-        Iconsax.profile_2user,
-      ),
-      TabData(
-        TabKey.profile,
-        Iconsax.profile_circle,
-      ),
-    ];
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _pageController,
-        children: [
-          Assets(store),
-          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
-          ScanPage(),
-          const ContactsPage(),
-          const Profile(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _tabIndex,
-        iconSize: 22,
-        onTap: (index) async {
-          if (_tabList[index].key == TabKey.scan) {
-            // Push `ScanPage.Route`instead of changing the Page.
-            Navigator.of(context).pushNamed(
-              ScanPage.route,
-              arguments: ScanPageParams(scannerContext: QrScannerContext.mainPage),
-            );
-          } else {
-            setState(() {
-              _tabIndex = index;
-              _pageController.jumpToPage(index);
-            });
-          }
-        },
-        type: BottomNavigationBarType.fixed,
-        items: _navBarItems(_tabIndex),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-      ),
-    );
+  Future<void> initDeepLinks() async {
+    Log.d('initDeepLinks', _tag);
+    await initialDeepLinks(context);
   }
 }
 

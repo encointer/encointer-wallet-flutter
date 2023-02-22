@@ -1,17 +1,18 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'community_store.g.dart';
+
+const _tag = 'community_store';
 
 /// Stores data specific to an encointer community.
 ///
@@ -175,6 +176,7 @@ abstract class _CommunityStore with Store {
   }
 
   void initStore(Function? cacheFn, double? Function(BalanceEntry)? applyDemurrage) {
+    Log.d('initStore', _tag);
     _cacheFn = cacheFn as Future<void> Function()?;
     _applyDemurrage = applyDemurrage;
 
@@ -182,7 +184,9 @@ abstract class _CommunityStore with Store {
   }
 
   Future<void> writeToCache() {
+    Log.d('writeToCache', _tag);
     if (_cacheFn != null) {
+      Log.d('writeToCache: called()', _tag);
       return _cacheFn!();
     } else {
       return Future.value();

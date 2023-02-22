@@ -51,23 +51,23 @@ class EncointerApi {
 
   Future<void> startSubscriptions() async {
     Log.d('api: starting encointer subscriptions', 'EncointerApi');
-    getPhaseDurations();
-    subscribeCurrentPhase();
-    subscribeCommunityIdentifiers();
+    await getPhaseDurations();
+    await subscribeCurrentPhase();
+    await subscribeCommunityIdentifiers();
     if (store.settings.endpointIsNoTee) {
-      subscribeBusinessRegistry();
+      await subscribeBusinessRegistry();
     }
   }
 
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping encointer subscriptions', 'EncointerApi');
-    jsApi
-      ..unsubscribeMessage(_currentPhaseSubscribeChannel)
-      ..unsubscribeMessage(_communityIdentifiersChannel)
-      ..unsubscribeMessage(_businessRegistryChannel);
+
+    await jsApi.unsubscribeMessage(_currentPhaseSubscribeChannel);
+    await jsApi.unsubscribeMessage(_communityIdentifiersChannel);
+    await jsApi.unsubscribeMessage(_businessRegistryChannel);
 
     if (store.settings.endpointIsNoTee) {
-      jsApi.unsubscribeMessage(_businessRegistryChannel);
+      await jsApi.unsubscribeMessage(_businessRegistryChannel);
     }
   }
 
@@ -161,7 +161,7 @@ class EncointerApi {
     Log.d('api: getCurrentCeremonyIndex', 'EncointerApi');
     final cIndex = await jsApi.evalJavascript<String>('encointer.getCurrentCeremonyIndex()').then(int.parse);
     Log.d('api: Current Ceremony index: $cIndex', 'EncointerApi');
-    store.encointer.setCurrentCeremonyIndex(cIndex);
+    await store.encointer.setCurrentCeremonyIndex(cIndex);
     return cIndex;
   }
 
@@ -243,7 +243,7 @@ class EncointerApi {
 
     final mLocation = locationIndex != null && store.encointer.community?.meetupLocations != null
         ? store.encointer.community?.meetupLocations![locationIndex]
-        : (store.encointer.community?.meetupLocations?.first);
+        : store.encointer.community?.meetupLocations?.first;
 
     if (mLocation == null) {
       Log.d("No meetup locations found, can't get meetup time.", 'EncointerApi');

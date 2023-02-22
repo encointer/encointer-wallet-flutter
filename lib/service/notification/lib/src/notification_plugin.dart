@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -6,8 +8,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+const _tag = 'notification_plugin';
 
 typedef ScheduleNotification = Future<void> Function(int id, String title, String body, tz.TZDateTime scheduledDate);
 
@@ -17,6 +18,7 @@ final selectNotificationSubject = BehaviorSubject<String?>();
 
 class NotificationPlugin {
   static Future<void> setup() async {
+    Log.d('setup()', _tag);
     await _configureLocalTimeZone();
 
     const initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
@@ -169,6 +171,7 @@ class ReceivedNotification {
 }
 
 Future<void> _configureLocalTimeZone() async {
+  Log.d('_configureLocalTimeZone()', _tag);
   tz.initializeTimeZones();
   final timeZoneName = await FlutterTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(timeZoneName));

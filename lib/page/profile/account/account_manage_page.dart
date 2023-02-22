@@ -107,43 +107,46 @@ class _AccountManagePageState extends State<AccountManagePage> {
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin),
-            (String password) async {
-          Log.d('password is: $password', 'AccountManagePage');
-          setState(() {
-            _appStore.settings.setPin(password);
-          });
+        return showPasswordInputDialog(
+            context: context,
+            account: accountToBeEdited,
+            title: Text(dic.profile.confirmPin),
+            onOk: (String password) async {
+              Log.d('password is: $password', 'AccountManagePage');
+              setState(() {
+                _appStore.settings.setPin(password);
+              });
 
-          final isMnemonic =
-              await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
+              final isMnemonic =
+                  await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
-          if (isMnemonic) {
-            final seed =
-                await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
+              if (isMnemonic) {
+                final seed = await _appStore.account
+                    .decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
-            Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-              'key': seed,
-              'type': AccountStore.seedTypeMnemonic,
-            });
-          } else {
-            // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
-            showCupertinoDialog<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return CupertinoAlertDialog(
-                  title: Text(dic.profile.noMnemonicFound),
-                  content: Text(dic.profile.importedWithRawSeedHenceNoMnemonic),
-                  actions: <Widget>[
-                    CupertinoButton(
-                      child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ],
+                Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+                  'key': seed,
+                  'type': AccountStore.seedTypeMnemonic,
+                });
+              } else {
+                // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
+                showCupertinoDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CupertinoAlertDialog(
+                      title: Text(dic.profile.noMnemonicFound),
+                      content: Text(dic.profile.importedWithRawSeedHenceNoMnemonic),
+                      actions: <Widget>[
+                        CupertinoButton(
+                          child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ],
+                    );
+                  },
                 );
-              },
-            );
-          }
-        });
+              }
+            });
       },
     );
   }

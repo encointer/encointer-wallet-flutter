@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
 import 'package:encointer_wallet/service_locator/service_locator.dart' as service_locator;
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setEnvironment(Environment.test);
   service_locator.init(isTest: true);
 
   group('SettingsStore test', () {
@@ -37,7 +39,7 @@ void main() async {
     });
 
     test('network endpoint test', () async {
-      await store.init('_en');
+      await store.init();
       expect(store.endpoint.info, networkEndpointEncointerMainnet.info);
       expect(store.endpointList.length, 1);
     });

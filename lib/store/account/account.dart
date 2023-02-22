@@ -82,7 +82,7 @@ abstract class _AccountStore with Store {
   }
 
   AccountData getAccountData(String? requestedPubKey) {
-    Log.d('$_tag, getAccountData');
+    Log.d('getAccountData', _tag);
     final i = accountListAll.indexWhere((i) => i.pubKey == requestedPubKey);
     if (i < 0) {
       if (accountListAll.isNotEmpty) {
@@ -259,7 +259,7 @@ abstract class _AccountStore with Store {
     final index = accountList.indexWhere((i) => i.pubKey == pubKey);
     if (index > -1) {
       await rootStore.localStorage.removeAccount(pubKey);
-      Log.d('removed acc: $pubKey', 'AccountStore');
+      Log.d('removed acc: $pubKey', _tag);
     }
     await rootStore.localStorage.addAccount(formattedAcc);
 
@@ -272,7 +272,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> removeAccount(AccountData acc) async {
-    Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
+    Log.d('removeAccount: removing ${acc.pubKey}', _tag);
     await rootStore.localStorage.removeAccount(acc.pubKey);
     // remove encrypted seed after removing account
     deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
@@ -297,9 +297,9 @@ abstract class _AccountStore with Store {
   /// Tackle this in #574.
   @action
   Future<void> loadAccount() async {
-    Log.d('$_tag, loadAccount');
+    Log.d('loadAccount', _tag);
     final accList = await rootStore.localStorage.getAccountList();
-    Log.d('$_tag, loadAccount: accList $accList');
+    Log.d('loadAccount: accList $accList', _tag);
     accountList = ObservableList.of(accList.map(AccountData.fromJson));
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();

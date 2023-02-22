@@ -1,8 +1,9 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
-
 part 'data_update.g.dart';
+
+const _tag = 'data_update_store';
 
 /// Store that fires when a certain time has expired since an update.
 ///
@@ -67,22 +68,25 @@ abstract class _DataUpdateStore with Store {
 
   @action
   void setLastUpdate(DateTime dateTime) {
+    Log.d('setLastUpdate', _tag);
     lastUpdate = dateTime;
   }
 
   @action
   void setInvalidated() {
+    Log.d('setInvalidated', _tag);
     invalidated = true;
   }
 
   void setupUpdateReaction(Future<void> Function() updateFn) {
+    Log.d('setupUpdateReaction', _tag);
     _updateFn = updateFn;
 
     _disposer?.call();
 
     _disposer = reaction((_) => now, (_) {
       if (needsRefresh) {
-        Log.d('Reaction triggered...', 'DataUpdateStore');
+        Log.d('Reaction triggered...', _tag);
         executeUpdate();
       } else {
         // Only enable for debugging purposes, otherwise it spams every second.

@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/extras/utils/extensions/context_extensions.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/utils/encointer_state_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,10 +12,10 @@ class LanguageView extends StatefulWidget {
   State<LanguageView> createState() => _LanguageViewState();
 }
 
-class _LanguageViewState extends State<LanguageView> {
+class _LanguageViewState extends State<LanguageView> with EncointerStateMixin {
   @override
   Widget build(BuildContext context) {
-    final dic = context.localization.translationsForLocale().profile;
+    final dic = localization.profile;
     final settings = context.watch<AppSettings>();
     return Scaffold(
       appBar: AppBar(title: Text(dic.settingLang)),

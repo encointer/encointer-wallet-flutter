@@ -5,10 +5,11 @@ import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/common/data/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
-
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
+
+const _tag = 'account_api';
 
 class AccountApi {
   AccountApi(this.store, this.jsApi);
@@ -37,6 +38,7 @@ class AccountApi {
   }
 
   void setFetchAccountData(void Function()? fetchAccountData) {
+    Log.d('setFetchAccountData', _tag);
     this.fetchAccountData = fetchAccountData;
   }
 

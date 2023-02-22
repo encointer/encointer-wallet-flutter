@@ -32,6 +32,14 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
+  late final _$_initAsyncAction =
+      AsyncAction('_AppSettingsBase._init', context: context);
+
+  @override
+  Future<void> _init() {
+    return _$_initAsyncAction.run(() => super._init());
+  }
+
   late final _$setLocaleAsyncAction =
       AsyncAction('_AppSettingsBase.setLocale', context: context);
 

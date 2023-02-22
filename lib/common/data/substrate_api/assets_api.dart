@@ -2,6 +2,8 @@ import 'package:encointer_wallet/common/data/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 
+const _tag = 'assets_api';
+
 class AssetsApi {
   AssetsApi(this.store, this.jsApi);
 
@@ -21,6 +23,7 @@ class AssetsApi {
   }
 
   Future<void> fetchBalance() async {
+    Log.d('fetchBalance', _tag);
     final pubKey = store.account.currentAccountPubKey;
     final currentAddress = store.account.currentAddress;
     if (pubKey != null && pubKey.isNotEmpty) {

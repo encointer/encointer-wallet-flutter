@@ -1,21 +1,24 @@
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/extras/utils/extensions/context_extensions.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/page/account/create/create_account_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_page.dart';
+import 'package:encointer_wallet/utils/encointer_state_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CreateAccountEntryPage extends StatelessWidget {
+class CreateAccountEntryPage extends StatefulWidget {
   const CreateAccountEntryPage({super.key});
 
   static const String route = '/account/entry';
 
   @override
+  State<CreateAccountEntryPage> createState() => _CreateAccountEntryPageState();
+}
+
+class _CreateAccountEntryPageState extends State<CreateAccountEntryPage> with EncointerStateMixin {
+  @override
   Widget build(BuildContext context) {
     const nctrLogo = 'assets/nctr_logo.svg';
     const mosaicBackground = 'assets/nctr_mosaic_background.svg';
-    final dic = context.localization.translationsForLocale();
 
     return Scaffold(
       body: SafeArea(
@@ -44,8 +47,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
                       key: const Key('create-account'),
-                      child: Text(I18n.of(context)!.translationsForLocale().home.create,
-                          style: Theme.of(context).textTheme.displaySmall),
+                      child: Text(localization.home.create, style: Theme.of(context).textTheme.displaySmall),
                       onPressed: () {
                         Navigator.pushNamed(context, CreateAccountPage.route);
                       },
@@ -56,7 +58,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${dic.profile.doYouAlreadyHaveAnAccount} ',
+                        '${localization.profile.doYouAlreadyHaveAnAccount} ',
                         style: TextStyle(
                           color: zurichLion.shade50,
                         ),
@@ -64,7 +66,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                       GestureDetector(
                         key: const Key('import-account'),
                         child: Text(
-                          I18n.of(context)!.translationsForLocale().profile.import,
+                          localization.profile.import,
                           style: TextStyle(
                             color: zurichLion.shade50,
                             decoration: TextDecoration.underline,

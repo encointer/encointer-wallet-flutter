@@ -1,17 +1,18 @@
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/utils/encointer_state_mixin.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-Widget showPasswordInputDialog(
-  BuildContext context,
-  AccountData account,
-  Widget? title,
-  void Function(String password) onOk,
-) {
+Widget showPasswordInputDialog({
+  required BuildContext context,
+  required AccountData account,
+  required Widget? title,
+  required void Function(String password) onOk,
+}) {
   return PasswordInputDialog(
     account: account,
     title: title,
@@ -40,9 +41,70 @@ class PasswordInputDialog extends StatefulWidget {
   State<PasswordInputDialog> createState() => _PasswordInputDialogState();
 }
 
-class _PasswordInputDialogState extends State<PasswordInputDialog> {
+class _PasswordInputDialogState extends State<PasswordInputDialog> with EncointerStateMixin {
   final TextEditingController _passCtrl = TextEditingController();
   bool _submitting = false;
+
+  @override
+  void dispose() {
+    _passCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoAlertDialog(
+      title: widget.title ?? Container(),
+      content: Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: CupertinoTextFormFieldRow(
+          key: const Key('input-password-dialog'),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+          padding: EdgeInsets.zero,
+          autofocus: true,
+          keyboardType: TextInputType.number,
+          placeholder: localization.profile.passOld,
+          controller: _passCtrl,
+          validator: (v) {
+            if (v == null || !Fmt.checkPassword(v.trim())) {
+              return localization.account.createPasswordError;
+            }
+            return null;
+          },
+          obscureText: true,
+          // clearButtonMode: OverlayVisibilityMode.editing,
+          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+        ),
+      ),
+      actions: <Widget>[
+        if (widget.onAccountSwitch != null)
+          CupertinoButton(
+            child: Text(localization.home.switchAccount),
+            onPressed: () {
+              widget.onAccountSwitch!();
+            },
+          ),
+        if (widget.onCancel != null)
+          CupertinoButton(
+            child: Text(localization.home.cancel),
+            onPressed: () {
+              widget.onCancel!();
+            },
+          ),
+        CupertinoButton(
+          key: const Key('password-ok'),
+          onPressed: _submitting ? null : () => _onOk(_passCtrl.text.trim()),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (_submitting) const CupertinoActivityIndicator(),
+              Text(localization.home.ok),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 
   Future<void> _onOk(String password) async {
     setState(() {
@@ -58,10 +120,10 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       showCupertinoDialog<void>(
         context: context,
         builder: (BuildContext context) {
-          final dic = I18n.of(context)!.translationsForLocale();
+          final localization = I18n.of(context)!.translationsForLocale();
           return CupertinoAlertDialog(
-            title: Text(dic.profile.wrongPin),
-            content: Text(dic.profile.wrongPinHint),
+            title: Text(localization.profile.wrongPin),
+            content: Text(localization.profile.wrongPinHint),
             actions: <Widget>[
               CupertinoButton(
                 key: const Key('error-dialog-ok'),
@@ -76,68 +138,5 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       widget.onOk(password);
       Navigator.of(context).pop();
     }
-  }
-
-  @override
-  void dispose() {
-    _passCtrl.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-
-    return CupertinoAlertDialog(
-      title: widget.title ?? Container(),
-      content: Padding(
-        padding: const EdgeInsets.only(top: 16),
-        child: CupertinoTextFormFieldRow(
-          key: const Key('input-password-dialog'),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
-          padding: EdgeInsets.zero,
-          autofocus: true,
-          keyboardType: TextInputType.number,
-          placeholder: dic.profile.passOld,
-          controller: _passCtrl,
-          validator: (v) {
-            if (v == null || !Fmt.checkPassword(v.trim())) {
-              return dic.account.createPasswordError;
-            }
-            return null;
-          },
-          obscureText: true,
-          // clearButtonMode: OverlayVisibilityMode.editing,
-          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-        ),
-      ),
-      actions: <Widget>[
-        if (widget.onAccountSwitch != null)
-          CupertinoButton(
-            child: Text(dic.home.switchAccount),
-            onPressed: () {
-              widget.onAccountSwitch!();
-            },
-          ),
-        if (widget.onCancel != null)
-          CupertinoButton(
-            child: Text(dic.home.cancel),
-            onPressed: () {
-              widget.onCancel!();
-            },
-          ),
-        CupertinoButton(
-          key: const Key('password-ok'),
-          onPressed: _submitting ? null : () => _onOk(_passCtrl.text.trim()),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (_submitting) const CupertinoActivityIndicator(),
-              Text(dic.home.ok),
-            ],
-          ),
-        ),
-      ],
-    );
   }
 }

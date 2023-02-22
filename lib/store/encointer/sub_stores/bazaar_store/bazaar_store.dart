@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 part 'bazaar_store.g.dart';
+
+const _tag = 'bazaar_store';
 
 /// Stores data concerning the bazaar specific to a community
 ///
@@ -41,16 +44,20 @@ abstract class _BazaarStore with Store {
 
   @action
   void setBusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
+    Log.d('setBusinessRegistry: accBusinesses = ${accBusinesses.length}', _tag);
     businessRegistry = ObservableList.of(accBusinesses);
     writeToCache();
   }
 
   void initStore(Function? cacheFn) {
+    Log.d('initStore', _tag);
     _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {
+    Log.d('writeToCache', _tag);
     if (_cacheFn != null) {
+      Log.d('writeToCache: called()', _tag);
       return _cacheFn!();
     } else {
       return Future.value();

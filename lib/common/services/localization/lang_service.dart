@@ -4,9 +4,7 @@ import 'package:encointer_wallet/common/services/preferences/local_data.dart';
 import 'package:encointer_wallet/service_locator/service_locator.dart';
 
 class LangService {
-  LangService() : _storage = sl() {
-    _init();
-  }
+  LangService() : _storage = sl();
 
   static const enLocale = Locale('en', '');
   static const deLocale = Locale('de', '');
@@ -16,7 +14,7 @@ class LangService {
   final LocalData _storage;
 
   /// Future<Locale> because of integration test
-  Future<Locale> _init() async {
+  Future<Locale> init() async {
     final code = await _storage.getLocale();
     if (code != null) {
       return Locale(code.languageCode);

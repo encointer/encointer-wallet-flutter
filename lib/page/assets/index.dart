@@ -8,7 +8,6 @@ import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/extras/config/build_options.dart';
-import 'package:encointer_wallet/extras/utils/extensions/context_extensions.dart';
 import 'package:encointer_wallet/extras/utils/translations/translations.dart';
 import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
@@ -96,8 +95,6 @@ class _AssetsState extends State<Assets> {
 
   @override
   Widget build(BuildContext context) {
-    dic = context.localization.translationsForLocale();
-
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
     _panelHeightOpen = min(
@@ -463,10 +460,10 @@ class _AssetsState extends State<Assets> {
       builder: (_) {
         return WillPopScope(
           child: showPasswordInputDialog(
-            context,
-            widget.store.account.currentAccount,
-            Text(I18n.of(context)!.translationsForLocale().home.unlock),
-            (String password) {
+            context: context,
+            account: widget.store.account.currentAccount,
+            title: Text(I18n.of(context)!.translationsForLocale().home.unlock),
+            onOk: (String password) {
               setState(() {
                 widget.store.settings.setPin(password);
               });

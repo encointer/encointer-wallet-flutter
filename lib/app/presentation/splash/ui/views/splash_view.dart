@@ -1,10 +1,14 @@
+import 'package:encointer_wallet/app/presentation/home/ui/views/home_view.dart';
 import 'package:encointer_wallet/app/presentation/splash/store/splash_view_store.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
+import 'package:encointer_wallet/design_kit/colors/app_colors_config.dart';
+import 'package:encointer_wallet/design_kit/images/app_assets_svg.dart';
 import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+
+const _tag = 'splash_view';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -16,16 +20,14 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  final String mosaicBackground = 'assets/nctr_mosaic_background.svg';
-  final String nctrLogo = 'assets/nctr_logo.svg';
-
   Future<void> _initPage() async {
+    Log.d('_initPage', _tag);
     final store = context.watch<SplashViewStore>();
-    await store.init(context, sysLocaleCode: Localizations.localeOf(context).toString());
+    await store.init(context);
 
     if (store.appStore.account.accountListAll.isNotEmpty) {
       await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
+          context, CupertinoPageRoute<void>(builder: (context) => const HomeView()), (route) => false);
     } else {
       await Navigator.pushAndRemoveUntil(
           context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()), (route) => false);
@@ -41,15 +43,13 @@ class _SplashViewState extends State<SplashView> {
         builder: (context, s) {
           return Stack(
             children: [
-              SvgPicture.asset(
-                mosaicBackground,
+              AppAssetsSvg.nctrMosaicBackground(
                 fit: BoxFit.fill,
                 width: MediaQuery.of(context).size.width,
               ),
               Center(
-                child: SvgPicture.asset(
-                  nctrLogo,
-                  color: Colors.white,
+                child: AppAssetsSvg.nctrLogo(
+                  color: appColors.white,
                   width: 210,
                   height: 210,
                 ),

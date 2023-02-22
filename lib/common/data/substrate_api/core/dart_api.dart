@@ -1,8 +1,9 @@
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+const _tag = 'substrate_dart_api';
 
 /// Api to talk to an substrate node via the websocket protocol.
 ///
@@ -26,6 +27,7 @@ class SubstrateDartApi {
   String? get endpoint => _endpoint;
 
   Future<void> connect(String endpoint) async {
+    Log.d('connect', _tag);
     _connectAndListen(endpoint);
 
     try {
@@ -58,6 +60,7 @@ class SubstrateDartApi {
   /// Hints:
   /// * account ids must be passed as SS58.
   Future<T> rpc<T>(String method, [dynamic params]) async {
+    Log.d('rpc', _tag);
     if (_client == null) {
       throw Exception("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
     }
@@ -72,11 +75,13 @@ class SubstrateDartApi {
 
   /// Reconnect to the same endpoint if the connection was closed.
   Future<void> reconnect() async {
+    Log.d('reconnect', _tag);
     if (endpoint != null) await _connectAndListen(endpoint!);
   }
 
   /// Connects to and endpoint and starts listening on the input stream.
   Future<void> _connectAndListen(String endpoint) {
+    Log.d('_connectAndListen', _tag);
     _endpoint = endpoint;
     final socket = WebSocketChannel.connect(Uri.parse(endpoint));
     _client = Client(socket.cast<String>());

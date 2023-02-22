@@ -39,7 +39,6 @@ Future<void> main({Environment? environment}) async {
           create: (context) => AppSettings(),
         ),
         Provider<AppStore>(
-          // On test mode instead of LocalStorage() must be use MockLocalStorage()
           create: (context) => AppStore(),
         ),
         Provider<SplashViewStore>(

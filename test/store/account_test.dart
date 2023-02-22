@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/extras/config/build_options.dart';
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/service_locator/service_locator.dart' as service_locator;
 import 'package:encointer_wallet/store/app.dart';
@@ -5,6 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  setEnvironment(Environment.test);
 
   service_locator.init(isTest: true);
 
@@ -15,7 +18,7 @@ void main() async {
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'] as String;
 
-      await root.init('_en');
+      await root.init();
       final store = root.account;
 
       /// accounts load

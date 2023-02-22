@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:upgrader/upgrader.dart';
+
+const _tag = 'build_options';
 
 /// Whether we are in the process of running tests
 bool get flutterTestRunning => Platform.environment.containsKey('FLUTTER_TEST');
@@ -23,6 +26,7 @@ void setEnvironment(
   Environment build, {
   AppcastConfiguration? appCast,
 }) {
+  Log.d('setEnvironment = $build', _tag);
   switch (build) {
     case Environment.debug:
       buildConfig = BuildConfig.debug;
@@ -66,6 +70,9 @@ class BuildConfig {
     this.mockSubstrateApi = false,
     this.isTestMode = false,
     this.appCast,
+    this.integrationTestConfig = const IntegrationTestConfig(
+      testingRealApp: true,
+    ),
     required this.endpoint,
   });
 
@@ -84,26 +91,37 @@ class BuildConfig {
   /// If [isIntegrationTest] value is `true`, test will close upgrader alert and won't ask notifications permission.
   bool get isIntegrationTest => appCast != null;
 
+  final IntegrationTestConfig integrationTestConfig;
+
   static BuildConfig dev = BuildConfig(
-    isTestMode: true,
     endpoint: networkEndpointEncointerGesellDev,
   );
 
-  static BuildConfig debug = BuildConfig(endpoint: networkEndpointEncointerMainnet);
+  static BuildConfig debug = BuildConfig(
+    endpoint: networkEndpointEncointerMainnet,
+  );
 
-  static BuildConfig beta = BuildConfig(endpoint: networkEndpointEncointerMainnet);
+  static BuildConfig beta = BuildConfig(
+    endpoint: networkEndpointEncointerMainnet,
+  );
 
-  static BuildConfig apk = BuildConfig(endpoint: networkEndpointEncointerMainnet);
+  static BuildConfig apk = BuildConfig(
+    endpoint: networkEndpointEncointerMainnet,
+  );
 
-  static BuildConfig prod = BuildConfig(endpoint: networkEndpointEncointerMainnet);
+  static BuildConfig prod = BuildConfig(
+    endpoint: networkEndpointEncointerMainnet,
+  );
 
   static BuildConfig unitTest = BuildConfig(
     isTestMode: true,
     mockSubstrateApi: true,
-    endpoint: EndpointData(),
+    endpoint: networkEndpointEncointerMainnet,
   );
 
   static BuildConfig integrationTest = BuildConfig(
+    isTestMode: true,
+    mockSubstrateApi: true,
     appCast: getAppCast(),
     endpoint: EndpointData(),
   );
@@ -112,4 +130,11 @@ class BuildConfig {
 AppcastConfiguration getAppCast() {
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
   return AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
+}
+
+class IntegrationTestConfig {
+  const IntegrationTestConfig({
+    required this.testingRealApp,
+  });
+  final bool testingRealApp;
 }

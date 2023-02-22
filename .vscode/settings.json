@@ -3,4 +3,6 @@
     "dart.lineLength": 120,
     "git.ignoreLimitWarning": true,
     "explorer.autoReveal": true,
+    "dart.debugExternalLibraries": true,
+    "dart.debugSdkLibraries": true,
 }

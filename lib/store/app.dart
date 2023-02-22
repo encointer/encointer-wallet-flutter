@@ -90,12 +90,12 @@ abstract class _AppStore with Store {
   bool get appIsReady => storeIsReady && webApiIsReady;
 
   @action
-  Future<void> init(String sysLocaleCode) async {
-    Log.d(_tag, '_init');
+  Future<void> init() async {
+    Log.d('_init', _tag);
 
     // wait settings store loaded
     _settings = SettingsStore(this as AppStore);
-    await settings.init(sysLocaleCode);
+    await settings.init();
 
     _dataUpdate = DataUpdateStore(refreshPeriod: const Duration(minutes: 2));
 
@@ -117,16 +117,18 @@ abstract class _AppStore with Store {
 
   @action
   void setApiReady(bool value) {
-    Log.d('Setting Api Ready: $value', '_AppStore');
+    Log.d('Setting Api Ready: $value', _tag);
     webApiIsReady = value;
-    Log.d('Is App Ready?: $appIsReady', '_AppStore');
+    Log.d('Is App Ready?: $appIsReady', _tag);
   }
 
   Future<void> cacheObject(String key, Object value) {
+    Log.d(' cacheObject: key = $key, value = $value', _tag);
     return localStorage.setObject(getCacheKey(key), value);
   }
 
   Future<Object?> loadObject(String key) {
+    Log.d(' loadObject: key = $key', _tag);
     return localStorage.getObject(getCacheKey(key));
   }
 
@@ -135,6 +137,7 @@ abstract class _AppStore with Store {
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
+    Log.d(' getCacheKey: key = $key', _tag);
     final cacheKey = '${settings.endpoint.info}_$key';
     return buildConfig == BuildConfig.unitTest ? 'test-$cacheKey' : cacheKey;
   }
@@ -144,15 +147,18 @@ abstract class _AppStore with Store {
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
+    Log.d(' encointerCacheKey: networkInfo = $networkInfo', _tag);
     final key = '$encointerCachePrefix-$networkInfo';
     return buildConfig == BuildConfig.unitTest ? 'test-$key' : key;
   }
 
   Future<bool> purgeEncointerCache(String networkInfo) async {
+    Log.d(' purgeEncointerCache: networkInfo = $networkInfo', _tag);
     return localStorage.removeKey(encointerCacheKey(networkInfo));
   }
 
   Future<void> loadOrInitEncointerCache(String networkInfo) async {
+    Log.d(' loadOrInitEncointerCache: networkInfo = $networkInfo', _tag);
     final cacheVersionFinalKey = getCacheKey(encointerCacheVersionPrefix);
     final cacheVersion = await localStorage.getKV(cacheVersionFinalKey);
 
@@ -164,34 +170,35 @@ abstract class _AppStore with Store {
       try {
         maybeStore = await loadEncointerCache(encointerFinalCacheKey);
       } catch (e, s) {
-        Log.e('Exception loading the cached store: $e', '_AppStore', s);
+        Log.e('Exception loading the cached store: $e', _tag, s);
       }
     }
 
     if (maybeStore != null) {
       _encointer = maybeStore;
     } else {
-      Log.d('Initializing new encointer store.', '_AppStore');
+      Log.d('Initializing new encointer store.', _tag);
       _encointer = EncointerStore(networkInfo);
       encointer.initStore(
         this as AppStore,
         () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
       );
 
-      Log.d('Persisting cacheVersion: $encointerCacheVersion', '_AppStore');
+      Log.d('Persisting cacheVersion: $encointerCacheVersion', _tag);
       await localStorage.setKV(cacheVersionFinalKey, encointerCacheVersion);
 
-      Log.d('Writing the new store to cache', '_AppStore');
+      Log.d('Writing the new store to cache', _tag);
 
       return encointer.writeToCache();
     }
   }
 
   Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) async {
+    Log.d(' loadEncointerCache: encointerFinalCacheKey = $encointerFinalCacheKey', _tag);
     final cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
 
     if (cachedEncointerStore != null) {
-      Log.d('Found cached encointer store $cachedEncointerStore', '_AppStore');
+      Log.d(' Found cached encointer store $cachedEncointerStore', _tag);
 
       // Cache the entire encointer store at once: Check if this is too expensive,
       // when many accounts/cids exist in store. But as the caching future is in general not awaited,
@@ -212,16 +219,17 @@ abstract class _AppStore with Store {
   }
 
   Future<List<void>> addAccount(Map<String, dynamic> acc, String password, String? address) {
+    Log.d('addAccount: acc = $acc, password = $password, address = $address', _tag);
     return Future.wait([
       account.addAccount(acc, password),
     ]);
   }
 
   Future<void> setCurrentAccount(String? pubKey) async {
-    Log.d('setCurrentAccount: setting current account: $pubKey', '_AppStore');
+    Log.d('setCurrentAccount: setting current account: $pubKey', _tag);
 
     if (account.currentAccountPubKey == pubKey) {
-      Log.d('setCurrentAccount: currentAccount is already new account. returning', '_AppStore');
+      Log.d('setCurrentAccount: currentAccount is already new account. returning', _tag);
 
       return Future.value();
     }
@@ -234,7 +242,7 @@ abstract class _AppStore with Store {
     }
 
     final address = account.getNetworkAddress(pubKey);
-    Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
+    Log.d('setCurrentAccount: new current account address: $address', _tag);
     await encointer.initializeUninitializedStores(address);
 
     if (!settings.loading) {

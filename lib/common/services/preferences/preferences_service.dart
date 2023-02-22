@@ -39,7 +39,7 @@ class PreferencesService extends PreferencesStorage {
   static const meetUpNotificationKey = 'meet_up_notification';
 
   Future<void> init() async {
-    Log.d(_tag, 'init');
+    Log.d('init', _tag);
 
     _prefs = await SharedPreferences.getInstance();
   }

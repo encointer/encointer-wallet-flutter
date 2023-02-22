@@ -5,7 +5,6 @@ import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
 import 'package:encointer_wallet/page/account/create/create_account_page.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
@@ -53,10 +52,7 @@ class AppRoute {
         return CupertinoPageRoute(
           builder: (_) => const HomeView(),
         );
-      case EncointerHomePage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const EncointerHomePage(),
-        );
+
       case NetworkSelectPage.route:
         return CupertinoPageRoute(
           builder: (_) => const NetworkSelectPage(),
@@ -229,6 +225,7 @@ class AppRoute {
           ),
           settings: settings,
         );
+
       default:
         throw Exception(
           'no builder specified for route named: [${settings.name}]',

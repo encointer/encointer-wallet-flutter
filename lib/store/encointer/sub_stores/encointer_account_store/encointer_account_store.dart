@@ -1,17 +1,18 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'encointer_account_store.g.dart';
+
+const _tag = 'encointer_account_store';
 
 /// Stores data specific to an account across all communities.
 ///
@@ -65,7 +66,11 @@ abstract class _EncointerAccountStore with Store {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (e, s) {
-        Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
+        Log.e(
+          '$address has reputation, but none that has not been linked yet',
+          'EncointerAccountStore',
+          s,
+        );
         return 0;
       }
     } else {
@@ -75,13 +80,17 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    Log.d('balanceEntry $balanceEntry added to cid $cid added', 'EncointerAccountStore');
+    Log.d(
+      'addBalanceEntry: balanceEntry = $balanceEntry added to cid $cid added',
+      _tag,
+    );
     balanceEntries[cid.toFmtString()] = balanceEntry;
     writeToCache();
   }
 
   @action
   Future<void> setReputations(Map<int, CommunityReputation> reps) async {
+    Log.d('setReputations: reps = ${reps.length}', _tag);
     reputations = reps;
     await writeToCache();
     await getNumberOfNewbieTicketsForReputable();
@@ -89,17 +98,23 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void purgeReputations() {
+    Log.d('purgeReputations', _tag);
     reputations.clear();
     writeToCache();
   }
 
   @action
   void purgeCeremonySpecificState() {
+    Log.d('purgeCeremonySpecificState', _tag);
     purgeReputations();
   }
 
   @action
   Future<void> setTransferTxs(List list, String address, {bool reset = false, bool needCache = true}) async {
+    Log.d(
+      'setTransferTxs: list = ${list.length}, address = $address, reset = $reset, needCache = $needCache',
+      _tag,
+    );
     if (this.address != address) {
       Log.d("Tried to cached transfer tx's for wrong account. This is a bug.", 'EncointerAccountStore');
       return Future.value();
@@ -134,15 +149,19 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   Future<void> getNumberOfNewbieTicketsForReputable() async {
+    Log.d('getNumberOfNewbieTicketsForReputable', _tag);
     numberOfNewbieTicketsForReputable = await webApi.encointer.getNumberOfNewbieTicketsForReputable();
   }
 
   void initStore(Function? cacheFn) {
+    Log.d('initStore', _tag);
     _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {
+    Log.d('writeToCache', _tag);
     if (_cacheFn != null) {
+      Log.d('writeToCache: called()', _tag);
       return _cacheFn!();
     } else {
       return Future.value();

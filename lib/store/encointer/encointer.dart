@@ -171,6 +171,7 @@ abstract class _EncointerStore with Store {
   }
 
   double? applyDemurrage(BalanceEntry? entry) {
+    Log.d('applyDemurrage: entry = $entry', _tag);
     if (_rootStore.chain.latestHeaderNumber != null &&
         entry != null &&
         community != null &&
@@ -278,7 +279,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCurrentCeremonyIndex(int? index) {
+  Future<void> setCurrentCeremonyIndex(int? index) async {
     Log.d('store: set currentCeremonyIndex to $index', 'EncointerStore');
 
     if (currentCeremonyIndex != index) {
@@ -286,10 +287,10 @@ abstract class _EncointerStore with Store {
     }
 
     currentCeremonyIndex = index;
-    writeToCache();
+    await writeToCache();
 
     // update depending values without awaiting
-    updateState();
+    await updateState();
   }
 
   @action
@@ -317,6 +318,7 @@ abstract class _EncointerStore with Store {
   /// Will await a previous update future if an update has already been triggered.
   @action
   Future<void> updateState() async {
+    Log.d(' updateState', _tag);
     if (_updateStateFuture != null) {
       Log.d('[updateState] already updating state, awaiting the previously set future.', 'EncointerStore');
 
@@ -345,6 +347,7 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> updateAggregatedAccountData() async {
+    Log.d('updateAggregatedAccountData', _tag);
     try {
       if (chosenCid != null) {
         final data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
@@ -359,6 +362,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void purgeCeremonySpecificState() {
+    Log.d('purgeCeremonySpecificState', _tag);
     communityStores!.forEach((cid, store) => store.purgeCeremonySpecificState());
     accountStores!.forEach((cid, store) => store.purgeCeremonySpecificState());
   }
@@ -367,6 +371,7 @@ abstract class _EncointerStore with Store {
   ///
   /// Should always be called after creating a store to ensure full functionality.
   void initStore(AppStore root, Future<void> Function() cacheFn) {
+    Log.d('initStore', _tag);
     _rootStore = root;
     _cacheFn = cacheFn;
 
@@ -387,7 +392,9 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> writeToCache() {
+    Log.d('writeToCache', _tag);
     if (_cacheFn != null) {
+      Log.d('writeToCache: called()', _tag);
       return _cacheFn!();
     } else {
       return Future.value();
@@ -400,6 +407,7 @@ abstract class _EncointerStore with Store {
   ///
   /// Todo: Integrate used when #582 is tackled.
   Future<void> initCommunityStores(List<CommunityIdentifier> cids, String address, {bool shouldCache = true}) {
+    Log.d('initCommunityStores: cids = ${cids.length}, address = $address, shouldCache = $shouldCache', _tag);
     final futures = <Future<void>>[];
     for (final cid in cids) {
       futures.add(initCommunityStore(cid, address, shouldCache: shouldCache));
@@ -410,6 +418,7 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> initCommunityStore(CommunityIdentifier cid, String address, {bool shouldCache = true}) async {
+    Log.d('initCommunityStore: cids = $cid, address = $address, shouldCache = $shouldCache', _tag);
     final cidFmt = cid.toFmtString();
     if (!communityStores!.containsKey(cidFmt)) {
       Log.d('Adding new communityStore for cid: ${cid.toFmtString()}', 'EncointerStore');
@@ -428,6 +437,7 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> initEncointerAccountStore(String address, {bool shouldCache = true}) {
+    Log.d('initEncointerAccountStore:  address = $address, shouldCache = $shouldCache', _tag);
     if (!accountStores!.containsKey(address)) {
       Log.d('Adding new encointerAccountStore for: $address', 'EncointerStore');
 
@@ -443,6 +453,7 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> initBazaarStore(CommunityIdentifier cid, {bool shouldCache = true}) {
+    Log.d('initBazaarStore:  cid = $cid, shouldCache = $shouldCache', _tag);
     final cidFmt = cid.toFmtString();
     if (!bazaarStores!.containsKey(cidFmt)) {
       Log.d('Adding new bazaarStore for cid: ${cid.toFmtString()}', 'EncointerStore');
@@ -460,6 +471,7 @@ abstract class _EncointerStore with Store {
   ///
   /// This should be called upon changing the current account mainly, or after loading the store from cache.
   Future<void> initializeUninitializedStores(String address) {
+    Log.d('initializeUninitializedStores:  address = $address', _tag);
     final futures = [initEncointerAccountStore(address, shouldCache: false)];
 
     if (chosenCid != null) {
@@ -479,6 +491,7 @@ abstract class _EncointerStore with Store {
   ///
   /// Todo: not yet integrated, need to cache this first, and properly think through. Solve in #582.
   Future<void> loadPreviouslyTrackedCommunitiesFromCache(String network) async {
+    Log.d('loadPreviouslyTrackedCommunitiesFromCache:  network = $network', _tag);
     final maybeCids = await _rootStore.localStorage.getList(trackedCidsCacheKey(network));
     Log.d('Initializing previously tracked communities: $maybeCids', 'EncointerStore');
     if (maybeCids.isNotEmpty) {
@@ -488,6 +501,8 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> loadChosenCid(String network) async {
+    Log.d('loadChosenCid:  network = $network', _tag);
+
     final maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
     Log.d('Setting previously tracked chosenCid: $maybeChosenCid', 'EncointerStore');
     if (maybeChosenCid != null) {

@@ -1,11 +1,11 @@
+import 'package:encointer_wallet/app/presentation/home/ui/views/home_view.dart';
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_form.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -174,7 +174,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         await _importAccount();
         Navigator.pushAndRemoveUntil<void>(
           context,
-          CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()),
+          CupertinoPageRoute<void>(builder: (context) => const HomeView()),
           (route) => false,
         );
       }

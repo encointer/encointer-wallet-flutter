@@ -130,10 +130,10 @@ abstract class _SettingsStore with Store {
   }
 
   @action
-  Future<void> init(String sysLocaleCode) async {
-    Log.d('$_tag, _init');
+  Future<void> init() async {
+    Log.d('_init', _tag);
     await loadLocalCode();
-    await loadEndpoint(sysLocaleCode);
+    await loadEndpoint();
     await Future.wait([
       loadCustomSS58Format(),
       loadNetworkStateCache(),
@@ -159,7 +159,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadLocalCode() async {
-    Log.d('$_tag, loadLocalCode');
+    Log.d('loadLocalCode', _tag);
     final stored = await rootStore.localStorage.getObject(localStorageLocaleKey) as String?;
     if (stored != null) {
       localeCode = stored;
@@ -168,7 +168,7 @@ abstract class _SettingsStore with Store {
 
   @action
   void setNetworkLoading(bool isLoading) {
-    Log.d('$_tag, setNetworkLoading: isLoading: $isLoading');
+    Log.d('setNetworkLoading: isLoading: $isLoading', _tag);
     loading = isLoading;
   }
 
@@ -193,6 +193,7 @@ abstract class _SettingsStore with Store {
     Map<String, dynamic> data, {
     bool needCache = true,
   }) async {
+    Log.d('setNetworkState: data = $data, needCache = $needCache', _tag);
     networkState = NetworkState.fromJson(data);
 
     if (needCache) {
@@ -205,7 +206,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadNetworkStateCache() async {
-    Log.d('$_tag, loadNetworkStateCache');
+    Log.d('loadNetworkStateCache', _tag);
     final data = await Future.wait([
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkStateKey)),
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
@@ -228,6 +229,7 @@ abstract class _SettingsStore with Store {
     Map<String, dynamic> data, {
     bool needCache = true,
   }) async {
+    Log.d('setNetworkConst: data = $data, needCache = $needCache', _tag);
     networkConst = data;
 
     if (needCache) {
@@ -240,39 +242,44 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadContacts() async {
-    Log.d('$_tag, loadContacts');
+    Log.d('loadContacts', _tag);
     final ls = await rootStore.localStorage.getContactList();
-    contactList = ObservableList.of(ls.map(AccountData.fromJson));
+    contactList = ObservableList.of(ls.map(AccountData.fromJson).toList());
   }
 
   @action
   Future<void> addContact(Map<String, dynamic> con) async {
+    Log.d('addContact', _tag);
     await rootStore.localStorage.addContact(con);
     await loadContacts();
   }
 
   @action
   Future<void> removeContact(AccountData con) async {
+    Log.d('removeContact', _tag);
     await rootStore.localStorage.removeContact(con.address);
     loadContacts();
   }
 
   @action
   Future<void> updateContact(Map<String, dynamic> con) async {
+    Log.d('updateContact', _tag);
     await rootStore.localStorage.updateContact(con);
     loadContacts();
   }
 
   @action
   void setEndpoint(EndpointData value) {
+    Log.d('setEndpoint: value = ${value.info}', _tag);
     endpoint = value;
     rootStore.localStorage.setObject(localStorageEndpointKey, EndpointData.toJson(value));
   }
 
   @action
-  Future<void> loadEndpoint(String sysLocaleCode) async {
+  Future<void> loadEndpoint() async {
     Log.d(
-      '$_tag, loadEndpoint: sysLocaleCode = $sysLocaleCode, buildConfig = $buildConfig',
+      'loadEndpoint: buildConfig.endpoint.info = ${buildConfig.endpoint.info}',
+      _tag,
     );
     final value = await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
     if (value == null) {
@@ -280,6 +287,11 @@ abstract class _SettingsStore with Store {
     } else {
       endpoint = EndpointData.fromJson(value);
     }
+
+    Log.d(
+      'loadEndpoint: loaded value = ${buildConfig.endpoint.info}',
+      _tag,
+    );
   }
 
   @action
@@ -290,19 +302,19 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadCustomSS58Format() async {
-    Log.d('$_tag, loadCustomSS58Format');
+    Log.d('loadCustomSS58Format', _tag);
     final ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
 
     customSS58Format = ss58 ?? defaultSs58Prefix;
   }
 
   String getCacheKey(String key) {
-    Log.d('$_tag, getCacheKey');
+    Log.d('getCacheKey', _tag);
     return '${endpoint.info}_$key';
   }
 
   Future<void> reloadNetwork(EndpointData network) async {
-    Log.d('$_tag, reloadNetwork');
+    Log.d('reloadNetwork', _tag);
     setNetworkLoading(true);
     await setNetworkConst({}, needCache: false);
     setEndpoint(network);

@@ -1,9 +1,12 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/balances_info.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:mobx/mobx.dart';
 
 part 'assets.g.dart';
+
+const _tag = 'assets_store';
 
 class AssetsStore extends _AssetsStore with _$AssetsStore {
   AssetsStore(super.store);
@@ -196,6 +199,7 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> loadAccountCache() async {
+    Log.d('loadAccountCache', _tag);
     // return if currentAccount not exist
     final pubKey = rootStore.account.currentAccountPubKey;
     if (pubKey == null || pubKey.isEmpty) {
@@ -229,6 +233,7 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> loadCache() async {
+    Log.d('loadCache', _tag);
     final ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List<dynamic>?;
     if (ls != null) {
       for (final i in ls) {

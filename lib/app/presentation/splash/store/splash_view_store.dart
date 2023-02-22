@@ -14,14 +14,17 @@ import 'package:provider/provider.dart';
 
 part 'splash_view_store.g.dart';
 
+const _tag = 'splash_view_store';
+
 class SplashViewStore extends _SplashViewStore with _$SplashViewStore {}
 
 abstract class _SplashViewStore with Store {
   late final AppStore _appStore;
 
-  Future<void> init(BuildContext context, {required String sysLocaleCode}) async {
+  Future<void> init(BuildContext context) async {
+    Log.d('init', _tag);
     _appStore = context.watch<AppStore>();
-    await _appStore.init(sysLocaleCode);
+    await _appStore.init();
 
     await _initWebApi(context);
 
@@ -37,11 +40,18 @@ abstract class _SplashViewStore with Store {
   /// Currently, `store.init()` must be called before it is passed into the api
   /// due to some cyclic dependencies between webApi <> AppStore.
   Future<void> _initWebApi(BuildContext context) async {
-    final js = await JsServices.loadMainJs(context);
+    Log.d('_initWebApi', _tag);
+    final jsServiceEncointer = await JsServices.loadMainJs(context);
 
-    webApi = buildConfig == BuildConfig.unitTest
-        ? MockApi(_appStore, MockJSApi(), MockSubstrateDartApi(), js, withUi: true)
-        : Api.create(_appStore, JSApi(), SubstrateDartApi(), js);
+    webApi = buildConfig == BuildConfig.unitTest || !buildConfig.integrationTestConfig.testingRealApp
+        ? MockApi(
+            _appStore,
+            MockJSApi(),
+            MockSubstrateDartApi(),
+            jsServiceEncointer,
+            withUi: true,
+          )
+        : Api.create(_appStore, JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
     await webApi.init().timeout(
           const Duration(seconds: 20),
@@ -50,6 +60,8 @@ abstract class _SplashViewStore with Store {
   }
 
   Future<void> _setupUpdateReaction() async {
+    Log.d('_setupUpdateReaction', _tag);
+
     ///TODO(Azamat): Check this method for integration tests
     // We don't poll updates in tests because we mock the backend anyhow.
     if (buildConfig != BuildConfig.unitTest) {

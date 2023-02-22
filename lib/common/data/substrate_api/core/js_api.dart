@@ -5,6 +5,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 const encointerJsService = 'EncointerJsService';
 
+const _tag = 'js_api';
+
 /// Core interface to talk with our JS-service
 class JSApi {
   Map<String, Function> _msgHandlers = {};
@@ -15,6 +17,7 @@ class JSApi {
   int _evalJavascriptUID = 0;
 
   Future<void> launchWebView(String jsServiceEncointer, Future<void> Function() webViewPostInitCallback) async {
+    Log.d('launchWebView:  webViewPostInitCallback = $webViewPostInitCallback,', _tag);
     _msgHandlers = {};
     _msgCompleters = {};
     _evalJavascriptUID = 0;
@@ -85,6 +88,7 @@ class JSApi {
     // calls to the same method.
     bool allowRepeat = true,
   }) async {
+    Log.d('fetchBalance', _tag);
     // check if there's a same request loading
     if (!allowRepeat) {
       for (final i in _msgCompleters.keys) {
@@ -123,22 +127,25 @@ class JSApi {
   }
 
   int _getEvalJavascriptUID() {
+    Log.d('_getEvalJavascriptUID', _tag);
     return _evalJavascriptUID++;
   }
 
   Future<void> subscribeMessage(String code, String channel, Function callback) async {
+    Log.d('subscribeMessage', _tag);
     _msgHandlers[channel] = callback;
     await evalJavascript<dynamic>(code);
   }
 
   Future<void> unsubscribeMessage(String channel) async {
+    Log.d('unsubscribeMessage', _tag);
     if (_msgHandlers[channel] != null) {
       await _web!.webViewController.evaluateJavascript(source: 'unsub$channel()');
     }
   }
 
   Future<void> closeWebView() async {
-    Log.d('[JSApi]: closing webView', 'JSApi');
+    Log.d('closeWebView', _tag);
     if (_web != null) {
       await _web!.dispose();
       _web = null;
@@ -150,6 +157,7 @@ class JSApi {
 
 /// Wraps `jSSource` in a html document ready to be hoisted in a webView.
 String jSSourceHtmlContainer(String jSSource) {
+  Log.d('jSSourceHtmlContainer', _tag);
   return '''
   <!DOCTYPE html>
   <html lang="en">
