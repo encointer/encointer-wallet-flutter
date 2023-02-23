@@ -84,6 +84,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.3.3
+  flutter_gen_runner: ^5.2.0
   json_serializable: ^6.6.1
   json_serializable_mobx: ^0.10.3
   mobx_codegen: ^2.1.1
@@ -102,7 +103,19 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/public/app.png"
+  image_path: "assets/images/public/App.png"
+
+flutter_gen:
+  output: lib/gen/ # Optional (default: lib/gen/)
+
+  integrations:
+    flutter_svg: true
+  assets:
+    enabled: true
+
+    outputs:
+      class_name: MyAssets
+
 
 # The following section is specific to Flutter.
 flutter:
@@ -113,98 +126,113 @@ flutter:
     # js service
     - lib/js_service_encointer/dist/main.js
 
+    - assets/images/
+    - assets/images/assets/
+    - assets/images/profile/
+    - assets/images/public/
+    - assets/images/staking/
+    - assets/images/nctr_logo_faces_only_thick.svg
+    - assets/images/nctr_logo.svg
+    - assets/images/nctr_mosaic_background.svg
+    
+
+
+
+    
+
+
     #svg
-    - assets/nctr_logo.svg
-    - assets/nctr_mosaic_background.svg
-    - assets/nctr_logo_faces_only_thick.svg
+    # - assets/nctr_logo.svg
+    # - assets/nctr_mosaic_background.svg
+    # - assets/nctr_logo_faces_only_thick.svg
     # Leu icon for mocks
-    - assets/images/assets/icon_leu.svg
+    # - assets/images/assets/icon_leu.svg
     # images
     ## images - settings
-    - assets/images/public/nctr-cln.png
-    - assets/images/public/nctr-cln_gray.png
-    - assets/images/public/nctr-cln-dev.png
-    - assets/images/public/nctr-cln-dev_gray.png
-    - assets/images/public/nctr-gsl-dev.png
-    - assets/images/public/nctr-gsl-dev_gray.png
-    - assets/images/public/nctr-gsl.png
-    - assets/images/public/nctr-gsl_gray.png
-    - assets/images/public/nctr-r.png
-    - assets/images/public/nctr-r_gray.png
-    - assets/images/public/nctr-k.png
-    - assets/images/public/nctr-k_gray.png
-    - assets/images/assets/ERT.png
-    - assets/images/assets/scanner.png
+    # - assets/images/public/nctr-cln.png
+    # - assets/images/public/nctr-cln_gray.png
+    # - assets/images/public/nctr-cln-dev.png
+    # - assets/images/public/nctr-cln-dev_gray.png
+    # - assets/images/public/nctr-gsl-dev.png
+    # - assets/images/public/nctr-gsl-dev_gray.png
+    # - assets/images/public/nctr-gsl.png
+    # - assets/images/public/nctr-gsl_gray.png
+    # - assets/images/public/nctr-r.png
+    # - assets/images/public/nctr-r_gray.png
+    # - assets/images/public/nctr-k.png
+    # - assets/images/public/nctr-k_gray.png
+    # - assets/images/assets/ERT.png
+    # - assets/images/assets/scanner.png
     ## images - acala
-    - assets/images/assets/scanner_indigo.png
-    - assets/images/assets/top_bg_indigo.png
-    - assets/images/assets/receive_line_indigo.png
-    - assets/images/assets/qrcode_indigo.png
-    - assets/images/assets/plus_indigo.png
-    - assets/images/staking/top_bg_indigo.png
-    - assets/images/public/Wallet_indigo.png
-    - assets/images/public/Bazaar_dark.png
-    - assets/images/public/Profile_indigo.png
-    - assets/images/public/Ceremonies_indigo.png
-    - assets/images/public/Ceremonies_dark.png
-    - assets/images/public/Contacts_indigo.png
-    - assets/images/public/Contacts_dark.png
-    - assets/images/public/Scan_indigo.png
-    - assets/images/public/Scan_dark.png
-    - assets/images/public/Bazaar_indigo.png
+    # - assets/images/assets/scanner_indigo.png
+    # - assets/images/assets/top_bg_indigo.png
+    # - assets/images/assets/receive_line_indigo.png
+    # - assets/images/assets/qrcode_indigo.png
+    # - assets/images/assets/plus_indigo.png
+    # - assets/images/staking/top_bg_indigo.png
+    # - assets/images/public/Wallet_indigo.png
+    # - assets/images/public/Bazaar_dark.png
+    # - assets/images/public/Profile_indigo.png
+    # - assets/images/public/Ceremonies_indigo.png
+    # - assets/images/public/Ceremonies_dark.png
+    # - assets/images/public/Contacts_indigo.png
+    # - assets/images/public/Contacts_dark.png
+    # - assets/images/public/Scan_indigo.png
+    # - assets/images/public/Scan_dark.png
+    # - assets/images/public/Bazaar_indigo.png
     ## images - laminar
-    - assets/images/assets/scanner_purple.png
-    - assets/images/assets/top_bg_purple.png
-    - assets/images/assets/receive_line_purple.png
-    - assets/images/assets/qrcode_purple.png
-    - assets/images/assets/plus_purple.png
-    - assets/images/staking/top_bg_purple.png
-    - assets/images/public/Wallet_purple.png
-    - assets/images/public/Profile_purple.png
+    # - assets/images/assets/scanner_purple.png
+    # - assets/images/assets/top_bg_purple.png
+    # - assets/images/assets/receive_line_purple.png
+    # - assets/images/assets/qrcode_purple.png
+    # - assets/images/assets/plus_purple.png
+    # - assets/images/staking/top_bg_purple.png
+    # - assets/images/public/Wallet_purple.png
+    # - assets/images/public/Profile_purple.png
     ## images - kusama
-    - assets/images/assets/scanner_black.png
-    - assets/images/public/Wallet_black.png
-    - assets/images/public/Bazaar_black.png
-    - assets/images/public/Profile_black.png
-    - assets/images/assets/top_bg_black.png
-    - assets/images/assets/qrcode_black.png
-    - assets/images/assets/plus_black.png
-    - assets/images/assets/receive_line_black.png
-    - assets/images/public/kusama.png
+    # - assets/images/assets/scanner_black.png
+    # - assets/images/public/Wallet_black.png
+    # - assets/images/public/Bazaar_black.png
+    # - assets/images/public/Profile_black.png
+    # - assets/images/assets/top_bg_black.png
+    # - assets/images/assets/qrcode_black.png
+    # - assets/images/assets/plus_black.png
+    # - assets/images/assets/receive_line_black.png
+    # - assets/images/public/kusama.png
     ## images - polkadot
-    - assets/images/assets/scanner_pink.png
-    - assets/images/public/app.png
-    - assets/images/public/Wallet_pink.png
-    - assets/images/public/Bazaar_pink.png
-    - assets/images/public/Profile_pink.png
-    - assets/images/public/Wallet_dark.png
-    - assets/images/public/Profile_dark.png
-    - assets/images/public/logo_about.png
-    - assets/images/public/dontscreen.png
-    - assets/images/public/copy.png
-    - assets/images/public/polkadot.png
-    - assets/images/public/polkadot_gray.png
-    - assets/images/public/westend.png
-    - assets/images/public/substrate.png
-    - assets/images/public/default.png
-    - assets/images/assets/logo.png
-    - assets/images/assets/top_bg_pink.png
-    - assets/images/assets/Assets_nav_0.png
-    - assets/images/assets/Assets_nav_1.png
-    - assets/images/assets/qrcode_pink.png
-    - assets/images/assets/plus_pink.png
-    - assets/images/assets/Menu_scan.png
-    - assets/images/assets/assets_send.png
-    - assets/images/assets/assets_receive.png
-    - assets/images/assets/assets_up.png
-    - assets/images/assets/assets_down.png
-    - assets/images/assets/assets_fail.png
-    - assets/images/assets/success.png
-    - assets/images/assets/receive_line_pink.png
-    - assets/images/staking/top_bg_pink.png
-    - assets/images/profile/about.png
-    - assets/images/profile/address.png
-    - assets/images/profile/setting.png
+    # - assets/images/assets/scanner_pink.png
+    # - assets/images/public/app.png
+    # - assets/images/public/Wallet_pink.png
+    # - assets/images/public/Bazaar_pink.png
+    # - assets/images/public/Profile_pink.png
+    # - assets/images/public/Wallet_dark.png
+    # - assets/images/public/Profile_dark.png
+    # - assets/images/public/logo_about.png
+    # - assets/images/public/dontscreen.png
+    # - assets/images/public/copy.png
+    # - assets/images/public/polkadot.png
+    # - assets/images/public/polkadot_gray.png
+    # - assets/images/public/westend.png
+    # - assets/images/public/substrate.png
+    # - assets/images/public/default.png
+    # - assets/images/assets/logo.png
+    # - assets/images/assets/top_bg_pink.png
+    # - assets/images/assets/Assets_nav_0.png
+    # - assets/images/assets/Assets_nav_1.png
+    # - assets/images/assets/qrcode_pink.png
+    # - assets/images/assets/plus_pink.png
+    # - assets/images/assets/Menu_scan.png
+    # - assets/images/assets/assets_send.png
+    # - assets/images/assets/assets_receive.png
+    # - assets/images/assets/assets_up.png
+    # - assets/images/assets/assets_down.png
+    # - assets/images/assets/assets_fail.png
+    # - assets/images/assets/success.png
+    # - assets/images/assets/receive_line_pink.png
+    # - assets/images/staking/top_bg_pink.png
+    # - assets/images/profile/about.png
+    # - assets/images/profile/address.png
+    # - assets/images/profile/setting.png
 
   # fonts:
   #   - family: Schyler
