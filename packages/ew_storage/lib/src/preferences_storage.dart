@@ -10,21 +10,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// final storage = await PreferencesStorage.getInstance();
 ///
 /// // Write a key/value pair.
-/// await storage.write(key: 'my_key', value: 'my_value');
+/// await storage.writeString(key: 'my_key', value: 'my_value');
 ///
 /// // Read value for key.
-/// final value = await storage.read(key: 'my_key'); // 'my_value'
+/// final value = storage.readString(key: 'my_key'); // 'my_value'
 /// ```
 class PreferencesStorage implements EwStorage {
   const PreferencesStorage._(this._sharedPreferences);
 
   final SharedPreferences _sharedPreferences;
 
+  /// Returns a new instance of [PreferencesStorage].
+  ///
+  /// If [SharedPreferences] is not provided, the default instance will be used.
   static Future<PreferencesStorage> getInstance([SharedPreferences? pref]) async {
     return PreferencesStorage._(pref ?? await SharedPreferences.getInstance());
   }
 
-  @Deprecated('Please use the `readString` method instead of this method.')
+  @Deprecated('Please use the `readString` method instead.')
   @override
   Future<String?> read({required String key}) async {
     try {

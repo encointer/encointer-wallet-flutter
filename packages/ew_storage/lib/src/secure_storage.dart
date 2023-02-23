@@ -3,7 +3,7 @@ import 'package:ew_storage/src/interface/storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// A Secure Storage client which implements the base [EwStorage] interface.
-/// [SecureStorage] uses `FlutterSecureStorage` internally.
+/// By default, [SecureStorage] uses `FlutterSecureStorage`.
 ///
 /// ```dart
 /// // Create a `SecureStorage` instance.

@@ -3,6 +3,8 @@ class StorageException implements Exception {
   const StorageException([this.error, this.stackTrace]);
 
   /// Error thrown during the storage operation.
-  final Object? error;
+  final dynamic error;
+
+  /// The stack trace associated with the error, if any.
   final StackTrace? stackTrace;
 }
