@@ -17,6 +17,94 @@ class $LibGen {
   $LibJsServiceEncointerGen get jsServiceEncointer => const $LibJsServiceEncointerGen();
 }
 
+class $AssetsAvatarsGen {
+  const $AssetsAvatarsGen();
+
+  /// File path: assets/avatars/participant0.svg
+  SvgGenImage get participant0 => const SvgGenImage('assets/avatars/participant0.svg');
+
+  /// File path: assets/avatars/participant1.svg
+  SvgGenImage get participant1 => const SvgGenImage('assets/avatars/participant1.svg');
+
+  /// File path: assets/avatars/participant10.svg
+  SvgGenImage get participant10 => const SvgGenImage('assets/avatars/participant10.svg');
+
+  /// File path: assets/avatars/participant11.svg
+  SvgGenImage get participant11 => const SvgGenImage('assets/avatars/participant11.svg');
+
+  /// File path: assets/avatars/participant12.svg
+  SvgGenImage get participant12 => const SvgGenImage('assets/avatars/participant12.svg');
+
+  /// File path: assets/avatars/participant13.svg
+  SvgGenImage get participant13 => const SvgGenImage('assets/avatars/participant13.svg');
+
+  /// File path: assets/avatars/participant14.svg
+  SvgGenImage get participant14 => const SvgGenImage('assets/avatars/participant14.svg');
+
+  /// File path: assets/avatars/participant15.svg
+  SvgGenImage get participant15 => const SvgGenImage('assets/avatars/participant15.svg');
+
+  /// File path: assets/avatars/participant16.svg
+  SvgGenImage get participant16 => const SvgGenImage('assets/avatars/participant16.svg');
+
+  /// File path: assets/avatars/participant17.svg
+  SvgGenImage get participant17 => const SvgGenImage('assets/avatars/participant17.svg');
+
+  /// File path: assets/avatars/participant18.svg
+  SvgGenImage get participant18 => const SvgGenImage('assets/avatars/participant18.svg');
+
+  /// File path: assets/avatars/participant19.svg
+  SvgGenImage get participant19 => const SvgGenImage('assets/avatars/participant19.svg');
+
+  /// File path: assets/avatars/participant2.svg
+  SvgGenImage get participant2 => const SvgGenImage('assets/avatars/participant2.svg');
+
+  /// File path: assets/avatars/participant3.svg
+  SvgGenImage get participant3 => const SvgGenImage('assets/avatars/participant3.svg');
+
+  /// File path: assets/avatars/participant4.svg
+  SvgGenImage get participant4 => const SvgGenImage('assets/avatars/participant4.svg');
+
+  /// File path: assets/avatars/participant5.svg
+  SvgGenImage get participant5 => const SvgGenImage('assets/avatars/participant5.svg');
+
+  /// File path: assets/avatars/participant6.svg
+  SvgGenImage get participant6 => const SvgGenImage('assets/avatars/participant6.svg');
+
+  /// File path: assets/avatars/participant7.svg
+  SvgGenImage get participant7 => const SvgGenImage('assets/avatars/participant7.svg');
+
+  /// File path: assets/avatars/participant8.svg
+  SvgGenImage get participant8 => const SvgGenImage('assets/avatars/participant8.svg');
+
+  /// File path: assets/avatars/participant9.svg
+  SvgGenImage get participant9 => const SvgGenImage('assets/avatars/participant9.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+        participant0,
+        participant1,
+        participant10,
+        participant11,
+        participant12,
+        participant13,
+        participant14,
+        participant15,
+        participant16,
+        participant17,
+        participant18,
+        participant19,
+        participant2,
+        participant3,
+        participant4,
+        participant5,
+        participant6,
+        participant7,
+        participant8,
+        participant9
+      ];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -401,11 +489,18 @@ class $LibJsServiceEncointerDistGen {
   List<String> get values => [main];
 }
 
-class MyAssets {
-  MyAssets._();
+class Assets {
+  Assets._();
 
+  static const $AssetsAvatarsGen avatars = $AssetsAvatarsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const SvgGenImage nctrLogo = SvgGenImage('assets/nctr_logo.svg');
+  static const SvgGenImage nctrLogoFacesOnlyThick = SvgGenImage('assets/nctr_logo_faces_only_thick.svg');
+  static const SvgGenImage nctrMosaicBackground = SvgGenImage('assets/nctr_mosaic_background.svg');
   static const $LibGen lib = $LibGen();
+
+  /// List of all assets
+  List<SvgGenImage> get values => [nctrLogo, nctrLogoFacesOnlyThick, nctrMosaicBackground];
 }
 
 class AssetGenImage {
