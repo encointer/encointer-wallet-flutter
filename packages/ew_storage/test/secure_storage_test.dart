@@ -26,37 +26,32 @@ void main() {
     group('Read', () {
       test('returns `mockValue` succesfully', () async {
         when(() => flutterSecureStorage.read(key: mockKey)).thenAnswer((_) => Future.value(mockValue));
-        final actual = await secureStorage.readAsync(key: mockKey);
+        final actual = await secureStorage.read(key: mockKey);
         expect(actual, mockValue);
       });
 
       test('returns `null`', () async {
         when(() => flutterSecureStorage.read(key: mockKey)).thenAnswer((_) => Future<String?>.value());
-        final actual = await secureStorage.readAsync(key: mockKey);
+        final actual = await secureStorage.read(key: mockKey);
         expect(actual, isNull);
       });
 
       test('throw `StorageException` fails', () async {
         when(() => flutterSecureStorage.read(key: mockKey)).thenThrow(mockException);
-        expect(() async => secureStorage.readAsync(key: mockKey), throwsA(isA<StorageException>()));
+        expect(() async => secureStorage.read(key: mockKey), throwsA(isA<StorageException>()));
       });
     });
 
     group('Write', () {
       test('write succesfully', () async {
         when(() => flutterSecureStorage.write(key: mockKey, value: mockValue)).thenAnswer((_) => Future.value());
-        expect(secureStorage.write<String>(key: mockKey, value: mockValue), completes);
-      });
-
-      test('throw `StorageException` Type fails', () async {
-        when(() => flutterSecureStorage.write(key: mockKey, value: mockValue)).thenThrow(mockException);
-        expect(() async => secureStorage.write<bool>(key: mockKey, value: true), throwsA(isA<StorageException>()));
+        expect(secureStorage.writeString(key: mockKey, value: mockValue), completes);
       });
 
       test('throw `StorageException` fails', () async {
         when(() => flutterSecureStorage.write(key: mockKey, value: mockValue)).thenThrow(mockException);
         expect(
-          () async => secureStorage.write<String>(key: mockKey, value: mockValue),
+          () async => secureStorage.writeString(key: mockKey, value: mockValue),
           throwsA(isA<StorageException>()),
         );
       });

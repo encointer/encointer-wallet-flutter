@@ -24,50 +24,92 @@ class PreferencesStorage implements EwStorage {
     return PreferencesStorage._(pref ?? await SharedPreferences.getInstance());
   }
 
+  @Deprecated('Please use the `readString` method instead of this method.')
   @override
-  T? read<T>({required String key}) {
+  Future<String?> read({required String key}) async {
     try {
-      switch (T) {
-        case String:
-          return _sharedPreferences.getString(key) as T?;
-        case bool:
-          return _sharedPreferences.getBool(key) as T?;
-        case double:
-          return _sharedPreferences.getDouble(key) as T?;
-        case int:
-          return _sharedPreferences.getInt(key) as T?;
-        case List<String>:
-          return _sharedPreferences.getStringList(key) as T?;
-        default:
-          throw const StorageException('Type is not subtype of `String`, `bool`, `double`, `int`, `List<String>`');
-      }
+      return _sharedPreferences.getString(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  String? readString({required String key}) {
+    try {
+      return _sharedPreferences.getString(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  bool? readBool({required String key}) {
+    try {
+      return _sharedPreferences.getBool(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  double? readDouble({required String key}) {
+    try {
+      return _sharedPreferences.getDouble(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  int? readInt({required String key}) {
+    try {
+      return _sharedPreferences.getInt(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  List<String>? readStringList({required String key}) {
+    try {
+      return _sharedPreferences.getStringList(key);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
   @override
-  Future<void> write<T>({required String key, required T value}) async {
+  Future<void> writeString({required String key, required String value}) async {
     try {
-      switch (value.runtimeType) {
-        case String:
-          await _sharedPreferences.setString(key, value as String);
-          break;
-        case bool:
-          await _sharedPreferences.setBool(key, value as bool);
-          break;
-        case double:
-          await _sharedPreferences.setDouble(key, value as double);
-          break;
-        case int:
-          await _sharedPreferences.setInt(key, value as int);
-          break;
-        case List<String>:
-          await _sharedPreferences.setStringList(key, value as List<String>);
-          break;
-        default:
-          throw const StorageException('Type is not subtype of `String`, `bool`, `double`, `int`, `List<String>`');
-      }
+      await _sharedPreferences.setString(key, value);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  Future<void> writeBool({required String key, required bool value}) async {
+    try {
+      await _sharedPreferences.setBool(key, value);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  Future<void> writeDouble({required String key, required double value}) async {
+    try {
+      await _sharedPreferences.setDouble(key, value);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  Future<void> writeInt({required String key, required int value}) async {
+    try {
+      await _sharedPreferences.setInt(key, value);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  Future<void> writeStringList({required String key, required List<String> value}) async {
+    try {
+      await _sharedPreferences.setStringList(key, value);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
@@ -90,8 +132,4 @@ class PreferencesStorage implements EwStorage {
       throw StorageException(error, stackTrace);
     }
   }
-
-  @Deprecated('This mehtod should use by secure storage')
-  @override
-  Future<String?> readAsync({required String key}) => throw UnimplementedError();
 }
