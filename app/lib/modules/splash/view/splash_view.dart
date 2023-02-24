@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,7 +50,7 @@ class _SplashViewState extends State<SplashView> {
           context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
     } else {
       await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()), (route) => false);
+          context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryView()), (route) => false);
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -88,7 +89,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     if (!isCurrentNetwork) {
       await _reloadNetwork();
     }
-    Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
+    Navigator.of(context).pushNamed(CreateAccountEntryView.route);
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {

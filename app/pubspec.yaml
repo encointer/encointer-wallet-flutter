@@ -121,6 +121,7 @@ flutter:
     # Leu icon for mocks
     - assets/images/assets/icon_leu.svg
     # images
+    - assets/images/assets/kacheln.png
     ## images - settings
     - assets/images/public/nctr-cln.png
     - assets/images/public/nctr-cln_gray.png

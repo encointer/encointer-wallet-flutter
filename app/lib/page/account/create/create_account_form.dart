@@ -37,7 +37,7 @@ class CreateAccountForm extends StatelessWidget {
       }
 
       final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-      await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+      // await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
       final pubKey = acc['pubKey'] as String?;
       store.setCurrentAccount(pubKey);
@@ -104,7 +104,7 @@ class CreateAccountForm extends StatelessWidget {
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  store.account.setNewAccountName(_nameCtrl.text.trim());
+                  // store.account.setNewAccountName(_nameCtrl.text.trim());
                   Navigator.pushNamed(
                     context,
                     CreatePinPage.route,

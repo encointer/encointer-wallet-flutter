@@ -57,15 +57,15 @@ class AppRoute {
           builder: (_) => const NetworkSelectPage(),
           settings: settings,
         );
-      case CreateAccountEntryPage.route:
+      case CreateAccountEntryView.route:
         return CupertinoPageRoute(
-          builder: (_) => const CreateAccountEntryPage(),
+          builder: (_) => const CreateAccountEntryView(),
           settings: settings,
           fullscreenDialog: true,
         );
-      case CreateAccountPage.route:
+      case CreateAccountView.route:
         return CupertinoPageRoute(
-          builder: (_) => const CreateAccountPage(),
+          builder: (_) => const CreateAccountView(),
           settings: settings,
           fullscreenDialog: true,
         );

@@ -96,8 +96,8 @@ class AddAccountForm extends StatelessWidget {
                 if (_formKey.currentState!.validate()) {
                   final name = _nameCtrl.text.trim();
 
-                  store.account.setNewAccountName(name);
-                  store.account.setNewAccountPin(store.settings.cachedPin);
+                  // store.account.setNewAccountName(name);
+                  // store.account.setNewAccountPin(store.settings.cachedPin);
 
                   onSubmit();
                 } else {

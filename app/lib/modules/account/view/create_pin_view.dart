@@ -1,11 +1,74 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
+import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/utils/format.dart';
+
+class CreatePinView extends StatefulWidget {
+  const CreatePinView({super.key});
+
+  static const String route = '/account/createPin';
+
+  @override
+  State<CreatePinView> createState() => _CreatePinViewState();
+}
+
+class _CreatePinViewState extends State<CreatePinView> {
+  bool _submitting = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final store = context.watch<AppStore>();
+    final dic = I18n.of(context)!.translationsForLocale();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(dic.home.create),
+        actions: const [CloseButton()],
+      ),
+      body: SafeArea(
+        child: !_submitting
+            ? CreatePinForm(
+                onSubmit: () async {
+                  setState(() {
+                    _submitting = true;
+                  });
+
+                  // await params.onCreatePin();
+
+                  if (store.encointer.communityIdentifiers.length == 1) {
+                    await store.encointer.setChosenCid(
+                      store.encointer.communityIdentifiers[0],
+                    );
+                  } else {
+                    await Navigator.pushNamed(context, CommunityChooserOnMap.route);
+                  }
+
+                  setState(() {
+                    _submitting = false;
+                  });
+
+                  // Even if we do not choose a community, we go back to the home screen.
+                  Navigator.pushAndRemoveUntil<void>(
+                    context,
+                    CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()),
+                    (route) => false,
+                  );
+                },
+                store: store,
+              )
+            : const Center(child: CupertinoActivityIndicator()),
+      ),
+    );
+  }
+}
 
 class CreatePinForm extends StatefulWidget {
   const CreatePinForm({super.key, required this.store, required this.onSubmit});

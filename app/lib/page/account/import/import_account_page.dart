@@ -135,7 +135,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
     Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
     final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-    await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
+    // await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
 
     final pubKey = acc['pubKey'] as String?;
     await context.read<AppStore>().setCurrentAccount(pubKey);
@@ -171,7 +171,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       if (context.read<AppStore>().account.isFirstAccount) {
         Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
       } else {
-        context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
+        // context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
         await _importAccount();
         Navigator.pushAndRemoveUntil<void>(
           context,

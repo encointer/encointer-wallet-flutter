@@ -29,13 +29,13 @@ void main() {
       expect(store.currentAccount.address, accList[0]['address']);
 
       /// create new account
-      store
-        ..setNewAccountName('test')
-        ..setNewAccountPin('a111111');
-      expect(store.newAccount.name, 'test');
-      expect(store.newAccount.password, 'a111111');
-      store.setNewAccountKey('new_key');
-      expect(store.newAccount.key, 'new_key');
+      // store
+      //   ..setNewAccountName('test')
+      //   ..setNewAccountPin('a111111');
+      // expect(store.newAccount.name, 'test');
+      // expect(store.newAccount.password, 'a111111');
+      // store.setNewAccountKey('new_key');
+      // expect(store.newAccount.key, 'new_key');
 
       /// add account
       const testPass = 'a111111';

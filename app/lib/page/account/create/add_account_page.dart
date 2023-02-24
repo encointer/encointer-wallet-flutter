@@ -58,7 +58,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     Log.d('Created new account with address: ${addresses[0]}', 'AddAccountPage');
 
-    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+    // await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
     Log.d('added new account with address: ${addresses[0]}', 'AddAccountPage');
 
     final pubKey = acc['pubKey'] as String?;

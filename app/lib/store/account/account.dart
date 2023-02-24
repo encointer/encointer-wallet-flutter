@@ -34,7 +34,8 @@ abstract class _AccountStore with Store {
   final AppStore rootStore;
 
   Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc) {
-    acc['name'] = newAccount.name.isEmpty ? (acc['meta'] as Map<String, dynamic>)['name'] : newAccount.name;
+    acc['name'] = (acc['meta'] as Map<String, dynamic>)['name'];
+    // acc['name'] = newAccount.name.isEmpty ? (acc['meta'] as Map<String, dynamic>)['name'] : newAccount.name;
     if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
       (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
     }
@@ -48,8 +49,8 @@ abstract class _AccountStore with Store {
   @observable
   TxStatus? txStatus;
 
-  @observable
-  AccountCreate newAccount = AccountCreate();
+  // @observable
+  // AccountCreate newAccount = AccountCreate();
 
   @observable
   String? currentAccountPubKey = '';
@@ -140,26 +141,6 @@ abstract class _AccountStore with Store {
   @action
   void clearTxStatus() {
     txStatus = null;
-  }
-
-  @action
-  void setNewAccountName(String name) {
-    newAccount.name = name;
-  }
-
-  @action
-  void setNewAccountPin(String pin) {
-    newAccount.password = pin;
-  }
-
-  @action
-  void setNewAccountKey(String? key) {
-    newAccount.key = key;
-  }
-
-  @action
-  void resetNewAccount() {
-    newAccount = AccountCreate();
   }
 
   @action
@@ -258,8 +239,8 @@ abstract class _AccountStore with Store {
     // update account list
     await loadAccount();
 
-    // clear the temp account after addAccount finished
-    newAccount = AccountCreate();
+    // // clear the temp account after addAccount finished
+    // newAccount = AccountCreate();
   }
 
   @action
@@ -371,17 +352,4 @@ abstract class _AccountStore with Store {
       addressIndexMap[(i as Map<String, dynamic>)['accountId'] as String] = i;
     }
   }
-}
-
-class AccountCreate extends _AccountCreate with _$AccountCreate {}
-
-abstract class _AccountCreate with Store {
-  @observable
-  String name = '';
-
-  @observable
-  String password = '';
-
-  @observable
-  String? key = '';
 }
