@@ -103,7 +103,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/public/App.png"
+  image_path: "assets/images/public/app.png"
 
 flutter_gen:
   output: lib/gen/ # Optional (default: lib/gen/)
@@ -111,8 +111,9 @@ flutter_gen:
   integrations:
     flutter_svg: true
 
-  exclude:
-    - lib/js_service_encointer/dist/main.js
+  assets: 
+    exclude:
+      - lib/js_service_encointer/dist/*.jpg
 
 
 # The following section is specific to Flutter.
@@ -124,11 +125,9 @@ flutter:
     # js service
     - lib/js_service_encointer/dist/main.js
 
-    - assets/images/
+    # - assets/images/
     - assets/images/assets/
-    - assets/images/profile/
     - assets/images/public/
-    - assets/images/staking/
     - assets/avatars/
     - assets/nctr_logo.svg
     - assets/nctr_mosaic_background.svg
