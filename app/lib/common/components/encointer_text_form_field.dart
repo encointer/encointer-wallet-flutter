@@ -17,6 +17,8 @@ class EncointerTextFormField extends StatelessWidget {
     this.onChanged,
     this.keyboardType,
     this.obscureText = false,
+    this.fillColor,
+    this.filled,
   });
 
   final String? labelText;
@@ -30,6 +32,8 @@ class EncointerTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final ValueChanged<String>? onChanged;
   final bool obscureText;
+  final Color? fillColor;
+  final bool? filled;
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +48,14 @@ class EncointerTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,
+          fillColor: fillColor,
+          filled: filled,
           labelStyle: Theme.of(context).textTheme.headlineMedium,
           contentPadding: const EdgeInsets.only(top: 16, bottom: 16, left: 25),
-          border: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0,
-              style: BorderStyle.none,
-            ),
-          ),
           suffixIcon: suffixIcon,
+          border: const UnderlineInputBorder(
+            borderSide: BorderSide(width: 0, style: BorderStyle.none),
+          ),
         ),
         inputFormatters: inputFormatters,
         controller: controller,

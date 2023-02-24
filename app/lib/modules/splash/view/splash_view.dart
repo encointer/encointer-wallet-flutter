@@ -9,7 +9,6 @@ import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
-import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';

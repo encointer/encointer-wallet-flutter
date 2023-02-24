@@ -10,7 +10,6 @@ import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
-import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';

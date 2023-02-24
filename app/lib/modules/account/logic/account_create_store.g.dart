@@ -59,13 +59,13 @@ mixin _$AccountCreate on _AccountCreate, Store {
       Atom(name: '_AccountCreate.loading', context: context);
 
   @override
-  bool? get loading {
+  bool get loading {
     _$loadingAtom.reportRead();
     return super.loading;
   }
 
   @override
-  set loading(bool? value) {
+  set loading(bool value) {
     _$loadingAtom.reportWrite(value, super.loading, () {
       super.loading = value;
     });

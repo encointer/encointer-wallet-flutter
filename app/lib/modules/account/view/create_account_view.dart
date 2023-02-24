@@ -82,10 +82,10 @@ class CreateAcccountForm extends StatelessWidget {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 context.read<AccountCreate>().setName(_nameCtrl.text.trim());
-                Navigator.push<void>(
+                Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => Provider.value(
+                    builder: (BuildContext _) => Provider.value(
                       value: context.read<AccountCreate>(),
                       child: const CreatePinView(),
                     ),

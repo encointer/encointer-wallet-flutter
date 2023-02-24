@@ -15,7 +15,7 @@ abstract class _AccountCreate with Store {
   String? key;
 
   @observable
-  bool? loading = false;
+  bool loading = false;
 
   @action
   void setName(String value) => name = value;

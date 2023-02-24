@@ -26,9 +26,8 @@ class CustomButton extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return DecoratedBox(
       decoration: BoxDecoration(
-        gradient: backgroundColor == null ? primaryGradient : null,
+        gradient: primaryGradient,
         borderRadius: borderRadius,
-        color: backgroundColor,
       ),
       child: ElevatedButton(
         onPressed: onPressed,

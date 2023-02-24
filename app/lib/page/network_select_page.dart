@@ -8,7 +8,6 @@ import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/rounded_card.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
