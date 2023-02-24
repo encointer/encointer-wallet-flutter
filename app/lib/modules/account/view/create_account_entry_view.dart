@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/common/components/button/custom_button.dart';
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/account/import/import_account_page.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
 
 class CreateAccountEntryView extends StatelessWidget {
   const CreateAccountEntryView({super.key});
