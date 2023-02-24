@@ -2,7 +2,7 @@ import 'package:ew_storage/src/interface/exception.dart';
 import 'package:ew_storage/src/interface/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// A Preferences Storage client which implements the base [EwStorage] interface.
+/// A Preferences Storage client which implements the base [Storage] interface.
 /// [PreferencesStorage] uses `SharedPreferences` internally.
 ///
 /// ```dart
@@ -15,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// // Read value for key.
 /// final value = storage.readString(key: 'my_key'); // 'my_value'
 /// ```
-class PreferencesStorage implements EwStorage {
+class PreferencesStorage implements Storage {
   const PreferencesStorage._(this._sharedPreferences);
 
   final SharedPreferences _sharedPreferences;

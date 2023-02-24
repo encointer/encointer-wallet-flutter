@@ -1,7 +1,7 @@
 import 'package:ew_storage/src/interface/exception.dart';
 
 /// A Dart EwStorage Client Interface
-abstract class EwStorage {
+abstract class Storage {
   /// Returns the value associated with the provided [key].
   ///
   /// Returns `null` if no value is found for the given [key].

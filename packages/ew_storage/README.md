@@ -2,7 +2,9 @@
 
 Encointer Storage Package
 
-`ew_storage` is a simple and easy-to-use storage client for Flutter applications. It provides a unified interface to read, write and delete data from various storage options such as [shared_preferences](https://pub.dev/packages/shared_preferences) and [flutter_secure_storage.](https://pub.dev/packages/flutter_secure_storage)
+Provides simple storage abstractions for:
+* Plaintext storage with [shared_preferences](https://pub.dev/packages/shared_preferences)
+* Encrypted storage with: [flutter_secure_storage.](https://pub.dev/packages/flutter_secure_storage)
 
 ## PreferencesStorage
 ```dart
