@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -33,45 +32,25 @@ class AddressInputField extends StatefulWidget {
 class _AddressInputFieldState extends State<AddressInputField> {
   Future<List<AccountData>> _getAccountsFromInput(String input) async {
     final listLocal = widget.store.account.accountList.toList()..addAll(widget.store.settings.contactList);
+
     // return local account list if input empty
     if (input.isEmpty || input.trim().length < 3) {
       return listLocal;
     }
 
-    // check if user input is valid address or indices
-    final checkAddress = await webApi.account.decodeAddress([input]);
-    if (checkAddress.isEmpty) {
-      return listLocal;
-    }
+    return filterByAddressOrName(listLocal, input).toList();
+  }
 
-    final accountData = AccountData()..address = input;
-    if (input.length < 47) {
-      // check if input indices in local account list
-      final indicesIndex = listLocal.indexWhere((e) {
-        final accInfo = widget.store.account.addressIndexMap[e.address];
-        return accInfo != null && accInfo['accountIndex'] == input;
-      });
-      if (indicesIndex >= 0) {
-        return [listLocal[indicesIndex]];
-      }
-      // query account address with account indices
-      final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
-      if (queryRes != null) {
-        accountData
-          ..address = queryRes[0] as String
-          ..name = input;
-      }
-    } else {
-      // check if input address in local account list
-      final addressIndex = listLocal.indexWhere((e) => _itemAsString(e).contains(input));
-      if (addressIndex >= 0) {
-        return [listLocal[addressIndex]];
-      }
-    }
+  /// Filters [accounts] by [nameOrAddress] and returns a filtered iterable.
+  ///
+  /// This returns duplicates if the `nameOrAddress` matches the name and the address of the same element.
+  Iterable<AccountData> filterByAddressOrName(Iterable<AccountData> accounts, String nameOrAddress) {
+    final filteredByName = accounts.where((account) => account.name.startsWith(nameOrAddress.trim()));
+    final filteredByAddress = accounts.where(
+      (account) => Fmt.addressOfAccount(account, widget.store).startsWith(nameOrAddress.trim()),
+    );
 
-    await webApi.account.fetchAddressIndex([accountData.address]);
-
-    return [accountData];
+    return filteredByName.followedBy(filteredByAddress);
   }
 
   String _itemAsString(AccountData item) {
