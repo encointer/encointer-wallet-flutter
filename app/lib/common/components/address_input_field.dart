@@ -123,7 +123,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? dic.profile.errorUserNameIsRequired : null,
-        // For some reason there is no sync items?
         items: widget.store.account.accountListAll,
         filterFn: filterByAddressOrName,
         onChanged: (AccountData? data) {
