@@ -53,23 +53,12 @@ class _AddressInputFieldState extends State<AddressInputField> {
     return filteredByName.followedBy(filteredByAddress);
   }
 
-  String _itemAsString(AccountData item) {
-    final address = Fmt.addressOfAccount(item, widget.store);
-    final accInfo = widget.store.account.addressIndexMap[item.address];
-    String? idx = '';
-    if (accInfo != null && accInfo['accountIndex'] != null) {
-      idx = accInfo['accountIndex'] as String?;
-    }
-    return '${item.name} $idx $address ${item.address}';
-  }
-
   Widget _selectedItemBuilder(BuildContext context, AccountData? item) {
     if (item == null) {
       return Container();
     }
     return Observer(
       builder: (_) {
-        final accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           padding: const EdgeInsets.only(top: 8),
@@ -84,7 +73,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
+                    item.name.isNotEmpty ? item.name : Fmt.address(address)!,
                   ),
                   Text(
                     Fmt.address(address)!,
@@ -105,7 +94,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
   Widget _listItemBuilder(BuildContext context, AccountData item, bool isSelected) {
     return Observer(
       builder: (_) {
-        final accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -122,7 +110,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
             dense: true,
             title: Text(Fmt.address(address)!),
             subtitle: Text(
-              item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
+              item.name.isNotEmpty ? item.name : Fmt.address(address)!,
             ),
             leading: CircleAvatar(
               child: AddressIcon(item.address, item.pubKey),
@@ -168,7 +156,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? dic.profile.errorUserNameIsRequired : null,
         asyncItems: _getAccountsFromInput,
-        itemAsString: _itemAsString,
         onChanged: (AccountData? data) {
           if (widget.onChanged != null && data != null) {
             widget.onChanged!(data);
