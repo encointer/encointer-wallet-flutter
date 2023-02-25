@@ -252,6 +252,9 @@ class Fmt {
     return tokenView;
   }
 
+  /// Returns the address of an account with the ss58-prefix encoded that matches the current network.
+  ///
+  /// Todo: Improve handling of ss58-prefix: #1019
   static String addressOfAccount(AccountData acc, AppStore store) {
     return store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![acc.pubKey] ?? acc.address;
   }

@@ -31,6 +31,7 @@ class AddressInputField extends StatefulWidget {
 class _AddressInputFieldState extends State<AddressInputField> {
   /// Returns true if the [account]'s name or address starts with [nameOrAddress].
   bool filterByAddressOrName(AccountData account, String nameOrAddress) {
+    // we can't just use account.address unfortunately, see #1019.
     return account.name.startsWith(nameOrAddress.trim()) ||
         Fmt.addressOfAccount(account, widget.store).startsWith(nameOrAddress.trim());
   }
