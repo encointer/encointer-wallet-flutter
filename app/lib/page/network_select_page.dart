@@ -83,34 +83,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> _onCreateAccount() async {
-    final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
-    if (!isCurrentNetwork) {
-      await _reloadNetwork();
-    }
-    Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
-  }
-
-  Future<void> _showPasswordDialog(BuildContext context) async {
-    await showCupertinoDialog<void>(
-      context: context,
-      builder: (_) {
-        return Container(
-          child: showPasswordInputDialog(
-            context,
-            context.read<AppStore>().account.currentAccount,
-            Text(I18n.of(context)!.translationsForLocale().profile.unlock),
-            (String password) {
-              setState(() {
-                context.read<AppStore>().settings.setPin(password);
-              });
-            },
-          ),
-        );
-      },
-    );
-  }
-
   List<Widget> _buildAccountList() {
     // final primaryColor = Theme.of(context).primaryColor;
     final res = <Widget>[
@@ -121,19 +93,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             _selectedNetwork.info!.toUpperCase(),
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          IconButton(
-              icon: Image.asset('assets/images/assets/plus_indigo.png'),
-              color: Theme.of(context).primaryColor,
-              onPressed: () async => {
-                    if (context.read<AppStore>().settings.cachedPin.isEmpty)
-                      {
-                        await _showPasswordDialog(context),
-                      }
-                    else
-                      {
-                        _onCreateAccount(),
-                      }
-                  })
         ],
       ),
     ];
