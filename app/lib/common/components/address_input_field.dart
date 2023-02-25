@@ -1,6 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -40,71 +39,57 @@ class _AddressInputFieldState extends State<AddressInputField> {
     if (item == null) {
       return Container();
     }
-    return Observer(
-      builder: (_) {
-        final address = Fmt.addressOfAccount(item, widget.store);
-        return Container(
-          padding: const EdgeInsets.only(top: 8),
-          child: Row(
+
+    final address = Fmt.addressOfAccount(item, widget.store);
+
+    return Container(
+      padding: const EdgeInsets.only(top: 8),
+      child: Row(
+        children: [
+          if (!widget.hideIdenticon)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: AddressIcon(item.address, item.pubKey, tapToCopy: false, size: 36),
+            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!widget.hideIdenticon)
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: AddressIcon(item.address, item.pubKey, tapToCopy: false, size: 36),
-                ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name.isNotEmpty ? item.name : Fmt.address(address)!,
-                  ),
-                  Text(
-                    Fmt.address(address)!,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Theme.of(context).unselectedWidgetColor,
-                    ),
-                  ),
-                ],
-              )
+              Text(item.name.isNotEmpty ? item.name : Fmt.address(address)!),
+              Text(
+                Fmt.address(address)!,
+                style: TextStyle(fontSize: 12, color: Theme.of(context).unselectedWidgetColor),
+              ),
             ],
-          ),
-        );
-      },
+          )
+        ],
+      ),
     );
   }
 
   Widget _listItemBuilder(BuildContext context, AccountData item, bool isSelected) {
-    return Observer(
-      builder: (_) {
-        final address = Fmt.addressOfAccount(item, widget.store);
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8),
-          decoration: !isSelected
-              ? null
-              : BoxDecoration(
-                  border: Border.all(color: Theme.of(context).primaryColor),
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
-          child: ListTile(
-            key: Key(item.name),
-            selected: isSelected,
-            dense: true,
-            title: Text(Fmt.address(address)!),
-            subtitle: Text(
-              item.name.isNotEmpty ? item.name : Fmt.address(address)!,
+    final address = Fmt.addressOfAccount(item, widget.store);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: !isSelected
+          ? null
+          : BoxDecoration(
+              border: Border.all(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
             ),
-            leading: CircleAvatar(
-              child: AddressIcon(item.address, item.pubKey),
-            ),
-            onTap: () {
-              widget.onChanged?.call(item);
-              Navigator.pop(context);
-            },
-          ),
-        );
-      },
+      child: ListTile(
+        key: Key(item.name),
+        selected: isSelected,
+        dense: true,
+        title: Text(Fmt.address(address)!),
+        subtitle: Text(item.name.isNotEmpty ? item.name : Fmt.address(address)!),
+        leading: CircleAvatar(child: AddressIcon(item.address, item.pubKey)),
+        onTap: () {
+          widget.onChanged?.call(item);
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 
