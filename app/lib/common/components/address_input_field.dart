@@ -54,7 +54,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.name.isNotEmpty ? item.name : Fmt.address(address)!),
+              Text(item.name),
               Text(
                 Fmt.address(address)!,
                 style: TextStyle(fontSize: 12, color: Theme.of(context).unselectedWidgetColor),
@@ -82,8 +82,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
         key: Key(item.name),
         selected: isSelected,
         dense: true,
-        title: Text(Fmt.address(address)!),
-        subtitle: Text(item.name.isNotEmpty ? item.name : Fmt.address(address)!),
+        title: Text(item.name),
+        subtitle: Text(Fmt.address(address)!),
         leading: CircleAvatar(child: AddressIcon(item.address, item.pubKey)),
         onTap: () {
           widget.onChanged?.call(item);
