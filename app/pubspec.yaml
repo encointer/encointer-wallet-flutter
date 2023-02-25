@@ -125,7 +125,6 @@ flutter:
     # js service
     - lib/js_service_encointer/dist/main.js
 
-    # - assets/images/
     - assets/images/assets/
     - assets/images/public/
     - assets/avatars/

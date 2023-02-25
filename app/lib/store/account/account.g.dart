@@ -115,21 +115,6 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  late final _$addressIndexMapAtom = Atom(name: '_AccountStore.addressIndexMap', context: context);
-
-  @override
-  ObservableMap<String?, Map<dynamic, dynamic>> get addressIndexMap {
-    _$addressIndexMapAtom.reportRead();
-    return super.addressIndexMap;
-  }
-
-  @override
-  set addressIndexMap(ObservableMap<String?, Map<dynamic, dynamic>> value) {
-    _$addressIndexMapAtom.reportWrite(value, super.addressIndexMap, () {
-      super.addressIndexMap = value;
-    });
-  }
-
   late final _$accountIndexMapAtom = Atom(name: '_AccountStore.accountIndexMap', context: context);
 
   @override
@@ -335,16 +320,6 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setAddressIndex(List<dynamic> list) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAddressIndex');
-    try {
-      return super.setAddressIndex(list);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 loading: ${loading},
@@ -352,7 +327,6 @@ txStatus: ${txStatus},
 newAccount: ${newAccount},
 currentAccountPubKey: ${currentAccountPubKey},
 accountList: ${accountList},
-addressIndexMap: ${addressIndexMap},
 accountIndexMap: ${accountIndexMap},
 pubKeyAddressMap: ${pubKeyAddressMap},
 queuedTxs: ${queuedTxs},
