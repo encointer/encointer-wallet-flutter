@@ -30,27 +30,10 @@ class AddressInputField extends StatefulWidget {
 }
 
 class _AddressInputFieldState extends State<AddressInputField> {
-  Future<List<AccountData>> _getAccountsFromInput(String input) async {
-    final listLocal = widget.store.account.accountList.toList()..addAll(widget.store.settings.contactList);
-
-    // return local account list if input empty
-    if (input.isEmpty || input.trim().length < 3) {
-      return listLocal;
-    }
-
-    return filterByAddressOrName(listLocal, input).toList();
-  }
-
-  /// Filters [accounts] by [nameOrAddress] and returns a filtered iterable.
-  ///
-  /// This returns duplicates if the `nameOrAddress` matches the name and the address of the same element.
-  Iterable<AccountData> filterByAddressOrName(Iterable<AccountData> accounts, String nameOrAddress) {
-    final filteredByName = accounts.where((account) => account.name.startsWith(nameOrAddress.trim()));
-    final filteredByAddress = accounts.where(
-      (account) => Fmt.addressOfAccount(account, widget.store).startsWith(nameOrAddress.trim()),
-    );
-
-    return filteredByName.followedBy(filteredByAddress);
+  /// Returns true if the [account]'s name or address starts with [nameOrAddress].
+  bool filterByAddressOrName(AccountData account, String nameOrAddress) {
+    return account.name.startsWith(nameOrAddress.trim()) ||
+        Fmt.addressOfAccount(account, widget.store).startsWith(nameOrAddress.trim());
   }
 
   Widget _selectedItemBuilder(BuildContext context, AccountData? item) {
@@ -155,7 +138,9 @@ class _AddressInputFieldState extends State<AddressInputField> {
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? dic.profile.errorUserNameIsRequired : null,
-        asyncItems: _getAccountsFromInput,
+        // For some reason there is no sync items?
+        items: widget.store.account.accountListAll,
+        filterFn: filterByAddressOrName,
         onChanged: (AccountData? data) {
           if (widget.onChanged != null && data != null) {
             widget.onChanged!(data);
