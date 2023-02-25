@@ -115,21 +115,6 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  late final _$accountIndexMapAtom = Atom(name: '_AccountStore.accountIndexMap', context: context);
-
-  @override
-  Map<String?, Map<dynamic, dynamic>> get accountIndexMap {
-    _$accountIndexMapAtom.reportRead();
-    return super.accountIndexMap;
-  }
-
-  @override
-  set accountIndexMap(Map<String?, Map<dynamic, dynamic>> value) {
-    _$accountIndexMapAtom.reportWrite(value, super.accountIndexMap, () {
-      super.accountIndexMap = value;
-    });
-  }
-
   late final _$pubKeyAddressMapAtom = Atom(name: '_AccountStore.pubKeyAddressMap', context: context);
 
   @override
@@ -327,7 +312,6 @@ txStatus: ${txStatus},
 newAccount: ${newAccount},
 currentAccountPubKey: ${currentAccountPubKey},
 accountList: ${accountList},
-accountIndexMap: ${accountIndexMap},
 pubKeyAddressMap: ${pubKeyAddressMap},
 queuedTxs: ${queuedTxs},
 currentAccount: ${currentAccount},

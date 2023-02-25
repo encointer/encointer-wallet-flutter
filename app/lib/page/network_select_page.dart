@@ -106,21 +106,16 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       if (context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
         address = context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork.ss58]![i.pubKey];
       }
-      final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
-      final accInfo = context.read<AppStore>().account.accountIndexMap[i.address];
-      final accIndex =
-          isCurrentNetwork && accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
-      final padding = accIndex.isEmpty ? 0.0 : 7.0;
+
       return RoundedCard(
         border: address == context.read<AppStore>().account.currentAddress
             ? Border.all(color: Theme.of(context).primaryColorLight)
             : Border.all(color: Theme.of(context).cardColor),
         margin: const EdgeInsets.only(bottom: 16),
-        padding: EdgeInsets.only(top: padding, bottom: padding),
         child: ListTile(
           leading: AddressIcon(address!, i.pubKey, size: 55),
           title: Text(Fmt.accountName(context, i)),
-          subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
+          subtitle: Text(Fmt.address(address)!, maxLines: 2),
           onTap: _networkChanging ? null : () => _onSelect(i, address),
         ),
       );
