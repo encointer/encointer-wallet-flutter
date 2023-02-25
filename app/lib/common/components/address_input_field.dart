@@ -1,10 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -31,130 +29,68 @@ class AddressInputField extends StatefulWidget {
 }
 
 class _AddressInputFieldState extends State<AddressInputField> {
-  Future<List<AccountData>> _getAccountsFromInput(String input) async {
-    final listLocal = widget.store.account.accountList.toList()..addAll(widget.store.settings.contactList);
-    // return local account list if input empty
-    if (input.isEmpty || input.trim().length < 3) {
-      return listLocal;
-    }
-
-    // check if user input is valid address or indices
-    final checkAddress = await webApi.account.decodeAddress([input]);
-    if (checkAddress.isEmpty) {
-      return listLocal;
-    }
-
-    final accountData = AccountData()..address = input;
-    if (input.length < 47) {
-      // check if input indices in local account list
-      final indicesIndex = listLocal.indexWhere((e) {
-        final accInfo = widget.store.account.addressIndexMap[e.address];
-        return accInfo != null && accInfo['accountIndex'] == input;
-      });
-      if (indicesIndex >= 0) {
-        return [listLocal[indicesIndex]];
-      }
-      // query account address with account indices
-      final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
-      if (queryRes != null) {
-        accountData
-          ..address = queryRes[0] as String
-          ..name = input;
-      }
-    } else {
-      // check if input address in local account list
-      final addressIndex = listLocal.indexWhere((e) => _itemAsString(e).contains(input));
-      if (addressIndex >= 0) {
-        return [listLocal[addressIndex]];
-      }
-    }
-
-    await webApi.account.fetchAddressIndex([accountData.address]);
-
-    return [accountData];
-  }
-
-  String _itemAsString(AccountData item) {
-    final address = Fmt.addressOfAccount(item, widget.store);
-    final accInfo = widget.store.account.addressIndexMap[item.address];
-    String? idx = '';
-    if (accInfo != null && accInfo['accountIndex'] != null) {
-      idx = accInfo['accountIndex'] as String?;
-    }
-    return '${item.name} $idx $address ${item.address}';
+  /// Returns true if the [account]'s name or address starts with [nameOrAddress].
+  bool filterByAddressOrName(AccountData account, String nameOrAddress) {
+    // we can't just use account.address unfortunately, see #1019.
+    return account.name.startsWith(nameOrAddress.trim()) ||
+        Fmt.addressOfAccount(account, widget.store).startsWith(nameOrAddress.trim());
   }
 
   Widget _selectedItemBuilder(BuildContext context, AccountData? item) {
     if (item == null) {
       return Container();
     }
-    return Observer(
-      builder: (_) {
-        final accInfo = widget.store.account.addressIndexMap[item.pubKey];
-        final address = Fmt.addressOfAccount(item, widget.store);
-        return Container(
-          padding: const EdgeInsets.only(top: 8),
-          child: Row(
+
+    final address = Fmt.addressOfAccount(item, widget.store);
+
+    return Container(
+      padding: const EdgeInsets.only(top: 8),
+      child: Row(
+        children: [
+          if (!widget.hideIdenticon)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: AddressIcon(item.address, item.pubKey, tapToCopy: false, size: 36),
+            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!widget.hideIdenticon)
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: AddressIcon(item.address, item.pubKey, tapToCopy: false, size: 36),
-                ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
-                  ),
-                  Text(
-                    Fmt.address(address)!,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Theme.of(context).unselectedWidgetColor,
-                    ),
-                  ),
-                ],
-              )
+              Text(item.name),
+              Text(
+                Fmt.address(address)!,
+                style: TextStyle(fontSize: 12, color: Theme.of(context).unselectedWidgetColor),
+              ),
             ],
-          ),
-        );
-      },
+          )
+        ],
+      ),
     );
   }
 
   Widget _listItemBuilder(BuildContext context, AccountData item, bool isSelected) {
-    return Observer(
-      builder: (_) {
-        final accInfo = widget.store.account.addressIndexMap[item.pubKey];
-        final address = Fmt.addressOfAccount(item, widget.store);
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8),
-          decoration: !isSelected
-              ? null
-              : BoxDecoration(
-                  border: Border.all(color: Theme.of(context).primaryColor),
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
-          child: ListTile(
-            key: Key(item.name),
-            selected: isSelected,
-            dense: true,
-            title: Text(Fmt.address(address)!),
-            subtitle: Text(
-              item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
+    final address = Fmt.addressOfAccount(item, widget.store);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: !isSelected
+          ? null
+          : BoxDecoration(
+              border: Border.all(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
             ),
-            leading: CircleAvatar(
-              child: AddressIcon(item.address, item.pubKey),
-            ),
-            onTap: () {
-              widget.onChanged?.call(item);
-              Navigator.pop(context);
-            },
-          ),
-        );
-      },
+      child: ListTile(
+        key: Key(item.name),
+        selected: isSelected,
+        dense: true,
+        title: Text(item.name),
+        subtitle: Text(Fmt.address(address)!),
+        leading: CircleAvatar(child: AddressIcon(item.address, item.pubKey)),
+        onTap: () {
+          widget.onChanged?.call(item);
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 
@@ -188,8 +124,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? dic.profile.errorUserNameIsRequired : null,
-        asyncItems: _getAccountsFromInput,
-        itemAsString: _itemAsString,
+        items: widget.store.account.accountListAll,
+        filterFn: filterByAddressOrName,
         onChanged: (AccountData? data) {
           if (widget.onChanged != null && data != null) {
             widget.onChanged!(data);
