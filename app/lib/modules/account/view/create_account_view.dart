@@ -3,6 +3,8 @@ import 'package:encointer_wallet/common/components/encointer_text_form_field.dar
 import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/page/account/import/import_account_page.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -21,7 +23,7 @@ class CreateAccountView extends StatelessWidget {
     final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.home.create),
+        title: Text(addAccount ? dic.profile.addAccount : dic.home.create),
         leading: const SizedBox.shrink(),
         actions: const [CloseButton()],
       ),
@@ -29,7 +31,7 @@ class CreateAccountView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Provider(
           create: (context) => AccountCreate(),
-          child: CreateAcccountForm(),
+          child: CreateAcccountForm(addAccount: addAccount),
         ),
       ),
     );
@@ -37,7 +39,8 @@ class CreateAccountView extends StatelessWidget {
 }
 
 class CreateAcccountForm extends StatelessWidget {
-  CreateAcccountForm({super.key});
+  CreateAcccountForm({super.key, required this.addAccount});
+  final bool addAccount;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -46,6 +49,7 @@ class CreateAcccountForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
+    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return FormScrollable(
       formKey: _formKey,
@@ -77,30 +81,59 @@ class CreateAcccountForm extends StatelessWidget {
         ),
         const SizedBox(height: 20),
       ],
-      columnChildren: [
-        const SizedBox(height: 10),
-        CustomButtonWithIcon(
-          key: const Key('create-account-next'),
-          label: dic.account.next,
-          icon: const Icon(Iconsax.login_1),
-          textStyle: textTheme.displaySmall,
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              context.read<AccountCreate>().setName(_nameCtrl.text.trim());
-              Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext _) => Provider.value(
-                    value: context.read<AccountCreate>(),
-                    child: const CreatePinView(),
-                  ),
-                ),
-              );
-            }
-          },
-        ),
-        const SizedBox(height: 20),
-      ],
+      columnChildren: addAccount
+          ? [
+              const SizedBox(height: 10),
+              CustomButtonWithIcon(
+                key: const Key('import-account'),
+                label: dic.home.accountImport,
+                icon: const Icon(Iconsax.import_2),
+                textStyle: textTheme.displaySmall,
+                onPressed: () => Navigator.pushNamed(context, ImportAccountPage.route),
+                backgroundColor: colorScheme.background,
+                foregroundColor: colorScheme.primary,
+              ),
+              const SizedBox(height: 10),
+              CustomButtonWithIcon(
+                key: const Key('create-account-confirm'),
+                label: dic.profile.accountCreate,
+                icon: const Icon(Iconsax.add_square),
+                textStyle: textTheme.displaySmall,
+                onPressed: () async {
+                  await context.read<AccountCreate>().genarateAddAccount(
+                        context: context,
+                        appStore: context.read<AppStore>(),
+                        webApi: webApi,
+                        name: _nameCtrl.text.trim(),
+                      );
+                },
+              ),
+              const SizedBox(height: 20),
+            ]
+          : [
+              const SizedBox(height: 10),
+              CustomButtonWithIcon(
+                key: const Key('create-account-next'),
+                label: dic.account.next,
+                icon: const Icon(Iconsax.login_1),
+                textStyle: textTheme.displaySmall,
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<AccountCreate>().setName(_nameCtrl.text.trim());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext _) => Provider.value(
+                          value: context.read<AccountCreate>(),
+                          child: const CreatePinView(),
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
     );
   }
 }

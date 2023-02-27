@@ -34,13 +34,13 @@ abstract class _AccountCreate with Store {
     required Api webApi,
     required String password,
   }) async {
-    final dic = I18n.of(context)!.translationsForLocale();
     setLoading(true);
     appStore.settings.setPin(password);
     final key = await webApi.account.generateAccount();
     final acc = await webApi.account.importAccount(key: key, password: password);
     if (acc['error'] != null) {
       setLoading(false);
+      final dic = I18n.of(context)!.translationsForLocale();
       AppAlert.showErrorDailog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
     } else {
       final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
@@ -58,6 +58,38 @@ abstract class _AccountCreate with Store {
         await Navigator.pushNamed(context, CommunityChooserOnMap.route);
       }
       await Navigator.pushNamedAndRemoveUntil<void>(context, EncointerHomePage.route, (route) => false);
+    }
+  }
+
+  @action
+  Future<void> genarateAddAccount({
+    required BuildContext context,
+    required AppStore appStore,
+    required Api webApi,
+    required String name,
+  }) async {
+    setLoading(true);
+    if (appStore.settings.cachedPin.isEmpty) {
+      await AppAlert.showInputPasswordDailog(context: context, account: appStore.account.currentAccount);
+    }
+    final pin = appStore.settings.cachedPin;
+    final key = await webApi.account.generateAccount();
+    final acc = await webApi.account.importAccount(key: key, password: pin);
+    if (acc['error'] != null) {
+      setLoading(false);
+      final dic = I18n.of(context)!.translationsForLocale();
+      AppAlert.showErrorDailog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
+    } else {
+      final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
+      await appStore.addAccount(acc, pin, addresses[0], name);
+      final pubKey = acc['pubKey'] as String?;
+      appStore.setCurrentAccount(pubKey);
+      await appStore.loadAccountCache();
+
+      // fetch info for the imported account
+      webApi.fetchAccountData();
+      setLoading(false);
+      Navigator.of(context).pop();
     }
   }
 }

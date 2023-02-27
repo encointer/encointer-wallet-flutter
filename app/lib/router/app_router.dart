@@ -6,7 +6,7 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
-import 'package:encointer_wallet/page/account/create/add_account_page.dart';
+// import 'package:encointer_wallet/page/account/create/add_account_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/detail_page.dart';
@@ -66,12 +66,12 @@ class AppRoute {
           builder: (_) => CreateAccountView(addAccount: ars! as bool),
           fullscreenDialog: true,
         );
-      case AddAccountPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const AddAccountPage(),
-          settings: settings,
-          fullscreenDialog: true,
-        );
+      // case AddAccountPage.route:
+      //   return CupertinoPageRoute(
+      //     builder: (_) => const AddAccountPage(),
+      //     settings: settings,
+      //     fullscreenDialog: true,
+      //   );
       case AccountSharePage.route:
         return CupertinoPageRoute(
           builder: (_) => const AccountSharePage(),
