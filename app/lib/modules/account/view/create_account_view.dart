@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/common/components/button/custom_button.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
+import 'package:encointer_wallet/common/components/loading/progressing_inducator.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/account/import/import_account_page.dart';
@@ -9,6 +10,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
@@ -51,6 +53,7 @@ class CreateAcccountForm extends StatelessWidget {
     final dic = I18n.of(context)!.translationsForLocale();
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final store = context.watch<AccountCreate>();
     return FormScrollable(
       formKey: _formKey,
       listViewChildren: [
@@ -86,35 +89,38 @@ class CreateAcccountForm extends StatelessWidget {
               const SizedBox(height: 10),
               CustomButtonWithIcon(
                 key: const Key('import-account'),
-                label: dic.home.accountImport,
                 icon: const Icon(Iconsax.import_2),
                 textStyle: textTheme.displaySmall,
-                onPressed: () => Navigator.pushNamed(context, ImportAccountPage.route),
+                onPressed: () => Navigator.pushNamed(context, ImportAccountView.route),
                 backgroundColor: colorScheme.background,
                 foregroundColor: colorScheme.primary,
+                child: Text(dic.home.accountImport),
               ),
               const SizedBox(height: 10),
-              CustomButtonWithIcon(
-                key: const Key('create-account-confirm'),
-                label: dic.profile.accountCreate,
-                icon: const Icon(Iconsax.add_square),
-                textStyle: textTheme.displaySmall,
-                onPressed: () async {
-                  await context.read<AccountCreate>().genarateAddAccount(
-                        context: context,
-                        appStore: context.read<AppStore>(),
-                        webApi: webApi,
-                        name: _nameCtrl.text.trim(),
-                      );
-                },
-              ),
+              Observer(builder: (_) {
+                return CustomButtonWithIcon(
+                  key: const Key('create-account-confirm'),
+                  icon: const Icon(Iconsax.add_square),
+                  textStyle: textTheme.displaySmall,
+                  onPressed: !store.loading
+                      ? () async {
+                          await context.read<AccountCreate>().genarateAddAccount(
+                                context: context,
+                                appStore: context.read<AppStore>(),
+                                webApi: webApi,
+                                name: _nameCtrl.text.trim(),
+                              );
+                        }
+                      : null,
+                  child: !store.loading ? Text(dic.profile.accountCreate) : const ProgressingIndicator(),
+                );
+              }),
               const SizedBox(height: 20),
             ]
           : [
               const SizedBox(height: 10),
               CustomButtonWithIcon(
                 key: const Key('create-account-next'),
-                label: dic.account.next,
                 icon: const Icon(Iconsax.login_1),
                 textStyle: textTheme.displaySmall,
                 onPressed: () {
@@ -131,6 +137,7 @@ class CreateAcccountForm extends StatelessWidget {
                     );
                   }
                 },
+                child: Text(dic.account.next),
               ),
               const SizedBox(height: 20),
             ],

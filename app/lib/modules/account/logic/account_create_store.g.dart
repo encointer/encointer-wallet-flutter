@@ -48,6 +48,15 @@ mixin _$AccountCreate on _AccountCreate, Store {
         .run(() => super.generateAccount(context: context, appStore: appStore, webApi: webApi, password: password));
   }
 
+  late final _$genarateAddAccountAsyncAction = AsyncAction('_AccountCreate.genarateAddAccount', context: context);
+
+  @override
+  Future<void> genarateAddAccount(
+      {required BuildContext context, required AppStore appStore, required Api webApi, required String name}) {
+    return _$genarateAddAccountAsyncAction
+        .run(() => super.genarateAddAccount(context: context, appStore: appStore, webApi: webApi, name: name));
+  }
+
   late final _$_AccountCreateActionController = ActionController(name: '_AccountCreate', context: context);
 
   @override

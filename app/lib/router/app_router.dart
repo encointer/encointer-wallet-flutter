@@ -6,8 +6,6 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
-// import 'package:encointer_wallet/page/account/create/add_account_page.dart';
-import 'package:encointer_wallet/page/account/import/import_account_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/detail_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
@@ -83,9 +81,9 @@ class AppRoute {
       //     builder: (_) => const CreatePinPage(),
       //     settings: settings,
       //   );
-      case ImportAccountPage.route:
+      case ImportAccountView.route:
         return CupertinoPageRoute(
-          builder: (_) => const ImportAccountPage(),
+          builder: (_) => const ImportAccountView(),
           settings: settings,
         );
       case ScanPage.route:

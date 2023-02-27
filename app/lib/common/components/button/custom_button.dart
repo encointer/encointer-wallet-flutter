@@ -50,7 +50,7 @@ class CustomButton extends StatelessWidget {
 
 class CustomButtonWithIcon extends StatelessWidget {
   const CustomButtonWithIcon({
-    required this.label,
+    required this.child,
     required this.icon,
     this.onPressed,
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
@@ -62,13 +62,13 @@ class CustomButtonWithIcon extends StatelessWidget {
   });
 
   final void Function()? onPressed;
-  final String label;
+  final Widget child;
+  final Widget icon;
   final BorderRadiusGeometry? borderRadius;
   final Color? backgroundColor;
   final Color? foregroundColor;
   final Color? shadowColor;
   final TextStyle? textStyle;
-  final Widget icon;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class CustomButtonWithIcon extends StatelessWidget {
           ),
         ),
         icon: icon,
-        label: Text(label),
+        label: child,
       ),
     );
   }
