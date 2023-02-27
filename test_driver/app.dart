@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/app/presentation/splash/store/splash_view_store.dart';
 import 'package:encointer_wallet/app/wallet_app.dart';
 import 'package:encointer_wallet/extras/config/build_options.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
@@ -69,9 +68,6 @@ void main() async {
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()
           create: (context) => globalAppStore,
-        ),
-        Provider<SplashViewStore>(
-          create: (context) => SplashViewStore(),
         ),
       ],
       child: const WalletApp(),

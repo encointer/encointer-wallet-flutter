@@ -53,6 +53,7 @@ abstract class _AppStore with Store {
   // it removes the `null`-compiler checks and turns them into runtime-checks.
   @observable
   SettingsStore? _settings;
+  @computed
   SettingsStore get settings => _settings!;
 
   @observable
@@ -90,22 +91,30 @@ abstract class _AppStore with Store {
   bool get appIsReady => storeIsReady && webApiIsReady;
 
   @action
+  void _setSettingsStore() {
+    Log.d('_setSettingsStore', _tag);
+    _settings = SettingsStore();
+  }
+
+  @action
   Future<void> init() async {
     Log.d('_init', _tag);
 
+    _setSettingsStore();
+
     // wait settings store loaded
-    _settings = SettingsStore(this as AppStore);
+
     await settings.init();
 
     _dataUpdate = DataUpdateStore(refreshPeriod: const Duration(minutes: 2));
 
-    _account = AccountStore(this as AppStore);
+    _account = AccountStore();
     await account.loadAccount();
 
-    _assets = AssetsStore(this as AppStore);
+    _assets = AssetsStore();
     assets.loadCache();
 
-    _chain = ChainStore(this as AppStore);
+    _chain = ChainStore();
     chain.loadCache();
 
     // need to call this after settings was initialized
@@ -122,11 +131,13 @@ abstract class _AppStore with Store {
     Log.d('Is App Ready?: $appIsReady', _tag);
   }
 
+  @action
   Future<void> cacheObject(String key, Object value) {
     Log.d(' cacheObject: key = $key, value = $value', _tag);
     return localStorage.setObject(getCacheKey(key), value);
   }
 
+  @action
   Future<Object?> loadObject(String key) {
     Log.d(' loadObject: key = $key', _tag);
     return localStorage.getObject(getCacheKey(key));
@@ -136,6 +147,7 @@ abstract class _AppStore with Store {
   ///
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
+  @action
   String getCacheKey(String key) {
     Log.d(' getCacheKey: key = $key', _tag);
     final cacheKey = '${settings.endpoint.info}_$key';
@@ -146,17 +158,20 @@ abstract class _AppStore with Store {
   ///
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
+  @action
   String encointerCacheKey(String networkInfo) {
     Log.d(' encointerCacheKey: networkInfo = $networkInfo', _tag);
     final key = '$encointerCachePrefix-$networkInfo';
     return buildConfig == BuildConfig.unitTest ? 'test-$key' : key;
   }
 
+  @action
   Future<bool> purgeEncointerCache(String networkInfo) async {
     Log.d(' purgeEncointerCache: networkInfo = $networkInfo', _tag);
     return localStorage.removeKey(encointerCacheKey(networkInfo));
   }
 
+  @action
   Future<void> loadOrInitEncointerCache(String networkInfo) async {
     Log.d(' loadOrInitEncointerCache: networkInfo = $networkInfo', _tag);
     final cacheVersionFinalKey = getCacheKey(encointerCacheVersionPrefix);
@@ -193,6 +208,7 @@ abstract class _AppStore with Store {
     }
   }
 
+  @action
   Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) async {
     Log.d(' loadEncointerCache: encointerFinalCacheKey = $encointerFinalCacheKey', _tag);
     final cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
@@ -218,6 +234,7 @@ abstract class _AppStore with Store {
     }
   }
 
+  @action
   Future<List<void>> addAccount(Map<String, dynamic> acc, String password, String? address) {
     Log.d('addAccount: acc = $acc, password = $password, address = $address', _tag);
     return Future.wait([
@@ -225,6 +242,7 @@ abstract class _AppStore with Store {
     ]);
   }
 
+  @action
   Future<void> setCurrentAccount(String? pubKey) async {
     Log.d('setCurrentAccount: setting current account: $pubKey', _tag);
 
@@ -256,6 +274,7 @@ abstract class _AppStore with Store {
   /// Should be used whenever one switches to a new account. This function needs to be awaited most of the time.
   /// Otherwise, calling webApi queries when the cache has not finished loading might result in outdated or wrong data.
   /// E.g. not awaiting this call was the cause of #357.
+  @action
   Future<List<void>> loadAccountCache() async {
     return Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
   }

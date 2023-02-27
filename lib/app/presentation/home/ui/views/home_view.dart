@@ -29,14 +29,13 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> with EncointerStateMixin {
   final PageController _pageController = PageController();
 
-  late final HomeViewStore _store;
+  late final HomeViewStore _store = HomeViewStore();
 
   late List<TabData> _tabList;
   int _tabIndex = 0;
 
   @override
   void initState() {
-    _store = HomeViewStore();
     if (buildConfig != BuildConfig.integrationTest) NotificationPlugin.init(context);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -56,7 +55,7 @@ class _HomeViewState extends State<HomeView> with EncointerStateMixin {
         controller: _pageController,
         children: [
           const AssetsView(),
-          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) ...[
+          if (context.select<AppStore, bool>((store) => _store.appStore.settings.enableBazaar)) ...[
             const BazaarMain(),
           ],
           ScanPage(),
@@ -95,7 +94,7 @@ class _HomeViewState extends State<HomeView> with EncointerStateMixin {
         TabKey.wallet,
         Iconsax.home_2,
       ),
-      if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) ...[
+      if (context.select<AppStore, bool>((store) => _store.appStore.settings.enableBazaar)) ...[
         TabData(
           TabKey.bazaar,
           Iconsax.shop,

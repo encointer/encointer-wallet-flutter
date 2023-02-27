@@ -116,7 +116,7 @@ class BuildConfig {
   static BuildConfig unitTest = BuildConfig(
     isTestMode: true,
     mockSubstrateApi: true,
-    endpoint: networkEndpointEncointerMainnet,
+    endpoint: EndpointData(),
   );
 
   static BuildConfig integrationTest = BuildConfig(

@@ -1,18 +1,18 @@
 import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/common/services/preferences/preferences_service.dart';
 import 'package:encointer_wallet/extras/config/build_options.dart';
 import 'package:encointer_wallet/service_locator/service_locator.dart' as service_locator;
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   setEnvironment(Environment.test);
+  await PreferencesService.instance.init();
   service_locator.init(isTest: true);
 
   group('SettingsStore test', () {
-    final root = AppStore();
-    final store = SettingsStore(root);
+    late final store = SettingsStore();
 
     test('settings store created', () {
       expect(store.cacheNetworkStateKey, 'network');

@@ -9,6 +9,13 @@ part of 'app.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppStore on _AppStore, Store {
+  Computed<SettingsStore>? _$settingsComputed;
+
+  @override
+  SettingsStore get settings =>
+      (_$settingsComputed ??= Computed<SettingsStore>(() => super.settings,
+              name: '_AppStore.settings'))
+          .value;
   Computed<DataUpdateStore>? _$dataUpdateComputed;
 
   @override
@@ -183,8 +190,63 @@ mixin _$AppStore on _AppStore, Store {
     return _$initAsyncAction.run(() => super.init());
   }
 
+  late final _$purgeEncointerCacheAsyncAction =
+      AsyncAction('_AppStore.purgeEncointerCache', context: context);
+
+  @override
+  Future<bool> purgeEncointerCache(String networkInfo) {
+    return _$purgeEncointerCacheAsyncAction
+        .run(() => super.purgeEncointerCache(networkInfo));
+  }
+
+  late final _$loadOrInitEncointerCacheAsyncAction =
+      AsyncAction('_AppStore.loadOrInitEncointerCache', context: context);
+
+  @override
+  Future<void> loadOrInitEncointerCache(String networkInfo) {
+    return _$loadOrInitEncointerCacheAsyncAction
+        .run(() => super.loadOrInitEncointerCache(networkInfo));
+  }
+
+  late final _$loadEncointerCacheAsyncAction =
+      AsyncAction('_AppStore.loadEncointerCache', context: context);
+
+  @override
+  Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) {
+    return _$loadEncointerCacheAsyncAction
+        .run(() => super.loadEncointerCache(encointerFinalCacheKey));
+  }
+
+  late final _$setCurrentAccountAsyncAction =
+      AsyncAction('_AppStore.setCurrentAccount', context: context);
+
+  @override
+  Future<void> setCurrentAccount(String? pubKey) {
+    return _$setCurrentAccountAsyncAction
+        .run(() => super.setCurrentAccount(pubKey));
+  }
+
+  late final _$loadAccountCacheAsyncAction =
+      AsyncAction('_AppStore.loadAccountCache', context: context);
+
+  @override
+  Future<List<void>> loadAccountCache() {
+    return _$loadAccountCacheAsyncAction.run(() => super.loadAccountCache());
+  }
+
   late final _$_AppStoreActionController =
       ActionController(name: '_AppStore', context: context);
+
+  @override
+  void _setSettingsStore() {
+    final _$actionInfo = _$_AppStoreActionController.startAction(
+        name: '_AppStore._setSettingsStore');
+    try {
+      return super._setSettingsStore();
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setApiReady(bool value) {
@@ -198,10 +260,67 @@ mixin _$AppStore on _AppStore, Store {
   }
 
   @override
+  Future<void> cacheObject(String key, Object value) {
+    final _$actionInfo =
+        _$_AppStoreActionController.startAction(name: '_AppStore.cacheObject');
+    try {
+      return super.cacheObject(key, value);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<Object?> loadObject(String key) {
+    final _$actionInfo =
+        _$_AppStoreActionController.startAction(name: '_AppStore.loadObject');
+    try {
+      return super.loadObject(key);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String getCacheKey(String key) {
+    final _$actionInfo =
+        _$_AppStoreActionController.startAction(name: '_AppStore.getCacheKey');
+    try {
+      return super.getCacheKey(key);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String encointerCacheKey(String networkInfo) {
+    final _$actionInfo = _$_AppStoreActionController.startAction(
+        name: '_AppStore.encointerCacheKey');
+    try {
+      return super.encointerCacheKey(networkInfo);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<List<void>> addAccount(
+      Map<String, dynamic> acc, String password, String? address) {
+    final _$actionInfo =
+        _$_AppStoreActionController.startAction(name: '_AppStore.addAccount');
+    try {
+      return super.addAccount(acc, password, address);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 storeIsReady: ${storeIsReady},
 webApiIsReady: ${webApiIsReady},
+settings: ${settings},
 dataUpdate: ${dataUpdate},
 account: ${account},
 assets: ${assets},

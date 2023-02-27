@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
 import 'package:mobx/mobx.dart';
@@ -7,12 +8,10 @@ part 'chain.g.dart';
 
 const _tag = 'chain_store';
 
-class ChainStore extends _ChainStore with _$ChainStore {
-  ChainStore(super.store);
-}
+class ChainStore extends _ChainStore with _$ChainStore {}
 
 abstract class _ChainStore with Store {
-  _ChainStore(this.rootStore);
+  _ChainStore() : rootStore = sl<AppStore>();
 
   final AppStore rootStore;
 

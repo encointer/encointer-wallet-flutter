@@ -29,6 +29,15 @@ mixin _$AssetsViewStore on _AssetsViewStoreBase, Store {
         .run(() => super.reconnect(context: context, appStore: appStore));
   }
 
+  late final _$switchAccountAsyncAction =
+      AsyncAction('_AssetsViewStoreBase.switchAccount', context: context);
+
+  @override
+  Future<void> switchAccount(AccountData account, AppStore appStore) {
+    return _$switchAccountAsyncAction
+        .run(() => super.switchAccount(account, appStore));
+  }
+
   late final _$showPasswordDialogAsyncAction =
       AsyncAction('_AssetsViewStoreBase.showPasswordDialog', context: context);
 

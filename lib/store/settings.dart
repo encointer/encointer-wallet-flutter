@@ -5,6 +5,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/extras/config/build_options.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +16,10 @@ part 'settings.g.dart';
 
 const _tag = 'settings_store';
 
-class SettingsStore extends _SettingsStore with _$SettingsStore {
-  SettingsStore(super.store);
-}
+class SettingsStore extends _SettingsStore with _$SettingsStore {}
 
 abstract class _SettingsStore with Store {
-  _SettingsStore(this.rootStore);
+  _SettingsStore() : rootStore = sl<AppStore>();
 
   final AppStore rootStore;
 
@@ -131,7 +130,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> init() async {
-    Log.d('_init', _tag);
+    Log.d('init', _tag);
     await loadLocalCode();
     await loadEndpoint();
     await Future.wait([

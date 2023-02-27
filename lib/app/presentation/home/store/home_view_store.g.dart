@@ -9,6 +9,14 @@ part of 'home_view_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$HomeViewStore on _HomeViewStoreBase, Store {
+  Computed<AppStore>? _$appStoreComputed;
+
+  @override
+  AppStore get appStore =>
+      (_$appStoreComputed ??= Computed<AppStore>(() => super.appStore,
+              name: '_HomeViewStoreBase.appStore'))
+          .value;
+
   late final _$initAsyncAction =
       AsyncAction('_HomeViewStoreBase.init', context: context);
 
@@ -48,7 +56,7 @@ mixin _$HomeViewStore on _HomeViewStoreBase, Store {
   @override
   String toString() {
     return '''
-
+appStore: ${appStore}
     ''';
   }
 }

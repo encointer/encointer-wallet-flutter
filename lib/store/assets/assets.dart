@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/balances_info.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
@@ -8,12 +9,10 @@ part 'assets.g.dart';
 
 const _tag = 'assets_store';
 
-class AssetsStore extends _AssetsStore with _$AssetsStore {
-  AssetsStore(super.store);
-}
+class AssetsStore extends _AssetsStore with _$AssetsStore {}
 
 abstract class _AssetsStore with Store {
-  _AssetsStore(this.rootStore);
+  _AssetsStore() : rootStore = sl<AppStore>();
 
   final AppStore rootStore;
 

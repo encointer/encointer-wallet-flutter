@@ -5,6 +5,7 @@ import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -22,15 +23,13 @@ const _tag = 'account_store';
 /// * https://github.com/encointer/encointer-wallet-flutter/issues/487
 
 class AccountStore extends _AccountStore with _$AccountStore {
-  AccountStore(super.appStore);
-
   static const String seedTypeMnemonic = 'mnemonic';
   static const String seedTypeRawSeed = 'rawSeed';
   static const String seedTypeKeystore = 'keystore';
 }
 
 abstract class _AccountStore with Store {
-  _AccountStore(this.rootStore);
+  _AccountStore() : rootStore = sl<AppStore>();
 
   final AppStore rootStore;
 

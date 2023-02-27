@@ -3,10 +3,10 @@ import 'package:encointer_wallet/service/deep_link/deep_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/meetup/notification_handler.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 part 'home_view_store.g.dart';
@@ -16,6 +16,13 @@ const _tag = 'home_view_store';
 class HomeViewStore = _HomeViewStoreBase with _$HomeViewStore;
 
 abstract class _HomeViewStoreBase with Store {
+  _HomeViewStoreBase() : _appStore = sl<AppStore>();
+
+  late final AppStore _appStore;
+
+  @computed
+  AppStore get appStore => _appStore;
+
   @action
   Future<void> init(BuildContext context) async {
     Log.d('init', _tag);
@@ -48,7 +55,7 @@ abstract class _HomeViewStoreBase with Store {
     // enough time to connect to the blockchain or we already have a populated store.
     //
     // Hence, can only be null if someone uses the app for the first time and is offline.
-    final encointer = context.read<AppStore>().encointer;
+    final encointer = sl<AppStore>().encointer;
     if (encointer.nextRegisteringPhaseStart != null &&
         encointer.currentCeremonyIndex != null &&
         encointer.ceremonyCycleDuration != null) {

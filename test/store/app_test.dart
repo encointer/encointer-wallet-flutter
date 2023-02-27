@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   setEnvironment(Environment.test);
+
   service_locator.init(isTest: true);
 
   late final store = AppStore();
