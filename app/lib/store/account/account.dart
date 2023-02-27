@@ -58,12 +58,6 @@ abstract class _AccountStore with Store {
   ObservableList<AccountData> accountList = ObservableList<AccountData>();
 
   @observable
-  ObservableMap<String?, Map> addressIndexMap = ObservableMap<String?, Map>();
-
-  @observable
-  Map<String?, Map> accountIndexMap = <String, Map>{};
-
-  @observable
   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
 
   @observable
@@ -362,13 +356,6 @@ abstract class _AccountStore with Store {
       });
       // update state
       pubKeyAddressMap[int.parse(ss58)] = addresses;
-    }
-  }
-
-  @action
-  void setAddressIndex(List<dynamic> list) {
-    for (final i in list) {
-      addressIndexMap[(i as Map<String, dynamic>)['accountId'] as String] = i;
     }
   }
 }
