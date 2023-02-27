@@ -72,12 +72,12 @@ void main() {
     group('Clear', () {
       test('clear successfully', () async {
         when(() => flutterSecureStorage.deleteAll()).thenAnswer((_) => Future.value());
-        expect(secureStorage.deleteAll(), completes);
+        expect(secureStorage.clear(), completes);
       });
 
       test('throw `StorageException` fails', () async {
         when(() => flutterSecureStorage.deleteAll()).thenThrow(mockException);
-        expect(() async => secureStorage.deleteAll(), throwsA(isA<StorageException>()));
+        expect(() async => secureStorage.clear(), throwsA(isA<StorageException>()));
       });
     });
   });

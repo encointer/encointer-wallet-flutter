@@ -1,6 +1,8 @@
-import 'package:ew_storage/src/exception.dart';
+import 'package:ew_storage/src/interface/exception.dart';
+import 'package:ew_storage/src/interface/storage_interface_sync_read.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// A PreferencesStorage client which implements the base [StorageInterfaceSyncRead].
 /// [PreferencesStorage] uses `SharedPreferences` internally.
 ///
 /// ```dart
@@ -13,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// // Read value for key.
 /// final value = storage.getString(key: 'my_key'); // 'my_value'
 /// ```
-class PreferencesStorage {
+class PreferencesStorage implements StorageInterfaceSyncRead {
   const PreferencesStorage._(this._sharedPreferences);
 
   final SharedPreferences _sharedPreferences;
@@ -25,7 +27,8 @@ class PreferencesStorage {
     return PreferencesStorage._(pref ?? await SharedPreferences.getInstance());
   }
 
-  String? getString({required String key}) {
+  @override
+  String? readString({required String key}) {
     try {
       return _sharedPreferences.getString(key);
     } catch (error, stackTrace) {
@@ -33,7 +36,8 @@ class PreferencesStorage {
     }
   }
 
-  bool? getBool({required String key}) {
+  @override
+  bool? readBool({required String key}) {
     try {
       return _sharedPreferences.getBool(key);
     } catch (error, stackTrace) {
@@ -41,7 +45,8 @@ class PreferencesStorage {
     }
   }
 
-  double? getDouble({required String key}) {
+  @override
+  double? readDouble({required String key}) {
     try {
       return _sharedPreferences.getDouble(key);
     } catch (error, stackTrace) {
@@ -49,7 +54,8 @@ class PreferencesStorage {
     }
   }
 
-  int? getInt({required String key}) {
+  @override
+  int? readInt({required String key}) {
     try {
       return _sharedPreferences.getInt(key);
     } catch (error, stackTrace) {
@@ -57,7 +63,8 @@ class PreferencesStorage {
     }
   }
 
-  List<String>? getStringList({required String key}) {
+  @override
+  List<String>? readStringList({required String key}) {
     try {
       return _sharedPreferences.getStringList(key);
     } catch (error, stackTrace) {
@@ -65,7 +72,8 @@ class PreferencesStorage {
     }
   }
 
-  Future<bool> setString({required String key, required String value}) {
+  @override
+  Future<bool> writeString({required String key, required String value}) {
     try {
       return _sharedPreferences.setString(key, value);
     } catch (error, stackTrace) {
@@ -73,7 +81,8 @@ class PreferencesStorage {
     }
   }
 
-  Future<bool> setBool({required String key, required bool value}) {
+  @override
+  Future<bool> writeBool({required String key, required bool value}) {
     try {
       return _sharedPreferences.setBool(key, value);
     } catch (error, stackTrace) {
@@ -81,7 +90,8 @@ class PreferencesStorage {
     }
   }
 
-  Future<bool> setDouble({required String key, required double value}) {
+  @override
+  Future<bool> writeDouble({required String key, required double value}) {
     try {
       return _sharedPreferences.setDouble(key, value);
     } catch (error, stackTrace) {
@@ -89,7 +99,8 @@ class PreferencesStorage {
     }
   }
 
-  Future<bool> setInt({required String key, required int value}) {
+  @override
+  Future<bool> writeInt({required String key, required int value}) {
     try {
       return _sharedPreferences.setInt(key, value);
     } catch (error, stackTrace) {
@@ -97,7 +108,8 @@ class PreferencesStorage {
     }
   }
 
-  Future<bool> setStringList({required String key, required List<String> value}) {
+  @override
+  Future<bool> writeStringList({required String key, required List<String> value}) {
     try {
       return _sharedPreferences.setStringList(key, value);
     } catch (error, stackTrace) {
@@ -105,7 +117,8 @@ class PreferencesStorage {
     }
   }
 
-  Future<bool> remove({required String key}) async {
+  @override
+  Future<bool> delete({required String key}) async {
     try {
       return _sharedPreferences.remove(key);
     } catch (error, stackTrace) {
@@ -113,6 +126,7 @@ class PreferencesStorage {
     }
   }
 
+  @override
   Future<bool> clear() {
     try {
       return _sharedPreferences.clear();

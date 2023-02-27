@@ -1,6 +1,8 @@
-import 'package:ew_storage/src/exception.dart';
+import 'package:ew_storage/src/interface/exception.dart';
+import 'package:ew_storage/src/interface/storage_interface.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+/// A SecureStorage client which implements the base [StorageInterface].
 /// By default, [SecureStorage] uses `FlutterSecureStorage`.
 ///
 /// ```dart
@@ -13,7 +15,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// // Read value for key.
 /// final value = await storage.read(key: 'my_key'); // 'my_value'
 /// ```
-class SecureStorage {
+class SecureStorage implements StorageInterface {
   const SecureStorage([
     this._secureStorage = const FlutterSecureStorage(
       /// If you want read about [encryptedSharedPreferences]
@@ -24,6 +26,7 @@ class SecureStorage {
 
   final FlutterSecureStorage _secureStorage;
 
+  @override
   Future<String?> read({required String key}) {
     try {
       return _secureStorage.read(key: key);
@@ -32,6 +35,7 @@ class SecureStorage {
     }
   }
 
+  @override
   Future<void> write({required String key, required String value}) {
     try {
       return _secureStorage.write(key: key, value: value);
@@ -40,6 +44,7 @@ class SecureStorage {
     }
   }
 
+  @override
   Future<void> delete({required String key}) {
     try {
       return _secureStorage.delete(key: key);
@@ -48,7 +53,8 @@ class SecureStorage {
     }
   }
 
-  Future<void> deleteAll() {
+  @override
+  Future<void> clear() {
     try {
       return _secureStorage.deleteAll();
     } catch (error, stackTrace) {
