@@ -132,7 +132,7 @@ class AccountApi {
     // final key = store.account.newAccount.key;
     // final pass = store.account.newAccount.password;
     // var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
-    var code  = '';
+    var code = '';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
     return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }

@@ -24,8 +24,7 @@ mixin _$AccountCreate on _AccountCreate, Store {
     });
   }
 
-  late final _$passwordAtom =
-      Atom(name: '_AccountCreate.password', context: context);
+  late final _$passwordAtom = Atom(name: '_AccountCreate.password', context: context);
 
   @override
   String? get password {
@@ -55,8 +54,7 @@ mixin _$AccountCreate on _AccountCreate, Store {
     });
   }
 
-  late final _$loadingAtom =
-      Atom(name: '_AccountCreate.loading', context: context);
+  late final _$loadingAtom = Atom(name: '_AccountCreate.loading', context: context);
 
   @override
   bool get loading {
@@ -71,13 +69,11 @@ mixin _$AccountCreate on _AccountCreate, Store {
     });
   }
 
-  late final _$_AccountCreateActionController =
-      ActionController(name: '_AccountCreate', context: context);
+  late final _$_AccountCreateActionController = ActionController(name: '_AccountCreate', context: context);
 
   @override
   void setName(String value) {
-    final _$actionInfo = _$_AccountCreateActionController.startAction(
-        name: '_AccountCreate.setName');
+    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setName');
     try {
       return super.setName(value);
     } finally {
@@ -87,8 +83,7 @@ mixin _$AccountCreate on _AccountCreate, Store {
 
   @override
   void setPassword(String value) {
-    final _$actionInfo = _$_AccountCreateActionController.startAction(
-        name: '_AccountCreate.setPassword');
+    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setPassword');
     try {
       return super.setPassword(value);
     } finally {
@@ -98,8 +93,7 @@ mixin _$AccountCreate on _AccountCreate, Store {
 
   @override
   void setKey(String? valeu) {
-    final _$actionInfo = _$_AccountCreateActionController.startAction(
-        name: '_AccountCreate.setKey');
+    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setKey');
     try {
       return super.setKey(valeu);
     } finally {
@@ -109,8 +103,7 @@ mixin _$AccountCreate on _AccountCreate, Store {
 
   @override
   void setLoading(bool valeu) {
-    final _$actionInfo = _$_AccountCreateActionController.startAction(
-        name: '_AccountCreate.setLoading');
+    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setLoading');
     try {
       return super.setLoading(valeu);
     } finally {
@@ -120,8 +113,7 @@ mixin _$AccountCreate on _AccountCreate, Store {
 
   @override
   void resetNewAccount() {
-    final _$actionInfo = _$_AccountCreateActionController.startAction(
-        name: '_AccountCreate.resetNewAccount');
+    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.resetNewAccount');
     try {
       return super.resetNewAccount();
     } finally {
