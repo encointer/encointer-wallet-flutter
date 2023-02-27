@@ -4,7 +4,6 @@ import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
 import 'package:encointer_wallet/common/components/loading/progressing_inducator.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/page/account/import/import_account_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
@@ -91,7 +90,17 @@ class CreateAcccountForm extends StatelessWidget {
                 key: const Key('import-account'),
                 icon: const Icon(Iconsax.import_2),
                 textStyle: textTheme.displaySmall,
-                onPressed: () => Navigator.pushNamed(context, ImportAccountView.route),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext _) => Provider.value(
+                        value: context.read<AccountCreate>(),
+                        child: const ImportAccountView(),
+                      ),
+                    ),
+                  );
+                },
                 backgroundColor: colorScheme.background,
                 foregroundColor: colorScheme.primary,
                 child: Text(dic.home.accountImport),

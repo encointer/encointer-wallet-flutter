@@ -5,6 +5,7 @@ import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:provider/provider.dart';
 
 class CreateAccountEntryView extends StatelessWidget {
   const CreateAccountEntryView({super.key});
@@ -46,7 +47,17 @@ class CreateAccountEntryView extends StatelessWidget {
                 ),
                 InkWell(
                   key: const Key('import-account'),
-                  onTap: () => Navigator.pushNamed(context, ImportAccountView.route),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext _) => Provider(
+                          create: (_) => AccountCreate(),
+                          child: const ImportAccountView(),
+                        ),
+                      ),
+                    );
+                  },
                   child: Text(
                     dic.profile.import,
                     style: TextStyle(color: zurichLion.shade50, decoration: TextDecoration.underline),

@@ -64,27 +64,11 @@ class AppRoute {
           builder: (_) => CreateAccountView(addAccount: ars! as bool),
           fullscreenDialog: true,
         );
-      // case AddAccountPage.route:
-      //   return CupertinoPageRoute(
-      //     builder: (_) => const AddAccountPage(),
-      //     settings: settings,
-      //     fullscreenDialog: true,
-      //   );
       case AccountSharePage.route:
         return CupertinoPageRoute(
           builder: (_) => const AccountSharePage(),
           settings: settings,
           fullscreenDialog: true,
-        );
-      // case CreatePinPage.route:
-      //   return CupertinoPageRoute(
-      //     builder: (_) => const CreatePinPage(),
-      //     settings: settings,
-      //   );
-      case ImportAccountView.route:
-        return CupertinoPageRoute(
-          builder: (_) => const ImportAccountView(),
-          settings: settings,
         );
       case ScanPage.route:
         return CupertinoPageRoute(

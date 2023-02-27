@@ -4,6 +4,8 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/validate_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -16,6 +18,12 @@ abstract class _AccountCreate with Store {
   String? name;
 
   @observable
+  String? accountKey;
+
+  @observable
+  KeyType keyType = KeyType.mnemonic;
+
+  @observable
   bool loading = false;
 
   @action
@@ -26,6 +34,12 @@ abstract class _AccountCreate with Store {
 
   @action
   void resetName() => name = null;
+
+  @action
+  void setKey(String value) => accountKey = value;
+
+  @action
+  void setKeyType(KeyType value) => keyType = value;
 
   @action
   Future<void> generateAccount({
@@ -92,4 +106,44 @@ abstract class _AccountCreate with Store {
       Navigator.of(context).pop();
     }
   }
+
+  @action
+  String? validateAccount(Translations dic, String key) {
+    if (key.isEmpty) return dic.account.importMustNotBeEmpty;
+    if (ValidateKeys.isRawSeed(key)) {
+      keyType = KeyType.rawSeed;
+      return ValidateKeys.validateRawSeed(key) ? null : dic.account.importInvalidRawSeed;
+    } else if (ValidateKeys.isPrivateKey(key)) {
+      // Todo: #426
+      return dic.account.importPrivateKeyUnsupported;
+    } else {
+      keyType = KeyType.mnemonic;
+      return ValidateKeys.validateMnemonic(key) ? null : dic.account.importInvalidMnemonic;
+    }
+  }
+
+  @action
+  String? importAccount(Translations dic, String key) {
+    if (key.isEmpty) return dic.account.importMustNotBeEmpty;
+    if (ValidateKeys.isRawSeed(key)) {
+      keyType = KeyType.rawSeed;
+      return ValidateKeys.validateRawSeed(key) ? null : dic.account.importInvalidRawSeed;
+    } else if (ValidateKeys.isPrivateKey(key)) {
+      // Todo: #426
+      return dic.account.importPrivateKeyUnsupported;
+    } else {
+      keyType = KeyType.mnemonic;
+      return ValidateKeys.validateMnemonic(key) ? null : dic.account.importInvalidMnemonic;
+    }
+  }
+}
+
+enum KeyType {
+  mnemonic('mnemonic'),
+  rawSeed('rawSeed'),
+  keystore('keystore');
+
+  const KeyType(this.key);
+
+  final String key;
 }
