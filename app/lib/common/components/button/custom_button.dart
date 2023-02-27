@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
-    required this.label,
+    required this.child,
     this.onPressed,
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
     this.backgroundColor = Colors.transparent,
@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
   });
 
   final void Function()? onPressed;
-  final String label;
+  final Widget child;
   final BorderRadiusGeometry? borderRadius;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -42,7 +42,7 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        child: Text(label),
+        child: child,
       ),
     );
   }

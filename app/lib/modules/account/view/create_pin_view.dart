@@ -21,9 +21,7 @@ class CreatePinView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = context.watch<AccountCreate>();
     final dic = I18n.of(context)!.translationsForLocale();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.home.create),
@@ -31,13 +29,7 @@ class CreatePinView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: Observer(builder: (_) {
-          if (store.loading) {
-            return const ProgressingIndicator();
-          } else {
-            return CreatePinForm();
-          }
-        }),
+        child: CreatePinForm(),
       ),
     );
   }
@@ -55,6 +47,7 @@ class CreatePinForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
+    final store = context.watch<AccountCreate>();
 
     return FormScrollable(
       formKey: _formKey,
@@ -126,21 +119,25 @@ class CreatePinForm extends StatelessWidget {
       ],
       columnChildren: [
         const SizedBox(height: 10),
-        CustomButton(
-          key: const Key('create-account-confirm'),
-          label: dic.account.create,
-          textStyle: textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
-          onPressed: () async {
-            if (_formKey.currentState!.validate()) {
-              context.read<AccountCreate>().generateAccount(
-                    context: context,
-                    appStore: context.read<AppStore>(),
-                    webApi: webApi,
-                    password: _passCtrl.text.trim(),
-                  );
-            }
-          },
-        ),
+        Observer(builder: (_) {
+          return CustomButton(
+            key: const Key('create-account-confirm'),
+            textStyle: textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
+            onPressed: store.loading
+                ? null
+                : () async {
+                    if (_formKey.currentState!.validate()) {
+                      await context.read<AccountCreate>().generateAccount(
+                            context: context,
+                            appStore: context.read<AppStore>(),
+                            webApi: webApi,
+                            password: _passCtrl.text.trim(),
+                          );
+                    }
+                  },
+            child: store.loading ? const ProgressingIndicator() : Text(dic.account.create),
+          );
+        }),
       ],
     );
   }

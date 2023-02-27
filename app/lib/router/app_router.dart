@@ -61,9 +61,9 @@ class AppRoute {
           fullscreenDialog: true,
         );
       case CreateAccountView.route:
+        final ars = settings.arguments;
         return CupertinoPageRoute(
-          builder: (_) => const CreateAccountView(),
-          settings: settings,
+          builder: (_) => CreateAccountView(addAccount: ars! as bool),
           fullscreenDialog: true,
         );
       case AddAccountPage.route:

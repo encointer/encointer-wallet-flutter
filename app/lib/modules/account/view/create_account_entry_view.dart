@@ -31,11 +31,11 @@ class CreateAccountEntryView extends StatelessWidget {
             const Spacer(),
             CustomButton(
               key: const Key('create-account'),
-              label: dic.home.create,
               backgroundColor: Colors.white,
-              onPressed: () => Navigator.pushNamed(context, CreateAccountView.route),
+              onPressed: () => Navigator.pushNamed(context, CreateAccountView.route, arguments: false),
               foregroundColor: colorScheme.primary,
               textStyle: textTheme.displaySmall,
+              child: Text(dic.home.create),
             ),
             const SizedBox(height: 16),
             Row(
