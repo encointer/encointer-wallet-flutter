@@ -45,7 +45,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     await webApi.account.generateAccount();
 
-    final acc = await webApi.account.importAccount();
+    final acc = await webApi.account.importAccount(key: '', password: '');
 
     if (acc['error'] != null) {
       setState(() {

@@ -24,36 +24,6 @@ mixin _$AccountCreate on _AccountCreate, Store {
     });
   }
 
-  late final _$passwordAtom = Atom(name: '_AccountCreate.password', context: context);
-
-  @override
-  String? get password {
-    _$passwordAtom.reportRead();
-    return super.password;
-  }
-
-  @override
-  set password(String? value) {
-    _$passwordAtom.reportWrite(value, super.password, () {
-      super.password = value;
-    });
-  }
-
-  late final _$keyAtom = Atom(name: '_AccountCreate.key', context: context);
-
-  @override
-  String? get key {
-    _$keyAtom.reportRead();
-    return super.key;
-  }
-
-  @override
-  set key(String? value) {
-    _$keyAtom.reportWrite(value, super.key, () {
-      super.key = value;
-    });
-  }
-
   late final _$loadingAtom = Atom(name: '_AccountCreate.loading', context: context);
 
   @override
@@ -69,6 +39,15 @@ mixin _$AccountCreate on _AccountCreate, Store {
     });
   }
 
+  late final _$generateAccountAsyncAction = AsyncAction('_AccountCreate.generateAccount', context: context);
+
+  @override
+  Future<void> generateAccount(
+      {required BuildContext context, required AppStore appStore, required Api webApi, required String password}) {
+    return _$generateAccountAsyncAction
+        .run(() => super.generateAccount(context: context, appStore: appStore, webApi: webApi, password: password));
+  }
+
   late final _$_AccountCreateActionController = ActionController(name: '_AccountCreate', context: context);
 
   @override
@@ -76,26 +55,6 @@ mixin _$AccountCreate on _AccountCreate, Store {
     final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setName');
     try {
       return super.setName(value);
-    } finally {
-      _$_AccountCreateActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setPassword(String value) {
-    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setPassword');
-    try {
-      return super.setPassword(value);
-    } finally {
-      _$_AccountCreateActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setKey(String? valeu) {
-    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setKey');
-    try {
-      return super.setKey(valeu);
     } finally {
       _$_AccountCreateActionController.endAction(_$actionInfo);
     }
@@ -112,10 +71,10 @@ mixin _$AccountCreate on _AccountCreate, Store {
   }
 
   @override
-  void resetNewAccount() {
-    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.resetNewAccount');
+  void resetName() {
+    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.resetName');
     try {
-      return super.resetNewAccount();
+      return super.resetName();
     } finally {
       _$_AccountCreateActionController.endAction(_$actionInfo);
     }
@@ -125,8 +84,6 @@ mixin _$AccountCreate on _AccountCreate, Store {
   String toString() {
     return '''
 name: ${name},
-password: ${password},
-key: ${key},
 loading: ${loading}
     ''';
   }

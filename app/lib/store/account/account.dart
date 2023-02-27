@@ -33,9 +33,9 @@ abstract class _AccountStore with Store {
 
   final AppStore rootStore;
 
-  Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc) {
+  Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
     acc['name'] = (acc['meta'] as Map<String, dynamic>)['name'];
-    // acc['name'] = newAccount.name.isEmpty ? (acc['meta'] as Map<String, dynamic>)['name'] : newAccount.name;
+    acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
     if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
       (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
     }
@@ -206,7 +206,7 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<void> addAccount(Map<String, dynamic> acc, String password) async {
+  Future<void> addAccount(Map<String, dynamic> acc, String password, {String? name}) async {
     final pubKey = acc['pubKey'] as String;
     // save seed and remove it before add account
     void saveSeed(String seedType) {
@@ -221,7 +221,7 @@ abstract class _AccountStore with Store {
     saveSeed(AccountStore.seedTypeRawSeed);
 
     // format meta data of acc
-    final formattedAcc = _formatMetaData(acc);
+    final formattedAcc = _formatMetaData(acc, name: name);
 
     final index = accountList.indexWhere((i) => i.pubKey == pubKey);
     if (index > -1) {
@@ -232,9 +232,6 @@ abstract class _AccountStore with Store {
 
     // update account list
     await loadAccount();
-
-    // // clear the temp account after addAccount finished
-    // newAccount = AccountCreate();
   }
 
   @action

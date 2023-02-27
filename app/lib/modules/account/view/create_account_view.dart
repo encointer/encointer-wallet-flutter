@@ -10,16 +10,11 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-class CreateAccountView extends StatefulWidget {
+class CreateAccountView extends StatelessWidget {
   const CreateAccountView({super.key});
 
   static const String route = '/account/createAccount';
 
-  @override
-  State<CreateAccountView> createState() => _CreateAccountViewState();
-}
-
-class _CreateAccountViewState extends State<CreateAccountView> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();

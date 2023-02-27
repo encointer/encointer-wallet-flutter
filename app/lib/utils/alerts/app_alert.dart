@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class AppAlert {
-  static void showErrorCreatingAccountDialog(
+  static void showErrorDailog(
     BuildContext context, {
     Widget? title,
     required String errorText,

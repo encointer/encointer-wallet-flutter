@@ -50,6 +50,8 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
     /// import account
     final acc = await webApi.account.importAccount(
+      key: '',
+      password: '',
       keyType: _keyType,
       cryptoType: _cryptoType,
       derivePath: _derivePath,
@@ -169,7 +171,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       });
 
       if (context.read<AppStore>().account.isFirstAccount) {
-        Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
+        // Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
       } else {
         // context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
         await _importAccount();

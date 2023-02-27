@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -128,13 +130,14 @@ class CreatePinForm extends StatelessWidget {
           key: const Key('create-account-confirm'),
           label: dic.account.create,
           textStyle: textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
-          onPressed: () {
+          onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              // widget.store.account.setNewAccountPin(_passCtrl.text);
-
-              // widget.store.settings.setPin(_passCtrl.text);
-
-              // widget.onSubmit();
+              context.read<AccountCreate>().generateAccount(
+                    context: context,
+                    appStore: context.read<AppStore>(),
+                    webApi: webApi,
+                    password: _passCtrl.text.trim(),
+                  );
             }
           },
         ),

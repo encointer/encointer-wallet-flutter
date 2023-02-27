@@ -154,8 +154,8 @@ mixin _$AccountStore on _AccountStore, Store {
   late final _$addAccountAsyncAction = AsyncAction('_AccountStore.addAccount', context: context);
 
   @override
-  Future<void> addAccount(Map<String, dynamic> acc, String password) {
-    return _$addAccountAsyncAction.run(() => super.addAccount(acc, password));
+  Future<void> addAccount(Map<String, dynamic> acc, String password, {String? name}) {
+    return _$addAccountAsyncAction.run(() => super.addAccount(acc, password, name: name));
   }
 
   late final _$removeAccountAsyncAction = AsyncAction('_AccountStore.removeAccount', context: context);
