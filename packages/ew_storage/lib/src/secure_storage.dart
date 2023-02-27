@@ -1,8 +1,6 @@
-import 'package:ew_storage/src/interface/exception.dart';
-import 'package:ew_storage/src/interface/storage.dart';
+import 'package:ew_storage/src/exception.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// A Secure Storage client which implements the base [Storage] interface.
 /// By default, [SecureStorage] uses `FlutterSecureStorage`.
 ///
 /// ```dart
@@ -15,7 +13,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// // Read value for key.
 /// final value = await storage.read(key: 'my_key'); // 'my_value'
 /// ```
-class SecureStorage implements Storage {
+class SecureStorage {
   const SecureStorage([
     this._secureStorage = const FlutterSecureStorage(
       /// If you want read about [encryptedSharedPreferences]
@@ -26,37 +24,33 @@ class SecureStorage implements Storage {
 
   final FlutterSecureStorage _secureStorage;
 
-  @override
-  Future<String?> read({required String key}) async {
+  Future<String?> read({required String key}) {
     try {
-      return await _secureStorage.read(key: key);
+      return _secureStorage.read(key: key);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
-  @override
-  Future<void> writeString({required String key, required String value}) async {
+  Future<void> write({required String key, required String value}) {
     try {
-      await _secureStorage.write(key: key, value: value);
+      return _secureStorage.write(key: key, value: value);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
-  @override
-  Future<void> delete({required String key}) async {
+  Future<void> delete({required String key}) {
     try {
-      await _secureStorage.delete(key: key);
+      return _secureStorage.delete(key: key);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
-  @override
-  Future<void> clear() async {
+  Future<void> deleteAll() {
     try {
-      await _secureStorage.deleteAll();
+      return _secureStorage.deleteAll();
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }

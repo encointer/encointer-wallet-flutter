@@ -1,8 +1,6 @@
-import 'package:ew_storage/src/interface/exception.dart';
-import 'package:ew_storage/src/interface/storage.dart';
+import 'package:ew_storage/src/exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// A Preferences Storage client which implements the base [Storage] interface.
 /// [PreferencesStorage] uses `SharedPreferences` internally.
 ///
 /// ```dart
@@ -10,12 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// final storage = await PreferencesStorage.getInstance();
 ///
 /// // Write a key/value pair.
-/// await storage.writeString(key: 'my_key', value: 'my_value');
+/// await storage.setString(key: 'my_key', value: 'my_value');
 ///
 /// // Read value for key.
-/// final value = storage.readString(key: 'my_key'); // 'my_value'
+/// final value = storage.getString(key: 'my_key'); // 'my_value'
 /// ```
-class PreferencesStorage implements Storage {
+class PreferencesStorage {
   const PreferencesStorage._(this._sharedPreferences);
 
   final SharedPreferences _sharedPreferences;
@@ -27,9 +25,7 @@ class PreferencesStorage implements Storage {
     return PreferencesStorage._(pref ?? await SharedPreferences.getInstance());
   }
 
-  @Deprecated('Please use the `readString` method instead.')
-  @override
-  Future<String?> read({required String key}) async {
+  String? getString({required String key}) {
     try {
       return _sharedPreferences.getString(key);
     } catch (error, stackTrace) {
@@ -37,15 +33,7 @@ class PreferencesStorage implements Storage {
     }
   }
 
-  String? readString({required String key}) {
-    try {
-      return _sharedPreferences.getString(key);
-    } catch (error, stackTrace) {
-      throw StorageException(error, stackTrace);
-    }
-  }
-
-  bool? readBool({required String key}) {
+  bool? getBool({required String key}) {
     try {
       return _sharedPreferences.getBool(key);
     } catch (error, stackTrace) {
@@ -53,7 +41,7 @@ class PreferencesStorage implements Storage {
     }
   }
 
-  double? readDouble({required String key}) {
+  double? getDouble({required String key}) {
     try {
       return _sharedPreferences.getDouble(key);
     } catch (error, stackTrace) {
@@ -61,7 +49,7 @@ class PreferencesStorage implements Storage {
     }
   }
 
-  int? readInt({required String key}) {
+  int? getInt({required String key}) {
     try {
       return _sharedPreferences.getInt(key);
     } catch (error, stackTrace) {
@@ -69,7 +57,7 @@ class PreferencesStorage implements Storage {
     }
   }
 
-  List<String>? readStringList({required String key}) {
+  List<String>? getStringList({required String key}) {
     try {
       return _sharedPreferences.getStringList(key);
     } catch (error, stackTrace) {
@@ -77,60 +65,57 @@ class PreferencesStorage implements Storage {
     }
   }
 
-  @override
-  Future<void> writeString({required String key, required String value}) async {
+  Future<bool> setString({required String key, required String value}) {
     try {
-      await _sharedPreferences.setString(key, value);
+      return _sharedPreferences.setString(key, value);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
-  Future<void> writeBool({required String key, required bool value}) async {
+  Future<bool> setBool({required String key, required bool value}) {
     try {
-      await _sharedPreferences.setBool(key, value);
+      return _sharedPreferences.setBool(key, value);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
-  Future<void> writeDouble({required String key, required double value}) async {
+  Future<bool> setDouble({required String key, required double value}) {
     try {
-      await _sharedPreferences.setDouble(key, value);
+      return _sharedPreferences.setDouble(key, value);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
-  Future<void> writeInt({required String key, required int value}) async {
+  Future<bool> setInt({required String key, required int value}) {
     try {
-      await _sharedPreferences.setInt(key, value);
+      return _sharedPreferences.setInt(key, value);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
-  Future<void> writeStringList({required String key, required List<String> value}) async {
+  Future<bool> setStringList({required String key, required List<String> value}) {
     try {
-      await _sharedPreferences.setStringList(key, value);
+      return _sharedPreferences.setStringList(key, value);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
-  @override
-  Future<void> delete({required String key}) async {
+  Future<bool> remove({required String key}) async {
     try {
-      await _sharedPreferences.remove(key);
+      return _sharedPreferences.remove(key);
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }
   }
 
-  @override
-  Future<void> clear() async {
+  Future<bool> clear() {
     try {
-      await _sharedPreferences.clear();
+      return _sharedPreferences.clear();
     } catch (error, stackTrace) {
       throw StorageException(error, stackTrace);
     }

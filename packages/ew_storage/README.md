@@ -2,9 +2,8 @@
 
 Encointer Storage Package
 
-Provides simple storage abstractions for:
-* Plaintext storage with [shared_preferences](https://pub.dev/packages/shared_preferences)
-* Encrypted storage with: [flutter_secure_storage.](https://pub.dev/packages/flutter_secure_storage)
+* PreferencesStorage storage with [shared_preferences](https://pub.dev/packages/shared_preferences)
+* SecureStorage storage with: [flutter_secure_storage.](https://pub.dev/packages/flutter_secure_storage)
 
 ## PreferencesStorage
 ```dart

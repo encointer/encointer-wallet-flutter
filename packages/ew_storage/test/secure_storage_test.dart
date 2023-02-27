@@ -45,13 +45,13 @@ void main() {
     group('Write', () {
       test('write succesfully', () async {
         when(() => flutterSecureStorage.write(key: mockKey, value: mockValue)).thenAnswer((_) => Future.value());
-        expect(secureStorage.writeString(key: mockKey, value: mockValue), completes);
+        expect(secureStorage.write(key: mockKey, value: mockValue), completes);
       });
 
       test('throw `StorageException` fails', () async {
         when(() => flutterSecureStorage.write(key: mockKey, value: mockValue)).thenThrow(mockException);
         expect(
-          () async => secureStorage.writeString(key: mockKey, value: mockValue),
+          () async => secureStorage.write(key: mockKey, value: mockValue),
           throwsA(isA<StorageException>()),
         );
       });
@@ -72,12 +72,12 @@ void main() {
     group('Clear', () {
       test('clear successfully', () async {
         when(() => flutterSecureStorage.deleteAll()).thenAnswer((_) => Future.value());
-        expect(secureStorage.clear(), completes);
+        expect(secureStorage.deleteAll(), completes);
       });
 
       test('throw `StorageException` fails', () async {
         when(() => flutterSecureStorage.deleteAll()).thenThrow(mockException);
-        expect(() async => secureStorage.clear(), throwsA(isA<StorageException>()));
+        expect(() async => secureStorage.deleteAll(), throwsA(isA<StorageException>()));
       });
     });
   });
