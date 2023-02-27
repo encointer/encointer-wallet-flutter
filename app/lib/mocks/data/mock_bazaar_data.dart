@@ -82,17 +82,17 @@ final Map<String, IpfsBusiness> ipfsBusinesses = {
 // Todo: @armin add some actual images to assets that look nice in the bazaar.
 // Additionally, the bazaar should support more than one image per asset/business.
 final ipfsBusiness1 = IpfsBusiness('Homemade delicacies', 'Everything is yummy', 'Бишкек, Ala Too Square',
-    'assets/images/assets/assets_nav_0.png', 'Mo-Thu, 8am-8pm');
+    'assets/images/assets/Assets_nav_0.png', 'Mo-Thu, 8am-8pm');
 final ipfsBusiness2 = IpfsBusiness('From Malfoy for Dumbledore', 'You will love it', 'Zürich, Technoparkstrasse 1',
-    'assets/images/assets/assets_nav_0.png', 'Mo-Thu, 8am-8pm');
+    'assets/images/assets/Assets_nav_0.png', 'Mo-Thu, 8am-8pm');
 final ipfsBusiness3 = IpfsBusiness(
-    'NFT plaza', 'Everything is yummy', 'Miami Beach', 'assets/images/assets/assets_nav_0.png', 'Mo-Thu, 8am-8pm');
+    'NFT plaza', 'Everything is yummy', 'Miami Beach', 'assets/images/assets/Assets_nav_0.png', 'Mo-Thu, 8am-8pm');
 
 final ipfsOffering1 =
-    IpfsOffering('Cheesecake', 1, 'I am yummy', 'Бишкек, Ala Too Square', 'assets/images/assets/assets_nav_0.png');
+    IpfsOffering('Cheesecake', 1, 'I am yummy', 'Бишкек, Ala Too Square', 'assets/images/assets/Assets_nav_0.png');
 final ipfsOffering2 =
-    IpfsOffering('шашлы́к', 1, 'I am yummy', 'Бишкек, Ala Too Square', 'assets/images/assets/assets_nav_0.png');
+    IpfsOffering('шашлы́к', 1, 'I am yummy', 'Бишкек, Ala Too Square', 'assets/images/assets/Assets_nav_0.png');
 final ipfsOffering3 = IpfsOffering('Harry Potter Heptalogy', 1, 'I am interesting', 'Zürich, Technoparkstrasse 1',
-    'assets/images/assets/assets_nav_0.png');
+    'assets/images/assets/Assets_nav_0.png');
 final ipfsOffering4 = IpfsOffering(
-    'Picasso Fake as NFT by C.L.', 1, 'I am beautiful', 'Miami Beach', 'assets/images/assets/assets_nav_0.png');
+    'Picasso Fake as NFT by C.L.', 1, 'I am beautiful', 'Miami Beach', 'assets/images/assets/Assets_nav_0.png');
