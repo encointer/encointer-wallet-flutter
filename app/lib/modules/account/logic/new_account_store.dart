@@ -6,7 +6,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/validate_keys.dart';
 import 'package:mobx/mobx.dart';
 
-part 'account_create_store.g.dart';
+part 'new_account_store.g.dart';
 
 class NewAccountStore = _NewAccountStoreBase with _$NewAccountStore;
 
