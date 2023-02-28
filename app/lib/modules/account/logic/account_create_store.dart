@@ -63,6 +63,7 @@ abstract class _AccountCreate with Store {
   @action
   Future<AddAccountResponse> generateAccount(AppStore appStore, Api webApi) async {
     if (appStore.settings.cachedPin.isNotEmpty || password != null) {
+      setLoading(true);
       final pin = password ?? appStore.settings.cachedPin;
       return _generateAccount(appStore, webApi, pin);
     } else {
@@ -73,6 +74,7 @@ abstract class _AccountCreate with Store {
   @action
   Future<AddAccountResponse> importAccount(AppStore appStore, Api webApi) async {
     if (appStore.settings.cachedPin.isNotEmpty || password != null) {
+      setLoading(true);
       final pin = password ?? appStore.settings.cachedPin;
       return _importAccount(appStore, webApi, pin);
     } else {
@@ -113,6 +115,7 @@ abstract class _AccountCreate with Store {
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
           cacheAcc = acc;
+          setLoading(false);
           return AddAccountResponse.duplicate;
         } else {
           return saveAccount(webApi, appStore, acc, pin);

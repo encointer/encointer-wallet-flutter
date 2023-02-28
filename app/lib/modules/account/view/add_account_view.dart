@@ -156,7 +156,7 @@ class CreateAcccountForm extends StatelessWidget {
   Future<void> _navigate(BuildContext context, AddAccountResponse type) async {
     switch (type) {
       case AddAccountResponse.success:
-        Navigator.of(context).pop();
+        Navigator.pop(context);
         break;
       case AddAccountResponse.fail:
         final dic = I18n.of(context)!.translationsForLocale();

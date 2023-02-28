@@ -99,25 +99,7 @@ class CreatePinForm extends StatelessWidget {
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
         ),
         const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.info_outlined),
-              const SizedBox(width: 12),
-              Flexible(
-                child: Text(
-                  dic.profile.pinInfo,
-                  maxLines: 7,
-                  textAlign: TextAlign.justify,
-                  softWrap: true,
-                  style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const PinInfo(),
       ],
       columnChildren: [
         const SizedBox(height: 10),

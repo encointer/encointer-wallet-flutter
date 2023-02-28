@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/button/custom_button.dart';
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:provider/provider.dart';
@@ -38,32 +37,18 @@ class CreateAccountEntryView extends StatelessWidget {
               child: Text(dic.home.create),
             ),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${dic.profile.doYouAlreadyHaveAnAccount} ',
-                  style: TextStyle(color: zurichLion.shade50),
-                ),
-                InkWell(
-                  key: const Key('import-account'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext _) => Provider(
-                          create: (_) => AccountCreate(),
-                          child: const ImportAccountView(),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    dic.profile.import,
-                    style: TextStyle(color: zurichLion.shade50, decoration: TextDecoration.underline),
+            ImportAccountLink(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext _) => Provider(
+                      create: (_) => AccountCreate(),
+                      child: const ImportAccountView(),
+                    ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
             const SizedBox(height: 20),
           ],

@@ -128,7 +128,7 @@ class ImportAccountForm extends StatelessWidget {
     final store = context.read<AccountCreate>();
     switch (type) {
       case AddAccountResponse.success:
-        Navigator.of(context).pop();
+        Navigator.of(context).popUntil((route) => route.isFirst);
         break;
       case AddAccountResponse.fail:
         final dic = I18n.of(context)!.translationsForLocale();
@@ -151,8 +151,7 @@ class ImportAccountForm extends StatelessWidget {
               child: Text(dic.home.cancel),
               onPressed: () {
                 store.setLoading(false);
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
+                Navigator.of(context).popUntil((route) => route.isFirst);
               },
             ),
             CupertinoButton(
