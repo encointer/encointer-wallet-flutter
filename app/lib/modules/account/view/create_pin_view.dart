@@ -53,7 +53,7 @@ class CreatePinForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final store = context.watch<AccountCreate>();
+    final store = context.watch<NewAccountStore>();
 
     return FormScrollable(
       formKey: _formKey,
@@ -111,7 +111,7 @@ class CreatePinForm extends StatelessWidget {
                 ? null
                 : () async {
                     if (_formKey.currentState!.validate()) {
-                      final store = context.read<AccountCreate>();
+                      final store = context.read<NewAccountStore>();
                       final appStore = context.read<AppStore>();
                       store.setPassword(_passCtrl.text.trim());
                       if (fromImportPage) {

@@ -43,7 +43,7 @@ class CreateAccountEntryView extends StatelessWidget {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext _) => Provider(
-                      create: (_) => AccountCreate(),
+                      create: (_) => NewAccountStore(),
                       child: const ImportAccountView(),
                     ),
                   ),

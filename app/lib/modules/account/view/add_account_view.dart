@@ -32,7 +32,7 @@ class CreateAccountView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Provider(
-          create: (context) => AccountCreate(),
+          create: (context) => NewAccountStore(),
           child: CreateAcccountForm(addAccount: addAccount),
         ),
       ),
@@ -53,7 +53,7 @@ class CreateAcccountForm extends StatelessWidget {
     final dic = I18n.of(context)!.translationsForLocale();
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final store = context.watch<AccountCreate>();
+    final store = context.watch<NewAccountStore>();
     return FormScrollable(
       formKey: _formKey,
       listViewChildren: [
@@ -96,7 +96,7 @@ class CreateAcccountForm extends StatelessWidget {
                     context,
                     MaterialPageRoute<void>(
                       builder: (BuildContext _) => Provider.value(
-                        value: context.read<AccountCreate>(),
+                        value: context.read<NewAccountStore>(),
                         child: const ImportAccountView(),
                       ),
                     ),
@@ -114,7 +114,7 @@ class CreateAcccountForm extends StatelessWidget {
                   textStyle: textTheme.displaySmall,
                   onPressed: !store.loading
                       ? () async {
-                          final store = context.read<AccountCreate>();
+                          final store = context.read<NewAccountStore>();
                           final appStore = context.read<AppStore>();
                           store.setName(_nameCtrl.text.trim());
                           final res = await store.generateAccount(appStore, webApi);
@@ -134,7 +134,7 @@ class CreateAcccountForm extends StatelessWidget {
                 textStyle: textTheme.displaySmall,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    final store = context.read<AccountCreate>()..setName(_nameCtrl.text.trim());
+                    final store = context.read<NewAccountStore>()..setName(_nameCtrl.text.trim());
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(

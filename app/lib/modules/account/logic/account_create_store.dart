@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -6,9 +8,9 @@ import 'package:mobx/mobx.dart';
 
 part 'account_create_store.g.dart';
 
-class AccountCreate extends _AccountCreate with _$AccountCreate {}
+class NewAccountStore = _NewAccountStoreBase with _$NewAccountStore;
 
-abstract class _AccountCreate with Store {
+abstract class _NewAccountStoreBase with Store {
   @observable
   String? name;
 

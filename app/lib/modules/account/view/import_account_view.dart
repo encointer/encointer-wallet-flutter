@@ -48,7 +48,7 @@ class ImportAccountForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final store = context.watch<AccountCreate>();
+    final store = context.watch<NewAccountStore>();
     return FormScrollable(
       formKey: _formKey,
       listViewChildren: [
@@ -81,7 +81,7 @@ class ImportAccountForm extends StatelessWidget {
           ),
           controller: _keyCtrl,
           maxLines: 2,
-          validator: (String? value) => context.read<AccountCreate>().validateAccount(dic, value?.trim() ?? ''),
+          validator: (String? value) => context.read<NewAccountStore>().validateAccount(dic, value?.trim() ?? ''),
         ),
         const SizedBox(height: 20),
       ],
@@ -93,7 +93,7 @@ class ImportAccountForm extends StatelessWidget {
             onPressed: !store.loading
                 ? () async {
                     if (_formKey.currentState!.validate()) {
-                      final store = context.read<AccountCreate>();
+                      final store = context.read<NewAccountStore>();
                       final appStore = context.read<AppStore>();
                       store
                         ..setName(_nameCtrl.text.trim())
@@ -125,7 +125,7 @@ class ImportAccountForm extends StatelessWidget {
 
   Future<void> _navigate(BuildContext context, AddAccountResponse type) async {
     final appStore = context.read<AppStore>();
-    final store = context.read<AccountCreate>();
+    final store = context.read<NewAccountStore>();
     switch (type) {
       case AddAccountResponse.success:
         Navigator.of(context).popUntil((route) => route.isFirst);
