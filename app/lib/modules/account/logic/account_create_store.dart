@@ -90,7 +90,7 @@ abstract class _AccountCreate with Store {
         setLoading(false);
         return AddAccountResponse.fail;
       } else {
-        return _saveAccount(webApi, appStore, acc, pin);
+        return saveAccount(webApi, appStore, acc, pin);
       }
     } catch (e) {
       return AddAccountResponse.fail;
@@ -115,7 +115,7 @@ abstract class _AccountCreate with Store {
           cacheAcc = acc;
           return AddAccountResponse.duplicate;
         } else {
-          return _saveAccount(webApi, appStore, acc, pin);
+          return saveAccount(webApi, appStore, acc, pin);
         }
       }
     } catch (e) {
@@ -124,7 +124,7 @@ abstract class _AccountCreate with Store {
   }
 
   @action
-  Future<AddAccountResponse> _saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) async {
+  Future<AddAccountResponse> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) async {
     final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     await appStore.addAccount(acc, pin, addresses[0], name);
     final pubKey = acc['pubKey'] as String?;

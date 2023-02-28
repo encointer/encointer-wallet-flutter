@@ -1,5 +1,8 @@
+import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
+import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -131,10 +134,10 @@ class CreatePinForm extends StatelessWidget {
                       store.setPassword(_passCtrl.text.trim());
                       if (fromImportPage) {
                         final res = await store.importAccount(appStore, webApi);
-                        print(res);
+                        await _navigate(context, res);
                       } else {
                         final res = await store.generateAccount(appStore, webApi);
-                        print(res);
+                        await _navigate(context, res);
                       }
                     }
                   },
@@ -143,5 +146,28 @@ class CreatePinForm extends StatelessWidget {
         }),
       ],
     );
+  }
+
+  Future<void> _navigate(BuildContext context, AddAccountResponse type) async {
+    final appStore = context.read<AppStore>();
+    switch (type) {
+      case AddAccountResponse.success:
+        if (appStore.encointer.communityIdentifiers.length == 1) {
+          await appStore.encointer.setChosenCid(appStore.encointer.communityIdentifiers[0]);
+        } else {
+          await Navigator.pushNamed(context, CommunityChooserOnMap.route);
+        }
+        await Navigator.pushNamedAndRemoveUntil<void>(context, EncointerHomePage.route, (route) => false);
+        break;
+      case AddAccountResponse.fail:
+        final dic = I18n.of(context)!.translationsForLocale();
+        AppAlert.showErrorDailog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
+        break;
+      case AddAccountResponse.passwordEmpty:
+        await AppAlert.showInputPasswordDailog(context: context, account: appStore.account.currentAccount);
+        break;
+      case AddAccountResponse.duplicate:
+        break;
+    }
   }
 }

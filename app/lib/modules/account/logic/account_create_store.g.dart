@@ -127,11 +127,11 @@ mixin _$AccountCreate on _AccountCreate, Store {
     return _$_importAccountAsyncAction.run(() => super._importAccount(appStore, webApi, pin));
   }
 
-  late final _$_saveAccountAsyncAction = AsyncAction('_AccountCreate._saveAccount', context: context);
+  late final _$saveAccountAsyncAction = AsyncAction('_AccountCreate.saveAccount', context: context);
 
   @override
-  Future<AddAccountResponse> _saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) {
-    return _$_saveAccountAsyncAction.run(() => super._saveAccount(webApi, appStore, acc, pin));
+  Future<AddAccountResponse> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) {
+    return _$saveAccountAsyncAction.run(() => super.saveAccount(webApi, appStore, acc, pin));
   }
 
   late final _$_AccountCreateActionController = ActionController(name: '_AccountCreate', context: context);

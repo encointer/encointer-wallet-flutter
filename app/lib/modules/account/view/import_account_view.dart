@@ -5,8 +5,11 @@ import 'package:encointer_wallet/common/components/loading/progressing_inducator
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -107,7 +110,7 @@ class ImportAccountForm extends StatelessWidget {
                         );
                       } else {
                         final res = await store.importAccount(appStore, webApi);
-                        print(res);
+                        await _navigate(context, res);
                       }
                     }
                   }
@@ -118,5 +121,52 @@ class ImportAccountForm extends StatelessWidget {
         const SizedBox(height: 20),
       ],
     );
+  }
+
+  Future<void> _navigate(BuildContext context, AddAccountResponse type) async {
+    final appStore = context.read<AppStore>();
+    final store = context.read<AccountCreate>();
+    switch (type) {
+      case AddAccountResponse.success:
+        Navigator.of(context).pop();
+        break;
+      case AddAccountResponse.fail:
+        final dic = I18n.of(context)!.translationsForLocale();
+        AppAlert.showErrorDailog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
+        break;
+      case AddAccountResponse.passwordEmpty:
+        final appStore = context.read<AppStore>();
+        await AppAlert.showInputPasswordDailog(context: context, account: appStore.account.currentAccount);
+        break;
+      case AddAccountResponse.duplicate:
+        final pubKeyMap = appStore.account.pubKeyAddressMap[appStore.settings.endpoint.ss58]!;
+        final address = pubKeyMap[store.cacheAcc?['pubKey']];
+        final dic = I18n.of(context)!.translationsForLocale();
+        AppAlert.showDailog<void>(
+          context,
+          title: Text(Fmt.address(address)!),
+          content: Text(dic.account.importDuplicate),
+          actions: [
+            CupertinoButton(
+              child: Text(dic.home.cancel),
+              onPressed: () {
+                store.setLoading(false);
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+            CupertinoButton(
+              child: Text(dic.home.ok),
+              onPressed: () async {
+                if (store.cacheAcc != null) {
+                  await store.saveAccount(webApi, appStore, store.cacheAcc!, appStore.settings.cachedPin);
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+        break;
+    }
   }
 }
