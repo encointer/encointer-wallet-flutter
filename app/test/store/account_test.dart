@@ -28,22 +28,13 @@ void main() {
       expect(store.currentAccount.pubKey, accList[0]['pubKey']);
       expect(store.currentAccount.address, accList[0]['address']);
 
-      /// create new account
-      // store
-      //   ..setNewAccountName('test')
-      //   ..setNewAccountPin('a111111');
-      // expect(store.newAccount.name, 'test');
-      // expect(store.newAccount.password, 'a111111');
-      // store.setNewAccountKey('new_key');
-      // expect(store.newAccount.key, 'new_key');
-
       /// add account
       const testPass = 'a111111';
       await store.addAccount(endoEncointer, testPass);
       expect(store.accountList.length, 2);
       store.setCurrentAccount(endoEncointer['pubKey'] as String);
       expect(store.currentAccountPubKey, endoEncointer['pubKey']);
-      expect(store.currentAccount.name, 'test');
+      expect(store.currentAccount.name, 'Endo Encointer');
       expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
       expect(store.currentAccount.address, endoEncointer['address']);
       expect(store.optionalAccounts.length, 1);
