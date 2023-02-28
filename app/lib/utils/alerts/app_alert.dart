@@ -6,11 +6,42 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class AppAlert {
+  static Future<T?> showDailog<T>(
+    BuildContext context, {
+    Widget? title,
+    Widget? content,
+    List<Widget> actions = const <Widget>[],
+  }) {
+    return showCupertinoDialog<T>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: title,
+          content: content,
+          actions: actions,
+        );
+      },
+    );
+  }
+
+  static void showLoadingDailog(BuildContext context, String title) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(title),
+          content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
+        );
+      },
+    );
+  }
+
   static void showErrorDailog(
     BuildContext context, {
     Widget? title,
     required String errorText,
     required String buttontext,
+    void Function()? onPressed,
   }) {
     showCupertinoDialog<void>(
       context: context,
@@ -20,8 +51,8 @@ class AppAlert {
           content: Text(errorText),
           actions: <Widget>[
             CupertinoButton(
+              onPressed: onPressed ?? () => Navigator.of(context).pop(),
               child: Text(buttontext),
-              onPressed: () => Navigator.of(context).pop(),
             ),
           ],
         );

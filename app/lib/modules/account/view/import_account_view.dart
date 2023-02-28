@@ -7,6 +7,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class ImportAccountView extends StatelessWidget {
@@ -82,21 +83,29 @@ class ImportAccountForm extends StatelessWidget {
       ],
       columnChildren: [
         const SizedBox(height: 10),
-        CustomButton(
-          key: const Key('account-import-next'),
-          onPressed: !store.loading
-              ? () async {
-                  if (_formKey.currentState!.validate()) {
-                    // widget.onSubmit({
-                    //   'keyType': _keyType,
-                    //   'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
-                    //   'derivePath': _advanceOptions.path ?? '',
-                    // });
+        Observer(builder: (_) {
+          return CustomButton(
+            key: const Key('account-import-next'),
+            onPressed: !store.loading
+                ? () async {
+                    if (_formKey.currentState!.validate()) {
+                      await context.read<AccountCreate>().importAccount(
+                            context: context,
+                            name: _nameCtrl.text.trim(),
+                            key: _keyCtrl.text.trim(),
+                            appStore: context.read<AppStore>(),
+                          );
+                      // widget.onSubmit({
+                      //   'keyType': _keyType,
+                      //   'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
+                      //   'derivePath': _advanceOptions.path ?? '',
+                      // });
+                    }
                   }
-                }
-              : null,
-          child: !store.loading ? Text(dic.home.next) : const ProgressingIndicator(),
-        ),
+                : null,
+            child: !store.loading ? Text(dic.home.next) : const ProgressingIndicator(),
+          );
+        }),
         const SizedBox(height: 20),
       ],
     );
