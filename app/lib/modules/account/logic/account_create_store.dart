@@ -132,7 +132,6 @@ abstract class _AccountCreate with Store {
     await appStore.addAccount(acc, pin, addresses[0], name);
     final pubKey = acc['pubKey'] as String?;
     await appStore.setCurrentAccount(pubKey);
-    // appStore.setCurrentAccount(pubKey);
     await appStore.loadAccountCache();
     webApi.fetchAccountData();
     setLoading(false);
