@@ -3,6 +3,7 @@ import 'package:encointer_wallet/common/components/encointer_text_form_field.dar
 import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
 import 'package:encointer_wallet/common/components/loading/progressing_inducator.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -89,17 +90,25 @@ class ImportAccountForm extends StatelessWidget {
             onPressed: !store.loading
                 ? () async {
                     if (_formKey.currentState!.validate()) {
-                      await context.read<AccountCreate>().importAccount(
-                            context: context,
-                            name: _nameCtrl.text.trim(),
-                            key: _keyCtrl.text.trim(),
-                            appStore: context.read<AppStore>(),
-                          );
-                      // widget.onSubmit({
-                      //   'keyType': _keyType,
-                      //   'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
-                      //   'derivePath': _advanceOptions.path ?? '',
-                      // });
+                      final store = context.read<AccountCreate>();
+                      final appStore = context.read<AppStore>();
+                      store
+                        ..setName(_nameCtrl.text.trim())
+                        ..setKey(_keyCtrl.text.trim());
+                      if (appStore.account.isFirstAccount) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext _) => Provider.value(
+                              value: store,
+                              child: const CreatePinView(fromImportPage: true),
+                            ),
+                          ),
+                        );
+                      } else {
+                        final res = await store.importAccount(appStore, webApi);
+                        print(res);
+                      }
                     }
                   }
                 : null,

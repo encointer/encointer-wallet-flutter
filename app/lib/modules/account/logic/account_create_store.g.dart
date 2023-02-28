@@ -24,6 +24,21 @@ mixin _$AccountCreate on _AccountCreate, Store {
     });
   }
 
+  late final _$passwordAtom = Atom(name: '_AccountCreate.password', context: context);
+
+  @override
+  String? get password {
+    _$passwordAtom.reportRead();
+    return super.password;
+  }
+
+  @override
+  set password(String? value) {
+    _$passwordAtom.reportWrite(value, super.password, () {
+      super.password = value;
+    });
+  }
+
   late final _$accountKeyAtom = Atom(name: '_AccountCreate.accountKey', context: context);
 
   @override
@@ -69,37 +84,60 @@ mixin _$AccountCreate on _AccountCreate, Store {
     });
   }
 
+  late final _$cacheAccAtom = Atom(name: '_AccountCreate.cacheAcc', context: context);
+
+  @override
+  Map<String, dynamic>? get cacheAcc {
+    _$cacheAccAtom.reportRead();
+    return super.cacheAcc;
+  }
+
+  @override
+  set cacheAcc(Map<String, dynamic>? value) {
+    _$cacheAccAtom.reportWrite(value, super.cacheAcc, () {
+      super.cacheAcc = value;
+    });
+  }
+
   late final _$generateAccountAsyncAction = AsyncAction('_AccountCreate.generateAccount', context: context);
 
   @override
-  Future<void> generateAccount(
-      {required BuildContext context, required AppStore appStore, required Api webApi, required String password}) {
-    return _$generateAccountAsyncAction
-        .run(() => super.generateAccount(context: context, appStore: appStore, webApi: webApi, password: password));
-  }
-
-  late final _$genarateAddAccountAsyncAction = AsyncAction('_AccountCreate.genarateAddAccount', context: context);
-
-  @override
-  Future<void> genarateAddAccount(
-      {required BuildContext context, required AppStore appStore, required Api webApi, required String name}) {
-    return _$genarateAddAccountAsyncAction
-        .run(() => super.genarateAddAccount(context: context, appStore: appStore, webApi: webApi, name: name));
+  Future<AddAccountResponse> generateAccount(AppStore appStore, Api webApi) {
+    return _$generateAccountAsyncAction.run(() => super.generateAccount(appStore, webApi));
   }
 
   late final _$importAccountAsyncAction = AsyncAction('_AccountCreate.importAccount', context: context);
 
   @override
-  Future<void> importAccount(
-      {required BuildContext context, required String name, required String key, required AppStore appStore}) {
-    return _$importAccountAsyncAction
-        .run(() => super.importAccount(context: context, name: name, key: key, appStore: appStore));
+  Future<AddAccountResponse> importAccount(AppStore appStore, Api webApi) {
+    return _$importAccountAsyncAction.run(() => super.importAccount(appStore, webApi));
+  }
+
+  late final _$_generateAccountAsyncAction = AsyncAction('_AccountCreate._generateAccount', context: context);
+
+  @override
+  Future<AddAccountResponse> _generateAccount(AppStore appStore, Api webApi, String pin) {
+    return _$_generateAccountAsyncAction.run(() => super._generateAccount(appStore, webApi, pin));
+  }
+
+  late final _$_importAccountAsyncAction = AsyncAction('_AccountCreate._importAccount', context: context);
+
+  @override
+  Future<AddAccountResponse> _importAccount(AppStore appStore, Api webApi, String pin) {
+    return _$_importAccountAsyncAction.run(() => super._importAccount(appStore, webApi, pin));
+  }
+
+  late final _$_saveAccountAsyncAction = AsyncAction('_AccountCreate._saveAccount', context: context);
+
+  @override
+  Future<AddAccountResponse> _saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) {
+    return _$_saveAccountAsyncAction.run(() => super._saveAccount(webApi, appStore, acc, pin));
   }
 
   late final _$_AccountCreateActionController = ActionController(name: '_AccountCreate', context: context);
 
   @override
-  void setName(String value) {
+  void setName(String? value) {
     final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setName');
     try {
       return super.setName(value);
@@ -109,27 +147,27 @@ mixin _$AccountCreate on _AccountCreate, Store {
   }
 
   @override
-  void setLoading(bool valeu) {
+  void setPassword(String? value) {
+    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setPassword');
+    try {
+      return super.setPassword(value);
+    } finally {
+      _$_AccountCreateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setLoading(bool value) {
     final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setLoading');
     try {
-      return super.setLoading(valeu);
+      return super.setLoading(value);
     } finally {
       _$_AccountCreateActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void resetName() {
-    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.resetName');
-    try {
-      return super.resetName();
-    } finally {
-      _$_AccountCreateActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setKey(String value) {
+  void setKey(String? value) {
     final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setKey');
     try {
       return super.setKey(value);
@@ -149,6 +187,16 @@ mixin _$AccountCreate on _AccountCreate, Store {
   }
 
   @override
+  void setCacheAcc(Map<String, dynamic> value) {
+    final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.setCacheAcc');
+    try {
+      return super.setCacheAcc(value);
+    } finally {
+      _$_AccountCreateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String? validateAccount(Translations dic, String key) {
     final _$actionInfo = _$_AccountCreateActionController.startAction(name: '_AccountCreate.validateAccount');
     try {
@@ -162,9 +210,11 @@ mixin _$AccountCreate on _AccountCreate, Store {
   String toString() {
     return '''
 name: ${name},
+password: ${password},
 accountKey: ${accountKey},
 keyType: ${keyType},
-loading: ${loading}
+loading: ${loading},
+cacheAcc: ${cacheAcc}
     ''';
   }
 }

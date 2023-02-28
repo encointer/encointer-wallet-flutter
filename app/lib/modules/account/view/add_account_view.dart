@@ -113,12 +113,11 @@ class CreateAcccountForm extends StatelessWidget {
                   textStyle: textTheme.displaySmall,
                   onPressed: !store.loading
                       ? () async {
-                          await context.read<AccountCreate>().genarateAddAccount(
-                                context: context,
-                                appStore: context.read<AppStore>(),
-                                webApi: webApi,
-                                name: _nameCtrl.text.trim(),
-                              );
+                          final store = context.read<AccountCreate>();
+                          final appStore = context.read<AppStore>();
+                          store.setName(_nameCtrl.text.trim());
+                          final res = await store.generateAccount(appStore, webApi);
+                          print(res);
                         }
                       : null,
                   child: !store.loading ? Text(dic.profile.accountCreate) : const ProgressingIndicator(),
@@ -134,12 +133,12 @@ class CreateAcccountForm extends StatelessWidget {
                 textStyle: textTheme.displaySmall,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    context.read<AccountCreate>().setName(_nameCtrl.text.trim());
+                    final store = context.read<AccountCreate>()..setName(_nameCtrl.text.trim());
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext _) => Provider.value(
-                          value: context.read<AccountCreate>(),
+                          value: store,
                           child: const CreatePinView(),
                         ),
                       ),

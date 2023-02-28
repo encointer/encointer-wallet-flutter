@@ -15,7 +15,9 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 class CreatePinView extends StatelessWidget {
-  const CreatePinView({super.key});
+  const CreatePinView({super.key, this.fromImportPage = false});
+
+  final bool fromImportPage;
 
   static const String route = '/account/createPin';
 
@@ -29,17 +31,18 @@ class CreatePinView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: CreatePinForm(),
+        child: CreatePinForm(fromImportPage: fromImportPage),
       ),
     );
   }
 }
 
 class CreatePinForm extends StatelessWidget {
-  CreatePinForm({super.key});
+  CreatePinForm({super.key, required this.fromImportPage});
+
+  final bool fromImportPage;
 
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _passCtrl = TextEditingController();
   final TextEditingController _pass2Ctrl = TextEditingController();
 
@@ -76,9 +79,7 @@ class CreatePinForm extends StatelessWidget {
           hintText: dic.account.createPassword,
           labelText: dic.account.createPassword,
           controller: _passCtrl,
-          validator: (v) {
-            return Fmt.checkPassword(v!.trim()) ? null : dic.account.createPasswordError;
-          },
+          validator: (v) => Fmt.checkPassword(v!.trim()) ? null : dic.account.createPasswordError,
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
         ),
         const SizedBox(height: 20),
@@ -91,9 +92,7 @@ class CreatePinForm extends StatelessWidget {
           labelText: dic.account.createPassword2,
           controller: _pass2Ctrl,
           obscureText: true,
-          validator: (v) {
-            return _passCtrl.text != v ? dic.account.createPassword2Error : null;
-          },
+          validator: (v) => _passCtrl.text != v ? dic.account.createPassword2Error : null,
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
         ),
         const SizedBox(height: 16),
@@ -127,12 +126,16 @@ class CreatePinForm extends StatelessWidget {
                 ? null
                 : () async {
                     if (_formKey.currentState!.validate()) {
-                      await context.read<AccountCreate>().generateAccount(
-                            context: context,
-                            appStore: context.read<AppStore>(),
-                            webApi: webApi,
-                            password: _passCtrl.text.trim(),
-                          );
+                      final store = context.read<AccountCreate>();
+                      final appStore = context.read<AppStore>();
+                      store.setPassword(_passCtrl.text.trim());
+                      if (fromImportPage) {
+                        final res = await store.importAccount(appStore, webApi);
+                        print(res);
+                      } else {
+                        final res = await store.generateAccount(appStore, webApi);
+                        print(res);
+                      }
                     }
                   },
             child: store.loading ? const ProgressingIndicator() : Text(dic.account.create),
