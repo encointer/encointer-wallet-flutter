@@ -1,8 +1,3 @@
-import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -12,10 +7,15 @@ import 'package:encointer_wallet/common/components/button/custom_button.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
 import 'package:encointer_wallet/common/components/loading/progressing_inducator.dart';
-import 'package:encointer_wallet/modules/account/account.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/modules/account/account.dart';
+import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
+import 'package:encointer_wallet/page-encointer/home_page.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CreatePinView extends StatelessWidget {
   const CreatePinView({super.key, this.fromImportPage = false});

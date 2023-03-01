@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
 
 class ImportAccountLink extends StatelessWidget {
   const ImportAccountLink({super.key, this.onTap});

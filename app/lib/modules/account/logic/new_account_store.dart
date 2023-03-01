@@ -1,10 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api
+import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/validate_keys.dart';
-import 'package:mobx/mobx.dart';
 
 part 'new_account_store.g.dart';
 
