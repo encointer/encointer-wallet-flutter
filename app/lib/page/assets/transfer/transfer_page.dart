@@ -24,11 +24,11 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class TransferPageParams {
-  TransferPageParams({
+  const TransferPageParams({
     this.cid,
     this.communitySymbol,
-    this.recipient,
-    this.label,
+    required this.recipient,
+    required this.label,
     this.amount,
   });
 
@@ -43,15 +43,17 @@ class TransferPageParams {
 
   final CommunityIdentifier? cid;
   final String? communitySymbol;
-  final String? recipient;
-  final String? label;
+  final String recipient;
+  final String label;
   final double? amount;
 }
 
 class TransferPage extends StatefulWidget {
-  const TransferPage({super.key});
+  const TransferPage(this.params, {super.key});
 
   static const String route = '/assets/transfer';
+
+  final TransferPageParams? params;
 
   @override
   State<TransferPage> createState() => _TransferPageState();
@@ -71,12 +73,10 @@ class _TransferPageState extends State<TransferPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final params = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
-
       final store = context.read<AppStore>();
 
-      if (params != null) {
-        handleTransferPageParams(params, store);
+      if (widget.params != null) {
+        handleTransferPageParams(widget.params!, store);
       } else {
         _communitySymbol = store.encointer.community!.symbol;
         _cid = store.encointer.chosenCid;
@@ -89,8 +89,6 @@ class _TransferPageState extends State<TransferPage> {
   }
 
   void handleTransferPageParams(TransferPageParams params, AppStore store) {
-    _communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
-    _cid = params.cid;
     if (params.cid != store.encointer.chosenCid!) {
       showCupertinoDialog<void>(
         context: context,
@@ -103,16 +101,12 @@ class _TransferPageState extends State<TransferPage> {
         },
       );
     } else {
-      if (params.amount != null) {
-        _amountCtrl.text = '${params.amount}';
-      }
-
-      if (params.recipient != null) {
-        final acc = AccountData()
-          ..address = params.recipient!
-          ..name = params.label!;
-        _accountTo = acc;
-      }
+      _communitySymbol = params.communitySymbol ?? store.encointer.community?.symbol;
+      _cid = params.cid ?? store.encointer.chosenCid;
+      _accountTo = AccountData()
+        ..address = params.recipient
+        ..name = params.label;
+      if (params.amount != null) _amountCtrl.text = '${params.amount}';
     }
   }
 
@@ -120,150 +114,147 @@ class _TransferPageState extends State<TransferPage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
-
-    const decimals = encointerCurrenciesDecimals;
+    final textTheme = Theme.of(context).textTheme;
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
-
     Log.d('[transferPage]: available: $available', 'TransferPage');
 
-    return Observer(
-      builder: (_) {
-        return Form(
-          key: _formKey,
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(dic.assets.transfer),
-              leading: const SizedBox.shrink(),
-              actions: [
-                if (store.settings.developerMode)
-                  IconButton(
-                    key: const Key('go-transfer-history'),
-                    icon: const Icon(Icons.swap_vert_sharp),
-                    onPressed: () {
-                      Navigator.pushNamed(context, TransferHistoryView.route);
-                    },
-                  ),
-                IconButton(
-                  key: const Key('close-transfer-page'),
-                  icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(dic.assets.transfer),
+        leading: const SizedBox.shrink(),
+        actions: [
+          if (store.settings.developerMode)
+            IconButton(
+              key: const Key('go-transfer-history'),
+              icon: const Icon(Icons.swap_vert_sharp),
+              onPressed: () {
+                Navigator.pushNamed(context, TransferHistoryView.route);
+              },
             ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      key: const Key('transfer-listview'),
-                      children: [
-                        CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
-                        const SizedBox(height: 12),
-                        if (store.encointer.communityBalance != null)
-                          AccountBalanceWithMoreDigits(
-                            store: store,
-                            available: available,
-                            decimals: decimals,
-                          )
-                        else
-                          const CupertinoActivityIndicator(),
-                        Text(
-                          I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll(
-                                'ACCOUNT_NAME',
-                                Fmt.accountName(context, store.account.currentAccount),
-                              ),
-                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 24),
-                        IconButton(
-                          iconSize: 48,
-                          icon: const Icon(Iconsax.scan_barcode),
-                          onPressed: () async {
-                            final invoiceData = await Navigator.of(context).pushNamed(
-                              ScanPage.route,
-                              arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
-                            );
-                            if (invoiceData != null && invoiceData is InvoiceData) {
-                              handleTransferPageParams(
-                                TransferPageParams.fromInvoiceData(invoiceData),
-                                store,
-                              );
-                              setState(() {});
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                        EncointerTextFormField(
-                          labelText: dic.assets.amountToBeTransferred,
-                          textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(color: encointerBlack),
-                          inputFormatters: [UI.decimalInputFormatter()],
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                          controller: _amountCtrl,
-                          textFormFieldKey: const Key('transfer-amount-input'),
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return dic.assets.amountError;
-                            }
-                            if (balanceTooLow(value, available!, decimals)) {
-                              return dic.assets.insufficientBalance;
-                            }
-                            return null;
-                          },
-                          suffixIcon: const Text('ⵐ', style: TextStyle(color: encointerGrey, fontSize: 44)),
-                        ),
-                        const SizedBox(height: 24),
-                        AddressInputField(
-                          store,
-                          label: dic.assets.address,
-                          initialValue: _accountTo,
-                          onChanged: (AccountData acc) {
-                            setState(() {
-                              _accountTo = acc;
-                            });
-                          },
-                          hideIdenticon: true,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  if (store.settings.developerMode)
-                    Center(
-                      child: Text(
-                        '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
-                      ),
-                    ),
-                  const SizedBox(height: 8),
-                  PrimaryButton(
-                    key: const Key('make-transfer'),
-                    onPressed: _accountTo != null
-                        ? () {
-                            if (_cid != null && _communitySymbol != null) {
-                              _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
-                            }
-                          }
-                        : null,
-                    child: SizedBox(
-                      height: 24,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Iconsax.login_1),
-                          const SizedBox(width: 12),
-                          Text(dic.account.next),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          IconButton(
+            key: const Key('close-transfer-page'),
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
           ),
-        );
-      },
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  key: const Key('transfer-listview'),
+                  children: [
+                    CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
+                    const SizedBox(height: 12),
+                    Observer(builder: (_) {
+                      if (store.encointer.communityBalance != null) {
+                        return AccountBalanceWithMoreDigits(
+                          store: store,
+                          available: available,
+                          decimals: encointerCurrenciesDecimals,
+                        );
+                      } else {
+                        return const CupertinoActivityIndicator();
+                      }
+                    }),
+                    Text(
+                      dic.assets.yourBalanceFor.replaceAll(
+                        'ACCOUNT_NAME',
+                        Fmt.accountName(context, store.account.currentAccount),
+                      ),
+                      style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    IconButton(
+                      iconSize: 48,
+                      icon: const Icon(Iconsax.scan_barcode),
+                      onPressed: () async {
+                        final invoiceData = await Navigator.of(context).pushNamed(
+                          ScanPage.route,
+                          arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
+                        );
+                        if (invoiceData != null && invoiceData is InvoiceData) {
+                          handleTransferPageParams(
+                            TransferPageParams.fromInvoiceData(invoiceData),
+                            store,
+                          );
+                          setState(() {});
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    EncointerTextFormField(
+                      labelText: dic.assets.amountToBeTransferred,
+                      textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(color: encointerBlack),
+                      inputFormatters: [UI.decimalInputFormatter()],
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      controller: _amountCtrl,
+                      textFormFieldKey: const Key('transfer-amount-input'),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return dic.assets.amountError;
+                        }
+                        if (balanceTooLow(value, available!, encointerCurrenciesDecimals)) {
+                          return dic.assets.insufficientBalance;
+                        }
+                        return null;
+                      },
+                      suffixIcon: const Text('ⵐ', style: TextStyle(color: encointerGrey, fontSize: 44)),
+                    ),
+                    const SizedBox(height: 24),
+                    AddressInputField(
+                      store,
+                      label: dic.assets.address,
+                      initialValue: _accountTo,
+                      onChanged: (AccountData acc) {
+                        setState(() {
+                          _accountTo = acc;
+                        });
+                      },
+                      hideIdenticon: true,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              if (store.settings.developerMode)
+                Center(
+                  child: Text(
+                    '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
+                    style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
+                  ),
+                ),
+              const SizedBox(height: 8),
+              PrimaryButton(
+                key: const Key('make-transfer'),
+                onPressed: _accountTo != null
+                    ? () {
+                        if (_cid != null && _communitySymbol != null) {
+                          _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
+                        }
+                      }
+                    : null,
+                child: SizedBox(
+                  height: 24,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.login_1),
+                      const SizedBox(width: 12),
+                      Text(dic.account.next),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -307,15 +298,13 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Center(
       child: RichText(
         // need text base line alignment
         text: TextSpan(
-          text: '${Fmt.doubleFormat(
-            available,
-            length: 6,
-          )} ',
-          style: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
+          text: '${Fmt.doubleFormat(available, length: 6)} ',
+          style: textTheme.displayMedium!.copyWith(color: encointerBlack),
           children: const <TextSpan>[
             TextSpan(
               text: 'ⵐ',
