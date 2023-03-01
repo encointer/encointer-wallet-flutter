@@ -2,6 +2,7 @@ import 'package:encointer_wallet/common/data/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/mocks/test_tags.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+///TODO(Azamat): Chris, I need your help here
 void main() {
   group('can connect', () {
     test('rpc methods contains getAggregatedAccountData', () async {

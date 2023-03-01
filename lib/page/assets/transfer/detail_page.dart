@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/page/assets/transfer/tx_detail.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TransferDetailPage extends StatelessWidget {
   const TransferDetailPage({super.key});
@@ -16,7 +15,7 @@ class TransferDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
+    final store = sl.get<AppStore>();
     final symbol = store.settings.networkState!.tokenSymbol;
     final decimals = store.settings.networkState!.tokenDecimals;
     final tokenView = Fmt.tokenView(symbol);

@@ -4,6 +4,7 @@ import 'package:encointer_wallet/mocks/test_tags.dart';
 import 'package:encointer_wallet/mocks/test_utils.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+///TODO(Azamat): Chris, I need your help here
 void main() {
   group('encointerDartApi', () {
     test('gets aggregated account data', () async {

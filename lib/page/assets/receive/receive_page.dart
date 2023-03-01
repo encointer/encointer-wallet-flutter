@@ -4,18 +4,18 @@ import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enha
 import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ReceivePage extends StatefulWidget {
@@ -32,8 +32,8 @@ class _ReceivePageState extends State<ReceivePage> {
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   late InvoiceQrCode invoice;
-  late final AppStore _appStore;
 
+  final _appStore = sl.get<AppStore>();
   PausableTimer? paymentWatchdog;
   bool observedPendingExtrinsic = false;
   int resetObservedPendingExtrinsicCounter = 0;
@@ -41,7 +41,7 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   void initState() {
     super.initState();
-    _appStore = context.read<AppStore>();
+
     invoice = InvoiceQrCode(
       account: _appStore.account.currentAddress,
       cid: _appStore.encointer.chosenCid,
@@ -59,7 +59,7 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
+
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () async {
@@ -75,16 +75,16 @@ class _ReceivePageState extends State<ReceivePage> {
           }
         }
 
-        webApi.encointer.getAllBalances(store.account.currentAddress).then((balances) {
-          final cid = store.encointer.chosenCid;
+        webApi.encointer.getAllBalances(_appStore.account.currentAddress).then((balances) {
+          final cid = _appStore.encointer.chosenCid;
 
           if (cid == null) {
             return;
           }
 
-          final demurrageRate = store.encointer.community!.demurrage;
-          final newBalance = store.encointer.applyDemurrage(balances[cid]);
-          final oldBalance = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry) ?? 0;
+          final demurrageRate = _appStore.encointer.community!.demurrage;
+          final newBalance = _appStore.encointer.applyDemurrage(balances[cid]);
+          final oldBalance = _appStore.encointer.applyDemurrage(_appStore.encointer.communityBalanceEntry) ?? 0;
 
           if (newBalance != null) {
             final delta = newBalance - oldBalance;
@@ -92,10 +92,10 @@ class _ReceivePageState extends State<ReceivePage> {
             if (delta > demurrageRate!) {
               final msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', store.encointer.community?.metadata?.symbol ?? 'null')
-                  .replaceAll('ACCOUNT_NAME', store.account.currentAccount.name);
+                  .replaceAll('CID_SYMBOL', _appStore.encointer.community?.metadata?.symbol ?? 'null')
+                  .replaceAll('ACCOUNT_NAME', _appStore.account.currentAccount.name);
               Log.d('[receivePage] $msg', 'ReceivePage');
-              store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
+              _appStore.encointer.account?.addBalanceEntry(cid, balances[cid]!);
 
               NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
@@ -176,7 +176,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   ],
                 ),
                 Text(
-                  '${dic.profile.receiverAccount} ${store.account.currentAccount.name}',
+                  '${dic.profile.receiverAccount} ${_appStore.account.currentAccount.name}',
                   style: Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey),
                   textAlign: TextAlign.center,
                 ),
@@ -210,7 +210,7 @@ class _ReceivePageState extends State<ReceivePage> {
 /// Shows a [SnackBar] if we found an extrinsic in a transaction pool addressed to the current account.
 ///
 /// Returns a true if such an extrinsic was found.
-Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translations dic) async {
+Future<bool> showSnackBarUponPendingExtrinsics(AppStore appStore, Api api, Translations dic) async {
   var observedExtrinsics = false;
 
   try {
@@ -219,7 +219,7 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
     Log.d('[receivePage] pendingExtrinsics $extrinsics', 'ReceivePage');
     if (extrinsics.isNotEmpty) {
       for (final xt in extrinsics) {
-        if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {
+        if (xt.contains(appStore.account.currentAccountPubKey!.substring(2))) {
           RootSnackBar.showMsg(
             dic.profile.observedPendingExtrinsic,
             durationMillis: 5000,

@@ -9,6 +9,7 @@ import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dar
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -19,7 +20,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class AccountManagePage extends StatefulWidget {
   const AccountManagePage({super.key});
@@ -35,12 +35,11 @@ enum AccountAction { delete, export }
 class _AccountManagePageState extends State<AccountManagePage> {
   TextEditingController? _nameCtrl;
   bool _isEditingText = false;
-  late final AppStore _appStore;
+  final AppStore _appStore = sl.get<AppStore>();
 
   @override
   void initState() {
     super.initState();
-    _appStore = context.read<AppStore>();
     if (_appStore.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
   }
 
@@ -156,7 +155,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final dic = I18n.of(context)!.translationsForLocale();
     final h3 = Theme.of(context).textTheme.displaySmall;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
-    final store = context.watch<AppStore>();
+    final store = sl.get<AppStore>();
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
@@ -376,7 +375,7 @@ class CommunityIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = context.watch<AppStore>();
+    final store = sl.get<AppStore>();
     return Stack(
       children: [
         SizedBox(

@@ -1,10 +1,10 @@
 import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
   RemoteNodeListPage({super.key});
@@ -12,11 +12,13 @@ class RemoteNodeListPage extends StatelessWidget {
   static const String route = '/profile/endpoint';
   final Api? api = webApi;
 
+  final AppStore _appStore = sl.get<AppStore>();
+
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final endpoints = List<EndpointData>.of(networkEndpoints)
-      ..retainWhere((i) => i.info == context.watch<AppStore>().settings.endpoint.info);
+      ..retainWhere((i) => i.info == sl.get<AppStore>().settings.endpoint.info);
     final list = endpoints
         .map((i) => ListTile(
               leading: SizedBox(
@@ -30,7 +32,7 @@ class RemoteNodeListPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    if (context.select<AppStore, bool>((store) => store.settings.endpoint.value == i.value))
+                    if (_appStore.settings.endpoint.value == i.value)
                       Image.asset(
                         'assets/images/assets/success.png',
                         width: 16,
@@ -40,12 +42,12 @@ class RemoteNodeListPage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                if (context.read<AppStore>().settings.endpoint.value == i.value) {
+                if (_appStore.settings.endpoint.value == i.value) {
                   Navigator.of(context).pop();
                   return;
                 }
-                context.read<AppStore>().settings.setEndpoint(i);
-                context.read<AppStore>().settings.setNetworkLoading(true);
+                _appStore.settings.setEndpoint(i);
+                _appStore.settings.setNetworkLoading(true);
                 webApi.launchWebview(customNode: true);
                 Navigator.of(context).pop();
               },

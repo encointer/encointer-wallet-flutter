@@ -24,16 +24,17 @@ class WalletApp extends StatelessWidget {
         }
       },
       child: Observer(builder: (_) {
+        final languageStore = AppLanguageStore();
         return MaterialApp(
           title: 'EncointerWallet',
-          locale: AppLanguageStore().locale,
+          locale: languageStore.locale,
           localizationsDelegates: [
-            AppLocalizationsDelegate(AppLanguageStore().locale),
+            AppLocalizationsDelegate(languageStore.locale),
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: AppLanguageStore().locales,
+          supportedLocales: languageStore.locales,
           initialRoute: SplashView.route,
           theme: appThemeEncointer,
           scaffoldMessengerKey: rootScaffoldMessengerKey,

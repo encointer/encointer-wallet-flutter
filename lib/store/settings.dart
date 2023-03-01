@@ -16,10 +16,10 @@ part 'settings.g.dart';
 
 const _tag = 'settings_store';
 
-class SettingsStore extends _SettingsStore with _$SettingsStore {}
+class SettingsStore = _SettingsStore with _$SettingsStore;
 
 abstract class _SettingsStore with Store {
-  _SettingsStore() : rootStore = sl<AppStore>();
+  _SettingsStore() : rootStore = sl.get<AppStore>();
 
   final AppStore rootStore;
 

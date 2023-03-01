@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter/material.dart';
 
 class AddressFormItem extends StatelessWidget {
   const AddressFormItem(this.account, {super.key, this.label, this.onTap});
@@ -16,7 +15,7 @@ class AddressFormItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final grey = Theme.of(context).unselectedWidgetColor;
 
-    final address = Fmt.addressOfAccount(account, context.watch<AppStore>());
+    final address = Fmt.addressOfAccount(account, sl.get<AppStore>());
 
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,

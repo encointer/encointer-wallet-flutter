@@ -1,12 +1,12 @@
 import 'package:encointer_wallet/app/presentation/home/ui/views/home_view.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_form.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/encointer_state_mixin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CreatePinPageParams {
   CreatePinPageParams(this.onCreatePin);
@@ -23,18 +23,18 @@ class CreatePinPage extends StatefulWidget {
   State<CreatePinPage> createState() => _CreatePinPageState();
 }
 
-class _CreatePinPageState extends State<CreatePinPage> {
+class _CreatePinPageState extends State<CreatePinPage> with EncointerStateMixin {
   bool _submitting = false;
 
   @override
   Widget build(BuildContext context) {
     final params = ModalRoute.of(context)!.settings.arguments! as CreatePinPageParams;
-    final store = context.watch<AppStore>();
+    final store = sl.get<AppStore>();
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          I18n.of(context)!.translationsForLocale().home.create,
+          localization.home.create,
         ),
         iconTheme: const IconThemeData(
           color: encointerGrey, //change your color here

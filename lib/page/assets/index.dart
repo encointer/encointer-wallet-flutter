@@ -23,6 +23,7 @@ import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -33,7 +34,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -47,6 +47,7 @@ class Assets extends StatefulWidget {
 }
 
 class _AssetsState extends State<Assets> {
+  final AppStore appStore = sl.get<AppStore>();
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
@@ -72,8 +73,8 @@ class _AssetsState extends State<Assets> {
         _showPasswordDialog(context);
       }
 
-      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
-        context.read<AppStore>().encointer.community?.getCommunityIcon();
+      if (appStore.encointer.community?.communityIcon == null) {
+        appStore.encointer.community?.getCommunityIcon();
       }
     });
   }

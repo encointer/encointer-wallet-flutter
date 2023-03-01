@@ -9,6 +9,14 @@ part of 'assets_view_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AssetsViewStore on _AssetsViewStoreBase, Store {
+  Computed<AppStore>? _$appStoreComputed;
+
+  @override
+  AppStore get appStore =>
+      (_$appStoreComputed ??= Computed<AppStore>(() => super.appStore,
+              name: '_AssetsViewStoreBase.appStore'))
+          .value;
+
   late final _$refreshEncointerStateAsyncAction = AsyncAction(
       '_AssetsViewStoreBase.refreshEncointerState',
       context: context);
@@ -23,19 +31,16 @@ mixin _$AssetsViewStore on _AssetsViewStoreBase, Store {
       AsyncAction('_AssetsViewStoreBase.reconnect', context: context);
 
   @override
-  Future<void> reconnect(
-      {required BuildContext context, required AppStore appStore}) {
-    return _$reconnectAsyncAction
-        .run(() => super.reconnect(context: context, appStore: appStore));
+  Future<void> reconnect({required BuildContext context}) {
+    return _$reconnectAsyncAction.run(() => super.reconnect(context: context));
   }
 
   late final _$switchAccountAsyncAction =
       AsyncAction('_AssetsViewStoreBase.switchAccount', context: context);
 
   @override
-  Future<void> switchAccount(AccountData account, AppStore appStore) {
-    return _$switchAccountAsyncAction
-        .run(() => super.switchAccount(account, appStore));
+  Future<void> switchAccount(AccountData account) {
+    return _$switchAccountAsyncAction.run(() => super.switchAccount(account));
   }
 
   late final _$showPasswordDialogAsyncAction =
@@ -85,7 +90,7 @@ mixin _$AssetsViewStore on _AssetsViewStoreBase, Store {
   @override
   String toString() {
     return '''
-
+appStore: ${appStore}
     ''';
   }
 }

@@ -6,14 +6,11 @@ import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
-import 'package:encointer_wallet/service/deep_link/deep_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/encointer_state_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 const _tag = 'home_view';
 
@@ -36,9 +33,11 @@ class _HomeViewState extends State<HomeView> with EncointerStateMixin {
 
   @override
   void initState() {
+    Log.d('initState', _tag);
     if (buildConfig != BuildConfig.integrationTest) NotificationPlugin.init(context);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      Log.d('initState.WidgetsBinding.instance.addPostFrameCallback', _tag);
       await _store.init(context);
     });
     super.initState();
@@ -55,7 +54,7 @@ class _HomeViewState extends State<HomeView> with EncointerStateMixin {
         controller: _pageController,
         children: [
           const AssetsView(),
-          if (context.select<AppStore, bool>((store) => _store.appStore.settings.enableBazaar)) ...[
+          if (_store.appStore.settings.enableBazaar) ...[
             const BazaarMain(),
           ],
           ScanPage(),
@@ -94,7 +93,7 @@ class _HomeViewState extends State<HomeView> with EncointerStateMixin {
         TabKey.wallet,
         Iconsax.home_2,
       ),
-      if (context.select<AppStore, bool>((store) => _store.appStore.settings.enableBazaar)) ...[
+      if (_store.appStore.settings.enableBazaar) ...[
         TabData(
           TabKey.bazaar,
           Iconsax.shop,
@@ -151,11 +150,6 @@ class _HomeViewState extends State<HomeView> with EncointerStateMixin {
           ),
         )
         .toList();
-  }
-
-  Future<void> initDeepLinks() async {
-    Log.d('initDeepLinks', _tag);
-    await initialDeepLinks(context);
   }
 }
 

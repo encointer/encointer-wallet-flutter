@@ -21,7 +21,6 @@ import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/encointer_state_mixin.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,7 +29,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -49,7 +47,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
 
-  late final AssetsViewStore _store;
+  final AssetsViewStore _store = AssetsViewStore();
 
   PanelController? panelController;
 
@@ -64,21 +62,19 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
   @override
   void initState() {
     super.initState();
-    _store = AssetsViewStore()
-      ..reconnect(
-        context: context,
-        appStore: context.read<AppStore>(),
-      );
+    _store.reconnect(
+      context: context,
+    );
 
     panelController ??= PanelController();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<AppStore>().settings.cachedPin.isEmpty & !context.read<AppStore>().settings.endpointIsNoTee) {
+      if (_store.appStore.settings.cachedPin.isEmpty & !_store.appStore.settings.endpointIsNoTee) {
         _store.showPasswordDialog(context);
       }
 
-      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
-        context.read<AppStore>().encointer.community?.getCommunityIcon();
+      if (_store.appStore.encointer.community?.communityIcon == null) {
+        _store.appStore.encointer.community?.getCommunityIcon();
       }
     });
   }
@@ -92,8 +88,6 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final appStore = context.watch<AppStore>();
-
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
     _panelHeightOpen = min(
@@ -120,7 +114,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
       },
       onFocusGained: () {
         Log.d('[home:FocusDetector] Focus Gained.', _tag);
-        if (!appStore.settings.loading) {
+        if (!_store.appStore.settings.loading) {
           _store.refreshBalanceAndNotify(context);
         }
         balanceWatchdog!.reset();
@@ -128,7 +122,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
       },
       child: Scaffold(
         appBar: _appBar(),
-        body: _body(context, appStore, allCommunities, allAccounts),
+        body: _body(context, allCommunities, allAccounts),
       ),
     );
   }
@@ -142,7 +136,6 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
 
   Widget _body(
     BuildContext context,
-    AppStore appStore,
     List<AccountOrCommunityData> allCommunities,
     List<AccountOrCommunityData> allAccounts,
   ) {
@@ -170,14 +163,13 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
           ),
           child: RefreshIndicator(
             onRefresh: _store.refreshEncointerState,
-            child: _lists(appStore, context),
+            child: _lists(context),
           ),
         ),
         // panel entering from below
         panelBuilder: (scrollController) => _panelBuilder(
           context,
           scrollController,
-          appStore,
         ),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40),
@@ -188,7 +180,6 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
   }
 
   Widget _lists(
-    AppStore appStore,
     BuildContext context,
   ) {
     return ListView(
@@ -196,8 +187,8 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
       children: [
         Observer(
           builder: (_) {
-            final accountData = appStore.account.currentAccount;
-            return _accounData(appStore, context, accountData);
+            final accountData = _store.appStore.account.currentAccount;
+            return _accounData(context, accountData);
           },
         ),
         const Padding(
@@ -205,10 +196,10 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
         ),
         Observer(
           builder: (_) {
-            final shouldFetch = appStore.encointer.currentPhase == CeremonyPhase.Registering ||
-                (appStore.encointer.communityAccount?.meetupCompleted ?? false);
+            final shouldFetch = _store.appStore.encointer.currentPhase == CeremonyPhase.Registering ||
+                (_store.appStore.encointer.communityAccount?.meetupCompleted ?? false);
 
-            return appStore.settings.isConnected && shouldFetch
+            return _store.appStore.settings.isConnected && shouldFetch
                 ? FutureBuilder<bool?>(
                     future: webApi.encointer.hasPendingIssuance(),
                     builder: (_, AsyncSnapshot<bool?> snapshot) {
@@ -221,13 +212,13 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
                             child: Text(localization.assets.issuancePending),
                             onPressed: (context) => submitClaimRewards(
                               context,
-                              appStore,
+                              _store.appStore,
                               webApi,
-                              appStore.encointer.chosenCid!,
+                              _store.appStore.encointer.chosenCid!,
                             ),
                           );
                         } else {
-                          return appStore.settings.developerMode
+                          return _store.appStore.settings.developerMode
                               ? ElevatedButton(
                                   onPressed: null,
                                   child: Text(localization.assets.issuanceClaimed),
@@ -243,13 +234,12 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
           },
         ),
         const SizedBox(height: 24),
-        CeremonyBox(appStore, webApi, key: const Key('ceremony-box-wallet')),
+        CeremonyBox(_store.appStore, webApi, key: const Key('ceremony-box-wallet')),
       ],
     );
   }
 
   Widget _accounData(
-    AppStore appStore,
     BuildContext context,
     AccountData accountData,
   ) {
@@ -257,7 +247,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
       children: <Widget>[
         InkWell(
           key: const Key('panel-controller'),
-          child: CombinedCommunityAndAccountAvatar(appStore),
+          child: CombinedCommunityAndAccountAvatar(_store.appStore),
           onTap: () {
             if (panelController != null && panelController!.isAttached) {
               panelController!.open();
@@ -266,15 +256,15 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
         ),
         Observer(
           builder: (_) {
-            return (appStore.encointer.community?.name != null) & (appStore.encointer.chosenCid != null)
+            return (_store.appStore.encointer.community?.name != null) & (_store.appStore.encointer.chosenCid != null)
                 ? Column(
                     children: [
                       TextGradient(
-                        text: '${Fmt.doubleFormat(appStore.encointer.communityBalance)} ⵐ',
+                        text: '${Fmt.doubleFormat(_store.appStore.encointer.communityBalance)} ⵐ',
                         style: const TextStyle(fontSize: 60),
                       ),
                       Text(
-                        '${localization.assets.balance}, ${appStore.encointer.community?.symbol}',
+                        '${localization.assets.balance}, ${_store.appStore.encointer.community?.symbol}',
                         style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
                       ),
                     ],
@@ -282,7 +272,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
                 : Container(
                     margin: const EdgeInsets.only(top: 16),
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: (appStore.encointer.chosenCid == null)
+                    child: (_store.appStore.encointer.chosenCid == null)
                         ? SizedBox(
                             width: double.infinity,
                             child: Text(localization.assets.communityNotSelected, textAlign: TextAlign.center),
@@ -294,9 +284,9 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
                   );
           },
         ),
-        if (appStore.settings.developerMode)
+        if (_store.appStore.settings.developerMode)
           ElevatedButton(
-            onPressed: appStore.dataUpdate.setInvalidated,
+            onPressed: _store.appStore.dataUpdate.setInvalidated,
             child: const Text('Invalidate data to trigger state update'),
           ),
         const SizedBox(
@@ -342,7 +332,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
                   ),
                 ),
                 key: const Key('transfer'),
-                onPressed: appStore.encointer.communityBalance != null
+                onPressed: _store.appStore.encointer.communityBalance != null
                     ? () => Navigator.pushNamed(context, TransferPage.route)
                     : null,
                 child: Padding(
@@ -367,7 +357,6 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
   MediaQuery _panelBuilder(
     BuildContext context,
     ScrollController scrollController,
-    AppStore appStore,
   ) {
     return MediaQuery.removePadding(
       context: context,
@@ -382,7 +371,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
             children: [
               Observer(
                 builder: (BuildContext context) {
-                  allCommunities = initAllCommunities(appStore);
+                  allCommunities = initAllCommunities();
                   return SwitchAccountOrCommunity(
                     rowTitle: localization.home.switchCommunity,
                     data: allCommunities,
@@ -402,7 +391,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
               ),
               Observer(
                 builder: (BuildContext context) {
-                  allAccounts = initAllAccounts(localization, appStore);
+                  allAccounts = initAllAccounts(localization);
                   return SwitchAccountOrCommunity(
                     rowTitle: localization.home.switchAccount,
                     data: allAccounts,
@@ -413,7 +402,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
                         ///TODO<Azamat>: Why setState() being called?
                         setState(() {
                           _store
-                            ..switchAccount(appStore.account.accountListAll[index], appStore)
+                            ..switchAccount(_store.appStore.account.accountListAll[index])
                             ..refreshBalanceAndNotify(context);
                         });
                       }
@@ -428,11 +417,11 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
     );
   }
 
-  List<AccountOrCommunityData> initAllCommunities(AppStore appStore) {
+  List<AccountOrCommunityData> initAllCommunities() {
     final allCommunities = <AccountOrCommunityData>[
       AccountOrCommunityData(
         avatar: const CommunityAvatar(avatarSize: avatarSize),
-        name: appStore.encointer.community?.name ?? '...',
+        name: _store.appStore.encointer.community?.name ?? '...',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
       AccountOrCommunityData(
@@ -453,7 +442,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
       )
     ];
     // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
-    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
+    // allCommunities.addAll(_store.communities.communitiesList.map((community) => AccountOrCommunityData(
     //     avatar: webApi.ipfs.getCommunityIcon(community),
     //     name: community.name)));
 
@@ -462,13 +451,13 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
     return allCommunities;
   }
 
-  List<AccountOrCommunityData> initAllAccounts(Translations dic, AppStore appStore) {
+  List<AccountOrCommunityData> initAllAccounts(Translations dic) {
     final allAccounts = <AccountOrCommunityData>[
-      ...appStore.account.accountListAll.map(
+      ..._store.appStore.account.accountListAll.map(
         (account) => AccountOrCommunityData(
           avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
           name: account.name,
-          isSelected: account.pubKey == appStore.account.currentAccountPubKey,
+          isSelected: account.pubKey == _store.appStore.account.currentAccountPubKey,
         ),
       ),
       AccountOrCommunityData(

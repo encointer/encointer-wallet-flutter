@@ -12,6 +12,7 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
@@ -20,7 +21,7 @@ class MockBuildContext extends Mock implements BuildContext {}
 /// The `endpoint` should be different for every test if it involves serialization, so that the caching
 /// does not interfere with other tests.
 Future<AppStore> setupAppStore(String networkInfo) async {
-  final store = AppStore();
+  final store = service_locator.sl.get<AppStore>();
   await store.init();
 
   final endpoint = EndpointData()..info = networkInfo;
@@ -36,8 +37,9 @@ Future<AppStore> setupAppStore(String networkInfo) async {
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   setEnvironment(Environment.test);
-
+  SharedPreferences.setMockInitialValues({});
   service_locator.init(isTest: true);
+  await service_locator.sl.allReady();
 
   group('Caching and serialization works', () {
     test('encointer store initialization, serialization and cache works', () async {

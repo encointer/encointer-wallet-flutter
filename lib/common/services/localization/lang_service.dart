@@ -1,10 +1,9 @@
 import 'dart:ui';
 
 import 'package:encointer_wallet/common/services/preferences/local_data.dart';
-import 'package:encointer_wallet/service_locator/service_locator.dart';
 
 class LangService {
-  LangService() : _storage = sl();
+  LangService(this._storage);
 
   static const enLocale = Locale('en', '');
   static const deLocale = Locale('de', '');

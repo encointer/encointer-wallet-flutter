@@ -8,9 +8,12 @@ import 'package:encointer_wallet/service_locator/service_locator.dart' as servic
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  SharedPreferences.setMockInitialValues({});
   service_locator.init(isTest: true);
+  await service_locator.sl.allReady();
   group('communityStore', () {
     test('json serialization and caching works', () async {
       final localStorage = MockLocalStorage();
@@ -18,7 +21,7 @@ void main() {
 
       // Only to not get null errors in tests
       webApi = getMockApi(
-        AppStore(),
+        service_locator.sl.get<AppStore>(),
         withUI: false,
       );
       webApi.init();

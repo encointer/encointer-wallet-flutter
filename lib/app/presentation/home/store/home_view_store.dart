@@ -16,7 +16,7 @@ const _tag = 'home_view_store';
 class HomeViewStore = _HomeViewStoreBase with _$HomeViewStore;
 
 abstract class _HomeViewStoreBase with Store {
-  _HomeViewStoreBase() : _appStore = sl<AppStore>();
+  _HomeViewStoreBase() : _appStore = sl.get<AppStore>();
 
   late final AppStore _appStore;
 

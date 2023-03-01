@@ -48,7 +48,7 @@ void _dataSourceModule(bool isTest) {
     );
   }
 
-  sl.registerSingleton(LangService());
+  sl.registerSingleton(LangService(sl.get<LocalData>()));
 }
 
 void _commonStores() {

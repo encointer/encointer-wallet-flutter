@@ -7,6 +7,7 @@ import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -15,19 +16,17 @@ part 'splash_view_store.g.dart';
 
 const _tag = 'splash_view_store';
 
-class SplashViewStore extends _SplashViewStore with _$SplashViewStore {
-  SplashViewStore(super._appStore);
-}
+class SplashViewStore = _SplashViewStore with _$SplashViewStore;
 
 abstract class _SplashViewStore with Store {
-  _SplashViewStore(this._appStore);
+  _SplashViewStore() : _appStore = sl.get<AppStore>();
 
   late final AppStore _appStore;
 
   @action
   Future<void> init(BuildContext context) async {
     Log.d('init', _tag);
-    // _appStore = context.watch<AppStore>();
+
     await _appStore.init();
 
     await _initWebApi(context);

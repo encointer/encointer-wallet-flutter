@@ -13,6 +13,7 @@ import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -21,7 +22,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -36,7 +36,7 @@ class _ProfileState extends State<Profile> {
   List<Widget> _buildAccountList() {
     final allAccountsAsWidgets = <Widget>[];
 
-    final accounts = context.read<AppStore>().account.accountListAll;
+    final accounts = sl.get<AppStore>().account.accountListAll;
 
     allAccountsAsWidgets.addAll(accounts.map((account) {
       return InkWell(
@@ -83,7 +83,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final h3Grey = Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey);
-    final store = context.watch<AppStore>();
+    final store = sl.get<AppStore>();
     _selectedNetwork = store.settings.endpoint;
 
     // if all accounts are deleted, go to createAccountPage

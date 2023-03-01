@@ -238,11 +238,11 @@ mixin _$AppStore on _AppStore, Store {
       ActionController(name: '_AppStore', context: context);
 
   @override
-  void _setSettingsStore() {
+  void setSettingsStore() {
     final _$actionInfo = _$_AppStoreActionController.startAction(
-        name: '_AppStore._setSettingsStore');
+        name: '_AppStore.setSettingsStore');
     try {
-      return super._setSettingsStore();
+      return super.setSettingsStore();
     } finally {
       _$_AppStoreActionController.endAction(_$actionInfo);
     }

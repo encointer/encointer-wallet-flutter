@@ -4,11 +4,11 @@ import 'package:encointer_wallet/extras/utils/translations/translations_services
 import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_form.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage({super.key});
@@ -26,6 +26,8 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   bool _submitting = false;
 
   final TextEditingController _nameCtrl = TextEditingController();
+
+  final AppStore appStore = sl.get<AppStore>();
 
   @override
   void dispose() {
@@ -91,10 +93,9 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
-    final index = context.read<AppStore>().account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
+    final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
     if (index > -1) {
-      final pubKeyMap =
-          context.read<AppStore>().account.pubKeyAddressMap[context.read<AppStore>().settings.endpoint.ss58]!;
+      final pubKeyMap = appStore.account.pubKeyAddressMap[appStore.settings.endpoint.ss58]!;
       final address = pubKeyMap[acc['pubKey']];
       if (address != null) {
         showCupertinoDialog<void>(
@@ -134,12 +135,12 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
     Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
     final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-    await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
+    await appStore.addAccount(acc, appStore.account.newAccount.password, addresses[0]);
 
     final pubKey = acc['pubKey'] as String?;
-    await context.read<AppStore>().setCurrentAccount(pubKey);
+    await appStore.setCurrentAccount(pubKey);
 
-    await context.read<AppStore>().loadAccountCache();
+    await appStore.loadAccountCache();
 
     // fetch info for the imported account
     webApi.fetchAccountData();
@@ -160,17 +161,17 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Widget _getImportForm() {
-    return ImportAccountForm(context.read<AppStore>(), (Map<String, dynamic> data) async {
+    return ImportAccountForm(appStore, (Map<String, dynamic> data) async {
       setState(() {
         _keyType = data['keyType'] as String?;
         _cryptoType = data['cryptoType'] as String?;
         _derivePath = data['derivePath'] as String?;
       });
 
-      if (context.read<AppStore>().account.isFirstAccount) {
+      if (appStore.account.isFirstAccount) {
         Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
       } else {
-        context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
+        appStore.account.setNewAccountPin(appStore.settings.cachedPin);
         await _importAccount();
         Navigator.pushAndRemoveUntil<void>(
           context,

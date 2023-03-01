@@ -91,8 +91,8 @@ abstract class _AppStore with Store {
   bool get appIsReady => storeIsReady && webApiIsReady;
 
   @action
-  void _setSettingsStore() {
-    Log.d('_setSettingsStore', _tag);
+  void setSettingsStore() {
+    Log.d('setSettingsStore', _tag);
     _settings = SettingsStore();
   }
 
@@ -100,7 +100,7 @@ abstract class _AppStore with Store {
   Future<void> init() async {
     Log.d('_init', _tag);
 
-    _setSettingsStore();
+    setSettingsStore();
 
     // wait settings store loaded
 

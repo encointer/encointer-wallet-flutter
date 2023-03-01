@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class LocalData {
   LocalData(this._storage);
 
+  /// MockLocalStorage
+  /// PreferencesService
   final PreferencesStorage _storage;
 
   Future<List<Map<String, dynamic>>> getAccountList() {

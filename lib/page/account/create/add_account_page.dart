@@ -6,10 +6,10 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/page/account/create/add_account_form.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AddAccountPage extends StatefulWidget {
   const AddAccountPage({super.key});
@@ -22,12 +22,12 @@ class AddAccountPage extends StatefulWidget {
 
 class _AddAccountPageState extends State<AddAccountPage> {
   bool _submitting = false;
-  late final AppStore _appStore;
+  final AppStore _appStore = sl.get<AppStore>();
 
   @override
   void initState() {
     super.initState();
-    _appStore = context.read<AppStore>();
+
     if (_appStore.settings.cachedPin.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {
@@ -136,10 +136,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
                 submitting: _submitting,
                 onSubmit: () {
                   setState(() {
-                    _createAndImportAccount(context.read<AppStore>());
+                    _createAndImportAccount(_appStore);
                   });
                 },
-                store: context.watch<AppStore>(),
+                store: _appStore,
               )
             : const Center(child: CupertinoActivityIndicator()),
       ),

@@ -1,8 +1,8 @@
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 const defaultSs58Prefix = {
   'info': 'default',
@@ -22,6 +22,8 @@ class SS58PrefixListPage extends StatelessWidget {
   static const String route = '/profile/ss58';
   final Api? api = webApi;
 
+  final AppStore _appStore = sl.get<AppStore>();
+
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
@@ -35,14 +37,14 @@ class SS58PrefixListPage extends StatelessWidget {
               subtitle: Text((i['text'] as String?) ?? ''),
               trailing: const Icon(Icons.arrow_forward_ios, size: 18),
               onTap: () {
-                if (context.read<AppStore>().settings.customSS58Format['info'] == i['info']) {
+                if (_appStore.settings.customSS58Format['info'] == i['info']) {
                   Navigator.of(context).pop();
                   return;
                 }
-                context.read<AppStore>().settings.setCustomSS58Format(i);
+                _appStore.settings.setCustomSS58Format(i);
 //                if (i['info'] == 'default') {
 //                  api.account
-//                      .setSS58Format(default_ss58_map[context.read<AppStore>().settings.endpoint.info]);
+//                      .setSS58Format(default_ss58_map[_appStore.settings.endpoint.info]);
 //                } else {
 //                  api.account.setSS58Format(i['value']);
 //                }

@@ -4,6 +4,7 @@ import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -11,13 +12,12 @@ import 'package:encointer_wallet/page/reap_voucher/dialogs.dart';
 import 'package:encointer_wallet/page/reap_voucher/utils.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({
@@ -47,6 +47,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   /// Is true when all the data has been fetched.
   bool _isReady = false;
+  final AppStore _appStore = sl.get<AppStore>();
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
     Log.d('Fetching voucher data...', 'ReapVoucherPage');
@@ -56,10 +57,10 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     setState(() {});
 
     final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-    if (context.read<AppStore>().chain.latestHeaderNumber != null) {
+    if (_appStore.chain.latestHeaderNumber != null) {
       _voucherBalance = voucherBalanceEntry.applyDemurrage(
-        context.read<AppStore>().chain.latestHeaderNumber!,
-        context.read<AppStore>().encointer.community!.demurrage!,
+        _appStore.chain.latestHeaderNumber!,
+        _appStore.encointer.community!.demurrage!,
       );
     }
 
@@ -71,7 +72,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
+    final store = sl.get<AppStore>();
     final h2Grey = Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerGrey);
     final h4Grey = Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey);
     final params = ModalRoute.of(context)?.settings.arguments as ReapVoucherParams?;
@@ -192,7 +193,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
   ) async {
     ChangeResult? result = ChangeResult.ok;
-    final store = context.read<AppStore>();
+    final store = _appStore;
 
     if (store.settings.endpoint.info != networkInfo) {
       result = await showChangeNetworkAndCommunityDialog(

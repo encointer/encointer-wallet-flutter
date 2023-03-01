@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class ExportAccountPage extends StatelessWidget {
   ExportAccountPage({super.key});
@@ -21,7 +21,7 @@ class ExportAccountPage extends StatelessWidget {
 
   void _showPasswordDialog(BuildContext context, String seedType) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.read<AppStore>();
+    final store = sl.get<AppStore>();
 
     Future<void> onOk() async {
       final res = await webApi.account.checkAccountPassword(
@@ -100,7 +100,7 @@ class ExportAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
+    final store = sl.get<AppStore>();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.export),
@@ -111,8 +111,8 @@ class ExportAccountPage extends StatelessWidget {
             title: Text(dic.account.keystore),
             trailing: const Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
-              final json = AccountData.toJson(context.read<AppStore>().account.currentAccount)..remove('name');
-              (json['meta'] as Map<String, dynamic>)['name'] = context.read<AppStore>().account.currentAccount.name;
+              final json = AccountData.toJson(store.account.currentAccount)..remove('name');
+              (json['meta'] as Map<String, dynamic>)['name'] = store.account.currentAccount.name;
               Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
                 'key': jsonEncode(json),
                 'type': AccountStore.seedTypeKeystore,

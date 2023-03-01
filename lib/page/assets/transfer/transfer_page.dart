@@ -4,6 +4,7 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
@@ -11,16 +12,15 @@ import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class TransferPageParams {
   TransferPageParams({
@@ -72,7 +72,7 @@ class _TransferPageState extends State<TransferPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final params = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
 
-      final store = context.read<AppStore>();
+      final store = sl.get<AppStore>();
 
       if (params != null) {
         handleTransferPageParams(params, store);
@@ -118,7 +118,7 @@ class _TransferPageState extends State<TransferPage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
+    final store = sl.get<AppStore>();
 
     const decimals = encointerCurrenciesDecimals;
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
