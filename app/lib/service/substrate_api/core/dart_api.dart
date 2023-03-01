@@ -28,9 +28,6 @@ class SubstrateDartApi {
   String? get endpoint => _endpoint;
 
   Future<void> connect(String endpoint) async {
-// I tried to wait with await, but I found that the application opened too late before I used it.
-//     // That's why I used unwaited. However, I couldn't catch errors with either of them,
-//     // only a small delay when I used that await.
 //     _connectAndListen(endpoint);
     unawaited(_connectAndListen(endpoint));
 
