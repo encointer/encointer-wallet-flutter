@@ -11,7 +11,6 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -41,7 +40,7 @@ class CreateAccountView extends StatelessWidget {
   }
 }
 
-class CreateAcccountForm extends StatelessWidget {
+class CreateAcccountForm extends StatelessWidget with NavigateMixin {
   CreateAcccountForm({super.key, required this.addAccount});
   final bool addAccount;
 
@@ -119,7 +118,11 @@ class CreateAcccountForm extends StatelessWidget {
                           final appStore = context.read<AppStore>();
                           store.setName(_nameCtrl.text.trim());
                           final res = await store.generateAccount(appStore, webApi);
-                          await _navigate(context, res);
+                          await navigate(
+                            context: context,
+                            type: res,
+                            success: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                          );
                         }
                       : null,
                   child: !store.loading ? Text(dic.profile.accountCreate) : const ProgressingIndicator(),
@@ -152,23 +155,5 @@ class CreateAcccountForm extends StatelessWidget {
               const SizedBox(height: 20),
             ],
     );
-  }
-
-  Future<void> _navigate(BuildContext context, AddAccountResponse type) async {
-    switch (type) {
-      case AddAccountResponse.success:
-        Navigator.pop(context);
-        break;
-      case AddAccountResponse.fail:
-        final dic = I18n.of(context)!.translationsForLocale();
-        AppAlert.showErrorDailog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
-        break;
-      case AddAccountResponse.passwordEmpty:
-        final appStore = context.read<AppStore>();
-        await AppAlert.showInputPasswordDailog(context: context, account: appStore.account.currentAccount);
-        break;
-      case AddAccountResponse.duplicate:
-        break;
-    }
   }
 }

@@ -37,7 +37,7 @@ class ImportAccountView extends StatelessWidget {
   }
 }
 
-class ImportAccountForm extends StatelessWidget {
+class ImportAccountForm extends StatelessWidget with NavigateMixin {
   ImportAccountForm({super.key});
 
   final _formKey = GlobalKey<FormState>();
@@ -111,7 +111,12 @@ class ImportAccountForm extends StatelessWidget {
                         );
                       } else {
                         final res = await store.importAccount(appStore, webApi);
-                        await _navigate(context, res);
+                        await navigate(
+                          context: context,
+                          type: res,
+                          success: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                          duplicate: () => _duplicate(context),
+                        );
                       }
                     }
                   }
@@ -124,49 +129,34 @@ class ImportAccountForm extends StatelessWidget {
     );
   }
 
-  Future<void> _navigate(BuildContext context, AddAccountResponse type) async {
+  Future<void> _duplicate(BuildContext context) async {
     final appStore = context.read<AppStore>();
     final store = context.read<NewAccountStore>();
-    switch (type) {
-      case AddAccountResponse.success:
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        break;
-      case AddAccountResponse.fail:
-        final dic = I18n.of(context)!.translationsForLocale();
-        AppAlert.showErrorDailog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
-        break;
-      case AddAccountResponse.passwordEmpty:
-        final appStore = context.read<AppStore>();
-        await AppAlert.showInputPasswordDailog(context: context, account: appStore.account.currentAccount);
-        break;
-      case AddAccountResponse.duplicate:
-        final pubKeyMap = appStore.account.pubKeyAddressMap[appStore.settings.endpoint.ss58]!;
-        final address = pubKeyMap[store.cacheAcc?['pubKey']];
-        final dic = I18n.of(context)!.translationsForLocale();
-        AppAlert.showDailog<void>(
-          context,
-          title: Text(Fmt.address(address)!),
-          content: Text(dic.account.importDuplicate),
-          actions: [
-            CupertinoButton(
-              child: Text(dic.home.cancel),
-              onPressed: () {
-                store.setLoading(false);
-                Navigator.of(context).popUntil((route) => route.isFirst);
-              },
-            ),
-            CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () async {
-                if (store.cacheAcc != null) {
-                  await store.saveAccount(webApi, appStore, store.cacheAcc!, appStore.settings.cachedPin);
-                }
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-        break;
-    }
+    final pubKeyMap = appStore.account.pubKeyAddressMap[appStore.settings.endpoint.ss58]!;
+    final address = pubKeyMap[store.cacheAcc?['pubKey']];
+    final dic = I18n.of(context)!.translationsForLocale();
+    await AppAlert.showDailog<void>(
+      context,
+      title: Text(Fmt.address(address)!),
+      content: Text(dic.account.importDuplicate),
+      actions: [
+        CupertinoButton(
+          child: Text(dic.home.cancel),
+          onPressed: () {
+            store.setLoading(false);
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          },
+        ),
+        CupertinoButton(
+          child: Text(dic.home.ok),
+          onPressed: () async {
+            if (store.cacheAcc != null) {
+              await store.saveAccount(webApi, appStore, store.cacheAcc!, appStore.settings.cachedPin);
+            }
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          },
+        ),
+      ],
+    );
   }
 }
