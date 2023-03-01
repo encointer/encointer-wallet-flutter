@@ -74,14 +74,6 @@ class AccountApi {
     return address;
   }
 
-  /// query address with account index
-  Future<List<dynamic>?> queryAddressWithAccountIndex(String index) async {
-    final res = await jsApi.evalJavascript<List<dynamic>?>(
-      'account.queryAddressWithAccountIndex("$index", ${store.settings.endpoint.ss58})',
-    );
-    return res;
-  }
-
   Future<void> changeCurrentAccount({
     String? pubKey,
     bool fetchData = false,
@@ -148,17 +140,5 @@ class AccountApi {
     final pubKey = account.pubKey;
     Log.d('checkpass: $pubKey, $pass', 'AccountApi');
     return jsApi.evalJavascript('account.checkPassword("$pubKey", "$pass")');
-  }
-
-  Future<List<dynamic>> fetchAddressIndex(List addresses) async {
-    if (addresses.isEmpty) return [];
-
-    addresses.retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));
-    if (addresses.isEmpty) return [];
-
-    final res = await jsApi.evalJavascript<List<dynamic>>('account.getAccountIndex(${jsonEncode(addresses)})');
-    store.account.setAddressIndex(res);
-
-    return res;
   }
 }

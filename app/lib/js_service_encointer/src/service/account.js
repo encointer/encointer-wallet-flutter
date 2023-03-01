@@ -168,12 +168,6 @@ async function addressFromUri(uri) {
   return keyring.encodeAddress(pubKey, ss58);
 }
 
-async function queryAddressWithAccountIndex (accIndex, ss58) {
-  const num = ss58Decode(accIndex, ss58).toJSON();
-  const res = await api.query.indices.accounts(num.data);
-  return res;
-}
-
 /**
  * get ERT balance of an address
  * @param {String} address
@@ -212,12 +206,6 @@ async function subscribeBalance (msgChannel, address) {
       lockedBreakdown
     });
   }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
-function getAccountIndex (addresses) {
-  return api.derive.accounts.indexes().then((res) => {
-    return Promise.all(addresses.map((i) => api.derive.accounts.info(i)));
-  });
 }
 
 function getBlockTime (blocks) {
@@ -468,12 +456,10 @@ export default {
   addressFromUri,
   encodeAddress,
   decodeAddress,
-  queryAddressWithAccountIndex,
   gen,
   recover,
   getBalance,
   subscribeBalance,
-  getAccountIndex,
   getBlockTime,
   txFeeEstimate,
   sendTx,
