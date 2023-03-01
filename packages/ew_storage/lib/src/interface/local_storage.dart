@@ -1,4 +1,4 @@
-import 'package:ew_storage/src/example/abstract_class.dart';
+import 'package:ew_storage/src/interface/pref_interface_class.dart';
 import 'package:flutter/material.dart';
 
 class LocalData {

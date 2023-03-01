@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:ui';
 
-import 'package:ew_storage/src/example/abstract_class.dart';
-
+import 'package:ew_storage/src/interface/pref_interface_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Map<String, dynamic> endorphineCointer = {
