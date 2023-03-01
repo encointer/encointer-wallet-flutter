@@ -121,11 +121,29 @@ class $LibJsServiceEncointerGen {
 class $AssetsImagesAssetsGen {
   const $AssetsImagesAssetsGen();
 
-  /// File path: assets/images/assets/assets_nav_0.png
-  AssetGenImage get assetsNav0 => const AssetGenImage('assets/images/assets/assets_nav_0.png');
+  /// File path: assets/images/assets/Assets_nav_0.png
+  AssetGenImage get assetsNav0 => const AssetGenImage('assets/images/assets/Assets_nav_0.png');
 
-  /// File path: assets/images/assets/ert.png
-  AssetGenImage get ert => const AssetGenImage('assets/images/assets/ert.png');
+  /// File path: assets/images/assets/Assets_nav_1.png
+  AssetGenImage get assetsNav1 => const AssetGenImage('assets/images/assets/Assets_nav_1.png');
+
+  /// File path: assets/images/assets/ERT.png
+  AssetGenImage get ert => const AssetGenImage('assets/images/assets/ERT.png');
+
+  /// File path: assets/images/assets/assets_down.png
+  AssetGenImage get assetsDown => const AssetGenImage('assets/images/assets/assets_down.png');
+
+  /// File path: assets/images/assets/assets_fail.png
+  AssetGenImage get assetsFail => const AssetGenImage('assets/images/assets/assets_fail.png');
+
+  /// File path: assets/images/assets/assets_receive.png
+  AssetGenImage get assetsReceive => const AssetGenImage('assets/images/assets/assets_receive.png');
+
+  /// File path: assets/images/assets/assets_send.png
+  AssetGenImage get assetsSend => const AssetGenImage('assets/images/assets/assets_send.png');
+
+  /// File path: assets/images/assets/assets_up.png
+  AssetGenImage get assetsUp => const AssetGenImage('assets/images/assets/assets_up.png');
 
   /// File path: assets/images/assets/icon_leu.svg
   SvgGenImage get iconLeu => const SvgGenImage('assets/images/assets/icon_leu.svg');
@@ -140,7 +158,20 @@ class $AssetsImagesAssetsGen {
   AssetGenImage get success => const AssetGenImage('assets/images/assets/success.png');
 
   /// List of all assets
-  List<dynamic> get values => [assetsNav0, ert, iconLeu, logo, plusIndigo, success];
+  List<dynamic> get values => [
+        assetsNav0,
+        assetsNav1,
+        ert,
+        assetsDown,
+        assetsFail,
+        assetsReceive,
+        assetsSend,
+        assetsUp,
+        iconLeu,
+        logo,
+        plusIndigo,
+        success
+      ];
 }
 
 class $AssetsImagesPublicGen {
@@ -158,11 +189,53 @@ class $AssetsImagesPublicGen {
   /// File path: assets/images/public/copy.png
   AssetGenImage get copy => const AssetGenImage('assets/images/public/copy.png');
 
+  /// File path: assets/images/public/dontscreen.png
+  AssetGenImage get dontscreen => const AssetGenImage('assets/images/public/dontscreen.png');
+
   /// File path: assets/images/public/kusama.png
   AssetGenImage get kusama => const AssetGenImage('assets/images/public/kusama.png');
 
+  /// File path: assets/images/public/kusama_gray.png
+  AssetGenImage get kusamaGray => const AssetGenImage('assets/images/public/kusama_gray.png');
+
   /// File path: assets/images/public/logo_about.png
   AssetGenImage get logoAbout => const AssetGenImage('assets/images/public/logo_about.png');
+
+  /// File path: assets/images/public/nctr-cln-dev.png
+  AssetGenImage get nctrClnDev => const AssetGenImage('assets/images/public/nctr-cln-dev.png');
+
+  /// File path: assets/images/public/nctr-cln-dev_gray.png
+  AssetGenImage get nctrClnDevGray => const AssetGenImage('assets/images/public/nctr-cln-dev_gray.png');
+
+  /// File path: assets/images/public/nctr-cln.png
+  AssetGenImage get nctrCln => const AssetGenImage('assets/images/public/nctr-cln.png');
+
+  /// File path: assets/images/public/nctr-cln_gray.png
+  AssetGenImage get nctrClnGray => const AssetGenImage('assets/images/public/nctr-cln_gray.png');
+
+  /// File path: assets/images/public/nctr-gsl-dev.png
+  AssetGenImage get nctrGslDev => const AssetGenImage('assets/images/public/nctr-gsl-dev.png');
+
+  /// File path: assets/images/public/nctr-gsl-dev_gray.png
+  AssetGenImage get nctrGslDevGray => const AssetGenImage('assets/images/public/nctr-gsl-dev_gray.png');
+
+  /// File path: assets/images/public/nctr-gsl.png
+  AssetGenImage get nctrGsl => const AssetGenImage('assets/images/public/nctr-gsl.png');
+
+  /// File path: assets/images/public/nctr-gsl_gray.png
+  AssetGenImage get nctrGslGray => const AssetGenImage('assets/images/public/nctr-gsl_gray.png');
+
+  /// File path: assets/images/public/nctr-k.png
+  AssetGenImage get nctrK => const AssetGenImage('assets/images/public/nctr-k.png');
+
+  /// File path: assets/images/public/nctr-k_gray.png
+  AssetGenImage get nctrKGray => const AssetGenImage('assets/images/public/nctr-k_gray.png');
+
+  /// File path: assets/images/public/nctr-r.png
+  AssetGenImage get nctrR => const AssetGenImage('assets/images/public/nctr-r.png');
+
+  /// File path: assets/images/public/nctr-r_gray.png
+  AssetGenImage get nctrRGray => const AssetGenImage('assets/images/public/nctr-r_gray.png');
 
   /// File path: assets/images/public/polkadot-greyed-out.png
   AssetGenImage get polkadotGreyedOut => const AssetGenImage('assets/images/public/polkadot-greyed-out.png');
@@ -170,9 +243,43 @@ class $AssetsImagesPublicGen {
   /// File path: assets/images/public/polkadot.png
   AssetGenImage get polkadot => const AssetGenImage('assets/images/public/polkadot.png');
 
+  /// File path: assets/images/public/polkadot_gray.png
+  AssetGenImage get polkadotGray => const AssetGenImage('assets/images/public/polkadot_gray.png');
+
+  /// File path: assets/images/public/substrate.png
+  AssetGenImage get substrate => const AssetGenImage('assets/images/public/substrate.png');
+
+  /// File path: assets/images/public/westend.png
+  AssetGenImage get westend => const AssetGenImage('assets/images/public/westend.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [ceremoniesDark, ceremoniesIndigo, app, copy, kusama, logoAbout, polkadotGreyedOut, polkadot];
+  List<AssetGenImage> get values => [
+        ceremoniesDark,
+        ceremoniesIndigo,
+        app,
+        copy,
+        dontscreen,
+        kusama,
+        kusamaGray,
+        logoAbout,
+        nctrClnDev,
+        nctrClnDevGray,
+        nctrCln,
+        nctrClnGray,
+        nctrGslDev,
+        nctrGslDevGray,
+        nctrGsl,
+        nctrGslGray,
+        nctrK,
+        nctrKGray,
+        nctrR,
+        nctrRGray,
+        polkadotGreyedOut,
+        polkadot,
+        polkadotGray,
+        substrate,
+        westend
+      ];
 }
 
 class $LibJsServiceEncointerDistGen {

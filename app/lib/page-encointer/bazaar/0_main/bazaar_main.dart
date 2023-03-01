@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class BazaarMain extends StatelessWidget {
               title: Text(I18n.of(context)!.translationsForLocale().bazaar.bazaarTitle),
               centerTitle: true,
               // leading: IconButton(icon: Image.asset('assets/images/assets/ert.png'), onPressed: () => _chooseCommunity()), // TODO
-              leading: IconButton(icon: Image.asset('assets/images/assets/ert.png'), onPressed: () {}),
+              leading: IconButton(icon: Assets.images.assets.ert.image(), onPressed: () {}),
               bottom: TabBar(
                 tabs: <Widget>[
                   const Tab(icon: Icon(Icons.home), text: 'Home'),

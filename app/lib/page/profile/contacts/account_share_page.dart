@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
@@ -68,7 +69,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   const WakeLockAndBrightnessEnhancer(brightness: 1),
                   QrImage(
                     data: contactQrCode.toQrPayload(),
-                    embeddedImage: const AssetImage('assets/images/public/app.png'),
+                    embeddedImage: Assets.images.public.app.provider(),
                     embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(40, 40)),
                   ),
                   Text(

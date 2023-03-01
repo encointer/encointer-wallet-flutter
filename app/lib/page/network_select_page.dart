@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -122,7 +123,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           IconButton(
-              icon: Image.asset('assets/images/assets/plus_indigo.png'),
+              icon: Assets.images.assets.plusIndigo.image(),
               color: Theme.of(context).primaryColor,
               onPressed: () async => {
                     if (context.read<AppStore>().settings.cachedPin.isEmpty)
