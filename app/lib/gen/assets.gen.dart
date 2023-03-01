@@ -151,9 +151,6 @@ class $AssetsImagesAssetsGen {
   /// File path: assets/images/assets/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/assets/logo.png');
 
-  /// File path: assets/images/assets/plus_indigo.png
-  AssetGenImage get plusIndigo => const AssetGenImage('assets/images/assets/plus_indigo.png');
-
   /// File path: assets/images/assets/success.png
   AssetGenImage get success => const AssetGenImage('assets/images/assets/success.png');
 
@@ -169,7 +166,6 @@ class $AssetsImagesAssetsGen {
         assetsUp,
         iconLeu,
         logo,
-        plusIndigo,
         success
       ];
 }

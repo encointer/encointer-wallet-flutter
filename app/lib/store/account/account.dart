@@ -58,9 +58,6 @@ abstract class _AccountStore with Store {
   ObservableList<AccountData> accountList = ObservableList<AccountData>();
 
   @observable
-  Map<String?, Map> accountIndexMap = <String, Map>{};
-
-  @observable
   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
 
   @observable
