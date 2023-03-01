@@ -40,7 +40,7 @@ class CreateAccountView extends StatelessWidget {
   }
 }
 
-class CreateAcccountForm extends StatelessWidget with NavigateMixin {
+class CreateAcccountForm extends StatelessWidget with NewAccountNavigationMixin {
   CreateAcccountForm({super.key, required this.addAccount});
   final bool addAccount;
 

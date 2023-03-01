@@ -6,7 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-mixin NavigateMixin on Widget {
+mixin NewAccountNavigationMixin on Widget {
   Future<void> navigate({
     required BuildContext context,
     required AddAccountResponse type,

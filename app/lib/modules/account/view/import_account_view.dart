@@ -37,7 +37,7 @@ class ImportAccountView extends StatelessWidget {
   }
 }
 
-class ImportAccountForm extends StatelessWidget with NavigateMixin {
+class ImportAccountForm extends StatelessWidget with NewAccountNavigationMixin {
   ImportAccountForm({super.key});
 
   final _formKey = GlobalKey<FormState>();
