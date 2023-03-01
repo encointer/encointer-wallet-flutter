@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
@@ -25,7 +26,6 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   final String mosaicBackground = 'assets/nctr_mosaic_background.svg';
-  final String nctrLogo = 'assets/nctr_logo.svg';
 
   Future<void> _initPage() async {
     final store = context.watch<AppStore>();
@@ -68,14 +68,7 @@ class _SplashViewState extends State<SplashView> {
                 fit: BoxFit.fill,
                 width: MediaQuery.of(context).size.width,
               ),
-              Center(
-                child: SvgPicture.asset(
-                  nctrLogo,
-                  color: Colors.white,
-                  width: 210,
-                  height: 210,
-                ),
-              ),
+              const EncointerLogo(),
             ],
           );
         },
