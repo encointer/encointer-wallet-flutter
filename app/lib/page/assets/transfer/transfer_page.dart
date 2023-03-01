@@ -90,7 +90,7 @@ class _TransferPageState extends State<TransferPage> {
 
   void handleTransferPageParams(TransferPageParams params, AppStore store) {
     _communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
-    _cid = params.cid ?? store.encointer.chosenCid!;
+    _cid = params.cid;
     if (params.cid != store.encointer.chosenCid!) {
       showCupertinoDialog<void>(
         context: context,
