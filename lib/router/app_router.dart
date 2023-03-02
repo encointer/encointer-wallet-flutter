@@ -31,7 +31,6 @@ import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dar
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 class AppRoute {
   const AppRoute._();
@@ -219,10 +218,7 @@ class AppRoute {
         );
       case TransferHistoryView.route:
         return CupertinoPageRoute(
-          builder: (_) => Provider(
-            create: (context) => TransferHistoryStore()..getTransfers(),
-            child: const TransferHistoryView(),
-          ),
+          builder: (_) => TransferHistoryView(),
           settings: settings,
         );
 

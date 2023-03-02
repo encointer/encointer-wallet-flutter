@@ -1,3 +1,3 @@
-export 'logic/transfer_gistory_store.dart';
+export 'logic/transfer_history_store.dart';
 export 'view/transfer_history_view.dart';
 export 'widgets/transaction_card.dart';

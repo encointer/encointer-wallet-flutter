@@ -1,20 +1,20 @@
+import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/extras/utils/translations/translations_services.dart';
-
+// ignore: must_be_immutable
 class TransferHistoryView extends StatelessWidget {
-  const TransferHistoryView({super.key});
+  TransferHistoryView({super.key});
 
   static const route = '/transfer-history';
 
+  TransferHistoryStore store = TransferHistoryStore();
+
   @override
   Widget build(BuildContext context) {
-    final store = context.watch<TransferHistoryStore>();
     final dic = I18n.of(context)!.translationsForLocale().home;
     return Scaffold(
       appBar: AppBar(

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transfer_gistory_store.dart';
+part of 'transfer_history_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -25,12 +25,12 @@ mixin _$TransferHistoryStore on _TransferHistoryStoreBase, Store {
     });
   }
 
-  late final _$getTransfersAsyncAction =
-      AsyncAction('_TransferHistoryStoreBase.getTransfers', context: context);
+  late final _$_getTransfersAsyncAction =
+      AsyncAction('_TransferHistoryStoreBase._getTransfers', context: context);
 
   @override
-  Future<void> getTransfers() {
-    return _$getTransfersAsyncAction.run(() => super.getTransfers());
+  Future<void> _getTransfers() {
+    return _$_getTransfersAsyncAction.run(() => super._getTransfers());
   }
 
   @override
