@@ -1,12 +1,25 @@
 import 'package:ew_storage/src/interface/pref_interface_class.dart';
 import 'package:flutter/material.dart';
 
-class LocalData {
-  LocalData(this._storage);
+class LocalStorage {
+  LocalStorage({required this.isTest}){
+   _init();
+  };
+  
+  final bool isTest;
 
   /// MockLocalStorage
   /// PreferencesService
-  final PreferencesStorage _storage;
+ late final PreferencesStorage _storage;
+  
+  Future<void> _init() async {
+   if(isTest) {
+    _storage = MockLocalStorage();
+   } else{
+    await PreferencesService.instance.init();
+    _storage = PreferencesService.instance; 
+   }
+  }
 
   Future<List<Map<String, dynamic>>> getAccountList() {
     return _storage.getAccountList();
