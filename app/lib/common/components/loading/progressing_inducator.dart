@@ -5,6 +5,9 @@ class ProgressingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CupertinoActivityIndicator());
+    return const SizedBox(
+      width: double.minPositive,
+      child: Center(child: CupertinoActivityIndicator()),
+    );
   }
 }
