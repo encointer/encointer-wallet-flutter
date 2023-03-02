@@ -76,9 +76,9 @@ class AppRoute {
           settings: settings,
         );
       case TransferPage.route:
+        final params = settings.arguments;
         return CupertinoPageRoute(
-          builder: (_) => const TransferPage(),
-          settings: settings,
+          builder: (_) => TransferPage(params as TransferPageParams?),
           fullscreenDialog: true,
         );
       case PaymentConfirmationPage.route:
