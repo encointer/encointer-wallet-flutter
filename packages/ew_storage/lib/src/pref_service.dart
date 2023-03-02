@@ -36,7 +36,7 @@ class PreferencesService extends PreferencesStorage {
   }
 
   @override
-  Future<String?> getKV(String key) async {
+  String? getKV(String key) {
     return _prefs.getString(key);
   }
 
@@ -99,17 +99,9 @@ class PreferencesService extends PreferencesStorage {
   }
 
   @override
-  Future<bool> setSeeds(String seedType, Map value) async {
-    return setKV('${seedKey}_$seedType', jsonEncode(value));
-  }
-
-  @override
-  Future<Map<String, dynamic>> getSeeds(String seedType) async {
-    final value = await getKV('${seedKey}_$seedType');
-    if (value != null) {
-      return jsonDecode(value) as Map<String, dynamic>;
-    }
-    return {};
+  Map<String, dynamic>? getSeeds(String seedType) {
+    final value = getKV('${seedKey}_$seedType');
+    return value != null ? jsonDecode(value) as Map<String, dynamic> : null;
   }
 
   @override
@@ -120,7 +112,7 @@ class PreferencesService extends PreferencesStorage {
 
   @override
   Future<Object?> getObject(String key) async {
-    final value = await getKV('${customKVKey}_$key');
+    final value = getKV('${customKVKey}_$key');
     if (value != null) {
       final dynamic data = await compute(jsonDecode, value);
       return data as Object;
@@ -136,7 +128,7 @@ class PreferencesService extends PreferencesStorage {
   /// Gets the more specific return type that GetObject. This should always be preferred. /// /// Should be used instead of getObject`, see #533.
   @override
   Future<Map<String, dynamic>?> getMap(String key) async {
-    final value = await getKV('${customKVKey}_$key');
+    final value = getKV('${customKVKey}_$key');
 
     if (value != null) {
       // String to `Map<String, dynamic>` conversion
@@ -151,7 +143,7 @@ class PreferencesService extends PreferencesStorage {
     var data = await getObject(key) as Map?;
     data ??= {};
     data[accPubKey] = value;
-    setObject(key, data);
+    await setObject(key, data);
   }
 
   @override
@@ -177,7 +169,7 @@ class PreferencesService extends PreferencesStorage {
   }
 
   @override
-  Future<List<String>> getShownMessages() async {
+  List<String>? getShownMessages() {
     return getListString(meetUpNotificationKey);
   }
 
@@ -187,16 +179,14 @@ class PreferencesService extends PreferencesStorage {
   }
 
   @override
-  Future<Locale>? getLocale() {
+  Locale? getLocale() {
     final locale = _prefs.getString(_localKey);
-    if (locale == null || locale.isEmpty) return null;
-
-    return Future.value(Locale(locale));
+    return locale != null ? Locale(locale) : null;
   }
 
   @override
-  Future<bool> setBiometricEnabled(bool? value) {
-    return _prefs.setBool(_biometricEnabledKey, value ?? false);
+  Future<bool> setBiometricEnabled({required bool value}) {
+    return _prefs.setBool(_biometricEnabledKey, value);
   }
 
   @override
@@ -205,7 +195,7 @@ class PreferencesService extends PreferencesStorage {
   }
 
   @override
-  Future<bool> clear() async {
+  Future<bool> clear() {
     return _prefs.clear();
   }
 
@@ -213,7 +203,7 @@ class PreferencesService extends PreferencesStorage {
   Future<List<Map<String, dynamic>>> getList(String key) async {
     var res = <Map<String, dynamic>>[];
 
-    final str = await getKV(key);
+    final str = getKV(key);
     if (str != null) {
       final l = jsonDecode(str);
       res = (l as List)
@@ -263,7 +253,7 @@ class PreferencesService extends PreferencesStorage {
   }
 
   @override
-  Future<List<String>> getListString(String key) async {
-    return _prefs.getStringList(key) ?? <String>[];
+  List<String>? getListString(String key) {
+    return _prefs.getStringList(key);
   }
 }

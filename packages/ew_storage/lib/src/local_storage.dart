@@ -28,7 +28,7 @@ class LocalData {
     return _storage.getCurrentAccount();
   }
 
-  Future<Map<String, dynamic>> getSeeds(String seedType) async {
+  Map<String, dynamic>? getSeeds(String seedType) {
     return _storage.getSeeds(seedType);
   }
 
@@ -68,7 +68,7 @@ class LocalData {
     return _storage.getMap(key);
   }
 
-  Future<String?> getKV(String key) {
+  String? getKV(String key) {
     return _storage.getKV(key);
   }
 
@@ -84,7 +84,7 @@ class LocalData {
     return _storage.setShownMessages(value);
   }
 
-  Future<List<String>> getShownMessages() async {
+  List<String>? getShownMessages() {
     return _storage.getShownMessages();
   }
 
@@ -92,12 +92,12 @@ class LocalData {
     return _storage.setLocale(value);
   }
 
-  Future<Locale>? getLocale() {
+  Locale? getLocale() {
     return _storage.getLocale();
   }
 
-  Future<bool> setBiometricEnabled(bool? value) async {
-    return _storage.setBiometricEnabled(value);
+  Future<bool> setBiometricEnabled({required bool value}) async {
+    return _storage.setBiometricEnabled(value: value);
   }
 
   bool isBiometricEnabled() {
@@ -137,11 +137,7 @@ class LocalData {
     await _storage.setListString(key, value);
   }
 
-  Future<List<String>> getListString(String key) async {
+  List<String>? getListString(String key) {
     return _storage.getListString(key);
-  }
-
-  Future<bool> setSeeds(String seedType, Map value) async {
-    return _storage.setSeeds(seedType, value);
   }
 }

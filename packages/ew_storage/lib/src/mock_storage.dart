@@ -3,7 +3,6 @@ import 'dart:core';
 import 'dart:ui';
 
 import 'package:ew_storage/src/interface/pref_interface_class.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Map<String, dynamic> endorphineCointer = {
   'name': 'Endorphine Cointer',
@@ -29,9 +28,6 @@ Map<String, dynamic> storage = <String, dynamic>{};
 List<dynamic> pubKeys = accList.map((e) => e['pubKey']).toList();
 
 class MockLocalStorage extends PreferencesStorage {
-  /// Localization key
-  static const String _localKey = 'locale';
-
   @override
   Future<List<Map<String, dynamic>>> getAccountList() {
     return Future.value(accList);
@@ -59,8 +55,8 @@ class MockLocalStorage extends PreferencesStorage {
   }
 
   @override
-  Future<Map<String, dynamic>> getSeeds(String seedType) async {
-    return Future.value({});
+  Map<String, dynamic>? getSeeds(String seedType) {
+    return {};
   }
 
   @override
@@ -132,8 +128,8 @@ class MockLocalStorage extends PreferencesStorage {
   }
 
   @override
-  Future<String?> getKV(String key) {
-    return Future.value();
+  String? getKV(String key) {
+    return null;
   }
 
   @override
@@ -157,21 +153,17 @@ class MockLocalStorage extends PreferencesStorage {
   }
 
   @override
-  Future<List<String>> getListString(String key) {
+  List<String>? getListString(String key) {
     throw UnimplementedError();
   }
 
   @override
-  Future<Locale>? getLocale() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final locale = prefs.getString(_localKey);
-
-    return Locale(locale ?? 'en');
+  Locale? getLocale() {
+    return const Locale('en');
   }
 
   @override
-  Future<List<String>> getShownMessages() {
+  List<String>? getShownMessages() {
     throw UnimplementedError();
   }
 
@@ -191,7 +183,7 @@ class MockLocalStorage extends PreferencesStorage {
   }
 
   @override
-  Future<bool> setBiometricEnabled(bool? value) {
+  Future<bool> setBiometricEnabled({required bool value}) {
     throw UnimplementedError();
   }
 
@@ -217,11 +209,6 @@ class MockLocalStorage extends PreferencesStorage {
     String? itemValue,
     Map<String, dynamic> itemNew,
   ) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setSeeds(String seedType, Map value) {
     throw UnimplementedError();
   }
 }

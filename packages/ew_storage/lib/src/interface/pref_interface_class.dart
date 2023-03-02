@@ -11,7 +11,7 @@ abstract class PreferencesStorage {
 
   Future<String?> getCurrentAccount();
 
-  Future<Map<String, dynamic>> getSeeds(String seedType);
+  Map<String, dynamic>? getSeeds(String seedType);
 
   Future<Object?> getAccountCache(String? accPubKey, String key);
 
@@ -31,7 +31,7 @@ abstract class PreferencesStorage {
 
   Future<Map<String, dynamic>?> getMap(String key);
 
-  Future<String?> getKV(String key);
+  String? getKV(String key);
 
   Future<void> setKV(String key, String value);
 
@@ -39,13 +39,13 @@ abstract class PreferencesStorage {
 
   Future<bool> setShownMessages(List<String> value);
 
-  Future<List<String>> getShownMessages();
+  List<String>? getShownMessages();
 
   Future<bool> setLocale(Locale? value);
 
-  Future<Locale>? getLocale();
+  Locale? getLocale();
 
-  Future<bool> setBiometricEnabled(bool? value);
+  Future<bool> setBiometricEnabled({required bool value});
 
   bool isBiometricEnabled();
 
@@ -70,7 +70,5 @@ abstract class PreferencesStorage {
 
   Future<void> setListString(String key, List<String> value);
 
-  Future<List<String>> getListString(String key);
-
-  Future<bool> setSeeds(String seedType, Map value);
+  List<String>? getListString(String key);
 }
