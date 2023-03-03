@@ -225,9 +225,6 @@ class $AssetsImagesPublicGen {
   /// File path: assets/images/public/polkadot_gray.png
   AssetGenImage get polkadotGray => const AssetGenImage('assets/images/public/polkadot_gray.png');
 
-  /// File path: assets/images/public/substrate.png
-  AssetGenImage get substrate => const AssetGenImage('assets/images/public/substrate.png');
-
   /// List of all assets
   List<AssetGenImage> get values => [
         app,
@@ -251,8 +248,7 @@ class $AssetsImagesPublicGen {
         nctrRGray,
         polkadotGreyedOut,
         polkadot,
-        polkadotGray,
-        substrate
+        polkadotGray
       ];
 }
 
