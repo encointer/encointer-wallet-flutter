@@ -162,12 +162,6 @@ class $AssetsImagesPublicGen {
   /// File path: assets/images/public/app.png
   AssetGenImage get app => const AssetGenImage('assets/images/public/app.png');
 
-  /// File path: assets/images/public/ceremonies_dark.png
-  AssetGenImage get ceremoniesDark => const AssetGenImage('assets/images/public/ceremonies_dark.png');
-
-  /// File path: assets/images/public/ceremonies_indigo.png
-  AssetGenImage get ceremoniesIndigo => const AssetGenImage('assets/images/public/ceremonies_indigo.png');
-
   /// File path: assets/images/public/copy.png
   AssetGenImage get copy => const AssetGenImage('assets/images/public/copy.png');
 
@@ -228,8 +222,6 @@ class $AssetsImagesPublicGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         app,
-        ceremoniesDark,
-        ceremoniesIndigo,
         copy,
         kusama,
         kusamaGray,
