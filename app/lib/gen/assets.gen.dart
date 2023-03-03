@@ -121,9 +121,6 @@ class $LibJsServiceEncointerGen {
 class $AssetsImagesAssetsGen {
   const $AssetsImagesAssetsGen();
 
-  /// File path: assets/images/assets/Assets_nav_0.png
-  AssetGenImage get assetsNav0 => const AssetGenImage('assets/images/assets/Assets_nav_0.png');
-
   /// File path: assets/images/assets/ERT.png
   AssetGenImage get ert => const AssetGenImage('assets/images/assets/ERT.png');
 
@@ -132,6 +129,9 @@ class $AssetsImagesAssetsGen {
 
   /// File path: assets/images/assets/assets_fail.png
   AssetGenImage get assetsFail => const AssetGenImage('assets/images/assets/assets_fail.png');
+
+  /// File path: assets/images/assets/assets_nav_0.png
+  AssetGenImage get assetsNav0 => const AssetGenImage('assets/images/assets/assets_nav_0.png');
 
   /// File path: assets/images/assets/assets_receive.png
   AssetGenImage get assetsReceive => const AssetGenImage('assets/images/assets/assets_receive.png');
@@ -153,7 +153,7 @@ class $AssetsImagesAssetsGen {
 
   /// List of all assets
   List<dynamic> get values =>
-      [assetsNav0, ert, assetsDown, assetsFail, assetsReceive, assetsSend, assetsUp, iconLeu, logo, success];
+      [ert, assetsDown, assetsFail, assetsNav0, assetsReceive, assetsSend, assetsUp, iconLeu, logo, success];
 }
 
 class $AssetsImagesPublicGen {
