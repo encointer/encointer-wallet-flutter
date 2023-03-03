@@ -216,14 +216,14 @@ class $AssetsImagesPublicGen {
   /// File path: assets/images/public/nctr-r_gray.png
   AssetGenImage get nctrRGray => const AssetGenImage('assets/images/public/nctr-r_gray.png');
 
-  /// File path: assets/images/public/polkadot-greyed-out.png
-  AssetGenImage get polkadotGreyedOut => const AssetGenImage('assets/images/public/polkadot-greyed-out.png');
-
   /// File path: assets/images/public/polkadot.png
   AssetGenImage get polkadot => const AssetGenImage('assets/images/public/polkadot.png');
 
   /// File path: assets/images/public/polkadot_gray.png
   AssetGenImage get polkadotGray => const AssetGenImage('assets/images/public/polkadot_gray.png');
+
+  /// File path: assets/images/public/polkadot_greyed_out.png
+  AssetGenImage get polkadotGreyedOut => const AssetGenImage('assets/images/public/polkadot_greyed_out.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
@@ -246,9 +246,9 @@ class $AssetsImagesPublicGen {
         nctrKGray,
         nctrR,
         nctrRGray,
-        polkadotGreyedOut,
         polkadot,
-        polkadotGray
+        polkadotGray,
+        polkadotGreyedOut
       ];
 }
 
