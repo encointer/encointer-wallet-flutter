@@ -121,12 +121,6 @@ class $LibJsServiceEncointerGen {
 class $AssetsImagesAssetsGen {
   const $AssetsImagesAssetsGen();
 
-  /// File path: assets/images/assets/Assets_nav_0.png
-  AssetGenImage get assetsNav0 => const AssetGenImage('assets/images/assets/Assets_nav_0.png');
-
-  /// File path: assets/images/assets/Assets_nav_1.png
-  AssetGenImage get assetsNav1 => const AssetGenImage('assets/images/assets/Assets_nav_1.png');
-
   /// File path: assets/images/assets/ERT.png
   AssetGenImage get ert => const AssetGenImage('assets/images/assets/ERT.png');
 
@@ -135,6 +129,9 @@ class $AssetsImagesAssetsGen {
 
   /// File path: assets/images/assets/assets_fail.png
   AssetGenImage get assetsFail => const AssetGenImage('assets/images/assets/assets_fail.png');
+
+  /// File path: assets/images/assets/assets_nav_0.png
+  AssetGenImage get assetsNav0 => const AssetGenImage('assets/images/assets/assets_nav_0.png');
 
   /// File path: assets/images/assets/assets_receive.png
   AssetGenImage get assetsReceive => const AssetGenImage('assets/images/assets/assets_receive.png');
@@ -155,38 +152,24 @@ class $AssetsImagesAssetsGen {
   AssetGenImage get success => const AssetGenImage('assets/images/assets/success.png');
 
   /// List of all assets
-  List<dynamic> get values => [
-        assetsNav0,
-        assetsNav1,
-        ert,
-        assetsDown,
-        assetsFail,
-        assetsReceive,
-        assetsSend,
-        assetsUp,
-        iconLeu,
-        logo,
-        success
-      ];
+  List<dynamic> get values =>
+      [ert, assetsDown, assetsFail, assetsNav0, assetsReceive, assetsSend, assetsUp, iconLeu, logo, success];
 }
 
 class $AssetsImagesPublicGen {
   const $AssetsImagesPublicGen();
 
-  /// File path: assets/images/public/Ceremonies_dark.png
-  AssetGenImage get ceremoniesDark => const AssetGenImage('assets/images/public/Ceremonies_dark.png');
-
-  /// File path: assets/images/public/Ceremonies_indigo.png
-  AssetGenImage get ceremoniesIndigo => const AssetGenImage('assets/images/public/Ceremonies_indigo.png');
-
   /// File path: assets/images/public/app.png
   AssetGenImage get app => const AssetGenImage('assets/images/public/app.png');
 
+  /// File path: assets/images/public/ceremonies_dark.png
+  AssetGenImage get ceremoniesDark => const AssetGenImage('assets/images/public/ceremonies_dark.png');
+
+  /// File path: assets/images/public/ceremonies_indigo.png
+  AssetGenImage get ceremoniesIndigo => const AssetGenImage('assets/images/public/ceremonies_indigo.png');
+
   /// File path: assets/images/public/copy.png
   AssetGenImage get copy => const AssetGenImage('assets/images/public/copy.png');
-
-  /// File path: assets/images/public/dontscreen.png
-  AssetGenImage get dontscreen => const AssetGenImage('assets/images/public/dontscreen.png');
 
   /// File path: assets/images/public/kusama.png
   AssetGenImage get kusama => const AssetGenImage('assets/images/public/kusama.png');
@@ -242,19 +225,12 @@ class $AssetsImagesPublicGen {
   /// File path: assets/images/public/polkadot_gray.png
   AssetGenImage get polkadotGray => const AssetGenImage('assets/images/public/polkadot_gray.png');
 
-  /// File path: assets/images/public/substrate.png
-  AssetGenImage get substrate => const AssetGenImage('assets/images/public/substrate.png');
-
-  /// File path: assets/images/public/westend.png
-  AssetGenImage get westend => const AssetGenImage('assets/images/public/westend.png');
-
   /// List of all assets
   List<AssetGenImage> get values => [
+        app,
         ceremoniesDark,
         ceremoniesIndigo,
-        app,
         copy,
-        dontscreen,
         kusama,
         kusamaGray,
         logoAbout,
@@ -272,9 +248,7 @@ class $AssetsImagesPublicGen {
         nctrRGray,
         polkadotGreyedOut,
         polkadot,
-        polkadotGray,
-        substrate,
-        westend
+        polkadotGray
       ];
 }
 
