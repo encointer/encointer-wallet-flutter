@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -120,7 +121,10 @@ void _onTxFinish(
   if (mounted) {
     RootSnackBar.show(
       ListTile(
-        leading: SizedBox(width: 24, child: Image.asset('assets/images/assets/success.png')),
+        leading: SizedBox(
+          width: 24,
+          child: Assets.images.assets.success.image(),
+        ),
         title: Text(
           I18n.of(context)!.translationsForLocale().assets.success,
           style: const TextStyle(color: Colors.black54),

@@ -1,5 +1,5 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class EncointerLogo extends StatelessWidget {
   const EncointerLogo({super.key, this.height = 210, this.width = 210});
@@ -12,12 +12,7 @@ class EncointerLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SvgPicture.asset(
-        nctrLogo,
-        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-        width: width,
-        height: height,
-      ),
-    );
+        child: Assets.nctrLogo
+            .svg(colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn), width: width, height: height));
   }
 }
