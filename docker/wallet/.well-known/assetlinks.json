@@ -1,0 +1,11 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "org.encointer.wallet",
+        "sha256_cert_fingerprints":
+          ["E5:0E:B0:12:70:84:7A:8C:13:8E:68:4A:AA:9D:A9:24:9A:A5:90:AB:9A:4D:0A:09:FD:FA:5F:DF:58:30:71:C5"]
+      }
+    }
+  ]
