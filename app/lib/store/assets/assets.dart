@@ -117,7 +117,7 @@ abstract class _AssetsStore with Store {
         cache![k] = v;
       });
     }
-    rootStore.localStorage.setAccountCache(
+    await rootStore.localStorage.setAccountCache(
       rootStore.account.currentAccount.pubKey,
       cacheBalanceKey,
       cache,
@@ -135,7 +135,7 @@ abstract class _AssetsStore with Store {
     tokenBalances = Map<String, String>.from(amt!);
 
     if (!needCache) return;
-    rootStore.localStorage.setAccountCache(
+    await rootStore.localStorage.setAccountCache(
       pubKey,
       _getCacheKey(cacheTokenBalanceKey),
       amt,
@@ -152,28 +152,42 @@ abstract class _AssetsStore with Store {
     txs.clear();
   }
 
-  @action
-  Future<void> addTxs(Map res, String address, {bool shouldCache = false}) async {
-    if (rootStore.account.currentAddress != address) return;
+  /// I can not test this method. because it is not used anywhere else.
+  /// But I did it to fix lint. If it is right I will uncomment this method below.
+  /// But if not used maybe we can remove it.
+  /// ```dart
+  /// final futures = [
+  ///   rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls),
+  ///   rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTimeKey), cacheTxsTimestamp),
+  /// ];
+  /// await Future.wait(futures);
+  ///
+  /// ```
+  // @action
+  // Future<void> addTxs(Map res, String address, {bool shouldCache = false}) async {
+  //   if (rootStore.account.currentAddress != address) return;
 
-    txsCount = res['count'] as int?;
+  //   txsCount = res['count'] as int?;
 
-    final ls = res['transfers'] as List?;
-    if (ls == null) return;
+  //   final ls = res['transfers'] as List?;
+  //   if (ls == null) return;
 
-    for (final i in ls) {
-      final tx = TransferData.fromJson(i as Map<String, dynamic>);
-      txs.add(tx);
-    }
+  //   for (final i in ls) {
+  //     final tx = TransferData.fromJson(i as Map<String, dynamic>);
+  //     txs.add(tx);
+  //   }
 
-    if (shouldCache) {
-      rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls);
+  //   if (shouldCache) {
+  //     cacheTxsTimestamp = DateTime.now().millisecondsSinceEpoch;
+  //     final futures = [
+  //       rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls),
+  //       rootStore.localStorage
+  //           .setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTimeKey), cacheTxsTimestamp)
+  //     ];
 
-      cacheTxsTimestamp = DateTime.now().millisecondsSinceEpoch;
-      rootStore.localStorage
-          .setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTimeKey), cacheTxsTimestamp);
-    }
-  }
+  //     await Future.wait(futures);
+  //   }
+  // }
 
   @action
   void setTxsFilter(int filter) {
@@ -210,7 +224,7 @@ abstract class _AssetsStore with Store {
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTokenBalanceKey)),
     ]);
     if (cache[0] != null) {
-      setAccountBalances(pubKey, cache[0]! as Map<String, dynamic>, needCache: false);
+      await setAccountBalances(pubKey, cache[0]! as Map<String, dynamic>, needCache: false);
     }
     if (cache[1] != null) {
       txs = ObservableList.of(
@@ -222,9 +236,9 @@ abstract class _AssetsStore with Store {
       cacheTxsTimestamp = cache[2] as int?;
     }
     if (cache[3] != null) {
-      setAccountTokenBalances(pubKey, cache[3]! as Map<String, dynamic>, needCache: false);
+      await setAccountTokenBalances(pubKey, cache[3]! as Map<String, dynamic>, needCache: false);
     } else {
-      setAccountTokenBalances(pubKey, {}, needCache: false);
+      await setAccountTokenBalances(pubKey, {}, needCache: false);
     }
   }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +40,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     setState(() {
       _submitting = true;
     });
-    showCupertinoDialog<void>(
+    unawaited(showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -46,7 +48,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
-    );
+    ));
 
     /// import account
     final acc = await webApi.account.importAccount(
@@ -64,7 +66,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         msg = '${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType';
       }
 
-      showCupertinoDialog<void>(
+      return showCupertinoDialog<void>(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
@@ -85,7 +87,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           );
         },
       );
-      return;
     }
     await _checkAccountDuplicate(acc);
     return;
@@ -98,7 +99,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           context.read<AppStore>().account.pubKeyAddressMap[context.read<AppStore>().settings.endpoint.ss58]!;
       final address = pubKeyMap[acc['pubKey']];
       if (address != null) {
-        showCupertinoDialog<void>(
+        return showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
@@ -169,11 +170,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       });
 
       if (context.read<AppStore>().account.isFirstAccount) {
-        Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
+        await Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
       } else {
         context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
         await _importAccount();
-        Navigator.pushAndRemoveUntil<void>(
+        await Navigator.pushAndRemoveUntil<void>(
           context,
           CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()),
           (route) => false,

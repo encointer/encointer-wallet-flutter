@@ -18,11 +18,6 @@ void main() {
       await driver!.waitUntilFirstFrameRasterized();
     });
 
-    tearDownAll(() async {
-      if (driver != null) {
-        driver!.close();
-      }
-    });
     test('scan-page-screenshot', () async {
       final file = File('test_driver/resources/encointer-receive-qr-1.jpg');
       final bytes = await file.readAsBytes();
@@ -33,5 +28,10 @@ void main() {
 
       await screenshot(driver!, config, 'scan-receive');
     });
+  });
+  tearDownAll(() async {
+    if (driver != null) {
+      await driver!.close();
+    }
   });
 }

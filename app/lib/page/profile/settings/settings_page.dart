@@ -61,7 +61,7 @@ class _Settings extends State<SettingsPage> {
             onWillPop: () async {
               final code = _langOptions[_selected];
               if (code != context.read<AppStore>().settings.localeCode) {
-                context.read<AppStore>().settings.setLocalCode(code);
+                await context.read<AppStore>().settings.setLocalCode(code);
                 context.read<AppStore>().settings.changeLang(context, code);
               }
               return true;

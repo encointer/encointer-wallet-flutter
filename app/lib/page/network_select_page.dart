@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -41,7 +43,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     setState(() {
       _networkChanging = true;
     });
-    showCupertinoDialog<void>(
+    unawaited(showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -49,7 +51,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
           content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
-    );
+    ));
 
     await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork);
 
@@ -67,7 +69,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
     if (address != context.read<AppStore>().account.currentAddress || !isCurrentNetwork) {
       /// set current account
-      context.read<AppStore>().setCurrentAccount(i.pubKey);
+      await context.read<AppStore>().setCurrentAccount(i.pubKey);
 
       if (isCurrentNetwork) {
         await context.read<AppStore>().loadAccountCache();

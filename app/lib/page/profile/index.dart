@@ -268,7 +268,7 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
                 await store.account.removeAccount(acc);
               }
 
-              Navigator.pushAndRemoveUntil(
+              await Navigator.pushAndRemoveUntil(
                 context,
                 CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()),
                 (route) => false,

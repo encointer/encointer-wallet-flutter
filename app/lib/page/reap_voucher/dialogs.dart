@@ -123,7 +123,7 @@ Future<ChangeResult> changeWithLoadingDialog(
   BuildContext context,
   Future<ChangeResult> Function() changeFn,
 ) async {
-  showCupertinoDialog<void>(
+  await showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
