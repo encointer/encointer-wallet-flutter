@@ -21,7 +21,6 @@ Encointer wallet and client for mobile phones
 
 ## Overview
 
-
 <p align="left">
 <img src="./app/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="32%">
 <img src="./app/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="32%">
