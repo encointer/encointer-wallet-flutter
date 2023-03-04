@@ -266,8 +266,6 @@ abstract class _AccountStore with Store {
       deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey),
       deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey),
     ]);
-    // deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
-    // deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey);
 
     if (acc.pubKey == currentAccountPubKey) {
       // set new currentAccount after currentAccount was removed
