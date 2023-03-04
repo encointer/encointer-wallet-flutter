@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
@@ -46,9 +47,7 @@ class TxDetail extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(24),
-            child: success!
-                ? Image.asset('assets/images/assets/success.png')
-                : Image.asset('assets/images/staking/error.png'),
+            child: success! ? Assets.images.assets.success.image() : Assets.images.assets.assetsFail.image(),
           ),
           Text(
             '$action ${success! ? dic.assets.success : dic.assets.fail}',
@@ -69,7 +68,7 @@ class TxDetail extends StatelessWidget {
         subtitle: i.subtitle != null ? Text(i.subtitle!) : null,
         trailing: i.address != null
             ? IconButton(
-                icon: Image.asset('assets/images/public/copy.png'),
+                icon: Assets.images.public.copy.image(),
                 onPressed: () => UI.copyAndNotify(context, i.address),
               )
             : null,
