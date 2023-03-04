@@ -28,8 +28,7 @@ class SubstrateDartApi {
   String? get endpoint => _endpoint;
 
   Future<void> connect(String endpoint) async {
-//     _connectAndListen(endpoint);
-    unawaited(_connectAndListen(endpoint));
+    _connectAndListen(endpoint);
 
     try {
       _rpc = await rpc<Map<String, dynamic>>('rpc_methods').then(RpcMethods.fromJson);
@@ -66,7 +65,7 @@ class SubstrateDartApi {
     }
     if (_client!.isClosed) {
       Log.d('[dartApi] not connected. trying to reconnect to $endpoint', 'SubstrateDartApi');
-      await reconnect();
+      reconnect();
       Log.d('[dartApi] connection status: isclosed? ${_client?.isClosed}', 'SubstrateDartApi');
     }
     final value = await _client!.sendRequest(method, params);
@@ -74,17 +73,22 @@ class SubstrateDartApi {
   }
 
   /// Reconnect to the same endpoint if the connection was closed.
-  Future<void> reconnect() async {
-    if (endpoint != null) await _connectAndListen(endpoint!);
+  void reconnect() {
+    if (endpoint != null) _connectAndListen(endpoint!);
   }
 
   /// Connects to and endpoint and starts listening on the input stream.
-  Future<void> _connectAndListen(String endpoint) {
+  void _connectAndListen(String endpoint) {
     _endpoint = endpoint;
     final socket = WebSocketChannel.connect(Uri.parse(endpoint));
     _client = Client(socket.cast<String>());
 
     // The client won't subscribe to the input stream until `listen` is called.
-    return _client!.listen();
+    //
+    // Returns a [Future] that will complete when the connection is closed or
+    // when it has an error.
+    //
+    // Todo: better handling of error?
+    return unawaited(_client!.listen());
   }
 }
