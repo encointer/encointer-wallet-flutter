@@ -80,11 +80,6 @@ abstract class TranslationsProfile {
   String get exportAccount;
   String get errorUserNameIsRequired;
   String get observedPendingExtrinsic;
-  String get appHints;
-  String get meetUpNotifications;
-  String get meetUpListTileTitle;
-  String get openAppSettings;
-  String get enableAutoStart;
   String get contactUs;
   String get checkEmailApp;
 }
@@ -255,17 +250,6 @@ class TranslationsEnProfile implements TranslationsProfile {
   String get errorUserNameIsRequired => 'User name cannot be blank';
   @override
   String get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
-  @override
-  String get appHints => 'App-Hints';
-  @override
-  String get meetUpNotifications => 'Meetup notifications';
-  @override
-  String get meetUpListTileTitle => 'If your device is a Xiaomi or Honor phone, please enable autostart to '
-      'receive meetup notifications.';
-  @override
-  String get openAppSettings => 'Open App Settings';
-  @override
-  String get enableAutoStart => 'Enable autostart';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -436,18 +420,6 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   String get observedPendingExtrinsic =>
       'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
-  @override
-  String get appHints => 'App-Tipps';
-  @override
-  String get meetUpNotifications => 'Meetup-Benachrichtigungen';
-  @override
-  String get meetUpListTileTitle =>
-      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen '
-      'zu erhalten.';
-  @override
-  String get openAppSettings => 'App-Einstellungen öffnen';
-  @override
-  String get enableAutoStart => 'Autostart aktivieren';
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
@@ -620,18 +592,6 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get observedPendingExtrinsic =>
       'Une transaction non confirmée a été observée. Veuillez attendre la confirmation!';
-  @override
-  String get appHints => "Conseils pour l'app";
-  @override
-  String get meetUpNotifications => 'Notifications Rencontre';
-  @override
-  String get meetUpListTileTitle =>
-      'Si ton appareil est un smartphone Xiaomi ou Honor, le démarrage automatique doit être activé pour recevoir les notifications rencontre '
-      'de recevoir des notifications.';
-  @override
-  String get openAppSettings => "Ouvrir les paramètres de l'application";
-  @override
-  String get enableAutoStart => 'Activer le démarrage automatique';
 }
 
 class TranslationsRuProfile implements TranslationsProfile {
@@ -800,15 +760,4 @@ class TranslationsRuProfile implements TranslationsProfile {
   String get errorUserNameIsRequired => 'Имя пользователя не может быть пустым';
   @override
   String get observedPendingExtrinsic => 'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
-  @override
-  String get appHints => 'Рекомендации по использованию приложения';
-  @override
-  String get meetUpNotifications => 'Meetup - уведомления';
-  @override
-  String get meetUpListTileTitle => 'Если ваше устройство является телефоном Xiaomi или Honor, '
-      'включите автозапуск, чтобы получать Meetup - уведомления.';
-  @override
-  String get openAppSettings => 'Открыть настройки приложения';
-  @override
-  String get enableAutoStart => 'Включить автозапуск';
 }
