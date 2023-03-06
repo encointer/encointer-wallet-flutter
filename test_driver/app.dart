@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:encointer_wallet/app/wallet_app.dart';
-import 'package:encointer_wallet/common/services/preferences/preferences_service.dart';
 import 'package:encointer_wallet/extras/config/build_options.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
@@ -23,9 +22,7 @@ Future<void> runMain() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     setEnvironment(Environment.integrationTest);
 
-    await PreferencesService.instance.init();
-
-    service_locator.init();
+    service_locator.init(isTest: true);
     await service_locator.sl.allReady();
 
     // wait for the service locator to run
