@@ -366,7 +366,7 @@ class _AssetsState extends State<Assets> {
                         data: allAccounts,
                         onTap: (int index) {
                           if (index == allAccounts.length - 1) {
-                            Navigator.of(context).pushNamed(CreateAccountView.route, arguments: true);
+                            Navigator.of(context).pushNamed(AddAccountView.route);
                           } else {
                             setState(() {
                               switchAccount(widget.store.account.accountListAll[index]);

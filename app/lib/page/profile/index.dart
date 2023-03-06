@@ -119,7 +119,7 @@ class _ProfileState extends State<Profile> {
                     IconButton(
                       icon: const Icon(Iconsax.add_square),
                       color: zurichLion.shade500,
-                      onPressed: () => Navigator.of(context).pushNamed(CreateAccountView.route, arguments: true),
+                      onPressed: () => Navigator.of(context).pushNamed(AddAccountView.route),
                     ),
                   ],
                 ),

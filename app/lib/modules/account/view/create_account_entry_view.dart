@@ -31,7 +31,7 @@ class CreateAccountEntryView extends StatelessWidget {
             CustomButton(
               key: const Key('create-account'),
               backgroundColor: Colors.white,
-              onPressed: () => Navigator.pushNamed(context, CreateAccountView.route, arguments: false),
+              onPressed: () => Navigator.pushNamed(context, CreateAccountView.route),
               foregroundColor: colorScheme.primary,
               textStyle: textTheme.displaySmall,
               child: Text(dic.home.create),
