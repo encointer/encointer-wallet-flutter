@@ -114,7 +114,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
                   final res = await store.generateAccount(appStore, webApi);
                   await navigate(
                     context: context,
-                    type: res,
+                    type: res.operationResult,
                     onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
                   );
                 }

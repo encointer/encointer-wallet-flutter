@@ -1,4 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:mobx/mobx.dart';
 
@@ -27,9 +28,6 @@ abstract class _NewAccountStoreBase with Store {
   @observable
   bool loading = false;
 
-  @observable
-  Map<String, dynamic>? cacheAcc;
-
   @action
   void setName(String? value) => name = value;
 
@@ -44,9 +42,6 @@ abstract class _NewAccountStoreBase with Store {
 
   @action
   void setKeyType(KeyType value) => keyType = value;
-
-  @action
-  void setCacheAcc(Map<String, dynamic> value) => cacheAcc = value;
 
   @action
   String? validateAccount(Translations dic, String key) {
@@ -64,40 +59,40 @@ abstract class _NewAccountStoreBase with Store {
   }
 
   @action
-  Future<AddAccountResponse> generateAccount(AppStore appStore, Api webApi) async {
+  Future<NewAccountResult> generateAccount(AppStore appStore, Api webApi) async {
     final pin = password ?? appStore.settings.cachedPin;
-    if (pin.isEmpty) return AddAccountResponse.passwordEmpty;
+    if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
     setLoading(true);
     return _generateAccount(appStore, webApi, pin);
   }
 
   @action
-  Future<AddAccountResponse> importAccount(AppStore appStore, Api webApi) async {
+  Future<NewAccountResult> importAccount(AppStore appStore, Api webApi) async {
     final pin = password ?? appStore.settings.cachedPin;
-    if (pin.isEmpty) return AddAccountResponse.passwordEmpty;
+    if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
     setLoading(true);
     return _importAccount(appStore, webApi, pin);
   }
 
   @action
-  Future<AddAccountResponse> _generateAccount(AppStore appStore, Api webApi, String pin) async {
+  Future<NewAccountResult> _generateAccount(AppStore appStore, Api webApi, String pin) async {
     try {
       appStore.settings.setPin(pin);
       final key = await webApi.account.generateAccount();
       final acc = await webApi.account.importAccount(key: key, password: pin);
       if (acc['error'] != null) {
         setLoading(false);
-        return AddAccountResponse.fail;
+        return const NewAccountResult(NewAccountResultType.error);
       }
       return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
       Log.e('generate account', '$e', s);
-      return AddAccountResponse.fail;
+      return const NewAccountResult(NewAccountResultType.error);
     }
   }
 
   @action
-  Future<AddAccountResponse> _importAccount(AppStore appStore, Api webApi, String pin) async {
+  Future<NewAccountResult> _importAccount(AppStore appStore, Api webApi, String pin) async {
     try {
       appStore.settings.setPin(pin);
       final acc = await webApi.account.importAccount(
@@ -107,24 +102,23 @@ abstract class _NewAccountStoreBase with Store {
       );
       if (acc['error'] != null) {
         setLoading(false);
-        return AddAccountResponse.fail;
+        return const NewAccountResult(NewAccountResultType.error);
       } else {
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
-          cacheAcc = acc;
           setLoading(false);
-          return AddAccountResponse.duplicate;
+          return NewAccountResult(NewAccountResultType.duplicateAccount, newAccountData: acc);
         }
         return saveAccount(webApi, appStore, acc, pin);
       }
     } catch (e, s) {
       Log.e('import account', '$e', s);
-      return AddAccountResponse.fail;
+      return const NewAccountResult(NewAccountResultType.error);
     }
   }
 
   @action
-  Future<AddAccountResponse> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) async {
+  Future<NewAccountResult> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) async {
     final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     await appStore.addAccount(acc, pin, addresses[0], name);
     final pubKey = acc['pubKey'] as String?;
@@ -132,7 +126,7 @@ abstract class _NewAccountStoreBase with Store {
     await appStore.loadAccountCache();
     webApi.fetchAccountData();
     setLoading(false);
-    return AddAccountResponse.success;
+    return const NewAccountResult(NewAccountResultType.ok);
   }
 }
 
@@ -145,5 +139,3 @@ enum KeyType {
 
   final String key;
 }
-
-enum AddAccountResponse { success, fail, duplicate, passwordEmpty }

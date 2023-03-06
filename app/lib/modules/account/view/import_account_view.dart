@@ -113,9 +113,9 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                         final res = await store.importAccount(appStore, webApi);
                         await navigate(
                           context: context,
-                          type: res,
+                          type: res.operationResult,
                           onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                          onDuplicate: () => _onDuplicate(context),
+                          onDuplicateAccount: () => _onDuplicateAccount(context, res.newAccountData ?? {}),
                         );
                       }
                     }
@@ -129,11 +129,11 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
     );
   }
 
-  Future<void> _onDuplicate(BuildContext context) async {
+  Future<void> _onDuplicateAccount(BuildContext context, Map<String, dynamic> acc) async {
     final appStore = context.read<AppStore>();
     final store = context.read<NewAccountStore>();
     final pubKeyMap = appStore.account.pubKeyAddressMap[appStore.settings.endpoint.ss58]!;
-    final address = pubKeyMap[store.cacheAcc?['pubKey']];
+    final address = pubKeyMap[acc['pubKey']];
     final dic = I18n.of(context)!.translationsForLocale();
     await AppAlert.showDailog<void>(
       context,
@@ -150,9 +150,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         CupertinoButton(
           child: Text(dic.home.ok),
           onPressed: () async {
-            if (store.cacheAcc != null) {
-              await store.saveAccount(webApi, appStore, store.cacheAcc!, appStore.settings.cachedPin);
-            }
+            await store.saveAccount(webApi, appStore, acc, appStore.settings.cachedPin);
             Navigator.of(context).popUntil((route) => route.isFirst);
           },
         ),

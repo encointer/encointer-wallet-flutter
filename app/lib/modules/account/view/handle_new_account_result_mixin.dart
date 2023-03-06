@@ -9,24 +9,24 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 mixin HandleNewAccountResultMixin on Widget {
   Future<void> navigate({
     required BuildContext context,
-    required AddAccountResponse type,
+    required NewAccountResultType type,
     required void Function() onOk,
-    void Function()? onDuplicate,
+    void Function()? onDuplicateAccount,
   }) async {
     switch (type) {
-      case AddAccountResponse.success:
+      case NewAccountResultType.ok:
         onOk();
         break;
-      case AddAccountResponse.fail:
+      case NewAccountResultType.error:
         final dic = I18n.of(context)!.translationsForLocale();
         AppAlert.showErrorDailog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
         break;
-      case AddAccountResponse.passwordEmpty:
+      case NewAccountResultType.emptyPassword:
         final appStore = context.read<AppStore>();
         await AppAlert.showInputPasswordDailog(context: context, account: appStore.account.currentAccount);
         break;
-      case AddAccountResponse.duplicate:
-        if (onDuplicate != null) onDuplicate();
+      case NewAccountResultType.duplicateAccount:
+        if (onDuplicateAccount != null) onDuplicateAccount();
         break;
     }
   }

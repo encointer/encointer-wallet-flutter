@@ -84,53 +84,38 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     });
   }
 
-  late final _$cacheAccAtom = Atom(name: '_NewAccountStoreBase.cacheAcc', context: context);
-
-  @override
-  Map<String, dynamic>? get cacheAcc {
-    _$cacheAccAtom.reportRead();
-    return super.cacheAcc;
-  }
-
-  @override
-  set cacheAcc(Map<String, dynamic>? value) {
-    _$cacheAccAtom.reportWrite(value, super.cacheAcc, () {
-      super.cacheAcc = value;
-    });
-  }
-
   late final _$generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase.generateAccount', context: context);
 
   @override
-  Future<AddAccountResponse> generateAccount(AppStore appStore, Api webApi) {
+  Future<NewAccountResult> generateAccount(AppStore appStore, Api webApi) {
     return _$generateAccountAsyncAction.run(() => super.generateAccount(appStore, webApi));
   }
 
   late final _$importAccountAsyncAction = AsyncAction('_NewAccountStoreBase.importAccount', context: context);
 
   @override
-  Future<AddAccountResponse> importAccount(AppStore appStore, Api webApi) {
+  Future<NewAccountResult> importAccount(AppStore appStore, Api webApi) {
     return _$importAccountAsyncAction.run(() => super.importAccount(appStore, webApi));
   }
 
   late final _$_generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase._generateAccount', context: context);
 
   @override
-  Future<AddAccountResponse> _generateAccount(AppStore appStore, Api webApi, String pin) {
+  Future<NewAccountResult> _generateAccount(AppStore appStore, Api webApi, String pin) {
     return _$_generateAccountAsyncAction.run(() => super._generateAccount(appStore, webApi, pin));
   }
 
   late final _$_importAccountAsyncAction = AsyncAction('_NewAccountStoreBase._importAccount', context: context);
 
   @override
-  Future<AddAccountResponse> _importAccount(AppStore appStore, Api webApi, String pin) {
+  Future<NewAccountResult> _importAccount(AppStore appStore, Api webApi, String pin) {
     return _$_importAccountAsyncAction.run(() => super._importAccount(appStore, webApi, pin));
   }
 
   late final _$saveAccountAsyncAction = AsyncAction('_NewAccountStoreBase.saveAccount', context: context);
 
   @override
-  Future<AddAccountResponse> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) {
+  Future<NewAccountResult> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) {
     return _$saveAccountAsyncAction.run(() => super.saveAccount(webApi, appStore, acc, pin));
   }
 
@@ -187,16 +172,6 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   }
 
   @override
-  void setCacheAcc(Map<String, dynamic> value) {
-    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setCacheAcc');
-    try {
-      return super.setCacheAcc(value);
-    } finally {
-      _$_NewAccountStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String? validateAccount(Translations dic, String key) {
     final _$actionInfo =
         _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.validateAccount');
@@ -214,8 +189,7 @@ name: ${name},
 password: ${password},
 accountKey: ${accountKey},
 keyType: ${keyType},
-loading: ${loading},
-cacheAcc: ${cacheAcc}
+loading: ${loading}
     ''';
   }
 }

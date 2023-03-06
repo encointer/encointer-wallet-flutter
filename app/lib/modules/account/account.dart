@@ -5,4 +5,5 @@ export 'view/create_pin_view.dart';
 export 'view/import_account_view.dart';
 export 'view/handle_new_account_result_mixin.dart';
 export 'logic/new_account_store.dart';
+export 'logic/new_account_result.dart';
 export 'widgets/widgets.dart';

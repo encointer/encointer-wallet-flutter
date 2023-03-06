@@ -120,7 +120,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
                           : await store.generateAccount(appStore, webApi);
                       await navigate(
                         context: context,
-                        type: res,
+                        type: res.operationResult,
                         onOk: () => _onOk(context),
                       );
                     }
