@@ -19,6 +19,7 @@ class EncointerTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.fillColor,
     this.filled,
+    this.borderRadius = 4,
   });
 
   final String? labelText;
@@ -34,13 +35,14 @@ class EncointerTextFormField extends StatelessWidget {
   final bool obscureText;
   final Color? fillColor;
   final bool? filled;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: zurichLion.shade50,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: TextFormField(
         key: textFormFieldKey,
@@ -53,8 +55,9 @@ class EncointerTextFormField extends StatelessWidget {
           labelStyle: Theme.of(context).textTheme.headlineMedium,
           contentPadding: const EdgeInsets.only(top: 16, bottom: 16, left: 25),
           suffixIcon: suffixIcon,
-          border: const UnderlineInputBorder(
-            borderSide: BorderSide(width: 0, style: BorderStyle.none),
+          border: UnderlineInputBorder(
+            borderSide: const BorderSide(width: 0, style: BorderStyle.none),
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
           ),
         ),
         inputFormatters: inputFormatters,
