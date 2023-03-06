@@ -36,7 +36,7 @@ class CreateAccountView extends StatelessWidget {
   }
 }
 
-class CreateAcccountForm extends StatelessWidget with NewAccountNavigationMixin {
+class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
   CreateAcccountForm({super.key});
 
   final _formKey = GlobalKey<FormState>();

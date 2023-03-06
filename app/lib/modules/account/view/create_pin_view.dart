@@ -39,7 +39,7 @@ class CreatePinView extends StatelessWidget {
   }
 }
 
-class CreatePinForm extends StatelessWidget with NewAccountNavigationMixin {
+class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
   CreatePinForm({super.key, required this.fromImportPage});
 
   final bool fromImportPage;

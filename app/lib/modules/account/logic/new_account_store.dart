@@ -65,26 +65,18 @@ abstract class _NewAccountStoreBase with Store {
 
   @action
   Future<AddAccountResponse> generateAccount(AppStore appStore, Api webApi) async {
-    if (appStore.settings.cachedPin.isNotEmpty || password != null) {
-      setLoading(true);
-      final pin = password ?? appStore.settings.cachedPin;
-      return _generateAccount(appStore, webApi, pin);
-    } else {
-      Log.d('add account', 'empty password');
-      return AddAccountResponse.passwordEmpty;
-    }
+    final pin = password ?? appStore.settings.cachedPin;
+    if (pin.isEmpty) return AddAccountResponse.passwordEmpty;
+    setLoading(true);
+    return _generateAccount(appStore, webApi, pin);
   }
 
   @action
   Future<AddAccountResponse> importAccount(AppStore appStore, Api webApi) async {
-    if (appStore.settings.cachedPin.isNotEmpty || password != null) {
-      setLoading(true);
-      final pin = password ?? appStore.settings.cachedPin;
-      return _importAccount(appStore, webApi, pin);
-    } else {
-      Log.d('add account', 'empty password');
-      return AddAccountResponse.passwordEmpty;
-    }
+    final pin = password ?? appStore.settings.cachedPin;
+    if (pin.isEmpty) return AddAccountResponse.passwordEmpty;
+    setLoading(true);
+    return _importAccount(appStore, webApi, pin);
   }
 
   @action
@@ -96,9 +88,8 @@ abstract class _NewAccountStoreBase with Store {
       if (acc['error'] != null) {
         setLoading(false);
         return AddAccountResponse.fail;
-      } else {
-        return saveAccount(webApi, appStore, acc, pin);
       }
+      return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
       Log.e('generate account', '$e', s);
       return AddAccountResponse.fail;
@@ -123,9 +114,8 @@ abstract class _NewAccountStoreBase with Store {
           cacheAcc = acc;
           setLoading(false);
           return AddAccountResponse.duplicate;
-        } else {
-          return saveAccount(webApi, appStore, acc, pin);
         }
+        return saveAccount(webApi, appStore, acc, pin);
       }
     } catch (e, s) {
       Log.e('import account', '$e', s);
