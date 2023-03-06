@@ -31,7 +31,7 @@ class AccountApi {
       ..retainWhere((i) => i.observation ?? false);
     final observations = contacts.map((i) => i.pubKey).toList();
     if (observations.isNotEmpty) {
-      encodeAddress(observations);
+      await encodeAddress(observations);
     }
   }
 
@@ -86,7 +86,7 @@ class AccountApi {
         current = '';
       }
     }
-    store.setCurrentAccount(current);
+    await store.setCurrentAccount(current);
 
     await store.loadAccountCache();
     if (fetchData) fetchAccountData?.call();
@@ -103,11 +103,11 @@ class AccountApi {
 
     if (res['hash'] != null) {
       final hash = res['hash'] as String;
-      NotificationPlugin.showNotification(
+      unawaited(NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
         notificationTitle,
         '$pageTile - ${txInfo!['module']}.${txInfo['call']}',
-      );
+      ));
     }
     return res;
   }

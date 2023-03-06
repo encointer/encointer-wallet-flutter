@@ -170,11 +170,6 @@ class AppRoute {
           builder: (_) => const BazaarMain(),
           settings: settings,
         );
-      case Instruction.route:
-        return CupertinoPageRoute(
-          builder: (_) => const Instruction(),
-          settings: settings,
-        );
       case LangPage.route:
         return CupertinoPageRoute(
           builder: (_) => const LangPage(),

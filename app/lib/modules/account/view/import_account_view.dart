@@ -100,7 +100,7 @@ class ImportAccountForm extends StatelessWidget with NewAccountNavigationMixin {
                         ..setName(_nameCtrl.text.trim())
                         ..setKey(_keyCtrl.text.trim());
                       if (appStore.account.isFirstAccount) {
-                        Navigator.push(
+                        await Navigator.push(
                           context,
                           MaterialPageRoute<void>(
                             builder: (BuildContext _) => Provider.value(

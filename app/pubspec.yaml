@@ -84,6 +84,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.3.3
+  flutter_gen_runner: ^5.2.0
   json_serializable: ^6.6.1
   json_serializable_mobx: ^0.10.3
   mobx_codegen: ^2.1.1
@@ -104,6 +105,17 @@ flutter_icons:
   ios: true
   image_path: "assets/images/public/app.png"
 
+flutter_gen:
+  output: lib/gen/ # Optional (default: lib/gen/)
+
+  integrations:
+    flutter_svg: true
+
+  assets: 
+    exclude:
+      - lib/js_service_encointer/dist/*.jpg
+
+
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
@@ -113,11 +125,13 @@ flutter:
     # js service
     - lib/js_service_encointer/dist/main.js
 
-    #svg
+    - assets/images/assets/
+    - assets/images/public/
     - assets/avatars/
     - assets/nctr_logo.svg
     - assets/nctr_mosaic_background.svg
     - assets/nctr_logo_faces_only_thick.svg
+<<<<<<< HEAD
     # Leu icon for mocks
     - assets/images/assets/icon_leu.svg
     # images
@@ -208,6 +222,9 @@ flutter:
     - assets/images/profile/address.png
     - assets/images/profile/setting.png
 
+=======
+ 
+>>>>>>> 5b65d6369a953c152b00aa7fb514831298561f05
   # fonts:
   #   - family: Schyler
   #     fonts:

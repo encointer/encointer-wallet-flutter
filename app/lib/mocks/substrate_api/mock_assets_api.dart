@@ -24,7 +24,7 @@ class MockAssetsApi extends AssetsApi {
   @override
   Future<void> fetchBalance() async {
     Log.d('api: fetching mock balance', 'MockAssetsApi');
-    store.assets.setAccountBalances(
+    await store.assets.setAccountBalances(
       store.account.currentAccountPubKey,
       Map.of({store.settings.networkState!.tokenSymbol: balancesInfo}),
       needCache: false,

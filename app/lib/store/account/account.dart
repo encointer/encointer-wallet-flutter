@@ -154,14 +154,14 @@ abstract class _AccountStore with Store {
 
           Log.d('Queued tx result: $res', 'AccountStore');
           if (res['hash'] == null) {
-            NotificationPlugin.showNotification(
+            await NotificationPlugin.showNotification(
               0,
               args['notificationTitle'] as String?,
               'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
-              rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
+              await rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
             }
           }
         }
@@ -239,8 +239,11 @@ abstract class _AccountStore with Store {
     Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
     await rootStore.localStorage.removeAccount(acc.pubKey);
     // remove encrypted seed after removing account
-    deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
-    deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey);
+    await Future.wait([
+      rootStore.localStorage.removeAccount(acc.pubKey),
+      deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey),
+      deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey),
+    ]);
 
     if (acc.pubKey == currentAccountPubKey) {
       // set new currentAccount after currentAccount was removed
@@ -274,7 +277,7 @@ abstract class _AccountStore with Store {
     final encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
     final Map stored = await rootStore.localStorage.getSeeds(seedType);
     stored[pubKey] = encrypted;
-    rootStore.localStorage.setSeeds(seedType, stored);
+    await rootStore.localStorage.setSeeds(seedType, stored);
   }
 
   @action
@@ -311,7 +314,7 @@ abstract class _AccountStore with Store {
     }
 
     final seed = await FlutterAesEcbPkcs5.decryptString(encryptedSeed!, Fmt.passwordToEncryptKey(passwordOld));
-    encryptSeed(pubKey, seed, seedType, passwordNew);
+    await encryptSeed(pubKey, seed, seedType, passwordNew);
   }
 
   @action
@@ -319,7 +322,7 @@ abstract class _AccountStore with Store {
     final stored = await rootStore.localStorage.getSeeds(seedType);
     if (stored[pubKey] != null) {
       stored.remove(pubKey);
-      rootStore.localStorage.setSeeds(seedType, stored);
+      await rootStore.localStorage.setSeeds(seedType, stored);
     }
   }
 

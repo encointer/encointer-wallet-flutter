@@ -32,7 +32,7 @@ void main() {
       const testPass = 'a111111';
       await store.addAccount(endoEncointer, testPass);
       expect(store.accountList.length, 2);
-      store.setCurrentAccount(endoEncointer['pubKey'] as String);
+      await store.setCurrentAccount(endoEncointer['pubKey'] as String);
       expect(store.currentAccountPubKey, endoEncointer['pubKey']);
       expect(store.currentAccount.name, 'Endo Encointer');
       expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
@@ -56,7 +56,7 @@ void main() {
       expect(store.currentAccount.address, endoEncointer['address']);
 
       /// change account
-      store.setCurrentAccount(accList[0]['pubKey'] as String);
+      await store.setCurrentAccount(accList[0]['pubKey'] as String);
       expect(store.currentAccountPubKey, accList[0]['pubKey']);
       expect(store.currentAccount.name, accList[0]['name']);
       expect(store.currentAccount.pubKey, accList[0]['pubKey']);
@@ -66,7 +66,7 @@ void main() {
       expect(store.optionalAccounts[0].pubKey, endoEncointer['pubKey']);
       expect(store.optionalAccounts[0].address, endoEncointer['address']);
 
-      store.setCurrentAccount(endoEncointer['pubKey'] as String);
+      await store.setCurrentAccount(endoEncointer['pubKey'] as String);
       expect(store.currentAccountPubKey, endoEncointer['pubKey']);
       expect(store.currentAccount.name, 'test-change');
       expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
@@ -93,7 +93,7 @@ void main() {
       expect(store.optionalAccounts.length, 1);
 
       /// change to observation account
-      store.setCurrentAccount(contact['pubKey'] as String);
+      await store.setCurrentAccount(contact['pubKey'] as String);
       expect(store.currentAccountPubKey, contact['pubKey']);
       expect(store.currentAccount.name, contact['name']);
       expect(store.currentAccount.pubKey, contact['pubKey']);

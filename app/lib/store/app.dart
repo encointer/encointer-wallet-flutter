@@ -97,10 +97,10 @@ abstract class _AppStore with Store {
     await account.loadAccount();
 
     _assets = AssetsStore(this as AppStore);
-    assets.loadCache();
+    await assets.loadCache();
 
     _chain = ChainStore(this as AppStore);
-    chain.loadCache();
+    await chain.loadCache();
 
     // need to call this after settings was initialized
     final networkInfo = settings.endpoint.info;
@@ -231,7 +231,7 @@ abstract class _AppStore with Store {
 
     if (!settings.loading) {
       dataUpdate.setInvalidated();
-      webApi.assets.subscribeBalance();
+      await webApi.assets.subscribeBalance();
     }
   }
 

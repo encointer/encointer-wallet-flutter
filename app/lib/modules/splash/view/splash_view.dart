@@ -1,11 +1,11 @@
-import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
+import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
@@ -25,8 +25,6 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  final String mosaicBackground = 'assets/nctr_mosaic_background.svg';
-
   Future<void> _initPage() async {
     final store = context.watch<AppStore>();
     await store.init(Localizations.localeOf(context).toString());
@@ -62,11 +60,7 @@ class _SplashViewState extends State<SplashView> {
         builder: (context, s) {
           return Stack(
             children: [
-              SvgPicture.asset(
-                mosaicBackground,
-                fit: BoxFit.fill,
-                width: MediaQuery.of(context).size.width,
-              ),
+              Assets.nctrMosaicBackground.svg(fit: BoxFit.fill, width: MediaQuery.of(context).size.width),
               const EncointerLogo(),
             ],
           );

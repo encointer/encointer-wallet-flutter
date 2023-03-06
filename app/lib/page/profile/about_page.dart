@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -25,7 +26,7 @@ class AboutPage extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(48),
-              child: Image.asset('assets/images/public/logo_about.png'),
+              child: Assets.images.public.logoAbout.image(),
             ),
             Text(
               dic.profile.aboutBrief,

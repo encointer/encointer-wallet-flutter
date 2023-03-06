@@ -32,12 +32,6 @@ void main() {
       await driver!.requestData(TestCommands.init);
     });
 
-    tearDownAll(() async {
-      if (driver != null) {
-        driver!.close();
-      }
-    });
-
     test('importing account', () async {
       await driver!.tap(find.byValueKey('import-account'));
 
@@ -119,6 +113,11 @@ void main() {
       await driver!.tap(find.byValueKey('ceremony-step-1-next'));
       await screenshot(driver!, config, 'claim-qr');
     });
+  });
+  tearDownAll(() async {
+    if (driver != null) {
+      await driver!.close();
+    }
   });
 }
 
