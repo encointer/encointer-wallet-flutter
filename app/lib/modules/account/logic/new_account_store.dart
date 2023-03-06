@@ -1,4 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -69,6 +70,7 @@ abstract class _NewAccountStoreBase with Store {
       final pin = password ?? appStore.settings.cachedPin;
       return _generateAccount(appStore, webApi, pin);
     } else {
+      Log.d('add account', 'empty password');
       return AddAccountResponse.passwordEmpty;
     }
   }
@@ -80,6 +82,7 @@ abstract class _NewAccountStoreBase with Store {
       final pin = password ?? appStore.settings.cachedPin;
       return _importAccount(appStore, webApi, pin);
     } else {
+      Log.d('add account', 'empty password');
       return AddAccountResponse.passwordEmpty;
     }
   }
@@ -96,7 +99,8 @@ abstract class _NewAccountStoreBase with Store {
       } else {
         return saveAccount(webApi, appStore, acc, pin);
       }
-    } catch (e) {
+    } catch (e, s) {
+      Log.e('generate account', '$e', s);
       return AddAccountResponse.fail;
     }
   }
@@ -123,7 +127,8 @@ abstract class _NewAccountStoreBase with Store {
           return saveAccount(webApi, appStore, acc, pin);
         }
       }
-    } catch (e) {
+    } catch (e, s) {
+      Log.e('import account', '$e', s);
       return AddAccountResponse.fail;
     }
   }
