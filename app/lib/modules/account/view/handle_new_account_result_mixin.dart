@@ -10,12 +10,12 @@ mixin HandleNewAccountResultMixin on Widget {
   Future<void> navigate({
     required BuildContext context,
     required AddAccountResponse type,
-    required void Function() success,
-    void Function()? duplicate,
+    required void Function() onOk,
+    void Function()? onDuplicate,
   }) async {
     switch (type) {
       case AddAccountResponse.success:
-        success();
+        onOk();
         break;
       case AddAccountResponse.fail:
         final dic = I18n.of(context)!.translationsForLocale();
@@ -26,7 +26,7 @@ mixin HandleNewAccountResultMixin on Widget {
         await AppAlert.showInputPasswordDailog(context: context, account: appStore.account.currentAccount);
         break;
       case AddAccountResponse.duplicate:
-        if (duplicate != null) duplicate();
+        if (onDuplicate != null) onDuplicate();
         break;
     }
   }

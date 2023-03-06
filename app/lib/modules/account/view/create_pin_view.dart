@@ -121,7 +121,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
                       await navigate(
                         context: context,
                         type: res,
-                        success: () => _success(context),
+                        onOk: () => _onOk(context),
                       );
                     }
                   },
@@ -132,7 +132,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
     );
   }
 
-  Future<void> _success(BuildContext context) async {
+  Future<void> _onOk(BuildContext context) async {
     final appStore = context.read<AppStore>();
     if (appStore.encointer.communityIdentifiers.length == 1) {
       await appStore.encointer.setChosenCid(appStore.encointer.communityIdentifiers[0]);

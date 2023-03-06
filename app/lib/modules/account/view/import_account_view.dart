@@ -114,8 +114,8 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                         await navigate(
                           context: context,
                           type: res,
-                          success: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                          duplicate: () => _duplicate(context),
+                          onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                          onDuplicate: () => _onDuplicate(context),
                         );
                       }
                     }
@@ -129,7 +129,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
     );
   }
 
-  Future<void> _duplicate(BuildContext context) async {
+  Future<void> _onDuplicate(BuildContext context) async {
     final appStore = context.read<AppStore>();
     final store = context.read<NewAccountStore>();
     final pubKeyMap = appStore.account.pubKeyAddressMap[appStore.settings.endpoint.ss58]!;

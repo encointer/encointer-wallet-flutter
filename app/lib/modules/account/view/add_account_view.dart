@@ -115,7 +115,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
                   await navigate(
                     context: context,
                     type: res,
-                    success: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                    onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
                   );
                 }
               : null,
