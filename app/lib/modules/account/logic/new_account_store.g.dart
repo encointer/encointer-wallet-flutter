@@ -142,16 +142,6 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   }
 
   @override
-  void setLoading(bool value) {
-    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setLoading');
-    try {
-      return super.setLoading(value);
-    } finally {
-      _$_NewAccountStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setKey(String? value) {
     final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setKey');
     try {

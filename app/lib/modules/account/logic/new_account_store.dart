@@ -1,8 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
-import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:mobx/mobx.dart';
 
+import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -35,9 +35,6 @@ abstract class _NewAccountStoreBase with Store {
   void setPassword(String? value) => password = value;
 
   @action
-  void setLoading(bool value) => loading = value;
-
-  @action
   void setKey(String? value) => accountKey = value;
 
   @action
@@ -62,7 +59,7 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> generateAccount(AppStore appStore, Api webApi) async {
     final pin = password ?? appStore.settings.cachedPin;
     if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
-    setLoading(true);
+    loading = true;
     return _generateAccount(appStore, webApi, pin);
   }
 
@@ -70,7 +67,7 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> importAccount(AppStore appStore, Api webApi) async {
     final pin = password ?? appStore.settings.cachedPin;
     if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
-    setLoading(true);
+    loading = true;
     return _importAccount(appStore, webApi, pin);
   }
 
@@ -81,11 +78,12 @@ abstract class _NewAccountStoreBase with Store {
       final key = await webApi.account.generateAccount();
       final acc = await webApi.account.importAccount(key: key, password: pin);
       if (acc['error'] != null) {
-        setLoading(false);
+        loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       }
       return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
+      loading = false;
       Log.e('generate account', '$e', s);
       return const NewAccountResult(NewAccountResultType.error);
     }
@@ -101,17 +99,18 @@ abstract class _NewAccountStoreBase with Store {
         keyType: keyType.name,
       );
       if (acc['error'] != null) {
-        setLoading(false);
+        loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       } else {
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
-          setLoading(false);
+          loading = false;
           return NewAccountResult(NewAccountResultType.duplicateAccount, newAccountData: acc);
         }
         return saveAccount(webApi, appStore, acc, pin);
       }
     } catch (e, s) {
+      loading = false;
       Log.e('import account', '$e', s);
       return const NewAccountResult(NewAccountResultType.error);
     }
@@ -125,7 +124,7 @@ abstract class _NewAccountStoreBase with Store {
     await appStore.setCurrentAccount(pubKey);
     await appStore.loadAccountCache();
     webApi.fetchAccountData();
-    setLoading(false);
+    loading = false;
     return const NewAccountResult(NewAccountResultType.ok);
   }
 }
