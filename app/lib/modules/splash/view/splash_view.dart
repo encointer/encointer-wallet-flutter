@@ -58,11 +58,11 @@ class _SplashViewState extends State<SplashView> {
       body: FutureBuilder(
         future: _initPage(),
         builder: (context, s) {
-          return Stack(
-            children: [
-              Assets.nctrMosaicBackground.svg(fit: BoxFit.fill, width: MediaQuery.of(context).size.width),
-              const EncointerLogo(),
-            ],
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(image: Assets.images.assets.mosaicBackground.provider(), fit: BoxFit.cover),
+            ),
+            child: const EncointerLogo(),
           );
         },
       ),

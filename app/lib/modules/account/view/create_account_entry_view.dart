@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,6 @@ class CreateAccountEntryView extends StatelessWidget {
   const CreateAccountEntryView({super.key});
 
   static const String route = '/account/entry';
-  static const _mosaicBackground = 'assets/images/assets/kacheln.png';
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +20,8 @@ class CreateAccountEntryView extends StatelessWidget {
 
     return Scaffold(
       body: DecoratedBox(
-        decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage(_mosaicBackground), fit: BoxFit.cover),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: Assets.images.assets.mosaicBackground.provider(), fit: BoxFit.cover),
         ),
         child: Column(
           children: <Widget>[
