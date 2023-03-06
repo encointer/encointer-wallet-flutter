@@ -49,7 +49,7 @@ class ImportAccountForm extends StatelessWidget with NewAccountNavigationMixin {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final store = context.watch<NewAccountStore>();
+    final newAccountStore = context.watch<NewAccountStore>();
     return FormScrollable(
       formKey: _formKey,
       listViewChildren: [
@@ -91,7 +91,7 @@ class ImportAccountForm extends StatelessWidget with NewAccountNavigationMixin {
         Observer(builder: (_) {
           return CustomButton(
             key: const Key('account-import-next'),
-            onPressed: !store.loading
+            onPressed: !newAccountStore.loading
                 ? () async {
                     if (_formKey.currentState!.validate()) {
                       final store = context.read<NewAccountStore>();
@@ -121,7 +121,7 @@ class ImportAccountForm extends StatelessWidget with NewAccountNavigationMixin {
                     }
                   }
                 : null,
-            child: !store.loading ? Text(dic.home.next) : const ProgressingIndicator(),
+            child: !newAccountStore.loading ? Text(dic.home.next) : const ProgressingIndicator(),
           );
         }),
         const SizedBox(height: 20),

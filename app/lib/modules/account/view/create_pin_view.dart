@@ -52,7 +52,7 @@ class CreatePinForm extends StatelessWidget with NewAccountNavigationMixin {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final store = context.watch<NewAccountStore>();
+    final newAccountStore = context.watch<NewAccountStore>();
 
     return FormScrollable(
       formKey: _formKey,
@@ -108,7 +108,7 @@ class CreatePinForm extends StatelessWidget with NewAccountNavigationMixin {
           return CustomButton(
             key: const Key('create-account-confirm'),
             textStyle: textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
-            onPressed: store.loading
+            onPressed: newAccountStore.loading
                 ? null
                 : () async {
                     if (_formKey.currentState!.validate()) {
@@ -125,7 +125,7 @@ class CreatePinForm extends StatelessWidget with NewAccountNavigationMixin {
                       );
                     }
                   },
-            child: store.loading ? const ProgressingIndicator() : Text(dic.account.create),
+            child: newAccountStore.loading ? const ProgressingIndicator() : Text(dic.account.create),
           );
         }),
       ],

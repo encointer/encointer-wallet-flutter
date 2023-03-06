@@ -51,7 +51,7 @@ class AddAcccountForm extends StatelessWidget with NewAccountNavigationMixin {
     final dic = I18n.of(context)!.translationsForLocale();
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final store = context.watch<NewAccountStore>();
+    final newAccountStore = context.watch<NewAccountStore>();
     return FormScrollable(formKey: _formKey, listViewChildren: [
       const SizedBox(height: 80),
       Center(
@@ -106,7 +106,7 @@ class AddAcccountForm extends StatelessWidget with NewAccountNavigationMixin {
           key: const Key('create-account-confirm'),
           icon: const Icon(Iconsax.add_square),
           textStyle: textTheme.displaySmall,
-          onPressed: !store.loading
+          onPressed: !newAccountStore.loading
               ? () async {
                   final store = context.read<NewAccountStore>();
                   final appStore = context.read<AppStore>();
@@ -119,7 +119,7 @@ class AddAcccountForm extends StatelessWidget with NewAccountNavigationMixin {
                   );
                 }
               : null,
-          child: !store.loading ? Text(dic.profile.accountCreate) : const ProgressingIndicator(),
+          child: !newAccountStore.loading ? Text(dic.profile.accountCreate) : const ProgressingIndicator(),
         );
       }),
       const SizedBox(height: 20),
