@@ -1,5 +1,5 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -14,18 +14,13 @@ class CreateAccountEntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const mosaicBackground = 'assets/nctr_mosaic_background.svg';
     final dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            SvgPicture.asset(
-              mosaicBackground,
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).size.width,
-            ),
+            Assets.nctrMosaicBackground.svg(fit: BoxFit.fill, width: MediaQuery.of(context).size.width),
             const EncointerLogo(),
             Padding(
               padding: const EdgeInsets.all(16),

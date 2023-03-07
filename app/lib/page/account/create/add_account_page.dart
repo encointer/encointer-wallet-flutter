@@ -51,8 +51,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
       setState(() {
         _submitting = false;
       });
-      _showErrorCreatingAccountDialog(context);
-      return;
+      return _showErrorCreatingAccountDialog(context);
     }
 
     final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
@@ -77,7 +76,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-    showCupertinoDialog<void>(
+    return showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(

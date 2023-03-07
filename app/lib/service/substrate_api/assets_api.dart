@@ -12,12 +12,12 @@ class AssetsApi {
 
   Future<void> startSubscriptions() async {
     Log.d('api: starting assets subscriptions', 'AssetsApi');
-    subscribeBalance();
+    await subscribeBalance();
   }
 
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping assets subscriptions', 'AssetsApi');
-    jsApi.unsubscribeMessage(_balanceSubscribeChannel);
+    await jsApi.unsubscribeMessage(_balanceSubscribeChannel);
   }
 
   Future<void> fetchBalance() async {
@@ -26,23 +26,23 @@ class AssetsApi {
     if (pubKey != null && pubKey.isNotEmpty) {
       final address = currentAddress;
       final res = await jsApi.evalJavascript<Map<String, dynamic>>('account.getBalance("$address")');
-      store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res}));
+      await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res}));
     }
-    _fetchMarketPrice();
+    await _fetchMarketPrice();
   }
 
   Future<void> subscribeBalance() async {
-    jsApi.unsubscribeMessage(_balanceSubscribeChannel);
+    await jsApi.unsubscribeMessage(_balanceSubscribeChannel);
 
     final pubKey = store.account.currentAccountPubKey;
     if (pubKey != null && pubKey.isNotEmpty) {
       final address = store.account.currentAddress;
 
-      jsApi.subscribeMessage(
+      await jsApi.subscribeMessage(
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
         _balanceSubscribeChannel,
         (Map<String, dynamic> data) async {
-          store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data}));
+          await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data}));
         },
       );
     }

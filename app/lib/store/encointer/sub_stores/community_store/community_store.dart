@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -122,7 +123,7 @@ abstract class _CommunityStore with Store {
   Future<void> setBootstrappers(List<String> bs) async {
     Log.d('set bootstrappers to $bs', 'CommunityStore');
     bootstrappers = bs;
-    writeToCache();
+    unawaited(writeToCache());
   }
 
   @action
@@ -131,7 +132,7 @@ abstract class _CommunityStore with Store {
 
     metadata = meta;
     await getCommunityIcon();
-    writeToCache();
+    unawaited(writeToCache());
   }
 
   @action

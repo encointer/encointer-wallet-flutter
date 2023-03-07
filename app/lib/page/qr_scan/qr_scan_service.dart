@@ -68,6 +68,7 @@ void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext,
       Navigator.of(context).popAndPushNamed(
         TransferPage.route,
         arguments: TransferPageParams(
+          cid: qrCode.data.cid,
           recipient: qrCode.data.account,
           label: qrCode.data.label,
         ),

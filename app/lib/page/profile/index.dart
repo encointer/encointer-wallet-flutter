@@ -173,10 +173,6 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
-                title: Text(dic.profile.appHints, style: h3Grey),
-                onTap: () => Navigator.pushNamed(context, Instruction.route),
-              ),
-              ListTile(
                 title: Text(dic.profile.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
@@ -272,7 +268,7 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
                 await store.account.removeAccount(acc);
               }
 
-              Navigator.pushAndRemoveUntil(
+              await Navigator.pushAndRemoveUntil(
                 context,
                 CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()),
                 (route) => false,
