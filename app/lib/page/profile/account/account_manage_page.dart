@@ -319,8 +319,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             }
                           },
                           itemBuilder: (BuildContext context) => [
-                                AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete),
-                                AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
+                                AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete, Iconsax.trash),
+                                AccountActionItemData(dic.profile.exportAccount, AccountAction.export, Iconsax.export),
                               ]
                                   .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
                                         key: Key(data.accountAction.name),
@@ -332,7 +332,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                           child: ListTile(
                                             minLeadingWidth: 0,
                                             title: Text(data.title),
-                                            leading: const Icon(Iconsax.trash),
+                                            leading: Icon(data.icon),
                                           ),
                                         ),
                                       ))
@@ -351,10 +351,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
 }
 
 class AccountActionItemData {
-  AccountActionItemData(this.title, this.accountAction);
+  AccountActionItemData(this.title, this.accountAction, this.icon);
   // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
   final String title;
   final AccountAction accountAction;
+  final IconData icon;
 }
 
 class CommunityIcon extends StatelessWidget {
