@@ -20,11 +20,35 @@ class $LibGen {
 class $AssetsAvatarsGen {
   const $AssetsAvatarsGen();
 
-  /// File path: assets/avatars/participant0.svg
-  SvgGenImage get participant0 => const SvgGenImage('assets/avatars/participant0.svg');
+  /// File path: assets/avatars/participant00.svg
+  SvgGenImage get participant00 => const SvgGenImage('assets/avatars/participant00.svg');
 
-  /// File path: assets/avatars/participant1.svg
-  SvgGenImage get participant1 => const SvgGenImage('assets/avatars/participant1.svg');
+  /// File path: assets/avatars/participant01.svg
+  SvgGenImage get participant01 => const SvgGenImage('assets/avatars/participant01.svg');
+
+  /// File path: assets/avatars/participant02.svg
+  SvgGenImage get participant02 => const SvgGenImage('assets/avatars/participant02.svg');
+
+  /// File path: assets/avatars/participant03.svg
+  SvgGenImage get participant03 => const SvgGenImage('assets/avatars/participant03.svg');
+
+  /// File path: assets/avatars/participant04.svg
+  SvgGenImage get participant04 => const SvgGenImage('assets/avatars/participant04.svg');
+
+  /// File path: assets/avatars/participant05.svg
+  SvgGenImage get participant05 => const SvgGenImage('assets/avatars/participant05.svg');
+
+  /// File path: assets/avatars/participant06.svg
+  SvgGenImage get participant06 => const SvgGenImage('assets/avatars/participant06.svg');
+
+  /// File path: assets/avatars/participant07.svg
+  SvgGenImage get participant07 => const SvgGenImage('assets/avatars/participant07.svg');
+
+  /// File path: assets/avatars/participant08.svg
+  SvgGenImage get participant08 => const SvgGenImage('assets/avatars/participant08.svg');
+
+  /// File path: assets/avatars/participant09.svg
+  SvgGenImage get participant09 => const SvgGenImage('assets/avatars/participant09.svg');
 
   /// File path: assets/avatars/participant10.svg
   SvgGenImage get participant10 => const SvgGenImage('assets/avatars/participant10.svg');
@@ -56,34 +80,18 @@ class $AssetsAvatarsGen {
   /// File path: assets/avatars/participant19.svg
   SvgGenImage get participant19 => const SvgGenImage('assets/avatars/participant19.svg');
 
-  /// File path: assets/avatars/participant2.svg
-  SvgGenImage get participant2 => const SvgGenImage('assets/avatars/participant2.svg');
-
-  /// File path: assets/avatars/participant3.svg
-  SvgGenImage get participant3 => const SvgGenImage('assets/avatars/participant3.svg');
-
-  /// File path: assets/avatars/participant4.svg
-  SvgGenImage get participant4 => const SvgGenImage('assets/avatars/participant4.svg');
-
-  /// File path: assets/avatars/participant5.svg
-  SvgGenImage get participant5 => const SvgGenImage('assets/avatars/participant5.svg');
-
-  /// File path: assets/avatars/participant6.svg
-  SvgGenImage get participant6 => const SvgGenImage('assets/avatars/participant6.svg');
-
-  /// File path: assets/avatars/participant7.svg
-  SvgGenImage get participant7 => const SvgGenImage('assets/avatars/participant7.svg');
-
-  /// File path: assets/avatars/participant8.svg
-  SvgGenImage get participant8 => const SvgGenImage('assets/avatars/participant8.svg');
-
-  /// File path: assets/avatars/participant9.svg
-  SvgGenImage get participant9 => const SvgGenImage('assets/avatars/participant9.svg');
-
   /// List of all assets
   List<SvgGenImage> get values => [
-        participant0,
-        participant1,
+        participant00,
+        participant01,
+        participant02,
+        participant03,
+        participant04,
+        participant05,
+        participant06,
+        participant07,
+        participant08,
+        participant09,
         participant10,
         participant11,
         participant12,
@@ -93,15 +101,7 @@ class $AssetsAvatarsGen {
         participant16,
         participant17,
         participant18,
-        participant19,
-        participant2,
-        participant3,
-        participant4,
-        participant5,
-        participant6,
-        participant7,
-        participant8,
-        participant9
+        participant19
       ];
 }
 
