@@ -48,9 +48,6 @@ abstract class _AccountStore with Store {
   @observable
   TxStatus? txStatus;
 
-  // @observable
-  // AccountCreate newAccount = AccountCreate();
-
   @observable
   String? currentAccountPubKey = '';
 
