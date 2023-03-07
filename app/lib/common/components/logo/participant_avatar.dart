@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
+import 'package:encointer_wallet/gen/assets.gen.dart';
 
 class ParticipantAvatar extends StatelessWidget {
   const ParticipantAvatar({
@@ -18,8 +19,7 @@ class ParticipantAvatar extends StatelessWidget {
       backgroundColor: isActive ? Colors.green : Colors.grey,
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: SvgPicture.asset(
-          'assets/avatars/participant$index.svg',
+        child: Assets.avatars.values[index].svg(
           colorFilter: isActive ? const ColorFilter.srgbToLinearGamma() : const ColorFilter.linearToSrgbGamma(),
         ),
       ),
@@ -36,10 +36,7 @@ class UserMeetupAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: 0.8,
-      child: SvgPicture.asset(
-        'assets/avatars/participant$index.svg',
-        width: 70,
-      ),
+      child: Assets.avatars.values[index].svg(width: 70),
     );
   }
 }

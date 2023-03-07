@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -159,7 +160,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               children: networks.map((i) {
                 final network = i.info;
                 final isCurrent = network == _selectedNetwork.info;
-                final img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
                 return Container(
                   margin: const EdgeInsets.only(bottom: 8),
                   padding: const EdgeInsets.only(right: 8),
@@ -170,7 +170,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                       : null,
                   child: IconButton(
                     key: Key(i.info ?? '$i'),
-                    icon: Image.asset(img),
+                    icon: Image.asset(networkIconFromNetworkId(network!, isCurrent)),
                     onPressed: () {
                       if (!isCurrent) {
                         setState(() {
@@ -194,5 +194,20 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         ],
       ),
     );
+  }
+
+  String networkIconFromNetworkId(String networkId, bool isCurrent) {
+    switch (networkId) {
+      case 'nctr-gsl':
+        return isCurrent ? Assets.images.public.nctrGsl.path : Assets.images.public.nctrGslGray.path;
+      case 'nctr-r':
+        return isCurrent ? Assets.images.public.nctrR.path : Assets.images.public.nctrRGray.path;
+      case 'nctr-k':
+        return isCurrent ? Assets.images.public.nctrK.path : Assets.images.public.nctrKGray.path;
+      case 'nctr-gsl-dev':
+        return isCurrent ? Assets.images.public.nctrGslDev.path : Assets.images.public.nctrGslDevGray.path;
+      default:
+        return Assets.images.public.nctrKGray.path;
+    }
   }
 }
