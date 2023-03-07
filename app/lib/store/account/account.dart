@@ -34,7 +34,6 @@ abstract class _AccountStore with Store {
   final AppStore rootStore;
 
   Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
-    acc['name'] = (acc['meta'] as Map<String, dynamic>)['name'];
     acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
     if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
       (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
