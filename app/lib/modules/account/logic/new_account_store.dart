@@ -59,7 +59,6 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> generateAccount(AppStore appStore, Api webApi) async {
     final pin = password ?? appStore.settings.cachedPin;
     if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
-    loading = true;
     return _generateAccount(appStore, webApi, pin);
   }
 
@@ -67,13 +66,13 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> importAccount(AppStore appStore, Api webApi) async {
     final pin = password ?? appStore.settings.cachedPin;
     if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
-    loading = true;
     return _importAccount(appStore, webApi, pin);
   }
 
   @action
   Future<NewAccountResult> _generateAccount(AppStore appStore, Api webApi, String pin) async {
     try {
+      loading = true;
       appStore.settings.setPin(pin);
       final key = await webApi.account.generateAccount();
       final acc = await webApi.account.importAccount(key: key, password: pin);
@@ -92,6 +91,7 @@ abstract class _NewAccountStoreBase with Store {
   @action
   Future<NewAccountResult> _importAccount(AppStore appStore, Api webApi, String pin) async {
     try {
+      loading = true;
       appStore.settings.setPin(pin);
       final acc = await webApi.account.importAccount(
         key: accountKey ?? '',
