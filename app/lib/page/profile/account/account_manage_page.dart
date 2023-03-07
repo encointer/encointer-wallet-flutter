@@ -319,8 +319,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             }
                           },
                           itemBuilder: (BuildContext context) => [
-                                AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete, Iconsax.trash),
-                                AccountActionItemData(dic.profile.exportAccount, AccountAction.export, Iconsax.export),
+                                AccountActionItemData(
+                                  accountAction: AccountAction.delete,
+                                  icon: Iconsax.trash,
+                                  title: dic.profile.deleteAccount,
+                                ),
+                                AccountActionItemData(
+                                    accountAction: AccountAction.export,
+                                    icon: Iconsax.export,
+                                    title: dic.profile.exportAccount),
                               ]
                                   .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
                                         key: Key(data.accountAction.name),
@@ -351,7 +358,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
 }
 
 class AccountActionItemData {
-  AccountActionItemData(this.title, this.accountAction, this.icon);
+  AccountActionItemData({
+    required this.title,
+    required this.accountAction,
+    required this.icon,
+  });
   // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
   final String title;
   final AccountAction accountAction;
