@@ -25,5 +25,5 @@ void main() async {
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
 
-  await app.main(environment: Environment.integrationTest);
+  await app.main(environment: Environment.integrationTestRealApp);
 }

@@ -34,7 +34,9 @@ class _HomeViewState extends State<HomeView> with EncointerStateMixin {
   @override
   void initState() {
     Log.d('initState', _tag);
-    if (buildConfig != BuildConfig.integrationTest) NotificationPlugin.init(context);
+    if (buildConfig != BuildConfig.integrationTestRealApp) {
+      NotificationPlugin.init(context);
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       Log.d('initState.WidgetsBinding.instance.addPostFrameCallback', _tag);

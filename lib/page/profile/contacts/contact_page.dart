@@ -9,7 +9,6 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -158,7 +157,7 @@ class _Contact extends State<ContactPage> {
                         },
                       ),
                     ),
-                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                    if (_appStore.settings.developerMode)
                       Padding(
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
@@ -169,7 +168,7 @@ class _Contact extends State<ContactPage> {
                           controller: _memoCtrl,
                         ),
                       ),
-                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                    if (_appStore.settings.developerMode)
                       Row(
                         children: <Widget>[
                           Checkbox(

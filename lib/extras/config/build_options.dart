@@ -12,13 +12,11 @@ bool get flutterTestRunning => Platform.environment.containsKey('FLUTTER_TEST');
 
 /// Environment variants
 enum Environment {
-  debug,
   dev,
-  beta,
-  apk,
   prod,
   test,
-  integrationTest,
+  integrationTestRealApp,
+  integrationTestMockApp,
 }
 
 /// Set the build variant
@@ -28,18 +26,10 @@ void setEnvironment(
 }) {
   Log.d('setEnvironment = $build', _tag);
   switch (build) {
-    case Environment.debug:
-      buildConfig = BuildConfig.debug;
-      break;
     case Environment.dev:
       buildConfig = BuildConfig.dev;
       break;
-    case Environment.beta:
-      buildConfig = BuildConfig.beta;
-      break;
-    case Environment.apk:
-      buildConfig = BuildConfig.apk;
-      break;
+
     case Environment.prod:
       buildConfig = BuildConfig.prod;
       break;
@@ -47,8 +37,11 @@ void setEnvironment(
       buildConfig = BuildConfig.unitTest;
 
       break;
-    case Environment.integrationTest:
-      buildConfig = BuildConfig.integrationTest;
+    case Environment.integrationTestRealApp:
+      buildConfig = BuildConfig.integrationTestRealApp;
+      break;
+    case Environment.integrationTestMockApp:
+      buildConfig = BuildConfig.integrationTestRealApp;
       break;
   }
 }
@@ -97,18 +90,6 @@ class BuildConfig {
     endpoint: networkEndpointEncointerGesellDev,
   );
 
-  static BuildConfig debug = BuildConfig(
-    endpoint: networkEndpointEncointerMainnet,
-  );
-
-  static BuildConfig beta = BuildConfig(
-    endpoint: networkEndpointEncointerMainnet,
-  );
-
-  static BuildConfig apk = BuildConfig(
-    endpoint: networkEndpointEncointerMainnet,
-  );
-
   static BuildConfig prod = BuildConfig(
     endpoint: networkEndpointEncointerMainnet,
   );
@@ -119,7 +100,14 @@ class BuildConfig {
     endpoint: EndpointData(),
   );
 
-  static BuildConfig integrationTest = BuildConfig(
+  static BuildConfig integrationTestRealApp = BuildConfig(
+    isTestMode: true,
+    mockSubstrateApi: true,
+    appCast: getAppCast(),
+    endpoint: networkEndpointEncointerMainnet,
+  );
+
+  static BuildConfig integrationTestMockApp = BuildConfig(
     isTestMode: true,
     mockSubstrateApi: true,
     appCast: getAppCast(),

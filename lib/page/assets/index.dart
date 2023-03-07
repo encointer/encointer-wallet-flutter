@@ -140,7 +140,7 @@ class _AssetsState extends State<Assets> {
         body: UpgradeAlert(
           upgrader: Upgrader(
             appcastConfig: buildConfig.appCast,
-            debugLogging: buildConfig == BuildConfig.integrationTest,
+            debugLogging: buildConfig == BuildConfig.integrationTestRealApp,
             shouldPopScope: () => true,
             canDismissDialog: true,
           ),

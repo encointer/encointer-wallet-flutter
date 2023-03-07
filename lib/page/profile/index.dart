@@ -183,7 +183,7 @@ class _ProfileState extends State<Profile> {
               const SendToTrelloListTile(),
               // Show only if on dev mode,
               // hide it on production
-              if (buildConfig == BuildConfig.dev) ...[
+              if (buildConfig == BuildConfig.dev || buildConfig == BuildConfig.integrationTestRealApp) ...[
                 ListTile(
                   title: Text(dic.profile.developer, style: h3Grey),
                   trailing: Checkbox(

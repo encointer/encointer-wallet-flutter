@@ -10,7 +10,6 @@ import 'package:encointer_wallet/service_locator/service_locator.dart' as servic
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:upgrader/upgrader.dart';
 
 void main() async {
@@ -19,8 +18,7 @@ void main() async {
 
 Future<void> runMain() async {
   await runZonedGuarded(() async {
-    TestWidgetsFlutterBinding.ensureInitialized();
-    setEnvironment(Environment.integrationTest);
+    setEnvironment(Environment.integrationTestMockApp);
 
     service_locator.init(isTest: true);
     await service_locator.sl.allReady();

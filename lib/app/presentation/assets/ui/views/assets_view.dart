@@ -142,7 +142,9 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
     return UpgradeAlert(
       upgrader: Upgrader(
         appcastConfig: buildConfig.appCast,
-        debugLogging: buildConfig == BuildConfig.integrationTest,
+
+        ///TODO(Azamat): We need to check if this checking is correct [buildConfig == BuildConfig.integrationTestRealApp]
+        debugLogging: buildConfig == BuildConfig.integrationTestRealApp,
         shouldPopScope: () => true,
         canDismissDialog: true,
       ),
