@@ -279,6 +279,7 @@ class Fmt {
   /// ss58-encodes a 32-byte public key into an address.
   ///
   /// Reference implementation  from: https://github.com/polkadot-js/ss58/blob/master/index.js
+  /// Which uses this blake2 library: https://www.npmjs.com/package/blakejs?activeTab=explore
   ///
   static String ss58Encode(String pubKey, {int prefix = 42}) {
     final intBytes = Int8List.fromList([42, ...Fmt.hexToBytes(pubKey)]);
