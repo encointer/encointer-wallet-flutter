@@ -18,58 +18,74 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
-class ContactDetailPage extends StatelessWidget {
-  const ContactDetailPage(this.api, {super.key});
+class ContactDetailPage extends StatefulWidget {
+  const ContactDetailPage(this.accountData, {super.key});
 
   static const String route = '/profile/contactDetail';
 
-  final Api api;
+  final AccountData accountData;
 
-  void _removeItem(BuildContext context, AccountData account, AppStore store) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    showCupertinoDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(dic.profile.contactDeleteWarn),
-          content: Text(Fmt.accountName(context, account)),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(dic.home.cancel),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () {
-                Navigator.of(context).pop();
-                store.settings.removeContact(account);
-                if (store.account.currentAccountPubKey == account.pubKey) {
-                  webApi.account.changeCurrentAccount(fetchData: true);
-                }
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+  @override
+  State<ContactDetailPage> createState() => _ContactDetailPageState();
+}
+
+class _ContactDetailPageState extends State<ContactDetailPage> {
+  final TextEditingController _nameCtrl = TextEditingController();
+  late AccountData account;
+  bool isEditing = false;
+
+  @override
+  void initState() {
+    account = widget.accountData;
+    _nameCtrl.text = widget.accountData.name;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final account = ModalRoute.of(context)!.settings.arguments! as AccountData;
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          account.name,
-          style: Theme.of(context).textTheme.displaySmall,
-        ),
-        iconTheme: const IconThemeData(
-          color: Color(0xff666666), //change your color here
-        ),
+        title: !isEditing
+            ? Text(
+                _nameCtrl.text,
+                style: Theme.of(context).textTheme.displaySmall,
+              )
+            : TextFormField(controller: _nameCtrl),
+        actions: [
+          if (isEditing)
+            IconButton(
+              key: const Key('account-name-edit-check'),
+              icon: const Icon(Icons.check),
+              onPressed: () async {
+                if (_nameCtrl.text != widget.accountData.name) {
+                  final contactData = {
+                    'address': widget.accountData.address,
+                    'name': _nameCtrl.text,
+                    'memo': widget.accountData.memo,
+                    'observation': widget.accountData.observation,
+                    'pubKey': widget.accountData.pubKey,
+                  };
+                  await context.read<AppStore>().settings.updateContact(contactData);
+                }
+                setState(() {
+                  isEditing = false;
+                });
+              },
+            )
+          else
+            IconButton(
+              key: const Key('account-name-edit'),
+              icon: const Icon(Iconsax.edit),
+              onPressed: () {
+                setState(() {
+                  isEditing = true;
+                });
+              },
+            )
+        ],
         centerTitle: true,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -106,7 +122,7 @@ class ContactDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-              EndorseButton(store, api, account),
+              EndorseButton(store, webApi, account),
               const SizedBox(height: 16),
               SecondaryButtonWide(
                 key: const Key('send-money-to-account'),
@@ -126,7 +142,7 @@ class ContactDetailPage extends StatelessWidget {
                       cid: context.read<AppStore>().encointer.chosenCid,
                       communitySymbol: context.read<AppStore>().encointer.community?.symbol,
                       recipient: account.address,
-                      label: account.name,
+                      label: _nameCtrl.text,
                     ),
                   );
                 },
@@ -147,6 +163,36 @@ class ContactDetailPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _removeItem(BuildContext context, AccountData account, AppStore store) {
+    final dic = I18n.of(context)!.translationsForLocale();
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(dic.profile.contactDeleteWarn),
+          content: Text(Fmt.accountName(context, account)),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text(dic.home.cancel),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoButton(
+              child: Text(dic.home.ok),
+              onPressed: () {
+                Navigator.of(context).pop();
+                store.settings.removeContact(account);
+                if (store.account.currentAccountPubKey == account.pubKey) {
+                  webApi.account.changeCurrentAccount(fetchData: true);
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
