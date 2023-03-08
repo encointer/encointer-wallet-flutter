@@ -49,9 +49,9 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: !isEditing
-            ? Text(_nameCtrl.text, style: textTheme.displaySmall)
-            : TextFormField(key: const Key('contact-name-field'), controller: _nameCtrl),
+        title: isEditing
+            ? TextFormField(key: const Key('contact-name-field'), controller: _nameCtrl)
+            : Text(_nameCtrl.text, style: textTheme.displaySmall),
         actions: [
           if (isEditing)
             IconButton(
