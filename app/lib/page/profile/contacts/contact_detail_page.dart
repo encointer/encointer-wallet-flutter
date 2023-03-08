@@ -31,7 +31,7 @@ class ContactDetailPage extends StatefulWidget {
 
 class _ContactDetailPageState extends State<ContactDetailPage> {
   final TextEditingController _nameCtrl = TextEditingController();
-  late AccountData account;
+  late final AccountData account;
   bool isEditing = false;
 
   @override
@@ -45,19 +45,17 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
         title: !isEditing
-            ? Text(
-                _nameCtrl.text,
-                style: Theme.of(context).textTheme.displaySmall,
-              )
-            : TextFormField(controller: _nameCtrl),
+            ? Text(_nameCtrl.text, style: textTheme.displaySmall)
+            : TextFormField(key: const Key('contact-name-field'), controller: _nameCtrl),
         actions: [
           if (isEditing)
             IconButton(
-              key: const Key('account-name-edit-check'),
+              key: const Key('contact-name-edit-check'),
               icon: const Icon(Icons.check),
               onPressed: () async {
                 if (_nameCtrl.text != widget.accountData.name) {
@@ -77,7 +75,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
             )
           else
             IconButton(
-              key: const Key('account-name-edit'),
+              key: const Key('contact-name-edit'),
               icon: const Icon(Iconsax.edit),
               onPressed: () {
                 setState(() {
@@ -131,8 +129,10 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   children: [
                     const Icon(Iconsax.send_sqaure_2),
                     const SizedBox(width: 12),
-                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? 'null'),
-                        style: Theme.of(context).textTheme.displaySmall),
+                    Text(
+                      dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? 'null'),
+                      style: textTheme.displaySmall,
+                    ),
                   ],
                 ),
                 onPressed: () {
@@ -155,7 +155,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   children: [
                     const Icon(Iconsax.trash),
                     const SizedBox(width: 12),
-                    Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.displaySmall)
+                    Text(dic.profile.contactDelete, style: textTheme.displaySmall)
                   ],
                 ),
               ),
@@ -207,6 +207,7 @@ class EndorseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
+    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,7 +251,7 @@ class EndorseButton extends StatelessWidget {
                 children: [
                   const Icon(Iconsax.verify),
                   const SizedBox(width: 12),
-                  Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.displaySmall)
+                  Text(dic.profile.contactEndorse, style: textTheme.displaySmall)
                 ],
               ),
             ),
