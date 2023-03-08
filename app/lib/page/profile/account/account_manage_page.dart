@@ -358,7 +358,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 }
 
 class AccountActionItemData {
-  AccountActionItemData({
+  const AccountActionItemData({
     required this.title,
     required this.accountAction,
     required this.icon,
