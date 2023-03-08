@@ -3,6 +3,10 @@ import 'dart:core';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:base58check/base58.dart';
+import 'package:base58check/base58check.dart';
+import 'package:blake2b/blake2b_hash.dart';
+import 'package:blake2b/utils.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -267,5 +271,21 @@ class Fmt {
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].
   static String degree(String degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
     return (double.tryParse(degree) ?? 0.0).toStringAsFixed(fractionDisplay);
+  }
+
+  static const codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+
+  /// ss58-encodes a 32-byte public key into an address.
+  ///
+  /// Reference implementation  from: https://github.com/polkadot-js/ss58/blob/master/index.js
+  ///
+  static String ss58Encode(String pubKey, {int prefix = 42}) {
+    final intBytes = Int8List.fromList([42, ...Fmt.hexToBytes(pubKey)]);
+    final uIntBytes = Utils.int8list2uint8list(intBytes);
+
+    final hash = Blake2bHash.hash(uIntBytes, 0, uIntBytes.length);
+    final complete = List<int>.from([...uIntBytes, hash[0], hash[1]]);
+
+    return codec.encode(complete);
   }
 }
