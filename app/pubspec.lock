@@ -105,6 +105,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  blake2:
+    dependency: "direct main"
+    description:
+      name: blake2
+      sha256: "6dc3be6636645c478a06de3169a2b78c2c16ddb11e983cc2bbcf8ec688ce8cb0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2+1"
   blake2b:
     dependency: "direct main"
     description:

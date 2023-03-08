@@ -7,6 +7,7 @@ import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
 import 'package:blake2b/blake2b_hash.dart';
 import 'package:blake2b/utils.dart';
+import 'package:blake2/blake2.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -286,6 +287,17 @@ class Fmt {
     final hash = Blake2bHash.hash(uIntBytes, 0, uIntBytes.length);
     final complete = List<int>.from([...uIntBytes, hash[0], hash[1]]);
 
+    return codec.encode(complete);
+  }
+
+  static String ss58Encode2(String pubKey, {int prefix = 42}) {
+    final intBytes = Int8List.fromList([42, ...Fmt.hexToBytes(pubKey)]);
+    final uIntBytes = Utils.int8list2uint8list(intBytes);
+
+    final blake2b = Blake2b(key: uIntBytes);
+    final hash = blake2b.digest();
+
+    final complete = List<int>.from([...uIntBytes, hash[0], hash[1]]);
     return codec.encode(complete);
   }
 }
