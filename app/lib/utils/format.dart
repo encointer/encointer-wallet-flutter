@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
-import 'package:blake2b/blake2b_hash.dart';
 import 'package:blake2b/utils.dart';
 import 'package:blake2/blake2.dart';
 import 'package:convert/convert.dart';
