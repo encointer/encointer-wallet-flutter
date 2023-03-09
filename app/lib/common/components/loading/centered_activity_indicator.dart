@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class ProgressingIndicator extends StatelessWidget {
-  const ProgressingIndicator({super.key});
+class CenteredActivityIndicator extends StatelessWidget {
+  const CenteredActivityIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {

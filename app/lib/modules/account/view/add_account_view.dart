@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/components/loading/progressing_inducator.dart';
+import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -126,7 +126,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
             const SizedBox(width: 12),
             Observer(builder: (_) {
               if (newAccountStoreWatch.loading) {
-                return const ProgressingIndicator();
+                return const CenteredActivityIndicator();
               } else {
                 return Text(dic.home.next);
               }

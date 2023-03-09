@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
-import 'package:encointer_wallet/common/components/loading/progressing_inducator.dart';
+import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/modules/account/account.dart';
@@ -123,7 +123,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
           },
           child: Observer(builder: (_) {
             if (newAccountStoreWatch.loading) {
-              return const ProgressingIndicator();
+              return const CenteredActivityIndicator();
             } else {
               return Text(dic.home.next);
             }
