@@ -1,8 +1,10 @@
-import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:latlong2/latlong.dart';
+
+import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
+import 'package:encointer_wallet/models/location/location.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 
 class EncointerMap extends StatelessWidget {
   EncointerMap({
@@ -20,32 +22,32 @@ class EncointerMap extends StatelessWidget {
   final LatLng? center;
   final Widget Function(BuildContext, Marker)? popupBuilder;
 
+  final _popupLayerController = PopupController();
   final _mapController = MapController();
-
-  final PopupController _popupLayerController = PopupController();
 
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
+      mapController: _mapController,
       options: MapOptions(
         center: center ?? LatLng(47.389712, 8.517076),
-        // zoom: initialZoom ?? 13,
+        zoom: initialZoom ?? 13,
         maxZoom: 18,
         onPointerDown: (e, lt) {
           if (_mapController.zoom == 18) {
+            final location = Location('${locations[0].latitude}', '${locations[0].longitude}');
             showDialog<void>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
                 content: const Text('Open up Map App'),
                 actions: <Widget>[
                   TextButton(
-                    onPressed: () {},
-                    child: const Text(''),
+                    onPressed: () => AppLaunch.launchMap(location),
+                    child: const Text('OK'),
                   ),
                 ],
               ),
             );
-            print('You can open map App');
           }
         },
         onTap: (_, __) => _popupLayerController.hideAllPopups(disableAnimation: true),
@@ -80,22 +82,6 @@ class EncointerMap extends StatelessWidget {
       ],
     );
   }
-
-  // Future<void> showDialog({required BuildContext context, required AlertDialog Function(BuildContext context) builder}) async {
-  //   await showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return const AlertDialog(
-  //           content: Text('Open up Map App'),
-  //           actions: <Widget>[
-  //             TextButton(
-  //               onPressed: () => AppLaunch.launchMap(meetupLocation),
-  //               child: Text(''),
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
 }
 
 class PopupBuilder extends StatelessWidget {
