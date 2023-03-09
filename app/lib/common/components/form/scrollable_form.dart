@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FormScrollable extends StatelessWidget {
-  const FormScrollable({
+class ScrollableForm extends StatelessWidget {
+  const ScrollableForm({
     super.key,
     required this.formKey,
     required this.listViewChildren,

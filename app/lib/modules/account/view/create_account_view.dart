@@ -3,7 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
+import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -47,7 +47,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    return FormScrollable(
+    return ScrollableForm(
       formKey: _formKey,
       listViewChildren: [
         const SizedBox(height: 80),

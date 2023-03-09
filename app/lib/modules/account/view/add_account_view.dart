@@ -7,7 +7,7 @@ import 'package:encointer_wallet/common/components/encointer_text_form_field.dar
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
-import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
+import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -52,7 +52,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
     final newAccountStore = context.watch<NewAccountStore>();
-    return FormScrollable(formKey: _formKey, listViewChildren: [
+    return ScrollableForm(formKey: _formKey, listViewChildren: [
       const SizedBox(height: 80),
       Center(
         child: Text(

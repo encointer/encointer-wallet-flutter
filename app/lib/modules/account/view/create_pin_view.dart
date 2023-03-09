@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
+import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -53,7 +53,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
     final newAccountStore = context.watch<NewAccountStore>();
-    return FormScrollable(
+    return ScrollableForm(
       formKey: _formKey,
       listViewChildren: [
         const SizedBox(height: 80),
