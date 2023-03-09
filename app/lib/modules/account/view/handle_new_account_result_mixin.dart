@@ -19,11 +19,11 @@ mixin HandleNewAccountResultMixin on Widget {
         break;
       case NewAccountResultType.error:
         final dic = I18n.of(context)!.translationsForLocale();
-        AppAlert.showErrorDailog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
+        AppAlert.showErrorDialog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
         break;
       case NewAccountResultType.emptyPassword:
         final appStore = context.read<AppStore>();
-        await AppAlert.showInputPasswordDailog(context: context, account: appStore.account.currentAccount);
+        await AppAlert.showInputPasswordDialog(context: context, account: appStore.account.currentAccount);
         break;
       case NewAccountResultType.duplicateAccount:
         if (onDuplicateAccount != null) onDuplicateAccount();

@@ -137,7 +137,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
     final pubKeyMap = appStore.account.pubKeyAddressMap[appStore.settings.endpoint.ss58]!;
     final address = pubKeyMap[acc['pubKey']];
     final dic = I18n.of(context)!.translationsForLocale();
-    await AppAlert.showDailog<void>(
+    await AppAlert.showDialog<void>(
       context,
       title: Text(Fmt.address(address)!),
       content: Text(dic.account.importDuplicate),

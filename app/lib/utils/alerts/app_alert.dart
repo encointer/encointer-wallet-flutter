@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class AppAlert {
-  static Future<T?> showDailog<T>(
+  static Future<T?> showDialog<T>(
     BuildContext context, {
     Widget? title,
     Widget? content,
@@ -24,7 +24,7 @@ class AppAlert {
     );
   }
 
-  static void showLoadingDailog(BuildContext context, String title) {
+  static void showLoadingDialog(BuildContext context, String title) {
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -36,7 +36,7 @@ class AppAlert {
     );
   }
 
-  static void showErrorDailog(
+  static void showErrorDialog(
     BuildContext context, {
     Widget? title,
     required String errorText,
@@ -60,7 +60,7 @@ class AppAlert {
     );
   }
 
-  static Future<void> showInputPasswordDailog({
+  static Future<void> showInputPasswordDialog({
     required BuildContext context,
     required AccountData account,
   }) async {
