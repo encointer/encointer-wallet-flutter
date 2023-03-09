@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -152,10 +153,8 @@ class AppRoute {
           settings: settings,
         );
       case ContactDetailPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => ContactDetailPage(webApi),
-          settings: settings,
-        );
+        final arg = settings.arguments!;
+        return CupertinoPageRoute(builder: (_) => ContactDetailPage(arg as AccountData));
       case SettingsPage.route:
         return CupertinoPageRoute(
           builder: (_) => const SettingsPage(),
