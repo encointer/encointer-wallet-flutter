@@ -49,7 +49,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final newAccountStoreWatch = context.watch<NewAccountStore>();
+    final newAccountStore = context.watch<NewAccountStore>();
     return FormScrollable(
       formKey: _formKey,
       listViewChildren: [
@@ -91,10 +91,10 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         PrimaryButton(
           key: const Key('account-import-next'),
           onPressed: () async {
-            final newAccountStore = context.read<NewAccountStore>();
+            final newAccount = context.read<NewAccountStore>();
             final appStore = context.read<AppStore>();
-            if (_formKey.currentState!.validate() && !newAccountStore.loading) {
-              newAccountStore
+            if (_formKey.currentState!.validate() && !newAccount.loading) {
+              newAccount
                 ..setName(_nameCtrl.text.trim())
                 ..setKey(_keyCtrl.text.trim());
               if (appStore.account.isFirstAccount) {
@@ -102,13 +102,13 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext _) => Provider.value(
-                      value: newAccountStore,
+                      value: newAccount,
                       child: const CreatePinView(fromImportPage: true),
                     ),
                   ),
                 );
               } else {
-                final res = await newAccountStore.importAccount(appStore, webApi);
+                final res = await newAccount.importAccount(appStore, webApi);
                 await navigate(
                   context: context,
                   type: res.operationResult,
@@ -119,7 +119,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
             }
           },
           child: Observer(builder: (_) {
-            if (newAccountStoreWatch.loading) {
+            if (newAccountStore.loading) {
               return const CenteredActivityIndicator();
             } else {
               return Text(dic.home.next);

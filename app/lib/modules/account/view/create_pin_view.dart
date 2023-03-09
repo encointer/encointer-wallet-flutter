@@ -52,8 +52,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final newAccountStoreWatch = context.watch<NewAccountStore>();
-
+    final newAccountStore = context.watch<NewAccountStore>();
     return FormScrollable(
       formKey: _formKey,
       listViewChildren: [
@@ -107,13 +106,13 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         PrimaryButton(
           key: const Key('create-account-confirm'),
           onPressed: () async {
-            final newAccountStore = context.read<NewAccountStore>();
+            final newAccount = context.read<NewAccountStore>();
             final appStore = context.read<AppStore>();
-            if (_formKey.currentState!.validate() && !newAccountStore.loading) {
-              newAccountStore.setPassword(_passCtrl.text.trim());
+            if (_formKey.currentState!.validate() && !newAccount.loading) {
+              newAccount.setPassword(_passCtrl.text.trim());
               final res = fromImportPage
-                  ? await newAccountStore.importAccount(appStore, webApi)
-                  : await newAccountStore.generateAccount(appStore, webApi);
+                  ? await newAccount.importAccount(appStore, webApi)
+                  : await newAccount.generateAccount(appStore, webApi);
               await navigate(
                 context: context,
                 type: res.operationResult,
@@ -122,7 +121,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
             }
           },
           child: Observer(builder: (_) {
-            if (newAccountStoreWatch.loading) {
+            if (newAccountStore.loading) {
               return const CenteredActivityIndicator();
             } else {
               return Text(dic.home.next);

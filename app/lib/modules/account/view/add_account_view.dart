@@ -51,7 +51,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final newAccountStoreWatch = context.watch<NewAccountStore>();
+    final newAccountStore = context.watch<NewAccountStore>();
     return FormScrollable(formKey: _formKey, listViewChildren: [
       const SizedBox(height: 80),
       Center(
@@ -107,11 +107,11 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
       PrimaryButton(
         key: const Key('create-account-confirm'),
         onPressed: () async {
-          final newAccountStore = context.read<NewAccountStore>();
+          final newAccount = context.read<NewAccountStore>();
           final appStore = context.read<AppStore>();
-          if (_formKey.currentState!.validate() && !newAccountStore.loading) {
-            newAccountStore.setName(_nameCtrl.text.trim());
-            final res = await newAccountStore.generateAccount(appStore, webApi);
+          if (_formKey.currentState!.validate() && !newAccount.loading) {
+            newAccount.setName(_nameCtrl.text.trim());
+            final res = await newAccount.generateAccount(appStore, webApi);
             await navigate(
               context: context,
               type: res.operationResult,
@@ -125,7 +125,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
             const Icon(Iconsax.add_square),
             const SizedBox(width: 12),
             Observer(builder: (_) {
-              if (newAccountStoreWatch.loading) {
+              if (newAccountStore.loading) {
                 return const CenteredActivityIndicator();
               } else {
                 return Text(dic.home.next);
