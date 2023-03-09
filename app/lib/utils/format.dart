@@ -276,22 +276,8 @@ class Fmt {
 
   static const codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
-  /// ss58-encodes a 32-byte public key into an address.
-  ///
-  /// Reference implementation  from: https://github.com/polkadot-js/ss58/blob/master/index.js
-  /// Which uses this blake2 library: https://www.npmjs.com/package/blakejs?activeTab=explore
-  ///
+  /// Based on the rust version: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L324
   static String ss58Encode(String pubKey, {int prefix = 42}) {
-    final intBytes = Int8List.fromList([42, ...Fmt.hexToBytes(pubKey)]);
-    final uIntBytes = Utils.int8list2uint8list(intBytes);
-
-    final hash = Blake2bHash.hash(uIntBytes, 0, uIntBytes.length);
-    final complete = List<int>.from([...uIntBytes, hash[0], hash[1]]);
-
-    return codec.encode(complete);
-  }
-
-  static String ss58Encode2(String pubKey, {int prefix = 42}) {
     final intBytes = Int8List.fromList([42, ...Fmt.hexToBytes(pubKey)]);
     final uIntBytes = Utils.int8list2uint8list(intBytes);
 
