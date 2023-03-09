@@ -7,11 +7,12 @@ import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class MeetupLocationPage extends StatelessWidget {
-  const MeetupLocationPage(this.meetupLocation, {super.key});
+  MeetupLocationPage(this.meetupLocation, {super.key});
 
   final Location meetupLocation;
 
   static const route = '/meetup-location';
+  final _mapController = MapController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +25,30 @@ class MeetupLocationPage extends StatelessWidget {
         locations: [meetupLocation.toLatLng()],
         center: meetupLocation.toLatLng(),
         initialZoom: 10,
+        maxZoom: 18,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
           title: dic.encointer.showRouteMeetupLocation,
           description: '',
           onTap: () => AppLaunch.launchMap(meetupLocation),
           height: 40,
         ),
+        mapController: _mapController,
+        onPointerDown: (e, lt) {
+          if (_mapController.zoom > 17) {
+            showDialog<void>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                content: const Text('Open up Map App'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => AppLaunch.launchMap(meetupLocation),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
       ),
     );
   }
