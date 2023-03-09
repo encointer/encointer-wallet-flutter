@@ -277,7 +277,7 @@ class Fmt {
   /// Based on the rust version: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L324
   static String ss58Encode(String pubKey, {int prefix = 42}) {
     final ss58Prefix = Uint8List.fromList('SS58PRE'.codeUnits);
-    final body = Uint8List.fromList([42, ...Fmt.hexToBytes(pubKey)]);
+    final body = Uint8List.fromList([prefix, ...Fmt.hexToBytes(pubKey)]);
 
     final blake2b = Blake2b()
       ..update(ss58Prefix)
