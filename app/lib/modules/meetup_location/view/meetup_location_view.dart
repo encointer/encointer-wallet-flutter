@@ -41,9 +41,11 @@ class MeetupLocationPage extends StatelessWidget {
                 content: const Text('Open up Map App'),
                 actions: <Widget>[
                   TextButton(
-                    onPressed: () => AppLaunch.launchMap(meetupLocation),
-                    child: const Text('OK'),
-                  ),
+                      onPressed: () => AppLaunch.launchMap(meetupLocation),
+                      child: Text(I18n.of(context)!.translationsForLocale().home.ok)),
+                  TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: Text(I18n.of(context)!.translationsForLocale().home.cancel)),
                 ],
               ),
             );
