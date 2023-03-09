@@ -38,7 +38,7 @@ class MeetupLocationPage extends StatelessWidget {
             showDialog<void>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
-                content: const Text('Open up Map App'),
+                content: Text(I18n.of(context)!.translationsForLocale().encointer.showRouteMeetupLocation),
                 actions: <Widget>[
                   TextButton(
                       onPressed: () => AppLaunch.launchMap(meetupLocation),
