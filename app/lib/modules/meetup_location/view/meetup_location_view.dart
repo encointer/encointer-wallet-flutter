@@ -35,17 +35,20 @@ class MeetupLocationPage extends StatelessWidget {
         mapController: _mapController,
         onPointerDown: (e, lt) {
           if (_mapController.zoom > 17) {
+            _mapController.move(_mapController.center, 17);
             showDialog<void>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
-                content: Text(I18n.of(context)!.translationsForLocale().encointer.showRouteMeetupLocation),
+                content: Text(dic.encointer.showRouteMeetupLocation),
                 actions: <Widget>[
                   TextButton(
-                      onPressed: () => AppLaunch.launchMap(meetupLocation),
-                      child: Text(I18n.of(context)!.translationsForLocale().home.ok)),
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: Text(dic.home.cancel),
+                  ),
                   TextButton(
-                      onPressed: () => Navigator.pop(context, 'Cancel'),
-                      child: Text(I18n.of(context)!.translationsForLocale().home.cancel)),
+                    onPressed: () => AppLaunch.launchMap(meetupLocation),
+                    child: Text(dic.home.ok),
+                  ),
                 ],
               ),
             );
