@@ -281,7 +281,9 @@ class Fmt {
     final intBytes = Int8List.fromList([42, ...Fmt.hexToBytes(pubKey)]);
     final uIntBytes = Utils.int8list2uint8list(intBytes);
 
-    final blake2b = Blake2b(key: uIntBytes);
+    final blake2b = Blake2b()
+      ..update(Uint8List.fromList('SS58PRE'.codeUnits))
+      ..update(uIntBytes);
     final hash = blake2b.digest();
 
     final complete = List<int>.from([...uIntBytes, hash[0], hash[1]]);
