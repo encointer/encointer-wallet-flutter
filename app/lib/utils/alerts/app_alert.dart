@@ -1,9 +1,10 @@
-import 'package:encointer_wallet/common/components/password_input_dialog.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+
+import 'package:encointer_wallet/common/components/password_input_dialog.dart' as pass;
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 class AppAlert {
   static Future<T?> showDialog<T>(
@@ -60,7 +61,7 @@ class AppAlert {
     );
   }
 
-  static Future<void> showInputPasswordDialog({
+  static Future<void> showPasswordInputDialog({
     required BuildContext context,
     required AccountData account,
   }) async {
@@ -68,7 +69,7 @@ class AppAlert {
     return showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(
+        return pass.showPasswordInputDialog(
           context,
           account,
           Text(dic.profile.unlock),
