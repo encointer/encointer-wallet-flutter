@@ -41,7 +41,7 @@ class MeetupLocationPage extends StatelessWidget {
                 content: Text(dic.encointer.showRouteMeetupLocation),
                 actions: <Widget>[
                   TextButton(
-                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    onPressed: () => Navigator.pop(context),
                     child: Text(dic.home.cancel),
                   ),
                   TextButton(
