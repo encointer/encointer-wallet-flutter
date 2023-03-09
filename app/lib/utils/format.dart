@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
-import 'package:blake2b/utils.dart';
 import 'package:blake2/blake2.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/cupertino.dart';
@@ -273,19 +272,19 @@ class Fmt {
     return (double.tryParse(degree) ?? 0.0).toStringAsFixed(fractionDisplay);
   }
 
-  static const codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+  static const base58Codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
   /// Based on the rust version: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L324
   static String ss58Encode(String pubKey, {int prefix = 42}) {
-    final intBytes = Int8List.fromList([42, ...Fmt.hexToBytes(pubKey)]);
-    final uIntBytes = Utils.int8list2uint8list(intBytes);
+    final ss58Prefix = Uint8List.fromList('SS58PRE'.codeUnits);
+    final body = Uint8List.fromList([42, ...Fmt.hexToBytes(pubKey)]);
 
     final blake2b = Blake2b()
-      ..update(Uint8List.fromList('SS58PRE'.codeUnits))
-      ..update(uIntBytes);
+      ..update(ss58Prefix)
+      ..update(body);
     final hash = blake2b.digest();
 
-    final complete = List<int>.from([...uIntBytes, hash[0], hash[1]]);
-    return codec.encode(complete);
+    final complete = List<int>.from([...body, hash[0], hash[1]]);
+    return base58Codec.encode(complete);
   }
 }
