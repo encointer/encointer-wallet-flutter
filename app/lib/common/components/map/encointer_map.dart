@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
@@ -19,6 +20,8 @@ class EncointerMap extends StatelessWidget {
   final LatLng? center;
   final Widget Function(BuildContext, Marker)? popupBuilder;
 
+  final _mapController = MapController();
+
   final PopupController _popupLayerController = PopupController();
 
   @override
@@ -26,8 +29,25 @@ class EncointerMap extends StatelessWidget {
     return FlutterMap(
       options: MapOptions(
         center: center ?? LatLng(47.389712, 8.517076),
-        zoom: initialZoom ?? 13,
-        maxZoom: maxZoom,
+        // zoom: initialZoom ?? 13,
+        maxZoom: 18,
+        onPointerDown: (e, lt) {
+          if (_mapController.zoom == 18) {
+            showDialog<void>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                content: const Text('Open up Map App'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(''),
+                  ),
+                ],
+              ),
+            );
+            print('You can open map App');
+          }
+        },
         onTap: (_, __) => _popupLayerController.hideAllPopups(disableAnimation: true),
       ),
       children: [
@@ -60,6 +80,22 @@ class EncointerMap extends StatelessWidget {
       ],
     );
   }
+
+  // Future<void> showDialog({required BuildContext context, required AlertDialog Function(BuildContext context) builder}) async {
+  //   await showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return const AlertDialog(
+  //           content: Text('Open up Map App'),
+  //           actions: <Widget>[
+  //             TextButton(
+  //               onPressed: () => AppLaunch.launchMap(meetupLocation),
+  //               child: Text(''),
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 }
 
 class PopupBuilder extends StatelessWidget {
