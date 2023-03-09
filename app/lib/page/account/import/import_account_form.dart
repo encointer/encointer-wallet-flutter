@@ -98,8 +98,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     hintText: dic.account.createHint,
                     labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
-                    validator: (v) =>
-                        InputValidation.validateAccountName(context, v, widget.store.account.optionalAccounts),
+                    validator: (v) => InputValidation.validateAccountName(context, v, widget.store.account.accountList),
                   ),
                   TextFormField(
                     key: const Key('account-source'),

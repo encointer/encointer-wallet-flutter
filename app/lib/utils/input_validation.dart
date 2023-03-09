@@ -6,18 +6,14 @@ class InputValidation {
   static String? validateAccountName(BuildContext context, String? input, List<AccountData> existingAccounts) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    if (input == null) {
-      return dic.profile.contactNameError;
-    }
+    if (input == null) return dic.profile.contactNameError;
 
     final name = input.trim();
-    if (name.isEmpty) {
-      return dic.profile.contactNameError;
-    }
+    if (name.isEmpty) return dic.profile.contactNameError;
+
     final exist = existingAccounts.indexWhere((i) => i.name == name);
-    if (exist > -1) {
-      return dic.profile.contactNameAlreadyExists;
-    }
+    if (exist > -1) return dic.profile.contactNameAlreadyExists;
+
     return null;
   }
 }
