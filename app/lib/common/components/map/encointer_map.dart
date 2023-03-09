@@ -8,8 +8,8 @@ class EncointerMap extends StatelessWidget {
   EncointerMap({
     super.key,
     required this.locations,
-    this.initialZoom,
-    this.maxZoom,
+    this.initialZoom = 13,
+    this.maxZoom = 18,
     this.center,
     this.popupBuilder,
     this.mapController,
@@ -17,8 +17,8 @@ class EncointerMap extends StatelessWidget {
   });
 
   final List<LatLng> locations;
-  final double? initialZoom;
-  final double? maxZoom;
+  final double initialZoom;
+  final double maxZoom;
   final LatLng? center;
   final Widget Function(BuildContext, Marker)? popupBuilder;
   final MapController? mapController;
@@ -32,8 +32,8 @@ class EncointerMap extends StatelessWidget {
       mapController: mapController,
       options: MapOptions(
         center: center ?? LatLng(47.389712, 8.517076),
-        zoom: initialZoom ?? 13,
-        maxZoom: maxZoom ?? 18,
+        zoom: initialZoom,
+        maxZoom: maxZoom,
         onPointerDown: onPointerDown,
         onTap: (_, __) => _popupLayerController.hideAllPopups(disableAnimation: true),
       ),

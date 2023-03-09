@@ -25,7 +25,6 @@ class MeetupLocationPage extends StatelessWidget {
         locations: [meetupLocation.toLatLng()],
         center: meetupLocation.toLatLng(),
         initialZoom: 10,
-        maxZoom: 18,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
           title: dic.encointer.showRouteMeetupLocation,
           description: '',
