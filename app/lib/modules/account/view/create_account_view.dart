@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/button/custom_button.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -79,25 +79,33 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
       ],
       columnChildren: [
         const SizedBox(height: 10),
-        CustomButtonWithIcon(
+        PrimaryButton(
           key: const Key('create-account-next'),
-          icon: const Icon(Iconsax.login_1),
-          textStyle: textTheme.displaySmall,
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              final store = context.read<NewAccountStore>()..setName(_nameCtrl.text.trim());
+              context.read<NewAccountStore>().setName(_nameCtrl.text.trim());
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
                   builder: (BuildContext _) => Provider.value(
-                    value: store,
+                    value: context.read<NewAccountStore>(),
                     child: const CreatePinView(),
                   ),
                 ),
               );
             }
           },
-          child: Text(dic.account.next),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Iconsax.login_1),
+              const SizedBox(width: 12),
+              Text(
+                dic.account.next,
+                style: textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 20),
       ],

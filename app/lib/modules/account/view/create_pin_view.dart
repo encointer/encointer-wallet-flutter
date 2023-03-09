@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/button/custom_button.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
 import 'package:encointer_wallet/common/components/loading/progressing_inducator.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/modules/account/account.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
@@ -52,7 +52,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final newAccountStore = context.watch<NewAccountStore>();
+    final newAccountStoreWatch = context.watch<NewAccountStore>();
 
     return FormScrollable(
       formKey: _formKey,
@@ -83,7 +83,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
           controller: _passCtrl,
           borderRadius: 15,
           validator: (v) => Fmt.checkPassword(v!.trim()) ? null : dic.account.createPasswordError,
-          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         ),
         const SizedBox(height: 20),
         EncointerTextFormField(
@@ -97,37 +97,38 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
           borderRadius: 15,
           obscureText: true,
           validator: (v) => _passCtrl.text != v ? dic.account.createPassword2Error : null,
-          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         ),
         const SizedBox(height: 16),
         const PinInfo(),
       ],
       columnChildren: [
         const SizedBox(height: 10),
-        Observer(builder: (_) {
-          return CustomButton(
-            key: const Key('create-account-confirm'),
-            textStyle: textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
-            onPressed: newAccountStore.loading
-                ? null
-                : () async {
-                    if (_formKey.currentState!.validate()) {
-                      final store = context.read<NewAccountStore>();
-                      final appStore = context.read<AppStore>();
-                      store.setPassword(_passCtrl.text.trim());
-                      final res = fromImportPage
-                          ? await store.importAccount(appStore, webApi)
-                          : await store.generateAccount(appStore, webApi);
-                      await navigate(
-                        context: context,
-                        type: res.operationResult,
-                        onOk: () => _onOk(context),
-                      );
-                    }
-                  },
-            child: newAccountStore.loading ? const ProgressingIndicator() : Text(dic.account.create),
-          );
-        }),
+        PrimaryButton(
+          key: const Key('create-account-confirm'),
+          onPressed: () async {
+            final newAccountStore = context.read<NewAccountStore>();
+            final appStore = context.read<AppStore>();
+            if (_formKey.currentState!.validate() && !newAccountStore.loading) {
+              newAccountStore.setPassword(_passCtrl.text.trim());
+              final res = fromImportPage
+                  ? await newAccountStore.importAccount(appStore, webApi)
+                  : await newAccountStore.generateAccount(appStore, webApi);
+              await navigate(
+                context: context,
+                type: res.operationResult,
+                onOk: () => _onOk(context),
+              );
+            }
+          },
+          child: Observer(builder: (_) {
+            if (newAccountStoreWatch.loading) {
+              return const ProgressingIndicator();
+            } else {
+              return Text(dic.home.next);
+            }
+          }),
+        ),
       ],
     );
   }

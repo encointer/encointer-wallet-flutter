@@ -3,10 +3,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/button/custom_button.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/loading/progressing_inducator.dart';
+import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
+import 'package:encointer_wallet/common/components/form/form_scrollable.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -49,9 +50,8 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final newAccountStore = context.watch<NewAccountStore>();
+    final newAccountStoreWatch = context.watch<NewAccountStore>();
     return FormScrollable(formKey: _formKey, listViewChildren: [
       const SizedBox(height: 80),
       Center(
@@ -81,10 +81,16 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
       const SizedBox(height: 20),
     ], columnChildren: [
       const SizedBox(height: 10),
-      CustomButtonWithIcon(
+      SecondaryButtonWide(
         key: const Key('import-account'),
-        icon: const Icon(Iconsax.import_2),
-        textStyle: textTheme.displaySmall,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Iconsax.import_2),
+            const SizedBox(width: 10),
+            Text(dic.home.accountImport, style: textTheme.displaySmall),
+          ],
+        ),
         onPressed: () {
           Navigator.push(
             context,
@@ -96,32 +102,38 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
             ),
           );
         },
-        backgroundColor: colorScheme.background,
-        foregroundColor: colorScheme.primary,
-        child: Text(dic.home.accountImport),
       ),
       const SizedBox(height: 10),
-      Observer(builder: (_) {
-        return CustomButtonWithIcon(
-          key: const Key('create-account-confirm'),
-          icon: const Icon(Iconsax.add_square),
-          textStyle: textTheme.displaySmall,
-          onPressed: !newAccountStore.loading
-              ? () async {
-                  final store = context.read<NewAccountStore>();
-                  final appStore = context.read<AppStore>();
-                  store.setName(_nameCtrl.text.trim());
-                  final res = await store.generateAccount(appStore, webApi);
-                  await navigate(
-                    context: context,
-                    type: res.operationResult,
-                    onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                  );
-                }
-              : null,
-          child: !newAccountStore.loading ? Text(dic.profile.accountCreate) : const ProgressingIndicator(),
-        );
-      }),
+      PrimaryButton(
+        key: const Key('create-account-confirm'),
+        onPressed: () async {
+          final newAccountStore = context.read<NewAccountStore>();
+          final appStore = context.read<AppStore>();
+          if (_formKey.currentState!.validate() && !newAccountStore.loading) {
+            newAccountStore.setName(_nameCtrl.text.trim());
+            final res = await newAccountStore.generateAccount(appStore, webApi);
+            await navigate(
+              context: context,
+              type: res.operationResult,
+              onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
+            );
+          }
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Iconsax.add_square),
+            const SizedBox(width: 12),
+            Observer(builder: (_) {
+              if (newAccountStoreWatch.loading) {
+                return const ProgressingIndicator();
+              } else {
+                return Text(dic.home.next);
+              }
+            }),
+          ],
+        ),
+      ),
       const SizedBox(height: 20),
     ]);
   }
