@@ -50,6 +50,7 @@ abstract class TranslationsHome {
   String get transferHistory;
   String get noTransactions;
   String get unknownError;
+  String get openMapInBrowser;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -153,6 +154,8 @@ class TranslationsEnHome implements TranslationsHome {
   String get transferHistory => 'Transactions';
   @override
   String get unknownError => 'Unknown Error';
+  @override
+  String get openMapInBrowser => 'Open Map in Browser';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -256,6 +259,9 @@ class TranslationsDeHome implements TranslationsHome {
   String get transferHistory => 'Transaktionen';
   @override
   String get unknownError => 'Unbekannter Fehler';
+
+  @override
+  String get openMapInBrowser => 'Karte im Browser öffnen';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -360,6 +366,9 @@ class TranslationsFrHome implements TranslationsHome {
   String get transferHistory => 'Transactions';
   @override
   String get unknownError => 'Erreur inconnue';
+
+  @override
+  String get openMapInBrowser => 'Ouvrir la carte dans le navigateur';
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -464,4 +473,6 @@ class TranslationsRuHome implements TranslationsHome {
   String get transferHistory => 'Транзакции';
   @override
   String get unknownError => 'Неизвестная ошибка';
+  @override
+  String get openMapInBrowser => 'Открыть карту в браузере';
 }

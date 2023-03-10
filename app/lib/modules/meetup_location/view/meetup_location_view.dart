@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
@@ -35,21 +36,24 @@ class MeetupLocationPage extends StatelessWidget {
         onPointerDown: (e, lt) {
           if (_mapController.zoom > 17) {
             _mapController.move(_mapController.center, 17);
-            showDialog<void>(
+
+            showCupertinoDialog<void>(
               context: context,
-              builder: (BuildContext context) => AlertDialog(
-                content: Text(dic.encointer.showRouteMeetupLocation),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(dic.home.cancel),
-                  ),
-                  TextButton(
-                    onPressed: () => AppLaunch.launchMap(meetupLocation),
-                    child: Text(dic.home.ok),
-                  ),
-                ],
-              ),
+              builder: (BuildContext context) {
+                return CupertinoAlertDialog(
+                  content: Text(dic.home.openMapInBrowser),
+                  actions: <Widget>[
+                    CupertinoButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(dic.home.cancel),
+                    ),
+                    CupertinoButton(
+                      onPressed: () => AppLaunch.launchMap(meetupLocation),
+                      child: Text(dic.home.ok),
+                    ),
+                  ],
+                );
+              },
             );
           }
         },
