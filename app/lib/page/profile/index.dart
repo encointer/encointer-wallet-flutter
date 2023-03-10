@@ -9,8 +9,6 @@ import 'package:encointer_wallet/common/components/launch/send_to_trello_list_ti
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/page/account/create/add_account_page.dart';
-import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
@@ -121,7 +119,7 @@ class _ProfileState extends State<Profile> {
                     IconButton(
                       icon: const Icon(Iconsax.add_square),
                       color: zurichLion.shade500,
-                      onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route),
+                      onPressed: () => Navigator.of(context).pushNamed(AddAccountView.route),
                     ),
                   ],
                 ),
@@ -268,9 +266,9 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
                 await store.account.removeAccount(acc);
               }
 
-              await Navigator.pushAndRemoveUntil(
+              await Navigator.pushNamedAndRemoveUntil(
                 context,
-                CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()),
+                CreateAccountEntryView.route,
                 (route) => false,
               );
             },
