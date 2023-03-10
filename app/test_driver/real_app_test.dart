@@ -185,16 +185,31 @@ void main() async {
     await driver.tap(find.byValueKey('contact-address'));
     await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
     await driver.tap(find.byValueKey('contact-name'));
-    await driver.enterText('Sezar');
+    await driver.enterText('Obelix');
 
     await driver.tap(find.byValueKey('contact-save'));
     await addDelay(1000);
   });
 
-  test('send endorse to account', () async {
-    await driver.waitFor(find.byValueKey('Sezar'));
-    await driver.tap(find.byValueKey('Sezar'));
+  test('change contact name', () async {
+    await driver.waitFor(find.byValueKey('Obelix'));
+    await driver.tap(find.byValueKey('Obelix'));
 
+    await driver.waitFor(find.byValueKey('contact-name-edit'));
+    await driver.tap(find.byValueKey('contact-name-edit'));
+
+    await driver.waitFor(find.byValueKey('contact-name-field'));
+    await driver.tap(find.byValueKey('contact-name-field'));
+
+    await driver.enterText('Asterix');
+    await driver.tap(find.byValueKey('contact-name-edit-check'));
+
+    await driver.waitFor(find.text('Asterix'));
+
+    await addDelay(1000);
+  });
+
+  test('send endorse to account', () async {
     await driver.waitFor(find.byValueKey('tap-endorse-button'));
     await driver.tap(find.byValueKey('tap-endorse-button'));
     await addDelay(1000);
