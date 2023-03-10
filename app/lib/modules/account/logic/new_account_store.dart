@@ -93,8 +93,9 @@ abstract class _NewAccountStoreBase with Store {
     try {
       _loading = true;
       appStore.settings.setPin(pin);
+      assert(accountKey != null && accountKey!.isNotEmpty, 'accountKey can not be null or empty');
       final acc = await webApi.account.importAccount(
-        key: accountKey ?? '',
+        key: accountKey!,
         password: pin,
         keyType: keyType.name,
       );
