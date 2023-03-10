@@ -26,7 +26,6 @@ command:
 # For more complex scenarios, we can consider writing cross-platform dart scripts as mentioned in this issue:
 # https://github.com/invertase/melos/issues/122
 
-
 scripts:
   format:
     run: >-
