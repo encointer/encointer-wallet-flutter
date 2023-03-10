@@ -125,7 +125,7 @@ abstract class _NewAccountStoreBase with Store {
     await appStore.loadAccountCache();
     webApi.fetchAccountData();
     _loading = false;
-    return const NewAccountResult(NewAccountResultType.ok);
+    return NewAccountResult(NewAccountResultType.ok, newAccountData: acc);
   }
 }
 
