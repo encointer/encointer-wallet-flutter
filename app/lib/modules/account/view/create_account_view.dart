@@ -72,7 +72,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
           labelText: dic.profile.accountName,
           controller: _nameCtrl,
           validator: (v) {
-            return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.optionalAccounts);
+            return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.accountListAll);
           },
         ),
         const SizedBox(height: 20),

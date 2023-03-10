@@ -71,8 +71,9 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
           hintText: dic.account.createHint,
           labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
           controller: _nameCtrl,
-          validator: (v) =>
-              InputValidation.validateAccountName(context, v, context.read<AppStore>().account.accountList),
+          validator: (v) {
+            return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.accountList);
+          },
         ),
         TextFormField(
           key: const Key('account-source'),

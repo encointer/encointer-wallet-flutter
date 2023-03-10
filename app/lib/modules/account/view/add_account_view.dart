@@ -75,7 +75,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
         labelText: dic.profile.accountName,
         controller: _nameCtrl,
         validator: (v) {
-          return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.optionalAccounts);
+          return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.accountList);
         },
       ),
       const SizedBox(height: 20),
