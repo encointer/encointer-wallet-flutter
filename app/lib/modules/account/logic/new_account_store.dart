@@ -25,8 +25,8 @@ abstract class _NewAccountStoreBase with Store {
   @observable
   KeyType keyType = KeyType.mnemonic;
 
-  @observable
-  bool loading = false;
+  @readonly
+  bool _loading = false;
 
   @action
   void setName(String? value) => name = value;
@@ -72,17 +72,17 @@ abstract class _NewAccountStoreBase with Store {
   @action
   Future<NewAccountResult> _generateAccount(AppStore appStore, Api webApi, String pin) async {
     try {
-      loading = true;
+      _loading = true;
       appStore.settings.setPin(pin);
       final key = await webApi.account.generateAccount();
       final acc = await webApi.account.importAccount(key: key, password: pin);
       if (acc['error'] != null) {
-        loading = false;
+        _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       }
       return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
-      loading = false;
+      _loading = false;
       Log.e('generate account', '$e', s);
       return const NewAccountResult(NewAccountResultType.error);
     }
@@ -91,7 +91,7 @@ abstract class _NewAccountStoreBase with Store {
   @action
   Future<NewAccountResult> _importAccount(AppStore appStore, Api webApi, String pin) async {
     try {
-      loading = true;
+      _loading = true;
       appStore.settings.setPin(pin);
       final acc = await webApi.account.importAccount(
         key: accountKey ?? '',
@@ -99,18 +99,18 @@ abstract class _NewAccountStoreBase with Store {
         keyType: keyType.name,
       );
       if (acc['error'] != null) {
-        loading = false;
+        _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       } else {
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
-          loading = false;
+          _loading = false;
           return NewAccountResult(NewAccountResultType.duplicateAccount, newAccountData: acc);
         }
         return saveAccount(webApi, appStore, acc, pin);
       }
     } catch (e, s) {
-      loading = false;
+      _loading = false;
       Log.e('import account', '$e', s);
       return const NewAccountResult(NewAccountResultType.error);
     }
@@ -124,7 +124,7 @@ abstract class _NewAccountStoreBase with Store {
     await appStore.setCurrentAccount(pubKey);
     await appStore.loadAccountCache();
     webApi.fetchAccountData();
-    loading = false;
+    _loading = false;
     return const NewAccountResult(NewAccountResultType.ok);
   }
 }

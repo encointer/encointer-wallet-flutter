@@ -69,18 +69,20 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     });
   }
 
-  late final _$loadingAtom = Atom(name: '_NewAccountStoreBase.loading', context: context);
+  late final _$_loadingAtom = Atom(name: '_NewAccountStoreBase._loading', context: context);
 
-  @override
   bool get loading {
-    _$loadingAtom.reportRead();
-    return super.loading;
+    _$_loadingAtom.reportRead();
+    return super._loading;
   }
 
   @override
-  set loading(bool value) {
-    _$loadingAtom.reportWrite(value, super.loading, () {
-      super.loading = value;
+  bool get _loading => loading;
+
+  @override
+  set _loading(bool value) {
+    _$_loadingAtom.reportWrite(value, super._loading, () {
+      super._loading = value;
     });
   }
 
@@ -178,8 +180,7 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
 name: ${name},
 password: ${password},
 accountKey: ${accountKey},
-keyType: ${keyType},
-loading: ${loading}
+keyType: ${keyType}
     ''';
   }
 }
