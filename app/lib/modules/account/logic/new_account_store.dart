@@ -80,6 +80,8 @@ abstract class _NewAccountStoreBase with Store {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       }
+      final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
+      acc['address'] = addresses[0];
       return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
       _loading = false;
@@ -103,6 +105,8 @@ abstract class _NewAccountStoreBase with Store {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       } else {
+        final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
+        acc['address'] = addresses[0];
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
           _loading = false;
@@ -119,10 +123,8 @@ abstract class _NewAccountStoreBase with Store {
 
   @action
   Future<NewAccountResult> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) async {
-    final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-    await appStore.addAccount(acc, pin, addresses[0], name);
-    final pubKey = acc['pubKey'] as String?;
-    await appStore.setCurrentAccount(pubKey);
+    await appStore.addAccount(acc, pin, acc['address'] as String, name);
+    await appStore.setCurrentAccount(acc['pubKey'] as String?);
     await appStore.loadAccountCache();
     webApi.fetchAccountData();
     _loading = false;

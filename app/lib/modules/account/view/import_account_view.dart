@@ -132,14 +132,10 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
   }
 
   Future<void> _onDuplicateAccount(BuildContext context, Map<String, dynamic> acc) async {
-    final appStore = context.read<AppStore>();
-    final newAccountStore = context.read<NewAccountStore>();
-    final pubKeyMap = appStore.account.pubKeyAddressMap[appStore.settings.endpoint.ss58]!;
-    final address = pubKeyMap[acc['pubKey']];
     final dic = I18n.of(context)!.translationsForLocale();
     await AppAlert.showDialog<void>(
       context,
-      title: Text(Fmt.address(address)!),
+      title: Text(Fmt.address(acc['address'] as String)!),
       content: Text(dic.account.importDuplicate),
       actions: [
         CupertinoButton(
@@ -149,7 +145,8 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         CupertinoButton(
           child: Text(dic.home.ok),
           onPressed: () async {
-            await newAccountStore.saveAccount(webApi, appStore, acc, appStore.settings.cachedPin);
+            final appStore = context.read<AppStore>();
+            await context.read<NewAccountStore>().saveAccount(webApi, appStore, acc, appStore.settings.cachedPin);
             Navigator.of(context).popUntil((route) => route.isFirst);
           },
         ),
