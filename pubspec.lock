@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  cli_launcher:
+    dependency: transitive
+    description:
+      name: cli_launcher
+      sha256: "5e7e0282b79e8642edd6510ee468ae2976d847a0a29b3916e85f5fa1bfe24005"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   cli_util:
     dependency: transitive
     description:
@@ -53,10 +61,10 @@ packages:
     dependency: transitive
     description:
       name: conventional_commit
-      sha256: "23b6865cc9f71913f8d3dd08e6c5b8d450a7357a9a59194340bf8dda13c9273d"
+      sha256: "8eee25c315cf1946215d02d598402ca75cfee8a8ab482f3fac34cb0717323afa"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0+1"
+    version: "0.6.0"
   file:
     dependency: transitive
     description:
@@ -125,10 +133,10 @@ packages:
     dependency: "direct dev"
     description:
       name: melos
-      sha256: "913b9fbafafb70b786d2564d09468feee71d4ce9ccbc17c584cf70a7605c755d"
+      sha256: cd8e7db0250ee822c5354a8214afc751b6c1c41aadfbbef927456d509d953244
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.0"
+    version: "3.0.0"
   meta:
     dependency: transitive
     description:
