@@ -7,7 +7,7 @@ import 'package:encointer_wallet/store/settings.dart';
 const String leuZurich = 'Leu Zurich';
 const String bernBaer = 'Bern Bär';
 const String buendnerBock = 'Bündner Bock';
-const String zul = 'ZUL';
+
 CommunityIdentifier cid = CommunityIdentifier.fromFmtString('gbsuv7YXq9G');
 CommunityIdentifier cid2 = CommunityIdentifier.fromFmtString('hbsuv7YXq9G');
 CommunityIdentifier cid3 = CommunityIdentifier.fromFmtString('dbsuv7YXq9G');
