@@ -14,10 +14,19 @@ class MeetupLocationPage extends StatelessWidget {
 
   static const route = '/meetup-location';
   final _mapController = MapController();
+  bool ensureZoomWithinLimits(MapController controller) {
+    if (_mapController.zoom > 17) {
+      _mapController.move(_mapController.center, 17);
+      return true;
+    }
+
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.encointer.meetupLocation),
@@ -25,7 +34,7 @@ class MeetupLocationPage extends StatelessWidget {
       body: EncointerMap(
         locations: [meetupLocation.toLatLng()],
         center: meetupLocation.toLatLng(),
-        initialZoom: 10,
+        initialZoom: 16,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
           title: dic.encointer.showRouteMeetupLocation,
           description: '',
@@ -34,9 +43,7 @@ class MeetupLocationPage extends StatelessWidget {
         ),
         mapController: _mapController,
         onPointerDown: (e, lt) {
-          if (_mapController.zoom > 17) {
-            _mapController.move(_mapController.center, 17);
-
+          if (ensureZoomWithinLimits(_mapController)) {
             showCupertinoDialog<void>(
               context: context,
               builder: (BuildContext context) {
