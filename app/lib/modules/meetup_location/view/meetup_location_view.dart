@@ -18,14 +18,6 @@ class MeetupLocationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    bool ensureZoomWithinLimits(MapController controller) {
-      if (_mapController.zoom > 17) {
-        _mapController.move(_mapController.center, 17);
-        return true;
-      }
-      return false;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.encointer.meetupLocation),
@@ -33,7 +25,7 @@ class MeetupLocationPage extends StatelessWidget {
       body: EncointerMap(
         locations: [meetupLocation.toLatLng()],
         center: meetupLocation.toLatLng(),
-        initialZoom: 16,
+        initialZoom: 10,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
           title: dic.encointer.showRouteMeetupLocation,
           description: '',
@@ -65,5 +57,13 @@ class MeetupLocationPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  bool ensureZoomWithinLimits(MapController controller) {
+    if (_mapController.zoom > 17) {
+      _mapController.move(_mapController.center, 17);
+      return true;
+    }
+    return false;
   }
 }
