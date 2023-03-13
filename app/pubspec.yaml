@@ -113,7 +113,7 @@ flutter_gen:
 
   assets:
     exclude:
-      - assets/js_service_encointer/dist/*.jpg
+      - js_service_encointer/dist/*.jpg
 
 # The following section is specific to Flutter.
 flutter:
@@ -122,7 +122,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     # js service
-    - assets/js_service_encointer/dist/main.js
+    - js_service_encointer/dist/main.js
 
     - assets/images/assets/
     - assets/images/public/

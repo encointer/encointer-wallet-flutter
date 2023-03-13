@@ -11,6 +11,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 
+class $JsServiceEncointerGen {
+  const $JsServiceEncointerGen();
+
+  $JsServiceEncointerDistGen get dist => const $JsServiceEncointerDistGen();
+}
+
 class $AssetsAvatarsGen {
   const $AssetsAvatarsGen();
 
@@ -126,11 +132,14 @@ class $AssetsImagesGen {
   $AssetsImagesPublicGen get public => const $AssetsImagesPublicGen();
 }
 
-class $AssetsJsServiceEncointerGen {
-  const $AssetsJsServiceEncointerGen();
+class $JsServiceEncointerDistGen {
+  const $JsServiceEncointerDistGen();
 
-  $AssetsJsServiceEncointerDistGen get dist =>
-      const $AssetsJsServiceEncointerDistGen();
+  /// File path: js_service_encointer/dist/main.js
+  String get main => 'js_service_encointer/dist/main.js';
+
+  /// List of all assets
+  List<String> get values => [main];
 }
 
 class $AssetsImagesAssetsGen {
@@ -302,26 +311,16 @@ class $AssetsImagesPublicGen {
       ];
 }
 
-class $AssetsJsServiceEncointerDistGen {
-  const $AssetsJsServiceEncointerDistGen();
-
-  /// File path: assets/js_service_encointer/dist/main.js
-  String get main => 'assets/js_service_encointer/dist/main.js';
-
-  /// List of all assets
-  List<String> get values => [main];
-}
-
 class Assets {
   Assets._();
 
   static const $AssetsAvatarsGen avatars = $AssetsAvatarsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
-  static const $AssetsJsServiceEncointerGen jsServiceEncointer =
-      $AssetsJsServiceEncointerGen();
   static const SvgGenImage nctrLogo = SvgGenImage('assets/nctr_logo.svg');
   static const SvgGenImage nctrLogoFacesOnlyThick =
       SvgGenImage('assets/nctr_logo_faces_only_thick.svg');
+  static const $JsServiceEncointerGen jsServiceEncointer =
+      $JsServiceEncointerGen();
 
   /// List of all assets
   List<SvgGenImage> get values => [nctrLogo, nctrLogoFacesOnlyThick];
