@@ -111,10 +111,9 @@ flutter_gen:
   integrations:
     flutter_svg: true
 
-  assets: 
+  assets:
     exclude:
       - lib/js_service_encointer/dist/*.jpg
-
 
 # The following section is specific to Flutter.
 flutter:
@@ -129,9 +128,8 @@ flutter:
     - assets/images/public/
     - assets/avatars/
     - assets/nctr_logo.svg
-    - assets/nctr_mosaic_background.svg
     - assets/nctr_logo_faces_only_thick.svg
- 
+
   # fonts:
   #   - family: Schyler
   #     fonts:

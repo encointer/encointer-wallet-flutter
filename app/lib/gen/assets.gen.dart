@@ -148,12 +148,26 @@ class $AssetsImagesAssetsGen {
   /// File path: assets/images/assets/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/assets/logo.png');
 
+  /// File path: assets/images/assets/mosaic_background.png
+  AssetGenImage get mosaicBackground => const AssetGenImage('assets/images/assets/mosaic_background.png');
+
   /// File path: assets/images/assets/success.png
   AssetGenImage get success => const AssetGenImage('assets/images/assets/success.png');
 
   /// List of all assets
-  List<dynamic> get values =>
-      [ert, assetsDown, assetsFail, assetsNav0, assetsReceive, assetsSend, assetsUp, iconLeu, logo, success];
+  List<dynamic> get values => [
+        ert,
+        assetsDown,
+        assetsFail,
+        assetsNav0,
+        assetsReceive,
+        assetsSend,
+        assetsUp,
+        iconLeu,
+        logo,
+        mosaicBackground,
+        success
+      ];
 }
 
 class $AssetsImagesPublicGen {
@@ -261,11 +275,10 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const SvgGenImage nctrLogo = SvgGenImage('assets/nctr_logo.svg');
   static const SvgGenImage nctrLogoFacesOnlyThick = SvgGenImage('assets/nctr_logo_faces_only_thick.svg');
-  static const SvgGenImage nctrMosaicBackground = SvgGenImage('assets/nctr_mosaic_background.svg');
   static const $LibGen lib = $LibGen();
 
   /// List of all assets
-  List<SvgGenImage> get values => [nctrLogo, nctrLogoFacesOnlyThick, nctrMosaicBackground];
+  List<SvgGenImage> get values => [nctrLogo, nctrLogoFacesOnlyThick];
 }
 
 class AssetGenImage {

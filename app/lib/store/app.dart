@@ -205,10 +205,8 @@ abstract class _AppStore with Store {
     }
   }
 
-  Future<List<void>> addAccount(Map<String, dynamic> acc, String password, String? address) {
-    return Future.wait([
-      account.addAccount(acc, password),
-    ]);
+  Future<void> addAccount(Map<String, dynamic> acc, String password, String? address, String? name) {
+    return account.addAccount(acc, password, name: name);
   }
 
   Future<void> setCurrentAccount(String? pubKey) async {
