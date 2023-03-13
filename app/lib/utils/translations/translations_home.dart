@@ -259,7 +259,6 @@ class TranslationsDeHome implements TranslationsHome {
   String get transferHistory => 'Transaktionen';
   @override
   String get unknownError => 'Unbekannter Fehler';
-
   @override
   String get openMapInBrowser => 'Karte im Browser öffnen';
 }
@@ -366,7 +365,6 @@ class TranslationsFrHome implements TranslationsHome {
   String get transferHistory => 'Transactions';
   @override
   String get unknownError => 'Erreur inconnue';
-
   @override
   String get openMapInBrowser => 'Ouvrir la carte dans le navigateur';
 }

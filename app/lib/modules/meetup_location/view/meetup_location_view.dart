@@ -14,18 +14,17 @@ class MeetupLocationPage extends StatelessWidget {
 
   static const route = '/meetup-location';
   final _mapController = MapController();
-  bool ensureZoomWithinLimits(MapController controller) {
-    if (_mapController.zoom > 17) {
-      _mapController.move(_mapController.center, 17);
-      return true;
-    }
-
-    return false;
-  }
 
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
+    bool ensureZoomWithinLimits(MapController controller) {
+      if (_mapController.zoom > 17) {
+        _mapController.move(_mapController.center, 17);
+        return true;
+      }
+      return false;
+    }
 
     return Scaffold(
       appBar: AppBar(
