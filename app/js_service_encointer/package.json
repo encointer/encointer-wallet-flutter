@@ -1,0 +1,98 @@
+{
+  "name": "encointer-js-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf dist/*",
+    "lint": "eslint src/**.js",
+    "build": "cross-env NODE_ENV=production ./scripts/buildWebpack.cjs",
+    "encointer:link": "./scripts/encointer-link.cjs",
+    "encointer:unlink": "./scripts/encointer-unlink.cjs",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:gesell": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config-gesell-e2e.js",
+    "test:cantillon": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config-cantillon-e2e.js"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./service/": "./src/service/",
+    "./types": "./src/config/types.js"
+  },
+  "resolutions": {
+    "tslib": "^2.3.1"
+  },
+  "dependencies": {
+    "@encointer/node-api": "^0.8.7",
+    "@encointer/types": "^0.8.7",
+    "@encointer/util": "^0.8.7",
+    "@encointer/worker-api": "^0.8.7",
+    "@polkadot/api": "^7.2.1",
+    "@polkadot/keyring": "^8.2.2",
+    "@polkadot/networks": "^8.2.2",
+    "@polkadot/rpc-provider": "^7.2.1",
+    "@polkadot/types": "^7.2.1",
+    "@polkadot/util": "^8.2.2",
+    "@polkadot/util-crypto": "^8.2.2",
+    "Buffer": "^0.0.0",
+    "bn.js": "^4.12.0",
+    "buffer": "^6.0.3",
+    "core-js": "^3.20.2",
+    "node-rsa": "^1.1.1",
+    "oo7-substrate": "^0.8.0",
+    "process": "^0.11.10",
+    "regenerator-runtime": "^0.13.9",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/register": "^7.16.7",
+    "@babel/runtime": "^7.16.7",
+    "@jest/globals": "^27.4.6",
+    "@webpack-cli/info": "^1.4.0",
+    "@webpack-cli/init": "^1.1.3",
+    "babel-loader": "^8.2.3",
+    "browserslist": "^4.19.1",
+    "constants-browserify": "^1.0.0",
+    "cross-env": "^7.0.3",
+    "crypto-browserify": "^3.12.0",
+    "eslint": "^8.6.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jest": "^25.3.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-only-warn": "^1.0.3",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "inquirer": "^8.2.0",
+    "jest": "^27.4.7",
+    "jest-config": "^27.4.7",
+    "prettier": "^2.5.1",
+    "stream-browserify": "^3.0.0",
+    "thread-loader": "^3.0.4",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "eslintConfig": {
+    "globals": {
+      "api": true,
+      "send": true
+    },
+    "extends": [
+      "standard",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "only-warn"
+    ],
+    "rules": {
+      "semi": [
+        1,
+        "always"
+      ],
+      "no-extra-semi": 1
+    }
+  },
+  "packageManager": "yarn@3.0.2"
+}
