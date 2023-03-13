@@ -261,8 +261,8 @@ class $AssetsImagesPublicGen {
 class $LibJsServiceEncointerDistGen {
   const $LibJsServiceEncointerDistGen();
 
-  /// File path: js_service_encointer/dist/main.js
-  String get main => 'js_service_encointer/dist/main.js';
+  /// File path: assets/js_service_encointer/dist/main.js
+  String get main => 'assets/js_service_encointer/dist/main.js';
 
   /// List of all assets
   List<String> get values => [main];

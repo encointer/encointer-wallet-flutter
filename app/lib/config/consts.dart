@@ -163,3 +163,5 @@ String replaceLocalePlaceholder(String link, String locale) {
       return link.replaceAll(localePlaceHolder, 'en');
   }
 }
+
+const String jsServiceEncointerDistMainJs = 'assets/js_service_encointer/dist/main.js';

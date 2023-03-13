@@ -80,7 +80,7 @@ scripts:
     description: "Generate code with build_runner"
 
   yarn-build:
-    run: cd app/js_service_encointer && yarn install && yarn run build
+    run: cd app/assets/js_service_encointer && yarn install && yarn run build
     description: "Install yarn dependencies and build"
 
   # Unit test Encointer Wallet with tag
