@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
@@ -75,7 +74,7 @@ class _SplashViewState extends State<SplashView> {
 /// Currently, `store.init()` must be called before it is passed into the api
 /// due to some cyclic dependencies between webApi <> AppStore.
 Future<void> initWebApi(BuildContext context, AppStore store) async {
-  final js = await DefaultAssetBundle.of(context).loadString(jsServiceEncointerDistMainJs);
+  final js = await DefaultAssetBundle.of(context).loadString(Assets.jsServiceEncointer.dist.main);
 
   webApi = !store.config.mockSubstrateApi
       ? Api.create(store, JSApi(), SubstrateDartApi(), js)
