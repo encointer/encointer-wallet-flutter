@@ -3,13 +3,13 @@
 ///  FlutterGen
 /// *****************************************************
 
+import 'package:flutter/services.dart';
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/services.dart';
 
 class $LibGen {
   const $LibGen();
@@ -261,8 +261,8 @@ class $AssetsImagesPublicGen {
 class $LibJsServiceEncointerDistGen {
   const $LibJsServiceEncointerDistGen();
 
-  /// File path: lib/js_service_encointer/dist/main.js
-  String get main => 'lib/js_service_encointer/dist/main.js';
+  /// File path: js_service_encointer/dist/main.js
+  String get main => 'js_service_encointer/dist/main.js';
 
   /// List of all assets
   List<String> get values => [main];

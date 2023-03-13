@@ -1,19 +1,18 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
-import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
-import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -75,7 +74,7 @@ class _SplashViewState extends State<SplashView> {
 /// Currently, `store.init()` must be called before it is passed into the api
 /// due to some cyclic dependencies between webApi <> AppStore.
 Future<void> initWebApi(BuildContext context, AppStore store) async {
-  final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
+  final js = await DefaultAssetBundle.of(context).loadString('js_service_encointer/dist/main.js');
 
   webApi = !store.config.mockSubstrateApi
       ? Api.create(store, JSApi(), SubstrateDartApi(), js)
