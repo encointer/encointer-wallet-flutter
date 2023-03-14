@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-
+import 'package:latlong2/latlong.dart';
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
@@ -24,8 +24,9 @@ class MeetupLocationPage extends StatelessWidget {
       ),
       body: EncointerMap(
         locations: [meetupLocation.toLatLng()],
-        center: meetupLocation.toLatLng(),
-        initialZoom: 10,
+        center: LatLng(1.290270, 103.851959),
+        // center: meetupLocation.toLatLng(),
+        initialZoom: 15,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
           title: dic.encointer.showRouteMeetupLocation,
           description: '',
@@ -59,6 +60,9 @@ class MeetupLocationPage extends StatelessWidget {
     );
   }
 
+  /// Ensure that the zoom factor stays within the limits such that the map doesn't blank out.
+  ///
+  /// Returns true if the limit was reached.
   bool ensureZoomWithinLimits(MapController controller) {
     if (_mapController.zoom > 17) {
       _mapController.move(_mapController.center, 17);
