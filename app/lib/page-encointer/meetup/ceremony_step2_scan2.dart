@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -7,6 +6,7 @@ import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_vi
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step3_finish.dart';
 import 'package:encointer_wallet/page-encointer/meetup/scan_claim_qr_code.dart';
@@ -26,7 +26,6 @@ class CeremonyStep2Scan extends StatelessWidget {
 
   final AppStore store;
   final Api api;
-
   final String claimantAddress;
   final int confirmedParticipantsCount;
 
@@ -38,99 +37,96 @@ class CeremonyStep2Scan extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Text(dic.encointer.keySigningCycle),
       ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: ListView(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(height: 24),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: CeremonyProgressBar(progress: 2),
+          ),
+          const SizedBox(height: 48),
+          Center(
+            child: Text(
+              dic.encointer.scan,
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(color: zurichLion.shade600),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Text(
+                dic.encointer.scanDescriptionForMeetup,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.25),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          // Enhance brightness for the QR-code
+          const WakeLockAndBrightnessEnhancer(brightness: 1),
+          Expanded(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                QrCodeImage(qrCode: claimantAddress),
+                UserMeetupAvatar(index: getCurrentAccountIndex()),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: ElevatedButton(
+              key: const Key('close-meetup'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 24),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: CeremonyProgressBar(progress: 2),
-                  ),
-                  const SizedBox(height: 48),
-                  Center(
-                    child: Text(
-                      dic.encointer.scan,
-                      style: Theme.of(context).textTheme.displayMedium!.copyWith(color: zurichLion.shade600),
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Text(
-                        dic.encointer.scanDescriptionForMeetup,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.25),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  // Enhance brightness for the QR-code
-                  const WakeLockAndBrightnessEnhancer(brightness: 1),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      QrCodeImage(qrCode: claimantAddress),
-                      UserMeetupAvatar(index: getCurrentAccountIndex()),
-                    ],
+                  const Icon(Iconsax.arrow_right_2),
+                  const SizedBox(width: 12, height: 60),
+                  Text(dic.encointer.closeGathering, style: Theme.of(context).textTheme.displaySmall),
+                ],
+              ),
+              onPressed: () {
+                Navigator.push(context, CupertinoPageRoute<void>(builder: (_) => CeremonyStep3Finish(store, api)));
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: PrimaryButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Iconsax.scan_barcode),
+                  const SizedBox(width: 12),
+                  Text(
+                    dic.encointer.scanOthers,
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
                   ),
                 ],
               ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => ScanClaimQrCode(confirmedParticipantsCount),
+                  ),
+                );
+              },
             ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+          ),
+          if (store.settings.developerMode)
+            SizedBox(
+              height: 40,
               child: ElevatedButton(
-                key: const Key('close-meetup'),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Iconsax.arrow_right_2),
-                    const SizedBox(width: 12, height: 60),
-                    Text(dic.encointer.closeGathering, style: Theme.of(context).textTheme.displaySmall),
-                  ],
-                ),
-                onPressed: () {
-                  Navigator.push(context, CupertinoPageRoute<void>(builder: (_) => CeremonyStep3Finish(store, api)));
-                },
-              ),
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: PrimaryButton(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Iconsax.scan_barcode),
-                    const SizedBox(width: 12),
-                    Text(
-                      dic.encointer.scanOthers,
-                      style: Theme.of(context).textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
-                    ),
-                  ],
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => ScanClaimQrCode(confirmedParticipantsCount),
-                    ),
-                  );
-                },
-              ),
-            ),
-            if (store.settings.developerMode)
-              ElevatedButton(
                 key: const Key('attest-all-participants-dev'),
                 child: const Text('DEV ONLY: attest all participants'),
                 onPressed: () => attestAllParticipants(store, store.account.currentAddress),
               ),
-            const SizedBox(height: 12)
-          ],
-        ),
+            ),
+          const SizedBox(height: 12)
+        ],
       ),
     );
   }
