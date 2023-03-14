@@ -25,7 +25,7 @@ class MeetupLocationPage extends StatelessWidget {
       body: EncointerMap(
         locations: [meetupLocation.toLatLng()],
         center: meetupLocation.toLatLng(),
-        // zoom seviyesi 1 km^2'ye denk gelir.
+        // zoom level is equivalent to 1 km^2.
         initialZoom: 17,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
           title: dic.encointer.showRouteMeetupLocation,
@@ -39,7 +39,7 @@ class MeetupLocationPage extends StatelessWidget {
             AppAlert.showOkCancelDialog<void>(
               context: context,
               onOK: () => AppLaunch.launchMap(meetupLocation),
-              title: Text(dic.home.openMapInBrowser),
+              title: Text(dic.home.openMapApplication),
             );
           }
         },
