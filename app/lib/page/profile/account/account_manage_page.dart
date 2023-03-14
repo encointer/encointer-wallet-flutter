@@ -174,7 +174,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               ? TextFormField(
                   key: const Key('account-name-field'),
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(context, v, _appStore.account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(context, v, _appStore.account.accountList),
                 )
               : Text(_nameCtrl!.text),
           actions: <Widget>[
@@ -319,8 +319,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             }
                           },
                           itemBuilder: (BuildContext context) => [
-                                AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete),
-                                AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
+                                AccountActionItemData(
+                                  accountAction: AccountAction.delete,
+                                  icon: Iconsax.trash,
+                                  title: dic.profile.deleteAccount,
+                                ),
+                                AccountActionItemData(
+                                    accountAction: AccountAction.export,
+                                    icon: Iconsax.export,
+                                    title: dic.profile.exportAccount),
                               ]
                                   .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
                                         key: Key(data.accountAction.name),
@@ -332,7 +339,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                           child: ListTile(
                                             minLeadingWidth: 0,
                                             title: Text(data.title),
-                                            leading: const Icon(Iconsax.trash),
+                                            leading: Icon(data.icon),
                                           ),
                                         ),
                                       ))
@@ -351,10 +358,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
 }
 
 class AccountActionItemData {
-  AccountActionItemData(this.title, this.accountAction);
+  const AccountActionItemData({
+    required this.title,
+    required this.accountAction,
+    required this.icon,
+  });
   // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
   final String title;
   final AccountAction accountAction;
+  final IconData icon;
 }
 
 class CommunityIcon extends StatelessWidget {

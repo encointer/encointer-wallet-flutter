@@ -83,6 +83,8 @@ Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account
   await driver.tap(find.byValueKey('account-import-next'));
   await driver.waitFor(find.byValueKey('panel-controller'));
 
+  await closePanel(driver);
+
   await scrollToCeremonyBox(driver);
 
   await registerAndWait(driver, 'Bootstrapper');

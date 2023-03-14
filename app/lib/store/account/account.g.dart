@@ -70,21 +70,6 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  late final _$newAccountAtom = Atom(name: '_AccountStore.newAccount', context: context);
-
-  @override
-  AccountCreate get newAccount {
-    _$newAccountAtom.reportRead();
-    return super.newAccount;
-  }
-
-  @override
-  set newAccount(AccountCreate value) {
-    _$newAccountAtom.reportWrite(value, super.newAccount, () {
-      super.newAccount = value;
-    });
-  }
-
   late final _$currentAccountPubKeyAtom = Atom(name: '_AccountStore.currentAccountPubKey', context: context);
 
   @override
@@ -169,8 +154,8 @@ mixin _$AccountStore on _AccountStore, Store {
   late final _$addAccountAsyncAction = AsyncAction('_AccountStore.addAccount', context: context);
 
   @override
-  Future<void> addAccount(Map<String, dynamic> acc, String password) {
-    return _$addAccountAsyncAction.run(() => super.addAccount(acc, password));
+  Future<void> addAccount(Map<String, dynamic> acc, String password, {String? name}) {
+    return _$addAccountAsyncAction.run(() => super.addAccount(acc, password, name: name));
   }
 
   late final _$removeAccountAsyncAction = AsyncAction('_AccountStore.removeAccount', context: context);
@@ -245,46 +230,6 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setNewAccountName(String name) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountName');
-    try {
-      return super.setNewAccountName(name);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setNewAccountPin(String pin) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountPin');
-    try {
-      return super.setNewAccountPin(pin);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setNewAccountKey(String? key) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountKey');
-    try {
-      return super.setNewAccountKey(key);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void resetNewAccount() {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.resetNewAccount');
-    try {
-      return super.resetNewAccount();
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void queueTx(Map<String, dynamic> tx) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.queueTx');
     try {
@@ -309,7 +254,6 @@ mixin _$AccountStore on _AccountStore, Store {
     return '''
 loading: ${loading},
 txStatus: ${txStatus},
-newAccount: ${newAccount},
 currentAccountPubKey: ${currentAccountPubKey},
 accountList: ${accountList},
 pubKeyAddressMap: ${pubKeyAddressMap},
@@ -319,62 +263,6 @@ optionalAccounts: ${optionalAccounts},
 accountListAll: ${accountListAll},
 isFirstAccount: ${isFirstAccount},
 currentAddress: ${currentAddress}
-    ''';
-  }
-}
-
-mixin _$AccountCreate on _AccountCreate, Store {
-  late final _$nameAtom = Atom(name: '_AccountCreate.name', context: context);
-
-  @override
-  String get name {
-    _$nameAtom.reportRead();
-    return super.name;
-  }
-
-  @override
-  set name(String value) {
-    _$nameAtom.reportWrite(value, super.name, () {
-      super.name = value;
-    });
-  }
-
-  late final _$passwordAtom = Atom(name: '_AccountCreate.password', context: context);
-
-  @override
-  String get password {
-    _$passwordAtom.reportRead();
-    return super.password;
-  }
-
-  @override
-  set password(String value) {
-    _$passwordAtom.reportWrite(value, super.password, () {
-      super.password = value;
-    });
-  }
-
-  late final _$keyAtom = Atom(name: '_AccountCreate.key', context: context);
-
-  @override
-  String? get key {
-    _$keyAtom.reportRead();
-    return super.key;
-  }
-
-  @override
-  set key(String? value) {
-    _$keyAtom.reportWrite(value, super.key, () {
-      super.key = value;
-    });
-  }
-
-  @override
-  String toString() {
-    return '''
-name: ${name},
-password: ${password},
-key: ${key}
     ''';
   }
 }

@@ -119,19 +119,19 @@ class AccountApi {
     return jsApi.evalJavascript(call);
   }
 
-  Future<void> generateAccount() async {
+  Future<String> generateAccount() async {
     final acc = await jsApi.evalJavascript<Map<String, dynamic>>('account.gen()');
-    store.account.setNewAccountKey(acc['mnemonic'] as String);
+    return acc['mnemonic'] as String;
   }
 
   Future<Map<String, dynamic>> importAccount({
+    required String key,
+    required String password,
     String? keyType = AccountStore.seedTypeMnemonic,
     String? cryptoType = 'sr25519',
     String? derivePath = '',
   }) async {
-    final key = store.account.newAccount.key;
-    final pass = store.account.newAccount.password;
-    var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
+    var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$password")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
     return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }
