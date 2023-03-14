@@ -174,7 +174,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               ? TextFormField(
                   key: const Key('account-name-field'),
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(context, v, _appStore.account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(context, v, _appStore.account.accountList),
                 )
               : Text(_nameCtrl!.text),
           actions: <Widget>[
