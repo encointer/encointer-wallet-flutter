@@ -36,7 +36,7 @@ class MeetupLocationPage extends StatelessWidget {
         mapController: _mapController,
         onPointerDown: (e, lt) {
           if (!ensureZoomWithinLimits(_mapController)) {
-            AppAlert.showOkCancelDialog<void>(
+            AppAlert.confirmDialog<void>(
               context: context,
               onOK: () => AppLaunch.launchMap(meetupLocation),
               title: Text(dic.home.openMapApplication),
