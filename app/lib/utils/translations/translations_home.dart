@@ -260,7 +260,7 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get unknownError => 'Unbekannter Fehler';
   @override
-  String get openMapApplication => 'Öffnen Sie die Kartenanwendung';
+  String get openMapApplication => 'In Karte öffnen';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -366,7 +366,7 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get unknownError => 'Erreur inconnue';
   @override
-  String get openMapApplication => "Ouvrez l'application de carte";
+  String get openMapApplication => "Ouvrer l'application de carte";
 }
 
 class TranslationsRuHome implements TranslationsHome {
