@@ -37,7 +37,7 @@ class AppAlert {
     );
   }
 
-  static Future<T?> confirmDialog<T>({
+  static Future<T?> showConfirmDialog<T>({
     required BuildContext context,
     required VoidCallback onOK,
     Widget? title,
