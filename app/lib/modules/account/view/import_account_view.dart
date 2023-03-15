@@ -50,6 +50,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
     final newAccountStore = context.watch<NewAccountStore>();
+    final appStore = context.watch<AppStore>();
     return ScrollableForm(
       formKey: _formKey,
       listViewChildren: [
@@ -123,7 +124,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
             if (newAccountStore.loading) {
               return const CenteredActivityIndicator();
             } else {
-              return Text(dic.home.next);
+              return Text(appStore.account.accountList.isEmpty ? dic.home.next : dic.home.accountImport);
             }
           }),
         ),
