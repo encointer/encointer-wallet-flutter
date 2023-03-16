@@ -26,7 +26,7 @@ Future<void> submitTx(
   BuildContext context,
   AppStore store,
   Api api,
-  Map txParams, {
+  Map<String, dynamic> txParams, {
   dynamic Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
   if (store.settings.cachedPin.isEmpty) {

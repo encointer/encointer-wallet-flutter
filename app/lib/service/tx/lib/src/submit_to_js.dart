@@ -27,7 +27,7 @@ Future<void> submitToJS(
   AppStore store,
   Api api,
   bool showStatusSnackBar, {
-  required Map txParams,
+  required Map<String, dynamic> txParams,
   String? password,
   BigInt? tip,
 }) async {
@@ -36,7 +36,7 @@ Future<void> submitToJS(
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
 
-  final txInfo = txParams['txInfo'] as Map;
+  final txInfo = txParams['txInfo'] as Map<String, dynamic>;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
@@ -64,7 +64,7 @@ Future<void> submitToJS(
   } else {
     _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
     (txParams['txInfo'] as Map<String, dynamic>)['notificationTitle'] = dic.home.notifySubmittedQueued;
-    store.account.queueTx(txParams as Map<String, dynamic>);
+    store.account.queueTx(txParams);
   }
 }
 

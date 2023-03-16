@@ -94,7 +94,7 @@ class AccountApi {
 
   Future<Map<String, dynamic>> sendTxAndShowNotification(
     Map<String, dynamic> txInfo,
-    List? params, {
+    List<dynamic>? params, {
     String? rawParam,
   }) async {
     final res = await sendTx(txInfo, params, rawParam: rawParam);
