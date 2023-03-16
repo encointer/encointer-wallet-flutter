@@ -51,6 +51,9 @@ abstract class TranslationsHome {
   String get noTransactions;
   String get unknownError;
   String get openMapApplication;
+  String get unRegisterDescriptoin;
+  String get unRegister;
+  String get unRegisterDialogTitle;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -156,6 +159,13 @@ class TranslationsEnHome implements TranslationsHome {
   String get unknownError => 'Unknown Error';
   @override
   String get openMapApplication => 'Open Map Application';
+  @override
+  String get unRegister => 'Unregister';
+  @override
+  String get unRegisterDescriptoin =>
+      'If you want to cancel your registration for the meeting, you can cancel it here.';
+  @override
+  String get unRegisterDialogTitle => 'Make sure you want to cancel the registration';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -261,6 +271,13 @@ class TranslationsDeHome implements TranslationsHome {
   String get unknownError => 'Unbekannter Fehler';
   @override
   String get openMapApplication => 'In Karte öffnen';
+  @override
+  String get unRegister => 'Abmelden';
+  @override
+  String get unRegisterDescriptoin =>
+      'Wenn Sie sich von der Veranstaltung abmelden möchten, können Sie sich hier abmelden.';
+  @override
+  String get unRegisterDialogTitle => 'Stellen Sie sicher, dass Sie die Anmeldung wirklich stornieren möchten.';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -367,6 +384,13 @@ class TranslationsFrHome implements TranslationsHome {
   String get unknownError => 'Erreur inconnue';
   @override
   String get openMapApplication => "Ouvrer l'application de carte";
+  @override
+  String get unRegister => 'Se désinscrire';
+  @override
+  String get unRegisterDescriptoin =>
+      'Si vous souhaitez annuler votre inscription à la réunion, vous pouvez vous désinscrire ici.';
+  @override
+  String get unRegisterDialogTitle => "Assurez-vous que vous voulez vraiment annuler l'inscription.";
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -473,4 +497,11 @@ class TranslationsRuHome implements TranslationsHome {
   String get unknownError => 'Неизвестная ошибка';
   @override
   String get openMapApplication => 'Открыть приложение Карты';
+  @override
+  String get unRegister => 'Отменить регистрацию';
+  @override
+  String get unRegisterDescriptoin =>
+      'Если вы хотите отменить свою регистрацию на встречу, вы можете отменить ее здесь.';
+  @override
+  String get unRegisterDialogTitle => 'Убедитесь, что вы действительно хотите отменить регистрацию';
 }
