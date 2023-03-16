@@ -1,33 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:latlong2/latlong.dart';
+
+import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 
 class EncointerMap extends StatelessWidget {
   EncointerMap({
     super.key,
     required this.locations,
-    this.initialZoom,
-    this.maxZoom,
+    this.initialZoom = 13,
+    this.maxZoom = 18,
     this.center,
     this.popupBuilder,
+    this.mapController,
+    this.onPointerDown,
   });
 
   final List<LatLng> locations;
-  final double? initialZoom;
-  final double? maxZoom;
+  final double initialZoom;
+  final double maxZoom;
   final LatLng? center;
   final Widget Function(BuildContext, Marker)? popupBuilder;
+  final MapController? mapController;
+  final void Function(PointerDownEvent, LatLng)? onPointerDown;
 
-  final PopupController _popupLayerController = PopupController();
+  final _popupLayerController = PopupController();
 
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
+      mapController: mapController,
       options: MapOptions(
         center: center ?? LatLng(47.389712, 8.517076),
-        zoom: initialZoom ?? 13,
+        zoom: initialZoom,
         maxZoom: maxZoom,
+        onPointerDown: onPointerDown,
         onTap: (_, __) => _popupLayerController.hideAllPopups(disableAnimation: true),
       ),
       children: [
