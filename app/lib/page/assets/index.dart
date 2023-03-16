@@ -383,6 +383,17 @@ class _AssetsState extends State<Assets> {
             borderRadius: const BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            final store = context.read<AppStore>();
+            submitTx(
+              context,
+              store,
+              webApi,
+              unregisterParticipantParams(store.encointer.chosenCid!, store.encointer.currentCeremonyIndex),
+            );
+          },
+        ),
       ),
     );
   }
