@@ -12,6 +12,7 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_info.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_register_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_start_button.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/unregister_link_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/lower_ceremony_box_container.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/meetup_info.dart';
@@ -70,14 +71,15 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
-                        key: const Key('registration-meetup-button'),
-                        registerUntil: assigningPhaseStart,
-                        onPressed: (context) async {
-                          if (store.dataUpdate.expired) {
-                            await awaitDataUpdateWithDialog(context, store);
-                          }
-                          await submitRegisterParticipant(context, store, api);
-                        }),
+                      key: const Key('registration-meetup-button'),
+                      registerUntil: assigningPhaseStart,
+                      onPressed: (context) async {
+                        if (store.dataUpdate.expired) {
+                          await awaitDataUpdateWithDialog(context, store);
+                        }
+                        await submitRegisterParticipant(context, store, api);
+                      },
+                    ),
                   ),
                 if (store.encointer.showStartCeremonyButton)
                   Padding(
@@ -132,13 +134,19 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
   switch (store.encointer.currentPhase) {
     case CeremonyPhase.Registering:
       if (communityAccount?.isRegistered ?? false) {
-        return CeremonyNotification(
-          key: const Key('is-registered-info'),
-          notificationIconData: Iconsax.tick_square,
-          notification: dic.encointer.youAreRegisteredAs.replaceAll(
-            'PARTICIPANT_TYPE',
-            store.encointer.communityAccount!.participantType!.toValue(),
-          ),
+        return Column(
+          children: [
+            CeremonyNotification(
+              key: const Key('is-registered-info'),
+              notificationIconData: Iconsax.tick_square,
+              notification: dic.encointer.youAreRegisteredAs.replaceAll(
+                'PARTICIPANT_TYPE',
+                store.encointer.communityAccount!.participantType!.toValue(),
+              ),
+            ),
+            const SizedBox(height: 10),
+            const UnregisteredLinkButton(),
+          ],
         );
       } else {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
@@ -146,7 +154,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           "'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered",
           'CeremonyBox',
         );
-        return Container();
+        return const SizedBox.shrink();
       }
     case CeremonyPhase.Assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {

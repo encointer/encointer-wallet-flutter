@@ -42,6 +42,7 @@ class AppAlert {
     required VoidCallback onOK,
     Widget? title,
     Widget? content,
+    T? cancelValue,
   }) {
     final dic = I18n.of(context)!.translationsForLocale();
     return showCupertinoDialog<T>(
@@ -52,7 +53,7 @@ class AppAlert {
           content: content,
           actions: <Widget>[
             CupertinoButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(context, cancelValue),
               child: Text(dic.home.cancel),
             ),
             CupertinoButton(
