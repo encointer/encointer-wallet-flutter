@@ -1,10 +1,10 @@
 import 'dart:core';
 
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -54,7 +54,7 @@ Future<void> submitToJS(
       );
     }
 
-    final res = await _sendTx(context, api, txParams) as Map;
+    final res = await _sendTx(context, api, txParams);
 
     if (res['hash'] == null) {
       _onTxError(context, store, res['error'] as String, showStatusSnackBar);
@@ -81,9 +81,9 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
   }
 }
 
-Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
+Future<Map<String, dynamic>> _sendTx(BuildContext context, Api api, Map args) async {
   return api.account.sendTxAndShowNotification(
-    args['txInfo'] as Map<dynamic, dynamic>,
+    args['txInfo'] as Map<String, dynamic>,
     args['params'] as List<dynamic>?,
     rawParam: args['rawParam'] as String?,
   );

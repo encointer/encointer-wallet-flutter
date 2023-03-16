@@ -92,12 +92,12 @@ class AccountApi {
     if (fetchData) fetchAccountData?.call();
   }
 
-  Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
-    Map txInfo,
+  Future<Map<String, dynamic>> sendTxAndShowNotification(
+    Map<String, dynamic> txInfo,
     List? params, {
     String? rawParam,
   }) async {
-    final res = await sendTx(txInfo, params, rawParam: rawParam) as Map;
+    final res = await sendTx(txInfo, params, rawParam: rawParam);
 
     if (res['hash'] != null) {
       final hash = res['hash'] as String;
@@ -110,11 +110,11 @@ class AccountApi {
     return res;
   }
 
-  Future<dynamic> sendTx(Map txInfo, List? params, {String? rawParam}) async {
+  Future<Map<String, dynamic>> sendTx(Map txInfo, List? params, {String? rawParam}) async {
     final param = rawParam ?? jsonEncode(params);
     final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
     Log.d('sendTx call: $call', 'AccountApi');
-    return jsApi.evalJavascript(call);
+    return jsApi.evalJavascript<Map<String, dynamic>>(call);
   }
 
   Future<String> generateAccount() async {
