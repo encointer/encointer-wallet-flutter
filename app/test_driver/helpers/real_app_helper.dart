@@ -59,6 +59,16 @@ Future<void> registerAndWait(FlutterDriver driver, String registrationType) asyn
   await addDelay(1000);
 }
 
+Future<void> unRegisterAndWait(FlutterDriver driver) async {
+  await scrollToCeremonyBox(driver);
+  await driver.waitFor(find.byValueKey('unregister-button'));
+  await driver.tap(find.byValueKey('unregister-button'));
+  await driver.waitFor(find.byValueKey('unregister-dialog'));
+  await driver.tap(find.byValueKey('ok-button'));
+  await driver.waitFor(find.byValueKey('registration-meetup-button'));
+  await addDelay(1000);
+}
+
 Future<void> changeAccountFromPanel(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('panel-controller'));
   await driver.tap(find.byValueKey(account));

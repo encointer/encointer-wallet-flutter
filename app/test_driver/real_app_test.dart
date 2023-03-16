@@ -117,6 +117,11 @@ void main() async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToCeremonyBox(driver);
     await registerAndWait(driver, 'Newbie');
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('Unregister and register Tom again', () async {
+    await unRegisterAndWait(driver);
+    await registerAndWait(driver, 'Newbie');
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 

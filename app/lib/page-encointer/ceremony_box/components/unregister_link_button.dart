@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
@@ -16,30 +15,37 @@ class UnregisteredLinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final dic = I18n.of(context)!.translationsForLocale();
-    return RichText(
-      text: TextSpan(
+    return SizedBox(
+      height: 30,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          TextSpan(
-            text: dic.home.unRegisterDescriptoin,
-            style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
+          Expanded(
+            child: Text(
+              dic.home.unRegisterDescriptoin,
+              maxLines: 2,
+              style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
+            ),
           ),
-          TextSpan(
-            text: dic.home.unRegister,
-            style: textTheme.headlineMedium!.copyWith(color: encointerGrey, decoration: TextDecoration.underline),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () async {
-                final value = await AppAlert.showConfirmDialog<bool>(
-                  context: context,
-                  cancelValue: false,
-                  title: Text(dic.home.unRegisterDialogTitle),
-                  onOK: () => Navigator.pop(context, true),
-                );
-                if (value ?? false) {
-                  AppAlert.showLoadingDialog(context, dic.home.loading);
-                  await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
-                  Navigator.pop(context);
-                }
-              },
+          InkWell(
+            key: const Key('unregister-button'),
+            onTap: () async {
+              final value = await AppAlert.showConfirmDialog<bool>(
+                context: context,
+                cancelValue: false,
+                title: Text(dic.home.unRegisterDialogTitle, key: const Key('unregister-dialog')),
+                onOK: () => Navigator.pop(context, true),
+              );
+              if (value ?? false) {
+                AppAlert.showLoadingDialog(context, dic.home.loading);
+                await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
+                Navigator.pop(context);
+              }
+            },
+            child: Text(
+              dic.home.unRegister,
+              style: textTheme.headlineMedium!.copyWith(color: encointerGrey, decoration: TextDecoration.underline),
+            ),
           ),
         ],
       ),

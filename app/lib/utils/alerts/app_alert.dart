@@ -57,6 +57,7 @@ class AppAlert {
               child: Text(dic.home.cancel),
             ),
             CupertinoButton(
+              key: const Key('ok-button'),
               onPressed: onOK,
               child: Text(dic.home.ok),
             ),
