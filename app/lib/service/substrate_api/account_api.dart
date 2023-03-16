@@ -94,9 +94,7 @@ class AccountApi {
 
   Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
     Map? txInfo,
-    List? params,
-    String? pageTile,
-    String? notificationTitle, {
+    List? params, {
     String? rawParam,
   }) async {
     final res = await sendTx(txInfo, params, rawParam: rawParam) as Map;
@@ -105,8 +103,8 @@ class AccountApi {
       final hash = res['hash'] as String;
       unawaited(NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
-        notificationTitle,
-        '$pageTile - ${txInfo!['module']}.${txInfo['call']}',
+        '${txInfo!['notificationTitle']}',
+        '${txInfo['notificationBody']}',
       ));
     }
     return res;

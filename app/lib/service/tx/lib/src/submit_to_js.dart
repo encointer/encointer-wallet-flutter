@@ -87,8 +87,6 @@ Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
   return api.account.sendTxAndShowNotification(
     args['txInfo'] as Map<dynamic, dynamic>?,
     args['params'] as List<dynamic>?,
-    args['title'] as String?,
-    I18n.of(context)!.translationsForLocale().home.notifySubmitted,
     rawParam: args['rawParam'] as String?,
   );
 }

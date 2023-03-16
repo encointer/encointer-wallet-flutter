@@ -143,8 +143,6 @@ abstract class _AccountStore with Store {
           final res = await webApi.account.sendTxAndShowNotification(
             args['txInfo'] as Map<dynamic, dynamic>?,
             args['params'] as List<dynamic>?,
-            args['title'] as String?,
-            args['notificationTitle'] as String?,
             rawParam: args['rawParam'] as String?,
           );
 
