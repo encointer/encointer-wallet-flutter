@@ -141,7 +141,7 @@ abstract class _AccountStore with Store {
       if (await webApi.isConnected()) {
         for (final args in queuedTxs) {
           final res = await webApi.account.sendTxAndShowNotification(
-            args['txInfo'] as Map<dynamic, dynamic>?,
+            args['txInfo'] as Map<dynamic, dynamic>,
             args['params'] as List<dynamic>?,
             rawParam: args['rawParam'] as String?,
           );

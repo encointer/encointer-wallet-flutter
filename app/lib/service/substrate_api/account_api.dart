@@ -93,7 +93,7 @@ class AccountApi {
   }
 
   Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
-    Map? txInfo,
+    Map txInfo,
     List? params, {
     String? rawParam,
   }) async {
@@ -103,14 +103,14 @@ class AccountApi {
       final hash = res['hash'] as String;
       unawaited(NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
-        '${txInfo!['notificationTitle']}',
+        '${txInfo['notificationTitle']}',
         '${txInfo['notificationBody']}',
       ));
     }
     return res;
   }
 
-  Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
+  Future<dynamic> sendTx(Map txInfo, List? params, {String? rawParam}) async {
     final param = rawParam ?? jsonEncode(params);
     final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
     Log.d('sendTx call: $call', 'AccountApi');

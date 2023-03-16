@@ -83,7 +83,7 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
 
 Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
   return api.account.sendTxAndShowNotification(
-    args['txInfo'] as Map<dynamic, dynamic>?,
+    args['txInfo'] as Map<dynamic, dynamic>,
     args['params'] as List<dynamic>?,
     rawParam: args['rawParam'] as String?,
   );
