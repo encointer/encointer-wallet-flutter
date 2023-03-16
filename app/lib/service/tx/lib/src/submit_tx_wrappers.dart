@@ -105,6 +105,16 @@ Future<void> submitEndorseNewcomer(
   );
 }
 
+Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, Api api) {
+  return submitTx(
+    context,
+    store,
+    webApi,
+    unregisterParticipantParams(store.encointer.chosenCid!, store.encointer.currentCeremonyIndex),
+    onFinish: (txPageContext, res) => store.dataUpdate.setInvalidated(),
+  );
+}
+
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   if (store.settings.cachedPin.isEmpty) {

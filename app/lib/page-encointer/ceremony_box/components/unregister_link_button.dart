@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
+import 'package:encointer_wallet/store/app.dart';
 
 class UnregisteredLinkButton extends StatelessWidget {
   const UnregisteredLinkButton({super.key});
@@ -33,6 +37,8 @@ class UnregisteredLinkButton extends StatelessWidget {
                 );
                 if (value ?? false) {
                   AppAlert.showLoadingDialog(context, 'Loading');
+                  await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
+                  Navigator.pop(context);
                 }
               },
           ),
