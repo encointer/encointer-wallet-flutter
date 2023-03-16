@@ -4,15 +4,11 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 
 /// Params for known extrinsics.
 
-Map<String, dynamic> endorseNewcomerParams(
-  CommunityIdentifier chosenCid,
-  String newbie,
-  Translations dic,
-) {
+Map<String, dynamic> endorseNewcomerParams(CommunityIdentifier chosenCid, String newbie, Translations dic) {
   return {
     'title': 'endorse_newcomer',
-    'notificationTitle': 'Endorse newcomer',
-    'notificationBody': 'Yeni üyenin topluluğumuza katılmasını desteklediğin için teşekkür ederiz!',
+    'notificationTitle': dic.encointer.endorseNewcomerNotificationTitle,
+    'notificationBody': dic.encointer.endorseNewcomerNotificationBody,
     'txInfo': {
       'module': 'encointerCeremonies',
       'call': 'endorseNewcomer',
@@ -22,14 +18,12 @@ Map<String, dynamic> endorseNewcomerParams(
   };
 }
 
-Map<String, dynamic> registerParticipantParams(
-  CommunityIdentifier chosenCid, {
-  ProofOfAttendance? proof,
-}) {
+Map<String, dynamic> registerParticipantParams(CommunityIdentifier chosenCid, Translations dic,
+    {ProofOfAttendance? proof}) {
   return {
     'title': 'register_participant',
-    'notificationTitle': 'Görüşmeye başarıyla kaydoldunuz!',
-    'notificationBody': 'Görüşmeye kayıt olduğunuz için teşekkür ederiz. Görüşme tarihinde hatırlatma alacaksınız.',
+    'notificationTitle': dic.encointer.registerParticipantNotificationTitle,
+    'notificationBody': dic.encointer.registerParticipantNotificationBody,
     'txInfo': {
       'module': 'encointerCeremonies',
       'call': 'registerParticipant',
@@ -46,11 +40,12 @@ Map<String, dynamic> attestAttendeesParams(
   CommunityIdentifier chosenCid,
   int numberOfParticipantsVote,
   List<String> attendees,
+  Translations dic,
 ) {
   return {
     'title': 'attest_claims',
-    'notificationTitle': 'Attest phase tamamlandı',
-    'notificationBody': 'Attest phase başarıyla tamamlandı. Şimdi görüşmenin sonraki aşamalarına geçebilirsiniz.',
+    'notificationTitle': dic.encointer.attestNotificationTitle,
+    'notificationBody': dic.encointer.attestNotificationBody,
     'txInfo': {
       'module': 'encointerCeremonies',
       'call': 'attestAttendees',
@@ -60,11 +55,11 @@ Map<String, dynamic> attestAttendeesParams(
   };
 }
 
-Map<String, dynamic> claimRewardsParams(CommunityIdentifier chosenCid) {
+Map<String, dynamic> claimRewardsParams(CommunityIdentifier chosenCid, Translations dic) {
   return {
     'title': 'claim_rewards',
-    'notificationTitle': 'Ödül talebiniz alındı',
-    'notificationBody': 'Görüşmeniz başarıyla tamamlandı. Ödül talebiniz alındı ve en kısa sürede işleme alınacaktır.',
+    'notificationTitle': dic.encointer.claimRewardsNotificationTitle,
+    'notificationBody': dic.encointer.claimRewardsNotificationBody,
     'txInfo': {
       'module': 'encointerCeremonies',
       'call': 'claimRewards',
@@ -79,11 +74,12 @@ Map<String, dynamic> encointerBalanceTransferParams(
   CommunityIdentifier cid,
   String recipientAddress,
   double? amount,
+  Translations dic,
 ) {
   return {
     'title': 'encointerBalancesTransfer',
-    'notificationTitle': 'Transaction complete',
-    'notificationBody': "Your coins have been successfully transferred to the recipient's account!",
+    'notificationTitle': dic.encointer.balanceTransferNotificationTitle,
+    'notificationBody': dic.encointer.balanceTransferNotificationBody,
     'txInfo': {
       'module': 'encointerBalances',
       'call': 'transfer',

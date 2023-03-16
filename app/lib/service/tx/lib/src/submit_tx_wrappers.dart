@@ -68,7 +68,8 @@ Future<void> submitClaimRewards(
   Api api,
   CommunityIdentifier chosenCid,
 ) async {
-  final txParams = claimRewardsParams(chosenCid);
+  final dic = I18n.of(context)!.translationsForLocale();
+  final txParams = claimRewardsParams(chosenCid, dic);
 
   return submitTx(
     context,
@@ -91,7 +92,8 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier? chosenCid,
   String? newbie,
 ) async {
-  final txParams = endorseNewcomerParams(chosenCid!, newbie!);
+  final dic = I18n.of(context)!.translationsForLocale();
+  final txParams = endorseNewcomerParams(chosenCid!, newbie!, dic);
 
   return submitTx(
     context,
@@ -107,15 +109,15 @@ Future<void> submitEndorseNewcomer(
 
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
+  final dic = I18n.of(context)!.translationsForLocale();
   if (store.settings.cachedPin.isEmpty) {
-    final unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog<void>(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
           context,
           store.account.currentAccount,
-          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          Text(dic.home.unlockAccount.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
           (String password) => store.settings.setPin(password),
         );
       },
@@ -126,7 +128,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
+    registerParticipantParams(store.encointer.chosenCid!, dic, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) async {
       final data = await webApi.encointer.getAggregatedAccountData(
         store.encointer.chosenCid!,
@@ -152,10 +154,12 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 }
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
+  final dic = I18n.of(context)!.translationsForLocale();
   final params = attestAttendeesParams(
     store.encointer.chosenCid!,
     store.encointer.communityAccount!.participantCountVote!,
     store.encointer.communityAccount!.attendees!.toList(),
+    dic,
   );
 
   return submitTx(
