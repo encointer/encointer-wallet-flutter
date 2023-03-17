@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -364,17 +365,30 @@ class _AssetsState extends State<Assets> {
                         );
                       },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: InkWell(
-                        key: const Key('panel-controller'),
-                        child: const CommunityAvatar(avatarSize: 75),
-                        onTap: () {
-                          // if (panelController != null && panelController!.isAttached) {
-                          //   panelController!.open();
-                          // }
-                        },
-                      ),
+                    Observer(
+                      builder: (BuildContext context) {
+                        final v = _allCommunities();
+                        return SwitchAccountOrCommunity(
+                          rowTitle: dic!.home.switchCommunity,
+                          data: v,
+                          onTap: (int index) {
+                            if (index == allCommunities.length - 1) {
+                              Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
+                                _refreshBalanceAndNotify(dic);
+                              });
+                            } else {
+                              setState(() {
+                                // switchCommunnity(
+                                // widget.store.account.accountListAll[index]
+                                // );
+                                // _refreshBalanceAndNotify(dic);
+
+                                // TODO
+                              });
+                            }
+                          },
+                        );
+                      },
                     ),
                     // Observer(
                     //   builder: (BuildContext context) {
@@ -418,6 +432,34 @@ class _AssetsState extends State<Assets> {
         ),
       ),
     );
+  }
+
+  List<AccountOrCommunityData> _allCommunities() {
+    final c = context.read<AppStore>().encointer.communities!;
+    return c
+        .map(
+          (e) => AccountOrCommunityData(
+            avatar: Container(
+              height: avatarSize,
+              width: avatarSize,
+              decoration: BoxDecoration(
+                color: zurichLion.shade50,
+                shape: BoxShape.circle,
+              ),
+              child: FutureBuilder<String?>(
+                future: webApi.ipfs.getCommunityIcon(e.cid.toFmtString()),
+                builder: (context, snapshot) {
+                  return CircleAvatar(
+                    child:
+                        snapshot.data != null ? SvgPicture.string(snapshot.data!) : const CupertinoActivityIndicator(),
+                  );
+                },
+              ),
+            ),
+            name: e.name,
+          ),
+        )
+        .toList();
   }
 
   List<AccountOrCommunityData> initAllCommunities() {
