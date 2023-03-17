@@ -85,13 +85,7 @@ Map<String, dynamic> encointerBalanceTransferParams(
   };
 }
 
-Map<String, dynamic> unregisterParticipantParams(
-  CommunityIdentifier cid,
-  // CommunityCeremony is a new type we have to define.
-  // It must contain the CommunityCeremony of the reputation that was used when registering if the
-  // participant has registered as a reputatble. Otherwise, it must be null.
-  int? ceremonyIndex,
-) {
+Map<String, dynamic> unregisterParticipantParams(CommunityIdentifier cid, int? ceremonyIndex) {
   return {
     'title': 'encointerUnregisterParticipant',
     'txInfo': {
