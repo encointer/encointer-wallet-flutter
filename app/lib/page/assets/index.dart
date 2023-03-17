@@ -352,6 +352,11 @@ class _AssetsState extends State<Assets> {
                               });
                             } else {
                               setState(() {
+                                // switchCommunnity(
+                                // widget.store.account.accountListAll[index]
+                                // );
+                                // _refreshBalanceAndNotify(dic);
+
                                 // TODO
                               });
                             }
@@ -359,6 +364,34 @@ class _AssetsState extends State<Assets> {
                         );
                       },
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: InkWell(
+                        key: const Key('panel-controller'),
+                        child: const CommunityAvatar(avatarSize: 75),
+                        onTap: () {
+                          // if (panelController != null && panelController!.isAttached) {
+                          //   panelController!.open();
+                          // }
+                        },
+                      ),
+                    ),
+                    // Observer(
+                    //   builder: (BuildContext context) {
+                    //     return Padding(
+                    //       padding: const EdgeInsets.all(15),
+                    //       child: InkWell(
+                    //         key: const Key('panel-controller'),
+                    //         child: const CommunityAvatar(avatarSize: 75),
+                    //         onTap: () {
+                    //           // if (panelController != null && panelController!.isAttached) {
+                    //           //   panelController!.open();
+                    //           // }
+                    //         },
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
                     Observer(builder: (BuildContext context) {
                       allAccounts = initAllAccounts(dic!);
                       return SwitchAccountOrCommunity(
@@ -453,6 +486,12 @@ class _AssetsState extends State<Assets> {
       await widget.store.loadAccountCache();
 
       webApi.fetchAccountData();
+    }
+  }
+
+  Future<void> switchCommunity(AccountOrCommunityData communityData) async {
+    if (communityData.isSelected) {
+      // webApi.fetch();
     }
   }
 
