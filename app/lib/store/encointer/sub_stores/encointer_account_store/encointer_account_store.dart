@@ -105,6 +105,7 @@ abstract class _EncointerAccountStore with Store {
   @action
   void purgeCeremonySpecificState() {
     purgeReputations();
+    lastProofOfAttendance = null;
   }
 
   @action
