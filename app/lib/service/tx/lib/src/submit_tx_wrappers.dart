@@ -145,7 +145,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     api,
     registerParticipantParams(store.encointer.chosenCid!, proof: proof),
     onFinish: (BuildContext txPageContext, Map res) async {
-      if (proof != null) store.encointer.account!.lastProofOfAttendance = proof;
+      store.encointer.account!.lastProofOfAttendance = proof;
 
       final data = await webApi.encointer.getAggregatedAccountData(
         store.encointer.chosenCid!,
