@@ -238,26 +238,24 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'Register now!';
   @override
-  String get endorseNewcomerNotificationBody => 'Thank you for endorsing the newcomer to our community!';
+  String get endorseNewcomerNotificationBody => 'Thanks for endorsing the newbie!';
   @override
-  String get endorseNewcomerNotificationTitle => 'Endorse newcomer';
+  String get endorseNewcomerNotificationTitle => 'Newbie endorsed';
   @override
-  String get registerParticipantNotificationBody =>
-      'Thank you for registering for the meetup. You will receive a reminder on the date of the meetup.';
+  String get registerParticipantNotificationBody => 'You will receive a reminder one day before.';
   @override
-  String get registerParticipantNotificationTitle => 'You have successfully registered for the meetup!';
+  String get registerParticipantNotificationTitle => 'Registered for the next cycle!';
   @override
-  String get attestNotificationBody => 'You can now proceed to the next steps of the meetup.';
+  String get attestNotificationBody =>
+      'If all participants have sent the attestations, you can try to claim the income.';
   @override
-  String get attestNotificationTitle => 'Attest phase has been successfully completed';
+  String get attestNotificationTitle => 'Attested attendees';
   @override
-  String get claimRewardsNotificationBody =>
-      'Your reward request has been received and will be processed as soon as possible.';
+  String get claimRewardsNotificationBody => 'You have already received your community income!';
   @override
-  String get claimRewardsNotificationTitle => 'Your reward request has been received';
+  String get claimRewardsNotificationTitle => 'Claimed the community income';
   @override
-  String get balanceTransferNotificationBody =>
-      "Your coins have been successfully transferred to the recipient's account!";
+  String get balanceTransferNotificationBody => 'The recipient has received the tokens.';
   @override
   String get balanceTransferNotificationTitle => 'Transaction completed';
 }
@@ -418,27 +416,24 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'Melde dich jetzt an!';
   @override
-  String get endorseNewcomerNotificationBody =>
-      'Danke, dass Sie den Neuling in unserer Gemeinschaft unterstützt haben!';
+  String get endorseNewcomerNotificationBody => 'Danke für das Endorsen des Newbies!';
   @override
-  String get endorseNewcomerNotificationTitle => 'Neuling unterstützen';
+  String get endorseNewcomerNotificationTitle => 'Newbie Endorsed';
   @override
-  String get registerParticipantNotificationBody =>
-      'Vielen Dank für Ihre Anmeldung zum Treffen. Sie erhalten eine Erinnerung an dem Tag des Treffen.';
+  String get registerParticipantNotificationBody => 'Du erhältst eine Erinnerung einen Tag zuvor.';
   @override
-  String get registerParticipantNotificationTitle => 'Sie haben sich erfolgreich für das Treffen registriert!';
+  String get registerParticipantNotificationTitle => 'Für den nächsten Cycle angemeldet!';
   @override
-  String get attestNotificationBody => 'Sie können jetzt zu den nächsten Schritten des Treffen übergehen.';
+  String get attestNotificationBody =>
+      'Wenn alle Teilnehmer die Attestierungen geschickt haben, kannst du versuchen das Einkommen zu erhalten.';
   @override
-  String get attestNotificationTitle => 'Die Attestphase wurde erfolgreich abgeschlossen';
+  String get attestNotificationTitle => 'Teilnehmer attestiert';
   @override
-  String get claimRewardsNotificationBody =>
-      'Ihr Belohnungsantrag wurde erhalten und wird so schnell wie möglich bearbeitet.';
+  String get claimRewardsNotificationBody => 'Du hast dein Gemeinschaftseinkommen bereits erhalten.';
   @override
-  String get claimRewardsNotificationTitle => 'Ihr Belohnungsantrag wurde erhalten';
+  String get claimRewardsNotificationTitle => 'Gemeinschaftseinkommen angefordert';
   @override
-  String get balanceTransferNotificationBody =>
-      'Deine Coins wurden erfolgreich auf das Konto des Empfängers überwiesen!';
+  String get balanceTransferNotificationBody => 'Der Empfänger hat die Tokens erhalten.';
   @override
   String get balanceTransferNotificationTitle => 'Transaktion abgeschlossen';
 }
@@ -602,26 +597,24 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'Inscris-tois maintenant!';
   @override
-  String get endorseNewcomerNotificationBody => "Merci d'approuver le nouveau venu dans notre communauté!";
+  String get endorseNewcomerNotificationBody => "Merci d'avoir endossé le Novice!";
   @override
-  String get endorseNewcomerNotificationTitle => 'Approuver un nouveau venu';
+  String get endorseNewcomerNotificationTitle => 'Novice endossé';
   @override
-  String get registerParticipantNotificationBody =>
-      'Merci de vous être inscrit à rencontrer. Vous recevrez un rappel à la date de rencontrer.';
+  String get registerParticipantNotificationBody => 'Tu recevras un rappel un jour avant.';
   @override
-  String get registerParticipantNotificationTitle => 'Vous vous êtes inscrit avec succès à rencontrer!';
+  String get registerParticipantNotificationTitle => 'Inscrit pour le prochain cycle!';
   @override
-  String get attestNotificationBody => 'Vous pouvez maintenant passer aux prochaines étapes de rencontrer.';
+  String get attestNotificationBody =>
+      "Une fois que tous les participants ont envoyé les attestations, tu peux essayer d'obtenir le revenu.";
   @override
-  String get attestNotificationTitle => 'La phase Attest a été complétée avec succès';
+  String get attestNotificationTitle => 'Participants attestés';
   @override
-  String get claimRewardsNotificationBody =>
-      'Votre demande de récompense a été reçue et sera traitée dès que possible.';
+  String get claimRewardsNotificationBody => 'Tu as déjà reçu ton revenu communautaire.';
   @override
-  String get claimRewardsNotificationTitle => 'Votre demande de récompense a été reçue';
+  String get claimRewardsNotificationTitle => 'Revenu communautaire demandé';
   @override
-  String get balanceTransferNotificationBody =>
-      'Vos pièces ont été transférées avec succès sur le compte du destinataire!';
+  String get balanceTransferNotificationBody => 'Le destinataire a reçu les tokens.';
   @override
   String get balanceTransferNotificationTitle => 'Transaction complète';
 }
