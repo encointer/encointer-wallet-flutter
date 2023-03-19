@@ -107,7 +107,8 @@ Future<void> submitEndorseNewcomer(
 
 Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, Api api) {
   final lastProofOfAttendance = store.encointer.communityAccount?.participantType?.isReputable ?? false
-      ? store.encointer.account!.lastProofOfAttendance
+      ? store.encointer.account
+          ?.lastProofOfAttendance // can still be null if the participant did not register on the same phone.
       : null;
 
   return submitTx(
