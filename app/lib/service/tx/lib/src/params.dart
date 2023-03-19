@@ -85,7 +85,9 @@ Map<String, dynamic> encointerBalanceTransferParams(
   };
 }
 
-Map<String, dynamic> unregisterParticipantParams(CommunityIdentifier cid, int? ceremonyIndex) {
+Map<String, dynamic> unregisterParticipantParams(CommunityIdentifier cid, ProofOfAttendance? proof) {
+  final communityCeremony = proof != null ? [proof.communityIdentifier, proof.ceremonyIndex] : null;
+
   return {
     'title': 'encointerUnregisterParticipant',
     'txInfo': {
@@ -93,6 +95,6 @@ Map<String, dynamic> unregisterParticipantParams(CommunityIdentifier cid, int? c
       'call': 'unregisterParticipant',
       'cid': cid,
     },
-    'params': [cid, ceremonyIndex],
+    'params': [cid, communityCeremony],
   };
 }

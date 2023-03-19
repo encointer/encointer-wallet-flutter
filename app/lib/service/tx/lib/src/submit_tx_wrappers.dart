@@ -106,11 +106,15 @@ Future<void> submitEndorseNewcomer(
 }
 
 Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, Api api) {
+  final lastProofOfAttendance = store.encointer.communityAccount?.participantType?.isReputable ?? false
+      ? store.encointer.account!.lastProofOfAttendance
+      : null;
+
   return submitTx(
     context,
     store,
     webApi,
-    unregisterParticipantParams(store.encointer.chosenCid!, store.encointer.currentCeremonyIndex),
+    unregisterParticipantParams(store.encointer.chosenCid!, lastProofOfAttendance),
     onFinish: (txPageContext, res) => store.dataUpdate.setInvalidated(),
   );
 }
@@ -132,12 +136,16 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     );
   }
 
+  final proof = await api.encointer.getProofOfAttendance();
+
   return submitTx(
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
+    registerParticipantParams(store.encointer.chosenCid!, proof: proof),
     onFinish: (BuildContext txPageContext, Map res) async {
+      if (proof != null) store.encointer.account!.lastProofOfAttendance = proof;
+
       final data = await webApi.encointer.getAggregatedAccountData(
         store.encointer.chosenCid!,
         store.account.currentAddress,

@@ -18,7 +18,10 @@ EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json)
       )
       ..txsTransfer = ObservableList<TransferData>.of(
           (json['txsTransfer'] as List).map((e) => TransferData.fromJson(e as Map<String, dynamic>)))
-      ..numberOfNewbieTicketsForReputable = json['numberOfNewbieTicketsForReputable'] as int;
+      ..numberOfNewbieTicketsForReputable = json['numberOfNewbieTicketsForReputable'] as int
+      ..lastProofOfAttendance = json['lastProofOfAttendance'] == null
+          ? null
+          : ProofOfAttendance.fromJson(json['lastProofOfAttendance'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instance) => <String, dynamic>{
       'network': instance.network,
@@ -27,6 +30,7 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
       'reputations': instance.reputations.map((k, e) => MapEntry(k.toString(), e.toJson())),
       'txsTransfer': instance.txsTransfer.map((e) => e.toJson()).toList(),
       'numberOfNewbieTicketsForReputable': instance.numberOfNewbieTicketsForReputable,
+      'lastProofOfAttendance': instance.lastProofOfAttendance?.toJson(),
     };
 
 // **************************************************************************
@@ -36,13 +40,13 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
-  Computed<int?>? _$ceremonyIndexForProofOfAttendanceComputed;
+  Computed<int?>? _$ceremonyIndexForNextProofOfAttendanceComputed;
 
   @override
-  int? get ceremonyIndexForProofOfAttendance =>
-      (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<int?>(() => super.ceremonyIndexForProofOfAttendance,
-              name: '_EncointerAccountStore.ceremonyIndexForProofOfAttendance'))
-          .value;
+  int? get ceremonyIndexForNextProofOfAttendance => (_$ceremonyIndexForNextProofOfAttendanceComputed ??= Computed<int?>(
+          () => super.ceremonyIndexForNextProofOfAttendance,
+          name: '_EncointerAccountStore.ceremonyIndexForNextProofOfAttendance'))
+      .value;
 
   late final _$balanceEntriesAtom = Atom(name: '_EncointerAccountStore.balanceEntries', context: context);
 
@@ -102,6 +106,21 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   set numberOfNewbieTicketsForReputable(int value) {
     _$numberOfNewbieTicketsForReputableAtom.reportWrite(value, super.numberOfNewbieTicketsForReputable, () {
       super.numberOfNewbieTicketsForReputable = value;
+    });
+  }
+
+  late final _$lastProofOfAttendanceAtom = Atom(name: '_EncointerAccountStore.lastProofOfAttendance', context: context);
+
+  @override
+  ProofOfAttendance? get lastProofOfAttendance {
+    _$lastProofOfAttendanceAtom.reportRead();
+    return super.lastProofOfAttendance;
+  }
+
+  @override
+  set lastProofOfAttendance(ProofOfAttendance? value) {
+    _$lastProofOfAttendanceAtom.reportWrite(value, super.lastProofOfAttendance, () {
+      super.lastProofOfAttendance = value;
     });
   }
 
@@ -171,7 +190,8 @@ balanceEntries: ${balanceEntries},
 reputations: ${reputations},
 txsTransfer: ${txsTransfer},
 numberOfNewbieTicketsForReputable: ${numberOfNewbieTicketsForReputable},
-ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance}
+lastProofOfAttendance: ${lastProofOfAttendance},
+ceremonyIndexForNextProofOfAttendance: ${ceremonyIndexForNextProofOfAttendance}
     ''';
   }
 }
