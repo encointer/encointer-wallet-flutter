@@ -3,6 +3,8 @@ abstract class TranslationsTx {
   String get endorseNewcomerNotificationBody;
   String get registerParticipantNotificationTitle;
   String get registerParticipantNotificationBody;
+  String get unregisterParticipantNotificationTitle;
+  String get unregisterParticipantNotificationBody;
   String get attestNotificationTitle;
   String get attestNotificationBody;
   String get claimRewardsNotificationTitle;
@@ -33,6 +35,11 @@ class TranslationsEnTx implements TranslationsTx {
   String get balanceTransferNotificationBody => 'The recipient has received the tokens.';
   @override
   String get balanceTransferNotificationTitle => 'Transaction completed';
+  @override
+  String get unregisterParticipantNotificationBody =>
+      'Your registration for the next cycle has been cancelled. If you change your mind, you can register again.';
+  @override
+  String get unregisterParticipantNotificationTitle => 'Registration Cancelled';
 }
 
 class TranslationsDeTx implements TranslationsTx {
@@ -57,6 +64,11 @@ class TranslationsDeTx implements TranslationsTx {
   String get balanceTransferNotificationBody => 'Der Empfänger hat die Tokens erhalten.';
   @override
   String get balanceTransferNotificationTitle => 'Transaktion abgeschlossen';
+  @override
+  String get unregisterParticipantNotificationBody =>
+      'Ihre Anmeldung für den nächsten Zyklus wurde storniert. Wenn Sie es sich anders überlegen, können Sie sich erneut anmelden.';
+  @override
+  String get unregisterParticipantNotificationTitle => 'Registrierung storniert';
 }
 
 class TranslationsFrTx implements TranslationsTx {
@@ -81,6 +93,11 @@ class TranslationsFrTx implements TranslationsTx {
   String get balanceTransferNotificationBody => 'Le destinataire a reçu les tokens.';
   @override
   String get balanceTransferNotificationTitle => 'Transaction complète';
+  @override
+  String get unregisterParticipantNotificationBody =>
+      "Votre inscription pour le prochain cycle a été annulée. Si vous changez d'avis, vous pouvez vous inscrire à nouveau.";
+  @override
+  String get unregisterParticipantNotificationTitle => 'Inscription annulée';
 }
 
 class TranslationsRuTx implements TranslationsTx {
@@ -107,4 +124,9 @@ class TranslationsRuTx implements TranslationsTx {
   String get balanceTransferNotificationBody => 'Токены успешно переведены на счет получателя!';
   @override
   String get balanceTransferNotificationTitle => 'Транзакция завершена';
+  @override
+  String get unregisterParticipantNotificationBody =>
+      'Ваша регистрация на следующий цикл была отменена. Если вы передумаете, вы можете зарегистрироваться снова.';
+  @override
+  String get unregisterParticipantNotificationTitle => 'Регистрация отменена';
 }
