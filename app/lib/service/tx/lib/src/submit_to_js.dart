@@ -54,7 +54,11 @@ Future<void> submitToJS(
       );
     }
 
-    final res = await _sendTx(context, api, txParams);
+    final res = await api.account.sendTxAndShowNotification(
+      txParams['txInfo'] as Map<String, dynamic>,
+      txParams['params'] as List<dynamic>?,
+      rawParam: txParams['rawParam'] as String?,
+    );
 
     if (res['hash'] == null) {
       _onTxError(context, store, res['error'] as String, showStatusSnackBar);
@@ -80,14 +84,6 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
   } else {
     showErrorDialog(context, errorMsg);
   }
-}
-
-Future<Map<String, dynamic>> _sendTx(BuildContext context, Api api, Map args) async {
-  return api.account.sendTxAndShowNotification(
-    args['txInfo'] as Map<String, dynamic>,
-    args['params'] as List<dynamic>?,
-    rawParam: args['rawParam'] as String?,
-  );
 }
 
 void _showTxStatusSnackBar(String status, Widget? leading) {
