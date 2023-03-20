@@ -71,6 +71,12 @@ mixin _$EncointerStore on _EncointerStore, Store {
   int? get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
           Computed<int?>(() => super.currentPhaseDuration, name: '_EncointerStore.currentPhaseDuration'))
       .value;
+  Computed<List<String>>? _$cachedCommunityIconsComputed;
+
+  @override
+  List<String> get cachedCommunityIcons => (_$cachedCommunityIconsComputed ??=
+          Computed<List<String>>(() => super.cachedCommunityIcons, name: '_EncointerStore.cachedCommunityIcons'))
+      .value;
   Computed<bool>? _$communitiesContainsChosenCidComputed;
 
   @override
@@ -428,6 +434,7 @@ chosenCid: ${chosenCid},
 bazaarStores: ${bazaarStores},
 accountStores: ${accountStores},
 currentPhaseDuration: ${currentPhaseDuration},
+cachedCommunityIcons: ${cachedCommunityIcons},
 communitiesContainsChosenCid: ${communitiesContainsChosenCid},
 bazaar: ${bazaar},
 community: ${community},

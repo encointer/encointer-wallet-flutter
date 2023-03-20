@@ -13,6 +13,7 @@ import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
+import 'package:collection/collection.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
@@ -139,6 +140,13 @@ class _AssetsState extends State<Assets> {
       },
       child: Scaffold(
         appBar: appBar,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            final com = context.read<AppStore>().encointer.communityStores;
+            final icons = context.read<AppStore>().encointer.cachedCommunityIcons;
+            print('eldi');
+          },
+        ),
         body: UpgradeAlert(
           upgrader: Upgrader(
             appcastConfig: context.watch<AppStore>().config.appCast,
@@ -365,29 +373,24 @@ class _AssetsState extends State<Assets> {
                         );
                       },
                     ),
-                    Observer(
-                      builder: (BuildContext context) {
-                        final v = _allCommunities();
-                        return SwitchAccountOrCommunity(
-                          rowTitle: dic!.home.switchCommunity,
-                          data: v,
-                          onTap: (int index) {
-                            if (index == allCommunities.length - 1) {
-                              Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-                                _refreshBalanceAndNotify(dic);
-                              });
-                            } else {
-                              setState(() {
-                                // switchCommunnity(
-                                // widget.store.account.accountListAll[index]
-                                // );
-                                // _refreshBalanceAndNotify(dic);
+                    SwitchAccountOrCommunity(
+                      rowTitle: dic!.home.switchCommunity,
+                      data: _allCommunities(),
+                      onTap: (int index) {
+                        // if (index == allCommunities.length - 1) {
+                        //   Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
+                        //     _refreshBalanceAndNotify(dic);
+                        //   });
+                        // } else {
+                        //   setState(() {
+                        //     // switchCommunnity(
+                        //     // widget.store.account.accountListAll[index]
+                        //     // );
+                        //     // _refreshBalanceAndNotify(dic);
 
-                                // TODO
-                              });
-                            }
-                          },
-                        );
+                        //     // TODO
+                        //   });
+                        // }
                       },
                     ),
                     // Observer(
@@ -435,10 +438,12 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> _allCommunities() {
-    final c = context.read<AppStore>().encointer.communities!;
-    return c
-        .map(
-          (e) => AccountOrCommunityData(
+    final store = context.read<AppStore>();
+    final communityStores = store.encointer.communityStores?.values.toList() ?? [];
+    final icons = store.encointer.cachedCommunityIcons;
+    return communityStores
+        .mapIndexed(
+          (i, e) => AccountOrCommunityData(
             avatar: Container(
               height: avatarSize,
               width: avatarSize,
@@ -446,15 +451,7 @@ class _AssetsState extends State<Assets> {
                 color: zurichLion.shade50,
                 shape: BoxShape.circle,
               ),
-              child: FutureBuilder<String?>(
-                future: webApi.ipfs.getCommunityIcon(e.cid.toFmtString()),
-                builder: (context, snapshot) {
-                  return CircleAvatar(
-                    child:
-                        snapshot.data != null ? SvgPicture.string(snapshot.data!) : const CupertinoActivityIndicator(),
-                  );
-                },
-              ),
+              child: SvgPicture.string(store.encointer.cachedCommunityIcons[i]),
             ),
             name: e.name,
           ),

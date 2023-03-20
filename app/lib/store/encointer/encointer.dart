@@ -100,6 +100,11 @@ abstract class _EncointerStore with Store {
   @observable
   CommunityIdentifier? chosenCid;
 
+  @computed
+  List<String> get cachedCommunityIcons {
+    return communityStores!.values.map((store) => store.communityIcon!).toList();
+  }
+
   /// Checks if the chosenCid is contained in the communities.
   ///
   /// This is only relevant for edge-cases, where the chain does no longer contain a community. E.g. a dev-chain was
