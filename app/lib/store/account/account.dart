@@ -141,10 +141,8 @@ abstract class _AccountStore with Store {
       if (await webApi.isConnected()) {
         for (final args in queuedTxs) {
           final res = await webApi.account.sendTxAndShowNotification(
-            args['txInfo'] as Map<dynamic, dynamic>?,
+            args['txInfo'] as Map<String, dynamic>,
             args['params'] as List<dynamic>?,
-            args['title'] as String?,
-            args['notificationTitle'] as String?,
             rawParam: args['rawParam'] as String?,
           );
 
@@ -152,7 +150,7 @@ abstract class _AccountStore with Store {
           if (res['hash'] == null) {
             await NotificationPlugin.showNotification(
               0,
-              args['notificationTitle'] as String?,
+              '${args['txError']}',
               'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
             );
           } else {

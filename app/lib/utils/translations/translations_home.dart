@@ -12,7 +12,6 @@ abstract class TranslationsHome {
   String get errorOccurred;
   String get loading;
   String get next;
-  String get notifySubmitted;
   String get notifySubmittedQueued;
   String get ok;
   String get pinNeeded;
@@ -76,8 +75,6 @@ class TranslationsEnHome implements TranslationsHome {
   String get loading => 'Loading...';
   @override
   String get next => 'Next Step';
-  @override
-  String get notifySubmitted => 'transaction Submitted';
   @override
   String get notifySubmittedQueued => 'Queued transaction Submitted';
   @override
@@ -179,8 +176,6 @@ class TranslationsDeHome implements TranslationsHome {
   String get loading => 'Lädt...';
   @override
   String get next => 'Nächster Schritt';
-  @override
-  String get notifySubmitted => 'Transaktion eingereicht';
   @override
   String get notifySubmittedQueued => 'Die Transaktion in der Warteschlange wurde eingereicht';
   @override
@@ -287,8 +282,6 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get next => 'Prochaine étape';
   @override
-  String get notifySubmitted => 'Transaction soumise';
-  @override
   String get notifySubmittedQueued => "La transaction dans la file d'attente a été soumise";
   @override
   String get ok => 'OK';
@@ -392,8 +385,6 @@ class TranslationsRuHome implements TranslationsHome {
   String get loading => 'Загружается...';
   @override
   String get next => 'Следующий шаг';
-  @override
-  String get notifySubmitted => 'Транзакция отправлена';
   @override
   String get notifySubmittedQueued => 'Транзакция, в очереди, отправлена';
   @override
