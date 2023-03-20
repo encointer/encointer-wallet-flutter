@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
-import 'package:blake2/blake2.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +13,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:pointycastle/digests/blake2b.dart';
 
 class Fmt {
   static String passwordToEncryptKey(String password) {
@@ -274,15 +274,20 @@ class Fmt {
 
   static const base58Codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
+  static final SS58PRE = 'SS58PRE'.codeUnits;
+
   /// Based on the rust version: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L324
   static String ss58Encode(String pubKey, {int prefix = 42}) {
-    final ss58Prefix = Uint8List.fromList('SS58PRE'.codeUnits);
+    final ss58Prefix = Uint8List.fromList(SS58PRE);
     final body = Uint8List.fromList([prefix, ...Fmt.hexToBytes(pubKey)]);
 
-    final blake2b = Blake2b()
-      ..update(ss58Prefix)
-      ..update(body);
-    final hash = blake2b.digest();
+    final blake2 = Blake2bDigest()
+      ..init()
+      ..update(ss58Prefix, 0, ss58Prefix.length)
+      ..update(body, 0, body.length);
+
+    final hash = Uint8List(blake2.digestSize);
+    blake2.doFinal(hash, 0);
 
     final complete = List<int>.from([...body, hash[0], hash[1]]);
     return base58Codec.encode(complete);
