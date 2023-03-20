@@ -274,22 +274,28 @@ class Fmt {
 
   static const base58Codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
-  static final SS58PRE = 'SS58PRE'.codeUnits;
-
   /// Based on the rust version: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L324
   static String ss58Encode(String pubKey, {int prefix = 42}) {
-    final ss58Prefix = Uint8List.fromList(SS58PRE);
     final body = Uint8List.fromList([prefix, ...Fmt.hexToBytes(pubKey)]);
+    final hash = blake2WithSs58Pre(body);
+
+    final complete = List<int>.from([...body, hash[0], hash[1]]);
+    return base58Codec.encode(complete);
+  }
+
+  static final SS58PRE = 'SS58PRE'.codeUnits;
+
+  static Uint8List blake2WithSs58Pre(Uint8List data) {
+    final ss58Prefix = Uint8List.fromList(SS58PRE);
 
     final blake2 = Blake2bDigest()
       ..init()
       ..update(ss58Prefix, 0, ss58Prefix.length)
-      ..update(body, 0, body.length);
+      ..update(data, 0, data.length);
 
     final hash = Uint8List(blake2.digestSize);
     blake2.doFinal(hash, 0);
 
-    final complete = List<int>.from([...body, hash[0], hash[1]]);
-    return base58Codec.encode(complete);
+    return hash;
   }
 }
