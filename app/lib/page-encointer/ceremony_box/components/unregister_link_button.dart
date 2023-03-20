@@ -15,36 +15,24 @@ class UnregisteredLinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final dic = I18n.of(context)!.translationsForLocale();
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: '${dic.home.unRegisterDescriptoin} ',
-            style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
-          ),
-          WidgetSpan(
-            child: InkWell(
-              key: const Key('unregister-button'),
-              onTap: () async {
-                final value = await AppAlert.showConfirmDialog<bool>(
-                  context: context,
-                  cancelValue: false,
-                  title: Text(dic.home.unRegisterDialogTitle, key: const Key('unregister-dialog')),
-                  onOK: () => Navigator.pop(context, true),
-                );
-                if (value ?? false) {
-                  AppAlert.showLoadingDialog(context, dic.home.loading);
-                  await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
-                  Navigator.pop(context);
-                }
-              },
-              child: Text(
-                dic.home.unRegister,
-                style: textTheme.headlineMedium!.copyWith(color: encointerGrey, decoration: TextDecoration.underline),
-              ),
-            ),
-          ),
-        ],
+    return InkWell(
+      key: const Key('unregister-button'),
+      onTap: () async {
+        final value = await AppAlert.showConfirmDialog<bool>(
+          context: context,
+          cancelValue: false,
+          title: Text(dic.home.unregisterDialogTitle, key: const Key('unregister-dialog')),
+          onOK: () => Navigator.pop(context, true),
+        );
+        if (value ?? false) {
+          AppAlert.showLoadingDialog(context, dic.home.loading);
+          await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
+          Navigator.pop(context);
+        }
+      },
+      child: Text(
+        dic.home.unregister,
+        style: textTheme.headlineMedium!.copyWith(color: encointerGrey, decoration: TextDecoration.underline),
       ),
     );
   }
