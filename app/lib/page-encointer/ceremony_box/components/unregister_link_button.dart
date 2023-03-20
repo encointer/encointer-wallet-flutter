@@ -20,7 +20,7 @@ class UnregisteredLinkButton extends StatelessWidget {
       onTap: () async {
         final value = await AppAlert.showConfirmDialog<bool>(
           context: context,
-          cancelValue: false,
+          onCancelValue: false,
           title: Text(dic.home.unregisterDialogTitle, key: const Key('unregister-dialog')),
           onOK: () => Navigator.pop(context, true),
         );
