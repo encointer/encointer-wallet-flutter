@@ -108,6 +108,8 @@ Future<void> submitEndorseNewcomer(
 }
 
 Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, Api api) {
+  final dic = I18n.of(context)!.translationsForLocale();
+
   final lastProofOfAttendance = store.encointer.communityAccount?.participantType?.isReputable ?? false
       ? store.encointer.account
           ?.lastProofOfAttendance // can still be null if the participant did not register on the same phone.
@@ -117,7 +119,7 @@ Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, A
     context,
     store,
     webApi,
-    unregisterParticipantParams(store.encointer.chosenCid!, lastProofOfAttendance),
+    unregisterParticipantParams(store.encointer.chosenCid!, lastProofOfAttendance, dic),
     onFinish: (txPageContext, res) => store.dataUpdate.setInvalidated(),
   );
 }

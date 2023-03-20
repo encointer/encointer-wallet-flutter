@@ -1,4 +1,4 @@
-abstract class TranslationsTx {
+abstract class TranslationsTransaction {
   String get endorseNewcomerNotificationTitle;
   String get endorseNewcomerNotificationBody;
   String get registerParticipantNotificationTitle;
@@ -13,7 +13,7 @@ abstract class TranslationsTx {
   String get balanceTransferNotificationBody;
 }
 
-class TranslationsEnTx implements TranslationsTx {
+class TranslationsEnTransaction implements TranslationsTransaction {
   @override
   String get endorseNewcomerNotificationBody => 'Thanks for endorsing the newbie!';
   @override
@@ -42,7 +42,7 @@ class TranslationsEnTx implements TranslationsTx {
   String get unregisterParticipantNotificationTitle => 'Registration Cancelled';
 }
 
-class TranslationsDeTx implements TranslationsTx {
+class TranslationsDeTransaction implements TranslationsTransaction {
   @override
   String get endorseNewcomerNotificationBody => 'Danke für das Endorsen des Newbies!';
   @override
@@ -71,7 +71,7 @@ class TranslationsDeTx implements TranslationsTx {
   String get unregisterParticipantNotificationTitle => 'Registrierung storniert';
 }
 
-class TranslationsFrTx implements TranslationsTx {
+class TranslationsFrTransaction implements TranslationsTransaction {
   @override
   String get endorseNewcomerNotificationBody => "Merci d'avoir endossé le Novice!";
   @override
@@ -100,7 +100,7 @@ class TranslationsFrTx implements TranslationsTx {
   String get unregisterParticipantNotificationTitle => 'Inscription annulée';
 }
 
-class TranslationsRuTx implements TranslationsTx {
+class TranslationsRuTransaction implements TranslationsTransaction {
   @override
   String get endorseNewcomerNotificationBody => 'Благодарим за одобрение нвичка в нашем сообществе!';
   @override

@@ -15,7 +15,7 @@ abstract class Translations {
   TranslationsProfile get profile;
   TranslationsEncointer get encointer;
   TranslationsBazaar get bazaar;
-  TranslationsTx get tx;
+  TranslationsTransaction get transaction;
 }
 
 /// for english translations
@@ -33,7 +33,7 @@ class TranslationsEn implements Translations {
   @override
   TranslationsBazaar get bazaar => TranslationsEnBazaar();
   @override
-  TranslationsTx get tx => TranslationsEnTx();
+  TranslationsTransaction get transaction => TranslationsEnTransaction();
 }
 
 /// for german translations
@@ -51,7 +51,7 @@ class TranslationsDe implements Translations {
   @override
   TranslationsBazaar get bazaar => TranslationsDeBazaar();
   @override
-  TranslationsTx get tx => TranslationsDeTx();
+  TranslationsTransaction get transaction => TranslationsDeTransaction();
 }
 
 /// for french translations
@@ -69,7 +69,7 @@ class TranslationsFr implements Translations {
   @override
   TranslationsBazaar get bazaar => TranslationsFrBazaar();
   @override
-  TranslationsTx get tx => TranslationsFrTx();
+  TranslationsTransaction get transaction => TranslationsFrTransaction();
 }
 
 /// for russian translations
@@ -87,5 +87,5 @@ class TranslationsRu implements Translations {
   @override
   TranslationsBazaar get bazaar => TranslationsRuBazaar();
   @override
-  TranslationsTx get tx => TranslationsRuTx();
+  TranslationsTransaction get transaction => TranslationsRuTransaction();
 }
