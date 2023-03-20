@@ -773,25 +773,26 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'todo :)';
   @override
-  String get endorseNewcomerNotificationBody => 'Благодарим за одобрение нового участника в нашем сообществе!';
+  String get endorseNewcomerNotificationBody => 'Благодарим за одобрение нвичка в нашем сообществе!';
   @override
-  String get endorseNewcomerNotificationTitle => 'Одобрить нового участника';
+  String get endorseNewcomerNotificationTitle => 'Новичок одобрен';
   @override
   String get registerParticipantNotificationBody =>
-      'Спасибо за регистрацию на встречу. Вы получите напоминание о дате встречу.';
+      'Спасибо за регистрацию. Вам будет отправлено напоминание за день до встречи.';
   @override
-  String get registerParticipantNotificationTitle => 'Вы успешно зарегистрировались на встречу!';
+  String get registerParticipantNotificationTitle => 'Вы успешно зарегистрировались на следующую встречу!';
   @override
-  String get attestNotificationBody => 'Теперь вы можете перейти к следующим этапам встреча.';
+  String get attestNotificationBody =>
+      'Если все участники отправили свои подтверждения, можно попробовать получить доход.';
   @override
-  String get attestNotificationTitle => 'Фаза Attest успешно завершена';
+  String get attestNotificationTitle => 'Фаза Аттестации успешно завершена';
   @override
   String get claimRewardsNotificationBody =>
-      'Ваш запрос на вознаграждение получен и будет обработан в кратчайшие сроки.';
+      'Ваш запрос на вознаграждение получен и будет обработан в кратчайшие сроки. Вы получили свой доход сообщества!';
   @override
-  String get claimRewardsNotificationTitle => 'Ваш запрос на вознаграждение получен';
+  String get claimRewardsNotificationTitle => 'Доход сообщества запрошен';
   @override
-  String get balanceTransferNotificationBody => 'Ваши монеты успешно переведены на счет получателя!';
+  String get balanceTransferNotificationBody => 'Токены успешно переведены на счет получателя!';
   @override
   String get balanceTransferNotificationTitle => 'Транзакция завершена';
 }
