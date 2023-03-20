@@ -92,46 +92,44 @@ class AccountApi {
     if (fetchData) fetchAccountData?.call();
   }
 
-  Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
-    Map? txInfo,
-    List? params,
-    String? pageTile,
-    String? notificationTitle, {
+  Future<Map<String, dynamic>> sendTxAndShowNotification(
+    Map<String, dynamic> txInfo,
+    List<dynamic>? params, {
     String? rawParam,
   }) async {
-    final res = await sendTx(txInfo, params, rawParam: rawParam) as Map;
+    final res = await sendTx(txInfo, params, rawParam: rawParam);
 
     if (res['hash'] != null) {
       final hash = res['hash'] as String;
       unawaited(NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
-        notificationTitle,
-        '$pageTile - ${txInfo!['module']}.${txInfo['call']}',
+        '${txInfo['notificationTitle']}',
+        '${txInfo['notificationBody']}',
       ));
     }
     return res;
   }
 
-  Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
+  Future<Map<String, dynamic>> sendTx(Map txInfo, List? params, {String? rawParam}) async {
     final param = rawParam ?? jsonEncode(params);
     final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
     Log.d('sendTx call: $call', 'AccountApi');
-    return jsApi.evalJavascript(call);
+    return jsApi.evalJavascript<Map<String, dynamic>>(call);
   }
 
-  Future<void> generateAccount() async {
+  Future<String> generateAccount() async {
     final acc = await jsApi.evalJavascript<Map<String, dynamic>>('account.gen()');
-    store.account.setNewAccountKey(acc['mnemonic'] as String);
+    return acc['mnemonic'] as String;
   }
 
   Future<Map<String, dynamic>> importAccount({
+    required String key,
+    required String password,
     String? keyType = AccountStore.seedTypeMnemonic,
     String? cryptoType = 'sr25519',
     String? derivePath = '',
   }) async {
-    final key = store.account.newAccount.key;
-    final pass = store.account.newAccount.password;
-    var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
+    var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$password")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
     return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }

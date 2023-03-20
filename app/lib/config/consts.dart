@@ -4,11 +4,6 @@ import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
-const String networkNameEncointerGesell = 'nctr-gsl';
-const String networkNameEncointerLietaer = 'nctr-r';
-const String networkNameEncointerMainnet = 'nctr-k';
-const String networkNameEncointerCantillon = 'nctr-ctln';
-
 const String androidLocalHost = '10.0.2.2';
 const String iosLocalHost = 'localhost';
 
@@ -107,11 +102,6 @@ const int ertDecimals = 12;
 const int encointerCurrenciesDecimals = 18;
 
 const double faucetAmount = 0.1;
-
-const int dotReDenominateBlock = 1248328;
-
-const int secondOfDay = 24 * 60 * 60; // seconds of one day
-const int secondOfYear = 365 * 24 * 60 * 60; // seconds of one year
 
 // links
 const localePlaceHolder = 'LOCALE_PLACEHOLDER';

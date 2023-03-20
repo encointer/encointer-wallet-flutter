@@ -112,10 +112,9 @@ flutter_gen:
   integrations:
     flutter_svg: true
 
-  assets: 
+  assets:
     exclude:
-      - lib/js_service_encointer/dist/*.jpg
-
+      - js_service_encointer/dist/*.jpg
 
 # The following section is specific to Flutter.
 flutter:
@@ -124,15 +123,14 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     # js service
-    - lib/js_service_encointer/dist/main.js
+    - js_service_encointer/dist/main.js
 
     - assets/images/assets/
     - assets/images/public/
     - assets/avatars/
     - assets/nctr_logo.svg
-    - assets/nctr_mosaic_background.svg
     - assets/nctr_logo_faces_only_thick.svg
- 
+
   # fonts:
   #   - family: Schyler
   #     fonts:

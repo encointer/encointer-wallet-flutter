@@ -7,12 +7,14 @@ class EncointerLogo extends StatelessWidget {
   final double width;
   final double height;
 
-  static const nctrLogo = 'assets/nctr_logo.svg';
-
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Assets.nctrLogo
-            .svg(colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn), width: width, height: height));
+      child: Assets.nctrLogo.svg(
+        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+        width: width,
+        height: height,
+      ),
+    );
   }
 }

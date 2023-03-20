@@ -1,14 +1,14 @@
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
+import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
-import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
@@ -47,7 +47,7 @@ class _SplashViewState extends State<SplashView> {
           context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
     } else {
       await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()), (route) => false);
+          context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryView()), (route) => false);
     }
   }
 
@@ -58,11 +58,11 @@ class _SplashViewState extends State<SplashView> {
       body: FutureBuilder(
         future: _initPage(),
         builder: (context, s) {
-          return Stack(
-            children: [
-              Assets.nctrMosaicBackground.svg(fit: BoxFit.fill, width: MediaQuery.of(context).size.width),
-              const EncointerLogo(),
-            ],
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(image: Assets.images.assets.mosaicBackground.provider(), fit: BoxFit.cover),
+            ),
+            child: const EncointerLogo(),
           );
         },
       ),
@@ -75,7 +75,7 @@ class _SplashViewState extends State<SplashView> {
 /// Currently, `store.init()` must be called before it is passed into the api
 /// due to some cyclic dependencies between webApi <> AppStore.
 Future<void> initWebApi(BuildContext context, AppStore store) async {
-  final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
+  final js = await DefaultAssetBundle.of(context).loadString(Assets.jsServiceEncointer.dist.main);
 
   webApi = !store.config.mockSubstrateApi
       ? Api.create(store, JSApi(), SubstrateDartApi(), js)

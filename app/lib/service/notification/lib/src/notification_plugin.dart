@@ -113,7 +113,7 @@ class NotificationPlugin {
 
   static Future<bool> showNotification(int id, String? title, String body, {String? payload, String? cid}) async {
     await flutterLocalNotificationsPlugin.show(
-      0,
+      id,
       title,
       body,
       platformChannelSpecifics(body),
