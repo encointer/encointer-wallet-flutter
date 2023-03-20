@@ -134,6 +134,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
     case CeremonyPhase.Registering:
       if (communityAccount?.isRegistered ?? false) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             CeremonyNotification(
               key: const Key('is-registered-info'),
@@ -143,7 +144,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
                 store.encointer.communityAccount!.participantType!.toValue(),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 4),
             const UnregisteredLinkButton(),
           ],
         );
