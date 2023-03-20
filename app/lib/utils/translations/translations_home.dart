@@ -161,7 +161,7 @@ class TranslationsEnHome implements TranslationsHome {
   @override
   String get unregister => 'Unregister';
   @override
-  String get unregisterDialogTitle => 'Make sure you want to cancel the registration';
+  String get unregisterDialogTitle => 'Unregister from the next cycle?';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -270,7 +270,7 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get unregister => 'Abmelden';
   @override
-  String get unregisterDialogTitle => 'Stellen Sie sicher, dass Sie die Anmeldung wirklich stornieren möchten.';
+  String get unregisterDialogTitle => 'Vom nächsten Key-Signing Cycle abmelden?';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -380,7 +380,7 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get unregister => 'Se désinscrire';
   @override
-  String get unregisterDialogTitle => "Assurez-vous que vous voulez vraiment annuler l'inscription.";
+  String get unregisterDialogTitle => 'Se désinscrire du prochain cycle?';
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -490,5 +490,5 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get unregister => 'Отменить регистрацию';
   @override
-  String get unregisterDialogTitle => 'Убедитесь, что вы действительно хотите отменить регистрацию';
+  String get unregisterDialogTitle => 'Отказаться от участия в следующем цикле?';
 }
