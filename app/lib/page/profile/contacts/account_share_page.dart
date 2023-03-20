@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
@@ -29,7 +30,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
 
     final accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeShared = store.account.getAccountData(accountToBeSharedPubKey);
-    final addressSS58 = store.account.getNetworkAddress(accountToBeSharedPubKey);
+    final addressSS58 = Fmt.ss58Encode(accountToBeSharedPubKey!, prefix: store.settings.endpoint.ss58!);
 
     final contactQrCode = ContactQrCode(
       account: addressSS58,

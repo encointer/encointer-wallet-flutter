@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/config.dart';
@@ -225,9 +226,12 @@ abstract class _AppStore with Store {
       return Future.value();
     }
 
-    final address = account.getNetworkAddress(pubKey);
-    Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
-    await encointer.initializeUninitializedStores(address);
+    if (pubKey != null) {
+      // Todo: #1072
+      final address = Fmt.ss58Encode(pubKey, prefix: settings.endpoint.ss58!);
+      Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
+      await encointer.initializeUninitializedStores(address);
+    }
 
     if (!settings.loading) {
       dataUpdate.setInvalidated();
