@@ -34,7 +34,7 @@ void main() {
 /// ```rust
 /// const PREFIX: &[u8] = b"SS58PRE";
 ///
-/// fn blake2(data: &[u8]) -> Vec<u8> {
+/// fn blake2b(data: &[u8]) -> Vec<u8> {
 ///     use blake2::{Blake2b512, Digest};
 ///
 ///     let mut ctx = Blake2b512::new();
@@ -42,6 +42,8 @@ void main() {
 ///     ctx.update(data);
 ///     ctx.finalize().to_vec()
 /// }
+///
+/// blake2b(b"hello")
 /// ```
 final rustHelloHashWithPrefix = List<int>.from([
   88,
