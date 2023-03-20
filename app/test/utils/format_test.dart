@@ -9,7 +9,7 @@ void main() {
     test('encode works', () {
       // Alice, double check with `subkey inspect //Alice`
       expect(
-        Fmt.ss58Encode('0xd43593c715fdd31c61141abd04a99fd6822c8558854code39a5684e7a56da27d'),
+        Fmt.ss58Encode('0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d'),
         '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
       );
     });
