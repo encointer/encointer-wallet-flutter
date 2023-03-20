@@ -283,10 +283,10 @@ class Fmt {
     return base58Codec.encode(complete);
   }
 
-  static final SS58PRE = 'SS58PRE'.codeUnits;
+  static final ss58Prefix = 'SS58PRE'.codeUnits;
 
   static Uint8List blake2WithSs58Pre(Uint8List data) {
-    final ss58Pre = Uint8List.fromList(SS58PRE);
+    final ss58Pre = Uint8List.fromList(ss58Prefix);
 
     final blake2 = Blake2bDigest()
       ..init()

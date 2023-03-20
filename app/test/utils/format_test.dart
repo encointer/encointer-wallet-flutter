@@ -21,7 +21,7 @@ void main() {
 
     test('SS58PRE matches rust value', () {
       expect(
-        Fmt.SS58PRE,
+        Fmt.ss58Prefix,
         // Corresponds to rust's: `const PREFIX: &[u8] = b"SS58PRE";`
         List<int>.from([83, 83, 53, 56, 80, 82, 69]),
       );
