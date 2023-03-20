@@ -286,11 +286,11 @@ class Fmt {
   static final SS58PRE = 'SS58PRE'.codeUnits;
 
   static Uint8List blake2WithSs58Pre(Uint8List data) {
-    final ss58Prefix = Uint8List.fromList(SS58PRE);
+    final ss58Pre = Uint8List.fromList(SS58PRE);
 
     final blake2 = Blake2bDigest()
       ..init()
-      ..update(ss58Prefix, 0, ss58Prefix.length)
+      ..update(ss58Pre, 0, ss58Pre.length)
       ..update(data, 0, data.length);
 
     final hash = Uint8List(blake2.digestSize);
