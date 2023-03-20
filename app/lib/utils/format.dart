@@ -255,18 +255,6 @@ class Fmt {
     return tokenView;
   }
 
-  /// Returns the address of an account encoded with the ss58-prefix of the current network, if
-  /// available. Otherwise, it falls back the ss58 prefix of the connect network at account creation
-  /// time.
-  ///
-  /// This was inherited from upstream, and I have never observed that the fallback had to be
-  /// used.
-  ///
-  /// Todo: Improve handling of ss58-prefix: #1019
-  static String addressOfAccount(AccountData acc, AppStore store) {
-    return store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![acc.pubKey] ?? acc.address;
-  }
-
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].
   static String degree(String degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
     return (double.tryParse(degree) ?? 0.0).toStringAsFixed(fractionDisplay);

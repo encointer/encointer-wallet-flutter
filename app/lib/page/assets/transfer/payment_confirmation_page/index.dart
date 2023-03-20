@@ -61,12 +61,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
+    final store = context.read<AppStore>();
     final params = ModalRoute.of(context)!.settings.arguments! as PaymentConfirmationParams;
 
     final cid = params.cid;
     final recipientAccount = params.recipientAccount;
     final amount = params.amount;
-    final recipientAddress = Fmt.addressOfAccount(recipientAccount, context.read<AppStore>());
+    final recipientAddress = Fmt.ss58Encode(recipientAccount.pubKey, prefix: store.settings.endpoint.ss58!);
 
     return Scaffold(
       appBar: AppBar(title: Text(dic.assets.payment)),
