@@ -14,10 +14,12 @@ class AccountSelectList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: accounts.map((account) {
+        final address = Fmt.ss58Encode(account.pubKey, prefix: store.settings.endpoint.ss58!);
+
         return ListTile(
-          leading: AddressIcon(account.address, account.pubKey),
+          leading: AddressIcon(address, account.pubKey),
           title: Text(Fmt.accountName(context, account)),
-          subtitle: Text(Fmt.address(Fmt.ss58Encode(account.pubKey, prefix: store.settings.endpoint.ss58!))!),
+          subtitle: Text(Fmt.address(address)!),
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           onTap: () => Navigator.of(context).pop(account),
         );

@@ -51,7 +51,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
           if (!widget.hideIdenticon)
             Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: AddressIcon(account.address, account.pubKey, tapToCopy: false, size: 36),
+              child: AddressIcon(address, account.pubKey, tapToCopy: false, size: 36),
             ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +86,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         dense: true,
         title: Text(account.name),
         subtitle: Text(Fmt.address(address)!),
-        leading: CircleAvatar(child: AddressIcon(account.address, account.pubKey)),
+        leading: CircleAvatar(child: AddressIcon(address, account.pubKey)),
         onTap: () {
           widget.onChanged?.call(account);
           Navigator.pop(context);

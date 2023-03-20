@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -43,8 +44,9 @@ class _ReceivePageState extends State<ReceivePage> {
   void initState() {
     super.initState();
     _appStore = context.read<AppStore>();
+    final address = Fmt.ss58Encode(_appStore.account.currentAccountPubKey!, prefix: _appStore.settings.endpoint.ss58!);
     invoice = InvoiceQrCode(
-      account: _appStore.account.currentAddress,
+      account: address,
       cid: _appStore.encointer.chosenCid,
       label: _appStore.account.currentAccount.name,
     );
