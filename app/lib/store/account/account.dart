@@ -55,9 +55,6 @@ abstract class _AccountStore with Store {
   ObservableList<AccountData> accountList = ObservableList<AccountData>();
 
   @observable
-  ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
-
-  @observable
   List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
 
   @computed
@@ -317,20 +314,6 @@ abstract class _AccountStore with Store {
     if (stored[pubKey] != null) {
       stored.remove(pubKey);
       await rootStore.localStorage.setSeeds(seedType, stored);
-    }
-  }
-
-  @action
-  void setPubKeyAddressMap(Map<String, Map> data) {
-    for (final ss58 in data.keys) {
-      // get old data map
-      final addresses = Map<String, String>.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
-      // set new data
-      Map.of(data[ss58]!).forEach((k, v) {
-        addresses[k as String] = v as String;
-      });
-      // update state
-      pubKeyAddressMap[int.parse(ss58)] = addresses;
     }
   }
 }

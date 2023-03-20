@@ -21,17 +21,7 @@ class AccountApi {
       final accounts = jsonEncode(store.account.accountList.map(AccountData.toJson).toList());
 
       final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
-      final keys = await jsApi.evalJavascript<Map<String, dynamic>>('account.initKeys($accounts, $ss58)');
-      store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
-    }
-
-    // and contacts icons
-    final contacts = List<AccountData>.of(store.settings.contactList)
-      // set pubKeyAddressMap for observation accounts
-      ..retainWhere((i) => i.observation ?? false);
-    final observations = contacts.map((i) => i.pubKey).toList();
-    if (observations.isNotEmpty) {
-      await encodeAddress(observations);
+      await jsApi.evalJavascript<Map<String, dynamic>>('account.initKeys($accounts, $ss58)');
     }
   }
 
@@ -39,31 +29,10 @@ class AccountApi {
     this.fetchAccountData = fetchAccountData;
   }
 
-  /// Encodes publicKeys to SS58-addresses
-  Future<List<String?>> encodeAddress(List<String?> pubKeys) async {
-    final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
-    final res =
-        await jsApi.evalJavascript<Map<String, dynamic>>('account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)');
-
-    store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
-    final addresses = <String?>[];
-
-    for (final pubKey in pubKeys) {
-      Log.d('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}', 'AccountApi');
-      addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey!]);
-    }
-
-    return addresses;
-  }
-
   /// decode addresses to publicKeys
   Future<Map> decodeAddress(List<String> addresses) async {
     if (addresses.isEmpty) return {};
-
     final res = await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
-    if (res != null) {
-      store.account.setPubKeyAddressMap(Map<String, Map>.from({'${store.settings.endpoint.ss58}': res}));
-    }
     return res ?? {};
   }
 

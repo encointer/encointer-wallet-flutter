@@ -80,9 +80,7 @@ class _Contact extends State<ContactPage> {
       }
 
       // get contact info
-      if (_isObservation!) {
-        await webApi.account.encodeAddress([pubKey]);
-      } else {
+      if (!_isObservation!) {
         // if this address was used as observation and current account,
         // we need to change current account
         if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {

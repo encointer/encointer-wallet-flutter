@@ -1,4 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
@@ -80,8 +81,8 @@ abstract class _NewAccountStoreBase with Store {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       }
-      final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-      acc['address'] = addresses[0];
+
+      acc['address'] = Fmt.ss58Encode(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
       return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
       _loading = false;
@@ -105,8 +106,7 @@ abstract class _NewAccountStoreBase with Store {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       } else {
-        final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-        acc['address'] = addresses[0];
+        acc['address'] = Fmt.ss58Encode(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
           _loading = false;
