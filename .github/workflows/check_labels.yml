@@ -10,14 +10,16 @@ jobs:
     check_for_matching_labels:
       runs-on: ubuntu-latest
       if: github.base_ref == 'master' && github.event.pull_request.draft == false
-      matrix:
-        include:
-          - test: A-change-type
-            enforced_labels: "A0-UX,A1-BugFix,A2-Technical"
-          - test: B-urgency
-            enforced_labels: "B0-Low,B1-Medium,B2-Critical"
-          - test: C-breaking-changes
-            enforced_labels: "C0-BreaksNothing,C1-BreaksApi"
+      strategy:
+        fail-fast: false
+        matrix:
+          include:
+            - test: A-change-type
+              enforced_labels: "A0-UX,A1-BugFix,A2-Technical"
+            - test: B-urgency
+              enforced_labels: "B0-Low,B1-Medium,B2-Critical"
+            - test: C-breaking-changes
+              enforced_labels: "C0-BreaksNothing,C1-BreaksApi"
       steps:
         - name: Label check
           run: |
