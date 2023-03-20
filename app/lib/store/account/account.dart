@@ -150,7 +150,7 @@ abstract class _AccountStore with Store {
           if (res['hash'] == null) {
             await NotificationPlugin.showNotification(
               0,
-              '${(args['txInfo'] as Map<String, dynamic>)['notificationTitle']}',
+              '${args['txError']}',
               'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
             );
           } else {

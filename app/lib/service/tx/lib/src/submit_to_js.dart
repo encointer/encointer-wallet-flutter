@@ -63,7 +63,8 @@ Future<void> submitToJS(
     }
   } else {
     _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
-    (txParams['txInfo'] as Map<String, dynamic>)['notificationTitle'] = dic.home.notifySubmittedQueued;
+    txInfo['notificationTitle'] = dic.home.notifySubmittedQueued;
+    txInfo['txError'] = dic.home.txError;
     store.account.queueTx(txParams);
   }
 }
