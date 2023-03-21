@@ -275,7 +275,12 @@ class Fmt {
   static const base58Codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
   /// Based on the rust version: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L324
+  ///
+  /// Note: This only supports prefixes < 64, bigger prefixes require
+  /// special handling.
   static String ss58Encode(String pubKey, {int prefix = 42}) {
+    assert(prefix < 64, 'prefixes >= 64 are currently not supported');
+
     final body = Uint8List.fromList([prefix, ...Fmt.hexToBytes(pubKey)]);
     final hash = blake2WithSs58Pre(body);
 
