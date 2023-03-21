@@ -18,13 +18,13 @@ class UnregisteredLinkButton extends StatelessWidget {
     return InkWell(
       key: const Key('unregister-button'),
       onTap: () async {
-        final value = await AppAlert.showConfirmDialog<bool>(
+        final shouldUnregister = await AppAlert.showConfirmDialog<bool>(
           context: context,
-          onCancelValue: false,
+          onCancel: () => Navigator.pop(context, false),
           title: Text(dic.home.unregisterDialogTitle, key: const Key('unregister-dialog')),
           onOK: () => Navigator.pop(context, true),
         );
-        if (value ?? false) {
+        if (shouldUnregister ?? false) {
           AppAlert.showLoadingDialog(context, dic.home.loading);
           await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
           Navigator.pop(context);

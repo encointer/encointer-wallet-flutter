@@ -39,6 +39,7 @@ class MeetupLocationPage extends StatelessWidget {
             AppAlert.showConfirmDialog<void>(
               context: context,
               onOK: () => AppLaunch.launchMap(meetupLocation),
+              onCancel: () => Navigator.pop(context),
               title: Text(dic.home.openMapApplication),
             );
           }

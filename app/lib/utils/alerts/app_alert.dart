@@ -40,9 +40,9 @@ class AppAlert {
   static Future<T?> showConfirmDialog<T>({
     required BuildContext context,
     required VoidCallback onOK,
+    required VoidCallback onCancel,
     Widget? title,
     Widget? content,
-    T? onCancelValue,
   }) {
     final dic = I18n.of(context)!.translationsForLocale();
     return showCupertinoDialog<T>(
@@ -53,7 +53,7 @@ class AppAlert {
           content: content,
           actions: <Widget>[
             CupertinoButton(
-              onPressed: () => Navigator.pop(context, onCancelValue),
+              onPressed: onCancel,
               child: Text(dic.home.cancel),
             ),
             CupertinoButton(
