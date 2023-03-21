@@ -39,14 +39,14 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   String get unregisterParticipantNotificationBody =>
       'Your registration for the next cycle has been cancelled. If you change your mind, you can register again.';
   @override
-  String get unregisterParticipantNotificationTitle => 'Registration Cancelled';
+  String get unregisterParticipantNotificationTitle => 'Registration cancelled';
 }
 
 class TranslationsDeTransaction implements TranslationsTransaction {
   @override
   String get endorseNewcomerNotificationBody => 'Danke für das Endorsen des Newbies!';
   @override
-  String get endorseNewcomerNotificationTitle => 'Newbie Endorsed';
+  String get endorseNewcomerNotificationTitle => 'Newbie endorsed';
   @override
   String get registerParticipantNotificationBody => 'Du erhältst eine Erinnerung einen Tag zuvor.';
   @override
@@ -66,7 +66,7 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   String get balanceTransferNotificationTitle => 'Transaktion abgeschlossen';
   @override
   String get unregisterParticipantNotificationBody =>
-      'Ihre Anmeldung für den nächsten Zyklus wurde storniert. Wenn Sie es sich anders überlegen, können Sie sich erneut anmelden.';
+      'Du hast dich abgemeldet vom nächsten Cycle. Du kannst dich wider anmelden, wenn du es dir anders überlegst.';
   @override
   String get unregisterParticipantNotificationTitle => 'Registrierung storniert';
 }
@@ -95,7 +95,7 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   String get balanceTransferNotificationTitle => 'Transaction complète';
   @override
   String get unregisterParticipantNotificationBody =>
-      "Votre inscription pour le prochain cycle a été annulée. Si vous changez d'avis, vous pouvez vous inscrire à nouveau.";
+      "Tu t'es désinscrit du prochain cycle. Tu peux te réinscrire si tu changes d'avis.";
   @override
   String get unregisterParticipantNotificationTitle => 'Inscription annulée';
 }
