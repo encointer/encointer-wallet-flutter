@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
@@ -140,13 +141,6 @@ class _AssetsState extends State<Assets> {
       },
       child: Scaffold(
         appBar: appBar,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            final com = context.read<AppStore>().encointer.communityStores;
-            final icons = context.read<AppStore>().encointer.cachedCommunityIcons;
-            print('eldi');
-          },
-        ),
         body: UpgradeAlert(
           upgrader: Upgrader(
             appcastConfig: context.watch<AppStore>().config.appCast,
@@ -360,55 +354,41 @@ class _AssetsState extends State<Assets> {
                                 _refreshBalanceAndNotify(dic);
                               });
                             } else {
-                              setState(() {
-                                // switchCommunnity(
-                                // widget.store.account.accountListAll[index]
-                                // );
-                                // _refreshBalanceAndNotify(dic);
+                              // setState(() {
+                              // switchCommunnity(
+                              // widget.store.account.accountListAll[index]
+                              // );
+                              // _refreshBalanceAndNotify(dic);
 
-                                // TODO
-                              });
+                              // TODO
+                              // });
                             }
                           },
                         );
                       },
                     ),
-                    SwitchAccountOrCommunity(
-                      rowTitle: dic!.home.switchCommunity,
-                      data: _allCommunities(),
-                      onTap: (int index) {
-                        // if (index == allCommunities.length - 1) {
-                        //   Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-                        //     _refreshBalanceAndNotify(dic);
-                        //   });
-                        // } else {
-                        //   setState(() {
-                        //     // switchCommunnity(
-                        //     // widget.store.account.accountListAll[index]
-                        //     // );
-                        //     // _refreshBalanceAndNotify(dic);
+                    Observer(builder: (_) {
+                      return SwitchAccountOrCommunity(
+                        rowTitle: dic!.home.switchCommunity,
+                        data: _allCommunities(),
+                        onTap: (int index) {
+                          // if (index == allCommunities.length - 1) {
+                          //   Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
+                          //     _refreshBalanceAndNotify(dic);
+                          //   });
+                          // } else {
+                          //   setState(() {
+                          //     // switchCommunnity(
+                          //     // widget.store.account.accountListAll[index]
+                          //     // );
+                          //     // _refreshBalanceAndNotify(dic);
 
-                        //     // TODO
-                        //   });
-                        // }
-                      },
-                    ),
-                    // Observer(
-                    //   builder: (BuildContext context) {
-                    //     return Padding(
-                    //       padding: const EdgeInsets.all(15),
-                    //       child: InkWell(
-                    //         key: const Key('panel-controller'),
-                    //         child: const CommunityAvatar(avatarSize: 75),
-                    //         onTap: () {
-                    //           // if (panelController != null && panelController!.isAttached) {
-                    //           //   panelController!.open();
-                    //           // }
-                    //         },
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
+                          //     // TODO
+                          //   });
+                          // }
+                        },
+                      );
+                    }),
                     Observer(builder: (BuildContext context) {
                       allAccounts = initAllAccounts(dic!);
                       return SwitchAccountOrCommunity(
@@ -440,7 +420,6 @@ class _AssetsState extends State<Assets> {
   List<AccountOrCommunityData> _allCommunities() {
     final store = context.read<AppStore>();
     final communityStores = store.encointer.communityStores?.values.toList() ?? [];
-    final icons = store.encointer.cachedCommunityIcons;
     return communityStores
         .mapIndexed(
           (i, e) => AccountOrCommunityData(
@@ -451,7 +430,9 @@ class _AssetsState extends State<Assets> {
                 color: zurichLion.shade50,
                 shape: BoxShape.circle,
               ),
-              child: SvgPicture.string(store.encointer.cachedCommunityIcons[i]),
+              child: e.communityIcon != null
+                  ? SvgPicture.string(e.communityIcon!)
+                  : SvgPicture.asset(fallBackCommunityIcon),
             ),
             name: e.name,
           ),
