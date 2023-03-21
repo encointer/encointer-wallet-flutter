@@ -125,13 +125,11 @@ class PreferencesService extends PreferencesStorage {
     return removeKey('${customKVKey}_$key');
   }
 
-  /// Gets the more specific return type that GetObject. This should always be preferred. /// /// Should be used instead of getObject`, see #533.
   @override
   Future<Map<String, dynamic>?> getMap(String key) async {
     final value = getKV('${customKVKey}_$key');
 
     if (value != null) {
-      // String to `Map<String, dynamic>` conversion
       final data = await compute(jsonDecode, value);
       return data as Map<String, dynamic>?;
     }
@@ -155,7 +153,7 @@ class PreferencesService extends PreferencesStorage {
     return data[accPubKey];
   }
 
-// cache timeout 10 minutes
+  // cache timeout 10 minutes
   static const int customCacheTimeLength = 10 * 60 * 1000;
 
   static bool checkCacheTimeout(int cacheTime) {
