@@ -4,18 +4,18 @@ import 'package:ew_storage/src/pref_service.dart';
 import 'package:flutter/material.dart';
 
 class LocalStorage {
-  LocalStorage({required this.isTest}) {
+  LocalStorage({required this.mockLocalStorage}) {
     _init();
   }
 
-  final bool isTest;
+  final bool mockLocalStorage;
 
   /// MockLocalStorage
   /// PreferencesService
   late final PreferencesStorage _storage;
 
   Future<void> _init() async {
-    if (isTest) {
+    if (mockLocalStorage) {
       _storage = MockLocalStorage();
     } else {
       await PreferencesService.instance.init();
