@@ -5,16 +5,18 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('SS58', () {
-    // Alice, double check with `subkey inspect //Alice`
+    // Alice pubKey, double check with `subkey inspect //Alice`
     const alice = '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d';
 
     test('ss58Encode works for prefix 2', () {
       // Prefix of the encointer kusama-parachain (production) and rococo-parachain (testnet).
+      // Reproduce with `subkey inspect //Alice -n kusama`
       expect(Fmt.ss58Encode(alice, prefix: 2), 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F');
     });
 
     test('ss58Encode works for prefix 42', () {
       // Prefix of the other encointer testnets.
+      // Reproduce with `subkey inspect //Alice`
       expect(Fmt.ss58Encode(alice), '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
     });
 
