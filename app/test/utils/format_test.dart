@@ -5,12 +5,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('SS58', () {
-    test('ss58Encode works', () {
-      // Alice, double check with `subkey inspect //Alice`
-      expect(
-        Fmt.ss58Encode('0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d'),
-        '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-      );
+    // Alice, double check with `subkey inspect //Alice`
+    const alice = '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d';
+
+    test('ss58Encode works for prefix 2', () {
+      // Prefix of the encointer kusama-parachain (production) and rococo-parachain (testnet).
+      expect(Fmt.ss58Encode(alice, prefix: 2), 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F');
+    });
+
+    test('ss58Encode works for prefix 42', () {
+      // Prefix of the other encointer testnets.
+      expect(Fmt.ss58Encode(alice), '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
     });
 
     test('blake2bWithSs58Pre works', () {
