@@ -371,21 +371,10 @@ class _AssetsState extends State<Assets> {
                       return SwitchAccountOrCommunity(
                         rowTitle: dic!.home.switchCommunity,
                         data: _allCommunities(),
-                        onTap: (int index) {
-                          // if (index == allCommunities.length - 1) {
-                          //   Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-                          //     _refreshBalanceAndNotify(dic);
-                          //   });
-                          // } else {
-                          //   setState(() {
-                          //     // switchCommunnity(
-                          //     // widget.store.account.accountListAll[index]
-                          //     // );
-                          //     // _refreshBalanceAndNotify(dic);
-
-                          //     // TODO
-                          //   });
-                          // }
+                        onTap: (int index) async {
+                          final store = context.read<AppStore>();
+                          final communityStores = store.encointer.communityStores?.values.toList() ?? [];
+                          await store.encointer.setChosenCid(communityStores[index].cid);
                         },
                       );
                     }),
@@ -418,8 +407,7 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> _allCommunities() {
-    final store = context.read<AppStore>();
-    final communityStores = store.encointer.communityStores?.values.toList() ?? [];
+    final communityStores = context.read<AppStore>().encointer.communityStores?.values.toList() ?? [];
     return communityStores
         .mapIndexed(
           (i, e) => AccountOrCommunityData(
