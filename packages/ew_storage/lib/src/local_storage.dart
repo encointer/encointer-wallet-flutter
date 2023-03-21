@@ -1,4 +1,4 @@
-import 'package:ew_storage/src/interface/pref_interface_class.dart';
+import 'package:ew_storage/src/interface/local_storage_interface.dart';
 import 'package:ew_storage/src/mock_storage.dart';
 import 'package:ew_storage/src/pref_service.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class LocalStorage {
 
   /// MockLocalStorage
   /// PreferencesService
-  late final PreferencesStorage _storage;
+  late final EncointerLocalStorage _storage;
 
   Future<void> _init() async {
     if (mockLocalStorage) {

@@ -1,8 +1,8 @@
 import 'package:ew_storage/src/interface/exception.dart';
-import 'package:ew_storage/src/interface/storage_interface.dart';
+import 'package:ew_storage/src/interface/secure_storage_interface.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// A SecureStorage client which implements the base [StorageInterface].
+/// A SecureStorage client which implements the base [SecureStorageInterface].
 /// By default, [SecureStorage] uses `FlutterSecureStorage`.
 ///
 /// ```dart
@@ -15,7 +15,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// // Read value for key.
 /// final value = await storage.read(key: 'my_key'); // 'my_value'
 /// ```
-class SecureStorage implements StorageInterface {
+class SecureStorage implements SecureStorageInterface {
   const SecureStorage([
     this._secureStorage = const FlutterSecureStorage(
       /// If you want read about [encryptedSharedPreferences]

@@ -1,7 +1,7 @@
 import 'package:ew_storage/src/interface/exception.dart';
 
-/// A Dart StorageInterface Client Interface
-abstract class StorageInterface {
+/// A Dart SecureStorageInterface Client Interface
+abstract class SecureStorageInterface {
   /// Returns the value associated with the provided [key].
   ///
   /// Returns `null` if no value is found for the given [key].

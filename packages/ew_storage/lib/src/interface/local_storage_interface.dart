@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class PreferencesStorage {
+abstract class EncointerLocalStorage {
   Future<List<Map<String, dynamic>>> getAccountList();
 
   Future<void> addAccount(Map<String, dynamic> acc);
