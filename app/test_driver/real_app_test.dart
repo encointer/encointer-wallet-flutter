@@ -290,10 +290,25 @@ void main() async {
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
-  test('account share and change name', () async {
+  test('account share', () async {
     await changeAccountFromPanel(driver, 'Tom');
-    await shareAccountAndChangeNameTest(driver, 'Tom', 'Jerry');
+    await shareAccount(driver, 'Tom');
     await addDelay(2500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('account change name', () async {
+    await accountChangeName(driver, 'Jerry');
+    await addDelay(500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('account export', () async {
+    await accountExport(driver);
+    await addDelay(500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('account delete from account manage page', () async {
+    await accountDeleteFromAccountManagePage(driver);
+    await addDelay(500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('delete all account ad show create account page', () async {
