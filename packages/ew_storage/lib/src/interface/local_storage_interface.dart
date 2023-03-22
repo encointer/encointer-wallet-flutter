@@ -55,18 +55,9 @@ abstract class EncointerLocalStorage {
 
   Future<void> addItemToList(String key, Map<String, dynamic> acc);
 
-  Future<void> removeItemFromList(
-    String key,
-    String itemKey,
-    String itemValue,
-  );
+  Future<void> removeItemFromList(String key, String itemKey, String itemValue);
 
-  Future<void> updateItemInList(
-    String key,
-    String itemKey,
-    String? itemValue,
-    Map<String, dynamic> itemNew,
-  );
+  Future<void> updateItemInList(String key, String itemKey, String? itemValue, Map<String, dynamic> itemNew);
 
   Future<void> setListString(String key, List<String> value);
 

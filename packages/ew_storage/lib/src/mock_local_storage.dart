@@ -27,7 +27,7 @@ Map<String, dynamic> storage = <String, dynamic>{};
 
 List<dynamic> pubKeys = accList.map((e) => e['pubKey']).toList();
 
-class MockLocalStorage extends EncointerLocalStorage {
+class MockLocalStorage implements EncointerLocalStorage {
   @override
   Future<List<Map<String, dynamic>>> getAccountList() {
     return Future.value(accList);
@@ -91,7 +91,6 @@ class MockLocalStorage extends EncointerLocalStorage {
 
   @override
   Future<Object?> getObject(String key) async {
-// Log.d("getObject: $storage", 'MockLocalStorage');
     final value = storage[key] as String?;
 
     if (value != null) {
@@ -116,7 +115,6 @@ class MockLocalStorage extends EncointerLocalStorage {
 
   @override
   Future<Map<String, dynamic>?> getMap(String key) async {
-// Log.d("getMap: $storage", 'MockLocalStorage');
     final value = storage[key] as String?;
 
     if (value != null) {
