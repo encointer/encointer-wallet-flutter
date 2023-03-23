@@ -138,8 +138,8 @@ abstract class _EncointerAccountStore with Store {
     numberOfNewbieTicketsForReputable = await webApi.encointer.getNumberOfNewbieTicketsForReputable();
   }
 
-  void initStore(Function? cacheFn) {
-    _cacheFn = cacheFn as Future<void> Function()?;
+  void initStore(Future<void> Function()? cacheFn) {
+    _cacheFn = cacheFn;
   }
 
   Future<void> writeToCache() {

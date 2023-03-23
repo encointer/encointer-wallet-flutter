@@ -233,13 +233,12 @@ abstract class _EncointerStore with Store {
   Future<void> setChosenCid([CommunityIdentifier? cid]) async {
     if (chosenCid != cid) {
       chosenCid = cid;
-      unawaited(writeToCache());
 
       if (cid != null) {
         await Future.wait([
           _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson()),
-          initBazaarStore(cid),
-          initCommunityStore(cid, _rootStore.account.currentAddress)
+          initBazaarStore(cid, shouldCache: false),
+          initCommunityStore(cid, _rootStore.account.currentAddress, shouldCache: false)
         ]);
       } else {
         await _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
@@ -254,6 +253,8 @@ abstract class _EncointerStore with Store {
     if (!_rootStore.settings.loading) {
       webApi.encointer.getCommunityData();
     }
+
+    unawaited(writeToCache());
   }
 
   @action
@@ -381,18 +382,16 @@ abstract class _EncointerStore with Store {
     communityStores ??= ObservableMap();
 
     accountStores!.forEach((cid, store) => store.initStore(cacheFn));
-    bazaarStores!.forEach((cid, store) => store.initStore(cacheFn));
+    bazaarStores!.forEach((cid, store) => store);
     communityStores!.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
 
     loadChosenCid(network);
   }
 
   Future<void> writeToCache() {
-    if (_cacheFn != null) {
-      return _cacheFn!();
-    } else {
-      return Future.value();
-    }
+    return _cacheFn?.call() ?? Future.value();
+    // if (_cacheFn != null) return _cacheFn!();
+    // // return null;
   }
 
   // -- init functions for sub-stores
@@ -447,7 +446,7 @@ abstract class _EncointerStore with Store {
     final cidFmt = cid.toFmtString();
     if (!bazaarStores!.containsKey(cidFmt)) {
       Log.d('Adding new bazaarStore for cid: ${cid.toFmtString()}', 'EncointerStore');
-      final bazaarStore = BazaarStore(network, cid)..initStore(_cacheFn);
+      final bazaarStore = BazaarStore(network, cid);
 
       bazaarStores![cidFmt] = bazaarStore;
       return shouldCache ? writeToCache() : Future.value();

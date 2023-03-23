@@ -26,8 +26,8 @@ abstract class _BazaarStore with Store {
   _BazaarStore(this.network, this.cid);
 
   /// Function that writes the store to local storage.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  Future<void> Function()? _cacheFn;
+  // @JsonKey(includeFromJson: false, includeToJson: false)
+  // Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.
   final String? network;
@@ -42,18 +42,18 @@ abstract class _BazaarStore with Store {
   @action
   void setBusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
     businessRegistry = ObservableList.of(accBusinesses);
-    writeToCache();
+    // writeToCache();
   }
 
-  void initStore(Function? cacheFn) {
-    _cacheFn = cacheFn as Future<void> Function()?;
-  }
+  // void initStore(Function? cacheFn) {
+  //   _cacheFn = cacheFn as Future<void> Function()?;
+  // }
 
-  Future<void> writeToCache() {
-    if (_cacheFn != null) {
-      return _cacheFn!();
-    } else {
-      return Future.value();
-    }
-  }
+  // Future<void> writeToCache() {
+  //   if (_cacheFn != null) {
+  //     return _cacheFn!();
+  //   } else {
+  //     return Future.value();
+  //   }
+  // }
 }
