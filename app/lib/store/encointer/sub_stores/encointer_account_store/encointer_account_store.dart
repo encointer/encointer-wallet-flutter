@@ -8,9 +8,9 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
-import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/common/stores/assets/types/transfer_data.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
 
 part 'encointer_account_store.g.dart';
 

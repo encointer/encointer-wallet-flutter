@@ -1,16 +1,16 @@
+import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_info_and_calendar.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_schedule.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class CeremonyInfo extends StatelessWidget {
   const CeremonyInfo({
@@ -67,7 +67,7 @@ class CeremonyInfo extends StatelessWidget {
                       onInfoPressed: () async {
                         final infoLink = ceremonyInfoLink(
                           languageCode,
-                          context.read<AppStore>().encointer.community?.cid.toFmtString() ?? '',
+                          sl<AppStore>().encointer.community?.cid.toFmtString() ?? '',
                         );
                         await AppLaunch.launchURL(infoLink);
                       },

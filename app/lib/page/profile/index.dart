@@ -1,8 +1,12 @@
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/common/stores/settings/settings_store.dart';
+import 'package:encointer_wallet/presentation/account/ui/views/add_account_view.dart';
+import 'package:encointer_wallet/presentation/account/ui/views/create_account_entry_view.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
@@ -13,13 +17,11 @@ import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/snack_bar.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -31,57 +33,10 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   EndpointData? _selectedNetwork;
 
-  List<Widget> _buildAccountList() {
-    final allAccountsAsWidgets = <Widget>[];
-
-    final accounts = context.read<AppStore>().account.accountListAll;
-
-    allAccountsAsWidgets.addAll(accounts.map((account) {
-      return InkWell(
-        key: Key(account.name),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                AddressIcon(
-                  '',
-                  account.pubKey,
-                  size: 70,
-                  tapToCopy: false,
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: zurichLion.shade800),
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Text(
-              Fmt.accountName(context, account),
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            // This sizedBox is here to define a distance between the accounts
-            const SizedBox(width: 100),
-          ],
-        ),
-        onTap: () => {
-          Navigator.pushNamed(context, AccountManagePage.route, arguments: account.pubKey),
-        },
-      );
-    }).toList());
-    return allAccountsAsWidgets;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final h3Grey = Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey);
-    final store = context.watch<AppStore>();
+    final store = sl<AppStore>();
     _selectedNetwork = store.settings.endpoint;
 
     // if all accounts are deleted, go to createAccountPage
@@ -241,40 +196,82 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-}
 
-Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
-  final dic = I18n.of(context)!.translationsForLocale();
+  List<Widget> _buildAccountList() {
+    final allAccountsAsWidgets = <Widget>[];
 
-  return showCupertinoDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return CupertinoAlertDialog(
-        title: Text(dic.profile.accountsDelete),
-        actions: <Widget>[
-          CupertinoButton(
-            child: Text(dic.home.cancel),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          CupertinoButton(
-            key: const Key('remove-all-accounts-check'),
-            child: Text(dic.home.ok),
-            onPressed: () async {
-              final accounts = store.account.accountListAll;
+    final accounts = sl<AppStore>().account.accountListAll;
 
-              for (final acc in accounts) {
-                await store.account.removeAccount(acc);
-              }
-
-              await Navigator.pushNamedAndRemoveUntil(
-                context,
-                CreateAccountEntryView.route,
-                (route) => false,
-              );
-            },
-          ),
-        ],
+    allAccountsAsWidgets.addAll(accounts.map((account) {
+      return InkWell(
+        key: Key(account.name),
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                AddressIcon(
+                  '',
+                  account.pubKey,
+                  size: 70,
+                  tapToCopy: false,
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0, //give the values according to your requirement
+                  child: Icon(Iconsax.edit, color: zurichLion.shade800),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(
+              Fmt.accountName(context, account),
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            // This sizedBox is here to define a distance between the accounts
+            const SizedBox(width: 100),
+          ],
+        ),
+        onTap: () => {
+          Navigator.pushNamed(context, AccountManagePage.route, arguments: account.pubKey),
+        },
       );
-    },
-  );
+    }).toList());
+    return allAccountsAsWidgets;
+  }
+
+  Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
+    final dic = I18n.of(context)!.translationsForLocale();
+
+    return showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(dic.profile.accountsDelete),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text(dic.home.cancel),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoButton(
+              key: const Key('remove-all-accounts-check'),
+              child: Text(dic.home.ok),
+              onPressed: () async {
+                final accounts = store.account.accountListAll;
+
+                for (final acc in accounts) {
+                  await store.account.removeAccount(acc);
+                }
+
+                await Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  CreateAccountEntryView.route,
+                  (route) => false,
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

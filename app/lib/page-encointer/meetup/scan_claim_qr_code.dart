@@ -1,17 +1,17 @@
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/snack_bar.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations.dart';
 
 class ScanClaimQrCode extends StatefulWidget {
   const ScanClaimQrCode(this.confirmedParticipantsCount, {super.key});
@@ -25,10 +25,10 @@ class ScanClaimQrCode extends StatefulWidget {
 class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
   late final List<String> allParticipants;
   late final String currentAddress;
+  final store = sl<AppStore>();
 
   @override
   void initState() {
-    final store = context.read<AppStore>();
     currentAddress = store.account.currentAddress;
     allParticipants = store.encointer.communityAccount?.meetup?.registry ?? [];
     super.initState();
@@ -66,7 +66,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
+
     return Scaffold(
       appBar: AppBar(
         leading: const SizedBox.shrink(),
@@ -92,7 +92,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                   if (barcode.rawValue == null) {
                     Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
                   } else {
-                    onScan(context.read<AppStore>(), dic, barcode.rawValue!);
+                    onScan(sl<AppStore>(), dic, barcode.rawValue!);
                   }
                 }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width

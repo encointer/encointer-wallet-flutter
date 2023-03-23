@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/design_kit/buttons/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,13 +31,18 @@ class _SubmitButtonState extends State<SubmitButton> {
   @override
   Widget build(BuildContext context) {
     return PrimaryButton(
-      onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
+      onPressed: _onPressed,
       child: !_submitting
           ? widget.child
           : Theme(
               // change theme locally to dark such that the activity indicator appears bright
-              data: ThemeData(cupertinoOverrideTheme: const CupertinoThemeData(brightness: Brightness.dark)),
-              child: const CupertinoActivityIndicator()),
+              data: ThemeData(
+                cupertinoOverrideTheme: const CupertinoThemeData(
+                  brightness: Brightness.dark,
+                ),
+              ),
+              child: const CupertinoActivityIndicator(),
+            ),
     );
   }
 }

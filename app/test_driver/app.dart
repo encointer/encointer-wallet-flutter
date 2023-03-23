@@ -13,7 +13,7 @@ import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/app_store.dart';
 
 void main() async {
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';

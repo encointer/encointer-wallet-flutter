@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/utils/ui.dart';
+import 'package:encointer_wallet/extras/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';

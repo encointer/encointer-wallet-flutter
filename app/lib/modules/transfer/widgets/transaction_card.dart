@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({super.key, required this.transaction});

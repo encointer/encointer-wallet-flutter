@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:encointer_wallet/utils/validate_keys.dart';
+import 'package:encointer_wallet/extras/utils/validate_keys.dart';
 
 void main() {
   group('PrivateKey', () {

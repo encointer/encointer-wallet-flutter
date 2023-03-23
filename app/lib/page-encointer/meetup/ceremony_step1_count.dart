@@ -1,15 +1,18 @@
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/design_kit/buttons/primary_button.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step2_scan2.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
+
+const _tag = 'ceremony_step1_count';
 
 class CeremonyStep1Count extends StatelessWidget {
   CeremonyStep1Count(this.store, this.api, {super.key});
@@ -96,14 +99,28 @@ class CeremonyStep1Count extends StatelessWidget {
                     ),
                   ],
                 ),
-                onPressed: () => _attendeesCountController.text.trim().isNotEmpty
-                    ? _pushStep2ScanPage(context, int.parse(_attendeesCountController.text.trim()))
-                    : null,
+                onPressed: () => _onPressed(context),
+
+                /// Please do not code this way!
+                // onPressed: () => _attendeesCountController.text.trim().isNotEmpty
+                //     ? _pushStep2ScanPage(context, int.parse(_attendeesCountController.text.trim()))
+                //     : null,
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  /// This is an example of we need to code, thanks.
+  Future<void> _onPressed(BuildContext context) async {
+    Log.d('_onPressed', _tag);
+    if (_attendeesCountController.text.trim().isEmpty) return;
+
+    await _pushStep2ScanPage(
+      context,
+      int.parse(_attendeesCountController.text.trim()),
     );
   }
 }

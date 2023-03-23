@@ -1,18 +1,18 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/design_kit/buttons/primary_button.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/presentation/account/types/account_data.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
@@ -30,82 +30,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
   final TextEditingController _passCtrl = TextEditingController();
   final TextEditingController _pass2Ctrl = TextEditingController();
 
+  /// TODO(Azamat): Why do we need [_submitting]?
   bool _submitting = false;
-
-  Future<void> _onSave(AppStore store) async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _submitting = true;
-      });
-
-      final dic = I18n.of(context)!.translationsForLocale();
-      final passOld = _passOldCtrl.text.trim();
-      final passNew = _passCtrl.text.trim();
-      // check password
-      final passChecked = await webApi.account.checkAccountPassword(
-        store.account.currentAccount,
-        passOld,
-      );
-      if (passChecked == null) {
-        await showCupertinoDialog<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Text(dic.profile.wrongPin),
-              content: Text(dic.profile.wrongPinHint),
-              actions: <Widget>[
-                CupertinoButton(
-                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-                  onPressed: () {
-                    _passOldCtrl.clear();
-                    setState(() {
-                      _submitting = false;
-                    });
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        // we need to iterate over all active accounts and update there password
-        store.settings.setPin(passNew);
-        for (final account in store.account.accountListAll) {
-          final acc = await api.evalJavascript(
-            'account.changePassword("${account.pubKey}", "$passOld", "$passNew")',
-          ) as Map<String, dynamic>;
-
-          // update encrypted seed after password updated
-          store.account.accountListAll.map((accountData) {
-            // use local name, not webApi returned name
-            final localAcc = AccountData.toJson(accountData);
-            // make metadata the same as the polkadot-js/api's
-            (acc['meta'] as Map<String, dynamic>)['name'] = localAcc['name'];
-            store.account.updateAccount(acc);
-            store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
-          });
-        }
-        await showCupertinoDialog<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Text(dic.profile.passSuccess),
-              content: Text(dic.profile.passSuccessTxt),
-              actions: <Widget>[
-                CupertinoButton(
-                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-                    onPressed: () {
-                      // moving back to profile page after changing password
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                    }),
-              ],
-            );
-          },
-        );
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +112,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 ),
               ),
               PrimaryButton(
-                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>()),
+                onPressed: _onSave,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -203,5 +129,81 @@ class _ChangePassword extends State<ChangePasswordPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _onSave() async {
+    final store = sl<AppStore>();
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _submitting = true;
+      });
+
+      final dic = I18n.of(context)!.translationsForLocale();
+      final passOld = _passOldCtrl.text.trim();
+      final passNew = _passCtrl.text.trim();
+      // check password
+      final passChecked = await webApi.account.checkAccountPassword(
+        store.account.currentAccount,
+        passOld,
+      );
+      if (passChecked == null) {
+        await showCupertinoDialog<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(dic.profile.wrongPin),
+              content: Text(dic.profile.wrongPinHint),
+              actions: <Widget>[
+                CupertinoButton(
+                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                  onPressed: () {
+                    _passOldCtrl.clear();
+                    setState(() {
+                      _submitting = false;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // we need to iterate over all active accounts and update there password
+        store.settings.setPin(passNew);
+        for (final account in store.account.accountListAll) {
+          final acc = await api.evalJavascript(
+            'account.changePassword("${account.pubKey}", "$passOld", "$passNew")',
+          ) as Map<String, dynamic>;
+
+          // update encrypted seed after password updated
+          store.account.accountListAll.map((accountData) {
+            // use local name, not webApi returned name
+            final localAcc = AccountData.toJson(accountData);
+            // make metadata the same as the polkadot-js/api's
+            (acc['meta'] as Map<String, dynamic>)['name'] = localAcc['name'];
+            store.account.updateAccount(acc);
+            store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
+          });
+        }
+        await showCupertinoDialog<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(dic.profile.passSuccess),
+              content: Text(dic.profile.passSuccessTxt),
+              actions: <Widget>[
+                CupertinoButton(
+                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                    onPressed: () {
+                      // moving back to profile page after changing password
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                    }),
+              ],
+            );
+          },
+        );
+      }
+    }
   }
 }

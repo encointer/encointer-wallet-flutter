@@ -1,18 +1,18 @@
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/presentation/account/types/account_data.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
-Widget showPasswordInputDialog(
-  BuildContext context,
-  AccountData account,
-  Widget? title,
-  void Function(String password) onOk,
-) {
+Widget showPasswordInputDialog({
+  required BuildContext context,
+  required AccountData account,
+  required Widget? title,
+  required void Function(String password) onOk,
+}) {
   return PasswordInputDialog(
     account: account,
     title: title,

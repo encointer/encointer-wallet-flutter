@@ -1,12 +1,15 @@
-import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/presentation/account/ui/views/add_account_view.dart';
+import 'package:encointer_wallet/presentation/account/ui/views/create_account_entry_view.dart';
+import 'package:encointer_wallet/presentation/account/ui/views/create_account_view.dart';
+import 'package:encointer_wallet/presentation/home/ui/views/home_view.dart';
+import 'package:encointer_wallet/presentation/splash/ui/views/splash_view.dart';
+import 'package:encointer_wallet/presentation/account/types/account_data.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/detail_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
@@ -27,7 +30,7 @@ import 'package:encointer_wallet/page/profile/settings/settings_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 
 class AppRoute {
   const AppRoute._();
@@ -44,9 +47,9 @@ class AppRoute {
         return CupertinoPageRoute(
           builder: (_) => const SplashView(),
         );
-      case EncointerHomePage.route:
+      case HomeView.route:
         return CupertinoPageRoute(
-          builder: (_) => const EncointerHomePage(),
+          builder: (_) => const HomeView(),
         );
       case NetworkSelectPage.route:
         return CupertinoPageRoute(
@@ -122,7 +125,7 @@ class AppRoute {
         );
       case ContactListPage.route:
         return CupertinoPageRoute(
-          builder: (_) => const ContactListPage(),
+          builder: (_) => ContactListPage(),
           settings: settings,
         );
       case ContactPage.route:
@@ -190,10 +193,7 @@ class AppRoute {
         );
       case TransferHistoryView.route:
         return CupertinoPageRoute(
-          builder: (_) => Provider(
-            create: (context) => TransferHistoryStore()..getTransfers(),
-            child: const TransferHistoryView(),
-          ),
+          builder: (_) => const TransferHistoryView(),
           settings: settings,
         );
       default:

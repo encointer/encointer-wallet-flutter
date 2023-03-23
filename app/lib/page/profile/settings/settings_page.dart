@@ -1,12 +1,12 @@
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -21,10 +21,11 @@ class _Settings extends State<SettingsPage> {
 
   int _selected = 0;
 
+  final store = sl<AppStore>();
+
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
 
     String getLang(String code) {
       switch (code) {
@@ -60,9 +61,10 @@ class _Settings extends State<SettingsPage> {
             ),
             onWillPop: () async {
               final code = _langOptions[_selected];
-              if (code != context.read<AppStore>().settings.localeCode) {
-                await context.read<AppStore>().settings.setLocalCode(code);
-                context.read<AppStore>().settings.changeLang(context, code);
+              final appStore = sl<AppStore>();
+              if (code != appStore.settings.localeCode) {
+                await appStore.settings.setLocalCode(code);
+                appStore.settings.changeLang(context, code);
               }
               return true;
             },

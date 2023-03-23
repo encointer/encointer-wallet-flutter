@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -6,10 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/rounded_button.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -54,7 +55,7 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
+        final exist = sl<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
           return showCupertinoDialog<void>(
             context: context,
@@ -72,11 +73,11 @@ class _Contact extends State<ContactPage> {
             },
           );
         } else {
-          await context.read<AppStore>().settings.addContact(con);
+          await sl<AppStore>().settings.addContact(con);
         }
       } else {
         // edit contact
-        await context.read<AppStore>().settings.updateContact(con);
+        await sl<AppStore>().settings.updateContact(con);
       }
 
       // get contact info
@@ -85,7 +86,7 @@ class _Contact extends State<ContactPage> {
       } else {
         // if this address was used as observation and current account,
         // we need to change current account
-        if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {
+        if (pubKey == sl<AppStore>().account.currentAccountPubKey) {
           await webApi.account.changeCurrentAccount(fetchData: true);
         }
       }

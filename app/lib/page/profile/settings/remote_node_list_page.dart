@@ -1,12 +1,13 @@
+import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/common/stores/settings/settings_store.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
   RemoteNodeListPage({super.key});
@@ -18,7 +19,7 @@ class RemoteNodeListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final endpoints = List<EndpointData>.of(networkEndpoints)
-      ..retainWhere((i) => i.info == context.watch<AppStore>().settings.endpoint.info);
+      ..retainWhere((i) => i.info == sl<AppStore>().settings.endpoint.info);
     final list = endpoints
         .map((i) => ListTile(
               leading: SizedBox(
@@ -39,12 +40,12 @@ class RemoteNodeListPage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                if (context.read<AppStore>().settings.endpoint.value == i.value) {
+                if (sl<AppStore>().settings.endpoint.value == i.value) {
                   Navigator.of(context).pop();
                   return;
                 }
-                context.read<AppStore>().settings.setEndpoint(i);
-                context.read<AppStore>().settings.setNetworkLoading(true);
+                sl<AppStore>().settings.setEndpoint(i);
+                sl<AppStore>().settings.setNetworkLoading(true);
                 webApi.launchWebview(customNode: true);
                 Navigator.of(context).pop();
               },

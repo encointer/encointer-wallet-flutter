@@ -1,14 +1,15 @@
+import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/design_kit/buttons/primary_button.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
@@ -16,12 +17,11 @@ import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/ui.dart';
+import 'package:encointer_wallet/presentation/account/types/account_data.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
+import 'package:encointer_wallet/extras/utils/ui.dart';
 
 class TransferPageParams {
   const TransferPageParams({
@@ -73,7 +73,7 @@ class _TransferPageState extends State<TransferPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final store = context.read<AppStore>();
+      final store = sl<AppStore>();
 
       if (widget.params != null) {
         handleTransferPageParams(widget.params!, store);
@@ -113,7 +113,7 @@ class _TransferPageState extends State<TransferPage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
+    final store = sl<AppStore>();
     final textTheme = Theme.of(context).textTheme;
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
     Log.d('[transferPage]: available: $available', 'TransferPage');
@@ -232,13 +232,11 @@ class _TransferPageState extends State<TransferPage> {
               const SizedBox(height: 8),
               PrimaryButton(
                 key: const Key('make-transfer'),
-                onPressed: _accountTo != null
-                    ? () {
-                        if (_cid != null && _communitySymbol != null) {
-                          _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
-                        }
-                      }
-                    : null,
+                onPressed: () {
+                  if (_cid != null && _communitySymbol != null) {
+                    _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
+                  }
+                },
                 child: SizedBox(
                   height: 24,
                   child: Row(

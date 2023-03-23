@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
-import 'package:encointer_wallet/utils/enum.dart';
+import 'package:encointer_wallet/extras/utils/enum.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 part 'ceremonies.g.dart';

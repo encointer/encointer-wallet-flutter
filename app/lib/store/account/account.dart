@@ -1,338 +1,340 @@
-import 'dart:async';
+// import 'dart:async';
 
-import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
-import 'package:mobx/mobx.dart';
+// import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
+// import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+// import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/account/types/tx_status.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
+// import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
+// import 'package:encointer_wallet/service/log/log_service.dart';
+// import 'package:encointer_wallet/service/notification/lib/notification.dart';
+// import 'package:encointer_wallet/store/account/types/account_data.dart';
+// import 'package:encointer_wallet/store/account/types/tx_status.dart';
+// import 'package:encointer_wallet/store/app_store.dart';
+// import 'package:encointer_wallet/extras/utils/format.dart';
 
-part 'account.g.dart';
+// part 'account.g.dart';
 
-/// Mobx-store containing account related data.
-///
-/// Todo: This store has been inherited from upstream, and I think it would need a refactoring:
-/// * https://github.com/encointer/encointer-wallet-flutter/issues/574
-/// * https://github.com/encointer/encointer-wallet-flutter/issues/487
+// /// Mobx-store containing account related data.
+// ///
+// /// Todo: This store has been inherited from upstream, and I think it would need a refactoring:
+// /// * https://github.com/encointer/encointer-wallet-flutter/issues/574
+// /// * https://github.com/encointer/encointer-wallet-flutter/issues/487
 
-class AccountStore extends _AccountStore with _$AccountStore {
-  AccountStore(super.appStore);
+// const _tag = 'account_store';
 
-  static const String seedTypeMnemonic = 'mnemonic';
-  static const String seedTypeRawSeed = 'rawSeed';
-  static const String seedTypeKeystore = 'keystore';
-}
+// class AccountStore extends _AccountStore with _$AccountStore {
+//   AccountStore(super.appStore);
 
-abstract class _AccountStore with Store {
-  _AccountStore(this.rootStore);
+//   static const String seedTypeMnemonic = 'mnemonic';
+//   static const String seedTypeRawSeed = 'rawSeed';
+//   static const String seedTypeKeystore = 'keystore';
+// }
 
-  final AppStore rootStore;
+// abstract class _AccountStore with Store {
+//   _AccountStore(this.rootStore);
 
-  Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
-    acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
-    if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
-      (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
-    }
-    (acc['meta'] as Map<String, dynamic>)['whenEdited'] = DateTime.now().millisecondsSinceEpoch;
-    return acc;
-  }
+//   final AppStore rootStore;
 
-  @observable
-  bool loading = true;
+//   Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
+//     acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
+//     if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
+//       (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
+//     }
+//     (acc['meta'] as Map<String, dynamic>)['whenEdited'] = DateTime.now().millisecondsSinceEpoch;
+//     return acc;
+//   }
 
-  @observable
-  TxStatus? txStatus;
+//   @observable
+//   bool loading = true;
 
-  @observable
-  String? currentAccountPubKey = '';
+//   @observable
+//   TxStatus? txStatus;
 
-  @observable
-  ObservableList<AccountData> accountList = ObservableList<AccountData>();
+//   @observable
+//   String? currentAccountPubKey = '';
 
-  @observable
-  ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
+//   @observable
+//   ObservableList<AccountData> accountList = ObservableList<AccountData>();
 
-  @observable
-  List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
+//   @observable
+//   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
 
-  @computed
-  AccountData get currentAccount {
-    return getAccountData(currentAccountPubKey);
-  }
+//   @observable
+//   List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
 
-  AccountData getAccountData(String? requestedPubKey) {
-    final i = accountListAll.indexWhere((i) => i.pubKey == requestedPubKey);
-    if (i < 0) {
-      if (accountListAll.isNotEmpty) {
-        return accountListAll[0];
-      } else {
-        return AccountData();
-      }
-    }
-    return accountListAll[i];
-  }
+//   @computed
+//   AccountData get currentAccount {
+//     return getAccountData(currentAccountPubKey);
+//   }
 
-  @computed
-  List<AccountData> get optionalAccounts {
-    return accountListAll.where((i) => i.pubKey != currentAccountPubKey).toList();
-  }
+//   AccountData getAccountData(String? requestedPubKey) {
+//     final i = accountListAll.indexWhere((i) => i.pubKey == requestedPubKey);
+//     if (i < 0) {
+//       if (accountListAll.isNotEmpty) {
+//         return accountListAll[0];
+//       } else {
+//         return AccountData();
+//       }
+//     }
+//     return accountListAll[i];
+//   }
 
-  /// accountList with observations
-  @computed
-  List<AccountData> get accountListAll {
-    final contactList = rootStore.settings.contactList.toList()..retainWhere((i) => i.observation ?? false);
-    final accList = accountList.toList()..addAll(contactList);
-    return accList;
-  }
+//   @computed
+//   List<AccountData> get optionalAccounts {
+//     return accountListAll.where((i) => i.pubKey != currentAccountPubKey).toList();
+//   }
 
-  @computed
-  bool get isFirstAccount {
-    return accountListAll.isEmpty;
-  }
+//   /// accountList with observations
+//   @computed
+//   List<AccountData> get accountListAll {
+//     final contactList = rootStore.settings.contactList.toList()..retainWhere((i) => i.observation ?? false);
+//     final accList = accountList.toList()..addAll(contactList);
+//     return accList;
+//   }
 
-  @computed
-  String get currentAddress {
-    return getNetworkAddress(currentAccountPubKey);
-  }
+//   @computed
+//   bool get isFirstAccount {
+//     return accountListAll.isEmpty;
+//   }
 
-  /// Gets the address (SS58) for the corresponding network.
-  String getNetworkAddress(String? pubKey) {
-    // _log("currentAddress: endpoint.info: ${rootStore.settings.endpoint.info}");
-    // _log("currentAddress: endpoint.ss58: ${rootStore.settings.endpoint.ss58}");
-    // _log("currentAddress: customSS58: ${rootStore.settings.customSS58Format.toString()}");
-    // _log("currentAddress: AddressMap 42: ${pubKeyAddressMap[42].toString()}");
-    // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
+//   @computed
+//   String get currentAddress {
+//     return getNetworkAddress(currentAccountPubKey);
+//   }
 
-    var ss58 = rootStore.settings.customSS58Format['value'] as int?;
-    if (rootStore.settings.customSS58Format['info'] == defaultSs58Prefix['info']) {
-      ss58 = rootStore.settings.endpoint.ss58;
-    }
+//   /// Gets the address (SS58) for the corresponding network.
+//   String getNetworkAddress(String? pubKey) {
+//     // _log("currentAddress: endpoint.info: ${rootStore.settings.endpoint.info}");
+//     // _log("currentAddress: endpoint.ss58: ${rootStore.settings.endpoint.ss58}");
+//     // _log("currentAddress: customSS58: ${rootStore.settings.customSS58Format.toString()}");
+//     // _log("currentAddress: AddressMap 42: ${pubKeyAddressMap[42].toString()}");
+//     // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
 
-    final address = pubKeyAddressMap[ss58!] != null ? pubKeyAddressMap[ss58]![pubKey!] : null;
+//     var ss58 = rootStore.settings.customSS58Format['value'] as int?;
+//     if (rootStore.settings.customSS58Format['info'] == defaultSs58Prefix['info']) {
+//       ss58 = rootStore.settings.endpoint.ss58;
+//     }
 
-    if (address != null) {
-      return address;
-    } else {
-      Log.d('getNetworkAddress: could not get address (SS58)', 'AccountStore');
-      return currentAccount.address;
-    }
-  }
+//     final address = pubKeyAddressMap[ss58!] != null ? pubKeyAddressMap[ss58]![pubKey!] : null;
 
-  @action
-  void setTxStatus([TxStatus? status]) {
-    txStatus = status;
-  }
+//     if (address != null) {
+//       return address;
+//     } else {
+//       Log.d('getNetworkAddress: could not get address (SS58)', 'AccountStore');
+//       return currentAccount.address;
+//     }
+//   }
 
-  @action
-  void clearTxStatus() {
-    txStatus = null;
-  }
+//   @action
+//   void setTxStatus([TxStatus? status]) {
+//     txStatus = status;
+//   }
 
-  @action
-  void queueTx(Map<String, dynamic> tx) {
-    queuedTxs.add(tx);
+//   @action
+//   void clearTxStatus() {
+//     txStatus = null;
+//   }
 
-    Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
-      if (await webApi.isConnected()) {
-        for (final args in queuedTxs) {
-          final res = await webApi.account.sendTxAndShowNotification(
-            args['txInfo'] as Map<dynamic, dynamic>?,
-            args['params'] as List<dynamic>?,
-            args['title'] as String?,
-            args['notificationTitle'] as String?,
-            rawParam: args['rawParam'] as String?,
-          );
+//   @action
+//   void queueTx(Map<String, dynamic> tx) {
+//     queuedTxs.add(tx);
 
-          Log.d('Queued tx result: $res', 'AccountStore');
-          if (res['hash'] == null) {
-            await NotificationPlugin.showNotification(
-              0,
-              args['notificationTitle'] as String?,
-              'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
-            );
-          } else {
-            if (rootStore.settings.endpointIsEncointer) {
-              await rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
-            }
-          }
-        }
-        rootStore.assets.setSubmitting(false);
-        rootStore.account.clearTxStatus();
-        timer.cancel();
-        queuedTxs = [];
-      } else {
-        Log.d('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)', 'AccountStore');
-      }
-    });
-  }
+//     Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
+//       if (await webApi.isConnected()) {
+//         for (final args in queuedTxs) {
+//           final res = await webApi.account.sendTxAndShowNotification(
+//             args['txInfo'] as Map<dynamic, dynamic>?,
+//             args['params'] as List<dynamic>?,
+//             args['title'] as String?,
+//             args['notificationTitle'] as String?,
+//             rawParam: args['rawParam'] as String?,
+//           );
 
-  @action
-  Future<void> setCurrentAccount(String? pubKey) async {
-    if (currentAccountPubKey != pubKey) {
-      currentAccountPubKey = pubKey;
+//           Log.d('Queued tx result: $res', 'AccountStore');
+//           if (res['hash'] == null) {
+//             await NotificationPlugin.showNotification(
+//               0,
+//               args['notificationTitle'] as String?,
+//               'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
+//             );
+//           } else {
+//             if (rootStore.settings.endpointIsEncointer) {
+//               await rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
+//             }
+//           }
+//         }
+//         rootStore.assets.setSubmitting(false);
+//         rootStore.account.clearTxStatus();
+//         timer.cancel();
+//         queuedTxs = [];
+//       } else {
+//         Log.d('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)', 'AccountStore');
+//       }
+//     });
+//   }
 
-      await rootStore.localStorage.setCurrentAccount(pubKey!);
+//   @action
+//   Future<void> setCurrentAccount(String? pubKey) async {
+//     if (currentAccountPubKey != pubKey) {
+//       currentAccountPubKey = pubKey;
 
-      return loadAccount();
-    }
-  }
+//       await rootStore.localStorage.setCurrentAccount(pubKey!);
 
-  @action
-  Future<void> updateAccountName(AccountData account, String newName) async {
-    final acc = AccountData.toJson(account);
-    (acc['meta'] as Map<String, dynamic>)['name'] = newName;
+//       return loadAccount();
+//     }
+//   }
 
-    await updateAccount(acc);
-  }
+//   @action
+//   Future<void> updateAccountName(AccountData account, String newName) async {
+//     final acc = AccountData.toJson(account);
+//     (acc['meta'] as Map<String, dynamic>)['name'] = newName;
 
-  @action
-  Future<void> updateAccount(Map<String, dynamic> acc) async {
-    final formattedAcc = _formatMetaData(acc);
+//     await updateAccount(acc);
+//   }
 
-    final accNew = AccountData.fromJson(formattedAcc);
-    await rootStore.localStorage.removeAccount(accNew.pubKey);
-    await rootStore.localStorage.addAccount(formattedAcc);
+//   @action
+//   Future<void> updateAccount(Map<String, dynamic> acc) async {
+//     final formattedAcc = _formatMetaData(acc);
 
-    await loadAccount();
-  }
+//     final accNew = AccountData.fromJson(formattedAcc);
+//     await rootStore.localStorage.removeAccount(accNew.pubKey);
+//     await rootStore.localStorage.addAccount(formattedAcc);
 
-  @action
-  Future<void> addAccount(Map<String, dynamic> acc, String password, {String? name}) async {
-    final pubKey = acc['pubKey'] as String;
-    // save seed and remove it before add account
-    void saveSeed(String seedType) {
-      final seed = acc[seedType] as String?;
-      if (seed != null && seed.isNotEmpty) {
-        encryptSeed(pubKey, acc[seedType] as String, seedType, password);
-        acc.remove(seedType);
-      }
-    }
+//     await loadAccount();
+//   }
 
-    saveSeed(AccountStore.seedTypeMnemonic);
-    saveSeed(AccountStore.seedTypeRawSeed);
+//   @action
+//   Future<void> addAccount(Map<String, dynamic> acc, String password, {String? name}) async {
+//     final pubKey = acc['pubKey'] as String;
+//     // save seed and remove it before add account
+//     void saveSeed(String seedType) {
+//       final seed = acc[seedType] as String?;
+//       if (seed != null && seed.isNotEmpty) {
+//         encryptSeed(pubKey, acc[seedType] as String, seedType, password);
+//         acc.remove(seedType);
+//       }
+//     }
 
-    // format meta data of acc
-    final formattedAcc = _formatMetaData(acc, name: name);
+//     saveSeed(AccountStore.seedTypeMnemonic);
+//     saveSeed(AccountStore.seedTypeRawSeed);
 
-    final index = accountList.indexWhere((i) => i.pubKey == pubKey);
-    if (index > -1) {
-      await rootStore.localStorage.removeAccount(pubKey);
-      Log.d('removed acc: $pubKey', 'AccountStore');
-    }
-    await rootStore.localStorage.addAccount(formattedAcc);
+//     // format meta data of acc
+//     final formattedAcc = _formatMetaData(acc, name: name);
 
-    // update account list
-    await loadAccount();
-  }
+//     final index = accountList.indexWhere((i) => i.pubKey == pubKey);
+//     if (index > -1) {
+//       await rootStore.localStorage.removeAccount(pubKey);
+//       Log.d('removed acc: $pubKey', 'AccountStore');
+//     }
+//     await rootStore.localStorage.addAccount(formattedAcc);
 
-  @action
-  Future<void> removeAccount(AccountData acc) async {
-    Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
-    await rootStore.localStorage.removeAccount(acc.pubKey);
-    // remove encrypted seed after removing account
-    await Future.wait([
-      rootStore.localStorage.removeAccount(acc.pubKey),
-      deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey),
-      deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey),
-    ]);
+//     // update account list
+//     await loadAccount();
+//   }
 
-    if (acc.pubKey == currentAccountPubKey) {
-      // set new currentAccount after currentAccount was removed
-      final accounts = await rootStore.localStorage.getAccountList();
-      final newCurrentAccountPubKey = accounts.isNotEmpty ? accounts[0]['pubKey'] as String? : '';
-      Log.d('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey', 'AccountStore');
-      await rootStore.setCurrentAccount(newCurrentAccountPubKey);
-    } else {
-      // update account list
-      await loadAccount();
-    }
-  }
+//   @action
+//   Future<void> removeAccount(AccountData acc) async {
+//     Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
+//     await rootStore.localStorage.removeAccount(acc.pubKey);
+//     // remove encrypted seed after removing account
+//     await Future.wait([
+//       rootStore.localStorage.removeAccount(acc.pubKey),
+//       deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey),
+//       deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey),
+//     ]);
 
-  /// This needs to always be called after the account list has been updated.
-  ///
-  /// This is most likely only here due to poor understanding of mobx. Updating
-  /// the account list in an action itself should remove the need to call this.
-  /// Tackle this in #574.
-  @action
-  Future<void> loadAccount() async {
-    final accList = await rootStore.localStorage.getAccountList();
-    accountList = ObservableList.of(accList.map(AccountData.fromJson));
+//     if (acc.pubKey == currentAccountPubKey) {
+//       // set new currentAccount after currentAccount was removed
+//       final accounts = await rootStore.localStorage.getAccountList();
+//       final newCurrentAccountPubKey = accounts.isNotEmpty ? accounts[0]['pubKey'] as String? : '';
+//       Log.d('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey', 'AccountStore');
+//       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
+//     } else {
+//       // update account list
+//       await loadAccount();
+//     }
+//   }
 
-    currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
-    loading = false;
-  }
+//   /// This needs to always be called after the account list has been updated.
+//   ///
+//   /// This is most likely only here due to poor understanding of mobx. Updating
+//   /// the account list in an action itself should remove the need to call this.
+//   /// Tackle this in #574.
+//   @action
+//   Future<void> loadAccount() async {
+//     final accList = await rootStore.localStorage.getAccountList();
+//     accountList = ObservableList.of(accList.map(AccountData.fromJson));
 
-  @action
-  Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
-    final key = Fmt.passwordToEncryptKey(password);
-    final encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
-    final Map stored = await rootStore.localStorage.getSeeds(seedType);
-    stored[pubKey] = encrypted;
-    await rootStore.localStorage.setSeeds(seedType, stored);
-  }
+//     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
+//     loading = false;
+//   }
 
-  @action
-  Future<String?> decryptSeed(String pubKey, String seedType, String password) async {
-    final Map stored = await rootStore.localStorage.getSeeds(seedType);
-    final encrypted = stored[pubKey] as String?;
-    if (encrypted == null) {
-      return Future.value();
-    }
-    return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
-  }
+//   @action
+//   Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
+//     final key = Fmt.passwordToEncryptKey(password);
+//     final encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
+//     final Map stored = await rootStore.localStorage.getSeeds(seedType);
+//     stored[pubKey] = encrypted;
+//     await rootStore.localStorage.setSeeds(seedType, stored);
+//   }
 
-  @action
-  Future<bool> checkSeedExist(String seedType, String? pubKey) async {
-    final Map stored = await rootStore.localStorage.getSeeds(seedType);
-    final encrypted = stored[pubKey] as String?;
-    return encrypted != null;
-  }
+//   @action
+//   Future<String?> decryptSeed(String pubKey, String seedType, String password) async {
+//     final Map stored = await rootStore.localStorage.getSeeds(seedType);
+//     final encrypted = stored[pubKey] as String?;
+//     if (encrypted == null) {
+//       return Future.value();
+//     }
+//     return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
+//   }
 
-  @action
-  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
-    final Map storedMnemonics = await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
-    final Map storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
-    String? encryptedSeed = '';
-    var seedType = '';
-    if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedMnemonics[pubKey] as String?;
-      seedType = AccountStore.seedTypeMnemonic;
-    } else if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedRawSeeds[pubKey] as String?;
-      seedType = AccountStore.seedTypeRawSeed;
-    } else {
-      return;
-    }
+//   @action
+//   Future<bool> checkSeedExist(String seedType, String? pubKey) async {
+//     final Map stored = await rootStore.localStorage.getSeeds(seedType);
+//     final encrypted = stored[pubKey] as String?;
+//     return encrypted != null;
+//   }
 
-    final seed = await FlutterAesEcbPkcs5.decryptString(encryptedSeed!, Fmt.passwordToEncryptKey(passwordOld));
-    await encryptSeed(pubKey, seed, seedType, passwordNew);
-  }
+//   @action
+//   Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
+//     final Map storedMnemonics = await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
+//     final Map storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
+//     String? encryptedSeed = '';
+//     var seedType = '';
+//     if (storedMnemonics[pubKey] != null) {
+//       encryptedSeed = storedMnemonics[pubKey] as String?;
+//       seedType = AccountStore.seedTypeMnemonic;
+//     } else if (storedMnemonics[pubKey] != null) {
+//       encryptedSeed = storedRawSeeds[pubKey] as String?;
+//       seedType = AccountStore.seedTypeRawSeed;
+//     } else {
+//       return;
+//     }
 
-  @action
-  Future<void> deleteSeed(String seedType, String? pubKey) async {
-    final stored = await rootStore.localStorage.getSeeds(seedType);
-    if (stored[pubKey] != null) {
-      stored.remove(pubKey);
-      await rootStore.localStorage.setSeeds(seedType, stored);
-    }
-  }
+//     final seed = await FlutterAesEcbPkcs5.decryptString(encryptedSeed!, Fmt.passwordToEncryptKey(passwordOld));
+//     await encryptSeed(pubKey, seed, seedType, passwordNew);
+//   }
 
-  @action
-  void setPubKeyAddressMap(Map<String, Map> data) {
-    for (final ss58 in data.keys) {
-      // get old data map
-      final addresses = Map<String, String>.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
-      // set new data
-      Map.of(data[ss58]!).forEach((k, v) {
-        addresses[k as String] = v as String;
-      });
-      // update state
-      pubKeyAddressMap[int.parse(ss58)] = addresses;
-    }
-  }
-}
+//   @action
+//   Future<void> deleteSeed(String seedType, String? pubKey) async {
+//     final stored = await rootStore.localStorage.getSeeds(seedType);
+//     if (stored[pubKey] != null) {
+//       stored.remove(pubKey);
+//       await rootStore.localStorage.setSeeds(seedType, stored);
+//     }
+//   }
+
+//   @action
+//   void setPubKeyAddressMap(Map<String, Map> data) {
+//     for (final ss58 in data.keys) {
+//       // get old data map
+//       final addresses = Map<String, String>.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
+//       // set new data
+//       Map.of(data[ss58]!).forEach((k, v) {
+//         addresses[k as String] = v as String;
+//       });
+//       // update state
+//       pubKeyAddressMap[int.parse(ss58)] = addresses;
+//     }
+//   }
+// }

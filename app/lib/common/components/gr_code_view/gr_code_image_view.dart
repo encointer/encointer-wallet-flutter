@@ -3,7 +3,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/utils/extensions/extensions.dart';
+import 'package:encointer_wallet/extras/utils/extensions/extensions.dart';
 
 class QrCodeImageWithButton extends StatelessWidget {
   const QrCodeImageWithButton({

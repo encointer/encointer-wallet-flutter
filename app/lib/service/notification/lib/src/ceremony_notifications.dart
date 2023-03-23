@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/utils/translations/translations_encointer.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations_encointer.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Manages meetups reminder notifications.
