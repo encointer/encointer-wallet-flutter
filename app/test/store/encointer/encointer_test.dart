@@ -1,9 +1,8 @@
-import 'package:encointer_wallet/store/settings.dart';
+import 'package:encointer_wallet/common/stores/settings/settings_store.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
-import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
@@ -11,21 +10,20 @@ import 'package:encointer_wallet/store/app_store.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart' as service_locator;
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Returns an initialized `AppStore`.
 ///
 /// The `endpoint` should be different for every test if it involves serialization, so that the caching
 /// does not interfere with other tests.
 Future<AppStore> setupAppStore(String networkInfo) async {
-  final store = AppStore(
-    MockLocalStorage(),
-    config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
-  );
-  await store.init('_en');
+  final store = service_locator.sl.get<AppStore>();
+  await store.init();
 
   final endpoint = EndpointData()..info = networkInfo;
   store.settings.setEndpoint(endpoint);
-  await store.init('_en');
+  await store.init();
 
   webApi = getMockApi(store, withUI: false);
   await webApi.init();
@@ -33,8 +31,13 @@ Future<AppStore> setupAppStore(String networkInfo) async {
   return store;
 }
 
-void main() {
+void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  setEnvironment(Environment.test);
+  SharedPreferences.setMockInitialValues({});
+  service_locator.init(isTest: true);
+  await service_locator.sl.allReady();
 
   group('Caching and serialization works', () {
     test('encointer store initialization, serialization and cache works', () async {
@@ -100,7 +103,7 @@ void main() {
       );
 
       // should initialize a new encointer store
-      await appStore.init('_en');
+      await appStore.init();
       final expectedStore = EncointerStore(testNetwork);
 
       expect(

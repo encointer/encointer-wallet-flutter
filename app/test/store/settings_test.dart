@@ -1,20 +1,21 @@
+import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart' as service_locator;
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/store/app_store.dart';
-import 'package:encointer_wallet/store/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setEnvironment(Environment.test);
+  SharedPreferences.setMockInitialValues({});
+  service_locator.init(isTest: true);
+  await service_locator.sl.allReady();
 
   group('SettingsStore test', () {
-    final root = AppStore(
-      MockLocalStorage(),
-      config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
-    );
-    final store = SettingsStore(root);
+    service_locator.sl.get<AppStore>().setSettingsStore();
+    late final store = service_locator.sl.get<AppStore>().settings;
 
     test('settings store created', () {
       expect(store.cacheNetworkStateKey, 'network');
@@ -41,7 +42,7 @@ void main() {
     });
 
     test('network endpoint test', () async {
-      await store.init('_en');
+      await store.init();
       expect(store.endpoint.info, networkEndpointEncointerMainnet.info);
       expect(store.endpointList.length, 1);
     });

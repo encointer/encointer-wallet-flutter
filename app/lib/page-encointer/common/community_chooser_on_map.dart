@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dart_geohash/dart_geohash.dart';
 import 'package:encointer_wallet/service_locator/service_locator.dart';
@@ -31,7 +32,9 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
   @override
   void initState() {
     locations = getLocations(appStore);
+    log('_CommunityChooserOnMapState,initState locations: $locations');
     communityDataAt = getCommunityDataAt(appStore);
+    log('_CommunityChooserOnMapState,initState communityDataAt: $communityDataAt');
     super.initState();
   }
 
