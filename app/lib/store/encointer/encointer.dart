@@ -202,11 +202,13 @@ abstract class _EncointerStore with Store {
 
   @action
   void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
-    // call 1
-    Log.d('set phase duration to $phaseDurations', 'EncointerStore');
+    // call 1 {CeremonyPhase.Registering, 112}
+    if (this.phaseDurations.toString() != phaseDurations.toString()) {
+      Log.d('set phase duration to $phaseDurations', 'EncointerStore');
 
-    this.phaseDurations = phaseDurations;
-    writeToCache();
+      this.phaseDurations = phaseDurations;
+      writeToCache();
+    }
   }
 
   @action
@@ -249,6 +251,7 @@ abstract class _EncointerStore with Store {
       } else {
         await _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
+      unawaited(writeToCache());
     }
 
     if (_rootStore.settings.endpointIsNoTee) {
@@ -259,8 +262,6 @@ abstract class _EncointerStore with Store {
     if (!_rootStore.settings.loading) {
       webApi.encointer.getCommunityData();
     }
-
-    unawaited(writeToCache());
   }
 
   @action
