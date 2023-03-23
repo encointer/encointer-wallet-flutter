@@ -202,6 +202,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
+    // call 1
     Log.d('set phase duration to $phaseDurations', 'EncointerStore');
 
     this.phaseDurations = phaseDurations;
@@ -210,23 +211,28 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> setCommunityIdentifiers(List<CommunityIdentifier> cids) async {
+    // call 2
     Log.d('set communityIdentifiers to $cids', 'EncointerStore');
+    if (communityIdentifiers != cids) {
+      communityIdentifiers = cids;
 
-    communityIdentifiers = cids;
-    unawaited(writeToCache());
-
-    if (communities != null && communitiesContainsChosenCid && !communitiesContainsChosenCid) {
-      // inconsistency found, reset state
-      await setChosenCid();
+      if (communities != null && communitiesContainsChosenCid && !communitiesContainsChosenCid) {
+        // inconsistency found, reset state
+        await setChosenCid();
+      } else {
+        unawaited(writeToCache());
+      }
     }
   }
 
   @action
   void setCommunities(List<CidName> c) {
+    // call 3
     Log.d('set communities to $c', 'EncointerStore');
-
-    communities = c;
-    writeToCache();
+    if (communities != c) {
+      communities = c;
+      writeToCache();
+    }
   }
 
   @action
@@ -259,11 +265,12 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
+    // call 4
     Log.d('set currentPhase to $phase', 'EncointerStore');
 
     if (currentPhase != phase) {
       currentPhase = phase;
-      writeToCache();
+      // writeToCache();
     }
     // update depending values without awaiting
     webApi.encointer.getCurrentCeremonyIndex();
@@ -281,14 +288,14 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCurrentCeremonyIndex(int? index) {
+    // call 5
     Log.d('store: set currentCeremonyIndex to $index', 'EncointerStore');
 
     if (currentCeremonyIndex != index) {
       purgeCeremonySpecificState();
+      currentCeremonyIndex = index;
+      writeToCache();
     }
-
-    currentCeremonyIndex = index;
-    writeToCache();
 
     // update depending values without awaiting
     updateState();
