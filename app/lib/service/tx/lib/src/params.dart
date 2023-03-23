@@ -11,8 +11,8 @@ Map<String, dynamic> endorseNewcomerParams(CommunityIdentifier chosenCid, String
       'module': 'encointerCeremonies',
       'call': 'endorseNewcomer',
       'cid': chosenCid,
-      'notificationTitle': dic.encointer.endorseNewcomerNotificationTitle,
-      'notificationBody': dic.encointer.endorseNewcomerNotificationBody,
+      'notificationTitle': dic.transaction.endorseNewcomerNotificationTitle,
+      'notificationBody': dic.transaction.endorseNewcomerNotificationBody,
     },
     'params': [chosenCid, newbie],
   };
@@ -26,8 +26,8 @@ Map<String, dynamic> registerParticipantParams(CommunityIdentifier chosenCid, Tr
       'module': 'encointerCeremonies',
       'call': 'registerParticipant',
       'cid': chosenCid,
-      'notificationTitle': dic.encointer.registerParticipantNotificationTitle,
-      'notificationBody': dic.encointer.registerParticipantNotificationBody,
+      'notificationTitle': dic.transaction.registerParticipantNotificationTitle,
+      'notificationBody': dic.transaction.registerParticipantNotificationBody,
     },
     'params': [
       chosenCid,
@@ -48,8 +48,8 @@ Map<String, dynamic> attestAttendeesParams(
       'module': 'encointerCeremonies',
       'call': 'attestAttendees',
       'cid': chosenCid,
-      'notificationTitle': dic.encointer.attestNotificationTitle,
-      'notificationBody': dic.encointer.attestNotificationBody,
+      'notificationTitle': dic.transaction.attestNotificationTitle,
+      'notificationBody': dic.transaction.attestNotificationBody,
     },
     'params': [chosenCid, numberOfParticipantsVote, attendees],
   };
@@ -62,8 +62,8 @@ Map<String, dynamic> claimRewardsParams(CommunityIdentifier chosenCid, Translati
       'module': 'encointerCeremonies',
       'call': 'claimRewards',
       'cid': chosenCid,
-      'notificationTitle': dic.encointer.claimRewardsNotificationTitle,
-      'notificationBody': dic.encointer.claimRewardsNotificationBody,
+      'notificationTitle': dic.transaction.claimRewardsNotificationTitle,
+      'notificationBody': dic.transaction.claimRewardsNotificationBody,
     },
     // meetupIndex == null. The chain will figure out our index.
     'params': [chosenCid, null],
@@ -82,13 +82,29 @@ Map<String, dynamic> encointerBalanceTransferParams(
       'module': 'encointerBalances',
       'call': 'transfer',
       'cid': cid,
-      'notificationTitle': dic.encointer.balanceTransferNotificationTitle,
-      'notificationBody': dic.encointer.balanceTransferNotificationBody,
+      'notificationTitle': dic.transaction.balanceTransferNotificationTitle,
+      'notificationBody': dic.transaction.balanceTransferNotificationBody,
     },
     'params': [
       recipientAddress,
       cid,
       amount.toString(),
     ],
+  };
+}
+
+Map<String, dynamic> unregisterParticipantParams(CommunityIdentifier cid, ProofOfAttendance? proof, Translations dic) {
+  final communityCeremony = [proof?.communityIdentifier, proof?.ceremonyIndex];
+
+  return {
+    'title': 'encointerUnregisterParticipant',
+    'txInfo': {
+      'module': 'encointerCeremonies',
+      'call': 'unregisterParticipant',
+      'cid': cid,
+      'notificationTitle': dic.transaction.unregisterParticipantNotificationTitle,
+      'notificationBody': dic.transaction.unregisterParticipantNotificationBody,
+    },
+    'params': [cid, communityCeremony],
   };
 }

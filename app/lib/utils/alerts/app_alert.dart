@@ -40,6 +40,7 @@ class AppAlert {
   static Future<T?> showConfirmDialog<T>({
     required BuildContext context,
     required VoidCallback onOK,
+    required VoidCallback onCancel,
     Widget? title,
     Widget? content,
   }) {
@@ -52,10 +53,11 @@ class AppAlert {
           content: content,
           actions: <Widget>[
             CupertinoButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: onCancel,
               child: Text(dic.home.cancel),
             ),
             CupertinoButton(
+              key: const Key('ok-button'),
               onPressed: onOK,
               child: Text(dic.home.ok),
             ),

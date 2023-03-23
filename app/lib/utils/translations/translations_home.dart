@@ -50,6 +50,8 @@ abstract class TranslationsHome {
   String get noTransactions;
   String get unknownError;
   String get openMapApplication;
+  String get unregister;
+  String get unregisterDialogTitle;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -153,6 +155,10 @@ class TranslationsEnHome implements TranslationsHome {
   String get unknownError => 'Unknown Error';
   @override
   String get openMapApplication => 'Open Map Application';
+  @override
+  String get unregister => 'Unregister';
+  @override
+  String get unregisterDialogTitle => 'Unregister from the next cycle?';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -256,6 +262,10 @@ class TranslationsDeHome implements TranslationsHome {
   String get unknownError => 'Unbekannter Fehler';
   @override
   String get openMapApplication => 'In Karte öffnen';
+  @override
+  String get unregister => 'Abmelden';
+  @override
+  String get unregisterDialogTitle => 'Vom nächsten Key-Signing Cycle abmelden?';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -360,6 +370,10 @@ class TranslationsFrHome implements TranslationsHome {
   String get unknownError => 'Erreur inconnue';
   @override
   String get openMapApplication => "Ouvrer l'application de carte";
+  @override
+  String get unregister => 'Se désinscrire';
+  @override
+  String get unregisterDialogTitle => 'Se désinscrire du prochain cycle?';
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -464,4 +478,8 @@ class TranslationsRuHome implements TranslationsHome {
   String get unknownError => 'Неизвестная ошибка';
   @override
   String get openMapApplication => 'Открыть приложение Карты';
+  @override
+  String get unregister => 'Отменить регистрацию';
+  @override
+  String get unregisterDialogTitle => 'Отказаться от участия в следующем цикле?';
 }
