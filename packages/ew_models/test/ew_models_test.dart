@@ -7,5 +7,9 @@ void main() {
     test('can be instantiated', () {
       expect(EwModels(), isNotNull);
     });
+
+    test('1+1=2', () {
+      expect(1 + 1, 2);
+    });
   });
 }
