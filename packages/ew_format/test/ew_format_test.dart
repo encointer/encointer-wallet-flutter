@@ -6,9 +6,5 @@ void main() {
     test('can be instantiated', () {
       expect(const EwFormat(), isNotNull);
     });
-
-    test('1+1=2', () {
-      expect(1 + 1, 2);
-    });
   });
 }
