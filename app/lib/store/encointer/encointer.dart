@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -215,7 +216,7 @@ abstract class _EncointerStore with Store {
   Future<void> setCommunityIdentifiers(List<CommunityIdentifier> cids) async {
     // call 2
     Log.d('set communityIdentifiers to $cids', 'EncointerStore');
-    if (communityIdentifiers != cids) {
+    if (!listEquals<CommunityIdentifier>(communityIdentifiers, cids)) {
       communityIdentifiers = cids;
 
       if (communities != null && communitiesContainsChosenCid && !communitiesContainsChosenCid) {
@@ -231,7 +232,7 @@ abstract class _EncointerStore with Store {
   void setCommunities(List<CidName> c) {
     // call 3
     Log.d('set communities to $c', 'EncointerStore');
-    if (communities != c) {
+    if (!listEquals<CidName>(communities, c)) {
       communities = c;
       writeToCache();
     }

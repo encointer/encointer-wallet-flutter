@@ -17,7 +17,13 @@ class CidName {
   final String name;
 
   @override
-  String toString() {
-    return jsonEncode(this);
-  }
+  String toString() => jsonEncode(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CidName && runtimeType == other.runtimeType && name == other.name && cid == other.cid;
+
+  @override
+  int get hashCode => name.hashCode ^ cid.hashCode;
 }
