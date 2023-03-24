@@ -2,7 +2,7 @@ name: Unit Tests & Code Quality
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [master, f-droid ]
   pull_request:
     branches: [master, f-droid, el/fix-call-encointer-writeToCache]
 
