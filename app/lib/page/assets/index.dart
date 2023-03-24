@@ -4,7 +4,7 @@ import 'package:encointer_wallet/common/components/loading/centered_activity_ind
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -109,7 +109,6 @@ class _AssetsState extends State<Assets> {
       panelHeight,
     );
 
-    var allCommunities = <AccountOrCommunityData>[];
     var allAccounts = <AccountOrCommunityData>[];
 
     balanceWatchdog = PausableTimer(
@@ -344,24 +343,6 @@ class _AssetsState extends State<Assets> {
                   const SizedBox(height: 12),
                   const DragHandle(),
                   Column(children: [
-                    // Observer(
-                    //   builder: (BuildContext context) {
-                    //     allCommunities = initAllCommunities();
-                    //     return SwitchAccountOrCommunity(
-                    //       rowTitle: dic!.home.switchCommunity,
-                    //       data: allCommunities,
-                    //       onTap: (int index) {
-                    //         if (index == allCommunities.length - 1) {
-                    //           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-                    //             _refreshBalanceAndNotify(dic);
-                    //           });
-                    //         } else {
-                    //           // TODO
-                    //         }
-                    //       },
-                    //     );
-                    //   },
-                    // ),
                     Observer(builder: (_) {
                       return SwitchAccountOrCommunity(
                         rowTitle: dic!.home.switchCommunity,
@@ -371,7 +352,7 @@ class _AssetsState extends State<Assets> {
                           final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                           await store.encointer.setChosenCid(communityStores[index].cid);
                         },
-                        onPressedAdd: () {
+                        addIconOnPressed: () {
                           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
                             _refreshBalanceAndNotify(dic);
                           });
@@ -385,7 +366,6 @@ class _AssetsState extends State<Assets> {
                         data: allAccounts,
                         onTap: (int index) {
                           if (index == allAccounts.length - 1) {
-                            Navigator.of(context).pushNamed(AddAccountView.route);
                           } else {
                             setState(() {
                               switchAccount(widget.store.account.accountListAll[index]);
@@ -393,7 +373,7 @@ class _AssetsState extends State<Assets> {
                             });
                           }
                         },
-                        onPressedAdd: () {
+                        addIconOnPressed: () {
                           Navigator.of(context).pushNamed(AddAccountView.route);
                         },
                       );
@@ -435,74 +415,34 @@ class _AssetsState extends State<Assets> {
       return [
         AccountOrCommunityData(
             avatar: Container(
-                height: avatarSize,
-                width: avatarSize,
-                decoration: BoxDecoration(
-                  color: zurichLion.shade50,
-                  shape: BoxShape.circle,
-                ),
-                child: const CenteredActivityIndicator()),
+              height: avatarSize,
+              width: avatarSize,
+              decoration: BoxDecoration(
+                color: zurichLion.shade50,
+                shape: BoxShape.circle,
+              ),
+              child: const CenteredActivityIndicator(),
+            ),
             name: '...')
       ];
     }
-  }
-
-  List<AccountOrCommunityData> initAllCommunities() {
-    final allCommunities = <AccountOrCommunityData>[
-      AccountOrCommunityData(
-        avatar: const CommunityAvatar(avatarSize: avatarSize),
-        name: widget.store.encointer.community?.name ?? '...',
-        isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
-      ),
-      AccountOrCommunityData(
-        avatar: Container(
-          height: avatarSize,
-          width: avatarSize,
-          decoration: BoxDecoration(
-            color: zurichLion.shade50,
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.add,
-            key: Key('add-community'),
-            size: 36,
-          ),
-        ),
-        name: dic!.profile.addCommunity,
-      )
-    ];
-    // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
-    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
-    //     avatar: webApi.ipfs.getCommunityIcon(community),
-    //     name: community.name)));
-
-    // For now show the selected community if available and let the user add a community from the world map community chooser
-
-    return allCommunities;
   }
 
   List<AccountOrCommunityData> initAllAccounts(Translations dic) {
     final allAccounts = <AccountOrCommunityData>[
       ...widget.store.account.accountListAll.map(
         (account) => AccountOrCommunityData(
-          avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
+          avatar: AddressIcon(
+            '',
+            account.pubKey,
+            key: Key(account.name),
+            size: avatarSize,
+            tapToCopy: false,
+          ),
           name: account.name,
           isSelected: account.pubKey == widget.store.account.currentAccountPubKey,
         ),
       ),
-      AccountOrCommunityData(
-        avatar: Container(
-          key: const Key('add-account-panel'),
-          height: avatarSize,
-          width: avatarSize,
-          decoration: BoxDecoration(
-            color: zurichLion.shade50,
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(Icons.add, size: 36),
-        ),
-        name: dic.profile.addAccount,
-      )
     ];
     return allAccounts;
   }
@@ -513,12 +453,6 @@ class _AssetsState extends State<Assets> {
       await widget.store.loadAccountCache();
 
       webApi.fetchAccountData();
-    }
-  }
-
-  Future<void> switchCommunity(AccountOrCommunityData communityData) async {
-    if (communityData.isSelected) {
-      // webApi.fetch();
     }
   }
 
