@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 void main() {
   group('EwModels', () {
     test('can be instantiated', () {
-      expect(const EwModels(), isNotNull);
+      expect(EwModels(), isNotNull);
     });
   });
 }
