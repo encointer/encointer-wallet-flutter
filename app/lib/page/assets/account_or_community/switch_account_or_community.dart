@@ -3,12 +3,18 @@ import 'package:encointer_wallet/page/assets/account_or_community/account_or_com
 import 'package:flutter/material.dart';
 
 class SwitchAccountOrCommunity extends StatefulWidget {
-  const SwitchAccountOrCommunity({super.key, this.rowTitle, this.data, this.onTap});
+  const SwitchAccountOrCommunity({
+    super.key,
+    this.rowTitle,
+    this.data,
+    this.onTap,
+    required this.onPressedAdd,
+  });
 
   final String? rowTitle;
   final List<AccountOrCommunityData>? data;
   final void Function(int index)? onTap;
-
+  final VoidCallback onPressedAdd;
   @override
   State<SwitchAccountOrCommunity> createState() => _SwitchAccountOrCommunityState();
 }
@@ -21,15 +27,20 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const SizedBox(
-        height: 15,
-      ),
-      Center(
-        child: Text(
-          widget.rowTitle!,
-          style: Theme.of(context).textTheme.displayMedium,
-        ),
+    return Column(children: [
+      const SizedBox(height: 15),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            widget.rowTitle!,
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+          IconButton(
+            onPressed: widget.onPressedAdd,
+            icon: const Icon(Icons.add, size: 36),
+          ),
+        ],
       ),
       const SizedBox(height: 15),
       SizedBox(

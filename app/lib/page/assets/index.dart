@@ -342,31 +342,24 @@ class _AssetsState extends State<Assets> {
                   const SizedBox(height: 12),
                   const DragHandle(),
                   Column(children: [
-                    Observer(
-                      builder: (BuildContext context) {
-                        allCommunities = initAllCommunities();
-                        return SwitchAccountOrCommunity(
-                          rowTitle: dic!.home.switchCommunity,
-                          data: allCommunities,
-                          onTap: (int index) {
-                            if (index == allCommunities.length - 1) {
-                              Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-                                _refreshBalanceAndNotify(dic);
-                              });
-                            } else {
-                              // setState(() {
-                              // switchCommunnity(
-                              // widget.store.account.accountListAll[index]
-                              // );
-                              // _refreshBalanceAndNotify(dic);
-
-                              // TODO
-                              // });
-                            }
-                          },
-                        );
-                      },
-                    ),
+                    // Observer(
+                    //   builder: (BuildContext context) {
+                    //     allCommunities = initAllCommunities();
+                    //     return SwitchAccountOrCommunity(
+                    //       rowTitle: dic!.home.switchCommunity,
+                    //       data: allCommunities,
+                    //       onTap: (int index) {
+                    //         if (index == allCommunities.length - 1) {
+                    //           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
+                    //             _refreshBalanceAndNotify(dic);
+                    //           });
+                    //         } else {
+                    //           // TODO
+                    //         }
+                    //       },
+                    //     );
+                    //   },
+                    // ),
                     Observer(builder: (_) {
                       return SwitchAccountOrCommunity(
                         rowTitle: dic!.home.switchCommunity,
@@ -375,6 +368,11 @@ class _AssetsState extends State<Assets> {
                           final store = context.read<AppStore>();
                           final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                           await store.encointer.setChosenCid(communityStores[index].cid);
+                        },
+                        onPressedAdd: () {
+                          Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
+                            _refreshBalanceAndNotify(dic);
+                          });
                         },
                       );
                     }),
@@ -392,6 +390,9 @@ class _AssetsState extends State<Assets> {
                               _refreshBalanceAndNotify(dic);
                             });
                           }
+                        },
+                        onPressedAdd: () {
+                          Navigator.of(context).pushNamed(AddAccountView.route);
                         },
                       );
                     }),
