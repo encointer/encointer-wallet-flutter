@@ -99,8 +99,8 @@ scripts:
   unit-test-packages:
     run: >-
       flutter pub global run melos exec --ignore="encointer_wallet" -- \
-      flutter test
-    description: "Run unit tests with the `encointer-node-e2e` tag"
+      flutter test --verbose
+    description: "Run unit tests for all subpackages"
 
   # Run Encointer Wallet
   run-android:
