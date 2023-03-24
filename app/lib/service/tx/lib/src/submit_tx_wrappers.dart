@@ -26,7 +26,7 @@ Future<void> submitTx(
   BuildContext context,
   AppStore store,
   Api api,
-  Map txParams, {
+  Map<String, dynamic> txParams, {
   dynamic Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
   if (store.settings.cachedPin.isEmpty) {
@@ -68,7 +68,8 @@ Future<void> submitClaimRewards(
   Api api,
   CommunityIdentifier chosenCid,
 ) async {
-  final txParams = claimRewardsParams(chosenCid);
+  final dic = I18n.of(context)!.translationsForLocale();
+  final txParams = claimRewardsParams(chosenCid, dic);
 
   return submitTx(
     context,
@@ -91,7 +92,8 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier? chosenCid,
   String? newbie,
 ) async {
-  final txParams = endorseNewcomerParams(chosenCid!, newbie!);
+  final dic = I18n.of(context)!.translationsForLocale();
+  final txParams = endorseNewcomerParams(chosenCid!, newbie!, dic);
 
   return submitTx(
     context,
@@ -105,29 +107,50 @@ Future<void> submitEndorseNewcomer(
   );
 }
 
+Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, Api api) {
+  final dic = I18n.of(context)!.translationsForLocale();
+
+  final lastProofOfAttendance = store.encointer.communityAccount?.participantType?.isReputable ?? false
+      ? store.encointer.account
+          ?.lastProofOfAttendance // can still be null if the participant did not register on the same phone.
+      : null;
+
+  return submitTx(
+    context,
+    store,
+    webApi,
+    unregisterParticipantParams(store.encointer.chosenCid!, lastProofOfAttendance, dic),
+    onFinish: (txPageContext, res) => store.dataUpdate.setInvalidated(),
+  );
+}
+
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
+  final dic = I18n.of(context)!.translationsForLocale();
   if (store.settings.cachedPin.isEmpty) {
-    final unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog<void>(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
           context,
           store.account.currentAccount,
-          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          Text(dic.home.unlockAccount.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
           (String password) => store.settings.setPin(password),
         );
       },
     );
   }
 
+  final proof = await api.encointer.getProofOfAttendance();
+
   return submitTx(
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
+    registerParticipantParams(store.encointer.chosenCid!, dic, proof: proof),
     onFinish: (BuildContext txPageContext, Map res) async {
+      store.encointer.account!.lastProofOfAttendance = proof;
+
       final data = await webApi.encointer.getAggregatedAccountData(
         store.encointer.chosenCid!,
         store.account.currentAddress,
@@ -152,10 +175,12 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 }
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
+  final dic = I18n.of(context)!.translationsForLocale();
   final params = attestAttendeesParams(
     store.encointer.chosenCid!,
     store.encointer.communityAccount!.participantCountVote!,
     store.encointer.communityAccount!.attendees!.toList(),
+    dic,
   );
 
   return submitTx(
