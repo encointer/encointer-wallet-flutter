@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -408,25 +410,41 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> _allCommunities() {
-    final communityStores = context.read<AppStore>().encointer.communityStores?.values.toList() ?? [];
-    return communityStores
-        .mapIndexed(
-          (i, e) => AccountOrCommunityData(
-            avatar: Container(
-              height: avatarSize,
-              width: avatarSize,
-              decoration: BoxDecoration(
-                color: zurichLion.shade50,
-                shape: BoxShape.circle,
+    final communityStores = context.read<AppStore>().encointer.communityStores?.values.toList();
+    if (communityStores != null && communityStores.isNotEmpty) {
+      return communityStores
+          .mapIndexed(
+            (i, e) => AccountOrCommunityData(
+              avatar: Container(
+                height: avatarSize,
+                width: avatarSize,
+                decoration: BoxDecoration(
+                  color: zurichLion.shade50,
+                  shape: BoxShape.circle,
+                ),
+                child: e.communityIcon != null
+                    ? SvgPicture.string(e.communityIcon!)
+                    : SvgPicture.asset(fallBackCommunityIcon),
               ),
-              child: e.communityIcon != null
-                  ? SvgPicture.string(e.communityIcon!)
-                  : SvgPicture.asset(fallBackCommunityIcon),
+              name: e.name,
+              isSelected: widget.store.encointer.community?.cid == e.cid,
             ),
-            name: e.name,
-          ),
-        )
-        .toList();
+          )
+          .toList();
+    } else {
+      return [
+        AccountOrCommunityData(
+            avatar: Container(
+                height: avatarSize,
+                width: avatarSize,
+                decoration: BoxDecoration(
+                  color: zurichLion.shade50,
+                  shape: BoxShape.circle,
+                ),
+                child: const CenteredActivityIndicator()),
+            name: '...')
+      ];
+    }
   }
 
   List<AccountOrCommunityData> initAllCommunities() {

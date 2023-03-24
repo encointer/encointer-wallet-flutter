@@ -15,6 +15,7 @@ class SwitchAccountOrCommunity extends StatefulWidget {
   final List<AccountOrCommunityData>? data;
   final void Function(int index)? onTap;
   final VoidCallback onPressedAdd;
+
   @override
   State<SwitchAccountOrCommunity> createState() => _SwitchAccountOrCommunityState();
 }
