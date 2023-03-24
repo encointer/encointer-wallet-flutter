@@ -132,6 +132,8 @@ extension ParticipantTypeExtension on ParticipantType {
   String toValue() {
     return toEnumValue(this);
   }
+
+  bool get isReputable => this == ParticipantType.Reputable;
 }
 
 extension CeremonyPhaseExtension on CeremonyPhase {
