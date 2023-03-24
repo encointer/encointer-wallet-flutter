@@ -75,7 +75,7 @@ class _SplashViewState extends State<SplashView> {
 /// Currently, `store.init()` must be called before it is passed into the api
 /// due to some cyclic dependencies between webApi <> AppStore.
 Future<void> initWebApi(BuildContext context, AppStore store) async {
-  final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
+  final js = await DefaultAssetBundle.of(context).loadString('js_service_encointer/dist/main.js');
 
   webApi = !store.config.mockSubstrateApi
       ? Api.create(store, JSApi(), SubstrateDartApi(), js)
