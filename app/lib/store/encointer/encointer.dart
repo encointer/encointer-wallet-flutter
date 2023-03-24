@@ -203,7 +203,6 @@ abstract class _EncointerStore with Store {
 
   @action
   void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
-    // call 1 {CeremonyPhase.Registering, 112}
     if (this.phaseDurations.toString() != phaseDurations.toString()) {
       Log.d('set phase duration to $phaseDurations', 'EncointerStore');
 
@@ -214,11 +213,10 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> setCommunityIdentifiers(List<CommunityIdentifier> cids) async {
-    // call 2
-    Log.d('set communityIdentifiers to $cids', 'EncointerStore');
     if (!listEquals<CommunityIdentifier>(communityIdentifiers, cids)) {
-      communityIdentifiers = cids;
+      Log.d('set communityIdentifiers to $cids', 'EncointerStore');
 
+      communityIdentifiers = cids;
       if (communities != null && communitiesContainsChosenCid && !communitiesContainsChosenCid) {
         // inconsistency found, reset state
         await setChosenCid();
@@ -230,9 +228,8 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCommunities(List<CidName> c) {
-    // call 3
-    Log.d('set communities to $c', 'EncointerStore');
     if (!listEquals<CidName>(communities, c)) {
+      Log.d('set communities to $c', 'EncointerStore');
       communities = c;
       writeToCache();
     }
@@ -242,7 +239,6 @@ abstract class _EncointerStore with Store {
   Future<void> setChosenCid([CommunityIdentifier? cid]) async {
     if (chosenCid != cid) {
       chosenCid = cid;
-
       if (cid != null) {
         await Future.wait([
           _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson()),
@@ -260,19 +256,14 @@ abstract class _EncointerStore with Store {
     }
 
     // update depending values without awaiting
-    if (!_rootStore.settings.loading) {
-      webApi.encointer.getCommunityData();
-    }
+    if (!_rootStore.settings.loading) webApi.encointer.getCommunityData();
   }
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
-    // call 4
-    Log.d('set currentPhase to $phase', 'EncointerStore');
-
     if (currentPhase != phase) {
+      Log.d('set currentPhase to $phase', 'EncointerStore');
       currentPhase = phase;
-      // writeToCache();
     }
     // update depending values without awaiting
     webApi.encointer.getCurrentCeremonyIndex();
@@ -280,9 +271,8 @@ abstract class _EncointerStore with Store {
 
   @action
   void setNextPhaseTimestamp(int timestamp) {
-    Log.d('set nextPhaseTimestamp to $timestamp', 'EncointerStore');
-
     if (nextPhaseTimestamp != timestamp) {
+      Log.d('set nextPhaseTimestamp to $timestamp', 'EncointerStore');
       nextPhaseTimestamp = timestamp;
       writeToCache();
     }
@@ -290,15 +280,12 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCurrentCeremonyIndex(int? index) {
-    // call 5
-    Log.d('store: set currentCeremonyIndex to $index', 'EncointerStore');
-
     if (currentCeremonyIndex != index) {
+      Log.d('store: set currentCeremonyIndex to $index', 'EncointerStore');
       purgeCeremonySpecificState();
       currentCeremonyIndex = index;
       writeToCache();
     }
-
     // update depending values without awaiting
     updateState();
   }
@@ -399,8 +386,6 @@ abstract class _EncointerStore with Store {
 
   Future<void> writeToCache() {
     return _cacheFn?.call() ?? Future.value();
-    // if (_cacheFn != null) return _cacheFn!();
-    // // return null;
   }
 
   // -- init functions for sub-stores

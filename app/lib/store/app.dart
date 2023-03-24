@@ -97,8 +97,8 @@ abstract class _AppStore with Store {
     await account.loadAccount();
 
     _assets = AssetsStore(this as AppStore);
-    // await assets.loadCache();
     _chain = ChainStore(this as AppStore);
+
     await chain.loadCache();
 
     // need to call this after settings was initialized

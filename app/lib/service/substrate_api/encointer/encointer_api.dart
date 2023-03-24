@@ -382,7 +382,6 @@ class EncointerApi {
 
       await store.encointer.setCommunityIdentifiers(cids);
 
-      // call
       await communitiesGetAll();
     });
   }
