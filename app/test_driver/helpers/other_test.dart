@@ -56,7 +56,7 @@ Future<void> sendMoneyToAccount(FlutterDriver driver) async {
   });
 }
 
-Future<void> shareAccountAndChangeNameTest(FlutterDriver driver, String account, String changedName) async {
+Future<void> shareAccount(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('profile'));
 
   await driver.waitFor(find.byValueKey(account));
@@ -68,17 +68,26 @@ Future<void> shareAccountAndChangeNameTest(FlutterDriver driver, String account,
   await addDelay(800);
   await driver.waitFor(find.byValueKey('close-share-page'));
   await driver.tap(find.byValueKey('close-share-page'));
+  await addDelay(500);
+}
 
+Future<void> accountChangeName(FlutterDriver driver, String changedName) async {
   await driver.waitFor(find.byValueKey('account-name-edit'));
   await driver.tap(find.byValueKey('account-name-edit'));
+  await addDelay(500);
 
   await driver.waitFor(find.byValueKey('account-name-field'));
   await driver.tap(find.byValueKey('account-name-field'));
   await driver.enterText(changedName);
+  await addDelay(1500);
+
   await driver.tap(find.byValueKey('account-name-edit-check'));
+  await addDelay(700);
   await driver.waitFor(find.text(changedName));
   await addDelay(1000);
+}
 
+Future<void> accountExport(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
   await driver.tap(find.byValueKey('export'));
   await driver.tap(find.byValueKey('input-password-dialog'));
@@ -88,17 +97,15 @@ Future<void> shareAccountAndChangeNameTest(FlutterDriver driver, String account,
   await driver.waitFor(find.byValueKey('account-mnemonic-key'));
   await addDelay(1000);
   await driver.tap(find.pageBack());
-
-  await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
-  await driver.tap(find.byValueKey('delete'));
-  await driver.waitFor(find.byValueKey('delete-account'));
-  await driver.tap(find.byValueKey('delete-account'));
 }
 
 Future<void> deleteAccountFromAccountManagePage(FlutterDriver driver, String account) async {
   await driver.waitFor(find.byValueKey(account));
   await driver.tap(find.byValueKey(account));
+  await accountDeleteFromAccountManagePage(driver);
+}
 
+Future<void> accountDeleteFromAccountManagePage(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
   await driver.tap(find.byValueKey('delete'));
   await driver.waitFor(find.byValueKey('delete-account'));

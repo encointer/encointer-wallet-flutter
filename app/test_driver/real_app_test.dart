@@ -86,8 +86,23 @@ void main() async {
     });
   });
 
-  test('import and register-Alice', () async {
-    await importAccountAndRegisterMeetup(driver, 'Alice');
+  test('import account Alice', () async {
+    await importAccount(driver, 'Alice');
+  }, timeout: const Timeout(Duration(seconds: 60)));
+
+  test('Register [Bootstrapper] Alice', () async {
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, 'Bootstrapper');
+  }, timeout: const Timeout(Duration(seconds: 60)));
+
+  test('Unregister [Bootstrapper] Alice', () async {
+    await unregisterAndWait(driver);
+  }, timeout: const Timeout(Duration(seconds: 60)));
+
+  test('Register [Bootstrapper] Alice again', () async {
+    await registerAndWait(driver, 'Bootstrapper');
+    await scrollToPanelController(driver);
+    await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('send money to Tom', () async {
@@ -113,9 +128,17 @@ void main() async {
     });
   }, timeout: const Timeout(Duration(seconds: 60)));
 
-  test('register Tom', () async {
+  test('Register [Newbie] Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, 'Newbie');
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('Unregister [Newbie] Tom', () async {
+    await unregisterAndWait(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('Register [Newbie] Tom again', () async {
     await registerAndWait(driver, 'Newbie');
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
@@ -280,6 +303,14 @@ void main() async {
   test('register Tom (check status as Reputable)', () async {
     await scrollToCeremonyBox(driver);
     await registerAndWait(driver, 'Reputable');
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('Unregister [Reputable] Tom', () async {
+    await unregisterAndWait(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('Register [Reputable] Tom again', () async {
+    await registerAndWait(driver, 'Reputable');
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -287,13 +318,36 @@ void main() async {
     await changeAccountFromPanel(driver, 'Li');
     await scrollToCeremonyBox(driver);
     await registerAndWait(driver, 'Endorsee');
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('Unregister [Endorsee] Li', () async {
+    await unregisterAndWait(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('Register [Newbie-Endorsee] Li again', () async {
+    await registerAndWait(driver, 'Newbie');
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
-  test('account share and change name', () async {
+  test('account share', () async {
     await changeAccountFromPanel(driver, 'Tom');
-    await shareAccountAndChangeNameTest(driver, 'Tom', 'Jerry');
+    await shareAccount(driver, 'Tom');
     await addDelay(2500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('account change name', () async {
+    await accountChangeName(driver, 'Jerry');
+    await addDelay(500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('account export', () async {
+    await accountExport(driver);
+    await addDelay(500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('account delete from account manage page', () async {
+    await accountDeleteFromAccountManagePage(driver);
+    await addDelay(500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('delete all account ad show create account page', () async {
