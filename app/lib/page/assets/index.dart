@@ -353,7 +353,8 @@ class _AssetsState extends State<Assets> {
                           final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                           await store.encointer.setChosenCid(communityStores[index].cid);
                         },
-                        addIconOnPressed: () {
+                        onAddIconPressed: () {
+                          const Key('add-community');
                           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
                             _refreshBalanceAndNotify(dic);
                           });
@@ -374,7 +375,8 @@ class _AssetsState extends State<Assets> {
                             });
                           }
                         },
-                        addIconOnPressed: () {
+                        onAddIconPressed: () {
+                          const Key('add-account-panel');
                           Navigator.of(context).pushNamed(AddAccountView.route);
                         },
                       );
