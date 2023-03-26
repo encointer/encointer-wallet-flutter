@@ -22,7 +22,7 @@ class PreferencesStorage implements EncointerLocalStorage {
   static const defaultBiometricEnabled = false;
 
   /// Localization key
-  static const String _localKey = 'locale';
+  static const _localKey = 'locale';
   static const userLoggedKey = 'USER_LOGGED';
   static const defaultUserLogged = false;
   static const accountsKey = 'wallet_account_list';
