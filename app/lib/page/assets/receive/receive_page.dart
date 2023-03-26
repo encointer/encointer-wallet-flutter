@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
+import 'package:encointer_wallet/common/components/qr_code_view/qr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';

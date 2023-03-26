@@ -37,6 +37,36 @@ class AppAlert {
     );
   }
 
+  static Future<T?> showConfirmDialog<T>({
+    required BuildContext context,
+    required VoidCallback onOK,
+    required VoidCallback onCancel,
+    Widget? title,
+    Widget? content,
+  }) {
+    final dic = I18n.of(context)!.translationsForLocale();
+    return showCupertinoDialog<T>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: title,
+          content: content,
+          actions: <Widget>[
+            CupertinoButton(
+              onPressed: onCancel,
+              child: Text(dic.home.cancel),
+            ),
+            CupertinoButton(
+              key: const Key('ok-button'),
+              onPressed: onOK,
+              child: Text(dic.home.ok),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   static void showErrorDialog(
     BuildContext context, {
     Widget? title,

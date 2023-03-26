@@ -128,7 +128,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
               if (newAccountStore.loading) {
                 return const CenteredActivityIndicator();
               } else {
-                return Text(dic.home.next);
+                return Text(dic.home.create);
               }
             }),
           ],
