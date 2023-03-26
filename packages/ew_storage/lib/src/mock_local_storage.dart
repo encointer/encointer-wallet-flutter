@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:ui';
 
-import 'package:ew_storage/src/interface/local_storage_interface.dart';
+import 'package:ew_storage/src/interface/encointer_local_storage.dart';
 
 Map<String, dynamic> endorphineCointer = {
   'name': 'Endorphine Cointer',

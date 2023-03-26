@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ew_storage/src/interface/local_storage_interface.dart';
+import 'package:ew_storage/src/interface/encointer_local_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
