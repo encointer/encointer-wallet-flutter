@@ -1,4 +1,4 @@
-import 'package:ew_storage/src/interface/exception.dart';
+import 'package:ew_storage/src/interface/storage_exception.dart';
 import 'package:ew_storage/src/interface/secure_storage_interface.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
