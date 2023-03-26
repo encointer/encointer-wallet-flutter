@@ -192,8 +192,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
               IconButton(
                 key: const Key('account-name-edit-check'),
                 icon: const Icon(Icons.check),
-                onPressed: () {
-                  _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
+                onPressed: () async {
+                  await _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
                   setState(() {
                     _isEditingText = false;
                   });
