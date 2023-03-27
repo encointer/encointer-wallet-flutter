@@ -6,69 +6,45 @@ abstract class EncointerLocalStorageInterface {
 
   final StorageInterfaceSyncRead storage;
 
-  List<Map<String, dynamic>> getList(String key);
-
-  List<Map<String, dynamic>> getAccountList();
-
-  String? getCurrentAccount();
-
-  Map<String, dynamic>? getSeeds(String seedType);
-
-  Object? getAccountCache(String? accPubKey, String key);
-
-  List<Map<String, dynamic>> getContactList();
-
-  Object? getObject(String key);
-
+  // ----------- base methods --------------
   Map<String, dynamic>? getMap(String key);
-
-  String? getKV(String key);
-
-  List<String>? getShownMessages();
-
-  Locale? getLocale();
-
+  List<Map<String, dynamic>> getMapList(String key);
   List<String>? getListString(String key);
 
-  bool isBiometricEnabled();
+  Object? getObject(String key);
+  Future<void> setObject(String key, Object value);
 
-  // --------------- set -----------
-
-  Future<void> addAccount(Map<String, dynamic> acc);
-
-  Future<bool> setCurrentAccount(String pubKey);
-
-  Future<void> addContact(Map<String, dynamic> contact);
-
-  Future<void> updateContact(Map<String, dynamic> con);
-
-  Future<bool> setObject(String key, Object value);
-
+  String? getKV(String key);
   Future<void> setKV(String key, String value);
 
-  Future<void> setAccountCache(String accPubKey, String key, Object? value);
-
-  Future<bool> setShownMessages(List<String> value);
-
-  Future<bool> setLocale(Locale? value);
-
-  Future<bool> setBiometricEnabled({required bool value});
-
+  Future<void> addItemToList(String key, Map<String, dynamic> acc);
+  Future<void> removeItemFromList(String key, String itemKey, String itemValue);
   Future<void> updateItemInList(String key, String itemKey, String? itemValue, Map<String, dynamic> itemNew);
 
-  Future<void> setListString(String key, List<String> value);
+  Future<void> removeKey(String key);
+  Future<void> clear();
 
-  Future<void> addItemToList(String key, Map<String, dynamic> acc);
-
-  // ------------ remove ------------
-
+  // ----------- account methods --------------
+  String? getCurrentAccount();
+  Future<void> setCurrentAccount(String pubKey);
   Future<void> removeAccount(String pubKey);
 
+  List<Map<String, dynamic>> getAccountList();
+  Future<void> addAccount(Map<String, dynamic> acc);
+
+  Object? getAccountCache(String? accPubKey, String key);
+  Future<void> setAccountCache(String accPubKey, String key, Object? value);
+
+  // ----------- contact methods --------------
+  List<Map<String, dynamic>> getContactList();
+
+  Future<void> addContact(Map<String, dynamic> contact);
   Future<void> removeContact(String address);
+  Future<void> updateContact(Map<String, dynamic> con);
 
-  Future<bool> removeKey(String key);
+  // ----------- community methods --------------
+  Map<String, dynamic>? getSeeds(String seedType);
 
-  Future<bool> clear();
-
-  Future<void> removeItemFromList(String key, String itemKey, String itemValue);
+  // Check can we delete this method
+  Future<bool> setLocale(Locale? value);
 }
