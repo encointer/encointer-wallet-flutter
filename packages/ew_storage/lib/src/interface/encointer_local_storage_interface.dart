@@ -46,7 +46,7 @@ abstract class EncointerLocalStorageInterface {
 
   Future<void> setKV(String key, String value);
 
-  Future<void> setAccountCache(String? accPubKey, String key, Object? value);
+  Future<void> setAccountCache(String accPubKey, String key, Object? value);
 
   Future<bool> setShownMessages(List<String> value);
 

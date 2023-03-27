@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ew_storage/src/interface/encointer_local_storage_interface.dart';
@@ -93,89 +92,40 @@ class EncointerLocalStorage implements EncointerLocalStorageInterface {
   // --------------- set -------------
 
   @override
-  Future<bool> setKV(String key, String value) {
-    return storage.setString(key: key, value: value);
-  }
+  Future<bool> setKV(String key, String value) => storage.setString(key: key, value: value);
 
   @override
-  Future<void> addAccount(Map<String, dynamic> acc) async {
-    return addItemToList(accountsKey, acc);
-  }
+  Future<void> addAccount(Map<String, dynamic> acc) => addItemToList(accountsKey, acc);
 
   @override
-  Future<void> removeAccount(String pubKey) async {
-    return removeItemFromList(accountsKey, 'pubKey', pubKey);
-  }
+  Future<bool> setCurrentAccount(String pubKey) => setKV(currentAccountKey, pubKey);
+
+  Future<bool> setChosenCid(String cid) => setKV(encointerCommunityKey, cid);
 
   @override
-  Future<bool> setCurrentAccount(String pubKey) async {
-    return setKV(currentAccountKey, pubKey);
-  }
-
-  Future<bool> setChosenCid(String cid) async {
-    return setKV(encointerCommunityKey, cid);
-  }
+  Future<void> addContact(Map<String, dynamic> contact) => addItemToList(contactsKey, contact);
 
   @override
-  Future<void> addContact(Map<String, dynamic> contact) async {
-    return addItemToList(contactsKey, contact);
-  }
+  Future<bool> setObject(String key, Object value) => setKV('${customKVKey}_$key', jsonEncode(value));
 
   @override
-  Future<void> removeContact(String address) async {
-    return removeItemFromList(contactsKey, 'address', address);
-  }
+  Future<bool> setLocale(Locale? value) => storage.setString(key: _localKey, value: value?.languageCode ?? 'en');
 
   @override
-  Future<void> updateContact(Map<String, dynamic> con) async {
+  Future<bool> setBiometricEnabled({required bool value}) => storage.setBool(key: _biometricEnabledKey, value: value);
+
+  @override
+  Future<void> setListString(String key, List<String> value) => storage.setStringList(key: key, value: value);
+
+  @override
+  Future<void> updateContact(Map<String, dynamic> con) {
     return updateItemInList(contactsKey, 'address', con['address'] as String?, con);
-  }
-
-  @override
-  Future<bool> setObject(String key, Object value) async {
-    final str = await compute(jsonEncode, value);
-    return setKV('${customKVKey}_$key', str);
-  }
-
-  @override
-  Future<bool> removeKey(String key) {
-    return removeKey('${customKVKey}_$key');
-  }
-
-  @override
-  Future<void> setAccountCache(String? accPubKey, String key, Object? value) async {
-    var data = getObject(key) as Map?;
-    data ??= {};
-    data[accPubKey] = value;
-    await setObject(key, data);
-  }
-
-  // cache timeout 10 minutes
-  static const int customCacheTimeLength = 10 * 60 * 1000;
-
-  static bool checkCacheTimeout(int cacheTime) {
-    return DateTime.now().millisecondsSinceEpoch - customCacheTimeLength > cacheTime;
   }
 
   @override
   Future<bool> setShownMessages(List<String> value) async {
     await setListString(meetUpNotificationKey, value);
-    return Future.value(true);
-  }
-
-  @override
-  Future<bool> setLocale(Locale? value) {
-    return storage.setString(key: _localKey, value: value?.languageCode ?? 'en');
-  }
-
-  @override
-  Future<bool> setBiometricEnabled({required bool value}) {
-    return storage.setBool(key: _biometricEnabledKey, value: value);
-  }
-
-  @override
-  Future<bool> clear() {
-    return storage.clear();
+    return true;
   }
 
   @override
@@ -185,9 +135,10 @@ class EncointerLocalStorage implements EncointerLocalStorageInterface {
   }
 
   @override
-  Future<void> removeItemFromList(String key, String itemKey, String itemValue) async {
-    final ls = getList(key)..removeWhere((item) => item[itemKey] == itemValue);
-    await setKV(key, jsonEncode(ls));
+  Future<void> setAccountCache(String accPubKey, String key, Object? value) async {
+    final data = (getObject(key) as Map<String, dynamic>?) ?? {};
+    data[accPubKey] = value;
+    await setObject(key, data);
   }
 
   @override
@@ -198,8 +149,30 @@ class EncointerLocalStorage implements EncointerLocalStorageInterface {
     await setKV(key, jsonEncode(ls));
   }
 
+  // --------------- remove ----------
+
   @override
-  Future<void> setListString(String key, List<String> value) async {
-    await storage.setStringList(key: key, value: value);
+  Future<void> removeAccount(String pubKey) => removeItemFromList(accountsKey, 'pubKey', pubKey);
+
+  @override
+  Future<void> removeContact(String address) => removeItemFromList(contactsKey, 'address', address);
+
+  @override
+  Future<bool> removeKey(String key) => removeKey('${customKVKey}_$key');
+
+  // cache timeout 10 minutes
+  static const int customCacheTimeLength = 10 * 60 * 1000;
+
+  static bool checkCacheTimeout(int cacheTime) {
+    return DateTime.now().millisecondsSinceEpoch - customCacheTimeLength > cacheTime;
+  }
+
+  @override
+  Future<bool> clear() => storage.clear();
+
+  @override
+  Future<void> removeItemFromList(String key, String itemKey, String itemValue) async {
+    final ls = getList(key)..removeWhere((item) => item[itemKey] == itemValue);
+    await setKV(key, jsonEncode(ls));
   }
 }
