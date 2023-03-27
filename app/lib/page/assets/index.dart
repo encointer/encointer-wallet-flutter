@@ -367,13 +367,10 @@ class _AssetsState extends State<Assets> {
                         rowTitle: dic!.home.switchAccount,
                         data: allAccounts,
                         onTap: (int index) {
-                          // if (index == allAccounts.length - 1) {
-                          // } else {
                           setState(() {
                             switchAccount(widget.store.account.accountListAll[index]);
                             _refreshBalanceAndNotify(dic);
                           });
-                          // }
                         },
                         onAddIconPressed: () {
                           Navigator.of(context).pushNamed(AddAccountView.route);
