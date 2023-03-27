@@ -6,37 +6,43 @@ abstract class EncointerLocalStorageInterface {
 
   final StorageInterfaceSyncRead storage;
 
-  Future<List<Map<String, dynamic>>> getAccountList();
+  List<Map<String, dynamic>> getList(String key);
 
-  Future<void> addAccount(Map<String, dynamic> acc);
+  List<Map<String, dynamic>> getAccountList();
 
-  Future<void> removeAccount(String pubKey);
-
-  Future<bool> setCurrentAccount(String pubKey);
-
-  Future<String?> getCurrentAccount();
+  String? getCurrentAccount();
 
   Map<String, dynamic>? getSeeds(String seedType);
 
-  Future<Object?> getAccountCache(String? accPubKey, String key);
+  Object? getAccountCache(String? accPubKey, String key);
 
-  Future<List<Map<String, dynamic>>> getContactList();
+  List<Map<String, dynamic>> getContactList();
+
+  Object? getObject(String key);
+
+  Map<String, dynamic>? getMap(String key);
+
+  String? getKV(String key);
+
+  List<String>? getShownMessages();
+
+  Locale? getLocale();
+
+  List<String>? getListString(String key);
+
+  bool isBiometricEnabled();
+
+  // --------------- set -----------
+
+  Future<void> addAccount(Map<String, dynamic> acc);
+
+  Future<bool> setCurrentAccount(String pubKey);
 
   Future<void> addContact(Map<String, dynamic> contact);
 
-  Future<void> removeContact(String address);
-
   Future<void> updateContact(Map<String, dynamic> con);
 
-  Future<Object?> getObject(String key);
-
   Future<bool> setObject(String key, Object value);
-
-  Future<bool> removeKey(String key);
-
-  Future<Map<String, dynamic>?> getMap(String key);
-
-  String? getKV(String key);
 
   Future<void> setKV(String key, String value);
 
@@ -44,27 +50,25 @@ abstract class EncointerLocalStorageInterface {
 
   Future<bool> setShownMessages(List<String> value);
 
-  List<String>? getShownMessages();
-
   Future<bool> setLocale(Locale? value);
 
-  Locale? getLocale();
-
   Future<bool> setBiometricEnabled({required bool value});
-
-  bool isBiometricEnabled();
-
-  Future<bool> clear();
-
-  Future<List<Map<String, dynamic>>> getList(String key);
-
-  Future<void> addItemToList(String key, Map<String, dynamic> acc);
-
-  Future<void> removeItemFromList(String key, String itemKey, String itemValue);
 
   Future<void> updateItemInList(String key, String itemKey, String? itemValue, Map<String, dynamic> itemNew);
 
   Future<void> setListString(String key, List<String> value);
 
-  List<String>? getListString(String key);
+  Future<void> addItemToList(String key, Map<String, dynamic> acc);
+
+  // ------------ remove ------------
+
+  Future<void> removeAccount(String pubKey);
+
+  Future<void> removeContact(String address);
+
+  Future<bool> removeKey(String key);
+
+  Future<bool> clear();
+
+  Future<void> removeItemFromList(String key, String itemKey, String itemValue);
 }

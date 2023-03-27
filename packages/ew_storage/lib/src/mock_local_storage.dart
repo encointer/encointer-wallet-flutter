@@ -35,8 +35,8 @@ class MockLocalStorage implements EncointerLocalStorageInterface {
   final StorageInterfaceSyncRead storage;
 
   @override
-  Future<List<Map<String, dynamic>>> getAccountList() {
-    return Future.value(accList);
+  List<Map<String, dynamic>> getAccountList() {
+    return accList;
   }
 
   @override
@@ -56,8 +56,8 @@ class MockLocalStorage implements EncointerLocalStorageInterface {
   }
 
   @override
-  Future<String?> getCurrentAccount() async {
-    return Future.value(currentAccountPubKey);
+  String? getCurrentAccount() {
+    return currentAccountPubKey;
   }
 
   @override
@@ -71,8 +71,8 @@ class MockLocalStorage implements EncointerLocalStorageInterface {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getContactList() async {
-    return Future.value(contactList);
+  List<Map<String, dynamic>> getContactList() {
+    return contactList;
   }
 
   @override
@@ -120,7 +120,7 @@ class MockLocalStorage implements EncointerLocalStorageInterface {
   }
 
   @override
-  Future<Map<String, dynamic>?> getMap(String key) async {
+  Map<String, dynamic>? getMap(String key) {
     final value = mockStorage[key] as String?;
 
     if (value != null) {
@@ -128,7 +128,7 @@ class MockLocalStorage implements EncointerLocalStorageInterface {
       final data = jsonDecode(value);
       if (data is Map<String, dynamic>?) return data;
     }
-    return Future.value();
+    return null;
   }
 
   @override
@@ -152,7 +152,7 @@ class MockLocalStorage implements EncointerLocalStorageInterface {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getList(String key) {
+  List<Map<String, dynamic>> getList(String key) {
     throw UnimplementedError();
   }
 
