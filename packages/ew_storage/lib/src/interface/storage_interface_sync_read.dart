@@ -6,66 +6,66 @@ abstract class StorageInterfaceSyncRead {
   ///
   /// Returns `null` if no value is found for the given [key].
   ///
-  /// Throws a [StorageException] if the read fails.
-  String? readString({required String key});
+  /// Throws a [StorageException] if the get fails.
+  String? getString(String key);
 
   /// Returns the [bool] value associated with the provided [key].
   ///
   /// Returns `null` if no value is found for the given [key].
   ///
-  /// Throws a [StorageException] if the read fails.
-  bool? readBool({required String key});
+  /// Throws a [StorageException] if the get fails.
+  bool? getBool(String key);
 
   /// Returns the [double] value associated with the provided [key].
   ///
   /// Returns `null` if no value is found for the given [key].
   ///
-  /// Throws a [StorageException] if the read fails.
-  double? readDouble({required String key});
+  /// Throws a [StorageException] if the get fails.
+  double? getDouble(String key);
 
   /// Returns the [int] value associated with the provided [key].
   ///
   /// Returns `null` if no value is found for the given [key].
   ///
-  /// Throws a [StorageException] if the read fails.
-  int? readInt({required String key});
+  /// Throws a [StorageException] if the get fails.
+  int? getInt(String key);
 
   /// Returns the [List<String>] value associated with the provided [key].
   ///
   /// Returns `null` if no value is found for the given [key].
   ///
-  /// Throws a [StorageException] if the read fails.
-  List<String>? readStringList({required String key});
+  /// Throws a [StorageException] if the get fails.
+  List<String>? getStringList(String key);
 
-  /// Asynchronously writes [String] the provided [key] and [value] pair.
+  /// Asynchronously sets [String] the provided [key] and [value] pair.
   ///
-  /// Throws a [StorageException] if the write fails.
-  Future<bool> writeString({required String key, required String value});
+  /// Throws a [StorageException] if the set fails.
+  Future<bool> setString({required String key, required String value});
 
-  /// Asynchronously writes [bool] the provided [key] and [value] pair.
+  /// Asynchronously sets [bool] the provided [key] and [value] pair.
   ///
-  /// Throws a [StorageException] if the write fails.
-  Future<bool> writeBool({required String key, required bool value});
+  /// Throws a [StorageException] if the set fails.
+  Future<bool> setBool({required String key, required bool value});
 
-  /// Asynchronously writes [double] the provided [key] and [value] pair.
+  /// Asynchronously sets [double] the provided [key] and [value] pair.
   ///
-  /// Throws a [StorageException] if the write fails.
-  Future<bool> writeDouble({required String key, required double value});
+  /// Throws a [StorageException] if the set fails.
+  Future<bool> setDouble({required String key, required double value});
 
-  /// Asynchronously writes [int] the provided [key] and [value] pair.
+  /// Asynchronously sets [int] the provided [key] and [value] pair.
   ///
-  /// Throws a [StorageException] if the write fails.
-  Future<bool> writeInt({required String key, required int value});
+  /// Throws a [StorageException] if the set fails.
+  Future<bool> setInt({required String key, required int value});
 
-  /// Asynchronously writes [List<String>] the provided [key] and [value] pair.
+  /// Asynchronously sets [List<String>] the provided [key] and [value] pair.
   ///
-  /// Throws a [StorageException] if the write fails.
-  Future<bool> writeStringList({required String key, required List<String> value});
+  /// Throws a [StorageException] if the set fails.
+  Future<bool> setStringList({required String key, required List<String> value});
 
   /// Asynchronously removes the value associated with the provided [key].
   ///
   /// Throws a [StorageException] if the deletion fails.
-  Future<bool> delete({required String key});
+  Future<bool> delete(String key);
 
   /// Asynchronously removes all 'key-value' pairs.
   ///

@@ -1,6 +1,11 @@
+import 'package:ew_storage/src/interface/storage_interface_sync_read.dart';
 import 'package:flutter/material.dart';
 
 abstract class EncointerLocalStorageInterface {
+  const EncointerLocalStorageInterface(this.storage);
+
+  final StorageInterfaceSyncRead storage;
+
   Future<List<Map<String, dynamic>>> getAccountList();
 
   Future<void> addAccount(Map<String, dynamic> acc);

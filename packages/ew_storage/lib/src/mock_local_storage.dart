@@ -3,6 +3,7 @@ import 'dart:core';
 import 'dart:ui';
 
 import 'package:ew_storage/src/interface/encointer_local_storage_interface.dart';
+import 'package:ew_storage/src/interface/storage_interface_sync_read.dart';
 
 Map<String, dynamic> endorphineCointer = {
   'name': 'Endorphine Cointer',
@@ -23,11 +24,16 @@ Map<String, dynamic> endorphineCointer = {
 List<Map<String, dynamic>> accList = [];
 String currentAccountPubKey = '';
 List<Map<String, dynamic>> contactList = [endorphineCointer];
-Map<String, dynamic> storage = <String, dynamic>{};
+Map<String, dynamic> mockStorage = <String, dynamic>{};
 
 List<dynamic> pubKeys = accList.map((e) => e['pubKey']).toList();
 
 class MockLocalStorage implements EncointerLocalStorageInterface {
+  const MockLocalStorage(this.storage);
+
+  @override
+  final StorageInterfaceSyncRead storage;
+
   @override
   Future<List<Map<String, dynamic>>> getAccountList() {
     return Future.value(accList);
@@ -91,7 +97,7 @@ class MockLocalStorage implements EncointerLocalStorageInterface {
 
   @override
   Future<Object?> getObject(String key) async {
-    final value = storage[key] as String?;
+    final value = mockStorage[key] as String?;
 
     if (value != null) {
       final data = jsonDecode(value);
@@ -103,19 +109,19 @@ class MockLocalStorage implements EncointerLocalStorageInterface {
   @override
   Future<bool> setObject(String key, Object value) async {
     final str = jsonEncode(value);
-    storage[key] = str;
+    mockStorage[key] = str;
     return Future.value(true);
   }
 
   @override
   Future<bool> removeKey(String key) async {
-    storage.remove(key);
+    await storage.delete(key);
     return Future.value(true);
   }
 
   @override
   Future<Map<String, dynamic>?> getMap(String key) async {
-    final value = storage[key] as String?;
+    final value = mockStorage[key] as String?;
 
     if (value != null) {
       // String to `Map<String, dynamic>` conversion

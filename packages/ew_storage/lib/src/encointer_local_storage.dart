@@ -1,21 +1,16 @@
 import 'dart:convert';
 
-import 'package:ew_storage/src/interface/encointer_local_storage_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:ew_storage/src/interface/encointer_local_storage_interface.dart';
+import 'package:ew_storage/src/interface/storage_interface_sync_read.dart';
 
 class EncointerLocalStorage implements EncointerLocalStorageInterface {
-  const EncointerLocalStorage._(this._prefs);
+  const EncointerLocalStorage(this.storage);
 
-  final SharedPreferences _prefs;
-
-  /// Returns a new instance of [EncointerLocalStorage].
-  ///
-  /// If [SharedPreferences] is not provided, the default instance will be used.
-  static Future<EncointerLocalStorage> getInstance([SharedPreferences? pref]) async {
-    return EncointerLocalStorage._(pref ?? await SharedPreferences.getInstance());
-  }
+  @override
+  final StorageInterfaceSyncRead storage;
 
   /// to check if biometrics is enabled or not
   static const _biometricEnabledKey = 'BIOMETRIC_ENABLED';
@@ -35,12 +30,12 @@ class EncointerLocalStorage implements EncointerLocalStorageInterface {
 
   @override
   String? getKV(String key) {
-    return _prefs.getString(key);
+    return storage.getString(key);
   }
 
   @override
-  Future<bool> setKV(String key, String value) async {
-    return _prefs.setString(key, value);
+  Future<bool> setKV(String key, String value) {
+    return storage.setString(key: key, value: value);
   }
 
   @override
@@ -171,28 +166,28 @@ class EncointerLocalStorage implements EncointerLocalStorageInterface {
 
   @override
   Future<bool> setLocale(Locale? value) {
-    return _prefs.setString(_localKey, value?.languageCode ?? 'en');
+    return storage.setString(key: _localKey, value: value?.languageCode ?? 'en');
   }
 
   @override
   Locale? getLocale() {
-    final locale = _prefs.getString(_localKey);
+    final locale = storage.getString(_localKey);
     return locale != null ? Locale(locale) : null;
   }
 
   @override
   Future<bool> setBiometricEnabled({required bool value}) {
-    return _prefs.setBool(_biometricEnabledKey, value);
+    return storage.setBool(key: _biometricEnabledKey, value: value);
   }
 
   @override
   bool isBiometricEnabled() {
-    return _prefs.getBool(_biometricEnabledKey) ?? defaultBiometricEnabled;
+    return storage.getBool(_biometricEnabledKey) ?? defaultBiometricEnabled;
   }
 
   @override
   Future<bool> clear() {
-    return _prefs.clear();
+    return storage.clear();
   }
 
   @override
@@ -245,11 +240,11 @@ class EncointerLocalStorage implements EncointerLocalStorageInterface {
 
   @override
   Future<void> setListString(String key, List<String> value) async {
-    await _prefs.setStringList(key, value);
+    await storage.setStringList(key: key, value: value);
   }
 
   @override
   List<String>? getListString(String key) {
-    return _prefs.getStringList(key);
+    return storage.getStringList(key);
   }
 }
