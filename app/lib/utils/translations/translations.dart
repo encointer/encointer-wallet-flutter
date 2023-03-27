@@ -4,6 +4,7 @@ import 'package:encointer_wallet/utils/translations/translations_bazaar.dart';
 import 'package:encointer_wallet/utils/translations/translations_encointer.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:encointer_wallet/utils/translations/translations_profile.dart';
+import 'package:encointer_wallet/utils/translations/translations_transaction.dart';
 
 /// top level contains groups like 'account', 'profile' etc.
 /// (when you add a new group the compiler will force you to add it in all implementations, too.)
@@ -14,6 +15,7 @@ abstract class Translations {
   TranslationsProfile get profile;
   TranslationsEncointer get encointer;
   TranslationsBazaar get bazaar;
+  TranslationsTransaction get transaction;
 }
 
 /// for english translations
@@ -30,6 +32,8 @@ class TranslationsEn implements Translations {
   TranslationsEncointer get encointer => TranslationsEnEncointer();
   @override
   TranslationsBazaar get bazaar => TranslationsEnBazaar();
+  @override
+  TranslationsTransaction get transaction => TranslationsEnTransaction();
 }
 
 /// for german translations
@@ -46,6 +50,8 @@ class TranslationsDe implements Translations {
   TranslationsEncointer get encointer => TranslationsDeEncointer();
   @override
   TranslationsBazaar get bazaar => TranslationsDeBazaar();
+  @override
+  TranslationsTransaction get transaction => TranslationsDeTransaction();
 }
 
 /// for french translations
@@ -62,6 +68,8 @@ class TranslationsFr implements Translations {
   TranslationsEncointer get encointer => TranslationsFrEncointer();
   @override
   TranslationsBazaar get bazaar => TranslationsFrBazaar();
+  @override
+  TranslationsTransaction get transaction => TranslationsFrTransaction();
 }
 
 /// for russian translations
@@ -78,4 +86,6 @@ class TranslationsRu implements Translations {
   TranslationsEncointer get encointer => TranslationsRuEncointer();
   @override
   TranslationsBazaar get bazaar => TranslationsRuBazaar();
+  @override
+  TranslationsTransaction get transaction => TranslationsRuTransaction();
 }
