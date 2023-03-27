@@ -23,7 +23,7 @@ class SwitchAccountOrCommunity extends StatefulWidget {
 }
 
 class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
-  static const double identiconPlusTextHeight = 130;
+  static const double identiconPlusTextHeight = 120;
   static const double itemExtent = 90;
   static const double fadeWidth = 32;
   static const Color whiteTransparent = Color(0x00ffffff);
@@ -31,7 +31,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      const SizedBox(height: 15),
+      const SizedBox(height: 10),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -39,14 +39,20 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
             widget.rowTitle!,
             style: Theme.of(context).textTheme.displayMedium,
           ),
-          IconButton(
-            key: widget.addIconButtonKey,
-            onPressed: widget.onAddIconPressed,
-            icon: const Icon(Icons.add, size: 36),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6, left: 4),
+            child: IconButton(
+              key: widget.addIconButtonKey,
+              onPressed: widget.onAddIconPressed,
+              icon: const Icon(
+                Icons.add,
+                size: 36,
+              ),
+            ),
           ),
         ],
       ),
-      const SizedBox(height: 15),
+      const SizedBox(height: 10),
       SizedBox(
         height: identiconPlusTextHeight,
         // otherwise ListView would use infinite height

@@ -23,7 +23,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.min,
       children: [
         InkWell(

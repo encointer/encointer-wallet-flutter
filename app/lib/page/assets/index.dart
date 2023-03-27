@@ -354,8 +354,6 @@ class _AssetsState extends State<Assets> {
                           await store.encointer.setChosenCid(communityStores[index].cid);
                         },
                         onAddIconPressed: () {
-                          // key:
-                          // const Key('add-community');
                           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
                             _refreshBalanceAndNotify(dic);
                           });
@@ -369,17 +367,15 @@ class _AssetsState extends State<Assets> {
                         rowTitle: dic!.home.switchAccount,
                         data: allAccounts,
                         onTap: (int index) {
-                          if (index == allAccounts.length - 1) {
-                          } else {
-                            setState(() {
-                              switchAccount(widget.store.account.accountListAll[index]);
-                              _refreshBalanceAndNotify(dic);
-                            });
-                          }
+                          // if (index == allAccounts.length - 1) {
+                          // } else {
+                          setState(() {
+                            switchAccount(widget.store.account.accountListAll[index]);
+                            _refreshBalanceAndNotify(dic);
+                          });
+                          // }
                         },
                         onAddIconPressed: () {
-                          // key:
-                          // const Key('add-account-panel');
                           Navigator.of(context).pushNamed(AddAccountView.route);
                         },
                         addIconButtonKey: const Key('add-account-panel'),
