@@ -84,18 +84,10 @@ class EncointerLocalStorage implements EncointerLocalStorageInterface {
 
   @override
   List<Map<String, dynamic>> getList(String key) {
-    var res = <Map<String, dynamic>>[];
-
     final str = getKV(key);
-    if (str != null) {
-      final l = jsonDecode(str);
-      res = (l as List)
-          .map(
-            (i) => Map<String, dynamic>.from(i as Map<String, dynamic>),
-          )
-          .toList();
-    }
-    return res;
+    return str != null
+        ? (jsonDecode(str) as List).map((i) => Map<String, dynamic>.from(i as Map<String, dynamic>)).toList()
+        : [];
   }
 
   // --------------- set -------------
