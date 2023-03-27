@@ -1,14 +1,24 @@
-import 'dart:convert';
-
-import 'package:ew_storage/src/interface/encointer_local_storage.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:ew_storage/src/interface/storage_exception.dart';
+import 'package:ew_storage/src/interface/storage_interface_sync_read.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PreferencesStorage implements EncointerLocalStorage {
-  const PreferencesStorage._(this._prefs);
+/// A PreferencesStorage client which implements the base [StorageInterfaceSyncRead].
+/// [PreferencesStorage] uses `SharedPreferences` internally.
+///
+/// ```dart
+/// // Create a `PreferencesStorage` instance.
+/// final storage = await PreferencesStorage.getInstance();
+///
+/// // Write a key/value pair.
+/// await storage.setString(key: 'my_key', value: 'my_value');
+///
+/// // Read value for key.
+/// final value = storage.getString(key: 'my_key'); // 'my_value'
+/// ```
+class PreferencesStorage implements StorageInterfaceSyncRead {
+  const PreferencesStorage._(this._sharedPreferences);
 
-  final SharedPreferences _prefs;
+  final SharedPreferences _sharedPreferences;
 
   /// Returns a new instance of [PreferencesStorage].
   ///
@@ -17,239 +27,111 @@ class PreferencesStorage implements EncointerLocalStorage {
     return PreferencesStorage._(pref ?? await SharedPreferences.getInstance());
   }
 
-  /// to check if biometrics is enabled or not
-  static const _biometricEnabledKey = 'BIOMETRIC_ENABLED';
-  static const defaultBiometricEnabled = false;
-
-  /// Localization key
-  static const _localKey = 'locale';
-  static const userLoggedKey = 'USER_LOGGED';
-  static const defaultUserLogged = false;
-  static const accountsKey = 'wallet_account_list';
-  static const currentAccountKey = 'wallet_current_account';
-  static const encointerCommunityKey = 'wallet_encointer_community';
-  static const contactsKey = 'wallet_contact_list';
-  static const seedKey = 'wallet_seed';
-  static const customKVKey = 'wallet_kv';
-  static const meetUpNotificationKey = 'meet_up_notification';
-
   @override
-  String? getKV(String key) {
-    return _prefs.getString(key);
-  }
-
-  @override
-  Future<bool> setKV(String key, String value) async {
-    return _prefs.setString(key, value);
-  }
-
-  @override
-  Future<void> addAccount(Map<String, dynamic> acc) async {
-    return addItemToList(accountsKey, acc);
-  }
-
-  @override
-  Future<void> removeAccount(String pubKey) async {
-    return removeItemFromList(accountsKey, 'pubKey', pubKey);
-  }
-
-  @override
-  Future<List<Map<String, dynamic>>> getAccountList() async {
-    return getList(accountsKey);
-  }
-
-  @override
-  Future<bool> setCurrentAccount(String pubKey) async {
-    return setKV(currentAccountKey, pubKey);
-  }
-
-  @override
-  Future<String?> getCurrentAccount() async {
-    return getKV(currentAccountKey);
-  }
-
-  Future<bool> setChosenCid(String cid) async {
-    return setKV(encointerCommunityKey, cid);
-  }
-
-  Future<String?> getChosenCid() async {
-    return getKV(encointerCommunityKey);
-  }
-
-  @override
-  Future<void> addContact(Map<String, dynamic> contact) async {
-    return addItemToList(contactsKey, contact);
-  }
-
-  @override
-  Future<void> removeContact(String address) async {
-    return removeItemFromList(contactsKey, 'address', address);
-  }
-
-  @override
-  Future<void> updateContact(Map<String, dynamic> con) async {
-    return updateItemInList(contactsKey, 'address', con['address'] as String?, con);
-  }
-
-  @override
-  Future<List<Map<String, dynamic>>> getContactList() async {
-    return getList(contactsKey);
-  }
-
-  @override
-  Map<String, dynamic>? getSeeds(String seedType) {
-    final value = getKV('${seedKey}_$seedType');
-    return value != null ? jsonDecode(value) as Map<String, dynamic> : null;
-  }
-
-  @override
-  Future<bool> setObject(String key, Object value) async {
-    final str = await compute(jsonEncode, value);
-    return setKV('${customKVKey}_$key', str);
-  }
-
-  @override
-  Future<Object?> getObject(String key) async {
-    final value = getKV('${customKVKey}_$key');
-    if (value != null) {
-      final dynamic data = await compute(jsonDecode, value);
-      return data as Object;
+  String? readString({required String key}) {
+    try {
+      return _sharedPreferences.getString(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
     }
-    return Future.value();
   }
 
   @override
-  Future<bool> removeKey(String key) {
-    return removeKey('${customKVKey}_$key');
-  }
-
-  @override
-  Future<Map<String, dynamic>?> getMap(String key) async {
-    final value = getKV('${customKVKey}_$key');
-
-    if (value != null) {
-      final data = await compute(jsonDecode, value);
-      return data as Map<String, dynamic>?;
+  bool? readBool({required String key}) {
+    try {
+      return _sharedPreferences.getBool(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
     }
-    return Future.value();
   }
 
   @override
-  Future<void> setAccountCache(String? accPubKey, String key, Object? value) async {
-    var data = await getObject(key) as Map?;
-    data ??= {};
-    data[accPubKey] = value;
-    await setObject(key, data);
-  }
-
-  @override
-  Future<Object?> getAccountCache(String? accPubKey, String key) async {
-    final data = await getObject(key) as Map?;
-    if (data == null) {
-      return Future.value();
+  double? readDouble({required String key}) {
+    try {
+      return _sharedPreferences.getDouble(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
     }
-    return data[accPubKey];
-  }
-
-  // cache timeout 10 minutes
-  static const int customCacheTimeLength = 10 * 60 * 1000;
-
-  static bool checkCacheTimeout(int cacheTime) {
-    return DateTime.now().millisecondsSinceEpoch - customCacheTimeLength > cacheTime;
   }
 
   @override
-  Future<bool> setShownMessages(List<String> value) async {
-    await setListString(meetUpNotificationKey, value);
-    return Future.value(true);
+  int? readInt({required String key}) {
+    try {
+      return _sharedPreferences.getInt(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
   }
 
   @override
-  List<String>? getShownMessages() {
-    return getListString(meetUpNotificationKey);
+  List<String>? readStringList({required String key}) {
+    try {
+      return _sharedPreferences.getStringList(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
   }
 
   @override
-  Future<bool> setLocale(Locale? value) {
-    return _prefs.setString(_localKey, value?.languageCode ?? 'en');
+  Future<bool> writeString({required String key, required String value}) {
+    try {
+      return _sharedPreferences.setString(key, value);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
   }
 
   @override
-  Locale? getLocale() {
-    final locale = _prefs.getString(_localKey);
-    return locale != null ? Locale(locale) : null;
+  Future<bool> writeBool({required String key, required bool value}) {
+    try {
+      return _sharedPreferences.setBool(key, value);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
   }
 
   @override
-  Future<bool> setBiometricEnabled({required bool value}) {
-    return _prefs.setBool(_biometricEnabledKey, value);
+  Future<bool> writeDouble({required String key, required double value}) {
+    try {
+      return _sharedPreferences.setDouble(key, value);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
   }
 
   @override
-  bool isBiometricEnabled() {
-    return _prefs.getBool(_biometricEnabledKey) ?? defaultBiometricEnabled;
+  Future<bool> writeInt({required String key, required int value}) {
+    try {
+      return _sharedPreferences.setInt(key, value);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  @override
+  Future<bool> writeStringList({required String key, required List<String> value}) {
+    try {
+      return _sharedPreferences.setStringList(key, value);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
+  }
+
+  @override
+  Future<bool> delete({required String key}) async {
+    try {
+      return _sharedPreferences.remove(key);
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
+    }
   }
 
   @override
   Future<bool> clear() {
-    return _prefs.clear();
-  }
-
-  @override
-  Future<List<Map<String, dynamic>>> getList(String key) async {
-    var res = <Map<String, dynamic>>[];
-
-    final str = getKV(key);
-    if (str != null) {
-      final l = jsonDecode(str);
-      res = (l as List)
-          .map(
-            (i) => Map<String, dynamic>.from(i as Map<String, dynamic>),
-          )
-          .toList();
+    try {
+      return _sharedPreferences.clear();
+    } catch (error, stackTrace) {
+      throw StorageException(error, stackTrace);
     }
-    return res;
-  }
-
-  @override
-  Future<void> addItemToList(String key, Map<String, dynamic> acc) async {
-    final ls = await getList(key);
-    ls.add(acc);
-    await setKV(key, jsonEncode(ls));
-  }
-
-  @override
-  Future<void> removeItemFromList(
-    String key,
-    String itemKey,
-    String itemValue,
-  ) async {
-    final ls = await getList(key);
-    ls.removeWhere((item) => item[itemKey] == itemValue);
-    await setKV(key, jsonEncode(ls));
-  }
-
-  @override
-  Future<void> updateItemInList(
-    String key,
-    String itemKey,
-    String? itemValue,
-    Map<String, dynamic> itemNew,
-  ) async {
-    final ls = await getList(key);
-    ls
-      ..removeWhere((item) => item[itemKey] == itemValue)
-      ..add(itemNew);
-    await setKV(key, jsonEncode(ls));
-  }
-
-  @override
-  Future<void> setListString(String key, List<String> value) async {
-    await _prefs.setStringList(key, value);
-  }
-
-  @override
-  List<String>? getListString(String key) {
-    return _prefs.getStringList(key);
   }
 }

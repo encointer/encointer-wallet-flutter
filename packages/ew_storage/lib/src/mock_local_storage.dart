@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:ui';
 
-import 'package:ew_storage/src/interface/encointer_local_storage.dart';
+import 'package:ew_storage/src/interface/encointer_local_storage_interface.dart';
 
 Map<String, dynamic> endorphineCointer = {
   'name': 'Endorphine Cointer',
@@ -27,7 +27,7 @@ Map<String, dynamic> storage = <String, dynamic>{};
 
 List<dynamic> pubKeys = accList.map((e) => e['pubKey']).toList();
 
-class MockLocalStorage implements EncointerLocalStorage {
+class MockLocalStorage implements EncointerLocalStorageInterface {
   @override
   Future<List<Map<String, dynamic>>> getAccountList() {
     return Future.value(accList);

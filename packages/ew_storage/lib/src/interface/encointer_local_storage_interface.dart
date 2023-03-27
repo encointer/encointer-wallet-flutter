@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class EncointerLocalStorage {
+abstract class EncointerLocalStorageInterface {
   Future<List<Map<String, dynamic>>> getAccountList();
 
   Future<void> addAccount(Map<String, dynamic> acc);
