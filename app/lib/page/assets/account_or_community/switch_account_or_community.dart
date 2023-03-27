@@ -9,12 +9,14 @@ class SwitchAccountOrCommunity extends StatefulWidget {
     this.data,
     this.onTap,
     required this.onAddIconPressed,
+    required this.addIconButtonKey,
   });
 
   final String? rowTitle;
   final List<AccountOrCommunityData>? data;
   final void Function(int index)? onTap;
   final VoidCallback onAddIconPressed;
+  final Key addIconButtonKey;
 
   @override
   State<SwitchAccountOrCommunity> createState() => _SwitchAccountOrCommunityState();
@@ -38,6 +40,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
             style: Theme.of(context).textTheme.displayMedium,
           ),
           IconButton(
+            key: widget.addIconButtonKey,
             onPressed: widget.onAddIconPressed,
             icon: const Icon(Icons.add, size: 36),
           ),

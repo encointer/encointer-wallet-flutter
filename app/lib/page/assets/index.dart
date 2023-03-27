@@ -354,11 +354,13 @@ class _AssetsState extends State<Assets> {
                           await store.encointer.setChosenCid(communityStores[index].cid);
                         },
                         onAddIconPressed: () {
-                          const Key('add-community');
+                          // key:
+                          // const Key('add-community');
                           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
                             _refreshBalanceAndNotify(dic);
                           });
                         },
+                        addIconButtonKey: const Key('add-community'),
                       );
                     }),
                     Observer(builder: (BuildContext context) {
@@ -376,9 +378,11 @@ class _AssetsState extends State<Assets> {
                           }
                         },
                         onAddIconPressed: () {
-                          const Key('add-account-panel');
+                          // key:
+                          // const Key('add-account-panel');
                           Navigator.of(context).pushNamed(AddAccountView.route);
                         },
+                        addIconButtonKey: const Key('add-account-panel'),
                       );
                     }),
                   ]),
