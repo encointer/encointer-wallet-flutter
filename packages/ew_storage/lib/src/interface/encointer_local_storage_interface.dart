@@ -1,5 +1,4 @@
 import 'package:ew_storage/src/interface/storage_interface_sync_read.dart';
-import 'package:flutter/material.dart';
 
 abstract class EncointerLocalStorageInterface {
   const EncointerLocalStorageInterface(this.storage);
@@ -7,19 +6,30 @@ abstract class EncointerLocalStorageInterface {
   final StorageInterfaceSyncRead storage;
 
   // ----------- base methods --------------
-  Map<String, dynamic>? getMap(String key);
-  List<Map<String, dynamic>> getMapList(String key);
+  String? getString(String key);
+  Future<void> setString({required String key, required String value});
+
+  bool? getBool(String key);
+  Future<void> setBool({required String key, required bool value});
+
+  int? getInt(String key);
+  Future<void> setInt({required String key, required int value});
+
+  double? getDouble(String key);
+  Future<void> setDouble({required String key, required double value});
+
   List<String>? getListString(String key);
-
-  Object? getObject(String key);
-  Future<void> setObject(String key, Object value);
-
-  String? getKV(String key);
-  Future<void> setKV(String key, String value);
+  Future<void> setListString({required String key, required List<String> value});
 
   Future<void> addItemToList(String key, Map<String, dynamic> acc);
   Future<void> removeItemFromList(String key, String itemKey, String itemValue);
   Future<void> updateItemInList(String key, String itemKey, String? itemValue, Map<String, dynamic> itemNew);
+
+  T? getValueJsonDecode<T>(String key);
+  Future<void> setValueJsonEncode<T>(String key, T value);
+
+  Future<T?> getValueJsonDecodeCompute<T>(String key);
+  Future<void> setValueJsonEncodeCompute<T>(String key, T value);
 
   Future<void> removeKey(String key);
   Future<void> clear();
@@ -46,5 +56,5 @@ abstract class EncointerLocalStorageInterface {
   Map<String, dynamic>? getSeeds(String seedType);
 
   // Check can we delete this method
-  Future<bool> setLocale(Locale? value);
+  Future<void> setLocale([String languageCode = 'en']);
 }
