@@ -9,7 +9,6 @@ on:
 env:
   NODE_VERSION: 16.13.1
   JAVA_VERSION: 12.x
-  TEMP_SCREENSHOTS: /tmp/screenshots
 
 jobs:
   integration-tests:

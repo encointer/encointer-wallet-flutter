@@ -59,16 +59,16 @@ Future<void> sendMoneyToAccount(FlutterDriver driver) async {
   });
 }
 
-Future<void> shareAccount(FlutterDriver driver, String account) async {
+Future<void> shareAccount(FlutterDriver driver, String account, {bool shouldTakeScreenshot = false}) async {
   await driver.tap(find.byValueKey('profile'));
-  await takeScreenshot(driver, 'real-profile-page');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-profile-page');
   await driver.waitFor(find.byValueKey(account));
   await driver.tap(find.byValueKey(account));
 
   await driver.waitFor(find.byValueKey('go-to-account-share'));
-  await takeScreenshot(driver, 'real-account-manage-page');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-account-manage-page');
   await driver.tap(find.byValueKey('go-to-account-share'));
-  await takeScreenshot(driver, 'real-account-share-page');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-account-share-page');
 
   await addDelay(800);
   await driver.waitFor(find.byValueKey('close-share-page'));
@@ -76,7 +76,7 @@ Future<void> shareAccount(FlutterDriver driver, String account) async {
   await addDelay(500);
 }
 
-Future<void> accountChangeName(FlutterDriver driver, String changedName) async {
+Future<void> accountChangeName(FlutterDriver driver, String changedName, {bool shouldTakeScreenshot = false}) async {
   await driver.waitFor(find.byValueKey('account-name-edit'));
   await driver.tap(find.byValueKey('account-name-edit'));
   await addDelay(500);
@@ -84,7 +84,7 @@ Future<void> accountChangeName(FlutterDriver driver, String changedName) async {
   await driver.waitFor(find.byValueKey('account-name-field'));
   await driver.tap(find.byValueKey('account-name-field'));
   await driver.enterText(changedName);
-  await addDelay(1500);
+  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-change-account-name');
 
   await driver.tap(find.byValueKey('account-name-edit-check'));
   await addDelay(700);
@@ -92,11 +92,13 @@ Future<void> accountChangeName(FlutterDriver driver, String changedName) async {
   await addDelay(1000);
 }
 
-Future<void> accountExport(FlutterDriver driver) async {
+Future<void> accountExport(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
+  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-change-account-export');
   await driver.tap(find.byValueKey('export'));
   await driver.tap(find.byValueKey('input-password-dialog'));
   await driver.enterText('0001');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-change-account-export-confirm');
   await driver.tap(find.byValueKey('password-ok'));
 
   await driver.waitFor(find.byValueKey('account-mnemonic-key'));

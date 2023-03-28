@@ -9,7 +9,7 @@ on:
 env:
   NODE_VERSION: 16.13.1
   JAVA_VERSION: 12.x
-  TEMP_SCREENSHOTS: ./screenshots
+  ARTIFACT_PATH: ./screenshots
 
 jobs:
   cancel_previous_runs:
@@ -94,7 +94,7 @@ jobs:
       - name: "Flutter driver test and record video"
         run: ./scripts/ios_integration_test.sh
         env:
-          TEMP_DIR: ${{ env.TEMP_SCREENSHOTS }}
+          TEMP_DIR: ${{ env.ARTIFACT_PATH }}
           RECORD: ${{ matrix.record_video }}
 
       - name: "Upload screenshots and recording"
@@ -102,4 +102,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.device }}
-          path: ${{ env.TEMP_SCREENSHOTS }}
+          path: ${{ env.ARTIFACT_PATH }}

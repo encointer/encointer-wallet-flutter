@@ -34,15 +34,16 @@ void main() async {
 
   test('home-page', () async {
     await refreshWalletPage(driver);
-    await takeScreenshot(driver, 'real-home-page');
 
     await dismissUpgradeDialogOnAndroid(driver);
+    await takeScreenshot(driver, 'real-home-page');
     await addDelay(1000);
   });
 
   test('qr-receive page', () async {
     await driver.tap(find.byValueKey('qr-receive'));
-    await addDelay(1000);
+    await driver.waitFor(find.byValueKey('close-receive-page'));
+    await takeScreenshot(driver, 'real-qr-receive-page');
     await driver.tap(find.byValueKey('close-receive-page'));
     await addDelay(1000);
   });
@@ -119,7 +120,7 @@ void main() async {
     await driver.tap(find.byValueKey('transfer-select-account'));
     await driver.waitFor(find.byValueKey('Tom'));
     await driver.tap(find.byValueKey('Tom'));
-    await addDelay(2000);
+    await takeScreenshot(driver, 'real-transfer-page');
 
     await driver.runUnsynchronized(() async {
       await driver.waitFor(find.byValueKey('make-transfer'));
@@ -128,6 +129,7 @@ void main() async {
       await driver.waitFor(find.byValueKey('make-transfer-send'));
       await driver.tap(find.byValueKey('make-transfer-send'));
       await driver.waitFor(find.byValueKey('transfer-done'));
+      await takeScreenshot(driver, 'real-transfer-confirm-page');
       await driver.tap(find.byValueKey('transfer-done'));
       await addDelay(1000);
     });
@@ -136,11 +138,11 @@ void main() async {
   test('Register [Newbie] Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, 'Newbie');
+    await registerAndWait(driver, 'Newbie', shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Unregister [Newbie] Tom', () async {
-    await unregisterAndWait(driver);
+    await unregisterAndWait(driver, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Register [Newbie] Tom again', () async {
@@ -184,7 +186,7 @@ void main() async {
   test('start meetup-Tom', () async {
     await addDelay(1000);
     await changeAccountFromPanel(driver, 'Tom');
-    await startMeetupTest(driver);
+    await startMeetupTest(driver, shouldTakeScreenshot: true);
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -215,6 +217,7 @@ void main() async {
     await driver.tap(find.byValueKey('contact-name'));
     await driver.enterText('Obelix');
 
+    await takeScreenshot(driver, 'real-add-contact');
     await driver.tap(find.byValueKey('contact-save'));
     await addDelay(1000);
   });
@@ -230,10 +233,10 @@ void main() async {
     await driver.tap(find.byValueKey('contact-name-field'));
 
     await driver.enterText('Asterix');
+    await takeScreenshot(driver, 'real-change-contact-name');
     await driver.tap(find.byValueKey('contact-name-edit-check'));
 
     await driver.waitFor(find.text('Asterix'));
-
     await addDelay(1000);
   });
 
@@ -336,17 +339,17 @@ void main() async {
 
   test('account share', () async {
     await changeAccountFromPanel(driver, 'Tom');
-    await shareAccount(driver, 'Tom');
+    await shareAccount(driver, 'Tom', shouldTakeScreenshot: true);
     await addDelay(2500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('account change name', () async {
-    await accountChangeName(driver, 'Jerry');
+    await accountChangeName(driver, 'Jerry', shouldTakeScreenshot: true);
     await addDelay(500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('account export', () async {
-    await accountExport(driver);
+    await accountExport(driver, shouldTakeScreenshot: true);
     await addDelay(500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
