@@ -13,33 +13,27 @@ mixin _$SplashViewStore on _SplashViewStore, Store {
 
   @override
   AppStore get appStore =>
-      (_$appStoreComputed ??= Computed<AppStore>(() => super.appStore,
-              name: '_SplashViewStore.appStore'))
-          .value;
+      (_$appStoreComputed ??= Computed<AppStore>(() => super.appStore, name: '_SplashViewStore.appStore')).value;
 
-  late final _$initAsyncAction =
-      AsyncAction('_SplashViewStore.init', context: context);
+  late final _$initAsyncAction = AsyncAction('_SplashViewStore.init', context: context);
 
   @override
   Future<void> init(BuildContext context) {
     return _$initAsyncAction.run(() => super.init(context));
   }
 
-  late final _$_initWebApiAsyncAction =
-      AsyncAction('_SplashViewStore._initWebApi', context: context);
+  late final _$_initWebApiAsyncAction = AsyncAction('_SplashViewStore._initWebApi', context: context);
 
   @override
   Future<void> _initWebApi(BuildContext context) {
     return _$_initWebApiAsyncAction.run(() => super._initWebApi(context));
   }
 
-  late final _$_setupUpdateReactionAsyncAction =
-      AsyncAction('_SplashViewStore._setupUpdateReaction', context: context);
+  late final _$_setupUpdateReactionAsyncAction = AsyncAction('_SplashViewStore._setupUpdateReaction', context: context);
 
   @override
   Future<void> _setupUpdateReaction() {
-    return _$_setupUpdateReactionAsyncAction
-        .run(() => super._setupUpdateReaction());
+    return _$_setupUpdateReactionAsyncAction.run(() => super._setupUpdateReaction());
   }
 
   @override

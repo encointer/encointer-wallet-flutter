@@ -114,8 +114,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  late final _$copiedOpeningHoursAtom =
-      Atom(name: '_OpeningHoursState.copiedOpeningHours', context: context);
+  late final _$copiedOpeningHoursAtom = Atom(name: '_OpeningHoursState.copiedOpeningHours', context: context);
 
   @override
   OpeningHoursForDayState? get copiedOpeningHours {
@@ -130,8 +129,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  late final _$dayOnFocusAtom =
-      Atom(name: '_OpeningHoursState.dayOnFocus', context: context);
+  late final _$dayOnFocusAtom = Atom(name: '_OpeningHoursState.dayOnFocus', context: context);
 
   @override
   int? get dayOnFocus {
@@ -146,8 +144,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  late final _$dayToCopyFromAtom =
-      Atom(name: '_OpeningHoursState.dayToCopyFrom', context: context);
+  late final _$dayToCopyFromAtom = Atom(name: '_OpeningHoursState.dayToCopyFrom', context: context);
 
   @override
   int? get dayToCopyFrom {
@@ -162,13 +159,11 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  late final _$_OpeningHoursStateActionController =
-      ActionController(name: '_OpeningHoursState', context: context);
+  late final _$_OpeningHoursStateActionController = ActionController(name: '_OpeningHoursState', context: context);
 
   @override
   void copyFrom(int day) {
-    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(
-        name: '_OpeningHoursState.copyFrom');
+    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(name: '_OpeningHoursState.copyFrom');
     try {
       return super.copyFrom(day);
     } finally {
@@ -178,8 +173,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
 
   @override
   void setDayOnFocus(int day) {
-    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(
-        name: '_OpeningHoursState.setDayOnFocus');
+    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(name: '_OpeningHoursState.setDayOnFocus');
     try {
       return super.setDayOnFocus(day);
     } finally {
@@ -189,8 +183,8 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
 
   @override
   void pasteOpeningHoursTo(int day) {
-    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(
-        name: '_OpeningHoursState.pasteOpeningHoursTo');
+    final _$actionInfo =
+        _$_OpeningHoursStateActionController.startAction(name: '_OpeningHoursState.pasteOpeningHoursTo');
     try {
       return super.pasteOpeningHoursTo(day);
     } finally {
@@ -216,8 +210,7 @@ dayToCopyFrom: ${dayToCopyFrom}
 }
 
 mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
-  late final _$openingIntervalsAtom =
-      Atom(name: '_OpeningHoursForDayState.openingIntervals', context: context);
+  late final _$openingIntervalsAtom = Atom(name: '_OpeningHoursForDayState.openingIntervals', context: context);
 
   @override
   ObservableList<OpeningIntervalState> get openingIntervals {
@@ -232,8 +225,7 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
     });
   }
 
-  late final _$timeFormatErrorAtom =
-      Atom(name: '_OpeningHoursForDayState.timeFormatError', context: context);
+  late final _$timeFormatErrorAtom = Atom(name: '_OpeningHoursForDayState.timeFormatError', context: context);
 
   @override
   String? get timeFormatError {
@@ -264,8 +256,8 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
 
   @override
   void addInterval(OpeningIntervalState interval) {
-    final _$actionInfo = _$_OpeningHoursForDayStateActionController.startAction(
-        name: '_OpeningHoursForDayState.addInterval');
+    final _$actionInfo =
+        _$_OpeningHoursForDayStateActionController.startAction(name: '_OpeningHoursForDayState.addInterval');
     try {
       return super.addInterval(interval);
     } finally {
@@ -275,8 +267,8 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
 
   @override
   void removeInterval(int index) {
-    final _$actionInfo = _$_OpeningHoursForDayStateActionController.startAction(
-        name: '_OpeningHoursForDayState.removeInterval');
+    final _$actionInfo =
+        _$_OpeningHoursForDayStateActionController.startAction(name: '_OpeningHoursForDayState.removeInterval');
     try {
       return super.removeInterval(index);
     } finally {
@@ -294,8 +286,7 @@ timeFormatError: ${timeFormatError}
 }
 
 mixin _$OpeningIntervalState on _OpeningIntervalState, Store {
-  late final _$startAtom =
-      Atom(name: '_OpeningIntervalState.start', context: context);
+  late final _$startAtom = Atom(name: '_OpeningIntervalState.start', context: context);
 
   @override
   int get start {
@@ -310,8 +301,7 @@ mixin _$OpeningIntervalState on _OpeningIntervalState, Store {
     });
   }
 
-  late final _$endAtom =
-      Atom(name: '_OpeningIntervalState.end', context: context);
+  late final _$endAtom = Atom(name: '_OpeningIntervalState.end', context: context);
 
   @override
   int get end {

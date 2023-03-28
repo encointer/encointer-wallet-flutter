@@ -13,12 +13,9 @@ mixin _$AppLanguageStore on _AppLanguageStoreBase, Store {
 
   @override
   Locale get locale =>
-      (_$localeComputed ??= Computed<Locale>(() => super.locale,
-              name: '_AppLanguageStoreBase.locale'))
-          .value;
+      (_$localeComputed ??= Computed<Locale>(() => super.locale, name: '_AppLanguageStoreBase.locale')).value;
 
-  late final _$_localeAtom =
-      Atom(name: '_AppLanguageStoreBase._locale', context: context);
+  late final _$_localeAtom = Atom(name: '_AppLanguageStoreBase._locale', context: context);
 
   @override
   Locale get _locale {
@@ -33,16 +30,14 @@ mixin _$AppLanguageStore on _AppLanguageStoreBase, Store {
     });
   }
 
-  late final _$_initAsyncAction =
-      AsyncAction('_AppLanguageStoreBase._init', context: context);
+  late final _$_initAsyncAction = AsyncAction('_AppLanguageStoreBase._init', context: context);
 
   @override
   Future<void> _init() {
     return _$_initAsyncAction.run(() => super._init());
   }
 
-  late final _$setLocaleAsyncAction =
-      AsyncAction('_AppLanguageStoreBase.setLocale', context: context);
+  late final _$setLocaleAsyncAction = AsyncAction('_AppLanguageStoreBase.setLocale', context: context);
 
   @override
   Future<void> setLocale(int index) {

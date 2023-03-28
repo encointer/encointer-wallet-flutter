@@ -13,12 +13,10 @@ mixin _$ChainStore on _ChainStore, Store {
 
   @override
   int? get latestHeaderNumber => (_$latestHeaderNumberComputed ??=
-          Computed<int?>(() => super.latestHeaderNumber,
-              name: '_ChainStore.latestHeaderNumber'))
+          Computed<int?>(() => super.latestHeaderNumber, name: '_ChainStore.latestHeaderNumber'))
       .value;
 
-  late final _$latestHeaderAtom =
-      Atom(name: '_ChainStore.latestHeader', context: context);
+  late final _$latestHeaderAtom = Atom(name: '_ChainStore.latestHeader', context: context);
 
   @override
   Header? get latestHeader {
@@ -33,13 +31,11 @@ mixin _$ChainStore on _ChainStore, Store {
     });
   }
 
-  late final _$_ChainStoreActionController =
-      ActionController(name: '_ChainStore', context: context);
+  late final _$_ChainStoreActionController = ActionController(name: '_ChainStore', context: context);
 
   @override
   void setLatestHeader(Header latest) {
-    final _$actionInfo = _$_ChainStoreActionController.startAction(
-        name: '_ChainStore.setLatestHeader');
+    final _$actionInfo = _$_ChainStoreActionController.startAction(name: '_ChainStore.setLatestHeader');
     try {
       return super.setLatestHeader(latest);
     } finally {

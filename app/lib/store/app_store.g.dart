@@ -13,51 +13,38 @@ mixin _$AppStore on _AppStore, Store {
 
   @override
   SettingsStore get settings =>
-      (_$settingsComputed ??= Computed<SettingsStore>(() => super.settings,
-              name: '_AppStore.settings'))
-          .value;
+      (_$settingsComputed ??= Computed<SettingsStore>(() => super.settings, name: '_AppStore.settings')).value;
   Computed<DataUpdateStore>? _$dataUpdateComputed;
 
   @override
-  DataUpdateStore get dataUpdate => (_$dataUpdateComputed ??=
-          Computed<DataUpdateStore>(() => super.dataUpdate,
-              name: '_AppStore.dataUpdate'))
-      .value;
+  DataUpdateStore get dataUpdate =>
+      (_$dataUpdateComputed ??= Computed<DataUpdateStore>(() => super.dataUpdate, name: '_AppStore.dataUpdate')).value;
   Computed<AccountStore>? _$accountComputed;
 
   @override
   AccountStore get account =>
-      (_$accountComputed ??= Computed<AccountStore>(() => super.account,
-              name: '_AppStore.account'))
-          .value;
+      (_$accountComputed ??= Computed<AccountStore>(() => super.account, name: '_AppStore.account')).value;
   Computed<AssetsStore>? _$assetsComputed;
 
   @override
-  AssetsStore get assets => (_$assetsComputed ??=
-          Computed<AssetsStore>(() => super.assets, name: '_AppStore.assets'))
-      .value;
+  AssetsStore get assets =>
+      (_$assetsComputed ??= Computed<AssetsStore>(() => super.assets, name: '_AppStore.assets')).value;
   Computed<ChainStore>? _$chainComputed;
 
   @override
-  ChainStore get chain => (_$chainComputed ??=
-          Computed<ChainStore>(() => super.chain, name: '_AppStore.chain'))
-      .value;
+  ChainStore get chain => (_$chainComputed ??= Computed<ChainStore>(() => super.chain, name: '_AppStore.chain')).value;
   Computed<EncointerStore>? _$encointerComputed;
 
   @override
   EncointerStore get encointer =>
-      (_$encointerComputed ??= Computed<EncointerStore>(() => super.encointer,
-              name: '_AppStore.encointer'))
-          .value;
+      (_$encointerComputed ??= Computed<EncointerStore>(() => super.encointer, name: '_AppStore.encointer')).value;
   Computed<bool>? _$appIsReadyComputed;
 
   @override
-  bool get appIsReady => (_$appIsReadyComputed ??=
-          Computed<bool>(() => super.appIsReady, name: '_AppStore.appIsReady'))
-      .value;
+  bool get appIsReady =>
+      (_$appIsReadyComputed ??= Computed<bool>(() => super.appIsReady, name: '_AppStore.appIsReady')).value;
 
-  late final _$_settingsAtom =
-      Atom(name: '_AppStore._settings', context: context);
+  late final _$_settingsAtom = Atom(name: '_AppStore._settings', context: context);
 
   @override
   SettingsStore? get _settings {
@@ -72,8 +59,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  late final _$_dataUpdateAtom =
-      Atom(name: '_AppStore._dataUpdate', context: context);
+  late final _$_dataUpdateAtom = Atom(name: '_AppStore._dataUpdate', context: context);
 
   @override
   DataUpdateStore? get _dataUpdate {
@@ -88,8 +74,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  late final _$_accountAtom =
-      Atom(name: '_AppStore._account', context: context);
+  late final _$_accountAtom = Atom(name: '_AppStore._account', context: context);
 
   @override
   AccountStore? get _account {
@@ -134,8 +119,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  late final _$_encointerAtom =
-      Atom(name: '_AppStore._encointer', context: context);
+  late final _$_encointerAtom = Atom(name: '_AppStore._encointer', context: context);
 
   @override
   EncointerStore? get _encointer {
@@ -150,8 +134,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  late final _$storeIsReadyAtom =
-      Atom(name: '_AppStore.storeIsReady', context: context);
+  late final _$storeIsReadyAtom = Atom(name: '_AppStore.storeIsReady', context: context);
 
   @override
   bool get storeIsReady {
@@ -166,8 +149,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  late final _$webApiIsReadyAtom =
-      Atom(name: '_AppStore.webApiIsReady', context: context);
+  late final _$webApiIsReadyAtom = Atom(name: '_AppStore.webApiIsReady', context: context);
 
   @override
   bool get webApiIsReady {
@@ -182,21 +164,18 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  late final _$initAsyncAction =
-      AsyncAction('_AppStore.init', context: context);
+  late final _$initAsyncAction = AsyncAction('_AppStore.init', context: context);
 
   @override
   Future<void> init() {
     return _$initAsyncAction.run(() => super.init());
   }
 
-  late final _$purgeEncointerCacheAsyncAction =
-      AsyncAction('_AppStore.purgeEncointerCache', context: context);
+  late final _$purgeEncointerCacheAsyncAction = AsyncAction('_AppStore.purgeEncointerCache', context: context);
 
   @override
   Future<bool> purgeEncointerCache(String networkInfo) {
-    return _$purgeEncointerCacheAsyncAction
-        .run(() => super.purgeEncointerCache(networkInfo));
+    return _$purgeEncointerCacheAsyncAction.run(() => super.purgeEncointerCache(networkInfo));
   }
 
   late final _$loadOrInitEncointerCacheAsyncAction =
@@ -204,54 +183,42 @@ mixin _$AppStore on _AppStore, Store {
 
   @override
   Future<void> loadOrInitEncointerCache(String networkInfo) {
-    return _$loadOrInitEncointerCacheAsyncAction
-        .run(() => super.loadOrInitEncointerCache(networkInfo));
+    return _$loadOrInitEncointerCacheAsyncAction.run(() => super.loadOrInitEncointerCache(networkInfo));
   }
 
-  late final _$loadEncointerCacheAsyncAction =
-      AsyncAction('_AppStore.loadEncointerCache', context: context);
+  late final _$loadEncointerCacheAsyncAction = AsyncAction('_AppStore.loadEncointerCache', context: context);
 
   @override
   Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) {
-    return _$loadEncointerCacheAsyncAction
-        .run(() => super.loadEncointerCache(encointerFinalCacheKey));
+    return _$loadEncointerCacheAsyncAction.run(() => super.loadEncointerCache(encointerFinalCacheKey));
   }
 
-  late final _$addAccountAsyncAction =
-      AsyncAction('_AppStore.addAccount', context: context);
+  late final _$addAccountAsyncAction = AsyncAction('_AppStore.addAccount', context: context);
 
   @override
-  Future<void> addAccount(
-      Map<String, dynamic> acc, String password, String? address,
-      {String? name = ''}) {
-    return _$addAccountAsyncAction
-        .run(() => super.addAccount(acc, password, address, name: name));
+  Future<void> addAccount(Map<String, dynamic> acc, String password, String? address, {String? name = ''}) {
+    return _$addAccountAsyncAction.run(() => super.addAccount(acc, password, address, name: name));
   }
 
-  late final _$setCurrentAccountAsyncAction =
-      AsyncAction('_AppStore.setCurrentAccount', context: context);
+  late final _$setCurrentAccountAsyncAction = AsyncAction('_AppStore.setCurrentAccount', context: context);
 
   @override
   Future<void> setCurrentAccount(String? pubKey) {
-    return _$setCurrentAccountAsyncAction
-        .run(() => super.setCurrentAccount(pubKey));
+    return _$setCurrentAccountAsyncAction.run(() => super.setCurrentAccount(pubKey));
   }
 
-  late final _$loadAccountCacheAsyncAction =
-      AsyncAction('_AppStore.loadAccountCache', context: context);
+  late final _$loadAccountCacheAsyncAction = AsyncAction('_AppStore.loadAccountCache', context: context);
 
   @override
   Future<List<void>> loadAccountCache() {
     return _$loadAccountCacheAsyncAction.run(() => super.loadAccountCache());
   }
 
-  late final _$_AppStoreActionController =
-      ActionController(name: '_AppStore', context: context);
+  late final _$_AppStoreActionController = ActionController(name: '_AppStore', context: context);
 
   @override
   void setSettingsStore() {
-    final _$actionInfo = _$_AppStoreActionController.startAction(
-        name: '_AppStore.setSettingsStore');
+    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.setSettingsStore');
     try {
       return super.setSettingsStore();
     } finally {
@@ -261,8 +228,7 @@ mixin _$AppStore on _AppStore, Store {
 
   @override
   void setApiReady(bool value) {
-    final _$actionInfo =
-        _$_AppStoreActionController.startAction(name: '_AppStore.setApiReady');
+    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.setApiReady');
     try {
       return super.setApiReady(value);
     } finally {
@@ -272,8 +238,7 @@ mixin _$AppStore on _AppStore, Store {
 
   @override
   Future<void> cacheObject(String key, Object value) {
-    final _$actionInfo =
-        _$_AppStoreActionController.startAction(name: '_AppStore.cacheObject');
+    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.cacheObject');
     try {
       return super.cacheObject(key, value);
     } finally {
@@ -283,8 +248,7 @@ mixin _$AppStore on _AppStore, Store {
 
   @override
   Future<Object?> loadObject(String key) {
-    final _$actionInfo =
-        _$_AppStoreActionController.startAction(name: '_AppStore.loadObject');
+    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.loadObject');
     try {
       return super.loadObject(key);
     } finally {
@@ -294,8 +258,7 @@ mixin _$AppStore on _AppStore, Store {
 
   @override
   String getCacheKey(String key) {
-    final _$actionInfo =
-        _$_AppStoreActionController.startAction(name: '_AppStore.getCacheKey');
+    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.getCacheKey');
     try {
       return super.getCacheKey(key);
     } finally {
@@ -305,8 +268,7 @@ mixin _$AppStore on _AppStore, Store {
 
   @override
   String encointerCacheKey(String networkInfo) {
-    final _$actionInfo = _$_AppStoreActionController.startAction(
-        name: '_AppStore.encointerCacheKey');
+    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.encointerCacheKey');
     try {
       return super.encointerCacheKey(networkInfo);
     } finally {

@@ -13,29 +13,24 @@ mixin _$HomeViewStore on _HomeViewStoreBase, Store {
 
   @override
   AppStore get appStore =>
-      (_$appStoreComputed ??= Computed<AppStore>(() => super.appStore,
-              name: '_HomeViewStoreBase.appStore'))
-          .value;
+      (_$appStoreComputed ??= Computed<AppStore>(() => super.appStore, name: '_HomeViewStoreBase.appStore')).value;
 
-  late final _$initAsyncAction =
-      AsyncAction('_HomeViewStoreBase.init', context: context);
+  late final _$initAsyncAction = AsyncAction('_HomeViewStoreBase.init', context: context);
 
   @override
   Future<void> init(BuildContext context) {
     return _$initAsyncAction.run(() => super.init(context));
   }
 
-  late final _$initDeepLinksAsyncAction =
-      AsyncAction('_HomeViewStoreBase.initDeepLinks', context: context);
+  late final _$initDeepLinksAsyncAction = AsyncAction('_HomeViewStoreBase.initDeepLinks', context: context);
 
   @override
   Future<void> initDeepLinks(BuildContext context) {
     return _$initDeepLinksAsyncAction.run(() => super.initDeepLinks(context));
   }
 
-  late final _$fetchMessagesAndScheduleNotificationsAsyncAction = AsyncAction(
-      '_HomeViewStoreBase.fetchMessagesAndScheduleNotifications',
-      context: context);
+  late final _$fetchMessagesAndScheduleNotificationsAsyncAction =
+      AsyncAction('_HomeViewStoreBase.fetchMessagesAndScheduleNotifications', context: context);
 
   @override
   Future<void> fetchMessagesAndScheduleNotifications(BuildContext context) {
@@ -43,14 +38,12 @@ mixin _$HomeViewStore on _HomeViewStoreBase, Store {
         .run(() => super.fetchMessagesAndScheduleNotifications(context));
   }
 
-  late final _$runCeremonyNotificationsAsyncAction = AsyncAction(
-      '_HomeViewStoreBase.runCeremonyNotifications',
-      context: context);
+  late final _$runCeremonyNotificationsAsyncAction =
+      AsyncAction('_HomeViewStoreBase.runCeremonyNotifications', context: context);
 
   @override
   Future<void> runCeremonyNotifications(BuildContext context) {
-    return _$runCeremonyNotificationsAsyncAction
-        .run(() => super.runCeremonyNotifications(context));
+    return _$runCeremonyNotificationsAsyncAction.run(() => super.runCeremonyNotifications(context));
   }
 
   @override
