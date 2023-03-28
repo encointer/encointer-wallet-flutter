@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 import 'helpers/add_delay.dart';
 import 'helpers/other_test.dart';
 import 'helpers/real_app_helper.dart';
+import 'helpers/take_screenshot.dart';
 
 void main() async {
   late FlutterDriver driver;
@@ -19,19 +20,23 @@ void main() async {
   });
 
   test('create account by name Tom', () async {
+    await takeScreenshot(driver, 'real-create-account-entry');
     await createAccountAndSetPin(driver, 'Tom');
   });
 
   test('choosing cid', () async {
     await driver.waitFor(find.byValueKey('cid-0-marker-icon'));
     await driver.tap(find.byValueKey('cid-0-marker-icon'));
+    await driver.waitFor(find.byValueKey('cid-0-marker-description'));
+    await takeScreenshot(driver, 'real-select-community-from-map');
     await driver.tap(find.byValueKey('cid-0-marker-description'));
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('home-page', () async {
     await refreshWalletPage(driver);
-    await dismissUpgradeDialogOnAndroid(driver);
+    await takeScreenshot(driver, 'real-home-page');
 
+    await dismissUpgradeDialogOnAndroid(driver);
     await addDelay(1000);
   });
 

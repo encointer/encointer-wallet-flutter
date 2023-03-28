@@ -2,6 +2,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
 import 'real_app_helper.dart';
+import 'take_screenshot.dart';
 
 Future<void> scrollToSendAddress(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
@@ -16,6 +17,7 @@ Future<void> createAccountAndSetPin(FlutterDriver driver, String account) async 
   await driver.waitFor(find.byValueKey('create-account-name'));
   await driver.tap(find.byValueKey('create-account-name'));
   await driver.enterText(account);
+  await takeScreenshot(driver, 'real-create-account');
   await driver.tap(find.byValueKey('create-account-next'));
 
   await driver.waitFor(find.byValueKey('create-account-pin'));
@@ -25,6 +27,7 @@ Future<void> createAccountAndSetPin(FlutterDriver driver, String account) async 
   await driver.tap(find.byValueKey('create-account-pin2'));
   await driver.enterText('0001');
 
+  await takeScreenshot(driver, 'real-create-pin');
   await driver.tap(find.byValueKey('create-account-confirm'));
 }
 
@@ -58,12 +61,14 @@ Future<void> sendMoneyToAccount(FlutterDriver driver) async {
 
 Future<void> shareAccount(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('profile'));
-
+  await takeScreenshot(driver, 'real-profile-page');
   await driver.waitFor(find.byValueKey(account));
   await driver.tap(find.byValueKey(account));
 
   await driver.waitFor(find.byValueKey('go-to-account-share'));
+  await takeScreenshot(driver, 'real-account-manage-page');
   await driver.tap(find.byValueKey('go-to-account-share'));
+  await takeScreenshot(driver, 'real-account-share-page');
 
   await addDelay(800);
   await driver.waitFor(find.byValueKey('close-share-page'));
