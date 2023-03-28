@@ -2,14 +2,14 @@ name: Android CI
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el/generate-screenshots-in-ci]
   pull_request:
     branches: [master, f-droid]
 
 env:
   NODE_VERSION: 16.13.1
   JAVA_VERSION: 12.x
-  TEMP_SCREENSHOTS: /tmp/screenshots
+  TEMP_SCREENSHOTS: ./screenshots
 
 jobs:
   cancel_previous_runs:
