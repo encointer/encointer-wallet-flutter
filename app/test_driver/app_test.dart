@@ -111,10 +111,9 @@ void main() {
       await takeScreenshot(driver!, 'mock-claim-qr');
     });
   });
+
   tearDownAll(() async {
-    if (driver != null) {
-      await driver!.close();
-    }
+    if (driver != null) await driver!.close();
   });
 }
 
@@ -126,9 +125,7 @@ Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
   final operationSystem = await driver.requestData('getPlatform');
   log('operationSystem ==================> $operationSystem');
 
-  if (operationSystem != 'android') {
-    return;
-  }
+  if (operationSystem != 'android') return;
 
   try {
     log('Waiting for upgrader alert dialog');
