@@ -2,7 +2,7 @@ name: IOS CI
 
 on:
   push:
-    branches: [master, f-droid, el/generate-screenshots-in-ci]
+    branches: [master, f-droid]
   pull_request:
     branches: [master, f-droid]
 
