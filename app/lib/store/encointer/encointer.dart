@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -50,10 +51,10 @@ class EncointerStore extends _EncointerStore with _$EncointerStore {
 }
 
 abstract class _EncointerStore with Store {
-  _EncointerStore(this.network);
+  _EncointerStore(this.network) : _rootStore = sl<AppStore>();
 
   @JsonKey(includeFromJson: false, includeToJson: false)
-  late AppStore _rootStore;
+  late final AppStore _rootStore;
 
   // Note: In synchronous code, every modification of an @observable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
@@ -367,8 +368,7 @@ abstract class _EncointerStore with Store {
   /// Initialize the store and the sub-stores.
   ///
   /// Should always be called after creating a store to ensure full functionality.
-  void initStore(AppStore root, Future<void> Function() cacheFn) {
-    _rootStore = root;
+  void initStore(Future<void> Function() cacheFn) {
     _cacheFn = cacheFn;
 
     // These are merely safety guards, and should never be needed. A null reference error occurred here only because

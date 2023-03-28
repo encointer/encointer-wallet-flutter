@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/extras/config/build_options.dart';
 import 'package:encointer_wallet/presentation/account/types/account_data.dart';
 import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app_store.dart';
@@ -268,7 +269,7 @@ abstract class _SettingsStore with Store {
     if (value == null) {
       endpoint = networkEndpointEncointerMainnet;
     } else {
-      endpoint = EndpointData.fromJson(value);
+      endpoint = buildConfig.endpoint;
     }
   }
 

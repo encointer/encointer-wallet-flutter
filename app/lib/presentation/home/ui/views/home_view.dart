@@ -42,13 +42,13 @@ class _HomeViewState extends State<HomeView> with EncointerStateMixin {
       Log.d('initState.WidgetsBinding.instance.addPostFrameCallback', _tag);
       await _store.init(context);
     });
+
+    _getTabLists(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _getTabLists(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: PageView(

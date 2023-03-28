@@ -198,7 +198,6 @@ abstract class _AppStore with Store {
       Log.d('Initializing new encointer store.', _tag);
       _encointer = EncointerStore(networkInfo);
       encointer.initStore(
-        this as AppStore,
         () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
       );
 
@@ -224,7 +223,6 @@ abstract class _AppStore with Store {
       // it should be fine.
       final encointerStore = EncointerStore.fromJson(cachedEncointerStore)
         ..initStore(
-          this as AppStore,
           () => localStorage.setObject(
             encointerFinalCacheKey,
             encointer.toJson(),

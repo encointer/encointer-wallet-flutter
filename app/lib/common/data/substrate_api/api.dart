@@ -145,15 +145,17 @@ class Api {
   Future<void> connectNodeAll() async {
     final nodes = store.settings.endpointList.map((e) => e.value).toList();
     final configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
-    Log.d('configs: $configs', 'Api');
+    Log.d('configs: $configs', _tag);
 
     // do connect
     final res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
-      Log.d('connect failed', 'Api');
+      Log.d('Connection failed', _tag);
       store.settings.setNetworkName(null);
       return;
     }
+
+    Log.d('Successfully connected: res = $res', _tag);
 
     // setWorker endpoint on js side
     if (store.settings.endpointIsTeeProxy) {

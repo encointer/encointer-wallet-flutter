@@ -68,7 +68,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     'observation': widget.accountData.observation,
                     'pubKey': widget.accountData.pubKey,
                   };
-                  await sl<AppStore>().settings.updateContact(contactData);
+                  await store.settings.updateContact(contactData);
                 }
                 setState(() {
                   isEditing = false;
@@ -141,8 +141,8 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   Navigator.of(context).pushNamed(
                     TransferPage.route,
                     arguments: TransferPageParams(
-                      cid: sl<AppStore>().encointer.chosenCid,
-                      communitySymbol: sl<AppStore>().encointer.community?.symbol,
+                      cid: store.encointer.chosenCid,
+                      communitySymbol: store.encointer.community?.symbol,
                       recipient: account.address,
                       label: _nameCtrl.text,
                     ),
@@ -151,7 +151,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
               ),
               const SizedBox(height: 16),
               SecondaryButtonWide(
-                onPressed: () => _removeItem(context, account, sl<AppStore>()),
+                onPressed: () => _removeItem(context, account),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -168,7 +168,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
     );
   }
 
-  void _removeItem(BuildContext context, AccountData account, AppStore store) {
+  void _removeItem(BuildContext context, AccountData account) {
     final dic = I18n.of(context)!.translationsForLocale();
     showCupertinoDialog<void>(
       context: context,
