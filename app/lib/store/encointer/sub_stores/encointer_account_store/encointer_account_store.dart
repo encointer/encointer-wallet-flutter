@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/common/data/substrate_api/api.dart';
 import 'package:encointer_wallet/common/stores/assets/types/transfer_data.dart';
@@ -61,7 +62,7 @@ abstract class _EncointerAccountStore with Store {
   int numberOfNewbieTicketsForReputable = 0;
 
   @computed
-  int? get ceremonyIndexForProofOfAttendance {
+  int? get ceremonyIndexForNextProofOfAttendance {
     if (reputations.isNotEmpty) {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
@@ -73,6 +74,13 @@ abstract class _EncointerAccountStore with Store {
       return 0;
     }
   }
+
+  /// Proof of attendance used for the last registration.
+  ///
+  /// We need to supply parts of it when unregistering to
+  /// reclaim the reputation.
+  @observable
+  ProofOfAttendance? lastProofOfAttendance;
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
@@ -97,6 +105,7 @@ abstract class _EncointerAccountStore with Store {
   @action
   void purgeCeremonySpecificState() {
     purgeReputations();
+    lastProofOfAttendance = null;
   }
 
   @action

@@ -140,7 +140,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double? amount) async {
-    final params = encointerBalanceTransferParams(cid, recipientAddress, amount);
+    final dic = I18n.of(context)!.translationsForLocale();
+    final params = encointerBalanceTransferParams(cid, recipientAddress, amount, dic);
 
     setState(() {
       _transferState = TransferState.submitting;

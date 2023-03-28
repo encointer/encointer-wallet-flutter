@@ -27,6 +27,7 @@ dependencies:
   intl: ^0.17.0
   json_annotation: ^4.8.0
   bip39: ^1.0.6
+  pointycastle: ^3.6.2
   # state management with mobx
   mobx: ^2.1.3+1
   flutter_mobx: ^2.0.6+5

@@ -243,6 +243,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
         ),
         const SizedBox(height: 24),
         CeremonyBox(_store.appStore, webApi, key: const Key('ceremony-box-wallet')),
+        const SizedBox(height: 24),
       ],
     );
   }
@@ -389,6 +390,7 @@ class _AssetsViewState extends State<AssetsView> with EncointerStateMixin {
                           _store.refreshBalanceAndNotify(context);
                         });
                       } else {
+                        ///Why [setState] is getting called here?
                         setState(() {
                           // TODO
                         });

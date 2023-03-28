@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/common/constants/consts.dart';
@@ -15,7 +16,7 @@ bool get flutterTestRunning => Platform.environment.containsKey('FLUTTER_TEST');
 enum Environment {
   dev,
   prod,
-  test,
+  unitTest,
   integrationTestRealApp,
   integrationTestMockApp,
 }
@@ -34,7 +35,7 @@ void setEnvironment(
     case Environment.prod:
       buildConfig = BuildConfig.prod;
       break;
-    case Environment.test:
+    case Environment.unitTest:
       buildConfig = BuildConfig.unitTest;
 
       break;
@@ -98,7 +99,7 @@ class BuildConfig {
   static BuildConfig unitTest = BuildConfig(
     isTestMode: true,
     mockSubstrateApi: true,
-    endpoint: EndpointData(),
+    endpoint: unitTestEndpoint,
   );
 
   static BuildConfig integrationTestRealApp = BuildConfig(

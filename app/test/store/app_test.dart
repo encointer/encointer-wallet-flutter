@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
-  setEnvironment(Environment.test);
+  setEnvironment(Environment.unitTest);
   SharedPreferences.setMockInitialValues({});
   service_locator.init(isTest: true);
   await service_locator.sl.allReady();

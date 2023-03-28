@@ -437,7 +437,7 @@ class EncointerApi {
   /// returns null, if none available.
   Future<ProofOfAttendance?> getProofOfAttendance() async {
     final pubKey = store.account.currentAccountPubKey;
-    final cIndex = store.encointer.account?.ceremonyIndexForProofOfAttendance;
+    final cIndex = store.encointer.account?.ceremonyIndexForNextProofOfAttendance;
 
     if (cIndex == null || cIndex == 0) {
       return Future.value();

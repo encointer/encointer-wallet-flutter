@@ -11,6 +11,8 @@ import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/presentation/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app_store.dart';
 
+const _tag = 'AccountApi';
+
 class AccountApi {
   AccountApi(this.store, this.jsApi);
 
@@ -94,33 +96,6 @@ class AccountApi {
     if (fetchData) fetchAccountData?.call();
   }
 
-  Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
-    Map? txInfo,
-    List? params,
-    String? pageTile,
-    String? notificationTitle, {
-    String? rawParam,
-  }) async {
-    final res = await sendTx(txInfo, params, rawParam: rawParam) as Map;
-
-    if (res['hash'] != null) {
-      final hash = res['hash'] as String;
-      unawaited(NotificationPlugin.showNotification(
-        int.parse(hash.substring(0, 6)),
-        notificationTitle,
-        '$pageTile - ${txInfo!['module']}.${txInfo['call']}',
-      ));
-    }
-    return res;
-  }
-
-  Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
-    final param = rawParam ?? jsonEncode(params);
-    final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
-    Log.d('sendTx call: $call', 'AccountApi');
-    return jsApi.evalJavascript(call);
-  }
-
   Future<String> generateAccount() async {
     final acc = await jsApi.evalJavascript<Map<String, dynamic>>('account.gen()');
     return acc['mnemonic'] as String;
@@ -142,5 +117,30 @@ class AccountApi {
     final pubKey = account.pubKey;
     Log.d('checkpass: $pubKey, $pass', 'AccountApi');
     return jsApi.evalJavascript('account.checkPassword("$pubKey", "$pass")');
+  }
+
+  Future<Map<String, dynamic>> sendTxAndShowNotification(
+    Map<String, dynamic> txInfo,
+    List<dynamic>? params, {
+    String? rawParam,
+  }) async {
+    final res = await sendTx(txInfo, params, rawParam: rawParam);
+
+    if (res['hash'] != null) {
+      final hash = res['hash'] as String;
+      unawaited(NotificationPlugin.showNotification(
+        int.parse(hash.substring(0, 6)),
+        '${txInfo['notificationTitle']}',
+        '${txInfo['notificationBody']}',
+      ));
+    }
+    return res;
+  }
+
+  Future<Map<String, dynamic>> sendTx(Map txInfo, List? params, {String? rawParam}) async {
+    final param = rawParam ?? jsonEncode(params);
+    final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
+    Log.d('sendTx call: $call', _tag);
+    return jsApi.evalJavascript<Map<String, dynamic>>(call);
   }
 }

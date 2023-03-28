@@ -34,14 +34,14 @@ Future<AppStore> setupAppStore(String networkInfo) async {
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setEnvironment(Environment.test);
+  setEnvironment(Environment.unitTest);
   SharedPreferences.setMockInitialValues({});
   service_locator.init(isTest: true);
   await service_locator.sl.allReady();
 
   group('Caching and serialization works', () {
     test('encointer store initialization, serialization and cache works', () async {
-      final testNetwork = '${unitTestEndpoint.info!}-0';
+      final testNetwork = unitTestEndpoint.info!;
       final appStore = await setupAppStore(testNetwork);
       final encointerStore = appStore.encointer;
 
@@ -104,6 +104,7 @@ void main() async {
 
       // should initialize a new encointer store
       await appStore.init();
+      await appStore.loadOrInitEncointerCache(testNetwork);
       final expectedStore = EncointerStore(testNetwork);
 
       expect(

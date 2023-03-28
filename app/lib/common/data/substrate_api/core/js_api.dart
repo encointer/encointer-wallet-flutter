@@ -60,6 +60,11 @@ class JSApi {
       },
     );
 
+    WebView.debugLoggingSettings.excludeFilter.add(
+      // Exclude logs of "EncointerJsService"
+      RegExp('EncointerJsService'),
+    );
+
     await _web!.run();
 
     // log updates about the webView state until it is ready.

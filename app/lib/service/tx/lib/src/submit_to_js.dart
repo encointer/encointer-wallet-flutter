@@ -27,26 +27,24 @@ Future<void> submitToJS(
   AppStore store,
   Api api,
   bool showStatusSnackBar, {
-  required Map txParams,
+  required Map<String, dynamic> txParams,
   String? password,
   BigInt? tip,
 }) async {
   final dic = I18n.of(context)!.translationsForLocale();
 
-  final args = txParams;
-
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
 
-  final txInfo = args['txInfo'] as Map;
+  final txInfo = txParams['txInfo'] as Map<String, dynamic>;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
   txInfo['tip'] = tip.toString();
   Log.d('$txInfo', 'submitToJS');
-  Log.d('${args['params']}', 'submitToJS');
+  Log.d('${txParams['params']}', 'submitToJS');
 
-  final onTxFinishFn = args['onFinish'] as dynamic Function(BuildContext, Map)?;
+  final onTxFinishFn = txParams['onFinish'] as dynamic Function(BuildContext, Map)?;
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
@@ -56,7 +54,11 @@ Future<void> submitToJS(
       );
     }
 
-    final res = await _sendTx(context, api, args) as Map;
+    final res = await api.account.sendTxAndShowNotification(
+      txParams['txInfo'] as Map<String, dynamic>,
+      txParams['params'] as List<dynamic>?,
+      rawParam: txParams['rawParam'] as String?,
+    );
 
     if (res['hash'] == null) {
       _onTxError(context, store, res['error'] as String, showStatusSnackBar);
@@ -65,8 +67,9 @@ Future<void> submitToJS(
     }
   } else {
     _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
-    args['notificationTitle'] = dic.home.notifySubmittedQueued;
-    store.account.queueTx(args as Map<String, dynamic>);
+    txInfo['notificationTitle'] = dic.home.notifySubmittedQueued;
+    txInfo['txError'] = dic.home.txError;
+    store.account.queueTx(txParams);
   }
 }
 
@@ -81,16 +84,6 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
   } else {
     showErrorDialog(context, errorMsg);
   }
-}
-
-Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
-  return api.account.sendTxAndShowNotification(
-    args['txInfo'] as Map<dynamic, dynamic>?,
-    args['params'] as List<dynamic>?,
-    args['title'] as String?,
-    I18n.of(context)!.translationsForLocale().home.notifySubmitted,
-    rawParam: args['rawParam'] as String?,
-  );
 }
 
 void _showTxStatusSnackBar(String status, Widget? leading) {
