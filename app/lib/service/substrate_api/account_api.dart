@@ -96,6 +96,7 @@ class AccountApi {
     Map<String, dynamic> txInfo,
     List<dynamic>? params, {
     String? rawParam,
+    String? cid,
   }) async {
     final res = await sendTx(txInfo, params, rawParam: rawParam);
 

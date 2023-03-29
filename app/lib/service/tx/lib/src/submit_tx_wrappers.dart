@@ -157,13 +157,15 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       );
       Log.d('$data', 'AggregatedAccountData from register participant');
       final registrationType = data.personal?.participantType;
+      final cid = store.encointer.community?.cid.toFmtString();
       if (registrationType != null) {
         _showEducationalDialog(registrationType, context);
         if (store.settings.endpoint == networkEndpointEncointerMainnet) {
           await CeremonyNotifications.scheduleMeetupReminders(
-            data.global!.ceremonyIndex,
-            store.encointer.community!.meetupTime!,
-            I18n.of(context)!.translationsForLocale().encointer,
+            ceremonyIndex: data.global!.ceremonyIndex,
+            meetupTime: store.encointer.community!.meetupTime!,
+            dic: I18n.of(context)!.translationsForLocale().encointer,
+            cid: cid,
           );
         }
       }

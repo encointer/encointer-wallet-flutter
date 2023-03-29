@@ -58,6 +58,7 @@ Future<void> submitToJS(
       txParams['txInfo'] as Map<String, dynamic>,
       txParams['params'] as List<dynamic>?,
       rawParam: txParams['rawParam'] as String?,
+      cid: store.encointer.community?.cid.toFmtString(),
     );
 
     if (res['hash'] == null) {

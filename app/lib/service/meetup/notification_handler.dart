@@ -10,15 +10,19 @@ class NotificationHandler {
     tz.Location local,
     ScheduleNotification scheduleNotification,
     String langCode,
+    String? cid,
   ) async {
     final feeds = await FeedRepo().fetchData(langCode);
-    if (feeds != null && feeds.isNotEmpty) await _registerScheduleNotifications(feeds, local, scheduleNotification);
+    if (feeds != null && feeds.isNotEmpty) {
+      await _registerScheduleNotifications(feeds, local, scheduleNotification, cid);
+    }
   }
 
   static Future<void> _registerScheduleNotifications(
     List<Feed> feeds,
     tz.Location local,
     ScheduleNotification scheduleNotification,
+    String? cid,
   ) async {
     feeds.forEachIndexed((i, e) async {
       if (tz.TZDateTime.from(feeds[i].showAt, local).isAfter(DateTime.now())) {
@@ -27,6 +31,7 @@ class NotificationHandler {
           feeds[i].title,
           feeds[i].content,
           tz.TZDateTime.from(feeds[i].showAt, local),
+          cid: cid,
         );
       }
     });

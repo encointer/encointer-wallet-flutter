@@ -9,7 +9,13 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-typedef ScheduleNotification = Future<void> Function(int id, String title, String body, tz.TZDateTime scheduledDate);
+typedef ScheduleNotification = Future<void> Function(
+  int id,
+  String title,
+  String body,
+  tz.TZDateTime scheduledDate, {
+  String? cid,
+});
 
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 final didReceiveLocalNotificationSubject = BehaviorSubject<ReceivedNotification>();
@@ -111,7 +117,7 @@ class NotificationPlugin {
   }
 
   static NotificationDetails _platformChannelSpecifics(String body, {String? cid}) {
-    final sound = (cid ?? 'u0qj944rhWE') != 'u0qj944rhWE' ? 'gbd_chime' : 'lions_growl';
+    final sound = cid != null && cid != 'u0qj944rhWE' ? 'gbd_chime' : 'lions_growl';
     return NotificationDetails(
       android: _androidPlatformChannelSpecifics(body, sound),
       iOS: _iOSPlatformChannelSpecifics(sound),

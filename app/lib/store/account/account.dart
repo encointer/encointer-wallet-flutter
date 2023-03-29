@@ -144,6 +144,7 @@ abstract class _AccountStore with Store {
             args['txInfo'] as Map<String, dynamic>,
             args['params'] as List<dynamic>?,
             rawParam: args['rawParam'] as String?,
+            cid: rootStore.encointer.community?.cid.toFmtString(),
           );
 
           Log.d('Queued tx result: $res', 'AccountStore');
@@ -152,6 +153,7 @@ abstract class _AccountStore with Store {
               0,
               '${args['txError']}',
               'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
+              cid: rootStore.encointer.community?.cid.toFmtString(),
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
