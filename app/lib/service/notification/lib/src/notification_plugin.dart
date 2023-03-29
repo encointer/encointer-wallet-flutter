@@ -111,7 +111,7 @@ class NotificationPlugin {
   }
 
   static NotificationDetails _platformChannelSpecifics(String body, {String? cid = 'u0qj944rhWE'}) {
-    final sound = cid != 'u0qj944rhWE' ? 'gbd' : 'lions_growl';
+    final sound = cid != 'u0qj944rhWE' ? 'gbd_chime' : 'lions_growl';
     return NotificationDetails(
       android: _androidPlatformChannelSpecifics(body, sound),
       iOS: _iOSPlatformChannelSpecifics(sound),
