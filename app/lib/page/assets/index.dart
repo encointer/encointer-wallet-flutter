@@ -12,6 +12,7 @@ import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
@@ -138,11 +139,29 @@ class _AssetsState extends State<Assets> {
       },
       child: Scaffold(
         appBar: appBar,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
-            await NotificationPlugin.showNotification(2, 'Eldi', 'Example', cid: cid);
-          },
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: () async {
+                final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
+                await NotificationPlugin.showNotification(2, 'Eldi', 'Example');
+              },
+            ),
+            FloatingActionButton(
+              onPressed: () async {
+                final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
+                final time = tz.TZDateTime.now(tz.local).add(const Duration(seconds: 30));
+                print(time);
+                await NotificationPlugin.scheduleNotification(
+                  1,
+                  'Eldi',
+                  'Example',
+                  time,
+                );
+              },
+            ),
+          ],
         ),
         body: UpgradeAlert(
           upgrader: Upgrader(
