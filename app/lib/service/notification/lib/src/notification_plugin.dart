@@ -90,33 +90,40 @@ class NotificationPlugin {
     });
   }
 
-  static AndroidNotificationDetails androidPlatformChannelSpecifics(String body) => AndroidNotificationDetails(
-        'transaction_submitted',
-        'Tx Submitted',
-        channelDescription: 'transaction submitted to blockchain network',
-        importance: Importance.max,
-        priority: Priority.high,
-        ticker: 'ticker',
-        sound: const RawResourceAndroidNotificationSound('lions_growl'),
-        styleInformation: BigTextStyleInformation(body),
-      );
+  static AndroidNotificationDetails _androidPlatformChannelSpecifics(String body, String sound) {
+    return AndroidNotificationDetails(
+      '$sound channel id',
+      '$sound channel name',
+      channelDescription: '$sound channel description',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+      sound: RawResourceAndroidNotificationSound(sound),
+      styleInformation: BigTextStyleInformation(body),
+    );
+  }
 
-  static const iOSPlatformChannelSpecifics = DarwinNotificationDetails(
-    sound: 'lions_growl.wav',
-    presentSound: true,
-  );
+  static DarwinNotificationDetails _iOSPlatformChannelSpecifics(String sound) {
+    return DarwinNotificationDetails(
+      sound: '$sound.wav',
+      presentSound: true,
+    );
+  }
 
-  static NotificationDetails platformChannelSpecifics(String body) => NotificationDetails(
-        android: androidPlatformChannelSpecifics(body),
-        iOS: iOSPlatformChannelSpecifics,
-      );
+  static NotificationDetails _platformChannelSpecifics(String body, {String? cid = 'u0qj944rhWE'}) {
+    final sound = cid != 'u0qj944rhWE' ? 'gbd' : 'lions_growl';
+    return NotificationDetails(
+      android: _androidPlatformChannelSpecifics(body, sound),
+      iOS: _iOSPlatformChannelSpecifics(sound),
+    );
+  }
 
   static Future<bool> showNotification(int id, String? title, String body, {String? payload, String? cid}) async {
     await flutterLocalNotificationsPlugin.show(
       id,
       title,
       body,
-      platformChannelSpecifics(body),
+      _platformChannelSpecifics(body, cid: cid),
       payload: payload ?? 'undefined',
     );
     return Future.value(true);
@@ -128,6 +135,7 @@ class NotificationPlugin {
     String body,
     DateTime scheduledDate, {
     bool overridePendingNotificationWithSameId = true,
+    String? cid,
   }) async {
     final pendingNotificationRequests = await flutterLocalNotificationsPlugin.pendingNotificationRequests();
     // Check if a notification with the specified id has already been scheduled
@@ -147,7 +155,7 @@ class NotificationPlugin {
       title,
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
-      platformChannelSpecifics(body),
+      _platformChannelSpecifics(body, cid: cid),
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
     );

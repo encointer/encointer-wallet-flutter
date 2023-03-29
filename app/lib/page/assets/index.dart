@@ -138,6 +138,12 @@ class _AssetsState extends State<Assets> {
       },
       child: Scaffold(
         appBar: appBar,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
+            await NotificationPlugin.showNotification(2, 'Eldi', 'Example', cid: cid);
+          },
+        ),
         body: UpgradeAlert(
           upgrader: Upgrader(
             appcastConfig: context.watch<AppStore>().config.appCast,

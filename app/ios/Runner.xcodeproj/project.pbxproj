@@ -21,6 +21,7 @@
 		0FB4ED323DB222DAED23878A /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
+		17AE218429D411D800EB8E34 /* gbd.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = gbd.wav; path = ../../../../../../flutter_sabak/my_app_3/sound_demo/assets/gbd.wav; sourceTree = "<group>"; };
 		17BEAFC02911F3CA008D9D62 /* RunnerDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerDebug.entitlements; sourceTree = "<group>"; };
 		1C3C224C297E2FDC002D114F /* RunnerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerRelease.entitlements; sourceTree = "<group>"; };
 		1C4CAAD028324A1F002A90CE /* lions_growl.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lions_growl.wav; sourceTree = "<group>"; };
@@ -53,6 +54,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17AE218329D411CD00EB8E34 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1C4CAAD028324A1F002A90CE /* lions_growl.wav */,
+				17AE218429D411D800EB8E34 /* gbd.wav */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		4C9779789C63CFC44F1E60AD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,7 +87,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
-				1C4CAAD028324A1F002A90CE /* lions_growl.wav */,
+				17AE218329D411CD00EB8E34 /* Resources */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
