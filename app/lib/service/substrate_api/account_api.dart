@@ -106,6 +106,7 @@ class AccountApi {
         int.parse(hash.substring(0, 6)),
         '${txInfo['notificationTitle']}',
         '${txInfo['notificationBody']}',
+        cid: cid,
       ));
     }
     return res;
