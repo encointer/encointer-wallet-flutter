@@ -24,6 +24,11 @@ void main() async {
   setUp(() => channel.setMockMethodCallHandler((MethodCall methodCall) async => '42'));
 
   test('executeTaskIsolate called', () async {
-    await NotificationHandler.fetchMessagesAndScheduleNotifications(local, mockScheduleNotification, 'en', 'leo');
+    await NotificationHandler.fetchMessagesAndScheduleNotifications(
+      local,
+      mockScheduleNotification,
+      langCode: 'en',
+      cid: 'leo',
+    );
   });
 }

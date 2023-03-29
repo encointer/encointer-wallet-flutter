@@ -40,8 +40,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       await NotificationHandler.fetchMessagesAndScheduleNotifications(
         tz.local,
         NotificationPlugin.scheduleNotification,
-        Localizations.localeOf(context).languageCode,
-        cid,
+        langCode: Localizations.localeOf(context).languageCode,
+        cid: cid,
       );
 
       // Should never be null, we either come from the splash screen, and hence we had
