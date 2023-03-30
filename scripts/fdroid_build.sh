@@ -8,5 +8,7 @@
 
 set -exuo pipefail
 
-./flutterw config --no-analytics
-./flutterw build apk --flavor fdroid
+cd app
+
+../flutterw config --no-analytics
+../flutterw build apk --flavor fdroid

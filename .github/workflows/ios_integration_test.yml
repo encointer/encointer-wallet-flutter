@@ -46,7 +46,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          distribution: 'zulu'
+          distribution: "zulu"
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
@@ -64,9 +64,14 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Melos Install
+        run: ./scripts/install_melos.sh
+
+      - name: Melos Bootstrap
+        run: ./flutterw pub global run melos bootstrap
+
       - name: "Build JS"
-        working-directory: ./scripts
-        run: source ./init_env.sh && ./build_js.sh
+        run: ./flutterw pub global run melos yarn-build
 
       - name: Start colima a docker runtime for MacOs
         run: |
@@ -74,10 +79,10 @@ jobs:
           colima start
 
       - name: Run encointer-node
-        run: ./scripts/run_encointer_node_notee_docker.sh &
+        run: ./scripts/docker_run_encointer_node_notee.sh &
 
       - name: Bootstrap Demo Community
-        run: docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
+        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
 
       - name: "Start Simulator"
         working-directory: ./scripts

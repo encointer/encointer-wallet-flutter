@@ -14,9 +14,9 @@ then
   echo "Recording process up with pid: ${RECORDING_PID}"
 fi
 
-./flutterw drive --target=test_driver/app.dart --flavor dev
-./flutterw drive --target=test_driver/scan_page.dart --flavor dev
-./flutterw drive --target=test_driver/real_app.dart --flavor dev
+./flutterw pub global run melos integration-app-test-android
+./flutterw pub global run melos integration-scan-test-android
+./flutterw pub global run melos integration-real-app-test-android
 
 mkdir -p "$TEMP_DIR"
 

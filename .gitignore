@@ -31,6 +31,13 @@
 .pub/
 /build/
 
+# Ignore all toolchain files from all sub-packages.
+**/.dart_tool/
+**/.packages
+**/build/
+# keep the .lock file from the workspace and the app.
+packages/**/pubspec.lock
+
 # Web related
 lib/generated_plugin_registrant.dart
 
@@ -40,7 +47,7 @@ lib/generated_plugin_registrant.dart
 # webview lib
 **/dist
 **/node_modules/
-/android/fastlane/metadata/android/en-US/images/phoneScreenshots/
+app/android/fastlane/metadata/android/en-US/images/phoneScreenshots/
 
 # source files
 /source
