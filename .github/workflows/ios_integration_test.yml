@@ -82,7 +82,7 @@ jobs:
         run: ./scripts/run_encointer_node_notee_docker.sh &
 
       - name: Bootstrap Demo Community
-        run: docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
+        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
 
       - name: "Start Simulator"
         working-directory: ./scripts
