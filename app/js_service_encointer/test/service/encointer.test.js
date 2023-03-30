@@ -152,9 +152,8 @@ describe('encointer', () => {
       const ticketsPerReputation = await api.query.encointerCeremonies.endorsementTicketsPerReputable();
 
       expect(
-        await remainingNewbieTicketsReputable(
-          cid, 2, alice.publicKey
-        )).toBe(ticketsPerReputation);
+        await remainingNewbieTicketsReputable(cid, 2, alice.publicKey)
+      ).toBe(ticketsPerReputation.toNumber());
     });
   });
 
