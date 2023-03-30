@@ -58,11 +58,16 @@ dependencies:
   web_socket_channel: ^2.3.0
   cupertino_icons: ^1.0.5
   # QR code generator & reader
+  flutter_qr_scan:
+    git:
+      url: https://github.com/encointer/flutter_qr_reader.git
+      # Get fixed version on master
+      ref: 647977de0d71a2e421d8dff7357d483329581e65
   qr_flutter_fork:
     git:
       url: https://github.com/polkawallet-io/qr.flutter.git
       ref: master
-  mobile_scanner: ^2.1.0
+#  mobile_scanner: ^2.1.0
   aes_ecb_pkcs5_flutter: ^0.1.2
   permission_handler: ^10.2.0
   flutter_svg: ^2.0.1

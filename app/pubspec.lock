@@ -480,6 +480,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.7"
+  flutter_qr_scan:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "647977de0d71a2e421d8dff7357d483329581e65"
+      resolved-ref: "647977de0d71a2e421d8dff7357d483329581e65"
+      url: "https://github.com/encointer/flutter_qr_reader.git"
+    source: git
+    version: "1.0.7"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -783,14 +792,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  mobile_scanner:
-    dependency: "direct main"
-    description:
-      name: mobile_scanner
-      sha256: "531725451c7506f4c57b4720da1fe33a1394cdf9d4a5075a3a2dd51e21113928"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   mobx:
     dependency: "direct main"
     description:
