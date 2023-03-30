@@ -27,6 +27,9 @@ jobs:
       - name: Run encointer-node
         run: ./scripts/run_encointer_node_notee_docker.sh &
 
+      - name: Bootstrap Demo Community
+        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
+
       - name: Test JS
         # We don't really have unit tests in the JS part. Most tests need a local node running.
         run: |
