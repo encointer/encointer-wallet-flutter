@@ -143,8 +143,8 @@ describe('encointer', () => {
     });
   });
 
-  // skip because it needs the bootstrapping script.
-  describe.skip('remainingReputableNewbieTickets', () => {
+  // Note: this needs the bootstrapping script, but we have this in the CI now.
+  describe('remainingReputableNewbieTickets', () => {
     it('returns tickets per reputation after bootstrapping ceremony', async () =>  {
       const alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
       const cid = communityIdentifierFromString(api.registry, "sqm1v79dF6b");
@@ -158,8 +158,8 @@ describe('encointer', () => {
     });
   });
 
-  // skip because it needs the bootstrapping script.
-  describe.skip('reap voucher', () => {
+  // Note: this needs the bootstrapping script, but we have this in the CI now.
+  describe('reap voucher', () => {
     it('removes all the balance from voucher', async () => {
       // assumes that the bootstrap script has been run.
       const voucherUri = "//VoucherUri";
@@ -177,16 +177,15 @@ describe('encointer', () => {
       // the test before we have some dust as leftover.
       expect(balanceVoucher.principal).toBeGreaterThanOrEqual(0.06);
 
-      // await reapVoucher(voucherUri, recipient.address, cid, cid);
-      //
-      // const balanceRecipient = await getBalance(cid, recipient.address);
-      // console.log(`balance recipient: ${JSON.stringify(balanceRecipient)}`);
-      // expect(balanceRecipient.principal).toBeGreaterThan(0.058);
-      //
-      // const balanceVoucherReaped = await getBalance(cid, voucherPair.address);
-      // console.log(`balance voucher: ${JSON.stringify(balanceVoucherReaped)}`);
-      // expect(balanceVoucherReaped.principal).toBeLessThan(0.015);
+      await reapVoucher(voucherUri, recipient.address, cid, cid);
 
+      const balanceRecipient = await getBalance(cid, recipient.address);
+      console.log(`balance recipient: ${JSON.stringify(balanceRecipient)}`);
+      expect(balanceRecipient.principal).toBeGreaterThan(0.050);
+
+      const balanceVoucherReaped = await getBalance(cid, voucherPair.address);
+      console.log(`balance voucher: ${JSON.stringify(balanceVoucherReaped)}`);
+      expect(balanceVoucherReaped.principal).toBe(0);
     }, 90000);
   });
 });
