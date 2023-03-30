@@ -25,7 +25,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Run encointer-node
-        run: ./scripts/run_encointer_node_notee_docker.sh &
+        run: ./scripts/docker_run_encointer_node_notee.sh &
 
       - name: Bootstrap Demo Community
         run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
