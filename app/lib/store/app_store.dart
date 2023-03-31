@@ -43,8 +43,6 @@ class AppStore extends _AppStore with _$AppStore {
 abstract class _AppStore with Store {
   _AppStore() : localStorage = sl();
 
-  // final AppConfig config;
-
   late final LocalData localStorage;
 
   // Note, following pattern of a nullable field with a non-nullable getter
