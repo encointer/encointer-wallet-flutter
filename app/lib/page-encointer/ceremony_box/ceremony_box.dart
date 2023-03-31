@@ -1,11 +1,12 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/design_kit/buttons/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -18,10 +19,9 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/compone
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/meetup_info.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step1_count.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class CeremonyBox extends StatelessWidget {
   const CeremonyBox(this.store, this.api, {super.key});

@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:animated_check/animated_check.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/design_kit/buttons/primary_button.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -13,12 +15,11 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/payment_overview.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transfer_state.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/presentation/account/types/account_data.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
@@ -66,7 +67,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     final cid = params.cid;
     final recipientAccount = params.recipientAccount;
     final amount = params.amount;
-    final recipientAddress = Fmt.addressOfAccount(recipientAccount, context.read<AppStore>());
+    final recipientAddress = Fmt.addressOfAccount(recipientAccount, sl<AppStore>());
 
     return Scaffold(
       appBar: AppBar(title: Text(dic.assets.payment)),
@@ -75,7 +76,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         child: Column(
           children: [
             PaymentOverview(
-              context.watch<AppStore>(),
+              sl<AppStore>(),
               params.communitySymbol,
               params.recipientAccount,
               params.amount,
@@ -158,14 +159,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       }
     }
 
-    await submitTx(context, context.read<AppStore>(), widget.api, params, onFinish: onFinish);
-
-    // for debugging
-    // Future.delayed(const Duration(milliseconds: 1500), () {
-    //   setState(() {
-    //     _transferState = TransferState.finished;
-    //   });
-    // });
+    await submitTx(context, sl<AppStore>(), widget.api, params, onFinish: onFinish);
 
     Log.d('TransferState after callback: $_transferState', 'PaymentConfirmationPage');
     // trigger rebuild after state update in callback

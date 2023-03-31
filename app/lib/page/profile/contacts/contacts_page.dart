@@ -1,13 +1,13 @@
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class ContactsPage extends StatelessWidget {
   const ContactsPage({super.key});
@@ -42,7 +42,7 @@ class ContactsPage extends StatelessWidget {
             ),
             body: SafeArea(
               child: ListView(
-                children: context.watch<AppStore>().settings.contactList.map((i) {
+                children: sl<AppStore>().settings.contactList.map((i) {
                   return ListTile(
                     leading: AddressIcon(i.address, i.pubKey, size: 45),
                     title: Text(Fmt.accountName(context, i)),

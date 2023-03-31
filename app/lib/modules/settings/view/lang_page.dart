@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:encointer_wallet/common/stores/language/app_language_store.dart';
+import 'package:encointer_wallet/extras/utils/encointer_state_mixin.dart';
 
-import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
 
 class LangPage extends StatefulWidget {
   const LangPage({super.key});
@@ -13,23 +12,25 @@ class LangPage extends StatefulWidget {
   State<LangPage> createState() => _LangPageState();
 }
 
-class _LangPageState extends State<LangPage> {
+class _LangPageState extends State<LangPage> with EncointerStateMixin {
+  final languageStore = AppLanguageStore();
+
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().profile;
-    final settings = context.watch<AppSettings>();
+    final dic = localization.profile;
+
     return Scaffold(
       appBar: AppBar(title: Text(dic.settingLang)),
       body: ListView.builder(
-        itemCount: settings.locales.length,
+        itemCount: languageStore.locales.length,
         itemBuilder: (BuildContext context, int index) {
-          final lang = settings.getName(settings.locales[index].languageCode);
+          final lang = languageStore.getName(languageStore.locales[index].languageCode);
           return RadioListTile(
             title: Text(lang),
-            value: settings.locales[index],
-            groupValue: settings.locale,
+            value: languageStore.locales[index],
+            groupValue: languageStore.locale,
             onChanged: (v) async {
-              await context.read<AppSettings>().setLocale(index);
+              await languageStore.setLocale(index);
             },
           );
         },

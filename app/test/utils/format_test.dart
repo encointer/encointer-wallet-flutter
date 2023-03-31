@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

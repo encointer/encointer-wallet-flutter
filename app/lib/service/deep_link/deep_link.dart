@@ -1,7 +1,7 @@
 import 'package:app_links/app_links.dart';
+import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';

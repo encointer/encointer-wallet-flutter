@@ -1,9 +1,8 @@
+import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/service/meetup/meetup.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
-
-import 'package:encointer_wallet/config/consts.dart';
 
 import '../../fixtures/fixture_reader.dart';
 

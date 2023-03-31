@@ -1,20 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
-class TransferHistoryView extends StatelessWidget {
+class TransferHistoryView extends StatefulWidget {
   const TransferHistoryView({super.key});
 
   static const route = '/transfer-history';
 
   @override
+  State<TransferHistoryView> createState() => _TransferHistoryViewState();
+}
+
+class _TransferHistoryViewState extends State<TransferHistoryView> {
+  final store = TransferHistoryStore();
+
+  @override
+  void initState() {
+    super.initState();
+    store.getTransfers();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final store = context.watch<TransferHistoryStore>();
     final dic = I18n.of(context)!.translationsForLocale().home;
     return Scaffold(
       appBar: AppBar(

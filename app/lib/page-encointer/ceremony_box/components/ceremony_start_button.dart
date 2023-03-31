@@ -1,13 +1,16 @@
+import 'package:encointer_wallet/design_kit/buttons/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class CeremonyStartButton extends StatelessWidget {
-  const CeremonyStartButton({super.key, this.onPressed});
+  const CeremonyStartButton({
+    required this.onPressed,
+    super.key,
+  });
 
-  final void Function()? onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {

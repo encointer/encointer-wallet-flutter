@@ -1,15 +1,15 @@
+import 'package:encointer_wallet/common/constants/consts.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class AccountSharePage extends StatefulWidget {
   const AccountSharePage({super.key});
@@ -21,11 +21,11 @@ class AccountSharePage extends StatefulWidget {
 }
 
 class _AccountSharePageState extends State<AccountSharePage> {
+  final store = sl<AppStore>();
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
-    final store = context.watch<AppStore>();
 
     final accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeShared = store.account.getAccountData(accountToBeSharedPubKey);

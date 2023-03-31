@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
+import 'package:encointer_wallet/presentation/account/stores/account_store.dart';
 
 class ExportResultPage extends StatelessWidget {
   const ExportResultPage({super.key});

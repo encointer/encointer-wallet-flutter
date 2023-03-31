@@ -1,15 +1,15 @@
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/rounded_button.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -17,10 +17,10 @@ class ContactPage extends StatefulWidget {
   static const String route = '/profile/contact';
 
   @override
-  State<ContactPage> createState() => _Contact();
+  State<ContactPage> createState() => _ContactPageState();
 }
 
-class _Contact extends State<ContactPage> {
+class _ContactPageState extends State<ContactPage> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _addressCtrl = TextEditingController();
@@ -29,69 +29,11 @@ class _Contact extends State<ContactPage> {
 
   bool? _isObservation = false;
 
-  ContactData? qrScanData;
+  final _appStore = sl<AppStore>();
+
+  late ContactData? qrScanData;
 
   bool _submitting = false;
-
-  Future<void> _onSave() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _submitting = true;
-      });
-      final dic = I18n.of(context)!.translationsForLocale();
-      final addr = _addressCtrl.text.replaceAll(' ', '');
-      final pubKeyAddress = await webApi.account.decodeAddress([addr]);
-      final pubKey = pubKeyAddress.keys.toList()[0] as String;
-      final con = {
-        'address': addr,
-        'name': _nameCtrl.text,
-        'memo': _memoCtrl.text,
-        'observation': _isObservation,
-        'pubKey': pubKey,
-      };
-      setState(() {
-        _submitting = false;
-      });
-      if (qrScanData == null) {
-        // create new contact
-        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
-        if (exist > -1) {
-          return showCupertinoDialog<void>(
-            context: context,
-            builder: (BuildContext context) {
-              return CupertinoAlertDialog(
-                title: Container(),
-                content: Text(dic.profile.contactAlreadyExists),
-                actions: <Widget>[
-                  CupertinoButton(
-                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              );
-            },
-          );
-        } else {
-          await context.read<AppStore>().settings.addContact(con);
-        }
-      } else {
-        // edit contact
-        await context.read<AppStore>().settings.updateContact(con);
-      }
-
-      // get contact info
-      if (_isObservation!) {
-        await webApi.account.encodeAddress([pubKey]);
-      } else {
-        // if this address was used as observation and current account,
-        // we need to change current account
-        if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {
-          await webApi.account.changeCurrentAccount(fetchData: true);
-        }
-      }
-      Navigator.of(context).pop();
-    }
-  }
 
   @override
   void dispose() {
@@ -103,11 +45,15 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    final qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
+    qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
     final dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
-      _addressCtrl.text = qrScanData.account;
-      _nameCtrl.text = qrScanData.label;
+      if (qrScanData?.account != null) {
+        _addressCtrl.text = qrScanData!.account;
+      }
+      if (qrScanData?.label != null) {
+        _nameCtrl.text = qrScanData!.label;
+      }
     }
 
     return Scaffold(
@@ -155,7 +101,7 @@ class _Contact extends State<ContactPage> {
                         },
                       ),
                     ),
-                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                    if (_appStore.settings.developerMode)
                       Padding(
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
@@ -166,7 +112,7 @@ class _Contact extends State<ContactPage> {
                           controller: _memoCtrl,
                         ),
                       ),
-                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                    if (_appStore.settings.developerMode)
                       Row(
                         children: <Widget>[
                           Checkbox(
@@ -220,5 +166,65 @@ class _Contact extends State<ContactPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _onSave() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _submitting = true;
+      });
+      final dic = I18n.of(context)!.translationsForLocale();
+      final addr = _addressCtrl.text.replaceAll(' ', '');
+      final pubKeyAddress = await webApi.account.decodeAddress([addr]);
+      final pubKey = pubKeyAddress.keys.toList()[0] as String;
+      final con = {
+        'address': addr,
+        'name': _nameCtrl.text,
+        'memo': _memoCtrl.text,
+        'observation': _isObservation,
+        'pubKey': pubKey,
+      };
+      setState(() {
+        _submitting = false;
+      });
+      if (qrScanData == null) {
+        // create new contact
+        final exist = _appStore.settings.contactList.indexWhere((i) => i.address == addr);
+        if (exist > -1) {
+          return showCupertinoDialog<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return CupertinoAlertDialog(
+                title: Container(),
+                content: Text(dic.profile.contactAlreadyExists),
+                actions: <Widget>[
+                  CupertinoButton(
+                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          await _appStore.settings.addContact(con);
+        }
+      } else {
+        // edit contact
+        await _appStore.settings.updateContact(con);
+      }
+
+      // get contact info
+      if (_isObservation!) {
+        await webApi.account.encodeAddress([pubKey]);
+      } else {
+        // if this address was used as observation and current account,
+        // we need to change current account
+        if (pubKey == _appStore.account.currentAccountPubKey) {
+          await webApi.account.changeCurrentAccount(fetchData: true);
+        }
+      }
+      Navigator.of(context).pop();
+    }
   }
 }

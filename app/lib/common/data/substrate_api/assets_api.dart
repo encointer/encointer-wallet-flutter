@@ -1,0 +1,58 @@
+import 'package:encointer_wallet/common/data/substrate_api/core/js_api.dart';
+
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+
+const _tag = 'assets_api';
+
+class AssetsApi {
+  AssetsApi(this.store, this.jsApi);
+
+  final JSApi jsApi;
+  final AppStore store;
+
+  final String _balanceSubscribeChannel = 'gas token balance';
+
+  Future<void> startSubscriptions() async {
+    Log.d('api: starting assets subscriptions', 'AssetsApi');
+    await subscribeBalance();
+  }
+
+  Future<void> stopSubscriptions() async {
+    Log.d('api: stopping assets subscriptions', 'AssetsApi');
+    await jsApi.unsubscribeMessage(_balanceSubscribeChannel);
+  }
+
+  Future<void> fetchBalance() async {
+    Log.d('fetchBalance', _tag);
+    final pubKey = store.account.currentAccountPubKey;
+    final currentAddress = store.account.currentAddress;
+    if (pubKey != null && pubKey.isNotEmpty) {
+      final address = currentAddress;
+      final res = await jsApi.evalJavascript<Map<String, dynamic>>('account.getBalance("$address")');
+      await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res}));
+    }
+    await _fetchMarketPrice();
+  }
+
+  Future<void> subscribeBalance() async {
+    await jsApi.unsubscribeMessage(_balanceSubscribeChannel);
+
+    final pubKey = store.account.currentAccountPubKey;
+    if (pubKey != null && pubKey.isNotEmpty) {
+      final address = store.account.currentAddress;
+
+      await jsApi.subscribeMessage(
+        'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
+        _balanceSubscribeChannel,
+        (Map<String, dynamic> data) async {
+          await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data}));
+        },
+      );
+    }
+  }
+
+  Future<void> _fetchMarketPrice() async {
+    Log.d('Fetch marketprice not implemented for Encointer networks', 'AssetsApi');
+  }
+}

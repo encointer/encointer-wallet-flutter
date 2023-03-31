@@ -7,7 +7,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 typedef ScheduleNotification = Future<void> Function(int id, String title, String body, tz.TZDateTime scheduledDate);
 

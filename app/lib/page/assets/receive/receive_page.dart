@@ -1,23 +1,23 @@
+import 'package:encointer_wallet/common/constants/consts.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/qr_code_view/qr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:encointer_wallet/utils/ui.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/snack_bar.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
+import 'package:encointer_wallet/extras/utils/translations/translations.dart';
+import 'package:encointer_wallet/extras/utils/ui.dart';
 
 class ReceivePage extends StatefulWidget {
   const ReceivePage({super.key});
@@ -42,7 +42,7 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   void initState() {
     super.initState();
-    _appStore = context.read<AppStore>();
+    _appStore = sl<AppStore>();
     invoice = InvoiceQrCode(
       account: _appStore.account.currentAddress,
       cid: _appStore.encointer.chosenCid,
@@ -60,7 +60,7 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
+    final store = sl<AppStore>();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () async {

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dart_geohash/dart_geohash.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -9,9 +11,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:provider/provider.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class CommunityChooserOnMap extends StatefulWidget {
   const CommunityChooserOnMap({super.key});
@@ -26,10 +27,14 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
   late final List<LatLng> locations;
   late final Map<LatLng, CidName> communityDataAt;
 
+  final appStore = sl<AppStore>();
+
   @override
   void initState() {
-    locations = getLocations(context.read<AppStore>());
-    communityDataAt = getCommunityDataAt(context.read<AppStore>());
+    locations = getLocations(appStore);
+    log('_CommunityChooserOnMapState,initState locations: $locations');
+    communityDataAt = getCommunityDataAt(appStore);
+    log('_CommunityChooserOnMapState,initState communityDataAt: $communityDataAt');
     super.initState();
   }
 
@@ -64,7 +69,7 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
                   title: communityDataAt[marker.point]!.name,
                   description: communityDataAt[marker.point]!.cid.toFmtString(),
                   onTap: () async {
-                    await context.read<AppStore>().encointer.setChosenCid(communityDataAt[marker.point]!.cid);
+                    await appStore.encointer.setChosenCid(communityDataAt[marker.point]!.cid);
                     Navigator.pop(context);
                   },
                 );

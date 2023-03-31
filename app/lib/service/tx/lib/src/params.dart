@@ -1,6 +1,6 @@
+import 'package:encointer_wallet/extras/utils/translations/translations.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 /// Params for known extrinsics.
 

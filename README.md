@@ -291,3 +291,230 @@ FOSS constraints.
 
 ## Acknowledgements
 This app has been built based on [polkawallet.io](https://polkawallet.io)
+
+
+### Flutter Best Practices
+- DO NOT USE `index.dart`:
+  for naming any UI related files, do not use index.dart,
+  instead, go with a very specific name, for ex: `name_view.dart`.
+
+- `Business Logic`:
+  - Business Logic should be separated from UI.
+  **Note:** DO NOT WRITE any business logic inside UI
+  - Data -> Business Logic --> UI. 
+  Here, every (UI) screen should have its own business logic (store).
+  `HomeView` <--> `HomeViewStore`
+
+- Naming `Views` (screens) and `Stores`:
+  Screens and stores need to have `the same names`, 
+  here's an example: if `HomeView` is a screen name, 
+  then the store name that holds `the business logic` for `HomeView` 
+  must be `HomeViewStore`. 
+  Shortly, if screen name is `XView` then store name must be `XViewStore`.
+  Say, if it's a widget, `XWidget`, then `XWidgetStore`.
+
+
+### Clean Architecture
+
+```
+|__ assets
+|   
+|__ js_service_encointer  
+|   
+|__ lib (lib contains dart files)
+|   |
+|   ├── common
+|   |   |
+|   |   |
+|   │   ├── constants
+|   |   |   |__ app_constants.dart
+|   |   |   .
+|   |   |   .
+|   |   |    
+|   |   |__ mixins   
+|   |   |      
+|   │   ├── data
+|   │   │   |__ js_api
+|   |   |   |   |_ js_api.dart
+|   |   |   |   |_ js_api_exception.dart
+|   |   |   |   |_ js_api_error.dart
+|   |   |   |
+|   │   │   |__ ipfs
+|   |   |   |   |_ ipfs.dart
+|   |   |   |
+|   │   │   |__ dart_api
+|   |   |   |   |_ dart_api.dart
+|   |   |   |   |_ dart_api_exception.dart
+|   |   |   |   |_ dart_api_error.dart
+|   |   |   |   |
+|   |   |   |   |_ network_interceptors
+|   |   |   |      |_ dart_api_token_interceptor.dart
+|   |   |   |      |_ dart_api_version_interceptor.dart
+|   |   |   |
+|   │   |   |__ local_storage
+|   |   |   |   |_ local_storage.dart
+|   |   |   .     
+|   |   |   .     
+|   |   |         
+|   |   ├── services
+|   |   |   |
+|   |   │   |__ localization
+|   |   |   |   |_ localization_service.dart
+|   |   |   |
+|   |   │   |__ permission
+|   |   |   |   |_ permission_service.dart
+|   |   |   |
+|   |   │   |__ preferences
+|   |   |   |   |_ preferences_service.dart
+|   |   |   |
+|   |   │   |__ local_notifications
+|   |   |   |   |_ local_notifications_service.dart
+|   |   |   |
+|   |   │   |__ internet_connection
+|   |   |   |   |_ internet_connection_service.dart
+|   |   |   |
+|   |   │   |__ analytics
+|   |   |   |
+|   |   |   |__ crashlytics 
+|   |   |   
+|   |   .
+|   |   .
+|   |
+|   |__ app (app is here)
+|   |   |
+|   |   ├── data
+.   |   │   ├── home
+.   |   │   │   |── models
+.   |   |   │   |    └── a_model.dart
+    |   |   |   |    |__ b_model.dart
+    |   |   |   |
+    |   |   |   |__ repositories
+    |   |   |       |__ home_repositories.dart
+    |   |   |
+    |   |   |
+    |   │   ├── meet_up
+    |   │   │   |── models
+    |   |   │   |    └── c_model.dart
+    |   |   |   |    |__ d_model.dart
+    |   |   |   |
+    |   |   |   |__ repositories
+    |   |   |       |__ meet_up_repositories.dart
+    |   |
+    |   |
+    |   ├── domain
+    |   │   ├── home
+    |   │   │   |── entities
+    |   |   |   |    |__ models
+    |   |   │   |       └── client_a_model.dart
+    |   |   |   |       |__ client_b_model.dart
+    |   |   |   |
+    |   |   |   |__ use_cases
+    |   |   |       |__ home_use_cases.dart
+    |   |   |
+    |   |   |
+    |   │   ├── meet_up
+    |   │   .   |── entities
+    |   |   .   |    |__ models
+    |   |   .   |       └── client_c_model.dart
+    |   |   .   |       |__ client_d_model.dart
+    |   |   .   |
+    |   |   .   |__ use_cases
+    |   |   .       |__ meet_up_use_cases.dart
+    |   |
+    |   |
+    |   │   
+    |   └── presentation
+    |   |   ├── home
+    |   |   |   |
+    |   |   |   |-- store
+    |   |   │   |    └── main_screen_store.dart
+    |   |   |   |    |__ main_screen_store.g.dart
+    |   |   |   |
+    |   |   |   |    └── views
+    |   |   |   |        └── home_view.dart  
+    |   |   |   |    └── widgets 
+    |   |   |   |        └── home_x_widget.dart  
+    |   |   ├── meet_up
+    |   |   |   |
+    |   |   |   |-- store
+    |   |   │   |    └── meet_up_view_store.dart
+    |   |   │   |    └── meet_up_view_store.g.dart
+    |   |   |   |
+    |   |   |   |__ ui
+    |   |   |        └── views
+    |   |   |            └── meet_up_view.dart  
+    |   |   |        └── widgets 
+    |   |   |            └── meet_up_button_widget.dart  
+    |   |   |       
+    |   |   |....
+|   |   .
+|   |   .
+|   |   .
+|   |
+|   |__ design_kit
+|   |   |
+|   |   |__ colors
+|   |   |   |__ app_colors_config.dart  
+|   |   |   |__ app_colors_set.dart  
+|   |   |   |__ app_colors_set_light.dart  
+|   |   |   |__ app_colors_set_dark.dart  
+|   |   |
+|   |   |__ texts
+|   |   |   |__ app_text_styles.dart   
+|   |   |       
+|   |   |
+|   |   |__ images
+|   |   |   |__ app_icons.dart
+|   |   |   |__ app_illustrations.dart
+|   |   |   .
+|   |   |   .
+|   |   |
+|   |   ├── widgets
+|   |   |   |
+|   |   |   |-- app_bars
+|   |   │   |   └── main_app_bar.dart
+|   |   |   |   |__ secondary_app_bar.dart
+|   |   |   |   .
+|   |   |   |
+|   |   |   |-- app_bottom_sheets
+|   |   │   |   └── app_bottom_sheet.dart
+|   |   |   .   |__ error_bottom_sheet.dart 
+|   |   |   .   .
+|   |   |   .
+|   |   |
+|   |   |__ screens
+|   |   |   └── app_web_view_screen.dart
+|   |   |
+|   |
+|   |__ extras
+|   |   |
+|   |   |__ utils  
+|   |   |   |__ extensions
+|   |   |   |   |__ double_extensions.dart
+|   |   |   |   |__ string_extensions.dart
+|   |   |   |   .
+|   |   |   |
+|   |   |   |__ functions
+|   |   |   |   |__ double_extensions.dart
+|   |   |   |   |__ string_extensions.dart
+|   |   |   |   .
+|   |   |   |
+|   |   |   |__ logs
+|   |   |   |
+|   |   |   |
+|   |   |   
+|   |   |__ config
+|   |   | 
+|   |   | 
+|   |
+|   |__ routes
+|   |   |__ routes.dart
+|   |   
+|   |
+|   ├── service_locator
+|   |    |__ service_locator.dart
+|   |
+|   |__ main.dart  
+
+```
+

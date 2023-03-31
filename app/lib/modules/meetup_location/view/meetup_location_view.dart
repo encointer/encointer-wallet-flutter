@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:encointer_wallet/extras/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class MeetupLocationPage extends StatelessWidget {
   MeetupLocationPage(this.meetupLocation, {super.key});

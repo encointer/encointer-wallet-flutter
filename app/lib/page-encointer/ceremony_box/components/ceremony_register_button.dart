@@ -1,11 +1,11 @@
+import 'package:encointer_wallet/design_kit/buttons/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/maybe_date_time.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
 
 class CeremonyRegisterButton extends StatefulWidget {
   const CeremonyRegisterButton({super.key, this.registerUntil, this.onPressed});
@@ -36,7 +36,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
     final dic = I18n.of(context)!.translationsForLocale();
 
     return PrimaryButton(
-      onPressed: !_submitting && widget.registerUntil != null ? _onPressed : null,
+      onPressed: _onPressed,
       child: !_submitting
           ? FittedBox(
               child: Row(
@@ -45,14 +45,20 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
                   const Icon(Iconsax.login_1),
                   const SizedBox(width: 6),
                   Text('${dic.encointer.registerUntil} '),
-                  MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode).add_Hm())
+                  MaybeDateTime(
+                    widget.registerUntil,
+                    dateFormat: DateFormat.yMd(languageCode).add_Hm(),
+                  ),
                 ],
               ),
             )
           : Theme(
               // change theme locally to dark such that the activity indicator appears bright
-              data: ThemeData(cupertinoOverrideTheme: const CupertinoThemeData(brightness: Brightness.dark)),
-              child: const CupertinoActivityIndicator()),
+              data: ThemeData(
+                cupertinoOverrideTheme: const CupertinoThemeData(brightness: Brightness.dark),
+              ),
+              child: const CupertinoActivityIndicator(),
+            ),
     );
   }
 }

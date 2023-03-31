@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/mocks/ipfs/mock_ipfs_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,11 +6,16 @@ import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/test_utils.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart' as service_locator;
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  SharedPreferences.setMockInitialValues({});
+  service_locator.init(isTest: true);
+  await service_locator.sl.allReady();
   group('communityStore', () {
     test('json serialization and caching works', () async {
       final localStorage = MockLocalStorage();
@@ -19,7 +23,7 @@ void main() {
 
       // Only to not get null errors in tests
       webApi = getMockApi(
-        AppStore(MockLocalStorage(), config: const AppConfig()),
+        service_locator.sl.get<AppStore>(),
         withUI: false,
       );
       await webApi.init();

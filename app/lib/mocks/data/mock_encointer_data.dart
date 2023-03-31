@@ -1,8 +1,8 @@
+import 'package:encointer_wallet/common/stores/settings/settings_store.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/location/location.dart';
-import 'package:encointer_wallet/store/settings.dart';
 
 const String leuZurich = 'Leu Zurich';
 const String bernBaer = 'Bern Bär';

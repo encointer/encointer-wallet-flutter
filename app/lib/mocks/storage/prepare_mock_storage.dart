@@ -3,8 +3,8 @@ import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/chain/types/header.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/common/stores/chain/types/header.dart';
 
 abstract class PrepareMockStorage {
   static String wait(AppStore store) {

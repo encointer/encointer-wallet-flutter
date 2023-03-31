@@ -1,8 +1,9 @@
+import 'package:encointer_wallet/common/data/substrate_api/api.dart';
+import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
@@ -10,13 +11,12 @@ import 'package:encointer_wallet/common/components/submit_button_secondary.dart'
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/ui.dart';
+import 'package:encointer_wallet/presentation/account/types/account_data.dart';
+import 'package:encointer_wallet/store/app_store.dart';
+import 'package:encointer_wallet/extras/utils/format.dart';
+import 'package:encointer_wallet/extras/utils/translations/i_18_n.dart';
+import 'package:encointer_wallet/extras/utils/ui.dart';
 
 class ContactDetailPage extends StatefulWidget {
   const ContactDetailPage(this.accountData, {super.key});
@@ -34,6 +34,8 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   late final AccountData account;
   bool isEditing = false;
 
+  final store = sl<AppStore>();
+
   @override
   void initState() {
     account = widget.accountData;
@@ -44,7 +46,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final store = context.watch<AppStore>();
+
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
@@ -66,7 +68,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     'observation': widget.accountData.observation,
                     'pubKey': widget.accountData.pubKey,
                   };
-                  await context.read<AppStore>().settings.updateContact(contactData);
+                  await store.settings.updateContact(contactData);
                 }
                 setState(() {
                   isEditing = false;
@@ -139,8 +141,8 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   Navigator.of(context).pushNamed(
                     TransferPage.route,
                     arguments: TransferPageParams(
-                      cid: context.read<AppStore>().encointer.chosenCid,
-                      communitySymbol: context.read<AppStore>().encointer.community?.symbol,
+                      cid: store.encointer.chosenCid,
+                      communitySymbol: store.encointer.community?.symbol,
                       recipient: account.address,
                       label: _nameCtrl.text,
                     ),
@@ -149,7 +151,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
               ),
               const SizedBox(height: 16),
               SecondaryButtonWide(
-                onPressed: () => _removeItem(context, account, context.read<AppStore>()),
+                onPressed: () => _removeItem(context, account),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -166,7 +168,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
     );
   }
 
-  void _removeItem(BuildContext context, AccountData account, AppStore store) {
+  void _removeItem(BuildContext context, AccountData account) {
     final dic = I18n.of(context)!.translationsForLocale();
     showCupertinoDialog<void>(
       context: context,
