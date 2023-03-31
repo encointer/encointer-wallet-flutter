@@ -9,6 +9,7 @@ part 'app_language_store.g.dart';
 
 const _tag = 'app_language_store';
 
+// ignore: library_private_types_in_public_api
 class AppLanguageStore = _AppLanguageStoreBase with _$AppLanguageStore;
 
 abstract class _AppLanguageStoreBase with Store {

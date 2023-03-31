@@ -28,7 +28,7 @@ class SubstrateDartApi {
 
   Future<void> connect(String endpoint) async {
     Log.d('connect', _tag);
-    _connectAndListen(endpoint);
+    await _connectAndListen(endpoint);
 
     try {
       _rpc = await rpc<Map<String, dynamic>>('rpc_methods').then(RpcMethods.fromJson);
@@ -66,7 +66,7 @@ class SubstrateDartApi {
     }
     if (_client!.isClosed) {
       Log.d('[dartApi] not connected. trying to reconnect to $endpoint', 'SubstrateDartApi');
-      reconnect();
+      await reconnect();
       Log.d('[dartApi] connection status: isclosed? ${_client?.isClosed}', 'SubstrateDartApi');
     }
     final value = await _client!.sendRequest(method, params);

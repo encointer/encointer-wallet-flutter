@@ -15,6 +15,7 @@ part 'assets_view_store.g.dart';
 
 const _tag = 'assets_view_store';
 
+// ignore: library_private_types_in_public_api
 class AssetsViewStore = _AssetsViewStoreBase with _$AssetsViewStore;
 
 abstract class _AssetsViewStoreBase with Store {

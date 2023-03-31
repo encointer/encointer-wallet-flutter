@@ -17,6 +17,7 @@ part 'splash_view_store.g.dart';
 
 const _tag = 'splash_view_store';
 
+// ignore: library_private_types_in_public_api
 class SplashViewStore = _SplashViewStore with _$SplashViewStore;
 
 abstract class _SplashViewStore with Store {

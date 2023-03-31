@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service_locator/service_locator.dart';
 import 'package:encointer_wallet/store/app_store.dart';
 import 'package:encointer_wallet/common/stores/chain/types/header.dart';
@@ -23,6 +24,7 @@ abstract class _ChainStore with Store {
 
   @action
   void setLatestHeader(Header latest) {
+    Log.d('setLatestHeader', _tag);
     latestHeader = latest;
     rootStore.cacheObject(latestHeaderKey, latest);
   }
@@ -31,6 +33,7 @@ abstract class _ChainStore with Store {
   int? get latestHeaderNumber => latestHeader?.number;
 
   Future<void> loadCache() async {
+    Log.d('loadCache', _tag);
     final h = await rootStore.loadObject(latestHeaderKey);
     if (h != null) {
       latestHeader = Header.fromJson(h as Map<String, dynamic>);
