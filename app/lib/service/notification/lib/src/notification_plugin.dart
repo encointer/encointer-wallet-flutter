@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -7,6 +6,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/config/prod_community.dart';
 
 typedef ScheduleNotification = Future<void> Function(
   int id,
