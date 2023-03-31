@@ -14,6 +14,7 @@ part 'home_view_store.g.dart';
 
 const _tag = 'home_view_store';
 
+// ignore: library_private_types_in_public_api
 class HomeViewStore = _HomeViewStoreBase with _$HomeViewStore;
 
 abstract class _HomeViewStoreBase with Store {
