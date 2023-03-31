@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -71,10 +72,10 @@ class NotificationPlugin {
   }
 
   static NotificationDetails _platformChannelSpecifics(String body, {String? cid}) {
-    final sound = cid == 'dpcmj33LUs9' ? 'gbd_chime' : 'lions_growl';
+    final communityByCid = ProdCommunity.getCommunityByCid(cid);
     return NotificationDetails(
-      android: _androidPlatformChannelSpecifics(body, sound),
-      iOS: _iOSPlatformChannelSpecifics(sound),
+      android: _androidPlatformChannelSpecifics(body, communityByCid.notificationSound),
+      iOS: _iOSPlatformChannelSpecifics(communityByCid.notificationSound),
     );
   }
 

@@ -106,25 +106,14 @@ const double faucetAmount = 0.1;
 // links
 const localePlaceHolder = 'LOCALE_PLACEHOLDER';
 const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';
-const _leuZurichLink = 'https://leu.zuerich/$localePlaceHolder';
-const _greenbayLink = 'http://greenbaydollar.com/';
 const meetupNotificationLink = 'https://encointer.github.io/feed/community_messages/$localePlaceHolder/cm.json';
 const encointerLink = 'https://wallet.encointer.org/app/';
 
 String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
 
-String ceremonyInfoLink(String locale, String cid) {
-  switch (cid) {
-    case 'dpcmj33LUs9':
-    case 'dpcm5272THU':
-      return _greenbayLink;
-    default:
-      return replaceLocalePlaceholder(ceremonyInfoLinkBase, locale);
-  }
-}
-
-String leuZurichLink(String locale) {
-  return replaceLocalePlaceholder(_leuZurichLink, locale);
+String ceremonyInfoLink(String locale, String? cid) {
+  final communityByCid = ProdCommunity.getCommunityByCid(cid);
+  return replaceLocalePlaceholder(communityByCid.webSiteLink, locale);
 }
 
 const assignmentFAQLinkEN = 'https://leu.zuerich/en/#why-have-i-not-been-assigned-to-a-cycle';
@@ -153,3 +142,33 @@ String replaceLocalePlaceholder(String link, String locale) {
       return link.replaceAll(localePlaceHolder, 'en');
   }
 }
+
+enum ProdCommunity {
+  leo(notificationSound: _leuZurichSound, webSiteLink: _leuZurichLink),
+  gbd(notificationSound: _greenbaySound, webSiteLink: _greenbayLink);
+
+  const ProdCommunity({
+    required this.webSiteLink,
+    required this.notificationSound,
+  });
+
+  final String webSiteLink;
+  final String notificationSound;
+
+  static ProdCommunity getCommunityByCid(String? cid) {
+    switch (cid) {
+      case 'dpcmj33LUs9':
+      case 'dpcm5272THU':
+        return gbd;
+      case 'u0qj944rhWE':
+        return leo;
+      default:
+        return leo;
+    }
+  }
+}
+
+const _leuZurichSound = 'lions_growl';
+const _greenbaySound = 'gbd_chime';
+const _leuZurichLink = 'https://leu.zuerich/$localePlaceHolder';
+const _greenbayLink = 'http://greenbaydollar.com/';
