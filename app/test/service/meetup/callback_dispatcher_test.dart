@@ -28,7 +28,7 @@ void main() async {
       local,
       mockScheduleNotification,
       langCode: 'en',
-      cid: 'leo',
+      cid: 'u0qj944rhWE',
     );
   });
 }
