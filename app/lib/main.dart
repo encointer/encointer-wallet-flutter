@@ -15,8 +15,7 @@ Future<void> main({Environment? environment}) async {
   setEnvironment(environment ?? Environment.dev);
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationPlugin.setup();
-  // var notificationAppLaunchDetails =
-  //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+
   if (Platform.isAndroid) {
     // this is enabled by default in IOS dev-builds.
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);

@@ -126,8 +126,7 @@ class MockLocalStorage extends PreferencesStorage {
 
   @override
   Future<bool> clear() {
-    // TODO: implement clear
-    throw UnimplementedError();
+    return Future.value(true);
   }
 
   @override
@@ -170,9 +169,11 @@ class MockLocalStorage extends PreferencesStorage {
   }
 
   @override
-  Future<void> setAccountCache(String? accPubKey, String key, Object? value) {
-    // TODO: implement setAccountCache
-    throw UnimplementedError();
+  Future<void> setAccountCache(String? accPubKey, String key, Object? value) async {
+    var data = await getObject(key) as Map?;
+    data ??= {};
+    data[accPubKey] = value;
+    await setObject(key, data);
   }
 
   @override
@@ -212,7 +213,6 @@ class MockLocalStorage extends PreferencesStorage {
 
   @override
   Future<bool> setSeeds(String seedType, Map value) {
-    // TODO: implement setSeeds
-    throw UnimplementedError();
+    return Future.value(true);
   }
 }
