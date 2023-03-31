@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
-		171C70B329D4210B004C3E26 /* gbd_chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = 171C70B229D4210B004C3E26 /* gbd_chime.wav */; };
-		171C70B529D4211C004C3E26 /* lions_growl.wav in Resources */ = {isa = PBXBuildFile; fileRef = 171C70B429D4211B004C3E26 /* lions_growl.wav */; };
+		17717F6429D68B3F007E18CE /* gbd_chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = 17717F6329D68B3F007E18CE /* gbd_chime.wav */; };
+		17717F6629D68B61007E18CE /* lions_growl.wav in Resources */ = {isa = PBXBuildFile; fileRef = 17717F6529D68B61007E18CE /* lions_growl.wav */; };
 		29DC552324B73DDE00E2041A /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E5C930B0B11FFACB230966 /* Pods_Runner.framework */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -22,8 +22,8 @@
 		0FB4ED323DB222DAED23878A /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
-		171C70B229D4210B004C3E26 /* gbd_chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gbd_chime.wav; sourceTree = "<group>"; };
-		171C70B429D4211B004C3E26 /* lions_growl.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lions_growl.wav; sourceTree = "<group>"; };
+		17717F6329D68B3F007E18CE /* gbd_chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gbd_chime.wav; sourceTree = "<group>"; };
+		17717F6529D68B61007E18CE /* lions_growl.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lions_growl.wav; sourceTree = "<group>"; };
 		17BEAFC02911F3CA008D9D62 /* RunnerDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerDebug.entitlements; sourceTree = "<group>"; };
 		1C3C224C297E2FDC002D114F /* RunnerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerRelease.entitlements; sourceTree = "<group>"; };
 		2913C44F2417A2DC002C2368 /* Runner.entitlements */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp.preprocessed; path = Runner.entitlements; sourceTree = "<group>"; };
@@ -55,6 +55,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17717F6129D68ADF007E18CE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				17717F6229D68AF7007E18CE /* notificitation_sounds */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		17717F6229D68AF7007E18CE /* notificitation_sounds */ = {
+			isa = PBXGroup;
+			children = (
+				17717F6529D68B61007E18CE /* lions_growl.wav */,
+				17717F6329D68B3F007E18CE /* gbd_chime.wav */,
+			);
+			path = notificitation_sounds;
+			sourceTree = "<group>";
+		};
 		4C9779789C63CFC44F1E60AD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,8 +96,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
-				171C70B429D4211B004C3E26 /* lions_growl.wav */,
-				171C70B229D4210B004C3E26 /* gbd_chime.wav */,
+				17717F6129D68ADF007E18CE /* Resources */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
@@ -196,9 +212,9 @@
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
+				17717F6629D68B61007E18CE /* lions_growl.wav in Resources */,
+				17717F6429D68B3F007E18CE /* gbd_chime.wav in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
-				171C70B329D4210B004C3E26 /* gbd_chime.wav in Resources */,
-				171C70B529D4211C004C3E26 /* lions_growl.wav in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
