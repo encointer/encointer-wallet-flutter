@@ -10,7 +10,6 @@ import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -139,31 +138,6 @@ class _AssetsState extends State<Assets> {
       },
       child: Scaffold(
         appBar: appBar,
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              onPressed: () async {
-                final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
-                await NotificationPlugin.showNotification(2, 'Eldi', 'Example', cid: cid);
-              },
-            ),
-            FloatingActionButton(
-              onPressed: () async {
-                final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
-                final time = tz.TZDateTime.now(tz.local).add(const Duration(seconds: 30));
-                // print(time);
-                await NotificationPlugin.scheduleNotification(
-                  1,
-                  'Eldi',
-                  'Example',
-                  time,
-                  cid: cid,
-                );
-              },
-            ),
-          ],
-        ),
         body: UpgradeAlert(
           upgrader: Upgrader(
             appcastConfig: context.watch<AppStore>().config.appCast,
