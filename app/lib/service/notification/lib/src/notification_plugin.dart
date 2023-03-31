@@ -2,12 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 
 typedef ScheduleNotification = Future<void> Function(
   int id,
@@ -18,8 +16,6 @@ typedef ScheduleNotification = Future<void> Function(
 });
 
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-final didReceiveLocalNotificationSubject = BehaviorSubject<ReceivedNotification>();
-final selectNotificationSubject = BehaviorSubject<String?>();
 
 class NotificationPlugin {
   static Future<void> setup() async {
@@ -27,18 +23,13 @@ class NotificationPlugin {
 
     const initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
 
-    final initializationSettingsIOS = DarwinInitializationSettings(
+    const initializationSettingsIOS = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
-      onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
-        didReceiveLocalNotificationSubject.add(
-          ReceivedNotification(id: id, title: title, body: body, payload: payload),
-        );
-      },
     );
 
-    final initializationSettings = InitializationSettings(
+    const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
@@ -47,11 +38,7 @@ class NotificationPlugin {
     Log.d('notification_plugin initialised: $initialised', 'main.dart');
   }
 
-  static void init(BuildContext context) {
-    _requestIOSPermissions();
-    _configureDidReceiveLocalNotificationSubject(context);
-    _configureSelectNotificationSubject(context);
-  }
+  static void init(BuildContext context) => _requestIOSPermissions();
 
   static void _requestIOSPermissions() {
     flutterLocalNotificationsPlugin
@@ -61,39 +48,6 @@ class NotificationPlugin {
           badge: true,
           sound: true,
         );
-  }
-
-  static void _configureDidReceiveLocalNotificationSubject(BuildContext context) {
-    didReceiveLocalNotificationSubject.stream.listen((ReceivedNotification receivedNotification) async {
-      Log.d('${receivedNotification.title}', 'NotificationPlugin');
-      Log.d('${receivedNotification.body}', 'NotificationPlugin');
-      await showDialog<void>(
-        context: context,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: receivedNotification.title != null ? Text(receivedNotification.title!) : null,
-          content: receivedNotification.body != null ? Text(receivedNotification.body!) : null,
-          actions: [
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-              onPressed: () async {
-                Navigator.of(context, rootNavigator: true).pop();
-              },
-            )
-          ],
-        ),
-      );
-    });
-  }
-
-  static void _configureSelectNotificationSubject(BuildContext context) {
-    selectNotificationSubject.stream.listen((String? payload) async {
-      //  await Navigator.pushNamed(
-      //    context,
-      //    '/',
-      //    arguments: payload,
-      //  );
-    });
   }
 
   static AndroidNotificationDetails _androidPlatformChannelSpecifics(String body, String sound) {
@@ -166,20 +120,6 @@ class NotificationPlugin {
       androidAllowWhileIdle: true,
     );
   }
-}
-
-class ReceivedNotification {
-  const ReceivedNotification({
-    required this.id,
-    required this.title,
-    required this.body,
-    required this.payload,
-  });
-
-  final int id;
-  final String? title;
-  final String? body;
-  final String? payload;
 }
 
 Future<void> _configureLocalTimeZone() async {
