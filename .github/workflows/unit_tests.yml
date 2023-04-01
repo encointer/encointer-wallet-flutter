@@ -2,13 +2,9 @@ name: Unit Tests & Code Quality
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
   pull_request:
-    branches: [ master, f-droid ]
-
-env:
-  JS_SERVICE_ENCOINTER_PATH: lib/js_service_encointer
-  JS_SERVICE_ENCOINTER_MAIN: lib/js_service_encointer/dist/main.js
+    branches: [master, f-droid]
 
 jobs:
   flutter:
@@ -21,30 +17,32 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
-      # Analyzer throws an error if an asset is missing
-      - name: "Make mock-main.js"
-        run: |
-          mkdir -p ${{ env.JS_SERVICE_ENCOINTER_PATH }}/dist
-          touch ${{ env.JS_SERVICE_ENCOINTER_MAIN }}
+      - name: Melos Install
+        run: ./scripts/install_melos.sh
 
-      # analyze and test
+      - name: Melos Bootstrap
+        run: ./flutterw pub global run melos bootstrap
+
+      - name: "Build JS"
+        run: ./flutterw pub global run melos yarn-build
+
       - name: "Check fmt"
-        run: ./flutterw format . --line-length 120 --set-exit-if-changed
+        run: ./flutterw pub global run melos format-check
 
       - name: "Analyze Code"
-        run: ./flutterw pub get && ./flutterw analyze  --fatal-warnings
+        run: ./flutterw pub global run melos analyze-check
 
-      - name: "Run unit tests"
-        run: ./flutterw test --exclude-tags encointer-node-e2e
+      - name: "Run unit tests Encointer"
+        run: ./flutterw pub global run melos unit-test-app-exclude-encointer-node-e2e
+
+      - name: "Run unit tests Packages"
+        run: ./flutterw pub global run melos unit-test-packages
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
-          ./flutterw pub run build_runner build --delete-conflicting-outputs
-          ./flutterw format . --line-length 120
+          ./flutterw pub global run melos run-build-runner
+          ./flutterw pub global run melos format
           git diff --exit-code
 
     #  test-js:
     # Todo: Currently e2e tests are mixed with unit tests (although the amount of unit tests is really small)
-
-
-
