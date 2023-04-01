@@ -38,6 +38,9 @@ Tested on commit <enter-commit>
 - [ ] Removing all accounts works
 - [ ] Changing communities works.
 - [ ] Changing network works
+- [ ] Voucher:
+   - [ ] Funding Works
+   - [ ] Reaping Works
 
 ## Meetup Flow
 This needs to be tested on rococo, it needs one bootstrapper account and two freshly created accounts, where one will be endorsed and the other will be a newbie.
@@ -48,7 +51,6 @@ This needs to be tested on rococo, it needs one bootstrapper account and two fre
    - [ ] regular rewards payout in next registering phase
 - [ ] Registering 1 bootstrapper and two reputables and performing meetup works. (This needs the rococo single councillor account to call next phase.)
    - [ ] Test that unregistering the reputable refunds the reputation and the reputable can register again.
-
 
 ## Other
 - [ ] inform slack channel about new release
