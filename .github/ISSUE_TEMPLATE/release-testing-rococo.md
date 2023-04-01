@@ -31,20 +31,24 @@ Tested on commit <enter-commit>
    - [ ] Endorsing newcomer works
    - [ ] Endorsing newcomer with reputable works
 - [ ] Profile Page
+  - [ ] Removing single account works
   - [ ] Add account works:
      - [ ] With import account flow
      - [ ] With create account flow
 - [ ] Removing all accounts works
 - [ ] Changing communities works.
+- [ ] Changing network works
 
 ## Meetup Flow
-This needs two bootstrappers on a rococo test community, and preferably three smartphones to streamline the process.
+This needs to be tested on rococo, it needs one bootstrapper account and two freshly created accounts, where one will be endorsed and the other will be a newbie.
 
-- [ ] Registering 2 bootstrappers and 1 newbie and performing meetup works. (This needs the rococo single councillor account to call next phase.)
+- [ ] Registering 1 bootstrappers, 1 endorsee and 1 newbie and performing meetup works. (This needs the rococo single councillor account to call next phase.)
 - [ ] Claiming rewards works
-   - [ ]  early rewards payout in attesting phase
+   - [ ] early rewards payout in attesting phase
    - [ ] regular rewards payout in next registering phase
-- [ ] Registering 2 bootstrappers and a reputable and performing meetup works. (This needs the rococo single councillor account to call next phase.)
+- [ ] Registering 1 bootstrapper and two reputables and performing meetup works. (This needs the rococo single councillor account to call next phase.)
+   - [ ] Test that unregistering the reputable refunds the reputation and the reputable can register again.
+
 
 ## Other
 - [ ] inform slack channel about new release
