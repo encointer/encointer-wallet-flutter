@@ -1,4 +1,4 @@
-import 'package:ew_storage/src/interface/storage_exception.dart';
+import 'package:ew_storage/src/storage_exception.dart';
 import 'package:ew_storage/src/interface/sync_read_storage_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

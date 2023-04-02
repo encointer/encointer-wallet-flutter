@@ -1,4 +1,4 @@
-import 'package:ew_storage/src/interface/storage_exception.dart';
+import 'package:ew_storage/src/storage_exception.dart';
 
 /// A Dart StorageInterface Client Interface
 abstract class SyncReadStorageInterface {
