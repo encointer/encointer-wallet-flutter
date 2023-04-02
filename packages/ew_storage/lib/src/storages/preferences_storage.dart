@@ -1,5 +1,5 @@
-import 'package:ew_storage/src/base_storages/storage_exception.dart';
-import 'package:ew_storage/src/base_storages/interface/sync_read_storage_interface.dart';
+import 'package:ew_storage/src/storages/storage_exception.dart';
+import 'package:ew_storage/src/storages/interface/sync_read_storage_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// A PreferencesStorage client which implements the base [SyncReadStorageInterface].
