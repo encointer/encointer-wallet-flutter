@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:ew_storage/src/interface/storage_interface_sync_read.dart';
+import 'package:ew_storage/src/interface/sync_read_storage_interface.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class StorageExtensionInterface {
   const StorageExtensionInterface(this.storage);
 
-  final StorageInterfaceSyncRead storage;
+  final SyncReadStorageInterface storage;
 
   // ----------- base methods --------------
   String? getString(String key) => storage.getString(key);
