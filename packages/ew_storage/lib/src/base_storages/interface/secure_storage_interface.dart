@@ -1,4 +1,4 @@
-import 'package:ew_storage/src/storage_exception.dart';
+import 'package:ew_storage/src/base_storages/storage_exception.dart';
 
 /// A Dart SecureStorageInterface Client Interface
 abstract class SecureStorageInterface {
