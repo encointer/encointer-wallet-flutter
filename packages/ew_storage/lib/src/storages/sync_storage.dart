@@ -4,8 +4,8 @@ import 'dart:core';
 import 'package:ew_storage/src/interface/sync_read_storage_interface.dart';
 import 'package:flutter/foundation.dart';
 
-abstract class StorageExtensionInterface {
-  const StorageExtensionInterface(this.storage);
+abstract class SyncStorage {
+  const SyncStorage(this.storage);
 
   final SyncReadStorageInterface storage;
 

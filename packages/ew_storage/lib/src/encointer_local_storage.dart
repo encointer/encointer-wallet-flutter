@@ -1,7 +1,7 @@
 import 'package:ew_storage/src/interface/encointer.dart';
-import 'package:ew_storage/src/interface/storage_extension.dart';
+import 'package:ew_storage/src/storages/sync_storage.dart';
 
-class EncointerLocalStorage extends StorageExtensionInterface implements EncointerStorageInterface {
+class EncointerLocalStorage extends SyncStorage implements EncointerStorageInterface {
   const EncointerLocalStorage(super.storage);
 
 
