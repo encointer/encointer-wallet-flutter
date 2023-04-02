@@ -1,7 +1,7 @@
 import 'dart:core';
 
-import 'package:ew_storage/src/interface/encointer.dart';
-import 'package:ew_storage/src/storages/sync_storage.dart';
+import 'package:ew_storage/src/base_storages/interface/encointer.dart';
+import 'package:ew_storage/src/base_storages/sync_storage.dart';
 
 class MockLocalStorage extends SyncStorage implements EncointerStorageInterface {
   const MockLocalStorage(super.storage);
