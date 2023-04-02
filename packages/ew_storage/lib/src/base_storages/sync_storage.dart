@@ -4,10 +4,10 @@ import 'dart:core';
 import 'package:ew_storage/src/base_storages/interface/sync_read_storage_interface.dart';
 import 'package:flutter/foundation.dart';
 
-abstract class SyncStorage {
+abstract class SyncStorage<Storage extends SyncReadStorageInterface> {
   const SyncStorage(this.storage);
 
-  final SyncReadStorageInterface storage;
+  final Storage storage;
 
   // ----------- base methods --------------
   String? getString(String key) => storage.getString(key);
