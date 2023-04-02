@@ -2,8 +2,8 @@ import 'dart:core';
 
 import 'package:ew_storage/src/encointer/interfaces/encointer_storage_interface.dart';
 
-class MockLocalStorage implements EncointerStorageInterface {
-  const MockLocalStorage();
+class EncointerMockStorage implements EncointerStorageInterface {
+  const EncointerMockStorage();
 
   // ----------- account methods --------------
   @override
