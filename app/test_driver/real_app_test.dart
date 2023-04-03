@@ -20,7 +20,7 @@ void main() async {
   });
 
   test('create account by name Tom', () async {
-    await takeScreenshot(driver, Screenshots.onboarding);
+    await takeScreenshot(driver, Screenshots.splashView);
     await createAccountAndSetPin(driver, 'Tom');
   });
 

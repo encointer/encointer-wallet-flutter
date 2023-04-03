@@ -23,7 +23,7 @@ Future<void> takeScreenshot(
 
 class Screenshots {
   /// 0-20 onboarding stuff
-  static const onboarding = '001-onboarding';
+  static const splashView = '001-splash-view';
   static const createAccount = '002-create-account';
   static const pinEntry = '003-pin-entry';
   static const importAccount = '004-import-account';
