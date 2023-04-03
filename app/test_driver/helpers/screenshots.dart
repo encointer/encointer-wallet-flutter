@@ -24,9 +24,10 @@ Future<void> takeScreenshot(
 class Screenshots {
   /// 0-20 onboarding stuff
   static const splashView = '001-splash-view';
-  static const createAccount = '002-create-account';
-  static const pinEntry = '003-pin-entry';
-  static const importAccount = '004-import-account';
+  static const accountEntryView = '002-account-entry-view';
+  static const createAccount = '003-create-account';
+  static const pinEntry = '004-pin-entry';
+  static const importAccount = '005-import-account';
 
   /// 21-40 home
   static const chooseCommunityMap = '021-choose-community-map';
