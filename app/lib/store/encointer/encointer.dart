@@ -349,7 +349,8 @@ abstract class _EncointerStore with Store {
     try {
       if (chosenCid != null) {
         if (_rootStore.account.currentAccountPubKey == null) return;
-        final data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAccountPubKey!);
+        final data =
+            await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAccountPubKey!);
         setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
       } else {
         Log.d('chosenCid is null', 'Encointer updateAggregatedAccountData');
