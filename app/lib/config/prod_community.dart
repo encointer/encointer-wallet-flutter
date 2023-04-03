@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/config/consts.dart';
 
 enum Community {
-  leo(notificationSound: _leuZurichSound, webSiteLink: _leuZurichLink),
+  leu(notificationSound: _leuZurichSound, webSiteLink: _leuZurichLink),
   gbd(notificationSound: _greenbaySound, webSiteLink: _greenbayLink);
 
   const Community({
@@ -11,13 +11,15 @@ enum Community {
 
   factory Community.fromCid(String? cid) {
     switch (cid) {
-      case 'dpcmj33LUs9':
-      case 'dpcm5272THU':
+      case Cids.gbdKsm:
+      case Cids.gbdRoc:
+      case Cids.gbdGsl:
         return gbd;
-      case 'u0qj944rhWE':
-        return leo;
+      case Cids.leuKsm:
+      case Cids.leuRoc:
+        return leu;
       default:
-        return leo;
+        return leu;
     }
   }
 
