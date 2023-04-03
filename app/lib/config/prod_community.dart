@@ -20,6 +20,7 @@ enum Community {
 }
 
 class Cids {
+  /// The list of community cids [communityKusamaCid, communityRococoCid, communityGesselCid]
   static const _leuCids = <String>['u0qj944rhWE', 'u0qj944rhWE'];
   static const _gbdCids = <String>['dpcmj33LUs9', 'dpcmj33LUs9', 'dpcm5272THU'];
 
