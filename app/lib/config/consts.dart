@@ -113,7 +113,7 @@ const encointerLink = 'https://wallet.encointer.org/app/';
 String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
 
 String ceremonyInfoLink(String locale, String? cid) {
-  final communityByCid = Community.getCommunityByCid(cid);
+  final communityByCid = Community.fromCid(cid);
   return replaceLocalePlaceholder(communityByCid.webSiteLink, locale);
 }
 

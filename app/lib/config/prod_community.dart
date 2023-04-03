@@ -9,7 +9,7 @@ enum Community {
     required this.notificationSound,
   });
 
-  factory Community.getCommunityByCid(String? cid) {
+  factory Community.fromCid(String? cid) {
     switch (cid) {
       case 'dpcmj33LUs9':
       case 'dpcm5272THU':
