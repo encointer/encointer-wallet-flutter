@@ -19,9 +19,7 @@ class AccountApi {
   Future<void> initAccounts() async {
     if (store.account.accountList.isNotEmpty) {
       final accounts = jsonEncode(store.account.accountList.map(AccountData.toJson).toList());
-
-      final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
-      await jsApi.evalJavascript<Map<String, dynamic>>('account.initKeys($accounts, $ss58)');
+      await jsApi.evalJavascript<void>('account.initKeys($accounts)');
     }
   }
 
