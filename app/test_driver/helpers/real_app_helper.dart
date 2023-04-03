@@ -55,7 +55,7 @@ Future<void> tapAndWaitNextPhase(FlutterDriver driver) async {
 Future<void> registerAndWait(FlutterDriver driver, String registrationType, {bool shouldTakeScreenshot = false}) async {
   await driver.tap(find.byValueKey('registration-meetup-button'));
   await driver.waitFor(find.byValueKey('educate-dialog-$registrationType'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeRegisteredAsNewbieConformDialog);
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeRegisteredAsNewbieConfirmDialog);
   await driver.tap(find.byValueKey('close-educate-dialog'));
   await driver.waitFor(find.byValueKey('is-registered-info'));
   if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeRegisteredAsNewbie);

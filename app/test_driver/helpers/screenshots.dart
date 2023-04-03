@@ -23,15 +23,15 @@ Future<void> takeScreenshot(
 
 class Screenshots {
   /// 0-20 onboarding stuff
-  static const onboard001 = '001-onboarding';
+  static const onboarding = '001-onboarding';
   static const createAccount = '002-create-account';
   static const pinEntry = '003-pin-entry';
   static const importAccount = '004-import-account';
 
   /// 21-40 home
-  static const choosCommunityMap = '021-choose-community-map';
+  static const chooseCommunityMap = '021-choose-community-map';
   static const homeWithRegisterButton = '022-home-with-register-button';
-  static const homeRegisteredAsNewbieConformDialog = '023-home-registered-as-newbie-confirm-dialog';
+  static const homeRegisteredAsNewbieConfirmDialog = '023-home-registered-as-newbie-confirm-dialog';
   static const homeRegisteredAsNewbie = '024-home-registered-as-newbie';
   static const homeUnregisterDialog = '025-home-unregister-dialog';
   static const homeAssigningPhaseAssigned = '026-home-assigning-phase-assigned';

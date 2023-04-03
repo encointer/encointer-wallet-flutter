@@ -20,7 +20,7 @@ void main() async {
   });
 
   test('create account by name Tom', () async {
-    await takeScreenshot(driver, Screenshots.onboard001);
+    await takeScreenshot(driver, Screenshots.onboarding);
     await createAccountAndSetPin(driver, 'Tom');
   });
 
@@ -28,7 +28,7 @@ void main() async {
     await driver.waitFor(find.byValueKey('cid-0-marker-icon'));
     await driver.tap(find.byValueKey('cid-0-marker-icon'));
     await driver.waitFor(find.byValueKey('cid-0-marker-description'));
-    await takeScreenshot(driver, Screenshots.choosCommunityMap);
+    await takeScreenshot(driver, Screenshots.chooseCommunityMap);
     await driver.tap(find.byValueKey('cid-0-marker-description'));
   }, timeout: const Timeout(Duration(seconds: 120)));
 
