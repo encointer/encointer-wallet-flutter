@@ -9,10 +9,7 @@ enum Community {
     required this.notificationSound,
   });
 
-  final String webSiteLink;
-  final String notificationSound;
-
-  static Community getCommunityByCid(String? cid) {
+  factory Community.getCommunityByCid(String? cid) {
     switch (cid) {
       case 'dpcmj33LUs9':
       case 'dpcm5272THU':
@@ -23,6 +20,18 @@ enum Community {
         return leo;
     }
   }
+
+  final String webSiteLink;
+  final String notificationSound;
+}
+
+class Cids {
+  static const String leuKsm = 'u0qj944rhWE';
+  static const String leuRoc = 'gb1bc2QX9PQ';
+
+  static const String gbdKsm = 'dpcmj33LUs9';
+  static const String gbdRoc = 'dpcmj33LUs9';
+  static const String gbdGsl = 'dpcm5272THU';
 }
 
 const _leuZurichSound = 'lions_growl';
