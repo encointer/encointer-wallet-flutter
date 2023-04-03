@@ -53,13 +53,12 @@ Future<void> tapAndWaitNextPhase(FlutterDriver driver) async {
 }
 
 Future<void> registerAndWait(FlutterDriver driver, String registrationType, {bool shouldTakeScreenshot = false}) async {
-  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-registration-meetup');
   await driver.tap(find.byValueKey('registration-meetup-button'));
   await driver.waitFor(find.byValueKey('educate-dialog-$registrationType'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-educate-dialog');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeRegisteredAsNewbieConformDialog);
   await driver.tap(find.byValueKey('close-educate-dialog'));
   await driver.waitFor(find.byValueKey('is-registered-info'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-is-registered-info');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeRegisteredAsNewbie);
 }
 
 Future<void> unregisterAndWait(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
@@ -67,7 +66,7 @@ Future<void> unregisterAndWait(FlutterDriver driver, {bool shouldTakeScreenshot 
   await driver.waitFor(find.byValueKey('unregister-button'));
   await driver.tap(find.byValueKey('unregister-button'));
   await driver.waitFor(find.byValueKey('unregister-dialog'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-unregister-dialog');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeUnregisterDialog);
   await driver.tap(find.byValueKey('ok-button'));
   await driver.waitFor(find.byValueKey('registration-meetup-button'));
   await addDelay(1000);
@@ -80,7 +79,7 @@ Future<void> changeAccountFromPanel(FlutterDriver driver, String account) async 
   await addDelay(1000);
 }
 
-Future<void> importAccount(FlutterDriver driver, String account) async {
+Future<void> importAccount(FlutterDriver driver, String account, {bool shouldTakeScreenshot = false}) async {
   await driver.tap(find.byValueKey('panel-controller'));
   await driver.tap(find.byValueKey('add-account-panel'));
 
@@ -93,7 +92,7 @@ Future<void> importAccount(FlutterDriver driver, String account) async {
 
   await driver.tap(find.byValueKey('account-source'));
   await driver.enterText('//$account');
-
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.importAccount);
   await driver.tap(find.byValueKey('account-import-next'));
   await driver.waitFor(find.byValueKey('panel-controller'));
 
@@ -102,11 +101,9 @@ Future<void> importAccount(FlutterDriver driver, String account) async {
 
 Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account) async {
   await importAccount(driver, account);
-
   await scrollToCeremonyBox(driver);
 
   await registerAndWait(driver, 'Bootstrapper');
-
   await scrollToPanelController(driver);
   await addDelay(1000);
 }
@@ -124,17 +121,17 @@ Future<void> startMeetupTest(FlutterDriver driver, {bool shouldTakeScreenshot = 
   await driver.waitFor(find.byValueKey('attendees-count'));
   await driver.tap(find.byValueKey('attendees-count'));
   await driver.enterText('4');
-  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-attendees-count');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.step1ConfirmNumberOfAttendees);
   await driver.tap(find.byValueKey('ceremony-step-1-next'));
 
   await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-attest-all-participants-dev');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.step2QrCode);
   await driver.tap(find.byValueKey('attest-all-participants-dev'));
   await driver.waitFor(find.byType('SnackBar'));
   await driver.tap(find.byValueKey('close-meetup'));
 
   await driver.waitFor(find.byValueKey('submit-claims'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, 'real-submit-claims');
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.step3FinishGathering);
   await driver.tap(find.byValueKey('submit-claims'));
 
   await driver.waitFor(find.byValueKey('panel-controller'));

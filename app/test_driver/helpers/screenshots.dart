@@ -22,13 +22,13 @@ Future<void> takeScreenshot(
 }
 
 class Screenshots {
-  /// 0-20 onboarding stuff
+  /// 0-20 onboarding stuff (-1)
   static const onboard001 = '001-onboarding';
-  static const importAccount002 = '002-import-account';
-  static const createAccount003 = '003-create-account';
-  static const pinEntry = '004-pin-entry';
+  static const createAccount = '002-create-account';
+  static const pinEntry = '003-pin-entry';
+  static const importAccount = '004-import-account';
 
-  /// 21-40 home
+  /// 21-40 home (-3)
   static const choosCommunityMap = '021-choose-community-map';
   static const homeWithRegisterButton = '022-home-with-register-button';
   static const homeRegisteredAsNewbieConformDialog = '023-home-registered-as-newbie-confirm-dialog';
@@ -40,20 +40,23 @@ class Screenshots {
 
   /// 41-60 send and receive
   static const receiveView = '041-receive-view';
-  static const sendView = '041-send-view';
-  static const txConfirmationView = '042-tx-confirmation-view';
+  static const sendView = '042-send-view';
+  static const txConfirmationView = '043-tx-confirmation-view';
 
-  /// 61-80 profile
+  /// 61-80 profile (-2)
   static const profileView = '061-profile-view';
-  static const accountManagePage = '062-account-manage-page';
-  static const accountOptionsDialog = '063-account-options-dialog';
-  static const exportAccountView = '064-export-account-view';
-  static const accountShareView = '065-account-share-view';
+  static const accountManageView = '062-account-manage-view';
+  static const changeAccountName = '063-change-account-name';
+  static const accountOptionsDialog = '064-account-options-dialog';
+  static const accountPasswordDialog = '065-account-options-dialog';
+  static const exportAccountView = '066-export-account-view';
+  static const accountShareView = '067-account-share-view';
 
-  /// 81-100 contacts
+  /// 81-100 contacts (-1)
   static const contactsOverview = '081-contacts-overview';
-  static const contactView = '082-contact-view';
-  static const addContact = '083-add-contact';
+  static const addContact = '082-add-contact';
+  static const contactView = '083-contact-view';
+  static const changeContactName = '084-change-contact-name';
 
   /// 101-120 gathering flow
   static const step1ConfirmNumberOfAttendees = '101-step-1-confirm-number-of-attendees';

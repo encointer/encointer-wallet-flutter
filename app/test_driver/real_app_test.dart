@@ -20,7 +20,7 @@ void main() async {
   });
 
   test('create account by name Tom', () async {
-    await takeScreenshot(driver, 'real-create-account-entry');
+    await takeScreenshot(driver, Screenshots.onboard001);
     await createAccountAndSetPin(driver, 'Tom');
   });
 
@@ -28,7 +28,7 @@ void main() async {
     await driver.waitFor(find.byValueKey('cid-0-marker-icon'));
     await driver.tap(find.byValueKey('cid-0-marker-icon'));
     await driver.waitFor(find.byValueKey('cid-0-marker-description'));
-    await takeScreenshot(driver, 'real-select-community-from-map');
+    await takeScreenshot(driver, Screenshots.choosCommunityMap);
     await driver.tap(find.byValueKey('cid-0-marker-description'));
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -36,38 +36,33 @@ void main() async {
     await refreshWalletPage(driver);
 
     await dismissUpgradeDialogOnAndroid(driver);
-    await takeScreenshot(driver, 'real-home-page');
+    await takeScreenshot(driver, Screenshots.homeWithRegisterButton);
     await addDelay(1000);
   });
 
   test('qr-receive page', () async {
     await driver.tap(find.byValueKey('qr-receive'));
     await driver.waitFor(find.byValueKey('close-receive-page'));
-    await takeScreenshot(driver, 'real-qr-receive-page');
+    await takeScreenshot(driver, Screenshots.receiveView);
     await driver.tap(find.byValueKey('close-receive-page'));
     await addDelay(1000);
   });
 
   test('turn on dev-mode', () async {
     await driver.tap(find.byValueKey('profile'));
-
     await scrollToDevMode(driver);
-
     await driver.tap(find.byValueKey('dev-mode'));
 
     await scrollToNextPhaseButton(driver);
-
     await addDelay(1000);
   });
 
   test('change-network', () async {
     await driver.tap(find.byValueKey('choose-network'));
-
     await driver.tap(find.byValueKey('nctr-gsl-dev'));
     await driver.tap(find.text('Tom'));
 
     await driver.waitFor(find.byValueKey('profile-list-view'));
-
     await driver.tap(find.byValueKey('wallet'));
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 90)));
@@ -120,7 +115,7 @@ void main() async {
     await driver.tap(find.byValueKey('transfer-select-account'));
     await driver.waitFor(find.byValueKey('Tom'));
     await driver.tap(find.byValueKey('Tom'));
-    await takeScreenshot(driver, 'real-transfer-page');
+    await takeScreenshot(driver, Screenshots.sendView);
 
     await driver.runUnsynchronized(() async {
       await driver.waitFor(find.byValueKey('make-transfer'));
@@ -129,7 +124,7 @@ void main() async {
       await driver.waitFor(find.byValueKey('make-transfer-send'));
       await driver.tap(find.byValueKey('make-transfer-send'));
       await driver.waitFor(find.byValueKey('transfer-done'));
-      await takeScreenshot(driver, 'real-transfer-confirm-page');
+      await takeScreenshot(driver, Screenshots.txConfirmationView);
       await driver.tap(find.byValueKey('transfer-done'));
       await addDelay(1000);
     });
@@ -160,11 +155,9 @@ void main() async {
 
   test('get attesting-phase', () async {
     await driver.tap(find.byValueKey('profile'));
-
     await scrollToNextPhaseButton(driver);
 
     await tapAndWaitNextPhase(driver);
-
     await tapAndWaitNextPhase(driver);
 
     await driver.tap(find.byValueKey('wallet'));
@@ -208,7 +201,7 @@ void main() async {
     await driver.tap(find.byValueKey('wallet'));
   });
 
-  test('contact-page add account', () async {
+  test('contact-page add contact', () async {
     await driver.tap(find.byValueKey('contacts'));
     await driver.tap(find.byValueKey('add-contact'));
 
@@ -217,7 +210,7 @@ void main() async {
     await driver.tap(find.byValueKey('contact-name'));
     await driver.enterText('Obelix');
 
-    await takeScreenshot(driver, 'real-add-contact');
+    await takeScreenshot(driver, Screenshots.addContact);
     await driver.tap(find.byValueKey('contact-save'));
     await addDelay(1000);
   });
@@ -227,13 +220,14 @@ void main() async {
     await driver.tap(find.byValueKey('Obelix'));
 
     await driver.waitFor(find.byValueKey('contact-name-edit'));
+    await takeScreenshot(driver, Screenshots.contactView);
     await driver.tap(find.byValueKey('contact-name-edit'));
 
     await driver.waitFor(find.byValueKey('contact-name-field'));
     await driver.tap(find.byValueKey('contact-name-field'));
 
     await driver.enterText('Asterix');
-    await takeScreenshot(driver, 'real-change-contact-name');
+    await takeScreenshot(driver, Screenshots.changeContactName);
     await driver.tap(find.byValueKey('contact-name-edit-check'));
 
     await driver.waitFor(find.text('Asterix'));
