@@ -7,7 +7,6 @@ Future<void> takeScreenshot(
   String name, {
   String directory = '../screenshots',
   Duration timeout = const Duration(seconds: 30),
-  bool silent = false,
   bool waitUntilNoTransientCallbacks = true,
 }) async {
   if (waitUntilNoTransientCallbacks) {
