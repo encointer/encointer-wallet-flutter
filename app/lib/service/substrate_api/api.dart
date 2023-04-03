@@ -92,7 +92,7 @@ class Api {
       // load keyPairs from local data
       await account.initAccounts();
 
-      if (store.account.currentAddress.isNotEmpty) {
+      if (store.account.currentAccountPubKey != null) {
         await store.encointer.initializeUninitializedStores(store.account.currentAddress);
       }
 
