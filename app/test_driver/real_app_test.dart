@@ -88,7 +88,7 @@ void main() async {
   });
 
   test('import account Alice', () async {
-    await importAccount(driver, 'Alice');
+    await importAccount(driver, 'Alice', shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Register [Bootstrapper] Alice', () async {
@@ -203,6 +203,7 @@ void main() async {
 
   test('contact-page add contact', () async {
     await driver.tap(find.byValueKey('contacts'));
+    await takeScreenshot(driver, Screenshots.contactsOverview);
     await driver.tap(find.byValueKey('add-contact'));
 
     await driver.tap(find.byValueKey('contact-address'));

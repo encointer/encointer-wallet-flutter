@@ -22,13 +22,13 @@ Future<void> takeScreenshot(
 }
 
 class Screenshots {
-  /// 0-20 onboarding stuff (-1)
+  /// 0-20 onboarding stuff
   static const onboard001 = '001-onboarding';
   static const createAccount = '002-create-account';
   static const pinEntry = '003-pin-entry';
   static const importAccount = '004-import-account';
 
-  /// 21-40 home (-3)
+  /// 21-40 home (-3: 26,27,28)
   static const choosCommunityMap = '021-choose-community-map';
   static const homeWithRegisterButton = '022-home-with-register-button';
   static const homeRegisteredAsNewbieConformDialog = '023-home-registered-as-newbie-confirm-dialog';
@@ -43,16 +43,16 @@ class Screenshots {
   static const sendView = '042-send-view';
   static const txConfirmationView = '043-tx-confirmation-view';
 
-  /// 61-80 profile (-2)
+  /// 61-80 profile (-1: 66)
   static const profileView = '061-profile-view';
   static const accountManageView = '062-account-manage-view';
   static const changeAccountName = '063-change-account-name';
   static const accountOptionsDialog = '064-account-options-dialog';
-  static const accountPasswordDialog = '065-account-options-dialog';
+  static const accountPasswordDialog = '065-account-password-dialog';
   static const exportAccountView = '066-export-account-view';
   static const accountShareView = '067-account-share-view';
 
-  /// 81-100 contacts (-1)
+  /// 81-100 contacts
   static const contactsOverview = '081-contacts-overview';
   static const addContact = '082-add-contact';
   static const contactView = '083-contact-view';
