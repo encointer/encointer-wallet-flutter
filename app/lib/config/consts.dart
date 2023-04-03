@@ -28,7 +28,7 @@ EndpointData networkEndpointEncointerLietaer = EndpointData.fromJson({
 
 EndpointData networkEndpointEncointerMainnet = EndpointData.fromJson({
   'info': 'nctr-k',
-  'ss58': 42, // Fixme: #567
+  'ss58': 2,
   'text': 'Encointer Network on Kusama (Hosted by Encointer Association)',
   'value': 'wss://kusama.api.encointer.org',
   'overrideConfig': gesellConfig.toJson(),
