@@ -78,11 +78,13 @@ class _ReceivePageState extends State<ReceivePage> {
           }
         }
 
-        final cid = store.encointer.chosenCid;
-        final currentAddress = store.account.currentAddress;
-        if (currentAddress == null || cid == null) return;
+        await webApi.encointer.getAllBalances(store.account.currentAddress).then((balances) {
+          final cid = store.encointer.chosenCid;
 
-        await webApi.encointer.getAllBalances(currentAddress).then((balances) {
+          if (cid == null) {
+            return;
+          }
+
           final demurrageRate = store.encointer.community!.demurrage;
           final newBalance = store.encointer.applyDemurrage(balances[cid]);
           final oldBalance = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry) ?? 0;

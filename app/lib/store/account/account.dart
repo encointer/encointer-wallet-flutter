@@ -92,8 +92,7 @@ abstract class _AccountStore with Store {
   }
 
   @computed
-  String? get currentAddress {
-    if (currentAccountPubKey == null || currentAccountPubKey!.isEmpty) return null;
+  String get currentAddress {
     return Fmt.ss58Encode(currentAccountPubKey!, prefix: rootStore.settings.endpoint.ss58!);
   }
 
@@ -129,7 +128,7 @@ abstract class _AccountStore with Store {
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
-              await rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress!);
+              await rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
             }
           }
         }

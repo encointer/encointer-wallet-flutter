@@ -239,7 +239,7 @@ abstract class _EncointerStore with Store {
         await Future.wait([
           _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson()),
           initBazaarStore(cid),
-          initCommunityStore(cid, _rootStore.account.currentAddress!)
+          initCommunityStore(cid, _rootStore.account.currentAddress)
         ]);
       } else {
         await _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
@@ -346,16 +346,13 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> updateAggregatedAccountData() async {
-    final currentAddress = _rootStore.account.currentAddress;
-
-    if (chosenCid == null || currentAddress == null) {
-      Log.d('chosenCid or current address is null', 'Encointer updateAggregatedAccountData');
-      return;
-    }
-
     try {
-        final data = await webApi.encointer.getAggregatedAccountData(chosenCid!, currentAddress);
-        setAggregatedAccountData(chosenCid!, currentAddress, data);
+      if (chosenCid != null) {
+        final data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
+        setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
+      } else {
+        Log.d('chosenCid is null', 'Encointer updateAggregatedAccountData');
+      }
     } catch (e, s) {
       Log.e('$e', 'EncointerStore', s);
     }

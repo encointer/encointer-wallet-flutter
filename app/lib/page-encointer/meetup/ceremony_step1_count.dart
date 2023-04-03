@@ -26,7 +26,7 @@ class CeremonyStep1Count extends StatelessWidget {
         builder: (BuildContext context) => CeremonyStep2Scan(
           store,
           api,
-          claimantAddress: store.account.currentAddress!,
+          claimantAddress: store.account.currentAddress,
           confirmedParticipantsCount: count,
         ),
       ),
