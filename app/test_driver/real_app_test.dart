@@ -145,29 +145,42 @@ void main() async {
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
+  test('import account Charlie', () async {
+    await importAccount(driver, 'Charlie');
+  }, timeout: const Timeout(Duration(seconds: 60)));
+
   test('import and register-Bob', () async {
     await importAccountAndRegisterMeetup(driver, 'Bob');
   }, timeout: const Timeout(Duration(seconds: 60)));
 
-  test('import and register-Charlie', () async {
-    await importAccountAndRegisterMeetup(driver, 'Charlie');
-  }, timeout: const Timeout(Duration(seconds: 60)));
+  test('get assignin-phase', () async {
+    await driver.tap(find.byValueKey('profile'));
+    await scrollToNextPhaseButton(driver);
+
+    await tapAndWaitNextPhase(driver);
+    await driver.tap(find.byValueKey('wallet'));
+    await driver.waitFor(find.byValueKey('list-view-wallet'));
+    await scrollToCeremonyBox(driver);
+    await driver.waitFor(find.byValueKey('account-assigned'));
+    await takeScreenshot(driver, Screenshots.homeAssigningPhaseAssigned);
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Charlie');
+    await scrollToCeremonyBox(driver);
+    await driver.waitFor(find.byValueKey('account-unassigned'));
+    await takeScreenshot(driver, Screenshots.homeAssigningPhaseUnassigned);
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Bob');
+    await addDelay(1000);
+  }, timeout: const Timeout(Duration(seconds: 40)));
 
   test('get attesting-phase', () async {
     await driver.tap(find.byValueKey('profile'));
     await scrollToNextPhaseButton(driver);
 
     await tapAndWaitNextPhase(driver);
-    await tapAndWaitNextPhase(driver);
-
     await driver.tap(find.byValueKey('wallet'));
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 40)));
-
-  test('start meetup-Cahrlie', () async {
-    await addDelay(1000);
-    await startMeetupTest(driver);
-  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('start meetup-Bob', () async {
     await addDelay(1000);

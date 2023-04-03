@@ -102,6 +102,7 @@ Future<void> accountExport(FlutterDriver driver, {bool shouldTakeScreenshot = fa
   await driver.tap(find.byValueKey('password-ok'));
 
   await driver.waitFor(find.byValueKey('account-mnemonic-key'));
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.exportAccountView);
   await addDelay(1000);
   await driver.tap(find.pageBack());
 }

@@ -28,7 +28,7 @@ class Screenshots {
   static const pinEntry = '003-pin-entry';
   static const importAccount = '004-import-account';
 
-  /// 21-40 home (-3: 26,27,28)
+  /// 21-40 home
   static const choosCommunityMap = '021-choose-community-map';
   static const homeWithRegisterButton = '022-home-with-register-button';
   static const homeRegisteredAsNewbieConformDialog = '023-home-registered-as-newbie-confirm-dialog';
@@ -43,7 +43,7 @@ class Screenshots {
   static const sendView = '042-send-view';
   static const txConfirmationView = '043-tx-confirmation-view';
 
-  /// 61-80 profile (-1: 66)
+  /// 61-80 profile
   static const profileView = '061-profile-view';
   static const accountManageView = '062-account-manage-view';
   static const changeAccountName = '063-change-account-name';
