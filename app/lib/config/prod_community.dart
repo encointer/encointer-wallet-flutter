@@ -20,9 +20,16 @@ enum Community {
 }
 
 class Cids {
-  /// The list of community cids [communityKusamaCid, communityRococoCid, communityGesselCid]
-  static const _leuCids = <String>['u0qj944rhWE', 'u0qj944rhWE'];
-  static const _gbdCids = <String>['dpcmj33LUs9', 'dpcmj33LUs9', 'dpcm5272THU'];
+  static const leuKsm = 'u0qj944rhWE';
+  static const leuRoc = 'gb1bc2QX9PQ';
+  // leu does not exist on Gesell.
+
+  static const gbdKsm = 'dpcmj33LUs9';
+  static const gbdRoc = 'dpcmj33LUs9';
+  static const gbdGsl = 'dpcm5272THU';
+
+  static const _leuCids = <String>[leuKsm, leuRoc];
+  static const _gbdCids = <String>[gbdKsm, gbdRoc, gbdRoc];
 
   static bool isLeu(String? cid) => _leuCids.contains(cid);
   static bool isGbd(String? cid) => _gbdCids.contains(cid);

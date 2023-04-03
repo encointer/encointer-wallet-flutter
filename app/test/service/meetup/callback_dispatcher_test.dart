@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:timezone/timezone.dart' as tz;
 
+import 'package:encointer_wallet/config/prod_community.dart';
 import 'package:encointer_wallet/service/meetup/meetup.dart';
 
 class MockLocation extends Mock implements tz.Location {}
@@ -28,7 +29,7 @@ void main() async {
       local,
       mockScheduleNotification,
       langCode: 'en',
-      cid: 'u0qj944rhWE',
+      cid: Cids.leuKsm,
     );
   });
 }
