@@ -34,8 +34,8 @@ class Screenshots {
   static const homeRegisteredAsNewbieConformDialog = '023-home-registered-as-newbie-confirm-dialog';
   static const homeRegisteredAsNewbie = '024-home-registered-as-newbie';
   static const homeUnregisterDialog = '025-home-unregister-dialog';
-  static const homeAssgningPhaseAssigned = '026-home-assgning-phase-assigned';
-  static const homeAssgningPhaseUnassigned = '027-home-assigning-phase-unassigned';
+  static const homeAssigningPhaseAssigned = '026-home-assigning-phase-assigned';
+  static const homeAssigningPhaseUnassigned = '027-home-assigning-phase-unassigned';
   static const homeAttestingPhaseStartMeetup = '028-home-attesting-phase-start-meetup';
 
   /// 41-60 send and receive

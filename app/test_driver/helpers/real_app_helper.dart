@@ -114,7 +114,7 @@ Future<void> startMeetupTest(FlutterDriver driver, {bool shouldTakeScreenshot = 
     find.byValueKey('start-meetup'),
     dyScroll: -300,
   );
-
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeAttestingPhaseStartMeetup);
   await driver.tap(find.byValueKey('start-meetup'));
   await addDelay(500);
 
