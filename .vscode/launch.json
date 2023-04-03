@@ -12,8 +12,8 @@
             "type": "dart",
             "program": "app/lib/main.dart",
             "args": [
-                "--flavor",
-                "dev",
+                // "--flavor",
+                // "dev",
                 "--target",
                 "lib/main.dart"
             ],

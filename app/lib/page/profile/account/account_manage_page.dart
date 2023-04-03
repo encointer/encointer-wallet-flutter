@@ -216,17 +216,20 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           accountToBeEditedPubKey!,
                           size: 130,
                         ),
+                      Text(
+                        addressSS58,
+                        key: const Key('account-public-key'),
+                        // Text only read `addressSS58` for integration test
+                        style: const TextStyle(fontSize: 2, color: Colors.transparent),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            // In the tests, we have to read the address from the field, but `Fmt.address` does only return parts of it `5Hdf...P3ZD`.
-                            // Additionally, we can't paste from the clipboard in flutter driver tests, which is why we have to read it from the text field.
-                            store.config.isIntegrationTest ? addressSS58 : Fmt.address(addressSS58)!,
+                            Fmt.address(addressSS58)!,
                             style: const TextStyle(fontSize: 20),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            key: const Key('account-public-key'),
                           ),
                           IconButton(
                             icon: const Icon(Iconsax.copy),
