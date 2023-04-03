@@ -53,10 +53,11 @@ class Screenshots {
   static const accountShareView = '067-account-share-view';
 
   /// 81-100 contacts
-  static const contactsOverview = '081-contacts-overview';
+  static const contactsOverviewEmpty = '081-contacts-overview-empty';
   static const addContact = '082-add-contact';
   static const contactView = '083-contact-view';
   static const changeContactName = '084-change-contact-name';
+  static const contactsOverview = '085-contacts-overview';
 
   /// 101-120 gathering flow
   static const step1ConfirmNumberOfAttendees = '101-step-1-confirm-number-of-attendees';

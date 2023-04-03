@@ -216,7 +216,7 @@ void main() async {
 
   test('contact-page add contact', () async {
     await driver.tap(find.byValueKey('contacts'));
-    await takeScreenshot(driver, Screenshots.contactsOverview);
+    await takeScreenshot(driver, Screenshots.contactsOverviewEmpty);
     await driver.tap(find.byValueKey('add-contact'));
 
     await driver.tap(find.byValueKey('contact-address'));
@@ -313,6 +313,7 @@ void main() async {
     await driver.tap(find.byValueKey('send-money-to-account'));
 
     await sendMoneyToAccount(driver);
+    await takeScreenshot(driver, Screenshots.contactsOverview);
     await driver.tap(find.byValueKey('wallet'));
   });
 
