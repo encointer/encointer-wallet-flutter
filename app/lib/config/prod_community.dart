@@ -10,17 +10,9 @@ enum Community {
   });
 
   factory Community.fromCid(String? cid) {
-    switch (cid) {
-      case Cids.gbdKsm:
-      case Cids.gbdRoc:
-      case Cids.gbdGsl:
-        return gbd;
-      case Cids.leuKsm:
-      case Cids.leuRoc:
-        return leu;
-      default:
-        return leu;
-    }
+    if (Cids.isGbd(cid)) return gbd;
+    if (Cids.isLeu(cid)) return leu;
+    return leu;
   }
 
   final String webSiteLink;
@@ -28,12 +20,11 @@ enum Community {
 }
 
 class Cids {
-  static const String leuKsm = 'u0qj944rhWE';
-  static const String leuRoc = 'gb1bc2QX9PQ';
+  static const _leuCids = <String>['u0qj944rhWE', 'u0qj944rhWE'];
+  static const _gbdCids = <String>['dpcmj33LUs9', 'dpcmj33LUs9', 'dpcm5272THU'];
 
-  static const String gbdKsm = 'dpcmj33LUs9';
-  static const String gbdRoc = 'dpcmj33LUs9';
-  static const String gbdGsl = 'dpcm5272THU';
+  static bool isLeu(String? cid) => _leuCids.contains(cid);
+  static bool isGbd(String? cid) => _gbdCids.contains(cid);
 }
 
 const _leuZurichSound = 'lions_growl';
