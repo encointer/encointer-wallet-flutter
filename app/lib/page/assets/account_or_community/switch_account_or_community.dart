@@ -3,35 +3,56 @@ import 'package:encointer_wallet/page/assets/account_or_community/account_or_com
 import 'package:flutter/material.dart';
 
 class SwitchAccountOrCommunity extends StatefulWidget {
-  const SwitchAccountOrCommunity({super.key, this.rowTitle, this.data, this.onTap});
+  const SwitchAccountOrCommunity({
+    super.key,
+    this.rowTitle,
+    this.data,
+    this.onTap,
+    required this.onAddIconPressed,
+    required this.addIconButtonKey,
+  });
 
   final String? rowTitle;
   final List<AccountOrCommunityData>? data;
   final void Function(int index)? onTap;
+  final VoidCallback onAddIconPressed;
+  final Key addIconButtonKey;
 
   @override
   State<SwitchAccountOrCommunity> createState() => _SwitchAccountOrCommunityState();
 }
 
 class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
-  static const double identiconPlusTextHeight = 130;
+  static const double identiconPlusTextHeight = 120;
   static const double itemExtent = 90;
   static const double fadeWidth = 32;
   static const Color whiteTransparent = Color(0x00ffffff);
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const SizedBox(
-        height: 15,
+    return Column(children: [
+      const SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            widget.rowTitle!,
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6, left: 4),
+            child: IconButton(
+              key: widget.addIconButtonKey,
+              onPressed: widget.onAddIconPressed,
+              icon: const Icon(
+                Icons.add,
+                size: 36,
+              ),
+            ),
+          ),
+        ],
       ),
-      Center(
-        child: Text(
-          widget.rowTitle!,
-          style: Theme.of(context).textTheme.displayMedium,
-        ),
-      ),
-      const SizedBox(height: 15),
+      const SizedBox(height: 10),
       SizedBox(
         height: identiconPlusTextHeight,
         // otherwise ListView would use infinite height
