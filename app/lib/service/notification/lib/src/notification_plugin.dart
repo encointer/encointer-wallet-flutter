@@ -72,7 +72,7 @@ class NotificationPlugin {
   }
 
   static NotificationDetails _platformChannelSpecifics(String body, {String? cid}) {
-    final communityByCid = ProdCommunity.getCommunityByCid(cid);
+    final communityByCid = Community.getCommunityByCid(cid);
     return NotificationDetails(
       android: _androidPlatformChannelSpecifics(body, communityByCid.notificationSound),
       iOS: _iOSPlatformChannelSpecifics(communityByCid.notificationSound),

@@ -1,10 +1,10 @@
 import 'package:encointer_wallet/config/consts.dart';
 
-enum ProdCommunity {
+enum Community {
   leo(notificationSound: _leuZurichSound, webSiteLink: _leuZurichLink),
   gbd(notificationSound: _greenbaySound, webSiteLink: _greenbayLink);
 
-  const ProdCommunity({
+  const Community({
     required this.webSiteLink,
     required this.notificationSound,
   });
@@ -12,7 +12,7 @@ enum ProdCommunity {
   final String webSiteLink;
   final String notificationSound;
 
-  static ProdCommunity getCommunityByCid(String? cid) {
+  static Community getCommunityByCid(String? cid) {
     switch (cid) {
       case 'dpcmj33LUs9':
       case 'dpcm5272THU':
