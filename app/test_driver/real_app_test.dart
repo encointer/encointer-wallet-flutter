@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 import 'helpers/add_delay.dart';
 import 'helpers/other_test.dart';
 import 'helpers/real_app_helper.dart';
-import 'helpers/take_screenshot.dart';
+import 'helpers/screenshots.dart';
 
 void main() async {
   late FlutterDriver driver;

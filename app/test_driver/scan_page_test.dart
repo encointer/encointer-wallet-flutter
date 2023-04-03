@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-import 'helpers/take_screenshot.dart';
+import 'helpers/screenshots.dart';
 
 void main() {
   FlutterDriver? driver;

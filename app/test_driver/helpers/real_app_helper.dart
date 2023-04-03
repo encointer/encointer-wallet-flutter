@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
-import 'take_screenshot.dart';
+import 'screenshots.dart';
 
 const String getPlatformCommand = 'getPlatform';
 

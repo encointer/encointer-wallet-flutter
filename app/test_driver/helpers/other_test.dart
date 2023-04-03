@@ -2,7 +2,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
 import 'real_app_helper.dart';
-import 'take_screenshot.dart';
+import 'screenshots.dart';
 
 Future<void> scrollToSendAddress(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
