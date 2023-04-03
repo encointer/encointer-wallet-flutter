@@ -33,11 +33,11 @@ mixin _$AccountStore on _AccountStore, Store {
   bool get isFirstAccount =>
       (_$isFirstAccountComputed ??= Computed<bool>(() => super.isFirstAccount, name: '_AccountStore.isFirstAccount'))
           .value;
-  Computed<String>? _$currentAddressComputed;
+  Computed<String?>? _$currentAddressComputed;
 
   @override
-  String get currentAddress =>
-      (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress, name: '_AccountStore.currentAddress'))
+  String? get currentAddress =>
+      (_$currentAddressComputed ??= Computed<String?>(() => super.currentAddress, name: '_AccountStore.currentAddress'))
           .value;
 
   late final _$loadingAtom = Atom(name: '_AccountStore.loading', context: context);

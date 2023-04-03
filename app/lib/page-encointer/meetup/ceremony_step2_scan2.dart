@@ -121,7 +121,7 @@ class CeremonyStep2Scan extends StatelessWidget {
               child: ElevatedButton(
                 key: const Key('attest-all-participants-dev'),
                 child: const Text('DEV ONLY: attest all participants'),
-                onPressed: () => attestAllParticipants(store, store.account.currentAddress),
+                onPressed: () => attestAllParticipants(store, store.account.currentAddress!),
               ),
             ),
           const SizedBox(height: 12)
@@ -132,8 +132,8 @@ class CeremonyStep2Scan extends StatelessWidget {
 
   int getCurrentAccountIndex() {
     final currentAddress = store.account.currentAddress;
-    final participiants = store.encointer.communityAccount!.meetup!.registry;
-    return participiants.indexOf(currentAddress);
+    final participants = store.encointer.communityAccount!.meetup!.registry;
+    return participants.indexOf(currentAddress!);
   }
 }
 

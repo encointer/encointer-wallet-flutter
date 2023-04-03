@@ -60,7 +60,7 @@ void main() {
       await encointerStore.setChosenCid(testCid);
 
       final testCommunityStore = CommunityStore(testNetwork, testCid);
-      await testCommunityStore.initCommunityAccountStore(appStore.account.currentAddress);
+      await testCommunityStore.initCommunityAccountStore(appStore.account.currentAddress!);
 
       final targetJson = <String, dynamic>{
         'network': testNetwork,

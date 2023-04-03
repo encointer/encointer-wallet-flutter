@@ -82,7 +82,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final cid = voucher?.cid;
     final networkInfo = voucher?.network;
     final issuer = voucher?.issuer;
-    final recipient = store.account.currentAddress;
+    final recipient = store.account.currentAddress!;
     final showFundVoucher = params?.showFundVoucher;
 
     if (!_postFrameCallbackCalled) {

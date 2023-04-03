@@ -29,7 +29,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
   @override
   void initState() {
     final store = context.read<AppStore>();
-    currentAddress = store.account.currentAddress;
+    currentAddress = store.account.currentAddress!;
     allParticipants = store.encointer.communityAccount?.meetup?.registry ?? [];
     super.initState();
   }
