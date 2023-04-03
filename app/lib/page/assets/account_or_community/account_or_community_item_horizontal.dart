@@ -43,7 +43,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
-            widget.itemData.name!,
+            widget.itemData.name ?? '',
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
             maxLines: 2,
