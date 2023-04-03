@@ -135,7 +135,11 @@ class EncointerApi {
 
   /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.
   ///
-  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String address) async {
+  /// Todo: Be able to handle pubKey and any address and transform it to the
+  /// address with prefix 42. Needs #1105.
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String pubKey) async {
+    final address = Fmt.ss58Encode(pubKey);
+
     try {
       final accountData = await _dartApi.getAggregatedAccountData(cid, address);
       Log.d(
@@ -330,13 +334,16 @@ class EncointerApi {
     await jsApi.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
         (String data) async {
+      if (store.account.currentAccountPubKey == null) return;
       final phase = ceremonyPhaseFromString(data.toUpperCase())!;
 
       final cid = store.encointer.chosenCid;
       final address = store.account.currentAddress;
 
+      final pubKey = store.account.currentAccountPubKey!;
+
       if (cid != null) {
-        final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, address);
+        final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
         store.encointer.setAggregatedAccountData(cid, address, data);
       }
 
@@ -352,10 +359,10 @@ class EncointerApi {
   Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
     CeremonyPhase nextPhase,
     CommunityIdentifier cid,
-    String address,
+    String pubKey,
   ) async {
     while (true) {
-      final data = await getAggregatedAccountData(cid, address);
+      final data = await getAggregatedAccountData(cid, pubKey);
       final phase = data.global.ceremonyPhase;
 
       if (nextPhase == phase) {
