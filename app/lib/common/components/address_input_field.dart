@@ -42,8 +42,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
       return Container();
     }
 
-    final address = Fmt.ss58Encode(account.pubKey, prefix: widget.store.settings.endpoint.ss58!);
-
     return Container(
       padding: const EdgeInsets.only(top: 8),
       child: Row(
@@ -51,14 +49,14 @@ class _AddressInputFieldState extends State<AddressInputField> {
           if (!widget.hideIdenticon)
             Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: AddressIcon(address, account.pubKey, tapToCopy: false, size: 36),
+              child: AddressIcon(account.address, account.pubKey, tapToCopy: false, size: 36),
             ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(account.name),
               Text(
-                Fmt.address(address)!,
+                Fmt.address(account.address)!,
                 style: TextStyle(fontSize: 12, color: Theme.of(context).unselectedWidgetColor),
               ),
             ],

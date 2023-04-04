@@ -93,7 +93,9 @@ abstract class _AccountStore with Store {
 
   @computed
   String get currentAddress {
-    return Fmt.ss58Encode(currentAccountPubKey!, prefix: rootStore.settings.endpoint.ss58!);
+    return currentAccountPubKey != null
+        ? Fmt.ss58Encode(currentAccountPubKey!, prefix: rootStore.settings.endpoint.ss58!)
+        : '';
   }
 
   @action
