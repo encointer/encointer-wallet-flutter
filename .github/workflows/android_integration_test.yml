@@ -4,7 +4,7 @@ on:
   push:
     branches: [master, f-droid]
   pull_request:
-    branches: [master, f-droid, cl/only-use-dart-ss58-encoding]
+    branches: [master, f-droid]
 
 env:
   NODE_VERSION: 16.13.1
