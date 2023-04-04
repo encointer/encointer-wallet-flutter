@@ -80,18 +80,18 @@ enum ParticipantTypeTest {
   ),
   bootstrapper(
     'Bootstrapper',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsNewbieConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsNewbie,
+    educationDialogScreenshot: Screenshots.homeRegisteredAsBootstrapperConfirmDialog,
+    registeredAsType: Screenshots.homeRegisteredAsBootstrapper,
   ),
   reputable(
     'Reputable',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsNewbieConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsNewbie,
+    educationDialogScreenshot: Screenshots.homeRegisteredAsReputableConfirmDialog,
+    registeredAsType: Screenshots.homeRegisteredAsReputable,
   ),
   endorsee(
     'Endorsee',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsNewbieConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsNewbie,
+    educationDialogScreenshot: Screenshots.homeRegisteredAsEndorseeConfirmDialog,
+    registeredAsType: Screenshots.homeRegisteredAsEndorsee,
   );
 
   const ParticipantTypeTest(

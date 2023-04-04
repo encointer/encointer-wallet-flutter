@@ -61,7 +61,6 @@ Future<void> sendMoneyToAccount(FlutterDriver driver) async {
 
 Future<void> shareAccount(FlutterDriver driver, String account, {bool shouldTakeScreenshot = false}) async {
   await driver.tap(find.byValueKey('profile'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.profileView);
   await driver.waitFor(find.byValueKey(account));
   await driver.tap(find.byValueKey(account));
 

@@ -53,6 +53,7 @@ void main() async {
 
   test('turn on dev-mode', () async {
     await driver.tap(find.byValueKey('profile'));
+    await takeScreenshot(driver, Screenshots.profileView);
     await scrollToDevMode(driver);
     await driver.tap(find.byValueKey('dev-mode'));
 
@@ -372,7 +373,7 @@ void main() async {
 
   test('import account with menemonic phrase', () async {
     await driver.tap(find.byValueKey('wallet'));
-    await importAccount(driver, 'Alice', menmonic: menemonic, shouldTakeScreenshot: true);
+    await importAccount(driver, 'Bob', menmonic: menemonic, shouldTakeScreenshot: true);
     await addDelay(500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
