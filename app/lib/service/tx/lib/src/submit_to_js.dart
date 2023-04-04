@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
@@ -58,6 +59,7 @@ Future<void> submitToJS(
       txParams['txInfo'] as Map<String, dynamic>,
       txParams['params'] as List<dynamic>?,
       rawParam: txParams['rawParam'] as String?,
+      cid: store.encointer.community?.cid.toFmtString(),
     );
 
     if (res['hash'] == null) {
@@ -182,7 +184,10 @@ Future<void> showInsufficientFundsDialog(BuildContext context) {
           Container(),
           CupertinoButton(
             child: Text(dic.encointer.goToLeuZurich),
-            onPressed: () => AppLaunch.launchURL(leuZurichLink(languageCode)),
+            onPressed: () {
+              final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
+              AppLaunch.launchURL(ceremonyInfoLink(languageCode, cid));
+            },
           ),
           CupertinoButton(
             child: Text(dic.home.ok),
