@@ -52,13 +52,17 @@ Future<void> tapAndWaitNextPhase(FlutterDriver driver) async {
   await driver.waitFor(find.byType('SnackBar'));
 }
 
-Future<void> registerAndWait(FlutterDriver driver, String registrationType, {bool shouldTakeScreenshot = false}) async {
+Future<void> registerAndWait(
+  FlutterDriver driver,
+  ParticipantTypeTest registrationType, {
+  bool shouldTakeScreenshot = false,
+}) async {
   await driver.tap(find.byValueKey('registration-meetup-button'));
-  await driver.waitFor(find.byValueKey('educate-dialog-$registrationType'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeRegisteredAsNewbieConfirmDialog);
+  await driver.waitFor(find.byValueKey('educate-dialog-${registrationType.type}'));
+  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.educationDialogScreenshot);
   await driver.tap(find.byValueKey('close-educate-dialog'));
   await driver.waitFor(find.byValueKey('is-registered-info'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeRegisteredAsNewbie);
+  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.registeredAsType);
 }
 
 Future<void> unregisterAndWait(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
@@ -79,7 +83,12 @@ Future<void> changeAccountFromPanel(FlutterDriver driver, String account) async 
   await addDelay(1000);
 }
 
-Future<void> importAccount(FlutterDriver driver, String account, {bool shouldTakeScreenshot = false}) async {
+Future<void> importAccount(
+  FlutterDriver driver,
+  String account, {
+  bool shouldTakeScreenshot = false,
+  String? menmonic,
+}) async {
   await driver.tap(find.byValueKey('panel-controller'));
   await driver.tap(find.byValueKey('add-account-panel'));
 
@@ -91,7 +100,7 @@ Future<void> importAccount(FlutterDriver driver, String account, {bool shouldTak
   await driver.enterText(account);
 
   await driver.tap(find.byValueKey('account-source'));
-  await driver.enterText('//$account');
+  await driver.enterText(menmonic ?? '//$account');
   if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.importAccount);
   await driver.tap(find.byValueKey('account-import-next'));
   await driver.waitFor(find.byValueKey('panel-controller'));
@@ -103,7 +112,7 @@ Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account
   await importAccount(driver, account);
   await scrollToCeremonyBox(driver);
 
-  await registerAndWait(driver, 'Bootstrapper');
+  await registerAndWait(driver, ParticipantTypeTest.bootstrapper);
   await scrollToPanelController(driver);
   await addDelay(1000);
 }

@@ -92,7 +92,7 @@ Future<void> accountChangeName(FlutterDriver driver, String changedName, {bool s
   await addDelay(1000);
 }
 
-Future<void> accountExport(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
+Future<String> accountExport(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
   if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.accountOptionsDialog);
   await driver.tap(find.byValueKey('export'));
@@ -102,9 +102,11 @@ Future<void> accountExport(FlutterDriver driver, {bool shouldTakeScreenshot = fa
   await driver.tap(find.byValueKey('password-ok'));
 
   await driver.waitFor(find.byValueKey('account-mnemonic-key'));
+  final mnemonic = await driver.getText(find.byValueKey('account-mnemonic-key'));
   if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.exportAccountView);
   await addDelay(1000);
   await driver.tap(find.pageBack());
+  return mnemonic;
 }
 
 Future<void> deleteAccountFromAccountManagePage(FlutterDriver driver, String account) async {

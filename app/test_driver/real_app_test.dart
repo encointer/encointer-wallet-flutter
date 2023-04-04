@@ -10,6 +10,7 @@ void main() async {
   late FlutterDriver driver;
 
   var publicKey = '';
+  var menemonic = '';
 
   group('EncointerWallet App', () {
     setUpAll(() async {
@@ -90,12 +91,12 @@ void main() async {
   });
 
   test('import account Alice', () async {
-    await importAccount(driver, 'Alice', shouldTakeScreenshot: true);
+    await importAccount(driver, 'Alice');
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Register [Bootstrapper] Alice', () async {
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, 'Bootstrapper');
+    await registerAndWait(driver, ParticipantTypeTest.bootstrapper, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Unregister [Bootstrapper] Alice', () async {
@@ -103,7 +104,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Register [Bootstrapper] Alice again', () async {
-    await registerAndWait(driver, 'Bootstrapper');
+    await registerAndWait(driver, ParticipantTypeTest.bootstrapper);
     await scrollToPanelController(driver);
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 60)));
@@ -135,7 +136,7 @@ void main() async {
   test('Register [Newbie] Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, 'Newbie', shouldTakeScreenshot: true);
+    await registerAndWait(driver, ParticipantTypeTest.newbie, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Unregister [Newbie] Tom', () async {
@@ -143,7 +144,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Register [Newbie] Tom again', () async {
-    await registerAndWait(driver, 'Newbie');
+    await registerAndWait(driver, ParticipantTypeTest.newbie);
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -321,7 +322,7 @@ void main() async {
 
   test('register Tom (check status as Reputable)', () async {
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, 'Reputable');
+    await registerAndWait(driver, ParticipantTypeTest.reputable, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Unregister [Reputable] Tom', () async {
@@ -329,14 +330,14 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Register [Reputable] Tom again', () async {
-    await registerAndWait(driver, 'Reputable');
+    await registerAndWait(driver, ParticipantTypeTest.reputable);
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('register Li (check status as Endorsee)', () async {
     await changeAccountFromPanel(driver, 'Li');
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, 'Endorsee');
+    await registerAndWait(driver, ParticipantTypeTest.endorsee, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Unregister [Endorsee] Li', () async {
@@ -344,7 +345,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Register [Newbie-Endorsee] Li again', () async {
-    await registerAndWait(driver, 'Newbie');
+    await registerAndWait(driver, ParticipantTypeTest.newbie);
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -360,7 +361,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('account export', () async {
-    await accountExport(driver, shouldTakeScreenshot: true);
+    menemonic = await accountExport(driver, shouldTakeScreenshot: true);
     await addDelay(500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -369,7 +370,15 @@ void main() async {
     await addDelay(500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
+  test('import account with menemonic phrase', () async {
+    await driver.tap(find.byValueKey('wallet'));
+    await importAccount(driver, 'Alice', menmonic: menemonic, shouldTakeScreenshot: true);
+    await addDelay(500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
   test('delete all account ad show create account page', () async {
+    await driver.tap(find.byValueKey('profile'));
+    await driver.waitFor(find.byValueKey('remove-all-accounts'));
     await rmAllAccountsFromProfilePage(driver);
     await addDelay(2000);
   });

@@ -34,10 +34,16 @@ class Screenshots {
   static const homeWithRegisterButton = '022-home-with-register-button';
   static const homeRegisteredAsNewbieConfirmDialog = '023-home-registered-as-newbie-confirm-dialog';
   static const homeRegisteredAsNewbie = '024-home-registered-as-newbie';
-  static const homeUnregisterDialog = '025-home-unregister-dialog';
-  static const homeAssigningPhaseAssigned = '026-home-assigning-phase-assigned';
-  static const homeAssigningPhaseUnassigned = '027-home-assigning-phase-unassigned';
-  static const homeAttestingPhaseStartMeetup = '028-home-attesting-phase-start-meetup';
+  static const homeRegisteredAsBootstrapperConfirmDialog = '025-home-registered-as-bootstrapper-confirm-dialog';
+  static const homeRegisteredAsBootstrapper = '026-home-registered-as-bootstrapper';
+  static const homeRegisteredAsReputableConfirmDialog = '027-home-registered-as-reputable-confirm-dialog';
+  static const homeRegisteredAsReputable = '028-home-registered-as-reputable';
+  static const homeRegisteredAsEndorseeConfirmDialog = '029-home-registered-as-endorsee-confirm-dialog';
+  static const homeRegisteredAsEndorsee = '030-home-registered-as-endorsee';
+  static const homeUnregisterDialog = '031-home-unregister-dialog';
+  static const homeAssigningPhaseAssigned = '032-home-assigning-phase-assigned';
+  static const homeAssigningPhaseUnassigned = '033-home-assigning-phase-unassigned';
+  static const homeAttestingPhaseStartMeetup = '034-home-attesting-phase-start-meetup';
 
   /// 41-60 send and receive
   static const receiveView = '041-receive-view';
@@ -64,4 +70,37 @@ class Screenshots {
   static const step1ConfirmNumberOfAttendees = '101-step-1-confirm-number-of-attendees';
   static const step2QrCode = '102-step-2-qr-code';
   static const step3FinishGathering = '103-step-3-finish-gathering';
+}
+
+enum ParticipantTypeTest {
+  newbie(
+    'Newbie',
+    educationDialogScreenshot: Screenshots.homeRegisteredAsNewbieConfirmDialog,
+    registeredAsType: Screenshots.homeRegisteredAsNewbie,
+  ),
+  bootstrapper(
+    'Bootstrapper',
+    educationDialogScreenshot: Screenshots.homeRegisteredAsNewbieConfirmDialog,
+    registeredAsType: Screenshots.homeRegisteredAsNewbie,
+  ),
+  reputable(
+    'Reputable',
+    educationDialogScreenshot: Screenshots.homeRegisteredAsNewbieConfirmDialog,
+    registeredAsType: Screenshots.homeRegisteredAsNewbie,
+  ),
+  endorsee(
+    'Endorsee',
+    educationDialogScreenshot: Screenshots.homeRegisteredAsNewbieConfirmDialog,
+    registeredAsType: Screenshots.homeRegisteredAsNewbie,
+  );
+
+  const ParticipantTypeTest(
+    this.type, {
+    required this.educationDialogScreenshot,
+    required this.registeredAsType,
+  });
+
+  final String type;
+  final String educationDialogScreenshot;
+  final String registeredAsType;
 }
