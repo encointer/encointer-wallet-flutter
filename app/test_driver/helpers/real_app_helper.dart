@@ -7,6 +7,13 @@ import 'screenshots.dart';
 
 const String getPlatformCommand = 'getPlatform';
 
+Future<void> turnDevMode(FlutterDriver driver) async {
+  await scrollToDevMode(driver);
+  await driver.tap(find.byValueKey('dev-mode'));
+
+  await scrollToNextPhaseButton(driver);
+}
+
 Future<void> scrollToDevMode(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('profile-list-view'),

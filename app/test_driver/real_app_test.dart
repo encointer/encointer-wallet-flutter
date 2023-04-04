@@ -54,10 +54,7 @@ void main() async {
   test('turn on dev-mode', () async {
     await driver.tap(find.byValueKey('profile'));
     await takeScreenshot(driver, Screenshots.profileView);
-    await scrollToDevMode(driver);
-    await driver.tap(find.byValueKey('dev-mode'));
-
-    await scrollToNextPhaseButton(driver);
+    await turnDevMode(driver);
     await addDelay(1000);
   });
 
@@ -67,6 +64,7 @@ void main() async {
     await driver.tap(find.text('Tom'));
 
     await driver.waitFor(find.byValueKey('profile-list-view'));
+    await driver.tap(find.byValueKey('dev-mode'));
     await driver.tap(find.byValueKey('wallet'));
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 90)));
@@ -159,9 +157,11 @@ void main() async {
 
   test('get assignin-phase', () async {
     await driver.tap(find.byValueKey('profile'));
-    await scrollToNextPhaseButton(driver);
+    await turnDevMode(driver);
 
     await tapAndWaitNextPhase(driver);
+    await driver.tap(find.byValueKey('dev-mode'));
+
     await driver.tap(find.byValueKey('wallet'));
     await driver.waitFor(find.byValueKey('list-view-wallet'));
     await scrollToCeremonyBox(driver);
@@ -179,9 +179,11 @@ void main() async {
 
   test('get attesting-phase', () async {
     await driver.tap(find.byValueKey('profile'));
-    await scrollToNextPhaseButton(driver);
+    await turnDevMode(driver);
 
     await tapAndWaitNextPhase(driver);
+    await driver.tap(find.byValueKey('dev-mode'));
+
     await driver.tap(find.byValueKey('wallet'));
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 40)));
@@ -213,8 +215,9 @@ void main() async {
     await driver.tap(find.byValueKey('profile'));
     await driver.waitFor(find.text('2'));
     await addDelay(1000);
-    await scrollToNextPhaseButton(driver);
+    await turnDevMode(driver);
     await tapAndWaitNextPhase(driver);
+    await driver.tap(find.byValueKey('dev-mode'));
     await driver.tap(find.byValueKey('wallet'));
   });
 
