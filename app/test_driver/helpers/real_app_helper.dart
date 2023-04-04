@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
+import 'participant_type.dart';
 import 'screenshots.dart';
 
 const String getPlatformCommand = 'getPlatform';
@@ -61,7 +62,7 @@ Future<void> tapAndWaitNextPhase(FlutterDriver driver) async {
 
 Future<void> registerAndWait(
   FlutterDriver driver,
-  ParticipantTypeTest registrationType, {
+  ParticipantType registrationType, {
   bool shouldTakeScreenshot = false,
 }) async {
   await driver.tap(find.byValueKey('registration-meetup-button'));
@@ -119,7 +120,7 @@ Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account
   await importAccount(driver, account);
   await scrollToCeremonyBox(driver);
 
-  await registerAndWait(driver, ParticipantTypeTest.bootstrapper);
+  await registerAndWait(driver, ParticipantType.bootstrapper);
   await scrollToPanelController(driver);
   await addDelay(1000);
 }

@@ -3,6 +3,7 @@ import 'package:test/test.dart';
 
 import 'helpers/add_delay.dart';
 import 'helpers/other_test.dart';
+import 'helpers/participant_type.dart';
 import 'helpers/real_app_helper.dart';
 import 'helpers/screenshots.dart';
 
@@ -95,7 +96,7 @@ void main() async {
 
   test('Register [Bootstrapper] Alice', () async {
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, ParticipantTypeTest.bootstrapper, shouldTakeScreenshot: true);
+    await registerAndWait(driver, ParticipantType.bootstrapper, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Unregister [Bootstrapper] Alice', () async {
@@ -103,7 +104,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Register [Bootstrapper] Alice again', () async {
-    await registerAndWait(driver, ParticipantTypeTest.bootstrapper);
+    await registerAndWait(driver, ParticipantType.bootstrapper);
     await scrollToPanelController(driver);
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 60)));
@@ -135,7 +136,7 @@ void main() async {
   test('Register [Newbie] Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, ParticipantTypeTest.newbie, shouldTakeScreenshot: true);
+    await registerAndWait(driver, ParticipantType.newbie, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Unregister [Newbie] Tom', () async {
@@ -143,7 +144,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Register [Newbie] Tom again', () async {
-    await registerAndWait(driver, ParticipantTypeTest.newbie);
+    await registerAndWait(driver, ParticipantType.newbie);
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -326,7 +327,7 @@ void main() async {
 
   test('register Tom (check status as Reputable)', () async {
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, ParticipantTypeTest.reputable, shouldTakeScreenshot: true);
+    await registerAndWait(driver, ParticipantType.reputable, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Unregister [Reputable] Tom', () async {
@@ -334,14 +335,14 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Register [Reputable] Tom again', () async {
-    await registerAndWait(driver, ParticipantTypeTest.reputable);
+    await registerAndWait(driver, ParticipantType.reputable);
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('register Li (check status as Endorsee)', () async {
     await changeAccountFromPanel(driver, 'Li');
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, ParticipantTypeTest.endorsee, shouldTakeScreenshot: true);
+    await registerAndWait(driver, ParticipantType.endorsee, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Unregister [Endorsee] Li', () async {
@@ -349,7 +350,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Register [Newbie-Endorsee] Li again', () async {
-    await registerAndWait(driver, ParticipantTypeTest.newbie);
+    await registerAndWait(driver, ParticipantType.newbie);
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 

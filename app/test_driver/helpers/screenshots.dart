@@ -71,36 +71,3 @@ class Screenshots {
   static const step2QrCode = '102-step-2-qr-code';
   static const step3FinishGathering = '103-step-3-finish-gathering';
 }
-
-enum ParticipantTypeTest {
-  newbie(
-    'Newbie',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsNewbieConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsNewbie,
-  ),
-  bootstrapper(
-    'Bootstrapper',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsBootstrapperConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsBootstrapper,
-  ),
-  reputable(
-    'Reputable',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsReputableConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsReputable,
-  ),
-  endorsee(
-    'Endorsee',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsEndorseeConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsEndorsee,
-  );
-
-  const ParticipantTypeTest(
-    this.type, {
-    required this.educationDialogScreenshot,
-    required this.registeredAsType,
-  });
-
-  final String type;
-  final String educationDialogScreenshot;
-  final String registeredAsType;
-}
