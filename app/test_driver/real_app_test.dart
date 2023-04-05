@@ -189,9 +189,43 @@ void main() async {
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 40)));
 
+  test('start meetup-Bob for screenshot', () async {
+    await addDelay(1000);
+    // await changeAccountFromPanel(driver, 'Bob');
+    await driver.scrollUntilVisible(
+      find.byValueKey('profile-list-view'),
+      find.byValueKey('start-meetup'),
+      dyScroll: -300,
+    );
+    await takeScreenshot(driver, Screenshots.homeAttestingPhaseStartMeetup);
+    await driver.tap(find.byValueKey('start-meetup'));
+    await addDelay(500);
+
+    await driver.waitFor(find.byValueKey('attendees-count'));
+    await driver.tap(find.byValueKey('attendees-count'));
+    await driver.enterText('3');
+    await takeScreenshot(driver, Screenshots.step1ConfirmNumberOfAttendees);
+    await driver.tap(find.byValueKey('ceremony-step-1-next'));
+    await addDelay(1000);
+    // await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
+    await takeScreenshot(driver, Screenshots.step2QrCode);
+    await addDelay(1000);
+    await driver.tap(find.pageBack());
+    await driver.tap(find.byValueKey('close-encointer-ceremony-step1'));
+    await addDelay(1000);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('turn on dev mode', () async {
+    await driver.tap(find.byValueKey('profile'));
+    await turnDevMode(driver);
+
+    await driver.tap(find.byValueKey('wallet'));
+    await addDelay(1000);
+  }, timeout: const Timeout(Duration(seconds: 40)));
+
   test('start meetup-Bob', () async {
     await addDelay(1000);
-    await changeAccountFromPanel(driver, 'Bob');
+    // await changeAccountFromPanel(driver, 'Bob');
     await startMeetupTest(driver);
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 120)));
@@ -216,7 +250,8 @@ void main() async {
     await driver.tap(find.byValueKey('profile'));
     await driver.waitFor(find.text('2'));
     await addDelay(1000);
-    await turnDevMode(driver);
+    await scrollToDevMode(driver);
+    await scrollToNextPhaseButton(driver);
     await tapAndWaitNextPhase(driver);
     await driver.tap(find.byValueKey('dev-mode'));
     await driver.tap(find.byValueKey('wallet'));

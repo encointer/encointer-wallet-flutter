@@ -115,7 +115,7 @@ class CeremonyStep2Scan extends StatelessWidget {
               },
             ),
           ),
-          if (store.settings.developerMode || store.config.isIntegrationTest)
+          if (store.settings.developerMode)
             SizedBox(
               height: 40,
               child: ElevatedButton(
