@@ -1,8 +1,8 @@
-import 'package:ew_storage/src/interface/storage_exception.dart';
-import 'package:ew_storage/src/interface/storage_interface_sync_read.dart';
+import 'package:ew_storage/src/storages/storage_exception.dart';
+import 'package:ew_storage/src/storages/interface/sync_read_storage_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// A PreferencesStorage client which implements the base [StorageInterfaceSyncRead].
+/// A PreferencesStorage client which implements the base [SyncReadStorageInterface].
 /// [PreferencesStorage] uses `SharedPreferences` internally.
 ///
 /// ```dart
@@ -15,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// // Read value for key.
 /// final value = storage.getString(key: 'my_key'); // 'my_value'
 /// ```
-class PreferencesStorage implements StorageInterfaceSyncRead {
+class PreferencesStorage implements SyncReadStorageInterface {
   const PreferencesStorage._(this._sharedPreferences);
 
   final SharedPreferences _sharedPreferences;

@@ -1,83 +1,9 @@
-import 'dart:convert';
 import 'dart:core';
 
-import 'package:ew_storage/src/interface/encointer_local_storage_interface.dart';
-import 'package:ew_storage/src/interface/storage_interface_sync_read.dart';
+import 'package:ew_storage/src/encointer/interfaces/encointer_storage_interface.dart';
 
-class MockLocalStorage implements EncointerLocalStorageInterface {
-  const MockLocalStorage(this.storage);
-
-  @override
-  final StorageInterfaceSyncRead storage;
-
-  // ----------- base methods --------------
-  @override
-  String? getString(String key) => null;
-
-  @override
-  Future<void> setString({required String key, required String value}) async {}
-
-  @override
-  bool? getBool(String key) => null;
-
-  @override
-  Future<void> setBool({required String key, required bool value}) async {}
-
-  @override
-  int? getInt(String key) => null;
-
-  @override
-  Future<void> setInt({required String key, required int value}) async {}
-
-  @override
-  double? getDouble(String key) => null;
-
-  @override
-  Future<void> setDouble({required String key, required double value}) async {}
-
-  @override
-  List<String>? getListString(String key) => null;
-
-  @override
-  Future<void> setListString({required String key, required List<String> value}) async {}
-
-  @override
-  T? getValueJsonDecode<T>(String key) {
-    final value = mockStorage[key] as String?;
-    return value != null ? jsonDecode(value) as T : null;
-  }
-
-  @override
-  Future<void> setValueJsonEncode<T>(String key, T value) async {
-    mockStorage[key] = jsonEncode(value);
-  }
-
-  @override
-  Future<void> addItemToList(String key, Map<String, dynamic> acc) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> removeItemFromList(String key, String itemKey, String itemValue) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> updateItemInList(String key, String itemKey, String? itemValue, Map<String, dynamic> itemNew) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<T?> getValueJsonDecodeCompute<T>(String key) => Future.value();
-
-  @override
-  Future<void> setValueJsonEncodeCompute<T>(String key, T value) async {}
-
-  @override
-  Future<void> removeKey(String key) => Future.value();
-
-  @override
-  Future<void> clear() => throw UnimplementedError();
+class EncointerMockStorage implements EncointerStorageInterface {
+  const EncointerMockStorage();
 
   // ----------- account methods --------------
   @override

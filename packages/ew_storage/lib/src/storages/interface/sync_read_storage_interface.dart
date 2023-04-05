@@ -1,7 +1,7 @@
-import 'package:ew_storage/src/interface/storage_exception.dart';
+import 'package:ew_storage/src/storages/storage_exception.dart';
 
 /// A Dart StorageInterface Client Interface
-abstract class StorageInterfaceSyncRead {
+abstract class SyncReadStorageInterface {
   /// Returns the [String] value associated with the provided [key].
   ///
   /// Returns `null` if no value is found for the given [key].
