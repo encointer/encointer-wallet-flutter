@@ -191,7 +191,6 @@ void main() async {
 
   test('start meetup-Bob for screenshot', () async {
     await addDelay(1000);
-    // await changeAccountFromPanel(driver, 'Bob');
     await driver.scrollUntilVisible(
       find.byValueKey('profile-list-view'),
       find.byValueKey('start-meetup'),
@@ -207,7 +206,6 @@ void main() async {
     await takeScreenshot(driver, Screenshots.step1ConfirmNumberOfAttendees);
     await driver.tap(find.byValueKey('ceremony-step-1-next'));
     await addDelay(1000);
-    // await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
     await takeScreenshot(driver, Screenshots.step2QrCode);
     await addDelay(1000);
     await driver.tap(find.pageBack());
@@ -225,7 +223,6 @@ void main() async {
 
   test('start meetup-Bob', () async {
     await addDelay(1000);
-    // await changeAccountFromPanel(driver, 'Bob');
     await startMeetupTest(driver);
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 120)));

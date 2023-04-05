@@ -138,11 +138,9 @@ Future<void> startMeetupTest(FlutterDriver driver, {bool shouldTakeScreenshot = 
   await driver.waitFor(find.byValueKey('attendees-count'));
   await driver.tap(find.byValueKey('attendees-count'));
   await driver.enterText('3');
-  // if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.step1ConfirmNumberOfAttendees);
   await driver.tap(find.byValueKey('ceremony-step-1-next'));
 
   await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
-  // if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.step2QrCode);
   await driver.tap(find.byValueKey('attest-all-participants-dev'));
   await driver.waitFor(find.byType('SnackBar'));
   await driver.tap(find.byValueKey('close-meetup'));
