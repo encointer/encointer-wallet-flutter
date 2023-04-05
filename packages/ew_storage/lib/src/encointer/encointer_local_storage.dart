@@ -4,8 +4,7 @@ import 'package:ew_storage/src/storages/sync_storage.dart';
 class EncointerLocalStorage extends SyncStorage implements EncointerStorageInterface {
   const EncointerLocalStorage(super.storage);
 
-
-  /// local keys
+  // local keys
   static const localKey = 'locale';
   static const accountsKey = 'wallet_account_list';
   static const currentAccountKey = 'wallet_current_account';

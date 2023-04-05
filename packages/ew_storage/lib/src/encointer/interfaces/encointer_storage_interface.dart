@@ -1,4 +1,3 @@
-
 abstract class EncointerStorageInterface {
   // ----------- account methods --------------
   String? getCurrentAccount();
