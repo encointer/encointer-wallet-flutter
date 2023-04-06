@@ -161,7 +161,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
         _showEducationalDialog(registrationType, context);
         if (store.settings.endpoint == networkEndpointEncointerMainnet) {
           await CeremonyNotifications.scheduleMeetupReminders(
-            ceremonyIndex: data.global!.ceremonyIndex,
+            ceremonyIndex: data.global.ceremonyIndex,
             meetupTime: store.encointer.community!.meetupTime!,
             dic: I18n.of(context)!.translationsForLocale().encointer,
             cid: store.encointer.community?.cid.toFmtString(),
