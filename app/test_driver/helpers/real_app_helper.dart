@@ -93,9 +93,9 @@ Future<void> changeAccountFromPanel(FlutterDriver driver, String account) async 
 
 Future<void> importAccount(
   FlutterDriver driver,
-  String account, {
+  String accountName,
+  String seedOrMnemonic, {
   bool shouldTakeScreenshot = false,
-  String? menmonic,
 }) async {
   await driver.tap(find.byValueKey('panel-controller'));
   await driver.tap(find.byValueKey('add-account-panel'));
@@ -105,10 +105,10 @@ Future<void> importAccount(
 
   await driver.waitFor(find.byValueKey('create-account-name'));
   await driver.tap(find.byValueKey('create-account-name'));
-  await driver.enterText(account);
+  await driver.enterText(accountName);
 
   await driver.tap(find.byValueKey('account-source'));
-  await driver.enterText(menmonic ?? '//$account');
+  await driver.enterText(seedOrMnemonic);
   if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.importAccount);
   await driver.tap(find.byValueKey('account-import-next'));
   await driver.waitFor(find.byValueKey('panel-controller'));
@@ -116,8 +116,8 @@ Future<void> importAccount(
   await closePanel(driver);
 }
 
-Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account) async {
-  await importAccount(driver, account);
+Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String accountName, String seedOrMnemonic) async {
+  await importAccount(driver, accountName, seedOrMnemonic);
   await scrollToCeremonyBox(driver);
 
   await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);

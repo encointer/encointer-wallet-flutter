@@ -91,7 +91,7 @@ void main() async {
   });
 
   test('import account Alice', () async {
-    await importAccount(driver, 'Alice');
+    await importAccount(driver, 'Alice', '//Alice');
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Register [Bootstrapper] Alice', () async {
@@ -149,11 +149,11 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('import account Charlie', () async {
-    await importAccount(driver, 'Charlie');
+    await importAccount(driver, 'Charlie', '//Charlie');
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('import and register-Bob', () async {
-    await importAccountAndRegisterMeetup(driver, 'Bob');
+    await importAccountAndRegisterMeetup(driver, 'Bob', '//Bob');
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('get assignin-phase', () async {
@@ -409,7 +409,7 @@ void main() async {
 
   test('import account with menemonic phrase', () async {
     await driver.tap(find.byValueKey('wallet'));
-    await importAccount(driver, 'Bob', menmonic: menemonic, shouldTakeScreenshot: true);
+    await importAccount(driver, 'Bob', menemonic, shouldTakeScreenshot: true);
     await addDelay(500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
