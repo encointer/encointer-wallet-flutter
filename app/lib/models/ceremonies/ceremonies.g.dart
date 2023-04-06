@@ -7,20 +7,20 @@ part of 'ceremonies.dart';
 // **************************************************************************
 
 AggregatedAccountData _$AggregatedAccountDataFromJson(Map<String, dynamic> json) => AggregatedAccountData(
-      json['global'] == null ? null : AggregatedAccountDataGlobal.fromJson(json['global'] as Map<String, dynamic>),
+      AggregatedAccountDataGlobal.fromJson(json['global'] as Map<String, dynamic>),
       json['personal'] == null
           ? null
           : AggregatedAccountDataPersonal.fromJson(json['personal'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AggregatedAccountDataToJson(AggregatedAccountData instance) => <String, dynamic>{
-      'global': instance.global?.toJson(),
+      'global': instance.global.toJson(),
       'personal': instance.personal?.toJson(),
     };
 
 AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(Map<String, dynamic> json) =>
     AggregatedAccountDataPersonal(
-      $enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType']),
+      $enumDecode(_$ParticipantTypeEnumMap, json['participantType']),
       json['meetupIndex'] as int?,
       json['meetupLocationIndex'] as int?,
       json['meetupTime'] as int?,
@@ -28,7 +28,7 @@ AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(Map<String
     );
 
 Map<String, dynamic> _$AggregatedAccountDataPersonalToJson(AggregatedAccountDataPersonal instance) => <String, dynamic>{
-      'participantType': _$ParticipantTypeEnumMap[instance.participantType],
+      'participantType': _$ParticipantTypeEnumMap[instance.participantType]!,
       'meetupIndex': instance.meetupIndex,
       'meetupLocationIndex': instance.meetupLocationIndex,
       'meetupTime': instance.meetupTime,
