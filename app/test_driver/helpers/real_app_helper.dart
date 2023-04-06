@@ -125,7 +125,11 @@ Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account
   await addDelay(1000);
 }
 
-Future<void> startMeetupTest(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
+Future<void> startMeetupTest(
+  FlutterDriver driver, {
+  bool shouldTakeScreenshot = false,
+  int participantsCount = 3,
+}) async {
   await driver.scrollUntilVisible(
     find.byValueKey('profile-list-view'),
     find.byValueKey('start-meetup'),
@@ -137,7 +141,7 @@ Future<void> startMeetupTest(FlutterDriver driver, {bool shouldTakeScreenshot = 
 
   await driver.waitFor(find.byValueKey('attendees-count'));
   await driver.tap(find.byValueKey('attendees-count'));
-  await driver.enterText('3');
+  await driver.enterText('$participantsCount');
   await driver.tap(find.byValueKey('ceremony-step-1-next'));
 
   await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
