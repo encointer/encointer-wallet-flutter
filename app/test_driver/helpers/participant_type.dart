@@ -3,32 +3,32 @@ import 'screenshots.dart';
 enum ParticipantType {
   newbie(
     'Newbie',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsNewbieConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsNewbie,
+    educationDialogScreenshotName: Screenshots.homeRegisteredAsNewbieConfirmDialog,
+    screenshotName: Screenshots.homeRegisteredAsNewbie,
   ),
   bootstrapper(
     'Bootstrapper',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsBootstrapperConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsBootstrapper,
+    educationDialogScreenshotName: Screenshots.homeRegisteredAsBootstrapperConfirmDialog,
+    screenshotName: Screenshots.homeRegisteredAsBootstrapper,
   ),
   reputable(
     'Reputable',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsReputableConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsReputable,
+    educationDialogScreenshotName: Screenshots.homeRegisteredAsReputableConfirmDialog,
+    screenshotName: Screenshots.homeRegisteredAsReputable,
   ),
   endorsee(
     'Endorsee',
-    educationDialogScreenshot: Screenshots.homeRegisteredAsEndorseeConfirmDialog,
-    registeredAsType: Screenshots.homeRegisteredAsEndorsee,
+    educationDialogScreenshotName: Screenshots.homeRegisteredAsEndorseeConfirmDialog,
+    screenshotName: Screenshots.homeRegisteredAsEndorsee,
   );
 
   const ParticipantType(
     this.type, {
-    required this.educationDialogScreenshot,
-    required this.registeredAsType,
+    required this.educationDialogScreenshotName,
+    required this.screenshotName,
   });
 
   final String type;
-  final String educationDialogScreenshot;
-  final String registeredAsType;
+  final String educationDialogScreenshotName;
+  final String screenshotName;
 }

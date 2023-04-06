@@ -67,10 +67,10 @@ Future<void> registerAndWait(
 }) async {
   await driver.tap(find.byValueKey('registration-meetup-button'));
   await driver.waitFor(find.byValueKey('educate-dialog-${registrationType.type}'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.educationDialogScreenshot);
+  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.educationDialogScreenshotName);
   await driver.tap(find.byValueKey('close-educate-dialog'));
   await driver.waitFor(find.byValueKey('is-registered-info'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.registeredAsType);
+  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.screenshotName);
 }
 
 Future<void> unregisterAndWait(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
