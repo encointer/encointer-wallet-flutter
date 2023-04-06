@@ -1,6 +1,6 @@
 import 'screenshots.dart';
 
-enum ParticipantType {
+enum ParticipantTypeTestHelper {
   newbie(
     'Newbie',
     educationDialogScreenshotName: Screenshots.homeRegisteredAsNewbieConfirmDialog,
@@ -22,7 +22,7 @@ enum ParticipantType {
     screenshotName: Screenshots.homeRegisteredAsEndorsee,
   );
 
-  const ParticipantType(
+  const ParticipantTypeTestHelper(
     this.type, {
     required this.educationDialogScreenshotName,
     required this.screenshotName,

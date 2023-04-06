@@ -62,7 +62,7 @@ Future<void> tapAndWaitNextPhase(FlutterDriver driver) async {
 
 Future<void> registerAndWait(
   FlutterDriver driver,
-  ParticipantType registrationType, {
+  ParticipantTypeTestHelper registrationType, {
   bool shouldTakeScreenshot = false,
 }) async {
   await driver.tap(find.byValueKey('registration-meetup-button'));
@@ -120,7 +120,7 @@ Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account
   await importAccount(driver, account);
   await scrollToCeremonyBox(driver);
 
-  await registerAndWait(driver, ParticipantType.bootstrapper);
+  await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
   await scrollToPanelController(driver);
   await addDelay(1000);
 }
