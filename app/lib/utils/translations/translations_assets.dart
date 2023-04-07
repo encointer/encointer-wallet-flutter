@@ -52,8 +52,6 @@ abstract class TranslationsAssets {
   String get redeemFailure;
   String get invalidNetwork;
   String get invalidCommunity;
-  // String get transactionError;
-  // String get insufficientFundsExplanation;
   String get chosenRightCommunity;
 }
 
