@@ -11,8 +11,8 @@ abstract class TranslationsTransaction {
   String get claimRewardsNotificationBody;
   String get balanceTransferNotificationTitle;
   String get balanceTransferNotificationBody;
-  String get invalidTransactionTitle;
-  String get invalidTransactionBody;
+  String get transactionErrorTitle;
+  String get transactionErrorBody;
   String get alreadyEndorsedTitle;
   String get alreadyEndorsedBody;
   String get invalidRequestTitle;
@@ -68,10 +68,10 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   @override
   String get invalidRequestTitle => 'Invalid Request';
   @override
-  String get invalidTransactionBody =>
-      'Your transaction has failed due to insufficient funds. Please ensure that you have sufficient account balance to complete the transaction.';
+  String get transactionErrorBody =>
+      'You do not have sufficient funds on this account. See on the website of your local community how to get some.';
   @override
-  String get invalidTransactionTitle => 'Invalid Transaction';
+  String get transactionErrorTitle => 'Transaction error';
   @override
   String get lowPriorityBody =>
       'Your transaction has a low priority and cannot replace another transaction already in the pool. Please wait for the previous transaction to complete before submitting a new one.';
@@ -127,10 +127,10 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   @override
   String get invalidRequestTitle => 'Ungültige Anfrage';
   @override
-  String get invalidTransactionBody =>
-      ' Ihre Transaktion ist aufgrund unzureichender Mittel fehlgeschlagen. Stellen Sie bitte sicher, dass Sie ausreichend Kontoguthaben haben, um die Transaktion abzuschließen.';
+  String get transactionErrorBody =>
+      'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
   @override
-  String get invalidTransactionTitle => 'Ungültige Transaktion';
+  String get transactionErrorTitle => 'Transaktionsfehler';
   @override
   String get lowPriorityBody =>
       'Ihre Transaktion hat eine niedrige Priorität und kann keine andere bereits im Pool befindliche Transaktion ersetzen. Bitte warten Sie, bis die vorherige Transaktion abgeschlossen ist, bevor Sie eine neue senden.';
@@ -186,10 +186,10 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   @override
   String get invalidRequestTitle => 'Demande invalide';
   @override
-  String get invalidTransactionBody =>
-      "Votre transaction a échoué en raison de fonds insuffisants. Veuillez vous assurer que vous disposez d'un solde de compte suffisant pour effectuer la transaction.";
+  String get transactionErrorBody =>
+      "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.";
   @override
-  String get invalidTransactionTitle => 'Transaction invalide';
+  String get transactionErrorTitle => 'Erreur de transaction.';
   @override
   String get lowPriorityBody =>
       "Votre transaction a une faible priorité et ne peut pas remplacer une autre transaction déjà dans le pool. Veuillez attendre que la transaction précédente soit terminée avant d'en soumettre une nouvelle.";
@@ -247,10 +247,10 @@ class TranslationsRuTransaction implements TranslationsTransaction {
   @override
   String get invalidRequestTitle => 'Недействительный запрос';
   @override
-  String get invalidTransactionBody =>
-      'Ваша транзакция не удалась из-за недостаточных средств. Пожалуйста, убедитесь, что у вас достаточный баланс на счете для завершения транзакции.';
+  String get transactionErrorBody =>
+      'У вас недостаточно средств на этом счете. Смотрите на сайте вашей местной общины, как получить вознаграждение';
   @override
-  String get invalidTransactionTitle => 'Ошибка недействительной транзакции';
+  String get transactionErrorTitle => 'Ошибка транзакции';
   @override
   String get lowPriorityBody =>
       'Ваша транзакция имеет низкий приоритет и не может заменить другую транзакцию, уже находящуюся в пуле. Пожалуйста, подождите, пока предыдущая транзакция завершится, прежде чем отправлять новую.';
