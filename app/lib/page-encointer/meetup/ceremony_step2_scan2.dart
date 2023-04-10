@@ -35,6 +35,7 @@ class CeremonyStep2Scan extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
+    final appSettingsStore = context.watch<AppSettings>();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.encointer.keySigningCycle),
@@ -117,7 +118,7 @@ class CeremonyStep2Scan extends StatelessWidget {
               },
             ),
           ),
-          if (context.select<AppSettings, bool>((store) => store.developerMode))
+          if (appSettingsStore.developerMode)
             SizedBox(
               height: 40,
               child: ElevatedButton(

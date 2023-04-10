@@ -38,6 +38,7 @@ class ScanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
+    final appSettingsStore = context.watch<AppSettings>();
     void onScan(String data) {
       try {
         final qrCode = qrScanService.parse(data);
@@ -78,7 +79,7 @@ class ScanPage extends StatelessWidget {
                     }
                   },
                 ),
-                if (context.select<AppSettings, bool>((store) => store.developerMode)) mockQrDataRow(dic, onScan),
+                if (appSettingsStore.developerMode) mockQrDataRow(dic, onScan),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(

@@ -155,6 +155,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final h3 = Theme.of(context).textTheme.displaySmall;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
+    final appSettingsStore = context.watch<AppSettings>();
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
@@ -244,7 +245,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                if (context.select<AppSettings, bool>((store) => store.developerMode))
+                if (appSettingsStore.developerMode)
                   Expanded(
                     child: ListView.builder(
                         // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
