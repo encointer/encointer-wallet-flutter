@@ -179,11 +179,11 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
                   key: const Key('dev-mode'),
-                  value: store.settings.developerMode,
-                  onChanged: (_) => store.settings.toggleDeveloperMode(),
+                  value: context.select<AppSettings, bool>((store) => store.developerMode),
+                  onChanged: (v) => context.read<AppSettings>().toggleDeveloperMode(),
                 ),
               ),
-              if (store.settings.developerMode)
+              if (context.select<AppSettings, bool>((store) => store.developerMode))
                 // Column in case we add more developer options
                 Column(
                   children: <Widget>[

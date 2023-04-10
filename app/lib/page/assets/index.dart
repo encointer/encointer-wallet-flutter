@@ -214,7 +214,7 @@ class _AssetsState extends State<Assets> {
                                     );
                             },
                           ),
-                          if (widget.store.settings.developerMode)
+                          if (context.select<AppSettings, bool>((store) => store.developerMode))
                             ElevatedButton(
                               onPressed: widget.store.dataUpdate.setInvalidated,
                               child: const Text('Invalidate data to trigger state update'),
@@ -311,7 +311,7 @@ class _AssetsState extends State<Assets> {
                                       ),
                                     );
                                   } else {
-                                    return widget.store.settings.developerMode
+                                    return context.select<AppSettings, bool>((store) => store.developerMode)
                                         ? ElevatedButton(
                                             onPressed: null,
                                             child: Text(dic.assets.issuanceClaimed),

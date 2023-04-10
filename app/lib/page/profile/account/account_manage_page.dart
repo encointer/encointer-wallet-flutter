@@ -14,6 +14,7 @@ import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -243,7 +244,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                if (store.settings.developerMode)
+                if (context.select<AppSettings, bool>((store) => store.developerMode))
                   Expanded(
                     child: ListView.builder(
                         // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
