@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -26,5 +27,6 @@ void main() async {
   await Upgrader.clearSavedSettings();
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
   final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
+  WidgetsApp.debugAllowBannerOverride = false;
   await app.main(appCast: cfg);
 }

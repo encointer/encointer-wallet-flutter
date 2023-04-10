@@ -9,7 +9,6 @@ on:
 env:
   NODE_VERSION: 16.13.1
   JAVA_VERSION: 12.x
-  TEMP_SCREENSHOTS: /tmp/screenshots
 
 jobs:
   integration-tests:
@@ -25,7 +24,10 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Run encointer-node
-        run: ./scripts/run_encointer_node_notee_docker.sh &
+        run: ./scripts/docker_run_encointer_node_notee.sh &
+
+      - name: Bootstrap Demo Community
+        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
 
       - name: Test JS
         # We don't really have unit tests in the JS part. Most tests need a local node running.

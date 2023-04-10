@@ -135,7 +135,7 @@ scripts:
 
   integration-real-app-test-ios:
     run: cd app && flutter drive --target=test_driver/real_app.dart
-    description: "Run integration tests for the `real_app.dart`` file on IOS"
+    description: "Run integration tests for the `real_app.dart` file on IOS"
 
   integration-scan-test-android:
     run: cd app && flutter drive --target=test_driver/scan_page.dart --flavor dev

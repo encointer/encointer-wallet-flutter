@@ -163,12 +163,14 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return MeetupInfo(
           meetup,
           location,
+          key: const Key('account-assigned'),
           onPressed: () {
             Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
           },
         );
       } else {
         return CeremonyNotification(
+          key: const Key('account-unassigned'),
           notificationIconData: Iconsax.close_square,
           notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );

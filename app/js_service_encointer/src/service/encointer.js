@@ -94,21 +94,17 @@ export async function reapVoucher (voucherUri, recipientAddress, cid) {
   console.log(`[reapVoucher] voucher balanceEntry: ${JSON.stringify(balanceEntry)}`);
 
   const balance = applyDemurrage(balanceEntry, finalizedHeader.number, demurrage);
+  console.log(`[encointer/reapVoucher] transfer from voucher ${balance} to ${recipientAddress}`);
 
-  console.log(`[reapVoucher] after demurrage ${balance}`);
-
-  // keep enough balance for the recipientAddress to pay the fees
-  const transferAmount = applyDemurrage(balanceEntry, finalizedHeader.number, demurrage) - 0.02;
-
-  console.log(`[encointer/reapVoucher] transfer from voucher ${transferAmount} to ${recipientAddress}`);
-
-  if (transferAmount < 0) {
+  // 0.04: less doesn't make any sense. The voucher of the recipient won't even
+  // be able to pay a transaction with it.
+  if (balance < 0.04) {
     return new Promise((resolve, _reject) => {
       resolve({ error: 'the voucher does not have enough balance left.' });
     });
   }
 
-  return encointerTransfer(voucherPair, recipientAddress, cid, transferAmount.toString());
+  return encointerTransferAll(voucherPair, recipientAddress, cid);
 }
 
 export function encointerTransfer (fromPair, recipientAddress, cid, amount) {
@@ -117,6 +113,19 @@ export function encointerTransfer (fromPair, recipientAddress, cid, amount) {
   const txInfo = {
     module: 'encointerBalances',
     call: 'transfer',
+    tip: 0,
+    txPaymentAsset: cid, // As the sender has CC, we imply that we pay with it.
+  };
+
+  return sendTxWithPair(fromPair, txInfo, paramList);
+}
+
+export function encointerTransferAll (fromPair, recipientAddress, cid) {
+
+  const paramList = [recipientAddress, cid];
+  const txInfo = {
+    module: 'encointerBalances',
+    call: 'transferAll',
     tip: 0,
     txPaymentAsset: cid, // As the sender has CC, we imply that we pay with it.
   };
