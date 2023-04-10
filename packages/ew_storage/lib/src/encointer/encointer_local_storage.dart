@@ -23,7 +23,7 @@ class EncointerLocalStorage extends SyncStorage implements EncointerStorageInter
 
   @override
   Future<void> removeAccount(String pubKey) {
-    return removeItemFromList(accountsKey, 'pubKey', pubKey);
+    return removeItemFromList(key: accountsKey, itemKey: 'pubKey', itemValue: pubKey);
   }
 
   @override
@@ -32,7 +32,9 @@ class EncointerLocalStorage extends SyncStorage implements EncointerStorageInter
   }
 
   @override
-  Future<void> addAccount(Map<String, dynamic> acc) => addItemToList(accountsKey, acc);
+  Future<void> addAccount(Map<String, dynamic> acc) {
+    return addItemToList(key: accountsKey, newItem: acc);
+  }
 
   @override
   Object? getAccountCache(String? accPubKey, String key) {
@@ -54,16 +56,23 @@ class EncointerLocalStorage extends SyncStorage implements EncointerStorageInter
   }
 
   @override
-  Future<void> addContact(Map<String, dynamic> contact) => addItemToList(contactsKey, contact);
+  Future<void> addContact(Map<String, dynamic> contact) {
+    return addItemToList(key: contactsKey, newItem: contact);
+  }
 
   @override
   Future<void> removeContact(String address) {
-    return removeItemFromList(contactsKey, 'address', address);
+    return removeItemFromList(key: contactsKey, itemKey: 'address', itemValue: address);
   }
 
   @override
   Future<void> updateContact(Map<String, dynamic> con) {
-    return updateItemInList(contactsKey, 'address', con['address'] as String?, con);
+    return updateItemInList(
+      key: contactsKey,
+      itemKey: 'address',
+      itemValue: con['address'] as String?,
+      itemNew: con,
+    );
   }
 
   // ----------- community methods --------------

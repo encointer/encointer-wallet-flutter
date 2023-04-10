@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:ew_storage/src/storages/interface/sync_read_storage_interface.dart';
 import 'package:flutter/foundation.dart';
+
+import 'package:ew_storage/src/storages/interface/sync_read_storage_interface.dart';
 
 abstract class SyncStorage<Storage extends SyncReadStorageInterface> {
   const SyncStorage(this.storage);
@@ -49,33 +50,42 @@ abstract class SyncStorage<Storage extends SyncReadStorageInterface> {
     return storage.setString(key: key, value: jsonEncode(value));
   }
 
-  Future<void> addItemToList(String key, Map<String, dynamic> acc) {
-    final ls = (getValueJsonDecode<List<Map<String, dynamic>>>(key) ?? [])..add(acc);
-    return storage.setString(key: key, value: jsonEncode(ls));
-  }
-
-  Future<void> removeItemFromList(String key, String itemKey, String itemValue) {
-    final ls = (getValueJsonDecode<List<Map<String, dynamic>>>(key) ?? [])
-      ..removeWhere((item) => item[itemKey] == itemValue);
-    return storage.setString(key: key, value: jsonEncode(ls));
-  }
-
-  Future<void> updateItemInList(String key, String itemKey, String? itemValue, Map<String, dynamic> itemNew) {
-    final ls = (getValueJsonDecode<List<Map<String, dynamic>>>(key) ?? [])
-      ..removeWhere((item) => item[itemKey] == itemValue)
-      ..add(itemNew);
-    return storage.setString(key: key, value: jsonEncode(ls));
-  }
-
   Future<T?> getValueJsonDecodeCompute<T>(String key) async {
     final strValue = storage.getString(key);
     final value = strValue != null ? await compute(jsonDecode, strValue) : null;
     return value as T?;
   }
 
-  Future<void> setValueJsonEncodeCompute<T>(String key, T value) async {
+  Future<void> setValueJsonEncodeCompute<T>({required String key, required T value}) async {
     final str = await compute(jsonEncode, value);
     await storage.setString(key: key, value: str);
+  }
+
+  Future<void> addItemToList({required String key, required Map<String, dynamic> newItem}) async {
+    final ls = (await getValueJsonDecodeCompute<List<Map<String, dynamic>>>(key) ?? [])..add(newItem);
+    return setValueJsonEncodeCompute<List<Map<String, dynamic>>>(key: key, value: ls);
+  }
+
+  Future<void> removeItemFromList({
+    required String key,
+    required String itemKey,
+    required String itemValue,
+  }) async {
+    final ls = (await getValueJsonDecodeCompute<List<Map<String, dynamic>>>(key) ?? [])
+      ..removeWhere((item) => item[itemKey] == itemValue);
+    return setValueJsonEncodeCompute<List<Map<String, dynamic>>>(key: key, value: ls);
+  }
+
+  Future<void> updateItemInList({
+    required String key,
+    required String itemKey,
+    required Map<String, dynamic> itemNew,
+    String? itemValue,
+  }) async {
+    final ls = (await getValueJsonDecodeCompute<List<Map<String, dynamic>>>(key) ?? [])
+      ..removeWhere((item) => item[itemKey] == itemValue)
+      ..add(itemNew);
+    return setValueJsonEncodeCompute<List<Map<String, dynamic>>>(key: key, value: ls);
   }
 
   Future<void> removeKey(String key) => storage.delete(key);
