@@ -12,9 +12,16 @@ then
   echo "Recording process up with pid: ${RECORDING_PID}"
 fi
 
-./flutterw pub global run melos integration-app-test-ios
+# ./flutterw pub global run melos integration-app-test-ios
 ./flutterw pub global run melos integration-scan-test-ios
-./flutterw pub global run melos integration-real-app-test-ios
+# ./flutterw pub global run melos integration-real-app-test-ios
+if [ "$RECORD" == "true" ]
+then
+  ./flutterw pub global run melos integration-real-app-test-ios-screenshot
+else
+  ./flutterw pub global run melos integration-real-app-test-ios  
+fi
+
 
 mkdir -p "$TEMP_DIR"
 
