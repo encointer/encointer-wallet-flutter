@@ -6,18 +6,19 @@ import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/main.dart' as app;
 
-import 'helpers/real_app_helper.dart';
-
-// [ANDROID] ./flutterw drive --target=test_driver/real_app.dart --flavor dev
-// [IOS] ./flutterw drive --target=test_driver/real_app.dart
+import 'helpers/command/real_app_commands.dart';
 
 void main() async {
+  const shouldTakeScreenshot = String.fromEnvironment('screenshot');
   enableFlutterDriverExtension(
     handler: (command) {
       var result = '';
       switch (command) {
-        case getPlatformCommand:
+        case RealAppTestCommand.getPlatformCommand:
           result = Platform.operatingSystem;
+          break;
+        case RealAppTestCommand.shouldTakeScreenshot:
+          result = shouldTakeScreenshot;
           break;
       }
       return Future.value(result);

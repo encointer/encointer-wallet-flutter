@@ -133,9 +133,17 @@ scripts:
     run: cd app && flutter drive --target=test_driver/real_app.dart --flavor dev
     description: "Run integration tests for the `real_app.dart` file on Android"
 
+  integration-real-app-test-android-screenshot:
+    run: cd app && flutter drive --target=test_driver/real_app.dart --flavor dev --dart-define=screenshot=true
+    description: "Run integration tests for the `real_app.dart` file on Android and test will take screenshots"
+
   integration-real-app-test-ios:
     run: cd app && flutter drive --target=test_driver/real_app.dart
     description: "Run integration tests for the `real_app.dart` file on IOS"
+
+  integration-real-app-test-ios-screenshot:
+    run: cd app && flutter drive --target=test_driver/real_app.dart --dart-define=screenshot=true
+    description: "Run integration tests for the `real_app.dart` file on IOS and test will take screenshots"
 
   integration-scan-test-android:
     run: cd app && flutter drive --target=test_driver/scan_page.dart --flavor dev

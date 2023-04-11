@@ -3,10 +3,9 @@ import 'dart:developer';
 import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
+import 'command/real_app_commands.dart';
 import 'participant_type.dart';
 import 'screenshots.dart';
-
-const String getPlatformCommand = 'getPlatform';
 
 Future<void> turnDevMode(FlutterDriver driver) async {
   await scrollToDevMode(driver);
@@ -159,7 +158,7 @@ Future<void> startMeetupTest(
 }
 
 Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
-  final operationSystem = await driver.requestData(getPlatformCommand);
+  final operationSystem = await driver.requestData(RealAppTestCommand.getPlatformCommand);
   // ignore: avoid_print
   print('operationSystem ==================> $operationSystem');
 
