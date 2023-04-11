@@ -53,18 +53,16 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Registration cancelled';
   @override
-  String get alreadyEndorsedErrorBody =>
-      'You have already endorsed this participant. Please do not attempt to endorse the same participant more than once.';
+  String get alreadyEndorsedErrorBody => 'This account has already been endorsed for this cycle.';
   @override
   String get alreadyEndorsedErrorTitle => 'Already Endorsed';
   @override
-  String get noValidClaimsErrorBody =>
-      'Claims can be submitted after all attendees have scanned everyone. Please ensure that you have scanned all attendees and tapped on claims.';
+  String get noValidClaimsErrorBody => 'You did not send any valid claims. Did you scan the other attendees?';
   @override
-  String get noValidClaimsErrorTitle => 'Invalid Claim';
+  String get noValidClaimsErrorTitle => 'No Valid Claims';
   @override
   String get votesNotDependableErrorBody =>
-      'You cannot claim rewards before meetup finishes. Please ensure the meeting completed.';
+      'There were not enough confirmed participants for this gathering to allow early claim of rewards. You have to wait 48 hours to claim your income.';
   @override
   String get votesNotDependableErrorTitle => 'Invalid Request';
   @override
@@ -79,7 +77,7 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   String get txTooLowPriorityErrorTitle => 'Low Priority';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Rewards for this claim have already been issued. Please do not attempt to submit the same claim again.';
+      'Another attendee has triggered the payout for this gathering. You should have received your income already.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Rewards Issued';
 }
@@ -112,18 +110,17 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Registrierung storniert';
   @override
-  String get alreadyEndorsedErrorBody =>
-      'Sie haben diesen Teilnehmer bereits befürwortet. Bitte versuchen Sie nicht, denselben Teilnehmer mehr als einmal zu befürworten.';
+  String get alreadyEndorsedErrorBody => 'Dieses Konto wurde bereits für diesen Zyklus befürwortet.';
   @override
   String get alreadyEndorsedErrorTitle => 'Bereits befürwortet';
   @override
   String get noValidClaimsErrorBody =>
-      'Ansprüche können erst gestellt werden, nachdem alle Teilnehmer alle gescannt haben. Bitte stellen Sie sicher, dass Sie alle Teilnehmer gescannt und Ansprüche geltend gemacht haben.';
+      'Sie haben keine gültigen Ansprüche eingereicht. Haben Sie die anderen Teilnehmer gescannt?';
   @override
-  String get noValidClaimsErrorTitle => 'Ungültiger Anspruch';
+  String get noValidClaimsErrorTitle => 'Keine gültigen Ansprüche';
   @override
   String get votesNotDependableErrorBody =>
-      'Sie können Belohnungen nicht beanspruchen, bevor das Treffen beendet ist. Bitte stellen Sie sicher, dass das Meeting abgeschlossen ist.';
+      'Es gab nicht genug bestätigte Teilnehmer für dieses Treffen, um eine frühe Belohnungsforderung zuzulassen. Sie müssen 48 Stunden warten, um Ihr Einkommen zu fordern.';
   @override
   String get votesNotDependableErrorTitle => 'Ungültige Anfrage';
   @override
@@ -138,7 +135,7 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   String get txTooLowPriorityErrorTitle => 'Niedrige Priorität';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Die Belohnungen für diesen Anspruch wurden bereits ausgegeben. Bitte versuchen Sie nicht, denselben Anspruch erneut einzureichen.';
+      'Ein anderer Teilnehmer hat die Auszahlung für dieses Treffen ausgelöst. Sie sollten bereits Ihr Einkommen erhalten haben.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Belohnungen ausgegeben';
 }
@@ -171,18 +168,17 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Inscription annulée';
   @override
-  String get alreadyEndorsedErrorBody =>
-      "Vous avez déjà approuvé ce participant. Veuillez ne pas essayer d'approuver le même participant plus d'une fois.";
+  String get alreadyEndorsedErrorBody => 'Ce compte a déjà été approuvé pour ce cycle.';
   @override
   String get alreadyEndorsedErrorTitle => 'Déjà Endossé';
   @override
   String get noValidClaimsErrorBody =>
-      "Les demandes peuvent être soumises après que tous les participants ont scanné tout le monde. Veuillez vous assurer d'avoir scanné tous les participants et appuyé sur les réclamations.";
+      "Vous n'avez pas envoyé de demandes valables. Avez-vous scanné les autres participants ?";
   @override
-  String get noValidClaimsErrorTitle => 'Réclamation invalide';
+  String get noValidClaimsErrorTitle => 'Pas de demandes valides';
   @override
   String get votesNotDependableErrorBody =>
-      'Vous ne pouvez pas réclamer de récompenses avant la fin de la rencontre. Veuillez vous assurer que la réunion est terminée.';
+      "Il n'y avait pas suffisamment de participants confirmés pour cette réunion pour permettre une demande anticipée de récompense. Vous devez attendre 48 heures pour demander votre revenu.";
   @override
   String get votesNotDependableErrorTitle => 'Demande invalide';
   @override
@@ -197,7 +193,7 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   String get txTooLowPriorityErrorTitle => 'Priorité faible';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Les récompenses pour cette réclamation ont déjà été émises. Veuillez ne pas essayer de soumettre la même réclamation à nouveau.';
+      'Un autre participant a déclenché le paiement pour cette réunion. Vous auriez déjà dû recevoir votre revenu.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Récompenses émises';
 }
@@ -232,18 +228,17 @@ class TranslationsRuTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Регистрация отменена';
   @override
-  String get alreadyEndorsedErrorBody =>
-      'Вы уже подтвердили участника. Пожалуйста, не пытайтесь подтвердить того же участника более одного раза.';
+  String get alreadyEndorsedErrorBody => 'Этот аккаунт уже был одобрен на этот цикл.';
   @override
   String get alreadyEndorsedErrorTitle => 'Уже подтверждено';
   @override
   String get noValidClaimsErrorBody =>
-      'Запросы на вознаграждения могут быть отправлены после того, как все участники отсканировали всех. Пожалуйста, убедитесь, что вы отсканировали всех участников и нажали на запросы на вознаграждения.';
+      'Вы не отправили никаких действительных требований. Вы проверили других участников?';
   @override
-  String get noValidClaimsErrorTitle => 'Недействительный запрос на вознаграждение';
+  String get noValidClaimsErrorTitle => 'Нет действительных требований';
   @override
   String get votesNotDependableErrorBody =>
-      'Вы не можете запросить вознаграждение до завершения встречи. Пожалуйста, убедитесь, что встреча завершена.';
+      'Не было достаточно подтвержденных участников для раннего запроса вознаграждения за это собрание. Вы должны подождать 48 часов, чтобы запросить свой доход.';
   @override
   String get votesNotDependableErrorTitle => 'Недействительный запрос';
   @override
@@ -258,7 +253,7 @@ class TranslationsRuTransaction implements TranslationsTransaction {
   String get txTooLowPriorityErrorTitle => 'Низкий приоритет';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Вознаграждения за этот запрос уже были выданы. Пожалуйста, не пытайтесь повторно отправлять тот же запрос.';
+      'Другой участник запустил выплату за это собрание. Вы уже должны были получить свой доход.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Выданы вознаграждения';
 }
