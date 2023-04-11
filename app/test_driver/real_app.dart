@@ -6,7 +6,7 @@ import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/main.dart' as app;
 
-import 'helpers/command/real_app_commands.dart';
+import 'helpers/command/real_app_command.dart';
 
 void main() async {
   const shouldTakeScreenshot = String.fromEnvironment('screenshot');

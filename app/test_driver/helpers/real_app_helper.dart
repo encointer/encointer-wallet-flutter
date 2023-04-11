@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
-import 'command/real_app_commands.dart';
+import 'command/real_app_command.dart';
 import 'extension/screenshot_driver_extension.dart';
 import 'participant_type.dart';
 import 'screenshots.dart';

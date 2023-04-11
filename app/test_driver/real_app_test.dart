@@ -2,7 +2,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 import 'helpers/add_delay.dart';
-import 'helpers/command/real_app_commands.dart';
+import 'helpers/command/real_app_command.dart';
 import 'helpers/extension/screenshot_driver_extension.dart';
 import 'helpers/other_test.dart';
 import 'helpers/participant_type.dart';
