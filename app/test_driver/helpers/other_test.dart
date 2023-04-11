@@ -1,7 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
-import 'extension/driver_extension.dart';
+import 'extension/screenshot_driver_extension.dart';
 import 'real_app_helper.dart';
 import 'screenshots.dart';
 

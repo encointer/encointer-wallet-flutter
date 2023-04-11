@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 
 import 'helpers/add_delay.dart';
 import 'helpers/command/real_app_commands.dart';
-import 'helpers/extension/driver_extension.dart';
+import 'helpers/extension/screenshot_driver_extension.dart';
 import 'helpers/other_test.dart';
 import 'helpers/participant_type.dart';
 import 'helpers/real_app_helper.dart';
