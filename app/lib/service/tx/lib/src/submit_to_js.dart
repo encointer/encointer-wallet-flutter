@@ -83,17 +83,14 @@ void _onTransactionUnsuccessfully(BuildContext context, AppStore store, String e
   if (mounted) RootSnackBar.removeCurrent();
   final dic = I18n.of(context)!.translationsForLocale();
 
-  if (errorMsg.startsWith(insufficientFundsError)) {
-    showInsufficientFundsDialog(context);
-  } else {
-    final message = getLocalizedTxErrorMessage(dic.transaction, errorMsg);
-    AppAlert.showErrorDialog(
-      context,
-      title: Text('${message['title']}'),
-      errorText: '${message['body']}',
-      buttontext: dic.home.ok,
-    );
-  }
+  final message = getLocalizedTxErrorMessage(dic.transaction, errorMsg);
+
+  AppAlert.showErrorDialog(
+    context,
+    title: Text('${message['title']}'),
+    errorText: '${message['body']}',
+    buttontext: dic.home.ok,
+  );
 }
 
 void _showTxStatusSnackBar(String status, Widget? leading) {
@@ -159,6 +156,8 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
 Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, String txError) {
   if (txError.startsWith(lowPriorityTx)) {
     return {'title': dic.txTooLowPriorityErrorTitle, 'body': dic.txTooLowPriorityErrorBody};
+  } else if (txError.startsWith(insufficientFundsError)) {
+    return {'title': dic.insufficientFundsErrorTitle, 'body': dic.insufficientFundsErrorBody};
   }
   switch (txError) {
     case 'ecncointerCeremonies.VotesNotDependable':
@@ -175,28 +174,4 @@ Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, Stri
       // display plain tx error in case we don't recognize the error
       return {'title': 'Invalib Transactions', 'body': txError};
   }
-}
-
-Future<void> showInsufficientFundsDialog(BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale();
-  final languageCode = Localizations.localeOf(context).languageCode;
-  return AppAlert.showDialog<void>(
-    context,
-    title: Text(dic.transaction.insufficientFundsErrorTitle),
-    content: Text(dic.transaction.insufficientFundsErrorBody),
-    actions: <Widget>[
-      const SizedBox.shrink(),
-      CupertinoButton(
-        child: Text(dic.encointer.goToLeuZurich),
-        onPressed: () {
-          final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
-          AppLaunch.launchURL(ceremonyInfoLink(languageCode, cid));
-        },
-      ),
-      CupertinoButton(
-        child: Text(dic.home.ok),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
-    ],
-  );
 }
