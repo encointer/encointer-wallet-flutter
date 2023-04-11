@@ -86,7 +86,7 @@ void _onTransactionUnsuccessfully(BuildContext context, AppStore store, String e
   if (errorMsg.startsWith(insufficientFundsError)) {
     showInsufficientFundsDialog(context);
   } else {
-    final message = getMessageTransactionUnsuccessfully(dic.transaction, errorMsg);
+    final message = getLocalizedTxErrorMessage(dic.transaction, errorMsg);
     AppAlert.showErrorDialog(
       context,
       title: Text('${message['title']}'),
@@ -156,7 +156,7 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
   }
 }
 
-Map<String, String> getMessageTransactionUnsuccessfully(TranslationsTransaction dic, String txError) {
+Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, String txError) {
   if (txError.startsWith(lowPriorityTx)) {
     return {'title': dic.lowPriorityTitle, 'body': dic.lowPriorityBody};
   }
