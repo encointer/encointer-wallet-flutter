@@ -11,18 +11,18 @@ abstract class TranslationsTransaction {
   String get claimRewardsNotificationBody;
   String get balanceTransferNotificationTitle;
   String get balanceTransferNotificationBody;
-  String get transactionErrorTitle;
-  String get transactionErrorBody;
-  String get alreadyEndorsedTitle;
-  String get alreadyEndorsedBody;
-  String get invalidRequestTitle;
-  String get invalidRequestBody;
-  String get invalidClaimTitle;
-  String get invalidClaimBody;
-  String get lowPriorityTitle;
-  String get lowPriorityBody;
-  String get rewardsIssuedTitle;
-  String get rewardsIssuedBody;
+  String get insufficientFundsErrorTitle;
+  String get insufficientFundsErrorBody;
+  String get alreadyEndorsedErrorTitle;
+  String get alreadyEndorsedErrorBody;
+  String get votesNotDependableErrorTitle;
+  String get votesNotDependableErrorBody;
+  String get noValidClaimsErrorTitle;
+  String get noValidClaimsErrorBody;
+  String get txTooLowPriorityErrorTitle;
+  String get txTooLowPriorityErrorBody;
+  String get rewardsAlreadyIssuedErrorTitle;
+  String get rewardsAlreadyIssuedErrorBody;
 }
 
 class TranslationsEnTransaction implements TranslationsTransaction {
@@ -53,35 +53,35 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Registration cancelled';
   @override
-  String get alreadyEndorsedBody =>
+  String get alreadyEndorsedErrorBody =>
       'You have already endorsed this participant. Please do not attempt to endorse the same participant more than once.';
   @override
-  String get alreadyEndorsedTitle => 'Already Endorsed';
+  String get alreadyEndorsedErrorTitle => 'Already Endorsed';
   @override
-  String get invalidClaimBody =>
+  String get noValidClaimsErrorBody =>
       'Claims can be submitted after all attendees have scanned everyone. Please ensure that you have scanned all attendees and tapped on claims.';
   @override
-  String get invalidClaimTitle => 'Invalid Claim';
+  String get noValidClaimsErrorTitle => 'Invalid Claim';
   @override
-  String get invalidRequestBody =>
+  String get votesNotDependableErrorBody =>
       'You cannot claim rewards before meetup finishes. Please ensure the meeting completed.';
   @override
-  String get invalidRequestTitle => 'Invalid Request';
+  String get votesNotDependableErrorTitle => 'Invalid Request';
   @override
-  String get transactionErrorBody =>
+  String get insufficientFundsErrorBody =>
       'You do not have sufficient funds on this account. See on the website of your local community how to get some.';
   @override
-  String get transactionErrorTitle => 'Transaction error';
+  String get insufficientFundsErrorTitle => 'Transaction error';
   @override
-  String get lowPriorityBody =>
+  String get txTooLowPriorityErrorBody =>
       'Your transaction has a low priority and cannot replace another transaction already in the pool. Please wait for the previous transaction to complete before submitting a new one.';
   @override
-  String get lowPriorityTitle => 'Low Priority';
+  String get txTooLowPriorityErrorTitle => 'Low Priority';
   @override
-  String get rewardsIssuedBody =>
+  String get rewardsAlreadyIssuedErrorBody =>
       'Rewards for this claim have already been issued. Please do not attempt to submit the same claim again.';
   @override
-  String get rewardsIssuedTitle => 'Rewards Issued';
+  String get rewardsAlreadyIssuedErrorTitle => 'Rewards Issued';
 }
 
 class TranslationsDeTransaction implements TranslationsTransaction {
@@ -112,35 +112,35 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Registrierung storniert';
   @override
-  String get alreadyEndorsedBody =>
+  String get alreadyEndorsedErrorBody =>
       'Sie haben diesen Teilnehmer bereits befürwortet. Bitte versuchen Sie nicht, denselben Teilnehmer mehr als einmal zu befürworten.';
   @override
-  String get alreadyEndorsedTitle => 'Bereits befürwortet';
+  String get alreadyEndorsedErrorTitle => 'Bereits befürwortet';
   @override
-  String get invalidClaimBody =>
+  String get noValidClaimsErrorBody =>
       'Ansprüche können erst gestellt werden, nachdem alle Teilnehmer alle gescannt haben. Bitte stellen Sie sicher, dass Sie alle Teilnehmer gescannt und Ansprüche geltend gemacht haben.';
   @override
-  String get invalidClaimTitle => 'Ungültiger Anspruch';
+  String get noValidClaimsErrorTitle => 'Ungültiger Anspruch';
   @override
-  String get invalidRequestBody =>
+  String get votesNotDependableErrorBody =>
       'Sie können Belohnungen nicht beanspruchen, bevor das Treffen beendet ist. Bitte stellen Sie sicher, dass das Meeting abgeschlossen ist.';
   @override
-  String get invalidRequestTitle => 'Ungültige Anfrage';
+  String get votesNotDependableErrorTitle => 'Ungültige Anfrage';
   @override
-  String get transactionErrorBody =>
+  String get insufficientFundsErrorBody =>
       'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
   @override
-  String get transactionErrorTitle => 'Transaktionsfehler';
+  String get insufficientFundsErrorTitle => 'Transaktionsfehler';
   @override
-  String get lowPriorityBody =>
+  String get txTooLowPriorityErrorBody =>
       'Ihre Transaktion hat eine niedrige Priorität und kann keine andere bereits im Pool befindliche Transaktion ersetzen. Bitte warten Sie, bis die vorherige Transaktion abgeschlossen ist, bevor Sie eine neue senden.';
   @override
-  String get lowPriorityTitle => 'Niedrige Priorität';
+  String get txTooLowPriorityErrorTitle => 'Niedrige Priorität';
   @override
-  String get rewardsIssuedBody =>
+  String get rewardsAlreadyIssuedErrorBody =>
       'Die Belohnungen für diesen Anspruch wurden bereits ausgegeben. Bitte versuchen Sie nicht, denselben Anspruch erneut einzureichen.';
   @override
-  String get rewardsIssuedTitle => 'Belohnungen ausgegeben';
+  String get rewardsAlreadyIssuedErrorTitle => 'Belohnungen ausgegeben';
 }
 
 class TranslationsFrTransaction implements TranslationsTransaction {
@@ -171,35 +171,35 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Inscription annulée';
   @override
-  String get alreadyEndorsedBody =>
+  String get alreadyEndorsedErrorBody =>
       "Vous avez déjà approuvé ce participant. Veuillez ne pas essayer d'approuver le même participant plus d'une fois.";
   @override
-  String get alreadyEndorsedTitle => 'Déjà Endossé';
+  String get alreadyEndorsedErrorTitle => 'Déjà Endossé';
   @override
-  String get invalidClaimBody =>
+  String get noValidClaimsErrorBody =>
       "Les demandes peuvent être soumises après que tous les participants ont scanné tout le monde. Veuillez vous assurer d'avoir scanné tous les participants et appuyé sur les réclamations.";
   @override
-  String get invalidClaimTitle => 'Réclamation invalide';
+  String get noValidClaimsErrorTitle => 'Réclamation invalide';
   @override
-  String get invalidRequestBody =>
+  String get votesNotDependableErrorBody =>
       'Vous ne pouvez pas réclamer de récompenses avant la fin de la rencontre. Veuillez vous assurer que la réunion est terminée.';
   @override
-  String get invalidRequestTitle => 'Demande invalide';
+  String get votesNotDependableErrorTitle => 'Demande invalide';
   @override
-  String get transactionErrorBody =>
+  String get insufficientFundsErrorBody =>
       "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.";
   @override
-  String get transactionErrorTitle => 'Erreur de transaction.';
+  String get insufficientFundsErrorTitle => 'Erreur de transaction.';
   @override
-  String get lowPriorityBody =>
+  String get txTooLowPriorityErrorBody =>
       "Votre transaction a une faible priorité et ne peut pas remplacer une autre transaction déjà dans le pool. Veuillez attendre que la transaction précédente soit terminée avant d'en soumettre une nouvelle.";
   @override
-  String get lowPriorityTitle => 'Priorité faible';
+  String get txTooLowPriorityErrorTitle => 'Priorité faible';
   @override
-  String get rewardsIssuedBody =>
+  String get rewardsAlreadyIssuedErrorBody =>
       'Les récompenses pour cette réclamation ont déjà été émises. Veuillez ne pas essayer de soumettre la même réclamation à nouveau.';
   @override
-  String get rewardsIssuedTitle => 'Récompenses émises';
+  String get rewardsAlreadyIssuedErrorTitle => 'Récompenses émises';
 }
 
 class TranslationsRuTransaction implements TranslationsTransaction {
@@ -232,33 +232,33 @@ class TranslationsRuTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Регистрация отменена';
   @override
-  String get alreadyEndorsedBody =>
+  String get alreadyEndorsedErrorBody =>
       'Вы уже подтвердили участника. Пожалуйста, не пытайтесь подтвердить того же участника более одного раза.';
   @override
-  String get alreadyEndorsedTitle => 'Уже подтверждено';
+  String get alreadyEndorsedErrorTitle => 'Уже подтверждено';
   @override
-  String get invalidClaimBody =>
+  String get noValidClaimsErrorBody =>
       'Запросы на вознаграждения могут быть отправлены после того, как все участники отсканировали всех. Пожалуйста, убедитесь, что вы отсканировали всех участников и нажали на запросы на вознаграждения.';
   @override
-  String get invalidClaimTitle => 'Недействительный запрос на вознаграждение';
+  String get noValidClaimsErrorTitle => 'Недействительный запрос на вознаграждение';
   @override
-  String get invalidRequestBody =>
+  String get votesNotDependableErrorBody =>
       'Вы не можете запросить вознаграждение до завершения встречи. Пожалуйста, убедитесь, что встреча завершена.';
   @override
-  String get invalidRequestTitle => 'Недействительный запрос';
+  String get votesNotDependableErrorTitle => 'Недействительный запрос';
   @override
-  String get transactionErrorBody =>
+  String get insufficientFundsErrorBody =>
       'У вас недостаточно средств на этом счете. Смотрите на сайте вашей местной общины, как получить вознаграждение';
   @override
-  String get transactionErrorTitle => 'Ошибка транзакции';
+  String get insufficientFundsErrorTitle => 'Ошибка транзакции';
   @override
-  String get lowPriorityBody =>
+  String get txTooLowPriorityErrorBody =>
       'Ваша транзакция имеет низкий приоритет и не может заменить другую транзакцию, уже находящуюся в пуле. Пожалуйста, подождите, пока предыдущая транзакция завершится, прежде чем отправлять новую.';
   @override
-  String get lowPriorityTitle => 'Низкий приоритет';
+  String get txTooLowPriorityErrorTitle => 'Низкий приоритет';
   @override
-  String get rewardsIssuedBody =>
+  String get rewardsAlreadyIssuedErrorBody =>
       'Вознаграждения за этот запрос уже были выданы. Пожалуйста, не пытайтесь повторно отправлять тот же запрос.';
   @override
-  String get rewardsIssuedTitle => 'Выданы вознаграждения';
+  String get rewardsAlreadyIssuedErrorTitle => 'Выданы вознаграждения';
 }

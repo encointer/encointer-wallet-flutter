@@ -158,19 +158,19 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
 
 Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, String txError) {
   if (txError.startsWith(lowPriorityTx)) {
-    return {'title': dic.lowPriorityTitle, 'body': dic.lowPriorityBody};
+    return {'title': dic.txTooLowPriorityErrorTitle, 'body': dic.txTooLowPriorityErrorBody};
   }
   switch (txError) {
     case 'ecncointerCeremonies.VotesNotDependable':
-      return {'title': dic.invalidRequestTitle, 'body': dic.invalidRequestBody};
+      return {'title': dic.votesNotDependableErrorTitle, 'body': dic.votesNotDependableErrorBody};
     case 'RewardsAlreadyClaimed':
-      return {'title': dic.invalidRequestTitle, 'body': dic.invalidRequestBody};
+      return {'title': dic.votesNotDependableErrorTitle, 'body': dic.votesNotDependableErrorBody};
     case 'encointerCeremonies.AlreadyEndorsed':
-      return {'title': dic.alreadyEndorsedTitle, 'body': dic.alreadyEndorsedBody};
+      return {'title': dic.alreadyEndorsedErrorTitle, 'body': dic.alreadyEndorsedErrorBody};
     case 'encointerCeremonies.NoValidClaims':
-      return {'title': dic.invalidClaimTitle, 'body': dic.invalidClaimBody};
+      return {'title': dic.noValidClaimsErrorTitle, 'body': dic.noValidClaimsErrorBody};
     case 'encointerCeremonies.RewardsAlreadyIssued':
-      return {'title': dic.rewardsIssuedTitle, 'body': dic.rewardsIssuedBody};
+      return {'title': dic.rewardsAlreadyIssuedErrorTitle, 'body': dic.rewardsAlreadyIssuedErrorBody};
     default:
       // display plain tx error in case we don't recognize the error
       return {'title': 'Invalib Transactions', 'body': txError};
@@ -182,8 +182,8 @@ Future<void> showInsufficientFundsDialog(BuildContext context) {
   final languageCode = Localizations.localeOf(context).languageCode;
   return AppAlert.showDialog<void>(
     context,
-    title: Text(dic.transaction.transactionErrorTitle),
-    content: Text(dic.transaction.transactionErrorBody),
+    title: Text(dic.transaction.insufficientFundsErrorTitle),
+    content: Text(dic.transaction.insufficientFundsErrorBody),
     actions: <Widget>[
       const SizedBox.shrink(),
       CupertinoButton(
