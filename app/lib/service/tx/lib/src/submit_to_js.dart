@@ -66,7 +66,7 @@ Future<void> submitToJS(
     );
 
     if (res['hash'] == null) {
-      _onTransactionUnsuccessfully(context, store, res['error'] as String, showStatusSnackBar);
+      _onTxError(context, store, res['error'] as String, showStatusSnackBar);
     } else {
       _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
@@ -78,7 +78,7 @@ Future<void> submitToJS(
   }
 }
 
-void _onTransactionUnsuccessfully(BuildContext context, AppStore store, String errorMsg, bool mounted) {
+void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) RootSnackBar.removeCurrent();
   final dic = I18n.of(context)!.translationsForLocale();
