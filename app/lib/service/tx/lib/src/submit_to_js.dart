@@ -2,11 +2,8 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
-import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
