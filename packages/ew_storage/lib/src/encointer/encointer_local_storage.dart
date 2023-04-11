@@ -49,6 +49,11 @@ class EncointerLocalStorage extends SyncStorage implements EncointerStorageInter
     return setValueJsonEncode<Map<String, dynamic>>(key, data);
   }
 
+  @override
+  Map<String, dynamic>? getSeeds(String seedType) {
+    return getValueJsonDecode<Map<String, dynamic>>('${seedKey}_$seedType');
+  }
+
   // ----------- contact methods --------------
   @override
   List<Map<String, dynamic>> getContactList() {
@@ -75,12 +80,7 @@ class EncointerLocalStorage extends SyncStorage implements EncointerStorageInter
     );
   }
 
-  // ----------- community methods --------------
-  @override
-  Map<String, dynamic>? getSeeds(String seedType) {
-    return getValueJsonDecode<Map<String, dynamic>>('${seedKey}_$seedType');
-  }
-
+  // ----------- other methods --------------
   @override
   Future<void> setLocale([String languageCode = 'en']) {
     return storage.setString(key: localKey, value: languageCode);

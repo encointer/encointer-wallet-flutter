@@ -10,6 +10,8 @@ abstract class EncointerStorageInterface {
   Object? getAccountCache(String? accPubKey, String key);
   Future<void> setAccountCache(String accPubKey, String key, Object? value);
 
+  Map<String, dynamic>? getSeeds(String seedType);
+
   // ----------- contact methods --------------
   List<Map<String, dynamic>> getContactList();
 
@@ -17,9 +19,7 @@ abstract class EncointerStorageInterface {
   Future<void> removeContact(String address);
   Future<void> updateContact(Map<String, dynamic> con);
 
-  // ----------- community methods --------------
-  Map<String, dynamic>? getSeeds(String seedType);
-
+  // ----------- other methods --------------
   // Check can we delete this method
   Future<void> setLocale([String languageCode = 'en']);
 }
