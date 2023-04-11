@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+import 'helpers/extension/driver_extension.dart';
 import 'helpers/screenshots.dart';
 
 void main() {

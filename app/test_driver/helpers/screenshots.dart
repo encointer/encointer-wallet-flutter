@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_driver/flutter_driver.dart';
 
+import 'extension/driver_extension.dart';
+
 Future<void> takeScreenshot(
   FlutterDriver driver,
   String name, {
@@ -9,7 +11,6 @@ Future<void> takeScreenshot(
   Duration timeout = const Duration(seconds: 30),
   bool waitUntilNoTransientCallbacks = true,
 }) async {
-  print('[driver.shouldTakeScreenshot - in takeScreenshot]-------------->${driver.shouldTakeScreenshot}');
   if (driver.shouldTakeScreenshot) {
     if (waitUntilNoTransientCallbacks) {
       await driver.waitUntilNoTransientCallbacks(timeout: timeout);
@@ -22,13 +23,6 @@ Future<void> takeScreenshot(
     // ignore: avoid_print
     print('Screenshot $name created at ${file.path}');
   }
-}
-
-extension ScreenshotVariable on FlutterDriver {
-  static final _shouldTakeScreenshot = Expando<bool>();
-
-  bool get shouldTakeScreenshot => _shouldTakeScreenshot[this] ?? false;
-  set shouldTakeScreenshot(bool x) => _shouldTakeScreenshot[this] = x;
 }
 
 class Screenshots {

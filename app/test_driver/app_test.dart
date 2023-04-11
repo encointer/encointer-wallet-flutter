@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 
+import 'helpers/extension/driver_extension.dart';
 import 'helpers/screenshots.dart';
 
 void main() {
