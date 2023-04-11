@@ -4,6 +4,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
 import 'command/real_app_commands.dart';
+import 'extension/driver_extension.dart';
 import 'participant_type.dart';
 import 'screenshots.dart';
 
@@ -66,10 +67,10 @@ Future<void> registerAndWait(
 }) async {
   await driver.tap(find.byValueKey('registration-meetup-button'));
   await driver.waitFor(find.byValueKey('educate-dialog-${registrationType.type}'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.educationDialogScreenshotName);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(registrationType.educationDialogScreenshotName);
   await driver.tap(find.byValueKey('close-educate-dialog'));
   await driver.waitFor(find.byValueKey('is-registered-info'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.screenshotName);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(registrationType.screenshotName);
 }
 
 Future<void> unregisterAndWait(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
@@ -77,7 +78,7 @@ Future<void> unregisterAndWait(FlutterDriver driver, {bool shouldTakeScreenshot 
   await driver.waitFor(find.byValueKey('unregister-button'));
   await driver.tap(find.byValueKey('unregister-button'));
   await driver.waitFor(find.byValueKey('unregister-dialog'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeUnregisterDialog);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.homeUnregisterDialog);
   await driver.tap(find.byValueKey('ok-button'));
   await driver.waitFor(find.byValueKey('registration-meetup-button'));
   await addDelay(1000);
@@ -108,7 +109,7 @@ Future<void> importAccount(
 
   await driver.tap(find.byValueKey('account-source'));
   await driver.enterText(seedOrMnemonic);
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.importAccount);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.importAccount);
   await driver.tap(find.byValueKey('account-import-next'));
   await driver.waitFor(find.byValueKey('panel-controller'));
 
@@ -134,7 +135,7 @@ Future<void> startMeetupTest(
     find.byValueKey('start-meetup'),
     dyScroll: -300,
   );
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeAttestingPhaseStartMeetup);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.homeAttestingPhaseStartMeetup);
   await driver.tap(find.byValueKey('start-meetup'));
   await addDelay(500);
 
@@ -149,7 +150,7 @@ Future<void> startMeetupTest(
   await driver.tap(find.byValueKey('close-meetup'));
 
   await driver.waitFor(find.byValueKey('submit-claims'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.step3FinishGathering);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.step3FinishGathering);
   await driver.tap(find.byValueKey('submit-claims'));
 
   await driver.waitFor(find.byValueKey('panel-controller'));

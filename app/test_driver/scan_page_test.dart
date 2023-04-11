@@ -5,7 +5,6 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 import 'helpers/extension/driver_extension.dart';
-import 'helpers/screenshots.dart';
 
 void main() {
   FlutterDriver? driver;
@@ -26,7 +25,7 @@ void main() {
       // set the background in the MockScanPage
       await driver!.requestData(base64);
 
-      await takeScreenshot(driver!, 'mock-scan-receive');
+      await driver!.takeScreenshot('mock-scan-receive');
     });
   });
 

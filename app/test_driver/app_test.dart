@@ -7,7 +7,6 @@ import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 
 import 'helpers/extension/driver_extension.dart';
-import 'helpers/screenshots.dart';
 
 void main() {
   FlutterDriver? driver;
@@ -65,12 +64,12 @@ void main() {
       await dismissUpgradeDialogOnAndroid(driver!);
 
       // take a screenshot of the EncointerHome Screen
-      await takeScreenshot(driver!, 'mock-encointer-home');
+      await driver!.takeScreenshot('mock-encointer-home');
     });
 
     test('show receive qr code', () async {
       await driver!.tap(find.byValueKey('qr-receive'));
-      await takeScreenshot(driver!, 'mock-receive-funds');
+      await driver!.takeScreenshot('mock-receive-funds');
 
       // go back to homepage
       await driver!.tap(find.byValueKey('close-receive-page'));
@@ -90,7 +89,7 @@ void main() {
       await driver!.enterText('3.4');
 
       print('---screenshot transfer-page');
-      await takeScreenshot(driver!, 'mock-transfer-page');
+      await driver!.takeScreenshot('mock-transfer-page');
 
       // go back to homepage
 
@@ -103,13 +102,13 @@ void main() {
       await driver!.requestData(TestCommands.readyForMeetup);
 
       log('tapping startMeetup');
-      await takeScreenshot(driver!, 'mock-debug-meetup-start');
+      await driver!.takeScreenshot('mock-debug-meetup-start');
 
       await driver!.tap(find.byValueKey('start-meetup'));
       await driver!.tap(find.byValueKey('attendees-count'));
       await driver!.enterText('3');
       await driver!.tap(find.byValueKey('ceremony-step-1-next'));
-      await takeScreenshot(driver!, 'mock-claim-qr');
+      await driver!.takeScreenshot('mock-claim-qr');
     });
   });
 
