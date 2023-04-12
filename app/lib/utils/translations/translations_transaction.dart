@@ -134,7 +134,7 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   @override
   String get txTooLowPriorityErrorBody =>
       'Technischer Transaktionsfehler. Das kann passieren, wenn du zweimal innerhalb '
-          'sehr kurzer Zeit eine Transaktion abschickts. Bitte warte einige Sekunden.';
+          'sehr kurzer Zeit eine Transaktion abschickst. Bitte warte einige Sekunden.';
   @override
   String get txTooLowPriorityErrorTitle => 'Transaktions Prioritätsfehler';
   @override
