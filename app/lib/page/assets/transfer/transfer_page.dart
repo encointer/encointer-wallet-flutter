@@ -123,7 +123,7 @@ class _TransferPageState extends State<TransferPage> {
         title: Text(dic.assets.transfer),
         leading: const SizedBox.shrink(),
         actions: [
-          if (store.settings.developerMode)
+          if (context.select<AppSettings, bool>((store) => store.developerMode))
             IconButton(
               key: const Key('go-transfer-history'),
               icon: const Icon(Icons.swap_vert_sharp),
@@ -222,7 +222,7 @@ class _TransferPageState extends State<TransferPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              if (store.settings.developerMode)
+              if (context.select<AppSettings, bool>((store) => store.developerMode))
                 Center(
                   child: Text(
                     '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
