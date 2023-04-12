@@ -1,3 +1,4 @@
+import 'package:ew_storage/ew_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/config.dart';
@@ -6,12 +7,14 @@ import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
+import '../mock/flutter_secure_storage.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
   group('SettingsStore test', () {
     final root = AppStore(
       MockLocalStorage(),
+      SecureStorage(MockFlutterSecureStorage()),
       config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
     );
     final store = SettingsStore(root);

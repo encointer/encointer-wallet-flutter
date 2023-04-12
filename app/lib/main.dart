@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:ew_storage/ew_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrader/upgrader.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
@@ -37,7 +37,11 @@ Future<void> main({AppcastConfiguration? appCast}) async {
         ),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()
-          create: (context) => AppStore(util.LocalStorage(), config: AppConfig(appCast: appCast)),
+          create: (context) => AppStore(
+            util.LocalStorage(),
+            const SecureStorage(),
+            config: AppConfig(appCast: appCast),
+          ),
         )
       ],
       child: const WalletApp(),

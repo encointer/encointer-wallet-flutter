@@ -13,8 +13,7 @@ NodeConfig _$NodeConfigFromJson(Map<String, dynamic> json) => NodeConfig(
       ),
     );
 
-Map<String, dynamic> _$NodeConfigToJson(NodeConfig instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$NodeConfigToJson(NodeConfig instance) => <String, dynamic>{
       'types': instance.types,
       'pallets': instance.pallets?.map((k, e) => MapEntry(k, e.toJson())),
     };

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
+import 'package:ew_storage/ew_storage.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
@@ -21,7 +22,7 @@ part 'account.g.dart';
 /// * https://github.com/encointer/encointer-wallet-flutter/issues/487
 
 class AccountStore extends _AccountStore with _$AccountStore {
-  AccountStore(super.appStore);
+  AccountStore(super.appStore, super.secureStorage);
 
   static const String seedTypeMnemonic = 'mnemonic';
   static const String seedTypeRawSeed = 'rawSeed';
@@ -29,9 +30,12 @@ class AccountStore extends _AccountStore with _$AccountStore {
 }
 
 abstract class _AccountStore with Store {
-  _AccountStore(this.rootStore);
+  _AccountStore(this.rootStore, this.secureStorage);
 
   final AppStore rootStore;
+  final SecureStorage secureStorage;
+
+  static const String pinStorageKey = 'pin-key';
 
   Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
     acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
@@ -59,6 +63,20 @@ abstract class _AccountStore with Store {
 
   @observable
   List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
+
+  @observable
+  String? pincode;
+
+  @action
+  Future<String?> getPin() async {
+    return pincode ??= await secureStorage.read(key: pinStorageKey);
+  }
+
+  @action
+  Future<void> setPin(String pin) async {
+    pincode = pin;
+    await secureStorage.write(key: pinStorageKey, value: pin);
+  }
 
   @computed
   AccountData get currentAccount {
@@ -263,6 +281,7 @@ abstract class _AccountStore with Store {
   Future<void> loadAccount() async {
     final accList = await rootStore.localStorage.getAccountList();
     accountList = ObservableList.of(accList.map(AccountData.fromJson));
+    await getPin();
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
     loading = false;

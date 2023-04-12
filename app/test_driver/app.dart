@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:ew_storage/ew_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/app.dart';
@@ -20,6 +20,7 @@ void main() async {
   final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
   final globalAppStore = AppStore(
     MockLocalStorage(),
+    const SecureStorage(),
     config: AppConfig(mockSubstrateApi: true, isTestMode: true, appCast: cfg),
   );
 

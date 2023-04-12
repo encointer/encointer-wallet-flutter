@@ -6,39 +6,28 @@ part of 'ceremonies.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AggregatedAccountData _$AggregatedAccountDataFromJson(
-        Map<String, dynamic> json) =>
-    AggregatedAccountData(
-      AggregatedAccountDataGlobal.fromJson(
-          json['global'] as Map<String, dynamic>),
+AggregatedAccountData _$AggregatedAccountDataFromJson(Map<String, dynamic> json) => AggregatedAccountData(
+      AggregatedAccountDataGlobal.fromJson(json['global'] as Map<String, dynamic>),
       json['personal'] == null
           ? null
-          : AggregatedAccountDataPersonal.fromJson(
-              json['personal'] as Map<String, dynamic>),
+          : AggregatedAccountDataPersonal.fromJson(json['personal'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$AggregatedAccountDataToJson(
-        AggregatedAccountData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AggregatedAccountDataToJson(AggregatedAccountData instance) => <String, dynamic>{
       'global': instance.global.toJson(),
       'personal': instance.personal?.toJson(),
     };
 
-AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(
-        Map<String, dynamic> json) =>
+AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(Map<String, dynamic> json) =>
     AggregatedAccountDataPersonal(
       $enumDecode(_$ParticipantTypeEnumMap, json['participantType']),
       json['meetupIndex'] as int?,
       json['meetupLocationIndex'] as int?,
       json['meetupTime'] as int?,
-      (json['meetupRegistry'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      (json['meetupRegistry'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$AggregatedAccountDataPersonalToJson(
-        AggregatedAccountDataPersonal instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AggregatedAccountDataPersonalToJson(AggregatedAccountDataPersonal instance) => <String, dynamic>{
       'participantType': _$ParticipantTypeEnumMap[instance.participantType]!,
       'meetupIndex': instance.meetupIndex,
       'meetupLocationIndex': instance.meetupLocationIndex,
@@ -53,16 +42,13 @@ const _$ParticipantTypeEnumMap = {
   ParticipantType.Newbie: 'Newbie',
 };
 
-AggregatedAccountDataGlobal _$AggregatedAccountDataGlobalFromJson(
-        Map<String, dynamic> json) =>
+AggregatedAccountDataGlobal _$AggregatedAccountDataGlobalFromJson(Map<String, dynamic> json) =>
     AggregatedAccountDataGlobal(
       $enumDecode(_$CeremonyPhaseEnumMap, json['ceremonyPhase']),
       json['ceremonyIndex'] as int,
     );
 
-Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(
-        AggregatedAccountDataGlobal instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(AggregatedAccountDataGlobal instance) => <String, dynamic>{
       'ceremonyPhase': _$CeremonyPhaseEnumMap[instance.ceremonyPhase]!,
       'ceremonyIndex': instance.ceremonyIndex,
     };
@@ -73,18 +59,14 @@ const _$CeremonyPhaseEnumMap = {
   CeremonyPhase.Attesting: 'Attesting',
 };
 
-CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) =>
-    CommunityReputation(
+CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) => CommunityReputation(
       json['communityIdentifier'] == null
           ? null
-          : CommunityIdentifier.fromJson(
-              json['communityIdentifier'] as Map<String, dynamic>),
+          : CommunityIdentifier.fromJson(json['communityIdentifier'] as Map<String, dynamic>),
       $enumDecodeNullable(_$ReputationEnumMap, json['reputation']),
     );
 
-Map<String, dynamic> _$CommunityReputationToJson(
-        CommunityReputation instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CommunityReputationToJson(CommunityReputation instance) => <String, dynamic>{
       'communityIdentifier': instance.communityIdentifier?.toJson(),
       'reputation': _$ReputationEnumMap[instance.reputation],
     };

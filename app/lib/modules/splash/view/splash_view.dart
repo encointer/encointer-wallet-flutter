@@ -40,7 +40,7 @@ class _SplashViewState extends State<SplashView> {
 
     store.setApiReady(true);
 
-    if (store.account.accountListAll.isNotEmpty) {
+    if (store.account.accountList.isNotEmpty) {
       await Navigator.pushNamedAndRemoveUntil(context, LoginView.route, (route) => false);
     } else {
       await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);

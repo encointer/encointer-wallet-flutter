@@ -9,8 +9,7 @@ part of 'new_account_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$NewAccountStore on _NewAccountStoreBase, Store {
-  late final _$nameAtom =
-      Atom(name: '_NewAccountStoreBase.name', context: context);
+  late final _$nameAtom = Atom(name: '_NewAccountStoreBase.name', context: context);
 
   @override
   String? get name {
@@ -25,8 +24,7 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     });
   }
 
-  late final _$passwordAtom =
-      Atom(name: '_NewAccountStoreBase.password', context: context);
+  late final _$passwordAtom = Atom(name: '_NewAccountStoreBase.password', context: context);
 
   @override
   String? get password {
@@ -41,8 +39,7 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     });
   }
 
-  late final _$accountKeyAtom =
-      Atom(name: '_NewAccountStoreBase.accountKey', context: context);
+  late final _$accountKeyAtom = Atom(name: '_NewAccountStoreBase.accountKey', context: context);
 
   @override
   String? get accountKey {
@@ -57,8 +54,7 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     });
   }
 
-  late final _$keyTypeAtom =
-      Atom(name: '_NewAccountStoreBase.keyType', context: context);
+  late final _$keyTypeAtom = Atom(name: '_NewAccountStoreBase.keyType', context: context);
 
   @override
   KeyType get keyType {
@@ -73,8 +69,7 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     });
   }
 
-  late final _$_loadingAtom =
-      Atom(name: '_NewAccountStoreBase._loading', context: context);
+  late final _$_loadingAtom = Atom(name: '_NewAccountStoreBase._loading', context: context);
 
   bool get loading {
     _$_loadingAtom.reportRead();
@@ -91,61 +86,46 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     });
   }
 
-  late final _$generateAccountAsyncAction =
-      AsyncAction('_NewAccountStoreBase.generateAccount', context: context);
+  late final _$generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase.generateAccount', context: context);
 
   @override
   Future<NewAccountResult> generateAccount(AppStore appStore, Api webApi) {
-    return _$generateAccountAsyncAction
-        .run(() => super.generateAccount(appStore, webApi));
+    return _$generateAccountAsyncAction.run(() => super.generateAccount(appStore, webApi));
   }
 
-  late final _$importAccountAsyncAction =
-      AsyncAction('_NewAccountStoreBase.importAccount', context: context);
+  late final _$importAccountAsyncAction = AsyncAction('_NewAccountStoreBase.importAccount', context: context);
 
   @override
   Future<NewAccountResult> importAccount(AppStore appStore, Api webApi) {
-    return _$importAccountAsyncAction
-        .run(() => super.importAccount(appStore, webApi));
+    return _$importAccountAsyncAction.run(() => super.importAccount(appStore, webApi));
   }
 
-  late final _$_generateAccountAsyncAction =
-      AsyncAction('_NewAccountStoreBase._generateAccount', context: context);
+  late final _$_generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase._generateAccount', context: context);
 
   @override
-  Future<NewAccountResult> _generateAccount(
-      AppStore appStore, Api webApi, String pin) {
-    return _$_generateAccountAsyncAction
-        .run(() => super._generateAccount(appStore, webApi, pin));
+  Future<NewAccountResult> _generateAccount(AppStore appStore, Api webApi, String pin) {
+    return _$_generateAccountAsyncAction.run(() => super._generateAccount(appStore, webApi, pin));
   }
 
-  late final _$_importAccountAsyncAction =
-      AsyncAction('_NewAccountStoreBase._importAccount', context: context);
+  late final _$_importAccountAsyncAction = AsyncAction('_NewAccountStoreBase._importAccount', context: context);
 
   @override
-  Future<NewAccountResult> _importAccount(
-      AppStore appStore, Api webApi, String pin) {
-    return _$_importAccountAsyncAction
-        .run(() => super._importAccount(appStore, webApi, pin));
+  Future<NewAccountResult> _importAccount(AppStore appStore, Api webApi, String pin) {
+    return _$_importAccountAsyncAction.run(() => super._importAccount(appStore, webApi, pin));
   }
 
-  late final _$saveAccountAsyncAction =
-      AsyncAction('_NewAccountStoreBase.saveAccount', context: context);
+  late final _$saveAccountAsyncAction = AsyncAction('_NewAccountStoreBase.saveAccount', context: context);
 
   @override
-  Future<NewAccountResult> saveAccount(
-      Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) {
-    return _$saveAccountAsyncAction
-        .run(() => super.saveAccount(webApi, appStore, acc, pin));
+  Future<NewAccountResult> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) {
+    return _$saveAccountAsyncAction.run(() => super.saveAccount(webApi, appStore, acc, pin));
   }
 
-  late final _$_NewAccountStoreBaseActionController =
-      ActionController(name: '_NewAccountStoreBase', context: context);
+  late final _$_NewAccountStoreBaseActionController = ActionController(name: '_NewAccountStoreBase', context: context);
 
   @override
   void setName(String? value) {
-    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(
-        name: '_NewAccountStoreBase.setName');
+    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setName');
     try {
       return super.setName(value);
     } finally {
@@ -155,8 +135,7 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
 
   @override
   void setPassword(String? value) {
-    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(
-        name: '_NewAccountStoreBase.setPassword');
+    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setPassword');
     try {
       return super.setPassword(value);
     } finally {
@@ -166,8 +145,7 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
 
   @override
   void setKey(String? value) {
-    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(
-        name: '_NewAccountStoreBase.setKey');
+    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setKey');
     try {
       return super.setKey(value);
     } finally {
@@ -177,8 +155,7 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
 
   @override
   void setKeyType(KeyType value) {
-    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(
-        name: '_NewAccountStoreBase.setKeyType');
+    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setKeyType');
     try {
       return super.setKeyType(value);
     } finally {
@@ -188,8 +165,8 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
 
   @override
   String? validateAccount(Translations dic, String key) {
-    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(
-        name: '_NewAccountStoreBase.validateAccount');
+    final _$actionInfo =
+        _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.validateAccount');
     try {
       return super.validateAccount(dic, key);
     } finally {

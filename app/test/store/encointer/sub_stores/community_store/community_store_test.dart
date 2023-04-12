@@ -1,8 +1,6 @@
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/mocks/ipfs/mock_ipfs_api.dart';
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
+import 'package:encointer_wallet/mocks/ipfs/mock_ipfs_api.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/test_utils.dart';
@@ -10,6 +8,10 @@ import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
+import 'package:ew_storage/ew_storage.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../../../../mock/flutter_secure_storage.dart';
 
 void main() {
   group('communityStore', () {
@@ -19,7 +21,7 @@ void main() {
 
       // Only to not get null errors in tests
       webApi = getMockApi(
-        AppStore(MockLocalStorage(), config: const AppConfig()),
+        AppStore(MockLocalStorage(), SecureStorage(MockFlutterSecureStorage()), config: const AppConfig()),
         withUI: false,
       );
       await webApi.init();
