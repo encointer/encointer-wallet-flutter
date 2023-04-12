@@ -110,34 +110,39 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Registrierung storniert';
   @override
-  String get alreadyEndorsedErrorBody => 'Dieses Konto wurde bereits für diesen Zyklus befürwortet.';
+  String get alreadyEndorsedErrorBody => 'Dieses Konto wurde bereits für diesen Key-Signing Cycle endorsed.';
   @override
-  String get alreadyEndorsedErrorTitle => 'Bereits befürwortet';
+  String get alreadyEndorsedErrorTitle => 'Bereits endorsed';
   @override
   String get noValidClaimsErrorBody =>
-      'Sie haben keine gültigen Ansprüche eingereicht. Haben Sie die anderen Teilnehmer gescannt?';
+      'Keine gültigen Bestätigungen wurden eingereicht. Hast du andere Teilnehmer gescannt?';
   @override
-  String get noValidClaimsErrorTitle => 'Keine gültigen Ansprüche';
+  String get noValidClaimsErrorTitle => 'Keine gültigen Bestätigungen';
   @override
   String get votesNotDependableErrorBody =>
-      'Es gab nicht genug bestätigte Teilnehmer für dieses Treffen, um eine frühe Belohnungsforderung zuzulassen. Sie müssen 48 Stunden warten, um Ihr Einkommen zu fordern.';
+      'Es wurde nur die Hälfte oder weniger der zugewiesenen Teilnehmer bestätigt, oder '
+          'einige Teilnehmer haben ihre Bestätigungen noch nicht eingereicht. Das verhindert '
+          'das sofortige Auszahlen des Einkommens und du musst 48 Stunden warten.';
   @override
-  String get votesNotDependableErrorTitle => 'Ungültige Anfrage';
+  String get votesNotDependableErrorTitle => 'Unzureichende Bestätigungen';
   @override
   String get insufficientFundsErrorBody =>
-      'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
+      'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen '
+          'gemeinschaft, wie du welches bekommen kannst.';
   @override
-  String get insufficientFundsErrorTitle => 'Transaktionsfehler';
+  String get insufficientFundsErrorTitle => 'Zu wenig Guthaben';
   @override
   String get txTooLowPriorityErrorBody =>
-      'Ihre Transaktion hat eine niedrige Priorität und kann keine andere bereits im Pool befindliche Transaktion ersetzen. Bitte warten Sie, bis die vorherige Transaktion abgeschlossen ist, bevor Sie eine neue senden.';
+      'Technischer Transaktionsfehler. Das kann passieren, wenn du zweimal innerhalb '
+          'sehr kurzer Zeit eine Transaktion abschickts. Bitte warte einige Sekunden.';
   @override
-  String get txTooLowPriorityErrorTitle => 'Niedrige Priorität';
+  String get txTooLowPriorityErrorTitle => 'Transaktions Prioritätsfehler';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Ein anderer Teilnehmer hat die Auszahlung für dieses Treffen ausgelöst. Sie sollten bereits Ihr Einkommen erhalten haben.';
+      'Ein anderer Teilnehmer hat die Auszahlung für dieses Treffen ausgelöst. Du solltest '
+          'dein Einkommen bereits erhalten haben.';
   @override
-  String get rewardsAlreadyIssuedErrorTitle => 'Belohnungen ausgegeben';
+  String get rewardsAlreadyIssuedErrorTitle => 'Einkommen bereits ausgezahlt';
 }
 
 class TranslationsFrTransaction implements TranslationsTransaction {
