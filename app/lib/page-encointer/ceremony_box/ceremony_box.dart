@@ -65,7 +65,6 @@ class CeremonyBox extends StatelessWidget {
                   meetupTime: meetupTime,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   meetupCompleted: store.encointer.communityAccount?.meetupCompleted ?? false,
-                  devMode: store.settings.developerMode,
                 ),
                 if (store.encointer.showRegisterButton)
                   Padding(
