@@ -130,35 +130,6 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  late final _$pincodeAtom = Atom(name: '_AccountStore.pincode', context: context);
-
-  @override
-  String? get pincode {
-    _$pincodeAtom.reportRead();
-    return super.pincode;
-  }
-
-  @override
-  set pincode(String? value) {
-    _$pincodeAtom.reportWrite(value, super.pincode, () {
-      super.pincode = value;
-    });
-  }
-
-  late final _$getPinAsyncAction = AsyncAction('_AccountStore.getPin', context: context);
-
-  @override
-  Future<String?> getPin() {
-    return _$getPinAsyncAction.run(() => super.getPin());
-  }
-
-  late final _$setPinAsyncAction = AsyncAction('_AccountStore.setPin', context: context);
-
-  @override
-  Future<void> setPin(String pin) {
-    return _$setPinAsyncAction.run(() => super.setPin(pin));
-  }
-
   late final _$setCurrentAccountAsyncAction = AsyncAction('_AccountStore.setCurrentAccount', context: context);
 
   @override
@@ -287,7 +258,6 @@ currentAccountPubKey: ${currentAccountPubKey},
 accountList: ${accountList},
 pubKeyAddressMap: ${pubKeyAddressMap},
 queuedTxs: ${queuedTxs},
-pincode: ${pincode},
 currentAccount: ${currentAccount},
 optionalAccounts: ${optionalAccounts},
 accountListAll: ${accountListAll},

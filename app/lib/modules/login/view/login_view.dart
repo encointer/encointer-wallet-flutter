@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/modules/login/logic/login_store.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/modules/login/widget/widget.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -22,14 +23,21 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   @override
-  void didChangeDependencies() {
-    useLocalAuth();
-    super.didChangeDependencies();
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final appStore = context.read<AppStore>();
+      if (appStore.settings.cachedPin.isEmpty) {
+        await AppAlert.showPasswordInputDialog(context: context, account: appStore.account.currentAccount);
+      }
+      await useLocalAuth();
+    });
+    super.initState();
   }
 
   Future<void> useLocalAuth() async {
     final dic = I18n.of(context)!.translationsForLocale();
-    if (await context.read<LoginStore>().isDeviceSupported()) {
+    final loginStore = context.read<LoginStore>();
+    if (await loginStore.isDeviceSupported()) {
       final value = await context.read<LoginStore>().authenticate(dic.account.localizedReason);
       if (value) await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
@@ -41,26 +49,36 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final store = context.watch<LoginStore>();
     final appStore = context.watch<AppStore>();
+    final cachedPin = appStore.settings.cachedPin;
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Encointer'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(
-            '${dic.account.welcome} ${appStore.account.currentAccount.name}',
-            style: textTheme.displaySmall,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.8,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                '${dic.account.welcome} ${appStore.account.currentAccount.name}',
+                style: textTheme.displaySmall,
+              ),
+              Observer(builder: (_) {
+                return PinDots(store.pincode.length, maxLength: appStore.settings.cachedPin.length);
+              }),
+              const SizedBox(height: 5),
+              PinKeyboard(
+                useLocalAuth: useLocalAuth,
+                onTapDigit: (value) => context.read<LoginStore>().addPinCode(value, cachedPin.length),
+                removeLastDigit: context.read<LoginStore>().removeLastDigit,
+              ),
+              const LoginButton(),
+            ],
           ),
-          Observer(builder: (_) {
-            return PinDots(store.pincode.length, maxLength: store.pincode.length < 4 ? 4 : store.pincode.length);
-          }),
-          const SizedBox(height: 5),
-          PinKeyboard(useLocalAuth: useLocalAuth),
-          const LoginButton(),
-        ],
+        ),
       ),
     );
   }
@@ -76,21 +94,20 @@ class LoginButton extends StatelessWidget {
     final dic = I18n.of(context)!.translationsForLocale();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: Observer(builder: (_) {
-        return PrimaryButton(
-          onPressed: store.pincode.length >= 4 && !store.isLoading
-              ? () async {
-                  final value = await context.read<LoginStore>().checkAccountPassword(appStore.account.currentAccount);
-                  if (value) {
-                    await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
-                  } else {
-                    RootSnackBar.showMsg(dic.account.passwordError);
-                  }
-                }
-              : null,
-          child: !store.isLoading ? Text(dic.account.signIn) : const CupertinoActivityIndicator(),
-        );
-      }),
+      child: PrimaryButton(
+        onPressed: () async {
+          if (appStore.settings.cachedPin.isEmpty) {
+            await AppAlert.showPasswordInputDialog(context: context, account: appStore.account.currentAccount);
+          }
+          final value = context.read<LoginStore>().checkPinCode(appStore.settings.cachedPin);
+          if (value) {
+            await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
+          } else {
+            RootSnackBar.showMsg(dic.account.passwordError);
+          }
+        },
+        child: !store.isLoading ? Text(dic.account.signIn) : const CupertinoActivityIndicator(),
+      ),
     );
   }
 }

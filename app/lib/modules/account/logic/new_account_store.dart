@@ -73,7 +73,7 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> _generateAccount(AppStore appStore, Api webApi, String pin) async {
     try {
       _loading = true;
-      appStore.settings.setPin(pin);
+      await appStore.settings.setPin(pin);
       final key = await webApi.account.generateAccount();
       final acc = await webApi.account.importAccount(key: key, password: pin);
       if (acc['error'] != null) {
@@ -94,7 +94,7 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> _importAccount(AppStore appStore, Api webApi, String pin) async {
     try {
       _loading = true;
-      appStore.settings.setPin(pin);
+      await appStore.settings.setPin(pin);
       assert(accountKey != null && accountKey!.isNotEmpty, 'accountKey can not be null or empty');
       final acc = await webApi.account.importAccount(
         key: accountKey!,

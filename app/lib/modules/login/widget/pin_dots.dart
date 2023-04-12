@@ -4,7 +4,7 @@ class PinDots extends StatelessWidget {
   const PinDots(
     this.itemLength, {
     super.key,
-    this.maxLength = 4,
+    required this.maxLength,
   });
 
   final int itemLength;

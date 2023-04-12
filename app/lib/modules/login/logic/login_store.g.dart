@@ -24,20 +24,13 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  late final _$checkAccountPasswordAsyncAction = AsyncAction('_LoginStoreBase.checkAccountPassword', context: context);
-
-  @override
-  Future<bool> checkAccountPassword(AccountData account) {
-    return _$checkAccountPasswordAsyncAction.run(() => super.checkAccountPassword(account));
-  }
-
   late final _$_LoginStoreBaseActionController = ActionController(name: '_LoginStoreBase', context: context);
 
   @override
-  void addPinCode(int value) {
+  void addPinCode(int value, int maxLength) {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.addPinCode');
     try {
-      return super.addPinCode(value);
+      return super.addPinCode(value, maxLength);
     } finally {
       _$_LoginStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -48,6 +41,16 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.removeLastDigit');
     try {
       return super.removeLastDigit();
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  bool checkPinCode(String cachedPin) {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.checkPinCode');
+    try {
+      return super.checkPinCode(cachedPin);
     } finally {
       _$_LoginStoreBaseActionController.endAction(_$actionInfo);
     }

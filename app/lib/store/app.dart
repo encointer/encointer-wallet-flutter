@@ -90,12 +90,12 @@ abstract class _AppStore with Store {
   @action
   Future<void> init(String sysLocaleCode) async {
     // wait settings store loaded
-    _settings = SettingsStore(this as AppStore);
+    _settings = SettingsStore(this as AppStore, secureStorage);
     await settings.init(sysLocaleCode);
 
     _dataUpdate = DataUpdateStore(refreshPeriod: const Duration(minutes: 2));
 
-    _account = AccountStore(this as AppStore, secureStorage);
+    _account = AccountStore(this as AppStore);
     await account.loadAccount();
 
     _assets = AssetsStore(this as AppStore);

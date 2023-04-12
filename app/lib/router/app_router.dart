@@ -1,10 +1,10 @@
-import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
@@ -48,10 +48,7 @@ class AppRoute {
       case LoginView.route:
         return CupertinoPageRoute(
           builder: (_) => Provider(
-            create: (context) => LoginStore(
-              LocalAuthentication(),
-              webApi.account,
-            ),
+            create: (context) => LoginStore(LocalAuthentication()),
             child: const LoginView(),
           ),
         );
