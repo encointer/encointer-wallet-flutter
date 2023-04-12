@@ -120,27 +120,22 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   String get noValidClaimsErrorTitle => 'Keine gültigen Bestätigungen';
   @override
   String get votesNotDependableErrorBody =>
-      'Es wurde nur die Hälfte oder weniger der zugewiesenen Teilnehmer bestätigt, oder '
-          'einige Teilnehmer haben ihre Bestätigungen noch nicht eingereicht. Das verhindert '
-          'das sofortige Auszahlen des Einkommens und du musst 48 Stunden warten.';
+      'Es wurde nur die Hälfte oder weniger der zugewiesenen Teilnehmer bestätigt, oder einige Teilnehmer haben ihre Bestätigungen noch nicht eingereicht. Das verhindert das sofortige Auszahlen des Einkommens und du musst 48 Stunden warten.';
   @override
   String get votesNotDependableErrorTitle => 'Unzureichende Bestätigungen';
   @override
   String get insufficientFundsErrorBody =>
-      'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen '
-          'gemeinschaft, wie du welches bekommen kannst.';
+      'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
   @override
   String get insufficientFundsErrorTitle => 'Zu wenig Guthaben';
   @override
   String get txTooLowPriorityErrorBody =>
-      'Technischer Transaktionsfehler. Das kann passieren, wenn du zweimal innerhalb '
-          'sehr kurzer Zeit eine Transaktion abschickst. Bitte warte einige Sekunden.';
+      'Technischer Transaktionsfehler. Das kann passieren, wenn du zweimal innerhalb sehr kurzer Zeit eine Transaktion abschickst. Bitte warte einige Sekunden.';
   @override
   String get txTooLowPriorityErrorTitle => 'Transaktions Prioritätsfehler';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Ein anderer Teilnehmer hat die Auszahlung für dieses Treffen ausgelöst. Du solltest '
-          'dein Einkommen bereits erhalten haben.';
+      'Ein anderer Teilnehmer hat die Auszahlung für dieses Treffen ausgelöst. Du solltest dein Einkommen bereits erhalten haben.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Einkommen bereits ausgezahlt';
 }
@@ -183,9 +178,7 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   String get noValidClaimsErrorTitle => 'Pas de confirmations valides';
   @override
   String get votesNotDependableErrorBody =>
-      "Seule la moitié ou moins des participants attribués ont été confirmés, ou certains participants n'ont "
-          "pas encore envoyé leurs confirmations. Cela empêche le paiement immédiat du revenu et tu dois attendre "
-          "48 heures.";
+      "Seule la moitié ou moins des participants attribués ont été confirmés, ou certains participants n'ont pas encore envoyé leurs confirmations. Cela empêche le paiement immédiat du revenu et tu dois attendre 48 heures.";
   @override
   String get votesNotDependableErrorTitle => 'Confirmations insuffisantes';
   @override
@@ -195,8 +188,7 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   String get insufficientFundsErrorTitle => 'Trop peu de crédit';
   @override
   String get txTooLowPriorityErrorBody =>
-      "Erreur technique de transaction. Cela peut arriver si tu envoies deux fois une transaction dans un laps de temps"
-          " très court. Veuillez patienter quelques secondes'.";
+      "Erreur technique de transaction. Cela peut arriver si tu envoies deux fois une transaction dans un laps de temps très court. Veuillez patienter quelques secondes'.";
   @override
   String get txTooLowPriorityErrorTitle => 'Erreur de priorité de transaction';
   @override
