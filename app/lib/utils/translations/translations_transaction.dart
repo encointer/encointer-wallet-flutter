@@ -173,34 +173,37 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Inscription annulée';
   @override
-  String get alreadyEndorsedErrorBody => 'Ce compte a déjà été approuvé pour ce cycle.';
+  String get alreadyEndorsedErrorBody => 'Ce compte a déjà été endossé pour ce cycle';
   @override
-  String get alreadyEndorsedErrorTitle => 'Déjà Endossé';
+  String get alreadyEndorsedErrorTitle => 'Déjà endossé';
   @override
   String get noValidClaimsErrorBody =>
-      "Vous n'avez pas envoyé de demandes valables. Avez-vous scanné les autres participants ?";
+      "Vous n'avez pas envoyé de confirmations valables. As-tu scanné les autres participants?";
   @override
-  String get noValidClaimsErrorTitle => 'Pas de demandes valides';
+  String get noValidClaimsErrorTitle => 'Pas de confirmations valides';
   @override
   String get votesNotDependableErrorBody =>
-      "Il n'y avait pas suffisamment de participants confirmés pour cette réunion pour permettre une demande anticipée de récompense. Vous devez attendre 48 heures pour demander votre revenu.";
+      "Seule la moitié ou moins des participants attribués ont été confirmés, ou certains participants n'ont "
+          "pas encore envoyé leurs confirmations. Cela empêche le paiement immédiat du revenu et tu dois attendre "
+          "48 heures.";
   @override
-  String get votesNotDependableErrorTitle => 'Demande invalide';
+  String get votesNotDependableErrorTitle => 'Confirmations insuffisantes';
   @override
   String get insufficientFundsErrorBody =>
       "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.";
   @override
-  String get insufficientFundsErrorTitle => 'Erreur de transaction.';
+  String get insufficientFundsErrorTitle => 'Trop peu de crédit';
   @override
   String get txTooLowPriorityErrorBody =>
-      "Votre transaction a une faible priorité et ne peut pas remplacer une autre transaction déjà dans le pool. Veuillez attendre que la transaction précédente soit terminée avant d'en soumettre une nouvelle.";
+      "Erreur technique de transaction. Cela peut arriver si tu envoies deux fois une transaction dans un laps de temps"
+          " très court. Veuillez patienter quelques secondes'.";
   @override
-  String get txTooLowPriorityErrorTitle => 'Priorité faible';
+  String get txTooLowPriorityErrorTitle => 'Erreur de priorité de transaction';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Un autre participant a déclenché le paiement pour cette réunion. Vous auriez déjà dû recevoir votre revenu.';
+      'Un autre participant a déclenché le paiement pour cette rencontre. Tu devrais avoir avoir déjà reçu ton revenu.';
   @override
-  String get rewardsAlreadyIssuedErrorTitle => 'Récompenses émises';
+  String get rewardsAlreadyIssuedErrorTitle => 'Revenu déjà versé';
 }
 
 class TranslationsRuTransaction implements TranslationsTransaction {
