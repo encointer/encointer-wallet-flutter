@@ -16,7 +16,8 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       timestamp: json['timestamp'] as int,
     );
 
-Map<String, dynamic> _$TransactionToJson(Transaction instance) => <String, dynamic>{
+Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'accountName': instance.accountName,
       'accountAddress': instance.accountAddress,

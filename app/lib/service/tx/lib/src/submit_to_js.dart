@@ -2,8 +2,10 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -26,26 +28,24 @@ Future<void> submitToJS(
   AppStore store,
   Api api,
   bool showStatusSnackBar, {
-  required Map txParams,
+  required Map<String, dynamic> txParams,
   String? password,
   BigInt? tip,
 }) async {
   final dic = I18n.of(context)!.translationsForLocale();
 
-  final args = txParams;
-
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
 
-  final txInfo = args['txInfo'] as Map;
+  final txInfo = txParams['txInfo'] as Map<String, dynamic>;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
   txInfo['tip'] = tip.toString();
   Log.d('$txInfo', 'submitToJS');
-  Log.d('${args['params']}', 'submitToJS');
+  Log.d('${txParams['params']}', 'submitToJS');
 
-  final onTxFinishFn = args['onFinish'] as dynamic Function(BuildContext, Map)?;
+  final onTxFinishFn = txParams['onFinish'] as dynamic Function(BuildContext, Map)?;
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
@@ -55,7 +55,12 @@ Future<void> submitToJS(
       );
     }
 
-    final res = await _sendTx(context, api, args) as Map;
+    final res = await api.account.sendTxAndShowNotification(
+      txParams['txInfo'] as Map<String, dynamic>,
+      txParams['params'] as List<dynamic>?,
+      rawParam: txParams['rawParam'] as String?,
+      cid: store.encointer.community?.cid.toFmtString(),
+    );
 
     if (res['hash'] == null) {
       _onTxError(context, store, res['error'] as String, showStatusSnackBar);
@@ -64,8 +69,9 @@ Future<void> submitToJS(
     }
   } else {
     _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
-    args['notificationTitle'] = dic.home.notifySubmittedQueued;
-    store.account.queueTx(args as Map<String, dynamic>);
+    txInfo['notificationTitle'] = dic.home.notifySubmittedQueued;
+    txInfo['txError'] = dic.home.txError;
+    store.account.queueTx(txParams);
   }
 }
 
@@ -80,16 +86,6 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
   } else {
     showErrorDialog(context, errorMsg);
   }
-}
-
-Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
-  return api.account.sendTxAndShowNotification(
-    args['txInfo'] as Map<dynamic, dynamic>?,
-    args['params'] as List<dynamic>?,
-    args['title'] as String?,
-    I18n.of(context)!.translationsForLocale().home.notifySubmitted,
-    rawParam: args['rawParam'] as String?,
-  );
 }
 
 void _showTxStatusSnackBar(String status, Widget? leading) {
@@ -120,7 +116,10 @@ void _onTxFinish(
   if (mounted) {
     RootSnackBar.show(
       ListTile(
-        leading: SizedBox(width: 24, child: Image.asset('assets/images/assets/success.png')),
+        leading: SizedBox(
+          width: 24,
+          child: Assets.images.assets.success.image(),
+        ),
         title: Text(
           I18n.of(context)!.translationsForLocale().assets.success,
           style: const TextStyle(color: Colors.black54),
@@ -185,7 +184,10 @@ Future<void> showInsufficientFundsDialog(BuildContext context) {
           Container(),
           CupertinoButton(
             child: Text(dic.encointer.goToLeuZurich),
-            onPressed: () => AppLaunch.launchURL(leuZurichLink(languageCode)),
+            onPressed: () {
+              final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
+              AppLaunch.launchURL(ceremonyInfoLink(languageCode, cid));
+            },
           ),
           CupertinoButton(
             child: Text(dic.home.ok),

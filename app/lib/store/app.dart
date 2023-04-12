@@ -97,10 +97,10 @@ abstract class _AppStore with Store {
     await account.loadAccount();
 
     _assets = AssetsStore(this as AppStore);
-    assets.loadCache();
+    await assets.loadCache();
 
     _chain = ChainStore(this as AppStore);
-    chain.loadCache();
+    await chain.loadCache();
 
     // need to call this after settings was initialized
     final networkInfo = settings.endpoint.info;
@@ -205,10 +205,8 @@ abstract class _AppStore with Store {
     }
   }
 
-  Future<List<void>> addAccount(Map<String, dynamic> acc, String password, String? address) {
-    return Future.wait([
-      account.addAccount(acc, password),
-    ]);
+  Future<void> addAccount(Map<String, dynamic> acc, String password, String? address, String? name) {
+    return account.addAccount(acc, password, name: name);
   }
 
   Future<void> setCurrentAccount(String? pubKey) async {
@@ -233,7 +231,7 @@ abstract class _AppStore with Store {
 
     if (!settings.loading) {
       dataUpdate.setInvalidated();
-      webApi.assets.subscribeBalance();
+      await webApi.assets.subscribeBalance();
     }
   }
 

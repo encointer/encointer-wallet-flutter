@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -6,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
@@ -60,7 +62,7 @@ abstract class _EncointerAccountStore with Store {
   int numberOfNewbieTicketsForReputable = 0;
 
   @computed
-  int? get ceremonyIndexForProofOfAttendance {
+  int? get ceremonyIndexForNextProofOfAttendance {
     if (reputations.isNotEmpty) {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
@@ -73,6 +75,13 @@ abstract class _EncointerAccountStore with Store {
     }
   }
 
+  /// Proof of attendance used for the last registration.
+  ///
+  /// We need to supply parts of it when unregistering to
+  /// reclaim the reputation.
+  @observable
+  ProofOfAttendance? lastProofOfAttendance;
+
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     Log.d('balanceEntry $balanceEntry added to cid $cid added', 'EncointerAccountStore');
@@ -83,7 +92,7 @@ abstract class _EncointerAccountStore with Store {
   @action
   Future<void> setReputations(Map<int, CommunityReputation> reps) async {
     reputations = reps;
-    writeToCache();
+    unawaited(writeToCache());
     await getNumberOfNewbieTicketsForReputable();
   }
 
@@ -96,6 +105,7 @@ abstract class _EncointerAccountStore with Store {
   @action
   void purgeCeremonySpecificState() {
     purgeReputations();
+    lastProofOfAttendance = null;
   }
 
   @action
@@ -128,7 +138,7 @@ abstract class _EncointerAccountStore with Store {
     }
 
     if (needCache && txsTransfer.isNotEmpty) {
-      writeToCache();
+      unawaited(writeToCache());
     }
   }
 

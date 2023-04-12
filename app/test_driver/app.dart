@@ -9,6 +9,7 @@ import 'package:upgrader/upgrader.dart';
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
+import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -53,6 +54,8 @@ void main() async {
   enableFlutterDriverExtension(handler: dataHandler);
   WidgetsApp.debugAllowBannerOverride = false; // remove debug banner for screenshots
 
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationPlugin.setup();
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
   final localService = AppService(await SharedPreferences.getInstance());

@@ -121,13 +121,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
             final seed =
                 await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
-            Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+            await Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
               'key': seed,
               'type': AccountStore.seedTypeMnemonic,
             });
           } else {
             // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
-            showCupertinoDialog<void>(
+            await showCupertinoDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(
@@ -174,7 +174,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               ? TextFormField(
                   key: const Key('account-name-field'),
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(context, v, _appStore.account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(context, v, _appStore.account.accountList),
                 )
               : Text(_nameCtrl!.text),
           actions: <Widget>[
@@ -192,8 +192,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
               IconButton(
                 key: const Key('account-name-edit-check'),
                 icon: const Icon(Icons.check),
-                onPressed: () {
-                  _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
+                onPressed: () async {
+                  await _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
                   setState(() {
                     _isEditingText = false;
                   });
@@ -216,17 +216,20 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           accountToBeEditedPubKey!,
                           size: 130,
                         ),
+                      Text(
+                        addressSS58,
+                        key: const Key('account-public-key'),
+                        // Text only read `addressSS58` for integration test
+                        style: const TextStyle(fontSize: 2, color: Colors.transparent),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            // In the tests, we have to read the address from the field, but `Fmt.address` does only return parts of it `5Hdf...P3ZD`.
-                            // Additionally, we can't paste from the clipboard in flutter driver tests, which is why we have to read it from the text field.
-                            store.config.isIntegrationTest ? addressSS58 : Fmt.address(addressSS58)!,
+                            Fmt.address(addressSS58)!,
                             style: const TextStyle(fontSize: 20),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            key: const Key('account-public-key'),
                           ),
                           IconButton(
                             icon: const Icon(Iconsax.copy),
@@ -319,8 +322,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             }
                           },
                           itemBuilder: (BuildContext context) => [
-                                AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete),
-                                AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
+                                AccountActionItemData(
+                                  accountAction: AccountAction.delete,
+                                  icon: Iconsax.trash,
+                                  title: dic.profile.deleteAccount,
+                                ),
+                                AccountActionItemData(
+                                    accountAction: AccountAction.export,
+                                    icon: Iconsax.export,
+                                    title: dic.profile.exportAccount),
                               ]
                                   .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
                                         key: Key(data.accountAction.name),
@@ -332,7 +342,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                           child: ListTile(
                                             minLeadingWidth: 0,
                                             title: Text(data.title),
-                                            leading: const Icon(Iconsax.trash),
+                                            leading: Icon(data.icon),
                                           ),
                                         ),
                                       ))
@@ -351,10 +361,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
 }
 
 class AccountActionItemData {
-  AccountActionItemData(this.title, this.accountAction);
+  const AccountActionItemData({
+    required this.title,
+    required this.accountAction,
+    required this.icon,
+  });
   // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
   final String title;
   final AccountAction accountAction;
+  final IconData icon;
 }
 
 class CommunityIcon extends StatelessWidget {

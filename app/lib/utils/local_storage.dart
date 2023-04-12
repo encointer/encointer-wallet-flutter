@@ -120,7 +120,7 @@ class LocalStorage {
     var data = await getObject(key) as Map?;
     data ??= {};
     data[accPubKey] = value;
-    setObject(key, data);
+    await setObject(key, data);
   }
 
   Future<Object?> getAccountCache(String? accPubKey, String key) async {
@@ -167,13 +167,13 @@ class _LocalStorage {
   Future<void> addItemToList(String storeKey, Map<String, dynamic> acc) async {
     final ls = await getList(storeKey);
     ls.add(acc);
-    setKV(storeKey, jsonEncode(ls));
+    await setKV(storeKey, jsonEncode(ls));
   }
 
   Future<void> removeItemFromList(String storeKey, String itemKey, String itemValue) async {
     final ls = await getList(storeKey);
     ls.removeWhere((item) => item[itemKey] == itemValue);
-    setKV(storeKey, jsonEncode(ls));
+    await setKV(storeKey, jsonEncode(ls));
   }
 
   Future<void> updateItemInList(
@@ -182,7 +182,7 @@ class _LocalStorage {
     ls
       ..removeWhere((item) => item[itemKey] == itemValue)
       ..add(itemNew);
-    setKV(storeKey, jsonEncode(ls));
+    await setKV(storeKey, jsonEncode(ls));
   }
 
   Future<List<Map<String, dynamic>>> getList(String storeKey) async {

@@ -18,58 +18,72 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
-class ContactDetailPage extends StatelessWidget {
-  const ContactDetailPage(this.api, {super.key});
+class ContactDetailPage extends StatefulWidget {
+  const ContactDetailPage(this.accountData, {super.key});
 
   static const String route = '/profile/contactDetail';
 
-  final Api api;
+  final AccountData accountData;
 
-  void _removeItem(BuildContext context, AccountData account, AppStore store) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    showCupertinoDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(dic.profile.contactDeleteWarn),
-          content: Text(Fmt.accountName(context, account)),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(dic.home.cancel),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () {
-                Navigator.of(context).pop();
-                store.settings.removeContact(account);
-                if (store.account.currentAccountPubKey == account.pubKey) {
-                  webApi.account.changeCurrentAccount(fetchData: true);
-                }
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+  @override
+  State<ContactDetailPage> createState() => _ContactDetailPageState();
+}
+
+class _ContactDetailPageState extends State<ContactDetailPage> {
+  final TextEditingController _nameCtrl = TextEditingController();
+  late final AccountData account;
+  bool isEditing = false;
+
+  @override
+  void initState() {
+    account = widget.accountData;
+    _nameCtrl.text = widget.accountData.name;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final account = ModalRoute.of(context)!.settings.arguments! as AccountData;
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          account.name,
-          style: Theme.of(context).textTheme.displaySmall,
-        ),
-        iconTheme: const IconThemeData(
-          color: Color(0xff666666), //change your color here
-        ),
+        title: isEditing
+            ? TextFormField(key: const Key('contact-name-field'), controller: _nameCtrl)
+            : Text(_nameCtrl.text, style: textTheme.displaySmall),
+        actions: [
+          if (isEditing)
+            IconButton(
+              key: const Key('contact-name-edit-check'),
+              icon: const Icon(Icons.check),
+              onPressed: () async {
+                if (_nameCtrl.text != widget.accountData.name) {
+                  final contactData = {
+                    'address': widget.accountData.address,
+                    'name': _nameCtrl.text,
+                    'memo': widget.accountData.memo,
+                    'observation': widget.accountData.observation,
+                    'pubKey': widget.accountData.pubKey,
+                  };
+                  await context.read<AppStore>().settings.updateContact(contactData);
+                }
+                setState(() {
+                  isEditing = false;
+                });
+              },
+            )
+          else
+            IconButton(
+              key: const Key('contact-name-edit'),
+              icon: const Icon(Iconsax.edit),
+              onPressed: () {
+                setState(() {
+                  isEditing = true;
+                });
+              },
+            )
+        ],
         centerTitle: true,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -106,7 +120,7 @@ class ContactDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-              EndorseButton(store, api, account),
+              EndorseButton(store, webApi, account),
               const SizedBox(height: 16),
               SecondaryButtonWide(
                 key: const Key('send-money-to-account'),
@@ -115,8 +129,10 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.send_sqaure_2),
                     const SizedBox(width: 12),
-                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? 'null'),
-                        style: Theme.of(context).textTheme.displaySmall),
+                    Text(
+                      dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? 'null'),
+                      style: textTheme.displaySmall,
+                    ),
                   ],
                 ),
                 onPressed: () {
@@ -126,7 +142,7 @@ class ContactDetailPage extends StatelessWidget {
                       cid: context.read<AppStore>().encointer.chosenCid,
                       communitySymbol: context.read<AppStore>().encointer.community?.symbol,
                       recipient: account.address,
-                      label: account.name,
+                      label: _nameCtrl.text,
                     ),
                   );
                 },
@@ -139,7 +155,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.trash),
                     const SizedBox(width: 12),
-                    Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.displaySmall)
+                    Text(dic.profile.contactDelete, style: textTheme.displaySmall)
                   ],
                 ),
               ),
@@ -147,6 +163,36 @@ class ContactDetailPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _removeItem(BuildContext context, AccountData account, AppStore store) {
+    final dic = I18n.of(context)!.translationsForLocale();
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(dic.profile.contactDeleteWarn),
+          content: Text(Fmt.accountName(context, account)),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text(dic.home.cancel),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoButton(
+              child: Text(dic.home.ok),
+              onPressed: () {
+                Navigator.of(context).pop();
+                store.settings.removeContact(account);
+                if (store.account.currentAccountPubKey == account.pubKey) {
+                  webApi.account.changeCurrentAccount(fetchData: true);
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -161,6 +207,7 @@ class EndorseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
+    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,7 +251,7 @@ class EndorseButton extends StatelessWidget {
                 children: [
                   const Icon(Iconsax.verify),
                   const SizedBox(width: 12),
-                  Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.displaySmall)
+                  Text(dic.profile.contactEndorse, style: textTheme.displaySmall)
                 ],
               ),
             ),
@@ -233,9 +280,9 @@ class EndorseButton extends StatelessWidget {
     final bootstrappers = community?.bootstrappers;
     final dic = I18n.of(context)!.translationsForLocale();
     if (bootstrappers != null && bootstrappers.contains(contact.address)) {
-      _popupDialog(context, dic.profile.cantEndorseBootstrapper);
+      await _popupDialog(context, dic.profile.cantEndorseBootstrapper);
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
-      _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
+      await _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
     } else {
       await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
     }
@@ -243,7 +290,7 @@ class EndorseButton extends StatelessWidget {
 }
 
 Future<void> _popupDialog(BuildContext context, String content) async {
-  showCupertinoDialog<void>(
+  return showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(

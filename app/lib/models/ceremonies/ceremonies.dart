@@ -5,7 +5,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/utils/enum.dart';
 
-// Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 part 'ceremonies.g.dart';
 
 @JsonSerializable(explicitToJson: true)
@@ -15,7 +14,7 @@ class AggregatedAccountData {
   factory AggregatedAccountData.fromJson(Map<String, dynamic> json) => _$AggregatedAccountDataFromJson(json);
   Map<String, dynamic> toJson() => _$AggregatedAccountDataToJson(this);
 
-  AggregatedAccountDataGlobal? global;
+  AggregatedAccountDataGlobal global;
   AggregatedAccountDataPersonal? personal;
 
   @override
@@ -33,7 +32,7 @@ class AggregatedAccountDataPersonal {
       _$AggregatedAccountDataPersonalFromJson(json);
   Map<String, dynamic> toJson() => _$AggregatedAccountDataPersonalToJson(this);
 
-  ParticipantType? participantType;
+  ParticipantType participantType;
   int? meetupIndex;
   int? meetupLocationIndex;
   int? meetupTime;
@@ -132,6 +131,8 @@ extension ParticipantTypeExtension on ParticipantType {
   String toValue() {
     return toEnumValue(this);
   }
+
+  bool get isReputable => this == ParticipantType.Reputable;
 }
 
 extension CeremonyPhaseExtension on CeremonyPhase {

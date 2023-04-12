@@ -22,11 +22,9 @@ Encointer wallet and client for mobile phones
 ## Overview
 
 <p align="left">
-  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=300>
-  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width=300>
-  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=300>
-  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width=300>
-  <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width=300>
+<img src="./app/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="32%">
+<img src="./app/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="32%">
+<img src="./app/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="32%">
 </p>
 
 ### Requirements
@@ -37,13 +35,37 @@ Encointer wallet and client for mobile phones
 
 # Build Instructions
 
-## Install Flutter
+## Setup
 
-Built with [Flutter](https://flutter.dev/), you need to have `Flutter` dev tools
-installed on your computer to compile the project. check [Flutter Documentation](https://flutter.dev/docs)
- to learn how to install `Flutter` and initialize a Flutter App.
+The following works for ubuntu 22.04:
 
-## Flutter wrapper
+Install Android Studio from snap and set it up as follows:
+1. Tools > SDK manager > Install SDK Android 8.0 Oreo (not sure if version matters much)
+2. ... Tools > Install SDK commandline tools
+3. Settings > Plugins > Install Flutter
+
+then:
+
+```
+sudo apt install cmake ninja-build libgtk-3-dev npm build-essentials
+./scripts/install_flutter_wrapper.sh
+./flutterw pub global activate melos
+# add the following line to `~/.bashrc` as well
+export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/encointer/encointer-wallet-flutter/.flutter/bin"
+
+melos bootstrap
+
+sudo npm install --global yarn
+# optional:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+```
+
+In studio: under run configurations, add build flavor `dev`
+
+Now: run!
+
+### Additional Info
+
 This project uses [flutter_wrapper](https://github.com/passsy/flutter_wrapper). Flutter wrapper is a tool that enables
 having the same flutter version across multiple developers. It installs automatically the flutter version form the
 pubspec.yml into the `.flutter` submodule.
@@ -57,41 +79,21 @@ Further info can be found in the [Medium Article](https://passsy.medium.com/flut
 ```shell
 git submodule update --init
 ```
-
 #### Linux and MacOs
 Linux and MacOs users can simply replace all `flutter` CLI commands with `./flutterw` and it will just work.
 
 #### Windows
 In windows, this does unfortunately not work, but you can still set up your IDE to use the flutter version in from the `.flutter` git submodule. And you can do the following workaround:
 
-```shell
-# initialize .flutter git submodule (also works on windows)
-./scripts/install_flutter_wrapper.sh
-
-# refer to the flutter installation in your git submodule
-./.flutter/bin/flutter doctor
-``` 
-
-## Install Melos
-
 [Melos](https://melos.invertase.dev/) splitting up large code bases into separate independently versioned packages is extremely useful for code sharing. However, making changes across many repositories is messy and difficult to track, and testing across repositories gets complicated really fast.
 To solve these (and many other) problems, some projects will organize their code bases into multi-package repositories (sometimes called [monorepos](https://en.wikipedia.org/wiki/Monorepo)).
-
-Install
-```shell
-dart pub global activate melos
-```
-Setup
-```shell
-melos bootstrap
-```
 
 ## Build js dependencies
 
 Encointer wallet connects to the chains with [polkadot-js/api](https://polkadot.js.org/api/), running in a hidden webview.
 You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
 
-See the js_service_encointer [Readme](app/lib/js_service_encointer/README.md) for more documentation.
+See the js_service_encointer [Readme](app/js_service_encointer/README.md) for more documentation.
 
 ```shell
 melos yarn-build

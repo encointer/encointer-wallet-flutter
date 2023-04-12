@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
@@ -7,11 +8,6 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
-import 'package:encointer_wallet/page/account/create/add_account_page.dart';
-import 'package:encointer_wallet/page/account/create/create_account_page.dart';
-import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
-import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
-import 'package:encointer_wallet/page/account/import/import_account_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/detail_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
@@ -68,22 +64,20 @@ class AppRoute {
           builder: (_) => const NetworkSelectPage(),
           settings: settings,
         );
-      case CreateAccountEntryPage.route:
+      case CreateAccountEntryView.route:
         return CupertinoPageRoute(
-          builder: (_) => const CreateAccountEntryPage(),
+          builder: (_) => const CreateAccountEntryView(),
           settings: settings,
           fullscreenDialog: true,
         );
-      case CreateAccountPage.route:
+      case CreateAccountView.route:
         return CupertinoPageRoute(
-          builder: (_) => const CreateAccountPage(),
-          settings: settings,
+          builder: (_) => const CreateAccountView(),
           fullscreenDialog: true,
         );
-      case AddAccountPage.route:
+      case AddAccountView.route:
         return CupertinoPageRoute(
-          builder: (_) => const AddAccountPage(),
-          settings: settings,
+          builder: (_) => const AddAccountView(),
           fullscreenDialog: true,
         );
       case AccountSharePage.route:
@@ -92,25 +86,15 @@ class AppRoute {
           settings: settings,
           fullscreenDialog: true,
         );
-      case CreatePinPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const CreatePinPage(),
-          settings: settings,
-        );
-      case ImportAccountPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const ImportAccountPage(),
-          settings: settings,
-        );
       case ScanPage.route:
         return CupertinoPageRoute(
           builder: (_) => ScanPage(),
           settings: settings,
         );
       case TransferPage.route:
+        final params = settings.arguments;
         return CupertinoPageRoute(
-          builder: (_) => const TransferPage(),
-          settings: settings,
+          builder: (_) => TransferPage(params as TransferPageParams?),
           fullscreenDialog: true,
         );
       case PaymentConfirmationPage.route:
@@ -163,10 +147,8 @@ class AppRoute {
           settings: settings,
         );
       case ContactDetailPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => ContactDetailPage(webApi),
-          settings: settings,
-        );
+        final arg = settings.arguments!;
+        return CupertinoPageRoute(builder: (_) => ContactDetailPage(arg as AccountData));
       case SettingsPage.route:
         return CupertinoPageRoute(
           builder: (_) => const SettingsPage(),
@@ -200,11 +182,6 @@ class AppRoute {
       case BazaarMain.route:
         return CupertinoPageRoute(
           builder: (_) => const BazaarMain(),
-          settings: settings,
-        );
-      case Instruction.route:
-        return CupertinoPageRoute(
-          builder: (_) => const Instruction(),
           settings: settings,
         );
       case LangPage.route:

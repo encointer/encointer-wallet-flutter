@@ -1,5 +1,3 @@
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,43 +45,6 @@ class AddressIcon extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class AddressIconWithLabel extends StatelessWidget {
-  const AddressIconWithLabel(
-    this.address,
-    this.pubKey, {
-    super.key,
-    this.size = 96,
-    this.tapToCopy = true,
-    this.labelStyle,
-  });
-
-  final String address;
-  final String pubKey;
-  final double size;
-  final bool tapToCopy;
-  final TextStyle? labelStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = labelStyle ?? Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey, height: 1.5);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        AddressIcon(
-          address,
-          pubKey,
-          size: size,
-        ),
-        Text(
-          Fmt.address(address)!,
-          style: style,
-          textAlign: TextAlign.center,
-        ),
-      ],
     );
   }
 }

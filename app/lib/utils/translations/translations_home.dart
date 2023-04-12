@@ -12,7 +12,6 @@ abstract class TranslationsHome {
   String get errorOccurred;
   String get loading;
   String get next;
-  String get notifySubmitted;
   String get notifySubmittedQueued;
   String get ok;
   String get pinNeeded;
@@ -50,6 +49,9 @@ abstract class TranslationsHome {
   String get transferHistory;
   String get noTransactions;
   String get unknownError;
+  String get openMapApplication;
+  String get unregister;
+  String get unregisterDialogTitle;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -75,8 +77,6 @@ class TranslationsEnHome implements TranslationsHome {
   String get loading => 'Loading...';
   @override
   String get next => 'Next Step';
-  @override
-  String get notifySubmitted => 'transaction Submitted';
   @override
   String get notifySubmittedQueued => 'Queued transaction Submitted';
   @override
@@ -153,6 +153,12 @@ class TranslationsEnHome implements TranslationsHome {
   String get transferHistory => 'Transactions';
   @override
   String get unknownError => 'Unknown Error';
+  @override
+  String get openMapApplication => 'Open Map Application';
+  @override
+  String get unregister => 'Unregister';
+  @override
+  String get unregisterDialogTitle => 'Unregister from the next cycle?';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -176,8 +182,6 @@ class TranslationsDeHome implements TranslationsHome {
   String get loading => 'Lädt...';
   @override
   String get next => 'Nächster Schritt';
-  @override
-  String get notifySubmitted => 'Transaktion eingereicht';
   @override
   String get notifySubmittedQueued => 'Die Transaktion in der Warteschlange wurde eingereicht';
   @override
@@ -256,6 +260,12 @@ class TranslationsDeHome implements TranslationsHome {
   String get transferHistory => 'Transaktionen';
   @override
   String get unknownError => 'Unbekannter Fehler';
+  @override
+  String get openMapApplication => 'In Karte öffnen';
+  @override
+  String get unregister => 'Abmelden';
+  @override
+  String get unregisterDialogTitle => 'Vom nächsten Key-Signing Cycle abmelden?';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -281,8 +291,6 @@ class TranslationsFrHome implements TranslationsHome {
   String get loading => 'Chargement…';
   @override
   String get next => 'Prochaine étape';
-  @override
-  String get notifySubmitted => 'Transaction soumise';
   @override
   String get notifySubmittedQueued => "La transaction dans la file d'attente a été soumise";
   @override
@@ -360,6 +368,12 @@ class TranslationsFrHome implements TranslationsHome {
   String get transferHistory => 'Transactions';
   @override
   String get unknownError => 'Erreur inconnue';
+  @override
+  String get openMapApplication => "Ouvrer l'application de carte";
+  @override
+  String get unregister => 'Se désinscrire';
+  @override
+  String get unregisterDialogTitle => 'Se désinscrire du prochain cycle?';
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -385,8 +399,6 @@ class TranslationsRuHome implements TranslationsHome {
   String get loading => 'Загружается...';
   @override
   String get next => 'Следующий шаг';
-  @override
-  String get notifySubmitted => 'Транзакция отправлена';
   @override
   String get notifySubmittedQueued => 'Транзакция, в очереди, отправлена';
   @override
@@ -464,4 +476,10 @@ class TranslationsRuHome implements TranslationsHome {
   String get transferHistory => 'Транзакции';
   @override
   String get unknownError => 'Неизвестная ошибка';
+  @override
+  String get openMapApplication => 'Открыть приложение Карты';
+  @override
+  String get unregister => 'Отменить регистрацию';
+  @override
+  String get unregisterDialogTitle => 'Отказаться от участия в следующем цикле?';
 }

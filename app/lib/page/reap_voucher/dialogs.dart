@@ -123,7 +123,7 @@ Future<ChangeResult> changeWithLoadingDialog(
   BuildContext context,
   Future<ChangeResult> Function() changeFn,
 ) async {
-  showCupertinoDialog<void>(
+  await showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
@@ -173,31 +173,5 @@ Future<ChangeResult?> showChangeCommunityDialog(
         ],
       );
     },
-  );
-}
-
-Future<void> showInvalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
-  return showCupertinoDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return invalidCommunityDialog(context, cid);
-    },
-  );
-}
-
-Widget invalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
-  final dic = I18n.of(context)!.translationsForLocale();
-
-  return CupertinoAlertDialog(
-    title: Container(),
-    content: Text('${dic.assets.voucherContainsInexistentCommunity} ${cid.toFmtString()}'),
-    actions: <Widget>[
-      CupertinoButton(
-        child: Text(dic.home.ok),
-        onPressed: () {
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        },
-      ),
-    ],
   );
 }

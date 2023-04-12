@@ -3,8 +3,17 @@ import 'dart:developer';
 import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
+import 'participant_type.dart';
+import 'screenshots.dart';
 
 const String getPlatformCommand = 'getPlatform';
+
+Future<void> turnDevMode(FlutterDriver driver) async {
+  await scrollToDevMode(driver);
+  await driver.tap(find.byValueKey('dev-mode'));
+
+  await scrollToNextPhaseButton(driver);
+}
 
 Future<void> scrollToDevMode(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
@@ -51,11 +60,27 @@ Future<void> tapAndWaitNextPhase(FlutterDriver driver) async {
   await driver.waitFor(find.byType('SnackBar'));
 }
 
-Future<void> registerAndWait(FlutterDriver driver, String registrationType) async {
+Future<void> registerAndWait(
+  FlutterDriver driver,
+  ParticipantTypeTestHelper registrationType, {
+  bool shouldTakeScreenshot = false,
+}) async {
   await driver.tap(find.byValueKey('registration-meetup-button'));
-  await driver.waitFor(find.byValueKey('educate-dialog-$registrationType'));
+  await driver.waitFor(find.byValueKey('educate-dialog-${registrationType.type}'));
+  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.educationDialogScreenshotName);
   await driver.tap(find.byValueKey('close-educate-dialog'));
   await driver.waitFor(find.byValueKey('is-registered-info'));
+  if (shouldTakeScreenshot) await takeScreenshot(driver, registrationType.screenshotName);
+}
+
+Future<void> unregisterAndWait(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
+  await scrollToCeremonyBox(driver);
+  await driver.waitFor(find.byValueKey('unregister-button'));
+  await driver.tap(find.byValueKey('unregister-button'));
+  await driver.waitFor(find.byValueKey('unregister-dialog'));
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeUnregisterDialog);
+  await driver.tap(find.byValueKey('ok-button'));
+  await driver.waitFor(find.byValueKey('registration-meetup-button'));
   await addDelay(1000);
 }
 
@@ -66,7 +91,12 @@ Future<void> changeAccountFromPanel(FlutterDriver driver, String account) async 
   await addDelay(1000);
 }
 
-Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account) async {
+Future<void> importAccount(
+  FlutterDriver driver,
+  String accountName,
+  String seedOrMnemonic, {
+  bool shouldTakeScreenshot = false,
+}) async {
   await driver.tap(find.byValueKey('panel-controller'));
   await driver.tap(find.byValueKey('add-account-panel'));
 
@@ -75,47 +105,53 @@ Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account
 
   await driver.waitFor(find.byValueKey('create-account-name'));
   await driver.tap(find.byValueKey('create-account-name'));
-  await driver.enterText(account);
+  await driver.enterText(accountName);
 
   await driver.tap(find.byValueKey('account-source'));
-  await driver.enterText('//$account');
-
+  await driver.enterText(seedOrMnemonic);
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.importAccount);
   await driver.tap(find.byValueKey('account-import-next'));
   await driver.waitFor(find.byValueKey('panel-controller'));
 
+  await closePanel(driver);
+}
+
+Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String accountName, String seedOrMnemonic) async {
+  await importAccount(driver, accountName, seedOrMnemonic);
   await scrollToCeremonyBox(driver);
 
-  await registerAndWait(driver, 'Bootstrapper');
-
+  await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
   await scrollToPanelController(driver);
   await addDelay(1000);
 }
 
-Future<void> startMeetupTest(FlutterDriver driver) async {
+Future<void> startMeetupTest(
+  FlutterDriver driver, {
+  bool shouldTakeScreenshot = false,
+  int participantsCount = 3,
+}) async {
   await driver.scrollUntilVisible(
     find.byValueKey('profile-list-view'),
     find.byValueKey('start-meetup'),
     dyScroll: -300,
   );
-
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.homeAttestingPhaseStartMeetup);
   await driver.tap(find.byValueKey('start-meetup'));
   await addDelay(500);
 
   await driver.waitFor(find.byValueKey('attendees-count'));
   await driver.tap(find.byValueKey('attendees-count'));
-  await driver.enterText('4');
-  await addDelay(500);
+  await driver.enterText('$participantsCount');
   await driver.tap(find.byValueKey('ceremony-step-1-next'));
 
   await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
   await driver.tap(find.byValueKey('attest-all-participants-dev'));
-  await addDelay(500);
   await driver.waitFor(find.byType('SnackBar'));
   await driver.tap(find.byValueKey('close-meetup'));
 
   await driver.waitFor(find.byValueKey('submit-claims'));
+  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.step3FinishGathering);
   await driver.tap(find.byValueKey('submit-claims'));
-  await addDelay(500);
 
   await driver.waitFor(find.byValueKey('panel-controller'));
   await scrollToPanelController(driver);

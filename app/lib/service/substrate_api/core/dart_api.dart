@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -71,17 +73,22 @@ class SubstrateDartApi {
   }
 
   /// Reconnect to the same endpoint if the connection was closed.
-  Future<void> reconnect() async {
-    if (endpoint != null) await _connectAndListen(endpoint!);
+  void reconnect() {
+    if (endpoint != null) _connectAndListen(endpoint!);
   }
 
   /// Connects to and endpoint and starts listening on the input stream.
-  Future<void> _connectAndListen(String endpoint) {
+  void _connectAndListen(String endpoint) {
     _endpoint = endpoint;
     final socket = WebSocketChannel.connect(Uri.parse(endpoint));
     _client = Client(socket.cast<String>());
 
     // The client won't subscribe to the input stream until `listen` is called.
-    return _client!.listen();
+    //
+    // Returns a [Future] that will complete when the connection is closed or
+    // when it has an error.
+    //
+    // Todo: better handling of error?
+    return unawaited(_client!.listen());
   }
 }

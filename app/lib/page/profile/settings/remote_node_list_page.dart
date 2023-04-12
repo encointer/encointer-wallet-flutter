@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,10 +33,7 @@ class RemoteNodeListPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     if (context.select<AppStore, bool>((store) => store.settings.endpoint.value == i.value))
-                      Image.asset(
-                        'assets/images/assets/success.png',
-                        width: 16,
-                      ),
+                      Assets.images.assets.success.image(width: 16),
                     const Icon(Icons.arrow_forward_ios, size: 18)
                   ],
                 ),

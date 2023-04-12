@@ -78,7 +78,6 @@ const MaterialColor zurichLion = MaterialColor(
 );
 const Color encointerGrey = Color(0xff666666);
 const Color encointerBlack = Color(0xff353535);
-const Color encointerLightBlue = Color(0xffF4F8F9); // TODO issue #334
 
 // TODO later: maybe turn into a function that takes the 2 colors and returns the gradient
 final primaryGradient = LinearGradient(

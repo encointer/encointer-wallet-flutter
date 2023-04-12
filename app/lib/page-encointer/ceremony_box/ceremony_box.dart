@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,6 +12,7 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_info.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_register_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_start_button.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/unregister_link_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/lower_ceremony_box_container.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/meetup_info.dart';
@@ -130,13 +133,20 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
   switch (store.encointer.currentPhase) {
     case CeremonyPhase.Registering:
       if (communityAccount?.isRegistered ?? false) {
-        return CeremonyNotification(
-          key: const Key('is-registered-info'),
-          notificationIconData: Iconsax.tick_square,
-          notification: dic.encointer.youAreRegisteredAs.replaceAll(
-            'PARTICIPANT_TYPE',
-            store.encointer.communityAccount!.participantType!.toValue(),
-          ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            CeremonyNotification(
+              key: const Key('is-registered-info'),
+              notificationIconData: Iconsax.tick_square,
+              notification: dic.encointer.youAreRegisteredAs.replaceAll(
+                'PARTICIPANT_TYPE',
+                store.encointer.communityAccount!.participantType!.toValue(),
+              ),
+            ),
+            const SizedBox(height: 4),
+            const UnregisteredLinkButton(),
+          ],
         );
       } else {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
@@ -144,7 +154,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           "'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered",
           'CeremonyBox',
         );
-        return Container();
+        return const SizedBox.shrink();
       }
     case CeremonyPhase.Assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
@@ -153,12 +163,14 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return MeetupInfo(
           meetup,
           location,
+          key: const Key('account-assigned'),
           onPressed: () {
             Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
           },
         );
       } else {
         return CeremonyNotification(
+          key: const Key('account-unassigned'),
           notificationIconData: Iconsax.close_square,
           notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
@@ -192,13 +204,13 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
-  showCupertinoDialog<void>(
+  unawaited(showCupertinoDialog<void>(
     context: context,
     builder: (_) => CupertinoAlertDialog(
       title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),
       content: const CupertinoActivityIndicator(),
     ),
-  );
+  ));
 
   await store.dataUpdate.executeUpdate().whenComplete(() => Navigator.of(context).pop());
 }

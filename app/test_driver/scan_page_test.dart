@@ -4,11 +4,10 @@ import 'dart:io';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-import 'package:encointer_wallet/utils/screenshot.dart';
+import 'helpers/screenshots.dart';
 
 void main() {
   FlutterDriver? driver;
-  final config = Config();
 
   group('scan-page', () {
     setUpAll(() async {
@@ -18,11 +17,6 @@ void main() {
       await driver!.waitUntilFirstFrameRasterized();
     });
 
-    tearDownAll(() async {
-      if (driver != null) {
-        driver!.close();
-      }
-    });
     test('scan-page-screenshot', () async {
       final file = File('test_driver/resources/encointer-receive-qr-1.jpg');
       final bytes = await file.readAsBytes();
@@ -31,7 +25,11 @@ void main() {
       // set the background in the MockScanPage
       await driver!.requestData(base64);
 
-      await screenshot(driver!, config, 'scan-receive');
+      await takeScreenshot(driver!, 'mock-scan-receive');
     });
+  });
+
+  tearDownAll(() async {
+    if (driver != null) await driver!.close();
   });
 }

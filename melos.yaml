@@ -26,7 +26,6 @@ command:
 # For more complex scenarios, we can consider writing cross-platform dart scripts as mentioned in this issue:
 # https://github.com/invertase/melos/issues/122
 
-
 scripts:
   format:
     run: >-
@@ -81,7 +80,7 @@ scripts:
     description: "Generate code with build_runner"
 
   yarn-build:
-    run: cd app/lib/js_service_encointer && yarn install && yarn run build
+    run: cd app/js_service_encointer && yarn install && yarn run build
     description: "Install yarn dependencies and build"
 
   # Unit test Encointer Wallet with tag
@@ -136,7 +135,7 @@ scripts:
 
   integration-real-app-test-ios:
     run: cd app && flutter drive --target=test_driver/real_app.dart
-    description: "Run integration tests for the `real_app.dart`` file on IOS"
+    description: "Run integration tests for the `real_app.dart` file on IOS"
 
   integration-scan-test-android:
     run: cd app && flutter drive --target=test_driver/scan_page.dart --flavor dev

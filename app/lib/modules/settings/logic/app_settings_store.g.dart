@@ -12,10 +12,12 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   Computed<Locale>? _$localeComputed;
 
   @override
-  Locale get locale =>
-      (_$localeComputed ??= Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale')).value;
+  Locale get locale => (_$localeComputed ??=
+          Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale'))
+      .value;
 
-  late final _$_localeAtom = Atom(name: '_AppSettingsBase._locale', context: context);
+  late final _$_localeAtom =
+      Atom(name: '_AppSettingsBase._locale', context: context);
 
   @override
   Locale get _locale {
@@ -30,7 +32,8 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$enableBiometricAuthAtom = Atom(name: '_AppSettingsBase.enableBiometricAuth', context: context);
+  late final _$enableBiometricAuthAtom =
+      Atom(name: '_AppSettingsBase.enableBiometricAuth', context: context);
 
   @override
   bool get enableBiometricAuth {
@@ -45,25 +48,30 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$setLocaleAsyncAction = AsyncAction('_AppSettingsBase.setLocale', context: context);
+  late final _$setLocaleAsyncAction =
+      AsyncAction('_AppSettingsBase.setLocale', context: context);
 
   @override
   Future<void> setLocale(int index) {
     return _$setLocaleAsyncAction.run(() => super.setLocale(index));
   }
 
-  late final _$toggleAuthenticationAsyncAction = AsyncAction('_AppSettingsBase.toggleAuthentication', context: context);
+  late final _$toggleAuthenticationAsyncAction =
+      AsyncAction('_AppSettingsBase.toggleAuthentication', context: context);
 
   @override
   Future<void> toggleAuthentication(bool value) {
-    return _$toggleAuthenticationAsyncAction.run(() => super.toggleAuthentication(value));
+    return _$toggleAuthenticationAsyncAction
+        .run(() => super.toggleAuthentication(value));
   }
 
-  late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
+  late final _$_AppSettingsBaseActionController =
+      ActionController(name: '_AppSettingsBase', context: context);
 
   @override
   void init() {
-    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.init');
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(
+        name: '_AppSettingsBase.init');
     try {
       return super.init();
     } finally {
@@ -73,8 +81,8 @@ mixin _$AppSettings on _AppSettingsBase, Store {
 
   @override
   bool getAuthenticationEnabled() {
-    final _$actionInfo =
-        _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.getAuthenticationEnabled');
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(
+        name: '_AppSettingsBase.getAuthenticationEnabled');
     try {
       return super.getAuthenticationEnabled();
     } finally {

@@ -33,8 +33,8 @@ abstract class _AccountStore with Store {
 
   final AppStore rootStore;
 
-  Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc) {
-    acc['name'] = newAccount.name.isEmpty ? (acc['meta'] as Map<String, dynamic>)['name'] : newAccount.name;
+  Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
+    acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
     if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
       (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
     }
@@ -49,19 +49,10 @@ abstract class _AccountStore with Store {
   TxStatus? txStatus;
 
   @observable
-  AccountCreate newAccount = AccountCreate();
-
-  @observable
   String? currentAccountPubKey = '';
 
   @observable
   ObservableList<AccountData> accountList = ObservableList<AccountData>();
-
-  @observable
-  ObservableMap<String?, Map> addressIndexMap = ObservableMap<String?, Map>();
-
-  @observable
-  Map<String?, Map> accountIndexMap = <String, Map>{};
 
   @observable
   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
@@ -143,50 +134,31 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setNewAccountName(String name) {
-    newAccount.name = name;
-  }
-
-  @action
-  void setNewAccountPin(String pin) {
-    newAccount.password = pin;
-  }
-
-  @action
-  void setNewAccountKey(String? key) {
-    newAccount.key = key;
-  }
-
-  @action
-  void resetNewAccount() {
-    newAccount = AccountCreate();
-  }
-
-  @action
   void queueTx(Map<String, dynamic> tx) {
     queuedTxs.add(tx);
 
     Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
       if (await webApi.isConnected()) {
+        final cid = rootStore.encointer.community?.cid.toFmtString();
         for (final args in queuedTxs) {
           final res = await webApi.account.sendTxAndShowNotification(
-            args['txInfo'] as Map<dynamic, dynamic>?,
+            args['txInfo'] as Map<String, dynamic>,
             args['params'] as List<dynamic>?,
-            args['title'] as String?,
-            args['notificationTitle'] as String?,
             rawParam: args['rawParam'] as String?,
+            cid: cid,
           );
 
           Log.d('Queued tx result: $res', 'AccountStore');
           if (res['hash'] == null) {
-            NotificationPlugin.showNotification(
+            await NotificationPlugin.showNotification(
               0,
-              args['notificationTitle'] as String?,
+              '${args['txError']}',
               'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
+              cid: cid,
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
-              rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
+              await rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
             }
           }
         }
@@ -231,7 +203,7 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<void> addAccount(Map<String, dynamic> acc, String password) async {
+  Future<void> addAccount(Map<String, dynamic> acc, String password, {String? name}) async {
     final pubKey = acc['pubKey'] as String;
     // save seed and remove it before add account
     void saveSeed(String seedType) {
@@ -246,7 +218,7 @@ abstract class _AccountStore with Store {
     saveSeed(AccountStore.seedTypeRawSeed);
 
     // format meta data of acc
-    final formattedAcc = _formatMetaData(acc);
+    final formattedAcc = _formatMetaData(acc, name: name);
 
     final index = accountList.indexWhere((i) => i.pubKey == pubKey);
     if (index > -1) {
@@ -257,9 +229,6 @@ abstract class _AccountStore with Store {
 
     // update account list
     await loadAccount();
-
-    // clear the temp account after addAccount finished
-    newAccount = AccountCreate();
   }
 
   @action
@@ -267,8 +236,11 @@ abstract class _AccountStore with Store {
     Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
     await rootStore.localStorage.removeAccount(acc.pubKey);
     // remove encrypted seed after removing account
-    deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
-    deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey);
+    await Future.wait([
+      rootStore.localStorage.removeAccount(acc.pubKey),
+      deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey),
+      deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey),
+    ]);
 
     if (acc.pubKey == currentAccountPubKey) {
       // set new currentAccount after currentAccount was removed
@@ -302,7 +274,7 @@ abstract class _AccountStore with Store {
     final encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
     final Map stored = await rootStore.localStorage.getSeeds(seedType);
     stored[pubKey] = encrypted;
-    rootStore.localStorage.setSeeds(seedType, stored);
+    await rootStore.localStorage.setSeeds(seedType, stored);
   }
 
   @action
@@ -339,7 +311,7 @@ abstract class _AccountStore with Store {
     }
 
     final seed = await FlutterAesEcbPkcs5.decryptString(encryptedSeed!, Fmt.passwordToEncryptKey(passwordOld));
-    encryptSeed(pubKey, seed, seedType, passwordNew);
+    await encryptSeed(pubKey, seed, seedType, passwordNew);
   }
 
   @action
@@ -347,7 +319,7 @@ abstract class _AccountStore with Store {
     final stored = await rootStore.localStorage.getSeeds(seedType);
     if (stored[pubKey] != null) {
       stored.remove(pubKey);
-      rootStore.localStorage.setSeeds(seedType, stored);
+      await rootStore.localStorage.setSeeds(seedType, stored);
     }
   }
 
@@ -364,24 +336,4 @@ abstract class _AccountStore with Store {
       pubKeyAddressMap[int.parse(ss58)] = addresses;
     }
   }
-
-  @action
-  void setAddressIndex(List<dynamic> list) {
-    for (final i in list) {
-      addressIndexMap[(i as Map<String, dynamic>)['accountId'] as String] = i;
-    }
-  }
-}
-
-class AccountCreate extends _AccountCreate with _$AccountCreate {}
-
-abstract class _AccountCreate with Store {
-  @observable
-  String name = '';
-
-  @observable
-  String password = '';
-
-  @observable
-  String? key = '';
 }

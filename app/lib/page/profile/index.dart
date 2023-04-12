@@ -9,8 +9,6 @@ import 'package:encointer_wallet/common/components/launch/send_to_trello_list_ti
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/page/account/create/add_account_page.dart';
-import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
@@ -122,7 +120,7 @@ class _ProfileState extends State<Profile> {
                     IconButton(
                       icon: const Icon(Iconsax.add_square),
                       color: zurichLion.shade500,
-                      onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route),
+                      onPressed: () => Navigator.of(context).pushNamed(AddAccountView.route),
                     ),
                   ],
                 ),
@@ -172,10 +170,6 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.about, style: Theme.of(context).textTheme.displaySmall),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
-              ),
-              ListTile(
-                title: Text(dic.profile.appHints, style: h3Grey),
-                onTap: () => Navigator.pushNamed(context, Instruction.route),
               ),
               ListTile(
                 title: Text(dic.profile.settingLang, style: h3Grey),
@@ -278,7 +272,7 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
                 await store.account.removeAccount(acc);
               }
 
-              Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryPage.route, (route) => false);
+              await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
             },
           ),
         ],

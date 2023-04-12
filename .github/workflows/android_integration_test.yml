@@ -9,7 +9,7 @@ on:
 env:
   NODE_VERSION: 16.13.1
   JAVA_VERSION: 12.x
-  TEMP_SCREENSHOTS: /tmp/screenshots
+  ARTIFACT_PATH: ./screenshots
 
 jobs:
   cancel_previous_runs:
@@ -91,10 +91,10 @@ jobs:
           colima start
 
       - name: Run encointer-node
-        run: ./scripts/run_encointer_node_notee_docker.sh &
+        run: ./scripts/docker_run_encointer_node_notee.sh &
 
       - name: Bootstrap Demo Community
-        run: docker run encointer/encointer-client-notee:0.0.2 bootstrap_demo_community.py -u ws://host.docker.internal -p 9944
+        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
 
       - name: "Create AVD and generate a clean snapshot for caching"
         if: steps.avd-cache.outputs.cache-hit != 'true'
@@ -112,7 +112,7 @@ jobs:
         env:
           ANDROID_DEBUG: "true"
           RECORD: ${{ matrix.record_video }}
-          TEMP_DIR: ${{ env.TEMP_SCREENSHOTS }}
+          TEMP_DIR: ${{ env.ARTIFACT_PATH }}
         with:
           api-level: ${{ matrix.api-level }}
           profile: ${{ matrix.device }}
@@ -127,4 +127,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.device }}
-          path: ${{ env.TEMP_SCREENSHOTS }}
+          path: ${{ env.ARTIFACT_PATH }}

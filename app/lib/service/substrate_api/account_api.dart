@@ -31,7 +31,7 @@ class AccountApi {
       ..retainWhere((i) => i.observation ?? false);
     final observations = contacts.map((i) => i.pubKey).toList();
     if (observations.isNotEmpty) {
-      encodeAddress(observations);
+      await encodeAddress(observations);
     }
   }
 
@@ -74,14 +74,6 @@ class AccountApi {
     return address;
   }
 
-  /// query address with account index
-  Future<List<dynamic>?> queryAddressWithAccountIndex(String index) async {
-    final res = await jsApi.evalJavascript<List<dynamic>?>(
-      'account.queryAddressWithAccountIndex("$index", ${store.settings.endpoint.ss58})',
-    );
-    return res;
-  }
-
   Future<void> changeCurrentAccount({
     String? pubKey,
     bool fetchData = false,
@@ -94,52 +86,52 @@ class AccountApi {
         current = '';
       }
     }
-    store.setCurrentAccount(current);
+    await store.setCurrentAccount(current);
 
     await store.loadAccountCache();
     if (fetchData) fetchAccountData?.call();
   }
 
-  Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
-    Map? txInfo,
-    List? params,
-    String? pageTile,
-    String? notificationTitle, {
+  Future<Map<String, dynamic>> sendTxAndShowNotification(
+    Map<String, dynamic> txInfo,
+    List<dynamic>? params, {
     String? rawParam,
+    String? cid,
   }) async {
-    final res = await sendTx(txInfo, params, rawParam: rawParam) as Map;
+    final res = await sendTx(txInfo, params, rawParam: rawParam);
 
     if (res['hash'] != null) {
       final hash = res['hash'] as String;
-      NotificationPlugin.showNotification(
+      unawaited(NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
-        notificationTitle,
-        '$pageTile - ${txInfo!['module']}.${txInfo['call']}',
-      );
+        '${txInfo['notificationTitle']}',
+        '${txInfo['notificationBody']}',
+        cid: cid,
+      ));
     }
     return res;
   }
 
-  Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
+  Future<Map<String, dynamic>> sendTx(Map txInfo, List? params, {String? rawParam}) async {
     final param = rawParam ?? jsonEncode(params);
     final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
     Log.d('sendTx call: $call', 'AccountApi');
-    return jsApi.evalJavascript(call);
+    return jsApi.evalJavascript<Map<String, dynamic>>(call);
   }
 
-  Future<void> generateAccount() async {
+  Future<String> generateAccount() async {
     final acc = await jsApi.evalJavascript<Map<String, dynamic>>('account.gen()');
-    store.account.setNewAccountKey(acc['mnemonic'] as String);
+    return acc['mnemonic'] as String;
   }
 
   Future<Map<String, dynamic>> importAccount({
+    required String key,
+    required String password,
     String? keyType = AccountStore.seedTypeMnemonic,
     String? cryptoType = 'sr25519',
     String? derivePath = '',
   }) async {
-    final key = store.account.newAccount.key;
-    final pass = store.account.newAccount.password;
-    var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
+    var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$password")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
     return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }
@@ -148,17 +140,5 @@ class AccountApi {
     final pubKey = account.pubKey;
     Log.d('checkpass: $pubKey, $pass', 'AccountApi');
     return jsApi.evalJavascript<Map<String, dynamic>?>('account.checkPassword("$pubKey", "$pass")');
-  }
-
-  Future<List<dynamic>> fetchAddressIndex(List addresses) async {
-    if (addresses.isEmpty) return [];
-
-    addresses.retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));
-    if (addresses.isEmpty) return [];
-
-    final res = await jsApi.evalJavascript<List<dynamic>>('account.getAccountIndex(${jsonEncode(addresses)})');
-    store.account.setAddressIndex(res);
-
-    return res;
   }
 }

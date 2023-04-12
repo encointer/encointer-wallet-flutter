@@ -1,13 +1,14 @@
+import 'dart:async';
+
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/rounded_card.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -43,7 +44,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     setState(() {
       _networkChanging = true;
     });
-    showCupertinoDialog<void>(
+    unawaited(showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -51,7 +52,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
           content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
-    );
+    ));
 
     await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork);
 
@@ -69,7 +70,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
     if (address != context.read<AppStore>().account.currentAddress || !isCurrentNetwork) {
       /// set current account
-      context.read<AppStore>().setCurrentAccount(i.pubKey);
+      await context.read<AppStore>().setCurrentAccount(i.pubKey);
 
       if (isCurrentNetwork) {
         await context.read<AppStore>().loadAccountCache();
@@ -83,34 +84,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> _onCreateAccount() async {
-    final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
-    if (!isCurrentNetwork) {
-      await _reloadNetwork();
-    }
-    Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
-  }
-
-  Future<void> _showPasswordDialog(BuildContext context) async {
-    await showCupertinoDialog<void>(
-      context: context,
-      builder: (_) {
-        return Container(
-          child: showPasswordInputDialog(
-            context,
-            context.read<AppStore>().account.currentAccount,
-            Text(I18n.of(context)!.translationsForLocale().profile.unlock),
-            (String password) {
-              setState(() {
-                context.read<AppStore>().settings.setPin(password);
-              });
-            },
-          ),
-        );
-      },
-    );
-  }
-
   List<Widget> _buildAccountList() {
     final res = <Widget>[
       Row(
@@ -120,19 +93,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             _selectedNetwork.info!.toUpperCase(),
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          IconButton(
-              icon: Image.asset('assets/images/assets/plus_indigo.png'),
-              color: Theme.of(context).primaryColor,
-              onPressed: () async => {
-                    if (context.read<AppStore>().settings.cachedPin.isEmpty)
-                      {
-                        await _showPasswordDialog(context),
-                      }
-                    else
-                      {
-                        _onCreateAccount(),
-                      }
-                  })
         ],
       ),
     ];
@@ -148,21 +108,16 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       if (context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
         address = context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork.ss58]![i.pubKey];
       }
-      final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
-      final accInfo = context.read<AppStore>().account.accountIndexMap[i.address];
-      final accIndex =
-          isCurrentNetwork && accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
-      final padding = accIndex.isEmpty ? 0.0 : 7.0;
+
       return RoundedCard(
         border: address == context.read<AppStore>().account.currentAddress
             ? Border.all(color: Theme.of(context).primaryColorLight)
             : Border.all(color: Theme.of(context).cardColor),
         margin: const EdgeInsets.only(bottom: 16),
-        padding: EdgeInsets.only(top: padding, bottom: padding),
         child: ListTile(
-          leading: AddressIcon(address!, i.pubKey),
+          leading: AddressIcon(address!, i.pubKey, size: 55),
           title: Text(Fmt.accountName(context, i)),
-          subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
+          subtitle: Text(Fmt.address(address)!, maxLines: 2),
           onTap: _networkChanging ? null : () => _onSelect(i, address),
         ),
       );
@@ -204,7 +159,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               children: networks.map((i) {
                 final network = i.info;
                 final isCurrent = network == _selectedNetwork.info;
-                final img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
                 return Container(
                   margin: const EdgeInsets.only(bottom: 8),
                   padding: const EdgeInsets.only(right: 8),
@@ -215,7 +169,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                       : null,
                   child: IconButton(
                     key: Key(i.info ?? '$i'),
-                    icon: Image.asset(img),
+                    icon: Image.asset(networkIconFromNetworkId(network!, isCurrent)),
                     onPressed: () {
                       if (!isCurrent) {
                         setState(() {
@@ -239,5 +193,20 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         ],
       ),
     );
+  }
+
+  String networkIconFromNetworkId(String networkId, bool isCurrent) {
+    switch (networkId) {
+      case 'nctr-gsl':
+        return isCurrent ? Assets.images.public.nctrGsl.path : Assets.images.public.nctrGslGray.path;
+      case 'nctr-r':
+        return isCurrent ? Assets.images.public.nctrR.path : Assets.images.public.nctrRGray.path;
+      case 'nctr-k':
+        return isCurrent ? Assets.images.public.nctrK.path : Assets.images.public.nctrKGray.path;
+      case 'nctr-gsl-dev':
+        return isCurrent ? Assets.images.public.nctrGslDev.path : Assets.images.public.nctrGslDevGray.path;
+      default:
+        return Assets.images.public.nctrKGray.path;
+    }
   }
 }
