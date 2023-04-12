@@ -149,7 +149,7 @@ abstract class _SettingsStore with Store {
       loadCustomSS58Format(),
       loadNetworkStateCache(),
       loadContacts(),
-      // getPin(),
+      getPin(),
     ]);
   }
 

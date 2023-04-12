@@ -8,7 +8,7 @@ class AppService {
   final SharedPreferences storage;
 
   static const String localStorageLocaleKey = 'locale';
-  static const String authenticationEnabled = 'authentication-enabled';
+  static const String enableBiometricAuthKey = 'biometric-auth-enabled';
 
   Locale init() {
     final code = storage.getString(localStorageLocaleKey);
@@ -30,11 +30,11 @@ class AppService {
     return locales[index];
   }
 
-  Future<void> toggleAuthentication(bool value) async {
-    await storage.setBool(authenticationEnabled, value);
+  Future<void> toggleBiometricAuthEnable(bool value) async {
+    await storage.setBool(enableBiometricAuthKey, value);
   }
 
-  bool? getAuthenticationEnabled() => storage.getBool(authenticationEnabled);
+  bool? getEnableBiometricAuth() => storage.getBool(enableBiometricAuthKey);
 
   String getName(String code) {
     switch (code) {

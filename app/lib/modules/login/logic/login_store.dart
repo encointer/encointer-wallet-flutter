@@ -1,9 +1,18 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:flutter/cupertino.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/page-encointer/home_page.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 part 'login_store.g.dart';
 
@@ -36,7 +45,7 @@ abstract class _LoginStoreBase with Store {
   /// Authenticates the user with biometrics or device authentication options available on the device.
   /// Returns a `Future<bool>` which is `true` if successful, `false` otherwise.
   /// [localizedReason] is the message displayed to the user during the authentication prompt.
-  Future<bool> authenticate(String localizedReason) {
+  Future<bool> localAuthenticate(String localizedReason) {
     try {
       return _localAuth.authenticate(
         localizedReason: localizedReason,
@@ -66,5 +75,38 @@ abstract class _LoginStoreBase with Store {
     if (cachedPin.isNotEmpty && pass == cachedPin) return true;
     pincode.clear();
     return false;
+  }
+
+  Future<void> navigate(BuildContext context, {required bool isPinCorrect, required Translations dic}) async {
+    if (isPinCorrect) {
+      await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
+    } else {
+      RootSnackBar.showMsg(dic.account.passwordError);
+    }
+  }
+
+  Future<void> useBiometricAuth(BuildContext context) async {
+    final appStore = context.read<AppStore>();
+    if (appStore.settings.cachedPin.isEmpty) {
+      await AppAlert.showPasswordInputDialog(context: context, account: appStore.account.currentAccount);
+    }
+    final dic = I18n.of(context)!.translationsForLocale();
+    final loginStore = context.read<LoginStore>();
+    final appSettingsStore = context.read<AppSettings>();
+    if (await loginStore.isDeviceSupported() && appSettingsStore.getEnableBiometricAuth()) {
+      final isPinCorrect = await loginStore.localAuthenticate(dic.account.localizedReason);
+      await loginStore.navigate(context, isPinCorrect: isPinCorrect, dic: dic);
+    }
+  }
+
+  Future<void> usePincodeAuth(BuildContext context) async {
+    final dic = I18n.of(context)!.translationsForLocale();
+    final loginStore = context.read<LoginStore>();
+    final appStore = context.read<AppStore>();
+    if (appStore.settings.cachedPin.isEmpty) {
+      await AppAlert.showPasswordInputDialog(context: context, account: appStore.account.currentAccount);
+    }
+    final isPinCorrect = loginStore.checkPinCode(appStore.settings.cachedPin);
+    await loginStore.navigate(context, isPinCorrect: isPinCorrect, dic: dic);
   }
 }

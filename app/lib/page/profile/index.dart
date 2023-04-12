@@ -177,7 +177,7 @@ class _ProfileState extends State<Profile> {
               ),
               SwitchListTile(
                 title: Text('Auth', style: h3Grey),
-                onChanged: context.read<AppSettings>().toggleAuthentication,
+                onChanged: context.read<AppSettings>().toggleBiometricAuth,
                 value: appSettings.enableBiometricAuth,
               ),
               const SendToTrelloListTile(),

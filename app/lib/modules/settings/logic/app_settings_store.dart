@@ -35,8 +35,8 @@ abstract class _AppSettingsBase with Store {
   void init() => _locale = _service.init();
 
   @action
-  bool getAuthenticationEnabled() {
-    final value = _service.getAuthenticationEnabled();
+  bool getEnableBiometricAuth() {
+    final value = _service.getEnableBiometricAuth();
     if (value != null) enableBiometricAuth = value;
     return enableBiometricAuth;
   }
@@ -47,9 +47,9 @@ abstract class _AppSettingsBase with Store {
   }
 
   @action
-  Future<void> toggleAuthentication(bool value) async {
+  Future<void> toggleBiometricAuth(bool value) async {
     enableBiometricAuth = value;
-    await _service.toggleAuthentication(value);
+    await _service.toggleBiometricAuthEnable(value);
   }
 
   String getName(String code) => _service.getName(code);

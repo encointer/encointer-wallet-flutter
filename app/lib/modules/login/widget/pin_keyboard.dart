@@ -4,14 +4,8 @@ import 'package:encointer_wallet/common/components/buttons/circle_button.dart';
 import 'package:encointer_wallet/modules/login/widget/widget.dart';
 
 class PinKeyboard extends StatelessWidget {
-  const PinKeyboard({
-    super.key,
-    required this.useLocalAuth,
-    required this.onTapDigit,
-    required this.removeLastDigit,
-  });
+  const PinKeyboard({super.key, required this.onTapDigit, required this.removeLastDigit});
 
-  final VoidCallback useLocalAuth;
   final void Function(int value) onTapDigit;
   final VoidCallback removeLastDigit;
 
@@ -26,10 +20,7 @@ class PinKeyboard extends StatelessWidget {
       })
         ..addAll(
           [
-            CircleButton(
-              onPressed: useLocalAuth,
-              child: const Icon(Icons.fingerprint),
-            ),
+            CircleButton(onPressed: () {}),
             CircleButton(
               child: const Text('0'),
               onPressed: () => onTapDigit(0),
