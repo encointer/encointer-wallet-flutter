@@ -30,7 +30,6 @@ abstract class TranslationsAccount {
   String get uosScan;
   String get uosSigner;
   String get uosTitle;
-  String get biometricError;
   String get welcome;
   String get passwordError;
   String get signIn;
@@ -97,8 +96,6 @@ class TranslationsEnAccount implements TranslationsAccount {
   String get uosSigner => 'Signer';
   @override
   String get uosTitle => 'Offline Signature';
-  @override
-  String get biometricError => 'Your device does not support biometric authentication';
   @override
   String get welcome => 'Welcome';
   @override
@@ -170,8 +167,6 @@ class TranslationsDeAccount implements TranslationsAccount {
   @override
   String get uosTitle => 'Offline Signatur';
   @override
-  String get biometricError => 'Ihr Gerät unterstützt keine biometrische Authentifizierung';
-  @override
   String get welcome => 'Willkommen';
   @override
   String get passwordError => 'Das Passwort ist falsch';
@@ -242,8 +237,6 @@ class TranslationsFrAccount implements TranslationsAccount {
   @override
   String get uosTitle => 'Signature hors ligne';
   @override
-  String get biometricError => "Votre appareil ne prend pas en charge l'authentification biométrique";
-  @override
   String get welcome => 'Bienvenue';
   @override
   String get passwordError => 'Le mot de passe est incorrect';
@@ -313,8 +306,6 @@ class TranslationsRuAccount implements TranslationsAccount {
   String get uosSigner => 'Подписавший';
   @override
   String get uosTitle => 'Оффлайн подпись';
-  @override
-  String get biometricError => 'Ваше устройство не поддерживает биометрическую проверку подлинности';
   @override
   String get welcome => 'Добро пожаловать';
   @override
