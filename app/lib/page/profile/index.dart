@@ -177,7 +177,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
               SwitchListTile(
-                title: Text('Auth', style: h3Grey),
+                title: Text(dic.account.biometricAuth, style: h3Grey),
                 onChanged: context.read<AppSettings>().toggleBiometricAuth,
                 value: appSettings.enableBiometricAuth,
               ),
