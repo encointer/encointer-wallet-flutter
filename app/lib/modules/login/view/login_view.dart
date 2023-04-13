@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/common/components/buttons/circle_button.dart';
 import 'package:encointer_wallet/modules/login/widget/widget.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -21,9 +22,11 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async => context.read<LoginStore>().useBiometricAuth(context),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final loginStore = context.read<LoginStore>();
+      await loginStore.isDeviceSupported();
+      await loginStore.useBiometricAuth(context);
+    });
     super.initState();
   }
 
@@ -33,16 +36,15 @@ class _LoginViewState extends State<LoginView> {
     final loginStore = context.watch<LoginStore>();
     final appStore = context.watch<AppStore>();
     final cachedPin = appStore.settings.cachedPin;
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Encointer'),
+        title: Text('${dic.account.welcome} ${appStore.account.currentAccount.name}'),
       ),
       body: SingleChildScrollView(
         child: ReactionBuilder(
           builder: (BuildContext context) {
             return reaction<bool>((r) => loginStore.pincode.length == cachedPin.length, (v) {
-              if (v) context.read<LoginStore>().useBiometricAuth(context);
+              if (v) context.read<LoginStore>().usePincodeAuth(context);
             });
           },
           child: SizedBox(
@@ -50,17 +52,22 @@ class _LoginViewState extends State<LoginView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
-                  '${dic.account.welcome} ${appStore.account.currentAccount.name}',
-                  style: textTheme.displaySmall,
-                ),
                 Observer(builder: (_) {
                   return PinDots(loginStore.pincode.length, maxLength: appStore.settings.cachedPin.length);
                 }),
-                const SizedBox(height: 5),
                 PinKeyboard(
                   onTapDigit: (value) => context.read<LoginStore>().addPinCode(value, cachedPin.length),
                   removeLastDigit: context.read<LoginStore>().removeLastDigit,
+                  biometricWidget: Observer(builder: (_) {
+                    if (loginStore.deviceSupportedBiometricAuth) {
+                      return CircleButton(
+                        child: const Icon(Icons.fingerprint),
+                        onPressed: () => context.read<LoginStore>().useBiometricAuth(context),
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  }),
                 ),
                 LoginButton(onPressed: () => context.read<LoginStore>().usePincodeAuth(context)),
               ],

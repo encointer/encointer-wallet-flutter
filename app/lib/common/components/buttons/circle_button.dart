@@ -14,20 +14,17 @@ class CircleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          shape: const CircleBorder(),
-          padding: const EdgeInsets.all(12),
-          backgroundColor: colorScheme.background,
-          shadowColor: Colors.black,
-          elevation: 3,
-          textStyle: textTheme.displayMedium!.copyWith(fontWeight: FontWeight.bold, fontSize: 34),
-        ),
-        child: child,
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(12),
+        backgroundColor: colorScheme.background,
+        shadowColor: Colors.black,
+        elevation: 3,
+        textStyle: textTheme.displayMedium!.copyWith(fontWeight: FontWeight.bold, fontSize: 34),
       ),
+      child: child,
     );
   }
 }

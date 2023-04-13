@@ -24,7 +24,7 @@ abstract class _LoginStoreBase with Store {
   final LocalAuthentication _localAuth;
 
   @observable
-  bool isLoading = false;
+  bool deviceSupportedBiometricAuth = true;
 
   final pincode = ObservableList<int>();
 
@@ -36,10 +36,10 @@ abstract class _LoginStoreBase with Store {
   }
 
   /// [removeLastDigit] is an action method that removes the last element from the [pincode] list
-  /// if the list is not empty and [isLoading] is `false`.
+  /// if the list is not empty.
   @action
   void removeLastDigit() {
-    if (pincode.isNotEmpty && !isLoading) pincode.removeLast();
+    if (pincode.isNotEmpty) pincode.removeLast();
   }
 
   /// Authenticates the user with biometrics or device authentication options available on the device.
@@ -60,15 +60,17 @@ abstract class _LoginStoreBase with Store {
   /// Check if local authentication is supported on the device.
   /// Returns a `future` with `true` if supported, `false` otherwise.
   /// Returns `false` and logs errors if a `PlatformException` occurs.
-  Future<bool> isDeviceSupported() {
+  @action
+  Future<bool> isDeviceSupported() async {
     try {
-      return _localAuth.isDeviceSupported();
+      return deviceSupportedBiometricAuth = await _localAuth.isDeviceSupported();
     } catch (e, s) {
       Log.e('$e', 'SplashViewState', s);
       return Future.value(false);
     }
   }
 
+  @action
   bool checkPinCode(String cachedPin) {
     final pass = pincode.map((e) => e.toString()).join();
     if (cachedPin.isNotEmpty && pass == cachedPin) return true;
@@ -92,7 +94,7 @@ abstract class _LoginStoreBase with Store {
     final dic = I18n.of(context)!.translationsForLocale();
     final loginStore = context.read<LoginStore>();
     final appSettingsStore = context.read<AppSettings>();
-    if (await loginStore.isDeviceSupported() && appSettingsStore.getEnableBiometricAuth()) {
+    if (deviceSupportedBiometricAuth && appSettingsStore.getEnableBiometricAuth()) {
       final isPinCorrect = await loginStore.localAuthenticate(dic.account.localizedReason);
       await loginStore.navigate(context, isPinCorrect: isPinCorrect, dic: dic);
     }
