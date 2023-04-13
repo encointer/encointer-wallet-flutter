@@ -70,7 +70,6 @@ abstract class _LoginStoreBase with Store {
     }
   }
 
-  @action
   bool checkPinCode(String cachedPin) {
     final pass = pincode.map((e) => e.toString()).join();
     if (cachedPin.isNotEmpty && pass == cachedPin) return true;
