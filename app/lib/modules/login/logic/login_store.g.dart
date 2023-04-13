@@ -47,16 +47,6 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
-  bool checkPinCode(String cachedPin) {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.checkPinCode');
-    try {
-      return super.checkPinCode(cachedPin);
-    } finally {
-      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 isLoading: ${isLoading}
