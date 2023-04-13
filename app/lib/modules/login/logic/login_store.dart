@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -81,15 +80,14 @@ abstract class _LoginStoreBase with Store {
     }
   }
 
-  Future<void> useBiometricAuth(BuildContext context) async {
+  Future<void> useBiometricAuth(BuildContext context, bool enableBiometricAuth) async {
     final appStore = context.read<AppStore>();
     if (appStore.settings.cachedPin.isEmpty) {
       await AppAlert.showPasswordInputDialog(context: context, account: appStore.account.currentAccount);
     }
     final dic = I18n.of(context)!.translationsForLocale();
     final loginStore = context.read<LoginStore>();
-    final appSettingsStore = context.read<AppSettings>();
-    if (deviceSupportedBiometricAuth && appSettingsStore.getEnableBiometricAuth()) {
+    if (deviceSupportedBiometricAuth && enableBiometricAuth) {
       final isPinCorrect = await loginStore.localAuthenticate(dic.account.localizedReason);
       await loginStore.navigate(context, isPinCorrect: isPinCorrect, dic: dic);
     }

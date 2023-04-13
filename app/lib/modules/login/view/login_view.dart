@@ -24,7 +24,7 @@ class _LoginViewState extends State<LoginView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final loginStore = context.read<LoginStore>();
       await loginStore.isDeviceSupported();
-      await loginStore.useBiometricAuth(context);
+      await loginStore.useBiometricAuth(context, context.read<AppSettings>().getEnableBiometricAuth());
     });
     super.initState();
   }
@@ -61,7 +61,7 @@ class _LoginViewState extends State<LoginView> {
                     if (loginStore.deviceSupportedBiometricAuth) {
                       return CircleButton(
                         child: const Icon(Icons.fingerprint),
-                        onPressed: () => context.read<LoginStore>().useBiometricAuth(context),
+                        onPressed: () => context.read<LoginStore>().useBiometricAuth(context, true),
                       );
                     } else {
                       return const SizedBox.shrink();
