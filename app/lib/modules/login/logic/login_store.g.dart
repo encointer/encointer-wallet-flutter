@@ -35,10 +35,10 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   late final _$_LoginStoreBaseActionController = ActionController(name: '_LoginStoreBase', context: context);
 
   @override
-  void addPinCode(int value, int maxLength) {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.addPinCode');
+  void addDigit(int value, int maxLength) {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.addDigit');
     try {
-      return super.addPinCode(value, maxLength);
+      return super.addDigit(value, maxLength);
     } finally {
       _$_LoginStoreBaseActionController.endAction(_$actionInfo);
     }

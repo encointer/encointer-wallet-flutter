@@ -28,15 +28,11 @@ abstract class _LoginStoreBase with Store {
 
   final pincode = ObservableList<int>();
 
-  /// [addPinCode] is an action method that adds an integer value to the pincode list.
-  /// If the length of the [pincode] list is less than 20 and the app is not in a `loading` state,
   @action
-  void addPinCode(int value, int maxLength) {
+  void addDigit(int value, int maxLength) {
     if (pincode.length < maxLength) pincode.add(value);
   }
 
-  /// [removeLastDigit] is an action method that removes the last element from the [pincode] list
-  /// if the list is not empty.
   @action
   void removeLastDigit() {
     if (pincode.isNotEmpty) pincode.removeLast();

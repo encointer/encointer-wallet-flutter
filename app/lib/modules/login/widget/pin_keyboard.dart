@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:encointer_wallet/common/components/grid_view/grid_view_count.dart';
 import 'package:encointer_wallet/common/components/buttons/circle_button.dart';
-import 'package:encointer_wallet/modules/login/widget/widget.dart';
 
 class PinKeyboard extends StatelessWidget {
   const PinKeyboard({

@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/common/components/buttons/circle_button.dart';
 import 'package:encointer_wallet/modules/login/widget/widget.dart';
@@ -53,10 +52,10 @@ class _LoginViewState extends State<LoginView> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Observer(builder: (_) {
-                  return PinDots(loginStore.pincode.length, maxLength: appStore.settings.cachedPin.length);
+                  return PinDots(loginStore.pincode.length, maxLength: cachedPin.length);
                 }),
                 PinKeyboard(
-                  onTapDigit: (value) => context.read<LoginStore>().addPinCode(value, cachedPin.length),
+                  onTapDigit: (value) => context.read<LoginStore>().addDigit(value, cachedPin.length),
                   removeLastDigit: context.read<LoginStore>().removeLastDigit,
                   biometricWidget: Observer(builder: (_) {
                     if (loginStore.deviceSupportedBiometricAuth) {
@@ -74,23 +73,6 @@ class _LoginViewState extends State<LoginView> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class LoginButton extends StatelessWidget {
-  const LoginButton({super.key, required this.onPressed});
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: PrimaryButton(
-        onPressed: onPressed,
-        child: Text(dic.account.signIn),
       ),
     );
   }
