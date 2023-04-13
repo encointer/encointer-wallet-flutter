@@ -100,6 +100,7 @@ class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
     dic = I18n.of(context)!.translationsForLocale();
+    final appSettingsStore = context.watch<AppSettings>();
 
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
@@ -214,7 +215,7 @@ class _AssetsState extends State<Assets> {
                                     );
                             },
                           ),
-                          if (widget.store.settings.developerMode)
+                          if (appSettingsStore.developerMode)
                             ElevatedButton(
                               onPressed: widget.store.dataUpdate.setInvalidated,
                               child: const Text('Invalidate data to trigger state update'),
@@ -311,7 +312,7 @@ class _AssetsState extends State<Assets> {
                                       ),
                                     );
                                   } else {
-                                    return widget.store.settings.developerMode
+                                    return appSettingsStore.developerMode
                                         ? ElevatedButton(
                                             onPressed: null,
                                             child: Text(dic.assets.issuanceClaimed),

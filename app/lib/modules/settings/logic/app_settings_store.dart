@@ -53,4 +53,10 @@ abstract class _AppSettingsBase with Store {
   }
 
   String getName(String code) => _service.getName(code);
+
+  @observable
+  bool developerMode = false;
+
+  @action
+  void toggleDeveloperMode() => developerMode = !developerMode;
 }
