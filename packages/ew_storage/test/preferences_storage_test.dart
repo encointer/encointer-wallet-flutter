@@ -7,7 +7,9 @@ class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
   const mockKey = 'mock-key';
-  const mockValue = 'mock-value';
+  const mockStringValue = 'mock-value';
+  const mockBoolValue = true;
+  const mockIntValue = 1;
   final mockException = Exception('oops');
 
   group('PreferencesStorage', () {
@@ -73,13 +75,13 @@ void main() {
     });
 
     group('getInt', () {
-      test('returns `mockValue` succesfully', () async {
-        when(() => sharedPreferences.getInt(mockKey)).thenAnswer((_) => 1); //TODO
+      test('returns `mock-int-value` succesfully', () async {
+        when(() => sharedPreferences.getInt(mockKey)).thenAnswer((_) => mockIntValue);
         final actual = sharedPreferences.getInt(mockKey);
-        expect(actual, mockValue);
+        expect(actual, mockIntValue);
       });
       test('returns `null`', () async {
-        when(() => sharedPreferences.getInt(mockKey)).thenAnswer((_) => 1); //TODO
+        when(() => sharedPreferences.getInt(mockKey)).thenAnswer((_) => mockIntValue);
         final actual = sharedPreferences.getInt(mockKey);
         expect(actual, isNull);
       });
@@ -128,6 +130,18 @@ void main() {
       test('throw `StorageException` fails', () async {
         when(() => sharedPreferences.setBool(mockKey, mockValue as bool)).thenThrow(mockException);
         expect(() async => sharedPreferences.setBool(mockKey, mockValue as bool), throwsA(isA<StorageException>()));
+      });
+    });
+    group('setDouble', () {
+      test('sets `mockValue` succesfully', () async {
+        await sharedPreferences.setDouble(mockKey, 00);
+        final actual = sharedPreferences.setDouble(mockKey, 00); //here need to ask
+        // verify(() => sharedPreferences.setDouble(mockKey, mockValue)).called(1);
+        expect(actual, mockValue);
+      });
+      test('throw `StorageException` fails', () async {
+        when(() => sharedPreferences.setDouble(mockKey, 00)).thenThrow(mockException);
+        expect(() async => sharedPreferences.setDouble(mockKey, 00), throwsA(isA<StorageException>()));
       });
     });
   });
