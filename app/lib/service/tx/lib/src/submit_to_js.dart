@@ -1,7 +1,7 @@
 import 'dart:core';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -11,6 +11,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/utils/translations/translations_transaction.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
 
@@ -79,14 +81,28 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
   store.assets.setSubmitting(false);
   if (mounted) RootSnackBar.removeCurrent();
   final dic = I18n.of(context)!.translationsForLocale();
+  final languageCode = Localizations.localeOf(context).languageCode;
 
   final message = getLocalizedTxErrorMessage(dic.transaction, errorMsg);
 
-  AppAlert.showErrorDialog(
+  AppAlert.showDialog<void>(
     context,
     title: Text('${message['title']}'),
-    errorText: '${message['body']}',
-    buttontext: dic.home.ok,
+    content: Text('${message['body']}'),
+    actions: [
+      const SizedBox.shrink(),
+      CupertinoButton(
+        child: const Text('FAQ'),
+        onPressed: () {
+          final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
+          AppLaunch.launchURL(ceremonyInfoLink(languageCode, cid));
+        },
+      ),
+      CupertinoButton(
+        child: Text(dic.home.ok),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+    ],
   );
 }
 
@@ -169,6 +185,6 @@ Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, Stri
       return {'title': dic.rewardsAlreadyIssuedErrorTitle, 'body': dic.rewardsAlreadyIssuedErrorBody};
     default:
       // display plain tx error in case we don't recognize the error
-      return {'title': 'Invalib Transactions', 'body': txError};
+      return {'title': dic.invalidTransactions, 'body': txError};
   }
 }
