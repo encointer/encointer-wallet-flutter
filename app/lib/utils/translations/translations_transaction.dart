@@ -247,20 +247,20 @@ class TranslationsRuTransaction implements TranslationsTransaction {
   String get votesNotDependableErrorBody =>
       'Назначенных участников собрания подтвердили только половину или менее. Также возможно, что некоторые участники еще не представили свое подтверждение. Это мешает достижению ранней выплаты, и вам нужно подождать 48 часов.';
   @override
-  String get votesNotDependableErrorTitle => 'Голоса недостоверны/Голоса не надежные';
+  String get votesNotDependableErrorTitle => 'Голоса недостоверны';
   @override
   String get insufficientFundsErrorBody =>
-      'У вас недостаточно средств на этом счете. Смотрите на сайте вашей местной общины, как получить вознаграждение/У вас недостаточно средств на этом аккаунте. Посмотрите на веб-сайте вашего местного сообщества, как их получить.';
+      'У вас недостаточно средств на этом аккаунте. Посмотрите на веб-сайте вашего местного сообщества, как их получить.';
   @override
   String get insufficientFundsErrorTitle => 'Недостаточно средств';
   @override
   String get txTooLowPriorityErrorBody =>
       'Техническая ошибка приоритета транзакции. Это может произойти, если вы быстро дважды нажмете на кнопку отправки. Пожалуйста, подождите несколько секунд.';
   @override
-  String get txTooLowPriorityErrorTitle => 'Низкий приоритет/Техническая ошибка приоритета транзакции';
+  String get txTooLowPriorityErrorTitle => 'Техническая ошибка приоритета транзакции';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Другой участник запустил выплату за это собрание. Вы уже должны были получить свой доход./Другой участник инициировал выплату за это собрание. Вы уже должны были получить свой доход.';
+      'Другой участник инициировал выплату за это собрание. Вы уже должны были получить свой доход.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Вознаграждения уже выданы';
   @override
