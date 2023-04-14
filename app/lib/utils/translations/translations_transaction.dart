@@ -207,7 +207,7 @@ class TranslationsFrTransaction implements TranslationsTransaction {
 
 class TranslationsRuTransaction implements TranslationsTransaction {
   @override
-  String get endorseNewcomerNotificationBody => 'Благодарим за одобрение нвичка в нашем сообществе!';
+  String get endorseNewcomerNotificationBody => 'Благодарим за одобрение новичка в нашем сообществе!';
   @override
   String get endorseNewcomerNotificationTitle => 'Новичок одобрен';
   @override
@@ -235,34 +235,34 @@ class TranslationsRuTransaction implements TranslationsTransaction {
   @override
   String get unregisterParticipantNotificationTitle => 'Регистрация отменена';
   @override
-  String get alreadyEndorsedErrorBody => 'Этот аккаунт уже был одобрен на этот цикл.';
+  String get alreadyEndorsedErrorBody => 'Этот аккаунт уже был подтвержден в этом цикле.';
   @override
   String get alreadyEndorsedErrorTitle => 'Уже подтверждено';
   @override
   String get noValidClaimsErrorBody =>
-      'Вы не отправили никаких действительных требований. Вы проверили других участников?';
+      'Вы не отправили никаких действительных требований. Вы проверили наличие других участников?';
   @override
   String get noValidClaimsErrorTitle => 'Нет действительных требований';
   @override
   String get votesNotDependableErrorBody =>
-      'Не было достаточно подтвержденных участников для раннего запроса вознаграждения за это собрание. Вы должны подождать 48 часов, чтобы запросить свой доход.';
+      'Назначенных участников собрания подтвердили только половину или менее. Также возможно, что некоторые участники еще не представили свое подтверждение. Это мешает достижению ранней выплаты, и вам нужно подождать 48 часов.';
   @override
-  String get votesNotDependableErrorTitle => 'Недействительный запрос';
+  String get votesNotDependableErrorTitle => 'Голоса недостоверны/Голоса не надежные';
   @override
   String get insufficientFundsErrorBody =>
-      'У вас недостаточно средств на этом счете. Смотрите на сайте вашей местной общины, как получить вознаграждение';
+      'У вас недостаточно средств на этом счете. Смотрите на сайте вашей местной общины, как получить вознаграждение/У вас недостаточно средств на этом аккаунте. Посмотрите на веб-сайте вашего местного сообщества, как их получить.';
   @override
-  String get insufficientFundsErrorTitle => 'Ошибка транзакции';
+  String get insufficientFundsErrorTitle => 'Недостаточно средств';
   @override
   String get txTooLowPriorityErrorBody =>
-      'Ваша транзакция имеет низкий приоритет и не может заменить другую транзакцию, уже находящуюся в пуле. Пожалуйста, подождите, пока предыдущая транзакция завершится, прежде чем отправлять новую.';
+      'Техническая ошибка приоритета транзакции. Это может произойти, если вы быстро дважды нажмете на кнопку отправки. Пожалуйста, подождите несколько секунд.';
   @override
-  String get txTooLowPriorityErrorTitle => 'Низкий приоритет';
+  String get txTooLowPriorityErrorTitle => 'Низкий приоритет/Техническая ошибка приоритета транзакции';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Другой участник запустил выплату за это собрание. Вы уже должны были получить свой доход.';
+      'Другой участник запустил выплату за это собрание. Вы уже должны были получить свой доход./Другой участник инициировал выплату за это собрание. Вы уже должны были получить свой доход.';
   @override
-  String get rewardsAlreadyIssuedErrorTitle => 'Выданы вознаграждения';
+  String get rewardsAlreadyIssuedErrorTitle => 'Вознаграждения уже выданы';
   @override
   String get invalidTransactions => 'Недействительные транзакции';
 }
