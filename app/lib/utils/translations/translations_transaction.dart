@@ -23,6 +23,7 @@ abstract class TranslationsTransaction {
   String get txTooLowPriorityErrorBody;
   String get rewardsAlreadyIssuedErrorTitle;
   String get rewardsAlreadyIssuedErrorBody;
+  String get invalidTransactions;
 }
 
 class TranslationsEnTransaction implements TranslationsTransaction {
@@ -62,24 +63,26 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   String get noValidClaimsErrorTitle => 'No Valid Claims';
   @override
   String get votesNotDependableErrorBody =>
-      'There were not enough confirmed participants for this gathering to allow early claim of rewards. You have to wait 48 hours to claim your income.';
+      "Only half or less of the assigned participants were attested for this gathering. It could also be that some attendees haven't submitted their attestation yet. This prevents the early payout, and you need to wait for 48 hours.";
   @override
-  String get votesNotDependableErrorTitle => 'Invalid Request';
+  String get votesNotDependableErrorTitle => 'Votes not dependable';
   @override
   String get insufficientFundsErrorBody =>
       'You do not have sufficient funds on this account. See on the website of your local community how to get some.';
   @override
-  String get insufficientFundsErrorTitle => 'Transaction error';
+  String get insufficientFundsErrorTitle => 'Insufficient Funds';
   @override
   String get txTooLowPriorityErrorBody =>
-      'Your transaction has a low priority and cannot replace another transaction already in the pool. Please wait for the previous transaction to complete before submitting a new one.';
+      'Technical transaction priority error. This can happen if you tap twice on a submit button very quickly. Please wait for a few seconds.';
   @override
-  String get txTooLowPriorityErrorTitle => 'Low Priority';
+  String get txTooLowPriorityErrorTitle => 'Transaction priority error';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
       'Another attendee has triggered the payout for this gathering. You should have received your income already.';
   @override
-  String get rewardsAlreadyIssuedErrorTitle => 'Rewards Issued';
+  String get rewardsAlreadyIssuedErrorTitle => 'Rewards already issued';
+  @override
+  String get invalidTransactions => 'Invalid Transactions';
 }
 
 class TranslationsDeTransaction implements TranslationsTransaction {
@@ -138,6 +141,8 @@ class TranslationsDeTransaction implements TranslationsTransaction {
       'Ein anderer Teilnehmer hat die Auszahlung für dieses Treffen ausgelöst. Du solltest dein Einkommen bereits erhalten haben.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Einkommen bereits ausgezahlt';
+  @override
+  String get invalidTransactions => 'Ungültige Transaktionen';
 }
 
 class TranslationsFrTransaction implements TranslationsTransaction {
@@ -196,6 +201,8 @@ class TranslationsFrTransaction implements TranslationsTransaction {
       'Un autre participant a déclenché le paiement pour cette rencontre. Tu devrais avoir avoir déjà reçu ton revenu.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Revenu déjà versé';
+  @override
+  String get invalidTransactions => 'Transactions invalides';
 }
 
 class TranslationsRuTransaction implements TranslationsTransaction {
@@ -256,4 +263,6 @@ class TranslationsRuTransaction implements TranslationsTransaction {
       'Другой участник запустил выплату за это собрание. Вы уже должны были получить свой доход.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Выданы вознаграждения';
+  @override
+  String get invalidTransactions => 'Недействительные транзакции';
 }
