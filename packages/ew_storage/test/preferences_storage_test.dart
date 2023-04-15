@@ -195,17 +195,18 @@ void main() {
       });
     });
 
-    //  group('Delete', () {
-    //   test('delete successfully', () async {
-    //     when(() => sharedPreferences.delete(key: mockKey)).thenAnswer((_) => Future.value(true));
-    //     expect(preferencesStorage.delete(mockKey), completes);
-    //   });
+    group('Delete', () {
+      test('delete successfully', () async {
+        when(() => sharedPreferences.remove(mockKey)).thenAnswer((_) => Future.value(true));
+        expect(preferencesStorage.delete(mockKey), completes);
+      });
 
-    //   test('throw `StorageException` fails', () async {
-    //     when(() => sharedPreferences.delete(key: mockKey)).thenThrow(mockException);
-    //     expect(() async => preferencesStorage.delete(mockKey), throwsA(isA<StorageException>()));
-    //   });
-    // });
+      test('throw `StorageException` fails', () async {
+        when(() => sharedPreferences.remove(mockKey)).thenThrow(mockException);
+        expect(() async => preferencesStorage.delete(mockKey), throwsA(isA<StorageException>()));
+      });
+    });
+
     group('Clear', () {
       test('clear successfully', () async {
         when(() => sharedPreferences.clear()).thenAnswer((_) => Future.value(true));
