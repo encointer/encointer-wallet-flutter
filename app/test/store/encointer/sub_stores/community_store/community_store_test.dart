@@ -27,7 +27,6 @@ void main() {
       final communityStore = CommunityStore(
         'My Test Network',
         mediterraneanTestCommunity,
-        true,
       );
 
       communityStore.initStore(
@@ -63,6 +62,7 @@ void main() {
 
       final targetJson = <String, dynamic>{
         'network': 'My Test Network',
+        'isIntegrationTest': false,
         'cid': mediterraneanTestCommunity.toJson(),
         'metadata': testMetadata.toJson(),
         'demurrage': 1.1,
