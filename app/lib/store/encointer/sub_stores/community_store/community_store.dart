@@ -86,7 +86,7 @@ abstract class _CommunityStore with Store {
   Future<String?> getCommunityIcon() async {
     try {
       if (assetsCid != null) {
-        final maybeIcon = await webApi.ipfs.getCommunityIcon(assetsCid!);
+        final maybeIcon = await webApi.httpApi.getCommunityIcon(assetsCid!);
         if (maybeIcon != null) communityIcon = maybeIcon;
       }
     } catch (e) {

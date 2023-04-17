@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:http/http.dart';
+
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/subscan.dart';
@@ -27,7 +29,7 @@ class Api {
     this.assets,
     this.chain,
     this.encointer,
-    this.ipfs,
+    this.httpApi,
     this._jsServiceEncointer,
   );
 
@@ -45,7 +47,7 @@ class Api {
       AssetsApi(store, js),
       ChainApi(store, js),
       EncointerApi(store, js, dartApi),
-      Ipfs(gateway: store.settings.ipfsGateway),
+      HttpApi(Client(), gateway: store.settings.ipfsGateway),
       jsServiceEncointer,
     );
   }
@@ -59,7 +61,7 @@ class Api {
   final AssetsApi assets;
   final ChainApi chain;
   final EncointerApi encointer;
-  final Ipfs ipfs;
+  final HttpApi httpApi;
 
   SubScanApi subScanApi = SubScanApi();
 
