@@ -9,6 +9,7 @@ part of 'community_store.dart';
 CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityStore(
       json['network'] as String,
       CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+      json['isIntegrationTest'] as bool? ?? false,
     )
       ..metadata =
           json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
@@ -30,6 +31,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityS
 
 Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String, dynamic>{
       'network': instance.network,
+      'isIntegrationTest': instance.isIntegrationTest,
       'cid': instance.cid.toJson(),
       'metadata': instance.metadata?.toJson(),
       'demurrage': instance.demurrage,

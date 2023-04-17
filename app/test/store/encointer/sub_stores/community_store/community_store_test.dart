@@ -27,6 +27,7 @@ void main() {
       final communityStore = CommunityStore(
         'My Test Network',
         mediterraneanTestCommunity,
+        true,
       );
 
       communityStore.initStore(

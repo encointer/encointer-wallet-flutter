@@ -8,6 +8,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/location/location.dart';
+import 'package:encointer_wallet/mocks/ipfs/mock_ipfs_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
@@ -19,7 +20,7 @@ part 'community_store.g.dart';
 /// It also contains sub-stores for account and community specific data.
 @JsonSerializable(explicitToJson: true)
 class CommunityStore extends _CommunityStore with _$CommunityStore {
-  CommunityStore(super.network, super.cid);
+  CommunityStore(super.network, super.cid, [super.isIntegrationTest]);
 
   factory CommunityStore.fromJson(Map<String, dynamic> json) => _$CommunityStoreFromJson(json);
   Map<String, dynamic> toJson() => _$CommunityStoreToJson(this);
@@ -31,7 +32,7 @@ class CommunityStore extends _CommunityStore with _$CommunityStore {
 }
 
 abstract class _CommunityStore with Store {
-  _CommunityStore(this.network, this.cid);
+  _CommunityStore(this.network, this.cid, [this.isIntegrationTest = false]);
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   Future<void> Function()? _cacheFn;
@@ -43,6 +44,7 @@ abstract class _CommunityStore with Store {
   double? Function(BalanceEntry)? _applyDemurrage;
 
   final String network;
+  final bool isIntegrationTest;
 
   final CommunityIdentifier cid;
 
@@ -84,6 +86,7 @@ abstract class _CommunityStore with Store {
 
   @action
   Future<String?> getCommunityIcon() async {
+    if (isIntegrationTest) return communityIcon = mockIcon;
     try {
       if (assetsCid != null) {
         final maybeIcon = await webApi.httpApi.getCommunityIcon(assetsCid!);
