@@ -28,6 +28,7 @@ void main() {
       test('returns `mockStringValue` succesfully', () async {
         when(() => sharedPreferences.getString(mockKey)).thenAnswer((_) => mockStringValue);
         final actual = preferencesStorage.getString(mockKey);
+        verify(() => sharedPreferences.getString(mockKey)).called(1);
         expect(actual, mockStringValue);
       });
       test('returns null', () {
@@ -46,11 +47,13 @@ void main() {
       test('returns `mockValue` succesfully', () {
         when(() => sharedPreferences.getBool(mockKey)).thenAnswer((_) => mockBoolValue);
         final actual = preferencesStorage.getBool(mockKey);
+        verify(() => sharedPreferences.getBool(mockKey)).called(1);
         expect(actual, mockBoolValue);
       });
       test('returns `null`', () {
         when(() => sharedPreferences.getBool(mockKey)).thenAnswer((_) => null);
         final actual = preferencesStorage.getBool(mockKey);
+        verify(() => sharedPreferences.getBool(mockKey)).called(1);
         expect(actual, isNull);
       });
       test('throw `StorageException` fails', () {
@@ -70,9 +73,9 @@ void main() {
       });
       test('returns null', () {
         when(() => sharedPreferences.getDouble(mockKey)).thenAnswer((_) => null);
-        final name = preferencesStorage.getDouble(mockKey);
+        final actual = preferencesStorage.getDouble(mockKey);
         verify(() => sharedPreferences.getDouble(mockKey)).called(1);
-        expect(name, isNull);
+        expect(actual, isNull);
       });
       test('throw StorageException fails', () {
         when(() => sharedPreferences.getDouble(mockKey)).thenThrow(mockException);
@@ -124,6 +127,7 @@ void main() {
       test('saves mockStringValue succesfully returns true', () async {
         when(() => sharedPreferences.setString(mockKey, mockStringValue)).thenAnswer((_) => Future.value(true));
         final actual = await preferencesStorage.setString(key: mockKey, value: mockStringValue);
+        verify(() => sharedPreferences.setString(mockKey, mockStringValue)).called(1);
         expect(actual, isTrue);
       });
       test('throw `StorageException` when false', () async {
@@ -139,6 +143,7 @@ void main() {
       test('saves `mockBoolValue` succesfully', () async {
         when(() => sharedPreferences.setBool(mockKey, mockBoolValue)).thenAnswer((_) => Future.value(true));
         final actual = await preferencesStorage.setBool(key: mockKey, value: mockBoolValue);
+        verify(() => sharedPreferences.setBool(mockKey, mockBoolValue)).called(1);
         expect(actual, isTrue);
       });
       test('throw `StorageException` fails', () async {
@@ -154,6 +159,7 @@ void main() {
       test('saves `mockDoubleValue` succesfully', () async {
         when(() => sharedPreferences.setDouble(mockKey, mockDoubleValue)).thenAnswer((_) => Future.value(true));
         final actual = await preferencesStorage.setDouble(key: mockKey, value: mockDoubleValue);
+        verify(() => sharedPreferences.setDouble(mockKey, mockDoubleValue)).called(1);
         expect(actual, isTrue);
       });
       test('throw `StorageException` fails', () async {
@@ -169,6 +175,7 @@ void main() {
       test('saves `mockIntValue` succesfully', () async {
         when(() => sharedPreferences.setInt(mockKey, mockIntValue)).thenAnswer((_) => Future.value(true));
         final actual = await preferencesStorage.setInt(key: mockKey, value: mockIntValue);
+        verify(() => sharedPreferences.setInt(mockKey, mockIntValue)).called(1);
         expect(actual, isTrue);
       });
       test('throw `StorageException` fails', () async {
@@ -184,6 +191,7 @@ void main() {
       test('saves `mockIntValue` succesfully', () async {
         when(() => sharedPreferences.setStringList(mockKey, mockStringListValue)).thenAnswer((_) => Future.value(true));
         final actual = await preferencesStorage.setStringList(key: mockKey, value: mockStringListValue);
+        verify(() => sharedPreferences.setStringList(mockKey, mockStringListValue)).called(1);
         expect(actual, isTrue);
       });
       test('throw `StorageException` fails', () async {
@@ -198,7 +206,9 @@ void main() {
     group('Delete', () {
       test('delete successfully', () async {
         when(() => sharedPreferences.remove(mockKey)).thenAnswer((_) => Future.value(true));
-        expect(preferencesStorage.delete(mockKey), completes);
+        final actual = await preferencesStorage.delete(mockKey);
+        verify(() => sharedPreferences.remove(mockKey)).called(1);
+        expect(actual, isTrue);
       });
 
       test('throw `StorageException` fails', () async {
@@ -210,7 +220,9 @@ void main() {
     group('Clear', () {
       test('clear successfully', () async {
         when(() => sharedPreferences.clear()).thenAnswer((_) => Future.value(true));
-        expect(preferencesStorage.clear(), completes);
+        final actual = await preferencesStorage.clear();
+        verify(() => sharedPreferences.clear()).called(1);
+        expect(actual, isTrue);
       });
       test('throw `StorageException` fails', () async {
         when(() => sharedPreferences.clear()).thenThrow(mockException);
