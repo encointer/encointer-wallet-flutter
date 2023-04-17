@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-import 'package:encointer_wallet/service/ipfs/http_api.dart';
+import 'package:encointer_wallet/service/http_api/http_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrate_api/account_api.dart';

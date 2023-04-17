@@ -15,7 +15,7 @@ class HttpApi {
 
   Future<String?> getCommunityIcon(String cid) async {
     if (cid.isEmpty) {
-      Log.d('[IPFS] return default encointer icon because ipfs-cid is not set', 'Ipfs');
+      Log.d('[HttpApi] return default encointer icon because cid is not set', 'HttpApi');
       return null;
     }
     try {
