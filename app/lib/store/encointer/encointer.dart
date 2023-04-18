@@ -415,8 +415,7 @@ abstract class _EncointerStore with Store {
     if (!communityStores!.containsKey(cidFmt)) {
       Log.d('Adding new communityStore for cid: ${cid.toFmtString()}', 'EncointerStore');
 
-      final communityStore = CommunityStore(network, cid, _rootStore.config.isIntegrationTest)
-        ..initStore(_cacheFn, applyDemurrage);
+      final communityStore = CommunityStore(network, cid)..initStore(_cacheFn, applyDemurrage);
       await communityStore.initCommunityAccountStore(address);
 
       communityStores![cidFmt] = communityStore;

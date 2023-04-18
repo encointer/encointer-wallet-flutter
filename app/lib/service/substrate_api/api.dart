@@ -29,7 +29,7 @@ class Api {
     this.assets,
     this.chain,
     this.encointer,
-    this.httpApi,
+    this.ipfsApi,
     this._jsServiceEncointer,
   );
 
@@ -61,7 +61,7 @@ class Api {
   final AssetsApi assets;
   final ChainApi chain;
   final EncointerApi encointer;
-  final IpfsApi httpApi;
+  final IpfsApi ipfsApi;
 
   SubScanApi subScanApi = SubScanApi();
 

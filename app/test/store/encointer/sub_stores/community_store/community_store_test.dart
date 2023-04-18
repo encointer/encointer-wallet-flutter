@@ -62,7 +62,6 @@ void main() {
 
       final targetJson = <String, dynamic>{
         'network': 'My Test Network',
-        'isIntegrationTest': false,
         'cid': mediterraneanTestCommunity.toJson(),
         'metadata': testMetadata.toJson(),
         'demurrage': 1.1,
