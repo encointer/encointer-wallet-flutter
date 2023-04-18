@@ -14,14 +14,7 @@ fi
 
 ./flutterw pub global run melos integration-app-test-ios
 ./flutterw pub global run melos integration-scan-test-ios
-
-if [ "$RECORD" == "true" ]
-then
-  ./flutterw pub global run melos integration-real-app-test-ios-screenshot
-else
-  ./flutterw pub global run melos integration-real-app-test-ios  
-fi
-
+./flutterw pub global run melos integration-real-app-test-ios-screenshot
 
 mkdir -p "$TEMP_DIR"
 
