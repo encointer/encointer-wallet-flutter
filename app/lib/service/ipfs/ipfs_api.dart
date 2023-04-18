@@ -1,14 +1,17 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 class IpfsApi {
-  const IpfsApi(Client client, {this.gateway = ipfsGatewayEncointer}) : _client = client;
+  IpfsApi({
+    http.Client? httpClient,
+    this.gateway = ipfsGatewayEncointer,
+  }) : _httpClient = httpClient ?? http.Client();
 
-  final Client _client;
+  final http.Client _httpClient;
   final String gateway;
 
   static const String getRequest = '/api/v0/object/get?arg=';
@@ -20,7 +23,7 @@ class IpfsApi {
     }
     try {
       final uri = Uri.parse('$gateway/$getRequest$cid/$communityIconName');
-      final response = await _client.get(uri).timeout(const Duration(seconds: 8));
+      final response = await _httpClient.get(uri).timeout(const Duration(seconds: 8));
       final body = jsonDecode(response.body) as Map<String, dynamic>;
       return body['Data'] as String?;
     } catch (e, s) {

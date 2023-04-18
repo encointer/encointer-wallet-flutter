@@ -12,7 +12,7 @@ const mockIcon = '<svg viewBox="0 0 132.09 131.85" '
     '<path d="m97.62 95.38-12.03 11.17-8.84-11.17z"/></svg>';
 
 class MockIpfsApi extends IpfsApi {
-  const MockIpfsApi(super.client);
+  MockIpfsApi({super.gateway, super.httpClient});
 
   @override
   Future<String?> getCommunityIcon(String? cid) {
