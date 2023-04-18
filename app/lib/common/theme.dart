@@ -62,6 +62,22 @@ final appThemeEncointer = ThemeData(
 );
 
 const MaterialColor zurichLion = MaterialColor(
+  0xFF79C943, // <-- primary green color
+  <int, Color>{
+    50:Color(0xFFF6FAF1), // <--- used for light green buttons (i.e. secondary buttons)
+    100: Color(0xFFF6FAF1),
+    200: Color(0xFFF6FAF2),
+    300: Color(0xFF93C47D), // <--- medium green border color of progress bar
+    400: Color(0xFF7CB342), // <--- starting color of gradient
+    500: Color(0xFF0D8102), // <--- main color for almost all texts
+    600: Color(0xFF35B731), // <--- end color of gradient
+    700: Color(0xFF35B733),
+    800: Color(0xFF34B032),
+    900: Color(0xFF004D08), // <--- dark green for the scan bottomButtonBar icon
+  },
+);
+
+const MaterialColor zurichLion3 = MaterialColor(
   0xff4374A3,
   <int, Color>{
     50: Color(0xffF4F8F9), // <--- used for light blue buttons (i.e. secondary buttons)
