@@ -175,8 +175,6 @@ Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, Stri
   switch (txError) {
     case 'ecncointerCeremonies.VotesNotDependable':
       return {'title': dic.votesNotDependableErrorTitle, 'body': dic.votesNotDependableErrorBody};
-    case 'RewardsAlreadyClaimed':
-      return {'title': dic.votesNotDependableErrorTitle, 'body': dic.votesNotDependableErrorBody};
     case 'encointerCeremonies.AlreadyEndorsed':
       return {'title': dic.alreadyEndorsedErrorTitle, 'body': dic.alreadyEndorsedErrorBody};
     case 'encointerCeremonies.NoValidClaims':
