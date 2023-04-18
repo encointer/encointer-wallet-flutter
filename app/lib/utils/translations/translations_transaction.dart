@@ -82,7 +82,7 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Rewards already issued';
   @override
-  String get transactionError => 'Invalid Transactions';
+  String get transactionError => 'Transaction error';
 }
 
 class TranslationsDeTransaction implements TranslationsTransaction {
@@ -142,7 +142,7 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Einkommen bereits ausgezahlt';
   @override
-  String get transactionError => 'Ungültige Transaktionen';
+  String get transactionError => 'Transaktionsfehler';
 }
 
 class TranslationsFrTransaction implements TranslationsTransaction {
@@ -202,7 +202,7 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Revenu déjà versé';
   @override
-  String get transactionError => 'Transactions invalides';
+  String get transactionError => 'Erreur de transaction';
 }
 
 class TranslationsRuTransaction implements TranslationsTransaction {
@@ -264,5 +264,5 @@ class TranslationsRuTransaction implements TranslationsTransaction {
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Вознаграждения уже выданы';
   @override
-  String get transactionError => 'Недействительные транзакции';
+  String get transactionError => 'Ошибка транзакции';
 }
