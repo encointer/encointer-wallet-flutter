@@ -1,4 +1,4 @@
 class RealAppTestCommand {
-  static const String getPlatformCommand = 'getPlatform';
+  static const String getPlatform = 'getPlatform';
   static const String shouldTakeScreenshot = 'shouldTakeScreenshot';
 }

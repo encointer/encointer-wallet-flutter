@@ -14,7 +14,7 @@ void main() async {
     handler: (command) {
       var result = '';
       switch (command) {
-        case RealAppTestCommand.getPlatformCommand:
+        case RealAppTestCommand.getPlatform:
           result = Platform.operatingSystem;
           break;
         case RealAppTestCommand.shouldTakeScreenshot:
