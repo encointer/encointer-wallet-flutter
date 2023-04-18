@@ -183,6 +183,6 @@ Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, Stri
       return {'title': dic.rewardsAlreadyIssuedErrorTitle, 'body': dic.rewardsAlreadyIssuedErrorBody};
     default:
       // display plain tx error in case we don't recognize the error
-      return {'title': dic.invalidTransactions, 'body': txError};
+      return {'title': dic.transactionError, 'body': txError};
   }
 }

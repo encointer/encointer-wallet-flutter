@@ -23,7 +23,7 @@ abstract class TranslationsTransaction {
   String get txTooLowPriorityErrorBody;
   String get rewardsAlreadyIssuedErrorTitle;
   String get rewardsAlreadyIssuedErrorBody;
-  String get invalidTransactions;
+  String get transactionError;
 }
 
 class TranslationsEnTransaction implements TranslationsTransaction {
@@ -82,7 +82,7 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Rewards already issued';
   @override
-  String get invalidTransactions => 'Invalid Transactions';
+  String get transactionError => 'Invalid Transactions';
 }
 
 class TranslationsDeTransaction implements TranslationsTransaction {
@@ -142,7 +142,7 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Einkommen bereits ausgezahlt';
   @override
-  String get invalidTransactions => 'Ungültige Transaktionen';
+  String get transactionError => 'Ungültige Transaktionen';
 }
 
 class TranslationsFrTransaction implements TranslationsTransaction {
@@ -202,7 +202,7 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Revenu déjà versé';
   @override
-  String get invalidTransactions => 'Transactions invalides';
+  String get transactionError => 'Transactions invalides';
 }
 
 class TranslationsRuTransaction implements TranslationsTransaction {
@@ -264,5 +264,5 @@ class TranslationsRuTransaction implements TranslationsTransaction {
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Вознаграждения уже выданы';
   @override
-  String get invalidTransactions => 'Недействительные транзакции';
+  String get transactionError => 'Недействительные транзакции';
 }
