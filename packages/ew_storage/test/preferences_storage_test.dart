@@ -1,5 +1,4 @@
 import 'package:ew_storage/ew_storage.dart';
-// import 'package:ew_storage/src/storages/storage_exception.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
