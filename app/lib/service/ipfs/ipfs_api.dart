@@ -5,8 +5,8 @@ import 'package:http/http.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
-class HttpApi {
-  const HttpApi(Client client, {this.gateway = ipfsGatewayEncointer}) : _client = client;
+class IpfsApi {
+  const IpfsApi(Client client, {this.gateway = ipfsGatewayEncointer}) : _client = client;
 
   final Client _client;
   final String gateway;
@@ -15,7 +15,7 @@ class HttpApi {
 
   Future<String?> getCommunityIcon(String cid) async {
     if (cid.isEmpty) {
-      Log.d('[HttpApi] return default encointer icon because cid is not set', 'HttpApi');
+      Log.d('[IPFS] return default encointer icon because ipfs-cid is not set', 'Ipfs');
       return null;
     }
     try {

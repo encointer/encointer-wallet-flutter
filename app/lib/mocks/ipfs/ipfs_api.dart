@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/service/http_api/http_api.dart';
+import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 
 const mockIcon = '<svg viewBox="0 0 132.09 131.85" '
     'xmlns="http://www.w3.org/2000/svg"><circle cx="65.4" '
@@ -11,8 +11,8 @@ const mockIcon = '<svg viewBox="0 0 132.09 131.85" '
     '26.19-11.6 7.26 8.06v-10.32l-4.42-4.35v-8.87l4.42-5.8v-5.16z"/> '
     '<path d="m97.62 95.38-12.03 11.17-8.84-11.17z"/></svg>';
 
-class MockHttpApi extends HttpApi {
-  const MockHttpApi(super.client);
+class MockIpfsApi extends IpfsApi {
+  const MockIpfsApi(super.client);
 
   @override
   Future<String?> getCommunityIcon(String? cid) {
