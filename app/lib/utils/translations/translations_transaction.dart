@@ -128,7 +128,7 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   String get votesNotDependableErrorTitle => 'Unzureichende Bestätigungen';
   @override
   String get insufficientFundsErrorBody =>
-      'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
+      'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen Gemeinschaft, wie du welches bekommen kannst.';
   @override
   String get insufficientFundsErrorTitle => 'Zu wenig Guthaben';
   @override
@@ -198,7 +198,7 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   String get txTooLowPriorityErrorTitle => 'Erreur de priorité de transaction';
   @override
   String get rewardsAlreadyIssuedErrorBody =>
-      'Un autre participant a déclenché le paiement pour cette rencontre. Tu devrais avoir avoir déjà reçu ton revenu.';
+      'Un autre participant a déclenché le paiement pour cette rencontre. Tu devrais avoir déjà reçu ton revenu.';
   @override
   String get rewardsAlreadyIssuedErrorTitle => 'Revenu déjà versé';
   @override
