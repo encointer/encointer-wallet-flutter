@@ -41,6 +41,9 @@ class CeremonyStep2Scan extends StatelessWidget {
         title: Text(dic.encointer.keySigningCycle),
         actions: [
           UserMeetupAvatar(index: getCurrentAccountIndex()),
+          const SizedBox(
+            width: 20,
+          )
         ],
       ),
       body: Column(

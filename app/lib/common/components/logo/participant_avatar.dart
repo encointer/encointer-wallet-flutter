@@ -36,8 +36,8 @@ class UserMeetupAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final svgWidth = context.width > 730 ? 70.0 : 40.0;
-    return Padding(
-      padding: const EdgeInsets.only(right: 20),
+    return Opacity(
+      opacity: 0.8,
       child: Assets.avatars.values[index].svg(width: svgWidth),
     );
   }
