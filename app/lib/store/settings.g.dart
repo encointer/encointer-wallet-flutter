@@ -250,21 +250,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$themeAtom = Atom(name: '_SettingsStore.theme', context: context);
-
-  @override
-  ThemeData get theme {
-    _$themeAtom.reportRead();
-    return super.theme;
-  }
-
-  @override
-  set theme(ThemeData value) {
-    _$themeAtom.reportWrite(value, super.theme, () {
-      super.theme = value;
-    });
-  }
-
   late final _$initAsyncAction = AsyncAction('_SettingsStore.init', context: context);
 
   @override
@@ -445,7 +430,6 @@ networkState: ${networkState},
 networkConst: ${networkConst},
 contactList: ${contactList},
 locale: ${locale},
-theme: ${theme},
 endpointIsEncointer: ${endpointIsEncointer},
 endpointIsNoTee: ${endpointIsNoTee},
 endpointIsTeeProxy: ${endpointIsTeeProxy},

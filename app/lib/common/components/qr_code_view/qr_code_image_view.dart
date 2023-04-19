@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/extensions/extensions.dart';
 
 class QrCodeImageWithButton extends StatelessWidget {
@@ -25,10 +25,10 @@ class QrCodeImageWithButton extends StatelessWidget {
         const SizedBox(height: 10),
         TextButton.icon(
           onPressed: onTap,
-          icon: Icon(Icons.share, color: zurichLion.shade500),
+          icon: const Icon(Icons.share),
           label: Text(
             text,
-            style: Theme.of(context).textTheme.displaySmall,
+            style: context.textTheme.displaySmall,
           ),
         ),
         const SizedBox(height: 20),
@@ -57,10 +57,10 @@ class QrCodeImage extends StatelessWidget {
         maxScale: context.isMobile ? 1.0001 : 1.1,
         minScale: context.isMobile ? 0.2 : 0.4,
         initialScale: context.isMobile ? 0.8 : 0.5,
-        backgroundDecoration: BoxDecoration(color: zurichLion.shade50),
+        backgroundDecoration: BoxDecoration(color: context.colorScheme.background),
         child: Center(
           child: QrImage(
-            backgroundColor: Theme.of(context).canvasColor,
+            backgroundColor: context.colorScheme.background,
             data: qrCode,
             errorCorrectionLevel: errorCorrectionLevel,
           ),

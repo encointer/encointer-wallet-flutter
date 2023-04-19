@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/modules/account/account.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
@@ -51,7 +51,6 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
     final newAccountStore = context.watch<NewAccountStore>();
     return ScrollableForm(
       formKey: _formKey,
@@ -60,7 +59,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         Center(
           child: Text(
             dic.profile.pinSecure,
-            style: textTheme.displayMedium,
+            style: context.textTheme.displayMedium,
             textAlign: TextAlign.center,
           ),
         ),
@@ -68,7 +67,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         Text(
           dic.profile.pinHint,
           textAlign: TextAlign.center,
-          style: textTheme.displayMedium!.copyWith(color: encointerBlack),
+          style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(
@@ -76,7 +75,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
           keyboardType: TextInputType.number,
           filled: true,
           obscureText: true,
-          fillColor: zurichLion.shade50,
+          fillColor: context.colorScheme.background,
           hintText: dic.account.createPassword,
           labelText: dic.account.createPassword,
           controller: _passCtrl,
@@ -89,7 +88,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
           key: const Key('create-account-pin2'),
           keyboardType: TextInputType.number,
           filled: true,
-          fillColor: const Color(0xffF4F8F9),
+          fillColor: context.colorScheme.background,
           hintText: dic.account.createPassword2,
           labelText: dic.account.createPassword2,
           controller: _pass2Ctrl,

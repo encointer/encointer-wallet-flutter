@@ -3,7 +3,7 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -40,14 +40,14 @@ class CeremonyStep3Finish extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.thankYou,
-                        style: Theme.of(context).textTheme.displayMedium!.copyWith(color: zurichLion.shade600),
+                        style: context.textTheme.displayMedium,
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.weHopeToSeeYouAtTheNextGathering,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.5),
+                        style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.5),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -78,7 +78,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                     const SizedBox(width: 12, height: 60),
                     Text(
                       dic.encointer.finish,
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: context.textTheme.displaySmall,
                     ),
                   ],
                 ),

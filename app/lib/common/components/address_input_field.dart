@@ -2,7 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -58,7 +58,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
               Text(item.name),
               Text(
                 Fmt.address(address)!,
-                style: TextStyle(fontSize: 12, color: Theme.of(context).unselectedWidgetColor),
+                style: TextStyle(fontSize: 12, color: context.theme.unselectedWidgetColor),
               ),
             ],
           )
@@ -75,7 +75,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
       decoration: !isSelected
           ? null
           : BoxDecoration(
-              border: Border.all(color: Theme.of(context).primaryColor),
+              border: Border.all(color: context.colorScheme.primary),
               borderRadius: BorderRadius.circular(5),
               color: Colors.white,
             ),
@@ -99,7 +99,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     final dic = I18n.of(context)!.translationsForLocale();
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: zurichLion.shade50,
+        color: context.colorScheme.background,
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(
@@ -114,7 +114,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
             labelText: widget.label,
-            labelStyle: Theme.of(context).textTheme.headlineMedium,
+            labelStyle: context.textTheme.headlineMedium,
             contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
             border: const UnderlineInputBorder(
               borderSide: BorderSide(width: 0, style: BorderStyle.none),

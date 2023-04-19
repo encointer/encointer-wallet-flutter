@@ -19,7 +19,7 @@ import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -193,10 +193,8 @@ class _AssetsState extends State<Assets> {
                                         ),
                                         Text(
                                           '${dic!.assets.balance}, ${widget.store.encointer.community?.symbol}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium!
-                                              .copyWith(color: encointerGrey),
+                                          style: context.textTheme.headlineMedium!
+                                              .copyWith(color: AppColors.encointerGrey),
                                         ),
                                       ],
                                     )
@@ -399,7 +397,7 @@ class _AssetsState extends State<Assets> {
                 height: avatarSize,
                 width: avatarSize,
                 decoration: BoxDecoration(
-                  color: zurichLion.shade50,
+                  color: context.colorScheme.background,
                   shape: BoxShape.circle,
                 ),
                 child: e.communityIcon != null
@@ -418,7 +416,7 @@ class _AssetsState extends State<Assets> {
               height: avatarSize,
               width: avatarSize,
               decoration: BoxDecoration(
-                color: zurichLion.shade50,
+                color: context.colorScheme.background,
                 shape: BoxShape.circle,
               ),
               child: const CenteredActivityIndicator(),

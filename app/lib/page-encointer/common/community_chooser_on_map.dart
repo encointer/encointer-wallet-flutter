@@ -7,7 +7,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -46,7 +46,7 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
         leading: const SizedBox.shrink(),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.close, color: encointerGrey),
+            icon: const Icon(Icons.close, color: AppColors.encointerGrey),
             onPressed: () => Navigator.pop(context),
           )
         ],

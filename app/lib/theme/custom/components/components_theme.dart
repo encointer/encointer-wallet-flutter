@@ -27,8 +27,7 @@ mixin CompomnentTheme {
       backgroundColor: Colors.white,
       shadowColor: Colors.transparent,
       centerTitle: true,
-      toolbarTextStyle: TextStyle(fontSize: 19, color: primarySwatch.shade500),
-      titleTextStyle: TextStyle(fontSize: 19, color: primarySwatch.shade500),
+      foregroundColor: primarySwatch.shade500,
     );
   }
 

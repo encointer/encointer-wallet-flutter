@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step2_scan2.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -62,20 +62,20 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.count,
-                        style: Theme.of(context).textTheme.displayMedium!.copyWith(color: zurichLion.shade600),
+                        style: context.textTheme.displayMedium,
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black, height: 2),
+                        style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 2),
                       ),
                     ),
                     const SizedBox(height: 48),
                     EncointerTextFormField(
                       labelText: dic.encointer.numberOfAttendees,
-                      textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(color: encointerBlack),
+                      textStyle: context.textTheme.displayLarge!.copyWith(color: AppColors.encointerBlack),
                       controller: _attendeesCountController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       textFormFieldKey: const Key('attendees-count'),
@@ -92,7 +92,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     const SizedBox(width: 12),
                     Text(
                       dic.encointer.next,
-                      style: Theme.of(context).textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
+                      style: context.textTheme.displaySmall,
                     ),
                   ],
                 ),

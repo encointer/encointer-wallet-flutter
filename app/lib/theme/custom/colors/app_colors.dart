@@ -21,7 +21,7 @@ class AppColors {
   static const Color encointerBlack = Color(0xff353535);
 
   // TODO later: maybe turn into a function that takes the 2 colors and returns the gradient
-  final primaryGradient = LinearGradient(
+  static final primaryGradient = LinearGradient(
     begin: const Alignment(-.9, 0),
     end: const Alignment(0.1, -.1),
     colors: <Color>[zurichLion.shade400, zurichLion.shade600],

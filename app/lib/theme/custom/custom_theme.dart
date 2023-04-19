@@ -8,12 +8,17 @@ class CustomTheme with CompomnentTheme, TypographyTheme {
   final MaterialColor primarySwatch;
 
   ThemeData get light => ThemeData(
-        primarySwatch: primarySwatch,
-        scaffoldBackgroundColor: Colors.white,
-        elevatedButtonTheme: elevatedButtonThemeData(primarySwatch),
-        appBarTheme: appBarTheme(primarySwatch),
-        textTheme: textTheme(primarySwatch),
-      );
+      primarySwatch: primarySwatch,
+      scaffoldBackgroundColor: Colors.white,
+      elevatedButtonTheme: elevatedButtonThemeData(primarySwatch),
+      appBarTheme: appBarTheme(primarySwatch),
+      textTheme: textTheme(primarySwatch),
+      iconTheme: iconTheme(primarySwatch),
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primarySwatch,
+        background: primarySwatch.shade50,
+        secondary: primarySwatch.shade500,
+      ));
 
   LinearGradient get primaryGradient => LinearGradient(
         begin: const Alignment(-.9, 0),

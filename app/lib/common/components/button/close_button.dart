@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class CloseButton extends StatelessWidget {
   const CloseButton({super.key, this.onPressed});
@@ -9,7 +9,7 @@ class CloseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.close, color: encointerGrey),
+      icon: const Icon(Icons.close, color: AppColors.encointerGrey),
       onPressed: onPressed ?? () => Navigator.pop(context),
     );
   }

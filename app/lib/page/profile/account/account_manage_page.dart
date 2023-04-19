@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
@@ -81,7 +81,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
-    final h3 = Theme.of(context).textTheme.displaySmall!;
+    final h3 = context.textTheme.displaySmall!;
 
     final community = _appStore.encointer.communityStores![cidFmt]!;
 
@@ -98,7 +98,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       subtitle: Text(community.symbol!, style: h3),
       trailing: Text(
         '${entry != null && community.applyDemurrage != null ? Fmt.doubleFormat(community.applyDemurrage!(entry)) : 0} ⵐ',
-        style: h3.copyWith(color: encointerGrey),
+        style: h3.copyWith(color: AppColors.encointerGrey),
       ),
     );
   }
@@ -152,7 +152,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final h3 = Theme.of(context).textTheme.displaySmall;
+    final h3 = context.textTheme.displaySmall;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
     final appSettingsStore = context.watch<AppSettings>();
@@ -235,13 +235,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           ),
                           IconButton(
                             icon: const Icon(Iconsax.copy),
-                            color: zurichLion.shade500,
+                            color: context.colorScheme.secondary,
                             onPressed: () => UI.copyAndNotify(context, addressSS58),
                           ),
                         ],
                       ),
                       Text(dic.encointer.communities,
-                          style: h3!.copyWith(color: encointerGrey), textAlign: TextAlign.left),
+                          style: h3!.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
                     ],
                   ),
                 ),
@@ -276,7 +276,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 DecoratedBox(
                   // width: double.infinity,
                   decoration: BoxDecoration(
-                    gradient: primaryGradient,
+                    gradient: AppColors.primaryGradient,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -308,7 +308,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             key: Key('popup-menu-account-trash-export'),
                             color: Colors.white,
                           ),
-                          color: zurichLion.shade50,
+                          color: context.colorScheme.background,
                           padding: const EdgeInsets.all(20),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -339,8 +339,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                         value: data.accountAction,
                                         // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
                                         child: ListTileTheme(
-                                          textColor: zurichLion.shade500,
-                                          iconColor: zurichLion.shade500,
+                                          textColor: context.colorScheme.secondary,
+                                          iconColor: context.colorScheme.secondary,
                                           child: ListTile(
                                             minLeadingWidth: 0,
                                             title: Text(data.title),

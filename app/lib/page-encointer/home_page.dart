@@ -3,7 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
@@ -78,7 +78,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
             icon: _tabList[activeItem] == i
                 ? ShaderMask(
                     blendMode: BlendMode.srcIn,
-                    shaderCallback: (bounds) => primaryGradient.createShader(
+                    shaderCallback: (bounds) => AppColors.primaryGradient.createShader(
                       Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                     ),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -100,7 +100,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                 : Icon(
                     i.iconData,
                     key: Key(i.key.name),
-                    color: i.key == TabKey.scan ? zurichLion.shade900 : encointerGrey,
+                    color: i.key == TabKey.scan ? context.colorScheme.onSurface : AppColors.encointerGrey,
                   ),
             label: '',
           ),
