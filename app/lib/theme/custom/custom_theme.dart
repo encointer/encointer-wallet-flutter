@@ -7,7 +7,7 @@ class CustomTheme with CompomnentTheme, TypographyTheme {
 
   final MaterialColor primarySwatch;
 
-  ThemeData light() {
+  ThemeData get light {
     return ThemeData(
       primarySwatch: primarySwatch,
       scaffoldBackgroundColor: Colors.white,
@@ -15,9 +15,5 @@ class CustomTheme with CompomnentTheme, TypographyTheme {
       appBarTheme: appBarTheme(primarySwatch),
       textTheme: textTheme(primarySwatch),
     );
-  }
-
-  CustomTheme copyWith({MaterialColor? primarySwatch}) {
-    return CustomTheme(primarySwatch ?? this.primarySwatch);
   }
 }
