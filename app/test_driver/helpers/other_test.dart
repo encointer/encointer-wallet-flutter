@@ -1,6 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
+import 'extension/screenshot_driver_extension.dart';
 import 'real_app_helper.dart';
 import 'screenshots.dart';
 
@@ -17,7 +18,7 @@ Future<void> createAccountAndSetPin(FlutterDriver driver, String account) async 
   await driver.waitFor(find.byValueKey('create-account-name'));
   await driver.tap(find.byValueKey('create-account-name'));
   await driver.enterText(account);
-  await takeScreenshot(driver, Screenshots.createAccount);
+  await driver.takeScreenshot(Screenshots.createAccount);
   await driver.tap(find.byValueKey('create-account-next'));
 
   await driver.waitFor(find.byValueKey('create-account-pin'));
@@ -27,7 +28,7 @@ Future<void> createAccountAndSetPin(FlutterDriver driver, String account) async 
   await driver.tap(find.byValueKey('create-account-pin2'));
   await driver.enterText('0001');
 
-  await takeScreenshot(driver, Screenshots.pinEntry);
+  await driver.takeScreenshot(Screenshots.pinEntry);
   await driver.tap(find.byValueKey('create-account-confirm'));
 }
 
@@ -65,9 +66,9 @@ Future<void> shareAccount(FlutterDriver driver, String account, {bool shouldTake
   await driver.tap(find.byValueKey(account));
 
   await driver.waitFor(find.byValueKey('go-to-account-share'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.accountManageView);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.accountManageView);
   await driver.tap(find.byValueKey('go-to-account-share'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.accountShareView);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.accountShareView);
 
   await addDelay(800);
   await driver.waitFor(find.byValueKey('close-share-page'));
@@ -83,7 +84,7 @@ Future<void> accountChangeName(FlutterDriver driver, String changedName, {bool s
   await driver.waitFor(find.byValueKey('account-name-field'));
   await driver.tap(find.byValueKey('account-name-field'));
   await driver.enterText(changedName);
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.changeAccountName);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.changeAccountName);
 
   await driver.tap(find.byValueKey('account-name-edit-check'));
   await addDelay(700);
@@ -93,16 +94,16 @@ Future<void> accountChangeName(FlutterDriver driver, String changedName, {bool s
 
 Future<String> accountExport(FlutterDriver driver, {bool shouldTakeScreenshot = false}) async {
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.accountOptionsDialog);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.accountOptionsDialog);
   await driver.tap(find.byValueKey('export'));
   await driver.tap(find.byValueKey('input-password-dialog'));
   await driver.enterText('0001');
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.accountPasswordDialog);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.accountPasswordDialog);
   await driver.tap(find.byValueKey('password-ok'));
 
   await driver.waitFor(find.byValueKey('account-mnemonic-key'));
   final mnemonic = await driver.getText(find.byValueKey('account-mnemonic-key'));
-  if (shouldTakeScreenshot) await takeScreenshot(driver, Screenshots.exportAccountView);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.exportAccountView);
   await addDelay(1000);
   await driver.tap(find.pageBack());
   return mnemonic;
