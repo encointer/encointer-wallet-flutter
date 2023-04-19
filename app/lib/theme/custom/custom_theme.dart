@@ -7,13 +7,17 @@ class CustomTheme with CompomnentTheme, TypographyTheme {
 
   final MaterialColor primarySwatch;
 
-  ThemeData get light {
-    return ThemeData(
-      primarySwatch: primarySwatch,
-      scaffoldBackgroundColor: Colors.white,
-      elevatedButtonTheme: elevatedButtonThemeData(primarySwatch),
-      appBarTheme: appBarTheme(primarySwatch),
-      textTheme: textTheme(primarySwatch),
-    );
-  }
+  ThemeData get light => ThemeData(
+        primarySwatch: primarySwatch,
+        scaffoldBackgroundColor: Colors.white,
+        elevatedButtonTheme: elevatedButtonThemeData(primarySwatch),
+        appBarTheme: appBarTheme(primarySwatch),
+        textTheme: textTheme(primarySwatch),
+      );
+
+  LinearGradient get primaryGradient => LinearGradient(
+        begin: const Alignment(-.9, 0),
+        end: const Alignment(0.1, -.1),
+        colors: [primarySwatch.shade400, primarySwatch.shade600],
+      );
 }

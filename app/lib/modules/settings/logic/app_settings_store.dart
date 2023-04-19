@@ -1,10 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/settings/settings.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 part 'app_settings_store.g.dart';
 
@@ -27,6 +27,12 @@ abstract class _AppSettingsBase with Store {
 
   @computed
   Locale get locale => _locale;
+
+  @observable
+  MaterialColor primarySwatch = AppColors.zurichLion;
+
+  @computed
+  CustomTheme get theme => CustomTheme(primarySwatch);
 
   @action
   void init() => _locale = _service.init();

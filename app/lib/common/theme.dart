@@ -64,7 +64,7 @@ final appThemeEncointer = ThemeData(
 const MaterialColor zurichLion = MaterialColor(
   0xFF79C943, // <-- primary green color
   <int, Color>{
-    50:Color(0xFFF6FAF1), // <--- used for light green buttons (i.e. secondary buttons)
+    50: Color(0xFFF6FAF1), // <--- used for light green buttons (i.e. secondary buttons)
     100: Color(0xFFF6FAF1),
     200: Color(0xFFF6FAF2),
     300: Color(0xFF93C47D), // <--- medium green border color of progress bar

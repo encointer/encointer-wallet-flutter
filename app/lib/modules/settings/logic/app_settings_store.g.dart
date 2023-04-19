@@ -14,6 +14,11 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   Locale get locale =>
       (_$localeComputed ??= Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale')).value;
+  Computed<CustomTheme>? _$themeComputed;
+
+  @override
+  CustomTheme get theme =>
+      (_$themeComputed ??= Computed<CustomTheme>(() => super.theme, name: '_AppSettingsBase.theme')).value;
 
   late final _$_localeAtom = Atom(name: '_AppSettingsBase._locale', context: context);
 
@@ -27,6 +32,21 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   set _locale(Locale value) {
     _$_localeAtom.reportWrite(value, super._locale, () {
       super._locale = value;
+    });
+  }
+
+  late final _$primarySwatchAtom = Atom(name: '_AppSettingsBase.primarySwatch', context: context);
+
+  @override
+  MaterialColor get primarySwatch {
+    _$primarySwatchAtom.reportRead();
+    return super.primarySwatch;
+  }
+
+  @override
+  set primarySwatch(MaterialColor value) {
+    _$primarySwatchAtom.reportWrite(value, super.primarySwatch, () {
+      super.primarySwatch = value;
     });
   }
 
@@ -77,8 +97,10 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   String toString() {
     return '''
+primarySwatch: ${primarySwatch},
 developerMode: ${developerMode},
-locale: ${locale}
+locale: ${locale},
+theme: ${theme}
     ''';
   }
 }
