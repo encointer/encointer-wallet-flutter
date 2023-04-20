@@ -14,11 +14,8 @@ void main() async {
   const shouldTakeScreenshot = String.fromEnvironment('screenshot');
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
 
-  // Clear settings to make upgrade dialog visible in subsequent test runs.
-  await Upgrader.clearSavedSettings();
+  late final AppSettings appSettings;
   final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
-  final localService = LangService(await SharedPreferences.getInstance());
-  final appSettings = AppSettings(localService);
 
   enableFlutterDriverExtension(
     handler: (command) {
@@ -30,12 +27,18 @@ void main() async {
         case RealAppTestCommand.shouldTakeScreenshot:
           result = shouldTakeScreenshot;
           break;
+        case RealAppTestCommand.localeEn:
+          result = appSettings.locale.languageCode;
+          break;
       }
       return Future.value(result);
     },
   );
 
+  WidgetsFlutterBinding.ensureInitialized();
+  // Clear settings to make upgrade dialog visible in subsequent test runs.
+  await Upgrader.clearSavedSettings();
+  appSettings = AppSettings(LangService(await SharedPreferences.getInstance()));
   WidgetsApp.debugAllowBannerOverride = false;
-
   await app.main(appCast: cfg, appSettings: appSettings);
 }

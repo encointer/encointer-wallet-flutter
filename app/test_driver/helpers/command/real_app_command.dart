@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
+// import 'package:encointer_wallet/modules/modules.dart';
 
 class RealAppTestCommand {
   static const String getPlatform = 'getPlatform';
@@ -10,10 +10,13 @@ class RealAppTestCommand {
   static const String devModeOn = 'dev-mode-on';
   static const String devModeOff = 'dev-mode-off';
 
-  static Future<String> changeLocaleEn(AppSettings appSettings, String languageCode) async {
-    if (appSettings.locale.languageCode != languageCode) {
-      await appSettings.setLocale(languageCode);
-    }
-    return appSettings.locale.languageCode;
-  }
+  // static Future<String> changeLocale(AppSettings appSettings, String languageCode) async {
+  //   if (appSettings.locale.languageCode != languageCode) {
+  //     // print('--------------------- CHANGE LOCALE $languageCode');
+  //     await appSettings.setLocale(languageCode);
+  //   } else {
+  //     // print('--------------------- LOCALE ALREADY $languageCode');
+  //   }
+  //   return appSettings.locale.languageCode;
+  // }
 }
