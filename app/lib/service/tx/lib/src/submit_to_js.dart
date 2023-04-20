@@ -173,7 +173,7 @@ Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, Stri
     return {'title': dic.insufficientFundsErrorTitle, 'body': dic.insufficientFundsErrorBody};
   }
   switch (txError) {
-    case 'ecncointerCeremonies.VotesNotDependable':
+    case 'encointerCeremonies.VotesNotDependable':
       return {'title': dic.votesNotDependableErrorTitle, 'body': dic.votesNotDependableErrorBody};
     case 'encointerCeremonies.AlreadyEndorsed':
       return {'title': dic.alreadyEndorsedErrorTitle, 'body': dic.alreadyEndorsedErrorBody};
