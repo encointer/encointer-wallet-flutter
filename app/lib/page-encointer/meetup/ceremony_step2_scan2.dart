@@ -38,6 +38,12 @@ class CeremonyStep2Scan extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.encointer.keySigningCycle),
+        actions: [
+          UserMeetupAvatar(index: getCurrentAccountIndex()),
+          const SizedBox(
+            width: 20,
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -71,7 +77,6 @@ class CeremonyStep2Scan extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 QrCodeImage(qrCode: claimantAddress),
-                UserMeetupAvatar(index: getCurrentAccountIndex()),
               ],
             ),
           ),
