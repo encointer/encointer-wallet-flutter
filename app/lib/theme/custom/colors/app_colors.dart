@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const MaterialColor zurichLion = MaterialColor(
+  static const MaterialColor leu = MaterialColor(
     0xff4374A3,
     <int, Color>{
       50: Color(0xffF4F8F9), // <--- used for light blue buttons (i.e. secondary buttons)
@@ -17,6 +17,22 @@ class AppColors {
     },
   );
 
+  static const MaterialColor gbd = MaterialColor(
+    0xFF79C943, // <-- primary green color
+    <int, Color>{
+      50: Color(0xFFF6FAF1), // <--- used for light green buttons (i.e. secondary buttons)
+      100: Color(0xFFF6FAF1),
+      200: Color(0xFFF6FAF2),
+      300: Color(0xFF93C47D), // <--- medium green border color of progress bar
+      400: Color(0xFF7CB342), // <--- starting color of gradient
+      500: Color(0xFF0D8102), // <--- main color for almost all texts
+      600: Color(0xFF35B731), // <--- end color of gradient
+      700: Color(0xFF35B733),
+      800: Color(0xFF34B032),
+      900: Color(0xFF004D08), // <--- dark green for the scan bottomButtonBar icon
+    },
+  );
+
   static const Color encointerGrey = Color(0xff666666);
   static const Color encointerBlack = Color(0xff353535);
 
@@ -24,6 +40,6 @@ class AppColors {
   static final primaryGradient = LinearGradient(
     begin: const Alignment(-.9, 0),
     end: const Alignment(0.1, -.1),
-    colors: <Color>[zurichLion.shade400, zurichLion.shade600],
+    colors: <Color>[leu.shade400, leu.shade600],
   );
 }

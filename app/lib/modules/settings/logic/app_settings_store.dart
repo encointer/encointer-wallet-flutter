@@ -29,7 +29,7 @@ abstract class _AppSettingsBase with Store {
   Locale get locale => _locale;
 
   @observable
-  MaterialColor primarySwatch = AppColors.zurichLion;
+  MaterialColor primarySwatch = AppColors.leu;
 
   @computed
   CustomTheme get theme => CustomTheme(primarySwatch);
