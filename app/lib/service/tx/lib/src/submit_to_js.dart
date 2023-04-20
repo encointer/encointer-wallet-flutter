@@ -181,6 +181,8 @@ Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, Stri
       return {'title': dic.noValidClaimsErrorTitle, 'body': dic.noValidClaimsErrorBody};
     case 'encointerCeremonies.RewardsAlreadyIssued':
       return {'title': dic.rewardsAlreadyIssuedErrorTitle, 'body': dic.rewardsAlreadyIssuedErrorBody};
+    case 'encointerBalances.BalanceTooLow':
+      return {'title': dic.balanceTooLowTitle, 'body': dic.balanceTooLowBody};
     default:
       // display plain tx error in case we don't recognize the error
       return {'title': dic.transactionError, 'body': txError};

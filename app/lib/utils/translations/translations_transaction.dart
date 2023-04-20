@@ -23,6 +23,8 @@ abstract class TranslationsTransaction {
   String get txTooLowPriorityErrorBody;
   String get rewardsAlreadyIssuedErrorTitle;
   String get rewardsAlreadyIssuedErrorBody;
+  String get balanceTooLowTitle;
+  String get balanceTooLowBody;
   String get transactionError;
 }
 
@@ -83,6 +85,11 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   String get rewardsAlreadyIssuedErrorTitle => 'Rewards already issued';
   @override
   String get transactionError => 'Transaction error';
+  @override
+  String get balanceTooLowBody =>
+      "You don't have sufficient funds in your account. You can't send all your money because you need some for the fees.";
+  @override
+  String get balanceTooLowTitle => 'Balance too low';
 }
 
 class TranslationsDeTransaction implements TranslationsTransaction {
@@ -143,6 +150,11 @@ class TranslationsDeTransaction implements TranslationsTransaction {
   String get rewardsAlreadyIssuedErrorTitle => 'Einkommen bereits ausgezahlt';
   @override
   String get transactionError => 'Transaktionsfehler';
+  @override
+  String get balanceTooLowBody =>
+      'Du hast nicht genug Geld auf dem Konto. Du kannst nicht dein ganzes Geld schicken, weil du noch ein wenig für die Gebühren brauchst.';
+  @override
+  String get balanceTooLowTitle => 'Kontostand zu tief';
 }
 
 class TranslationsFrTransaction implements TranslationsTransaction {
@@ -203,6 +215,11 @@ class TranslationsFrTransaction implements TranslationsTransaction {
   String get rewardsAlreadyIssuedErrorTitle => 'Revenu déjà versé';
   @override
   String get transactionError => 'Erreur de transaction';
+  @override
+  String get balanceTooLowBody =>
+      "Tu n'as pas assez d'argent sur ton compte. Tu ne peux pas envoyer tout ton argent, car il t'en faut encore un peu pour payer les frais.";
+  @override
+  String get balanceTooLowTitle => 'Solde trop bas';
 }
 
 class TranslationsRuTransaction implements TranslationsTransaction {
@@ -265,4 +282,9 @@ class TranslationsRuTransaction implements TranslationsTransaction {
   String get rewardsAlreadyIssuedErrorTitle => 'Вознаграждения уже выданы';
   @override
   String get transactionError => 'Ошибка транзакции';
+  @override
+  String get balanceTooLowBody =>
+      'У вас недостаточно средств на счету. Вы не можете отправить все свои деньги, так как часть нужна для оплаты комиссии.';
+  @override
+  String get balanceTooLowTitle => 'Недостаточно средств на счете';
 }
