@@ -14,6 +14,7 @@ import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -154,6 +155,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final h3 = Theme.of(context).textTheme.displaySmall;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
+    final appSettingsStore = context.watch<AppSettings>();
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
@@ -216,17 +218,20 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           accountToBeEditedPubKey!,
                           size: 130,
                         ),
+                      Text(
+                        addressSS58,
+                        key: const Key('account-public-key'),
+                        // Text only read `addressSS58` for integration test
+                        style: const TextStyle(fontSize: 2, color: Colors.transparent),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            // In the tests, we have to read the address from the field, but `Fmt.address` does only return parts of it `5Hdf...P3ZD`.
-                            // Additionally, we can't paste from the clipboard in flutter driver tests, which is why we have to read it from the text field.
-                            store.config.isIntegrationTest ? addressSS58 : Fmt.address(addressSS58)!,
+                            Fmt.address(addressSS58)!,
                             style: const TextStyle(fontSize: 20),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            key: const Key('account-public-key'),
                           ),
                           IconButton(
                             icon: const Icon(Iconsax.copy),
@@ -240,7 +245,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                if (store.settings.developerMode)
+                if (appSettingsStore.developerMode)
                   Expanded(
                     child: ListView.builder(
                         // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
