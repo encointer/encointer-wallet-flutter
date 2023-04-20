@@ -16,7 +16,7 @@ fi
 
 ./flutterw pub global run melos integration-app-test-android
 ./flutterw pub global run melos integration-scan-test-android
-./flutterw pub global run melos integration-real-app-test-android
+./flutterw pub global run melos integration-real-app-test-android-screenshot
 
 mkdir -p "$TEMP_DIR"
 

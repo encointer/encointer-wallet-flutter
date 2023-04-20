@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/extensions/layout/layout_extensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/gen/assets.gen.dart';
@@ -34,9 +35,10 @@ class UserMeetupAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final svgWidth = context.width > 730 ? 70.0 : 40.0;
     return Opacity(
       opacity: 0.8,
-      child: Assets.avatars.values[index].svg(width: 70),
+      child: Assets.avatars.values[index].svg(width: svgWidth),
     );
   }
 }

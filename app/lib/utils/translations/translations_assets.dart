@@ -52,8 +52,6 @@ abstract class TranslationsAssets {
   String get redeemFailure;
   String get invalidNetwork;
   String get invalidCommunity;
-  String get transactionError;
-  String get insufficientFundsExplanation;
   String get chosenRightCommunity;
 }
 
@@ -162,12 +160,6 @@ class TranslationsEnAssets implements TranslationsAssets {
   String get invalidNetwork => 'Invalid Network';
   @override
   String get invalidCommunity => 'Invalid Community';
-  @override
-  String get transactionError => 'Transaction error';
-  @override
-  String get insufficientFundsExplanation =>
-      'You do not have sufficient funds on this account. See on the website of your'
-      ' local community how to get some.';
   @override
   String get chosenRightCommunity =>
       'The data is for a different community. Please change the community to send funds.';
@@ -278,11 +270,6 @@ class TranslationsDeAssets implements TranslationsAssets {
   String get invalidNetwork => 'Ungültiges Netzwerk';
   @override
   String get invalidCommunity => 'Ungülige Gemeinschaft';
-  @override
-  String get transactionError => 'Transaktionsfehler';
-  @override
-  String get insufficientFundsExplanation => 'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite'
-      ' deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
   @override
   String get chosenRightCommunity =>
       'Die Daten sind für eine andere Community. Bitte wechsle die Community um Geld zu senden.';
@@ -395,11 +382,6 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get invalidCommunity => 'Communauté non valide.';
   @override
-  String get transactionError => 'Erreur de transaction.';
-  @override
-  String get insufficientFundsExplanation =>
-      "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.";
-  @override
   String get chosenRightCommunity =>
       "Les données sont destinées à une autre communauté. S'il te plaît, change la communauté pour envoyer le payment.";
 }
@@ -509,11 +491,6 @@ class TranslationsRuAssets implements TranslationsAssets {
   String get invalidNetwork => 'Неправильная сеть';
   @override
   String get invalidCommunity => 'Несоотвествующая община';
-  @override
-  String get transactionError => 'Ошибка транзакции';
-  @override
-  String get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите '
-      'на сайте вашей местной общины, как получить вознаграждение';
   @override
   String get chosenRightCommunity =>
       'Данные относятся к другому сообществу. Пожалуйста, измените сообщество, чтобы отправить средства.';

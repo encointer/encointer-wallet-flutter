@@ -7,7 +7,12 @@ import 'package:encointer_wallet/service/notification/lib/notification.dart';
 /// deterministic ID per reminder type per ceremony index.
 class CeremonyNotifications {
   /// Schedules two meetup reminders for a registered meetup.
-  static Future<void> scheduleMeetupReminders(int ceremonyIndex, int meetupTime, TranslationsEncointer dic) async {
+  static Future<void> scheduleMeetupReminders({
+    required int ceremonyIndex,
+    required int meetupTime,
+    required TranslationsEncointer dic,
+    String? cid,
+  }) async {
     final meetupDateTime = DateTime.fromMillisecondsSinceEpoch(meetupTime);
 
     final oneHourBeforeMeetup = meetupDateTime.subtract(const Duration(hours: 1));
@@ -17,6 +22,7 @@ class CeremonyNotifications {
         dic.meetupNotificationOneHourBeforeTitle,
         dic.meetupNotificationOneHourBeforeContent,
         oneHourBeforeMeetup,
+        cid: cid,
       );
     }
 
@@ -27,6 +33,7 @@ class CeremonyNotifications {
         dic.meetupNotificationOneDayBeforeTitle,
         dic.meetupNotificationOneDayBeforeContent,
         oneDayBeforeMeetup,
+        cid: cid,
       );
     }
   }
@@ -38,6 +45,7 @@ class CeremonyNotifications {
     int ceremonyCycleDuration,
     TranslationsEncointer dic, {
     int numberOfCyclesToSchedule = 5,
+    String? cid,
   }) async {
     for (var i = 0; i < numberOfCyclesToSchedule; i++) {
       // calculate the scheduled date by adding i*ceremonyCycleDuration to nextRegisteringPhase
@@ -47,6 +55,7 @@ class CeremonyNotifications {
         dic.registeringPhaseReminderTitle,
         dic.registeringPhaseReminderContent,
         scheduledDate,
+        cid: cid,
       );
     }
   }
@@ -61,6 +70,7 @@ class CeremonyNotifications {
     TranslationsEncointer dic, {
     int numberOfCyclesToSchedule = 5,
     Duration showBeforeAssigningPhase = const Duration(hours: 24),
+    String? cid,
   }) async {
     for (var i = 0; i < numberOfCyclesToSchedule; i++) {
       final scheduledDate = DateTime.fromMillisecondsSinceEpoch(assigningPhaseStart + i * ceremonyCycleDuration)
@@ -72,6 +82,7 @@ class CeremonyNotifications {
           dic.registeringPhaseReminderTitle,
           dic.registeringPhaseReminderContent,
           scheduledDate,
+          cid: cid,
         );
       }
     }

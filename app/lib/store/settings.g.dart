@@ -235,21 +235,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$developerModeAtom = Atom(name: '_SettingsStore.developerMode', context: context);
-
-  @override
-  bool get developerMode {
-    _$developerModeAtom.reportRead();
-    return super.developerMode;
-  }
-
-  @override
-  set developerMode(bool value) {
-    _$developerModeAtom.reportWrite(value, super.developerMode, () {
-      super.developerMode = value;
-    });
-  }
-
   late final _$localeAtom = Atom(name: '_SettingsStore.locale', context: context);
 
   @override
@@ -387,16 +372,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void toggleDeveloperMode() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleDeveloperMode');
-    try {
-      return super.toggleDeveloperMode();
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void toggleEnableBazaar() {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleEnableBazaar');
     try {
@@ -469,7 +444,6 @@ networkName: ${networkName},
 networkState: ${networkState},
 networkConst: ${networkConst},
 contactList: ${contactList},
-developerMode: ${developerMode},
 locale: ${locale},
 theme: ${theme},
 endpointIsEncointer: ${endpointIsEncointer},

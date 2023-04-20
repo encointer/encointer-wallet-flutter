@@ -356,7 +356,7 @@ class EncointerApi {
   ) async {
     while (true) {
       final data = await getAggregatedAccountData(cid, address);
-      final phase = data.global!.ceremonyPhase;
+      final phase = data.global.ceremonyPhase;
 
       if (nextPhase == phase) {
         Log.d('[EncointerApi] received account data valid for the new ceremony phase', 'EncointerApi');

@@ -23,7 +23,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.min,
       children: [
         InkWell(
@@ -43,7 +43,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
-            widget.itemData.name!,
+            widget.itemData.name ?? '',
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
             maxLines: 2,

@@ -150,20 +150,21 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     registerParticipantParams(store.encointer.chosenCid!, dic, proof: proof),
     onFinish: (BuildContext txPageContext, Map res) async {
       store.encointer.account!.lastProofOfAttendance = proof;
-
       final data = await webApi.encointer.getAggregatedAccountData(
         store.encointer.chosenCid!,
         store.account.currentAddress,
       );
       Log.d('$data', 'AggregatedAccountData from register participant');
       final registrationType = data.personal?.participantType;
+
       if (registrationType != null) {
         _showEducationalDialog(registrationType, context);
         if (store.settings.endpoint == networkEndpointEncointerMainnet) {
           await CeremonyNotifications.scheduleMeetupReminders(
-            data.global!.ceremonyIndex,
-            store.encointer.community!.meetupTime!,
-            I18n.of(context)!.translationsForLocale().encointer,
+            ceremonyIndex: data.global.ceremonyIndex,
+            meetupTime: store.encointer.community!.meetupTime!,
+            dic: I18n.of(context)!.translationsForLocale().encointer,
+            cid: store.encointer.community?.cid.toFmtString(),
           );
         }
       }

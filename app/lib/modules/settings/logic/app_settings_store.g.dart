@@ -30,6 +30,21 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
+  late final _$developerModeAtom = Atom(name: '_AppSettingsBase.developerMode', context: context);
+
+  @override
+  bool get developerMode {
+    _$developerModeAtom.reportRead();
+    return super.developerMode;
+  }
+
+  @override
+  set developerMode(bool value) {
+    _$developerModeAtom.reportWrite(value, super.developerMode, () {
+      super.developerMode = value;
+    });
+  }
+
   late final _$setLocaleAsyncAction = AsyncAction('_AppSettingsBase.setLocale', context: context);
 
   @override
@@ -50,8 +65,19 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   }
 
   @override
+  void toggleDeveloperMode() {
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.toggleDeveloperMode');
+    try {
+      return super.toggleDeveloperMode();
+    } finally {
+      _$_AppSettingsBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+developerMode: ${developerMode},
 locale: ${locale}
     ''';
   }

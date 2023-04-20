@@ -82,6 +82,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final h3Grey = Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey);
     final store = context.watch<AppStore>();
+    final appSettingsStore = context.watch<AppSettings>();
     _selectedNetwork = store.settings.endpoint;
 
     // if all accounts are deleted, go to createAccountPage
@@ -179,11 +180,11 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
                   key: const Key('dev-mode'),
-                  value: store.settings.developerMode,
-                  onChanged: (_) => store.settings.toggleDeveloperMode(),
+                  value: appSettingsStore.developerMode,
+                  onChanged: (v) => context.read<AppSettings>().toggleDeveloperMode(),
                 ),
               ),
-              if (store.settings.developerMode)
+              if (appSettingsStore.developerMode)
                 // Column in case we add more developer options
                 Column(
                   children: <Widget>[

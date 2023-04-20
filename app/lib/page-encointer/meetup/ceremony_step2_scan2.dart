@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/qr_code_view/qr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -12,6 +13,7 @@ import 'package:encointer_wallet/page-encointer/meetup/ceremony_step3_finish.dar
 import 'package:encointer_wallet/page-encointer/meetup/scan_claim_qr_code.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -33,9 +35,16 @@ class CeremonyStep2Scan extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final textTheme = Theme.of(context).textTheme;
+    final appSettingsStore = context.watch<AppSettings>();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.encointer.keySigningCycle),
+        actions: [
+          UserMeetupAvatar(index: getCurrentAccountIndex()),
+          const SizedBox(
+            width: 20,
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -69,7 +78,6 @@ class CeremonyStep2Scan extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 QrCodeImage(qrCode: claimantAddress),
-                UserMeetupAvatar(index: getCurrentAccountIndex()),
               ],
             ),
           ),
@@ -115,7 +123,7 @@ class CeremonyStep2Scan extends StatelessWidget {
               },
             ),
           ),
-          if (store.settings.developerMode)
+          if (appSettingsStore.developerMode)
             SizedBox(
               height: 40,
               child: ElevatedButton(

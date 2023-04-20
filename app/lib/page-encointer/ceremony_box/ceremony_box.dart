@@ -65,7 +65,6 @@ class CeremonyBox extends StatelessWidget {
                   meetupTime: meetupTime,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   meetupCompleted: store.encointer.communityAccount?.meetupCompleted ?? false,
-                  devMode: store.settings.developerMode,
                 ),
                 if (store.encointer.showRegisterButton)
                   Padding(
@@ -163,12 +162,14 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return MeetupInfo(
           meetup,
           location,
+          key: const Key('account-assigned'),
           onPressed: () {
             Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
           },
         );
       } else {
         return CeremonyNotification(
+          key: const Key('account-unassigned'),
           notificationIconData: Iconsax.close_square,
           notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );

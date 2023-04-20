@@ -1,7 +1,4 @@
-import 'dart:io';
-
-import 'package:encointer_wallet/service/ipfs/http_api.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 
 const mockIcon = '<svg viewBox="0 0 132.09 131.85" '
     'xmlns="http://www.w3.org/2000/svg"><circle cx="65.4" '
@@ -14,28 +11,11 @@ const mockIcon = '<svg viewBox="0 0 132.09 131.85" '
     '26.19-11.6 7.26 8.06v-10.32l-4.42-4.35v-8.87l4.42-5.8v-5.16z"/> '
     '<path d="m97.62 95.38-12.03 11.17-8.84-11.17z"/></svg>';
 
-class MockIpfs extends Ipfs {
-  MockIpfs(String gateway) : super(gateway: gateway);
-
-  @override
-  Future<void> getJson(String cid) async {
-    Log.d('unimplemented getJson', 'MockIpfs');
-  }
+class MockIpfsApi extends IpfsApi {
+  MockIpfsApi({super.gateway, super.httpClient});
 
   @override
   Future<String?> getCommunityIcon(String? cid) {
     return Future.value(mockIcon);
-  }
-
-  @override
-  Future<String> uploadImage(File image) async {
-    Log.d('unimplemented uploadImage', 'MockIpfs');
-    return 'unimplemented uploadImage';
-  }
-
-  @override
-  Future<String> uploadJson(Map<String, dynamic> json) async {
-    Log.d('unimplemented uploadJson', 'MockIpfs');
-    return 'unimplemented uploadJson';
   }
 }

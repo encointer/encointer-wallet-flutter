@@ -6,6 +6,8 @@ import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/mocks/ipfs/ipfs_api.dart';
+import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
@@ -26,7 +28,7 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> {
   Future<void> _initPage() async {
-    final store = context.watch<AppStore>();
+    final store = context.read<AppStore>();
     await store.init(Localizations.localeOf(context).toString());
 
     // initialize it **after** the store was initialized.
@@ -78,7 +80,8 @@ Future<void> initWebApi(BuildContext context, AppStore store) async {
   final js = await DefaultAssetBundle.of(context).loadString(Assets.jsServiceEncointer.dist.main);
 
   webApi = !store.config.mockSubstrateApi
-      ? Api.create(store, JSApi(), SubstrateDartApi(), js)
+      ? Api.create(store, JSApi(), SubstrateDartApi(), js,
+          store.config.isIntegrationTest ? MockIpfsApi() : IpfsApi(gateway: store.settings.ipfsGateway))
       : MockApi(store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
 
   await webApi.init().timeout(

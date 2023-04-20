@@ -6,14 +6,7 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_servic
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyInfoAndCalendar extends StatelessWidget {
-  const CeremonyInfoAndCalendar({
-    required this.nextCeremonyDate,
-    this.onInfoPressed,
-    this.devMode = false,
-    super.key,
-  });
-
-  final bool devMode;
+  const CeremonyInfoAndCalendar({required this.nextCeremonyDate, this.onInfoPressed, super.key});
 
   /// date for the next ceremony
   final DateTime nextCeremonyDate;
