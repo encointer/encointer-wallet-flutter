@@ -23,13 +23,14 @@ class _LangPageState extends State<LangPage> {
       body: ListView.builder(
         itemCount: settings.locales.length,
         itemBuilder: (BuildContext context, int index) {
-          final lang = settings.getName(settings.locales[index].languageCode);
+          final locale = settings.locales[index];
+          final lang = settings.getName(locale.languageCode);
           return RadioListTile(
             title: Text(lang),
-            value: settings.locales[index],
+            value: locale,
             groupValue: settings.locale,
             onChanged: (v) async {
-              await context.read<AppSettings>().setLocale(index);
+              await context.read<AppSettings>().setLocale(locale.languageCode);
             },
           );
         },
