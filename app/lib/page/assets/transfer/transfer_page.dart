@@ -180,7 +180,7 @@ class _TransferPageState extends State<TransferPage> {
                           arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
                         );
                         if (invoiceData != null && invoiceData is InvoiceData) {
-                          handleTransferPageParams(
+                          await handleTransferPageParams(
                             TransferPageParams.fromInvoiceData(invoiceData),
                             store,
                           );
