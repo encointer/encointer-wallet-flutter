@@ -65,6 +65,7 @@ class AccountApi {
     Map<String, dynamic> txInfo,
     List<dynamic>? params, {
     String? rawParam,
+    String? cid,
   }) async {
     final res = await sendTx(txInfo, params, rawParam: rawParam);
 
@@ -74,6 +75,7 @@ class AccountApi {
         int.parse(hash.substring(0, 6)),
         '${txInfo['notificationTitle']}',
         '${txInfo['notificationBody']}',
+        cid: cid,
       ));
     }
     return res;

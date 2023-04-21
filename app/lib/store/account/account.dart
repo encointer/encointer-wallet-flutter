@@ -114,11 +114,13 @@ abstract class _AccountStore with Store {
 
     Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
       if (await webApi.isConnected()) {
+        final cid = rootStore.encointer.community?.cid.toFmtString();
         for (final args in queuedTxs) {
           final res = await webApi.account.sendTxAndShowNotification(
             args['txInfo'] as Map<String, dynamic>,
             args['params'] as List<dynamic>?,
             rawParam: args['rawParam'] as String?,
+            cid: cid,
           );
 
           Log.d('Queued tx result: $res', 'AccountStore');
@@ -127,6 +129,7 @@ abstract class _AccountStore with Store {
               0,
               '${args['txError']}',
               'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
+              cid: cid,
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
