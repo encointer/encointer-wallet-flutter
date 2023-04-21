@@ -30,10 +30,17 @@ class AccountApi {
   }
 
   /// decode addresses to publicKeys
-  Future<Map> decodeAddress(List<String> addresses) async {
+  Future<Map> decodeAddresses(List<String> addresses) async {
     if (addresses.isEmpty) return {};
     final res = await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
     return res ?? {};
+  }
+
+  /// Decode one address to the corresponding pubKey.
+  Future<String> addressToPubKey(String address) async {
+    final pubKeyAddress = await decodeAddresses([address]);
+    final pubKey = pubKeyAddress.keys.toList()[0] as String;
+    return pubKey;
   }
 
   Future<String> addressFromUri(String uri) async {

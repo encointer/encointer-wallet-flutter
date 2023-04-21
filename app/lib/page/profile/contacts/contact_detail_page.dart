@@ -141,7 +141,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     arguments: TransferPageParams(
                       cid: context.read<AppStore>().encointer.chosenCid,
                       communitySymbol: context.read<AppStore>().encointer.community?.symbol,
-                      recipient: account.address,
+                      recipientAddress: account.address,
                       label: _nameCtrl.text,
                     ),
                   );
