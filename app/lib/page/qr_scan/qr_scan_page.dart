@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page/qr_scan/qr_scan_service.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -38,6 +38,7 @@ class ScanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
+    final appSettingsStore = context.watch<AppSettings>();
     void onScan(String data) {
       try {
         final qrCode = qrScanService.parse(data);
@@ -79,7 +80,28 @@ class ScanPage extends StatelessWidget {
                     }
                   },
                 ),
-                if (context.select<AppStore, bool>((store) => store.settings.developerMode)) mockQrDataRow(dic, onScan)
+                if (appSettingsStore.developerMode) mockQrDataRow(dic, onScan),
+                //overlays a semi-transparent rounded square border that is 90% of screen width
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: MediaQuery.of(context).size.width * 0.7,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(color: Colors.white38, width: 2),
+                          borderRadius: const BorderRadius.all(Radius.circular(24)),
+                        ),
+                      ),
+                      Text(
+                        I18n.of(context)!.translationsForLocale().account.qrScan,
+                        style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           } else {

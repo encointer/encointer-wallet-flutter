@@ -1,7 +1,6 @@
 import 'dart:core';
 
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/mocks/ipfs/mock_ipfs_api.dart';
+import 'package:encointer_wallet/mocks/ipfs/ipfs_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_account_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_assets_api.dart';
@@ -31,7 +30,7 @@ class MockApi extends Api {
           MockAssetsApi(store, js),
           MockChainApi(store, js),
           MockEncointerApi(store, js, dartApi),
-          MockIpfs(ipfs_gateway_local),
+          MockIpfsApi(),
           jsServiceEncointer,
         );
 

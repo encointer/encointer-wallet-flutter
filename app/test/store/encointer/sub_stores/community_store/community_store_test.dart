@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/mocks/ipfs/mock_ipfs_api.dart';
+import 'package:encointer_wallet/mocks/ipfs/ipfs_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
