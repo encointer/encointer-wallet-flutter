@@ -57,11 +57,11 @@ class LocalStorage {
   }
 
   Future<void> removeContact(String address) async {
-    return storage.removeItemFromList(contactsKey, 'address', address);
+    return storage.removeItemFromList(contactsKey, 'pubKey', address);
   }
 
   Future<void> updateContact(Map<String, dynamic> con) async {
-    return storage.updateItemInList(contactsKey, 'address', con['address'] as String?, con);
+    return storage.updateItemInList(contactsKey, 'pubKey', con['pubKey'] as String?, con);
   }
 
   Future<List<Map<String, dynamic>>> getContactList() async {
