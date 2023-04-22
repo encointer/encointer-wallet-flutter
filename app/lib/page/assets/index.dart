@@ -330,9 +330,13 @@ class _AssetsState extends State<Assets> {
                     CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                     const SizedBox(height: 24),
                     Container(
-                      height: 150,
-                      width: 30,
-                      color: Colors.green,
+                      height: 70,
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                      decoration: BoxDecoration(color: zurichLion.shade50, borderRadius: BorderRadius.circular(15)),
+                      child: Column(children: [
+                        Text('Apr 21', style: Theme.of(context).textTheme.bodySmall),
+                        Text('This is a title', style: TextStyle(fontSize: 70)),
+                      ]),
                     )
                   ],
                 ),
