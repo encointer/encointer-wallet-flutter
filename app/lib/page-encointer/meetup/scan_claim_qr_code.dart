@@ -48,7 +48,8 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
       if (!allParticipantsPrefix42.contains(attendeeAddressPrefix42)) {
         // this is important because the runtime checks if there are too many claims trying to be registered.
         RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
-        Log.d('Claimant: $attendeeAddressPrefix42 is not part of registry: $allParticipantsPrefix42', 'ScanClaimQrCode');
+        Log.d(
+            'Claimant: $attendeeAddressPrefix42 is not part of registry: $allParticipantsPrefix42', 'ScanClaimQrCode');
       } else {
         final msg = store.encointer.communityAccount!.containsAttendee(attendeeAddressPrefix42)
             ? dic.encointer.claimsScannedAlready

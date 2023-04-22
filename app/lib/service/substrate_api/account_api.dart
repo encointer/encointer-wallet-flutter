@@ -31,7 +31,8 @@ class AccountApi {
   /// Todo: Remove this #1105.
   Future<List<String>> addressesToPubKey(List<String> addresses) async {
     if (addresses.isEmpty) return [];
-    final pubKeyAddress = await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
+    final pubKeyAddress =
+        await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
 
     if (pubKeyAddress != null) {
       return pubKeyAddress.keys.toList();
