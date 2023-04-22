@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -139,9 +140,12 @@ class CeremonyStep2Scan extends StatelessWidget {
   }
 
   int getCurrentAccountIndex() {
-    final currentAddress = store.account.currentAddress;
-    final participiants = store.encointer.communityAccount!.meetup!.registry;
-    return participiants.indexOf(currentAddress);
+    final currentAccountPubKey = store.account.currentAccountPubKey!;
+    final participants = store.encointer.communityAccount!.meetup!.registry;
+    final address = Fmt.ss58Encode(currentAccountPubKey);
+
+    // the addresses of the meetup are unfortunately encoded with the default prefix: 42.
+    return participants.indexOf(address);
   }
 }
 
