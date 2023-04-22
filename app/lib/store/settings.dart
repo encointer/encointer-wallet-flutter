@@ -237,7 +237,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> removeContact(AccountData con) async {
-    await rootStore.localStorage.removeContact(con.address);
+    await rootStore.localStorage.removeContact(con.pubKey);
     await loadContacts();
   }
 

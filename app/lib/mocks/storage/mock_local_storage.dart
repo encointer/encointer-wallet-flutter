@@ -52,8 +52,8 @@ class MockLocalStorage extends LocalStorage {
   }
 
   @override
-  Future<void> removeContact(String address) async {
-    contactList.removeWhere((i) => i['address'] == address);
+  Future<void> removeContact(String pubKey) async {
+    contactList.removeWhere((i) => i['address'] == pubKey);
     return Future.value();
   }
 
