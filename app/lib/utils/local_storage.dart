@@ -56,8 +56,8 @@ class LocalStorage {
     return storage.addItemToList(contactsKey, contact);
   }
 
-  Future<void> removeContact(String address) async {
-    return storage.removeItemFromList(contactsKey, 'pubKey', address);
+  Future<void> removeContact(String pubKey) async {
+    return storage.removeItemFromList(contactsKey, 'pubKey', pubKey);
   }
 
   Future<void> updateContact(Map<String, dynamic> con) async {
