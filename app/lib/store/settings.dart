@@ -64,9 +64,6 @@ abstract class _SettingsStore with Store {
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
 
   @observable
-  bool developerMode = false;
-
-  @observable
   Locale locale = const Locale('en', '');
 
   @observable
@@ -141,11 +138,6 @@ abstract class _SettingsStore with Store {
   Future<void> setLocalCode(String code) async {
     await rootStore.localStorage.setObject(localStorageLocaleKey, code);
     localeCode = code;
-  }
-
-  @action
-  void toggleDeveloperMode() {
-    developerMode = !developerMode;
   }
 
   @action
@@ -245,7 +237,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> removeContact(AccountData con) async {
-    await rootStore.localStorage.removeContact(con.address);
+    await rootStore.localStorage.removeContact(con.pubKey);
     await loadContacts();
   }
 

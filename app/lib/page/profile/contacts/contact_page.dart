@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/rounded_button.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -40,8 +41,8 @@ class _Contact extends State<ContactPage> {
       });
       final dic = I18n.of(context)!.translationsForLocale();
       final addr = _addressCtrl.text.replaceAll(' ', '');
-      final pubKeyAddress = await webApi.account.decodeAddress([addr]);
-      final pubKey = pubKeyAddress.keys.toList()[0] as String;
+      final pubKey = await webApi.account.addressToPubKey(addr);
+
       final con = {
         'address': addr,
         'name': _nameCtrl.text,
@@ -54,7 +55,7 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
+        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.pubKey == pubKey);
         if (exist > -1) {
           return showCupertinoDialog<void>(
             context: context,
@@ -80,9 +81,7 @@ class _Contact extends State<ContactPage> {
       }
 
       // get contact info
-      if (_isObservation!) {
-        await webApi.account.encodeAddress([pubKey]);
-      } else {
+      if (!_isObservation!) {
         // if this address was used as observation and current account,
         // we need to change current account
         if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {
@@ -155,7 +154,7 @@ class _Contact extends State<ContactPage> {
                         },
                       ),
                     ),
-                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                    if (context.select<AppSettings, bool>((store) => store.developerMode))
                       Padding(
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
@@ -166,7 +165,7 @@ class _Contact extends State<ContactPage> {
                           controller: _memoCtrl,
                         ),
                       ),
-                    if (context.select<AppStore, bool>((store) => store.settings.developerMode))
+                    if (context.select<AppSettings, bool>((store) => store.developerMode))
                       Row(
                         children: <Widget>[
                           Checkbox(

@@ -14,6 +14,7 @@ import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -154,10 +155,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final h3 = Theme.of(context).textTheme.displaySmall;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
+    final appSettingsStore = context.watch<AppSettings>();
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
-    final addressSS58 = store.account.getNetworkAddress(accountToBeEditedPubKey);
+    final addressSS58 = Fmt.ss58Encode(accountToBeEditedPubKey!, prefix: store.settings.endpoint.ss58!);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
@@ -212,8 +214,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       const SizedBox(height: 20),
                       if (!isKeyboard)
                         AddressIcon(
-                          '',
-                          accountToBeEditedPubKey!,
+                          addressSS58,
+                          accountToBeEditedPubKey,
                           size: 130,
                         ),
                       Text(
@@ -243,7 +245,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                if (store.settings.developerMode)
+                if (appSettingsStore.developerMode)
                   Expanded(
                     child: ListView.builder(
                         // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-import 'helpers/screenshots.dart';
+import 'helpers/extension/screenshot_driver_extension.dart';
 
 void main() {
   FlutterDriver? driver;
@@ -12,7 +12,7 @@ void main() {
   group('scan-page', () {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
-
+      driver!.shouldTakeScreenshot = true;
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
     });
@@ -25,7 +25,7 @@ void main() {
       // set the background in the MockScanPage
       await driver!.requestData(base64);
 
-      await takeScreenshot(driver!, 'mock-scan-receive');
+      await driver!.takeScreenshot('mock-scan-receive');
     });
   });
 

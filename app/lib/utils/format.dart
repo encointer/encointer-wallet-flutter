@@ -11,7 +11,6 @@ import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:pointycastle/digests/blake2b.dart';
 
@@ -253,18 +252,6 @@ class Fmt {
   static String tokenView(String? token) {
     final tokenView = token ?? '';
     return tokenView;
-  }
-
-  /// Returns the address of an account encoded with the ss58-prefix of the current network, if
-  /// available. Otherwise, it falls back the ss58 prefix of the connect network at account creation
-  /// time.
-  ///
-  /// This was inherited from upstream, and I have never observed that the fallback had to be
-  /// used.
-  ///
-  /// Todo: Improve handling of ss58-prefix: #1019
-  static String addressOfAccount(AccountData acc, AppStore store) {
-    return store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![acc.pubKey] ?? acc.address;
   }
 
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].

@@ -100,6 +100,7 @@ class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
     dic = I18n.of(context)!.translationsForLocale();
+    final appSettingsStore = context.watch<AppSettings>();
 
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
@@ -167,8 +168,6 @@ class _AssetsState extends State<Assets> {
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
-                      final accountData = widget.store.account.currentAccount;
-
                       return Column(
                         children: <Widget>[
                           InkWell(
@@ -214,7 +213,7 @@ class _AssetsState extends State<Assets> {
                                     );
                             },
                           ),
-                          if (widget.store.settings.developerMode)
+                          if (appSettingsStore.developerMode)
                             ElevatedButton(
                               onPressed: widget.store.dataUpdate.setInvalidated,
                               child: const Text('Invalidate data to trigger state update'),
@@ -234,11 +233,7 @@ class _AssetsState extends State<Assets> {
                                     ),
                                   ),
                                   key: const Key('qr-receive'),
-                                  onPressed: () {
-                                    if (accountData.address != '') {
-                                      Navigator.pushNamed(context, ReceivePage.route);
-                                    }
-                                  },
+                                  onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                                   child: Padding(
                                     padding: const EdgeInsets.all(16),
                                     child: Row(
@@ -311,7 +306,7 @@ class _AssetsState extends State<Assets> {
                                       ),
                                     );
                                   } else {
-                                    return widget.store.settings.developerMode
+                                    return appSettingsStore.developerMode
                                         ? ElevatedButton(
                                             onPressed: null,
                                             child: Text(dic.assets.issuanceClaimed),

@@ -140,23 +140,6 @@ async function decodeAddress (addresses) {
   }
 }
 
-/**
- * encode pubKey to addresses with different prefixes
- * @param {List<String>} pubKeys
- * @returns {Map<String, String>} pubKeyAddressMap
- */
-async function encodeAddress (pubKeys, ss58Formats) {
-  await cryptoWaitReady();
-  const res = {};
-  ss58Formats.forEach((ss58) => {
-    res[ss58] = {};
-    pubKeys.forEach((i) => {
-      res[ss58][i] = keyring.encodeAddress(hexToU8a(i), ss58);
-    });
-  });
-  return res;
-}
-
 async function addressFromUri(uri) {
   const voucherPair = keyring.createFromUri(uri);
   const pubKey = voucherPair.publicKey;
@@ -454,7 +437,6 @@ function changePassword (pubKey, passOld, passNew) {
 export default {
   initKeys,
   addressFromUri,
-  encodeAddress,
   decodeAddress,
   gen,
   recover,
