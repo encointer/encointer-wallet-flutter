@@ -331,22 +331,16 @@ class EncointerApi {
   }
 
   Future<void> subscribeCurrentPhase() async {
-    // Get the next phase timestamp once before we subscribe otherwise
-    // it takes a long time until we get the first update.
-    await getNextPhaseTimestamp();
-
     await jsApi.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
         (String data) async {
-      if (store.account.currentAccountPubKey == null) return;
       final phase = ceremonyPhaseFromString(data.toUpperCase())!;
 
       final cid = store.encointer.chosenCid;
-      final address = store.account.currentAddress;
+      final pubKey = store.account.currentAccountPubKey;
 
-      final pubKey = store.account.currentAccountPubKey!;
-
-      if (cid != null) {
+      if (cid != null && pubKey != null) {
+        final address = store.account.currentAddress;
         final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
         store.encointer.setAggregatedAccountData(cid, address, data);
       }
