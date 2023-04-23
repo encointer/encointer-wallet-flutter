@@ -1,23 +1,25 @@
 import 'dart:core';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
-import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
+import 'package:encointer_wallet/utils/translations/translations_transaction.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
 const insufficientFundsError = '1010';
+const lowPriorityTx = '1014';
 
 /// Inner function to submit a tx via the JS interface.
 ///
@@ -77,15 +79,31 @@ Future<void> submitToJS(
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);
-  if (mounted) {
-    RootSnackBar.removeCurrent();
-  }
+  if (mounted) RootSnackBar.removeCurrent();
+  final dic = I18n.of(context)!.translationsForLocale();
+  final languageCode = Localizations.localeOf(context).languageCode;
 
-  if (errorMsg.startsWith(insufficientFundsError)) {
-    showInsufficientFundsDialog(context);
-  } else {
-    showErrorDialog(context, errorMsg);
-  }
+  final message = getLocalizedTxErrorMessage(dic.transaction, errorMsg);
+
+  AppAlert.showDialog<void>(
+    context,
+    title: Text('${message['title']}'),
+    content: Text('${message['body']}'),
+    actions: [
+      const SizedBox.shrink(),
+      CupertinoButton(
+        child: const Text('FAQ'),
+        onPressed: () {
+          final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
+          AppLaunch.launchURL(ceremonyInfoLink(languageCode, cid));
+        },
+      ),
+      CupertinoButton(
+        child: Text(dic.home.ok),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+    ],
+  );
 }
 
 void _showTxStatusSnackBar(String status, Widget? leading) {
@@ -131,9 +149,7 @@ void _onTxFinish(
 }
 
 String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
-  if (status == null) {
-    return '';
-  }
+  if (status == null) return '';
   switch (status) {
     case TxStatus.Queued:
       return dic.txQueued;
@@ -150,51 +166,25 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
   }
 }
 
-Future<void> showErrorDialog(BuildContext context, String errorMsg) {
-  final dic = I18n.of(context)!.translationsForLocale();
-
-  return showCupertinoDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return CupertinoAlertDialog(
-        title: Text(dic.assets.transactionError),
-        content: Text(errorMsg),
-        actions: <Widget>[
-          CupertinoButton(
-            child: Text(dic.home.ok),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      );
-    },
-  );
-}
-
-Future<void> showInsufficientFundsDialog(BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale();
-  final languageCode = Localizations.localeOf(context).languageCode;
-
-  return showCupertinoDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return CupertinoAlertDialog(
-        title: Text(dic.assets.transactionError),
-        content: Text(dic.assets.insufficientFundsExplanation),
-        actions: <Widget>[
-          Container(),
-          CupertinoButton(
-            child: Text(dic.encointer.goToLeuZurich),
-            onPressed: () {
-              final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
-              AppLaunch.launchURL(ceremonyInfoLink(languageCode, cid));
-            },
-          ),
-          CupertinoButton(
-            child: Text(dic.home.ok),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      );
-    },
-  );
+Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, String txError) {
+  if (txError.startsWith(lowPriorityTx)) {
+    return {'title': dic.txTooLowPriorityErrorTitle, 'body': dic.txTooLowPriorityErrorBody};
+  } else if (txError.startsWith(insufficientFundsError)) {
+    return {'title': dic.insufficientFundsErrorTitle, 'body': dic.insufficientFundsErrorBody};
+  }
+  switch (txError) {
+    case 'encointerCeremonies.VotesNotDependable':
+      return {'title': dic.votesNotDependableErrorTitle, 'body': dic.votesNotDependableErrorBody};
+    case 'encointerCeremonies.AlreadyEndorsed':
+      return {'title': dic.alreadyEndorsedErrorTitle, 'body': dic.alreadyEndorsedErrorBody};
+    case 'encointerCeremonies.NoValidClaims':
+      return {'title': dic.noValidClaimsErrorTitle, 'body': dic.noValidClaimsErrorBody};
+    case 'encointerCeremonies.RewardsAlreadyIssued':
+      return {'title': dic.rewardsAlreadyIssuedErrorTitle, 'body': dic.rewardsAlreadyIssuedErrorBody};
+    case 'encointerBalances.BalanceTooLow':
+      return {'title': dic.balanceTooLowTitle, 'body': dic.balanceTooLowBody};
+    default:
+      // display plain tx error in case we don't recognize the error
+      return {'title': dic.transactionError, 'body': txError};
+  }
 }
