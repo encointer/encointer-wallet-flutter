@@ -327,6 +327,10 @@ class EncointerApi {
   }
 
   Future<void> subscribeCurrentPhase() async {
+    // Get the next phase timestamp once before we subscribe otherwise
+    // it takes a long time until we get the first update.
+    await getNextPhaseTimestamp();
+
     await jsApi.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
         (String data) async {
