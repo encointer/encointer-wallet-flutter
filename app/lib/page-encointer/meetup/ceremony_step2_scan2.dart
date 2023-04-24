@@ -41,7 +41,7 @@ class CeremonyStep2Scan extends StatelessWidget {
       appBar: AppBar(
         title: Text(dic.encointer.keySigningCycle),
         actions: [
-          UserMeetupAvatar(index: getCurrentAccountIndex()),
+          UserMeetupAvatar(index: meetupIndexOfAccount(store.account.currentAccountPubKey!)),
           const SizedBox(
             width: 20,
           )
@@ -139,12 +139,11 @@ class CeremonyStep2Scan extends StatelessWidget {
     );
   }
 
-  int getCurrentAccountIndex() {
-    final currentAccountPubKey = store.account.currentAccountPubKey!;
+  int meetupIndexOfAccount(String accountPubKey) {
     final participants = store.encointer.communityAccount!.meetup!.registry;
-    final address = Fmt.ss58Encode(currentAccountPubKey);
+    final address = Fmt.ss58Encode(accountPubKey);
 
-    // the addresses of the meetup are unfortunately encoded with the default prefix: 42.
+    // the addresses of the meetup are encoded with the default prefix: 42.
     return participants.indexOf(address);
   }
 }
