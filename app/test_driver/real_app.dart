@@ -49,5 +49,5 @@ void main() async {
   await Upgrader.clearSavedSettings();
   appSettings = AppSettings(LangService(await SharedPreferences.getInstance()));
   WidgetsApp.debugAllowBannerOverride = false;
-  await app.main(appCast: cfg, appSettings: appSettings);
+  await app.main(appCast: cfg, settings: appSettings);
 }
