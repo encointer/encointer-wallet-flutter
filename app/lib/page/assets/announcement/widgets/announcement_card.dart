@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/announcement/announcement.dart';
 
@@ -25,15 +26,15 @@ class AnnouncementCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
-              leading: CircleAvatar(
-                // radius: 30,
-                child: SvgPicture.asset(
-                  announcement.publisherSVG,
-                ),
+              leading: const CircleAvatar(
+                child: CommunityIconObserver(),
+                // SvgPicture.asset(
+                //   announcement.publisherSVG,
+                // ),
               ),
               title: Align(
                 alignment: Alignment.centerRight,
-                child: Text(DateFormat.MMMMd(local.languageCode).format(announcement.publishDate),
+                child: Text(DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
                     style: Theme.of(context).textTheme.bodySmall),
               ),
               subtitle: Text(announcement.title, style: textTheme.titleLarge),

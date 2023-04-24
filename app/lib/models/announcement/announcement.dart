@@ -37,7 +37,7 @@ const announcementMockData = {
       'publisherSVG': 'assets/nctr_logo_faces_only_thick.svg',
       'content':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac elementum orci. Etiam fringilla augue non nisi accumsan euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur rcommunityIdentifiericulus mus.',
-      'publishDate': '2023-04-24 09:44:11.377',
+      'publishDate': '2023-04-23 09:44:11.377',
     },
     {
       'communityIdentifier': '3',
@@ -45,7 +45,7 @@ const announcementMockData = {
       'publisherSVG': 'assets/nctr_logo_faces_only_thick.svg',
       'content':
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac elementum orci. Etiam fringilla augue non nisi accumsan euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur rcommunityIdentifiericulus mus.',
-      'publishDate': '2023-04-24 09:44:11.377',
+      'publishDate': '2023-04-22 09:44:11.377',
     },
   ]
 };
