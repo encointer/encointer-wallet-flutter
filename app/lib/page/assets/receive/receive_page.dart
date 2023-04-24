@@ -9,6 +9,7 @@ import 'package:encointer_wallet/common/components/qr_code_view/qr_code_image_vi
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
@@ -43,8 +44,9 @@ class _ReceivePageState extends State<ReceivePage> {
   void initState() {
     super.initState();
     _appStore = context.read<AppStore>();
+    final address = Fmt.ss58Encode(_appStore.account.currentAccountPubKey!, prefix: _appStore.settings.endpoint.ss58!);
     invoice = InvoiceQrCode(
-      account: _appStore.account.currentAddress,
+      account: address,
       cid: _appStore.encointer.chosenCid,
       label: _appStore.account.currentAccount.name,
     );

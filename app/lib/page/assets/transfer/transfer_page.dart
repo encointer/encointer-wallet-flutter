@@ -27,7 +27,7 @@ class TransferPageParams {
   const TransferPageParams({
     this.cid,
     this.communitySymbol,
-    required this.recipient,
+    required this.recipientAddress,
     required this.label,
     this.amount,
   });
@@ -35,7 +35,7 @@ class TransferPageParams {
   factory TransferPageParams.fromInvoiceData(InvoiceData data) {
     return TransferPageParams(
       cid: data.cid,
-      recipient: data.account,
+      recipientAddress: data.account,
       label: data.label,
       amount: data.amount as double?,
     );
@@ -43,7 +43,7 @@ class TransferPageParams {
 
   final CommunityIdentifier? cid;
   final String? communitySymbol;
-  final String recipient;
+  final String recipientAddress;
   final String label;
   final double? amount;
 }
@@ -76,21 +76,19 @@ class _TransferPageState extends State<TransferPage> {
       final store = context.read<AppStore>();
 
       if (widget.params != null) {
-        handleTransferPageParams(widget.params!, store);
+        handleTransferPageParams(widget.params!, store).then((value) => setState(() {}));
       } else {
         _communitySymbol = store.encointer.community!.symbol;
         _cid = store.encointer.chosenCid;
       }
 
-      setState(() {});
-
       webApi.fetchAccountData();
     });
   }
 
-  void handleTransferPageParams(TransferPageParams params, AppStore store) {
+  Future<void> handleTransferPageParams(TransferPageParams params, AppStore store) async {
     if (params.cid != store.encointer.chosenCid!) {
-      showCupertinoDialog<void>(
+      return showCupertinoDialog<void>(
         context: context,
         barrierDismissible: true,
         builder: (context) {
@@ -103,8 +101,11 @@ class _TransferPageState extends State<TransferPage> {
     } else {
       _communitySymbol = params.communitySymbol ?? store.encointer.community?.symbol;
       _cid = params.cid ?? store.encointer.chosenCid;
+
+      final pubKey = await webApi.account.addressToPubKey(params.recipientAddress);
+
       _accountTo = AccountData()
-        ..address = params.recipient
+        ..pubKey = pubKey
         ..name = params.label;
       if (params.amount != null) _amountCtrl.text = '${params.amount}';
     }
@@ -178,7 +179,7 @@ class _TransferPageState extends State<TransferPage> {
                           arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
                         );
                         if (invoiceData != null && invoiceData is InvoiceData) {
-                          handleTransferPageParams(
+                          await handleTransferPageParams(
                             TransferPageParams.fromInvoiceData(invoiceData),
                             store,
                           );

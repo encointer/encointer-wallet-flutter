@@ -228,7 +228,7 @@ void _pushTransferPage(BuildContext context, VoucherData data, String voucherAdd
     TransferPage.route,
     arguments: TransferPageParams(
       cid: data.cid,
-      recipient: voucherAddress,
+      recipientAddress: voucherAddress,
       label: data.issuer,
     ),
   );

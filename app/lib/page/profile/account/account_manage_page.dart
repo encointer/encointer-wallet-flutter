@@ -159,7 +159,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
-    final addressSS58 = store.account.getNetworkAddress(accountToBeEditedPubKey);
+    final addressSS58 = Fmt.ss58Encode(accountToBeEditedPubKey!, prefix: store.settings.endpoint.ss58!);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
@@ -214,8 +214,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       const SizedBox(height: 20),
                       if (!isKeyboard)
                         AddressIcon(
-                          '',
-                          accountToBeEditedPubKey!,
+                          addressSS58,
+                          accountToBeEditedPubKey,
                           size: 130,
                         ),
                       Text(

@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -39,7 +40,7 @@ class CeremonyStep2Scan extends StatelessWidget {
       appBar: AppBar(
         title: Text(dic.encointer.keySigningCycle),
         actions: [
-          UserMeetupAvatar(index: getCurrentAccountIndex()),
+          UserMeetupAvatar(index: meetupIndexOfAccount(store.account.currentAccountPubKey!)),
           const SizedBox(
             width: 20,
           )
@@ -137,10 +138,12 @@ class CeremonyStep2Scan extends StatelessWidget {
     );
   }
 
-  int getCurrentAccountIndex() {
-    final currentAddress = store.account.currentAddress;
-    final participiants = store.encointer.communityAccount!.meetup!.registry;
-    return participiants.indexOf(currentAddress);
+  int meetupIndexOfAccount(String accountPubKey) {
+    final participants = store.encointer.communityAccount!.meetup!.registry;
+    final address = Fmt.ss58Encode(accountPubKey);
+
+    // the addresses of the meetup are encoded with the default prefix: 42.
+    return participants.indexOf(address);
   }
 }
 

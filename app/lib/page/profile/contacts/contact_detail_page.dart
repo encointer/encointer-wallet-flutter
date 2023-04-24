@@ -45,6 +45,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
+    final address = Fmt.ss58Encode(account.pubKey, prefix: store.settings.endpoint.ss58!);
     return Scaffold(
       appBar: AppBar(
         title: isEditing
@@ -98,7 +99,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AddressIcon(account.address, account.pubKey, size: 130),
+                        AddressIcon(address, account.pubKey, size: 130),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -107,11 +108,11 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
+                        Text(Fmt.address(address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
                           color: context.colorScheme.secondary,
-                          onPressed: () => UI.copyAndNotify(context, account.address),
+                          onPressed: () => UI.copyAndNotify(context, address),
                         ),
                       ],
                     ),
@@ -139,7 +140,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     arguments: TransferPageParams(
                       cid: context.read<AppStore>().encointer.chosenCid,
                       communitySymbol: context.read<AppStore>().encointer.community?.symbol,
-                      recipient: account.address,
+                      recipientAddress: address,
                       label: _nameCtrl.text,
                     ),
                   );
@@ -275,12 +276,14 @@ class EndorseButton extends StatelessWidget {
     final community = store.encointer.community;
     final bootstrappers = community?.bootstrappers;
     final dic = I18n.of(context)!.translationsForLocale();
-    if (bootstrappers != null && bootstrappers.contains(contact.address)) {
+    final address = Fmt.ss58Encode(contact.pubKey, prefix: store.settings.endpoint.ss58!);
+
+    if (bootstrappers != null && bootstrappers.contains(address)) {
       await _popupDialog(context, dic.profile.cantEndorseBootstrapper);
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
       await _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
     } else {
-      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
+      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, address);
     }
   }
 }
