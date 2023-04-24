@@ -46,6 +46,18 @@ void main() async {
     // await driver.takeScreenshot(Screenshots.homeWithRegisterButton);
     await addDelay(1000);
     await driver.requestData(RealAppTestCommand.localeEn);
+    await driver.takeScreenshot('test-en');
+    await driver.requestData(RealAppTestCommand.localeDe);
+    await driver.takeScreenshot('test-de');
+    await driver.requestData(RealAppTestCommand.localeFr);
+    await driver.takeScreenshot('test-fr');
+    await driver.requestData(RealAppTestCommand.localeRu);
+    await driver.takeScreenshot('test-ru');
+    await driver.requestData(RealAppTestCommand.devModeOn);
+    await driver.takeScreenshot('dev-mode-on');
+    await driver.requestData(RealAppTestCommand.devModeOff);
+    await driver.takeScreenshot('dec-mode-off');
+
     // await driver.takeScreenshot('01');
     // await driver.requestData(RealAppTestCommand.localeDe);
     // await driver.takeScreenshot('02');

@@ -10,6 +10,8 @@ import 'package:encointer_wallet/modules/modules.dart';
 
 import 'helpers/command/real_app_command.dart';
 
+part 'helpers/command/real_app_functions.dart';
+
 void main() async {
   const shouldTakeScreenshot = String.fromEnvironment('screenshot');
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
@@ -18,20 +20,27 @@ void main() async {
   final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
 
   enableFlutterDriverExtension(
-    handler: (command) {
-      var result = '';
+    handler: (command) async {
       switch (command) {
         case RealAppTestCommand.getPlatform:
-          result = Platform.operatingSystem;
-          break;
+          return Platform.operatingSystem;
         case RealAppTestCommand.shouldTakeScreenshot:
-          result = shouldTakeScreenshot;
-          break;
+          return shouldTakeScreenshot;
         case RealAppTestCommand.localeEn:
-          result = appSettings.locale.languageCode;
-          break;
+          return changeLocale(appSettings, 'en');
+        case RealAppTestCommand.localeDe:
+          return changeLocale(appSettings, 'de');
+        case RealAppTestCommand.localeFr:
+          return changeLocale(appSettings, 'fr');
+        case RealAppTestCommand.localeRu:
+          return changeLocale(appSettings, 'ru');
+        case RealAppTestCommand.devModeOn:
+          return toggleDeveloperMode(appSettings, true);
+        case RealAppTestCommand.devModeOff:
+          return toggleDeveloperMode(appSettings, false);
+        default:
+          return '';
       }
-      return Future.value(result);
     },
   );
 
