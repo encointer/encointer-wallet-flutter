@@ -5,29 +5,29 @@ mixin CompomnentTheme {
         borderRadius: BorderRadius.all(Radius.circular(15)),
       );
 
-  ElevatedButtonThemeData elevatedButtonThemeData(MaterialColor primarySwatch) {
+  ElevatedButtonThemeData elevatedButtonThemeData(ColorScheme colorScheme) {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: primarySwatch.shade50,
-        foregroundColor: primarySwatch.shade500,
+        backgroundColor: colorScheme.background,
+        foregroundColor: colorScheme.secondary,
         shadowColor: Colors.transparent,
         shape: shapeMedium,
       ),
     );
   }
 
-  IconThemeData iconTheme(MaterialColor primarySwatch) {
-    return IconThemeData(color: primarySwatch.shade500);
+  IconThemeData iconTheme(ColorScheme colorScheme) {
+    return IconThemeData(color: colorScheme.secondary);
   }
 
-  AppBarTheme appBarTheme(MaterialColor primarySwatch) {
+  AppBarTheme appBarTheme(ColorScheme colorScheme) {
     return AppBarTheme(
       elevation: 0,
       backgroundColor: Colors.white,
       shadowColor: Colors.transparent,
       centerTitle: true,
-      foregroundColor: primarySwatch.shade500,
+      foregroundColor: colorScheme.secondary,
     );
   }
 

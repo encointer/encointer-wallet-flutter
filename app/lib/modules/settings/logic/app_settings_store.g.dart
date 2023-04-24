@@ -38,13 +38,13 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   late final _$primarySwatchAtom = Atom(name: '_AppSettingsBase.primarySwatch', context: context);
 
   @override
-  MaterialColor get primarySwatch {
+  ColorScheme get primarySwatch {
     _$primarySwatchAtom.reportRead();
     return super.primarySwatch;
   }
 
   @override
-  set primarySwatch(MaterialColor value) {
+  set primarySwatch(ColorScheme value) {
     _$primarySwatchAtom.reportWrite(value, super.primarySwatch, () {
       super.primarySwatch = value;
     });
