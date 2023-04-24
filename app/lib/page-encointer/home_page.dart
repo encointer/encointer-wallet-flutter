@@ -78,7 +78,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
             icon: _tabList[activeItem] == i
                 ? ShaderMask(
                     blendMode: BlendMode.srcIn,
-                    shaderCallback: (bounds) => AppColors.primaryGradient.createShader(
+                    shaderCallback: (bounds) => AppColors.primaryGradient(context).createShader(
                       Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                     ),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [

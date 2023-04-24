@@ -53,7 +53,7 @@ class GradientBar extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
-        gradient: AppColors.primaryGradient,
+        gradient: AppColors.primaryGradient(context),
       ),
       child: const SizedBox(height: 5),
     );

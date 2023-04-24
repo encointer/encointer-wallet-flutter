@@ -276,7 +276,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 DecoratedBox(
                   // width: double.infinity,
                   decoration: BoxDecoration(
-                    gradient: AppColors.primaryGradient,
+                    gradient: AppColors.primaryGradient(context),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(

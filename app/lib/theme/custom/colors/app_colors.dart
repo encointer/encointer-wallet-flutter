@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -36,10 +37,12 @@ class AppColors {
   static const Color encointerGrey = Color(0xff666666);
   static const Color encointerBlack = Color(0xff353535);
 
-  // TODO later: maybe turn into a function that takes the 2 colors and returns the gradient
-  static final primaryGradient = LinearGradient(
-    begin: const Alignment(-.9, 0),
-    end: const Alignment(0.1, -.1),
-    colors: <Color>[leu.shade400, leu.shade600],
-  );
+  static LinearGradient primaryGradient(BuildContext context) {
+    return LinearGradient(
+      begin: const Alignment(-.9, 0),
+      end: const Alignment(0.1, -.1),
+      // colors: <Color>[leu.shade400, leu.shade600],
+      colors: <Color>[context.colorScheme.secondary, context.colorScheme.primary],
+    );
+  }
 }
