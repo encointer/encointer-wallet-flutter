@@ -5,6 +5,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
 import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
@@ -47,30 +48,36 @@ abstract class _AppStore with Store {
   // it removes the `null`-compiler checks and turns them into runtime-checks.
   @observable
   SettingsStore? _settings;
+
   SettingsStore get settings => _settings!;
 
   @observable
   DataUpdateStore? _dataUpdate;
+
   @computed
   DataUpdateStore get dataUpdate => _dataUpdate!;
 
   @observable
   AccountStore? _account;
+
   @computed
   AccountStore get account => _account!;
 
   @observable
   AssetsStore? _assets;
+
   @computed
   AssetsStore get assets => _assets!;
 
   @observable
   ChainStore? _chain;
+
   @computed
   ChainStore get chain => _chain!;
 
   @observable
   EncointerStore? _encointer;
+
   @computed
   EncointerStore get encointer => _encointer!;
 
@@ -225,9 +232,12 @@ abstract class _AppStore with Store {
       return Future.value();
     }
 
-    final address = account.getNetworkAddress(pubKey);
-    Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
-    await encointer.initializeUninitializedStores(address);
+    if (pubKey != null) {
+      // Todo: #1072
+      final address = Fmt.ss58Encode(pubKey, prefix: settings.endpoint.ss58!);
+      Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
+      await encointer.initializeUninitializedStores(address);
+    }
 
     if (!settings.loading) {
       dataUpdate.setInvalidated();
