@@ -51,7 +51,7 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String address) {
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String pubKey) {
     // ignore: null_argument_to_non_null_type
     return Future.value();
   }
