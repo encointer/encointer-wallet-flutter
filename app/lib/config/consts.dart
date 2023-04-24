@@ -28,7 +28,7 @@ EndpointData networkEndpointEncointerLietaer = EndpointData.fromJson({
 
 EndpointData networkEndpointEncointerMainnet = EndpointData.fromJson({
   'info': 'nctr-k',
-  'ss58': 42, // Fixme: #567
+  'ss58': 2,
   'text': 'Encointer Network on Kusama (Hosted by Encointer Association)',
   'value': 'wss://kusama.api.encointer.org',
   'overrideConfig': gesellConfig.toJson(),
@@ -75,18 +75,6 @@ List<EndpointData> networkEndpoints = [
   // networkEndpointEncointerCantillon,
   // networkEndpointEncointerCantillonDev,
 ];
-
-const networkSs58Map = {
-  'encointer': 42,
-  'nctr-gsl': 42,
-  'nctr-r': 42,
-  'nctr-k': 42, // Fixme: #567
-  'ss58': 42, // Fixme: #567
-  'nctr-cln': 42,
-  'nctr-gsl-dev': 42,
-  'nctr-cln-dev': 42,
-  'substrate': 42,
-};
 
 const fallBackCommunityIcon = 'assets/nctr_logo_faces_only_thick.svg';
 const communityIconName = 'community_icon.svg';
