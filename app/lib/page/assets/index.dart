@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
+import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -329,15 +331,19 @@ class _AssetsState extends State<Assets> {
                     const SizedBox(height: 24),
                     CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                     const SizedBox(height: 24),
-                    Container(
-                      height: 70,
-                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                      decoration: BoxDecoration(color: zurichLion.shade50, borderRadius: BorderRadius.circular(15)),
-                      child: Column(children: [
-                        Text('Apr 21', style: Theme.of(context).textTheme.bodySmall),
-                        Text('This is a title', style: TextStyle(fontSize: 70)),
-                      ]),
-                    )
+                    Provider(
+                      create: (context) => AnnouncementStore()..getAnnouncement(),
+                      child: const AnnouncementView(),
+                    ),
+                    // Container(
+                    //   height: 70,
+                    //   padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                    //   decoration: BoxDecoration(color: zurichLion.shade50, borderRadius: BorderRadius.circular(15)),
+                    //   child: Column(children: [
+                    //     Text('Apr 21', style: Theme.of(context).textTheme.bodySmall),
+                    //     Text('This is a title', style: TextStyle(fontSize: 70)),
+                    //   ]),
+                    // )
                   ],
                 ),
               ),
