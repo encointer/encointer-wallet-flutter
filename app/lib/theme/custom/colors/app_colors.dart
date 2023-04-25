@@ -11,6 +11,8 @@ class AppColors {
     tertiary: const Color(0xFF3880BD),
   );
 
+// 66 82 101 102
+
   // static const MaterialColor leu = MaterialColor(
   //   0xff4374A3,
   //   <int, Color>{
@@ -60,7 +62,7 @@ class AppColors {
       begin: const Alignment(-.9, 0),
       end: const Alignment(0.1, -.1),
       // colors: <Color>[leu.shade400, leu.shade600],
-      colors: <Color>[context.colorScheme.secondary, context.colorScheme.primary],
+      colors: <Color>[context.colorScheme.tertiary, context.colorScheme.secondary],
     );
   }
 }
