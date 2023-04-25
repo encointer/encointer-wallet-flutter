@@ -12,7 +12,7 @@
         android:allowBackup="false"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/LaunchTheme"
