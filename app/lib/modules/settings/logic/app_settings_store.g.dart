@@ -35,18 +35,18 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$primarySwatchAtom = Atom(name: '_AppSettingsBase.primarySwatch', context: context);
+  late final _$colorSchemeAtom = Atom(name: '_AppSettingsBase.colorScheme', context: context);
 
   @override
-  ColorScheme get primarySwatch {
-    _$primarySwatchAtom.reportRead();
-    return super.primarySwatch;
+  ColorScheme get colorScheme {
+    _$colorSchemeAtom.reportRead();
+    return super.colorScheme;
   }
 
   @override
-  set primarySwatch(ColorScheme value) {
-    _$primarySwatchAtom.reportWrite(value, super.primarySwatch, () {
-      super.primarySwatch = value;
+  set colorScheme(ColorScheme value) {
+    _$colorSchemeAtom.reportWrite(value, super.colorScheme, () {
+      super.colorScheme = value;
     });
   }
 
@@ -95,9 +95,19 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   }
 
   @override
+  void changeTheme(String cid) {
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.changeTheme');
+    try {
+      return super.changeTheme(cid);
+    } finally {
+      _$_AppSettingsBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-primarySwatch: ${primarySwatch},
+colorScheme: ${colorScheme},
 developerMode: ${developerMode},
 locale: ${locale},
 theme: ${theme}

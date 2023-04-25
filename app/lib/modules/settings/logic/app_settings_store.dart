@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/settings/settings.dart';
+import 'package:encointer_wallet/config/prod_community.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 part 'app_settings_store.g.dart';
@@ -29,10 +30,10 @@ abstract class _AppSettingsBase with Store {
   Locale get locale => _locale;
 
   @observable
-  ColorScheme primarySwatch = AppColors.gbd;
+  ColorScheme colorScheme = AppColors.leu;
 
   @computed
-  CustomTheme get theme => CustomTheme(primarySwatch);
+  CustomTheme get theme => CustomTheme(colorScheme);
 
   @action
   void init() => _locale = _service.init();
@@ -50,6 +51,9 @@ abstract class _AppSettingsBase with Store {
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;
 
-  // @action
-  // void changeTheme(String cid) {}
+  @action
+  void changeTheme(String cid) {
+    final community = Community.fromCid(cid);
+    if (colorScheme != community.colorScheme) colorScheme = community.colorScheme;
+  }
 }

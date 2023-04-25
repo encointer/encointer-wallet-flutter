@@ -31,36 +31,36 @@ mixin CompomnentTheme {
     );
   }
 
-  // CardTheme cardTheme() {
+  // CardTheme cardTheme(ColorScheme colorScheme) {
   //   return const CardTheme();
   // }
-  // ButtonThemeData buttonTheme(MaterialColor primarySwatch) {
+  // ButtonThemeData buttonTheme(ColorScheme colorScheme) {
   //   return const ButtonThemeData();
   // }
-  // InputDecorationTheme inputDecorationTheme(MaterialColor primarySwatch) {
+  // InputDecorationTheme inputDecorationTheme(ColorScheme colorScheme) {
   //   return const InputDecorationTheme(
   //     border: OutlineInputBorder(),
   //   );
   // }
-  // ListTileThemeData listTileTheme(MaterialColor primarySwatch) {
+  // ListTileThemeData listTileTheme(ColorScheme colorScheme) {
   //   return const ListTileThemeData();
   // }
-  // TabBarTheme tabBarTheme(MaterialColor primarySwatch) {
+  // TabBarTheme tabBarTheme(ColorScheme colorScheme) {
   //   return const TabBarTheme();
   // }
-  // BottomAppBarTheme bottomAppBarTheme(MaterialColor primarySwatch) {
+  // BottomAppBarTheme bottomAppBarTheme(ColorScheme colorScheme) {
   //   return const BottomAppBarTheme();
   // }
-  // BottomNavigationBarThemeData bottomNavigationBarTheme(MaterialColor primarySwatch) {
+  // BottomNavigationBarThemeData bottomNavigationBarTheme(ColorScheme colorScheme) {
   //   return const BottomNavigationBarThemeData();
   // }
-  // NavigationRailThemeData navigationRailTheme(MaterialColor primarySwatch) {
+  // NavigationRailThemeData navigationRailTheme(ColorScheme colorScheme) {
   //   return const NavigationRailThemeData();
   // }
-  // DrawerThemeData drawerTheme(MaterialColor primarySwatch) {
+  // DrawerThemeData drawerTheme(ColorScheme colorScheme) {
   //   return const DrawerThemeData();
   // }
-  // ScrollbarThemeData scrollbarThemeData(MaterialColor primarySwatch) {
+  // ScrollbarThemeData scrollbarThemeData(ColorScheme colorScheme) {
   //   return const ScrollbarThemeData();
   // }
 }
