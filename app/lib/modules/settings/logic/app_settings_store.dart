@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/settings/settings.dart';
-import 'package:encointer_wallet/config/prod_community.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 part 'app_settings_store.g.dart';
@@ -51,9 +50,10 @@ abstract class _AppSettingsBase with Store {
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;
 
-  @action
+  // When we get the colors for greenbay dollars from desiner, we can activate it.
+  // @action
   void changeTheme(String? cid) {
-    final community = Community.fromCid(cid);
-    if (colorScheme != community.colorScheme) colorScheme = community.colorScheme;
+    // final community = Community.fromCid(cid);
+    // if (colorScheme != community.colorScheme) colorScheme = community.colorScheme;
   }
 }
