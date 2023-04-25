@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ExportResultPage extends StatelessWidget {
