@@ -52,7 +52,7 @@ abstract class _AppSettingsBase with Store {
   void toggleDeveloperMode() => developerMode = !developerMode;
 
   @action
-  void changeTheme(String cid) {
+  void changeTheme(String? cid) {
     final community = Community.fromCid(cid);
     if (colorScheme != community.colorScheme) colorScheme = community.colorScheme;
   }

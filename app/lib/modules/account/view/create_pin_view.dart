@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/modules/account/account.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -135,6 +135,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
     final appStore = context.read<AppStore>();
     if (appStore.encointer.communityIdentifiers.length == 1) {
       await appStore.encointer.setChosenCid(appStore.encointer.communityIdentifiers[0]);
+      context.read<AppSettings>().changeTheme(appStore.encointer.community?.cid.toFmtString());
     } else {
       await Navigator.pushNamed(context, CommunityChooserOnMap.route);
     }

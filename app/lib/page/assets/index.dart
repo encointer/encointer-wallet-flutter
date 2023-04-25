@@ -344,6 +344,7 @@ class _AssetsState extends State<Assets> {
                           final store = context.read<AppStore>();
                           final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                           await store.encointer.setChosenCid(communityStores[index].cid);
+                          context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
                         },
                         onAddIconPressed: () {
                           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {

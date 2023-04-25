@@ -95,7 +95,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   }
 
   @override
-  void changeTheme(String cid) {
+  void changeTheme(String? cid) {
     final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.changeTheme');
     try {
       return super.changeTheme(cid);
