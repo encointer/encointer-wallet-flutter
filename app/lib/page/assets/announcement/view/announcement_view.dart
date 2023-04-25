@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/models/announcement/announcement.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
 import 'package:encointer_wallet/page/assets/announcement/widgets/announcement_card.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -14,13 +15,19 @@ class AnnouncementView extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = context.watch<AnnouncementStore>();
     final dic = I18n.of(context)!.translationsForLocale().home;
+    final appSettingsStore = context.watch<AppSettings>();
+    // final bool devMode = true;
     return Observer(builder: (_) {
       if (store.announcements == null) {
         return const Center(child: CupertinoActivityIndicator());
       } else if (store.announcements!.isEmpty) {
         return const Center(child: Text('No Announcement found!!!'));
       } else if (store.announcements!.isNotEmpty) {
-        return AnnouncementList(announcements: store.announcements!);
+        if (appSettingsStore.developerMode) {
+          return AnnouncementList(announcements: store.announcements!);
+        } else {
+          return Container();
+        }
       } else {
         return Center(child: Text(dic.unknownError));
       }
