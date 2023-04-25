@@ -170,8 +170,6 @@ class _AssetsState extends State<Assets> {
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
-                      final accountData = widget.store.account.currentAccount;
-
                       return Column(
                         children: <Widget>[
                           InkWell(
@@ -237,11 +235,7 @@ class _AssetsState extends State<Assets> {
                                     ),
                                   ),
                                   key: const Key('qr-receive'),
-                                  onPressed: () {
-                                    if (accountData.address != '') {
-                                      Navigator.pushNamed(context, ReceivePage.route);
-                                    }
-                                  },
+                                  onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                                   child: Padding(
                                     padding: const EdgeInsets.all(16),
                                     child: Row(

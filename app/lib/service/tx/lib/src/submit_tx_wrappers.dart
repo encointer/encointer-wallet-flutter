@@ -152,7 +152,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       store.encointer.account!.lastProofOfAttendance = proof;
       final data = await webApi.encointer.getAggregatedAccountData(
         store.encointer.chosenCid!,
-        store.account.currentAddress,
+        store.account.currentAccountPubKey!,
       );
       Log.d('$data', 'AggregatedAccountData from register participant');
       final registrationType = data.personal?.participantType;

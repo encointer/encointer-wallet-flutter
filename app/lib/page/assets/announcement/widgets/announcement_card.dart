@@ -1,11 +1,10 @@
-import 'package:encointer_wallet/common/components/logo/community_icon.dart';
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/models/announcement/announcement.dart';
-
+import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_community_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/models/announcement/announcement.dart';
 
 class AnnouncementCard extends StatelessWidget {
   const AnnouncementCard({super.key, required this.announcement});
@@ -26,12 +25,7 @@ class AnnouncementCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
-              leading: const CircleAvatar(
-                child: CommunityIconObserver(),
-                // SvgPicture.asset(
-                //   announcement.publisherSVG,
-                // ),
-              ),
+              leading: PublisherSVGandCommunityIcon(announcement.publisherSVG),
               title: Align(
                 alignment: Alignment.centerRight,
                 child: Text(DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
@@ -43,7 +37,7 @@ class AnnouncementCard extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
               child: Text(
                 announcement.content,
-                style: textTheme.bodyMedium,
+                style: textTheme.bodyMedium?.copyWith(height: 1.5),
               ),
             ),
             Padding(

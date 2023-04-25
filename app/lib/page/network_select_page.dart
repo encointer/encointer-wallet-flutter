@@ -85,6 +85,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   List<Widget> _buildAccountList() {
+    final appStore = context.read<AppStore>();
+
     // final primaryColor = Theme.of(context).primaryColor;
     final res = <Widget>[
       Row(
@@ -99,16 +101,10 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     ];
 
     /// first item is current account
-    final accounts = <AccountData>[
-      context.read<AppStore>().account.currentAccount,
-      ...context.read<AppStore>().account.optionalAccounts
-    ];
+    final accounts = <AccountData>[appStore.account.currentAccount, ...appStore.account.optionalAccounts];
 
     res.addAll(accounts.map((i) {
-      String? address = i.address;
-      if (context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
-        address = context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork.ss58]![i.pubKey];
-      }
+      final address = Fmt.ss58Encode(i.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
 
       return RoundedCard(
         border: address == context.read<AppStore>().account.currentAddress
@@ -116,7 +112,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             : Border.all(color: Theme.of(context).cardColor),
         margin: const EdgeInsets.only(bottom: 16),
         child: ListTile(
-          leading: AddressIcon(address!, i.pubKey, size: 55),
+          leading: AddressIcon(address, i.pubKey, size: 55),
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text(Fmt.address(address)!, maxLines: 2),
           onTap: _networkChanging ? null : () => _onSelect(i, address),
