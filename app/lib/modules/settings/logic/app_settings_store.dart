@@ -29,7 +29,7 @@ abstract class _AppSettingsBase with Store {
   Locale get locale => _locale;
 
   @observable
-  ColorScheme primarySwatch = AppColors.leu;
+  ColorScheme primarySwatch = AppColors.gbd;
 
   @computed
   CustomTheme get theme => CustomTheme(primarySwatch);
@@ -49,4 +49,7 @@ abstract class _AppSettingsBase with Store {
 
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;
+
+  // @action
+  // void changeTheme(String cid) {}
 }
