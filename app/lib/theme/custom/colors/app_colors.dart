@@ -11,7 +11,7 @@ class AppColors {
     tertiary: const Color(0xFF3880BD),
   );
 
-// 66 82 101 102
+// 82 101 102
 
   // static const MaterialColor leu = MaterialColor(
   //   0xff4374A3,

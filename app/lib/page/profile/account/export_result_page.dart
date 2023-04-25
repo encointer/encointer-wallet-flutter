@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ExportResultPage extends StatelessWidget {
@@ -56,8 +57,8 @@ class ExportResultPage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: Text(
-                            I18n.of(context)!.translationsForLocale().home.copy,
-                            style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
+                            dic.home.copy,
+                            style: TextStyle(fontSize: 14, color: context.colorScheme.primary),
                           ),
                         ),
                       )
@@ -65,16 +66,15 @@ class ExportResultPage extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.black12,
-                        ),
-                        borderRadius: const BorderRadius.all(Radius.circular(4))),
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black12),
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    ),
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       args['key'] as String,
                       key: const Key('account-mnemonic-key'),
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: context.textTheme.headlineMedium,
                     ),
                   ),
                 ],
