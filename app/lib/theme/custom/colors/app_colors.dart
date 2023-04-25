@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class AppColors {
   static ColorScheme leu = ColorScheme.fromSeed(
@@ -10,8 +10,6 @@ class AppColors {
     secondary: const Color(0xFF3969AC),
     tertiary: const Color(0xFF3880BD),
   );
-
-// 82 101 102
 
   // static const MaterialColor leu = MaterialColor(
   //   0xff4374A3,
