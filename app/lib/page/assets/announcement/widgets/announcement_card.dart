@@ -16,15 +16,24 @@ class AnnouncementCard extends StatefulWidget {
   final Announcement announcement;
   bool isFavorite;
 
-  // void isFavoritePressed() {
-  //   isFavorite = !isFavorite;
-  // }
-
   @override
   State<AnnouncementCard> createState() => _AnnouncementCardState();
 }
 
 class _AnnouncementCardState extends State<AnnouncementCard> {
+  int _count = 0;
+  bool _isFavoriteTapped = false;
+
+  void _incrementCount() {
+    setState(() {
+      if (!_isFavoriteTapped) {
+        _count++;
+        _isFavoriteTapped = true;
+        widget.isFavorite = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -59,18 +68,14 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: Icon(
-                    widget.isFavorite ? Icons.favorite : Icons.favorite_border_outlined,
-                    size: 20,
-                    color: widget.isFavorite ? encointerGrey : encointerGrey,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      widget.isFavorite = !widget.isFavorite;
-                    });
-                  },
-                ),
-                const SizedBox(width: 10),
+                    icon: Icon(
+                      widget.isFavorite ? Icons.favorite : Icons.favorite_border_outlined,
+                      size: 20,
+                      color: widget.isFavorite ? encointerGrey : encointerGrey,
+                    ),
+                    onPressed: _incrementCount),
+                Text('$_count'),
+                // const SizedBox(width: 10),
                 IconButton(
                   icon: const Icon(
                     Icons.share,
