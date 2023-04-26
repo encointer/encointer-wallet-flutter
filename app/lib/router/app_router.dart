@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page/profile/faq/faq_widget.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -194,6 +195,11 @@ class AppRoute {
             create: (context) => TransferHistoryStore()..getTransfers(),
             child: const TransferHistoryView(),
           ),
+          settings: settings,
+        );
+      case FaqWidget.route:
+        return CupertinoPageRoute(
+          builder: (_) => const FaqWidget(),
           settings: settings,
         );
       default:

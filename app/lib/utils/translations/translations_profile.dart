@@ -82,6 +82,12 @@ abstract class TranslationsProfile {
   String get observedPendingExtrinsic;
   String get contactUs;
   String get checkEmailApp;
+  String get faq;
+  String get faqLong;
+  String get backUpAndRestoreYourAccount;
+  String get inviteEndorseYourAccounts;
+  String get ceremonyInstructions;
+  String get completingAttestation;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -250,6 +256,18 @@ class TranslationsEnProfile implements TranslationsProfile {
   String get errorUserNameIsRequired => 'User name cannot be blank';
   @override
   String get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
+  @override
+  String get faq => 'FAQ';
+  @override
+  String get faqLong => 'Frequently Asked Questions';
+  @override
+  String get backUpAndRestoreYourAccount => 'Backing up and restoring your account';
+  @override
+  String get ceremonyInstructions => 'Ceremony instructions';
+  @override
+  String get completingAttestation => 'Completing an attestation';
+  @override
+  String get inviteEndorseYourAccounts => 'Invite and endorse your contacts';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -420,6 +438,18 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   String get observedPendingExtrinsic =>
       'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
+  @override
+  String get faq => 'FAQ';
+  @override
+  String get faqLong => 'Häufig gestellte Fragen';
+  @override
+  String get backUpAndRestoreYourAccount => 'Sichern und Wiederherstellen Ihres Kontos';
+  @override
+  String get ceremonyInstructions => 'Anweisungen für die Zeremonie';
+  @override
+  String get completingAttestation => 'Ausfüllen einer Bescheinigung';
+  @override
+  String get inviteEndorseYourAccounts => 'Laden Sie Ihre Kontakte ein und unterstützen Sie sie';
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
@@ -592,6 +622,18 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get observedPendingExtrinsic =>
       'Une transaction non confirmée a été observée. Veuillez attendre la confirmation!';
+  @override
+  String get faq => 'FAQ';
+  @override
+  String get faqLong => 'Questions fréquemment posées';
+  @override
+  String get backUpAndRestoreYourAccount => 'Sauvegarder et restaurer votre compte';
+  @override
+  String get ceremonyInstructions => 'Consignes de cérémonie';
+  @override
+  String get completingAttestation => 'Remplir une attestation';
+  @override
+  String get inviteEndorseYourAccounts => 'Invitez et approuvez vos contacts';
 }
 
 class TranslationsRuProfile implements TranslationsProfile {
@@ -760,4 +802,16 @@ class TranslationsRuProfile implements TranslationsProfile {
   String get errorUserNameIsRequired => 'Имя пользователя не может быть пустым';
   @override
   String get observedPendingExtrinsic => 'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
+  @override
+  String get faq => 'ЧАВО';
+  @override
+  String get faqLong => 'Часто задаваемые вопросы';
+  @override
+  String get backUpAndRestoreYourAccount => 'Резервное копирование и восстановление вашей учетной записи';
+  @override
+  String get ceremonyInstructions => 'Инструкции по церемонии';
+  @override
+  String get completingAttestation => 'Завершение аттестации';
+  @override
+  String get inviteEndorseYourAccounts => 'Пригласите и подтвердите свои контакты';
 }

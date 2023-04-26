@@ -131,3 +131,11 @@ String replaceLocalePlaceholder(String link, String locale) {
       return link.replaceAll(localePlaceHolder, 'en');
   }
 }
+
+class AppUrls {
+  static const backUpAndRestoreYourAccount =
+      'https://encointer.org/encointer-app/#Backing-up-and-restoring-your-account';
+  static const inviteEndorseYourAccounts = 'https://encointer.org/encointer-app/#Invite-and-endorse-your-contacts';
+  static const ceremonyInstructions = 'https://encointer.org/encointer-app/#Ceremony-instructions';
+  static const completingAttestation = 'https://encointer.org/encointer-app/#Completing-an-attestation';
+}
