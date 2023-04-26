@@ -7,14 +7,14 @@ import 'package:encointer_wallet/models/announcement/announcement.dart';
 import 'package:share_plus/share_plus.dart';
 
 class AnnouncementCard extends StatefulWidget {
-  AnnouncementCard({
+  const AnnouncementCard({
     super.key,
     required this.announcement,
     this.isFavorite = false,
   });
 
   final Announcement announcement;
-  bool isFavorite;
+  final bool isFavorite;
 
   @override
   State<AnnouncementCard> createState() => _AnnouncementCardState();
@@ -23,6 +23,7 @@ class AnnouncementCard extends StatefulWidget {
 class _AnnouncementCardState extends State<AnnouncementCard> {
   int _count = 0;
   bool _isFavoriteTapped = false;
+  // unlike
 
   void _incrementCount() {
     setState(() {
