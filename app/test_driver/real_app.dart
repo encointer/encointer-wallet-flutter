@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:encointer_wallet/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:upgrader/upgrader.dart';
@@ -29,5 +30,5 @@ void main() async {
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
   final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
   WidgetsApp.debugAllowBannerOverride = false;
-  await app.main(appCast: cfg);
+  await app.main(appCast: cfg, appEnvironment: AppEnvironment.PROD);
 }

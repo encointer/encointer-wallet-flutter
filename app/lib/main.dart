@@ -15,7 +15,7 @@ import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart' as util;
 
-Future<void> main({AppcastConfiguration? appCast}) async {
+Future<void> main({AppcastConfiguration? appCast, AppEnvironment? appEnvironment}) async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationPlugin.setup();
   // var notificationAppLaunchDetails =
@@ -37,7 +37,13 @@ Future<void> main({AppcastConfiguration? appCast}) async {
         ),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()
-          create: (context) => AppStore(util.LocalStorage(), config: AppConfig(appCast: appCast)),
+          create: (context) => AppStore(
+            util.LocalStorage(),
+            config: AppConfig(
+              appCast: appCast,
+              appEnvironment: appEnvironment ?? AppEnvironment.DEV,
+            ),
+          ),
         )
       ],
       child: const WalletApp(),

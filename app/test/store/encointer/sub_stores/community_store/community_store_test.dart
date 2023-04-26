@@ -19,7 +19,7 @@ void main() {
 
       // Only to not get null errors in tests
       webApi = getMockApi(
-        AppStore(MockLocalStorage(), config: const AppConfig()),
+        AppStore(MockLocalStorage(), config: const AppConfig(appEnvironment: AppEnvironment.DEV)),
         withUI: false,
       );
       await webApi.init();

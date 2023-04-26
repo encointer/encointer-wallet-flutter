@@ -19,7 +19,11 @@ import 'package:encointer_wallet/store/encointer/sub_stores/community_store/comm
 Future<AppStore> setupAppStore(String networkInfo) async {
   final store = AppStore(
     MockLocalStorage(),
-    config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
+    config: const AppConfig(
+      mockSubstrateApi: true,
+      isTestMode: true,
+      appEnvironment: AppEnvironment.DEV,
+    ),
   );
   await store.init('_en');
 

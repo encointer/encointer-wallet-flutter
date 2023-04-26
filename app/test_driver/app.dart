@@ -20,7 +20,12 @@ void main() async {
   final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
   final globalAppStore = AppStore(
     MockLocalStorage(),
-    config: AppConfig(mockSubstrateApi: true, isTestMode: true, appCast: cfg),
+    config: AppConfig(
+      mockSubstrateApi: true,
+      isTestMode: true,
+      appCast: cfg,
+      appEnvironment: AppEnvironment.DEV,
+    ),
   );
 
   // the tests are run in a separate isolate from the app. The test isolate can only interact with

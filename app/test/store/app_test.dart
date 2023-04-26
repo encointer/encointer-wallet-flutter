@@ -9,7 +9,11 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final store = AppStore(
     MockLocalStorage(),
-    config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
+    config: const AppConfig(
+      mockSubstrateApi: true,
+      isTestMode: true,
+      appEnvironment: AppEnvironment.DEV,
+    ),
   );
   accList = [testAcc];
   currentAccountPubKey = accList[0]['pubKey'] as String;
