@@ -1,15 +1,30 @@
 import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_community_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/announcement/announcement.dart';
+import 'package:share_plus/share_plus.dart';
 
-class AnnouncementCard extends StatelessWidget {
-  const AnnouncementCard({super.key, required this.announcement});
+class AnnouncementCard extends StatefulWidget {
+  AnnouncementCard({
+    super.key,
+    required this.announcement,
+    this.isFavorite = false,
+  });
+
   final Announcement announcement;
+  bool isFavorite;
 
+  // void isFavoritePressed() {
+  //   isFavorite = !isFavorite;
+  // }
+
+  @override
+  State<AnnouncementCard> createState() => _AnnouncementCardState();
+}
+
+class _AnnouncementCardState extends State<AnnouncementCard> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -25,39 +40,48 @@ class AnnouncementCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
-              leading: PublisherSVGandCommunityIcon(announcement.publisherSVG),
+              leading: PublisherSVGandCommunityIcon(widget.announcement.publisherSVG),
               title: Align(
                 alignment: Alignment.centerRight,
-                child: Text(DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
+                child: Text(DateFormat.MMMd(local.languageCode).format(widget.announcement.publishDate),
                     style: Theme.of(context).textTheme.bodySmall),
               ),
-              subtitle: Text(announcement.title, style: textTheme.titleLarge),
+              subtitle: Text(widget.announcement.title, style: textTheme.titleLarge),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
               child: Text(
-                announcement.content,
+                widget.announcement.content,
                 style: textTheme.bodyMedium?.copyWith(height: 1.5),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15, right: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
-                  Icon(
-                    Iconsax.heart5,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    widget.isFavorite ? Icons.favorite : Icons.favorite_border_outlined,
                     size: 20,
-                    color: encointerGrey,
+                    color: widget.isFavorite ? encointerGrey : encointerGrey,
                   ),
-                  SizedBox(width: 10),
-                  Icon(
+                  onPressed: () {
+                    setState(() {
+                      widget.isFavorite = !widget.isFavorite;
+                    });
+                  },
+                ),
+                const SizedBox(width: 10),
+                IconButton(
+                  icon: const Icon(
                     Icons.share,
                     size: 20,
                     color: encointerGrey,
-                  )
-                ],
-              ),
+                  ),
+                  onPressed: () {
+                    Share.share(widget.announcement.content);
+                  },
+                )
+              ],
             )
           ],
         ),

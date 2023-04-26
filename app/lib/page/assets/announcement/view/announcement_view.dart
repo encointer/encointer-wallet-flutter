@@ -16,7 +16,6 @@ class AnnouncementView extends StatelessWidget {
     final store = context.watch<AnnouncementStore>();
     final dic = I18n.of(context)!.translationsForLocale().home;
     final appSettingsStore = context.watch<AppSettings>();
-    // final bool devMode = true;
     return Observer(builder: (_) {
       if (store.announcements == null) {
         return const Center(child: CupertinoActivityIndicator());
