@@ -30,7 +30,11 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
+        // Flag to enable support for the new language API, see #1165.
         coreLibraryDesugaringEnabled true
+        // Older androids ( < API 26) use Java 7
+        // Sets Java compatibility to Java 8
+        // Needed to run JAVA 8 for backwards compatibility with Androids older than API 26, see #1165.
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -98,6 +102,8 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.jakewharton.threetenabp:threetenabp:1.4.6'
+    // Fixes bug for newer ( > API 26) android versions
+    // Bug: Failed to transform window-java-1.0.0-beta04.jar (androidx.window:window-java:1.0.0-beta04)
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.window:window-java:1.0.0'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
