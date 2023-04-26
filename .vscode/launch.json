@@ -22,8 +22,7 @@
             "name": "encointer-wallet-flutter: iOS",
             "request": "launch",
             "type": "dart",
-            "program": "app/lib/main.dart",
-             
+            "program": "app/lib/main.dart",        
         },
         {
             "name": "encointer-wallet-flutter (profile mode)",
