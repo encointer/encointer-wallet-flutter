@@ -17,6 +17,7 @@ class AppColors {
     brightness: Brightness.light,
   );
 
+  /// TODO(eldiiar): Replace colors with designer's colors.
   static const ColorScheme gbd = ColorScheme(
     primary: Color(0xFF79C943), // main color for almost all texts
     onPrimary: Color(0xFFF6FAF1),

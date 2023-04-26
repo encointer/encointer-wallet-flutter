@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 mixin CompomnentTheme {
-  RoundedRectangleBorder get shapeMedium => const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+  RoundedRectangleBorder get roundedRectBorder20 => const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       );
 
   ElevatedButtonThemeData elevatedButtonThemeData(ColorScheme colorScheme) {
@@ -12,7 +12,7 @@ mixin CompomnentTheme {
         backgroundColor: colorScheme.background,
         foregroundColor: colorScheme.secondary,
         shadowColor: Colors.transparent,
-        shape: shapeMedium,
+        shape: roundedRectBorder20,
       ),
     );
   }

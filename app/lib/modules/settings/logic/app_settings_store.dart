@@ -50,7 +50,7 @@ abstract class _AppSettingsBase with Store {
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;
 
-  // When we get the colors for greenbay dollars from desiner, we can activate it.
+  /// TODO(edliiar): Activate GBD colors when received from designer.
   // @action
   void changeTheme(String? cid) {
     // final community = Community.fromCid(cid);
