@@ -6,28 +6,34 @@ import 'package:http/http.dart' as http;
 import 'package:ew_http/src/exception/http_exception.dart';
 
 typedef TokenProvider = Future<String?> Function();
-typedef FromJsonM<T> = T Function(Map<String, dynamic>);
+typedef FromJson<T> = T Function(Map<String, dynamic>);
 
 class EwHttp {
-  EwHttp({
-    http.Client? client,
-    String baseUrl = 'api.encointer.org',
-    TokenProvider? tokenProvider,
-  })  : _client = client ?? http.Client(),
-        _baseUrl = baseUrl,
+  EwHttp({http.Client? client, TokenProvider? tokenProvider})
+      : _client = client ?? http.Client(),
         _tokenProvider = tokenProvider;
 
   final http.Client _client;
-  final String _baseUrl;
   final TokenProvider? _tokenProvider;
 
-  Future<T> get<T>(String path, {required FromJsonM<T> fromJson}) async {
+  Future<T> get<T>(String url, {required FromJson<T> fromJson}) async {
     try {
-      final uri = Uri.parse('$_baseUrl/$path');
+      final uri = Uri.parse(url);
       final response = await _client.get(uri, headers: await _getRequestHeaders());
-      return fromJson(response.jsonBody());
+      return fromJson(response.decode());
     } catch (e, s) {
-      throw HttpStatusException(statusCode: 101, error: e, stackTrace: s);
+      throw HttpStatusException(error: e, stackTrace: s);
+    }
+  }
+
+  Future<List<T>> getList<T>(String url, {required FromJson<T> fromJson}) async {
+    try {
+      final uri = Uri.parse(url);
+      final response = await _client.get(uri, headers: await _getRequestHeaders());
+      final body = response.decode<List<Map<String, dynamic>>>();
+      return body.map((e) => fromJson(e)).toList();
+    } catch (e, s) {
+      throw HttpStatusException(error: e, stackTrace: s);
     }
   }
 
@@ -42,9 +48,9 @@ class EwHttp {
 }
 
 extension on http.Response {
-  Map<String, dynamic> jsonBody() {
+  T decode<T>() {
     try {
-      return jsonDecode(body) as Map<String, dynamic>;
+      return jsonDecode(body) as T;
     } catch (error, stackTrace) {
       Error.throwWithStackTrace(error, stackTrace);
     }
