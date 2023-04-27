@@ -16,21 +16,28 @@ class EwHttp {
   final http.Client _client;
   final TokenProvider? _tokenProvider;
 
-  Future<T> get<T>(String url, {required FromJson<T> fromJson}) async {
+  Future<T> get<T>(String url) async {
     try {
       final uri = Uri.parse(url);
       final response = await _client.get(uri, headers: await _getRequestHeaders());
-      return fromJson(response.decode());
+      return response.decode<T>();
     } catch (e, s) {
       throw HttpStatusException(error: e, stackTrace: s);
     }
   }
 
-  Future<List<T>> getList<T>(String url, {required FromJson<T> fromJson}) async {
+  Future<T> getType<T>(String url, {required FromJson<T> fromJson}) async {
     try {
-      final uri = Uri.parse(url);
-      final response = await _client.get(uri, headers: await _getRequestHeaders());
-      final body = response.decode<List<dynamic>>();
+      final body = await get<Map<String, dynamic>>(url);
+      return fromJson(body);
+    } catch (e, s) {
+      throw HttpStatusException(error: e, stackTrace: s);
+    }
+  }
+
+  Future<List<T>> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
+    try {
+      final body = await get<List<dynamic>>(url);
       return body.map((e) => fromJson(e as Map<String, dynamic>)).toList();
     } catch (e, s) {
       throw HttpStatusException(error: e, stackTrace: s);

@@ -16,16 +16,23 @@ void main() {
 
   group('EwHttp', () {
     test('get', () async {
-      final value = await ewHttp.getList<Feed>(getListUrl, fromJson: Feed.fromJson);
+      final value = await ewHttp.get<Map<String, dynamic>>(getUrl);
+      expect(value, isNotNull);
+      expect(value, isMap);
+      expect(value, isA<Map<String, dynamic>>());
+    });
+
+    test('get List Type', () async {
+      final value = await ewHttp.getType<Feed>(getUrl, fromJson: Feed.fromJson);
+      expect(value, isNotNull);
+      expect(value, isA<Feed>());
+    });
+
+    test('getType', () async {
+      final value = await ewHttp.getTypeList<Feed>(getListUrl, fromJson: Feed.fromJson);
       expect(value, isNotNull);
       expect(value, isList);
       expect(value[0], isA<Feed>());
-    });
-
-    test('get List', () async {
-      final value = await ewHttp.get<Feed>(getUrl, fromJson: Feed.fromJson);
-      expect(value, isNotNull);
-      expect(value, isA<Feed>());
     });
   });
 }
