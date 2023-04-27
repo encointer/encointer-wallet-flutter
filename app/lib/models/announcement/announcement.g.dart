@@ -12,6 +12,8 @@ Announcement _$AnnouncementFromJson(Map<String, dynamic> json) => Announcement(
       publisherSVG: json['publisherSVG'] as String,
       content: json['content'] as String,
       publishDate: DateTime.parse(json['publishDate'] as String),
+      isFavorite: json['isFavorite'] as bool? ?? false,
+      countFavorite: json['countFavorite'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$AnnouncementToJson(Announcement instance) => <String, dynamic>{
@@ -20,4 +22,6 @@ Map<String, dynamic> _$AnnouncementToJson(Announcement instance) => <String, dyn
       'publisherSVG': instance.publisherSVG,
       'content': instance.content,
       'publishDate': instance.publishDate.toIso8601String(),
+      'isFavorite': instance.isFavorite,
+      'countFavorite': instance.countFavorite,
     };

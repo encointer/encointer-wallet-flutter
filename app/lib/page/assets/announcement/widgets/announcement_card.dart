@@ -10,27 +10,38 @@ class AnnouncementCard extends StatefulWidget {
   const AnnouncementCard({
     super.key,
     required this.announcement,
-    this.isFavorite = false,
   });
 
   final Announcement announcement;
-  final bool isFavorite;
 
   @override
   State<AnnouncementCard> createState() => _AnnouncementCardState();
 }
 
 class _AnnouncementCardState extends State<AnnouncementCard> {
-  int _count = 0;
-  bool _isFavoriteTapped = false;
+  late int _countFavorite;
+  late bool _isFavorite;
   // unlike
 
-  void _incrementCount() {
+  @override
+  void initState() {
+    _isFavorite = widget.announcement.isFavorite;
+    _countFavorite = widget.announcement.countFavorite;
+    super.initState();
+  }
+
+  void _likeUnlike() {
     setState(() {
-      if (!_isFavoriteTapped) {
-        _count++;
-        _isFavoriteTapped = true;
-        widget.isFavorite = true;
+      if (_isFavorite) {
+        _isFavorite = false;
+        _countFavorite--;
+
+        /// send favorite to backend to like
+      } else {
+        _isFavorite = true;
+        _countFavorite++;
+
+        /// send favorite to backend unlike
       }
     });
   }
@@ -69,13 +80,14 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                    icon: Icon(
-                      widget.isFavorite ? Icons.favorite : Icons.favorite_border_outlined,
-                      size: 20,
-                      color: widget.isFavorite ? encointerGrey : encointerGrey,
-                    ),
-                    onPressed: _incrementCount),
-                Text('$_count'),
+                  icon: Icon(
+                    _isFavorite ? Icons.favorite : Icons.favorite_border_outlined,
+                    size: 20,
+                    color: _isFavorite ? encointerGrey : encointerGrey,
+                  ),
+                  onPressed: _likeUnlike,
+                ),
+                Text('$_countFavorite'),
                 // const SizedBox(width: 10),
                 IconButton(
                   icon: const Icon(
