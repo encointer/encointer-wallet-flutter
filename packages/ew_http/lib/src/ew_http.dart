@@ -1,7 +1,9 @@
-/// {@template ew_http}
-/// Ew Http Dart package
-/// {@endtemplate}
+import 'package:http/http.dart' as http;
+
 class EwHttp {
-  /// {@macro ew_http}
-  const EwHttp();
+  EwHttp([http.Client? client]) : _client = client ?? http.Client();
+
+  final http.Client _client;
+
+  
 }
