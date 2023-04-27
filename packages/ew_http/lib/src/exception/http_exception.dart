@@ -1,5 +1,5 @@
-class HttpException implements Exception {
-  const HttpException({
+class HttpStatusException implements Exception {
+  const HttpStatusException({
     required this.statusCode,
     this.error,
     this.stackTrace,
