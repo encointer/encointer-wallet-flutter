@@ -30,8 +30,8 @@ class EwHttp {
     try {
       final uri = Uri.parse(url);
       final response = await _client.get(uri, headers: await _getRequestHeaders());
-      final body = response.decode<List<Map<String, dynamic>>>();
-      return body.map((e) => fromJson(e)).toList();
+      final body = response.decode<List<dynamic>>();
+      return body.map((e) => fromJson(e as Map<String, dynamic>)).toList();
     } catch (e, s) {
       throw HttpStatusException(error: e, stackTrace: s);
     }
