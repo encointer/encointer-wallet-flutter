@@ -21,7 +21,6 @@ class AnnouncementCard extends StatefulWidget {
 class _AnnouncementCardState extends State<AnnouncementCard> {
   late int _countFavorite;
   late bool _isFavorite;
-  // unlike
 
   @override
   void initState() {
@@ -36,12 +35,12 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
         _isFavorite = false;
         _countFavorite--;
 
-        /// send favorite to backend to like
+        /// send favorite to backend unlike
       } else {
         _isFavorite = true;
         _countFavorite++;
 
-        /// send favorite to backend unlike
+        /// send favorite to backend to like
       }
     });
   }
@@ -88,7 +87,6 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
                   onPressed: _likeUnlike,
                 ),
                 Text('$_countFavorite'),
-                // const SizedBox(width: 10),
                 IconButton(
                   icon: const Icon(
                     Icons.share,

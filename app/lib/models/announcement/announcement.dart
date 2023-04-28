@@ -25,40 +25,40 @@ class Announcement {
   final int countFavorite;
 }
 
-const announcementMockData = {
-  'announcement': [
-    {
-      'communityIdentifier': '1',
-      'title': 'This is a title',
-      'publisherSVG':
-          'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/communnity_leader_photo.png?raw=true',
-      'content':
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac elementum orci. Etiam fringilla augue non nisi accumsan euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur rcommunityIdentifiericulus mus.',
-      'publishDate': '2023-04-24 09:44:11.377',
-      'isFavorite': true,
-      'countFavorite': 17,
-    },
-    {
-      'communityIdentifier': '2',
-      'title': 'This is a title',
-      'publisherSVG':
-          'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/communnity_leader_photo.png?raw=true',
-      'content':
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac elementum orci. Etiam fringilla augue non nisi accumsan euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur rcommunityIdentifiericulus mus.',
-      'publishDate': '2023-04-23 09:44:11.377',
-      'isFavorite': false,
-      'countFavorite': 101,
-    },
-    {
-      'communityIdentifier': '3',
-      'title': 'This is a title',
-      'publisherSVG':
-          'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/communnity_leader_photo.png?raw=true',
-      'content':
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac elementum orci. Etiam fringilla augue non nisi accumsan euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur rcommunityIdentifiericulus mus.',
-      'publishDate': '2023-04-22 09:44:11.377',
-      'isFavorite': true,
-      'countFavorite': 1,
-    },
-  ]
-};
+// const announcementMockData = {
+//   'announcement': [
+//     {
+//       'communityIdentifier': '1',
+//       'title': 'This is a title',
+//       'publisherSVG':
+//           'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/communnity_leader_photo.png?raw=true',
+//       'content':
+//           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac elementum orci. Etiam fringilla augue non nisi accumsan euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur rcommunityIdentifiericulus mus.',
+//       'publishDate': '2023-04-24 09:44:11.377',
+//       'isFavorite': true,
+//       'countFavorite': 17,
+//     },
+//     {
+//       'communityIdentifier': '2',
+//       'title': 'This is a title',
+//       'publisherSVG':
+//           'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/communnity_leader_photo.png?raw=true',
+//       'content':
+//           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac elementum orci. Etiam fringilla augue non nisi accumsan euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur rcommunityIdentifiericulus mus.',
+//       'publishDate': '2023-04-23 09:44:11.377',
+//       'isFavorite': false,
+//       'countFavorite': 101,
+//     },
+//     {
+//       'communityIdentifier': '3',
+//       'title': 'This is a title',
+//       'publisherSVG':
+//           'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/communnity_leader_photo.png?raw=true',
+//       'content':
+//           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac elementum orci. Etiam fringilla augue non nisi accumsan euismod. Orci varius natoque penatibus et magnis dis parturient montes, nascetur rcommunityIdentifiericulus mus.',
+//       'publishDate': '2023-04-22 09:44:11.377',
+//       'isFavorite': true,
+//       'countFavorite': 1,
+//     },
+//   ]
+// };
