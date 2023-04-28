@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import 'package:ew_http/src/exception/http_exception.dart';
+import 'package:ew_http/src/exceptions/exceptions.dart';
 
 typedef TokenProvider = Future<String?> Function();
 typedef FromJson<T> = T Function(Map<String, dynamic>);
@@ -20,27 +20,30 @@ class EwHttp {
     try {
       final uri = Uri.parse(url);
       final response = await _client.get(uri, headers: await _getRequestHeaders());
+      if (response.statusCode != HttpStatus.ok) {
+        throw HttpRequestException(statusCode: response.statusCode);
+      }
       return response.decode<T>();
     } catch (e, s) {
-      throw HttpStatusException(error: e, stackTrace: s);
+      throw HttpRequestException(error: e, stackTrace: s);
     }
   }
 
   Future<T> getType<T>(String url, {required FromJson<T> fromJson}) async {
     try {
-      final body = await get<Map<String, dynamic>>(url);
-      return fromJson(body);
+      final data = await get<Map<String, dynamic>>(url);
+      return fromJson(data);
     } catch (e, s) {
-      throw HttpStatusException(error: e, stackTrace: s);
+      throw JsonDeserializationException(error: e, stackTrace: s);
     }
   }
 
   Future<List<T>> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
     try {
-      final body = await get<List<dynamic>>(url);
-      return body.map((e) => fromJson(e as Map<String, dynamic>)).toList();
+      final data = await get<List<dynamic>>(url);
+      return data.map((e) => fromJson(e as Map<String, dynamic>)).toList();
     } catch (e, s) {
-      throw HttpStatusException(error: e, stackTrace: s);
+      throw JsonDeserializationException(error: e, stackTrace: s);
     }
   }
 
@@ -58,8 +61,8 @@ extension on http.Response {
   T decode<T>() {
     try {
       return jsonDecode(body) as T;
-    } catch (error, stackTrace) {
-      Error.throwWithStackTrace(error, stackTrace);
+    } catch (e, s) {
+      throw JsonDecodeException(error: e, stackTrace: s);
     }
   }
 }

@@ -1,5 +1,7 @@
 /// Ew Http Dart package
 library ew_http;
 
-export 'src/exception/http_exception.dart';
+export 'package:http/http.dart';
+
+export 'src/exceptions/exceptions.dart';
 export 'src/ew_http.dart';
