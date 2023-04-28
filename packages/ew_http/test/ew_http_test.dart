@@ -28,16 +28,16 @@ void main() {
     });
 
     test('Get Type', () async {
-      final value = await ewHttp.getType<Feed>(getUrl, fromJson: Feed.fromJson);
+      final value = await ewHttp.getType<TestModel>(getUrl, fromJson: TestModel.fromJson);
       expect(value, isNotNull);
-      expect(value, isA<Feed>());
+      expect(value, isA<TestModel>());
     });
 
     test('Get List Type', () async {
-      final value = await ewHttp.getTypeList<Feed>(getListUrl, fromJson: Feed.fromJson);
+      final value = await ewHttp.getTypeList<TestModel>(getListUrl, fromJson: TestModel.fromJson);
       expect(value, isNotNull);
       expect(value, isList);
-      expect(value[0], isA<Feed>());
+      expect(value[0], isA<TestModel>());
     });
   });
 }

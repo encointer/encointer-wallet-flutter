@@ -1,13 +1,13 @@
-class Feed {
-  const Feed({
+class TestModel {
+  const TestModel({
     required this.id,
     required this.title,
     required this.content,
     required this.showAt,
   });
 
-  factory Feed.fromJson(Map<String, dynamic> json) {
-    return Feed(
+  factory TestModel.fromJson(Map<String, dynamic> json) {
+    return TestModel(
       id: json['id'] as String,
       title: json['title'] as String,
       content: json['content'] as String,
