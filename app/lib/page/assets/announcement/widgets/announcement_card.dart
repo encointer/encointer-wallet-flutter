@@ -1,11 +1,10 @@
-import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
-import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_community_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 
+import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_community_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/announcement/announcement.dart';
-import 'package:share_plus/share_plus.dart';
 
 class AnnouncementCard extends StatefulWidget {
   const AnnouncementCard({
