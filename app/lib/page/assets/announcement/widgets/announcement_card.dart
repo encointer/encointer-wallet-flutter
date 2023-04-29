@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
 import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_community_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

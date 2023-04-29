@@ -1,9 +1,8 @@
 import 'dart:convert';
-
-import 'package:encointer_wallet/config/prod_community.dart';
-import 'package:encointer_wallet/models/announcement/announcement.dart';
 import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
+import 'package:encointer_wallet/config/prod_community.dart';
+import 'package:encointer_wallet/models/announcement/announcement.dart';
 
 part 'announcement_store.g.dart';
 
