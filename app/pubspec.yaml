@@ -81,6 +81,8 @@ dependencies:
   photo_view: ^0.14.0
   upgrader: ^6.0.1
   app_links: ^3.4.1
+  ew_http:
+    path: ../packages/ew_http/
 
 dev_dependencies:
   build_runner: ^2.3.3
