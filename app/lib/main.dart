@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/subscan.dart';
@@ -30,17 +32,20 @@ Future<void> main({AppcastConfiguration? appCast}) async {
   final localService = LangService(await SharedPreferences.getInstance());
 
   runApp(
-    MultiProvider(
+    MultiRepositoryProvider(
       providers: [
-        Provider<AppSettings>(
-          create: (context) => AppSettings(localService)..init(),
-        ),
-        Provider<AppStore>(
-          // On test mode instead of LocalStorage() must be use MockLocalStorage()
-          create: (context) => AppStore(util.LocalStorage(), config: AppConfig(appCast: appCast)),
-        )
+        RepositoryProvider(create: (context) => EwHttp()),
       ],
-      child: const WalletApp(),
+      child: MultiProvider(
+        providers: [
+          Provider(create: (context) => AppSettings(localService)..init()),
+          Provider<AppStore>(
+            // On test mode instead of LocalStorage() must be use MockLocalStorage()
+            create: (context) => AppStore(util.LocalStorage(), config: AppConfig(appCast: appCast)),
+          ),
+        ],
+        child: const WalletApp(),
+      ),
     ),
   );
 }
