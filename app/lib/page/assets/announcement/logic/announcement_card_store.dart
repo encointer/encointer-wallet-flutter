@@ -6,24 +6,19 @@ part 'announcement_card_store.g.dart';
 class AnnouncementCardStore = _AnnouncementCardStoreBase with _$AnnouncementCardStore;
 
 abstract class _AnnouncementCardStoreBase with Store {
-  @observable
-  bool isFavorite = false;
+  _AnnouncementCardStoreBase({bool isFavorite1 = false, int countFavorite1 = 0})
+      : isFavorite = isFavorite1,
+        countFavorite = countFavorite1;
 
   @observable
-  int countFavorite = 0;
+  late bool isFavorite;
+
+  @observable
+  late int countFavorite;
 
   @action
   void toggleFavorite() {
-    if (isFavorite) {
-      isFavorite = false;
-      countFavorite--;
-
-      /// send favorite to backend unlike
-    } else {
-      isFavorite = true;
-      countFavorite++;
-
-      /// send favorite to backend to like
-    }
+    isFavorite = !isFavorite;
+    isFavorite ? countFavorite++ : countFavorite--;
   }
 }

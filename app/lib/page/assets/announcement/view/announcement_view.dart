@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,7 +54,13 @@ class AnnouncementList extends StatelessWidget {
       itemCount: announcements.length,
       itemBuilder: (BuildContext context, int index) {
         final announcement = announcements[index];
-        return AnnouncementCard(announcement: announcement);
+        return Provider(
+          create: (context) => AnnouncementCardStore(
+            isFavorite1: announcement.isFavorite,
+            countFavorite1: announcement.countFavorite,
+          ),
+          child: AnnouncementCard(announcement: announcement),
+        );
       },
     );
   }
