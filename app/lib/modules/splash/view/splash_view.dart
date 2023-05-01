@@ -85,7 +85,7 @@ Future<void> initWebApi(BuildContext context, AppStore store) async {
   webApi = !store.config.mockSubstrateApi
       ? Api.create(store, JSApi(), SubstrateDartApi(), js,
           store.config.isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway))
-      : MockApi(store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
+      : MockApi(store, MockJSApi(), MockSubstrateDartApi(), ewHttp, js, withUi: true);
 
   await webApi.init().timeout(
         const Duration(seconds: 20),

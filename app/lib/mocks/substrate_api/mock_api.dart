@@ -14,7 +14,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 MockApi getMockApi(AppStore store, {required bool withUI}) {
-  return MockApi(store, MockJSApi(), MockSubstrateDartApi(), '', withUi: withUI);
+  return MockApi(store, MockJSApi(), MockSubstrateDartApi(), EwHttp(), '', withUi: withUI);
 }
 
 class MockApi extends Api {
@@ -22,6 +22,7 @@ class MockApi extends Api {
     AppStore store,
     MockJSApi js,
     MockSubstrateDartApi dartApi,
+    EwHttp ewHttp,
     String jsServiceEncointer, {
     required this.withUi,
   }) : super(
@@ -31,8 +32,8 @@ class MockApi extends Api {
           MockAccountApi(store, js),
           MockAssetsApi(store, js),
           MockChainApi(store, js),
-          MockEncointerApi(store, js, dartApi),
-          MockIpfsApi(EwHttp()),
+          MockEncointerApi(store, js, dartApi, ewHttp),
+          MockIpfsApi(ewHttp),
           jsServiceEncointer,
         );
 

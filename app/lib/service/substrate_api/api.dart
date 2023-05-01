@@ -44,7 +44,7 @@ class Api {
       AccountApi(store, js),
       AssetsApi(store, js),
       ChainApi(store, js),
-      EncointerApi(store, js, dartApi),
+      EncointerApi(store, js, dartApi, ipfsApi.ewHttp),
       ipfsApi,
       jsServiceEncointer,
     );
