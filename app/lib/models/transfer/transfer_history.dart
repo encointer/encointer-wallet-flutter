@@ -5,25 +5,22 @@ part 'transfer_history.g.dart';
 @JsonSerializable()
 class Transaction {
   const Transaction({
-    required this.id,
-    required this.accountName,
-    required this.accountAddress,
-    required this.type,
-    required this.currency,
-    required this.amount,
+    required this.blockNumber,
     required this.timestamp,
+    required this.counterParty,
+    required this.amount,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
   Map<String, dynamic> toJson() => _$TransactionToJson(this);
 
-  final String id;
-  final String accountName;
-  final String accountAddress;
-  final TransactionType type;
-  final String currency;
+  final String blockNumber;
+  final String timestamp;
+  final String counterParty;
   final double amount;
-  final int timestamp;
+
+  TransactionType get type => amount < 0 ? TransactionType.outgoing : TransactionType.incoming;
+  DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
 }
 
 enum TransactionType { outgoing, incoming }
