@@ -1,5 +1,7 @@
 import 'dart:core';
 
+import 'package:ew_http/ew_http.dart';
+
 import 'package:encointer_wallet/mocks/ipfs/ipfs_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_account_api.dart';
@@ -7,8 +9,6 @@ import 'package:encointer_wallet/mocks/substrate_api/mock_assets_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_chain_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_encointer_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
-import 'package:ew_http/ew_http.dart';
-
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';

@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrate_api/account_api.dart';
 import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
 import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
@@ -61,8 +60,6 @@ class Api {
   final ChainApi chain;
   final EncointerApi encointer;
   final IpfsApi ipfsApi;
-
-  SubScanApi subScanApi = SubScanApi();
 
   Future<void> init() async {
     await Future.wait([
