@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 
