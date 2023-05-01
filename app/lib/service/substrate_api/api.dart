@@ -18,7 +18,7 @@ import 'package:encointer_wallet/store/app.dart';
 late Api webApi;
 
 class Api {
-  Api(
+  const Api(
     this.store,
     this.js,
     this.dartApi,
