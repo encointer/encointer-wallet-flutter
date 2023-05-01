@@ -4,6 +4,9 @@ import 'package:ew_http/ew_http.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/utils/format.dart';
 
 part 'transfer_gistory_store.g.dart';
 
@@ -20,10 +23,14 @@ abstract class _TransferHistoryStoreBase with Store {
   FetchStatus fetchStatus = FetchStatus.initial;
 
   @action
-  Future<void> getTransfers() async {
+  Future<void> getTransfers(AppStore appStore) async {
     fetchStatus = FetchStatus.loading;
+    final address = Fmt.ss58Encode(
+      appStore.account.currentAccountPubKey ?? '',
+      prefix: appStore.settings.endpoint.ss58 ?? 42,
+    );
     final data = await ewHttp.getTypeList<Transaction>(
-      'https://api.encointer.org/v1/accounting/transaction-log?cid=dpcmj33LUs9&start=1670000000000&end=1676250900000&account=PBK',
+      transactionHistoryEndpoint(appStore.encointer.community?.cid.toFmtString() ?? '', address),
       fromJson: Transaction.fromJson,
     );
     fetchStatus = data == null ? FetchStatus.error : FetchStatus.success;

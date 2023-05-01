@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
@@ -193,7 +194,9 @@ class AppRoute {
       case TransferHistoryView.route:
         return CupertinoPageRoute(
           builder: (_) => Provider(
-            create: (context) => TransferHistoryStore(RepositoryProvider.of<EwHttp>(context))..getTransfers(),
+            create: (context) => TransferHistoryStore(
+              RepositoryProvider.of<EwHttp>(context),
+            )..getTransfers(context.read<AppStore>()),
             child: const TransferHistoryView(),
           ),
         );

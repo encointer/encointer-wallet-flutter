@@ -97,8 +97,11 @@ const localePlaceHolder = 'LOCALE_PLACEHOLDER';
 const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';
 const meetupNotificationLink = 'https://encointer.github.io/feed/community_messages/$localePlaceHolder/cm.json';
 const encointerLink = 'https://wallet.encointer.org/app/';
+const encointerapi = 'https://api.encointer.org/v1/';
 
 String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
+String transactionHistoryEndpoint(String cid, String address) =>
+    '$encointerapi/accounting/transaction-log?cid=$cid&start=1670000000000&end=1676250900000&account=$address';
 
 String ceremonyInfoLink(String locale, String? cid) {
   final communityByCid = Community.fromCid(cid);
