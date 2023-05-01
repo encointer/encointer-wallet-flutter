@@ -30,6 +30,7 @@ abstract class _TransferHistoryStoreBase with Store {
       prefix: appStore.settings.endpoint.ss58 ?? 42,
     );
     final data = await ewHttp.getTypeList<Transaction>(
+      // transactionHistoryEndpoint('{cid}', '{PubKey}'),
       transactionHistoryEndpoint(appStore.encointer.community?.cid.toFmtString() ?? '', address),
       fromJson: Transaction.fromJson,
     );
