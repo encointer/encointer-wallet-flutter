@@ -30,7 +30,7 @@ const transferHistoryMockData = {
     {
       'id': '1',
       'accountName': 'John Doe',
-      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW',
+      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13E FmK1FMWW',
       'type': 'incoming',
       'currency': 'Leu',
       'amount': 0.005,
