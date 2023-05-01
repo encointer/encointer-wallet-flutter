@@ -24,35 +24,3 @@ class Transaction {
 }
 
 enum TransactionType { outgoing, incoming }
-
-const transferHistoryMockData = {
-  'transfer_history': [
-    {
-      'id': '1',
-      'accountName': 'John Doe',
-      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13E FmK1FMWW',
-      'type': 'incoming',
-      'currency': 'Leu',
-      'amount': 0.005,
-      'timestamp': 1674783247953
-    },
-    {
-      'id': '2',
-      'accountName': 'Jane Smith',
-      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW',
-      'type': 'outgoing',
-      'currency': 'Leu',
-      'amount': 0.0125,
-      'timestamp': 1674783247953
-    },
-    {
-      'id': '3',
-      'accountName': 'Bob Johnson',
-      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW',
-      'type': 'incoming',
-      'currency': 'Leu',
-      'amount': 0.1,
-      'timestamp': 1674783247953
-    }
-  ]
-};
