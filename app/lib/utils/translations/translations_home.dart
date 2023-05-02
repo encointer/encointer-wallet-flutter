@@ -48,6 +48,7 @@ abstract class TranslationsHome {
   String get appSettings;
   String get transferHistory;
   String get noTransactions;
+  String get error;
   String get unknownError;
   String get openMapApplication;
   String get unregister;
@@ -152,7 +153,9 @@ class TranslationsEnHome implements TranslationsHome {
   @override
   String get transferHistory => 'Transactions';
   @override
-  String get unknownError => 'Unknown Error';
+  String get error => 'Error';
+  @override
+  String get unknownError => 'Sorry, an error occurred. Please check your internet connection and try again.';
   @override
   String get openMapApplication => 'Open Map Application';
   @override
@@ -259,7 +262,10 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get transferHistory => 'Transaktionen';
   @override
-  String get unknownError => 'Unbekannter Fehler';
+  String get error => 'Fehler';
+  @override
+  String get unknownError =>
+      'Entschuldigung, es ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.';
   @override
   String get openMapApplication => 'In Karte öffnen';
   @override
@@ -367,7 +373,10 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get transferHistory => 'Transactions';
   @override
-  String get unknownError => 'Erreur inconnue';
+  String get error => 'Erreur';
+  @override
+  String get unknownError =>
+      "Désolé, une erreur s'est produite. Veuillez vérifier votre connexion Internet et réessayer.";
   @override
   String get openMapApplication => "Ouvrer l'application de carte";
   @override
@@ -475,7 +484,10 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get transferHistory => 'Транзакции';
   @override
-  String get unknownError => 'Неизвестная ошибка';
+  String get error => 'Ошибка';
+  @override
+  String get unknownError =>
+      'Извините, произошла ошибка. Пожалуйста, проверьте свое интернет-соединение и попробуйте еще раз.';
   @override
   String get openMapApplication => 'Открыть приложение Карты';
   @override

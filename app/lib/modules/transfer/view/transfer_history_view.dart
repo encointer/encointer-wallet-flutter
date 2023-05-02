@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/common/components/error/error_view.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 
 class TransferHistoryView extends StatelessWidget {
@@ -22,13 +24,17 @@ class TransferHistoryView extends StatelessWidget {
       body: Observer(builder: (_) {
         switch (transferHistoryStore.fetchStatus) {
           case FetchStatus.initial:
-            return Center(child: Text(dic.transferHistory));
           case FetchStatus.loading:
             return const CenteredActivityIndicator();
           case FetchStatus.success:
             return TransactionsList(transactions: transferHistoryStore.transactions ?? []);
           case FetchStatus.error:
-            return Center(child: Text(dic.unknownError));
+            return ErrorView(
+              onRetryPressed: () {
+                final appStore = context.read<AppStore>();
+                context.read<TransferHistoryStore>().getTransfers(appStore);
+              },
+            );
         }
       }),
     );
@@ -42,8 +48,7 @@ class TransactionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().home;
-    if (transactions.isEmpty) return Center(child: Text(dic.noTransactions));
+    if (transactions.isEmpty) return const TransactionsEmpty();
     return ListView.builder(
       itemCount: transactions.length,
       itemBuilder: (BuildContext context, int index) {
