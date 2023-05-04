@@ -40,6 +40,21 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     });
   }
 
+  late final _$errorAtom = Atom(name: '_AnnouncementStoreBase.error', context: context);
+
+  @override
+  String? get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String? value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   late final _$getAnnouncementCommunnityAsyncAction =
       AsyncAction('_AnnouncementStoreBase.getAnnouncementCommunnity', context: context);
 
@@ -56,11 +71,25 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     return _$getAnnouncementGlobalAsyncAction.run(() => super.getAnnouncementGlobal());
   }
 
+  late final _$_AnnouncementStoreBaseActionController =
+      ActionController(name: '_AnnouncementStoreBase', context: context);
+
+  @override
+  void init() {
+    final _$actionInfo = _$_AnnouncementStoreBaseActionController.startAction(name: '_AnnouncementStoreBase.init');
+    try {
+      return super.init();
+    } finally {
+      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 announcementsGlobal: ${announcementsGlobal},
-announcementsCommunnity: ${announcementsCommunnity}
+announcementsCommunnity: ${announcementsCommunnity},
+error: ${error}
     ''';
   }
 }

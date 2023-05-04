@@ -19,7 +19,7 @@ class AnnouncementConsts {
 class AnnouncementStore = _AnnouncementStoreBase with _$AnnouncementStore;
 
 abstract class _AnnouncementStoreBase with Store {
-  late final AnnouncementsApi _announcementsApi;
+  late AnnouncementsApi _announcementsApi;
 
   @observable
   List<Announcement>? announcementsGlobal;
