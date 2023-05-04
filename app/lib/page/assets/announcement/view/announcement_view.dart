@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
+import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,36 +9,74 @@ import 'package:encointer_wallet/page/assets/announcement/logic/announcement_sto
 import 'package:encointer_wallet/page/assets/announcement/widgets/announcement_card.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-class AnnouncementView extends StatelessWidget {
-  const AnnouncementView({super.key});
+class AnnouncementView extends StatefulWidget {
+  final String? cid;
+  const AnnouncementView({
+    super.key,
+    required this.cid,
+  });
+
+  @override
+  State<AnnouncementView> createState() => _AnnouncementViewState();
+}
+
+class _AnnouncementViewState extends State<AnnouncementView> {
+  final AnnouncementStore _announcementStore = AnnouncementStore();
+  late TranslationsHome _dic;
+
+  @override
+  void initState() {
+    _announcementStore.init();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    _dic = I18n.of(context)!.translationsForLocale().home;
+    await _getAnnouncements();
+    super.didChangeDependencies();
+  }
+
+  Future<void> _getAnnouncements() async {
+    await Future.wait([
+      _announcementStore.getAnnouncementGlobal(),
+      _announcementStore.getAnnouncementCommunnity(widget.cid),
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final store = context.watch<AnnouncementStore>();
-    final dic = I18n.of(context)!.translationsForLocale().home;
-
-    Widget buildAnnouncementList(List<Announcement>? announcements) {
-      if (announcements == null) {
-        return const Center(child: CupertinoActivityIndicator());
-      } else if (announcements.isEmpty) {
-        return const Center(child: Text('No Announcement found!!!'));
-      } else if (announcements.isNotEmpty) {
-        return AnnouncementList(announcements: announcements);
-      } else {
-        return Center(child: Text(dic.unknownError));
-      }
-    }
-
     return Column(
       children: [
-        Observer(builder: (_) {
-          return buildAnnouncementList(store.announcementsGlobal);
-        }),
-        Observer(builder: (_) {
-          return buildAnnouncementList(store.announcementsCommunnity);
-        }),
+        Observer(
+          builder: (_) {
+            return buildAnnouncementList(_announcementStore.announcementsGlobal);
+          },
+        ),
+        Observer(
+          builder: (_) {
+            return buildAnnouncementList(_announcementStore.announcementsCommunnity);
+          },
+        ),
       ],
     );
+  }
+
+  /// NOTE: Do not write any functions inside [build]!
+  Widget buildAnnouncementList(List<Announcement>? announcements) {
+    if (_announcementStore.error != null) {
+      return Center(
+        child: Text(_announcementStore.error!),
+      );
+    } else if (announcements == null) {
+      return const Center(child: CupertinoActivityIndicator());
+    } else if (announcements.isEmpty) {
+      return const Center(child: Text('No Announcement found!!!'));
+    } else if (announcements.isNotEmpty) {
+      return AnnouncementList(announcements: announcements);
+    } else {
+      return Center(child: Text(_dic.unknownError));
+    }
   }
 }
 
