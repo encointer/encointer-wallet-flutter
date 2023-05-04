@@ -11,11 +11,6 @@ const _logTarget = 'api_services';
 typedef TokenProvider = Future<String?> Function();
 
 class ApiServices {
-  late final http.Client _client;
-  late final String _baseUrl;
-  late final TokenProvider? _tokenProvider;
-  final _clientCompleter = Completer<http.Client>();
-
   ApiServices({
     required String baseUrl,
     required http.Client client,
@@ -25,6 +20,11 @@ class ApiServices {
         _tokenProvider = tokenProvider {
     _init();
   }
+
+  late final http.Client _client;
+  late final String _baseUrl;
+  late final TokenProvider? _tokenProvider;
+  final _clientCompleter = Completer<http.Client>();
 
   Future<void> _init() async {
     Log.d(_logTarget, '_init: _baseUrl = $_baseUrl, _client = $_client');

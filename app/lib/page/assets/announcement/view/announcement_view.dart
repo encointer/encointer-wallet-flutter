@@ -10,11 +10,12 @@ import 'package:encointer_wallet/page/assets/announcement/widgets/announcement_c
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AnnouncementView extends StatefulWidget {
-  final String? cid;
   const AnnouncementView({
     super.key,
     required this.cid,
   });
+
+  final String? cid;
 
   @override
   State<AnnouncementView> createState() => _AnnouncementViewState();

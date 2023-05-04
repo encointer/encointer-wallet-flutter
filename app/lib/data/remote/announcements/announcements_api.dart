@@ -4,8 +4,8 @@ import 'package:encointer_wallet/data/common_services/network/api_services.dart'
 import 'package:encointer_wallet/data/remote/announcements/announcements_api_services.dart';
 
 class AnnouncementsApi implements AnnouncementsApiServices {
-  late final ApiServices _apiServices;
   AnnouncementsApi({required ApiServices apiServices}) : _apiServices = apiServices;
+  late final ApiServices _apiServices;
 
   @override
   Future<ApiResponse> getAnnouncementCommunnity({String? cid}) async {

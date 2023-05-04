@@ -14,13 +14,13 @@ void main() {
     mockAnnouncementsApi = MockAnnouncementsApi();
   });
 
-  void setGetAnnouncementCommunnity() async {
+  void setGetAnnouncementCommunnity() {
     when(
       () => mockAnnouncementsApi.getAnnouncementCommunnity(cid: any(named: 'cid')),
     ).thenAnswer((_) async => Success<List<Announcement>>(data: leuAnnouncements));
   }
 
-  void setGetAnnouncementGlobal() async {
+  void setGetAnnouncementGlobal() {
     when(
       () => mockAnnouncementsApi.getAnnouncementGlobal(),
     ).thenAnswer((_) async => Success<List<Announcement>>(data: globalAnnouncements));

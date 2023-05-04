@@ -8,7 +8,7 @@ void main() {
       final leuAnnon = leuAnnouncements;
       final leuAnnonData = leuAnnouncementsData;
 
-      final result = leuAnnonData.map((e) => Announcement.fromJson(e)).toList();
+      final result = leuAnnonData.map(Announcement.fromJson).toList();
 
       expect(result.first.communityIdentifier, leuAnnon.first.communityIdentifier);
     });
@@ -17,7 +17,7 @@ void main() {
       final globalAnnon = globalAnnouncements;
       final globalAnnonData = globalAnnouncementsData;
 
-      final result = globalAnnonData.map((e) => Announcement.fromJson(e)).toList();
+      final result = globalAnnonData.map(Announcement.fromJson).toList();
 
       expect(result.first.communityIdentifier, globalAnnon.first.communityIdentifier);
     });

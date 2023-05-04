@@ -19,7 +19,7 @@ void main() {
     mockApiServices = MockApiServices();
   });
 
-  void setUpMockHttpClientSuccess200() async {
+  void setUpMockHttpClientSuccess200() {
     when(
       () => mockApiServices.get(endpoint: any(named: 'endpoint')),
     ).thenAnswer((_) async => Success<List<Announcement>>(data: leuAnnouncements));
