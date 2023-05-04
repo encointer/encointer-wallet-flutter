@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
 import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

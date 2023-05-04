@@ -32,7 +32,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   }
 
   @override
-  void didChangeDependencies() async {
+  Future<void> didChangeDependencies() async {
     _dic = I18n.of(context)!.translationsForLocale().home;
     await _getAnnouncements();
     super.didChangeDependencies();
