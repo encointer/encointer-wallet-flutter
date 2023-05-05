@@ -24,6 +24,14 @@ class CeremonyStep3Finish extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(dic.encointer.keySigningCycle),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            },
+            icon: const Icon(Icons.close),
+          )
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -69,22 +77,6 @@ class CeremonyStep3Finish extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              ElevatedButton(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Iconsax.arrow_right_2),
-                    const SizedBox(width: 12, height: 60),
-                    Text(
-                      dic.encointer.finish,
-                      style: Theme.of(context).textTheme.displaySmall,
-                    ),
-                  ],
-                ),
-                onPressed: () {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                },
               ),
               const SizedBox(height: 12),
               Padding(
