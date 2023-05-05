@@ -12,7 +12,7 @@ void main() {
   group('scan-page', () {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
-      driver!.shouldTakeScreenshot = true;
+      driver!.shouldTakeScreenshot = 'B';
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
     });

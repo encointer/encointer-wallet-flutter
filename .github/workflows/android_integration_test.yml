@@ -2,9 +2,19 @@ name: Android CI
 
 on:
   push:
-    branches: [master, f-droid]
+    branches:
+      [
+        master,
+        f-droid,
+        el/take-screenshots-for-every-language-in-integration-test,
+      ]
   pull_request:
-    branches: [master, f-droid]
+    branches:
+      [
+        master,
+        f-droid,
+        el/take-screenshots-for-every-language-in-integration-test,
+      ]
 
 env:
   NODE_VERSION: 16.13.1
@@ -90,11 +100,11 @@ jobs:
           brew install docker
           colima start
 
-      - name: Run encointer-node
-        run: ./scripts/docker_run_encointer_node_notee.sh &
+      # - name: Run encointer-node
+      #   run: ./scripts/docker_run_encointer_node_notee.sh &
 
-      - name: Bootstrap Demo Community
-        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
+      # - name: Bootstrap Demo Community
+      #   run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
 
       - name: "Create AVD and generate a clean snapshot for caching"
         if: steps.avd-cache.outputs.cache-hit != 'true'
