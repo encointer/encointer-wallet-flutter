@@ -100,8 +100,11 @@ const encointerLink = 'https://wallet.encointer.org/app/';
 const encointerApi = 'https://api.encointer.org/v1/';
 
 String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
-String getTransactionHistoryUrl(String cid, String address) =>
-    '$encointerApi/accounting/transaction-log?cid=$cid&start=1670000000000&end=1676250900000&account=$address';
+String getTransactionHistoryUrl(String cid, String address, {DateTime? startTime, DateTime? endTime}) {
+  final start = startTime?.millisecondsSinceEpoch ?? 1670000000000;
+  final end = (endTime ?? DateTime.now()).millisecondsSinceEpoch;
+  return '$encointerApi/accounting/transaction-log?cid=$cid&start=$start&end=$end&account=$address';
+}
 
 String ceremonyInfoLink(String locale, String? cid) {
   final communityByCid = Community.fromCid(cid);

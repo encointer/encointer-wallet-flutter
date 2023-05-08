@@ -34,6 +34,6 @@ abstract class _TransferHistoryStoreBase with Store {
       fromJson: Transaction.fromJson,
     );
     fetchStatus = data == null ? FetchStatus.error : FetchStatus.success;
-    if (fetchStatus == FetchStatus.success) transactions = data;
+    if (fetchStatus == FetchStatus.success) transactions = data!.reversed.toList();
   }
 }

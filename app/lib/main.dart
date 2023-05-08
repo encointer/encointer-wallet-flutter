@@ -17,7 +17,8 @@ import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart' as util;
 
-Future<void> main({AppcastConfiguration? appCast}) async {
+Future<void> main({AppcastConfiguration? appCast, AppSettings? settings}) async {
+  late final AppSettings appSettings;
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationPlugin.setup();
   // var notificationAppLaunchDetails =
@@ -29,7 +30,7 @@ Future<void> main({AppcastConfiguration? appCast}) async {
 
   HttpOverrides.global = MyHttpOverrides();
 
-  final localService = LangService(await SharedPreferences.getInstance());
+  appSettings = settings ?? AppSettings(LangService(await SharedPreferences.getInstance()));
 
   runApp(
     MultiRepositoryProvider(
@@ -38,7 +39,7 @@ Future<void> main({AppcastConfiguration? appCast}) async {
       ],
       child: MultiProvider(
         providers: [
-          Provider(create: (context) => AppSettings(localService)..init()),
+          Provider<AppSettings>(create: (context) => appSettings..init()),
           Provider<AppStore>(
             // On test mode instead of LocalStorage() must be use MockLocalStorage()
             create: (context) => AppStore(util.LocalStorage(), config: AppConfig(appCast: appCast)),

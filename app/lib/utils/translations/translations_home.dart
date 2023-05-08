@@ -53,6 +53,7 @@ abstract class TranslationsHome {
   String get openMapApplication;
   String get unregister;
   String get unregisterDialogTitle;
+  String get retry;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -155,13 +156,15 @@ class TranslationsEnHome implements TranslationsHome {
   @override
   String get error => 'Error';
   @override
-  String get unknownError => 'Sorry, an error occurred. Please check your internet connection and try again.';
+  String get unknownError => 'An error occurred. Please check your internet connection and try again.';
   @override
   String get openMapApplication => 'Open Map Application';
   @override
   String get unregister => 'Unregister';
   @override
   String get unregisterDialogTitle => 'Unregister from the next cycle?';
+  @override
+  String get retry => 'Retry';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -265,13 +268,15 @@ class TranslationsDeHome implements TranslationsHome {
   String get error => 'Fehler';
   @override
   String get unknownError =>
-      'Entschuldigung, es ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.';
+      'Es ist ein Fehler aufgetreten. Bitte überprüfe deine Internetverbindung und versuche es erneut.';
   @override
   String get openMapApplication => 'In Karte öffnen';
   @override
   String get unregister => 'Abmelden';
   @override
   String get unregisterDialogTitle => 'Vom nächsten Key-Signing Cycle abmelden?';
+  @override
+  String get retry => 'Wiederholen';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -375,14 +380,15 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get error => 'Erreur';
   @override
-  String get unknownError =>
-      "Désolé, une erreur s'est produite. Veuillez vérifier votre connexion Internet et réessayer.";
+  String get unknownError => 'Une erreur est survenue. Vérifie ta connexion Internet et réessaye.';
   @override
   String get openMapApplication => "Ouvrer l'application de carte";
   @override
   String get unregister => 'Se désinscrire';
   @override
   String get unregisterDialogTitle => 'Se désinscrire du prochain cycle?';
+  @override
+  String get retry => 'Réessayer';
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -494,4 +500,6 @@ class TranslationsRuHome implements TranslationsHome {
   String get unregister => 'Отменить регистрацию';
   @override
   String get unregisterDialogTitle => 'Отказаться от участия в следующем цикле?';
+  @override
+  String get retry => 'Повторить';
 }

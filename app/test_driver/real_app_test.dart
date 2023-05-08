@@ -416,8 +416,34 @@ void main() async {
     await addDelay(500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
-  test('delete all account ad show create account page', () async {
+  test('change-language-with-driver', () async {
+    await driver.requestData(RealAppTestCommand.localeDe);
+    await driver.takeScreenshot(Screenshots.homeLocaleDe);
+    await driver.requestData(RealAppTestCommand.localeFr);
+    await driver.takeScreenshot(Screenshots.homeLocaleFr);
+    await driver.requestData(RealAppTestCommand.localeRu);
+    await driver.takeScreenshot(Screenshots.homeLocaleRu);
+    await driver.requestData(RealAppTestCommand.localeEn);
+    await driver.takeScreenshot(Screenshots.homeLocaleEn);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('change-language-from-profile-page', () async {
     await driver.tap(find.byValueKey('profile'));
+    await driver.waitFor(find.byValueKey('settings-language'));
+    await driver.tap(find.byValueKey('settings-language'));
+    await driver.waitFor(find.text('Language'));
+    await driver.tap(find.byValueKey('locale-de'));
+    await driver.waitFor(find.text('Sprache'));
+    await driver.tap(find.byValueKey('locale-fr'));
+    await driver.waitFor(find.text('Langue'));
+    await driver.tap(find.byValueKey('locale-ru'));
+    await driver.waitFor(find.text('Язык'));
+    await driver.tap(find.byValueKey('locale-en'));
+    await driver.waitFor(find.text('Language'));
+    await driver.tap(find.pageBack());
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('delete all account ad show create account page', () async {
     await driver.waitFor(find.byValueKey('remove-all-accounts'));
     await rmAllAccountsFromProfilePage(driver);
     await addDelay(2000);
