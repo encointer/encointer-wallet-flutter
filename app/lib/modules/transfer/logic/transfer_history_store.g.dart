@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transfer_gistory_store.dart';
+part of 'transfer_history_store.dart';
 
 // **************************************************************************
 // StoreGenerator
