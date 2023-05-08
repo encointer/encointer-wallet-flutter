@@ -155,7 +155,7 @@ class TranslationsEnHome implements TranslationsHome {
   @override
   String get error => 'Error';
   @override
-  String get unknownError => 'Sorry, an error occurred. Please check your internet connection and try again.';
+  String get unknownError => 'An error occurred. Please check your internet connection and try again.';
   @override
   String get openMapApplication => 'Open Map Application';
   @override
@@ -265,7 +265,7 @@ class TranslationsDeHome implements TranslationsHome {
   String get error => 'Fehler';
   @override
   String get unknownError =>
-      'Entschuldigung, es ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.';
+      'Es ist ein Fehler aufgetreten. Bitte überprüfe deine Internetverbindung und versuche es erneut.';
   @override
   String get openMapApplication => 'In Karte öffnen';
   @override
@@ -375,8 +375,7 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get error => 'Erreur';
   @override
-  String get unknownError =>
-      "Désolé, une erreur s'est produite. Veuillez vérifier votre connexion Internet et réessayer.";
+  String get unknownError => 'Une erreur est survenue. Vérifie ta connexion Internet et réessaye.';
   @override
   String get openMapApplication => "Ouvrer l'application de carte";
   @override

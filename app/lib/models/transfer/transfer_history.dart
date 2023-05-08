@@ -21,7 +21,7 @@ class Transaction {
   /// The timestamp of the transaction, in milliseconds.
   final String timestamp;
 
-  /// The public key of the counterparty.
+  /// The address of the counterparty.
   final String counterParty;
 
   /// The amount of the transaction.
