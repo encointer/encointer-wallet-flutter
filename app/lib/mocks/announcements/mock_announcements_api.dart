@@ -26,7 +26,7 @@ List<Announcement> globalAnnouncements = [
   )
 ];
 
-List<Map<String, dynamic>> globalAnnouncementsData = [
+List<Map<String, dynamic>> globalAnnouncementsJson = [
   {
     'communityIdentifier': 'global',
     'title': 'This is a title',
@@ -40,7 +40,7 @@ List<Map<String, dynamic>> globalAnnouncementsData = [
   }
 ];
 
-List<Map<String, dynamic>> leuAnnouncementsData = [
+List<Map<String, dynamic>> leuAnnouncementsJson = [
   {
     'communityIdentifier': 'u0qj944rhWE',
     'title': 'This is a title',

@@ -74,14 +74,18 @@ class ApiServices {
         final responseJson = json.decode(response.body);
         return Success(data: responseJson);
       case 400:
-        return Failure(error: 'Bad Request Error');
+        return Failure(failureType: FailureType.badRequest);
       case 401:
       case 403:
-        return Failure(error: 'You have no authorization!');
+        return Failure(failureType: FailureType.noAuthorization);
       case 500:
       default:
+
+        /// if status code is none of 400, 401, 403, 500
+        /// we return status code only as error
         return Failure(
-          error: 'Something went wrong with the server, please try again. StatusCode: ${response.statusCode}',
+          failureType: FailureType.unknown,
+          error: '${response.statusCode}',
         );
     }
   }

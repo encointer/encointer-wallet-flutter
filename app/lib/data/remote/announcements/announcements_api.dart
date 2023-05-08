@@ -8,13 +8,13 @@ class AnnouncementsApi implements AnnouncementsApiServices {
   late final ApiServices _apiServices;
 
   @override
-  Future<ApiResponse> getAnnouncementCommunnity({String? cid}) async {
+  Future<ApiResponse> getLeuAnnouncements({String? cid}) async {
     final community = Community.fromCid(cid);
     return _apiServices.get(endpoint: '${community.name}/announcements.json');
   }
 
   @override
-  Future<ApiResponse> getAnnouncementGlobal() async {
+  Future<ApiResponse> getGlobalAnnouncements() async {
     return _apiServices.get(endpoint: 'global/announcements.json');
   }
 }

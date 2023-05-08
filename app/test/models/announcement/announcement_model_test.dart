@@ -4,20 +4,20 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('test Announcement serialization', () {
-    test('test Announcement serialization for leu', () {
+    test('for leu', () {
       final leuAnnon = leuAnnouncements;
-      final leuAnnonData = leuAnnouncementsData;
+      final leuAnnonJson = leuAnnouncementsJson;
 
-      final result = leuAnnonData.map(Announcement.fromJson).toList();
+      final result = leuAnnonJson.map(Announcement.fromJson).toList();
 
       expect(result.first.communityIdentifier, leuAnnon.first.communityIdentifier);
     });
 
-    test('test Announcement serialization for global', () {
+    test('for global', () {
       final globalAnnon = globalAnnouncements;
-      final globalAnnonData = globalAnnouncementsData;
+      final globalAnnonJson = globalAnnouncementsJson;
 
-      final result = globalAnnonData.map(Announcement.fromJson).toList();
+      final result = globalAnnonJson.map(Announcement.fromJson).toList();
 
       expect(result.first.communityIdentifier, globalAnnon.first.communityIdentifier);
     });

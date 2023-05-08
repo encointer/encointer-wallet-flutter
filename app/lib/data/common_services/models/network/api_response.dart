@@ -7,7 +7,17 @@ class Success<T> extends ApiResponse<T> {
 }
 
 class Failure<T> extends ApiResponse<T> {
-  Failure({required this.error});
+  Failure({required this.failureType, this.error});
+  FailureType failureType;
 
-  String error;
+  /// if status code is none of 400, 401, 403, 500
+  /// we return status code only as error
+  /// otherwise, leave it null
+  String? error;
+}
+
+enum FailureType {
+  unknown,
+  badRequest,
+  noAuthorization,
 }

@@ -8,7 +8,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-const _error404 = '404 Error';
+const FailureType _badRequest = FailureType.badRequest;
+
+const _statusCode = 'StatusCode: 404';
 
 class MockApiServices extends Mock implements ApiServices {}
 
@@ -25,12 +27,17 @@ void main() {
     ).thenAnswer((_) async => Success<List<Announcement>>(data: leuAnnouncements));
   }
 
-  void setUpMockHttpClientFailure404() {
+  void setUpMockHttpClientFailure400() {
     when(() => mockApiServices.get(endpoint: any(named: 'endpoint')))
-        .thenAnswer((_) async => Failure<String>(error: _error404));
+        .thenAnswer((_) async => Failure<FailureType>(failureType: _badRequest));
   }
 
-  group('test ApiServices methods', () {
+  void setUpMockHttpClientFailure404() {
+    when(() => mockApiServices.get(endpoint: any(named: 'endpoint')))
+        .thenAnswer((_) async => Failure<String>(failureType: _badRequest, error: _statusCode));
+  }
+
+  group('test ApiServices methods:', () {
     test(
       'should return leuAnnouncements when the response code is 200 (success)',
       () async {
@@ -46,14 +53,26 @@ void main() {
     );
 
     test(
-      'should throw a ServerException when the response code is 404 or other',
+      'should throw a ServerException when the response code is 400',
+      () async {
+        // arrange
+        setUpMockHttpClientFailure400();
+        // act
+        final result = await mockApiServices.get(endpoint: 'endpoint');
+        // assert
+        expect((result as Failure<FailureType>).failureType, equals(_badRequest));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 404',
       () async {
         // arrange
         setUpMockHttpClientFailure404();
         // act
         final result = await mockApiServices.get(endpoint: 'endpoint');
         // assert
-        expect((result as Failure<String>).error, equals(_error404));
+        expect((result as Failure<String>).error, equals(_statusCode));
       },
     );
   });

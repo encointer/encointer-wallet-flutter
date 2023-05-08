@@ -12,13 +12,13 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   late final _$announcementsGlobalAtom = Atom(name: '_AnnouncementStoreBase.announcementsGlobal', context: context);
 
   @override
-  List<Announcement>? get announcementsGlobal {
+  List<Announcement> get announcementsGlobal {
     _$announcementsGlobalAtom.reportRead();
     return super.announcementsGlobal;
   }
 
   @override
-  set announcementsGlobal(List<Announcement>? value) {
+  set announcementsGlobal(List<Announcement> value) {
     _$announcementsGlobalAtom.reportWrite(value, super.announcementsGlobal, () {
       super.announcementsGlobal = value;
     });
@@ -28,13 +28,13 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
       Atom(name: '_AnnouncementStoreBase.announcementsCommunnity', context: context);
 
   @override
-  List<Announcement>? get announcementsCommunnity {
+  List<Announcement> get announcementsCommunnity {
     _$announcementsCommunnityAtom.reportRead();
     return super.announcementsCommunnity;
   }
 
   @override
-  set announcementsCommunnity(List<Announcement>? value) {
+  set announcementsCommunnity(List<Announcement> value) {
     _$announcementsCommunnityAtom.reportWrite(value, super.announcementsCommunnity, () {
       super.announcementsCommunnity = value;
     });
@@ -55,30 +55,82 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     });
   }
 
-  late final _$getAnnouncementCommunnityAsyncAction =
-      AsyncAction('_AnnouncementStoreBase.getAnnouncementCommunnity', context: context);
+  late final _$failureTypeAtom = Atom(name: '_AnnouncementStoreBase.failureType', context: context);
 
   @override
-  Future<void> getAnnouncementCommunnity(String? cid) {
-    return _$getAnnouncementCommunnityAsyncAction.run(() => super.getAnnouncementCommunnity(cid));
+  FailureType? get failureType {
+    _$failureTypeAtom.reportRead();
+    return super.failureType;
   }
 
-  late final _$getAnnouncementGlobalAsyncAction =
-      AsyncAction('_AnnouncementStoreBase.getAnnouncementGlobal', context: context);
+  @override
+  set failureType(FailureType? value) {
+    _$failureTypeAtom.reportWrite(value, super.failureType, () {
+      super.failureType = value;
+    });
+  }
+
+  late final _$loadingAtom = Atom(name: '_AnnouncementStoreBase.loading', context: context);
 
   @override
-  Future<void> getAnnouncementGlobal() {
-    return _$getAnnouncementGlobalAsyncAction.run(() => super.getAnnouncementGlobal());
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  late final _$getLeuAnnouncementsAsyncAction =
+      AsyncAction('_AnnouncementStoreBase.getLeuAnnouncements', context: context);
+
+  @override
+  Future<void> getLeuAnnouncements(String? cid) {
+    return _$getLeuAnnouncementsAsyncAction.run(() => super.getLeuAnnouncements(cid));
+  }
+
+  late final _$getGlobalAnnouncementsAsyncAction =
+      AsyncAction('_AnnouncementStoreBase.getGlobalAnnouncements', context: context);
+
+  @override
+  Future<void> getGlobalAnnouncements() {
+    return _$getGlobalAnnouncementsAsyncAction.run(() => super.getGlobalAnnouncements());
   }
 
   late final _$_AnnouncementStoreBaseActionController =
       ActionController(name: '_AnnouncementStoreBase', context: context);
 
   @override
-  void init() {
-    final _$actionInfo = _$_AnnouncementStoreBaseActionController.startAction(name: '_AnnouncementStoreBase.init');
+  void _init() {
+    final _$actionInfo = _$_AnnouncementStoreBaseActionController.startAction(name: '_AnnouncementStoreBase._init');
     try {
-      return super.init();
+      return super._init();
+    } finally {
+      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setAnnouncementsEmpty() {
+    final _$actionInfo =
+        _$_AnnouncementStoreBaseActionController.startAction(name: '_AnnouncementStoreBase.setAnnouncementsEmpty');
+    try {
+      return super.setAnnouncementsEmpty();
+    } finally {
+      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setLoading(bool val) {
+    final _$actionInfo =
+        _$_AnnouncementStoreBaseActionController.startAction(name: '_AnnouncementStoreBase.setLoading');
+    try {
+      return super.setLoading(val);
     } finally {
       _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -89,7 +141,9 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     return '''
 announcementsGlobal: ${announcementsGlobal},
 announcementsCommunnity: ${announcementsCommunnity},
-error: ${error}
+error: ${error},
+failureType: ${failureType},
+loading: ${loading}
     ''';
   }
 }

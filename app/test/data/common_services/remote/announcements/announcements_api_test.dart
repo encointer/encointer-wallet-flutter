@@ -16,13 +16,13 @@ void main() {
 
   void setGetAnnouncementCommunnity() {
     when(
-      () => mockAnnouncementsApi.getAnnouncementCommunnity(cid: any(named: 'cid')),
+      () => mockAnnouncementsApi.getLeuAnnouncements(cid: any(named: 'cid')),
     ).thenAnswer((_) async => Success<List<Announcement>>(data: leuAnnouncements));
   }
 
   void setGetAnnouncementGlobal() {
     when(
-      () => mockAnnouncementsApi.getAnnouncementGlobal(),
+      () => mockAnnouncementsApi.getGlobalAnnouncements(),
     ).thenAnswer((_) async => Success<List<Announcement>>(data: globalAnnouncements));
   }
 
@@ -32,7 +32,7 @@ void main() {
       setGetAnnouncementCommunnity();
 
       // act
-      final result = await mockAnnouncementsApi.getAnnouncementCommunnity(cid: 'cid');
+      final result = await mockAnnouncementsApi.getLeuAnnouncements(cid: 'cid');
 
       // assert
       expect((result as Success<List<Announcement>>).data!.first.communityIdentifier,
@@ -43,7 +43,7 @@ void main() {
       setGetAnnouncementGlobal();
 
       // act
-      final result = await mockAnnouncementsApi.getAnnouncementGlobal();
+      final result = await mockAnnouncementsApi.getGlobalAnnouncements();
 
       // assert
       expect((result as Success<List<Announcement>>).data!.first.communityIdentifier,

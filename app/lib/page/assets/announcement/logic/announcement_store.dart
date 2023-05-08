@@ -19,20 +19,29 @@ class AnnouncementConsts {
 class AnnouncementStore = _AnnouncementStoreBase with _$AnnouncementStore;
 
 abstract class _AnnouncementStoreBase with Store {
+  _AnnouncementStoreBase() {
+    _init();
+  }
   late AnnouncementsApi _announcementsApi;
 
   @observable
-  List<Announcement>? announcementsGlobal;
+  List<Announcement> announcementsGlobal = <Announcement>[];
 
   @observable
-  List<Announcement>? announcementsCommunnity;
+  List<Announcement> announcementsCommunnity = <Announcement>[];
 
   @observable
   String? error;
 
+  @observable
+  FailureType? failureType;
+
+  @observable
+  bool loading = true;
+
   @action
-  void init() {
-    Log.d('init', _logTarget);
+  void _init() {
+    Log.d('_init', _logTarget);
 
     _announcementsApi = AnnouncementsApi(
       apiServices: ApiServices(
@@ -42,33 +51,54 @@ abstract class _AnnouncementStoreBase with Store {
     );
   }
 
+  /// On UI, we check if announcements empty or not
   @action
-  Future<void> getAnnouncementCommunnity(String? cid) async {
+  void setAnnouncementsEmpty() {
+    Log.d('setAnnouncementsEmpty', _logTarget);
+    announcementsCommunnity = <Announcement>[];
+    announcementsGlobal = <Announcement>[];
+  }
+
+  @action
+  void setLoading(bool val) {
+    Log.d('setLoading: val = $val', _logTarget);
+    loading = val;
+  }
+
+  @action
+  Future<void> getLeuAnnouncements(String? cid) async {
     Log.d('getAnnouncementCommunnity: cid = $cid', _logTarget);
-    final response = await _announcementsApi.getAnnouncementCommunnity(cid: cid);
+
+    final response = await _announcementsApi.getLeuAnnouncements(cid: cid);
 
     if (response is Success) {
       final data = response.data as List;
       announcementsCommunnity = data.map((e) => Announcement.fromJson(e as Map<String, dynamic>)).toList();
     } else if (response is Failure) {
       error = response.error;
+      failureType = response.failureType;
     } else {
-      error = 'Something went wrong, please try again!';
+      error = 'SomethingWentWrong';
     }
+
+    setLoading(false);
   }
 
   @action
-  Future<void> getAnnouncementGlobal() async {
+  Future<void> getGlobalAnnouncements() async {
     Log.d('getAnnouncementGlobal', _logTarget);
-    final response = await _announcementsApi.getAnnouncementGlobal();
+
+    final response = await _announcementsApi.getGlobalAnnouncements();
 
     if (response is Success) {
       final data = response.data as List;
       announcementsGlobal = data.map((e) => Announcement.fromJson(e as Map<String, dynamic>)).toList();
     } else if (response is Failure) {
       error = response.error;
+      failureType = response.failureType;
     } else {
-      error = 'Something went wrong, please try again!';
+      error = 'SomethingWentWrong';
     }
+    setLoading(false);
   }
 }
