@@ -112,10 +112,10 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   }
 
   /// NOTE: Do not write any functions inside [build]!
-  Widget buildAnnouncementList(List<Announcement>? announcements) {
+  Widget buildAnnouncementList(List<Announcement> announcements) {
     if (_announcementStore.loading) {
       return const Center(child: CupertinoActivityIndicator());
-    } else if (announcements!.isEmpty) {
+    } else if (announcements.isEmpty) {
       return Center(child: Text(_dic.noAnnouncementFound));
     } else if (announcements.isNotEmpty) {
       return AnnouncementList(announcements: announcements);
