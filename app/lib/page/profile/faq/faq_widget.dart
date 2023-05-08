@@ -6,14 +6,14 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 
 class FaqWidget extends StatefulWidget {
-  const FaqWidget({Key? key}) : super(key: key);
+  const FaqWidget({super.key});
   static const String route = '/profile/faq';
 
   @override
-  _FaqWidgetState createState() => _FaqWidgetState();
+  FaqWidgetState createState() => FaqWidgetState();
 }
 
-class _FaqWidgetState extends State<FaqWidget> with PostFrameMixin {
+class FaqWidgetState extends State<FaqWidget> with PostFrameMixin {
   late Translations _dic;
 
   @override

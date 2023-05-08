@@ -178,6 +178,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, FaqWidget.route),
               ),
               ListTile(
+                key: const Key('settings-language'),
                 title: Text(dic.profile.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
