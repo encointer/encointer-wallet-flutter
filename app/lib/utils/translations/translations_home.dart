@@ -53,6 +53,7 @@ abstract class TranslationsHome {
   String get openMapApplication;
   String get unregister;
   String get unregisterDialogTitle;
+  String get retry;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -162,6 +163,8 @@ class TranslationsEnHome implements TranslationsHome {
   String get unregister => 'Unregister';
   @override
   String get unregisterDialogTitle => 'Unregister from the next cycle?';
+  @override
+  String get retry => 'Retry';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -272,6 +275,8 @@ class TranslationsDeHome implements TranslationsHome {
   String get unregister => 'Abmelden';
   @override
   String get unregisterDialogTitle => 'Vom nächsten Key-Signing Cycle abmelden?';
+  @override
+  String get retry => 'Wiederholen';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -382,6 +387,8 @@ class TranslationsFrHome implements TranslationsHome {
   String get unregister => 'Se désinscrire';
   @override
   String get unregisterDialogTitle => 'Se désinscrire du prochain cycle?';
+  @override
+  String get retry => 'Réessayer';
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -493,4 +500,6 @@ class TranslationsRuHome implements TranslationsHome {
   String get unregister => 'Отменить регистрацию';
   @override
   String get unregisterDialogTitle => 'Отказаться от участия в следующем цикле?';
+  @override
+  String get retry => 'Повторить';
 }

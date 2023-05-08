@@ -38,7 +38,7 @@ class ErrorView extends StatelessWidget {
           if (onRetryPressed != null)
             ElevatedButton(
               onPressed: onRetryPressed,
-              child: const Text('Retry'),
+              child: Text(dic.retry),
             ),
           const SizedBox(height: 40),
         ],
