@@ -13,7 +13,7 @@ import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/subscan.dart';
+import 'package:encointer_wallet/service/http_overrides.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart' as util;
 
