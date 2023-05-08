@@ -3,6 +3,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'add_delay.dart';
 import 'extension/screenshot_driver_extension.dart';
 import 'real_app_helper.dart';
+import 'real_app_test/enter_text.dart';
 import 'screenshots.dart';
 
 Future<void> scrollToSendAddress(FlutterDriver driver) async {
@@ -16,26 +17,19 @@ Future<void> scrollToSendAddress(FlutterDriver driver) async {
 Future<void> createAccountAndSetPin(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('create-account'));
   await driver.waitFor(find.byValueKey('create-account-name'));
-  await driver.tap(find.byValueKey('create-account-name'));
-  await driver.enterText(account);
-  await driver.takeScreenshot(Screenshots.createAccount);
-  await driver.tap(find.byValueKey('create-account-name'));
-  await driver.enterText(account);
+  await driver.takeScreenshot(
+    Screenshots.createAccount,
+    enterText: () async => enterAccountName(driver, account),
+  );
+
   await driver.tap(find.byValueKey('create-account-next'));
-
   await driver.waitFor(find.byValueKey('create-account-pin'));
-  // await driver.tap(find.byValueKey('create-account-pin'));
-  // await driver.enterText('0001');
 
-  // await driver.tap(find.byValueKey('create-account-pin2'));
-  // await driver.enterText('0001');
+  await driver.takeScreenshot(
+    Screenshots.pinEntry,
+    enterText: () async => enterCreatePin(driver, '0001'),
+  );
 
-  await driver.takeScreenshot(Screenshots.pinEntry);
-  await driver.tap(find.byValueKey('create-account-pin'));
-  await driver.enterText('0001');
-
-  await driver.tap(find.byValueKey('create-account-pin2'));
-  await driver.enterText('0001');
   await driver.tap(find.byValueKey('create-account-confirm'));
 }
 

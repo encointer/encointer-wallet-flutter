@@ -24,7 +24,7 @@ void main() async {
   });
 
   test('create account by name Tom', () async {
-    await driver.takeScreenshot(Screenshots.splashView);
+    // await driver.takeScreenshot(Screenshots.splashView);
     await driver.waitFor(find.byValueKey('create-account'));
     await driver.takeScreenshot(Screenshots.accountEntryView);
     await createAccountAndSetPin(driver, 'Tom');
