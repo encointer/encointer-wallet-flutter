@@ -57,38 +57,31 @@ class _AccountSharePageState extends State<AccountSharePage> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: Column(
             children: [
-              ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  Text(
-                    dic.profile.qrScanHintAccount,
-                    style: textTheme.displayMedium!.copyWith(color: encointerBlack),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  // Enhance brightness for the QR-code
-                  const WakeLockAndBrightnessEnhancer(brightness: 1),
-                  SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: PrettyQr(
-                      image: Assets.images.public.app.provider(),
-                      data: contactQrCode.toQrPayload(),
-                      size: 40,
-                      roundEdges: true,
-                    ),
-                  ),
-                  // QrImage(
-                  //   data: contactQrCode.toQrPayload(),
-                  //   embeddedImage: Assets.images.public.app.provider(),
-                  //   embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(40, 40)),
-                  // ),
-                  Text(
-                    accountToBeShared.name,
-                    style: textTheme.displaySmall!.copyWith(color: encointerGrey),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+              Text(
+                dic.profile.qrScanHintAccount,
+                style: textTheme.displayMedium!.copyWith(color: encointerBlack),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              // Enhance brightness for the QR-code
+              const WakeLockAndBrightnessEnhancer(brightness: 1),
+              PrettyQr(
+                image: Assets.images.public.app
+                    .image(
+                      height: 40,
+                      width: 40,
+                    )
+                    .image,
+                data: contactQrCode.toQrPayload(),
+                size: MediaQuery.of(context).size.width * 0.85,
+                typeNumber: 7,
+              ),
+
+              const SizedBox(height: 16),
+              Text(
+                accountToBeShared.name,
+                style: textTheme.displaySmall!.copyWith(color: encointerGrey),
+                textAlign: TextAlign.center,
               ),
               const Spacer(),
               Text(

@@ -191,7 +191,9 @@ class _ReceivePageState extends State<ReceivePage> {
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
                     QrCodeImageWithButton(
                       qrCode: invoice.toQrPayload(),
-                      text: dic.assets.shareInvoice,
+                      shareText: dic.assets.shareInvoice,
+                      printText: dic.assets.print,
+                      previewText: dic.assets.preview,
                       onTap: () => {
                         if (_formKey.currentState!.validate())
                           {
