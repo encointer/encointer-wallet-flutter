@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
@@ -68,11 +68,21 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   const SizedBox(height: 16),
                   // Enhance brightness for the QR-code
                   const WakeLockAndBrightnessEnhancer(brightness: 1),
-                  QrImage(
-                    data: contactQrCode.toQrPayload(),
-                    embeddedImage: Assets.images.public.app.provider(),
-                    embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(40, 40)),
+                  SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: PrettyQr(
+                      image: Assets.images.public.app.provider(),
+                      data: contactQrCode.toQrPayload(),
+                      size: 40,
+                      roundEdges: true,
+                    ),
                   ),
+                  // QrImage(
+                  //   data: contactQrCode.toQrPayload(),
+                  //   embeddedImage: Assets.images.public.app.provider(),
+                  //   embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(40, 40)),
+                  // ),
                   Text(
                     accountToBeShared.name,
                     style: textTheme.displaySmall!.copyWith(color: encointerGrey),

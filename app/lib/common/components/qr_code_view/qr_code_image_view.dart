@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:qr_flutter_fork/qr_flutter_fork.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/extensions/extensions.dart';
@@ -59,10 +59,11 @@ class QrCodeImage extends StatelessWidget {
         initialScale: context.isMobile ? 0.8 : 0.5,
         backgroundDecoration: BoxDecoration(color: zurichLion.shade50),
         child: Center(
-          child: QrImage(
-            backgroundColor: Theme.of(context).canvasColor,
+          child: PrettyQr(
             data: qrCode,
-            errorCorrectionLevel: errorCorrectionLevel,
+            errorCorrectLevel: errorCorrectionLevel,
+            roundEdges: true,
+            size: size.height * 0.8,
           ),
         ),
       ),
