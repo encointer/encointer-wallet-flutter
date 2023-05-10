@@ -7,7 +7,7 @@ void main() {
   const key = 'key';
 
   group('PreferencesStorage', () {
-    test('setString - getString', () async {
+    test('setString and getString roundtrip works', () async {
       const setValue = 'set-value';
       SharedPreferences.setMockInitialValues(<String, Object>{key: setValue});
       final storage = await PreferencesStorage.getInstance();
@@ -17,7 +17,7 @@ void main() {
       expect(getValue, setValue);
     });
 
-    test('setBool - getBool', () async {
+    test('setBool and getBool roundtrip works', () async {
       const setValue = true;
       SharedPreferences.setMockInitialValues(<String, Object>{key: setValue});
       final storage = await PreferencesStorage.getInstance();
@@ -27,7 +27,7 @@ void main() {
       expect(getValue, setValue);
     });
 
-    test('setDouble - getDouble', () async {
+    test('setDouble and getDouble roundtrip works', () async {
       const setValue = 1.7;
       SharedPreferences.setMockInitialValues(<String, Object>{key: setValue});
       final storage = await PreferencesStorage.getInstance();
@@ -37,7 +37,7 @@ void main() {
       expect(getValue, setValue);
     });
 
-    test('setInt - getInt', () async {
+    test('setInt and getInt roundtrip works', () async {
       const setValue = 1;
       SharedPreferences.setMockInitialValues(<String, Object>{key: setValue});
       final storage = await PreferencesStorage.getInstance();
@@ -47,7 +47,7 @@ void main() {
       expect(getValue, setValue);
     });
 
-    test('setStringList - getStringList', () async {
+    test('setStringList and getStringList roundtrip works', () async {
       const setValue = ['A', 'B', 'C'];
       SharedPreferences.setMockInitialValues(<String, Object>{key: setValue});
       final storage = await PreferencesStorage.getInstance();
@@ -57,7 +57,7 @@ void main() {
       expect(getValue, setValue);
     });
 
-    test('Delete', () async {
+    test('storage.delete works', () async {
       const setValue = 1;
       SharedPreferences.setMockInitialValues(<String, Object>{key: setValue});
       final storage = await PreferencesStorage.getInstance();
@@ -70,7 +70,7 @@ void main() {
       expect(getNullValue, isNull);
     });
 
-    test('Clear', () async {
+    test('storage.clear works', () async {
       const boolKey = 'bool-key';
       const stringKey = 'string-key';
       const setStringValue = 'string-value';
