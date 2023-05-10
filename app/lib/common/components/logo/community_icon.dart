@@ -8,9 +8,9 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class CommunityIconObserver extends StatelessWidget {
-  const CommunityIconObserver({super.key, this.radius});
+  const CommunityIconObserver({super.key, double? radius}) : radius = radius ?? 10;
 
-  final double? radius;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
