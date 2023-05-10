@@ -30,8 +30,7 @@ abstract class _TransferHistoryStoreBase with Store {
       prefix: appStore.settings.endpoint.ss58 ?? 42,
     );
     final data = await ewHttp.getTypeList<Transaction>(
-      getTransactionHistoryUrl('dpcmj33LUs9', 'GqC37KSFFeGAoL7YxSeP1YDwr85WJvLmDDQiSaprTDAm8Jj'),
-      // getTransactionHistoryUrl(appStore.encointer.community?.cid.toFmtString() ?? '', address),
+      getTransactionHistoryUrl(appStore.encointer.community?.cid.toFmtString() ?? '', address),
       fromJson: Transaction.fromJson,
     );
     fetchStatus = data == null ? FetchStatus.error : FetchStatus.success;

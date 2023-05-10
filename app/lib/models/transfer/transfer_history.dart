@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+
 part 'transfer_history.g.dart';
 
 /// A class representing an Encointer transaction.
@@ -33,6 +35,15 @@ class Transaction {
 
   /// Returns the date and time of the transaction as a [DateTime] object.
   DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
+
+  /// Returns the name of the [counterparty] in the transaction by checking against the provided [contacts] list.
+  /// Returns null if no matching contact is found.
+  String? getNameFromContacts(List<AccountData> contacts) {
+    for (final contact in contacts) {
+      if (contact.address == counterParty) return contact.name;
+    }
+    return null;
+  }
 }
 
 /// An enumeration of the transaction types.
