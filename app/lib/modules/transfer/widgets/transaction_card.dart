@@ -27,7 +27,7 @@ class TransactionCard extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(transaction.blockNumber),
+            Text(appStore.account.accountListAll.singleWhere((e) => e.address == transaction.counterParty).name),
             Text.rich(
               TextSpan(
                 children: [
