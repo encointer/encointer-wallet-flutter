@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page/assets/qr_code_printing/widgets/preview_pdf_and_print.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,7 @@ class AppRoute {
   // it is preferable to use Navigator.pushNamed (rather than Navigator.push) for large projects
   // cf. CupertinoPageRoute documentation -> fullscreenDialog: true, (in this case the page slides in from the bottom)
   static Route<void> onGenerateRoute(RouteSettings settings) {
+    final arguments = settings.arguments;
     switch (settings.name) {
       case SplashView.route:
         return CupertinoPageRoute(
@@ -194,6 +196,12 @@ class AppRoute {
             create: (context) => TransferHistoryStore()..getTransfers(),
             child: const TransferHistoryView(),
           ),
+          settings: settings,
+        );
+      case PreviewPdfAndPrint.route:
+        return CupertinoPageRoute(
+          // ignore: cast_nullable_to_non_nullable
+          builder: (_) => PreviewPdfAndPrint(args: arguments as PreviewPdfAndPrintArgs),
           settings: settings,
         );
       default:
