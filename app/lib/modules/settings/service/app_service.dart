@@ -30,7 +30,7 @@ class AppService {
     return Locale(languageCode);
   }
 
-  Future<void> toggleBiometricAuthEnable(bool value) async {
+  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
     await storage.setBool(enableBiometricAuthKey, value);
   }
 

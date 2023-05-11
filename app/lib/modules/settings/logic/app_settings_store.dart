@@ -47,9 +47,9 @@ abstract class _AppSettingsBase with Store {
   }
 
   @action
-  Future<void> toggleBiometricAuth(bool value) async {
+  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
     isBiometricAuthenticationEnabled = value;
-    await _service.toggleBiometricAuthEnable(value);
+    await _service.setIsBiometricAuthenticationEnabled(value);
   }
 
   String getName(String code) => _service.getName(code);

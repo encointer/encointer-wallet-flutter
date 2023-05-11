@@ -68,11 +68,12 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     return _$setLocaleAsyncAction.run(() => super.setLocale(languageCode));
   }
 
-  late final _$toggleBiometricAuthAsyncAction = AsyncAction('_AppSettingsBase.toggleBiometricAuth', context: context);
+  late final _$setIsBiometricAuthenticationEnabledAsyncAction =
+      AsyncAction('_AppSettingsBase.setIsBiometricAuthenticationEnabled', context: context);
 
   @override
-  Future<void> toggleBiometricAuth(bool value) {
-    return _$toggleBiometricAuthAsyncAction.run(() => super.toggleBiometricAuth(value));
+  Future<void> setIsBiometricAuthenticationEnabled(bool value) {
+    return _$setIsBiometricAuthenticationEnabledAsyncAction.run(() => super.setIsBiometricAuthenticationEnabled(value));
   }
 
   late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
