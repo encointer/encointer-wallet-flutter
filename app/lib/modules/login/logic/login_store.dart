@@ -76,7 +76,7 @@ abstract class _LoginStoreBase with Store {
     if (isPinCorrect) {
       await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
-      RootSnackBar.showMsg(dic.account.passwordError);
+      RootSnackBar.showMsg(dic.account.pinError);
     }
   }
 

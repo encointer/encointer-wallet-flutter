@@ -31,7 +31,7 @@ abstract class TranslationsAccount {
   String get uosSigner;
   String get uosTitle;
   String get welcome;
-  String get passwordError;
+  String get pinError;
   String get signIn;
   String get localizedReason;
   String get biometricAuth;
@@ -100,7 +100,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   @override
   String get welcome => 'Welcome';
   @override
-  String get passwordError => 'Password is incorrect';
+  String get pinError => 'PIN is incorrect';
   @override
   String get signIn => 'Sign in';
   @override
@@ -172,7 +172,7 @@ class TranslationsDeAccount implements TranslationsAccount {
   @override
   String get welcome => 'Willkommen';
   @override
-  String get passwordError => 'Das Passwort ist falsch';
+  String get pinError => 'PIN ist falsch';
   @override
   String get signIn => 'Anmelden';
   @override
@@ -244,7 +244,7 @@ class TranslationsFrAccount implements TranslationsAccount {
   @override
   String get welcome => 'Bienvenue';
   @override
-  String get passwordError => 'Le mot de passe est incorrect';
+  String get pinError => 'Le code PIN est incorrect';
   @override
   String get signIn => 'Se connecter';
   @override
@@ -316,7 +316,7 @@ class TranslationsRuAccount implements TranslationsAccount {
   @override
   String get welcome => 'Добро пожаловать';
   @override
-  String get passwordError => 'Неверный пароль';
+  String get pinError => 'Неверный PIN-код';
   @override
   String get signIn => 'Войти';
   @override
