@@ -42,7 +42,7 @@ class _LoginViewState extends State<LoginView> {
       body: SingleChildScrollView(
         child: ReactionBuilder(
           builder: (BuildContext context) {
-            return reaction<bool>((r) => loginStore.pincode.length == cachedPin.length, (v) {
+            return reaction<bool>((r) => loginStore.pinCode.length == cachedPin.length, (v) {
               if (v) context.read<LoginStore>().usePincodeAuth(context);
             });
           },
@@ -52,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Observer(builder: (_) {
-                  return PinDots(loginStore.pincode.length, maxLength: cachedPin.length);
+                  return PinDots(loginStore.pinCode.length, maxLength: cachedPin.length);
                 }),
                 PinKeyboard(
                   onTapDigit: (value) => context.read<LoginStore>().addDigit(value, cachedPin.length),

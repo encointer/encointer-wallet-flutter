@@ -25,16 +25,16 @@ abstract class _LoginStoreBase with Store {
   @observable
   bool deviceSupportedBiometricAuth = true;
 
-  final pincode = ObservableList<int>();
+  final pinCode = ObservableList<int>();
 
   @action
   void addDigit(int value, int maxLength) {
-    if (pincode.length < maxLength) pincode.add(value);
+    if (pinCode.length < maxLength) pinCode.add(value);
   }
 
   @action
   void removeLastDigit() {
-    if (pincode.isNotEmpty) pincode.removeLast();
+    if (pinCode.isNotEmpty) pinCode.removeLast();
   }
 
   /// Authenticates the user with biometrics or device authentication options available on the device.
@@ -66,9 +66,9 @@ abstract class _LoginStoreBase with Store {
   }
 
   bool checkPinCode(String cachedPin) {
-    final pass = pincode.map((e) => e.toString()).join();
+    final pass = pinCode.map((e) => e.toString()).join();
     if (cachedPin.isNotEmpty && pass == cachedPin) return true;
-    pincode.clear();
+    pinCode.clear();
     return false;
   }
 
