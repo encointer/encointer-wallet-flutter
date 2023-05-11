@@ -42,8 +42,8 @@ abstract class _AppSettingsBase with Store {
   }
 
   @action
-  Future<void> setLocale(int index) async {
-    _locale = await _service.setLocale(index, locales);
+  Future<void> setLocale(String languageCode) async {
+    _locale = await _service.setLocale(languageCode);
   }
 
   @action

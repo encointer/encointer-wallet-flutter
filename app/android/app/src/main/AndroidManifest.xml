@@ -11,8 +11,12 @@
         android:icon="@mipmap/launcher_icon"
         android:allowBackup="false"
         android:usesCleartextTraffic="true">
+        <!-- android:name=".MainActivity": Android is run from MainActivity.kt file 
+        android:name="io.flutter.embedding.android.FlutterFragmentActivity"
+        We need MainActivity.kt to initialize AndroidThreeTen for older versions of android
+        -->
         <activity
-            android:name="io.flutter.embedding.android.FlutterFragmentActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/LaunchTheme"

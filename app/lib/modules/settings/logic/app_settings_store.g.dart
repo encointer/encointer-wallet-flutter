@@ -63,8 +63,8 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   late final _$setLocaleAsyncAction = AsyncAction('_AppSettingsBase.setLocale', context: context);
 
   @override
-  Future<void> setLocale(int index) {
-    return _$setLocaleAsyncAction.run(() => super.setLocale(index));
+  Future<void> setLocale(String languageCode) {
+    return _$setLocaleAsyncAction.run(() => super.setLocale(languageCode));
   }
 
   late final _$toggleBiometricAuthAsyncAction = AsyncAction('_AppSettingsBase.toggleBiometricAuth', context: context);

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
@@ -19,9 +18,7 @@ class AccountApi {
   Future<void> initAccounts() async {
     if (store.account.accountList.isNotEmpty) {
       final accounts = jsonEncode(store.account.accountList.map(AccountData.toJson).toList());
-
-      final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
-      await jsApi.evalJavascript<Map<String, dynamic>>('account.initKeys($accounts, $ss58)');
+      await jsApi.evalJavascript<void>('account.initKeys($accounts)');
     }
   }
 
@@ -29,18 +26,25 @@ class AccountApi {
     this.fetchAccountData = fetchAccountData;
   }
 
-  /// decode addresses to publicKeys
-  Future<Map> decodeAddresses(List<String> addresses) async {
-    if (addresses.isEmpty) return {};
-    final res = await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
-    return res ?? {};
+  /// Returns the pubKeys of the corresponding addresses.
+  ///
+  /// Todo: Remove this #1105.
+  Future<List<String>> addressesToPubKey(List<String> addresses) async {
+    if (addresses.isEmpty) return [];
+    final pubKeyAddress =
+        await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
+
+    if (pubKeyAddress != null) {
+      return pubKeyAddress.keys.toList();
+    }
+
+    return [];
   }
 
   /// Decode one address to the corresponding pubKey.
   Future<String> addressToPubKey(String address) async {
-    final pubKeyAddress = await decodeAddresses([address]);
-    final pubKey = pubKeyAddress.keys.toList()[0] as String;
-    return pubKey;
+    final addressList = await addressesToPubKey([address]);
+    return addressList[0];
   }
 
   Future<String> addressFromUri(String uri) async {

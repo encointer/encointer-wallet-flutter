@@ -24,10 +24,10 @@ class AppService {
     }
   }
 
-  Future<Locale> setLocale(int index, List<Locale> locales) async {
+  Future<Locale> setLocale(String languageCode) async {
     await storage.remove(localStorageLocaleKey);
-    await storage.setString(localStorageLocaleKey, locales[index].languageCode);
-    return locales[index];
+    await storage.setString(localStorageLocaleKey, languageCode);
+    return Locale(languageCode);
   }
 
   Future<void> toggleBiometricAuthEnable(bool value) async {
