@@ -34,7 +34,7 @@ class AppService {
     await storage.setBool(enableBiometricAuthKey, value);
   }
 
-  bool? getEnableBiometricAuth() => storage.getBool(enableBiometricAuthKey);
+  bool? getIsBiometricAuthenticationEnabled() => storage.getBool(enableBiometricAuthKey);
 
   String getName(String code) {
     switch (code) {

@@ -12,10 +12,12 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   Computed<Locale>? _$localeComputed;
 
   @override
-  Locale get locale =>
-      (_$localeComputed ??= Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale')).value;
+  Locale get locale => (_$localeComputed ??=
+          Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale'))
+      .value;
 
-  late final _$_localeAtom = Atom(name: '_AppSettingsBase._locale', context: context);
+  late final _$_localeAtom =
+      Atom(name: '_AppSettingsBase._locale', context: context);
 
   @override
   Locale get _locale {
@@ -30,8 +32,9 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$isBiometricAuthenticationEnabledAtom =
-      Atom(name: '_AppSettingsBase.isBiometricAuthenticationEnabled', context: context);
+  late final _$isBiometricAuthenticationEnabledAtom = Atom(
+      name: '_AppSettingsBase.isBiometricAuthenticationEnabled',
+      context: context);
 
   @override
   bool get isBiometricAuthenticationEnabled {
@@ -41,12 +44,14 @@ mixin _$AppSettings on _AppSettingsBase, Store {
 
   @override
   set isBiometricAuthenticationEnabled(bool value) {
-    _$isBiometricAuthenticationEnabledAtom.reportWrite(value, super.isBiometricAuthenticationEnabled, () {
+    _$isBiometricAuthenticationEnabledAtom
+        .reportWrite(value, super.isBiometricAuthenticationEnabled, () {
       super.isBiometricAuthenticationEnabled = value;
     });
   }
 
-  late final _$developerModeAtom = Atom(name: '_AppSettingsBase.developerMode', context: context);
+  late final _$developerModeAtom =
+      Atom(name: '_AppSettingsBase.developerMode', context: context);
 
   @override
   bool get developerMode {
@@ -61,26 +66,31 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$setLocaleAsyncAction = AsyncAction('_AppSettingsBase.setLocale', context: context);
+  late final _$setLocaleAsyncAction =
+      AsyncAction('_AppSettingsBase.setLocale', context: context);
 
   @override
   Future<void> setLocale(String languageCode) {
     return _$setLocaleAsyncAction.run(() => super.setLocale(languageCode));
   }
 
-  late final _$setIsBiometricAuthenticationEnabledAsyncAction =
-      AsyncAction('_AppSettingsBase.setIsBiometricAuthenticationEnabled', context: context);
+  late final _$setIsBiometricAuthenticationEnabledAsyncAction = AsyncAction(
+      '_AppSettingsBase.setIsBiometricAuthenticationEnabled',
+      context: context);
 
   @override
   Future<void> setIsBiometricAuthenticationEnabled(bool value) {
-    return _$setIsBiometricAuthenticationEnabledAsyncAction.run(() => super.setIsBiometricAuthenticationEnabled(value));
+    return _$setIsBiometricAuthenticationEnabledAsyncAction
+        .run(() => super.setIsBiometricAuthenticationEnabled(value));
   }
 
-  late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
+  late final _$_AppSettingsBaseActionController =
+      ActionController(name: '_AppSettingsBase', context: context);
 
   @override
   void init() {
-    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.init');
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(
+        name: '_AppSettingsBase.init');
     try {
       return super.init();
     } finally {
@@ -89,11 +99,11 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   }
 
   @override
-  bool getEnableBiometricAuth() {
-    final _$actionInfo =
-        _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.getEnableBiometricAuth');
+  bool getIsBiometricAuthenticationEnabled() {
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(
+        name: '_AppSettingsBase.getIsBiometricAuthenticationEnabled');
     try {
-      return super.getEnableBiometricAuth();
+      return super.getIsBiometricAuthenticationEnabled();
     } finally {
       _$_AppSettingsBaseActionController.endAction(_$actionInfo);
     }
@@ -101,7 +111,8 @@ mixin _$AppSettings on _AppSettingsBase, Store {
 
   @override
   void toggleDeveloperMode() {
-    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.toggleDeveloperMode');
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(
+        name: '_AppSettingsBase.toggleDeveloperMode');
     try {
       return super.toggleDeveloperMode();
     } finally {

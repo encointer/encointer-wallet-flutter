@@ -35,8 +35,8 @@ abstract class _AppSettingsBase with Store {
   void init() => _locale = _service.init();
 
   @action
-  bool getEnableBiometricAuth() {
-    final value = _service.getEnableBiometricAuth();
+  bool getIsBiometricAuthenticationEnabled() {
+    final value = _service.getIsBiometricAuthenticationEnabled();
     if (value != null) isBiometricAuthenticationEnabled = value;
     return isBiometricAuthenticationEnabled;
   }
