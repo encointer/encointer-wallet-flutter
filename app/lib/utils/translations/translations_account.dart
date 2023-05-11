@@ -104,7 +104,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   @override
   String get signIn => 'Sign in';
   @override
-  String get localizedReason => 'Login to your account using the security feature on your device.';
+  String get localizedReason => 'Authenticate to access your account.';
   @override
   String get biometricAuth => 'Biometric authentication';
 }
@@ -176,7 +176,7 @@ class TranslationsDeAccount implements TranslationsAccount {
   @override
   String get signIn => 'Anmelden';
   @override
-  String get localizedReason => 'Melden Sie sich mit der Sicherheitsfunktion Ihres Geräts an Ihrem Konto an.';
+  String get localizedReason => 'Authentifizierung notwendig um auf dein Konto zuzugreifen.';
   @override
   String get biometricAuth => 'Biometrische Authentifizierung';
 }
@@ -248,7 +248,7 @@ class TranslationsFrAccount implements TranslationsAccount {
   @override
   String get signIn => 'Se connecter';
   @override
-  String get localizedReason => 'Connectez-vous à votre compte en utilisant la fonction de sécurité de votre appareil.';
+  String get localizedReason => 'Authentification nécessaire pour accéder à ton compte.';
   @override
   String get biometricAuth => 'Authentification biométrique';
 }
@@ -320,7 +320,7 @@ class TranslationsRuAccount implements TranslationsAccount {
   @override
   String get signIn => 'Войти';
   @override
-  String get localizedReason => 'Войдите в свой аккаунт, используя безопасную функцию вашего устройства.';
+  String get localizedReason => 'Аутентифицируйтесь для доступа к вашей учетной записи.';
   @override
   String get biometricAuth => 'Биометрическая аутентификация';
 }
