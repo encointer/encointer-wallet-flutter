@@ -47,7 +47,7 @@ abstract class _LoginStoreBase with Store {
         options: const AuthenticationOptions(useErrorDialogs: false),
       );
     } catch (e, s) {
-      Log.e('$e', 'SplashViewState', s);
+      Log.e('$e', 'LoginStore', s);
       return Future.value(false);
     }
   }
@@ -60,7 +60,7 @@ abstract class _LoginStoreBase with Store {
     try {
       return deviceSupportedBiometricAuth = await _localAuth.isDeviceSupported();
     } catch (e, s) {
-      Log.e('$e', 'SplashViewState', s);
+      Log.e('$e', 'LoginStore', s);
       return Future.value(false);
     }
   }
