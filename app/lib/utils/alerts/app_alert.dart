@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/alerts/passwotd_input_dialog.dart';
+import 'package:encointer_wallet/utils/alerts/password_input_dialog.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AppAlert {
