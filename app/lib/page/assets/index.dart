@@ -167,6 +167,7 @@ class _AssetsState extends State<Assets> {
               child: RefreshIndicator(
                 onRefresh: _refreshEncointerState,
                 child: ListView(
+                  key: const Key('list-view-wallet'),
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
@@ -341,7 +342,6 @@ class _AssetsState extends State<Assets> {
               context: context,
               removeTop: true,
               child: ListView(
-                key: const Key('list-view-wallet'),
                 controller: scrollController,
                 children: <Widget>[
                   const SizedBox(height: 12),
