@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/common/components/buttons/circle_button.dart';
 import 'package:encointer_wallet/modules/login/widget/widget.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -27,7 +28,7 @@ class _LoginViewState extends State<LoginView> {
       final appSettings = context.read<AppSettings>();
       if (appStore.settings.cachedPin.isEmpty) await loginStore.checkCachedPin(context);
       await loginStore.isDeviceSupported();
-      await loginStore.useBiometricAuth(context, appSettings.getIsBiometricAuthenticationEnabled());
+      if (appSettings.getIsBiometricAuthenticationEnabled()) await loginStore.useBiometricAuth(context);
     });
     super.initState();
   }
@@ -64,7 +65,22 @@ class _LoginViewState extends State<LoginView> {
                     if (loginStore.deviceSupportedBiometricAuth) {
                       return CircleButton(
                         child: const Icon(Icons.fingerprint),
-                        onPressed: () => context.read<LoginStore>().useBiometricAuth(context, true),
+                        onPressed: () {
+                          final appSettings = context.read<AppSettings>();
+                          final loginStore = context.read<LoginStore>();
+                          if (!appSettings.isBiometricAuthenticationEnabled) {
+                            AppAlert.showPasswordInputDialog(
+                              context,
+                              account: context.read<AppStore>().account.currentAccount,
+                              onSuccess: (_) async {
+                                await appSettings.setIsBiometricAuthenticationEnabled(true);
+                                await loginStore.useBiometricAuth(context);
+                              },
+                            );
+                          } else {
+                            loginStore.useBiometricAuth(context);
+                          }
+                        },
                       );
                     } else {
                       return const SizedBox.shrink();

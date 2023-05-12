@@ -37,6 +37,19 @@ abstract class _LoginStoreBase with Store {
     if (pinCode.isNotEmpty) pinCode.removeLast();
   }
 
+  /// Check if local authentication is supported on the device.
+  /// Returns a `future` with `true` if supported, `false` otherwise.
+  /// Returns `false` and logs errors if a `PlatformException` occurs.
+  @action
+  Future<bool> isDeviceSupported() async {
+    try {
+      return deviceSupportedBiometricAuth = await _localAuth.isDeviceSupported();
+    } catch (e, s) {
+      Log.e('$e', 'LoginStore', s);
+      return Future.value(false);
+    }
+  }
+
   /// Authenticates the user with biometrics or device authentication options available on the device.
   /// Returns a `Future<bool>` which is `true` if successful, `false` otherwise.
   /// [localizedReason] is the message displayed to the user during the authentication prompt.
@@ -52,47 +65,34 @@ abstract class _LoginStoreBase with Store {
     }
   }
 
-  /// Check if local authentication is supported on the device.
-  /// Returns a `future` with `true` if supported, `false` otherwise.
-  /// Returns `false` and logs errors if a `PlatformException` occurs.
-  @action
-  Future<bool> isDeviceSupported() async {
-    try {
-      return deviceSupportedBiometricAuth = await _localAuth.isDeviceSupported();
-    } catch (e, s) {
-      Log.e('$e', 'LoginStore', s);
-      return Future.value(false);
+  Future<void> useBiometricAuth(BuildContext context) async {
+    if (deviceSupportedBiometricAuth) {
+      final dic = I18n.of(context)!.translationsForLocale();
+      final isPinCorrect = await localAuthenticate(dic.account.localizedReason);
+      await _navigate(context, isPinCorrect: isPinCorrect, dic: dic);
     }
   }
 
-  bool checkPinCode(String cachedPin) {
+  bool _checkPinCode(String cachedPin) {
     final pass = pinCode.map((e) => e.toString()).join();
     if (cachedPin.isNotEmpty && pass == cachedPin) return true;
     pinCode.clear();
     return false;
   }
 
-  Future<void> navigate(BuildContext context, {required bool isPinCorrect, required Translations dic}) async {
+  Future<void> usePincodeAuth(BuildContext context) async {
+    final dic = I18n.of(context)!.translationsForLocale();
+    final appStore = context.read<AppStore>();
+    final isPinCorrect = _checkPinCode(appStore.settings.cachedPin);
+    await _navigate(context, isPinCorrect: isPinCorrect, dic: dic);
+  }
+
+  Future<void> _navigate(BuildContext context, {required bool isPinCorrect, required Translations dic}) async {
     if (isPinCorrect) {
       await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
       RootSnackBar.showMsg(dic.account.pinError);
     }
-  }
-
-  Future<void> useBiometricAuth(BuildContext context, bool enableBiometricAuth) async {
-    if (deviceSupportedBiometricAuth && enableBiometricAuth) {
-      final dic = I18n.of(context)!.translationsForLocale();
-      final isPinCorrect = await localAuthenticate(dic.account.localizedReason);
-      await navigate(context, isPinCorrect: isPinCorrect, dic: dic);
-    }
-  }
-
-  Future<void> usePincodeAuth(BuildContext context) async {
-    final dic = I18n.of(context)!.translationsForLocale();
-    final appStore = context.read<AppStore>();
-    final isPinCorrect = checkPinCode(appStore.settings.cachedPin);
-    await navigate(context, isPinCorrect: isPinCorrect, dic: dic);
   }
 
   Future<void> checkCachedPin(BuildContext context) async {
