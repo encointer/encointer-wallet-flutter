@@ -98,7 +98,11 @@ abstract class _LoginStoreBase with Store {
   Future<void> checkCachedPin(BuildContext context) async {
     final appStore = context.read<AppStore>();
     do {
-      await AppAlert.showPasswordInputDialog(context, account: appStore.account.currentAccount);
+      await AppAlert.showPasswordInputDialog(
+        context,
+        account: appStore.account.currentAccount,
+        onSuccess: appStore.settings.setPin,
+      );
     } while (appStore.settings.cachedPin.isEmpty);
   }
 }

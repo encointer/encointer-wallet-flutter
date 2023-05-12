@@ -9,6 +9,7 @@ import 'package:encointer_wallet/common/components/launch/send_to_trello_list_ti
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
@@ -179,7 +180,15 @@ class _ProfileState extends State<Profile> {
               ),
               SwitchListTile(
                 title: Text(dic.account.biometricAuth, style: h3Grey),
-                onChanged: context.read<AppSettings>().setIsBiometricAuthenticationEnabled,
+                onChanged: (value) async {
+                  final appStore = context.read<AppStore>();
+                  final appSettings = context.read<AppSettings>();
+                  await AppAlert.showPasswordInputDialog(
+                    context,
+                    account: appStore.account.currentAccount,
+                    onSuccess: (_) => appSettings.setIsBiometricAuthenticationEnabled(value),
+                  );
+                },
                 value: appSettings.isBiometricAuthenticationEnabled,
               ),
               const SendToTrelloListTile(),

@@ -23,7 +23,11 @@ mixin HandleNewAccountResultMixin on Widget {
         break;
       case NewAccountResultType.emptyPassword:
         final appStore = context.read<AppStore>();
-        await AppAlert.showPasswordInputDialog(context, account: appStore.account.currentAccount);
+        await AppAlert.showPasswordInputDialog(
+          context,
+          account: appStore.account.currentAccount,
+          onSuccess: appStore.settings.setPin,
+        );
         break;
       case NewAccountResultType.duplicateAccount:
         if (onDuplicateAccount != null) onDuplicateAccount();
