@@ -76,7 +76,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                     padding: const pw.EdgeInsets.only(top: 50),
                     child: pw.FittedBox(
                       child: pw.Text(
-                        dic?.assets.payHerWithLeu ?? 'Zahle hier mit Leu',
+                        dic?.assets.payHereWithLeu ?? 'Zahle hier mit Leu',
                         style: pw.TextStyle(
                           fontSize: 56,
                           font: poppinsBlack,
