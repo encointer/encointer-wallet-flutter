@@ -437,7 +437,7 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get payHerWithLeu => 'Paye ici avec Leu';
   @override
-  String get scanQrCodeOnTheLeft => '2. Scannez le code QR \nsur la gauche';
+  String get scanQrCodeOnTheLeft => '2. Scanne le code QR \nsur la gauche';
 }
 
 class TranslationsRuAssets implements TranslationsAssets {
