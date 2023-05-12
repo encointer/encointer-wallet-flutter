@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -19,10 +21,6 @@ const _logTarget = 'preview_pdf_and_print_store';
 class PreviewPdfAndPrintStore = _PreviewPdfAndPrintStoreBase with _$PreviewPdfAndPrintStore;
 
 abstract class _PreviewPdfAndPrintStoreBase with Store {
-  _PreviewPdfAndPrintStoreBase(this.renderObjectKey) {
-    _createPdf();
-  }
-
   @observable
   GlobalKey? renderObjectKey;
 
@@ -35,9 +33,18 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
   @observable
   DateTime time = DateTime.now();
 
+  @observable
+  Translations? dic;
+
   @action
-  Future<void> _createPdf() async {
-    Log.d('_createPdf', _logTarget);
+  Future<void> createPdf({
+    required GlobalKey key,
+    required Translations translations,
+  }) async {
+    Log.d('createPdf: key = $key, translations = $translations', _logTarget);
+    renderObjectKey = key;
+    dic = translations;
+
     final uint8list = await _getQrCodeImage();
 
     final bgImage = await _getBgImage();
@@ -69,7 +76,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                     padding: const pw.EdgeInsets.only(top: 50),
                     child: pw.FittedBox(
                       child: pw.Text(
-                        'Zahle hier mit Leu',
+                        dic?.assets.payHerWithLeu ?? 'Zahle hier mit Leu',
                         style: pw.TextStyle(
                           fontSize: 56,
                           font: poppinsBlack,
@@ -96,7 +103,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
                           pw.Text(
-                            '1. Öffne die App \n«Encointer Wallet»',
+                            dic?.assets.openTheEncointerApp ?? '1. Öffne die App \n«Encointer Wallet»',
                             style: pw.TextStyle(
                               fontSize: 22,
                               font: poppinsMedium,
@@ -107,7 +114,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                           ),
                           pw.SizedBox(height: 20),
                           pw.Text(
-                            '2. Scanne den QR-Code \nauf der linken Seite',
+                            dic?.assets.scanQrCodeOnTheLeft ?? '2. Scanne den QR-Code \nauf der linken Seite',
                             style: pw.TextStyle(
                               fontSize: 22,
                               font: poppinsMedium,
@@ -118,7 +125,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                           ),
                           pw.SizedBox(height: 20),
                           pw.Text(
-                            '3. Bestätige die Zahlung',
+                            dic?.assets.confirmThePayment ?? '3. Bestätige die Zahlung',
                             style: pw.TextStyle(
                               fontSize: 22,
                               font: poppinsMedium,
@@ -164,7 +171,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
   @action
   Future<Uint8List?> _getBgImage() async {
     Log.d('_getBgImage', _logTarget);
-    final bgImageData = await rootBundle.load('assets/images/assets/leu_steller_bg.png');
+    final bgImageData = await rootBundle.load(Assets.images.assets.leuStellerBg.path);
     return bgImageData.buffer.asUint8List();
   }
 }

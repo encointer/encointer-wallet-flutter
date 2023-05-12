@@ -55,6 +55,22 @@ abstract class TranslationsAssets {
   String get chosenRightCommunity;
   String get print;
   String get preview;
+
+  /// Pay here with Leu
+  /// Zahle hier mit Leu
+  String get payHerWithLeu;
+
+  /// 1. Open the Encointer wallet app
+  /// 1. Öffne die App \n«Encointer Wallet»
+  String get openTheEncointerApp;
+
+  /// '2. Scan the QR code on the left'
+  ///  '2. Scanne den QR-Code \nauf der linken Seite'
+  String get scanQrCodeOnTheLeft;
+
+  /// 3. Confirm the payment
+  /// 3. Bestätige die Zahlung
+  String get confirmThePayment;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -169,6 +185,14 @@ class TranslationsEnAssets implements TranslationsAssets {
   String get print => 'Print';
   @override
   String get preview => 'Preview';
+  @override
+  String get confirmThePayment => '3. Confirm the payment';
+  @override
+  String get openTheEncointerApp => '1. Open the app \n«Encointer Wallet»';
+  @override
+  String get payHerWithLeu => 'Pay here with Leu';
+  @override
+  String get scanQrCodeOnTheLeft => '2. Scan the QR code \non the left';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -283,6 +307,14 @@ class TranslationsDeAssets implements TranslationsAssets {
   String get print => 'Drucken';
   @override
   String get preview => 'Vorschau';
+  @override
+  String get confirmThePayment => '3. Bestätige die Zahlung';
+  @override
+  String get openTheEncointerApp => '1. Öffne die App \n«Encointer Wallet»';
+  @override
+  String get payHerWithLeu => 'Zahle hier mit Leu';
+  @override
+  String get scanQrCodeOnTheLeft => '2. Scanne den QR-Code \nauf der linken Seite';
 }
 
 class TranslationsFrAssets implements TranslationsAssets {
@@ -398,6 +430,14 @@ class TranslationsFrAssets implements TranslationsAssets {
   String get print => 'Imprimer';
   @override
   String get preview => 'Aperçu';
+  @override
+  String get confirmThePayment => '3. Confirmez le paiement';
+  @override
+  String get openTheEncointerApp => "1. Ouvrez l'application \n«Encointer Wallet»";
+  @override
+  String get payHerWithLeu => 'Payez ici avec Leu';
+  @override
+  String get scanQrCodeOnTheLeft => '2. Scannez le code QR \nsur la gauche';
 }
 
 class TranslationsRuAssets implements TranslationsAssets {
@@ -512,4 +552,12 @@ class TranslationsRuAssets implements TranslationsAssets {
   String get print => 'Распечатать';
   @override
   String get preview => 'Предварительный просмотр';
+  @override
+  String get confirmThePayment => '3. Подтвердите платеж';
+  @override
+  String get openTheEncointerApp => '1. Откройте приложение \n«Encointer Wallet»';
+  @override
+  String get payHerWithLeu => 'Платите здесь с Leu';
+  @override
+  String get scanQrCodeOnTheLeft => '2. Отсканируйте QR-код \nслева';
 }

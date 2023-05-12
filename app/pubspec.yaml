@@ -58,10 +58,6 @@ dependencies:
   cupertino_icons: ^1.0.5
   # QR code generator & reader
   pretty_qr_code: ^2.0.3
-  # qr_flutter_fork:
-  #   git:
-  #     url: https://github.com/polkawallet-io/qr.flutter.git
-  #     ref: master
   mobile_scanner: ^2.1.0
   aes_ecb_pkcs5_flutter: ^0.1.2
   permission_handler: ^10.2.0
