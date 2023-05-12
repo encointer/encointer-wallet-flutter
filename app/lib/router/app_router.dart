@@ -200,8 +200,7 @@ class AppRoute {
         );
       case PreviewPdfAndPrint.route:
         return CupertinoPageRoute(
-          // ignore: cast_nullable_to_non_nullable
-          builder: (_) => PreviewPdfAndPrint(args: arguments as PreviewPdfAndPrintArgs),
+          builder: (_) => PreviewPdfAndPrint(args: arguments! as PreviewPdfAndPrintArgs),
           settings: settings,
         );
       default:
