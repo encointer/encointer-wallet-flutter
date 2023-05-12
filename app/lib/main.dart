@@ -33,9 +33,7 @@ Future<void> main({AppcastConfiguration? appCast, AppSettings? settings}) async 
   runApp(
     MultiProvider(
       providers: [
-        Provider<AppSettings>(
-          create: (context) => appSettings..init(),
-        ),
+        Provider<AppSettings>(create: (context) => appSettings..init()),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()
           create: (context) => AppStore(
