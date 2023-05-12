@@ -15,18 +15,18 @@ mixin _$PreviewPdfAndPrintStore on _PreviewPdfAndPrintStoreBase, Store {
   pw.Document? get doc =>
       (_$docComputed ??= Computed<pw.Document?>(() => super.doc, name: '_PreviewPdfAndPrintStoreBase.doc')).value;
 
-  late final _$_renderObjectKeyAtom = Atom(name: '_PreviewPdfAndPrintStoreBase._renderObjectKey', context: context);
+  late final _$renderObjectKeyAtom = Atom(name: '_PreviewPdfAndPrintStoreBase.renderObjectKey', context: context);
 
   @override
-  GlobalKey<State<StatefulWidget>> get _renderObjectKey {
-    _$_renderObjectKeyAtom.reportRead();
-    return super._renderObjectKey;
+  GlobalKey<State<StatefulWidget>>? get renderObjectKey {
+    _$renderObjectKeyAtom.reportRead();
+    return super.renderObjectKey;
   }
 
   @override
-  set _renderObjectKey(GlobalKey<State<StatefulWidget>> value) {
-    _$_renderObjectKeyAtom.reportWrite(value, super._renderObjectKey, () {
-      super._renderObjectKey = value;
+  set renderObjectKey(GlobalKey<State<StatefulWidget>>? value) {
+    _$renderObjectKeyAtom.reportWrite(value, super.renderObjectKey, () {
+      super.renderObjectKey = value;
     });
   }
 
@@ -85,6 +85,7 @@ mixin _$PreviewPdfAndPrintStore on _PreviewPdfAndPrintStoreBase, Store {
   @override
   String toString() {
     return '''
+renderObjectKey: ${renderObjectKey},
 time: ${time},
 doc: ${doc}
     ''';

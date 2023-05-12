@@ -15,15 +15,16 @@ part 'preview_pdf_and_print_store.g.dart';
 
 const _logTarget = 'preview_pdf_and_print_store';
 
+// ignore: library_private_types_in_public_api
 class PreviewPdfAndPrintStore = _PreviewPdfAndPrintStoreBase with _$PreviewPdfAndPrintStore;
 
 abstract class _PreviewPdfAndPrintStoreBase with Store {
-  _PreviewPdfAndPrintStoreBase(this._renderObjectKey) {
+  _PreviewPdfAndPrintStoreBase(this.renderObjectKey) {
     _createPdf();
   }
 
   @observable
-  GlobalKey _renderObjectKey;
+  GlobalKey? renderObjectKey;
 
   @observable
   pw.Document? _doc;
@@ -143,17 +144,17 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
   Future<Uint8List?> _getQrCodeImage() async {
     Log.d('_getQrCodeImage', _logTarget);
     try {
-      final boundary = _renderObjectKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-
-      final image = await boundary.toImage(pixelRatio: 3);
-      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      final pngBytes = byteData?.buffer.asUint8List();
-      if (pngBytes != null) {
-        final bs64 = base64Encode(pngBytes);
-        debugPrint(bs64.length.toString());
-        return pngBytes;
+      final boundary = renderObjectKey?.currentContext!.findRenderObject() as RenderRepaintBoundary?;
+      if (boundary != null) {
+        final image = await boundary.toImage(pixelRatio: 3);
+        final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+        final pngBytes = byteData?.buffer.asUint8List();
+        if (pngBytes != null) {
+          final bs64 = base64Encode(pngBytes);
+          debugPrint(bs64.length.toString());
+          return pngBytes;
+        }
       }
-
       return null;
     } catch (_) {
       throw Exception();
