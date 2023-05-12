@@ -435,7 +435,7 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get openTheEncointerApp => "1. Ouvre l'application \n«Encointer Wallet»";
   @override
-  String get payHerWithLeu => 'Payez ici avec Leu';
+  String get payHerWithLeu => 'Paye ici avec Leu';
   @override
   String get scanQrCodeOnTheLeft => '2. Scannez le code QR \nsur la gauche';
 }
