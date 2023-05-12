@@ -12,7 +12,6 @@
         android:allowBackup="false"
         android:usesCleartextTraffic="true">
         <!-- android:name=".MainActivity": Android is run from MainActivity.kt file 
-        android:name="io.flutter.embedding.android.FlutterFragmentActivity"
         We need MainActivity.kt to initialize AndroidThreeTen for older versions of android
         -->
         <activity
