@@ -13,10 +13,12 @@ class PasswordInputDialog extends StatefulWidget {
     super.key,
     required this.account,
     required this.onSuccess,
+    this.canPop = true,
   });
 
   final AccountData account;
   final Future<void> Function(String password) onSuccess;
+  final bool canPop;
 
   @override
   State<PasswordInputDialog> createState() => _PasswordInputDialogState();
@@ -44,7 +46,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       );
     } else {
       await widget.onSuccess(_passCtrl.text.trim());
-      Navigator.of(context).pop(true);
+      Navigator.of(context).pop();
     }
   }
 
@@ -57,40 +59,43 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    return CupertinoAlertDialog(
-      title: Text(dic.profile.unlock),
-      content: Padding(
-        padding: const EdgeInsets.only(top: 16),
-        child: CupertinoTextFormFieldRow(
-          key: const Key('input-password-dialog'),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
-          padding: EdgeInsets.zero,
-          autofocus: true,
-          keyboardType: TextInputType.number,
-          placeholder: dic.profile.passOld,
-          controller: _passCtrl,
-          validator: (v) {
-            if (v == null || !Fmt.checkPassword(v.trim())) return dic.account.createPasswordError;
+    return WillPopScope(
+      onWillPop: () async => widget.canPop,
+      child: CupertinoAlertDialog(
+        title: Text(dic.profile.unlock),
+        content: Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: CupertinoTextFormFieldRow(
+            key: const Key('input-password-dialog'),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            padding: EdgeInsets.zero,
+            autofocus: true,
+            keyboardType: TextInputType.number,
+            placeholder: dic.profile.passOld,
+            controller: _passCtrl,
+            validator: (v) {
+              if (v == null || !Fmt.checkPassword(v.trim())) return dic.account.createPasswordError;
 
-            return null;
-          },
-          obscureText: true,
-          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-        ),
-      ),
-      actions: <Widget>[
-        CupertinoButton(
-          key: const Key('password-ok'),
-          onPressed: _submitting ? null : _onOk,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (_submitting) const CupertinoActivityIndicator(),
-              Text(dic.home.ok),
-            ],
+              return null;
+            },
+            obscureText: true,
+            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
           ),
         ),
-      ],
+        actions: <Widget>[
+          CupertinoButton(
+            key: const Key('password-ok'),
+            onPressed: _submitting ? null : _onOk,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (_submitting) const CupertinoActivityIndicator(),
+                Text(dic.home.ok),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
