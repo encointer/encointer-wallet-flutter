@@ -22,9 +22,12 @@ class _LoginViewState extends State<LoginView> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final appStore = context.read<AppStore>();
       final loginStore = context.read<LoginStore>();
+      final appSettings = context.read<AppSettings>();
+      if (appStore.settings.cachedPin.isEmpty) await loginStore.checkCachedPin(context);
       await loginStore.isDeviceSupported();
-      await loginStore.useBiometricAuth(context, context.read<AppSettings>().getIsBiometricAuthenticationEnabled());
+      await loginStore.useBiometricAuth(context, appSettings.getIsBiometricAuthenticationEnabled());
     });
     super.initState();
   }

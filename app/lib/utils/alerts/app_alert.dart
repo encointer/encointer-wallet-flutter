@@ -91,11 +91,11 @@ class AppAlert {
     );
   }
 
-  static Future<void> showPasswordInputDialog({
-    required BuildContext context,
+  static Future<bool?> showPasswordInputDialog(
+    BuildContext context, {
     required AccountData account,
   }) async {
-    return showCupertinoDialog<void>(
+    return showCupertinoDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return PasswordInputDialog(

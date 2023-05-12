@@ -16,7 +16,7 @@ class PasswordInputDialog extends StatefulWidget {
   });
 
   final AccountData account;
-  final void Function(String password) onOk;
+  final Future<void> Function(String password) onOk;
 
   @override
   State<PasswordInputDialog> createState() => _PasswordInputDialogState();
@@ -43,8 +43,8 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         title: Text(dic.profile.wrongPin),
       );
     } else {
-      widget.onOk(_passCtrl.text.trim());
-      Navigator.of(context).pop();
+      await widget.onOk(_passCtrl.text.trim());
+      Navigator.of(context).pop(true);
     }
   }
 

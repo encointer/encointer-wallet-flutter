@@ -18,8 +18,14 @@ abstract class _AppSettingsBase with Store {
   @observable
   Locale _locale = const Locale('en');
 
+  @computed
+  Locale get locale => _locale;
+
   @observable
   bool isBiometricAuthenticationEnabled = false;
+
+  @observable
+  bool developerMode = false;
 
   final locales = const <Locale>[
     Locale('en', ''),
@@ -27,9 +33,6 @@ abstract class _AppSettingsBase with Store {
     Locale('fr', ''),
     Locale('ru', ''),
   ];
-
-  @computed
-  Locale get locale => _locale;
 
   @action
   void init() => _locale = _service.init();
@@ -53,9 +56,6 @@ abstract class _AppSettingsBase with Store {
   }
 
   String getName(String code) => _service.getName(code);
-
-  @observable
-  bool developerMode = false;
 
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;

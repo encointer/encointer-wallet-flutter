@@ -81,26 +81,24 @@ abstract class _LoginStoreBase with Store {
   }
 
   Future<void> useBiometricAuth(BuildContext context, bool enableBiometricAuth) async {
-    final appStore = context.read<AppStore>();
-    if (appStore.settings.cachedPin.isEmpty) {
-      await AppAlert.showPasswordInputDialog(context: context, account: appStore.account.currentAccount);
-    }
-    final dic = I18n.of(context)!.translationsForLocale();
-    final loginStore = context.read<LoginStore>();
     if (deviceSupportedBiometricAuth && enableBiometricAuth) {
-      final isPinCorrect = await loginStore.localAuthenticate(dic.account.localizedReason);
-      await loginStore.navigate(context, isPinCorrect: isPinCorrect, dic: dic);
+      final dic = I18n.of(context)!.translationsForLocale();
+      final isPinCorrect = await localAuthenticate(dic.account.localizedReason);
+      await navigate(context, isPinCorrect: isPinCorrect, dic: dic);
     }
   }
 
   Future<void> usePincodeAuth(BuildContext context) async {
     final dic = I18n.of(context)!.translationsForLocale();
-    final loginStore = context.read<LoginStore>();
     final appStore = context.read<AppStore>();
-    if (appStore.settings.cachedPin.isEmpty) {
-      await AppAlert.showPasswordInputDialog(context: context, account: appStore.account.currentAccount);
-    }
-    final isPinCorrect = loginStore.checkPinCode(appStore.settings.cachedPin);
-    await loginStore.navigate(context, isPinCorrect: isPinCorrect, dic: dic);
+    final isPinCorrect = checkPinCode(appStore.settings.cachedPin);
+    await navigate(context, isPinCorrect: isPinCorrect, dic: dic);
+  }
+
+  Future<void> checkCachedPin(BuildContext context) async {
+    final appStore = context.read<AppStore>();
+    do {
+      await AppAlert.showPasswordInputDialog(context, account: appStore.account.currentAccount);
+    } while (appStore.settings.cachedPin.isEmpty);
   }
 }
