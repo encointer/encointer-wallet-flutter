@@ -14,7 +14,7 @@ class SendToTrelloListTile extends StatelessWidget {
     return ListTile(
       title: Text(dic.contactUs, style: h3Grey),
       onTap: () async => AppLaunch.sendEmail(
-        'malikelbay1+np8u5ozogws6ijqbldun@boards.trello.com',
+        'bugreports@mail.encointer.org',
         snackBarText: dic.checkEmailApp,
         context: context,
       ),
