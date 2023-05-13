@@ -13,10 +13,8 @@ extension ScreenshotExtension on FlutterDriver {
     String directory = '../screenshots',
     Duration timeout = const Duration(seconds: 30),
     bool waitUntilNoTransientCallbacks = true,
-    Future<void> Function()? enterText,
   }) async {
     if (shouldTakeScreenshot == 'B') {
-      await enterText?.call();
       await _takeScreenshot(
         name,
         directory: directory,
@@ -26,8 +24,7 @@ extension ScreenshotExtension on FlutterDriver {
     } else if (shouldTakeScreenshot == 'C') {
       const locales = ['de', 'fr', 'ru', 'en'];
       for (final locale in locales) {
-        final currenLocale = await this.requestData('local-$locale');
-        await enterText?.call();
+        final currenLocale = await requestData('local-$locale');
         await _takeScreenshot(
           name,
           directory: '$directory/$currenLocale',

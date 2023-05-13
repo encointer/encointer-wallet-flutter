@@ -1,4 +1,4 @@
-import 'screenshots.dart';
+import 'screenshots/screenshots.dart';
 
 enum ParticipantTypeTestHelper {
   newbie(

@@ -2,36 +2,8 @@ import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
 import 'extension/screenshot_driver_extension.dart';
-import 'real_app_helper.dart';
-import 'real_app_test/enter_text.dart';
-import 'screenshots.dart';
-
-Future<void> scrollToSendAddress(FlutterDriver driver) async {
-  await driver.scrollUntilVisible(
-    find.byValueKey('transfer-listview'),
-    find.byValueKey('send-to-address'),
-    dyScroll: -300,
-  );
-}
-
-Future<void> createAccountAndSetPin(FlutterDriver driver, String account) async {
-  await driver.tap(find.byValueKey('create-account'));
-  await driver.waitFor(find.byValueKey('create-account-name'));
-  await driver.takeScreenshot(
-    Screenshots.createAccount,
-    enterText: () async => enterAccountName(driver, account),
-  );
-
-  await driver.tap(find.byValueKey('create-account-next'));
-  await driver.waitFor(find.byValueKey('create-account-pin'));
-
-  await driver.takeScreenshot(
-    Screenshots.pinEntry,
-    enterText: () async => enterCreatePin(driver, '0001'),
-  );
-
-  await driver.tap(find.byValueKey('create-account-confirm'));
-}
+import 'real_app_helper/real_app_helper.dart';
+import 'screenshots/screenshots.dart';
 
 Future<void> createNewbieAccount(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('panel-controller'));
