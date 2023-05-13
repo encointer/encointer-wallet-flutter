@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_driver/flutter_driver.dart';
 
+import '../command/real_app_command.dart';
+
 extension ScreenshotExtension on FlutterDriver {
   static final _shouldTakeScreenshot = Expando<String>();
 
@@ -44,6 +46,7 @@ extension ScreenshotExtension on FlutterDriver {
     if (waitUntilNoTransientCallbacks) {
       await this.waitUntilNoTransientCallbacks(timeout: timeout);
     }
+    await requestData(RealAppTestCommand.devModeOff);
     final pixels = await screenshot();
     final directoryPath = directory.endsWith('/') ? directory : '$directory/';
     final file = await File('$directoryPath$name.png').create(recursive: true);

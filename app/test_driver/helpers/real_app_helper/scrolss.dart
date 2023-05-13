@@ -17,6 +17,14 @@ Future<void> scrollToPanelController(FlutterDriver driver) async {
   );
 }
 
+Future<void> scrollToStartMeetup(FlutterDriver driver) async {
+  await driver.scrollUntilVisible(
+    find.byValueKey('list-view-wallet'),
+    find.byValueKey('start-meetup'),
+    dyScroll: -300,
+  );
+}
+
 // profile-view
 Future<void> scrollToDevMode(FlutterDriver driver) async {
   await driver.scrollUntilVisible(

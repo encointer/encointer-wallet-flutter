@@ -166,143 +166,97 @@ void main() async {
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
-  // test('get assignin-phase', () async {
-  //   await driver.tap(find.byValueKey('profile'));
-  //   await turnDevMode(driver);
+  test('get assignin-phase', () async {
+    await driver.tap(find.byValueKey('profile'));
+    await driver.requestData(RealAppTestCommand.devModeOn);
+    await scrollToNextPhaseButton(driver);
+    await tapAndWaitNextPhase(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  //   await tapAndWaitNextPhase(driver);
-  //   await turnDevMode(driver);
+  test('check assignin-phase account Assigned', () async {
+    await driver.tap(find.byValueKey('wallet'));
+    await driver.waitFor(find.byValueKey('list-view-wallet'));
+    await scrollToCeremonyBox(driver);
+    await driver.waitFor(find.byValueKey('account-assigned'));
+    await driver.takeScreenshot(Screenshots.homeAssigningPhaseAssigned);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // await driver.tap(find.byValueKey('wallet'));
-  // await driver.waitFor(find.byValueKey('list-view-wallet'));
-  // await scrollToCeremonyBox(driver);
-  // await driver.waitFor(find.byValueKey('account-assigned'));
-  // await driver.takeScreenshot(Screenshots.homeAssigningPhaseAssigned);
-  // await scrollToPanelController(driver);
-  // await changeAccountFromPanel(driver, 'Charlie');
-  // await scrollToCeremonyBox(driver);
-  // await driver.waitFor(find.byValueKey('account-unassigned'));
-  // await driver.takeScreenshot(Screenshots.homeAssigningPhaseUnassigned);
-  // await scrollToPanelController(driver);
-  // await changeAccountFromPanel(driver, 'Bob');
-  // await addDelay(1000);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('check assignin-phase account Unassigned', () async {
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Charlie');
+    await scrollToCeremonyBox(driver);
+    await driver.waitFor(find.byValueKey('account-unassigned'));
+    await driver.takeScreenshot(Screenshots.homeAssigningPhaseUnassigned);
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Bob');
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('get attesting-phase', () async {
-  //   await driver.tap(find.byValueKey('profile'));
-  //   await turnDevMode(driver);
+  test('get attesting-phase', () async {
+    await driver.tap(find.byValueKey('profile'));
+    await driver.requestData(RealAppTestCommand.devModeOn);
+    await scrollToNextPhaseButton(driver);
+    await tapAndWaitNextPhase(driver);
+  }, timeout: const Timeout(Duration(seconds: 40)));
 
-  //   await tapAndWaitNextPhase(driver);
-  //   await driver.tap(find.byValueKey('dev-mode'));
+  test('start meetup-Bob', () async {
+    await driver.waitFor(find.byValueKey('wallet'));
+    await driver.tap(find.byValueKey('wallet'));
+    await startMeetupTest(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  //   await driver.tap(find.byValueKey('wallet'));
-  //   await addDelay(1000);
-  // }, timeout: const Timeout(Duration(seconds: 40)));
+  test('start meetup-Tom', () async {
+    await changeAccountFromPanel(driver, 'Tom');
+    await startMeetupTest(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('start meetup-Bob for screenshot', () async {
-  //   await addDelay(1000);
-  //   await driver.scrollUntilVisible(
-  //     find.byValueKey('profile-list-view'),
-  //     find.byValueKey('start-meetup'),
-  //     dyScroll: -300,
-  //   );
-  //   await driver.takeScreenshot(Screenshots.homeAttestingPhaseStartMeetup);
-  //   await driver.tap(find.byValueKey('start-meetup'));
-  //   await addDelay(500);
+  test('start meetup-Alice', () async {
+    await changeAccountFromPanel(driver, 'Alice');
+    await startMeetupTest(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  //   await driver.waitFor(find.byValueKey('attendees-count'));
-  //   await driver.tap(find.byValueKey('attendees-count'));
-  //   await driver.enterText('3');
-  //   await driver.takeScreenshot(Screenshots.step1ConfirmNumberOfAttendees);
-  //   await driver.tap(find.byValueKey('ceremony-step-1-next'));
-  //   await addDelay(1000);
-  //   await driver.takeScreenshot(Screenshots.step2QrCode);
-  //   await addDelay(1000);
-  //   await driver.tap(find.pageBack());
-  //   await driver.tap(find.byValueKey('close-encointer-ceremony-step1'));
-  //   await addDelay(1000);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('Claim-pending (dev-mode)', () async {
+    await driver.requestData(RealAppTestCommand.devModeOn);
+    await driver.waitFor(find.byValueKey('claim-pending-dev'));
+    await driver.tap(find.byValueKey('claim-pending-dev'));
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('turn on dev mode', () async {
-  //   await driver.tap(find.byValueKey('profile'));
-  //   await turnDevMode(driver);
+  test('Go to Profile Page and Check reputation count', () async {
+    await driver.tap(find.byValueKey('profile'));
+    await driver.waitFor(find.text('2'));
+  });
 
-  //   await driver.tap(find.byValueKey('wallet'));
-  //   await addDelay(1000);
-  // }, timeout: const Timeout(Duration(seconds: 40)));
+  test('Get Registering phase', () async {
+    await driver.requestData(RealAppTestCommand.devModeOn);
+    await scrollToNextPhaseButton(driver);
+    await tapAndWaitNextPhase(driver);
+  });
 
-  // test('start meetup-Bob', () async {
-  //   await addDelay(1000);
-  //   await startMeetupTest(driver);
-  //   await addDelay(1000);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('contact-page add contact', () async {
+    await driver.tap(find.byValueKey('contacts'));
+    await driver.takeScreenshot(Screenshots.contactsOverviewEmpty);
+    await driver.tap(find.byValueKey('add-contact'));
 
-  // test('start meetup-Tom', () async {
-  //   await addDelay(1000);
-  //   await changeAccountFromPanel(driver, 'Tom');
-  //   await startMeetupTest(driver, shouldTakeScreenshot: true);
-  //   await addDelay(1000);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+    await driver.takeScreenshot(Screenshots.addContact);
+    await enterConatctNamePubkey(driver, 'Obelix', '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
+    // await driver.takeScreenshot(Screenshots.addContact);
+    await driver.tap(find.byValueKey('contact-save'));
+  });
 
-  // test('start meetup-Alice', () async {
-  //   await addDelay(1000);
-  //   await changeAccountFromPanel(driver, 'Alice');
-  //   await startMeetupTest(driver);
-  //   await driver.waitFor(find.byValueKey('claim-pending-dev'));
-  //   await driver.tap(find.byValueKey('claim-pending-dev'));
-  //   await addDelay(20000);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('change contact name', () async {
+    await driver.waitFor(find.byValueKey('Obelix'));
+    await driver.tap(find.byValueKey('Obelix'));
+    await driver.waitFor(find.byValueKey('contact-name-edit'));
+    await driver.takeScreenshot(Screenshots.contactView);
+    await enterChangeContactName(driver, 'Asterix');
+    // await driver.takeScreenshot(Screenshots.changeContactName);
+    await driver.tap(find.byValueKey('contact-name-edit-check'));
+    await driver.waitFor(find.text('Asterix'));
+  });
 
-  // test('Go to Profile Page and Check reputation count', () async {
-  //   await driver.tap(find.byValueKey('profile'));
-  //   await driver.waitFor(find.text('2'));
-  //   await addDelay(1000);
-  //   await scrollToDevMode(driver);
-  //   await scrollToNextPhaseButton(driver);
-  //   await tapAndWaitNextPhase(driver);
-  //   await driver.tap(find.byValueKey('dev-mode'));
-  //   await driver.tap(find.byValueKey('wallet'));
-  // });
-
-  // test('contact-page add contact', () async {
-  //   await driver.tap(find.byValueKey('contacts'));
-  //   await driver.takeScreenshot(Screenshots.contactsOverviewEmpty);
-  //   await driver.tap(find.byValueKey('add-contact'));
-
-  //   await driver.tap(find.byValueKey('contact-address'));
-  //   await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
-  //   await driver.tap(find.byValueKey('contact-name'));
-  //   await driver.enterText('Obelix');
-
-  //   await driver.takeScreenshot(Screenshots.addContact);
-  //   await driver.tap(find.byValueKey('contact-save'));
-  //   await addDelay(1000);
-  // });
-
-  // test('change contact name', () async {
-  //   await driver.waitFor(find.byValueKey('Obelix'));
-  //   await driver.tap(find.byValueKey('Obelix'));
-
-  //   await driver.waitFor(find.byValueKey('contact-name-edit'));
-  //   await driver.takeScreenshot(Screenshots.contactView);
-  //   await driver.tap(find.byValueKey('contact-name-edit'));
-
-  //   await driver.waitFor(find.byValueKey('contact-name-field'));
-  //   await driver.tap(find.byValueKey('contact-name-field'));
-
-  //   await driver.enterText('Asterix');
-  //   await driver.takeScreenshot(Screenshots.changeContactName);
-  //   await driver.tap(find.byValueKey('contact-name-edit-check'));
-
-  //   await driver.waitFor(find.text('Asterix'));
-  //   await addDelay(1000);
-  // });
-
-  // test('send endorse to account', () async {
-  //   await driver.waitFor(find.byValueKey('tap-endorse-button'));
-  //   await driver.tap(find.byValueKey('tap-endorse-button'));
-  //   await addDelay(1000);
-  // });
+  test('send endorse to account', () async {
+    await driver.waitFor(find.byValueKey('tap-endorse-button'));
+    await driver.tap(find.byValueKey('tap-endorse-button'));
+  });
 
   // test('send money to account from Bootstraper account', () async {
   //   await driver.waitFor(find.byValueKey('send-money-to-account'));
@@ -456,7 +410,5 @@ void main() async {
   //   await addDelay(2000);
   // });
 
-  tearDownAll(() async {
-    await driver.close();
-  });
+  tearDownAll(() async => driver.close());
 }
