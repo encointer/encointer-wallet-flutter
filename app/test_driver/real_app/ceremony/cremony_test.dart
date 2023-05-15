@@ -11,9 +11,10 @@ Future<void> startMeetupTest(
 }) async {
   if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.homeAttestingPhaseStartMeetup);
   await driver.tap(find.byValueKey('start-meetup'));
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.step1ConfirmNumberOfAttendees);
   await enterAttendeesCount(driver, participantsCount);
   await driver.tap(find.byValueKey('ceremony-step-1-next'));
-  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.homeAttestingPhaseStartMeetup);
+  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.step2QrCode);
   await driver.requestData(RealAppTestCommand.devModeOn);
   await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
   await driver.tap(find.byValueKey('attest-all-participants-dev'));

@@ -23,10 +23,10 @@ Future<void> confirmTransaction(FlutterDriver driver) async {
   await driver.runUnsynchronized(() async {
     await driver.waitFor(find.byValueKey('make-transfer'));
     await driver.tap(find.byValueKey('make-transfer'));
-
     await driver.waitFor(find.byValueKey('make-transfer-send'));
     await driver.tap(find.byValueKey('make-transfer-send'));
     await driver.waitFor(find.byValueKey('transfer-done'));
+    await driver.takeScreenshot(Screenshots.txConfirmationView);
     await driver.tap(find.byValueKey('transfer-done'));
   });
 }

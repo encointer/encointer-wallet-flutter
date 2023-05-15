@@ -22,10 +22,6 @@ class Screenshots {
   static const homeAssigningPhaseAssigned = '032-home-assigning-phase-assigned';
   static const homeAssigningPhaseUnassigned = '033-home-assigning-phase-unassigned';
   static const homeAttestingPhaseStartMeetup = '034-home-attesting-phase-start-meetup';
-  static const homeLocaleEn = '035-home-locale-en';
-  static const homeLocaleDe = '036-home-locale-de';
-  static const homeLocaleFr = '037-home-locale-fr';
-  static const homeLocaleRu = '038-home-locale-ru';
 
   /// 41-60 send and receive
   static const receiveView = '041-receive-view';
