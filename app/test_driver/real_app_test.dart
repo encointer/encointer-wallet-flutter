@@ -206,7 +206,7 @@ void main() async {
 
   test('start meetup-Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
-    await startMeetupTest(driver);
+    await startMeetupTest(driver, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('start meetup-Alice', () async {

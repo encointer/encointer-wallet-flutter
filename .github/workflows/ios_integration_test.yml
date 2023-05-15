@@ -2,19 +2,9 @@ name: IOS CI
 
 on:
   push:
-    branches:
-      [
-        master,
-        f-droid,
-        el/take-screenshots-for-every-language-in-integration-test,
-      ]
+    branches: [master, f-droid]
   pull_request:
-    branches:
-      [
-        master,
-        f-droid,
-        el/take-screenshots-for-every-language-in-integration-test,
-      ]
+    branches: [master, f-droid]
 
 env:
   NODE_VERSION: 16.13.1
@@ -87,13 +77,10 @@ jobs:
       #   run: |
       #     brew install docker
       #     colima start
-
       # - name: Run encointer-node
       #   run: ./scripts/docker_run_encointer_node_notee.sh &
-
       # - name: Bootstrap Demo Community
       #   run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
-
       - name: "Start Simulator"
         working-directory: ./scripts
         env:
