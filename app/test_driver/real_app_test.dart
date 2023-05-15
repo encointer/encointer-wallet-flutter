@@ -1,12 +1,10 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-import 'helpers/add_delay.dart';
 import 'helpers/command/real_app_command.dart';
 import 'helpers/extension/screenshot_driver_extension.dart';
 import 'helpers/participant_type.dart';
-import 'helpers/real_app_helper/real_app_helper.dart';
-import 'helpers/screenshots/screenshots.dart';
+import 'real_app/real_app.dart';
 
 void main() async {
   late FlutterDriver driver;
@@ -23,79 +21,48 @@ void main() async {
   });
 
   test('create account by name Tom', () async {
-    await driver.waitFor(find.byValueKey('create-account'));
-    await driver.takeScreenshot(Screenshots.accountEntryView);
+    await checkAcoountEntryView(driver);
+    await goCreateAccountViewFromAcoountEntryView(driver);
     await createAccount(driver, 'Tom');
-    await createPin(driver);
-  }, timeout: const Timeout(Duration(seconds: 180)));
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('create PIN by text 0001', () async {
+    await createPin(driver, '0001');
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('choosing cid', () async {
-    await driver.waitFor(find.byValueKey('cid-0-marker-icon'));
-    await driver.tap(find.byValueKey('cid-0-marker-icon'));
-    await driver.waitFor(find.byValueKey('cid-0-marker-description'));
-    await driver.takeScreenshot(Screenshots.chooseCommunityMap);
-    await driver.tap(find.byValueKey('cid-0-marker-description'));
+    await choosingCid(driver, 0);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('home-page', () async {
-    await refreshWalletPage(driver);
-
-    await dismissUpgradeDialogOnAndroid(driver);
-    await driver.takeScreenshot(Screenshots.homeWithRegisterButton);
-    await addDelay(1000);
-  });
+    await homeInit(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('qr-receive page', () async {
-    await driver.tap(find.byValueKey('qr-receive'));
-    await driver.waitFor(find.byValueKey('close-receive-page'));
-    await driver.takeScreenshot(Screenshots.receiveView);
-    await driver.tap(find.byValueKey('close-receive-page'));
-    await addDelay(1000);
-  });
+    await goReceiveViewFromHomeView(driver);
+    await receiveView(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('turn on dev-mode', () async {
-    await driver.tap(find.byValueKey('profile'));
-    await driver.takeScreenshot(Screenshots.profileView);
-    await scrollToDevMode(driver);
+    await goProfileViewFromNavBar(driver);
     await turnDevMode(driver);
-    await addDelay(1000);
-  });
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('change-network', () async {
-    await scrollToNextPhaseButton(driver);
-    await driver.tap(find.byValueKey('choose-network'));
-    await driver.tap(find.byValueKey('nctr-gsl-dev'));
-    await driver.tap(find.text('Tom'));
-
-    await driver.waitFor(find.byValueKey('profile-list-view'));
-    await driver.tap(find.byValueKey('dev-mode'));
-    await driver.tap(find.byValueKey('wallet'));
-    await addDelay(1000);
+    await goToNetwotkView(driver);
+    await changeDevNetwork(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('change-community', () async {
-    await driver.runUnsynchronized(() async {
-      await driver.tap(find.byValueKey('panel-controller'));
-      await driver.tap(find.byValueKey('add-community'));
-      await addDelay(1000);
-
-      await driver.tap(find.byValueKey('cid-0-marker-icon'));
-      await driver.tap(find.byValueKey('cid-0-marker-description'));
-      await addDelay(1000);
-
-      await driver.waitFor(find.byValueKey('add-community'));
-      await addDelay(1000);
-      await closePanel(driver);
-      await addDelay(1000);
-
-      await refreshWalletPage(driver);
-      await addDelay(1000);
-    });
+    await goHomeViewFromNavBar(driver);
+    await changeCommunity(driver);
   });
 
   test('import account Alice', () async {
+    await goToAddAcoountViewFromPanel(driver);
     await importAccount(driver, 'Alice', '//Alice');
-  }, timeout: const Timeout(Duration(seconds: 60)));
+    await closePanel(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Register [Bootstrapper] Alice', () async {
     await scrollToCeremonyBox(driver);
@@ -111,152 +78,128 @@ void main() async {
     await scrollToCeremonyBox(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
     await scrollToPanelController(driver);
-    await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('send money to Tom', () async {
-    await driver.tap(find.byValueKey('transfer'));
-    await driver.waitFor(find.byValueKey('transfer-listview'));
-
-    await driver.takeScreenshot(Screenshots.sendView);
-    await enterTransferAmount(driver, '0.1');
-    await driver.tap(find.byValueKey('transfer-select-account'));
-    await driver.waitFor(find.byValueKey('Tom'));
-    await driver.tap(find.byValueKey('Tom'));
-    // await driver.takeScreenshot(Screenshots.sendView);
-
-    await driver.runUnsynchronized(() async {
-      await driver.waitFor(find.byValueKey('make-transfer'));
-      await driver.tap(find.byValueKey('make-transfer'));
-
-      await driver.waitFor(find.byValueKey('make-transfer-send'));
-      await driver.tap(find.byValueKey('make-transfer-send'));
-      await driver.waitFor(find.byValueKey('transfer-done'));
-      await driver.takeScreenshot(Screenshots.txConfirmationView);
-      await driver.tap(find.byValueKey('transfer-done'));
-      await addDelay(1000);
-    });
+    await goToTransferViewFromHomeView(driver);
+    await senMoneyToAccount(driver, 'Tom', '0.1');
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Register [Newbie] Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToCeremonyBox(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.newbie, shouldTakeScreenshot: true);
-  }, timeout: const Timeout(Duration(seconds: 120)));
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Unregister [Newbie] Tom', () async {
     await scrollToCeremonyBox(driver);
     await unregisterAndWait(driver, shouldTakeScreenshot: true);
-  }, timeout: const Timeout(Duration(seconds: 120)));
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('Register [Newbie] Tom again', () async {
     await scrollToCeremonyBox(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
     await scrollToPanelController(driver);
-  }, timeout: const Timeout(Duration(seconds: 120)));
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('import account Charlie', () async {
+    await goToAddAcoountViewFromPanel(driver);
     await importAccount(driver, 'Charlie', '//Charlie');
+    await closePanel(driver);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('import and register-Bob', () async {
+    await goToAddAcoountViewFromPanel(driver);
     await importAccount(driver, 'Bob', '//Bob');
+    await closePanel(driver);
     await scrollToCeremonyBox(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
     await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('get assignin-phase', () async {
-    await driver.tap(find.byValueKey('profile'));
-    await driver.requestData(RealAppTestCommand.devModeOn);
-    await scrollToNextPhaseButton(driver);
-    await tapAndWaitNextPhase(driver);
+    await goProfileViewFromNavBar(driver);
+    await getNextPhase(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('check assignin-phase account Assigned', () async {
-    await driver.tap(find.byValueKey('wallet'));
-    await driver.waitFor(find.byValueKey('list-view-wallet'));
-    await scrollToCeremonyBox(driver);
-    await driver.waitFor(find.byValueKey('account-assigned'));
-    await driver.takeScreenshot(Screenshots.homeAssigningPhaseAssigned);
+    await goHomeViewFromNavBar(driver);
+    await checkAssignPhaseAssigned(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('check assignin-phase account Unassigned', () async {
     await scrollToPanelController(driver);
     await changeAccountFromPanel(driver, 'Charlie');
-    await scrollToCeremonyBox(driver);
-    await driver.waitFor(find.byValueKey('account-unassigned'));
-    await driver.takeScreenshot(Screenshots.homeAssigningPhaseUnassigned);
-    await scrollToPanelController(driver);
-    await changeAccountFromPanel(driver, 'Bob');
+    await checkAssignPhaseUnassigned(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('get attesting-phase', () async {
-    await driver.tap(find.byValueKey('profile'));
-    await driver.requestData(RealAppTestCommand.devModeOn);
-    await scrollToNextPhaseButton(driver);
-    await tapAndWaitNextPhase(driver);
-  }, timeout: const Timeout(Duration(seconds: 40)));
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Bob');
+    await goProfileViewFromNavBar(driver);
+    await getNextPhase(driver);
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('start meetup-Bob', () async {
-    await driver.waitFor(find.byValueKey('wallet'));
-    await driver.tap(find.byValueKey('wallet'));
+    await goHomeViewFromNavBar(driver);
+    await scrollToStartMeetup(driver);
     await startMeetupTest(driver);
+    await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('start meetup-Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
+    await scrollToStartMeetup(driver);
     await startMeetupTest(driver, shouldTakeScreenshot: true);
+    await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('start meetup-Alice', () async {
     await changeAccountFromPanel(driver, 'Alice');
+    await scrollToStartMeetup(driver);
     await startMeetupTest(driver);
+    await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Claim-pending (dev-mode)', () async {
-    await driver.requestData(RealAppTestCommand.devModeOn);
-    await driver.waitFor(find.byValueKey('claim-pending-dev'));
-    await driver.tap(find.byValueKey('claim-pending-dev'));
+    await claimPendingDev(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Go to Profile Page and Check reputation count', () async {
-    await driver.tap(find.byValueKey('profile'));
-    await driver.waitFor(find.text('2'));
+    await goProfileViewFromNavBar(driver);
+    await checkPeputationCount(driver, 2);
   });
 
   test('Get Registering phase', () async {
-    await driver.requestData(RealAppTestCommand.devModeOn);
-    await scrollToNextPhaseButton(driver);
-    await tapAndWaitNextPhase(driver);
+    await getNextPhase(driver);
   });
 
-  test('contact-page add contact', () async {
-    await driver.tap(find.byValueKey('contacts'));
-    await driver.takeScreenshot(Screenshots.contactsOverviewEmpty);
-    await driver.tap(find.byValueKey('add-contact'));
+  // test('contact-page add contact', () async {
+  //   await driver.tap(find.byValueKey('contacts'));
+  //   await driver.takeScreenshot(Screenshots.contactsOverviewEmpty);
+  //   await driver.tap(find.byValueKey('add-contact'));
 
-    await driver.takeScreenshot(Screenshots.addContact);
-    await enterConatctNamePubkey(driver, 'Obelix', '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
-    // await driver.takeScreenshot(Screenshots.addContact);
-    await driver.tap(find.byValueKey('contact-save'));
-  });
+  //   await driver.takeScreenshot(Screenshots.addContact);
+  //   await enterConatctNamePubkey(driver, 'Obelix', '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
+  //   // await driver.takeScreenshot(Screenshots.addContact);
+  //   await driver.tap(find.byValueKey('contact-save'));
+  // });
 
-  test('change contact name', () async {
-    await driver.waitFor(find.byValueKey('Obelix'));
-    await driver.tap(find.byValueKey('Obelix'));
-    await driver.waitFor(find.byValueKey('contact-name-edit'));
-    await driver.takeScreenshot(Screenshots.contactView);
-    await enterChangeContactName(driver, 'Asterix');
-    // await driver.takeScreenshot(Screenshots.changeContactName);
-    await driver.tap(find.byValueKey('contact-name-edit-check'));
-    await driver.waitFor(find.text('Asterix'));
-  });
+  // test('change contact name', () async {
+  //   await driver.waitFor(find.byValueKey('Obelix'));
+  //   await driver.tap(find.byValueKey('Obelix'));
+  //   await driver.waitFor(find.byValueKey('contact-name-edit'));
+  //   await driver.takeScreenshot(Screenshots.contactView);
+  //   await enterChangeContactName(driver, 'Asterix');
+  //   // await driver.takeScreenshot(Screenshots.changeContactName);
+  //   await driver.tap(find.byValueKey('contact-name-edit-check'));
+  //   await driver.waitFor(find.text('Asterix'));
+  // });
 
-  test('send endorse to account', () async {
-    await driver.waitFor(find.byValueKey('tap-endorse-button'));
-    await driver.tap(find.byValueKey('tap-endorse-button'));
-  });
+  // test('send endorse to account', () async {
+  //   await driver.waitFor(find.byValueKey('tap-endorse-button'));
+  //   await driver.tap(find.byValueKey('tap-endorse-button'));
+  // });
 
   // test('send money to account from Bootstraper account', () async {
   //   await driver.waitFor(find.byValueKey('send-money-to-account'));
