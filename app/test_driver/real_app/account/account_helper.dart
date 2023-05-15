@@ -12,7 +12,7 @@ Future<void> enterAccountMnemonic(FlutterDriver driver, String seedOrMnemonic) a
   await driver.enterText(seedOrMnemonic);
 }
 
-Future<void> enterCreatePin(FlutterDriver driver, String password) async {
+Future<void> enterPin(FlutterDriver driver, String password) async {
   await driver.waitFor(find.byValueKey('create-account-pin'));
   await driver.tap(find.byValueKey('create-account-pin'));
   await driver.enterText(password);
