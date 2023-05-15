@@ -9,7 +9,6 @@ import 'home_helper.dart';
 
 Future<void> homeInit(FlutterDriver driver) async {
   await refreshWalletPage(driver);
-
   await dismissUpgradeDialogOnAndroid(driver);
   await driver.takeScreenshot(Screenshots.homeWithRegisterButton);
 }

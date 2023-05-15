@@ -125,7 +125,6 @@ class CeremonyStep2Scan extends StatelessWidget {
               },
             ),
           ),
-          // if (appSettingsStore.developerMode)
           Observer(builder: (_) {
             if (appSettingsStore.developerMode) {
               return SizedBox(
