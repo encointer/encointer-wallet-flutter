@@ -1,19 +1,19 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
-Future<void> goCreateAccountViewFromAcoountEntryView(FlutterDriver driver) async {
+Future<void> goToCreateAccountViewFromAcoountEntryView(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('create-account'));
   await driver.waitFor(find.byValueKey('create-account-name'));
 }
 
-Future<void> goReceiveViewFromHomeView(FlutterDriver driver) async {
+Future<void> goToReceiveViewFromHomeView(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('qr-receive'));
 }
 
-Future<void> goProfileViewFromNavBar(FlutterDriver driver) async {
+Future<void> goToProfileViewFromNavBar(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('profile'));
 }
 
-Future<void> goHomeViewFromNavBar(FlutterDriver driver) async {
+Future<void> goToHomeViewFromNavBar(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('wallet'));
 }
 

@@ -4,13 +4,17 @@ import '../../helpers/extension/screenshot_driver_extension.dart';
 import '../../helpers/screenshots/screenshots.dart';
 import 'account_manage_helper.dart';
 
-Future<void> deleteAccountFromAccountManagePage(FlutterDriver driver, String account) async {
+Future<void> accountDetailPage(FlutterDriver driver, String account) async {
   await driver.waitFor(find.byValueKey(account));
   await driver.tap(find.byValueKey(account));
-  await accountDeleteFromAccountManagePage(driver);
 }
 
-Future<void> accountDeleteFromAccountManagePage(FlutterDriver driver) async {
+Future<void> deleteAccountFromProfilePage(FlutterDriver driver, String account) async {
+  await accountDetailPage(driver, account);
+  await deleteAccountFromAccountManagePage(driver);
+}
+
+Future<void> deleteAccountFromAccountManagePage(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
   await driver.tap(find.byValueKey('delete'));
   await driver.waitFor(find.byValueKey('delete-account'));
@@ -18,8 +22,7 @@ Future<void> accountDeleteFromAccountManagePage(FlutterDriver driver) async {
 }
 
 Future<String> getPublicKey(FlutterDriver driver, String accountName) async {
-  await driver.waitFor(find.byValueKey(accountName));
-  await driver.tap(find.byValueKey(accountName));
+  await accountDetailPage(driver, accountName);
   await driver.waitFor(find.byValueKey('account-public-key'));
   final publicKey = await driver.getText(find.byValueKey('account-public-key'));
   await driver.tap(find.byValueKey('close-account-manage'));
@@ -27,9 +30,6 @@ Future<String> getPublicKey(FlutterDriver driver, String accountName) async {
 }
 
 Future<void> shareAccount(FlutterDriver driver, String account, {bool shouldTakeScreenshot = false}) async {
-  await driver.tap(find.byValueKey('profile'));
-  await driver.waitFor(find.byValueKey(account));
-  await driver.tap(find.byValueKey(account));
   await driver.waitFor(find.byValueKey('go-to-account-share'));
   if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.accountManageView);
   await driver.tap(find.byValueKey('go-to-account-share'));
@@ -48,7 +48,7 @@ Future<void> accountChangeName(FlutterDriver driver, String newName, {bool shoul
   await driver.waitFor(find.text(newName));
 }
 
-Future<String> exportAcoount(FlutterDriver driver, String pin, {bool shouldTakeScreenshot = false}) async {
+Future<String> exportAccount(FlutterDriver driver, String pin, {bool shouldTakeScreenshot = false}) async {
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
   if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.accountOptionsDialog);
   await driver.tap(find.byValueKey('export'));

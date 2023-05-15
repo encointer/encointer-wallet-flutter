@@ -20,7 +20,7 @@ Future<void> tapDevMode(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('dev-mode'));
 }
 
-Future<void> tapAndWaitNextPhase(FlutterDriver driver) async {
+Future<void> tapNextPhase(FlutterDriver driver) async {
   await driver.waitFor(find.byValueKey('next-phase-button'));
   await driver.tap(find.byValueKey('next-phase-button'));
   await driver.waitFor(find.byType('SnackBar'));

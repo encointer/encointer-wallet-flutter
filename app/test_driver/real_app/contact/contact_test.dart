@@ -11,7 +11,7 @@ Future<void> checkContactEmpty(FlutterDriver driver) async {
 Future<void> addContact(FlutterDriver driver, String name, String pubKey) async {
   await driver.tap(find.byValueKey('add-contact'));
   await driver.takeScreenshot(Screenshots.addContact);
-  await enterConatctNamePubkey(driver, name, pubKey);
+  await enterConatctNameAndPubkey(driver, name, pubKey);
   await driver.tap(find.byValueKey('contact-save'));
   await driver.waitFor(find.byValueKey(name));
 }
@@ -26,7 +26,6 @@ Future<void> changeContactName(FlutterDriver driver, String name, String newName
   await driver.waitFor(find.byValueKey('contact-name-edit'));
   await driver.takeScreenshot(Screenshots.contactView);
   await enterChangeContactName(driver, newName);
-  // await driver.takeScreenshot(Screenshots.changeContactName);
   await driver.tap(find.byValueKey('contact-name-edit-check'));
   await driver.waitFor(find.text(newName));
   await driver.takeScreenshot(Screenshots.changeContactName);

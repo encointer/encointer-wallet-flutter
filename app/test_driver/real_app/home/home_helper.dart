@@ -21,8 +21,7 @@ Future<void> changeAccountFromPanel(FlutterDriver driver, String account) async 
 
 Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
   final operationSystem = await driver.requestData(RealAppTestCommand.getPlatform);
-  // ignore: avoid_print
-  print('operationSystem ==================> $operationSystem');
+  log('operationSystem ==================> $operationSystem');
   if (operationSystem == 'android') {
     try {
       log('Waiting for upgrader alert dialog');

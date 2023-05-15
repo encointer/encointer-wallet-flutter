@@ -23,7 +23,7 @@ void main() async {
 
   test('create account by name Tom', () async {
     await checkAcoountEntryView(driver);
-    await goCreateAccountViewFromAcoountEntryView(driver);
+    await goToCreateAccountViewFromAcoountEntryView(driver);
     await createAccount(driver, 'Tom');
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -40,22 +40,22 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('qr-receive page', () async {
-    await goReceiveViewFromHomeView(driver);
+    await goToReceiveViewFromHomeView(driver);
     await receiveView(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('turn on dev-mode', () async {
-    await goProfileViewFromNavBar(driver);
+    await goToProfileViewFromNavBar(driver);
     await turnDevMode(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('change-network', () async {
-    await goToNetwotkView(driver);
-    await changeDevNetwork(driver);
+    await goToNetworkView(driver);
+    await changeDevNetwork(driver, 'Tom');
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('change-community', () async {
-    await goHomeViewFromNavBar(driver);
+    await goToHomeViewFromNavBar(driver);
     await changeCommunity(driver);
   });
 
@@ -119,12 +119,12 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('get assignin-phase', () async {
-    await goProfileViewFromNavBar(driver);
+    await goToProfileViewFromNavBar(driver);
     await getNextPhase(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('check assignin-phase account Assigned', () async {
-    await goHomeViewFromNavBar(driver);
+    await goToHomeViewFromNavBar(driver);
     await checkAssignPhaseAssigned(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -137,12 +137,12 @@ void main() async {
   test('get attesting-phase', () async {
     await scrollToPanelController(driver);
     await changeAccountFromPanel(driver, 'Bob');
-    await goProfileViewFromNavBar(driver);
+    await goToProfileViewFromNavBar(driver);
     await getNextPhase(driver);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('start meetup-Bob', () async {
-    await goHomeViewFromNavBar(driver);
+    await goToHomeViewFromNavBar(driver);
     await scrollToStartMeetup(driver);
     await startMeetupTest(driver);
     await scrollToPanelController(driver);
@@ -167,7 +167,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Go to Profile Page and Check reputation count', () async {
-    await goProfileViewFromNavBar(driver);
+    await goToProfileViewFromNavBar(driver);
     await checkPeputationCount(driver, 2);
   });
 
@@ -192,20 +192,20 @@ void main() async {
   test('send money to account from Bootstraper account', () async {
     await senMoneyToContact(driver);
     await sendMoneyToSelectedAccount(driver, '0.2');
-    await goHomeViewFromNavBar(driver);
+    await goToHomeViewFromNavBar(driver);
   });
 
   test('delete account Bob', () async {
-    await goProfileViewFromNavBar(driver);
-    await deleteAccountFromAccountManagePage(driver, 'Bob');
+    await goToProfileViewFromNavBar(driver);
+    await deleteAccountFromProfilePage(driver, 'Bob');
   });
 
   test('delete account Charlie', () async {
-    await deleteAccountFromAccountManagePage(driver, 'Charlie');
+    await deleteAccountFromProfilePage(driver, 'Charlie');
   });
 
   test('create niewbie Account', () async {
-    await goHomeViewFromNavBar(driver);
+    await goToHomeViewFromNavBar(driver);
     await goToAddAcoountViewFromPanel(driver);
     await createNewbieAccount(driver, 'Li');
     await closePanel(driver);
@@ -213,7 +213,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('get public key', () async {
-    await goProfileViewFromNavBar(driver);
+    await goToProfileViewFromNavBar(driver);
     publicKey = await getPublicKey(driver, 'Li');
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -231,7 +231,7 @@ void main() async {
     await senMoneyToContact(driver);
     await sendMoneyToSelectedAccount(driver, '0.2');
     await driver.takeScreenshot(Screenshots.contactsOverview);
-    await goHomeViewFromNavBar(driver);
+    await goToHomeViewFromNavBar(driver);
   });
 
   test('register Tom (check status as Reputable)', () async {
@@ -265,7 +265,8 @@ void main() async {
   test('account share', () async {
     await scrollToPanelController(driver);
     await changeAccountFromPanel(driver, 'Tom');
-    await goProfileViewFromNavBar(driver);
+    await goToProfileViewFromNavBar(driver);
+    await accountDetailPage(driver, 'Tom');
     await shareAccount(driver, 'Tom', shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
@@ -274,21 +275,21 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('account export', () async {
-    menemonic = await exportAcoount(driver, '0001', shouldTakeScreenshot: true);
+    menemonic = await exportAccount(driver, '0001', shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('account delete from account manage page', () async {
-    await accountDeleteFromAccountManagePage(driver);
+    await deleteAccountFromAccountManagePage(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('import account with menemonic phrase', () async {
-    await goHomeViewFromNavBar(driver);
+    await goToHomeViewFromNavBar(driver);
     await goToAddAcoountViewFromPanel(driver);
     await importAccount(driver, 'Bob', menemonic, shouldTakeScreenshot: true);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('change-language-from-profile-page', () async {
-    await goProfileViewFromNavBar(driver);
+    await goToProfileViewFromNavBar(driver);
     await changeLanguage(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 

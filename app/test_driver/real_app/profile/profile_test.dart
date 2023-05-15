@@ -11,7 +11,7 @@ Future<void> turnDevMode(FlutterDriver driver) async {
   await tapDevMode(driver);
 }
 
-Future<void> goToNetwotkView(FlutterDriver driver) async {
+Future<void> goToNetworkView(FlutterDriver driver) async {
   await scrollToNextPhaseButton(driver);
   await driver.tap(find.byValueKey('choose-network'));
 }
@@ -19,7 +19,7 @@ Future<void> goToNetwotkView(FlutterDriver driver) async {
 Future<void> getNextPhase(FlutterDriver driver) async {
   await driver.requestData(RealAppTestCommand.devModeOn);
   await scrollToNextPhaseButton(driver);
-  await tapAndWaitNextPhase(driver);
+  await tapNextPhase(driver);
 }
 
 Future<void> checkPeputationCount(FlutterDriver driver, int count) async {

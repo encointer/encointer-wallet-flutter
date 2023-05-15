@@ -23,6 +23,5 @@ Future<void> startMeetupTest(
   await driver.waitFor(find.byValueKey('submit-claims'));
   if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.step3FinishGathering);
   await driver.tap(find.byValueKey('submit-claims'));
-
   await driver.waitFor(find.byValueKey('panel-controller'));
 }
