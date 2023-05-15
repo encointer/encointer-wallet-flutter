@@ -1,6 +1,5 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
-import '../../helpers/add_delay.dart';
 import '../../helpers/command/real_app_command.dart';
 import '../../helpers/extension/screenshot_driver_extension.dart';
 import '../../helpers/participant_type.dart';
@@ -22,7 +21,7 @@ Future<void> changeCommunity(FlutterDriver driver) async {
     await driver.tap(find.byValueKey('cid-0-marker-description'));
     await driver.waitFor(find.byValueKey('add-community'));
 
-    await addDelay(1000);
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
     await closePanel(driver);
     await refreshWalletPage(driver);
   });
