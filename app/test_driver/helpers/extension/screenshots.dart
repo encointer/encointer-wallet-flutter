@@ -1,3 +1,5 @@
+part of 'screenshot_driver.dart';
+
 class Screenshots {
   /// 0-20 onboarding stuff
   static const accountEntryView = '001-account-entry-view';

@@ -2,9 +2,8 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 import 'helpers/command/real_app_command.dart';
-import 'helpers/extension/screenshot_driver_extension.dart';
+import 'helpers/extension/screenshot_driver.dart';
 import 'helpers/participant_type.dart';
-import 'helpers/screenshots/screenshots.dart';
 import 'real_app/real_app.dart';
 
 void main() async {

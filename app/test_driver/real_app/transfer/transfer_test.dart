@@ -1,7 +1,6 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
-import '../../helpers/extension/screenshot_driver_extension.dart';
-import '../../helpers/screenshots/screenshots.dart';
+import '../../helpers/extension/screenshot_driver.dart';
 import 'transfer_helper.dart';
 
 Future<void> senMoneyToAccount(FlutterDriver driver, String recieveName, String amount) async {
