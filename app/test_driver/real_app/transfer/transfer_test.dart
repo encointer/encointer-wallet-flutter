@@ -11,7 +11,17 @@ Future<void> senMoneyToAccount(FlutterDriver driver, String recieveName, String 
   await driver.waitFor(find.byValueKey(recieveName));
   await driver.tap(find.byValueKey(recieveName));
   // await driver.takeScreenshot(Screenshots.sendView);
+  await conformTransaction(driver);
+}
 
+Future<void> sendMoneyToSelectedAccount(FlutterDriver driver, String amount) async {
+  await driver.waitFor(find.byValueKey('transfer-amount-input'));
+  await driver.tap(find.byValueKey('transfer-amount-input'));
+  await driver.enterText(amount);
+  await conformTransaction(driver);
+}
+
+Future<void> conformTransaction(FlutterDriver driver) async {
   await driver.runUnsynchronized(() async {
     await driver.waitFor(find.byValueKey('make-transfer'));
     await driver.tap(find.byValueKey('make-transfer'));
@@ -19,7 +29,6 @@ Future<void> senMoneyToAccount(FlutterDriver driver, String recieveName, String 
     await driver.waitFor(find.byValueKey('make-transfer-send'));
     await driver.tap(find.byValueKey('make-transfer-send'));
     await driver.waitFor(find.byValueKey('transfer-done'));
-    await driver.takeScreenshot(Screenshots.txConfirmationView);
     await driver.tap(find.byValueKey('transfer-done'));
   });
 }

@@ -25,3 +25,11 @@ Future<void> getNextPhase(FlutterDriver driver) async {
 Future<void> checkPeputationCount(FlutterDriver driver, int count) async {
   await driver.waitFor(find.text('$count'));
 }
+
+Future<void> deleteAllAccount(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('remove-all-accounts'));
+  await driver.tap(find.byValueKey('remove-all-accounts'));
+  await driver.waitFor(find.byValueKey('remove-all-accounts-check'));
+  await driver.tap(find.byValueKey('remove-all-accounts-check'));
+  await driver.waitFor(find.byValueKey('import-account'));
+}

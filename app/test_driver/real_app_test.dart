@@ -4,13 +4,14 @@ import 'package:test/test.dart';
 import 'helpers/command/real_app_command.dart';
 import 'helpers/extension/screenshot_driver_extension.dart';
 import 'helpers/participant_type.dart';
+import 'helpers/screenshots/screenshots.dart';
 import 'real_app/real_app.dart';
 
 void main() async {
   late FlutterDriver driver;
 
-  // var publicKey = '';
-  // var menemonic = '';
+  var publicKey = '';
+  var menemonic = '';
 
   group('EncointerWallet App', () {
     setUpAll(() async {
@@ -77,10 +78,10 @@ void main() async {
   test('Register [Bootstrapper] Alice again', () async {
     await scrollToCeremonyBox(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
-    await scrollToPanelController(driver);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('send money to Tom', () async {
+    await scrollToPanelController(driver);
     await goToTransferViewFromHomeView(driver);
     await senMoneyToAccount(driver, 'Tom', '0.1');
   }, timeout: const Timeout(Duration(seconds: 60)));
@@ -174,184 +175,127 @@ void main() async {
     await getNextPhase(driver);
   });
 
-  // test('contact-page add contact', () async {
-  //   await driver.tap(find.byValueKey('contacts'));
-  //   await driver.takeScreenshot(Screenshots.contactsOverviewEmpty);
-  //   await driver.tap(find.byValueKey('add-contact'));
+  test('contact-page add contact', () async {
+    await goToContactViewFromNavBar(driver);
+    await checkContactEmpty(driver);
+    await addContact(driver, 'Obelix', '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
+  });
 
-  //   await driver.takeScreenshot(Screenshots.addContact);
-  //   await enterConatctNamePubkey(driver, 'Obelix', '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
-  //   // await driver.takeScreenshot(Screenshots.addContact);
-  //   await driver.tap(find.byValueKey('contact-save'));
-  // });
+  test('change contact name', () async {
+    await changeContactName(driver, 'Obelix', 'Asterix');
+  });
 
-  // test('change contact name', () async {
-  //   await driver.waitFor(find.byValueKey('Obelix'));
-  //   await driver.tap(find.byValueKey('Obelix'));
-  //   await driver.waitFor(find.byValueKey('contact-name-edit'));
-  //   await driver.takeScreenshot(Screenshots.contactView);
-  //   await enterChangeContactName(driver, 'Asterix');
-  //   // await driver.takeScreenshot(Screenshots.changeContactName);
-  //   await driver.tap(find.byValueKey('contact-name-edit-check'));
-  //   await driver.waitFor(find.text('Asterix'));
-  // });
+  test('send endorse to account', () async {
+    await sendEndorse(driver);
+  });
 
-  // test('send endorse to account', () async {
-  //   await driver.waitFor(find.byValueKey('tap-endorse-button'));
-  //   await driver.tap(find.byValueKey('tap-endorse-button'));
-  // });
+  test('send money to account from Bootstraper account', () async {
+    await senMoneyToContact(driver);
+    await sendMoneyToSelectedAccount(driver, '0.2');
+    await goHomeViewFromNavBar(driver);
+  });
 
-  // test('send money to account from Bootstraper account', () async {
-  //   await driver.waitFor(find.byValueKey('send-money-to-account'));
-  //   await driver.tap(find.byValueKey('send-money-to-account'));
+  test('delete account Bob', () async {
+    await goProfileViewFromNavBar(driver);
+    await deleteAccountFromAccountManagePage(driver, 'Bob');
+  });
 
-  //   await sendMoneyToAccount(driver);
-  //   await driver.tap(find.byValueKey('wallet'));
-  // });
+  test('delete account Charlie', () async {
+    await deleteAccountFromAccountManagePage(driver, 'Charlie');
+  });
 
-  // test('delete account Bob', () async {
-  //   await driver.tap(find.byValueKey('profile'));
-  //   await deleteAccountFromAccountManagePage(driver, 'Bob');
-  // });
+  test('create niewbie Account', () async {
+    await goHomeViewFromNavBar(driver);
+    await goToAddAcoountViewFromPanel(driver);
+    await createNewbieAccount(driver, 'Li');
+    await closePanel(driver);
+    await changeAccountFromPanel(driver, 'Tom');
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('delete account Charlie', () async {
-  //   await deleteAccountFromAccountManagePage(driver, 'Charlie');
-  //   await driver.tap(find.byValueKey('wallet'));
-  // });
+  test('get public key', () async {
+    await goProfileViewFromNavBar(driver);
+    publicKey = await getPublicKey(driver, 'Li');
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('create niewbie Account', () async {
-  //   await addDelay(1000);
-  //   await createNewbieAccount(driver, 'Li');
-  //   await changeAccountFromPanel(driver, 'Tom');
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('contact-page add account Li', () async {
+    await goToContactViewFromNavBar(driver);
+    await addContact(driver, 'Li', publicKey);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('get public key', () async {
-  //   await driver.tap(find.byValueKey('profile'));
-  //   await driver.waitFor(find.byValueKey('Li'));
-  //   await driver.tap(find.byValueKey('Li'));
-  //   await driver.waitFor(find.byValueKey('account-public-key'));
-  //   await addDelay(1000);
-  //   publicKey = await driver.getText(find.byValueKey('account-public-key'));
-  //   await driver.tap(find.byValueKey('close-account-manage'));
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('send endorse to account from Reputable', () async {
+    await contactDetailView(driver, 'Li');
+    await sendEndorse(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('contact-page add account Li', () async {
-  //   await driver.tap(find.byValueKey('contacts'));
-  //   await driver.tap(find.byValueKey('add-contact'));
+  test('send money to account from Reputable account', () async {
+    await senMoneyToContact(driver);
+    await sendMoneyToSelectedAccount(driver, '0.2');
+    await driver.takeScreenshot(Screenshots.contactsOverview);
+    await goHomeViewFromNavBar(driver);
+  });
 
-  //   await driver.tap(find.byValueKey('contact-address'));
-  //   await driver.enterText(publicKey);
-  //   await driver.tap(find.byValueKey('contact-name'));
-  //   await driver.enterText('Li');
+  test('register Tom (check status as Reputable)', () async {
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, ParticipantTypeTestHelper.reputable, shouldTakeScreenshot: true);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  //   await driver.tap(find.byValueKey('contact-save'));
-  // }, timeout: const Timeout(Duration(seconds: 60)));
+  test('Unregister [Reputable] Tom', () async {
+    await unregisterAndWait(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('send endorse to account from Reputable', () async {
-  //   await driver.waitFor(find.byValueKey('Li'));
-  //   await driver.tap(find.byValueKey('Li'));
+  test('Register [Reputable] Tom again', () async {
+    await registerAndWait(driver, ParticipantTypeTestHelper.reputable);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  //   await driver.waitFor(find.byValueKey('tap-endorse-button'));
-  //   await driver.tap(find.byValueKey('tap-endorse-button'));
-  // }, timeout: const Timeout(Duration(seconds: 60)));
+  test('register Li (check status as Endorsee)', () async {
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Li');
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, ParticipantTypeTestHelper.endorsee, shouldTakeScreenshot: true);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('send money to account from Reputable account', () async {
-  //   await driver.waitFor(find.byValueKey('send-money-to-account'));
-  //   await driver.tap(find.byValueKey('send-money-to-account'));
+  test('Unregister [Endorsee] Li', () async {
+    await unregisterAndWait(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  //   await sendMoneyToAccount(driver);
-  //   await driver.takeScreenshot(Screenshots.contactsOverview);
-  //   await driver.tap(find.byValueKey('wallet'));
-  // });
+  test('Register [Newbie-Endorsee] Li again', () async {
+    await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('register Tom (check status as Reputable)', () async {
-  //   await scrollToCeremonyBox(driver);
-  //   await registerAndWait(driver, ParticipantTypeTestHelper.reputable, shouldTakeScreenshot: true);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('account share', () async {
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Tom');
+    await goProfileViewFromNavBar(driver);
+    await shareAccount(driver, 'Tom', shouldTakeScreenshot: true);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('Unregister [Reputable] Tom', () async {
-  //   await unregisterAndWait(driver);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('account change name', () async {
+    await accountChangeName(driver, 'Jerry', shouldTakeScreenshot: true);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('Register [Reputable] Tom again', () async {
-  //   await registerAndWait(driver, ParticipantTypeTestHelper.reputable);
-  //   await scrollToPanelController(driver);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('account export', () async {
+    menemonic = await exportAcoount(driver, '0001', shouldTakeScreenshot: true);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('register Li (check status as Endorsee)', () async {
-  //   await changeAccountFromPanel(driver, 'Li');
-  //   await scrollToCeremonyBox(driver);
-  //   await registerAndWait(driver, ParticipantTypeTestHelper.endorsee, shouldTakeScreenshot: true);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('account delete from account manage page', () async {
+    await accountDeleteFromAccountManagePage(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('Unregister [Endorsee] Li', () async {
-  //   await unregisterAndWait(driver);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('import account with menemonic phrase', () async {
+    await goHomeViewFromNavBar(driver);
+    await goToAddAcoountViewFromPanel(driver);
+    await importAccount(driver, 'Bob', menemonic, shouldTakeScreenshot: true);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('Register [Newbie-Endorsee] Li again', () async {
-  //   await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
-  //   await scrollToPanelController(driver);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
+  test('change-language-from-profile-page', () async {
+    await goProfileViewFromNavBar(driver);
+    await changeLanguage(driver);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-  // test('account share', () async {
-  //   await changeAccountFromPanel(driver, 'Tom');
-  //   await shareAccount(driver, 'Tom', shouldTakeScreenshot: true);
-  //   await addDelay(2500);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
-
-  // test('account change name', () async {
-  //   await accountChangeName(driver, 'Jerry', shouldTakeScreenshot: true);
-  //   await addDelay(500);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
-
-  // test('account export', () async {
-  //   menemonic = await accountExport(driver, shouldTakeScreenshot: true);
-  //   await addDelay(500);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
-
-  // test('account delete from account manage page', () async {
-  //   await accountDeleteFromAccountManagePage(driver);
-  //   await addDelay(500);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
-
-  // test('import account with menemonic phrase', () async {
-  //   await driver.tap(find.byValueKey('wallet'));
-  //   await importAccount(driver, 'Bob', menemonic, shouldTakeScreenshot: true);
-  //   await addDelay(500);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
-
-  // test('change-language-with-driver', () async {
-  //   await driver.requestData(RealAppTestCommand.localeDe);
-  //   await driver.takeScreenshot(Screenshots.homeLocaleDe);
-  //   await driver.requestData(RealAppTestCommand.localeFr);
-  //   await driver.takeScreenshot(Screenshots.homeLocaleFr);
-  //   await driver.requestData(RealAppTestCommand.localeRu);
-  //   await driver.takeScreenshot(Screenshots.homeLocaleRu);
-  //   await driver.requestData(RealAppTestCommand.localeEn);
-  //   await driver.takeScreenshot(Screenshots.homeLocaleEn);
-  // }, timeout: const Timeout(Duration(seconds: 120)));
-
-  // test('change-language-from-profile-page', () async {
-  //   await driver.tap(find.byValueKey('profile'));
-  //   await driver.waitFor(find.byValueKey('settings-language'));
-  //   await driver.tap(find.byValueKey('settings-language'));
-  //   await driver.waitFor(find.text('Language'));
-  //   await driver.tap(find.byValueKey('locale-de'));
-  //   await driver.waitFor(find.text('Sprache'));
-  //   await driver.tap(find.byValueKey('locale-fr'));
-  //   await driver.waitFor(find.text('Langue'));
-  //   await driver.tap(find.byValueKey('locale-ru'));
-  //   await driver.waitFor(find.text('Язык'));
-  //   await driver.tap(find.byValueKey('locale-en'));
-  //   await driver.waitFor(find.text('Language'));
-  //   await driver.tap(find.pageBack());
-  // }, timeout: const Timeout(Duration(seconds: 120)));
-
-  // test('delete all account ad show create account page', () async {
-  //   await driver.waitFor(find.byValueKey('remove-all-accounts'));
-  //   await rmAllAccountsFromProfilePage(driver);
-  //   await addDelay(2000);
-  // });
+  test('delete all account ad show create account page', () async {
+    await driver.waitFor(find.byValueKey('remove-all-accounts'));
+    await deleteAllAccount(driver);
+  });
 
   tearDownAll(() async => driver.close());
 }

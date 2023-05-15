@@ -26,3 +26,7 @@ Future<void> goToTransferViewFromHomeView(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('transfer'));
   await driver.waitFor(find.byValueKey('transfer-listview'));
 }
+
+Future<void> goToContactViewFromNavBar(FlutterDriver driver) async {
+  await driver.tap(find.byValueKey('contacts'));
+}

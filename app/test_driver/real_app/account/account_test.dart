@@ -27,6 +27,13 @@ Future<void> createPin(FlutterDriver driver, String pin) async {
   await driver.tap(find.byValueKey('create-account-confirm'));
 }
 
+Future<void> createNewbieAccount(FlutterDriver driver, String account) async {
+  await driver.waitFor(find.byValueKey('create-account-name'));
+  await driver.tap(find.byValueKey('create-account-name'));
+  await enterAccountName(driver, account);
+  await driver.tap(find.byValueKey('create-account-confirm'));
+}
+
 Future<void> importAccount(
   FlutterDriver driver,
   String accountName,
