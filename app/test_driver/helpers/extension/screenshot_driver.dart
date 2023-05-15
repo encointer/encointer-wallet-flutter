@@ -4,7 +4,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 
 import '../command/real_app_command.dart';
 
-part 'screenshots.dart';
+part 'screenshots_name.dart';
 
 extension ScreenshotExtension on FlutterDriver {
   static final _shouldTakeScreenshot = Expando<String>();
