@@ -15,7 +15,11 @@ void main() async {
   group('EncointerWallet App', () {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
-      driver.shouldTakeScreenshot = await driver.requestData(RealAppTestCommand.shouldTakeScreenshot);
+      final shouldTakeScreenshot = await driver.requestData(RealAppTestCommand.shouldTakeScreenshot);
+      driver.shouldTakeScreenshot = shouldTakeScreenshot == 'true';
+      final shouldTakeScreenshotForAllLocales =
+          await driver.requestData(RealAppTestCommand.shouldTakeScreenshotForAllLocales);
+      driver.shouldTakeScreenshotForAllLocales = shouldTakeScreenshotForAllLocales == 'true';
       await driver.waitUntilFirstFrameRasterized();
     });
   });

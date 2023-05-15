@@ -1,6 +1,7 @@
 class RealAppTestCommand {
   static const String getPlatform = 'getPlatform';
   static const String shouldTakeScreenshot = 'shouldTakeScreenshot';
+  static const String shouldTakeScreenshotForAllLocales = 'shouldTakeScreenshotForAllLocales';
   static const String localeEn = 'local-en';
   static const String localeDe = 'local-de';
   static const String localeFr = 'local-fr';

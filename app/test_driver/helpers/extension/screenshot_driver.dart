@@ -7,10 +7,13 @@ import '../command/real_app_command.dart';
 part 'screenshots_name.dart';
 
 extension ScreenshotExtension on FlutterDriver {
-  static final _shouldTakeScreenshot = Expando<String>();
+  static final _shouldTakeScreenshot = Expando<bool>();
+  static final _shouldTakeScreenshotForAllLocales = Expando<bool>();
 
-  String get shouldTakeScreenshot => _shouldTakeScreenshot[this] ?? 'A';
-  set shouldTakeScreenshot(String x) => _shouldTakeScreenshot[this] = x;
+  bool get shouldTakeScreenshot => _shouldTakeScreenshot[this] ?? false;
+  set shouldTakeScreenshot(bool x) => _shouldTakeScreenshot[this] = x;
+  bool get shouldTakeScreenshotForAllLocales => _shouldTakeScreenshotForAllLocales[this] ?? false;
+  set shouldTakeScreenshotForAllLocales(bool x) => _shouldTakeScreenshotForAllLocales[this] = x;
 
   Future<void> takeScreenshot(
     String name, {
@@ -18,14 +21,15 @@ extension ScreenshotExtension on FlutterDriver {
     Duration timeout = const Duration(seconds: 30),
     bool waitUntilNoTransientCallbacks = true,
   }) async {
-    if (shouldTakeScreenshot == 'B') {
+    if (shouldTakeScreenshot) {
       await _takeScreenshot(
         name,
         directory: directory,
         timeout: timeout,
         waitUntilNoTransientCallbacks: waitUntilNoTransientCallbacks,
       );
-    } else if (shouldTakeScreenshot == 'C') {
+    }
+    if (shouldTakeScreenshotForAllLocales) {
       const locales = ['de', 'fr', 'ru', 'en'];
       for (final locale in locales) {
         final currenLocale = await requestData('local-$locale');
@@ -48,6 +52,7 @@ extension ScreenshotExtension on FlutterDriver {
     if (waitUntilNoTransientCallbacks) {
       await this.waitUntilNoTransientCallbacks(timeout: timeout);
     }
+    // if (File(name).existsSync()) {
     await requestData(RealAppTestCommand.devModeOff);
     final pixels = await screenshot();
     final directoryPath = directory.endsWith('/') ? directory : '$directory/';
@@ -55,5 +60,6 @@ extension ScreenshotExtension on FlutterDriver {
     await file.writeAsBytes(pixels);
     // ignore: avoid_print
     print('Screenshot $name created at ${file.path}');
+    // }
   }
 }
