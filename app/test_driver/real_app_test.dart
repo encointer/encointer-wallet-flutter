@@ -293,7 +293,6 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('delete all account ad show create account page', () async {
-    await driver.waitFor(find.byValueKey('remove-all-accounts'));
     await deleteAllAccount(driver);
   });
 
