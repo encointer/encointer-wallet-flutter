@@ -292,7 +292,7 @@ void main() async {
     await changeLanguage(driver);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
-  test('delete all account ad show create account page', () async {
+  test('delete all accounts', () async {
     await deleteAllAccount(driver);
   });
 
