@@ -71,7 +71,7 @@ void main() async {
 
   test('Register [Bootstrapper] Alice', () async {
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper, shouldTakeScreenshot: true);
+    await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
   }, timeout: timeout120);
 
   test('Unregister [Bootstrapper] Alice', () async {
@@ -93,12 +93,12 @@ void main() async {
   test('Register [Newbie] Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, ParticipantTypeTestHelper.newbie, shouldTakeScreenshot: true);
+    await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
   }, timeout: timeout120);
 
   test('Unregister [Newbie] Tom', () async {
     await scrollToCeremonyBox(driver);
-    await unregisterAndWait(driver, shouldTakeScreenshot: true);
+    await unregisterAndWait(driver);
   }, timeout: timeout120);
 
   test('Register [Newbie] Tom again', () async {
@@ -155,7 +155,7 @@ void main() async {
   test('start meetup-Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToStartMeetup(driver);
-    await startMeetupTest(driver, shouldTakeScreenshot: true);
+    await startMeetupTest(driver);
     await scrollToPanelController(driver);
   }, timeout: timeout120);
 
@@ -240,7 +240,7 @@ void main() async {
 
   test('register Tom (check status as Reputable)', () async {
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, ParticipantTypeTestHelper.reputable, shouldTakeScreenshot: true);
+    await registerAndWait(driver, ParticipantTypeTestHelper.reputable);
   }, timeout: timeout120);
 
   test('Unregister [Reputable] Tom', () async {
@@ -255,7 +255,7 @@ void main() async {
     await scrollToPanelController(driver);
     await changeAccountFromPanel(driver, 'Li');
     await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, ParticipantTypeTestHelper.endorsee, shouldTakeScreenshot: true);
+    await registerAndWait(driver, ParticipantTypeTestHelper.endorsee);
   }, timeout: timeout120);
 
   test('Unregister [Endorsee] Li', () async {
@@ -271,15 +271,15 @@ void main() async {
     await changeAccountFromPanel(driver, 'Tom');
     await goToProfileViewFromNavBar(driver);
     await accountDetailPage(driver, 'Tom');
-    await shareAccount(driver, 'Tom', shouldTakeScreenshot: true);
+    await shareAccount(driver, 'Tom');
   }, timeout: timeout120);
 
   test('account change name', () async {
-    await accountChangeName(driver, 'Jerry', shouldTakeScreenshot: true);
+    await accountChangeName(driver, 'Jerry');
   }, timeout: timeout120);
 
   test('account export', () async {
-    menemonic = await exportAccount(driver, '0001', shouldTakeScreenshot: true);
+    menemonic = await exportAccount(driver, '0001');
   }, timeout: timeout120);
 
   test('account delete from account manage page', () async {
@@ -289,7 +289,7 @@ void main() async {
   test('import account with menemonic phrase', () async {
     await goToHomeViewFromNavBar(driver);
     await goToAddAcoountViewFromPanel(driver);
-    await importAccount(driver, 'Bob', menemonic, shouldTakeScreenshot: true);
+    await importAccount(driver, 'Bob', menemonic);
   }, timeout: timeout120);
 
   test('change-language-from-profile-page', () async {

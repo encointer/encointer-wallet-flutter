@@ -31,15 +31,10 @@ Future<void> createNewbieAccount(FlutterDriver driver, String account) async {
   await driver.tap(find.byValueKey('create-account-confirm'));
 }
 
-Future<void> importAccount(
-  FlutterDriver driver,
-  String accountName,
-  String seedOrMnemonic, {
-  bool shouldTakeScreenshot = false,
-}) async {
+Future<void> importAccount(FlutterDriver driver, String accountName, String seedOrMnemonic) async {
   await driver.waitFor(find.byValueKey('import-account'));
   await driver.tap(find.byValueKey('import-account'));
-  if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.importAccount);
+  await driver.takeScreenshot(Screenshots.importAccount);
   await driver.waitFor(find.byValueKey('create-account-name'));
   await enterAccountName(driver, accountName);
   await enterAccountMnemonic(driver, seedOrMnemonic);
