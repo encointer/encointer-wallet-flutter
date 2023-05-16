@@ -16,7 +16,7 @@ class TransferHistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final transferHistoryStore = context.watch<TransferHistoryStore>();
+    final transferHistoryStore = context.watch<TransferHistoryViewStore>();
     final dic = I18n.of(context)!.translationsForLocale().home;
     return Scaffold(
       appBar: AppBar(title: Text(dic.transferHistory)),
@@ -31,7 +31,7 @@ class TransferHistoryView extends StatelessWidget {
             return ErrorView(
               onRetryPressed: () {
                 final appStore = context.read<AppStore>();
-                context.read<TransferHistoryStore>().getTransfers(appStore);
+                context.read<TransferHistoryViewStore>().getTransfers(appStore);
               },
             );
         }

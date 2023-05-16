@@ -194,7 +194,7 @@ class AppRoute {
       case TransferHistoryView.route:
         return CupertinoPageRoute(
           builder: (_) => Provider(
-            create: (context) => TransferHistoryStore(
+            create: (context) => TransferHistoryViewStore(
               RepositoryProvider.of<EwHttp>(context),
             )..getTransfers(context.read<AppStore>()),
             child: const TransferHistoryView(),
