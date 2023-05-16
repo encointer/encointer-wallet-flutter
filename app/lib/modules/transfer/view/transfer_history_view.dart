@@ -22,7 +22,6 @@ class TransferHistoryView extends StatelessWidget {
       appBar: AppBar(title: Text(dic.transferHistory)),
       body: Observer(builder: (_) {
         switch (transferHistoryStore.fetchStatus) {
-          case FetchStatus.initial:
           case FetchStatus.loading:
             return const CenteredActivityIndicator();
           case FetchStatus.success:

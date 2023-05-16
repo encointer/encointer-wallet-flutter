@@ -20,7 +20,7 @@ abstract class _TransferHistoryViewStoreBase with Store {
   List<Transaction>? transactions;
 
   @observable
-  FetchStatus fetchStatus = FetchStatus.initial;
+  FetchStatus fetchStatus = FetchStatus.loading;
 
   @action
   Future<void> getTransfers(AppStore appStore) async {
