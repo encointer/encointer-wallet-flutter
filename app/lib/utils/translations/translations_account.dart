@@ -244,7 +244,7 @@ class TranslationsFrAccount implements TranslationsAccount {
   @override
   String get welcome => 'Bienvenue';
   @override
-  String get pinError => 'Le code PIN est incorrect';
+  String get pinError => 'Le NIP est incorrect';
   @override
   String get signIn => 'Se connecter';
   @override
