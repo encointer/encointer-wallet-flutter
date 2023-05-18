@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -23,30 +25,22 @@ class ScanPageParams {
 }
 
 class ScanPage extends StatelessWidget {
-  ScanPage({super.key});
+  ScanPage({
+    required this.arguments,
+    super.key,
+  });
+
+  final ScanPageParams arguments;
 
   static const String route = '/account/scan';
 
   final QrScanService qrScanService = QrScanService();
 
-  Future<PermissionStatus> canOpenCamera() async {
-    // will do nothing if already granted
-    return Permission.camera.request();
-  }
-
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
+    // final params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
     final appSettingsStore = context.watch<AppSettings>();
-    void onScan(String data) {
-      try {
-        final qrCode = qrScanService.parse(data);
-        qrScanService.handleQrScan(context, params.scannerContext, qrCode);
-      } catch (e) {
-        RootSnackBar.showMsg(e.toString());
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +54,7 @@ class ScanPage extends StatelessWidget {
         ],
       ),
       body: FutureBuilder<PermissionStatus>(
-        future: canOpenCamera(),
+        future: _canOpenCamera(),
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
@@ -75,11 +69,12 @@ class ScanPage extends StatelessWidget {
                     if (barcode.rawValue == null) {
                       Log.d('Failed to scan Barcode', 'ScanPage');
                     } else {
-                      onScan(barcode.rawValue!);
+                      log('barcode.rawValue: ${barcode.rawValue}');
+                      _onScan(context, barcode.rawValue!);
                     }
                   },
                 ),
-                if (appSettingsStore.developerMode) mockQrDataRow(dic, onScan),
+                if (appSettingsStore.developerMode) mockQrDataRow(dic, (v) => _onScan(context, v)),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(
@@ -110,35 +105,82 @@ class ScanPage extends StatelessWidget {
       ),
     );
   }
+
+  Future<PermissionStatus> _canOpenCamera() async {
+    // will do nothing if already granted
+    return Permission.camera.request();
+  }
+
+  void _onScan(BuildContext context, String data) {
+    try {
+      final qrCode = qrScanService.parse(data);
+      qrScanService.handleQrScan(context, arguments.scannerContext, qrCode);
+    } catch (e) {
+      RootSnackBar.showMsg(e.toString());
+    }
+  }
 }
+
+/// Recieve no invoice
+// encointer-invoice
+// v1.0
+// GexcuH8GaJgztyDN3vbFKGaXVePzBUX78Cx29JApZ1gvxyg
+// u0qj944rhWE
+// Aza
+
+/// Recieve with invoice
+// encointer-invoice
+// v1.0
+// GexcuH8GaJgztyDN3vbFKGaXVePzBUX78Cx29JApZ1gvxyg
+// u0qj944rhWE
+// 5.0
+// Aza
+
+/// Contact
+// encointer-contact
+// v1.0
+// GexcuH8GaJgztyDN3vbFKGaXVePzBUX78Cx29JApZ1gvxyg
+// Aza
 
 /// Adds some buttons to activate the scanner with mock data.
 Widget mockQrDataRow(Translations dic, void Function(String) onScan) {
-  return Row(children: [
-    ElevatedButton(
-      child: Text(dic.profile.addContact),
-      onPressed: () => onScan(
-        'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\n\n\nSara',
+  return Wrap(
+    children: [
+      ElevatedButton(
+        key: const Key('profile-to-scan'),
+        child: Text(dic.profile.addContact),
+        onPressed: () => onScan(
+          'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\n\n\nSara',
+        ),
       ),
-    ),
-    ElevatedButton(
-      child: Text(dic.assets.invoice),
-      onPressed: () => onScan(
-        'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX'
-        '\nsqm1v79dF6b\n0.2343\nAubrey',
+      ElevatedButton(
+        key: const Key('invoice-with-amount-to-scan'),
+        child: Text(dic.assets.invoice),
+        onPressed: () => onScan(
+          'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX'
+          '\nsqm1v79dF6b\n0.2343\nAubrey',
+        ),
       ),
-    ),
-    ElevatedButton(
-      child: const Text('voucher'),
-      // There is a unit test in `js_encointer_service/test/service/encointer.test
-      // that deposits some funds to this voucher on the local dev-network.
-      onPressed: () => onScan(
-        'encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b'
-        '\nnctr-gsl-dev\nAubrey',
+      ElevatedButton(
+        key: const Key('invoice-with-no-amount-to-scan'),
+        child: Text(dic.assets.noInvoice),
+        onPressed: () => onScan(
+          'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\nAubrey',
+        ),
       ),
-    ),
-    const Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
-  ]);
+      ElevatedButton(
+        key: const Key('voucher-to-scan'),
+        child: const Text('voucher'),
+        // There is a unit test in `js_encointer_service/test/service/encointer.test
+        // that deposits some funds to this voucher on the local dev-network.
+        onPressed: () => onScan(
+          'encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b'
+          '\nnctr-gsl-dev\nAubrey',
+        ),
+      ),
+      const Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
+    ],
+  );
 }
 
 Widget permissionErrorDialog(BuildContext context) {

@@ -172,6 +172,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                     const SizedBox(height: 24),
                     IconButton(
+                      key: const Key('transfer_send'),
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
                       onPressed: () async {

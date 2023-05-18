@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
@@ -17,6 +19,7 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
 
   factory InvoiceQrCode.fromQrFields(List<String> fields) {
     if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
+      log('fields.sublist(2) ${fields.sublist(2)}');
       return InvoiceQrCode.withData(InvoiceData.fromQrFieldsV1(fields.sublist(2)));
     } else {
       return InvoiceQrCode.withData(
@@ -57,13 +60,31 @@ class InvoiceData implements ToQrFields {
     required this.label,
   });
 
+  // 0 hash
+  // 1 second hash
+  // 2 name
+
   factory InvoiceData.fromQrFieldsV1(List<String> fields) {
-    return InvoiceData(
-      account: fields[0],
-      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
-      amount: fields[2].trim().isNotEmpty ? double.parse(fields[2]) : null,
-      label: fields[3],
-    );
+    /// invoice with no amount
+    if (fields.length == 3) {
+      return InvoiceData(
+        account: fields[0],
+        cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+        label: fields[2],
+      );
+    }
+
+    /// invoice with amount to send
+    else {
+      return InvoiceData(
+        account: fields[0],
+        cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+
+        /// fixed bug: if no amount is set in invoice, it works well
+        amount: fields[2].trim().isNotEmpty ? double.tryParse(fields[2]) : null,
+        label: fields[3],
+      );
+    }
   }
 
   factory InvoiceData.fromQrFieldsV2(List<String> fields) {

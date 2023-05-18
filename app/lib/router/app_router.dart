@@ -39,6 +39,7 @@ class AppRoute {
   // it is preferable to use Navigator.pushNamed (rather than Navigator.push) for large projects
   // cf. CupertinoPageRoute documentation -> fullscreenDialog: true, (in this case the page slides in from the bottom)
   static Route<void> onGenerateRoute(RouteSettings settings) {
+    final arguments = settings.arguments;
     switch (settings.name) {
       case SplashView.route:
         return CupertinoPageRoute(
@@ -77,7 +78,9 @@ class AppRoute {
         );
       case ScanPage.route:
         return CupertinoPageRoute(
-          builder: (_) => ScanPage(),
+          builder: (_) => ScanPage(
+            arguments: arguments! as ScanPageParams,
+          ),
           settings: settings,
         );
       case TransferPage.route:

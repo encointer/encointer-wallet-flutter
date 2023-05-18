@@ -143,7 +143,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         children: [
           Assets(store),
           if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
-          ScanPage(),
+
+          /// empty widget here because when qr code is clicked, we navigate to [ScanPage]
+          const SizedBox(),
           const ContactsPage(),
           const Profile(),
         ],
