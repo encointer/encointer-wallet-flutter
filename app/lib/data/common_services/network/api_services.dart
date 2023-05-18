@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:encointer_wallet/data/common_services/models/network/api_response.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 
 const _logTarget = 'api_services';
 
@@ -61,9 +60,9 @@ class ApiServices {
   }
 
   Future<ApiResponse> _executeQuery(
-    Future<Response> Function(http.Client client) function,
+    Future<http.Response> Function(http.Client client) function,
   ) async {
-    late final Response response;
+    late final http.Response response;
     response = await _clientCompleter.future.then(function);
     return _returnResponse(response);
   }

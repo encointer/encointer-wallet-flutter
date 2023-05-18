@@ -48,6 +48,7 @@ abstract class TranslationsHome {
   String get appSettings;
   String get transferHistory;
   String get noTransactions;
+  String get error;
   String get unknownError;
   String get openMapApplication;
   String get unregister;
@@ -58,6 +59,7 @@ abstract class TranslationsHome {
   String get somethingWentWrong;
   String get noAnnouncementFound;
   String get announcements;
+  String get retry;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -158,7 +160,9 @@ class TranslationsEnHome implements TranslationsHome {
   @override
   String get transferHistory => 'Transactions';
   @override
-  String get unknownError => 'Unknown Error';
+  String get error => 'Error';
+  @override
+  String get unknownError => 'An error occurred. Please check your internet connection and try again.';
   @override
   String get openMapApplication => 'Open Map Application';
   @override
@@ -180,6 +184,8 @@ class TranslationsEnHome implements TranslationsHome {
   String get noAnnouncementFound => 'No Announcement found!';
   @override
   String get announcements => 'Announcements:';
+  @override
+  String get retry => 'Retry';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -280,7 +286,10 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get transferHistory => 'Transaktionen';
   @override
-  String get unknownError => 'Unbekannter Fehler';
+  String get error => 'Fehler';
+  @override
+  String get unknownError =>
+      'Es ist ein Fehler aufgetreten. Bitte überprüfe deine Internetverbindung und versuche es erneut.';
   @override
   String get openMapApplication => 'In Karte öffnen';
   @override
@@ -302,6 +311,8 @@ class TranslationsDeHome implements TranslationsHome {
   String get noAnnouncementFound => 'Keine Ankündigung gefunden!';
   @override
   String get announcements => 'Ankündigungen:';
+  @override
+  String get retry => 'Wiederholen';
 }
 
 class TranslationsFrHome implements TranslationsHome {
@@ -403,7 +414,9 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get transferHistory => 'Transactions';
   @override
-  String get unknownError => 'Erreur inconnue';
+  String get error => 'Erreur';
+  @override
+  String get unknownError => 'Une erreur est survenue. Vérifie ta connexion Internet et réessaye.';
   @override
   String get openMapApplication => "Ouvrer l'application de carte";
   @override
@@ -425,6 +438,8 @@ class TranslationsFrHome implements TranslationsHome {
   String get noAnnouncementFound => 'Aucune annonce trouvée!';
   @override
   String get announcements => 'Annonces:';
+  @override
+  String get retry => 'Réessayer';
 }
 
 class TranslationsRuHome implements TranslationsHome {
@@ -526,7 +541,10 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   String get transferHistory => 'Транзакции';
   @override
-  String get unknownError => 'Неизвестная ошибка';
+  String get error => 'Ошибка';
+  @override
+  String get unknownError =>
+      'Извините, произошла ошибка. Пожалуйста, проверьте свое интернет-соединение и попробуйте еще раз.';
   @override
   String get openMapApplication => 'Открыть приложение Карты';
   @override
@@ -548,4 +566,6 @@ class TranslationsRuHome implements TranslationsHome {
   String get noAnnouncementFound => 'Объявление не найдено!';
   @override
   String get announcements => 'Объявления:';
+  @override
+  String get retry => 'Повторить';
 }
