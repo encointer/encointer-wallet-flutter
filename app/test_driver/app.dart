@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ew_storage/ew_storage.dart';
+import 'package:ew_http/ew_http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
@@ -64,17 +66,22 @@ void main() async {
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
   runApp(
-    MultiProvider(
+    MultiRepositoryProvider(
       providers: [
-        Provider<AppSettings>(
-          create: (context) => AppSettings(localService)..init(),
-        ),
-        Provider<AppStore>(
-          // On test mode instead of LocalStorage() must be use MockLocalStorage()
-          create: (context) => globalAppStore,
-        )
+        RepositoryProvider(create: (context) => EwHttp()),
       ],
-      child: const WalletApp(),
+      child: MultiProvider(
+        providers: [
+          Provider<AppSettings>(
+            create: (context) => AppSettings(localService)..init(),
+          ),
+          Provider<AppStore>(
+            // On test mode instead of LocalStorage() must be use MockLocalStorage()
+            create: (context) => globalAppStore,
+          )
+        ],
+        child: const WalletApp(),
+      ),
     ),
   );
 }
