@@ -115,6 +115,11 @@ scripts:
   build-apk-fdroid:
     run: cd app && flutter build apk --flavor fdroid
     description: "Build an APK file"
+ 
+  # Build apk for androids splitted per Application Binary Interface (abi)
+  build-apk-split:
+    run: cd app && flutter build apk --split-per-abi --flavor dev
+    description: "Build an APK file"
 
   build-appbundle:
     run: cd app && flutter build appbundle

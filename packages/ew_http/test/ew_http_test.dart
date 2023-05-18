@@ -37,7 +37,7 @@ void main() {
       final value = await ewHttp.getTypeList<TestModel>(getListUrl, fromJson: TestModel.fromJson);
       expect(value, isNotNull);
       expect(value, isList);
-      expect(value[0], isA<TestModel>());
+      expect(value?[0], isA<TestModel>());
     });
   });
 }
