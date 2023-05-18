@@ -43,16 +43,18 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-class Assets extends StatefulWidget {
-  const Assets(this.store, {super.key});
+/// Getting confused with Assets (gen) while importing
+/// thus changed name to [AssetsView]
+class AssetsView extends StatefulWidget {
+  const AssetsView(this.store, {super.key});
 
   final AppStore store;
 
   @override
-  State<Assets> createState() => _AssetsState();
+  State<AssetsView> createState() => _AssetsViewState();
 }
 
-class _AssetsState extends State<Assets> {
+class _AssetsViewState extends State<AssetsView> {
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
