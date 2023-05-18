@@ -24,7 +24,7 @@ class _LangPageState extends State<LangPage> {
         itemCount: settings.locales.length,
         itemBuilder: (BuildContext context, int index) {
           final locale = settings.locales[index];
-          final lang = settings.getName(locale.languageCode);
+          final lang = settings.getLocaleName(locale.languageCode);
           return RadioListTile(
             key: Key('locale-${locale.languageCode}'),
             title: Text(lang),

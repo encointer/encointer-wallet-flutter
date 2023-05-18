@@ -55,7 +55,7 @@ abstract class _AppSettingsBase with Store {
     await _service.setIsBiometricAuthenticationEnabled(value);
   }
 
-  String getName(String code) => _service.getName(code);
+  String getLocaleName(String code) => _service.getLocaleName(code);
 
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;

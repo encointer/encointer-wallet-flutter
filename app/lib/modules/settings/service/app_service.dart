@@ -36,7 +36,7 @@ class AppService {
 
   bool? getIsBiometricAuthenticationEnabled() => storage.getBool(enableBiometricAuthKey);
 
-  String getName(String code) {
+  String getLocaleName(String code) {
     switch (code) {
       case 'en':
         return 'English';
