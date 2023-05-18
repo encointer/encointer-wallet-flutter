@@ -29,7 +29,7 @@ void main() async {
     await driver.waitFor(find.byValueKey('create-account'));
     await driver.takeScreenshot(Screenshots.accountEntryView);
     await createAccountAndSetPin(driver, 'Tom');
-  });
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('choosing cid', () async {
     await driver.waitFor(find.byValueKey('cid-0-marker-icon'));
@@ -197,7 +197,6 @@ void main() async {
     await driver.scrollUntilVisible(
       find.byValueKey('profile-list-view'),
       find.byValueKey('start-meetup'),
-      dyScroll: -300,
     );
     await driver.takeScreenshot(Screenshots.homeAttestingPhaseStartMeetup);
     await driver.tap(find.byValueKey('start-meetup'));

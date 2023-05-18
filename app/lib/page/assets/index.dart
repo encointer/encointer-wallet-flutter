@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
+import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -165,6 +167,7 @@ class _AssetsState extends State<Assets> {
               child: RefreshIndicator(
                 onRefresh: _refreshEncointerState,
                 child: ListView(
+                  key: const Key('list-view-wallet'),
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
@@ -323,6 +326,13 @@ class _AssetsState extends State<Assets> {
                     const SizedBox(height: 24),
                     CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                     const SizedBox(height: 24),
+                    if (appSettingsStore.developerMode)
+                      Provider(
+                        create: (context) => AnnouncementStore()
+                          ..getAnnouncementGlobal()
+                          ..getAnnouncementCommunnity(widget.store.encointer.community?.cid.toFmtString()),
+                        child: const AnnouncementView(),
+                      ),
                   ],
                 ),
               ),
@@ -332,7 +342,6 @@ class _AssetsState extends State<Assets> {
               context: context,
               removeTop: true,
               child: ListView(
-                key: const Key('list-view-wallet'),
                 controller: scrollController,
                 children: <Widget>[
                   const SizedBox(height: 12),
