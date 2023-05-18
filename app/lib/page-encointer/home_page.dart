@@ -1,9 +1,11 @@
+import 'package:ew_http/ew_http.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
@@ -42,6 +44,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         NotificationPlugin.scheduleNotification,
         langCode: Localizations.localeOf(context).languageCode,
         cid: cid,
+        ewHttp: RepositoryProvider.of<EwHttp>(context),
       );
 
       // Should never be null, we either come from the splash screen, and hence we had

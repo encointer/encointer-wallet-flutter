@@ -15,7 +15,7 @@ import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.d
 /// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
 class MockEncointerApi extends EncointerApi {
-  MockEncointerApi(super.store, MockJSApi super.js, MockSubstrateDartApi super.dartApi);
+  MockEncointerApi(super.store, MockJSApi super.js, MockSubstrateDartApi super.dartApi, super.ewHttp);
 
   @override
   Future<void> startSubscriptions() async {

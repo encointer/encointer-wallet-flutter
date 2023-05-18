@@ -1,8 +1,10 @@
 import 'package:collection/collection.dart';
+import 'package:ew_http/ew_http.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import 'package:encointer_wallet/service/meetup/feed_repo.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/meetup/feed_model.dart';
 
 class NotificationHandler {
   static Future<void> fetchMessagesAndScheduleNotifications(
@@ -10,8 +12,12 @@ class NotificationHandler {
     ScheduleNotification scheduleNotification, {
     required String langCode,
     String? cid,
+    required EwHttp ewHttp,
   }) async {
-    final feeds = await FeedRepo().fetchData(langCode);
+    final feeds = await ewHttp.getTypeList(
+      replaceLocalePlaceholder(meetupNotificationLink, langCode),
+      fromJson: Feed.fromJson,
+    );
     if (feeds != null && feeds.isNotEmpty) {
       feeds.forEachIndexed((i, e) async {
         if (tz.TZDateTime.from(feeds[i].showAt, local).isAfter(DateTime.now())) {

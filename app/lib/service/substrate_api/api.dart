@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:ew_http/ew_http.dart';
+
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/mocks/ipfs/ipfs_api.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrate_api/account_api.dart';
 import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
 import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
@@ -11,7 +14,6 @@ import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/service/substrate_api/types/gen_external_links_params.dart';
-import 'package:encointer_wallet/store/app.dart';
 
 /// Global api instance
 ///
@@ -19,7 +21,7 @@ import 'package:encointer_wallet/store/app.dart';
 late Api webApi;
 
 class Api {
-  Api(
+  const Api(
     this.store,
     this.js,
     this.dartApi,
@@ -35,9 +37,11 @@ class Api {
     AppStore store,
     JSApi js,
     SubstrateDartApi dartApi,
-    String jsServiceEncointer,
-    IpfsApi ipfsApi,
-  ) {
+    EwHttp ewHttp,
+    String jsServiceEncointer, {
+    bool isIntegrationTest = false,
+    String gateway = '',
+  }) {
     return Api(
       store,
       js,
@@ -45,8 +49,8 @@ class Api {
       AccountApi(store, js),
       AssetsApi(store, js),
       ChainApi(store, js),
-      EncointerApi(store, js, dartApi),
-      ipfsApi,
+      EncointerApi(store, js, dartApi, ewHttp),
+      isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: gateway),
       jsServiceEncointer,
     );
   }
@@ -61,8 +65,6 @@ class Api {
   final ChainApi chain;
   final EncointerApi encointer;
   final IpfsApi ipfsApi;
-
-  SubScanApi subScanApi = SubScanApi();
 
   Future<void> init() async {
     await Future.wait([
