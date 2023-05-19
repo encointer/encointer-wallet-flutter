@@ -2,5 +2,5 @@
     "dart.flutterSdkPath": ".flutter",
     "dart.lineLength": 120,
     "git.ignoreLimitWarning": true,
-    "explorer.autoReveal": true,
+    "explorer.autoReveal": false,  
 }
