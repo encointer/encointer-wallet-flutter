@@ -443,7 +443,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   String get faqLong => 'Häufig gestellte Fragen';
   @override
-  String get backUpAndRestoreYourAccount => 'Sichern und Wiederherstellen Ihres Kontos';
+  String get backUpAndRestoreYourAccount => 'Sichern und Wiederherstellen deines Kontos';
   @override
   String get ceremonyInstructions => 'Anweisungen für die Zeremonie';
   @override
