@@ -3,77 +3,51 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
-import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
-
+import '../helpers/command/real_app_command.dart';
 import '../helpers/extension/screenshot_driver_extension.dart';
 import '../helpers/real_app_helper.dart';
 import '../helpers/screenshots.dart';
 import '../helpers/add_delay.dart';
+import '../helpers/other_test.dart';
 
 void main() {
   late FlutterDriver driver;
 
   group('EncointerWallet Dev QR Code testing', () {
     setUpAll(() async {
-      driver = await FlutterDriver.connect()
-        ..shouldTakeScreenshot = true;
-      // waits until the firs frame after ft startup stabilized
+      driver = await FlutterDriver.connect();
+      final val = await driver.requestData(RealAppTestCommand.shouldTakeScreenshot);
+      driver.shouldTakeScreenshot = val == 'true';
       await driver.waitUntilFirstFrameRasterized();
-
-      var ready = await driver.requestData(TestCommands.waitUntilAppIsReady);
-      while (ready == false.toString()) {
-        print('Waiting for app to be ready: $ready');
-        await Future<void>.delayed(const Duration(seconds: 1));
-        ready = await driver.requestData(TestCommands.waitUntilAppIsReady);
-        log('app is ready ready $ready');
-      }
-
-      await driver.requestData(TestCommands.init);
     });
 
-    test('importing account', () async {
-      await driver.tap(find.byValueKey('import-account'));
-
-      // put focus on text field
-      await driver.tap(find.byValueKey('account-source'));
-      await driver.enterText(endoEncointer['mnemonic'] as String);
-
-      await driver.tap(find.byValueKey('create-account-name'));
-      await driver.enterText(endoEncointer['name'] as String);
-
-      await driver.tap(find.byValueKey('account-import-next'));
-
-      await driver.tap(find.byValueKey('create-account-pin'));
-      await driver.enterText(defaultPin);
-
-      await driver.tap(find.byValueKey('create-account-pin2'));
-      await driver.enterText(defaultPin);
-
-      await driver.tap(find.byValueKey('create-account-confirm'));
+    test('create account by name Tom', () async {
+      await driver.takeScreenshot(Screenshots.splashView);
+      await driver.waitFor(find.byValueKey('create-account'));
+      await driver.takeScreenshot(Screenshots.accountEntryView);
+      await createAccountAndSetPin(driver, 'Tom');
     });
 
-    // Note: The second test continues where the first one ended
     test('choosing cid', () async {
+      await driver.waitFor(find.byValueKey('cid-0-marker-icon'));
       await driver.tap(find.byValueKey('cid-0-marker-icon'));
+      await driver.waitFor(find.byValueKey('cid-0-marker-description'));
+      await driver.takeScreenshot(Screenshots.chooseCommunityMap);
       await driver.tap(find.byValueKey('cid-0-marker-description'));
-    }, timeout: const Timeout(Duration(seconds: 120))); // needed for android CI with github actions
+    }, timeout: const Timeout(Duration(seconds: 120)));
 
-    test('print-screen of homepage', () async {
-      // Here we get the metadata because it is reset to null in
-      // the setChosenCid() method which is called, when a community is chosen
-      await driver.requestData(TestCommands.homePage);
+    test('home-page', () async {
+      await refreshWalletPage(driver);
 
-      await dismissUpgradeDialogOnAndroid(driver!);
-
-      // take a screenshot of the EncointerHome Screen
-      await driver.takeScreenshot('mock-encointer-home');
+      await dismissUpgradeDialogOnAndroid(driver);
+      await driver.takeScreenshot(Screenshots.homeWithRegisterButton);
+      await addDelay(1000);
     });
 
     test('turn on dev-mode', () async {
       await driver.tap(find.byValueKey('profile'));
       await driver.takeScreenshot(Screenshots.profileView);
-      await turnDevMode(driver);
+      await turnDevModeToTestQrScan(driver);
       await addDelay(1000);
     });
 
@@ -83,7 +57,6 @@ void main() {
       await driver.tap(find.text('Tom'));
 
       await driver.waitFor(find.byValueKey('profile-list-view'));
-      await driver.tap(find.byValueKey('dev-mode'));
       await driver.tap(find.byValueKey('wallet'));
       await addDelay(1000);
     }, timeout: const Timeout(Duration(seconds: 90)));
@@ -107,54 +80,75 @@ void main() {
         await addDelay(1000);
       });
     });
-    test('open and test qr code from home', () async {
-      await driver.tap(find.byValueKey('qr_scan'));
-      await driver.tap(find.byValueKey('profile-to-scan'));
-    });
 
-    test('show receive qr code', () async {
-      await driver.tap(find.byValueKey('qr-receive'));
-      await driver.takeScreenshot('mock-receive-funds');
+    test('import account Alice', () async {
+      await importAccount(driver, 'Alice', '//Alice');
+    }, timeout: const Timeout(Duration(seconds: 60)));
 
-      // go back to homepage
-      await driver.tap(find.byValueKey('close-receive-page'));
-    });
+    test('qr code from HomePage: test and save the contact from qr', () async {
+      // scan
+      await driver.waitFor(find.byValueKey('bottom-nav'));
+      await driver.tap(find.byValueKey('scan'));
+      await saveContactFromQrContact(driver);
+    }, timeout: const Timeout(Duration(seconds: 60)));
 
-    //   test('transfer-page', () async {
-    //     // go to transfer page
-    //     // await driver.tap(find.byValueKey('cid-asset'));
+    test('qr code from HomePage: test and send money with amount from qr', () async {
+      // scan
+      await driver.waitFor(find.byValueKey('bottom-nav'));
+      await driver.tap(find.byValueKey('scan'));
+      await sendFromQrWithAmount(driver);
+    }, timeout: const Timeout(Duration(seconds: 60)));
 
-    //     print('---find transfer');
-    //     await driver.tap(find.byValueKey('transfer'));
+    test('qr code from HomePage: test and send money without amount from qr', () async {
+      // scan
+      await driver.waitFor(find.byValueKey('bottom-nav'));
+      await driver.tap(find.byValueKey('scan'));
+      await sendFromQrWithoutAmount(driver);
+    }, timeout: const Timeout(Duration(seconds: 60)));
+  });
 
-    //     print('---find transfer-amount-input');
-    //     await driver.tap(find.byValueKey('transfer-amount-input'));
+  test('qr code from SendPage: test and send money with amount from qr', () async {
+    // scan
+    await driver.tap(find.byValueKey('transfer'));
+    await driver.waitFor(find.byValueKey('transfer-listview'));
+    await driver.tap(find.byValueKey('transfer_send'));
+    await sendFromQrWithAmount(driver);
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
-    //     print('---enter 3.4');
-    //     await driver.enterText('3.4');
+  test('qr code from SendPage: test and send money without amount from qr', () async {
+    // scan
+    await driver.tap(find.byValueKey('transfer'));
+    await driver.waitFor(find.byValueKey('transfer-listview'));
+    await driver.tap(find.byValueKey('transfer_send'));
+    await sendFromQrWithoutAmount(driver);
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
-    //     print('---screenshot transfer-page');
-    //     await driver.takeScreenshot('mock-transfer-page');
+  test('qr code from ContactPage: add contact from contact-qr', () async {
+    await driver.tap(find.byValueKey('contacts'));
+    await driver.takeScreenshot(Screenshots.contactsOverviewEmpty);
+    await driver.tap(find.byValueKey('add-contact'));
+    await driver.tap(find.byValueKey('scan-barcode'));
+    await saveContactFromQrContact(driver, true);
+    await driver.tap(find.byValueKey('back-to-contacts-page'));
+    await addDelay(1000);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-    //     // go back to homepage
+  test('qr code from ContactPage: add contact from invoice-qr', () async {
+    await driver.tap(find.byValueKey('contacts'));
+    await driver.takeScreenshot(Screenshots.contactsOverviewEmpty);
+    await driver.tap(find.byValueKey('add-contact'));
+    await driver.tap(find.byValueKey('scan-barcode'));
+    await saveContactFromQrInvoice(driver);
+    await driver.tap(find.byValueKey('back-to-contacts-page'));
+    await addDelay(1000);
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
-    //     print('---close-transfer-page');
-    //     await driver.tap(find.byValueKey('close-transfer-page'));
-    //   });
-
-    //   test('meetupPage', () async {
-    //     // attesting phase
-    //     await driver.requestData(TestCommands.readyForMeetup);
-
-    //     log('tapping startMeetup');
-    //     await driver.takeScreenshot('mock-debug-meetup-start');
-
-    //     await driver.tap(find.byValueKey('start-meetup'));
-    //     await driver.tap(find.byValueKey('attendees-count'));
-    //     await driver.enterText('3');
-    //     await driver.tap(find.byValueKey('ceremony-step-1-next'));
-    //     await driver.takeScreenshot('mock-claim-qr');
-    //   });
+  test('delete all account ad show create account page', () async {
+    await driver.waitFor(find.byValueKey('bottom-nav'));
+    await driver.tap(find.byValueKey('profile'));
+    await driver.waitFor(find.byValueKey('remove-all-accounts'));
+    await rmAllAccountsFromProfilePage(driver);
+    await addDelay(2000);
   });
 
   tearDownAll(() async {

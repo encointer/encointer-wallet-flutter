@@ -121,30 +121,10 @@ class ScanPage extends StatelessWidget {
   }
 }
 
-/// Recieve no invoice
-// encointer-invoice
-// v1.0
-// GexcuH8GaJgztyDN3vbFKGaXVePzBUX78Cx29JApZ1gvxyg
-// u0qj944rhWE
-// Aza
-
-/// Recieve with invoice
-// encointer-invoice
-// v1.0
-// GexcuH8GaJgztyDN3vbFKGaXVePzBUX78Cx29JApZ1gvxyg
-// u0qj944rhWE
-// 5.0
-// Aza
-
-/// Contact
-// encointer-contact
-// v1.0
-// GexcuH8GaJgztyDN3vbFKGaXVePzBUX78Cx29JApZ1gvxyg
-// Aza
-
 /// Adds some buttons to activate the scanner with mock data.
 Widget mockQrDataRow(Translations dic, void Function(String) onScan) {
   return Wrap(
+    key: const Key('mock-qr-data-row'),
     children: [
       ElevatedButton(
         key: const Key('profile-to-scan'),
@@ -154,11 +134,10 @@ Widget mockQrDataRow(Translations dic, void Function(String) onScan) {
         ),
       ),
       ElevatedButton(
-        key: const Key('invoice-with-amount-to-scan'),
-        child: Text(dic.assets.invoice),
+        key: const Key('contact-to-save-to-address'),
+        child: Text(dic.profile.addToContactFromQrContact),
         onPressed: () => onScan(
-          'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX'
-          '\nsqm1v79dF6b\n0.2343\nAubrey',
+          'encointer-contact\nv1.0\nGexcuH8GaJgztyDN3vbFKGaXVePzBUX78Cx29JApZ1gvxyg\n\n\nAza',
         ),
       ),
       ElevatedButton(

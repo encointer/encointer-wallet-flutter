@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:encointer_wallet/mocks/views/mock_dev_mode_qr_scan_page.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -74,8 +78,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
         .map(
-          (i) => BottomNavigationBarItem(
-            icon: _tabList[activeItem] == i
+          (tabData) => BottomNavigationBarItem(
+            icon: _tabList[activeItem] == tabData
                 ? ShaderMask(
                     blendMode: BlendMode.srcIn,
                     shaderCallback: (bounds) => primaryGradient.createShader(
@@ -83,8 +87,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                     ),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Icon(
-                        i.iconData,
-                        key: Key(i.key.name),
+                        tabData.iconData,
+                        key: Key(tabData.key.name),
                       ),
                       Container(
                         height: 4,
@@ -98,9 +102,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                     ]),
                   )
                 : Icon(
-                    i.iconData,
-                    key: Key(i.key.name),
-                    color: i.key == TabKey.scan ? zurichLion.shade900 : encointerGrey,
+                    tabData.iconData,
+                    key: Key(tabData.key.name),
+                    color: tabData.key == TabKey.scan ? zurichLion.shade900 : encointerGrey,
                   ),
             label: '',
           ),
@@ -111,6 +115,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<AppStore>();
+    final appSettingsStore = context.watch<AppSettings>();
     _tabList = <TabData>[
       TabData(
         TabKey.wallet,
@@ -151,15 +156,29 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        key: const Key('bottom-nav'),
         currentIndex: _tabIndex,
         iconSize: 22,
         onTap: (index) async {
           if (_tabList[index].key == TabKey.scan) {
-            // Push `ScanPage.Route`instead of changing the Page.
-            await Navigator.of(context).pushNamed(
-              ScanPage.route,
-              arguments: ScanPageParams(scannerContext: QrScannerContext.mainPage),
-            );
+            if (appSettingsStore.developerMode) {
+              /// if integration test: To test devmode QR scanning
+              await Navigator.push(
+                context,
+                // ignore: inference_failure_on_instance_creation
+                MaterialPageRoute(
+                  builder: (context) => MockDevModeQrScanPage(
+                    arguments: MockDevModeQrScanPageParams(scannerContext: QrScannerContext.mainPage),
+                  ),
+                ),
+              );
+            } else {
+              // Push `ScanPage.Route`instead of changing the Page.
+              await Navigator.of(context).pushNamed(
+                ScanPage.route,
+                arguments: ScanPageParams(scannerContext: QrScannerContext.mainPage),
+              );
+            }
           } else {
             setState(() {
               _tabIndex = index;

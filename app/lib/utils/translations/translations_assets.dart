@@ -54,6 +54,7 @@ abstract class TranslationsAssets {
   String get invalidCommunity;
   String get chosenRightCommunity;
   String get noInvoice;
+  String get addInvoiceQrToAddress;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -166,6 +167,8 @@ class TranslationsEnAssets implements TranslationsAssets {
       'The data is for a different community. Please change the community to send funds.';
   @override
   String get noInvoice => 'No invoice';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -278,6 +281,8 @@ class TranslationsDeAssets implements TranslationsAssets {
       'Die Daten sind für eine andere Community. Bitte wechsle die Community um Geld zu senden.';
   @override
   String get noInvoice => 'Ohne Rechnung';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
 }
 
 class TranslationsFrAssets implements TranslationsAssets {
@@ -391,6 +396,8 @@ class TranslationsFrAssets implements TranslationsAssets {
       "Les données sont destinées à une autre communauté. S'il te plaît, change la communauté pour envoyer le payment.";
   @override
   String get noInvoice => 'Sans facture';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
 }
 
 class TranslationsRuAssets implements TranslationsAssets {
@@ -503,4 +510,6 @@ class TranslationsRuAssets implements TranslationsAssets {
       'Данные относятся к другому сообществу. Пожалуйста, измените сообщество, чтобы отправить средства.';
   @override
   String get noInvoice => 'Без счета-фактуры';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
 }

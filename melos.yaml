@@ -150,8 +150,12 @@ scripts:
     description: "Run integration test for QR scan on Android"
 
   integration-scan-test-ios:
-    run: cd app && flutter drive -d 8030038C-A72F-4675-948A-67CC14D3642F --target=test_driver/scan_page.dart
+    run: cd app && flutter drive --target=test_driver/scan_page.dart
     description: "Run integration test for QR scan on iOS"
+
+  integration-dev-mode-qr-scan-test-ios:
+    run: cd app && flutter drive --target=test_driver/dev_qr_codes/dev_qr_codes_page.dart
+    description: "Run integration tests for the `dev_qr_codes/dev_qr_codes_page.dart` file on IOS"
 
   flutter-config-no-analytics:
     run: cd app && flutter config --no-analytics

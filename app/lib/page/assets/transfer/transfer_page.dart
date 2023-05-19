@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/mocks/views/mock_dev_mode_qr_scan_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -115,6 +116,7 @@ class _TransferPageState extends State<TransferPage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
+    final appSettinsStore = context.watch<AppSettings>();
     final textTheme = Theme.of(context).textTheme;
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
     Log.d('[transferPage]: available: $available', 'TransferPage');
@@ -176,16 +178,36 @@ class _TransferPageState extends State<TransferPage> {
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
                       onPressed: () async {
-                        final invoiceData = await Navigator.of(context).pushNamed(
-                          ScanPage.route,
-                          arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
-                        );
-                        if (invoiceData != null && invoiceData is InvoiceData) {
-                          await handleTransferPageParams(
-                            TransferPageParams.fromInvoiceData(invoiceData),
-                            store,
+                        if (appSettinsStore.developerMode) {
+                          final invoiceData = await Navigator.push(
+                            context,
+                            // ignore: inference_failure_on_instance_creation
+                            MaterialPageRoute(
+                              builder: (context) => MockDevModeQrScanPage(
+                                arguments: MockDevModeQrScanPageParams(scannerContext: QrScannerContext.transferPage),
+                              ),
+                            ),
                           );
-                          setState(() {});
+
+                          if (invoiceData != null && invoiceData is InvoiceData) {
+                            await handleTransferPageParams(
+                              TransferPageParams.fromInvoiceData(invoiceData),
+                              store,
+                            );
+                            setState(() {});
+                          }
+                        } else {
+                          final invoiceData = await Navigator.of(context).pushNamed(
+                            ScanPage.route,
+                            arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
+                          );
+                          if (invoiceData != null && invoiceData is InvoiceData) {
+                            await handleTransferPageParams(
+                              TransferPageParams.fromInvoiceData(invoiceData),
+                              store,
+                            );
+                            setState(() {});
+                          }
                         }
                       },
                     ),

@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/mocks/views/mock_dev_mode_qr_scan_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -102,6 +103,7 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
+    final appSettinsStore = context.read<AppSettings>();
     final qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
     final dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
@@ -122,6 +124,14 @@ class _Contact extends State<ContactPage> {
                 child: ListView(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
                   children: <Widget>[
+                    /// Needed for the integration testing QR devmode scanning
+                    if (appSettinsStore.developerMode) ...[
+                      IconButton(
+                        key: const Key('back-to-contacts-page'),
+                        icon: const Icon(Icons.arrow_back_ios, size: 28),
+                        onPressed: () => Navigator.of(context).pop(),
+                      )
+                    ],
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
@@ -196,10 +206,25 @@ class _Contact extends State<ContactPage> {
                       ),
                     const SizedBox(height: 24),
                     IconButton(
+                      key: const Key('scan-barcode'),
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
-                      onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
-                          arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage)),
+                      onPressed: () async {
+                        if (appSettinsStore.developerMode) {
+                          await Navigator.push(
+                            context,
+                            // ignore: inference_failure_on_instance_creation
+                            MaterialPageRoute(
+                              builder: (context) => MockDevModeQrScanPage(
+                                arguments: MockDevModeQrScanPageParams(scannerContext: QrScannerContext.contactsPage),
+                              ),
+                            ),
+                          );
+                        } else {
+                          await Navigator.of(context).popAndPushNamed(ScanPage.route,
+                              arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage));
+                        }
+                      },
                     ),
                     const SizedBox(height: 24),
                   ],

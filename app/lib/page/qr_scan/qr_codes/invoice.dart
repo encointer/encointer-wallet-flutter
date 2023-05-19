@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
@@ -19,7 +17,6 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
 
   factory InvoiceQrCode.fromQrFields(List<String> fields) {
     if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
-      log('fields.sublist(2) ${fields.sublist(2)}');
       return InvoiceQrCode.withData(InvoiceData.fromQrFieldsV1(fields.sublist(2)));
     } else {
       return InvoiceQrCode.withData(
