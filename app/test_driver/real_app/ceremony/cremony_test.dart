@@ -19,5 +19,5 @@ Future<void> startMeetupTest(FlutterDriver driver, {int participantsCount = 3}) 
   await driver.waitFor(find.byValueKey('submit-claims'));
   await driver.takeScreenshot(Screenshots.step3FinishGathering);
   await driver.tap(find.byValueKey('submit-claims'));
-  await driver.waitFor(find.byValueKey('panel-controller'));
+  await driver.waitFor(find.byValueKey('start-meetup'));
 }

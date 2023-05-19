@@ -133,13 +133,13 @@ void main() async {
   }, timeout: timeout120);
 
   test('check assignin-phase account Unassigned', () async {
-    await scrollToPanelEnd(driver);
+    await scrollToPanelController(driver);
     await changeAccountFromPanel(driver, 'Charlie');
     await checkAssignPhaseUnassigned(driver);
   }, timeout: timeout120);
 
   test('get attesting-phase', () async {
-    await scrollToPanelEnd(driver);
+    await scrollToPanelController(driver);
     await changeAccountFromPanel(driver, 'Bob');
     await goToProfileViewFromNavBar(driver);
     await getNextPhase(driver);
@@ -149,21 +149,21 @@ void main() async {
     await goToHomeViewFromNavBar(driver);
     await scrollToStartMeetup(driver);
     await startMeetupTest(driver);
-    await scrollToPanelEnd(driver);
+    await scrollToPanelController(driver);
   }, timeout: timeout120);
 
   test('start meetup-Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToStartMeetup(driver);
     await startMeetupTest(driver);
-    await scrollToPanelEnd(driver);
+    await scrollToPanelController(driver);
   }, timeout: timeout120);
 
   test('start meetup-Alice', () async {
     await changeAccountFromPanel(driver, 'Alice');
     await scrollToStartMeetup(driver);
     await startMeetupTest(driver);
-    await scrollToPanelEnd(driver);
+    await scrollToPanelController(driver);
   }, timeout: timeout120);
 
   test('Claim-pending (dev-mode)', () async {
