@@ -16,8 +16,12 @@ Future<void> turnDevMode(FlutterDriver driver) async {
 }
 
 Future<void> turnDevModeToTestQrScan(FlutterDriver driver) async {
-  await scrollToDevMode(driver);
+  await scrollToDevModeForQrTest(driver);
   await driver.tap(find.byValueKey('dev-mode'));
+}
+
+Future<void> scrollToDevModeForQrTest(FlutterDriver driver) async {
+  await driver.scrollIntoView(find.byValueKey('dev-mode'));
 }
 
 Future<void> scrollToDevMode(FlutterDriver driver) async {
