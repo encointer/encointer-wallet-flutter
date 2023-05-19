@@ -72,6 +72,7 @@ abstract class TranslationsEncointer {
   String get registeringPhaseReminderContent;
   String get registeringLastDayOfRegisteringReminderTitle;
   String get registeringLastDayOfRegisteringReminderContent;
+  String get offlineMessage;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -227,6 +228,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get registeringLastDayOfRegisteringReminderContent => 'Registration for the next gathering ends today.';
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'Register now!';
+  @override
+  String get offlineMessage => 'You are currently offline. Your claims can be submitted later, on the Home Screen.';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -384,6 +387,9 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get registeringLastDayOfRegisteringReminderContent => 'Die Anmeldung für das nächste Treffen endet heute.';
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'Melde dich jetzt an!';
+  @override
+  String get offlineMessage =>
+      'Sie sind derzeit offline. Sie können Ihre Ansprüche später auf dem Startbildschirm einreichen.';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -544,6 +550,9 @@ class TranslationsFrEncointer implements TranslationsEncointer {
       "L'inscription pour la prochaine réunion se termine aujourd'hui.";
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'Inscris-tois maintenant!';
+  @override
+  String get offlineMessage =>
+      "Vous êtes actuellement hors ligne. Vos demandes peuvent être soumises plus tard, sur l'écran d'accueil.";
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -696,7 +705,11 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get registeringPhaseReminderTitle => 'Зарегистрируйтесь сейчас, не упустите шанс!';
   @override
-  String get registeringLastDayOfRegisteringReminderContent => 'todo :)';
+  String get registeringLastDayOfRegisteringReminderContent =>
+      'Регистрация на следующее собрание заканчивается сегодня';
   @override
-  String get registeringLastDayOfRegisteringReminderTitle => 'todo :)';
+  String get registeringLastDayOfRegisteringReminderTitle => 'Зарегистрируйтесь прямо сейчас!';
+  @override
+  String get offlineMessage =>
+      'В настоящее время вы находитесь в оффлайн режиме. Ваши заявки можно будет отправить позже на главном экране.';
 }

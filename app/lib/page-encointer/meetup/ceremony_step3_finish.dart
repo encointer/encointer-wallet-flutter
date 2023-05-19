@@ -128,7 +128,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'You are currently offline. Your claims can be submitted later, on the Home Screen',
+                            dic.encointer.offlineMessage,
                             style: Theme.of(context).textTheme.bodySmall,
                             textAlign: TextAlign.center,
                           ),
