@@ -57,31 +57,15 @@ class InvoiceData implements ToQrFields {
     required this.label,
   });
 
-  // 0 hash
-  // 1 second hash
-  // 2 name
-
   factory InvoiceData.fromQrFieldsV1(List<String> fields) {
-    /// invoice with no amount
-    if (fields.length == 3) {
-      return InvoiceData(
-        account: fields[0],
-        cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
-        label: fields[2],
-      );
-    }
+    return InvoiceData(
+      account: fields[0],
+      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
 
-    /// invoice with amount to send
-    else {
-      return InvoiceData(
-        account: fields[0],
-        cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
-
-        /// fixed bug: if no amount is set in invoice, it works well
-        amount: fields[2].trim().isNotEmpty ? double.tryParse(fields[2]) : null,
-        label: fields[3],
-      );
-    }
+      /// fixed bug: if no amount is set in invoice, it works well
+      amount: fields[2].trim().isNotEmpty ? double.tryParse(fields[2]) : null,
+      label: fields[3],
+    );
   }
 
   factory InvoiceData.fromQrFieldsV2(List<String> fields) {

@@ -112,7 +112,7 @@ class MockDevModeQrScanPage extends StatelessWidget {
           key: const Key('invoice-with-no-amount-to-scan'),
           child: Text(dic.assets.noInvoice),
           onPressed: () => onScan(
-            'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\nAubrey',
+            'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\n\nAubrey',
           ),
         ),
         ElevatedButton(
@@ -125,7 +125,10 @@ class MockDevModeQrScanPage extends StatelessWidget {
             '\nnctr-gsl-dev\nAubrey',
           ),
         ),
-        const Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
+        const Padding(
+          padding: EdgeInsets.all(16),
+          child: Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
+        ),
       ],
     );
   }
