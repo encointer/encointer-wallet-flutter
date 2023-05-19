@@ -1,10 +1,14 @@
 import 'package:encointer_wallet/page/profile/faq/faq_widget.dart';
+import 'package:encointer_wallet/page/assets/qr_code_printing/widgets/preview_pdf_and_print.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
@@ -40,6 +44,7 @@ class AppRoute {
   // it is preferable to use Navigator.pushNamed (rather than Navigator.push) for large projects
   // cf. CupertinoPageRoute documentation -> fullscreenDialog: true, (in this case the page slides in from the bottom)
   static Route<void> onGenerateRoute(RouteSettings settings) {
+    final arguments = settings.arguments;
     switch (settings.name) {
       case SplashView.route:
         return CupertinoPageRoute(
@@ -192,9 +197,15 @@ class AppRoute {
       case TransferHistoryView.route:
         return CupertinoPageRoute(
           builder: (_) => Provider(
-            create: (context) => TransferHistoryStore()..getTransfers(),
+            create: (context) => TransferHistoryViewStore(
+              RepositoryProvider.of<EwHttp>(context),
+            )..getTransfers(context.read<AppStore>()),
             child: const TransferHistoryView(),
           ),
+        );
+      case PreviewPdfAndPrint.route:
+        return CupertinoPageRoute(
+          builder: (_) => PreviewPdfAndPrint(args: arguments! as PreviewPdfAndPrintArgs),
           settings: settings,
         );
       case FaqWidget.route:
@@ -203,9 +214,7 @@ class AppRoute {
           settings: settings,
         );
       default:
-        throw Exception(
-          'no builder specified for route named: [${settings.name}]',
-        );
+        throw Exception('no builder specified for route named: [${settings.name}]');
     }
   }
 }
