@@ -627,7 +627,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get faqLong => 'Questions fréquemment posées';
   @override
-  String get backUpAndRestoreYourAccount => 'Sauvegarder et restaurer votre compte';
+  String get backUpAndRestoreYourAccount => 'Sauvegarder et restaurer ton compte';
   @override
   String get ceremonyInstructions => 'Consignes de cérémonie';
   @override
