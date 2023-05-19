@@ -45,7 +45,16 @@ Future<void> scrollToPanelController(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('list-view-wallet'),
     find.byValueKey('panel-controller'),
-    dyScroll: 100,
+    dyScroll: 300,
+  );
+}
+
+Future<void> scrollToPanelEnd(FlutterDriver driver) async {
+  await driver.scroll(
+    find.byType('RefreshIndicator'),
+    0,
+    1000,
+    const Duration(milliseconds: 100),
   );
 }
 
