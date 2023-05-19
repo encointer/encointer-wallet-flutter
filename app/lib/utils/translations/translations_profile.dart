@@ -633,7 +633,7 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get completingAttestation => 'Remplir une attestation';
   @override
-  String get inviteEndorseYourAccounts => 'Invitez et approuvez vos contacts';
+  String get inviteEndorseYourAccounts => 'Invites et approuves tes contacts';
 }
 
 class TranslationsRuProfile implements TranslationsProfile {
