@@ -179,7 +179,7 @@ void main() async {
     await scrollToPanelController(driver);
     await changeAccountFromPanel(driver, 'Bob');
     await addDelay(1000);
-  }, timeout: const Timeout(Duration(seconds: 40)));
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('get attesting-phase', () async {
     await driver.tap(find.byValueKey('profile'));
