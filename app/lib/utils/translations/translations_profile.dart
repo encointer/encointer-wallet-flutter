@@ -449,7 +449,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   String get completingAttestation => 'Ausfüllen einer Bescheinigung';
   @override
-  String get inviteEndorseYourAccounts => 'Laden Sie Ihre Kontakte ein und unterstützen Sie sie';
+  String get inviteEndorseYourAccounts => 'Lade Kontakte ein und markiere sie als vertrauenswürdig';
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
