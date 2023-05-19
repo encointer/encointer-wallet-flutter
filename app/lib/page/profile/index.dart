@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page/profile/faq/faq_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -170,6 +171,11 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.about, style: Theme.of(context).textTheme.displaySmall),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
+              ),
+              ListTile(
+                title: Text(dic.profile.faq, style: Theme.of(context).textTheme.displaySmall),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                onTap: () => Navigator.pushNamed(context, FaqWidget.route),
               ),
               ListTile(
                 key: const Key('settings-language'),
