@@ -19,7 +19,6 @@ Future<void> scrollToDevMode(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('profile-list-view'),
     find.byValueKey('dev-mode'),
-    dyScroll: -300,
   );
 }
 
@@ -27,7 +26,6 @@ Future<void> scrollToNextPhaseButton(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('profile-list-view'),
     find.byValueKey('next-phase-button'),
-    dyScroll: -300,
   );
 }
 
@@ -43,7 +41,6 @@ Future<void> scrollToCeremonyBox(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('list-view-wallet'),
     find.byValueKey('ceremony-box-wallet'),
-    dyScroll: -300,
   );
 }
 
@@ -133,7 +130,6 @@ Future<void> startMeetupTest(
   await driver.scrollUntilVisible(
     find.byValueKey('profile-list-view'),
     find.byValueKey('start-meetup'),
-    dyScroll: -300,
   );
   if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.homeAttestingPhaseStartMeetup);
   await driver.tap(find.byValueKey('start-meetup'));
@@ -153,7 +149,7 @@ Future<void> startMeetupTest(
   if (shouldTakeScreenshot) await driver.takeScreenshot(Screenshots.step3FinishGathering);
   await driver.tap(find.byValueKey('submit-claims'));
 
-  await driver.waitFor(find.byValueKey('panel-controller'));
+  await driver.waitFor(find.byValueKey('start-meetup'));
   await scrollToPanelController(driver);
   await addDelay(1000);
 }
