@@ -332,11 +332,11 @@ class Fmt {
 }
 
 class Ss58DecodeResult {
-  Ss58DecodeResult(this.pubKey, this.prefix);
+  const Ss58DecodeResult(this.pubKey, this.prefix);
 
   /// The pubKey corresponding to the input address.
-  String pubKey;
+  final String pubKey;
 
   /// The prefix of the input address.
-  int prefix;
+  final int prefix;
 }
