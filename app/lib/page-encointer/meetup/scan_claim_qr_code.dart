@@ -59,7 +59,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
     }
   }
 
-  Future<void> onScan(AppStore store, Translations dic, String address) async {
+  void onScan(AppStore store, Translations dic, String address) {
     if (Fmt.isAddress(address)) {
       validateAndStoreParticipant(store, address, dic);
     } else {
@@ -93,11 +93,11 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
             }
             return Stack(
               children: [
-                MobileScanner(onDetect: (barcode, args) async {
+                MobileScanner(onDetect: (barcode, args) {
                   if (barcode.rawValue == null) {
                     Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
                   } else {
-                    await onScan(context.read<AppStore>(), dic, barcode.rawValue!);
+                    onScan(context.read<AppStore>(), dic, barcode.rawValue!);
                   }
                 }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
