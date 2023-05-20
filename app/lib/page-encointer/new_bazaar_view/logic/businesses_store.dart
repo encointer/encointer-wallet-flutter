@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/page-encointer/new_bazaar_view/widgets/dropdown_widget.dart';
+import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 
@@ -10,10 +12,17 @@ abstract class _BusinessesStoreBase with Store {
   @observable
   List<Businesses>? businesses;
 
+  @observable
+  FetchStatus fetchStatus = FetchStatus.loading;
+
   @action
-  Future<void> getBusinesses() async {
+  Future<void> getBusinesses({Category category = Category.alle}) async {
+    fetchStatus = FetchStatus.loading;
     await Future<void>.delayed(const Duration(seconds: 1));
     final data = businessesMockData['businesses'];
-    businesses = data?.map(Businesses.fromJson).toList();
+    final items = data!.map(Businesses.fromJson).toList();
+    if (category != Category.alle) items.removeWhere((element) => element.category != category.name);
+    businesses = items;
+    fetchStatus = FetchStatus.success;
   }
 }

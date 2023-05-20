@@ -16,15 +16,10 @@ import 'package:provider/provider.dart';
 // import 'package:encointer_wallet/page-encointer/bazaar/4_favorites/favorites.dart';
 // import 'package:encointer_wallet/utils/translations/index.dart';
 
-class BazaarMain extends StatefulWidget {
+class BazaarMain extends StatelessWidget {
   const BazaarMain({super.key});
   static const String route = '/bazaar';
 
-  @override
-  State<BazaarMain> createState() => _BazaarMainState();
-}
-
-class _BazaarMainState extends State<BazaarMain> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -57,10 +52,19 @@ class _BazaarMainState extends State<BazaarMain> {
           ),
         ),
       ),
-      body: Provider(
-        create: (context) => BusinessesStore()..getBusinesses(),
-        child: const BusinessesView(),
-      ),
+      body: const BusinessesView(),
+    );
+  }
+}
+
+class BazaarPage extends StatelessWidget {
+  const BazaarPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider(
+      create: (context) => BusinessesStore()..getBusinesses(),
+      child: const BazaarMain(),
     );
   }
 }

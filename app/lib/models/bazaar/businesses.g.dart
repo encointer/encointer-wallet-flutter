@@ -13,8 +13,7 @@ Businesses _$BusinessesFromJson(Map<String, dynamic> json) => Businesses(
       photo: json['photo'] as String,
     );
 
-Map<String, dynamic> _$BusinessesToJson(Businesses instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BusinessesToJson(Businesses instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'category': instance.category,

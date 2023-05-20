@@ -18,6 +18,7 @@ class Businesses {
   final String category;
   final String photo;
 }
+
 //category should be enum
 const businessesMockData = {
   'businesses': [

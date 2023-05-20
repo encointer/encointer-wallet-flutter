@@ -6,8 +6,7 @@ part of 'single_business.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SingleBusiness _$SingleBusinessFromJson(Map<String, dynamic> json) =>
-    SingleBusiness(
+SingleBusiness _$SingleBusinessFromJson(Map<String, dynamic> json) => SingleBusiness(
       name: json['name'] as String,
       description: json['description'] as String,
       category: json['category'] as String,
@@ -18,12 +17,10 @@ SingleBusiness _$SingleBusinessFromJson(Map<String, dynamic> json) =>
       latitude: (json['latitude'] as num).toDouble(),
       openingHours: json['openingHours'] as String,
       logo: json['logo'] as String,
-      photos:
-          (json['photos'] as List<dynamic>).map((e) => e as String).toList(),
+      photos: (json['photos'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$SingleBusinessToJson(SingleBusiness instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$SingleBusinessToJson(SingleBusiness instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'category': instance.category,

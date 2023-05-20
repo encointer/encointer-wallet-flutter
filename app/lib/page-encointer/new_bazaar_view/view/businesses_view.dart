@@ -1,7 +1,10 @@
+import 'package:encointer_wallet/common/components/error/error_view.dart';
+import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar_view/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar_view/widgets/businesses_card.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/fetch_status.dart';
+
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,16 +16,15 @@ class BusinessesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<BusinessesStore>();
-    final dic = I18n.of(context)!.translationsForLocale().home;
+
     return Observer(builder: (_) {
-      if (store.businesses == null) {
-        return const Center(child: CupertinoActivityIndicator());
-      } else if (store.businesses!.isEmpty) {
-        return const Center(child: Text('No business is found'));
-      } else if (store.businesses!.isNotEmpty) {
-        return BusinessesList(businesses: store.businesses!);
-      } else {
-        return Center(child: Text(dic.unknownError));
+      switch (store.fetchStatus) {
+        case FetchStatus.loading:
+          return const CenteredActivityIndicator();
+        case FetchStatus.success:
+          return BusinessesList(businesses: store.businesses!);
+        case FetchStatus.error:
+          return const ErrorView();
       }
     });
   }
