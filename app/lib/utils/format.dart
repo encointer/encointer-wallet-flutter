@@ -279,6 +279,7 @@ class Fmt {
 
   static final ss58Prefix = 'SS58PRE'.codeUnits;
 
+  /// Corresponds to the `ss58hash`: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L374
   static Uint8List blake2WithSs58Pre(Uint8List data) {
     final ss58Pre = Uint8List.fromList(ss58Prefix);
 
