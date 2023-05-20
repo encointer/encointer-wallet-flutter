@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
