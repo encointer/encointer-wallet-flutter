@@ -29,7 +29,7 @@ void main() {
         expect(result.pubKey, alice);
       });
 
-      test('ss58Encode works for prefix 42', () {
+      test('ss58Decode works for prefix 42', () {
         final result = Fmt.ss58Decode('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
         expect(result.prefix, 42);
         expect(result.pubKey, alice);
