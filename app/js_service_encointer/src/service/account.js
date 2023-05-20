@@ -9,7 +9,6 @@ import {
   compactAddLength,
   bnToU8a
 } from '@polkadot/util';
-import { ss58Decode } from 'oo7-substrate/src/ss58.js';
 import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
 import { createType } from '@polkadot/types';
@@ -100,26 +99,6 @@ async function recover (keyType, cryptoType, key, password) {
 async function initKeys (accounts) {
   await cryptoWaitReady();
   accounts.forEach((i) => keyring.addFromJson(i));
-}
-
-/**
- * Decode address to it's publicKey
- * @param {List<String>} addresses
- * @returns {Map<String, String>} pubKeyAddressMap
- */
-async function decodeAddress (addresses) {
-  await cryptoWaitReady();
-  try {
-    const res = {};
-    addresses.forEach((i) => {
-      const pubKey = u8aToHex(keyring.decodeAddress(i));
-      res[pubKey] = i;
-    });
-    return res;
-  } catch (err) {
-    send('log', { error: err.message });
-    return null;
-  }
 }
 
 async function addressFromUri(uri) {
@@ -419,7 +398,6 @@ function changePassword (pubKey, passOld, passNew) {
 export default {
   initKeys,
   addressFromUri,
-  decodeAddress,
   gen,
   recover,
   getBalance,
