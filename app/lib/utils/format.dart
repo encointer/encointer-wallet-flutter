@@ -278,8 +278,14 @@ class Fmt {
     return base58Codec.encode(complete);
   }
 
+  /// General pubKey length used in substrate and Encointer.
   static const pubKeyLen = 32;
+  /// Length of the checksum in an SS58-address.
   static const checkSumLen = 2;
+  /// If the SS58-address has a prefix < 64 the prefix length is 1 else it is 2.
+  ///
+  /// All Encointer networks use the prefix 2 or 42, so we can only implement a subset of the
+  /// SS58-codec.
   static const prefixLenForPrefixesSmallerThan64 = 1;
 
   /// Convert an SS58-address into a pubKey.
