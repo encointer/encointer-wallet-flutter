@@ -45,11 +45,12 @@ Future<void> scrollToPanelController(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('list-view-wallet'),
     find.byValueKey('panel-controller'),
-    dyScroll: 300,
+    dyScroll: 400,
   );
 }
 
 Future<void> scrollToStartMeetup(FlutterDriver driver) async {
+  await driver.requestData(RealAppTestCommand.devModeOff);
   await driver.scrollUntilVisible(
     find.byValueKey('list-view-wallet'),
     find.byValueKey('start-meetup'),
