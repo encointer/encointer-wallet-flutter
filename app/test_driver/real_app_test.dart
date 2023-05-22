@@ -1,6 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+import 'dev_qr_codes/dev_qr_codes_test.dart';
 import 'helpers/add_delay.dart';
 import 'helpers/command/real_app_command.dart';
 import 'helpers/extension/screenshot_driver_extension.dart';
@@ -112,7 +113,47 @@ void main() async {
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 60)));
 
+  group('DevMode QR Codes tests', () {
+    test('turn on dev-mode', () async {
+      await qrTurnOnDevMode(driver);
+    });
+
+    test('qr code from HomePage: test and save the contact from qr', () async {
+      await qrFromHomeTestAndSaveContact(driver);
+    }, timeout: const Timeout(Duration(seconds: 60)));
+
+    test('qr code from HomePage: test and send money with amount from qr', () async {
+      await qrFromHomeTestAndSendWithAmount(driver);
+    }, timeout: const Timeout(Duration(seconds: 60)));
+
+    test('qr code from HomePage: test and send money without amount from qr', () async {
+      await qrFromHomeTestAndSendWithoutAmount(driver);
+    }, timeout: const Timeout(Duration(seconds: 60)));
+
+    test('qr code from SendPage: test and send money with amount from qr', () async {
+      await qrFromSendPageTestAndSendWithAmount(driver);
+    }, timeout: const Timeout(Duration(seconds: 60)));
+
+    test('qr code from SendPage: test and send money without amount from qr', () async {
+      await qrFromSendPageTestAndSendWithoutAmount(driver);
+    }, timeout: const Timeout(Duration(seconds: 60)));
+
+    test('qr code from ContactPage: add contact from contact-qr', () async {
+      await qrFromContactAddContactFromQrContact(driver);
+    }, timeout: const Timeout(Duration(seconds: 120)));
+
+    test('qr code from ContactPage: add contact from invoice-qr', () async {
+      await qrFromContactAddContactFromQrInvoice(driver);
+    }, timeout: const Timeout(Duration(seconds: 120)));
+
+    test('turn off dev-mode', () async {
+      await qrTurnOnDevMode(driver);
+    });
+  });
+
   test('send money to Tom', () async {
+    await driver.waitFor(find.byValueKey('bottom-nav'));
+    await driver.tap(find.byValueKey('wallet'));
     await driver.tap(find.byValueKey('transfer'));
     await driver.waitFor(find.byValueKey('transfer-listview'));
     await driver.tap(find.byValueKey('transfer-amount-input'));
