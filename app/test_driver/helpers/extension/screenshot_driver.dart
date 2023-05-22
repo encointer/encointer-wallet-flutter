@@ -8,12 +8,9 @@ part 'screenshots_name.dart';
 
 extension ScreenshotExtension on FlutterDriver {
   static final _shouldTakeScreenshot = Expando<bool>();
-  static final _shouldTakeScreenshotForAllLocales = Expando<bool>();
 
   bool get shouldTakeScreenshot => _shouldTakeScreenshot[this] ?? false;
   set shouldTakeScreenshot(bool x) => _shouldTakeScreenshot[this] = x;
-  bool get shouldTakeScreenshotForAllLocales => _shouldTakeScreenshotForAllLocales[this] ?? false;
-  set shouldTakeScreenshotForAllLocales(bool x) => _shouldTakeScreenshotForAllLocales[this] = x;
 
   Future<void> takeScreenshot(
     String name, {
@@ -28,18 +25,6 @@ extension ScreenshotExtension on FlutterDriver {
         timeout: timeout,
         waitUntilNoTransientCallbacks: waitUntilNoTransientCallbacks,
       );
-    }
-    if (shouldTakeScreenshotForAllLocales && !File('../screenshots/de/$name.png').existsSync()) {
-      const locales = ['de', 'fr', 'ru', 'en'];
-      for (final locale in locales) {
-        final currenLocale = await requestData('local-$locale');
-        await _takeScreenshot(
-          name,
-          directory: '$directory/$currenLocale',
-          timeout: timeout,
-          waitUntilNoTransientCallbacks: waitUntilNoTransientCallbacks,
-        );
-      }
     }
   }
 
