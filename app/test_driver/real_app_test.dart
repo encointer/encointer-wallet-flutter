@@ -146,12 +146,12 @@ void main() async {
       await qrFromContactAddContactFromQrInvoice(driver);
     }, timeout: const Timeout(Duration(seconds: 120)));
 
-    test('turn off dev-mode', () async {
+    test('Testing DevMode QR Scan finished, turn off dev-mode', () async {
       await qrTurnOnDevMode(driver);
     });
   });
 
-  test('send money to Tom', () async {
+  test('Back to real app integration test, send money to Tom', () async {
     await driver.waitFor(find.byValueKey('bottom-nav'));
     await driver.tap(find.byValueKey('wallet'));
     await driver.tap(find.byValueKey('transfer'));
