@@ -13,8 +13,7 @@ import 'helpers/command/real_app_command.dart';
 part 'helpers/command/real_app_functions.dart';
 
 void main() async {
-  const shouldTakeScreenshot = String.fromEnvironment('screenshot');
-  const shouldTakeScreenshotForAllLocales = String.fromEnvironment('screenshot-for-all-locales');
+  const shouldTakeScreenshot = String.fromEnvironment('locales');
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
 
   late final AppSettings appSettings;
@@ -25,10 +24,8 @@ void main() async {
       switch (command) {
         case RealAppTestCommand.getPlatform:
           return Platform.operatingSystem;
-        case RealAppTestCommand.shouldTakeScreenshot:
+        case RealAppTestCommand.locales:
           return shouldTakeScreenshot;
-        case RealAppTestCommand.shouldTakeScreenshotForAllLocales:
-          return shouldTakeScreenshotForAllLocales;
         case RealAppTestCommand.localeEn:
           return changeLocale(appSettings, 'en');
         case RealAppTestCommand.localeDe:
