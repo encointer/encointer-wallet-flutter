@@ -1,9 +1,8 @@
-// import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar_view/logic/businesses_store.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar_view/logic/businesses_store.dart';
 
 class DropdownWidget extends StatefulWidget {
   const DropdownWidget({super.key});
@@ -17,6 +16,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return DropdownMenu<Category>(
       initialSelection: Category.alle,
       dropdownMenuEntries: Category.values
@@ -25,6 +25,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
               value: e,
               label: e.name,
               style: ButtonStyle(
+                textStyle: MaterialStateProperty.all(textTheme.bodySmall),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -50,6 +51,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
           ),
           contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
           constraints: const BoxConstraints(maxHeight: 40)),
+      textStyle: textTheme.bodyMedium,
       trailingIcon: const Icon(
         Icons.keyboard_arrow_down_outlined,
         color: encointerGrey,
@@ -59,34 +61,16 @@ class _DropdownWidgetState extends State<DropdownWidget> {
 }
 
 enum Category {
-  alle,
-  artAndMusic,
-  bodyAndSoul,
-  fashionAndClothing,
-  foodAndBeverageStore,
-  restaurantsAndBars,
-  neuBeiLeu
-}
+  alle('Alle'),
+  artAndMusic('Art & Music'),
+  bodyAndSoul('Body & Soul'),
+  fashionAndClothing('Fashion & Clothing'),
+  foodAndBeverageStore('Food & Beverage Store'),
+  restaurantsAndBars('Restaurants & Bars'),
+  neuBeiLeu('Neu bei Leu');
 
-extension CategoryEntry on Category {
-  String get name {
-    switch (this) {
-      case Category.alle:
-        return 'Alle';
-      case Category.artAndMusic:
-        return 'Art & Music';
-      case Category.bodyAndSoul:
-        return 'Body & Soul';
-      case Category.fashionAndClothing:
-        return 'Fashion & Clothing';
-      case Category.foodAndBeverageStore:
-        return 'Food & Beverage Store';
-      case Category.restaurantsAndBars:
-        return 'Restaurants & Bars';
-      case Category.neuBeiLeu:
-        return 'Neu bei Leu';
-    }
-  }
-
-  bool get enabled => this != Category.neuBeiLeu;
+  const Category(
+    this.name,
+  );
+  final String name;
 }

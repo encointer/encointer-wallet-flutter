@@ -1,6 +1,7 @@
+import 'package:mobx/mobx.dart';
+
 import 'package:encointer_wallet/page-encointer/new_bazaar_view/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
-import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 
 part 'businesses_store.g.dart';
