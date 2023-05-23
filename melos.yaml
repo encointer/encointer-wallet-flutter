@@ -147,7 +147,7 @@ scripts:
     description: "Run integration tests for the `real_app.dart` file on IOS"
 
   integration-real-app-test-ios-screenshot:
-    run: cd app && flutter drive --target=test_driver/real_app.dart --dart-define=locales=de,fr,ru,en
+    run: cd app && flutter drive --target=test_driver/real_app.dart --dart-define=locales=en
     description: "Run integration tests for the `real_app.dart` file on IOS with screenshot capturing enabled."
 
   integration-scan-test-android:
