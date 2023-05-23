@@ -552,7 +552,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get registeringLastDayOfRegisteringReminderTitle => 'Inscris-tois maintenant!';
   @override
   String get offlineMessage =>
-      "Vous êtes actuellement hors ligne. Vos demandes peuvent être soumises plus tard, sur l'écran d'accueil.";
+      "Tu es hors ligne. Tes demandes peuvent être soumises plus tard sur l'écran d'accueil.";
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
