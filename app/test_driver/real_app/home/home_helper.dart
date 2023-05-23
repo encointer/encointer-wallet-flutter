@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_driver/flutter_driver.dart';
 
-import '../../helpers/command/real_app_command.dart';
+import '../../helpers/helper.dart';
 
 Future<void> refreshWalletPage(FlutterDriver driver) async {
   await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));

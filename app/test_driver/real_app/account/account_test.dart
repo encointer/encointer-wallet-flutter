@@ -1,6 +1,6 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
-import '../../helpers/extension/screenshot_driver.dart';
+import '../../helpers/helper.dart';
 import 'account_helper.dart';
 
 Future<void> choosingCid(FlutterDriver driver, int index) async {

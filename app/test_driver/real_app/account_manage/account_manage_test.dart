@@ -1,6 +1,6 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
-import '../../helpers/extension/screenshot_driver.dart';
+import '../../helpers/helper.dart';
 import 'account_manage_helper.dart';
 
 Future<void> accountDetailPage(FlutterDriver driver, String account) async {

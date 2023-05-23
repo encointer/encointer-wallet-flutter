@@ -1,7 +1,6 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
-import '../../helpers/command/real_app_command.dart';
-import '../../helpers/extension/screenshot_driver.dart';
+import '../../helpers/helper.dart';
 import 'ceremony_helper.dart';
 
 Future<void> startMeetupTest(FlutterDriver driver, {int participantsCount = 3}) async {

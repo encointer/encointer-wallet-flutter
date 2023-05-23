@@ -8,7 +8,7 @@ import 'package:upgrader/upgrader.dart';
 import 'package:encointer_wallet/main.dart' as app;
 import 'package:encointer_wallet/modules/modules.dart';
 
-import 'helpers/command/real_app_command.dart';
+import 'helpers/helper.dart';
 
 part 'helpers/command/real_app_functions.dart';
 
