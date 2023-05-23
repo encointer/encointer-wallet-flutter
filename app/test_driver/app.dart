@@ -22,21 +22,21 @@ void main() async {
   enableFlutterDriverExtension(
     handler: (command) async {
       switch (command) {
-        case AppTestCommand.getPlatform:
+        case TestCommand.getPlatform:
           return Platform.operatingSystem;
-        case AppTestCommand.locales:
+        case TestCommand.locales:
           return shouldTakeScreenshot;
-        case AppTestCommand.localeEn:
+        case TestCommand.localeEn:
           return changeLocale(appSettings, 'en');
-        case AppTestCommand.localeDe:
+        case TestCommand.localeDe:
           return changeLocale(appSettings, 'de');
-        case AppTestCommand.localeFr:
+        case TestCommand.localeFr:
           return changeLocale(appSettings, 'fr');
-        case AppTestCommand.localeRu:
+        case TestCommand.localeRu:
           return changeLocale(appSettings, 'ru');
-        case AppTestCommand.devModeOn:
+        case TestCommand.devModeOn:
           return toggleDeveloperMode(appSettings, true);
-        case AppTestCommand.devModeOff:
+        case TestCommand.devModeOff:
           return toggleDeveloperMode(appSettings, false);
         default:
           return '';

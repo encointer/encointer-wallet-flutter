@@ -1,4 +1,4 @@
-class AppTestCommand {
+class TestCommand {
   static const String getPlatform = 'getPlatform';
   static const String locales = 'locales';
   static const String localeEn = 'local-en';

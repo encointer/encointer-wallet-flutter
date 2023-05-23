@@ -10,7 +10,7 @@ Future<void> startMeetupTest(FlutterDriver driver, {int participantsCount = 3}) 
   await enterAttendeesCount(driver, participantsCount);
   await driver.tap(find.byValueKey('ceremony-step-1-next'));
   await driver.takeLocalScreenshot(Screenshots.step2QrCode);
-  await driver.requestData(AppTestCommand.devModeOn);
+  await driver.requestData(TestCommand.devModeOn);
   await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
   await driver.tap(find.byValueKey('attest-all-participants-dev'));
   await driver.waitFor(find.byType('SnackBar'));

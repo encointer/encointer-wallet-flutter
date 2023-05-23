@@ -2,7 +2,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 import 'helpers/helper.dart';
-import 'real_app/real_app.dart';
+import 'app/app.dart';
 
 void main() async {
   late FlutterDriver driver;
@@ -14,7 +14,7 @@ void main() async {
   group('EncointerWallet App', () {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
-      final locales = await driver.requestData(RealAppTestCommand.locales);
+      final locales = await driver.requestData(TestCommand.locales);
       driver.locales = locales.split(',');
       await driver.waitUntilFirstFrameRasterized();
     });

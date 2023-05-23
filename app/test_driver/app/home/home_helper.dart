@@ -20,7 +20,7 @@ Future<void> changeAccountFromPanel(FlutterDriver driver, String account) async 
 }
 
 Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
-  final operationSystem = await driver.requestData(AppTestCommand.getPlatform);
+  final operationSystem = await driver.requestData(TestCommand.getPlatform);
   log('operationSystem ==================> $operationSystem');
   if (operationSystem == 'android') {
     try {
@@ -50,7 +50,7 @@ Future<void> scrollToPanelController(FlutterDriver driver) async {
 }
 
 Future<void> scrollToStartMeetup(FlutterDriver driver) async {
-  await driver.requestData(AppTestCommand.devModeOff);
+  await driver.requestData(TestCommand.devModeOff);
   await driver.scrollUntilVisible(
     find.byValueKey('list-view-wallet'),
     find.byValueKey('start-meetup'),

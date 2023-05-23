@@ -19,7 +19,7 @@ extension ScreenshotExtension on FlutterDriver {
     bool waitUntilNoTransientCallbacks = true,
   }) async {
     if (locales.contains('en') && !File('../screenshots/en/$name.png').existsSync()) {
-      await requestData(AppTestCommand.devModeOff);
+      await requestData(TestCommand.devModeOff);
       for (final locale in locales) {
         final currenLocale = await requestData('local-$locale');
         await takeScreenshot(
