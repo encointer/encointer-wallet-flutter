@@ -229,7 +229,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'Register now!';
   @override
-  String get offlineMessage => 'You are currently offline. Your claims can be submitted later, on the Home Screen.';
+  String get offlineMessage => 'You are currently offline. Your claims can be submitted later on the Home Screen.';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
