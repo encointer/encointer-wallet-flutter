@@ -55,12 +55,6 @@ class MockQRScanPage extends StatelessWidget {
             image: DecorationImage(image: background, fit: BoxFit.cover),
           ),
         ),
-        SafeArea(
-          child: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).cardColor),
-            onPressed: () {},
-          ),
-        ),
         //overlays a semi-transparent rounded square border that is 90% of screen width
         Center(
           child: Column(
@@ -75,10 +69,7 @@ class MockQRScanPage extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(24)),
                 ),
               ),
-              const Text(
-                'Scan Qr Code',
-                style: TextStyle(color: Colors.white38),
-              ),
+              const Text('Scan Qr Code', style: TextStyle(color: Colors.white38)),
             ],
           ),
         ),
