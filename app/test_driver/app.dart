@@ -10,7 +10,7 @@ import 'package:encointer_wallet/modules/modules.dart';
 
 import 'helpers/helper.dart';
 
-part 'helpers/command/real_app_functions.dart';
+part 'helpers/command/app_functions.dart';
 
 void main() async {
   const shouldTakeScreenshot = String.fromEnvironment('locales');
@@ -22,21 +22,21 @@ void main() async {
   enableFlutterDriverExtension(
     handler: (command) async {
       switch (command) {
-        case RealAppTestCommand.getPlatform:
+        case AppTestCommand.getPlatform:
           return Platform.operatingSystem;
-        case RealAppTestCommand.locales:
+        case AppTestCommand.locales:
           return shouldTakeScreenshot;
-        case RealAppTestCommand.localeEn:
+        case AppTestCommand.localeEn:
           return changeLocale(appSettings, 'en');
-        case RealAppTestCommand.localeDe:
+        case AppTestCommand.localeDe:
           return changeLocale(appSettings, 'de');
-        case RealAppTestCommand.localeFr:
+        case AppTestCommand.localeFr:
           return changeLocale(appSettings, 'fr');
-        case RealAppTestCommand.localeRu:
+        case AppTestCommand.localeRu:
           return changeLocale(appSettings, 'ru');
-        case RealAppTestCommand.devModeOn:
+        case AppTestCommand.devModeOn:
           return toggleDeveloperMode(appSettings, true);
-        case RealAppTestCommand.devModeOff:
+        case AppTestCommand.devModeOff:
           return toggleDeveloperMode(appSettings, false);
         default:
           return '';
