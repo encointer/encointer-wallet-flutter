@@ -389,7 +389,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get registeringLastDayOfRegisteringReminderTitle => 'Melde dich jetzt an!';
   @override
   String get offlineMessage =>
-      'Sie sind derzeit offline. Sie können Ihre Ansprüche später auf dem Startbildschirm einreichen.';
+      'Du bist offline. Du kannst deine Ansprüche später auf dem Startbildschirm einreichen.';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
