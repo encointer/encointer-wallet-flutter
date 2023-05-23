@@ -19,6 +19,7 @@ extension ScreenshotExtension on FlutterDriver {
     bool waitUntilNoTransientCallbacks = true,
   }) async {
     if (locales.contains('en') && !File('../screenshots/en/$name.png').existsSync()) {
+      await requestData(RealAppTestCommand.devModeOff);
       for (final locale in locales) {
         final currenLocale = await requestData('local-$locale');
         await takeScreenshot(
@@ -40,7 +41,6 @@ extension ScreenshotExtension on FlutterDriver {
     if (waitUntilNoTransientCallbacks) {
       await this.waitUntilNoTransientCallbacks(timeout: timeout);
     }
-    await requestData(RealAppTestCommand.devModeOff);
     final pixels = await screenshot();
     final directoryPath = directory.endsWith('/') ? directory : '$directory/';
     final file = await File('$directoryPath$name.png').create(recursive: true);
