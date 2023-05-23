@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 
-import 'helpers/extension/screenshot_driver_extension.dart';
+import 'helpers/helper.dart';
 
 void main() {
   FlutterDriver? driver;
@@ -14,7 +14,6 @@ void main() {
   group('EncointerWallet App', () {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
-      driver!.shouldTakeScreenshot = true;
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
 
