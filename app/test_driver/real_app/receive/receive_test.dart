@@ -4,6 +4,6 @@ import '../../helpers/helper.dart';
 
 Future<void> receiveView(FlutterDriver driver) async {
   await driver.waitFor(find.byValueKey('close-receive-page'));
-  await driver.takeScreenshot(Screenshots.receiveView);
+  await driver.takeLocalScreenshot(Screenshots.receiveView);
   await driver.tap(find.byValueKey('close-receive-page'));
 }

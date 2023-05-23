@@ -4,7 +4,7 @@ import '../../helpers/helper.dart';
 import 'profile_helper.dart';
 
 Future<void> turnDevMode(FlutterDriver driver) async {
-  await driver.takeScreenshot(Screenshots.profileView);
+  await driver.takeLocalScreenshot(Screenshots.profileView);
   await scrollToDevMode(driver);
   await tapDevMode(driver);
 }

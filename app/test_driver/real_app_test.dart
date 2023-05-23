@@ -229,7 +229,7 @@ void main() async {
   test('send money to account from Reputable account', () async {
     await senMoneyToContact(driver);
     await sendMoneyToSelectedAccount(driver, '0.2');
-    await driver.takeScreenshot(Screenshots.contactsOverview);
+    await driver.takeLocalScreenshot(Screenshots.contactsOverview);
     await goToHomeViewFromNavBar(driver);
   }, timeout: timeout120);
 

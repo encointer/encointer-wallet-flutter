@@ -12,7 +12,7 @@ extension ScreenshotExtension on FlutterDriver {
   List<String> get locales => _locales[this] ?? <String>[];
   set locales(List<String> x) => _locales[this] = x;
 
-  Future<void> takeScreenshot(
+  Future<void> takeLocalScreenshot(
     String name, {
     String directory = '../screenshots',
     Duration timeout = const Duration(seconds: 30),
@@ -21,7 +21,7 @@ extension ScreenshotExtension on FlutterDriver {
     if (locales.contains('en') && !File('../screenshots/en/$name.png').existsSync()) {
       for (final locale in locales) {
         final currenLocale = await requestData('local-$locale');
-        await _takeScreenshot(
+        await takeScreenshot(
           name,
           directory: '$directory/$currenLocale',
           timeout: timeout,
@@ -31,11 +31,11 @@ extension ScreenshotExtension on FlutterDriver {
     }
   }
 
-  Future<void> _takeScreenshot(
+  Future<void> takeScreenshot(
     String name, {
-    required String directory,
-    required Duration timeout,
-    required bool waitUntilNoTransientCallbacks,
+    String directory = '../screenshots',
+    Duration timeout = const Duration(seconds: 30),
+    bool waitUntilNoTransientCallbacks = true,
   }) async {
     if (waitUntilNoTransientCallbacks) {
       await this.waitUntilNoTransientCallbacks(timeout: timeout);

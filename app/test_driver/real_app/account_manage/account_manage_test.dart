@@ -30,9 +30,9 @@ Future<String> getPublicKey(FlutterDriver driver, String accountName) async {
 
 Future<void> shareAccount(FlutterDriver driver, String account) async {
   await driver.waitFor(find.byValueKey('go-to-account-share'));
-  await driver.takeScreenshot(Screenshots.accountManageView);
+  await driver.takeLocalScreenshot(Screenshots.accountManageView);
   await driver.tap(find.byValueKey('go-to-account-share'));
-  await driver.takeScreenshot(Screenshots.accountShareView);
+  await driver.takeLocalScreenshot(Screenshots.accountShareView);
   await driver.waitFor(find.byValueKey('close-share-page'));
   await driver.tap(find.byValueKey('close-share-page'));
 }
@@ -41,7 +41,7 @@ Future<void> accountChangeName(FlutterDriver driver, String newName) async {
   await driver.waitFor(find.byValueKey('account-name-edit'));
   await driver.tap(find.byValueKey('account-name-edit'));
   await driver.waitFor(find.byValueKey('account-name-field'));
-  await driver.takeScreenshot(Screenshots.changeAccountName);
+  await driver.takeLocalScreenshot(Screenshots.changeAccountName);
   await enterNewAccountName(driver, newName);
   await driver.tap(find.byValueKey('account-name-edit-check'));
   await driver.waitFor(find.text(newName));
@@ -49,14 +49,14 @@ Future<void> accountChangeName(FlutterDriver driver, String newName) async {
 
 Future<String> exportAccount(FlutterDriver driver, String pin) async {
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
-  await driver.takeScreenshot(Screenshots.accountOptionsDialog);
+  await driver.takeLocalScreenshot(Screenshots.accountOptionsDialog);
   await driver.tap(find.byValueKey('export'));
-  await driver.takeScreenshot(Screenshots.accountPasswordDialog);
+  await driver.takeLocalScreenshot(Screenshots.accountPasswordDialog);
   await enterPin(driver, pin);
   await driver.tap(find.byValueKey('password-ok'));
   await driver.waitFor(find.byValueKey('account-mnemonic-key'));
   final mnemonic = await driver.getText(find.byValueKey('account-mnemonic-key'));
-  await driver.takeScreenshot(Screenshots.exportAccountView);
+  await driver.takeLocalScreenshot(Screenshots.exportAccountView);
   await driver.tap(find.pageBack());
   return mnemonic;
 }
