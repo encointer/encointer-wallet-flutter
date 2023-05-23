@@ -8,12 +8,12 @@ import 'package:upgrader/upgrader.dart';
 import 'package:encointer_wallet/main.dart' as app;
 import 'package:encointer_wallet/modules/modules.dart';
 
-import 'helpers/command/real_app_command.dart';
+import 'helpers/helper.dart';
 
 part 'helpers/command/real_app_functions.dart';
 
 void main() async {
-  const shouldTakeScreenshot = String.fromEnvironment('screenshot');
+  const shouldTakeScreenshot = String.fromEnvironment('locales');
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
 
   late final AppSettings appSettings;
@@ -24,7 +24,7 @@ void main() async {
       switch (command) {
         case RealAppTestCommand.getPlatform:
           return Platform.operatingSystem;
-        case RealAppTestCommand.shouldTakeScreenshot:
+        case RealAppTestCommand.locales:
           return shouldTakeScreenshot;
         case RealAppTestCommand.localeEn:
           return changeLocale(appSettings, 'en');
