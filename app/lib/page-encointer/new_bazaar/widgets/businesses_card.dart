@@ -16,7 +16,7 @@ class BusinessesCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: Card(
-        color: const Color(0xFFf4f7f8),
+        color: businesses.status != null ? businesses.statusColor : const Color(0xFFf4f7f8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -25,8 +25,8 @@ class BusinessesCard extends StatelessWidget {
           child: Row(
             children: [
               SizedBox(
-                width: 120,
-                height: 120,
+                width: 140,
+                height: 140,
                 child: Image.network(
                   businesses.photo,
                   fit: BoxFit.cover,
@@ -38,7 +38,16 @@ class BusinessesCard extends StatelessWidget {
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.only(bottom: 20),
-                      child: Text(businesses.category, style: textTheme.bodySmall),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(businesses.category.name, style: textTheme.bodySmall),
+                          Text(
+                            businesses.status?.name ?? '',
+                            style: textTheme.bodySmall!.copyWith(color: businesses.status?.textColor ?? Colors.black),
+                          )
+                        ],
+                      ),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

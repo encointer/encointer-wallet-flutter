@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar_view/logic/businesses_store.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/logic/businesses_store.dart';
 
 class DropdownWidget extends StatefulWidget {
   const DropdownWidget({super.key});
@@ -61,16 +62,19 @@ class _DropdownWidgetState extends State<DropdownWidget> {
 }
 
 enum Category {
+  @JsonValue('Alle')
   alle('Alle'),
+  @JsonValue('Art & Music')
   artAndMusic('Art & Music'),
+  @JsonValue('Body & Soul')
   bodyAndSoul('Body & Soul'),
+  @JsonValue('Fashion & Clothing')
   fashionAndClothing('Fashion & Clothing'),
+  @JsonValue('Food & Beverage Store')
   foodAndBeverageStore('Food & Beverage Store'),
-  restaurantsAndBars('Restaurants & Bars'),
-  neuBeiLeu('Neu bei Leu');
+  @JsonValue('Restaurants & Bars')
+  restaurantsAndBars('Restaurants & Bars');
 
-  const Category(
-    this.name,
-  );
+  const Category(this.name);
   final String name;
 }
