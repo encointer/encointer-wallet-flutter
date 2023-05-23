@@ -1,10 +1,11 @@
+part of 'screenshot_driver.dart';
+
 class Screenshots {
   /// 0-20 onboarding stuff
-  static const splashView = '001-splash-view';
-  static const accountEntryView = '002-account-entry-view';
-  static const createAccount = '003-create-account';
-  static const pinEntry = '004-pin-entry';
-  static const importAccount = '005-import-account';
+  static const accountEntryView = '001-account-entry-view';
+  static const createAccount = '002-create-account';
+  static const pinEntry = '003-pin-entry';
+  static const importAccount = '004-import-account';
 
   /// 21-40 home
   static const chooseCommunityMap = '021-choose-community-map';
@@ -21,10 +22,6 @@ class Screenshots {
   static const homeAssigningPhaseAssigned = '032-home-assigning-phase-assigned';
   static const homeAssigningPhaseUnassigned = '033-home-assigning-phase-unassigned';
   static const homeAttestingPhaseStartMeetup = '034-home-attesting-phase-start-meetup';
-  static const homeLocaleEn = '035-home-locale-en';
-  static const homeLocaleDe = '036-home-locale-de';
-  static const homeLocaleFr = '037-home-locale-fr';
-  static const homeLocaleRu = '038-home-locale-ru';
 
   /// 41-60 send and receive
   static const receiveView = '041-receive-view';
