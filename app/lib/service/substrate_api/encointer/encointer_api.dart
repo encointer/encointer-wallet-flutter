@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
+import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';

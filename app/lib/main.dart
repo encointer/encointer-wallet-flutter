@@ -20,9 +20,8 @@ import 'package:encointer_wallet/utils/local_storage.dart' as util;
 Future<void> main({AppcastConfiguration? appCast, AppSettings? settings}) async {
   late final AppSettings appSettings;
   WidgetsFlutterBinding.ensureInitialized();
+
   await NotificationPlugin.setup();
-  // var notificationAppLaunchDetails =
-  //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   if (Platform.isAndroid) {
     // this is enabled by default in IOS dev-builds.
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
@@ -36,14 +35,12 @@ Future<void> main({AppcastConfiguration? appCast, AppSettings? settings}) async 
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => EwHttp()),
+        RepositoryProvider(create: (context) => AppConfig(appCast: appCast)),
       ],
       child: MultiProvider(
         providers: [
           Provider<AppSettings>(create: (context) => appSettings..init()),
-          Provider<AppStore>(
-            // On test mode instead of LocalStorage() must be use MockLocalStorage()
-            create: (context) => AppStore(util.LocalStorage(), config: AppConfig(appCast: appCast)),
-          ),
+          Provider<AppStore>(create: (context) => AppStore(util.LocalStorage())),
         ],
         child: const WalletApp(),
       ),

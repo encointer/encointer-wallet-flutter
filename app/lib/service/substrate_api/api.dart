@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/mocks/ipfs/ipfs_api.dart';
+import 'package:encointer_wallet/mocks/ipfs_api.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/account_api.dart';
