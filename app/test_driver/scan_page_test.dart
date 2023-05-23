@@ -12,7 +12,6 @@ void main() {
   group('scan-page', () {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
-      driver!.locales = ['en'];
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
     });
