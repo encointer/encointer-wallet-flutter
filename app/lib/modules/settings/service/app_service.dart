@@ -2,12 +2,13 @@ import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LangService {
-  const LangService(this.storage);
+class AppService {
+  const AppService(this.storage);
 
   final SharedPreferences storage;
 
   static const String localStorageLocaleKey = 'locale';
+  static const String enableBiometricAuthKey = 'biometric-auth-enabled';
 
   Locale init() {
     final code = storage.getString(localStorageLocaleKey);
@@ -29,7 +30,13 @@ class LangService {
     return Locale(languageCode);
   }
 
-  String getName(String code) {
+  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
+    await storage.setBool(enableBiometricAuthKey, value);
+  }
+
+  bool? getIsBiometricAuthenticationEnabled() => storage.getBool(enableBiometricAuthKey);
+
+  String getLocaleName(String code) {
     switch (code) {
       case 'en':
         return 'English';
