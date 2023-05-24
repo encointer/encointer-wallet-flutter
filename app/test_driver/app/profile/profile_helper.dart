@@ -11,6 +11,7 @@ Future<void> scrollToNextPhaseButton(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('profile-list-view'),
     find.byValueKey('next-phase-button'),
+    dyScroll: -100,
   );
 }
 
