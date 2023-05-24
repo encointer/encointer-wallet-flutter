@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
+
+import '../data/mock_account_data.dart';
 
 class MockLocalStorage extends LocalStorage {
   @override

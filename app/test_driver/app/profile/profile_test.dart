@@ -15,7 +15,7 @@ Future<void> goToNetworkView(FlutterDriver driver) async {
 }
 
 Future<void> getNextPhase(FlutterDriver driver) async {
-  await driver.requestData(RealAppTestCommand.devModeOn);
+  await driver.requestData(TestCommand.devModeOn);
   await scrollToNextPhaseButton(driver);
   await tapNextPhase(driver);
 }

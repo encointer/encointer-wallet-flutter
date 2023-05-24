@@ -1,6 +1,3 @@
-import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
-import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
@@ -8,6 +5,10 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
+
+import '../data/mock_encointer_data.dart';
+import 'mock_js_api.dart';
+import 'mock_substrate_dart_api.dart';
 
 /// The key rationale behind this mock is that all the getters do not alter the app state.
 ///

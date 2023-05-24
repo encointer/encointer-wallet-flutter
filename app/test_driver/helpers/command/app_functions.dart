@@ -1,4 +1,4 @@
-part of '../../real_app.dart';
+part of '../../app.dart';
 
 Future<String> changeLocale(AppSettings appSettings, String languageCode) async {
   if (appSettings.locale.languageCode != languageCode) {
