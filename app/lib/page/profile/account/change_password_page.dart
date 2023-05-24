@@ -70,7 +70,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
         );
       } else {
         // we need to iterate over all active accounts and update there password
-        store.settings.setPin(passNew);
+        await store.settings.setPin(passNew);
         for (final account in store.account.accountListAll) {
           final acc = await api.evalJavascript(
             'account.changePassword("${account.pubKey}", "$passOld", "$passNew")',
