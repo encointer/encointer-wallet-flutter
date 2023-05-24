@@ -95,9 +95,9 @@ class AccountApi {
     return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }
 
-  Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
+  Future<Map<String, dynamic>?> checkAccountPassword(AccountData account, String pass) async {
     final pubKey = account.pubKey;
     Log.d('checkpass: $pubKey, $pass', 'AccountApi');
-    return jsApi.evalJavascript('account.checkPassword("$pubKey", "$pass")');
+    return jsApi.evalJavascript<Map<String, dynamic>?>('account.checkPassword("$pubKey", "$pass")');
   }
 }

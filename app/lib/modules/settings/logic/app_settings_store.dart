@@ -13,10 +13,19 @@ class AppSettings = _AppSettingsBase with _$AppSettings;
 abstract class _AppSettingsBase with Store {
   _AppSettingsBase(this._service);
 
-  final LangService _service;
+  final AppService _service;
 
   @observable
   Locale _locale = const Locale('en');
+
+  @computed
+  Locale get locale => _locale;
+
+  @observable
+  bool isBiometricAuthenticationEnabled = false;
+
+  @observable
+  bool developerMode = false;
 
   final locales = const <Locale>[
     Locale('en', ''),
@@ -25,21 +34,28 @@ abstract class _AppSettingsBase with Store {
     Locale('ru', ''),
   ];
 
-  @computed
-  Locale get locale => _locale;
-
   @action
   void init() => _locale = _service.init();
+
+  @action
+  bool getIsBiometricAuthenticationEnabled() {
+    final value = _service.getIsBiometricAuthenticationEnabled();
+    if (value != null) isBiometricAuthenticationEnabled = value;
+    return isBiometricAuthenticationEnabled;
+  }
 
   @action
   Future<void> setLocale(String languageCode) async {
     _locale = await _service.setLocale(languageCode);
   }
 
-  String getName(String code) => _service.getName(code);
+  @action
+  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
+    isBiometricAuthenticationEnabled = value;
+    await _service.setIsBiometricAuthenticationEnabled(value);
+  }
 
-  @observable
-  bool developerMode = false;
+  String getLocaleName(String code) => _service.getLocaleName(code);
 
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;

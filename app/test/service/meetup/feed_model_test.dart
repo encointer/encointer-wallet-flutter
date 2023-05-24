@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/service/meetup/feed_model.dart';
 
-import '../../fixtures/fixture_reader.dart';
+import '../../mock/mock.dart';
 
 void main() {
   test('Object is Feed model', () {

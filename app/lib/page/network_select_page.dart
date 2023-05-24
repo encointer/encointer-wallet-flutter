@@ -86,8 +86,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   List<Widget> _buildAccountList() {
     final appStore = context.read<AppStore>();
-
-    // final primaryColor = Theme.of(context).primaryColor;
     final res = <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

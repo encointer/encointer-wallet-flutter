@@ -265,6 +265,20 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
+  late final _$getPinAsyncAction = AsyncAction('_SettingsStore.getPin', context: context);
+
+  @override
+  Future<String> getPin() {
+    return _$getPinAsyncAction.run(() => super.getPin());
+  }
+
+  late final _$setPinAsyncAction = AsyncAction('_SettingsStore.setPin', context: context);
+
+  @override
+  Future<void> setPin(String pin) {
+    return _$setPinAsyncAction.run(() => super.setPin(pin));
+  }
+
   late final _$initAsyncAction = AsyncAction('_SettingsStore.init', context: context);
 
   @override
@@ -396,16 +410,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkName');
     try {
       return super.setNetworkName(name);
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setPin(String pin) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setPin');
-    try {
-      return super.setPin(pin);
     } finally {
       _$_SettingsStoreActionController.endAction(_$actionInfo);
     }

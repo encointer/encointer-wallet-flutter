@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
@@ -34,7 +35,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    if (!context.read<AppStore>().config.isIntegrationTest) NotificationPlugin.init(context);
+    if (!RepositoryProvider.of<AppConfig>(context).isIntegrationTest) NotificationPlugin.init(context);
     final encointer = context.read<AppStore>().encointer;
     final cid = encointer.community?.cid.toFmtString();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {

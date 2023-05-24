@@ -1,6 +1,6 @@
+import 'package:ew_storage/ew_storage.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -31,13 +31,13 @@ const encointerCacheVersion = 'v1.0';
 ///
 /// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
 class AppStore extends _AppStore with _$AppStore {
-  AppStore(super.localStorage, {required super.config});
+  AppStore(super.localStorage, super.secureStorage);
 }
 
 abstract class _AppStore with Store {
-  _AppStore(this.localStorage, {required this.config});
+  _AppStore(this.localStorage, this.secureStorage);
 
-  final AppConfig config;
+  final SecureStorage secureStorage;
 
   // Note, following pattern of a nullable field with a non-nullable getter
   // is here because mobx can't handle `late` initialization:
@@ -95,7 +95,7 @@ abstract class _AppStore with Store {
   @action
   Future<void> init(String sysLocaleCode) async {
     // wait settings store loaded
-    _settings = SettingsStore(this as AppStore);
+    _settings = SettingsStore(this as AppStore, secureStorage);
     await settings.init(sysLocaleCode);
 
     _dataUpdate = DataUpdateStore(refreshPeriod: const Duration(minutes: 2));
@@ -132,21 +132,13 @@ abstract class _AppStore with Store {
   }
 
   /// Returns the network dependant cache key.
-  ///
-  /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
-  /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
-    final cacheKey = '${settings.endpoint.info}_$key';
-    return config.isTestMode ? 'test-$cacheKey' : cacheKey;
+    return '${settings.endpoint.info}_$key';
   }
 
   /// Returns the cache key for the encointer-storage.
-  ///
-  /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
-  /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
-    final key = '$encointerCachePrefix-$networkInfo';
-    return config.isTestMode ? 'test-$key' : key;
+    return '$encointerCachePrefix-$networkInfo';
   }
 
   Future<bool> purgeEncointerCache(String networkInfo) async {
