@@ -53,6 +53,12 @@ abstract class TranslationsHome {
   String get openMapApplication;
   String get unregister;
   String get unregisterDialogTitle;
+  String errorMessageWithStatusCode(String value);
+  String get badRequest;
+  String get noAuthorizationError;
+  String get somethingWentWrong;
+  String get noAnnouncementFound;
+  String get announcements;
   String get retry;
 }
 
@@ -163,6 +169,21 @@ class TranslationsEnHome implements TranslationsHome {
   String get unregister => 'Unregister';
   @override
   String get unregisterDialogTitle => 'Unregister from the next cycle?';
+  @override
+  String errorMessageWithStatusCode(String value) {
+    return 'Something went wrong, please try again! StatusCode: $value';
+  }
+
+  @override
+  String get badRequest => "The server couldn't process the request";
+  @override
+  String get noAuthorizationError => "You don't have permission to access";
+  @override
+  String get somethingWentWrong => 'Something went wrong, please try again!';
+  @override
+  String get noAnnouncementFound => 'No Announcement found!';
+  @override
+  String get announcements => 'Announcements:';
   @override
   String get retry => 'Retry';
 }
@@ -276,6 +297,21 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get unregisterDialogTitle => 'Vom nächsten Key-Signing Cycle abmelden?';
   @override
+  String errorMessageWithStatusCode(String value) {
+    return 'Etwas ist schief gelaufen. Bitte versuche es erneut! StatusCode: $value';
+  }
+
+  @override
+  String get badRequest => 'Der Server konnte die Anfrage nicht verarbeiten';
+  @override
+  String get noAuthorizationError => 'Du hast keine Zugriffsberechtigung';
+  @override
+  String get somethingWentWrong => 'Etwas ist schief gelaufen. Bitte versuche es erneut';
+  @override
+  String get noAnnouncementFound => 'Keine Ankündigung gefunden!';
+  @override
+  String get announcements => 'Ankündigungen:';
+  @override
   String get retry => 'Wiederholen';
 }
 
@@ -387,6 +423,21 @@ class TranslationsFrHome implements TranslationsHome {
   String get unregister => 'Se désinscrire';
   @override
   String get unregisterDialogTitle => 'Se désinscrire du prochain cycle?';
+  @override
+  String errorMessageWithStatusCode(String value) {
+    return "Une erreur s'est produite. Veuillez réessayer! StatusCode: $value";
+  }
+
+  @override
+  String get badRequest => "Le serveur n'a pas pu traiter la demande";
+  @override
+  String get noAuthorizationError => "Tu n'es pas autorisé à accéder";
+  @override
+  String get somethingWentWrong => "Une erreur s'est produite. Veuillez réessayer!";
+  @override
+  String get noAnnouncementFound => 'Aucune annonce trouvée!';
+  @override
+  String get announcements => 'Annonces:';
   @override
   String get retry => 'Réessayer';
 }
@@ -500,6 +551,21 @@ class TranslationsRuHome implements TranslationsHome {
   String get unregister => 'Отменить регистрацию';
   @override
   String get unregisterDialogTitle => 'Отказаться от участия в следующем цикле?';
+  @override
+  String errorMessageWithStatusCode(String value) {
+    return 'Что-то пошло не так. Пожалуйста, попробуйте еще раз! StatusCode: $value';
+  }
+
+  @override
+  String get badRequest => 'Сервер не смог обработать запрос';
+  @override
+  String get noAuthorizationError => 'У вас нет разрешения на доступ';
+  @override
+  String get somethingWentWrong => 'Что-то пошло не так. Пожалуйста, попробуйте еще раз!';
+  @override
+  String get noAnnouncementFound => 'Объявление не найдено!';
+  @override
+  String get announcements => 'Объявления:';
   @override
   String get retry => 'Повторить';
 }
