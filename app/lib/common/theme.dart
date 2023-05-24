@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 final appThemeEncointer = ThemeData(
-  // useMaterial3: true,
   primarySwatch: zurichLion,
   textTheme: TextTheme(
     displayLarge: TextStyle(
