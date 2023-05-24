@@ -2,8 +2,6 @@ import 'package:encointer_wallet/data/common_services/models/network/api_respons
 import 'package:encointer_wallet/data/common_services/network/api_services.dart';
 import 'package:encointer_wallet/data/remote/announcements/announcements_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/utils/translations/translations_home.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
 
