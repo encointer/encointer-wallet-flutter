@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/mocks/views/mock_dev_mode_qr_scan_page.dart';
 import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
@@ -36,7 +36,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    if (!context.read<AppStore>().config.isIntegrationTest) NotificationPlugin.init(context);
+    if (!RepositoryProvider.of<AppConfig>(context).isIntegrationTest) NotificationPlugin.init(context);
     final encointer = context.read<AppStore>().encointer;
     final cid = encointer.community?.cid.toFmtString();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -162,24 +162,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         iconSize: 22,
         onTap: (index) async {
           if (_tabList[index].key == TabKey.scan) {
-            if (appSettingsStore.developerMode) {
-              /// if integration test: To test devmode QR scanning
-              await Navigator.push(
-                context,
-                // ignore: inference_failure_on_instance_creation
-                MaterialPageRoute(
-                  builder: (context) => MockDevModeQrScanPage(
-                    arguments: MockDevModeQrScanPageParams(scannerContext: QrScannerContext.mainPage),
-                  ),
-                ),
-              );
-            } else {
-              // Push `ScanPage.Route`instead of changing the Page.
-              await Navigator.of(context).pushNamed(
-                ScanPage.route,
-                arguments: ScanPageParams(scannerContext: QrScannerContext.mainPage),
-              );
-            }
+            // Push `ScanPage.Route`instead of changing the Page.
+            await Navigator.of(context).pushNamed(
+              ScanPage.route,
+              arguments: ScanPageParams(scannerContext: QrScannerContext.mainPage),
+            );
           } else {
             setState(() {
               _tabIndex = index;

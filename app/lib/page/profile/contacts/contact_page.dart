@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/mocks/views/mock_dev_mode_qr_scan_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -210,20 +209,10 @@ class _Contact extends State<ContactPage> {
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
                       onPressed: () async {
-                        if (appSettinsStore.developerMode) {
-                          await Navigator.push(
-                            context,
-                            // ignore: inference_failure_on_instance_creation
-                            MaterialPageRoute(
-                              builder: (context) => MockDevModeQrScanPage(
-                                arguments: MockDevModeQrScanPageParams(scannerContext: QrScannerContext.contactsPage),
-                              ),
-                            ),
-                          );
-                        } else {
-                          await Navigator.of(context).popAndPushNamed(ScanPage.route,
-                              arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage));
-                        }
+                        await Navigator.of(context).popAndPushNamed(
+                          ScanPage.route,
+                          arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage),
+                        );
                       },
                     ),
                     const SizedBox(height: 24),

@@ -1,139 +1,340 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
-import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
+import 'app/dev_qr_codes/dev_qr_codes_test.dart';
+import 'helpers/helper.dart';
+import 'app/app.dart';
 
-import 'helpers/extension/screenshot_driver_extension.dart';
+void main() async {
+  late FlutterDriver driver;
+  const timeout120 = Timeout(Duration(seconds: 120));
 
-void main() {
-  FlutterDriver? driver;
+  var publicKey = '';
+  var menemonic = '';
 
   group('EncointerWallet App', () {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
-      driver!.shouldTakeScreenshot = true;
-      // waits until the firs frame after ft startup stabilized
-      await driver!.waitUntilFirstFrameRasterized();
-
-      var ready = await driver!.requestData(TestCommands.waitUntilAppIsReady);
-      while (ready == false.toString()) {
-        print('Waiting for app to be ready: $ready');
-        await Future<void>.delayed(const Duration(seconds: 1));
-        ready = await driver!.requestData(TestCommands.waitUntilAppIsReady);
-        log('app is ready ready $ready');
-      }
-
-      await driver!.requestData(TestCommands.init);
-    });
-
-    test('importing account', () async {
-      await driver!.tap(find.byValueKey('import-account'));
-
-      // put focus on text field
-      await driver!.tap(find.byValueKey('account-source'));
-      await driver!.enterText(endoEncointer['mnemonic'] as String);
-
-      await driver!.tap(find.byValueKey('create-account-name'));
-      await driver!.enterText(endoEncointer['name'] as String);
-
-      await driver!.tap(find.byValueKey('account-import-next'));
-
-      await driver!.tap(find.byValueKey('create-account-pin'));
-      await driver!.enterText(defaultPin);
-
-      await driver!.tap(find.byValueKey('create-account-pin2'));
-      await driver!.enterText(defaultPin);
-
-      await driver!.tap(find.byValueKey('create-account-confirm'));
-    });
-
-    // Note: The second test continues where the first one ended
-    test('choosing cid', () async {
-      await driver!.tap(find.byValueKey('cid-0-marker-icon'));
-      await driver!.tap(find.byValueKey('cid-0-marker-description'));
-    }, timeout: const Timeout(Duration(seconds: 120))); // needed for android CI with github actions
-
-    test('print-screen of homepage', () async {
-      // Here we get the metadata because it is reset to null in
-      // the setChosenCid() method which is called, when a community is chosen
-      await driver!.requestData(TestCommands.homePage);
-
-      await dismissUpgradeDialogOnAndroid(driver!);
-
-      // take a screenshot of the EncointerHome Screen
-      await driver!.takeScreenshot('mock-encointer-home');
-    });
-
-    test('show receive qr code', () async {
-      await driver!.tap(find.byValueKey('qr-receive'));
-      await driver!.takeScreenshot('mock-receive-funds');
-
-      // go back to homepage
-      await driver!.tap(find.byValueKey('close-receive-page'));
-    });
-
-    test('transfer-page', () async {
-      // go to transfer page
-      // await driver.tap(find.byValueKey('cid-asset'));
-
-      print('---find transfer');
-      await driver!.tap(find.byValueKey('transfer'));
-
-      print('---find transfer-amount-input');
-      await driver!.tap(find.byValueKey('transfer-amount-input'));
-
-      print('---enter 3.4');
-      await driver!.enterText('3.4');
-
-      print('---screenshot transfer-page');
-      await driver!.takeScreenshot('mock-transfer-page');
-
-      // go back to homepage
-
-      print('---close-transfer-page');
-      await driver!.tap(find.byValueKey('close-transfer-page'));
-    });
-
-    test('meetupPage', () async {
-      // attesting phase
-      await driver!.requestData(TestCommands.readyForMeetup);
-
-      log('tapping startMeetup');
-      await driver!.takeScreenshot('mock-debug-meetup-start');
-
-      await driver!.tap(find.byValueKey('start-meetup'));
-      await driver!.tap(find.byValueKey('attendees-count'));
-      await driver!.enterText('3');
-      await driver!.tap(find.byValueKey('ceremony-step-1-next'));
-      await driver!.takeScreenshot('mock-claim-qr');
+      final locales = await driver.requestData(TestCommand.locales);
+      driver.locales = locales.split(',');
+      await driver.waitUntilFirstFrameRasterized();
     });
   });
 
-  tearDownAll(() async {
-    if (driver != null) await driver!.close();
+  test('create account by name Tom', () async {
+    await checkAcoountEntryView(driver);
+    await goToCreateAccountViewFromAcoountEntryView(driver);
+    await createAccount(driver, 'Tom');
+  }, timeout: timeout120);
+
+  test('create PIN by text 0001', () async {
+    await createPin(driver, '0001');
+  }, timeout: timeout120);
+
+  test('choosing cid', () async {
+    await choosingCid(driver, 0);
+  }, timeout: timeout120);
+
+  test('home-page', () async {
+    await homeInit(driver);
+  }, timeout: timeout120);
+
+  test('qr-receive page', () async {
+    await goToReceiveViewFromHomeView(driver);
+    await receiveView(driver);
+  }, timeout: timeout120);
+
+  test('turn on dev-mode', () async {
+    await goToProfileViewFromNavBar(driver);
+    await turnDevMode(driver);
+  }, timeout: timeout120);
+
+  test('change-network', () async {
+    await goToNetworkView(driver);
+    await changeDevNetwork(driver, 'Tom');
+  }, timeout: timeout120);
+
+  test('change-community', () async {
+    await goToHomeViewFromNavBar(driver);
+    await changeCommunity(driver);
+  }, timeout: timeout120);
+
+  test('import account Alice', () async {
+    await goToAddAcoountViewFromPanel(driver);
+    await importAccount(driver, 'Alice', '//Alice');
+    await closePanel(driver);
+  }, timeout: timeout120);
+
+  test('Register [Bootstrapper] Alice', () async {
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
+  }, timeout: timeout120);
+
+  test('Unregister [Bootstrapper] Alice', () async {
+    await scrollToCeremonyBox(driver);
+    await unregisterAndWait(driver);
+  }, timeout: timeout120);
+
+  test('Register [Bootstrapper] Alice again', () async {
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
+  }, timeout: timeout120);
+
+  group('DevMode QR Codes tests', () {
+    test('turn on dev-mode', () async {
+      await qrTurnOnDevMode(driver);
+    });
+
+    test('HomePage: test and save the contact from qr', () async {
+      await qrFromHomeTestAndSaveContact(driver);
+    }, timeout: timeout120);
+
+    test('HomePage: test and send money with amount from qr', () async {
+      await qrFromHomeTestAndSendWithAmount(driver);
+    }, timeout: timeout120);
+
+    test('HomePage: test and send money without amount from qr', () async {
+      await qrFromHomeTestAndSendWithoutAmount(driver);
+    }, timeout: timeout120);
+
+    test('SendPage: test and send money with amount from qr', () async {
+      await qrFromSendPageTestAndSendWithAmount(driver);
+    }, timeout: timeout120);
+
+    test('SendPage: test and send money without amount from qr', () async {
+      await qrFromSendPageTestAndSendWithoutAmount(driver);
+    }, timeout: timeout120);
+
+    test('ContactPage: add contact from contact-qr', () async {
+      await qrFromContactAddContactFromQrContact(driver);
+    }, timeout: timeout120);
+
+    test('ContactPage: add contact from invoice-qr', () async {
+      await qrFromContactAddContactFromQrInvoice(driver);
+    }, timeout: timeout120);
+
+    test('finished, turn off dev-mode', () async {
+      await qrTurnOnDevMode(driver);
+      await goToHomeViewFromNavBar(driver);
+    });
   });
-}
 
-void log(String msg) {
-  print('[test_driver] $msg');
-}
+  test('send money to Tom', () async {
+    await scrollToPanelController(driver);
+    await goToTransferViewFromHomeView(driver);
+    await senMoneyToAccount(driver, 'Tom', '0.1');
+  }, timeout: timeout120);
 
-Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
-  final operationSystem = await driver.requestData('getPlatform');
-  log('operationSystem ==================> $operationSystem');
+  test('Register [Newbie] Tom', () async {
+    await changeAccountFromPanel(driver, 'Tom');
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
+  }, timeout: timeout120);
 
-  if (operationSystem != 'android') return;
+  test('Unregister [Newbie] Tom', () async {
+    await scrollToCeremonyBox(driver);
+    await unregisterAndWait(driver);
+  }, timeout: timeout120);
 
-  try {
-    log('Waiting for upgrader alert dialog');
-    await driver.waitFor(find.byType('AlertDialog'));
+  test('Register [Newbie] Tom again', () async {
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
+    await scrollToPanelController(driver);
+  }, timeout: timeout120);
 
-    log('Tapping ignore button');
-    await driver.tap(find.text('IGNORE'));
-  } catch (e) {
-    log(e.toString());
-  }
+  test('import account Charlie', () async {
+    await goToAddAcoountViewFromPanel(driver);
+    await importAccount(driver, 'Charlie', '//Charlie');
+    await closePanel(driver);
+  }, timeout: timeout120);
+
+  test('import and register-Bob', () async {
+    await goToAddAcoountViewFromPanel(driver);
+    await importAccount(driver, 'Bob', '//Bob');
+    await closePanel(driver);
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
+    await scrollToPanelController(driver);
+  }, timeout: timeout120);
+
+  test('get assignin-phase', () async {
+    await goToProfileViewFromNavBar(driver);
+    await getNextPhase(driver);
+  }, timeout: timeout120);
+
+  test('check assignin-phase account Assigned', () async {
+    await goToHomeViewFromNavBar(driver);
+    await checkAssignPhaseAssigned(driver);
+  }, timeout: timeout120);
+
+  test('check assignin-phase account Unassigned', () async {
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Charlie');
+    await checkAssignPhaseUnassigned(driver);
+  }, timeout: timeout120);
+
+  test('get attesting-phase', () async {
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Bob');
+    await goToProfileViewFromNavBar(driver);
+    await getNextPhase(driver);
+  }, timeout: timeout120);
+
+  test('start meetup-Bob', () async {
+    await goToHomeViewFromNavBar(driver);
+    await scrollToStartMeetup(driver);
+    await startMeetupTest(driver);
+    await scrollToPanelController(driver);
+  }, timeout: timeout120);
+
+  test('start meetup-Tom', () async {
+    await changeAccountFromPanel(driver, 'Tom');
+    await scrollToStartMeetup(driver);
+    await startMeetupTest(driver);
+    await scrollToPanelController(driver);
+  }, timeout: timeout120);
+
+  test('start meetup-Alice', () async {
+    await changeAccountFromPanel(driver, 'Alice');
+    await scrollToStartMeetup(driver);
+    await startMeetupTest(driver);
+    await scrollToPanelController(driver);
+  }, timeout: timeout120);
+
+  test('Claim-pending (dev-mode)', () async {
+    await claimPendingDev(driver);
+  }, timeout: timeout120);
+
+  test('Go to Profile Page and Check reputation count', () async {
+    await goToProfileViewFromNavBar(driver);
+    await checkPeputationCount(driver, 2);
+  }, timeout: timeout120);
+
+  test('Get Registering phase', () async {
+    await getNextPhase(driver);
+  }, timeout: timeout120);
+
+  test('contact-page add contact', () async {
+    await goToContactViewFromNavBar(driver);
+    await checkContactEmpty(driver);
+    await addContact(driver, 'Obelix', '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
+  }, timeout: timeout120);
+
+  test('change contact name', () async {
+    await changeContactName(driver, 'Obelix', 'Asterix');
+  }, timeout: timeout120);
+
+  test('send endorse to account', () async {
+    await sendEndorse(driver);
+  }, timeout: timeout120);
+
+  test('send money to account from Bootstraper account', () async {
+    await senMoneyToContact(driver);
+    await sendMoneyToSelectedAccount(driver, '0.2');
+    await goToHomeViewFromNavBar(driver);
+  }, timeout: timeout120);
+
+  test('delete account Bob', () async {
+    await goToProfileViewFromNavBar(driver);
+    await deleteAccountFromProfilePage(driver, 'Bob');
+  }, timeout: timeout120);
+
+  test('delete account Charlie', () async {
+    await deleteAccountFromProfilePage(driver, 'Charlie');
+  }, timeout: timeout120);
+
+  test('create niewbie Account', () async {
+    await goToHomeViewFromNavBar(driver);
+    await goToAddAcoountViewFromPanel(driver);
+    await createNewbieAccount(driver, 'Li');
+    await closePanel(driver);
+    await changeAccountFromPanel(driver, 'Tom');
+  }, timeout: timeout120);
+
+  test('get public key', () async {
+    await goToProfileViewFromNavBar(driver);
+    publicKey = await getPublicKey(driver, 'Li');
+  }, timeout: timeout120);
+
+  test('contact-page add account Li', () async {
+    await goToContactViewFromNavBar(driver);
+    await addContact(driver, 'Li', publicKey);
+  }, timeout: timeout120);
+
+  test('send endorse to account from Reputable', () async {
+    await contactDetailView(driver, 'Li');
+    await sendEndorse(driver);
+  }, timeout: timeout120);
+
+  test('send money to account from Reputable account', () async {
+    await senMoneyToContact(driver);
+    await sendMoneyToSelectedAccount(driver, '0.2');
+    await driver.takeLocalScreenshot(Screenshots.contactsOverview);
+    await goToHomeViewFromNavBar(driver);
+  }, timeout: timeout120);
+
+  test('register Tom (check status as Reputable)', () async {
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, ParticipantTypeTestHelper.reputable);
+  }, timeout: timeout120);
+
+  test('Unregister [Reputable] Tom', () async {
+    await unregisterAndWait(driver);
+  }, timeout: timeout120);
+
+  test('Register [Reputable] Tom again', () async {
+    await registerAndWait(driver, ParticipantTypeTestHelper.reputable);
+  }, timeout: timeout120);
+
+  test('register Li (check status as Endorsee)', () async {
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Li');
+    await scrollToCeremonyBox(driver);
+    await registerAndWait(driver, ParticipantTypeTestHelper.endorsee);
+  }, timeout: timeout120);
+
+  test('Unregister [Endorsee] Li', () async {
+    await unregisterAndWait(driver);
+  }, timeout: timeout120);
+
+  test('Register [Newbie-Endorsee] Li again', () async {
+    await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
+  }, timeout: timeout120);
+
+  test('account share', () async {
+    await scrollToPanelController(driver);
+    await changeAccountFromPanel(driver, 'Tom');
+    await goToProfileViewFromNavBar(driver);
+    await accountDetailPage(driver, 'Tom');
+    await shareAccount(driver, 'Tom');
+  }, timeout: timeout120);
+
+  test('account change name', () async {
+    await accountChangeName(driver, 'Jerry');
+  }, timeout: timeout120);
+
+  test('account export', () async {
+    menemonic = await exportAccount(driver, '0001');
+  }, timeout: timeout120);
+
+  test('account delete from account manage page', () async {
+    await deleteAccountFromAccountManagePage(driver);
+  }, timeout: timeout120);
+
+  test('import account with menemonic phrase', () async {
+    await goToHomeViewFromNavBar(driver);
+    await goToAddAcoountViewFromPanel(driver);
+    await importAccount(driver, 'Bob', menemonic);
+  }, timeout: timeout120);
+
+  test('change-language-from-profile-page', () async {
+    await goToProfileViewFromNavBar(driver);
+    await changeLanguage(driver);
+  }, timeout: timeout120);
+
+  test('delete all accounts', () async {
+    await deleteAllAccount(driver);
+  }, timeout: timeout120);
+
+  tearDownAll(() async => driver.close());
 }
