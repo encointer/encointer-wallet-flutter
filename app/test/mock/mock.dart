@@ -9,3 +9,4 @@ export 'data/mock_account_data.dart';
 export 'data/mock_encointer_data.dart';
 export 'fixtures/fixture_reader.dart';
 export 'storage/mock_local_storage.dart';
+export 'storage/flutter_secure_storage.dart';

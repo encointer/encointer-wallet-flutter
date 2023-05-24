@@ -6,7 +6,6 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
@@ -37,9 +36,8 @@ class _SplashViewState extends State<SplashView> {
     });
 
     store.setApiReady(true);
-
-    if (store.account.accountListAll.isNotEmpty) {
-      await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
+    if (store.account.accountList.isNotEmpty) {
+      await Navigator.pushNamedAndRemoveUntil(context, LoginView.route, (route) => false);
     } else {
       await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
     }

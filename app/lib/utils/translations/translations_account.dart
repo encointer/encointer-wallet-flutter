@@ -30,6 +30,11 @@ abstract class TranslationsAccount {
   String get uosScan;
   String get uosSigner;
   String get uosTitle;
+  String get welcome;
+  String get pinError;
+  String get signIn;
+  String get localizedReason;
+  String get biometricAuth;
 }
 
 class TranslationsEnAccount implements TranslationsAccount {
@@ -92,6 +97,16 @@ class TranslationsEnAccount implements TranslationsAccount {
   String get uosSigner => 'Signer';
   @override
   String get uosTitle => 'Offline Signature';
+  @override
+  String get welcome => 'Welcome';
+  @override
+  String get pinError => 'PIN is incorrect';
+  @override
+  String get signIn => 'Sign in';
+  @override
+  String get localizedReason => 'Authenticate to access your account.';
+  @override
+  String get biometricAuth => 'Biometric authentication';
 }
 
 class TranslationsDeAccount implements TranslationsAccount {
@@ -154,6 +169,16 @@ class TranslationsDeAccount implements TranslationsAccount {
   String get uosSigner => 'Signierer';
   @override
   String get uosTitle => 'Offline Signatur';
+  @override
+  String get welcome => 'Willkommen';
+  @override
+  String get pinError => 'PIN ist falsch';
+  @override
+  String get signIn => 'Anmelden';
+  @override
+  String get localizedReason => 'Authentifizierung notwendig um auf dein Konto zuzugreifen.';
+  @override
+  String get biometricAuth => 'Biometrische Authentifizierung';
 }
 
 class TranslationsFrAccount implements TranslationsAccount {
@@ -216,6 +241,16 @@ class TranslationsFrAccount implements TranslationsAccount {
   String get uosSigner => 'Signataire';
   @override
   String get uosTitle => 'Signature hors ligne';
+  @override
+  String get welcome => 'Bienvenue';
+  @override
+  String get pinError => 'Le NIP est incorrect';
+  @override
+  String get signIn => 'Se connecter';
+  @override
+  String get localizedReason => 'Authentification nécessaire pour accéder à ton compte.';
+  @override
+  String get biometricAuth => 'Authentification biométrique';
 }
 
 class TranslationsRuAccount implements TranslationsAccount {
@@ -278,4 +313,14 @@ class TranslationsRuAccount implements TranslationsAccount {
   String get uosSigner => 'Подписавший';
   @override
   String get uosTitle => 'Оффлайн подпись';
+  @override
+  String get welcome => 'Добро пожаловать';
+  @override
+  String get pinError => 'Неверный PIN-код';
+  @override
+  String get signIn => 'Войти';
+  @override
+  String get localizedReason => 'Аутентифицируйтесь для доступа к вашей учетной записи.';
+  @override
+  String get biometricAuth => 'Биометрическая аутентификация';
 }
