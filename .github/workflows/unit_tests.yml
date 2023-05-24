@@ -4,7 +4,7 @@ on:
   push:
     branches: [master, f-droid]
   pull_request:
-    branches: [master, f-droid, el/re-structure-integration-test]
+    branches: [master, f-droid]
 
 jobs:
   flutter:

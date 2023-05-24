@@ -132,17 +132,11 @@ abstract class _AppStore with Store {
   }
 
   /// Returns the network dependant cache key.
-  ///
-  /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
-  /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
     return '${settings.endpoint.info}_$key';
   }
 
   /// Returns the cache key for the encointer-storage.
-  ///
-  /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
-  /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
     return '$encointerCachePrefix-$networkInfo';
   }
