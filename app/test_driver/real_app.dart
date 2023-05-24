@@ -47,7 +47,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
-  appSettings = AppSettings(LangService(await SharedPreferences.getInstance()));
+  appSettings = AppSettings(AppService(await SharedPreferences.getInstance()));
   WidgetsApp.debugAllowBannerOverride = false;
   await app.main(appCast: cfg, settings: appSettings);
 }

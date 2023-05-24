@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:ew_storage/ew_storage.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/app.dart';
@@ -22,6 +22,7 @@ void main() async {
   final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
   final globalAppStore = AppStore(
     MockLocalStorage(),
+    const SecureStorage(),
     config: AppConfig(mockSubstrateApi: true, isTestMode: true, appCast: cfg),
   );
 
@@ -60,7 +61,7 @@ void main() async {
   await NotificationPlugin.setup();
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
-  final localService = LangService(await SharedPreferences.getInstance());
+  final localService = AppService(await SharedPreferences.getInstance());
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.

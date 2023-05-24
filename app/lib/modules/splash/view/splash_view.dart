@@ -1,5 +1,4 @@
 import 'package:ew_http/ew_http.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +7,6 @@ import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
@@ -44,12 +42,10 @@ class _SplashViewState extends State<SplashView> {
 
     store.setApiReady(true);
 
-    if (store.account.accountListAll.isNotEmpty) {
-      await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
+    if (store.account.accountList.isNotEmpty) {
+      await Navigator.pushNamedAndRemoveUntil(context, LoginView.route, (route) => false);
     } else {
-      await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryView()), (route) => false);
+      await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
     }
   }
 
