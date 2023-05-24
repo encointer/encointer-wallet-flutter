@@ -301,13 +301,13 @@ class Fmt {
     final data = base58Codec.decode(address);
     final prefix = data[0];
 
-    assert(prefix < 64, 'prefixes >= 64 are currently not supported');
-    assert(data.length == prefixLen + pubKeyLen + checkSumLen, 'Bad address length ${data.length}');
+    if (prefix >= 64) throw Exception('prefixes >= 64 are currently not supported');
+    if (data.length != prefixLen + pubKeyLen + checkSumLen) throw Exception('Bad address length ${data.length}');
 
     final hash = blake2WithSs58Pre(Uint8List.fromList(data.sublist(0, pubKeyLen + prefixLen)));
     final checksum = hash.sublist(0, checkSumLen);
     final checksumData = data.sublist(pubKeyLen + prefixLen, pubKeyLen + prefixLen + checkSumLen);
-    assert(listEquals(checksumData, checksum), 'Invalid checksum: $checksumData != $checksum');
+    if (!listEquals(checksumData, checksum)) throw Exception('Invalid checksum: $checksumData != $checksum');
 
     return Ss58DecodeResult(bytesToHex(data.sublist(prefixLen, prefixLen + pubKeyLen)), prefix);
   }

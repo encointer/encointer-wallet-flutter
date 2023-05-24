@@ -34,6 +34,27 @@ void main() {
         expect(result.prefix, 42);
         expect(result.pubKey, alice);
       });
+
+      test('ss58Decode fails for wrong checksum', () {
+        // I could not find out how to trigger wrong length yet.
+        try {
+          // Replaced last letter: Y -> Q
+          Fmt.ss58Decode('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQQ');
+        } catch (e) {
+          expect(e.toString(), 'Exception: Invalid checksum: [29, 25] != [29, 33]');
+        }
+      });
+
+      test('ss58Decode fails for prefix to big', () {
+        try {
+          // Removed last letter
+          Fmt.ss58Decode('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQ');
+        } catch (e) {
+          expect(e.toString(), 'Exception: prefixes >= 64 are currently not supported');
+        }
+      });
+
+      // I could not find out how to trigger wrong length yet...
     });
 
     test('blake2bWithSs58Pre works', () {
