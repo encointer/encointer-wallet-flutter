@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,8 +21,6 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
-import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -330,12 +329,9 @@ class _AssetsViewState extends State<AssetsView> {
                     const SizedBox(height: 24),
                     CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                     const SizedBox(height: 24),
-                    if (appSettingsStore.developerMode)
-                      Provider(
-                        create: (context) => AnnouncementStore()
-                          ..getAnnouncementGlobal()
-                          ..getAnnouncementCommunnity(widget.store.encointer.community?.cid.toFmtString()),
-                        child: const AnnouncementView(),
+                    if (!appSettingsStore.developerMode)
+                      AnnouncementView(
+                        cid: widget.store.encointer.community?.cid.toFmtString(),
                       ),
                   ],
                 ),
