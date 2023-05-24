@@ -388,8 +388,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'Melde dich jetzt an!';
   @override
-  String get offlineMessage =>
-      'Du bist offline. Du kannst deine Ansprüche später auf dem Startbildschirm einreichen.';
+  String get offlineMessage => 'Du bist offline. Du kannst deine Ansprüche später auf dem Startbildschirm einreichen.';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -551,8 +550,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get registeringLastDayOfRegisteringReminderTitle => 'Inscris-tois maintenant!';
   @override
-  String get offlineMessage =>
-      "Tu es hors ligne. Tes demandes peuvent être soumises plus tard sur l'écran d'accueil.";
+  String get offlineMessage => "Tu es hors ligne. Tes demandes peuvent être soumises plus tard sur l'écran d'accueil.";
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
