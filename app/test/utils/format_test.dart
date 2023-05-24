@@ -20,6 +20,14 @@ void main() {
         // Reproduce with `subkey inspect //Alice`
         expect(Fmt.ss58Encode(alice), '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
       });
+
+      test('ss58Encode fails for prefix >= 64', () {
+        try {
+          Fmt.ss58Encode(alice, prefix: 64);
+        } catch (e) {
+          expect(e.toString(), 'Exception: prefixes >= 64 are currently not supported');
+        }
+      });
     });
 
     group('Decode', () {
@@ -45,9 +53,9 @@ void main() {
         }
       });
 
-      test('ss58Decode fails for prefix to big', () {
+      test('ss58Decode fails for prefix too big', () {
         try {
-          // Removed last letter
+          // Removed last letter. I don't really know how to trigger specific prefixes.
           Fmt.ss58Decode('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQ');
         } catch (e) {
           expect(e.toString(), 'Exception: prefixes >= 64 are currently not supported');

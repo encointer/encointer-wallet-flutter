@@ -268,7 +268,7 @@ class Fmt {
   /// Note: This only supports prefixes < 64, bigger prefixes require
   /// special handling.
   static String ss58Encode(String pubKey, {int prefix = 42}) {
-    assert(prefix < 64, 'prefixes >= 64 are currently not supported');
+    if (prefix >= 64) throw Exception('prefixes >= 64 are currently not supported');
 
     final body = Uint8List.fromList([prefix, ...Fmt.hexToBytes(pubKey)]);
     final hash = blake2WithSs58Pre(body);
