@@ -2,10 +2,6 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:ew_storage/ew_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
-import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -13,18 +9,14 @@ import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 
-import '../../mock/flutter_secure_storage.dart';
+import '../../mock/mock.dart';
 
 /// Returns an initialized `AppStore`.
 ///
 /// The `endpoint` should be different for every test if it involves serialization, so that the caching
 /// does not interfere with other tests.
 Future<AppStore> setupAppStore(String networkInfo) async {
-  final store = AppStore(
-    MockLocalStorage(),
-    SecureStorage(MockFlutterSecureStorage()),
-    config: const AppConfig(mockSubstrateApi: true, isTestMode: true),
-  );
+  final store = AppStore(MockLocalStorage(), SecureStorage(MockFlutterSecureStorage()));
   await store.init('_en');
 
   final endpoint = EndpointData()..info = networkInfo;

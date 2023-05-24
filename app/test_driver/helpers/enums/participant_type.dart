@@ -1,4 +1,4 @@
-import '../extension/screenshot_driver.dart';
+import '../helper.dart';
 
 enum ParticipantTypeTestHelper {
   newbie(

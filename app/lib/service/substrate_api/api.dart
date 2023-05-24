@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/mocks/ipfs/ipfs_api.dart';
+import 'package:encointer_wallet/mocks/ipfs_api.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/account_api.dart';
@@ -40,7 +40,6 @@ class Api {
     EwHttp ewHttp,
     String jsServiceEncointer, {
     bool isIntegrationTest = false,
-    String gateway = '',
   }) {
     return Api(
       store,
@@ -50,7 +49,7 @@ class Api {
       AssetsApi(store, js),
       ChainApi(store, js),
       EncointerApi(store, js, dartApi, ewHttp),
-      isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: gateway),
+      isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
       jsServiceEncointer,
     );
   }
