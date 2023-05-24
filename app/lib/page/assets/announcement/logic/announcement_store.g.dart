@@ -85,12 +85,12 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     });
   }
 
-  late final _$getLeuAnnouncementsAsyncAction =
-      AsyncAction('_AnnouncementStoreBase.getLeuAnnouncements', context: context);
+  late final _$getCommunityAnnouncementsAsyncAction =
+      AsyncAction('_AnnouncementStoreBase.getCommunityAnnouncements', context: context);
 
   @override
-  Future<void> getLeuAnnouncements(String? cid) {
-    return _$getLeuAnnouncementsAsyncAction.run(() => super.getLeuAnnouncements(cid));
+  Future<void> getCommunityAnnouncements(String? cid) {
+    return _$getCommunityAnnouncementsAsyncAction.run(() => super.getCommunityAnnouncements(cid));
   }
 
   late final _$getGlobalAnnouncementsAsyncAction =

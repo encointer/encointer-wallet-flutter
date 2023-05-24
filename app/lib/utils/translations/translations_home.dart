@@ -304,7 +304,7 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get badRequest => 'Der Server konnte die Anfrage nicht verarbeiten';
   @override
-  String get noAuthorizationError => 'Sie haben keine Zugriffsberechtigung';
+  String get noAuthorizationError => 'Du hast keine Zugriffsberechtigung';
   @override
   String get somethingWentWrong => 'Etwas ist schief gelaufen. Bitte versuche es erneut';
   @override
@@ -431,7 +431,7 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get badRequest => "Le serveur n'a pas pu traiter la demande";
   @override
-  String get noAuthorizationError => "Vous n'êtes pas autorisé à accéder";
+  String get noAuthorizationError => "Tu n'es pas autorisé à accéder";
   @override
   String get somethingWentWrong => "Une erreur s'est produite. Veuillez réessayer!";
   @override

@@ -42,7 +42,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   @override
   void initState() {
     _disposers = <ReactionDisposer>[
-      /// in case of an error, it triggers dialog to popup
+      /// in case of an unknown error, it triggers dialog to popup
       reaction((_) => _announcementStore.error.isNotNullOrEmpty, (result) {
         if (result) {
           AppAlert.showErrorDialog(
@@ -53,7 +53,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
         }
       }),
 
-      /// in case of an error, it triggers dialog to popup
+      /// in case of a known error, it triggers dialog to popup
       reaction((_) => _announcementStore.failureType != null, (result) {
         if (result) {
           AppAlert.showErrorDialog(
@@ -71,6 +71,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   Future<void> didChangeDependencies() async {
     _dic = I18n.of(context)!.translationsForLocale().home;
     await _getAnnouncements();
+
     super.didChangeDependencies();
   }
 
@@ -83,13 +84,14 @@ class _AnnouncementViewState extends State<AnnouncementView> {
         d();
       }
     }
+
     super.dispose();
   }
 
   Future<void> _getAnnouncements() async {
     await Future.wait([
       _announcementStore.getGlobalAnnouncements(),
-      _announcementStore.getLeuAnnouncements(widget.cid),
+      _announcementStore.getCommunityAnnouncements(widget.cid),
     ]);
   }
 

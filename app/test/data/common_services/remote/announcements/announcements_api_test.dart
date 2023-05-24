@@ -16,7 +16,7 @@ void main() {
 
   void setGetAnnouncementCommunnity() {
     when(
-      () => mockAnnouncementsApi.getLeuAnnouncements(cid: any(named: 'cid')),
+      () => mockAnnouncementsApi.getCommunityAnnouncements(cid: any(named: 'cid')),
     ).thenAnswer((_) async => Success<List<Announcement>>(data: leuAnnouncements));
   }
 
@@ -32,7 +32,7 @@ void main() {
       setGetAnnouncementCommunnity();
 
       // act
-      final result = await mockAnnouncementsApi.getLeuAnnouncements(cid: 'cid');
+      final result = await mockAnnouncementsApi.getCommunityAnnouncements(cid: 'cid');
 
       // assert
       expect((result as Success<List<Announcement>>).data!.first.communityIdentifier,

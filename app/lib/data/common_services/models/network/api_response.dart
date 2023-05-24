@@ -10,14 +10,16 @@ class Failure<T> extends ApiResponse<T> {
   Failure({required this.failureType, this.error});
   FailureType failureType;
 
-  /// if status code is none of 400, 401, 403, 500
-  /// we return status code only as error
-  /// otherwise, leave it null
+  /// Contains the http status code for unknown errors, otherwise it is null.
   String? error;
 }
 
 enum FailureType {
-  unknown,
+  /// Represents http error 400
   badRequest,
+
+  /// Represents http errors 401, 403
   noAuthorization,
+  // Unknown error
+  unknown,
 }
