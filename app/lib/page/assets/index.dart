@@ -1,9 +1,5 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
-import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
-import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +19,10 @@ import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
+import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
+import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
