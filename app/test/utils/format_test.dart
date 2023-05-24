@@ -44,7 +44,6 @@ void main() {
       });
 
       test('ss58Decode fails for wrong checksum', () {
-        // I could not find out how to trigger wrong length yet.
         try {
           // Replaced last letter: Y -> Q
           Fmt.ss58Decode('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQQ');
