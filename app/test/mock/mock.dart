@@ -6,7 +6,6 @@ export 'api/mock_account_api.dart';
 export 'api/mock_encointer_api.dart';
 export 'api/mock_substrate_dart_api.dart';
 export 'data/mock_account_data.dart';
-export 'data/mock_chain_data.dart';
 export 'data/mock_encointer_data.dart';
 export 'fixtures/fixture_reader.dart';
 export 'storage/mock_local_storage.dart';
