@@ -56,7 +56,7 @@ Future<void> checkAssignPhaseUnassigned(FlutterDriver driver) async {
 }
 
 Future<void> claimPendingDev(FlutterDriver driver) async {
-  await driver.requestData(RealAppTestCommand.devModeOn);
+  await driver.requestData(TestCommand.devModeOn);
   await driver.waitFor(find.byValueKey('claim-pending-dev'));
   await driver.tap(find.byValueKey('claim-pending-dev'));
 }
