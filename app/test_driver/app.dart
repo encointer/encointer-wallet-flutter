@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/main.dart' as app;
+import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 
 import 'helpers/helper.dart';
@@ -17,7 +18,8 @@ void main() async {
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
 
   late final AppSettings appSettings;
-  final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
+  final appCast = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
+  final appConfig = AppConfig(appCast: appCast, isIntegrationTest: true);
 
   enableFlutterDriverExtension(
     handler: (command) async {
@@ -49,5 +51,5 @@ void main() async {
   await Upgrader.clearSavedSettings();
   appSettings = AppSettings(LangService(await SharedPreferences.getInstance()));
   WidgetsApp.debugAllowBannerOverride = false;
-  await app.main(appCast: cfg, settings: appSettings);
+  await app.main(appConfig: appConfig, settings: appSettings);
 }

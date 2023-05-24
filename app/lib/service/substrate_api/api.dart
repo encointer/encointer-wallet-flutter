@@ -40,7 +40,6 @@ class Api {
     EwHttp ewHttp,
     String jsServiceEncointer, {
     bool isIntegrationTest = false,
-    String gateway = '',
   }) {
     return Api(
       store,
@@ -50,7 +49,7 @@ class Api {
       AssetsApi(store, js),
       ChainApi(store, js),
       EncointerApi(store, js, dartApi, ewHttp),
-      isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: gateway),
+      isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
       jsServiceEncointer,
     );
   }

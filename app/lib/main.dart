@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:provider/provider.dart';
-import 'package:upgrader/upgrader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:encointer_wallet/app.dart';
@@ -17,7 +16,7 @@ import 'package:encointer_wallet/service/http_overrides.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart' as util;
 
-Future<void> main({AppcastConfiguration? appCast, AppSettings? settings}) async {
+Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
   late final AppSettings appSettings;
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -35,7 +34,7 @@ Future<void> main({AppcastConfiguration? appCast, AppSettings? settings}) async 
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => EwHttp()),
-        RepositoryProvider(create: (context) => AppConfig(appCast: appCast)),
+        RepositoryProvider(create: (context) => appConfig ?? const AppConfig()),
       ],
       child: MultiProvider(
         providers: [
