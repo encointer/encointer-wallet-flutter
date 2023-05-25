@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -268,7 +268,7 @@ class Fmt {
   /// Note: This only supports prefixes < 64, bigger prefixes require
   /// special handling.
   static String ss58Encode(String pubKey, {int prefix = 42}) {
-    assert(prefix < 64, 'prefixes >= 64 are currently not supported');
+    if (prefix >= 64) throw Exception('prefixes >= 64 are currently not supported');
 
     final body = Uint8List.fromList([prefix, ...Fmt.hexToBytes(pubKey)]);
     final hash = blake2WithSs58Pre(body);
@@ -277,8 +277,44 @@ class Fmt {
     return base58Codec.encode(complete);
   }
 
+  /// General pubKey length used in substrate and Encointer.
+  static const pubKeyLen = 32;
+
+  /// Length of the checksum in an SS58-address.
+  static const checkSumLen = 2;
+
+  /// If the SS58-address has a prefix < 64 the prefix length is 1 else it is 2.
+  ///
+  /// All Encointer networks use the prefix 2 or 42, so we can only implement a subset of the
+  /// SS58-codec.
+  static const prefixLenForPrefixesSmallerThan64 = 1;
+
+  /// Convert an SS58-address into a pubKey.
+  ///
+  /// Based on the rust version: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L269
+  ///
+  /// Note: This only supports prefixes < 64, bigger prefixes require
+  /// special handling.
+  static Ss58DecodeResult ss58Decode(String address) {
+    const prefixLen = prefixLenForPrefixesSmallerThan64;
+
+    final data = base58Codec.decode(address);
+    final prefix = data[0];
+
+    if (prefix >= 64) throw Exception('prefixes >= 64 are currently not supported');
+    if (data.length != prefixLen + pubKeyLen + checkSumLen) throw Exception('Bad address length ${data.length}');
+
+    final hash = blake2WithSs58Pre(Uint8List.fromList(data.sublist(0, pubKeyLen + prefixLen)));
+    final checksum = hash.sublist(0, checkSumLen);
+    final checksumData = data.sublist(pubKeyLen + prefixLen, pubKeyLen + prefixLen + checkSumLen);
+    if (!listEquals(checksumData, checksum)) throw Exception('Invalid checksum: $checksumData != $checksum');
+
+    return Ss58DecodeResult(bytesToHex(data.sublist(prefixLen, prefixLen + pubKeyLen)), prefix);
+  }
+
   static final ss58Prefix = 'SS58PRE'.codeUnits;
 
+  /// Corresponds to the `ss58hash`: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L374
   static Uint8List blake2WithSs58Pre(Uint8List data) {
     final ss58Pre = Uint8List.fromList(ss58Prefix);
 
@@ -292,4 +328,14 @@ class Fmt {
 
     return hash;
   }
+}
+
+class Ss58DecodeResult {
+  const Ss58DecodeResult(this.pubKey, this.prefix);
+
+  /// The pubKey corresponding to the input address.
+  final String pubKey;
+
+  /// The prefix of the input address.
+  final int prefix;
 }
