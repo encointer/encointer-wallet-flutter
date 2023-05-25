@@ -91,7 +91,7 @@ jobs:
 
         # Run Tests
       - name: "Flutter driver test"
-        run: ./scripts/integration_test_multi_language.sh
+        run: ./scripts/multi_language_screenshot_ci_test.sh
         env:
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
           RECORD: ${{ matrix.record_video }}
