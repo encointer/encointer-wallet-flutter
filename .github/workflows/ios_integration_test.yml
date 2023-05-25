@@ -100,7 +100,7 @@ jobs:
           RECORD: ${{ matrix.record_video }}
 
       - name: Run integration tests with printscreens in en only
-        if: not(startsWith(github.ref , 'refs/tags/'))
+        if: startsWith(github.ref , 'refs/tags/') != true
         run: ./scripts/ios_integration_test.sh
         env:
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
