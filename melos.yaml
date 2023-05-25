@@ -142,6 +142,10 @@ scripts:
     run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=en
     description: "Run integration test on IOS with screenshot capturing enabled."
 
+  integration-app-test-ios-screenshot-multi-language:
+    run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=de,fr,ru,en
+    description: "Run integration test on IOS with screenshot capturing enabled."
+
   integration-scan-test-android:
     run: cd app && flutter drive --target=test_driver/scan_page.dart --flavor dev
     description: "Run integration test for QR scan on Android"
