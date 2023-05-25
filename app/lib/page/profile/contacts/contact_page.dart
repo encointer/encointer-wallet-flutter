@@ -123,14 +123,6 @@ class _Contact extends State<ContactPage> {
                 child: ListView(
                   padding: const EdgeInsets.only(top: 8, bottom: 8),
                   children: <Widget>[
-                    /// Needed for the integration testing QR devmode scanning
-                    if (appSettinsStore.developerMode) ...[
-                      IconButton(
-                        key: const Key('back-to-contacts-page'),
-                        icon: const Icon(Icons.arrow_back_ios, size: 28),
-                        onPressed: () => Navigator.of(context).pop(),
-                      )
-                    ],
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
