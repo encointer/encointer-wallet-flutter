@@ -3,6 +3,8 @@ name: IOS CI
 on:
   push:
     branches: [master, f-droid]
+    tags:
+      - "*"
   pull_request:
     branches: [master, f-droid]
 
@@ -90,8 +92,15 @@ jobs:
           DEVICE_ID: ${{ matrix.device }}
         run: source ./ios_emulator.sh
 
-        # Run Tests
-      - name: "Flutter driver test and record video"
+      - name: Run integration tests with printscreens in all languages
+        if: startsWith(github.ref, 'refs/tags/')
+        run: ./scripts/multi_language_screenshot_ci_test.sh
+        env:
+          TEMP_DIR: ${{ env.ARTIFACT_PATH }}
+          RECORD: ${{ matrix.record_video }}
+
+      - name: Run integration tests with printscreens in en only
+        if: not(startsWith(github.ref , 'refs/tags/'))
         run: ./scripts/ios_integration_test.sh
         env:
           TEMP_DIR: ${{ env.ARTIFACT_PATH }}
