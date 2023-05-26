@@ -1,6 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+import 'app/voucher/voucher_integration_test.dart';
 import 'helpers/helper.dart';
 import 'app/app.dart';
 
@@ -78,6 +79,22 @@ void main() async {
     await scrollToCeremonyBox(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
   }, timeout: timeout120);
+
+  group('DevMode QR Voucher test', () {
+    test('turn on devMode', () async {
+      await qrTurnOnDevMode(driver);
+    });
+    test('get voucher by QR, fund', () async {
+      await getQrVoucherAndFund(driver);
+    });
+    test('get voucher by QR, redeem', () async {
+      await getQrVoucherAndRedeem(driver);
+    });
+    test('finished, turn off dev-mode', () async {
+      await qrTurnOnDevMode(driver);
+      await goToHomeViewFromNavBar(driver);
+    });
+  });
 
   test('send money to Tom', () async {
     await scrollToPanelController(driver);

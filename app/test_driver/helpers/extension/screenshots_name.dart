@@ -48,4 +48,7 @@ class Screenshots {
   static const step1ConfirmNumberOfAttendees = '101-step-1-confirm-number-of-attendees';
   static const step2QrCode = '102-step-2-qr-code';
   static const step3FinishGathering = '103-step-3-finish-gathering';
+
+  /// voucher
+  static const voucherDialog = '031-reap_voucher_dialog';
 }

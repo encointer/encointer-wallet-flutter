@@ -30,3 +30,23 @@ Future<void> goToTransferViewFromHomeView(FlutterDriver driver) async {
 Future<void> goToContactViewFromNavBar(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('contacts'));
 }
+
+Future<void> navigateToHomePage(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('bottom-nav'));
+  await driver.tap(find.byValueKey('wallet'));
+}
+
+Future<void> navigateToScanPage(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('bottom-nav'));
+  await driver.tap(find.byValueKey('scan'));
+}
+
+Future<void> navigateToContactsPage(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('bottom-nav'));
+  await driver.tap(find.byValueKey('contacts'));
+}
+
+Future<void> navigateToProfilePage(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('bottom-nav'));
+  await driver.tap(find.byValueKey('profile'));
+}

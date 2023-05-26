@@ -147,12 +147,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         children: [
           AssetsView(store),
           if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
-          ScanPage(),
+          const SizedBox(),
           const ContactsPage(),
           const Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        key: const Key('bottom-nav'),
         currentIndex: _tabIndex,
         iconSize: 22,
         onTap: (index) async {
