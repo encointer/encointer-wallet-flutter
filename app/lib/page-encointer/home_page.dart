@@ -7,6 +7,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
@@ -46,6 +47,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         langCode: Localizations.localeOf(context).languageCode,
         cid: cid,
         ewHttp: RepositoryProvider.of<EwHttp>(context),
+        devMode: context.read<AppSettings>().developerMode,
       );
 
       // Should never be null, we either come from the splash screen, and hence we had

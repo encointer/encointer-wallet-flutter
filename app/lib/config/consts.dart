@@ -84,8 +84,13 @@ const String ipfsGatewayEncointer = 'http://ipfs.encointer.org:8080';
 // ignore: non_constant_identifier_names
 final String ipfs_gateway_local = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:8080';
 
-const String encointerFeed = 'https://encointer.github.io/feed';
-const String encointerFeedOverrides = '$encointerFeed/overrides.json';
+const encointerFeed = 'https://encointer.github.io/feed';
+const communityMessagesPath = 'community_messages/$localePlaceHolder/cm.json';
+const encointerFeedOverridesPath = 'overrides.json';
+
+String getEncointerFeedLink({bool devMode = false}) {
+  return !devMode ? encointerFeed : '$encointerFeed/dev';
+}
 
 const int ertDecimals = 12;
 const int encointerCurrenciesDecimals = 18;
@@ -95,7 +100,6 @@ const double faucetAmount = 0.1;
 // links
 const localePlaceHolder = 'LOCALE_PLACEHOLDER';
 const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';
-const meetupNotificationLink = 'https://encointer.github.io/feed/community_messages/$localePlaceHolder/cm.json';
 const encointerLink = 'https://wallet.encointer.org/app/';
 const encointerApi = 'https://api.encointer.org/v1/';
 

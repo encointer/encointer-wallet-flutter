@@ -13,9 +13,10 @@ class NotificationHandler {
     required String langCode,
     String? cid,
     required EwHttp ewHttp,
+    bool devMode = false,
   }) async {
     final feeds = await ewHttp.getTypeList(
-      replaceLocalePlaceholder(meetupNotificationLink, langCode),
+      replaceLocalePlaceholder('${getEncointerFeedLink(devMode: devMode)}/$communityMessagesPath', langCode),
       fromJson: Feed.fromJson,
     );
     if (feeds != null && feeds.isNotEmpty) {
