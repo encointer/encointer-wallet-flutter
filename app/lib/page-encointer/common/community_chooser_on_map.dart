@@ -9,6 +9,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -67,7 +68,9 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
                   onTap: () async {
                     final store = context.read<AppStore>();
                     await store.encointer.setChosenCid(communityDataAt[marker.point]!.cid);
-                    context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                    if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+                      context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                    }
                     Navigator.pop(context);
                   },
                 );

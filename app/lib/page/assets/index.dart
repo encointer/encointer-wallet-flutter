@@ -14,12 +14,15 @@ import 'package:upgrader/upgrader.dart';
 import 'package:collection/collection.dart';
 
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
+import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -41,16 +44,18 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-class Assets extends StatefulWidget {
-  const Assets(this.store, {super.key});
+/// Getting confused with Assets (gen) while importing
+/// thus changed name to [AssetsView]
+class AssetsView extends StatefulWidget {
+  const AssetsView(this.store, {super.key});
 
   final AppStore store;
 
   @override
-  State<Assets> createState() => _AssetsState();
+  State<AssetsView> createState() => _AssetsViewState();
 }
 
-class _AssetsState extends State<Assets> {
+class _AssetsViewState extends State<AssetsView> {
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
@@ -144,8 +149,8 @@ class _AssetsState extends State<Assets> {
         appBar: appBar,
         body: UpgradeAlert(
           upgrader: Upgrader(
-            appcastConfig: context.watch<AppStore>().config.appCast,
-            debugLogging: context.watch<AppStore>().config.isIntegrationTest,
+            appcastConfig: RepositoryProvider.of<AppConfig>(context).appCast,
+            debugLogging: RepositoryProvider.of<AppConfig>(context).isIntegrationTest,
             shouldPopScope: () => true,
             canDismissDialog: true,
           ),
@@ -165,6 +170,7 @@ class _AssetsState extends State<Assets> {
               child: RefreshIndicator(
                 onRefresh: _refreshEncointerState,
                 child: ListView(
+                  key: const Key('list-view-wallet'),
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
@@ -321,6 +327,10 @@ class _AssetsState extends State<Assets> {
                     const SizedBox(height: 24),
                     CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                     const SizedBox(height: 24),
+                    if (!appSettingsStore.developerMode)
+                      AnnouncementView(
+                        cid: widget.store.encointer.community?.cid.toFmtString(),
+                      ),
                   ],
                 ),
               ),
@@ -330,7 +340,6 @@ class _AssetsState extends State<Assets> {
               context: context,
               removeTop: true,
               child: ListView(
-                key: const Key('list-view-wallet'),
                 controller: scrollController,
                 children: <Widget>[
                   const SizedBox(height: 12),
@@ -344,7 +353,9 @@ class _AssetsState extends State<Assets> {
                           final store = context.read<AppStore>();
                           final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                           await store.encointer.setChosenCid(communityStores[index].cid);
-                          context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                          if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+                            context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                          }
                         },
                         onAddIconPressed: () {
                           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {

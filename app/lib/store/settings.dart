@@ -1,3 +1,4 @@
+import 'package:ew_storage/ew_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
@@ -12,14 +13,16 @@ import 'package:encointer_wallet/store/app.dart';
 part 'settings.g.dart';
 
 class SettingsStore extends _SettingsStore with _$SettingsStore {
-  SettingsStore(super.store);
+  SettingsStore(super.store, super.secureStorage);
 }
 
 abstract class _SettingsStore with Store {
-  _SettingsStore(this.rootStore);
+  _SettingsStore(this.rootStore, this.secureStorage);
 
   final AppStore rootStore;
+  final SecureStorage secureStorage;
 
+  static const String pinStorageKey = 'pin-key';
   final String localStorageLocaleKey = 'locale';
   final String localStorageEndpointKey = 'endpoint';
   final String localStorageSS58Key = 'custom_ss58';
@@ -66,6 +69,18 @@ abstract class _SettingsStore with Store {
   Locale locale = const Locale('en', '');
 
   @action
+  Future<String> getPin() async {
+    if (cachedPin.isEmpty) cachedPin = await secureStorage.read(key: pinStorageKey) ?? '';
+    return cachedPin;
+  }
+
+  @action
+  Future<void> setPin(String pin) async {
+    cachedPin = pin;
+    await secureStorage.write(key: pinStorageKey, value: pin);
+  }
+
+  @action
   void changeLang(BuildContext context, String? code) {
     switch (code) {
       case 'en':
@@ -77,13 +92,6 @@ abstract class _SettingsStore with Store {
       default:
         locale = Localizations.localeOf(context);
     }
-  }
-
-  @action
-  void changeTheme() {
-    // todo: Remove this. It was for the network dependent theme.
-    // But his can be done at the same time, when we refactor
-    // the network selection page.
   }
 
   @computed
@@ -127,6 +135,7 @@ abstract class _SettingsStore with Store {
       loadCustomSS58Format(),
       loadNetworkStateCache(),
       loadContacts(),
+      getPin(),
     ]);
   }
 
@@ -158,11 +167,6 @@ abstract class _SettingsStore with Store {
   void setNetworkName(String? name) {
     networkName = name;
     loading = false;
-  }
-
-  @action
-  void setPin(String pin) {
-    cachedPin = pin;
   }
 
   @computed

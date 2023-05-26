@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-import 'package:encointer_wallet/common/components/qr_code_view/qr_code_image_view.dart';
+import 'package:encointer_wallet/page/assets/qr_code_printing/pages/qr_code_share_or_print_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -189,9 +189,11 @@ class _ReceivePageState extends State<ReceivePage> {
                   children: [
                     // Enhance brightness for the QR-code
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
-                    QrCodeImageWithButton(
+                    QrCodeShareOrPrintView(
                       qrCode: invoice.toQrPayload(),
-                      text: dic.assets.shareInvoice,
+                      shareText: dic.assets.shareInvoice,
+                      printText: dic.assets.print,
+                      previewText: dic.assets.preview,
                       onTap: () => {
                         if (_formKey.currentState!.validate())
                           {

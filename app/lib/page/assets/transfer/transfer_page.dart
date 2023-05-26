@@ -102,7 +102,7 @@ class _TransferPageState extends State<TransferPage> {
       _communitySymbol = params.communitySymbol ?? store.encointer.community?.symbol;
       _cid = params.cid ?? store.encointer.chosenCid;
 
-      final pubKey = await webApi.account.addressToPubKey(params.recipientAddress);
+      final pubKey = Fmt.ss58Decode(params.recipientAddress).pubKey;
 
       _accountTo = AccountData()
         ..pubKey = pubKey

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -135,7 +136,9 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
     final appStore = context.read<AppStore>();
     if (appStore.encointer.communityIdentifiers.length == 1) {
       await appStore.encointer.setChosenCid(appStore.encointer.communityIdentifiers[0]);
-      context.read<AppSettings>().changeTheme(appStore.encointer.community?.cid.toFmtString());
+      if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+        context.read<AppSettings>().changeTheme(appStore.encointer.community?.cid.toFmtString());
+      }
     } else {
       await Navigator.pushNamed(context, CommunityChooserOnMap.route);
     }

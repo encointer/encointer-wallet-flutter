@@ -1,61 +1,50 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+
 part 'transfer_history.g.dart';
 
+/// A class representing an Encointer transaction.
 @JsonSerializable()
 class Transaction {
   const Transaction({
-    required this.id,
-    required this.accountName,
-    required this.accountAddress,
-    required this.type,
-    required this.currency,
-    required this.amount,
+    required this.blockNumber,
     required this.timestamp,
+    required this.counterParty,
+    required this.amount,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
   Map<String, dynamic> toJson() => _$TransactionToJson(this);
 
-  final String id;
-  final String accountName;
-  final String accountAddress;
-  final TransactionType type;
-  final String currency;
+  /// The block number in which the transaction was made.
+  final String blockNumber;
+
+  /// The timestamp of the transaction, in milliseconds.
+  final String timestamp;
+
+  /// The address of the counterparty.
+  final String counterParty;
+
+  /// The amount of the transaction.
   final double amount;
-  final int timestamp;
+
+  /// Determines the type of this [Transaction] based on its amount.
+  /// Returns [TransactionType.outgoing] for negative amounts, and [TransactionType.incoming] for positive amounts.
+  TransactionType get type => amount < 0 ? TransactionType.outgoing : TransactionType.incoming;
+
+  /// Returns the date and time of the transaction as a [DateTime] object.
+  DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
+
+  /// Returns the name of the [counterparty] in the transaction by checking against the provided [contacts] list.
+  /// Returns null if no matching contact is found.
+  String? getNameFromContacts(List<AccountData> contacts) {
+    for (final contact in contacts) {
+      if (contact.address == counterParty) return contact.name;
+    }
+    return null;
+  }
 }
 
+/// An enumeration of the transaction types.
 enum TransactionType { outgoing, incoming }
-
-const transferHistoryMockData = {
-  'transfer_history': [
-    {
-      'id': '1',
-      'accountName': 'John Doe',
-      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW',
-      'type': 'incoming',
-      'currency': 'Leu',
-      'amount': 0.005,
-      'timestamp': 1674783247953
-    },
-    {
-      'id': '2',
-      'accountName': 'Jane Smith',
-      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW',
-      'type': 'outgoing',
-      'currency': 'Leu',
-      'amount': 0.0125,
-      'timestamp': 1674783247953
-    },
-    {
-      'id': '3',
-      'accountName': 'Bob Johnson',
-      'accountAddress': '5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW',
-      'type': 'incoming',
-      'currency': 'Leu',
-      'amount': 0.1,
-      'timestamp': 1674783247953
-    }
-  ]
-};

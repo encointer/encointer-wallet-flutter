@@ -1,20 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:ew_http/ew_http.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
-import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
-import 'package:encointer_wallet/mocks/ipfs/ipfs_api.dart';
-import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
+import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class SplashView extends StatefulWidget {
@@ -34,22 +30,16 @@ class _SplashViewState extends State<SplashView> {
     // initialize it **after** the store was initialized.
     await initWebApi(context, store);
 
-    // We don't poll updates in tests because we mock the backend anyhow.
-    if (!store.config.isTestMode) {
-      // must be set after api is initialized.
-      store.dataUpdate.setupUpdateReaction(() async {
-        await store.encointer.updateState();
-      });
-    }
+    // must be set after api is initialized.
+    store.dataUpdate.setupUpdateReaction(() async {
+      await store.encointer.updateState();
+    });
 
     store.setApiReady(true);
-
-    if (store.account.accountListAll.isNotEmpty) {
-      await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
+    if (store.account.accountList.isNotEmpty) {
+      await Navigator.pushNamedAndRemoveUntil(context, LoginView.route, (route) => false);
     } else {
-      await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryView()), (route) => false);
+      await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
     }
   }
 
@@ -78,11 +68,9 @@ class _SplashViewState extends State<SplashView> {
 /// due to some cyclic dependencies between webApi <> AppStore.
 Future<void> initWebApi(BuildContext context, AppStore store) async {
   final js = await DefaultAssetBundle.of(context).loadString(Assets.jsServiceEncointer.dist.main);
-
-  webApi = !store.config.mockSubstrateApi
-      ? Api.create(store, JSApi(), SubstrateDartApi(), js,
-          store.config.isIntegrationTest ? MockIpfsApi() : IpfsApi(gateway: store.settings.ipfsGateway))
-      : MockApi(store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
+  final ewHttp = RepositoryProvider.of<EwHttp>(context);
+  final appConfig = RepositoryProvider.of<AppConfig>(context);
+  webApi = Api.create(store, JSApi(), SubstrateDartApi(), ewHttp, js, isIntegrationTest: appConfig.isIntegrationTest);
 
   await webApi.init().timeout(
         const Duration(seconds: 20),

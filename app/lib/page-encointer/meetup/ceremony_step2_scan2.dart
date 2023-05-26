@@ -1,9 +1,15 @@
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/common/components/qr_code_view/qr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
@@ -12,11 +18,6 @@ import 'package:encointer_wallet/common/components/logo/participant_avatar.dart'
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step3_finish.dart';
 import 'package:encointer_wallet/page-encointer/meetup/scan_claim_qr_code.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
@@ -123,15 +124,20 @@ class CeremonyStep2Scan extends StatelessWidget {
               },
             ),
           ),
-          if (appSettingsStore.developerMode)
-            SizedBox(
-              height: 40,
-              child: ElevatedButton(
-                key: const Key('attest-all-participants-dev'),
-                child: const Text('DEV ONLY: attest all participants'),
-                onPressed: () => attestAllParticipants(store, store.account.currentAddress),
-              ),
-            ),
+          Observer(builder: (_) {
+            if (appSettingsStore.developerMode) {
+              return SizedBox(
+                height: 40,
+                child: ElevatedButton(
+                  key: const Key('attest-all-participants-dev'),
+                  child: const Text('DEV ONLY: attest all participants'),
+                  onPressed: () => attestAllParticipants(store, store.account.currentAddress),
+                ),
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          }),
           const SizedBox(height: 12)
         ],
       ),

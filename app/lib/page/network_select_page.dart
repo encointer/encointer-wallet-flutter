@@ -57,8 +57,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork);
 
-    context.read<AppStore>().settings.changeTheme();
-
     if (mounted) {
       Navigator.of(context).pop();
       setState(() {
@@ -87,8 +85,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   List<Widget> _buildAccountList() {
     final appStore = context.read<AppStore>();
-
-    // final primaryColor = Theme.of(context).primaryColor;
     final res = <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/store/app.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({super.key, required this.transaction});
@@ -11,6 +13,7 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appStore = context.watch<AppStore>();
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
       color: context.colorScheme.background,
@@ -23,13 +26,13 @@ class TransactionCard extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(transaction.accountName),
+            Text(transaction.getNameFromContacts(appStore.settings.contactList) ?? ''),
             Text.rich(
               TextSpan(
                 children: [
                   TextSpan(text: '${transaction.amount} '),
                   TextSpan(
-                    text: transaction.currency,
+                    text: '${appStore.encointer.community?.symbol}',
                     style: context.textTheme.bodySmall!.copyWith(color: context.colorScheme.primary),
                   ),
                 ],
@@ -40,8 +43,8 @@ class TransactionCard extends StatelessWidget {
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(Fmt.address(transaction.accountAddress) ?? ''),
-            Text(Fmt.dateTime(DateTime.fromMillisecondsSinceEpoch(transaction.timestamp))),
+            Text(Fmt.address(transaction.counterParty) ?? ''),
+            Text(Fmt.dateTime(transaction.dateTime)),
           ],
         ),
       ),

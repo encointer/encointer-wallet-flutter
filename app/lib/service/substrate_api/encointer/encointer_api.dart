@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:ew_http/ew_http.dart';
+
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
+import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
@@ -33,13 +35,14 @@ import 'package:encointer_wallet/utils/format.dart';
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class EncointerApi {
-  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi)
+  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp)
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi),
         _dartApi = EncointerDartApi(dartApi);
 
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
+  final EwHttp ewHttp;
 
   final AppStore store;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
@@ -275,10 +278,12 @@ class EncointerApi {
     if (cid == null) return;
 
     try {
+      final overrides = await ewHttp.getTypeList(encointerFeedOverrides, fromJson: MeetupOverrides.fromJson);
       final meetupTimeOverride = await feed.getMeetupTimeOverride(
-        store.encointer.network,
-        cid,
-        store.encointer.currentPhase,
+        network: store.encointer.network,
+        cid: cid,
+        phase: store.encointer.currentPhase,
+        overrides: overrides ?? [],
       );
       if (store.encointer.community != null) {
         store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
