@@ -12,6 +12,8 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'app.dart';
 import 'helpers/helper.dart';
 
+/// This will be deleted, temporarily testing
+
 void main() async {
   const shouldTakeScreenshot = String.fromEnvironment('locales');
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';

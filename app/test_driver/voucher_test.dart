@@ -5,6 +5,8 @@ import 'app/voucher/voucher_integration_test.dart';
 import 'helpers/helper.dart';
 import 'app/app.dart';
 
+/// This will be deleted, temporarily testing
+///
 void main() async {
   late FlutterDriver driver;
   const timeout120 = Timeout(Duration(seconds: 120));
