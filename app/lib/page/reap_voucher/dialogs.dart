@@ -23,11 +23,9 @@ class VoucherDialogs {
           ),
           actions: <Widget>[
             CupertinoButton(
+              key: const Key('voucher_dialog_ok'),
               onPressed: onOK,
-              child: Text(
-                dic.home.ok,
-                key: const Key('voucher_dialog_ok'),
-              ),
+              child: Text(dic.home.ok),
               // onPressed: () {
               //   Navigator.of(context).popUntil((route) => route.isFirst);
               // },

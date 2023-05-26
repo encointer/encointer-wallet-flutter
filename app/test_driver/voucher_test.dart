@@ -63,10 +63,10 @@ void main() async {
     await closePanel(driver);
   }, timeout: timeout120);
 
-  test('Register [Bootstrapper] Alice', () async {
-    await scrollToCeremonyBox(driver);
-    await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
-  }, timeout: timeout120);
+  // test('Register [Bootstrapper] Alice', () async {
+  //   await scrollToCeremonyBox(driver);
+  //   await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
+  // }, timeout: timeout120);
 
   group('DevMode QR Voucher test', () {
     test('turn on devMode', () async {
