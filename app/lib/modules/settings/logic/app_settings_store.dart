@@ -1,8 +1,9 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/settings/settings.dart';
+import 'package:encointer_wallet/config/prod_community.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 part 'app_settings_store.g.dart';
 
@@ -15,10 +16,7 @@ abstract class _AppSettingsBase with Store {
   final AppService _service;
 
   @observable
-  Locale _locale = const Locale('en');
-
-  @computed
-  Locale get locale => _locale;
+  Locale locale = const Locale('en');
 
   @observable
   bool isBiometricAuthenticationEnabled = false;
@@ -40,9 +38,13 @@ abstract class _AppSettingsBase with Store {
 
   @computed
   bool get isIntegrationTest => _isIntegrationTest;
+  ColorScheme colorScheme = AppColors.leu;
+
+  @computed
+  CustomTheme get theme => CustomTheme(colorScheme);
 
   @action
-  void init() => _locale = _service.init();
+  void init() => locale = _service.init();
 
   @action
   bool getIsBiometricAuthenticationEnabled() {
@@ -53,7 +55,7 @@ abstract class _AppSettingsBase with Store {
 
   @action
   Future<void> setLocale(String languageCode) async {
-    _locale = await _service.setLocale(languageCode);
+    locale = await _service.setLocale(languageCode);
   }
 
   @action
@@ -66,4 +68,11 @@ abstract class _AppSettingsBase with Store {
 
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;
+
+  /// TODO(edliiar): Activate GBD colors when received from designer.
+  @action
+  void changeTheme(String? cid) {
+    final community = Community.fromCid(cid);
+    if (colorScheme != community.colorScheme) colorScheme = community.colorScheme;
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ErrorView extends StatelessWidget {
@@ -25,13 +25,13 @@ class ErrorView extends StatelessWidget {
           const SizedBox(height: 40),
           Text(
             dic.error,
-            style: textTheme.displayLarge!.copyWith(color: encointerGrey),
+            style: textTheme.displayLarge!.copyWith(color: AppColors.encointerGrey),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
           Text(
             errorMessage ?? dic.unknownError,
-            style: textTheme.titleLarge!.copyWith(color: encointerGrey),
+            style: textTheme.titleLarge!.copyWith(color: AppColors.encointerGrey),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),

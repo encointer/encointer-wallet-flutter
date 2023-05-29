@@ -7,7 +7,7 @@ import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -73,8 +73,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
-    final h2Grey = Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerGrey);
-    final h4Grey = Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey);
+    final h2Grey = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey);
+    final h4Grey = context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey);
     final params = ModalRoute.of(context)?.settings.arguments as ReapVoucherParams?;
 
     final voucher = params?.voucher;
