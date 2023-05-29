@@ -154,6 +154,4 @@ scripts:
     run: cd app && flutter config --no-analytics
     description: "Disables the analytics data in the local configuration file of the Flutter tool"
 
-  integration-voucher-test-ios:
-    run: cd app && flutter drive --target=test_driver/voucher.dart
-    description: "Run integration test for QR scan on iOS"  
+
