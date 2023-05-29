@@ -41,7 +41,7 @@ class _Contact extends State<ContactPage> {
       });
       final dic = I18n.of(context)!.translationsForLocale();
       final addr = _addressCtrl.text.replaceAll(' ', '');
-      final pubKey = await webApi.account.addressToPubKey(addr);
+      final pubKey = Fmt.ss58Decode(addr).pubKey;
 
       final con = {
         'address': addr,

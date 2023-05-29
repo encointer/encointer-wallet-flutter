@@ -250,21 +250,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$themeAtom = Atom(name: '_SettingsStore.theme', context: context);
-
-  @override
-  ThemeData get theme {
-    _$themeAtom.reportRead();
-    return super.theme;
-  }
-
-  @override
-  set theme(ThemeData value) {
-    _$themeAtom.reportWrite(value, super.theme, () {
-      super.theme = value;
-    });
-  }
-
   late final _$getPinAsyncAction = AsyncAction('_SettingsStore.getPin', context: context);
 
   @override
@@ -376,16 +361,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void changeTheme() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.changeTheme');
-    try {
-      return super.changeTheme();
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void toggleEnableBazaar() {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleEnableBazaar');
     try {
@@ -449,7 +424,6 @@ networkState: ${networkState},
 networkConst: ${networkConst},
 contactList: ${contactList},
 locale: ${locale},
-theme: ${theme},
 endpointIsEncointer: ${endpointIsEncointer},
 endpointIsNoTee: ${endpointIsNoTee},
 endpointIsTeeProxy: ${endpointIsTeeProxy},

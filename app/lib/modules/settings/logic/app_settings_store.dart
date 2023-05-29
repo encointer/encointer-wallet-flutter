@@ -39,6 +39,11 @@ abstract class _AppSettingsBase with Store {
   @computed
   bool get isIntegrationTest => _isIntegrationTest;
 
+  ColorScheme colorScheme = AppColors.leu;
+
+  @computed
+  CustomTheme get theme => CustomTheme(colorScheme);
+
   @action
   void init() => locale = _service.init();
 

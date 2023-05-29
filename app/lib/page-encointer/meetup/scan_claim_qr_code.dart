@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -36,9 +35,8 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
   }
 
   /// Checks that the `attendeeAddress` is not equal to self and part of the meetup registry.
-  Future<void> validateAndStoreParticipant(AppStore store, String attendeeAddress, Translations dic) async {
-    // Todo: Replace this with a pure dart version #1105.
-    final attendeePubKey = await webApi.account.addressToPubKey(attendeeAddress);
+  void validateAndStoreParticipant(AppStore store, String attendeeAddress, Translations dic) {
+    final attendeePubKey = Fmt.ss58Decode(attendeeAddress).pubKey;
     final attendeeAddressPrefix42 = Fmt.ss58Encode(attendeePubKey);
 
     if (attendeeAddressPrefix42 == currentAddressPrefix42) {
@@ -61,9 +59,9 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
     }
   }
 
-  Future<void> onScan(AppStore store, Translations dic, String address) async {
+  void onScan(AppStore store, Translations dic, String address) {
     if (Fmt.isAddress(address)) {
-      await validateAndStoreParticipant(store, address, dic);
+      validateAndStoreParticipant(store, address, dic);
     } else {
       Log.e('Claim is not an address: $address', 'ScanClaimQrCode');
       RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed, durationMillis: 3000);
@@ -95,11 +93,11 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
             }
             return Stack(
               children: [
-                MobileScanner(onDetect: (barcode, args) async {
+                MobileScanner(onDetect: (barcode, args) {
                   if (barcode.rawValue == null) {
                     Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
                   } else {
-                    await onScan(context.read<AppStore>(), dic, barcode.rawValue!);
+                    onScan(context.read<AppStore>(), dic, barcode.rawValue!);
                   }
                 }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width

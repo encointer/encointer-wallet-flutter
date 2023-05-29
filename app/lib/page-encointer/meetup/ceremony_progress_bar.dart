@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class CeremonyProgressBar extends StatelessWidget {
   const CeremonyProgressBar({required this.progress, super.key});
@@ -36,10 +36,11 @@ class LightShadedBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(color: zurichLion.shade50, borderRadius: const BorderRadius.all(Radius.circular(10))),
-      child: const SizedBox(
-        height: 5,
+      decoration: BoxDecoration(
+        color: context.colorScheme.background,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
+      child: const SizedBox(height: 5),
     );
   }
 }
@@ -52,11 +53,9 @@ class GradientBar extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
-        gradient: primaryGradient,
+        gradient: AppColors.primaryGradient(context),
       ),
-      child: const SizedBox(
-        height: 5,
-      ),
+      child: const SizedBox(height: 5),
     );
   }
 }

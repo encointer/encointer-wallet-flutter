@@ -15,6 +15,11 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   bool get isIntegrationTest => (_$isIntegrationTestComputed ??=
           Computed<bool>(() => super.isIntegrationTest, name: '_AppSettingsBase.isIntegrationTest'))
       .value;
+  Computed<CustomTheme>? _$themeComputed;
+
+  @override
+  CustomTheme get theme =>
+      (_$themeComputed ??= Computed<CustomTheme>(() => super.theme, name: '_AppSettingsBase.theme')).value;
 
   late final _$localeAtom = Atom(name: '_AppSettingsBase.locale', context: context);
 
@@ -141,7 +146,8 @@ mixin _$AppSettings on _AppSettingsBase, Store {
 locale: ${locale},
 isBiometricAuthenticationEnabled: ${isBiometricAuthenticationEnabled},
 developerMode: ${developerMode},
-isIntegrationTest: ${isIntegrationTest}
+isIntegrationTest: ${isIntegrationTest},
+theme: ${theme}
     ''';
   }
 }
