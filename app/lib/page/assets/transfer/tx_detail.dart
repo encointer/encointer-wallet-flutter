@@ -1,11 +1,12 @@
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class TxDetail extends StatelessWidget {
   const TxDetail({
@@ -38,7 +39,7 @@ class TxDetail extends StatelessWidget {
           child: Text(name,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).unselectedWidgetColor,
+                color: context.theme.unselectedWidgetColor,
               )));
     }
 
@@ -51,7 +52,7 @@ class TxDetail extends StatelessWidget {
           ),
           Text(
             '$action ${success! ? dic.assets.success : dic.assets.fail}',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: context.textTheme.headlineMedium,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 32),

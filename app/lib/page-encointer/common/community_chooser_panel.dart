@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
@@ -60,7 +60,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
               if (widget.showCommunityNameAndAccountName)
                 Text(
                   '${widget.store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, widget.store.account.currentAccount)}',
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey, height: 1.5),
+                  style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey, height: 1.5),
                   textAlign: TextAlign.center,
                 ),
             ],
