@@ -3,13 +3,6 @@ import 'package:flutter_driver/flutter_driver.dart';
 import '../../helpers/extension/screenshot_driver.dart';
 import '../app.dart';
 
-Future<void> qrTurnOnOffDevMode(FlutterDriver driver) async {
-  await navigateToProfilePage(driver);
-  await driver.takeScreenshot(Screenshots.profileView);
-  await tapDevMode(driver);
-  await Future<void>.delayed(const Duration(milliseconds: 1000));
-}
-
 Future<void> getQrVoucherAndFund(FlutterDriver driver) async {
   await navigateToHomePage(driver);
   await scrollToPanelController(driver);

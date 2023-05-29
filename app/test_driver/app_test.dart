@@ -81,17 +81,13 @@ void main() async {
   }, timeout: timeout120);
 
   group('DevMode QR Voucher test', () {
-    test('turn on devMode', () async {
-      await qrTurnOnOffDevMode(driver);
-    });
     test('get voucher by QR, fund', () async {
       await getQrVoucherAndFund(driver);
     });
     test('get voucher by QR, redeem', () async {
       await getQrVoucherAndRedeem(driver);
     });
-    test('finished, turn off dev-mode', () async {
-      await qrTurnOnOffDevMode(driver);
+    test('finished, go to HomePage', () async {
       await goToHomeViewFromNavBar(driver);
     });
   });

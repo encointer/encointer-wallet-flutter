@@ -14,6 +14,12 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   Locale get locale =>
       (_$localeComputed ??= Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale')).value;
+  Computed<bool>? _$isIntegrationTestComputed;
+
+  @override
+  bool get isIntegrationTest => (_$isIntegrationTestComputed ??=
+          Computed<bool>(() => super.isIntegrationTest, name: '_AppSettingsBase.isIntegrationTest'))
+      .value;
 
   late final _$_localeAtom = Atom(name: '_AppSettingsBase._locale', context: context);
 
@@ -58,6 +64,21 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   set developerMode(bool value) {
     _$developerModeAtom.reportWrite(value, super.developerMode, () {
       super.developerMode = value;
+    });
+  }
+
+  late final _$_isIntegrationTestAtom = Atom(name: '_AppSettingsBase._isIntegrationTest', context: context);
+
+  @override
+  bool get _isIntegrationTest {
+    _$_isIntegrationTestAtom.reportRead();
+    return super._isIntegrationTest;
+  }
+
+  @override
+  set _isIntegrationTest(bool value) {
+    _$_isIntegrationTestAtom.reportWrite(value, super._isIntegrationTest, () {
+      super._isIntegrationTest = value;
     });
   }
 
@@ -114,7 +135,8 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     return '''
 isBiometricAuthenticationEnabled: ${isBiometricAuthenticationEnabled},
 developerMode: ${developerMode},
-locale: ${locale}
+locale: ${locale},
+isIntegrationTest: ${isIntegrationTest}
     ''';
   }
 }

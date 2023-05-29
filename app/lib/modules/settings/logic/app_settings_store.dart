@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'dart:ui';
 
 import 'package:mobx/mobx.dart';
@@ -8,6 +6,7 @@ import 'package:encointer_wallet/modules/settings/settings.dart';
 
 part 'app_settings_store.g.dart';
 
+// ignore: library_private_types_in_public_api
 class AppSettings = _AppSettingsBase with _$AppSettings;
 
 abstract class _AppSettingsBase with Store {
@@ -33,6 +32,14 @@ abstract class _AppSettingsBase with Store {
     Locale('fr', ''),
     Locale('ru', ''),
   ];
+
+  @observable
+  bool _isIntegrationTest = false;
+
+  set isIntegrationTest(bool v) => _isIntegrationTest = v;
+
+  @computed
+  bool get isIntegrationTest => _isIntegrationTest;
 
   @action
   void init() => _locale = _service.init();
