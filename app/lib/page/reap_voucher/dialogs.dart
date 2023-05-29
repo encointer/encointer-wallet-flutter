@@ -35,27 +35,6 @@ class VoucherDialogs {
   }
 }
 
-// Widget redeemSuccessDialog(BuildContext context) {
-//   final dic = I18n.of(context)!.translationsForLocale();
-
-//   return CupertinoAlertDialog(
-//     title: Container(),
-//     content: Text(
-//       dic.assets.redeemSuccess,
-//     ),
-//     actions: <Widget>[
-//       CupertinoButton(
-//         child: Text(
-//           dic.home.ok,
-//         ),
-//         onPressed: () {
-//           Navigator.of(context).popUntil((route) => route.isFirst);
-//         },
-//       ),
-//     ],
-//   );
-// }
-
 Future<void> showRedeemFailedDialog(BuildContext context, String? error) {
   return showCupertinoDialog(
     context: context,

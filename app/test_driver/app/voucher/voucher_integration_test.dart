@@ -58,7 +58,6 @@ Future<void> getQrVoucherAndRedeem(FlutterDriver driver) async {
   await scanVoucherFromQrScanPage(driver);
   await driver.waitFor(VoucherKeysToFind.submitVoucher);
   await driver.tap(VoucherKeysToFind.submitVoucher);
-
   await driver.runUnsynchronized(() async {
     await driver.takeLocalScreenshot(Screenshots.voucherDialog);
     await driver.waitFor(find.byValueKey('voucher_dialog_ok'));
