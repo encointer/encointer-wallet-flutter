@@ -14,6 +14,12 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   Locale get locale =>
       (_$localeComputed ??= Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale')).value;
+  Computed<bool>? _$isIngetrationTestComputed;
+
+  @override
+  bool get isIngetrationTest => (_$isIngetrationTestComputed ??=
+          Computed<bool>(() => super.isIngetrationTest, name: '_AppSettingsBase.isIngetrationTest'))
+      .value;
 
   late final _$_localeAtom = Atom(name: '_AppSettingsBase._locale', context: context);
 
@@ -58,6 +64,21 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   set developerMode(bool value) {
     _$developerModeAtom.reportWrite(value, super.developerMode, () {
       super.developerMode = value;
+    });
+  }
+
+  late final _$_isIngetrationTestAtom = Atom(name: '_AppSettingsBase._isIngetrationTest', context: context);
+
+  @override
+  bool get _isIngetrationTest {
+    _$_isIngetrationTestAtom.reportRead();
+    return super._isIngetrationTest;
+  }
+
+  @override
+  set _isIngetrationTest(bool value) {
+    _$_isIngetrationTestAtom.reportWrite(value, super._isIngetrationTest, () {
+      super._isIngetrationTest = value;
     });
   }
 
@@ -114,7 +135,8 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     return '''
 isBiometricAuthenticationEnabled: ${isBiometricAuthenticationEnabled},
 developerMode: ${developerMode},
-locale: ${locale}
+locale: ${locale},
+isIngetrationTest: ${isIngetrationTest}
     ''';
   }
 }

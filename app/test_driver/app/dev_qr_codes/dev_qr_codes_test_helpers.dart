@@ -1,63 +1,61 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
-import '../../helpers/extension/screenshot_driver.dart';
+import '../contact/contact_keys.dart';
+import '../transfer/transfer_keys.dart';
+import 'dev_qr_code_keys.dart';
 
 Future<void> sendFromQrWithAmount(FlutterDriver driver) async {
-  await driver.waitFor(find.byValueKey('mock-qr-data-row'));
-  await driver.tap(find.byValueKey('invoice-with-amount-to-scan'));
+  await driver.waitFor(find.byValueKey(DevQrCodeKeys.mockQrDataRow));
+  await driver.tap(find.byValueKey(DevQrCodeKeys.invoiceWithAmountToScan));
 
   await driver.runUnsynchronized(() async {
-    await driver.waitFor(find.byValueKey('make-transfer'));
-    await driver.tap(find.byValueKey('make-transfer'));
+    await driver.waitFor(find.byValueKey(TransferKeys.makeTransfer));
+    await driver.tap(find.byValueKey(TransferKeys.makeTransfer));
 
-    await driver.waitFor(find.byValueKey('make-transfer-send'));
-    await driver.tap(find.byValueKey('make-transfer-send'));
-    await driver.waitFor(find.byValueKey('transfer-done'));
-    await driver.takeScreenshot(Screenshots.txConfirmationView);
-    await driver.tap(find.byValueKey('transfer-done'));
+    await driver.waitFor(find.byValueKey(TransferKeys.makeTransferSend));
+    await driver.tap(find.byValueKey(TransferKeys.makeTransferSend));
+    await driver.waitFor(find.byValueKey(TransferKeys.transferDone));
+    await driver.tap(find.byValueKey(TransferKeys.transferDone));
     await Future<void>.delayed(const Duration(milliseconds: 1000));
   });
 }
 
 Future<void> sendFromQrWithoutAmount(FlutterDriver driver) async {
-  await driver.waitFor(find.byValueKey('mock-qr-data-row'));
-  await driver.tap(find.byValueKey('invoice-with-no-amount-to-scan'));
+  await driver.waitFor(find.byValueKey(DevQrCodeKeys.mockQrDataRow));
+  await driver.tap(find.byValueKey(DevQrCodeKeys.invoiceWithNoAmountToScan));
 
-  await driver.waitFor(find.byValueKey('transfer-listview'));
-  await driver.tap(find.byValueKey('transfer-amount-input'));
+  await driver.waitFor(find.byValueKey(TransferKeys.transferListview));
+  await driver.tap(find.byValueKey(TransferKeys.transferAmountInput));
 
   await driver.enterText('0.01');
-  await driver.takeScreenshot(Screenshots.sendView);
 
   await driver.runUnsynchronized(() async {
-    await driver.waitFor(find.byValueKey('make-transfer'));
-    await driver.tap(find.byValueKey('make-transfer'));
-
-    await driver.waitFor(find.byValueKey('make-transfer-send'));
-    await driver.tap(find.byValueKey('make-transfer-send'));
-    await driver.waitFor(find.byValueKey('transfer-done'));
-    await driver.takeScreenshot(Screenshots.txConfirmationView);
-    await driver.tap(find.byValueKey('transfer-done'));
+    await driver.waitFor(find.byValueKey(TransferKeys.makeTransfer));
+    await driver.tap(find.byValueKey(TransferKeys.makeTransfer));
+    await driver.waitFor(find.byValueKey(TransferKeys.makeTransferSend));
+    await driver.tap(find.byValueKey(TransferKeys.makeTransferSend));
+    await driver.waitFor(find.byValueKey(TransferKeys.transferDone));
+    await driver.tap(find.byValueKey(TransferKeys.transferDone));
     await Future<void>.delayed(const Duration(milliseconds: 1000));
   });
 }
 
 Future<void> saveContactFromQrContact(FlutterDriver driver, [bool contactToSaveToAddress = false]) async {
-  await driver.waitFor(find.byValueKey('mock-qr-data-row'));
+  await driver.waitFor(find.byValueKey(DevQrCodeKeys.mockQrDataRow));
 
   if (contactToSaveToAddress) {
-    await driver.tap(find.byValueKey('contact-to-save-to-address'));
+    await driver.tap(find.byValueKey(DevQrCodeKeys.contactToSaveToAddress));
   } else {
-    await driver.tap(find.byValueKey('profile-to-scan'));
+    await driver.tap(find.byValueKey(DevQrCodeKeys.profileToScan));
   }
 
-  await driver.waitFor(find.byValueKey('contact-save'));
-  await driver.tap(find.byValueKey('contact-save'));
+  await driver.waitFor(find.byValueKey(ContactKeys.contactSave));
+  await driver.tap(find.byValueKey(ContactKeys.contactSave));
 }
 
 Future<void> saveContactFromQrInvoice(FlutterDriver driver) async {
-  await driver.waitFor(find.byValueKey('mock-qr-data-row'));
-  await driver.tap(find.byValueKey('invoice-to-save-to-address'));
-  await driver.waitFor(find.byValueKey('contact-save'));
-  await driver.tap(find.byValueKey('contact-save'));
+  await driver.waitFor(find.byValueKey(DevQrCodeKeys.mockQrDataRow));
+  await driver.tap(find.byValueKey(DevQrCodeKeys.invoiceToSaveToAddress));
+  await driver.waitFor(find.byValueKey(ContactKeys.contactSave));
+  await driver.tap(find.byValueKey(ContactKeys.contactSave));
 }

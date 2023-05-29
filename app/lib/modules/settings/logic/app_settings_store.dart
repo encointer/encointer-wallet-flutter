@@ -33,6 +33,14 @@ abstract class _AppSettingsBase with Store {
     Locale('ru', ''),
   ];
 
+  @observable
+  bool _isIngetrationTest = false;
+
+  set isIngetrationTest(bool v) => _isIngetrationTest = v;
+
+  @computed
+  bool get isIngetrationTest => _isIngetrationTest;
+
   @action
   void init() => _locale = _service.init();
 

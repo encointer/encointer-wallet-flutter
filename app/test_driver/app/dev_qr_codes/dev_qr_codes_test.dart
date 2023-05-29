@@ -1,16 +1,9 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
-import '../../helpers/extension/screenshot_driver.dart';
 import '../navigate.dart';
-import '../profile/profile_helper.dart';
+import '../transfer/transfer_keys.dart';
+import 'dev_qr_code_keys.dart';
 import 'dev_qr_codes_test_helpers.dart';
-
-Future<void> qrTurnOnDevMode(FlutterDriver driver) async {
-  await navigateToProfilePage(driver);
-  await driver.takeScreenshot(Screenshots.profileView);
-  await tapDevMode(driver);
-  await Future<void>.delayed(const Duration(milliseconds: 1000));
-}
 
 Future<void> qrFromHomeTestAndSaveContact(FlutterDriver driver) async {
   await navigateToScanPage(driver);
@@ -30,15 +23,15 @@ Future<void> qrFromHomeTestAndSendWithoutAmount(FlutterDriver driver) async {
 Future<void> qrFromSendPageTestAndSendWithAmount(FlutterDriver driver) async {
   await navigateToHomePage(driver);
   await driver.tap(find.byValueKey('transfer'));
-  await driver.waitFor(find.byValueKey('transfer-listview'));
-  await driver.tap(find.byValueKey('transfer_send'));
+  await driver.waitFor(find.byValueKey(TransferKeys.transferListview));
+  await driver.tap(find.byValueKey(DevQrCodeKeys.openQrScannerOnSendPage));
   await sendFromQrWithAmount(driver);
 }
 
 Future<void> qrFromSendPageTestAndSendWithoutAmount(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('transfer'));
-  await driver.waitFor(find.byValueKey('transfer-listview'));
-  await driver.tap(find.byValueKey('transfer_send'));
+  await driver.waitFor(find.byValueKey(TransferKeys.transferListview));
+  await driver.tap(find.byValueKey(DevQrCodeKeys.openQrScannerOnSendPage));
   await sendFromQrWithoutAmount(driver);
 }
 
@@ -51,7 +44,6 @@ Future<void> qrFromContactAddContactFromQrContact(FlutterDriver driver) async {
 }
 
 Future<void> qrFromContactAddContactFromQrInvoice(FlutterDriver driver) async {
-  await navigateToHomePage(driver);
   await navigateToContactsPage(driver);
   await driver.tap(find.byValueKey('add-contact'));
   await driver.tap(find.byValueKey('scan-barcode'));

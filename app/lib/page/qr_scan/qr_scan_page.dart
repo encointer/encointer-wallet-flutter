@@ -52,7 +52,7 @@ class ScanPage extends StatelessWidget {
           )
         ],
       ),
-      body: appSettingsStore.developerMode ? _mockAppBuild(context, dic) : _realAppBuild(appSettingsStore, dic),
+      body: appSettingsStore.isIngetrationTest ? _mockAppBuild(context, dic) : _realAppBuild(appSettingsStore, dic),
     );
   }
 

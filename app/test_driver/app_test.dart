@@ -81,10 +81,6 @@ void main() async {
   }, timeout: timeout120);
 
   group('DevMode QR Codes tests', () {
-    test('turn on dev-mode', () async {
-      await qrTurnOnDevMode(driver);
-    });
-
     test('HomePage: test and save the contact from qr', () async {
       await qrFromHomeTestAndSaveContact(driver);
     }, timeout: timeout120);
@@ -113,8 +109,7 @@ void main() async {
       await qrFromContactAddContactFromQrInvoice(driver);
     }, timeout: timeout120);
 
-    test('finished, turn off dev-mode', () async {
-      await qrTurnOnDevMode(driver);
+    test('finished, go to HomePage', () async {
       await goToHomeViewFromNavBar(driver);
     });
   });
