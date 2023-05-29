@@ -22,6 +22,7 @@ Future<void> qrFromHomeTestAndSendWithoutAmount(FlutterDriver driver) async {
 
 Future<void> qrFromSendPageTestAndSendWithAmount(FlutterDriver driver) async {
   await navigateToHomePage(driver);
+  await driver.scrollIntoView(find.byValueKey('transfer'));
   await driver.tap(find.byValueKey('transfer'));
   await driver.waitFor(find.byValueKey(TransferKeys.transferListview));
   await driver.tap(find.byValueKey(DevQrCodeKeys.openQrScannerOnSendPage));
