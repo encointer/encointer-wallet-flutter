@@ -115,7 +115,6 @@ class _TransferPageState extends State<TransferPage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
-    final appSettinsStore = context.watch<AppSettings>();
     final textTheme = Theme.of(context).textTheme;
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
     Log.d('[transferPage]: available: $available', 'TransferPage');

@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -116,7 +115,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<AppStore>();
-    final appSettingsStore = context.watch<AppSettings>();
     _tabList = <TabData>[
       TabData(
         TabKey.wallet,

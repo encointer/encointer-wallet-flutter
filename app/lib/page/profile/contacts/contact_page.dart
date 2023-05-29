@@ -102,7 +102,6 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appSettinsStore = context.read<AppSettings>();
     final qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
     final dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
