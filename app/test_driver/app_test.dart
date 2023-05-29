@@ -82,7 +82,7 @@ void main() async {
 
   group('DevMode QR Voucher test', () {
     test('turn on devMode', () async {
-      await qrTurnOnDevMode(driver);
+      await qrTurnOnOffDevMode(driver);
     });
     test('get voucher by QR, fund', () async {
       await getQrVoucherAndFund(driver);
@@ -91,7 +91,7 @@ void main() async {
       await getQrVoucherAndRedeem(driver);
     });
     test('finished, turn off dev-mode', () async {
-      await qrTurnOnDevMode(driver);
+      await qrTurnOnOffDevMode(driver);
       await goToHomeViewFromNavBar(driver);
     });
   });

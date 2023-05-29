@@ -3,7 +3,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import '../../helpers/extension/screenshot_driver.dart';
 import '../app.dart';
 
-Future<void> qrTurnOnDevMode(FlutterDriver driver) async {
+Future<void> qrTurnOnOffDevMode(FlutterDriver driver) async {
   await navigateToProfilePage(driver);
   await driver.takeScreenshot(Screenshots.profileView);
   await tapDevMode(driver);
@@ -58,10 +58,12 @@ Future<void> getQrVoucherAndRedeem(FlutterDriver driver) async {
   await scanVoucherFromQrScanPage(driver);
   await driver.waitFor(VoucherKeysToFind.submitVoucher);
   await driver.tap(VoucherKeysToFind.submitVoucher);
-  await driver.takeLocalScreenshot(Screenshots.voucherDialog);
-  await driver.waitFor(find.byValueKey('voucher_dialog_ok'));
-  await driver.tap(find.byValueKey('voucher_dialog_ok'));
-  await driver.waitUntilNoTransientCallbacks();
+
+  await driver.runUnsynchronized(() async {
+    await driver.takeLocalScreenshot(Screenshots.voucherDialog);
+    await driver.waitFor(find.byValueKey('voucher_dialog_ok'));
+    await driver.tap(find.byValueKey('voucher_dialog_ok'));
+  });
 }
 
 class VoucherKeysToFind {

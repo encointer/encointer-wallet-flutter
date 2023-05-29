@@ -44,7 +44,7 @@ void main() async {
   }, timeout: timeout120);
 
   test('turn on dev-mode', () async {
-    await qrTurnOnDevMode(driver);
+    await qrTurnOnOffDevMode(driver);
   }, timeout: timeout120);
 
   test('change-network', () async {
@@ -70,7 +70,7 @@ void main() async {
 
   group('DevMode QR Voucher test', () {
     test('turn on devMode', () async {
-      await qrTurnOnDevMode(driver);
+      await qrTurnOnOffDevMode(driver);
     });
 
     test('get voucher by QR, fund', () async {
@@ -80,7 +80,7 @@ void main() async {
       await getQrVoucherAndRedeem(driver);
     }, timeout: timeout120);
     test('finished, turn off dev-mode', () async {
-      await qrTurnOnDevMode(driver);
+      await qrTurnOnOffDevMode(driver);
     });
   });
 

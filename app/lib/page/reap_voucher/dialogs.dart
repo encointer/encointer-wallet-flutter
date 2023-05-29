@@ -17,7 +17,6 @@ class VoucherDialogs {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: const SizedBox(key: Key('voucher-dialog')),
           content: Text(
             dic.assets.redeemSuccess,
           ),
@@ -28,9 +27,6 @@ class VoucherDialogs {
                 dic.home.ok,
                 key: const Key('voucher_dialog_ok'),
               ),
-              // onPressed: () {
-              //   Navigator.of(context).popUntil((route) => route.isFirst);
-              // },
             ),
           ],
         );
