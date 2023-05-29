@@ -9,24 +9,24 @@ part of 'app_settings_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppSettings on _AppSettingsBase, Store {
-  Computed<Locale>? _$localeComputed;
+  Computed<CustomTheme>? _$themeComputed;
 
   @override
-  Locale get locale =>
-      (_$localeComputed ??= Computed<Locale>(() => super.locale, name: '_AppSettingsBase.locale')).value;
+  CustomTheme get theme =>
+      (_$themeComputed ??= Computed<CustomTheme>(() => super.theme, name: '_AppSettingsBase.theme')).value;
 
-  late final _$_localeAtom = Atom(name: '_AppSettingsBase._locale', context: context);
+  late final _$localeAtom = Atom(name: '_AppSettingsBase.locale', context: context);
 
   @override
-  Locale get _locale {
-    _$_localeAtom.reportRead();
-    return super._locale;
+  Locale get locale {
+    _$localeAtom.reportRead();
+    return super.locale;
   }
 
   @override
-  set _locale(Locale value) {
-    _$_localeAtom.reportWrite(value, super._locale, () {
-      super._locale = value;
+  set locale(Locale value) {
+    _$localeAtom.reportWrite(value, super.locale, () {
+      super.locale = value;
     });
   }
 
@@ -58,6 +58,21 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   set developerMode(bool value) {
     _$developerModeAtom.reportWrite(value, super.developerMode, () {
       super.developerMode = value;
+    });
+  }
+
+  late final _$colorSchemeAtom = Atom(name: '_AppSettingsBase.colorScheme', context: context);
+
+  @override
+  ColorScheme get colorScheme {
+    _$colorSchemeAtom.reportRead();
+    return super.colorScheme;
+  }
+
+  @override
+  set colorScheme(ColorScheme value) {
+    _$colorSchemeAtom.reportWrite(value, super.colorScheme, () {
+      super.colorScheme = value;
     });
   }
 
@@ -110,11 +125,23 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   }
 
   @override
+  void changeTheme(String? cid) {
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.changeTheme');
+    try {
+      return super.changeTheme(cid);
+    } finally {
+      _$_AppSettingsBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+locale: ${locale},
 isBiometricAuthenticationEnabled: ${isBiometricAuthenticationEnabled},
 developerMode: ${developerMode},
-locale: ${locale}
+colorScheme: ${colorScheme},
+theme: ${theme}
     ''';
   }
 }

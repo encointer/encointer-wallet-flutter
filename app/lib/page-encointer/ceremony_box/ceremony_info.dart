@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_info_and_calendar.dart';
@@ -57,7 +56,7 @@ class CeremonyInfo extends StatelessWidget {
                     else
                       Text(
                         dic.encointer.gatheringSuccessfullyCompleted,
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerBlack),
+                        style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerBlack),
                       ),
                     CeremonyInfoAndCalendar(
                       nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),

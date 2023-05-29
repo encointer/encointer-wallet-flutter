@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class LowerCeremonyBoxContainer extends StatelessWidget {
   const LowerCeremonyBoxContainer({required this.child, super.key});
@@ -13,7 +13,7 @@ class LowerCeremonyBoxContainer extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(15)),
-        color: zurichLion.shade50,
+        color: context.colorScheme.background,
       ),
       child: child,
     );

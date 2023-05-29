@@ -1,11 +1,10 @@
-import 'package:encointer_wallet/page/assets/qr_code_printing/widgets/preview_pdf_and_print.dart';
 import 'package:flutter/material.dart';
-
 import 'package:photo_view/photo_view.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page/assets/qr_code_printing/widgets/preview_pdf_and_print.dart';
 import 'package:encointer_wallet/utils/extensions/extensions.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class QrCodeShareOrPrintView extends StatefulWidget {
   const QrCodeShareOrPrintView({
@@ -42,14 +41,11 @@ class _QrCodeShareOrPrintViewState extends State<QrCodeShareOrPrintView> {
             maxScale: context.isMobile ? 1.0001 : 1.1,
             minScale: context.isMobile ? 0.2 : 0.4,
             initialScale: context.isMobile ? 0.8 : 0.5,
-            backgroundDecoration: BoxDecoration(color: zurichLion.shade50),
+            backgroundDecoration: BoxDecoration(color: context.colorScheme.background),
             child: Center(
               child: RepaintBoundary(
                 key: _renderObjectKey,
-                child: PrettyQr(
-                  data: widget.qrCode,
-                  size: size.height * 0.45,
-                ),
+                child: PrettyQr(data: widget.qrCode, size: size.height * 0.45),
               ),
             ),
           ),
@@ -60,19 +56,13 @@ class _QrCodeShareOrPrintViewState extends State<QrCodeShareOrPrintView> {
           children: [
             TextButton.icon(
               onPressed: () => _previewPdfAndPrint(context),
-              icon: Icon(Icons.print, color: zurichLion.shade500),
-              label: Text(
-                widget.printText,
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
+              icon: Icon(Icons.print, color: context.colorScheme.secondary),
+              label: Text(widget.printText, style: context.textTheme.displaySmall),
             ),
             TextButton.icon(
               onPressed: widget.onTap,
-              icon: Icon(Icons.share, color: zurichLion.shade500),
-              label: Text(
-                widget.shareText,
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
+              icon: Icon(Icons.share, color: context.colorScheme.secondary),
+              label: Text(widget.shareText, style: context.textTheme.displaySmall),
             ),
           ],
         ),

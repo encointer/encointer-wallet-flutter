@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ImportAccountLink extends StatelessWidget {
@@ -16,14 +16,17 @@ class ImportAccountLink extends StatelessWidget {
       children: [
         Text(
           '${dic.profile.doYouAlreadyHaveAnAccount} ',
-          style: TextStyle(color: zurichLion.shade50),
+          style: TextStyle(color: context.colorScheme.background),
         ),
         InkWell(
           key: const Key('import-account'),
           onTap: onTap,
           child: Text(
             dic.profile.import,
-            style: TextStyle(color: zurichLion.shade50, decoration: TextDecoration.underline),
+            style: TextStyle(
+              color: context.colorScheme.background,
+              decoration: TextDecoration.underline,
+            ),
           ),
         ),
       ],

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
@@ -69,9 +68,6 @@ abstract class _SettingsStore with Store {
   @observable
   Locale locale = const Locale('en', '');
 
-  @observable
-  ThemeData theme = appThemeEncointer;
-
   @action
   Future<String> getPin() async {
     if (cachedPin.isEmpty) cachedPin = await secureStorage.read(key: pinStorageKey) ?? '';
@@ -96,13 +92,6 @@ abstract class _SettingsStore with Store {
       default:
         locale = Localizations.localeOf(context);
     }
-  }
-
-  @action
-  void changeTheme() {
-    // todo: Remove this. It was for the network dependent theme.
-    // But his can be done at the same time, when we refactor
-    // the network selection page.
   }
 
   @computed

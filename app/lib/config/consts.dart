@@ -89,7 +89,7 @@ const communityMessagesPath = 'community_messages/$localePlaceHolder/cm.json';
 const encointerFeedOverridesPath = 'overrides.json';
 
 String getEncointerFeedLink({bool devMode = false}) {
-  return !devMode ? encointerFeed : '$encointerFeed/dev';
+  return devMode ? '$encointerFeed/dev' : encointerFeed;
 }
 
 const int ertDecimals = 12;
