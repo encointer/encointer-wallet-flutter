@@ -10,10 +10,10 @@ class NotificationHandler {
   static Future<void> fetchMessagesAndScheduleNotifications(
     tz.Location local,
     ScheduleNotification scheduleNotification, {
-    required String langCode,
-    String? cid,
     required EwHttp ewHttp,
+    required String langCode,
     bool devMode = false,
+    String? cid,
   }) async {
     final feeds = await ewHttp.getTypeList(
       replaceLocalePlaceholder('${getEncointerFeedLink(devMode: devMode)}/$communityMessagesPath', langCode),
