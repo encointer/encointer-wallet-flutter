@@ -1,11 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 
 part 'transfer_history_view_store.g.dart';

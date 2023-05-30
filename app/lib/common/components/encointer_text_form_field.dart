@@ -1,6 +1,6 @@
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 /// TextFormField styled for the encointer app
 class EncointerTextFormField extends StatelessWidget {
@@ -41,7 +41,7 @@ class EncointerTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: zurichLion.shade50,
+        color: context.colorScheme.background,
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: TextFormField(
@@ -52,7 +52,7 @@ class EncointerTextFormField extends StatelessWidget {
           hintText: hintText,
           fillColor: fillColor,
           filled: filled,
-          labelStyle: Theme.of(context).textTheme.headlineMedium,
+          labelStyle: context.textTheme.headlineMedium,
           contentPadding: const EdgeInsets.only(top: 16, bottom: 16, left: 25),
           suffixIcon: suffixIcon,
           border: UnderlineInputBorder(

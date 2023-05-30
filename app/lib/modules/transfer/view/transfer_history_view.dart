@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,11 @@ class TransferHistoryView extends StatelessWidget {
     final transferHistoryStore = context.watch<TransferHistoryViewStore>();
     final dic = I18n.of(context)!.translationsForLocale().home;
     return Scaffold(
-      appBar: AppBar(title: Text(dic.transferHistory)),
+      appBar: AppBar(
+          title: Text(
+        dic.transferHistory,
+        style: context.textTheme.displayMedium,
+      )),
       body: Observer(builder: (_) {
         switch (transferHistoryStore.fetchStatus) {
           case FetchStatus.loading:

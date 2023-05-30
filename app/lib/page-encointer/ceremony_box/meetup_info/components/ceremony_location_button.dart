@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class CeremonyLocationButton extends StatelessWidget {
   const CeremonyLocationButton({this.onPressed, super.key});
@@ -17,8 +17,8 @@ class CeremonyLocationButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16),
         // make splash animation as high as the container
         backgroundColor: Colors.white,
-        foregroundColor: zurichLion.shade500,
-        shadowColor: zurichLion.shade500,
+        foregroundColor: context.colorScheme.secondary,
+        shadowColor: context.colorScheme.secondary,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

@@ -1,9 +1,10 @@
+import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -18,11 +19,9 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     final appStore = context.watch<AppStore>();
     return Card(
-      color: colorScheme.background,
+      color: context.colorScheme.background,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
@@ -51,13 +50,13 @@ class TransactionCard extends StatelessWidget {
                           transaction.type == TransactionType.incoming
                               ? Iconsax.receive_square_2
                               : Iconsax.send_sqaure_2,
-                          color: zurichLion,
+                          color: context.colorScheme.primary,
                           size: 25,
                         ),
                         const SizedBox(width: 5),
                         Text(
                           transaction.type.text,
-                          style: const TextStyle(fontSize: 14, color: Colors.grey),
+                          style: context.textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -71,25 +70,25 @@ class TransactionCard extends StatelessWidget {
                           children: [
                             Text(
                               transaction.getNameFromContacts(appStore.settings.contactList) ?? 'No Name',
-                              style: textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                              style: context.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                             ),
                             Text.rich(
                               TextSpan(
                                 children: [
                                   TextSpan(
                                     text: '${appStore.encointer.community?.symbol}',
-                                    style: textTheme.displaySmall!.copyWith(
+                                    style: context.textTheme.displaySmall!.copyWith(
                                       color: transaction.type == TransactionType.incoming
-                                          ? colorScheme.primary
-                                          : colorScheme.errorContainer,
+                                          ? context.colorScheme.primary
+                                          : const Color(0xffD76D89),
                                     ),
                                   ),
                                   const WidgetSpan(child: SizedBox(width: 5)),
                                   TextSpan(
                                     text: '${transaction.amount} ',
-                                    style: textTheme.displaySmall!.copyWith(
+                                    style: context.textTheme.displaySmall!.copyWith(
                                         color: transaction.type == TransactionType.incoming
-                                            ? colorScheme.primary
+                                            ? context.colorScheme.primary
                                             : const Color(0xffD76D89),
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -117,3 +116,39 @@ class TransactionCard extends StatelessWidget {
     );
   }
 }
+
+// Card(
+//       margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+//       color: context.colorScheme.background,
+//       child: ListTile(
+//         minLeadingWidth: 7,
+//         leading: Icon(
+//           transaction.type == TransactionType.incoming ? Icons.call_received_sharp : Icons.call_made_sharp,
+//           color: transaction.type == TransactionType.incoming ? Colors.green : context.colorScheme.errorContainer,
+//         ),
+//         title: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(transaction.getNameFromContacts(appStore.settings.contactList) ?? ''),
+//             Text.rich(
+//               TextSpan(
+//                 children: [
+//                   TextSpan(text: '${transaction.amount} '),
+//                   TextSpan(
+//                     text: '${appStore.encointer.community?.symbol}',
+//                     style: context.textTheme.bodySmall!.copyWith(color: context.colorScheme.primary),
+//                   ),
+//                 ],
+//               ),
+//             )
+//           ],
+//         ),
+//         subtitle: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(Fmt.address(transaction.counterParty) ?? ''),
+//             Text(Fmt.dateTime(transaction.dateTime)),
+//           ],
+//         ),
+//       ),
+//     );

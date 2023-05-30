@@ -21,9 +21,9 @@ import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -198,10 +198,8 @@ class _AssetsViewState extends State<AssetsView> {
                                         ),
                                         Text(
                                           '${dic!.assets.balance}, ${widget.store.encointer.community?.symbol}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium!
-                                              .copyWith(color: encointerGrey),
+                                          style: context.textTheme.headlineMedium!
+                                              .copyWith(color: AppColors.encointerGrey),
                                         ),
                                       ],
                                     )
@@ -375,6 +373,9 @@ class _AssetsViewState extends State<AssetsView> {
                           final store = context.read<AppStore>();
                           final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                           await store.encointer.setChosenCid(communityStores[index].cid);
+                          if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+                            context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                          }
                         },
                         onAddIconPressed: () {
                           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
@@ -422,7 +423,7 @@ class _AssetsViewState extends State<AssetsView> {
                 height: avatarSize,
                 width: avatarSize,
                 decoration: BoxDecoration(
-                  color: zurichLion.shade50,
+                  color: context.colorScheme.background,
                   shape: BoxShape.circle,
                 ),
                 child: e.communityIcon != null
@@ -441,7 +442,7 @@ class _AssetsViewState extends State<AssetsView> {
               height: avatarSize,
               width: avatarSize,
               decoration: BoxDecoration(
-                color: zurichLion.shade50,
+                color: context.colorScheme.background,
                 shape: BoxShape.circle,
               ),
               child: const CenteredActivityIndicator(),

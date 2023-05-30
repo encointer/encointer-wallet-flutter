@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class TransactionsEmpty extends StatelessWidget {
@@ -18,7 +18,7 @@ class TransactionsEmpty extends StatelessWidget {
           const SizedBox(height: 25),
           Text(
             dic.noTransactions,
-            style: textTheme.displayMedium!.copyWith(color: encointerGrey),
+            style: textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 50),

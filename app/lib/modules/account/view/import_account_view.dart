@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
@@ -48,7 +49,6 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
     final newAccountStore = context.watch<NewAccountStore>();
     final appStore = context.watch<AppStore>();
     return ScrollableForm(
@@ -58,13 +58,13 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         Text(
           dic.profile.detailsEnter,
           textAlign: TextAlign.center,
-          style: textTheme.displayMedium,
+          style: context.textTheme.displayMedium,
         ),
         const SizedBox(height: 10),
         Text(
           dic.profile.personalKeyEnter,
           textAlign: TextAlign.center,
-          style: textTheme.displayMedium!.copyWith(color: Colors.black),
+          style: context.textTheme.displayMedium!.copyWith(color: Colors.black),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(

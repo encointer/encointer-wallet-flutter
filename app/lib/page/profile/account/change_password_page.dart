@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -130,13 +130,13 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         Text(
                           dic.profile.hintEnterCurrentPin,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.displayMedium,
+                          style: context.textTheme.displayMedium,
                         ),
                         const SizedBox(height: 16),
                         Text(
                           dic.profile.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Colors.black),
+                          style: context.textTheme.displayMedium!.copyWith(color: Colors.black),
                         ),
                         const SizedBox(height: 30),
                         EncointerTextFormField(
@@ -193,7 +193,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     if (_submitting) const CupertinoActivityIndicator(),
                     Text(
                       dic.profile.contactSave,
-                      style: Theme.of(context).textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
+                      style: context.textTheme.displaySmall,
                     ),
                   ],
                 ),

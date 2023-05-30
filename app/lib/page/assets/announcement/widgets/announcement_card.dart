@@ -1,20 +1,16 @@
-import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_community_icon.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
 import 'package:encointer_wallet/models/announcement/announcement.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class AnnouncementCard extends StatelessWidget {
-  const AnnouncementCard({
-    super.key,
-    required this.announcement,
-  });
+  const AnnouncementCard({super.key, required this.announcement});
 
   final Announcement announcement;
 
@@ -26,7 +22,7 @@ class AnnouncementCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 24),
       child: Card(
-        color: zurichLion.shade50,
+        color: context.colorScheme.background,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -57,7 +53,7 @@ class AnnouncementCard extends StatelessWidget {
                     return Icon(
                       cardStore.isFavorite ? Icons.favorite : Icons.favorite_border_outlined,
                       size: 20,
-                      color: cardStore.isFavorite ? encointerGrey : encointerGrey,
+                      color: AppColors.encointerGrey,
                     );
                   }),
                   onPressed: context.read<AnnouncementCardStore>().toggleFavorite,
@@ -66,14 +62,8 @@ class AnnouncementCard extends StatelessWidget {
                   return Text('${cardStore.countFavorite}');
                 }),
                 IconButton(
-                  icon: const Icon(
-                    Icons.share,
-                    size: 20,
-                    color: encointerGrey,
-                  ),
-                  onPressed: () {
-                    Share.share(announcement.content);
-                  },
+                  icon: const Icon(Icons.share, size: 20, color: AppColors.encointerGrey),
+                  onPressed: () => Share.share(announcement.content),
                 )
               ],
             )

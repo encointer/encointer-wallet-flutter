@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
 import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_item_horizontal.dart';
-import 'package:flutter/material.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class SwitchAccountOrCommunity extends StatefulWidget {
   const SwitchAccountOrCommunity({
@@ -37,7 +39,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
         children: [
           Text(
             widget.rowTitle!,
-            style: Theme.of(context).textTheme.displayMedium,
+            style: context.textTheme.displayMedium,
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 6, left: 4),
