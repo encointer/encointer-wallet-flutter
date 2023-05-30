@@ -25,6 +25,7 @@ abstract class _TransferHistoryViewStoreBase with Store {
   @action
   Future<void> getTransfers(AppStore appStore) async {
     fetchStatus = FetchStatus.loading;
+
     final address = Fmt.ss58Encode(
       appStore.account.currentAccountPubKey ?? '',
       prefix: appStore.settings.endpoint.ss58 ?? 42,

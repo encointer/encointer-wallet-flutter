@@ -229,7 +229,6 @@ class _AssetsViewState extends State<AssetsView> {
                             height: 42,
                           ),
                           Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Expanded(
                                 child: ElevatedButton(
@@ -244,9 +243,7 @@ class _AssetsViewState extends State<AssetsView> {
                                     padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                                     child: Column(
                                       children: [
-                                        const Icon(
-                                          Iconsax.receive_square_2,
-                                        ),
+                                        const Icon(Iconsax.receive_square_2),
                                         const SizedBox(height: 4),
                                         Text(dic!.assets.receive),
                                       ],

@@ -48,3 +48,14 @@ class Transaction {
 
 /// An enumeration of the transaction types.
 enum TransactionType { outgoing, incoming }
+
+extension TransactionTypeExtension on TransactionType {
+  String get text {
+    switch (this) {
+      case TransactionType.outgoing:
+        return 'Sent';
+      case TransactionType.incoming:
+        return 'Received';
+    }
+  }
+}
