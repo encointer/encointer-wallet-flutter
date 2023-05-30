@@ -52,9 +52,9 @@ Future<void> getQrVoucherAndRedeem(FlutterDriver driver) async {
   await driver.waitFor(VoucherKeysToFind.submitVoucher);
   await driver.tap(VoucherKeysToFind.submitVoucher);
   await driver.runUnsynchronized(() async {
+    await driver.waitFor(VoucherKeysToFind.voucherDialogOk);
     await driver.takeLocalScreenshot(Screenshots.voucherDialog);
-    await driver.waitFor(find.byValueKey('voucher_dialog_ok'));
-    await driver.tap(find.byValueKey('voucher_dialog_ok'));
+    await driver.tap(VoucherKeysToFind.voucherDialogOk);
   });
 }
 
@@ -64,4 +64,5 @@ class VoucherKeysToFind {
   static final voucherToScan = find.byValueKey('voucher-to-scan');
   static final transferSend = find.byValueKey('transfer_send');
   static final voucherToTransferPage = find.byValueKey('voucher_to_transfer_page');
+  static final voucherDialogOk = find.byValueKey('voucher_dialog_ok');
 }
