@@ -278,16 +278,18 @@ class EncointerApi {
     if (cid == null) return;
 
     try {
-      final overrides = await ewHttp.getTypeList(encointerFeedOverrides, fromJson: MeetupOverrides.fromJson);
-      final meetupTimeOverride = await feed.getMeetupTimeOverride(
-        network: store.encointer.network,
-        cid: cid,
-        phase: store.encointer.currentPhase,
-        overrides: overrides ?? [],
-      );
-      if (store.encointer.community != null) {
-        store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
-      }
+      final response = await ewHttp.getTypeList(encointerFeedOverrides, fromJson: MeetupOverrides.fromJson);
+      response.fold((l) => Log.e(l.toString()), (overrides) async {
+        final meetupTimeOverride = await feed.getMeetupTimeOverride(
+          network: store.encointer.network,
+          cid: cid,
+          phase: store.encointer.currentPhase,
+          overrides: overrides,
+        );
+        if (store.encointer.community != null) {
+          store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
+        }
+      });
     } catch (e, s) {
       Log.e('api: exception: $e', 'EncointerApi', s);
     }

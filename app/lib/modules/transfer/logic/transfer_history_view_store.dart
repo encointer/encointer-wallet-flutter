@@ -29,11 +29,17 @@ abstract class _TransferHistoryViewStoreBase with Store {
       appStore.account.currentAccountPubKey ?? '',
       prefix: appStore.settings.endpoint.ss58 ?? 42,
     );
-    final data = await ewHttp.getTypeList<Transaction>(
+    final response = await ewHttp.getTypeList<Transaction>(
       getTransactionHistoryUrl(appStore.encointer.community?.cid.toFmtString() ?? '', address),
       fromJson: Transaction.fromJson,
     );
-    fetchStatus = data == null ? FetchStatus.error : FetchStatus.success;
-    if (fetchStatus == FetchStatus.success) transactions = data!.reversed.toList();
+
+    response.fold(
+      (l) => fetchStatus = FetchStatus.error,
+      (r) {
+        fetchStatus = FetchStatus.success;
+        transactions = r.reversed.toList();
+      },
+    );
   }
 }

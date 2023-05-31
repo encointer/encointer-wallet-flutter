@@ -74,5 +74,18 @@ void main() {
       const b = Left<int, String>('Some Error');
       expect(a, b);
     });
+
+    test('Either Call ifFight', () async {
+      late int rithValue;
+      late String leftValue;
+      Either<int, String> getRight() => const Right(12);
+      Either<int, String> getLeft() => const Left('Some Error');
+
+      getRight().fold((l) => null, (r) => rithValue = r);
+      expect(rithValue, 12);
+
+      getLeft().fold((l) => leftValue = l, (r) => null);
+      expect(leftValue, 'Some Error');
+    });
   });
 }
