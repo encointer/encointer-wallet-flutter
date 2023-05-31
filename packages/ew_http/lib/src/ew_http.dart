@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'package:ew_http/src/exceptions/exceptions.dart';
+import 'package:ew_http/src/interface/either.dart';
 
 typedef TokenProvider = Future<String?> Function();
 typedef FromJson<T> = T Function(Map<String, dynamic>);
@@ -16,35 +17,32 @@ class EwHttp {
   final http.Client _client;
   final TokenProvider? _tokenProvider;
 
-  Future<T?> get<T>(String url) async {
+  Future<Either<T, Exception>> get<T>(String url) async {
     try {
       final uri = Uri.parse(url);
       final response = await _client.get(uri, headers: await _getRequestHeaders());
-      if (response.statusCode != HttpStatus.ok) {
-        throw HttpRequestException(statusCode: response.statusCode);
-      }
-      return response.decode<T>();
+      if (response.statusCode == HttpStatus.ok) return Right(response.decode<T>());
+      return Left(HttpRequestException(statusCode: response.statusCode));
     } catch (e, s) {
-      throw HttpRequestException(error: e, stackTrace: s);
+      return Left(HttpRequestException(error: e, stackTrace: s));
     }
   }
 
-  Future<T?> getType<T>(String url, {required FromJson<T> fromJson}) async {
+  Future<Either<T, Exception>> getType<T>(String url, {required FromJson<T> fromJson}) async {
     try {
       final data = await get<Map<String, dynamic>>(url);
-      return data != null ? fromJson(data) : null;
+      return data.fold(Left.new, (r) => Right(fromJson(r)));
     } catch (e, s) {
-      throw JsonDeserializationException(error: e, stackTrace: s);
+      return Left(JsonDeserializationException(error: e, stackTrace: s));
     }
   }
 
-  Future<List<T>?> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
+  Future<Either<List<T>, Exception>> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
     try {
       final data = await get<List<dynamic>>(url);
-      if (data == null) return null;
-      return data.map((e) => fromJson(e as Map<String, dynamic>)).toList();
+      return data.fold(Left.new, (r) => Right(r.map((e) => fromJson(e as Map<String, dynamic>)).toList()));
     } catch (e, s) {
-      throw JsonDeserializationException(error: e, stackTrace: s);
+      return Left(JsonDeserializationException(error: e, stackTrace: s));
     }
   }
 

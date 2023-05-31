@@ -9,6 +9,7 @@ void main() {
 
   const getListUrl = 'https://encointer.github.io/feed/community_messages/en/cm.json';
   const getUrl = 'https://eldar2021.github.io/encointer/test_data.json';
+  const emptyList = 'https://eldar2021.github.io/encointer/test/empty_list.json';
 
   setUp(() {
     ewHttp = EwHttp();
@@ -16,28 +17,62 @@ void main() {
 
   group('EwHttp `get`, `getType`, `getListType`', () {
     test('Get', () async {
-      final mapValue = await ewHttp.get<Map<String, dynamic>>(getUrl);
+      Map<String, dynamic>? mapValue;
+      List<dynamic>? listValue;
+
+      final mapResponse = await ewHttp.get<Map<String, dynamic>>(getUrl);
+      mapResponse.fold((l) => null, (r) => mapValue = r);
+
       expect(mapValue, isNotNull);
       expect(mapValue, isMap);
       expect(mapValue, isA<Map<String, dynamic>>());
 
-      final listValue = await ewHttp.get<List<dynamic>>(getListUrl);
+      final listResponse = await ewHttp.get<List<dynamic>>(getListUrl);
+      listResponse.fold((l) => null, (r) => listValue = r);
       expect(listValue, isNotNull);
       expect(listValue, isList);
+      expect(listValue?.isNotEmpty, true);
       expect(listValue, isA<List<dynamic>>());
     });
 
     test('Get Type', () async {
-      final value = await ewHttp.getType<TestModel>(getUrl, fromJson: TestModel.fromJson);
-      expect(value, isNotNull);
-      expect(value, isA<TestModel>());
+      TestModel? testModel;
+      final response = await ewHttp.getType<TestModel>(getUrl, fromJson: TestModel.fromJson);
+      response.fold((l) => null, (r) => testModel = r);
+      expect(testModel, isNotNull);
+      expect(testModel, isA<TestModel>());
     });
 
     test('Get List Type', () async {
-      final value = await ewHttp.getTypeList<TestModel>(getListUrl, fromJson: TestModel.fromJson);
-      expect(value, isNotNull);
-      expect(value, isList);
-      expect(value?[0], isA<TestModel>());
+      List<TestModel>? testModelList;
+      final response = await ewHttp.getTypeList<TestModel>(getListUrl, fromJson: TestModel.fromJson);
+      response.fold((l) => null, (r) => testModelList = r);
+      expect(testModelList, isNotNull);
+      expect(testModelList, isList);
+      expect(testModelList, isA<List<TestModel>>());
+      expect(testModelList?[0], isA<TestModel>());
+    });
+
+    test('Get empty List', () async {
+      List<TestModel>? testModelList;
+      final response = await ewHttp.getTypeList<TestModel>(emptyList, fromJson: TestModel.fromJson);
+      response.fold((l) => null, (r) => testModelList = r);
+      expect(testModelList, isNotNull);
+      expect(testModelList, isList);
+      expect(testModelList, isA<List<TestModel>>());
+      expect(testModelList?.isEmpty, true);
+    });
+
+    test('Right equals', () async {
+      const a = Right<int, Exception>(20);
+      const b = Right<int, Exception>(20);
+      expect(a, b);
+    });
+
+    test('Left equals', () async {
+      const a = Left<int, String>('Some Error');
+      const b = Left<int, String>('Some Error');
+      expect(a, b);
     });
   });
 }
