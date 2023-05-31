@@ -408,7 +408,7 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   @override
   String get city => 'Ville';
   @override
-  String get communityChoose => 'Choisissez une communauté:';
+  String get communityChoose => 'Choisis une communauté:';
   @override
   String get communityLoad => 'Choisis une communauté:';
   @override

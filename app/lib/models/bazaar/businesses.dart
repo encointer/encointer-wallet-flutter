@@ -10,8 +10,8 @@ class Businesses {
     required this.name,
     required this.description,
     required this.category,
-    this.status,
     required this.photo,
+    this.status,
   });
   factory Businesses.fromJson(Map<String, dynamic> json) => _$BusinessesFromJson(json);
   Map<String, dynamic> toJson() => _$BusinessesToJson(this);
