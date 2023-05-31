@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
@@ -25,6 +26,10 @@ class EncointerDartApi {
   ///
   Future<List<String>> pendingExtrinsics() {
     return _dartApi.rpc<List<dynamic>>('author_pendingExtrinsics', <dynamic>[]).then(List.from);
+  }
+
+  Future<List<dynamic>> bazaarGetBusinesses(CommunityIdentifier cid) {
+    return _dartApi.rpc<List<dynamic>>('encointer_bazaarGetBusinesses', [cid.toJson()]);
   }
 
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {

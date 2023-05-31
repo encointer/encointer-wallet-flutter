@@ -75,6 +75,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     super.initState();
   }
 
+  @override
+  Future<void> didChangeDependencies() async {
+    final encointer = context.read<AppStore>().encointer;
+    await encointer.bazaar!.bazaarGetBusinesses(encointer.community!.cid);
+    super.didChangeDependencies();
+  }
+
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
         .map(

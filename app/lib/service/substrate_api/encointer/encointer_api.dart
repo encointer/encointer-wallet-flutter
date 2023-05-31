@@ -516,6 +516,10 @@ class EncointerApi {
     return allMockBusinesses;
   }
 
+  Future<List<dynamic>> bazaarGetBusinesses(CommunityIdentifier cid) async {
+    return _dartApi.bazaarGetBusinesses(cid);
+  }
+
   /// Get all the registered offerings for the current `chosenCid`
   Future<List<OfferingData>> getOfferings() async {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.

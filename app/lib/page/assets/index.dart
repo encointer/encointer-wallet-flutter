@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:developer' as dev;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -395,6 +396,7 @@ class _AssetsViewState extends State<AssetsView> {
 
   List<AccountOrCommunityData> _allCommunities() {
     final communityStores = context.read<AppStore>().encointer.communityStores?.values.toList();
+    dev.log('==================================== _allCommunities: ${communityStores?.length}');
     if (communityStores != null && communityStores.isNotEmpty) {
       return communityStores
           .mapIndexed(

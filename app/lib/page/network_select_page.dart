@@ -65,11 +65,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     }
   }
 
-  Future<void> _onSelect(AccountData i, String? address) async {
+  Future<void> _onSelect(AccountData accountData, String? address) async {
     final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
     if (address != context.read<AppStore>().account.currentAddress || !isCurrentNetwork) {
       /// set current account
-      await context.read<AppStore>().setCurrentAccount(i.pubKey);
+      await context.read<AppStore>().setCurrentAccount(accountData.pubKey);
 
       if (isCurrentNetwork) {
         await context.read<AppStore>().loadAccountCache();
@@ -100,8 +100,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     /// first item is current account
     final accounts = <AccountData>[appStore.account.currentAccount, ...appStore.account.optionalAccounts];
 
-    res.addAll(accounts.map((i) {
-      final address = Fmt.ss58Encode(i.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
+    res.addAll(accounts.map((accountData) {
+      final address = Fmt.ss58Encode(accountData.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
 
       return RoundedCard(
         border: address == context.read<AppStore>().account.currentAddress
@@ -109,10 +109,10 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             : Border.all(color: context.theme.cardColor),
         margin: const EdgeInsets.only(bottom: 16),
         child: ListTile(
-          leading: AddressIcon(address, i.pubKey, size: 55),
-          title: Text(Fmt.accountName(context, i)),
+          leading: AddressIcon(address, accountData.pubKey, size: 55),
+          title: Text(Fmt.accountName(context, accountData)),
           subtitle: Text(Fmt.address(address)!, maxLines: 2),
-          onTap: _networkChanging ? null : () => _onSelect(i, address),
+          onTap: _networkChanging ? null : () => _onSelect(accountData, address),
         ),
       );
     }).toList());
@@ -150,8 +150,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               ],
             ),
             child: Column(
-              children: networks.map((i) {
-                final network = i.info;
+              children: networks.map((endpointData) {
+                final network = endpointData.info;
                 final isCurrent = network == _selectedNetwork.info;
                 return Container(
                   margin: const EdgeInsets.only(bottom: 8),
@@ -162,12 +162,12 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                         )
                       : null,
                   child: IconButton(
-                    key: Key(i.info ?? '$i'),
+                    key: Key(endpointData.info ?? '$endpointData'),
                     icon: Image.asset(networkIconFromNetworkId(network!, isCurrent)),
                     onPressed: () {
                       if (!isCurrent) {
                         setState(() {
-                          _selectedNetwork = i;
+                          _selectedNetwork = endpointData;
                         });
                       }
                     },
