@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -50,12 +52,12 @@ class Transaction {
 enum TransactionType { outgoing, incoming }
 
 extension TransactionTypeExtension on TransactionType {
-  String get text {
+  String getText(BuildContext context) {
     switch (this) {
       case TransactionType.outgoing:
-        return 'Sent';
+        return I18n.of(context)!.translationsForLocale().transaction.sent;
       case TransactionType.incoming:
-        return 'Received';
+        return I18n.of(context)!.translationsForLocale().transaction.received;
     }
   }
 }

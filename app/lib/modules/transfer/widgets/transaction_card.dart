@@ -1,9 +1,9 @@
-import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -11,8 +11,8 @@ import 'package:encointer_wallet/store/app.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({
-    super.key,
     required this.transaction,
+    super.key,
   });
 
   final Transaction transaction;
@@ -55,7 +55,7 @@ class TransactionCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 5),
                         Text(
-                          transaction.type.text,
+                          transaction.type.getText(context),
                           style: context.textTheme.bodySmall,
                         ),
                       ],
@@ -116,39 +116,3 @@ class TransactionCard extends StatelessWidget {
     );
   }
 }
-
-// Card(
-//       margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-//       color: context.colorScheme.background,
-//       child: ListTile(
-//         minLeadingWidth: 7,
-//         leading: Icon(
-//           transaction.type == TransactionType.incoming ? Icons.call_received_sharp : Icons.call_made_sharp,
-//           color: transaction.type == TransactionType.incoming ? Colors.green : context.colorScheme.errorContainer,
-//         ),
-//         title: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             Text(transaction.getNameFromContacts(appStore.settings.contactList) ?? ''),
-//             Text.rich(
-//               TextSpan(
-//                 children: [
-//                   TextSpan(text: '${transaction.amount} '),
-//                   TextSpan(
-//                     text: '${appStore.encointer.community?.symbol}',
-//                     style: context.textTheme.bodySmall!.copyWith(color: context.colorScheme.primary),
-//                   ),
-//                 ],
-//               ),
-//             )
-//           ],
-//         ),
-//         subtitle: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             Text(Fmt.address(transaction.counterParty) ?? ''),
-//             Text(Fmt.dateTime(transaction.dateTime)),
-//           ],
-//         ),
-//       ),
-//     );
