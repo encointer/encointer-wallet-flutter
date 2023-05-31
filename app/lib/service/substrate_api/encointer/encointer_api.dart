@@ -272,13 +272,16 @@ class EncointerApi {
     return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
-  Future<void> getMeetupTimeOverride() async {
+  Future<void> getMeetupTimeOverride({bool devMode = false}) async {
     Log.d('api: Check if there are meetup time overrides', 'EncointerApi');
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
     try {
-      final response = await ewHttp.getTypeList(encointerFeedOverrides, fromJson: MeetupOverrides.fromJson);
+      final response = await ewHttp.getTypeList(
+        '${getEncointerFeedLink(devMode: devMode)}/$encointerFeedOverridesPath',
+        fromJson: MeetupOverrides.fromJson,
+      );
       response.fold((l) => Log.e(l.toString()), (overrides) async {
         final meetupTimeOverride = await feed.getMeetupTimeOverride(
           network: store.encointer.network,
