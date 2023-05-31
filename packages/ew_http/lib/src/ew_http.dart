@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ew_http/ew_http.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:ew_http/src/exceptions/exceptions.dart';
-import 'package:ew_http/src/interface/either.dart';
 
 typedef TokenProvider = Future<String?> Function();
 typedef FromJson<T> = T Function(Map<String, dynamic>);
@@ -17,32 +15,32 @@ class EwHttp {
   final http.Client _client;
   final TokenProvider? _tokenProvider;
 
-  Future<Either<T, Exception>> get<T>(String url) async {
+  Future<Either<T, EwHttpException>> get<T>(String url) async {
     try {
       final uri = Uri.parse(url);
       final response = await _client.get(uri, headers: await _getRequestHeaders());
       if (response.statusCode == HttpStatus.ok) return Right(response.decode<T>());
-      return Left(HttpRequestException(statusCode: response.statusCode));
+      return Left(_returnErrorResponse(response));
     } catch (e, s) {
-      return Left(HttpRequestException(error: e, stackTrace: s));
+      return Left(EwHttpException(FailureType.unknown, error: e, stackTrace: s));
     }
   }
 
-  Future<Either<T, Exception>> getType<T>(String url, {required FromJson<T> fromJson}) async {
+  Future<Either<T, EwHttpException>> getType<T>(String url, {required FromJson<T> fromJson}) async {
     try {
       final data = await get<Map<String, dynamic>>(url);
       return data.fold(Left.new, (r) => Right(fromJson(r)));
     } catch (e, s) {
-      return Left(JsonDeserializationException(error: e, stackTrace: s));
+      return Left(EwHttpException(FailureType.decode, error: e, stackTrace: s));
     }
   }
 
-  Future<Either<List<T>, Exception>> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
+  Future<Either<List<T>, EwHttpException>> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
     try {
       final data = await get<List<dynamic>>(url);
       return data.fold(Left.new, (r) => Right(r.map((e) => fromJson(e as Map<String, dynamic>)).toList()));
     } catch (e, s) {
-      return Left(JsonDeserializationException(error: e, stackTrace: s));
+      return Left(EwHttpException(FailureType.deserialization, error: e, stackTrace: s));
     }
   }
 
@@ -54,6 +52,21 @@ class EwHttp {
       if (token != null) HttpHeaders.authorizationHeader: 'Bearer $token',
     };
   }
+
+  EwHttpException _returnErrorResponse(Response response) {
+    switch (response.statusCode) {
+      case 400:
+        return EwHttpException(FailureType.badRequest, statusCode: response.statusCode);
+      case 401:
+        return EwHttpException(FailureType.noAuthorization, statusCode: response.statusCode);
+      case 403:
+        return EwHttpException(FailureType.forbidden, statusCode: response.statusCode);
+      case 500:
+        return EwHttpException(FailureType.internalServer, statusCode: response.statusCode);
+      default:
+        return EwHttpException(FailureType.unknown, error: response.statusCode, statusCode: response.statusCode);
+    }
+  }
 }
 
 extension on http.Response {
@@ -61,7 +74,7 @@ extension on http.Response {
     try {
       return jsonDecode(body) as T;
     } catch (e, s) {
-      throw JsonDecodeException(error: e, stackTrace: s);
+      throw EwHttpException(FailureType.decode, error: e, stackTrace: s);
     }
   }
 }

@@ -9,37 +9,6 @@ part of 'announcement_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
-  late final _$announcementsGlobalAtom = Atom(name: '_AnnouncementStoreBase.announcementsGlobal', context: context);
-
-  @override
-  List<Announcement> get announcementsGlobal {
-    _$announcementsGlobalAtom.reportRead();
-    return super.announcementsGlobal;
-  }
-
-  @override
-  set announcementsGlobal(List<Announcement> value) {
-    _$announcementsGlobalAtom.reportWrite(value, super.announcementsGlobal, () {
-      super.announcementsGlobal = value;
-    });
-  }
-
-  late final _$announcementsCommunnityAtom =
-      Atom(name: '_AnnouncementStoreBase.announcementsCommunnity', context: context);
-
-  @override
-  List<Announcement> get announcementsCommunnity {
-    _$announcementsCommunnityAtom.reportRead();
-    return super.announcementsCommunnity;
-  }
-
-  @override
-  set announcementsCommunnity(List<Announcement> value) {
-    _$announcementsCommunnityAtom.reportWrite(value, super.announcementsCommunnity, () {
-      super.announcementsCommunnity = value;
-    });
-  }
-
   late final _$errorAtom = Atom(name: '_AnnouncementStoreBase.error', context: context);
 
   @override
@@ -70,18 +39,18 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     });
   }
 
-  late final _$loadingAtom = Atom(name: '_AnnouncementStoreBase.loading', context: context);
+  late final _$fetchStatusAtom = Atom(name: '_AnnouncementStoreBase.fetchStatus', context: context);
 
   @override
-  bool get loading {
-    _$loadingAtom.reportRead();
-    return super.loading;
+  FetchStatus get fetchStatus {
+    _$fetchStatusAtom.reportRead();
+    return super.fetchStatus;
   }
 
   @override
-  set loading(bool value) {
-    _$loadingAtom.reportWrite(value, super.loading, () {
-      super.loading = value;
+  set fetchStatus(FetchStatus value) {
+    _$fetchStatusAtom.reportWrite(value, super.fetchStatus, () {
+      super.fetchStatus = value;
     });
   }
 
@@ -101,49 +70,12 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     return _$getGlobalAnnouncementsAsyncAction.run(() => super.getGlobalAnnouncements());
   }
 
-  late final _$_AnnouncementStoreBaseActionController =
-      ActionController(name: '_AnnouncementStoreBase', context: context);
-
-  @override
-  void _init() {
-    final _$actionInfo = _$_AnnouncementStoreBaseActionController.startAction(name: '_AnnouncementStoreBase._init');
-    try {
-      return super._init();
-    } finally {
-      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setAnnouncementsEmpty() {
-    final _$actionInfo =
-        _$_AnnouncementStoreBaseActionController.startAction(name: '_AnnouncementStoreBase.setAnnouncementsEmpty');
-    try {
-      return super.setAnnouncementsEmpty();
-    } finally {
-      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setLoading(bool val) {
-    final _$actionInfo =
-        _$_AnnouncementStoreBaseActionController.startAction(name: '_AnnouncementStoreBase.setLoading');
-    try {
-      return super.setLoading(val);
-    } finally {
-      _$_AnnouncementStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
   @override
   String toString() {
     return '''
-announcementsGlobal: ${announcementsGlobal},
-announcementsCommunnity: ${announcementsCommunnity},
 error: ${error},
 failureType: ${failureType},
-loading: ${loading}
+fetchStatus: ${fetchStatus}
     ''';
   }
 }
