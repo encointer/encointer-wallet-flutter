@@ -39,6 +39,7 @@ void main() async {
       langCode: 'en',
       cid: Cids.leuKsm,
       ewHttp: MockEwHttp(),
+      devMode: true,
     );
   });
 }
