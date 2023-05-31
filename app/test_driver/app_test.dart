@@ -81,23 +81,23 @@ void main() async {
   }, timeout: timeout120);
 
   group('DevMode QR Codes tests', () {
-    test('HomePage: test and save the contact from qr', () async {
+    test('HomePage: save the contact from qr', () async {
       await qrFromHomeTestAndSaveContact(driver);
     }, timeout: timeout120);
 
-    test('HomePage: test and send money with amount from qr', () async {
+    test('HomePage: send money with amount from qr', () async {
       await qrFromHomeTestAndSendWithAmount(driver);
     }, timeout: timeout120);
 
-    test('HomePage: test and send money without amount from qr', () async {
+    test('HomePage: send money without amount from qr', () async {
       await qrFromHomeTestAndSendWithoutAmount(driver);
     }, timeout: timeout120);
 
-    test('SendPage: test and send money with amount from qr', () async {
+    test('SendPage: send money with amount from qr', () async {
       await qrFromSendPageTestAndSendWithAmount(driver);
     }, timeout: timeout120);
 
-    test('SendPage: test and send money without amount from qr', () async {
+    test('SendPage: send money without amount from qr', () async {
       await qrFromSendPageTestAndSendWithoutAmount(driver);
     }, timeout: timeout120);
 
