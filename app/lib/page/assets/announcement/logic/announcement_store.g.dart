@@ -58,16 +58,16 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
       AsyncAction('_AnnouncementStoreBase.getCommunityAnnouncements', context: context);
 
   @override
-  Future<void> getCommunityAnnouncements(String? cid) {
-    return _$getCommunityAnnouncementsAsyncAction.run(() => super.getCommunityAnnouncements(cid));
+  Future<void> getCommunityAnnouncements(String? cid, {bool devMode = false}) {
+    return _$getCommunityAnnouncementsAsyncAction.run(() => super.getCommunityAnnouncements(cid, devMode: devMode));
   }
 
   late final _$getGlobalAnnouncementsAsyncAction =
       AsyncAction('_AnnouncementStoreBase.getGlobalAnnouncements', context: context);
 
   @override
-  Future<void> getGlobalAnnouncements() {
-    return _$getGlobalAnnouncementsAsyncAction.run(() => super.getGlobalAnnouncements());
+  Future<void> getGlobalAnnouncements({bool devMode = false}) {
+    return _$getGlobalAnnouncementsAsyncAction.run(() => super.getGlobalAnnouncements(devMode: devMode));
   }
 
   @override

@@ -328,9 +328,7 @@ class _AssetsViewState extends State<AssetsView> {
                     CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                     const SizedBox(height: 24),
                     if (appSettingsStore.developerMode)
-                      AnnouncementView(
-                        cid: widget.store.encointer.community?.cid.toFmtString(),
-                      ),
+                      AnnouncementView(cid: widget.store.encointer.community?.cid.toFmtString()),
                   ],
                 ),
               ),

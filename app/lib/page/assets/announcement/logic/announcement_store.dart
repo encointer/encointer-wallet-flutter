@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/models/announcement/announcement.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
+import 'package:encointer_wallet/config/consts.dart';
 
 part 'announcement_store.g.dart';
 
@@ -29,10 +30,10 @@ abstract class _AnnouncementStoreBase with Store {
   FetchStatus fetchStatus = FetchStatus.loading;
 
   @action
-  Future<void> getCommunityAnnouncements(String? cid) async {
+  Future<void> getCommunityAnnouncements(String? cid, {bool devMode = false}) async {
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final communityAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
-      'https://eldar2021.github.io/encointer/announcements/leu/announcements.json',
+      '${getEncointerFeedLink(devMode: devMode)}/announcements/$cid/en/announcements.json',
       fromJson: Announcement.fromJson,
     );
 
@@ -46,10 +47,10 @@ abstract class _AnnouncementStoreBase with Store {
   }
 
   @action
-  Future<void> getGlobalAnnouncements() async {
+  Future<void> getGlobalAnnouncements({bool devMode = false}) async {
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final globalAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
-      'https://eldar2021.github.io/encointer/announcements/global/announcements.json',
+      '${getEncointerFeedLink(devMode: devMode)}/announcements/global/en/announcements.json',
       fromJson: Announcement.fromJson,
     );
 

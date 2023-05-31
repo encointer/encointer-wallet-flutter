@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:encointer_wallet/models/announcement/announcement.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
@@ -92,9 +93,10 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   }
 
   Future<void> _getAnnouncements() async {
+    final devMode = context.read<AppSettings>().developerMode;
     await Future.wait([
-      _announcementStore.getGlobalAnnouncements(),
-      _announcementStore.getCommunityAnnouncements(widget.cid),
+      _announcementStore.getGlobalAnnouncements(devMode: devMode),
+      _announcementStore.getCommunityAnnouncements(widget.cid, devMode: devMode),
     ]);
   }
 
