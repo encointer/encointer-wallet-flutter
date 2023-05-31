@@ -5,10 +5,11 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
@@ -49,17 +50,17 @@ class _ProfileState extends State<Profile> {
                   size: 70,
                   tapToCopy: false,
                 ),
-                Positioned(
+                const Positioned(
                   bottom: 0,
                   right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: zurichLion.shade800),
+                  child: Icon(Iconsax.edit),
                 ),
               ],
             ),
             const SizedBox(height: 6),
             Text(
               Fmt.accountName(context, account),
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: context.textTheme.headlineMedium,
             ),
             // This sizedBox is here to define a distance between the accounts
             const SizedBox(width: 100),
@@ -80,8 +81,9 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final h3Grey = Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey);
+    final h3Grey = context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey);
     final store = context.watch<AppStore>();
+    final appSettings = context.watch<AppSettings>();
     final appSettingsStore = context.watch<AppSettings>();
     _selectedNetwork = store.settings.endpoint;
 
@@ -97,7 +99,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.title),
-        iconTheme: const IconThemeData(color: encointerGrey), //change your color here,
+        iconTheme: const IconThemeData(color: AppColors.encointerGrey), //change your color here,
         centerTitle: true,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -115,11 +117,11 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     Text(
                       dic.profile.accounts,
-                      style: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
+                      style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
                     ),
                     IconButton(
                       icon: const Icon(Iconsax.add_square),
-                      color: zurichLion.shade500,
+                      color: context.colorScheme.secondary,
                       onPressed: () => Navigator.of(context).pushNamed(AddAccountView.route),
                     ),
                   ],
@@ -133,10 +135,10 @@ class _ProfileState extends State<Profile> {
                       begin: Alignment.centerRight,
                       end: Alignment.centerLeft,
                       colors: [
-                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
-                        Theme.of(context).scaffoldBackgroundColor,
-                        Theme.of(context).scaffoldBackgroundColor,
-                        Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
+                        context.theme.scaffoldBackgroundColor.withOpacity(0),
+                        context.theme.scaffoldBackgroundColor,
+                        context.theme.scaffoldBackgroundColor,
+                        context.theme.scaffoldBackgroundColor.withOpacity(0),
                       ],
                       stops: const [0.0, 0.1, 0.9, 1.0],
                     ).createShader(bounds);
@@ -151,7 +153,7 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text(
                   dic.profile.changeYourPin,
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: context.textTheme.displaySmall,
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
@@ -167,7 +169,7 @@ class _ProfileState extends State<Profile> {
                       ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
                       : Text(dic.encointer.fetchingReputations)),
               ListTile(
-                title: Text(dic.profile.about, style: Theme.of(context).textTheme.displaySmall),
+                title: Text(dic.profile.about, style: context.textTheme.displaySmall),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
@@ -175,6 +177,19 @@ class _ProfileState extends State<Profile> {
                 key: const Key('settings-language'),
                 title: Text(dic.profile.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
+              ),
+              SwitchListTile(
+                title: Text(dic.account.biometricAuth, style: h3Grey),
+                onChanged: (value) async {
+                  final appStore = context.read<AppStore>();
+                  final appSettings = context.read<AppSettings>();
+                  await AppAlert.showPasswordInputDialog(
+                    context,
+                    account: appStore.account.currentAccount,
+                    onSuccess: (_) => appSettings.setIsBiometricAuthenticationEnabled(value),
+                  );
+                },
+                value: appSettings.isBiometricAuthenticationEnabled,
               ),
               const SendToTrelloListTile(),
               ListTile(
@@ -195,7 +210,7 @@ class _ProfileState extends State<Profile> {
                         child: Observer(
                           builder: (_) => Text(
                             'Change network (current: ${store.settings.endpoint.info})', // for devs only
-                            style: Theme.of(context).textTheme.headlineMedium,
+                            style: context.textTheme.headlineMedium,
                           ),
                         ),
                         onTap: () => Navigator.of(context).pushNamed(NetworkSelectPage.route),
@@ -268,11 +283,7 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
                 await store.account.removeAccount(acc);
               }
 
-              await Navigator.pushNamedAndRemoveUntil(
-                context,
-                CreateAccountEntryView.route,
-                (route) => false,
-              );
+              await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
             },
           ),
         ],

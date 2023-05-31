@@ -250,19 +250,18 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$themeAtom = Atom(name: '_SettingsStore.theme', context: context);
+  late final _$getPinAsyncAction = AsyncAction('_SettingsStore.getPin', context: context);
 
   @override
-  ThemeData get theme {
-    _$themeAtom.reportRead();
-    return super.theme;
+  Future<String> getPin() {
+    return _$getPinAsyncAction.run(() => super.getPin());
   }
 
+  late final _$setPinAsyncAction = AsyncAction('_SettingsStore.setPin', context: context);
+
   @override
-  set theme(ThemeData value) {
-    _$themeAtom.reportWrite(value, super.theme, () {
-      super.theme = value;
-    });
+  Future<void> setPin(String pin) {
+    return _$setPinAsyncAction.run(() => super.setPin(pin));
   }
 
   late final _$initAsyncAction = AsyncAction('_SettingsStore.init', context: context);
@@ -362,16 +361,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void changeTheme() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.changeTheme');
-    try {
-      return super.changeTheme();
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void toggleEnableBazaar() {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleEnableBazaar');
     try {
@@ -396,16 +385,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkName');
     try {
       return super.setNetworkName(name);
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setPin(String pin) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setPin');
-    try {
-      return super.setPin(pin);
     } finally {
       _$_SettingsStoreActionController.endAction(_$actionInfo);
     }
@@ -445,7 +424,6 @@ networkState: ${networkState},
 networkConst: ${networkConst},
 contactList: ${contactList},
 locale: ${locale},
-theme: ${theme},
 endpointIsEncointer: ${endpointIsEncointer},
 endpointIsNoTee: ${endpointIsNoTee},
 endpointIsTeeProxy: ${endpointIsTeeProxy},

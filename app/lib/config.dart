@@ -1,22 +1,15 @@
 import 'package:upgrader/upgrader.dart';
 
 class AppConfig {
-  const AppConfig({
-    this.mockSubstrateApi = false,
-    this.isTestMode = false,
-    this.appCast,
-  });
+  const AppConfig({this.isIntegrationTest = false, this.appCast});
 
-  /// [mockSubstrateApi] indicates whether the app uses a mocked api `MockApi` or the real api `Api`.
-  final bool mockSubstrateApi;
-
-  /// [isTestMode] indicates whether the app is running in test mode.
-  final bool isTestMode;
-
-  /// [appCast] is used to provide fake information about the app version for `Upgrader` package.
+  /// [appCast] is used to provide fake information about the app version for the `Upgrader` package.
   final AppcastConfiguration? appCast;
 
-  /// If [AppcastConfiguration] variable is not null, the app is running real integration test.
-  /// If [isIntegrationTest] value is `true`, test will close upgrader alert and won't ask notifications permission.
-  bool get isIntegrationTest => appCast != null;
+  /// If the [isIntegrationTest] value is `true`, the following conditions will occur:
+  /// 1) The test will close the Upgrader alert.
+  /// 2) The app won't ask for notification permissions.
+  /// 3) The app will show the full `acoountPubKey` in the `AccountManage` page.
+  /// 4) The `_animationController!.reset()` method will not be called for the `PaymentConfirmationPage`.
+  final bool isIntegrationTest;
 }

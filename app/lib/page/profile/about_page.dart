@@ -1,10 +1,11 @@
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AboutPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: context.theme.cardColor,
       appBar: AppBar(
         title: Text(dic.profile.about),
         centerTitle: true,
@@ -30,7 +31,7 @@ class AboutPage extends StatelessWidget {
             ),
             Text(
               dic.profile.aboutBrief,
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: context.textTheme.headlineMedium,
             ),
             const SizedBox(height: 8),
             FutureBuilder<PackageInfo>(

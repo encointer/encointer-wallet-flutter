@@ -1,10 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/settings/settings.dart';
+import 'package:encointer_wallet/config/prod_community.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 part 'app_settings_store.g.dart';
 
@@ -13,10 +14,16 @@ class AppSettings = _AppSettingsBase with _$AppSettings;
 abstract class _AppSettingsBase with Store {
   _AppSettingsBase(this._service);
 
-  final LangService _service;
+  final AppService _service;
 
   @observable
-  Locale _locale = const Locale('en');
+  Locale locale = const Locale('en');
+
+  @observable
+  bool isBiometricAuthenticationEnabled = false;
+
+  @observable
+  bool developerMode = false;
 
   final locales = const <Locale>[
     Locale('en', ''),
@@ -25,22 +32,42 @@ abstract class _AppSettingsBase with Store {
     Locale('ru', ''),
   ];
 
+  @observable
+  ColorScheme colorScheme = AppColors.leu;
+
   @computed
-  Locale get locale => _locale;
+  CustomTheme get theme => CustomTheme(colorScheme);
 
   @action
-  void init() => _locale = _service.init();
+  void init() => locale = _service.init();
+
+  @action
+  bool getIsBiometricAuthenticationEnabled() {
+    final value = _service.getIsBiometricAuthenticationEnabled();
+    if (value != null) isBiometricAuthenticationEnabled = value;
+    return isBiometricAuthenticationEnabled;
+  }
 
   @action
   Future<void> setLocale(String languageCode) async {
-    _locale = await _service.setLocale(languageCode);
+    locale = await _service.setLocale(languageCode);
   }
 
-  String getName(String code) => _service.getName(code);
+  @action
+  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
+    isBiometricAuthenticationEnabled = value;
+    await _service.setIsBiometricAuthenticationEnabled(value);
+  }
 
-  @observable
-  bool developerMode = false;
+  String getLocaleName(String code) => _service.getLocaleName(code);
 
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;
+
+  /// TODO(edliiar): Activate GBD colors when received from designer.
+  @action
+  void changeTheme(String? cid) {
+    final community = Community.fromCid(cid);
+    if (colorScheme != community.colorScheme) colorScheme = community.colorScheme;
+  }
 }

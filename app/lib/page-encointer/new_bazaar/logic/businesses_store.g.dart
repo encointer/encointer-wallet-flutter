@@ -42,7 +42,7 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
   late final _$getBusinessesAsyncAction = AsyncAction('_BusinessesStoreBase.getBusinesses', context: context);
 
   @override
-  Future<void> getBusinesses({Category category = Category.alle}) {
+  Future<void> getBusinesses({Category category = Category.all}) {
     return _$getBusinessesAsyncAction.run(() => super.getBusinesses(category: category));
   }
 

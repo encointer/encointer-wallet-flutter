@@ -4,10 +4,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -102,7 +102,7 @@ class _TransferPageState extends State<TransferPage> {
       _communitySymbol = params.communitySymbol ?? store.encointer.community?.symbol;
       _cid = params.cid ?? store.encointer.chosenCid;
 
-      final pubKey = await webApi.account.addressToPubKey(params.recipientAddress);
+      final pubKey = Fmt.ss58Decode(params.recipientAddress).pubKey;
 
       _accountTo = AccountData()
         ..pubKey = pubKey
@@ -115,7 +115,6 @@ class _TransferPageState extends State<TransferPage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
-    final textTheme = Theme.of(context).textTheme;
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
     Log.d('[transferPage]: available: $available', 'TransferPage');
 
@@ -167,7 +166,7 @@ class _TransferPageState extends State<TransferPage> {
                         'ACCOUNT_NAME',
                         Fmt.accountName(context, store.account.currentAccount),
                       ),
-                      style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
+                      style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
@@ -191,7 +190,7 @@ class _TransferPageState extends State<TransferPage> {
                     const SizedBox(height: 24),
                     EncointerTextFormField(
                       labelText: dic.assets.amountToBeTransferred,
-                      textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(color: encointerBlack),
+                      textStyle: context.textTheme.displayLarge!.copyWith(color: AppColors.encointerBlack),
                       inputFormatters: [UI.decimalInputFormatter()],
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       controller: _amountCtrl,
@@ -205,7 +204,7 @@ class _TransferPageState extends State<TransferPage> {
                         }
                         return null;
                       },
-                      suffixIcon: const Text('ⵐ', style: TextStyle(color: encointerGrey, fontSize: 44)),
+                      suffixIcon: const Text('ⵐ', style: TextStyle(color: AppColors.encointerGrey, fontSize: 44)),
                     ),
                     const SizedBox(height: 24),
                     AddressInputField(
@@ -227,7 +226,7 @@ class _TransferPageState extends State<TransferPage> {
                 Center(
                   child: Text(
                     '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
-                    style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
+                    style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
                   ),
                 ),
               const SizedBox(height: 8),
@@ -299,17 +298,16 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Center(
       child: RichText(
         // need text base line alignment
         text: TextSpan(
           text: '${Fmt.doubleFormat(available, length: 6)} ',
-          style: textTheme.displayMedium!.copyWith(color: encointerBlack),
+          style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
           children: const <TextSpan>[
             TextSpan(
               text: 'ⵐ',
-              style: TextStyle(color: encointerGrey),
+              style: TextStyle(color: AppColors.encointerGrey),
             ),
           ],
         ),

@@ -1,86 +1,55 @@
 import 'dart:io';
 
-import 'package:ew_http/ew_http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upgrader/upgrader.dart';
 
-import 'package:encointer_wallet/app.dart';
+import 'package:encointer_wallet/main.dart' as app;
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/utils/repository_provider.dart';
-import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
-import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
-import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/store/app.dart';
+
+import 'helpers/helper.dart';
+
+part 'helpers/command/app_functions.dart';
 
 void main() async {
+  const shouldTakeScreenshot = String.fromEnvironment('locales');
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
-  final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
-  final globalAppStore = AppStore(
-    MockLocalStorage(),
-    config: AppConfig(mockSubstrateApi: true, isTestMode: true, appCast: cfg),
+
+  late final AppSettings appSettings;
+  final appCast = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
+  final appConfig = AppConfig(appCast: appCast, isIntegrationTest: true);
+
+  enableFlutterDriverExtension(
+    handler: (command) async {
+      switch (command) {
+        case TestCommand.getPlatform:
+          return Platform.operatingSystem;
+        case TestCommand.locales:
+          return shouldTakeScreenshot;
+        case TestCommand.localeEn:
+          return changeLocale(appSettings, 'en');
+        case TestCommand.localeDe:
+          return changeLocale(appSettings, 'de');
+        case TestCommand.localeFr:
+          return changeLocale(appSettings, 'fr');
+        case TestCommand.localeRu:
+          return changeLocale(appSettings, 'ru');
+        case TestCommand.devModeOn:
+          return toggleDeveloperMode(appSettings, true);
+        case TestCommand.devModeOff:
+          return toggleDeveloperMode(appSettings, false);
+        default:
+          return '';
+      }
+    },
   );
-
-  // the tests are run in a separate isolate from the app. The test isolate can only interact with
-  // the app via the driver in order to, for instance, configure the app state.
-  // More info in: https://medium.com/stuart-engineering/mocking-integration-tests-with-flutter-af3b6ba846c7
-  //
-  // ignore: missing_return
-  Future<String> dataHandler(String? msg) async {
-    var result = '';
-    switch (msg) {
-      case TestCommands.waitUntilAppIsReady:
-        return PrepareMockStorage.wait(globalAppStore);
-      case TestCommands.init:
-        await PrepareMockStorage.init(globalAppStore);
-        break;
-      case TestCommands.homePage:
-        PrepareMockStorage.homePage(globalAppStore);
-        break;
-      case TestCommands.readyForMeetup:
-        PrepareMockStorage.readyForMeetup(globalAppStore);
-        break;
-      case TestCommands.getPlatform:
-        result = Platform.operatingSystem;
-        break;
-      default:
-        break;
-    }
-    return result;
-  }
-
-  enableFlutterDriverExtension(handler: dataHandler);
-  WidgetsApp.debugAllowBannerOverride = false; // remove debug banner for screenshots
 
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationPlugin.setup();
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
-  final localService = LangService(await SharedPreferences.getInstance());
-
-  // Call the `main()` function of the app, or call `runApp` with
-  // any widget you are interested in testing.
-  runApp(
-    MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider(create: (context) => EwHttp()),
-      ],
-      child: MultiProvider(
-        providers: [
-          Provider<AppSettings>(
-            create: (context) => AppSettings(localService)..init(),
-          ),
-          Provider<AppStore>(
-            // On test mode instead of LocalStorage() must be use MockLocalStorage()
-            create: (context) => globalAppStore,
-          )
-        ],
-        child: const WalletApp(),
-      ),
-    ),
-  );
+  appSettings = AppSettings(AppService(await SharedPreferences.getInstance()));
+  WidgetsApp.debugAllowBannerOverride = false;
+  await app.main(appConfig: appConfig, settings: appSettings);
 }

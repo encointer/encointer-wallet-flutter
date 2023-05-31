@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/password_input_dialog.dart' as pass;
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/alerts/password_input_dialog.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AppAlert {
@@ -91,20 +89,16 @@ class AppAlert {
     );
   }
 
-  static Future<void> showPasswordInputDialog({
-    required BuildContext context,
+  static Future<bool?> showPasswordInputDialog(
+    BuildContext context, {
     required AccountData account,
+    required Future<void> Function(String) onSuccess,
+    bool canPop = true,
   }) async {
-    final dic = I18n.of(context)!.translationsForLocale();
-    return showCupertinoDialog<void>(
+    return showCupertinoDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        return pass.showPasswordInputDialog(
-          context,
-          account,
-          Text(dic.profile.unlock),
-          (String password) => context.read<AppStore>().settings.setPin(password),
-        );
+        return PasswordInputDialog(account: account, onSuccess: onSuccess, canPop: canPop);
       },
     );
   }

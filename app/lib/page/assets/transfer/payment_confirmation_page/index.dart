@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:animated_check/animated_check.dart';
+import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -8,7 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/payment_overview.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transfer_state.dart';
@@ -214,8 +216,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   Widget _txStateTextInfo(TransferState state) {
-    final h1Grey = Theme.of(context).textTheme.displayLarge!.copyWith(color: encointerGrey);
-    final h2Grey = Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerGrey);
+    final h1Grey = context.textTheme.displayLarge!.copyWith(color: AppColors.encointerGrey);
+    final h2Grey = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey);
 
     final dic = I18n.of(context)!.translationsForLocale();
     switch (state) {
@@ -257,8 +259,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   void _animateTick() {
-    _animationController!.forward();
-    Future.delayed(const Duration(seconds: 1), () => _animationController!.reset());
+    if (!RepositoryProvider.of<AppConfig>(context).isIntegrationTest) {
+      _animationController!.forward();
+      Future.delayed(const Duration(seconds: 1), () => _animationController!.reset());
+    }
   }
 
   void _initializeAnimation() {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/view/businesses_view.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/dropdown_widget.dart';
@@ -19,7 +19,7 @@ class BazaarMain extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           dic.bazaar.acceptancePoints,
-          style: textTheme.displaySmall!.copyWith(color: zurichLion.shade600),
+          style: textTheme.displaySmall!.copyWith(color: context.colorScheme.secondary),
         ),
         actions: [
           IconButton(

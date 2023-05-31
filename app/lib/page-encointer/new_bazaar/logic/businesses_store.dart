@@ -17,12 +17,12 @@ abstract class _BusinessesStoreBase with Store {
   FetchStatus fetchStatus = FetchStatus.loading;
 
   @action
-  Future<void> getBusinesses({Category category = Category.alle}) async {
+  Future<void> getBusinesses({Category category = Category.all}) async {
     fetchStatus = FetchStatus.loading;
     await Future<void>.delayed(const Duration(seconds: 1));
     final data = businessesMockData['businesses'];
     final items = data!.map(Businesses.fromJson).toList();
-    if (category != Category.alle) items.removeWhere((element) => element.category != category);
+    if (category != Category.all) items.removeWhere((element) => element.category != category);
     items.sort((a, b) {
       if (a.status == Status.highlight && b.status == Status.neuBeiLeu) return -1;
       if (a.status == Status.neuBeiLeu && b.status == Status.highlight) return 1;

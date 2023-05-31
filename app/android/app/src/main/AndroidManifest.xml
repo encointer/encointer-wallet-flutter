@@ -44,6 +44,8 @@
             android:value="2" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- local_auth -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <queries>
         <!-- Needed to open URLs as of Android 11 -->
         <intent>

@@ -4,8 +4,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
@@ -34,7 +36,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    if (!context.read<AppStore>().config.isIntegrationTest) NotificationPlugin.init(context);
+    if (!RepositoryProvider.of<AppConfig>(context).isIntegrationTest) NotificationPlugin.init(context);
     final encointer = context.read<AppStore>().encointer;
     final cid = encointer.community?.cid.toFmtString();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -45,6 +47,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         langCode: Localizations.localeOf(context).languageCode,
         cid: cid,
         ewHttp: RepositoryProvider.of<EwHttp>(context),
+        devMode: context.read<AppSettings>().developerMode,
       );
 
       // Should never be null, we either come from the splash screen, and hence we had
@@ -81,7 +84,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
             icon: _tabList[activeItem] == i
                 ? ShaderMask(
                     blendMode: BlendMode.srcIn,
-                    shaderCallback: (bounds) => primaryGradient.createShader(
+                    shaderCallback: (bounds) => AppColors.primaryGradient(context).createShader(
                       Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                     ),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -103,7 +106,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                 : Icon(
                     i.iconData,
                     key: Key(i.key.name),
-                    color: i.key == TabKey.scan ? zurichLion.shade900 : encointerGrey,
+                    color: i.key == TabKey.scan ? context.colorScheme.onSurface : AppColors.encointerGrey,
                   ),
             label: '',
           ),

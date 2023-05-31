@@ -1,12 +1,11 @@
 import 'dart:io';
 
+import 'package:ew_storage/ew_storage.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:provider/provider.dart';
-import 'package:upgrader/upgrader.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
@@ -17,12 +16,11 @@ import 'package:encointer_wallet/service/http_overrides.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart' as util;
 
-Future<void> main({AppcastConfiguration? appCast, AppSettings? settings}) async {
+Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
   late final AppSettings appSettings;
   WidgetsFlutterBinding.ensureInitialized();
+
   await NotificationPlugin.setup();
-  // var notificationAppLaunchDetails =
-  //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   if (Platform.isAndroid) {
     // this is enabled by default in IOS dev-builds.
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
@@ -30,20 +28,20 @@ Future<void> main({AppcastConfiguration? appCast, AppSettings? settings}) async 
 
   HttpOverrides.global = MyHttpOverrides();
 
-  appSettings = settings ?? AppSettings(LangService(await SharedPreferences.getInstance()));
+  appSettings = settings ?? AppSettings(AppService(await SharedPreferences.getInstance()));
 
   runApp(
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => EwHttp()),
+        RepositoryProvider(create: (context) => appConfig ?? const AppConfig()),
       ],
       child: MultiProvider(
         providers: [
           Provider<AppSettings>(create: (context) => appSettings..init()),
           Provider<AppStore>(
-            // On test mode instead of LocalStorage() must be use MockLocalStorage()
-            create: (context) => AppStore(util.LocalStorage(), config: AppConfig(appCast: appCast)),
-          ),
+            create: (context) => AppStore(util.LocalStorage(), const SecureStorage()),
+          )
         ],
         child: const WalletApp(),
       ),

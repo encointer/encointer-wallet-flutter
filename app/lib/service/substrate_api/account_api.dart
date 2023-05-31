@@ -26,27 +26,6 @@ class AccountApi {
     this.fetchAccountData = fetchAccountData;
   }
 
-  /// Returns the pubKeys of the corresponding addresses.
-  ///
-  /// Todo: Remove this #1105.
-  Future<List<String>> addressesToPubKey(List<String> addresses) async {
-    if (addresses.isEmpty) return [];
-    final pubKeyAddress =
-        await jsApi.evalJavascript<Map<String, dynamic>?>('account.decodeAddress(${jsonEncode(addresses)})');
-
-    if (pubKeyAddress != null) {
-      return pubKeyAddress.keys.toList();
-    }
-
-    return [];
-  }
-
-  /// Decode one address to the corresponding pubKey.
-  Future<String> addressToPubKey(String address) async {
-    final addressList = await addressesToPubKey([address]);
-    return addressList[0];
-  }
-
   Future<String> addressFromUri(String uri) async {
     final address = await jsApi.evalJavascript<String>('account.addressFromUri("$uri")');
 
@@ -116,9 +95,9 @@ class AccountApi {
     return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }
 
-  Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
+  Future<Map<String, dynamic>?> checkAccountPassword(AccountData account, String pass) async {
     final pubKey = account.pubKey;
     Log.d('checkpass: $pubKey, $pass', 'AccountApi');
-    return jsApi.evalJavascript('account.checkPassword("$pubKey", "$pass")');
+    return jsApi.evalJavascript<Map<String, dynamic>?>('account.checkPassword("$pubKey", "$pass")');
   }
 }

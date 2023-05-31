@@ -10,8 +10,8 @@ Businesses _$BusinessesFromJson(Map<String, dynamic> json) => Businesses(
       name: json['name'] as String,
       description: json['description'] as String,
       category: $enumDecode(_$CategoryEnumMap, json['category']),
-      status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
       photo: json['photo'] as String,
+      status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
     );
 
 Map<String, dynamic> _$BusinessesToJson(Businesses instance) => <String, dynamic>{
@@ -23,7 +23,7 @@ Map<String, dynamic> _$BusinessesToJson(Businesses instance) => <String, dynamic
     };
 
 const _$CategoryEnumMap = {
-  Category.alle: 'Alle',
+  Category.all: 'All',
   Category.artAndMusic: 'Art & Music',
   Category.bodyAndSoul: 'Body & Soul',
   Category.fashionAndClothing: 'Fashion & Clothing',

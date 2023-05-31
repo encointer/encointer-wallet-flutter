@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
+import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
@@ -272,13 +272,16 @@ class EncointerApi {
     return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
-  Future<void> getMeetupTimeOverride() async {
+  Future<void> getMeetupTimeOverride({bool devMode = false}) async {
     Log.d('api: Check if there are meetup time overrides', 'EncointerApi');
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
     try {
-      final overrides = await ewHttp.getTypeList(encointerFeedOverrides, fromJson: MeetupOverrides.fromJson);
+      final overrides = await ewHttp.getTypeList(
+        '${getEncointerFeedLink(devMode: devMode)}/$encointerFeedOverridesPath',
+        fromJson: MeetupOverrides.fromJson,
+      );
       final meetupTimeOverride = await feed.getMeetupTimeOverride(
         network: store.encointer.network,
         cid: cid,

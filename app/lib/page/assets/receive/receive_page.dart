@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/page/assets/qr_code_printing/pages/qr_code_share_or_print_view.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -6,9 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-
+import 'package:encointer_wallet/page/assets/qr_code_printing/pages/qr_code_share_or_print_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -146,7 +145,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 48),
                       child: Text(
                         dic.profile.qrScanHint,
-                        style: Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerBlack),
+                        style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerBlack),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -155,7 +154,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       padding: const EdgeInsets.all(30),
                       child: EncointerTextFormField(
                         labelText: dic.assets.invoiceAmount,
-                        textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
+                        textStyle: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -171,7 +170,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         suffixIcon: const Text(
                           'ⵐ',
                           style: TextStyle(
-                            color: encointerGrey,
+                            color: AppColors.encointerGrey,
                             fontSize: 26,
                           ),
                         ),
@@ -181,7 +180,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 ),
                 Text(
                   '${dic.profile.receiverAccount} ${store.account.currentAccount.name}',
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey),
+                  style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),

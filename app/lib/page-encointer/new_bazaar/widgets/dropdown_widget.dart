@@ -1,8 +1,9 @@
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/custom/colors/app_colors.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/logic/businesses_store.dart';
 
 class DropdownWidget extends StatefulWidget {
@@ -13,25 +14,29 @@ class DropdownWidget extends StatefulWidget {
 }
 
 class _DropdownWidgetState extends State<DropdownWidget> {
-  Category selectedCategory = Category.alle;
+  Category selectedCategory = Category.all;
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return DropdownMenu<Category>(
-      initialSelection: Category.alle,
+      initialSelection: Category.all,
+      menuStyle: MenuStyle(
+        backgroundColor: MaterialStateProperty.all(const Color(0xFFf4f7f8)),
+        shadowColor: MaterialStateProperty.all(context.colorScheme.secondary),
+        elevation: MaterialStateProperty.all(40),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+      ),
       dropdownMenuEntries: Category.values
           .map(
             (e) => DropdownMenuEntry<Category>(
               value: e,
               label: e.name,
               style: ButtonStyle(
-                textStyle: MaterialStateProperty.all(textTheme.bodySmall),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
+                textStyle: MaterialStateProperty.all(context.textTheme.bodySmall),
               ),
             ),
           )
@@ -44,26 +49,27 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         }
       },
       inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: const Color(0xFFf4f7f8),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide.none,
-          ),
-          contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-          constraints: const BoxConstraints(maxHeight: 40)),
-      textStyle: textTheme.bodyMedium,
+        filled: true,
+        fillColor: const Color(0xFFf4f7f8),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide.none,
+        ),
+        contentPadding: const EdgeInsets.only(left: 15),
+        constraints: const BoxConstraints(maxHeight: 40),
+      ),
+      textStyle: context.textTheme.bodyMedium,
       trailingIcon: const Icon(
         Icons.keyboard_arrow_down_outlined,
-        color: encointerGrey,
+        color: AppColors.encointerGrey,
       ),
     );
   }
 }
 
 enum Category {
-  @JsonValue('Alle')
-  alle('Alle'),
+  @JsonValue('All')
+  all('All'),
   @JsonValue('Art & Music')
   artAndMusic('Art & Music'),
   @JsonValue('Body & Soul')
