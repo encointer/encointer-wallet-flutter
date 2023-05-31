@@ -11,9 +11,7 @@ void main() {
   const getUrl = 'https://eldar2021.github.io/encointer/test_data.json';
   const emptyList = 'https://eldar2021.github.io/encointer/test/empty_list.json';
 
-  setUp(() {
-    ewHttp = EwHttp();
-  });
+  setUp(() => ewHttp = EwHttp());
 
   group('EwHttp `get`, `getType`, `getListType`', () {
     test('Get', () async {
@@ -62,20 +60,20 @@ void main() {
       expect(testModelList, isA<List<TestModel>>());
       expect(testModelList?.isEmpty, true);
     });
+  });
 
-    test('Right equals', () async {
+  group('Either', () {
+    test('Right equals Right && Left', () async {
       const a = Right<int, Exception>(20);
       const b = Right<int, Exception>(20);
       expect(a, b);
+
+      const c = Left<int, String>('Some Error');
+      const d = Left<int, String>('Some Error');
+      expect(c, d);
     });
 
-    test('Left equals', () async {
-      const a = Left<int, String>('Some Error');
-      const b = Left<int, String>('Some Error');
-      expect(a, b);
-    });
-
-    test('Either Call ifFight', () async {
+    test('Either Call ifRight && ifLeft', () async {
       late int rithValue;
       late String leftValue;
       Either<int, String> getRight() => const Right(12);
