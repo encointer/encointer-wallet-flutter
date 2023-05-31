@@ -87,7 +87,6 @@ final String ipfs_gateway_local = 'http://${Platform.isAndroid ? androidLocalHos
 const encointerFeed = 'https://encointer.github.io/feed';
 const communityMessagesPath = 'community_messages/$localePlaceHolder/cm.json';
 const encointerFeedOverridesPath = 'overrides.json';
-const encointerFeedAnn = 'overrides.json';
 
 String getEncointerFeedLink({bool devMode = false}) {
   return devMode ? '$encointerFeed/dev' : encointerFeed;
