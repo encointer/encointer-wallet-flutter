@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/gen/assets.gen.dart';
-import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +15,8 @@ import 'package:collection/collection.dart';
 
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
