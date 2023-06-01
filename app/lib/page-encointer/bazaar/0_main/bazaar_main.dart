@@ -7,8 +7,8 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/view/businesses_view.
 import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-class BazaarMain extends StatelessWidget {
-  const BazaarMain({super.key});
+class BazaarPage extends StatelessWidget {
+  const BazaarPage({super.key});
   static const String route = '/bazaar';
 
   @override
@@ -52,14 +52,14 @@ class BazaarMain extends StatelessWidget {
   }
 }
 
-class BazaarPage extends StatelessWidget {
-  const BazaarPage({super.key});
+class BazaarMain extends StatelessWidget {
+  const BazaarMain({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Provider(
       create: (context) => BusinessesStore()..getBusinesses(),
-      child: const BazaarMain(),
+      child: const BazaarPage(),
     );
   }
 }
