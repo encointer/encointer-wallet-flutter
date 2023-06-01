@@ -12,6 +12,7 @@ class TransactionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (transactions.isEmpty) return const TransactionsEmpty();
     return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(14, 20, 14, 35),
       itemCount: transactions.length,
       itemBuilder: (BuildContext context, int index) {
         final transaction = transactions[index];

@@ -6,6 +6,7 @@ Future<void> scrollToSendAddress(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey(TransferKeys.transferListview),
     find.byValueKey('send-to-address'),
+    dyScroll: -200,
   );
 }
 
