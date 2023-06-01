@@ -16,7 +16,6 @@ class TransactionCard extends StatelessWidget {
     final appStore = context.watch<AppStore>();
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-      color: context.colorScheme.background,
       child: ListTile(
         minLeadingWidth: 7,
         leading: Icon(
