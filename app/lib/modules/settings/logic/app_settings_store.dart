@@ -38,6 +38,7 @@ abstract class _AppSettingsBase with Store {
 
   @computed
   bool get isIntegrationTest => _isIntegrationTest;
+
   ColorScheme colorScheme = AppColors.leu;
 
   @computed

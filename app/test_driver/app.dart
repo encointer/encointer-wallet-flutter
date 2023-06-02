@@ -50,6 +50,7 @@ void main() async {
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
   appSettings = AppSettings(AppService(await SharedPreferences.getInstance()))..isIntegrationTest = true;
+
   WidgetsApp.debugAllowBannerOverride = false;
   await app.main(appConfig: appConfig, settings: appSettings);
 }

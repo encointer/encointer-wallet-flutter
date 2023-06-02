@@ -196,10 +196,15 @@ class _Contact extends State<ContactPage> {
                       ),
                     const SizedBox(height: 24),
                     IconButton(
+                      key: const Key('scan-barcode'),
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
-                      onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
-                          arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage)),
+                      onPressed: () async {
+                        await Navigator.of(context).popAndPushNamed(
+                          ScanPage.route,
+                          arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage),
+                        );
+                      },
                     ),
                     const SizedBox(height: 24),
                   ],
