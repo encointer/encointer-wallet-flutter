@@ -53,6 +53,8 @@ abstract class TranslationsAssets {
   String get invalidNetwork;
   String get invalidCommunity;
   String get chosenRightCommunity;
+  String get noInvoice;
+  String get addInvoiceQrToAddress;
   String get print;
   String get preview;
   String get payHereWithLeu;
@@ -169,6 +171,10 @@ class TranslationsEnAssets implements TranslationsAssets {
   @override
   String get chosenRightCommunity =>
       'The data is for a different community. Please change the community to send funds.';
+  @override
+  String get noInvoice => 'No invoice';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
   @override
   String get print => 'Print';
   @override
@@ -291,6 +297,10 @@ class TranslationsDeAssets implements TranslationsAssets {
   @override
   String get chosenRightCommunity =>
       'Die Daten sind für eine andere Community. Bitte wechsle die Community um Geld zu senden.';
+  @override
+  String get noInvoice => 'Ohne Rechnung';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
   @override
   String get print => 'Drucken';
   @override
@@ -415,6 +425,10 @@ class TranslationsFrAssets implements TranslationsAssets {
   String get chosenRightCommunity =>
       "Les données sont destinées à une autre communauté. S'il te plaît, change la communauté pour envoyer le payment.";
   @override
+  String get noInvoice => 'Sans facture';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
+  @override
   String get print => 'Imprimer';
   @override
   String get preview => 'Aperçu';
@@ -536,6 +550,10 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   String get chosenRightCommunity =>
       'Данные относятся к другому сообществу. Пожалуйста, измените сообщество, чтобы отправить средства.';
+  @override
+  String get noInvoice => 'Без счета-фактуры';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
   @override
   String get print => 'Распечатать';
   @override
