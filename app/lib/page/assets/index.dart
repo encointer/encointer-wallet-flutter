@@ -236,12 +236,13 @@ class _AssetsViewState extends State<AssetsView> {
                               ),
                               const SizedBox(width: 3),
                               ActionButton(
-                                  key: const Key('go-transfer-history'),
-                                  icon: Assets.images.assets.receiveSquare2.svg(),
-                                  label: dic!.home.transferHistory,
-                                  onPressed: widget.store.encointer.communityBalance != null
-                                      ? () => Navigator.pushNamed(context, TransferHistoryView.route)
-                                      : null),
+                                key: const Key('go-transfer-history'),
+                                icon: Assets.images.assets.receiveSquare2.svg(),
+                                label: dic!.home.transferHistory,
+                                onPressed: widget.store.encointer.communityBalance != null
+                                    ? () => Navigator.pushNamed(context, TransferHistoryView.route)
+                                    : null,
+                              ),
                               const SizedBox(width: 3),
                               ActionButton(
                                 key: const Key('transfer'),
