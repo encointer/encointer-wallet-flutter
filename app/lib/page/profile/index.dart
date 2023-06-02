@@ -185,7 +185,7 @@ class _ProfileState extends State<Profile> {
                   final appSettings = context.read<AppSettings>();
                   await AppAlert.showPasswordInputDialog(
                     context,
-                    showCancelButton: true,
+                    shouldShowCancelButton: true,
                     account: appStore.account.currentAccount,
                     onSuccess: (_) => appSettings.setIsBiometricAuthenticationEnabled(value),
                   );

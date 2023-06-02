@@ -94,8 +94,8 @@ class AppAlert {
     required AccountData account,
     required Future<void> Function(String) onSuccess,
     bool canPop = true,
-    bool showCancelButton = false,
-    bool closeAfterSuccess = true,
+    bool shouldShowCancelButton = false,
+    bool autoCloseOnSuccess = true,
   }) async {
     return showCupertinoDialog<bool>(
       context: context,
@@ -104,8 +104,8 @@ class AppAlert {
           account: account,
           onSuccess: onSuccess,
           canPop: canPop,
-          showCancelButton: showCancelButton,
-          closeAfterSuccess: closeAfterSuccess,
+          shouldShowCancelButton: shouldShowCancelButton,
+          autoCloseOnSuccess: autoCloseOnSuccess,
         );
       },
     );
