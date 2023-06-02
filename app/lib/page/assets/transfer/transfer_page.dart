@@ -163,6 +163,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                     const SizedBox(height: 24),
                     IconButton(
+                      key: const Key('open-qr-scanner-on-send-page'),
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
                       onPressed: () async {
