@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -9,6 +7,7 @@ import 'package:encointer_wallet/theme/theme.dart';
 
 part 'app_settings_store.g.dart';
 
+// ignore: library_private_types_in_public_api
 class AppSettings = _AppSettingsBase with _$AppSettings;
 
 abstract class _AppSettingsBase with Store {
@@ -33,6 +32,13 @@ abstract class _AppSettingsBase with Store {
   ];
 
   @observable
+  bool _isIntegrationTest = false;
+
+  set isIntegrationTest(bool v) => _isIntegrationTest = v;
+
+  @computed
+  bool get isIntegrationTest => _isIntegrationTest;
+
   ColorScheme colorScheme = AppColors.leu;
 
   @computed

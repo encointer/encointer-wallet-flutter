@@ -2,6 +2,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 
 import '../../helpers/helper.dart';
 import 'contact_helper.dart';
+import 'contact_keys.dart';
 
 Future<void> checkContactEmpty(FlutterDriver driver) async {
   await driver.takeLocalScreenshot(Screenshots.contactsOverviewEmpty);
@@ -11,7 +12,7 @@ Future<void> addContact(FlutterDriver driver, String name, String pubKey) async 
   await driver.tap(find.byValueKey('add-contact'));
   await driver.takeLocalScreenshot(Screenshots.addContact);
   await enterConatctNameAndPubkey(driver, name, pubKey);
-  await driver.tap(find.byValueKey('contact-save'));
+  await driver.tap(find.byValueKey(ContactKeys.contactSave));
   await driver.waitFor(find.byValueKey(name));
 }
 
