@@ -112,6 +112,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       onSuccess: (password) async {
         final isMnemonic =
             await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
+        Navigator.pop(context);
         if (isMnemonic) {
           final seed =
               await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
@@ -122,7 +123,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
           });
         } else {
           final dic = I18n.of(context)!.translationsForLocale();
-          Navigator.pop(context);
           AppAlert.showErrorDialog(
             context,
             title: Text(dic.profile.noMnemonicFound),
