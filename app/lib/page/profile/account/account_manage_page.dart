@@ -106,7 +106,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   Future<void> _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) async {
     await AppAlert.showPasswordInputDialog(
       context,
-      shouldShowCancelButton: true,
+      showCancelButton: true,
       autoCloseOnSuccess: false,
       account: _appStore.account.currentAccount,
       onSuccess: (password) async {
