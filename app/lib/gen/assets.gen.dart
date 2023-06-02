@@ -158,6 +158,9 @@ class $AssetsImagesAssetsGen {
   /// File path: assets/images/assets/mosaic_background.png
   AssetGenImage get mosaicBackground => const AssetGenImage('assets/images/assets/mosaic_background.png');
 
+  /// File path: assets/images/assets/receive_square_2.svg
+  SvgGenImage get receiveSquare2 => const SvgGenImage('assets/images/assets/receive_square_2.svg');
+
   /// File path: assets/images/assets/success.png
   AssetGenImage get success => const AssetGenImage('assets/images/assets/success.png');
 
@@ -174,6 +177,7 @@ class $AssetsImagesAssetsGen {
         leuStellerBg,
         logo,
         mosaicBackground,
+        receiveSquare2,
         success
       ];
 }
