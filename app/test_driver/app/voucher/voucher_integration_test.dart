@@ -20,7 +20,7 @@ Future<void> scanVoucherFromQrScanPage(FlutterDriver driver) async {
 }
 
 Future<void> voucherGetToTransferPageThenToVoucher(FlutterDriver driver) async {
-  await driver.tap(VoucherKeysToFind.transferSend);
+  await driver.tap(VoucherKeysToFind.openQrScannerOnSendPage);
   await scanVoucherFromQrScanPage(driver);
   await driver.waitFor(VoucherKeysToFind.voucherToTransferPage);
   await driver.tap(VoucherKeysToFind.voucherToTransferPage);
@@ -62,7 +62,7 @@ class VoucherKeysToFind {
   static final submitVoucher = find.byValueKey('submit_voucher');
   static final mockQrDataRow = find.byValueKey('mock-qr-data-row');
   static final voucherToScan = find.byValueKey('voucher-to-scan');
-  static final transferSend = find.byValueKey('transfer_send');
+  static final openQrScannerOnSendPage = find.byValueKey('open-qr-scanner-on-send-page');
   static final voucherToTransferPage = find.byValueKey('voucher_to_transfer_page');
   static final voucherDialogOk = find.byValueKey('voucher_dialog_ok');
 }
