@@ -1,6 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+import 'app/dev_qr_codes/dev_qr_codes_test.dart';
 import 'helpers/helper.dart';
 import 'app/app.dart';
 
@@ -65,19 +66,53 @@ void main() async {
   }, timeout: timeout120);
 
   test('Register [Bootstrapper] Alice', () async {
-    await scrollToCeremonyBox(driver);
+    await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
   }, timeout: timeout120);
 
   test('Unregister [Bootstrapper] Alice', () async {
-    await scrollToCeremonyBox(driver);
+    await scrollToUnregisterButton(driver);
     await unregisterAndWait(driver);
   }, timeout: timeout120);
 
   test('Register [Bootstrapper] Alice again', () async {
-    await scrollToCeremonyBox(driver);
+    await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
   }, timeout: timeout120);
+
+  group('DevMode QR Codes tests', () {
+    test('HomePage: save the contact from qr', () async {
+      await qrFromHomeTestAndSaveContact(driver);
+    }, timeout: timeout120);
+
+    test('HomePage: send money with amount from qr', () async {
+      await qrFromHomeTestAndSendWithAmount(driver);
+    }, timeout: timeout120);
+
+    test('HomePage: send money without amount from qr', () async {
+      await qrFromHomeTestAndSendWithoutAmount(driver);
+    }, timeout: timeout120);
+
+    test('SendPage: send money with amount from qr', () async {
+      await qrFromSendPageTestAndSendWithAmount(driver);
+    }, timeout: timeout120);
+
+    test('SendPage: send money without amount from qr', () async {
+      await qrFromSendPageTestAndSendWithoutAmount(driver);
+    }, timeout: timeout120);
+
+    test('ContactPage: add contact from contact-qr', () async {
+      await qrFromContactAddContactFromQrContact(driver);
+    }, timeout: timeout120);
+
+    test('ContactPage: add contact from invoice-qr', () async {
+      await qrFromContactAddContactFromQrInvoice(driver);
+    }, timeout: timeout120);
+
+    test('finished, go to HomePage', () async {
+      await goToHomeViewFromNavBar(driver);
+    });
+  });
 
   test('send money to Tom', () async {
     await scrollToPanelController(driver);
@@ -87,17 +122,17 @@ void main() async {
 
   test('Register [Newbie] Tom', () async {
     await changeAccountFromPanel(driver, 'Tom');
-    await scrollToCeremonyBox(driver);
+    await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
   }, timeout: timeout120);
 
   test('Unregister [Newbie] Tom', () async {
-    await scrollToCeremonyBox(driver);
+    await scrollToUnregisterButton(driver);
     await unregisterAndWait(driver);
   }, timeout: timeout120);
 
   test('Register [Newbie] Tom again', () async {
-    await scrollToCeremonyBox(driver);
+    await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
     await scrollToPanelController(driver);
   }, timeout: timeout120);
@@ -112,7 +147,7 @@ void main() async {
     await goToAddAcoountViewFromPanel(driver);
     await importAccount(driver, 'Bob', '//Bob');
     await closePanel(driver);
-    await scrollToCeremonyBox(driver);
+    await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
     await scrollToPanelController(driver);
   }, timeout: timeout120);
@@ -234,30 +269,34 @@ void main() async {
   }, timeout: timeout120);
 
   test('register Tom (check status as Reputable)', () async {
-    await scrollToCeremonyBox(driver);
+    await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.reputable);
   }, timeout: timeout120);
 
   test('Unregister [Reputable] Tom', () async {
+    await scrollToUnregisterButton(driver);
     await unregisterAndWait(driver);
   }, timeout: timeout120);
 
   test('Register [Reputable] Tom again', () async {
+    await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.reputable);
   }, timeout: timeout120);
 
   test('register Li (check status as Endorsee)', () async {
     await scrollToPanelController(driver);
     await changeAccountFromPanel(driver, 'Li');
-    await scrollToCeremonyBox(driver);
+    await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.endorsee);
   }, timeout: timeout120);
 
   test('Unregister [Endorsee] Li', () async {
+    await scrollToUnregisterButton(driver);
     await unregisterAndWait(driver);
   }, timeout: timeout120);
 
   test('Register [Newbie-Endorsee] Li again', () async {
+    await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
   }, timeout: timeout120);
 

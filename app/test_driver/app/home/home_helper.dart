@@ -42,6 +42,22 @@ Future<void> scrollToCeremonyBox(FlutterDriver driver) async {
   );
 }
 
+Future<void> scrollToRegisterButton(FlutterDriver driver) async {
+  await driver.scrollUntilVisible(
+    find.byValueKey('list-view-wallet'),
+    find.byValueKey('registration-meetup-button'),
+    dyScroll: -150,
+  );
+}
+
+Future<void> scrollToUnregisterButton(FlutterDriver driver) async {
+  await driver.scrollUntilVisible(
+    find.byValueKey('list-view-wallet'),
+    find.byValueKey('unregister-button'),
+    dyScroll: -150,
+  );
+}
+
 Future<void> scrollToPanelController(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('list-view-wallet'),

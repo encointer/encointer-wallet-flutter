@@ -9,6 +9,12 @@ part of 'app_settings_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppSettings on _AppSettingsBase, Store {
+  Computed<bool>? _$isIntegrationTestComputed;
+
+  @override
+  bool get isIntegrationTest => (_$isIntegrationTestComputed ??=
+          Computed<bool>(() => super.isIntegrationTest, name: '_AppSettingsBase.isIntegrationTest'))
+      .value;
   Computed<CustomTheme>? _$themeComputed;
 
   @override
@@ -61,18 +67,18 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$colorSchemeAtom = Atom(name: '_AppSettingsBase.colorScheme', context: context);
+  late final _$_isIntegrationTestAtom = Atom(name: '_AppSettingsBase._isIntegrationTest', context: context);
 
   @override
-  ColorScheme get colorScheme {
-    _$colorSchemeAtom.reportRead();
-    return super.colorScheme;
+  bool get _isIntegrationTest {
+    _$_isIntegrationTestAtom.reportRead();
+    return super._isIntegrationTest;
   }
 
   @override
-  set colorScheme(ColorScheme value) {
-    _$colorSchemeAtom.reportWrite(value, super.colorScheme, () {
-      super.colorScheme = value;
+  set _isIntegrationTest(bool value) {
+    _$_isIntegrationTestAtom.reportWrite(value, super._isIntegrationTest, () {
+      super._isIntegrationTest = value;
     });
   }
 
@@ -140,7 +146,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
 locale: ${locale},
 isBiometricAuthenticationEnabled: ${isBiometricAuthenticationEnabled},
 developerMode: ${developerMode},
-colorScheme: ${colorScheme},
+isIntegrationTest: ${isIntegrationTest},
 theme: ${theme}
     ''';
   }
