@@ -14,11 +14,15 @@ class PasswordInputDialog extends StatefulWidget {
     required this.account,
     required this.onSuccess,
     this.canPop = true,
+    this.showCancelButton = false,
+    this.closeAfterSuccess = true,
   });
 
   final AccountData account;
   final Future<void> Function(String password) onSuccess;
   final bool canPop;
+  final bool showCancelButton;
+  final bool closeAfterSuccess;
 
   @override
   State<PasswordInputDialog> createState() => _PasswordInputDialogState();
@@ -46,7 +50,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       );
     } else {
       await widget.onSuccess(_passCtrl.text.trim());
-      Navigator.of(context).pop();
+      if (widget.closeAfterSuccess) Navigator.of(context).pop();
     }
   }
 
@@ -83,6 +87,12 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
           ),
         ),
         actions: <Widget>[
+          if (widget.showCancelButton)
+            CupertinoButton(
+              key: const Key('cancel-bottun'),
+              onPressed: () => Navigator.pop(context),
+              child: Text(dic.home.cancel),
+            ),
           CupertinoButton(
             key: const Key('password-ok'),
             onPressed: _submitting ? null : _onOk,

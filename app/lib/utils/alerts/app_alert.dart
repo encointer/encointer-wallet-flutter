@@ -94,11 +94,19 @@ class AppAlert {
     required AccountData account,
     required Future<void> Function(String) onSuccess,
     bool canPop = true,
+    bool showCancelButton = false,
+    bool closeAfterSuccess = true,
   }) async {
     return showCupertinoDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        return PasswordInputDialog(account: account, onSuccess: onSuccess, canPop: canPop);
+        return PasswordInputDialog(
+          account: account,
+          onSuccess: onSuccess,
+          canPop: canPop,
+          showCancelButton: showCancelButton,
+          closeAfterSuccess: closeAfterSuccess,
+        );
       },
     );
   }
