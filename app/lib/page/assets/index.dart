@@ -560,7 +560,7 @@ class ActionButton extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
           child: Column(
             children: [
-              const Icon(Iconsax.send_sqaure_2),
+              icon,
               const SizedBox(height: 4),
               Text(label, softWrap: false, overflow: TextOverflow.ellipsis),
             ],
