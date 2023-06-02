@@ -80,6 +80,7 @@ dependencies:
   local_auth: ^2.1.6
   printing: ^5.10.3
   pdf: ^3.10.1
+  connectivity_plus: ^4.0.1
   ew_storage:
     path: ../packages/ew_storage/
   ew_http:

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ew_storage/ew_storage.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:encointer_wallet/store/connectivity/connectivity_store.dart';
 import 'package:encointer_wallet/service/http_overrides.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart' as util;
@@ -39,6 +41,7 @@ Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
       child: MultiProvider(
         providers: [
           Provider<AppSettings>(create: (context) => appSettings..init()),
+          Provider<ConnectivityStore>(create: (context) => ConnectivityStore(Connectivity())..listen()),
           Provider<AppStore>(create: (context) => AppStore(util.LocalStorage(), const SecureStorage()))
         ],
         child: const WalletApp(),
