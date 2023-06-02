@@ -240,7 +240,7 @@ class EncointerApi {
           (list) => list.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList(),
         );
 
-    Log.d('api: CidNames: $cn', 'EncointerApi');
+    Log.d('api: CidNames: ${cn.length} and $cn ', 'EncointerApi');
     store.encointer.setCommunities(cn);
   }
 
@@ -516,7 +516,7 @@ class EncointerApi {
     return allMockBusinesses;
   }
 
-  Future<List<dynamic>> bazaarGetBusinesses(CommunityIdentifier cid) async {
+  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid) async {
     return _dartApi.bazaarGetBusinesses(cid);
   }
 

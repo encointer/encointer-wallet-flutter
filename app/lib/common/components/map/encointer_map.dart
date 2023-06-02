@@ -10,7 +10,7 @@ class EncointerMap extends StatelessWidget {
     super.key,
     required this.locations,
     this.initialZoom = 13,
-    this.maxZoom = 18,
+    this.maxZoom = 20,
     this.center,
     this.popupBuilder,
     this.mapController,

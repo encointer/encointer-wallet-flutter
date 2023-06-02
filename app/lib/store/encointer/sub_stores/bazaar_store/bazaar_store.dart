@@ -54,7 +54,7 @@ abstract class _BazaarStore with Store {
   Future<void> bazaarGetBusinesses(CommunityIdentifier cid) async {
     final bazaars = await webApi.encointer.bazaarGetBusinesses(cid);
     log('bazaarGetBusinesses bazaars: $bazaars');
-    businessRegistry = bazaars as ObservableList<AccountBusinessTuple>?;
+    setBusinessRegistry(bazaars);
   }
 
   Future<void> writeToCache() {

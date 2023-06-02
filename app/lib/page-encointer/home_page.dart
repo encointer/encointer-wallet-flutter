@@ -78,7 +78,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   @override
   Future<void> didChangeDependencies() async {
     final encointer = context.read<AppStore>().encointer;
-    await encointer.bazaar!.bazaarGetBusinesses(encointer.community!.cid);
+    await encointer.bazaar?.bazaarGetBusinesses(encointer.community!.cid);
     super.didChangeDependencies();
   }
 
