@@ -39,9 +39,7 @@ Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
       child: MultiProvider(
         providers: [
           Provider<AppSettings>(create: (context) => appSettings..init()),
-          Provider<AppStore>(
-            create: (context) => AppStore(util.LocalStorage(), const SecureStorage()),
-          )
+          Provider<AppStore>(create: (context) => AppStore(util.LocalStorage(), const SecureStorage()))
         ],
         child: const WalletApp(),
       ),

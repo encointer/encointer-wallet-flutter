@@ -126,7 +126,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
       case FetchStatus.success:
         return AnnouncementList(announcements: announcements);
       case FetchStatus.error:
-        return Center(child: Text(_dic.unknownError));
+        return const SizedBox.shrink();
     }
   }
 
@@ -160,8 +160,6 @@ class AnnouncementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().home;
-    if (announcements.isEmpty) return Center(child: Text(dic.noAnnouncementFound));
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
