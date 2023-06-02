@@ -38,6 +38,23 @@ Future<void> scrollToCeremonyBox(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('list-view-wallet'),
     find.byValueKey('ceremony-box-wallet'),
+    dyScroll: -150,
+  );
+}
+
+Future<void> scrollToRegisterButton(FlutterDriver driver) async {
+  await driver.scrollUntilVisible(
+    find.byValueKey('list-view-wallet'),
+    find.byValueKey('registration-meetup-button'),
+    dyScroll: -150,
+  );
+}
+
+Future<void> scrollToUnregisterButton(FlutterDriver driver) async {
+  await driver.scrollUntilVisible(
+    find.byValueKey('list-view-wallet'),
+    find.byValueKey('unregister-button'),
+    dyScroll: -150,
   );
 }
 
@@ -54,5 +71,6 @@ Future<void> scrollToStartMeetup(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('list-view-wallet'),
     find.byValueKey('start-meetup'),
+    dyScroll: -150,
   );
 }
