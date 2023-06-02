@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/common/components/buttons/custom_elevated_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,8 +15,9 @@ import 'package:upgrader/upgrader.dart';
 import 'package:collection/collection.dart';
 
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
-import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
@@ -226,55 +228,35 @@ class _AssetsViewState extends State<AssetsView> {
                             height: 42,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const RoundedRectangleBorder(
-                                      // don't redefine the entire style just the border radii
-                                      borderRadius: BorderRadius.horizontal(left: Radius.circular(15)),
-                                    ),
-                                  ),
+                                child: CustomElevatedButton(
                                   key: const Key('qr-receive'),
                                   onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(Iconsax.receive_square_2),
-                                        const SizedBox(width: 12),
-                                        Text(dic!.assets.receive),
-                                      ],
-                                    ),
-                                  ),
+                                  icon: const Icon(Iconsax.receive_square_2),
+                                  label: dic!.assets.receive,
                                 ),
                               ),
-                              const SizedBox(width: 2),
+                              const SizedBox(width: 3),
                               Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const RoundedRectangleBorder(
-                                      // don't redefine the entire style just the border radii
-                                      borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
-                                    ),
-                                  ),
+                                child: CustomElevatedButton(
+                                  key: const Key('go-transfer-history'),
+                                  onPressed: widget.store.encointer.communityBalance != null
+                                      ? () => Navigator.pushNamed(context, TransferHistoryView.route)
+                                      : null,
+                                  icon: Assets.images.assets.receiveSquare2.svg(),
+                                  label: dic!.home.transferHistory,
+                                ),
+                              ),
+                              const SizedBox(width: 3),
+                              Expanded(
+                                child: CustomElevatedButton(
                                   key: const Key('transfer'),
                                   onPressed: widget.store.encointer.communityBalance != null
                                       ? () => Navigator.pushNamed(context, TransferPage.route)
                                       : null,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(dic!.assets.transfer),
-                                        const SizedBox(width: 12),
-                                        const Icon(Iconsax.send_sqaure_2),
-                                      ],
-                                    ),
-                                  ),
+                                  icon: const Icon(Iconsax.send_sqaure_2),
+                                  label: dic!.assets.transfer,
                                 ),
                               ),
                             ],
