@@ -1,15 +1,18 @@
-import 'package:encointer_wallet/data/common_services/models/network/api_response.dart';
-import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
-import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
-import 'package:encointer_wallet/utils/translations/translations_home.dart';
+import 'package:ew_http/ew_http.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:encointer_wallet/models/announcement/announcement.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
+import 'package:encointer_wallet/utils/fetch_status.dart';
+import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
 import 'package:encointer_wallet/page/assets/announcement/widgets/announcement_card.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -34,13 +37,14 @@ class AnnouncementView extends StatefulWidget {
 }
 
 class _AnnouncementViewState extends State<AnnouncementView> {
-  final AnnouncementStore _announcementStore = AnnouncementStore();
+  late final AnnouncementStore _announcementStore;
   late TranslationsHome _dic;
 
   List<ReactionDisposer> _disposers = <ReactionDisposer>[];
 
   @override
   void initState() {
+    _announcementStore = AnnouncementStore(RepositoryProvider.of<EwHttp>(context));
     _disposers = <ReactionDisposer>[
       /// in case of an unknown error, it triggers dialog to popup
       reaction((_) => _announcementStore.error.isNotNullOrEmpty, (result) {
@@ -89,9 +93,10 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   }
 
   Future<void> _getAnnouncements() async {
+    final devMode = context.read<AppSettings>().developerMode;
     await Future.wait([
-      _announcementStore.getGlobalAnnouncements(),
-      _announcementStore.getCommunityAnnouncements(widget.cid),
+      _announcementStore.getGlobalAnnouncements(devMode: devMode),
+      _announcementStore.getCommunityAnnouncements(widget.cid, devMode: devMode),
     ]);
   }
 
@@ -115,14 +120,13 @@ class _AnnouncementViewState extends State<AnnouncementView> {
 
   /// NOTE: Do not write any functions inside [build]!
   Widget buildAnnouncementList(List<Announcement> announcements) {
-    if (_announcementStore.loading) {
-      return const Center(child: CupertinoActivityIndicator());
-    } else if (announcements.isEmpty) {
-      return Center(child: Text(_dic.noAnnouncementFound));
-    } else if (announcements.isNotEmpty) {
-      return AnnouncementList(announcements: announcements);
-    } else {
-      return Center(child: Text(_dic.unknownError));
+    switch (_announcementStore.fetchStatus) {
+      case FetchStatus.loading:
+        return const Center(child: CupertinoActivityIndicator());
+      case FetchStatus.success:
+        return AnnouncementList(announcements: announcements);
+      case FetchStatus.error:
+        return const SizedBox.shrink();
     }
   }
 
