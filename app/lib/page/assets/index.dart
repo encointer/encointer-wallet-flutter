@@ -555,7 +555,6 @@ class ActionButton extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
         ),
-        key: key,
         onPressed: onPressed,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
