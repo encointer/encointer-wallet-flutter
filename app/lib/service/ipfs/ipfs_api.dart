@@ -16,7 +16,7 @@ class IpfsApi {
       Log.d('[IPFS] return default encointer icon because ipfs-cid is not set', 'Ipfs');
       return null;
     }
-    final data = await ewHttp.get<Map<String, dynamic>>('$gateway/$getRequest$cid/$communityIconName');
-    return data?['Data'] as String?;
+    final response = await ewHttp.get<Map<String, dynamic>>('$gateway/$getRequest$cid/$communityIconName');
+    return response.fold((l) => null, (r) => r['Data'] as String?);
   }
 }

@@ -42,7 +42,7 @@ class AppService {
       case 'en':
         return 'English';
       case 'de':
-        return 'Deutch';
+        return 'Deutsch';
       case 'fr':
         return 'Français';
       case 'ru':
