@@ -158,7 +158,7 @@ class TranslationsEnHome implements TranslationsHome {
   @override
   String get noTransactions => 'No Transactions';
   @override
-  String get transferHistory => 'Transactions';
+  String get transferHistory => 'Transfers';
   @override
   String get error => 'Error';
   @override
@@ -284,7 +284,7 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get noTransactions => 'Keine Transaktionen';
   @override
-  String get transferHistory => 'Transaktionen';
+  String get transferHistory => 'Transfers';
   @override
   String get error => 'Fehler';
   @override
@@ -412,7 +412,7 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get noTransactions => 'Aucune transaction';
   @override
-  String get transferHistory => 'Transactions';
+  String get transferHistory => 'Transferts';
   @override
   String get error => 'Erreur';
   @override

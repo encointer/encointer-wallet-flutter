@@ -353,7 +353,7 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get issuancePending => 'Demander le paiement communautaire en cours';
   @override
-  String get receive => 'Demander';
+  String get receive => 'Exiger';
   @override
   String get scan => 'Scanner';
   @override
