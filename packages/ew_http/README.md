@@ -12,7 +12,7 @@ const getUrl = 'https://eldar2021.github.io/encointer/test_data.json';
 final ewHttp = EwHttp();
 
 final mapValue = await ewHttp.get<Map<String, dynamic>>(getUrl);
-print(mapValue); 
+mapValue.fold((error)=> print(error), (value)=> print(value));
 // {
 //  "id": "msg-1",
 //  "title": "App notifications are now activated",
@@ -21,8 +21,8 @@ print(mapValue);
 // }
 
 final testModel = await ewHttp.getType<TestModel>(getUrl, fromJson: TestModel.fromJson);
-print(testModel); // Instance of 'TestModel'
+testModel.fold((error)=> print(error), (value)=> print(value)); // Instance of 'TestModel'
 
 final testModelList = await ewHttp.getType<TestModel>(getUrl, fromJson: TestModel.fromJson);
-print(testModelList); // [Instance of 'TestModel', ..., Instance of 'TestModel']
+testModelList.fold((error)=> print(error), (value)=> print(value)); // [Instance of 'TestModel', ..., Instance of 'TestModel']
 ```
