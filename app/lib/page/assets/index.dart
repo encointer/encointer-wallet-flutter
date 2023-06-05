@@ -507,12 +507,6 @@ class _AssetsViewState extends State<AssetsView> {
               ? community.applyDemurrage!(oldBalanceEntry) ?? 0
               : 0;
 
-// =======
-//           double newBalance = community.applyDemurrage(balanceEntry) as double;
-//           double oldBalance = community.applyDemurrage(widget.store.encointer
-//                   .accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) as double? ??
-//               0;
-// >>>>>>> 9d4143d3262181f3ad0429032d40bcd3c94c1b9f
           final delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
@@ -543,5 +537,42 @@ class _AssetsViewState extends State<AssetsView> {
     }).catchError((Object? e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
+  }
+}
+
+class ActionButton extends StatelessWidget {
+  const ActionButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    this.onPressed,
+  });
+
+  final Widget icon;
+  final String label;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
+          child: Column(
+            children: [
+              icon,
+              const SizedBox(height: 4),
+              Text(label, softWrap: false, overflow: TextOverflow.ellipsis),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
