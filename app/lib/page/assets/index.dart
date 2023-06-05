@@ -13,9 +13,10 @@ import 'package:upgrader/upgrader.dart';
 import 'package:collection/collection.dart';
 
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
+import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
+import 'package:encointer_wallet/config/prod_community.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
-import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
@@ -217,9 +218,7 @@ class _AssetsViewState extends State<AssetsView> {
                               onPressed: widget.store.dataUpdate.setInvalidated,
                               child: const Text('Invalidate data to trigger state update'),
                             ),
-                          const SizedBox(
-                            height: 42,
-                          ),
+                          const SizedBox(height: 42),
                           Row(
                             children: [
                               Expanded(
@@ -341,10 +340,9 @@ class _AssetsViewState extends State<AssetsView> {
                     const SizedBox(height: 24),
                     CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                     const SizedBox(height: 24),
-                    if (!appSettingsStore.developerMode)
-                      AnnouncementView(
-                        cid: widget.store.encointer.community?.cid.toFmtString(),
-                      ),
+                    AnnouncementView(
+                      cid: Community.fromCid(widget.store.encointer.community?.cid.toFmtString()).cid,
+                    ),
                   ],
                 ),
               ),
