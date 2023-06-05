@@ -68,17 +68,17 @@ class _DropdownWidgetState extends State<DropdownWidget> {
 }
 
 enum Category {
-  @JsonValue('All')
+  @JsonValue('all')
   all('All'),
-  @JsonValue('Art & Music')
+  @JsonValue('art_music')
   artAndMusic('Art & Music'),
-  @JsonValue('Body & Soul')
+  @JsonValue('body_soul')
   bodyAndSoul('Body & Soul'),
-  @JsonValue('Fashion & Clothing')
+  @JsonValue('fashion_clothing')
   fashionAndClothing('Fashion & Clothing'),
-  @JsonValue('Food & Beverage Store')
+  @JsonValue('food_beverage_store')
   foodAndBeverageStore('Food & Beverage Store'),
-  @JsonValue('Restaurants & Bars')
+  @JsonValue('restaurants_bars')
   restaurantsAndBars('Restaurants & Bars');
 
   const Category(this.name);

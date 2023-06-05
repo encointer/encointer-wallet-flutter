@@ -23,15 +23,15 @@ Map<String, dynamic> _$BusinessesToJson(Businesses instance) => <String, dynamic
     };
 
 const _$CategoryEnumMap = {
-  Category.all: 'All',
-  Category.artAndMusic: 'Art & Music',
-  Category.bodyAndSoul: 'Body & Soul',
-  Category.fashionAndClothing: 'Fashion & Clothing',
-  Category.foodAndBeverageStore: 'Food & Beverage Store',
-  Category.restaurantsAndBars: 'Restaurants & Bars',
+  Category.all: 'all',
+  Category.artAndMusic: 'art_music',
+  Category.bodyAndSoul: 'body_soul',
+  Category.fashionAndClothing: 'fashion_clothing',
+  Category.foodAndBeverageStore: 'food_beverage_store',
+  Category.restaurantsAndBars: 'restaurants_bars',
 };
 
 const _$StatusEnumMap = {
-  Status.highlight: 'Highlight',
-  Status.neuBeiLeu: 'Neu bei Leu',
+  Status.highlight: 'highlight',
+  Status.neuBeiLeu: 'neu_bei_leu',
 };
