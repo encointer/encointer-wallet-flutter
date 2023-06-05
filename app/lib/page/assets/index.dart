@@ -221,74 +221,29 @@ class _AssetsViewState extends State<AssetsView> {
                           const SizedBox(height: 42),
                           Row(
                             children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                                    ),
-                                  ),
-                                  key: const Key('qr-receive'),
-                                  onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                                    child: Column(
-                                      children: [
-                                        const Icon(Iconsax.receive_square_2),
-                                        const SizedBox(height: 4),
-                                        Text(dic!.assets.receive),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                              ActionButton(
+                                key: const Key('qr-receive'),
+                                icon: const Icon(Iconsax.receive_square_2),
+                                label: dic!.assets.receive,
+                                onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                               ),
                               const SizedBox(width: 3),
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                                    ),
-                                  ),
-                                  key: const Key('go-transfer-history'),
-                                  onPressed: widget.store.encointer.communityBalance != null
-                                      ? () => Navigator.pushNamed(context, TransferHistoryView.route)
-                                      : null,
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                                    child: Column(
-                                      children: [
-                                        Assets.images.assets.receiveSquare2.svg(),
-                                        const SizedBox(height: 4),
-                                        Text(dic!.home.transferHistory),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                              ActionButton(
+                                key: const Key('go-transfer-history'),
+                                icon: Assets.images.assets.receiveSquare2.svg(),
+                                label: dic!.home.transferHistory,
+                                onPressed: widget.store.encointer.communityBalance != null
+                                    ? () => Navigator.pushNamed(context, TransferHistoryView.route)
+                                    : null,
                               ),
                               const SizedBox(width: 3),
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                                    ),
-                                  ),
-                                  key: const Key('transfer'),
-                                  onPressed: widget.store.encointer.communityBalance != null
-                                      ? () => Navigator.pushNamed(context, TransferPage.route)
-                                      : null,
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                                    child: Column(
-                                      children: [
-                                        const Icon(Iconsax.send_sqaure_2),
-                                        const SizedBox(height: 4),
-                                        Text(dic!.assets.transfer),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                              ActionButton(
+                                key: const Key('transfer'),
+                                icon: const Icon(Iconsax.send_sqaure_2),
+                                label: dic!.assets.transfer,
+                                onPressed: widget.store.encointer.communityBalance != null
+                                    ? () => Navigator.pushNamed(context, TransferPage.route)
+                                    : null,
                               ),
                             ],
                           ),
@@ -492,12 +447,6 @@ class _AssetsViewState extends State<AssetsView> {
               ? community.applyDemurrage!(oldBalanceEntry) ?? 0
               : 0;
 
-// =======
-//           double newBalance = community.applyDemurrage(balanceEntry) as double;
-//           double oldBalance = community.applyDemurrage(widget.store.encointer
-//                   .accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) as double? ??
-//               0;
-// >>>>>>> 9d4143d3262181f3ad0429032d40bcd3c94c1b9f
           final delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
@@ -528,5 +477,42 @@ class _AssetsViewState extends State<AssetsView> {
     }).catchError((Object? e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
+  }
+}
+
+class ActionButton extends StatelessWidget {
+  const ActionButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    this.onPressed,
+  });
+
+  final Widget icon;
+  final String label;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
+          child: Column(
+            children: [
+              icon,
+              const SizedBox(height: 4),
+              Text(label, softWrap: false, overflow: TextOverflow.ellipsis),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
