@@ -110,7 +110,7 @@ class _AssetsViewState extends State<AssetsView> {
       panelHeight,
     );
 
-    var allAccounts = <AccountOrCommunityData>[];
+    final allAccounts = <AccountOrCommunityData>[];
 
     balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
@@ -397,10 +397,9 @@ class _AssetsViewState extends State<AssetsView> {
                 );
               }),
               Observer(builder: (BuildContext context) {
-                allAccounts = initAllAccounts(dic!);
                 return SwitchAccountOrCommunity(
                   rowTitle: dic!.home.switchAccount,
-                  data: allAccounts,
+                  data: initAllAccounts(dic!),
                   onTap: (int index) {
                     setState(() {
                       switchAccount(widget.store.account.accountListAll[index]);
