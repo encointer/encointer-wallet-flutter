@@ -15,6 +15,7 @@ class AppService {
     if (code != null) {
       return Locale(code);
     } else {
+      // ignore: deprecated_member_use
       final deviceLocal = window.locale.languageCode;
       if (deviceLocal == 'en' || deviceLocal == 'de' || deviceLocal == 'ru' || deviceLocal == 'fr') {
         return Locale(deviceLocal);
