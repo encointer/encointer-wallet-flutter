@@ -99,9 +99,9 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  test: ^1.22.0
+  test: ^1.24.0
   mocktail: ^0.3.0
-  very_good_analysis: ^3.1.0
+  very_good_analysis: ^5.0.0+1
 
 flutter_icons:
   android: "launcher_icon"
