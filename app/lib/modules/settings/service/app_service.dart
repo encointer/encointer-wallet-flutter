@@ -38,17 +38,12 @@ class AppService {
   bool? getIsBiometricAuthenticationEnabled() => storage.getBool(enableBiometricAuthKey);
 
   String getLocaleName(String code) {
-    switch (code) {
-      case 'en':
-        return 'English';
-      case 'de':
-        return 'Deutsch';
-      case 'fr':
-        return 'Français';
-      case 'ru':
-        return 'Русский';
-      default:
-        return '';
-    }
+    return switch (code) {
+      'en' => 'English',
+      'de' => 'Deutsch',
+      'fr' => 'Français',
+      'ru' => 'Русский',
+      _ => '',
+    };
   }
 }
