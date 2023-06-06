@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class PinInfo extends StatelessWidget {
@@ -9,7 +9,6 @@ class PinInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -23,7 +22,7 @@ class PinInfo extends StatelessWidget {
               maxLines: 7,
               textAlign: TextAlign.justify,
               softWrap: true,
-              style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
+              style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
             ),
           ),
         ],

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -9,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/rounded_card.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -56,8 +57,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork);
 
-    context.read<AppStore>().settings.changeTheme();
-
     if (mounted) {
       Navigator.of(context).pop();
       setState(() {
@@ -85,38 +84,32 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   List<Widget> _buildAccountList() {
-    // final primaryColor = Theme.of(context).primaryColor;
+    final appStore = context.read<AppStore>();
     final res = <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
             _selectedNetwork.info!.toUpperCase(),
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: context.textTheme.headlineMedium,
           ),
         ],
       ),
     ];
 
     /// first item is current account
-    final accounts = <AccountData>[
-      context.read<AppStore>().account.currentAccount,
-      ...context.read<AppStore>().account.optionalAccounts
-    ];
+    final accounts = <AccountData>[appStore.account.currentAccount, ...appStore.account.optionalAccounts];
 
     res.addAll(accounts.map((i) {
-      String? address = i.address;
-      if (context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
-        address = context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork.ss58]![i.pubKey];
-      }
+      final address = Fmt.ss58Encode(i.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
 
       return RoundedCard(
         border: address == context.read<AppStore>().account.currentAddress
-            ? Border.all(color: Theme.of(context).primaryColorLight)
-            : Border.all(color: Theme.of(context).cardColor),
+            ? Border.all(color: context.theme.primaryColorLight)
+            : Border.all(color: context.theme.cardColor),
         margin: const EdgeInsets.only(bottom: 16),
         child: ListTile(
-          leading: AddressIcon(address!, i.pubKey, size: 55),
+          leading: AddressIcon(address, i.pubKey, size: 55),
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text(Fmt.address(address)!, maxLines: 2),
           onTap: _networkChanging ? null : () => _onSelect(i, address),
@@ -147,7 +140,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
           Container(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
             decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
+              color: context.theme.cardColor,
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
@@ -165,7 +158,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                   padding: const EdgeInsets.only(right: 8),
                   decoration: isCurrent
                       ? BoxDecoration(
-                          border: Border(right: BorderSide(width: 2, color: Theme.of(context).primaryColor)),
+                          border: Border(right: BorderSide(width: 2, color: context.colorScheme.primary)),
                         )
                       : null,
                   child: IconButton(

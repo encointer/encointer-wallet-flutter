@@ -1,9 +1,13 @@
+import 'package:ew_http/ew_http.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
@@ -32,7 +36,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    if (!context.read<AppStore>().config.isIntegrationTest) NotificationPlugin.init(context);
+    if (!RepositoryProvider.of<AppConfig>(context).isIntegrationTest) NotificationPlugin.init(context);
     final encointer = context.read<AppStore>().encointer;
     final cid = encointer.community?.cid.toFmtString();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -42,6 +46,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         NotificationPlugin.scheduleNotification,
         langCode: Localizations.localeOf(context).languageCode,
         cid: cid,
+        ewHttp: RepositoryProvider.of<EwHttp>(context),
+        devMode: context.read<AppSettings>().developerMode,
       );
 
       // Should never be null, we either come from the splash screen, and hence we had
@@ -74,17 +80,17 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
         .map(
-          (i) => BottomNavigationBarItem(
-            icon: _tabList[activeItem] == i
+          (tabData) => BottomNavigationBarItem(
+            icon: _tabList[activeItem] == tabData
                 ? ShaderMask(
                     blendMode: BlendMode.srcIn,
-                    shaderCallback: (bounds) => primaryGradient.createShader(
+                    shaderCallback: (bounds) => AppColors.primaryGradient(context).createShader(
                       Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                     ),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Icon(
-                        i.iconData,
-                        key: Key(i.key.name),
+                        tabData.iconData,
+                        key: Key(tabData.key.name),
                       ),
                       Container(
                         height: 4,
@@ -98,9 +104,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                     ]),
                   )
                 : Icon(
-                    i.iconData,
-                    key: Key(i.key.name),
-                    color: i.key == TabKey.scan ? zurichLion.shade900 : encointerGrey,
+                    tabData.iconData,
+                    key: Key(tabData.key.name),
+                    color: tabData.key == TabKey.scan ? context.colorScheme.onSurface : AppColors.encointerGrey,
                   ),
             label: '',
           ),
@@ -141,14 +147,17 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          Assets(store),
+          AssetsView(store),
           if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
-          ScanPage(),
+
+          /// empty widget here because when qr code is clicked, we navigate to [ScanPage]
+          const SizedBox(),
           const ContactsPage(),
           const Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        key: const Key('bottom-nav'),
         currentIndex: _tabIndex,
         iconSize: 22,
         onTap: (index) async {

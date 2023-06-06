@@ -101,6 +101,9 @@
 		</array>
 		</dict>
 	</array>
+	<!-- local_auth -->
+	<key>NSFaceIDUsageDescription</key>
+	<string>Used to unlock the app to send transactions to other members</string>
 	<!-- ... other tags -->
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>

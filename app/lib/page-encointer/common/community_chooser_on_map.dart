@@ -7,8 +7,10 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +48,7 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
         leading: const SizedBox.shrink(),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.close, color: encointerGrey),
+            icon: const Icon(Icons.close, color: AppColors.encointerGrey),
             onPressed: () => Navigator.pop(context),
           )
         ],
@@ -64,7 +66,11 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
                   title: communityDataAt[marker.point]!.name,
                   description: communityDataAt[marker.point]!.cid.toFmtString(),
                   onTap: () async {
-                    await context.read<AppStore>().encointer.setChosenCid(communityDataAt[marker.point]!.cid);
+                    final store = context.read<AppStore>();
+                    await store.encointer.setChosenCid(communityDataAt[marker.point]!.cid);
+                    if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+                      context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                    }
                     Navigator.pop(context);
                   },
                 );

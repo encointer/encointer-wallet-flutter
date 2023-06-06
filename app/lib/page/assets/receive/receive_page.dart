@@ -5,10 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
-import 'package:encointer_wallet/common/components/qr_code_view/qr_code_image_view.dart';
+import 'package:encointer_wallet/page/assets/qr_code_printing/pages/qr_code_share_or_print_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
@@ -43,8 +44,9 @@ class _ReceivePageState extends State<ReceivePage> {
   void initState() {
     super.initState();
     _appStore = context.read<AppStore>();
+    final address = Fmt.ss58Encode(_appStore.account.currentAccountPubKey!, prefix: _appStore.settings.endpoint.ss58!);
     invoice = InvoiceQrCode(
-      account: _appStore.account.currentAddress,
+      account: address,
       cid: _appStore.encointer.chosenCid,
       label: _appStore.account.currentAccount.name,
     );
@@ -143,7 +145,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 48),
                       child: Text(
                         dic.profile.qrScanHint,
-                        style: Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerBlack),
+                        style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerBlack),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -152,7 +154,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       padding: const EdgeInsets.all(30),
                       child: EncointerTextFormField(
                         labelText: dic.assets.invoiceAmount,
-                        textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
+                        textStyle: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -168,7 +170,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         suffixIcon: const Text(
                           'ⵐ',
                           style: TextStyle(
-                            color: encointerGrey,
+                            color: AppColors.encointerGrey,
                             fontSize: 26,
                           ),
                         ),
@@ -178,7 +180,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 ),
                 Text(
                   '${dic.profile.receiverAccount} ${store.account.currentAccount.name}',
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(color: encointerGrey),
+                  style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
@@ -187,9 +189,11 @@ class _ReceivePageState extends State<ReceivePage> {
                   children: [
                     // Enhance brightness for the QR-code
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
-                    QrCodeImageWithButton(
+                    QrCodeShareOrPrintView(
                       qrCode: invoice.toQrPayload(),
-                      text: dic.assets.shareInvoice,
+                      shareText: dic.assets.shareInvoice,
+                      printText: dic.assets.print,
+                      previewText: dic.assets.preview,
                       onTap: () => {
                         if (_formKey.currentState!.validate())
                           {

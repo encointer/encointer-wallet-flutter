@@ -23,32 +23,37 @@ class ScanClaimQrCode extends StatefulWidget {
 }
 
 class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
-  late final List<String> allParticipants;
-  late final String currentAddress;
+  late final List<String> allParticipantsPrefix42;
+  late final String currentAddressPrefix42;
 
   @override
   void initState() {
     final store = context.read<AppStore>();
-    currentAddress = store.account.currentAddress;
-    allParticipants = store.encointer.communityAccount?.meetup?.registry ?? [];
+    currentAddressPrefix42 = Fmt.ss58Encode(store.account.currentAccountPubKey!);
+    allParticipantsPrefix42 = store.encointer.communityAccount?.meetup?.registry ?? [];
     super.initState();
   }
 
-  void validateAndStoreParticipant(AppStore store, String attendee, Translations dic) {
-    if (attendee == currentAddress) {
+  /// Checks that the `attendeeAddress` is not equal to self and part of the meetup registry.
+  void validateAndStoreParticipant(AppStore store, String attendeeAddress, Translations dic) {
+    final attendeePubKey = Fmt.ss58Decode(attendeeAddress).pubKey;
+    final attendeeAddressPrefix42 = Fmt.ss58Encode(attendeePubKey);
+
+    if (attendeeAddressPrefix42 == currentAddressPrefix42) {
       RootSnackBar.showMsg(dic.encointer.meetupClaimantEqualToSelf);
-      Log.d('Claimant: $attendee is equal to self', 'ScanClaimQrCode');
+      Log.d('Claimant: $attendeeAddressPrefix42 is equal to self', 'ScanClaimQrCode');
     } else {
-      if (!allParticipants.contains(attendee)) {
+      if (!allParticipantsPrefix42.contains(attendeeAddressPrefix42)) {
         // this is important because the runtime checks if there are too many claims trying to be registered.
         RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
-        Log.d('Claimant: $attendee is not part of registry: $allParticipants', 'ScanClaimQrCode');
+        Log.d(
+            'Claimant: $attendeeAddressPrefix42 is not part of registry: $allParticipantsPrefix42', 'ScanClaimQrCode');
       } else {
-        final msg = store.encointer.communityAccount!.containsAttendee(attendee)
+        final msg = store.encointer.communityAccount!.containsAttendee(attendeeAddressPrefix42)
             ? dic.encointer.claimsScannedAlready
             : dic.encointer.claimsScannedNew;
 
-        store.encointer.communityAccount!.addAttendee(attendee);
+        store.encointer.communityAccount!.addAttendee(attendeeAddressPrefix42);
         RootSnackBar.showMsg(msg);
       }
     }
@@ -129,12 +134,12 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                           runSpacing: 5,
                           alignment: WrapAlignment.center,
                           children: List.generate(
-                            allParticipants.length,
+                            allParticipantsPrefix42.length,
                             (index) {
-                              if (allParticipants[index] == currentAddress) {
+                              if (allParticipantsPrefix42[index] == currentAddressPrefix42) {
                                 return const SizedBox.shrink();
                               } else if (store.encointer.communityAccount!.attendees!
-                                  .contains(allParticipants[index])) {
+                                  .contains(allParticipantsPrefix42[index])) {
                                 return ParticipantAvatar(index: index, isActive: true);
                               } else {
                                 return ParticipantAvatar(index: index);

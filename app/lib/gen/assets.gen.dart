@@ -149,11 +149,17 @@ class $AssetsImagesAssetsGen {
   /// File path: assets/images/assets/icon_leu.svg
   SvgGenImage get iconLeu => const SvgGenImage('assets/images/assets/icon_leu.svg');
 
+  /// File path: assets/images/assets/leu_steller_bg.png
+  AssetGenImage get leuStellerBg => const AssetGenImage('assets/images/assets/leu_steller_bg.png');
+
   /// File path: assets/images/assets/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/assets/logo.png');
 
   /// File path: assets/images/assets/mosaic_background.png
   AssetGenImage get mosaicBackground => const AssetGenImage('assets/images/assets/mosaic_background.png');
+
+  /// File path: assets/images/assets/receive_square_2.svg
+  SvgGenImage get receiveSquare2 => const SvgGenImage('assets/images/assets/receive_square_2.svg');
 
   /// File path: assets/images/assets/success.png
   AssetGenImage get success => const AssetGenImage('assets/images/assets/success.png');
@@ -168,8 +174,10 @@ class $AssetsImagesAssetsGen {
         assetsSend,
         assetsUp,
         iconLeu,
+        leuStellerBg,
         logo,
         mosaicBackground,
+        receiveSquare2,
         success
       ];
 }
@@ -333,7 +341,16 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider() => AssetImage(_assetName);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
 
   String get path => _assetName;
 
@@ -360,9 +377,9 @@ class SvgGenImage {
     bool excludeFromSemantics = false,
     SvgTheme theme = const SvgTheme(),
     ColorFilter? colorFilter,
+    Clip clipBehavior = Clip.hardEdge,
     @deprecated Color? color,
     @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
-    @deprecated Clip? clipBehavior,
     @deprecated bool cacheColorFilter = false,
   }) {
     return SvgPicture.asset(

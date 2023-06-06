@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -13,7 +13,6 @@ class UnregisteredLinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final dic = I18n.of(context)!.translationsForLocale();
     return InkWell(
       key: const Key('unregister-button'),
@@ -32,7 +31,8 @@ class UnregisteredLinkButton extends StatelessWidget {
       },
       child: Text(
         dic.home.unregister,
-        style: textTheme.headlineMedium!.copyWith(color: encointerGrey, decoration: TextDecoration.underline),
+        style: context.textTheme.headlineMedium!
+            .copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
       ),
     );
   }

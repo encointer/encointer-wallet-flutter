@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
 
 class AccountOrCommunityItemHorizontal extends StatefulWidget {
@@ -34,7 +34,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
               shape: BoxShape.circle,
               border: Border.all(
                 width: 2,
-                color: widget.itemData.isSelected ? zurichLion.shade500 : Colors.transparent,
+                color: widget.itemData.isSelected ? context.colorScheme.secondary : Colors.transparent,
               ),
             ),
             child: widget.itemData.avatar,
@@ -44,7 +44,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             widget.itemData.name ?? '',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: context.textTheme.headlineMedium,
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

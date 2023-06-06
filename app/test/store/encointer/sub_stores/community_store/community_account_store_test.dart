@@ -1,9 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
-import 'package:encointer_wallet/mocks/test_utils.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
+
+import '../../../../mock/mock.dart';
+import '../../../../utils/test_utils.dart';
 
 void main() {
   group('CommunityAccountStore', () {

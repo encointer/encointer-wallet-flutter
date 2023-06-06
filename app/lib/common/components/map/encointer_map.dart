@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 
 class EncointerMap extends StatelessWidget {
@@ -94,7 +95,7 @@ class PopupBuilder extends StatelessWidget {
       height: height,
       padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onBackground,
+        color: context.colorScheme.background,
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(

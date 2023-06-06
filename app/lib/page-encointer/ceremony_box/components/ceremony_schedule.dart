@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_count_down.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -53,11 +53,11 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: '${dic.encointer.nextCycleDateLabel} ',
-        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
+        style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
         children: [
           TextSpan(
             text: '$nextCeremonyYearMonthDay $nextCeremonyHourMinute',
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerBlack),
+            style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerBlack),
           ),
         ],
       ),
@@ -81,11 +81,11 @@ class CeremonyDateLabelRelative extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: '${dic.encointer.nextCycleTimeLeft} ',
-        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
+        style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
         children: [
           TextSpan(
             text: timeLeftUntilCeremonyStartsDaysHours,
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerBlack),
+            style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerBlack),
           ),
         ],
       ),
@@ -102,7 +102,7 @@ class CeremonyDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final h2BlackTheme = Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack);
+    final h2BlackTheme = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack);
     final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
     final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
 
@@ -110,7 +110,7 @@ class CeremonyDate extends StatelessWidget {
       children: [
         const Icon(
           Iconsax.calendar_1,
-          color: encointerGrey,
+          color: AppColors.encointerGrey,
           size: 18,
         ),
         const SizedBox(width: 6),
@@ -123,7 +123,7 @@ class CeremonyDate extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 2),
           child: Icon(
             Iconsax.clock,
-            color: encointerGrey,
+            color: AppColors.encointerGrey,
             size: 18,
           ),
         ),

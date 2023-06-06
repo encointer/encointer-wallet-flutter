@@ -100,21 +100,6 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  late final _$pubKeyAddressMapAtom = Atom(name: '_AccountStore.pubKeyAddressMap', context: context);
-
-  @override
-  ObservableMap<int, Map<String, String>> get pubKeyAddressMap {
-    _$pubKeyAddressMapAtom.reportRead();
-    return super.pubKeyAddressMap;
-  }
-
-  @override
-  set pubKeyAddressMap(ObservableMap<int, Map<String, String>> value) {
-    _$pubKeyAddressMapAtom.reportWrite(value, super.pubKeyAddressMap, () {
-      super.pubKeyAddressMap = value;
-    });
-  }
-
   late final _$queuedTxsAtom = Atom(name: '_AccountStore.queuedTxs', context: context);
 
   @override
@@ -240,23 +225,12 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setPubKeyAddressMap(Map<String, Map<dynamic, dynamic>> data) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setPubKeyAddressMap');
-    try {
-      return super.setPubKeyAddressMap(data);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 loading: ${loading},
 txStatus: ${txStatus},
 currentAccountPubKey: ${currentAccountPubKey},
 accountList: ${accountList},
-pubKeyAddressMap: ${pubKeyAddressMap},
 queuedTxs: ${queuedTxs},
 currentAccount: ${currentAccount},
 optionalAccounts: ${optionalAccounts},

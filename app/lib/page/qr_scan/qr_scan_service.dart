@@ -69,7 +69,7 @@ void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext,
         TransferPage.route,
         arguments: TransferPageParams(
           cid: qrCode.data.cid,
-          recipient: qrCode.data.account,
+          recipientAddress: qrCode.data.account,
           label: qrCode.data.label,
         ),
       );

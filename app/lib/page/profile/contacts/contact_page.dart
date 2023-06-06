@@ -41,8 +41,8 @@ class _Contact extends State<ContactPage> {
       });
       final dic = I18n.of(context)!.translationsForLocale();
       final addr = _addressCtrl.text.replaceAll(' ', '');
-      final pubKeyAddress = await webApi.account.decodeAddress([addr]);
-      final pubKey = pubKeyAddress.keys.toList()[0] as String;
+      final pubKey = Fmt.ss58Decode(addr).pubKey;
+
       final con = {
         'address': addr,
         'name': _nameCtrl.text,
@@ -55,7 +55,7 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
+        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.pubKey == pubKey);
         if (exist > -1) {
           return showCupertinoDialog<void>(
             context: context,
@@ -81,9 +81,7 @@ class _Contact extends State<ContactPage> {
       }
 
       // get contact info
-      if (_isObservation!) {
-        await webApi.account.encodeAddress([pubKey]);
-      } else {
+      if (!_isObservation!) {
         // if this address was used as observation and current account,
         // we need to change current account
         if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {
@@ -198,10 +196,15 @@ class _Contact extends State<ContactPage> {
                       ),
                     const SizedBox(height: 24),
                     IconButton(
+                      key: const Key('scan-barcode'),
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
-                      onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
-                          arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage)),
+                      onPressed: () async {
+                        await Navigator.of(context).popAndPushNamed(
+                          ScanPage.route,
+                          arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage),
+                        );
+                      },
                     ),
                     const SizedBox(height: 24),
                   ],

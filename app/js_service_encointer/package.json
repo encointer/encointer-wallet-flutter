@@ -39,7 +39,6 @@
     "buffer": "^6.0.3",
     "core-js": "^3.20.2",
     "node-rsa": "^1.1.1",
-    "oo7-substrate": "^0.8.0",
     "process": "^0.11.10",
     "regenerator-runtime": "^0.13.9",
     "tslib": "^2.3.1"

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -15,7 +16,6 @@ class CreateAccountEntryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: DecoratedBox(
         decoration: BoxDecoration(
@@ -31,7 +31,7 @@ class CreateAccountEntryView extends StatelessWidget {
               child: SecondaryButtonWide(
                 key: const Key('create-account'),
                 onPressed: () => Navigator.pushNamed(context, CreateAccountView.route),
-                child: Text(dic.home.create, style: textTheme.displaySmall),
+                child: Text(dic.home.create, style: context.textTheme.displaySmall),
               ),
             ),
             const SizedBox(height: 16),

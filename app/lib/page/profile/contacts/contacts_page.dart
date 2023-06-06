@@ -17,6 +17,8 @@ class ContactsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Observer(
         builder: (_) {
+          final store = context.watch<AppStore>();
+
           return Scaffold(
             appBar: AppBar(
               title: Text(
@@ -42,17 +44,19 @@ class ContactsPage extends StatelessWidget {
             ),
             body: SafeArea(
               child: ListView(
-                children: context.watch<AppStore>().settings.contactList.map((i) {
+                children: context.watch<AppStore>().settings.contactList.map((contact) {
+                  final address = Fmt.ss58Encode(contact.pubKey, prefix: store.settings.endpoint.ss58!);
+
                   return ListTile(
-                    leading: AddressIcon(i.address, i.pubKey, size: 45),
-                    title: Text(Fmt.accountName(context, i)),
-                    subtitle: Text(Fmt.address(i.address)!),
+                    leading: AddressIcon(address, contact.pubKey, size: 45),
+                    title: Text(Fmt.accountName(context, contact)),
+                    subtitle: Text(Fmt.address(address)!),
                     trailing: SizedBox(
                       width: 36,
                       child: IconButton(
-                        key: Key(i.name),
+                        key: Key(contact.name),
                         icon: const Icon(Icons.arrow_forward_ios, size: 18),
-                        onPressed: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: i),
+                        onPressed: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: contact),
                       ),
                     ),
                   );

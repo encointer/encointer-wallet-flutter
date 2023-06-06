@@ -5,6 +5,7 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/validate_keys.dart';
 
@@ -73,15 +74,15 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> _generateAccount(AppStore appStore, Api webApi, String pin) async {
     try {
       _loading = true;
-      appStore.settings.setPin(pin);
+      await appStore.settings.setPin(pin);
       final key = await webApi.account.generateAccount();
       final acc = await webApi.account.importAccount(key: key, password: pin);
       if (acc['error'] != null) {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       }
-      final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-      acc['address'] = addresses[0];
+
+      acc['address'] = Fmt.ss58Encode(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
       return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
       _loading = false;
@@ -94,7 +95,7 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> _importAccount(AppStore appStore, Api webApi, String pin) async {
     try {
       _loading = true;
-      appStore.settings.setPin(pin);
+      await appStore.settings.setPin(pin);
       assert(accountKey != null && accountKey!.isNotEmpty, 'accountKey can not be null or empty');
       final acc = await webApi.account.importAccount(
         key: accountKey!,
@@ -105,8 +106,7 @@ abstract class _NewAccountStoreBase with Store {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       } else {
-        final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
-        acc['address'] = addresses[0];
+        acc['address'] = Fmt.ss58Encode(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
           _loading = false;

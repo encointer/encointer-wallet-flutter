@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/submit_button_secondary.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -45,13 +45,12 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final store = context.watch<AppStore>();
-    final textTheme = Theme.of(context).textTheme;
-
+    final address = Fmt.ss58Encode(account.pubKey, prefix: store.settings.endpoint.ss58!);
     return Scaffold(
       appBar: AppBar(
         title: isEditing
             ? TextFormField(key: const Key('contact-name-field'), controller: _nameCtrl)
-            : Text(_nameCtrl.text, style: textTheme.displaySmall),
+            : Text(_nameCtrl.text, style: context.textTheme.displaySmall),
         actions: [
           if (isEditing)
             IconButton(
@@ -100,7 +99,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AddressIcon(account.address, account.pubKey, size: 130),
+                        AddressIcon(address, account.pubKey, size: 130),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -109,11 +108,11 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
+                        Text(Fmt.address(address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
-                          color: zurichLion.shade500,
-                          onPressed: () => UI.copyAndNotify(context, account.address),
+                          color: context.colorScheme.secondary,
+                          onPressed: () => UI.copyAndNotify(context, address),
                         ),
                       ],
                     ),
@@ -131,7 +130,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     const SizedBox(width: 12),
                     Text(
                       dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? 'null'),
-                      style: textTheme.displaySmall,
+                      style: context.textTheme.displaySmall,
                     ),
                   ],
                 ),
@@ -141,7 +140,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     arguments: TransferPageParams(
                       cid: context.read<AppStore>().encointer.chosenCid,
                       communitySymbol: context.read<AppStore>().encointer.community?.symbol,
-                      recipient: account.address,
+                      recipientAddress: address,
                       label: _nameCtrl.text,
                     ),
                   );
@@ -155,7 +154,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   children: [
                     const Icon(Iconsax.trash),
                     const SizedBox(width: 12),
-                    Text(dic.profile.contactDelete, style: textTheme.displaySmall)
+                    Text(dic.profile.contactDelete, style: context.textTheme.displaySmall)
                   ],
                 ),
               ),
@@ -207,8 +206,6 @@ class EndorseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -219,7 +216,7 @@ class EndorseButton extends StatelessWidget {
                     Text(dic.encointer.remainingNewbieTicketsAsBootStrapper),
                     Text(
                       ' ${store.encointer.communityAccount?.numberOfNewbieTicketsForBootstrapper ?? 0}',
-                      style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                      style: TextStyle(fontSize: 15, color: context.colorScheme.primary),
                     ),
                   ]),
                 )
@@ -232,7 +229,7 @@ class EndorseButton extends StatelessWidget {
                     Text(dic.encointer.remainingNewbieTicketsAsReputable),
                     Text(
                       ' ${store.encointer.account?.numberOfNewbieTicketsForReputable ?? 0}',
-                      style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                      style: TextStyle(fontSize: 15, color: context.colorScheme.primary),
                     ),
                   ]),
                 )
@@ -251,7 +248,7 @@ class EndorseButton extends StatelessWidget {
                 children: [
                   const Icon(Iconsax.verify),
                   const SizedBox(width: 12),
-                  Text(dic.profile.contactEndorse, style: textTheme.displaySmall)
+                  Text(dic.profile.contactEndorse, style: context.textTheme.displaySmall)
                 ],
               ),
             ),
@@ -279,12 +276,14 @@ class EndorseButton extends StatelessWidget {
     final community = store.encointer.community;
     final bootstrappers = community?.bootstrappers;
     final dic = I18n.of(context)!.translationsForLocale();
-    if (bootstrappers != null && bootstrappers.contains(contact.address)) {
+    final address = Fmt.ss58Encode(contact.pubKey, prefix: store.settings.endpoint.ss58!);
+
+    if (bootstrappers != null && bootstrappers.contains(address)) {
       await _popupDialog(context, dic.profile.cantEndorseBootstrapper);
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
       await _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
     } else {
-      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
+      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, address);
     }
   }
 }

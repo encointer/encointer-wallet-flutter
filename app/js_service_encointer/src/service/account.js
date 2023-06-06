@@ -9,7 +9,6 @@ import {
   compactAddLength,
   bnToU8a
 } from '@polkadot/util';
-import { ss58Decode } from 'oo7-substrate/src/ss58.js';
 import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
 import { createType } from '@polkadot/types';
@@ -92,69 +91,14 @@ async function recover (keyType, cryptoType, key, password) {
 }
 
 /**
- * Add user's accounts to keyring incedence,
- * so user can use them to sign txs with password.
- * We use a list of ss58Formats to encode the accounts
- * into different address formats for different networks.
+ * Import accounts in to the `keyring` that can be used to
+ * sign extrinsics from then on.
  *
  * @param {List<Keystore>} accounts
- * @param {List<int>} ss58Formats
- * @returns {Map<String, String>} pubKeyAddressMap
  */
-async function initKeys (accounts, ss58Formats) {
+async function initKeys (accounts) {
   await cryptoWaitReady();
-  const res = {};
-  ss58Formats.forEach((ss58) => {
-    res[ss58] = {};
-  });
-
-  accounts.forEach((i) => {
-    // import account to keyring
-    const keyPair = keyring.addFromJson(i);
-    // then encode address into different ss58 formats
-    ss58Formats.forEach((ss58) => {
-      const pubKey = u8aToHex(keyPair.publicKey);
-      res[ss58][pubKey] = keyring.encodeAddress(keyPair.publicKey, ss58);
-    });
-  });
-  return res;
-}
-
-/**
- * Decode address to it's publicKey
- * @param {List<String>} addresses
- * @returns {Map<String, String>} pubKeyAddressMap
- */
-async function decodeAddress (addresses) {
-  await cryptoWaitReady();
-  try {
-    const res = {};
-    addresses.forEach((i) => {
-      const pubKey = u8aToHex(keyring.decodeAddress(i));
-      res[pubKey] = i;
-    });
-    return res;
-  } catch (err) {
-    send('log', { error: err.message });
-    return null;
-  }
-}
-
-/**
- * encode pubKey to addresses with different prefixes
- * @param {List<String>} pubKeys
- * @returns {Map<String, String>} pubKeyAddressMap
- */
-async function encodeAddress (pubKeys, ss58Formats) {
-  await cryptoWaitReady();
-  const res = {};
-  ss58Formats.forEach((ss58) => {
-    res[ss58] = {};
-    pubKeys.forEach((i) => {
-      res[ss58][i] = keyring.encodeAddress(hexToU8a(i), ss58);
-    });
-  });
-  return res;
+  accounts.forEach((i) => keyring.addFromJson(i));
 }
 
 async function addressFromUri(uri) {
@@ -454,8 +398,6 @@ function changePassword (pubKey, passOld, passNew) {
 export default {
   initKeys,
   addressFromUri,
-  encodeAddress,
-  decodeAddress,
   gen,
   recover,
   getBalance,

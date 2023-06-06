@@ -237,10 +237,10 @@ packages:
     dependency: transitive
     description:
       name: source_span
-      sha256: dd904f795d4b4f3b870833847c461801f6750a9fa8e61ea5ac53f9422b31f250
+      sha256: "53e943d4206a5e30df338fd4c6e7a077e02254531b138a15aec3bd143c1a8b3c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.1"
+    version: "1.10.0"
   stack_trace:
     dependency: transitive
     description:
@@ -277,10 +277,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "6b12a91cd2febdb6f7e7d92c00d1d0c01d88bffc7fe36b1ed236f0cc37cb5ca4"
+      sha256: daadc9baabec998b062c9091525aa95786508b1c48e9c30f1f891b8bf6ff2e64
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.2"
   typed_data:
     dependency: transitive
     description:
@@ -315,4 +315,4 @@ packages:
     version: "2.1.0"
 sdks:
   dart: ">=2.19.0 <3.0.0"
-  flutter: ">=3.7.3"
+  flutter: ">=3.7.12"

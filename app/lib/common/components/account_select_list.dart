@@ -5,21 +5,23 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 
 class AccountSelectList extends StatelessWidget {
-  const AccountSelectList(this.store, this.list, {super.key});
+  const AccountSelectList(this.store, this.accounts, {super.key});
 
   final AppStore store;
-  final List<AccountData> list;
+  final List<AccountData> accounts;
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: list.map((i) {
+      children: accounts.map((account) {
+        final address = Fmt.ss58Encode(account.pubKey, prefix: store.settings.endpoint.ss58!);
+
         return ListTile(
-          leading: AddressIcon(i.address, i.pubKey),
-          title: Text(Fmt.accountName(context, i)),
-          subtitle: Text(Fmt.address(Fmt.addressOfAccount(i, store))!),
+          leading: AddressIcon(address, account.pubKey),
+          title: Text(Fmt.accountName(context, account)),
+          subtitle: Text(Fmt.address(address)!),
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-          onTap: () => Navigator.of(context).pop(i),
+          onTap: () => Navigator.of(context).pop(account),
         );
       }).toList(),
     );

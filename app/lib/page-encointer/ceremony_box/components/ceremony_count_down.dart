@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:quiver/async.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 class CeremonyCountDown extends StatefulWidget {
@@ -85,13 +85,13 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
       children: [
         const Icon(
           Iconsax.timer_start,
-          color: encointerGrey,
+          color: AppColors.encointerGrey,
           size: 18,
         ),
         const SizedBox(width: 8),
         Text(
           '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h ${timeLeftUntilCeremonyStarts.inMinutes.remainder(60)}min ${timeLeftUntilCeremonyStarts.inSeconds.remainder(60)}s',
-          style: Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack),
+          style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
         ),
       ],
     );

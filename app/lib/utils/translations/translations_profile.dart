@@ -82,6 +82,7 @@ abstract class TranslationsProfile {
   String get observedPendingExtrinsic;
   String get contactUs;
   String get checkEmailApp;
+  String get addToContactFromQrContact;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -250,6 +251,8 @@ class TranslationsEnProfile implements TranslationsProfile {
   String get errorUserNameIsRequired => 'User name cannot be blank';
   @override
   String get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
+  @override
+  String get addToContactFromQrContact => 'Add Contact-Qr';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -420,6 +423,8 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   String get observedPendingExtrinsic =>
       'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
+  @override
+  String get addToContactFromQrContact => 'Add Contact-Qr';
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
@@ -592,6 +597,8 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get observedPendingExtrinsic =>
       'Une transaction non confirmée a été observée. Veuillez attendre la confirmation!';
+  @override
+  String get addToContactFromQrContact => 'Add Contact-Qr';
 }
 
 class TranslationsRuProfile implements TranslationsProfile {
@@ -760,4 +767,6 @@ class TranslationsRuProfile implements TranslationsProfile {
   String get errorUserNameIsRequired => 'Имя пользователя не может быть пустым';
   @override
   String get observedPendingExtrinsic => 'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
+  @override
+  String get addToContactFromQrContact => 'Add Contact-Qr';
 }

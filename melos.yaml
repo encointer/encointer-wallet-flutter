@@ -116,6 +116,11 @@ scripts:
     run: cd app && flutter build apk --flavor fdroid
     description: "Build an APK file"
 
+  # Build apk for androids splitted per Application Binary Interface (abi)
+  build-apk-split:
+    run: cd app && flutter build apk --split-per-abi --flavor dev
+    description: "Build an APK file"
+
   build-appbundle:
     run: cd app && flutter build appbundle
     description: "Build an appbundle file"
@@ -123,27 +128,27 @@ scripts:
   # Integration test Encointer Wallet
   integration-app-test-android:
     run: cd app && flutter drive --target=test_driver/app.dart --flavor dev
-    description: "Run integration tests for the `app.dart` file on Android"
+    description: "Run integration test on Android"
+
+  integration-app-test-android-screenshot:
+    run: cd app && flutter drive --target=test_driver/app.dart --flavor dev --dart-define=locales=en
+    description: "Run integration test on Android with screenshot capturing enabled."
 
   integration-app-test-ios:
     run: cd app && flutter drive --target=test_driver/app.dart
-    description: "Run integration tests for the `app.dart` file on iOS"
+    description: "Run integration test on iOS"
 
-  integration-real-app-test-android:
-    run: cd app && flutter drive --target=test_driver/real_app.dart --flavor dev
-    description: "Run integration tests for the `real_app.dart` file on Android"
+  integration-app-test-ios-screenshot:
+    run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=en
+    description: "Run integration test on IOS with screenshot capturing enabled."
 
-  integration-real-app-test-android-screenshot:
-    run: cd app && flutter drive --target=test_driver/real_app.dart --flavor dev --dart-define=screenshot=true
-    description: "Run integration tests for the `real_app.dart` file on Android with screenshot capturing enabled."
+  integration-app-test-ios-screenshot-multi-language:
+    run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=de,fr,ru,en
+    description: "Run integration test on IOS with screenshot multi language capturing enabled."
 
-  integration-real-app-test-ios:
-    run: cd app && flutter drive --target=test_driver/real_app.dart
-    description: "Run integration tests for the `real_app.dart` file on IOS"
-
-  integration-real-app-test-ios-screenshot:
-    run: cd app && flutter drive --target=test_driver/real_app.dart --dart-define=screenshot=true
-    description: "Run integration tests for the `real_app.dart` file on IOS with screenshot capturing enabled."
+  integration-app-test-android-screenshot-multi-language:
+    run: cd app && flutter drive --target=test_driver/app.dart --flavor dev --dart-define=locales=de,fr,ru,en
+    description: "Run integration test on Android with screenshot multi language capturing enabled. "  
 
   integration-scan-test-android:
     run: cd app && flutter drive --target=test_driver/scan_page.dart --flavor dev

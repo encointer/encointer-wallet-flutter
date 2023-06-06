@@ -61,7 +61,7 @@ class InvoiceData implements ToQrFields {
     return InvoiceData(
       account: fields[0],
       cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
-      amount: fields[2].trim().isNotEmpty ? double.parse(fields[2]) : null,
+      amount: fields[2].trim().isNotEmpty ? double.tryParse(fields[2]) : null,
       label: fields[3],
     );
   }

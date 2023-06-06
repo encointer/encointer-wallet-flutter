@@ -53,6 +53,14 @@ abstract class TranslationsAssets {
   String get invalidNetwork;
   String get invalidCommunity;
   String get chosenRightCommunity;
+  String get noInvoice;
+  String get addInvoiceQrToAddress;
+  String get print;
+  String get preview;
+  String get payHereWithLeu;
+  String get openTheEncointerApp;
+  String get scanQrCodeOnTheLeft;
+  String get confirmThePayment;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -163,6 +171,22 @@ class TranslationsEnAssets implements TranslationsAssets {
   @override
   String get chosenRightCommunity =>
       'The data is for a different community. Please change the community to send funds.';
+  @override
+  String get noInvoice => 'No invoice';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
+  @override
+  String get print => 'Print';
+  @override
+  String get preview => 'Preview';
+  @override
+  String get confirmThePayment => '3. Confirm the payment';
+  @override
+  String get openTheEncointerApp => '1. Open the app \n«Encointer Wallet»';
+  @override
+  String get payHereWithLeu => 'Pay here with Leu';
+  @override
+  String get scanQrCodeOnTheLeft => '2. Scan the QR code \non the left';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -273,6 +297,22 @@ class TranslationsDeAssets implements TranslationsAssets {
   @override
   String get chosenRightCommunity =>
       'Die Daten sind für eine andere Community. Bitte wechsle die Community um Geld zu senden.';
+  @override
+  String get noInvoice => 'Ohne Rechnung';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
+  @override
+  String get print => 'Drucken';
+  @override
+  String get preview => 'Vorschau';
+  @override
+  String get confirmThePayment => '3. Bestätige die Zahlung';
+  @override
+  String get openTheEncointerApp => '1. Öffne die App \n«Encointer Wallet»';
+  @override
+  String get payHereWithLeu => 'Zahle hier mit Leu';
+  @override
+  String get scanQrCodeOnTheLeft => '2. Scanne den QR-Code \nauf der linken Seite';
 }
 
 class TranslationsFrAssets implements TranslationsAssets {
@@ -313,7 +353,7 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get issuancePending => 'Demander le paiement communautaire en cours';
   @override
-  String get receive => 'Demander';
+  String get receive => 'Exiger';
   @override
   String get scan => 'Scanner';
   @override
@@ -384,6 +424,22 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   String get chosenRightCommunity =>
       "Les données sont destinées à une autre communauté. S'il te plaît, change la communauté pour envoyer le payment.";
+  @override
+  String get noInvoice => 'Sans facture';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
+  @override
+  String get print => 'Imprimer';
+  @override
+  String get preview => 'Aperçu';
+  @override
+  String get confirmThePayment => '3. Confirmez le paiement';
+  @override
+  String get openTheEncointerApp => "1. Ouvre l'application \n«Encointer Wallet»";
+  @override
+  String get payHereWithLeu => 'Paye ici avec Leu';
+  @override
+  String get scanQrCodeOnTheLeft => '2. Scanne le code QR \nsur la gauche';
 }
 
 class TranslationsRuAssets implements TranslationsAssets {
@@ -494,4 +550,20 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   String get chosenRightCommunity =>
       'Данные относятся к другому сообществу. Пожалуйста, измените сообщество, чтобы отправить средства.';
+  @override
+  String get noInvoice => 'Без счета-фактуры';
+  @override
+  String get addInvoiceQrToAddress => 'Add QR-invoice to Address';
+  @override
+  String get print => 'Распечатать';
+  @override
+  String get preview => 'Предварительный просмотр';
+  @override
+  String get confirmThePayment => '3. Подтвердите платеж';
+  @override
+  String get openTheEncointerApp => '1. Откройте приложение \n«Encointer Wallet»';
+  @override
+  String get payHereWithLeu => 'Платите здесь с Leu';
+  @override
+  String get scanQrCodeOnTheLeft => '2. Отсканируйте QR-код \nслева';
 }

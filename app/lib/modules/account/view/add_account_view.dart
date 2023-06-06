@@ -8,8 +8,8 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
@@ -50,14 +50,13 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
     final newAccountStore = context.watch<NewAccountStore>();
     return ScrollableForm(formKey: _formKey, listViewChildren: [
       const SizedBox(height: 80),
       Center(
         child: Text(
           dic.profile.accountNameChoose,
-          style: textTheme.displayMedium,
+          style: context.textTheme.displayMedium,
         ),
       ),
       const SizedBox(height: 10),
@@ -65,7 +64,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
         child: Text(
           dic.profile.accountNameChooseHint,
           textAlign: TextAlign.center,
-          style: textTheme.displayMedium!.copyWith(color: encointerBlack),
+          style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
         ),
       ),
       const SizedBox(height: 30),
@@ -88,7 +87,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
           children: [
             const Icon(Iconsax.import_2),
             const SizedBox(width: 10),
-            Text(dic.home.accountImport, style: textTheme.displaySmall),
+            Text(dic.home.accountImport, style: context.textTheme.displaySmall),
           ],
         ),
         onPressed: () {

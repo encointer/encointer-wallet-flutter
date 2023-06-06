@@ -6,8 +6,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_info.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_register_button.dart';
@@ -51,7 +51,7 @@ class CeremonyBox extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
-              color: zurichLion.shade50,
+              color: context.colorScheme.background,
               borderRadius: BorderRadius.vertical(
                 top: const Radius.circular(15),
                 bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15),

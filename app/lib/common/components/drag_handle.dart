@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 /// handle for sliding up panel, for it look good
 class DragHandle extends StatelessWidget {
@@ -15,7 +15,7 @@ class DragHandle extends StatelessWidget {
           width: 40,
           height: 4,
           decoration: BoxDecoration(
-            color: zurichLion.shade50,
+            color: context.colorScheme.background,
             borderRadius: const BorderRadius.all(Radius.circular(2)),
           ),
         ),

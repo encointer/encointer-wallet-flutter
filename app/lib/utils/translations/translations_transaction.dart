@@ -26,6 +26,8 @@ abstract class TranslationsTransaction {
   String get balanceTooLowTitle;
   String get balanceTooLowBody;
   String get transactionError;
+  String get received;
+  String get sent;
 }
 
 class TranslationsEnTransaction implements TranslationsTransaction {
@@ -90,6 +92,10 @@ class TranslationsEnTransaction implements TranslationsTransaction {
       "You don't have sufficient funds in your account. You can't send all your money because you need some for the fees.";
   @override
   String get balanceTooLowTitle => 'Balance too low';
+  @override
+  String get received => 'Receved';
+  @override
+  String get sent => 'Sent';
 }
 
 class TranslationsDeTransaction implements TranslationsTransaction {
@@ -155,6 +161,10 @@ class TranslationsDeTransaction implements TranslationsTransaction {
       'Du hast nicht genug Geld auf dem Konto. Du kannst nicht dein ganzes Geld schicken, weil du noch ein wenig für die Gebühren brauchst.';
   @override
   String get balanceTooLowTitle => 'Kontostand zu tief';
+  @override
+  String get received => 'Empfangen';
+  @override
+  String get sent => 'Gesendet';
 }
 
 class TranslationsFrTransaction implements TranslationsTransaction {
@@ -220,6 +230,10 @@ class TranslationsFrTransaction implements TranslationsTransaction {
       "Tu n'as pas assez d'argent sur ton compte. Tu ne peux pas envoyer tout ton argent, car il t'en faut encore un peu pour payer les frais.";
   @override
   String get balanceTooLowTitle => 'Solde trop bas';
+  @override
+  String get received => 'Reçu';
+  @override
+  String get sent => 'Envoyé';
 }
 
 class TranslationsRuTransaction implements TranslationsTransaction {
@@ -287,4 +301,8 @@ class TranslationsRuTransaction implements TranslationsTransaction {
       'У вас недостаточно средств на счету. Вы не можете отправить все свои деньги, так как часть нужна для оплаты комиссии.';
   @override
   String get balanceTooLowTitle => 'Недостаточно средств на счете';
+  @override
+  String get received => 'Получено';
+  @override
+  String get sent => 'Отправлено';
 }

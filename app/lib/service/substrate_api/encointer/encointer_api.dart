@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:ew_http/ew_http.dart';
+
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
+import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
@@ -33,13 +35,14 @@ import 'package:encointer_wallet/utils/format.dart';
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class EncointerApi {
-  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi)
+  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp)
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi),
         _dartApi = EncointerDartApi(dartApi);
 
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
+  final EwHttp ewHttp;
 
   final AppStore store;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
@@ -135,7 +138,11 @@ class EncointerApi {
 
   /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.
   ///
-  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String address) async {
+  /// Todo: Be able to handle pubKey and any address and transform it to the
+  /// address with prefix 42. Needs #1105.
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String pubKey) async {
+    final address = Fmt.ss58Encode(pubKey);
+
     try {
       final accountData = await _dartApi.getAggregatedAccountData(cid, address);
       Log.d(
@@ -265,20 +272,27 @@ class EncointerApi {
     return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
-  Future<void> getMeetupTimeOverride() async {
+  Future<void> getMeetupTimeOverride({bool devMode = false}) async {
     Log.d('api: Check if there are meetup time overrides', 'EncointerApi');
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
     try {
-      final meetupTimeOverride = await feed.getMeetupTimeOverride(
-        store.encointer.network,
-        cid,
-        store.encointer.currentPhase,
+      final response = await ewHttp.getTypeList(
+        '${getEncointerFeedLink(devMode: devMode)}/$encointerFeedOverridesPath',
+        fromJson: MeetupOverrides.fromJson,
       );
-      if (store.encointer.community != null) {
-        store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
-      }
+      response.fold((l) => Log.e(l.toString()), (overrides) async {
+        final meetupTimeOverride = await feed.getMeetupTimeOverride(
+          network: store.encointer.network,
+          cid: cid,
+          phase: store.encointer.currentPhase,
+          overrides: overrides,
+        );
+        if (store.encointer.community != null) {
+          store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
+        }
+      });
     } catch (e, s) {
       Log.e('api: exception: $e', 'EncointerApi', s);
     }
@@ -333,10 +347,11 @@ class EncointerApi {
       final phase = ceremonyPhaseFromString(data.toUpperCase())!;
 
       final cid = store.encointer.chosenCid;
-      final address = store.account.currentAddress;
+      final pubKey = store.account.currentAccountPubKey;
 
-      if (cid != null) {
-        final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, address);
+      if (cid != null && pubKey != null) {
+        final address = store.account.currentAddress;
+        final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
         store.encointer.setAggregatedAccountData(cid, address, data);
       }
 
@@ -352,10 +367,10 @@ class EncointerApi {
   Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
     CeremonyPhase nextPhase,
     CommunityIdentifier cid,
-    String address,
+    String pubKey,
   ) async {
     while (true) {
-      final data = await getAggregatedAccountData(cid, address);
+      final data = await getAggregatedAccountData(cid, pubKey);
       final phase = data.global.ceremonyPhase;
 
       if (nextPhase == phase) {

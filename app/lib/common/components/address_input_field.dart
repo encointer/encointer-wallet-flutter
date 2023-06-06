@@ -2,7 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -31,17 +31,18 @@ class AddressInputField extends StatefulWidget {
 class _AddressInputFieldState extends State<AddressInputField> {
   /// Returns true if the [account]'s name or address starts with [nameOrAddress].
   bool filterByAddressOrName(AccountData account, String nameOrAddress) {
+    final ss58 = widget.store.settings.endpoint.ss58!;
     // we can't just use account.address unfortunately, see #1019.
     return account.name.startsWith(nameOrAddress.trim()) ||
-        Fmt.addressOfAccount(account, widget.store).startsWith(nameOrAddress.trim());
+        Fmt.ss58Encode(account.pubKey, prefix: ss58).startsWith(nameOrAddress.trim());
   }
 
-  Widget _selectedItemBuilder(BuildContext context, AccountData? item) {
-    if (item == null) {
+  Widget _selectedItemBuilder(BuildContext context, AccountData? account) {
+    if (account == null) {
       return Container();
     }
 
-    final address = Fmt.addressOfAccount(item, widget.store);
+    final address = Fmt.ss58Encode(account.pubKey, prefix: widget.store.settings.endpoint.ss58!);
 
     return Container(
       padding: const EdgeInsets.only(top: 8),
@@ -50,15 +51,15 @@ class _AddressInputFieldState extends State<AddressInputField> {
           if (!widget.hideIdenticon)
             Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: AddressIcon(item.address, item.pubKey, tapToCopy: false, size: 36),
+              child: AddressIcon(address, account.pubKey, tapToCopy: false, size: 36),
             ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.name),
+              Text(account.name),
               Text(
                 Fmt.address(address)!,
-                style: TextStyle(fontSize: 12, color: Theme.of(context).unselectedWidgetColor),
+                style: TextStyle(fontSize: 12, color: context.theme.unselectedWidgetColor),
               ),
             ],
           )
@@ -67,27 +68,27 @@ class _AddressInputFieldState extends State<AddressInputField> {
     );
   }
 
-  Widget _listItemBuilder(BuildContext context, AccountData item, bool isSelected) {
-    final address = Fmt.addressOfAccount(item, widget.store);
+  Widget _listItemBuilder(BuildContext context, AccountData account, bool isSelected) {
+    final address = Fmt.ss58Encode(account.pubKey, prefix: widget.store.settings.endpoint.ss58!);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: !isSelected
           ? null
           : BoxDecoration(
-              border: Border.all(color: Theme.of(context).primaryColor),
+              border: Border.all(color: context.colorScheme.primary),
               borderRadius: BorderRadius.circular(5),
               color: Colors.white,
             ),
       child: ListTile(
-        key: Key(item.name),
+        key: Key(account.name),
         selected: isSelected,
         dense: true,
-        title: Text(item.name),
+        title: Text(account.name),
         subtitle: Text(Fmt.address(address)!),
-        leading: CircleAvatar(child: AddressIcon(item.address, item.pubKey)),
+        leading: CircleAvatar(child: AddressIcon(address, account.pubKey)),
         onTap: () {
-          widget.onChanged?.call(item);
+          widget.onChanged?.call(account);
           Navigator.pop(context);
         },
       ),
@@ -99,7 +100,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     final dic = I18n.of(context)!.translationsForLocale();
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: zurichLion.shade50,
+        color: context.colorScheme.background,
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(
@@ -114,7 +115,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
             labelText: widget.label,
-            labelStyle: Theme.of(context).textTheme.headlineMedium,
+            labelStyle: context.textTheme.headlineMedium,
             contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
             border: const UnderlineInputBorder(
               borderSide: BorderSide(width: 0, style: BorderStyle.none),
