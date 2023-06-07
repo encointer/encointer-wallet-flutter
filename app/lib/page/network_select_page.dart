@@ -183,17 +183,12 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   String networkIconFromNetworkId(String networkId, bool isCurrent) {
-    switch (networkId) {
-      case 'nctr-gsl':
-        return isCurrent ? Assets.images.public.nctrGsl.path : Assets.images.public.nctrGslGray.path;
-      case 'nctr-r':
-        return isCurrent ? Assets.images.public.nctrR.path : Assets.images.public.nctrRGray.path;
-      case 'nctr-k':
-        return isCurrent ? Assets.images.public.nctrK.path : Assets.images.public.nctrKGray.path;
-      case 'nctr-gsl-dev':
-        return isCurrent ? Assets.images.public.nctrGslDev.path : Assets.images.public.nctrGslDevGray.path;
-      default:
-        return Assets.images.public.nctrKGray.path;
-    }
+    return switch (networkId) {
+      'nctr-gsl' => isCurrent ? Assets.images.public.nctrGsl.path : Assets.images.public.nctrGslGray.path,
+      'nctr-r' => isCurrent ? Assets.images.public.nctrR.path : Assets.images.public.nctrRGray.path,
+      'nctr-k' => isCurrent ? Assets.images.public.nctrK.path : Assets.images.public.nctrKGray.path,
+      'nctr-gsl-dev' => isCurrent ? Assets.images.public.nctrGslDev.path : Assets.images.public.nctrGslDevGray.path,
+      _ => Assets.images.public.nctrKGray.path,
+    };
   }
 }

@@ -120,14 +120,11 @@ class _AnnouncementViewState extends State<AnnouncementView> {
 
   /// NOTE: Do not write any functions inside [build]!
   Widget buildAnnouncementList(List<Announcement> announcements) {
-    switch (_announcementStore.fetchStatus) {
-      case FetchStatus.loading:
-        return const Center(child: CupertinoActivityIndicator());
-      case FetchStatus.success:
-        return AnnouncementList(announcements: announcements);
-      case FetchStatus.error:
-        return const SizedBox.shrink();
-    }
+    return switch (_announcementStore.fetchStatus) {
+      FetchStatus.loading => const Center(child: CupertinoActivityIndicator()),
+      FetchStatus.success => AnnouncementList(announcements: announcements),
+      FetchStatus.error => const SizedBox.shrink(),
+    };
   }
 
   String _getErrorMessages({
@@ -141,15 +138,11 @@ class _AnnouncementViewState extends State<AnnouncementView> {
     if (error.isNotNullOrEmpty) {
       return '${_dic.announcements} ${_dic.errorMessageWithStatusCode(error!)}';
     }
-    switch (failureType) {
-      case FailureType.badRequest:
-        return '${_dic.announcements} ${_dic.badRequest}';
-      case FailureType.noAuthorization:
-        return '${_dic.announcements} ${_dic.noAuthorizationError}';
-      // ignore: no_default_cases
-      default:
-        return '${_dic.announcements} ${_dic.somethingWentWrong}';
-    }
+    return switch (failureType) {
+      FailureType.badRequest => '${_dic.announcements} ${_dic.badRequest}',
+      FailureType.noAuthorization => '${_dic.announcements} ${_dic.noAuthorizationError}',
+      _ => '${_dic.announcements} ${_dic.somethingWentWrong}',
+    };
   }
 }
 
