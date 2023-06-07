@@ -82,16 +82,11 @@ abstract class _SettingsStore with Store {
 
   @action
   void changeLang(BuildContext context, String? code) {
-    switch (code) {
-      case 'en':
-        locale = const Locale('en', '');
-        break;
-      case 'de':
-        locale = const Locale('de', '');
-        break;
-      default:
-        locale = Localizations.localeOf(context);
-    }
+    locale = switch (code) {
+      'en' => const Locale('en', ''),
+      'de' => const Locale('de', ''),
+      _ => Localizations.localeOf(context),
+    };
   }
 
   @computed

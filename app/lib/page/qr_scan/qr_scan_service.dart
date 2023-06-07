@@ -41,14 +41,11 @@ class QrScanService {
   }
 
   void handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
-    switch (qrCode.context) {
-      case QrCodeContext.contact:
-        return handleContactQrCodeScan(context, scanContext, qrCode as ContactQrCode);
-      case QrCodeContext.invoice:
-        return handleInvoiceQrCodeScan(context, scanContext, qrCode as InvoiceQrCode);
-      case QrCodeContext.voucher:
-        return handleVoucherQrCodeScan(context, scanContext, qrCode as VoucherQrCode);
-    }
+    return switch (qrCode.context) {
+      QrCodeContext.contact => handleContactQrCodeScan(context, scanContext, qrCode as ContactQrCode),
+      QrCodeContext.invoice => handleInvoiceQrCodeScan(context, scanContext, qrCode as InvoiceQrCode),
+      QrCodeContext.voucher => handleVoucherQrCodeScan(context, scanContext, qrCode as VoucherQrCode),
+    };
   }
 }
 
