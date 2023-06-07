@@ -7,7 +7,11 @@
         "copy": "Copy",
         "detail": "Detail",
         "scan": "Scan",
-        "success": "Success"
+        "success": "Success",
+        "address": "Address",
+        "communityChoose": "Choose community:",
+        "address": "Send to Address",
+        "communityChoose": "Please choose a community"
     },
     "de": {
         "copy": "In die Zwischenablage kopieren",
@@ -37,6 +41,6 @@
         "copy": "Копировать",
         "detail": "Данные",
         "scan": "Сканировать",
-        "success": "Успешно",
+        "success": "Успешно"
     }
 }
