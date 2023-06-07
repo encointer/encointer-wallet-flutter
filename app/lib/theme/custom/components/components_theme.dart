@@ -31,10 +31,13 @@ mixin CompomnentTheme {
     );
   }
 
+  CardTheme cardTheme(ColorScheme colorScheme) {
+    return CardTheme(
+      color: colorScheme.background,
+    );
+  }
+
   // TODO(eldiiar): Use this code for set theme components
-  // CardTheme cardTheme(ColorScheme colorScheme) {
-  //   return const CardTheme();
-  // }
   // ButtonThemeData buttonTheme(ColorScheme colorScheme) {
   //   return const ButtonThemeData();
   // }
