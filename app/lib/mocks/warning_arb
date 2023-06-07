@@ -1,0 +1,42 @@
+{
+    "en": {
+        "scan": "Scan",
+        "copy": "Copy to clipboard",
+        "detail": "Detail",
+        "success": "Success",
+        "copy": "Copy",
+        "detail": "Detail",
+        "scan": "Scan",
+        "success": "Success"
+    },
+    "de": {
+        "copy": "In die Zwischenablage kopieren",
+        "detail": "Detail",
+        "scan": "Scannen",
+        "success": "Erfolgreich",
+        "copy": "Kopiere",
+        "detail": "Detail",
+        "scan": "Scannen",
+        "success": "Erfolgreich"
+    },
+    "fr": {
+        "scan": "Scanner",
+        "copy": "Copier dans le presse-papiers",
+        "detail": "Détail",
+        "success": "Réussite",
+        "copy": "Copier",
+        "detail": "Détail",
+        "scan": "Scanner",
+        "success": "Réussie"
+    },
+    "ru": {
+        "scan": "Сканировать",
+        "copy": "Скопировать в буфер обмена",
+        "detail": "Детали",
+        "success": "Успешно",
+        "copy": "Копировать",
+        "detail": "Данные",
+        "scan": "Сканировать",
+        "success": "Успешно",
+    }
+}
