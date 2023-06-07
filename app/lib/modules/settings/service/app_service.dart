@@ -12,17 +12,10 @@ class AppService {
 
   Locale init() {
     final code = storage.getString(localStorageLocaleKey);
-    if (code != null) {
-      return Locale(code);
-    } else {
-      // ignore: deprecated_member_use
-      final deviceLocal = window.locale.languageCode;
-      if (deviceLocal == 'en' || deviceLocal == 'de' || deviceLocal == 'ru' || deviceLocal == 'fr') {
-        return Locale(deviceLocal);
-      } else {
-        return const Locale('en');
-      }
-    }
+    if (code != null) return Locale(code);
+    // ignore: deprecated_member_use
+    final deviceLocal = window.locale.languageCode;
+    return Locale(switch (deviceLocal) { 'en' || 'de' || 'ru' || 'fr' => deviceLocal, _ => 'en' });
   }
 
   Future<Locale> setLocale(String languageCode) async {
@@ -36,14 +29,4 @@ class AppService {
   }
 
   bool? getIsBiometricAuthenticationEnabled() => storage.getBool(enableBiometricAuthKey);
-
-  String getLocaleName(String code) {
-    return switch (code) {
-      'en' => 'English',
-      'de' => 'Deutsch',
-      'fr' => 'Français',
-      'ru' => 'Русский',
-      _ => '',
-    };
-  }
 }
