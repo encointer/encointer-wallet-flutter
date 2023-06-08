@@ -9,12 +9,11 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: PrimaryButton(
         onPressed: onPressed,
-        child: Text(dic.signIn),
+        child: Text(context.l10n.signIn),
       ),
     );
   }

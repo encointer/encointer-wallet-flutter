@@ -35,13 +35,12 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     final loginStore = context.watch<LoginStore>();
     final appStore = context.watch<AppStore>();
     final cachedPin = appStore.settings.cachedPin;
     return Scaffold(
       appBar: AppBar(
-        title: Text('${dic.welcome} ${appStore.account.currentAccount.name}'),
+        title: Text('${context.l10n.welcome} ${appStore.account.currentAccount.name}'),
       ),
       body: SingleChildScrollView(
         child: ReactionBuilder(

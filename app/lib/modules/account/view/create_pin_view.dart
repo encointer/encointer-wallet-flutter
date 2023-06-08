@@ -26,10 +26,9 @@ class CreatePinView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.create),
+        title: Text(context.l10n.create),
         actions: const [CloseButton()],
       ),
       body: Padding(

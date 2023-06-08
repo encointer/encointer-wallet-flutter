@@ -18,13 +18,13 @@ class TransferHistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transferHistoryStore = context.watch<TransferHistoryViewStore>();
-    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-        dic.transferHistory,
-        style: context.textTheme.displayMedium,
-      )),
+        title: Text(
+          context.l10n.transferHistory,
+          style: context.textTheme.displayMedium,
+        ),
+      ),
       body: Observer(builder: (_) {
         return switch (transferHistoryStore.fetchStatus) {
           FetchStatus.loading => const CenteredActivityIndicator(),

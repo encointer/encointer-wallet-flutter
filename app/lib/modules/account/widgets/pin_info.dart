@@ -8,7 +8,6 @@ class PinInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -18,7 +17,7 @@ class PinInfo extends StatelessWidget {
           const SizedBox(width: 12),
           Flexible(
             child: Text(
-              dic.pinInfo,
+              context.l10n.pinInfo,
               maxLines: 7,
               textAlign: TextAlign.justify,
               softWrap: true,

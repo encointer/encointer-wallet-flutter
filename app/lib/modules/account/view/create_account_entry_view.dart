@@ -15,7 +15,6 @@ class CreateAccountEntryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return Scaffold(
       body: DecoratedBox(
         decoration: BoxDecoration(
@@ -31,7 +30,7 @@ class CreateAccountEntryView extends StatelessWidget {
               child: SecondaryButtonWide(
                 key: const Key('create-account'),
                 onPressed: () => Navigator.pushNamed(context, CreateAccountView.route),
-                child: Text(dic.create, style: context.textTheme.displaySmall),
+                child: Text(context.l10n.create, style: context.textTheme.displaySmall),
               ),
             ),
             const SizedBox(height: 16),

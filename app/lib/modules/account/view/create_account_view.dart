@@ -18,10 +18,9 @@ class CreateAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.create),
+        title: Text(context.l10n.create),
         leading: const SizedBox.shrink(),
         actions: const [CloseButton()],
       ),

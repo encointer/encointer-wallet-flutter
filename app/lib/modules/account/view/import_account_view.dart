@@ -23,10 +23,9 @@ class ImportAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.accountImport),
+        title: Text(context.l10n.accountImport),
         leading: const SizedBox.shrink(),
         actions: const [CloseButton()],
       ),

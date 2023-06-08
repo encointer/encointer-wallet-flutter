@@ -13,14 +13,13 @@ mixin HandleNewAccountResultMixin on Widget {
     required void Function() onOk,
     void Function()? onDuplicateAccount,
   }) async {
-    final dic = context.l10n;
     final appStore = context.read<AppStore>();
     return switch (type) {
       NewAccountResultType.ok => onOk(),
       NewAccountResultType.error => AppAlert.showErrorDialog(
           context,
-          errorText: dic.createError,
-          buttontext: dic.ok,
+          errorText: context.l10n.createError,
+          buttontext: context.l10n.ok,
         ),
       NewAccountResultType.emptyPassword => await AppAlert.showPasswordInputDialog(
           context,
