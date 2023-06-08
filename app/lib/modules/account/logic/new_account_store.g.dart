@@ -164,7 +164,7 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   }
 
   @override
-  String? validateAccount(Translations dic, String key) {
+  String? validateAccount(dynamic dic, String key) {
     final _$actionInfo =
         _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.validateAccount');
     try {

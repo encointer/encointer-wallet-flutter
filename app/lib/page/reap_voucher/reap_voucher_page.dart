@@ -18,7 +18,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({
@@ -71,7 +71,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final store = context.watch<AppStore>();
     final h2Grey = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey);
     final h4Grey = context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey);
@@ -94,16 +94,16 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
           if (result == ChangeResult.ok && cid != null) {
             await fetchVoucherData(widget.api, voucherUri!, cid);
           } else if (result == ChangeResult.invalidNetwork) {
-            await showErrorDialog(context, dic.assets.invalidNetwork);
+            await showErrorDialog(context, dic.invalidNetwork);
           } else if (result == ChangeResult.invalidCommunity) {
-            await showErrorDialog(context, dic.assets.invalidCommunity);
+            await showErrorDialog(context, dic.invalidCommunity);
           }
         },
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(dic.assets.voucher)),
+      appBar: AppBar(title: Text(dic.voucher)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
@@ -125,15 +125,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     )
                   : const CupertinoActivityIndicator(),
             ),
-            Text('${dic.assets.voucherBalance}, ${store.encointer.community?.symbol}', style: h4Grey),
+            Text('${dic.voucherBalance}, ${store.encointer.community?.symbol}', style: h4Grey),
             Expanded(
               // fit: FlexFit.tight,
               child: Center(
                 child: Text(
-                  dic.assets.doYouWantToRedeemThisVoucher.replaceAll(
-                    'ACCOUNT_PLACEHOLDER',
-                    store.account.currentAccount.name,
-                  ),
+                  dic.doYouWantToRedeemThisVoucher(store.account.currentAccount.name),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),
@@ -149,7 +146,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     children: [
                       const Icon(Iconsax.login_1),
                       const SizedBox(width: 6),
-                      Text(dic.assets.fundVoucher),
+                      Text(dic.fundVoucher),
                     ],
                   ),
                 ),
@@ -161,7 +158,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                 children: [
                   const Icon(Iconsax.login_1),
                   const SizedBox(width: 6),
-                  Text(dic.assets.redeemVoucher),
+                  Text(dic.redeemVoucher),
                 ],
               ),
             ),

@@ -9,7 +9,7 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_schedule.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class CeremonyInfo extends StatelessWidget {
   const CeremonyInfo({
@@ -30,7 +30,7 @@ class CeremonyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final languageCode = Localizations.localeOf(context).languageCode;
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
 
     return Container(
       child: meetupTime != null
@@ -55,7 +55,7 @@ class CeremonyInfo extends StatelessWidget {
                       )
                     else
                       Text(
-                        dic.encointer.gatheringSuccessfullyCompleted,
+                        dic.gatheringSuccessfullyCompleted,
                         style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerBlack),
                       ),
                     CeremonyInfoAndCalendar(

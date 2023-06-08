@@ -2,21 +2,21 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 /// stateless service that computes some of the view logic of the ceremony box
 class CeremonyBoxService {
   /// Returns a formatted date yMd or tomorrow or today
-  static String formatYearMonthDay(DateTime input, Translations dic, String? languageCode) {
+  static String formatYearMonthDay(DateTime input, AppLocalizations dic, String? languageCode) {
     var formatted = DateFormat.yMd(languageCode).format(input);
     final todayYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now());
     final tomorrowYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now().add(const Duration(days: 1)));
     final ceremonyIsToday = formatted == todayYearMonthDay;
     if (ceremonyIsToday) {
-      formatted = dic.encointer.today;
+      formatted = dic.today;
     }
     if (formatted == tomorrowYearMonthDay) {
-      formatted = dic.encointer.tomorrow;
+      formatted = dic.tomorrow;
     }
     return formatted;
   }
@@ -33,10 +33,10 @@ class CeremonyBoxService {
     return timeLeftUntilCeremonyStarts.compareTo(const Duration(days: 2)) < 0;
   }
 
-  static Event createCalendarEvent(DateTime nextCeremonyDate, Translations dic) {
+  static Event createCalendarEvent(DateTime nextCeremonyDate, AppLocalizations dic) {
     return Event(
-      title: dic.encointer.keySigningCycle,
-      description: dic.encointer.calendarEntryDescription,
+      title: dic.keySigningCycle,
+      description: dic.calendarEntryDescription,
       location: 'yet unknown',
       startDate: nextCeremonyDate,
       endDate: nextCeremonyDate.add(const Duration(minutes: 60)),

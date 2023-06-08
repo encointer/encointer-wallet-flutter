@@ -14,7 +14,7 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class NetworkSelectPage extends StatefulWidget {
   const NetworkSelectPage({super.key});
@@ -48,7 +48,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context)!.translationsForLocale().home.loading),
+          title: Text(context.l10n.loading),
           content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
@@ -130,10 +130,10 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.home.settingNetwork),
+        title: Text(dic.settingNetwork),
       ),
       body: Row(
         children: <Widget>[

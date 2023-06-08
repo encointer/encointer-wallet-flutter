@@ -60,25 +60,10 @@ mixin _$PreviewPdfAndPrintStore on _PreviewPdfAndPrintStoreBase, Store {
     });
   }
 
-  late final _$dicAtom = Atom(name: '_PreviewPdfAndPrintStoreBase.dic', context: context);
-
-  @override
-  Translations? get dic {
-    _$dicAtom.reportRead();
-    return super.dic;
-  }
-
-  @override
-  set dic(Translations? value) {
-    _$dicAtom.reportWrite(value, super.dic, () {
-      super.dic = value;
-    });
-  }
-
   late final _$createPdfAsyncAction = AsyncAction('_PreviewPdfAndPrintStoreBase.createPdf', context: context);
 
   @override
-  Future<void> createPdf({required GlobalKey<State<StatefulWidget>> key, required Translations translations}) {
+  Future<void> createPdf({required GlobalKey<State<StatefulWidget>> key, required dynamic translations}) {
     return _$createPdfAsyncAction.run(() => super.createPdf(key: key, translations: translations));
   }
 
@@ -102,7 +87,6 @@ mixin _$PreviewPdfAndPrintStore on _PreviewPdfAndPrintStoreBase, Store {
     return '''
 renderObjectKey: ${renderObjectKey},
 time: ${time},
-dic: ${dic},
 doc: ${doc}
     ''';
   }

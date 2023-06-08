@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 part 'transfer_history.g.dart';
 
@@ -54,7 +54,7 @@ enum TransactionType {
   incoming;
 
   String getText(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().transaction;
+    final dic = context.l10n;
     return switch (this) {
       TransactionType.outgoing => dic.sent,
       TransactionType.incoming => dic.received,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 class CeremonyLocationButton extends StatelessWidget {
@@ -11,7 +11,7 @@ class CeremonyLocationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -30,7 +30,7 @@ class CeremonyLocationButton extends StatelessWidget {
         children: [
           const Icon(Iconsax.location),
           const SizedBox(width: 6),
-          Text(dic.encointer.meetingPoint),
+          Text(dic.meetingPoint),
         ],
       ),
     );

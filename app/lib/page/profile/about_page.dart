@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -15,11 +15,11 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return Scaffold(
       backgroundColor: context.theme.cardColor,
       appBar: AppBar(
-        title: Text(dic.profile.about),
+        title: Text(dic.about),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -30,7 +30,7 @@ class AboutPage extends StatelessWidget {
               child: Assets.images.public.logoAbout.image(),
             ),
             Text(
-              dic.profile.aboutBrief,
+              dic.aboutBrief,
               style: context.textTheme.headlineMedium,
             ),
             const SizedBox(height: 8),
@@ -39,7 +39,7 @@ class AboutPage extends StatelessWidget {
               builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
                 Log.d('$snapshot', 'AboutPage');
                 if (snapshot.hasData) {
-                  return Text('${dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
+                  return Text('${dic.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
                 } else {
                   return const CupertinoActivityIndicator();
                 }

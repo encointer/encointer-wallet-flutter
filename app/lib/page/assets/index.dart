@@ -41,8 +41,7 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 /// Getting confused with Assets (gen) while importing
 /// thus changed name to [AssetsView]
@@ -91,7 +90,6 @@ class _AssetsViewState extends State<AssetsView> {
 
   late double _panelHeightOpen;
   final double _panelHeightClosed = 0;
-  Translations? dic;
 
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
@@ -100,7 +98,7 @@ class _AssetsViewState extends State<AssetsView> {
 
   @override
   Widget build(BuildContext context) {
-    dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final appSettingsStore = context.watch<AppSettings>();
 
     // Should typically not be higher than panelHeight, but on really small devices
@@ -126,7 +124,7 @@ class _AssetsViewState extends State<AssetsView> {
 
     final appBar = AppBar(
       key: const Key('assets-index-appbar'),
-      title: Text(dic!.assets.home),
+      title: Text(dic.home),
     );
     return FocusDetector(
       onFocusLost: () {
@@ -192,7 +190,7 @@ class _AssetsViewState extends State<AssetsView> {
                                           style: const TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          '${dic!.assets.balance}, ${widget.store.encointer.community?.symbol}',
+                                          '${dic.balance}, ${widget.store.encointer.community?.symbol}',
                                           style: context.textTheme.headlineMedium!
                                               .copyWith(color: AppColors.encointerGrey),
                                         ),
@@ -204,8 +202,7 @@ class _AssetsViewState extends State<AssetsView> {
                                       child: (widget.store.encointer.chosenCid == null)
                                           ? SizedBox(
                                               width: double.infinity,
-                                              child:
-                                                  Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
+                                              child: Text(dic.communityNotSelected, textAlign: TextAlign.center))
                                           : const SizedBox(
                                               width: double.infinity,
                                               child: CupertinoActivityIndicator(),
@@ -224,14 +221,14 @@ class _AssetsViewState extends State<AssetsView> {
                               ActionButton(
                                 key: const Key('qr-receive'),
                                 icon: const Icon(Iconsax.receive_square_2),
-                                label: dic!.assets.receive,
+                                label: dic.receive,
                                 onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                               ),
                               const SizedBox(width: 3),
                               ActionButton(
                                 key: const Key('go-transfer-history'),
                                 icon: Assets.images.assets.receiveSquare2.svg(),
-                                label: dic!.home.transferHistory,
+                                label: dic.transferHistory,
                                 onPressed: widget.store.encointer.communityBalance != null
                                     ? () => Navigator.pushNamed(context, TransferHistoryView.route)
                                     : null,
@@ -240,7 +237,7 @@ class _AssetsViewState extends State<AssetsView> {
                               ActionButton(
                                 key: const Key('transfer'),
                                 icon: const Icon(Iconsax.send_sqaure_2),
-                                label: dic!.assets.transfer,
+                                label: dic.transfer,
                                 onPressed: widget.store.encointer.communityBalance != null
                                     ? () => Navigator.pushNamed(context, TransferPage.route)
                                     : null,
@@ -254,7 +251,7 @@ class _AssetsViewState extends State<AssetsView> {
                       padding: EdgeInsets.symmetric(vertical: 6),
                     ),
                     Observer(builder: (_) {
-                      final dic = I18n.of(context)!.translationsForLocale();
+                      final dic = context.l10n;
 
                       final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
                           (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
@@ -269,7 +266,7 @@ class _AssetsViewState extends State<AssetsView> {
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
                                       key: const Key('claim-pending-dev'),
-                                      child: Text(dic.assets.issuancePending),
+                                      child: Text(dic.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
                                         widget.store,
@@ -281,7 +278,7 @@ class _AssetsViewState extends State<AssetsView> {
                                     return appSettingsStore.developerMode
                                         ? ElevatedButton(
                                             onPressed: null,
-                                            child: Text(dic.assets.issuanceClaimed),
+                                            child: Text(dic.issuanceClaimed),
                                           )
                                         : const SizedBox.shrink();
                                   }
@@ -314,7 +311,7 @@ class _AssetsViewState extends State<AssetsView> {
                   Column(children: [
                     Observer(builder: (_) {
                       return SwitchAccountOrCommunity(
-                        rowTitle: dic!.home.switchCommunity,
+                        rowTitle: dic.switchCommunity,
                         data: _allCommunities(),
                         onTap: (int index) async {
                           final store = context.read<AppStore>();
@@ -333,9 +330,9 @@ class _AssetsViewState extends State<AssetsView> {
                       );
                     }),
                     Observer(builder: (BuildContext context) {
-                      allAccounts = initAllAccounts(dic!);
+                      allAccounts = initAllAccounts(dic);
                       return SwitchAccountOrCommunity(
-                        rowTitle: dic!.home.switchAccount,
+                        rowTitle: dic.switchAccount,
                         data: allAccounts,
                         onTap: (int index) {
                           setState(() {
@@ -399,7 +396,7 @@ class _AssetsViewState extends State<AssetsView> {
     }
   }
 
-  List<AccountOrCommunityData> initAllAccounts(Translations dic) {
+  List<AccountOrCommunityData> initAllAccounts(AppLocalizations dic) {
     final allAccounts = <AccountOrCommunityData>[
       ...widget.store.account.accountListAll.map(
         (account) => AccountOrCommunityData(
@@ -427,7 +424,7 @@ class _AssetsViewState extends State<AssetsView> {
     }
   }
 
-  void _refreshBalanceAndNotify(Translations? dic) {
+  void _refreshBalanceAndNotify(AppLocalizations dic) {
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
       Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
       if (widget.store.encointer.chosenCid == null) {
@@ -453,12 +450,11 @@ class _AssetsViewState extends State<AssetsView> {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
-              final msg = dic!.assets.incomingConfirmed
-                  .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', community.metadata!.symbol)
-                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+              final msg = dic.incomingConfirmed(
+                  widget.store.account.currentAccount.name, delta.toStringAsPrecision(5), community.metadata!.symbol);
+
               Log.d('[home:balanceWatchdog] $msg', 'Assets');
-              NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
+              NotificationPlugin.showNotification(45, dic.fundsReceived, msg, cid: cidStr);
             }
           }
           if (cid == widget.store.encointer.chosenCid) {

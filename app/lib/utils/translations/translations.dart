@@ -8,7 +8,7 @@
 
 // /// top level contains groups like 'account', 'profile' etc.
 // /// (when you add a new group the compiler will force you to add it in all implementations, too.)
-// abstract class Translations {
+// abstract class AppLocalizations {
 //   TranslationsHome get home;
 //   TranslationsAccount get account;
 //   TranslationsAssets get assets;
@@ -19,7 +19,7 @@
 // }
 
 // /// for english translations
-// class TranslationsEn implements Translations {
+// class TranslationsEn implements AppLocalizations {
 //   @override
 //   TranslationsHome get home => TranslationsEnHome();
 //   @override
@@ -37,7 +37,7 @@
 // }
 
 // /// for german translations
-// class TranslationsDe implements Translations {
+// class TranslationsDe implements AppLocalizations {
 //   @override
 //   TranslationsHome get home => TranslationsDeHome();
 //   @override
@@ -55,7 +55,7 @@
 // }
 
 // /// for french translations
-// class TranslationsFr implements Translations {
+// class TranslationsFr implements AppLocalizations {
 //   @override
 //   TranslationsHome get home => TranslationsFrHome();
 //   @override
@@ -73,7 +73,7 @@
 // }
 
 // /// for russian translations
-// class TranslationsRu implements Translations {
+// class TranslationsRu implements AppLocalizations {
 //   @override
 //   TranslationsHome get home => TranslationsRuHome();
 //   @override

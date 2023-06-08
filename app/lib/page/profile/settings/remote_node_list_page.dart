@@ -6,7 +6,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
   RemoteNodeListPage({super.key});
@@ -16,7 +16,7 @@ class RemoteNodeListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final endpoints = List<EndpointData>.of(networkEndpoints)
       ..retainWhere((i) => i.info == context.watch<AppStore>().settings.endpoint.info);
     final list = endpoints
@@ -52,7 +52,7 @@ class RemoteNodeListPage extends StatelessWidget {
         .toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.profile.settingNodeList),
+        title: Text(dic.settingNodeList),
         centerTitle: true,
       ),
       body: SafeArea(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class SearchResultsOfferingFiltered extends StatelessWidget {
   SearchResultsOfferingFiltered(this.results, {super.key});
@@ -19,15 +19,15 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const titleStyle = TextStyle(fontWeight: FontWeight.bold, height: 2.5);
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Filter ${dic.bazaar.found} ${dic.bazaar.offerings}'),
+        title: Text('Filter ${dic.found} ${dic.offerings}'),
       ),
       body: ListView(children: [
-        ToggleButtonsWithTitle(dic.bazaar.categories, categories, null),
+        ToggleButtonsWithTitle(dic.categories, categories, null),
         Text(
-          dic.bazaar.price,
+          dic.price,
           style: titleStyle,
         ),
         RangeSlider(
@@ -43,7 +43,7 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
           },
         ),
         Text(
-          dic.bazaar.delivery,
+          dic.delivery,
           style: titleStyle,
         ),
         ToggleButtons(
@@ -51,7 +51,7 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
           children: deliveryOptions.map(Text.new).toList(),
         ),
         Text(
-          dic.bazaar.productNewness,
+          dic.productNewness,
           style: titleStyle,
         ),
         ToggleButtons(
@@ -63,10 +63,10 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
         children: [
           ElevatedButton(
               onPressed: () {}, // TODO state management
-              child: Text(dic.bazaar.reset)),
+              child: Text(dic.reset)),
           ElevatedButton(
               onPressed: () {}, //TODO state management
-              child: Text(dic.bazaar.apply)),
+              child: Text(dic.apply)),
         ],
       ),
     );

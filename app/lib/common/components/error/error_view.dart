@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ErrorView extends StatelessWidget {
   const ErrorView({
@@ -15,7 +15,7 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().home;
+    final dic = context.l10n;
     final textTheme = Theme.of(context).textTheme;
     return Center(
       child: Column(

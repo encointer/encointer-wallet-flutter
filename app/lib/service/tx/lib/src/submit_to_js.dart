@@ -9,12 +9,10 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
-import 'package:encointer_wallet/utils/translations/translations_transaction.dart';
-import 'package:encointer_wallet/utils/translations/translations_home.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
@@ -34,7 +32,7 @@ Future<void> submitToJS(
   String? password,
   BigInt? tip,
 }) async {
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
@@ -52,7 +50,7 @@ Future<void> submitToJS(
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
       _showTxStatusSnackBar(
-        getTxStatusTranslation(dic.home, store.account.txStatus),
+        getTxStatusTranslation(dic, store.account.txStatus),
         const CupertinoActivityIndicator(),
       );
     }
@@ -70,9 +68,9 @@ Future<void> submitToJS(
       _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
   } else {
-    _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
-    txInfo['notificationTitle'] = dic.home.notifySubmittedQueued;
-    txInfo['txError'] = dic.home.txError;
+    _showTxStatusSnackBar(dic.txQueuedOffline, null);
+    txInfo['notificationTitle'] = dic.notifySubmittedQueued;
+    txInfo['txError'] = dic.txError;
     store.account.queueTx(txParams);
   }
 }
@@ -80,10 +78,10 @@ Future<void> submitToJS(
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) RootSnackBar.removeCurrent();
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
 
-  final message = getLocalizedTxErrorMessage(dic.transaction, errorMsg);
+  final message = getLocalizedTxErrorMessage(dic, errorMsg);
 
   AppAlert.showDialog<void>(
     context,
@@ -99,7 +97,7 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
         },
       ),
       CupertinoButton(
-        child: Text(dic.home.ok),
+        child: Text(dic.ok),
         onPressed: () => Navigator.of(context).pop(),
       ),
     ],
@@ -139,7 +137,7 @@ void _onTxFinish(
           child: Assets.images.assets.success.image(),
         ),
         title: Text(
-          I18n.of(context)!.translationsForLocale().assets.success,
+          context.l10n.success,
           style: const TextStyle(color: Colors.black54),
         ),
       ),
@@ -148,7 +146,7 @@ void _onTxFinish(
   }
 }
 
-String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
+String getTxStatusTranslation(AppLocalizations dic, TxStatus? status) {
   if (status == null) return '';
   return switch (status) {
     TxStatus.Queued => dic.txQueued,
@@ -160,7 +158,7 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
   };
 }
 
-Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, String txError) {
+Map<String, String> getLocalizedTxErrorMessage(AppLocalizations dic, String txError) {
   if (txError.startsWith(lowPriorityTx)) {
     return {'title': dic.txTooLowPriorityErrorTitle, 'body': dic.txTooLowPriorityErrorBody};
   } else if (txError.startsWith(insufficientFundsError)) {

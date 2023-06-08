@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class SearchResultsBusinessFiltered extends StatelessWidget {
   SearchResultsBusinessFiltered(this.results, {super.key});
@@ -17,28 +17,28 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     const titleStyle = TextStyle(fontWeight: FontWeight.bold);
 
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            '${dic.bazaar.filter} ${dic.bazaar.businessesFound}',
+            '${dic.filter} ${dic.businessesFound}',
             style: titleStyle,
           ),
         ),
         body: ListView(children: [
-          ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, categories, null),
+          ToggleButtonsWithTitle(context.l10n.categories, categories, null),
         ]),
         floatingActionButton: ButtonBar(
           children: [
             ElevatedButton(
               onPressed: () {}, // TODO state management
-              child: Text(I18n.of(context)!.translationsForLocale().bazaar.reset),
+              child: Text(context.l10n.reset),
             ),
             ElevatedButton(
               onPressed: () {}, //TODO state management
-              child: Text(I18n.of(context)!.translationsForLocale().bazaar.apply),
+              child: Text(context.l10n.apply),
             ),
           ],
         ));

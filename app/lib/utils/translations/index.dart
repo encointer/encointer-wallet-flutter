@@ -1,6 +1,6 @@
 // import 'dart:async';
 
-// import 'package:encointer_wallet/utils/translations/translations.dart';
+// import 'package:encointer_wallet/l10n/l10.dart';
 // import 'package:flutter/foundation.dart' show SynchronousFuture;
 // import 'package:flutter/material.dart';
 
@@ -38,7 +38,7 @@
 //     const Locale('ru', ''): TranslationsRu(),
 //   };
 
-//   Translations translationsForLocale() {
+//   AppLocalizations translationsForLocale() {
 //     final translations = supportedLocales[locale];
 //     return translations ?? TranslationsEn();
 //   }

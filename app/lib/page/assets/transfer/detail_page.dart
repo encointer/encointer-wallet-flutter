@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page/assets/transfer/tx_detail.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class TransferDetailPage extends StatelessWidget {
   const TransferDetailPage({super.key});
@@ -15,7 +15,7 @@ class TransferDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final store = context.watch<AppStore>();
     final symbol = store.settings.networkState!.tokenSymbol;
     final decimals = store.settings.networkState!.tokenDecimals;
@@ -23,7 +23,7 @@ class TransferDetailPage extends StatelessWidget {
 
     final tx = ModalRoute.of(context)!.settings.arguments! as TransferData;
 
-    final txType = tx.from == store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
+    final txType = tx.from == store.account.currentAddress ? dic.transfer : dic.receive;
 
     return TxDetail(
       success: true,
@@ -35,20 +35,20 @@ class TransferDetailPage extends StatelessWidget {
       networkName: store.settings.endpoint.info,
       info: <DetailInfoItem>[
         DetailInfoItem(
-          label: dic.assets.value,
+          label: dic.value,
           title: '${tx.amount} $tokenView',
         ),
         DetailInfoItem(
-          label: dic.assets.fee,
+          label: dic.fee,
           title: '${Fmt.balance(tx.fee, decimals, length: decimals)} $tokenView',
         ),
         DetailInfoItem(
-          label: dic.assets.from,
+          label: dic.from,
           title: Fmt.address(tx.from),
           address: tx.from,
         ),
         DetailInfoItem(
-          label: dic.assets.to,
+          label: dic.to,
           title: Fmt.address(tx.to),
           address: tx.to,
         )

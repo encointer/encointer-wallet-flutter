@@ -12,7 +12,7 @@ import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:provider/provider.dart';
 
 class CommunityChooserOnMap extends StatefulWidget {
@@ -37,11 +37,11 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          dic.assets.communityChoose,
+          dic.communityChoose,
           maxLines: 2,
           textAlign: TextAlign.center,
         ),
@@ -80,10 +80,10 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
               color: Colors.white,
               child: CupertinoAlertDialog(
                 title: Container(),
-                content: Text(dic.encointer.noCommunitiesAreYouOffline),
+                content: Text(dic.noCommunitiesAreYouOffline),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(dic.home.ok),
+                    child: Text(dic.ok),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],

@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/utils/translations/translations_encointer.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Manages meetups reminder notifications.
@@ -10,7 +10,7 @@ class CeremonyNotifications {
   static Future<void> scheduleMeetupReminders({
     required int ceremonyIndex,
     required int meetupTime,
-    required TranslationsEncointer dic,
+    required AppLocalizations dic,
     String? cid,
   }) async {
     final meetupDateTime = DateTime.fromMillisecondsSinceEpoch(meetupTime);
@@ -43,7 +43,7 @@ class CeremonyNotifications {
     int nextRegisteringPhase,
     int currentCeremonyIndex,
     int ceremonyCycleDuration,
-    TranslationsEncointer dic, {
+    AppLocalizations dic, {
     int numberOfCyclesToSchedule = 5,
     String? cid,
   }) async {
@@ -67,7 +67,7 @@ class CeremonyNotifications {
     int assigningPhaseStart,
     int currentCeremonyIndex,
     int ceremonyCycleDuration,
-    TranslationsEncointer dic, {
+    AppLocalizations dic, {
     int numberOfCyclesToSchedule = 5,
     Duration showBeforeAssigningPhase = const Duration(hours: 24),
     String? cid,

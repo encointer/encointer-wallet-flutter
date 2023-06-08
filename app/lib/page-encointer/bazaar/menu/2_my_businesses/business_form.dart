@@ -4,7 +4,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_picker_
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/photo_tiles.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +19,7 @@ class BusinessFormScaffold extends StatelessWidget {
         create: (_) => BusinessFormState(),
         child: Scaffold(
           appBar: AppBar(
-            title: Text(I18n.of(context)!.translationsForLocale().bazaar.businessAdd),
+            title: Text(context.l10n.businessAdd),
           ),
           body: BusinessForm(categories: categories),
         ),
@@ -49,7 +49,7 @@ class BusinessForm extends StatelessWidget {
                 onChanged: (value) => businessFormState.name = value,
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  hintText: I18n.of(context)!.translationsForLocale().bazaar.businessNameHint,
+                  hintText: context.l10n.businessNameHint,
                   errorText: businessFormState.errors.name,
                 ),
               ),
@@ -61,27 +61,24 @@ class BusinessForm extends StatelessWidget {
                 // maxLines: 3,
                 onChanged: (value) => businessFormState.description = value,
                 decoration: InputDecoration(
-                    labelText: I18n.of(context)!.translationsForLocale().bazaar.description,
-                    hintText: I18n.of(context)!.translationsForLocale().bazaar.businessDescriptionHint,
+                    labelText: context.l10n.description,
+                    hintText: context.l10n.businessDescriptionHint,
                     errorText: businessFormState.errors.description),
               ),
             ),
 
-            ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, categories, null),
+            ToggleButtonsWithTitle(context.l10n.categories, categories, null),
             // TODO state mananagement
             const BusinessAddress(),
             Text(
-              I18n.of(context)!.translationsForLocale().bazaar.openningHours,
+              context.l10n.openningHours,
               style: const TextStyle(height: 2, fontWeight: FontWeight.bold),
             ),
             const OpeningHours(),
             ButtonBar(
               children: <Widget>[
                 ElevatedButton(
-                  child: Row(children: [
-                    const Icon(Icons.delete),
-                    Text(I18n.of(context)!.translationsForLocale().bazaar.delete)
-                  ]),
+                  child: Row(children: [const Icon(Icons.delete), Text(context.l10n.delete)]),
                   onPressed: () {
                     // TODO modify state
                     Navigator.pop(context);
@@ -89,8 +86,7 @@ class BusinessForm extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: businessFormState.validateAll,
-                  child: Row(
-                      children: [const Icon(Icons.check), Text(I18n.of(context)!.translationsForLocale().bazaar.save)]),
+                  child: Row(children: [const Icon(Icons.check), Text(context.l10n.save)]),
                 ),
               ],
             ),
@@ -106,13 +102,13 @@ class BusinessAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final businessFormState = Provider.of<BusinessFormState>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          I18n.of(context)!.translationsForLocale().bazaar.address,
+          context.l10n.address,
           style: const TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Row(
@@ -124,7 +120,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.street = value,
                   decoration: InputDecoration(
-                    labelText: I18n.of(context)!.translationsForLocale().bazaar.street,
+                    labelText: context.l10n.street,
                     errorText: businessFormState.errors.street,
                   ),
                 ),
@@ -138,7 +134,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.streetAddendum = value,
                   decoration: InputDecoration(
-                    labelText: dic.bazaar.no,
+                    labelText: dic.no,
                     errorText: businessFormState.errors.streetAddendum,
                   ),
                 ),
@@ -154,7 +150,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.zipCode = value,
                   decoration: InputDecoration(
-                    labelText: I18n.of(context)!.translationsForLocale().bazaar.zipCode,
+                    labelText: context.l10n.zipCode,
                     errorText: businessFormState.errors.zipCode,
                   ),
                 ),
@@ -169,7 +165,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.city = value,
                   decoration: InputDecoration(
-                    labelText: I18n.of(context)!.translationsForLocale().bazaar.city,
+                    labelText: context.l10n.city,
                     errorText: businessFormState.errors.city,
                   ),
                 ),

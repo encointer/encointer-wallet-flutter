@@ -21,7 +21,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class CeremonyBox extends StatelessWidget {
   const CeremonyBox(this.store, this.api, {super.key});
@@ -31,7 +31,7 @@ class CeremonyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
 
     return Observer(builder: (BuildContext context) {
       final meetupTime = store.encointer.community?.meetupTimeOverride ??
@@ -102,10 +102,7 @@ class CeremonyBox extends StatelessWidget {
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 6),
                           Text(
-                            dic.encointer.claimsSubmitN.replaceAll(
-                              'N_COUNT',
-                              store.encointer.communityAccount!.scannedAttendeesCount.toString(),
-                            ),
+                            dic.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount.toString()),
                           ),
                         ],
                       ),
@@ -126,7 +123,7 @@ class CeremonyBox extends StatelessWidget {
 }
 
 Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
   final communityAccount = store.encointer.communityAccount;
 
   switch (store.encointer.currentPhase) {
@@ -138,8 +135,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
             CeremonyNotification(
               key: const Key('is-registered-info'),
               notificationIconData: Iconsax.tick_square,
-              notification: dic.encointer.youAreRegisteredAs.replaceAll(
-                'PARTICIPANT_TYPE',
+              notification: dic.youAreRegisteredAs(
                 store.encointer.communityAccount!.participantType!.toValue(),
               ),
             ),
@@ -171,21 +167,22 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return CeremonyNotification(
           key: const Key('account-unassigned'),
           notificationIconData: Iconsax.close_square,
-          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+          notification: dic.youAreNotRegisteredPleaseRegisterNextTime,
         );
       }
     case CeremonyPhase.Attesting:
       if (!(store.encointer.communityAccount?.isAssigned ?? false)) {
         return CeremonyNotification(
           notificationIconData: Iconsax.close_square,
-          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+          notification: dic.youAreNotRegisteredPleaseRegisterNextTime,
         );
       } else {
         if (store.encointer.communityAccount?.meetupCompleted ?? false) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
-            notification: dic.encointer.successfullySentNAttestations
-                .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString()),
+            notification: dic.successfullySentNAttestations(
+              store.encointer.communityAccount!.scannedAttendeesCount.toString(),
+            ),
           );
         } else {
           final meetup = store.encointer.communityAccount!.meetup!;
@@ -206,7 +203,7 @@ Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) asy
   unawaited(showCupertinoDialog<void>(
     context: context,
     builder: (_) => CupertinoAlertDialog(
-      title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),
+      title: Text(context.l10n.updatingAppState),
       content: const CupertinoActivityIndicator(),
     ),
   ));

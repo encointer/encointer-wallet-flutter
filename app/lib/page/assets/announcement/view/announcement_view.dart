@@ -12,10 +12,9 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
-import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
 import 'package:encointer_wallet/page/assets/announcement/widgets/announcement_card.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 const _logTarget = 'announcement_view';
 
@@ -38,7 +37,7 @@ class AnnouncementView extends StatefulWidget {
 
 class _AnnouncementViewState extends State<AnnouncementView> {
   late final AnnouncementStore _announcementStore;
-  late TranslationsHome _dic;
+  late AppLocalizations _dic;
 
   List<ReactionDisposer> _disposers = <ReactionDisposer>[];
 
@@ -73,7 +72,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
 
   @override
   Future<void> didChangeDependencies() async {
-    _dic = I18n.of(context)!.translationsForLocale().home;
+    _dic = context.l10n;
     await _getAnnouncements();
 
     super.didChangeDependencies();

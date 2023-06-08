@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/material.dart';
 
 class OfferingForm extends StatefulWidget {
@@ -18,10 +18,10 @@ class _OfferingFormState extends State<OfferingForm> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.bazaar.offeringAdd),
+        title: Text(dic.offeringAdd),
       ),
       body: Form(
         child: Padding(
@@ -44,7 +44,7 @@ class _OfferingFormState extends State<OfferingForm> {
                     color: Colors.grey,
                     child: ListTile(
                       leading: const Icon(Icons.add_a_photo),
-                      title: Text(dic.bazaar.photoAdd),
+                      title: Text(dic.photoAdd),
                     ),
                   ),
                 ],
@@ -52,24 +52,24 @@ class _OfferingFormState extends State<OfferingForm> {
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  hintText: dic.bazaar.useDescriptiveName,
+                  hintText: dic.useDescriptiveName,
                 ),
               ),
               TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: 4,
                 decoration: InputDecoration(
-                  labelText: dic.bazaar.description,
+                  labelText: dic.description,
                 ),
               ),
-              ToggleButtonsWithTitle(dic.bazaar.categories, categories, null),
+              ToggleButtonsWithTitle(dic.categories, categories, null),
               // TODO state mananagement
               ToggleButtonsWithTitle(
-                  dic.bazaar.businessesOffered, businesses.map((business) => business.title).toList(), null),
+                  dic.businessesOffered, businesses.map((business) => business.title).toList(), null),
               // TODO state mananagement, TODO has to be an business.id not just the title
-              ToggleButtonsWithTitle(dic.bazaar.state, productNewness, null),
+              ToggleButtonsWithTitle(dic.state, productNewness, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
-              ToggleButtonsWithTitle(dic.bazaar.deliveryOptions, deliveryOptions, null),
+              ToggleButtonsWithTitle(dic.deliveryOptions, deliveryOptions, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
             ],
           ),
@@ -78,14 +78,14 @@ class _OfferingFormState extends State<OfferingForm> {
       floatingActionButton: ButtonBar(
         children: <Widget>[
           ElevatedButton(
-            child: Row(children: [const Icon(Icons.delete), Text(dic.bazaar.delete)]),
+            child: Row(children: [const Icon(Icons.delete), Text(dic.delete)]),
             onPressed: () {
               // TODO modify state
               Navigator.pop(context);
             },
           ),
           ElevatedButton(
-            child: Row(children: [const Icon(Icons.check), Text(dic.bazaar.save)]),
+            child: Row(children: [const Icon(Icons.check), Text(dic.save)]),
             onPressed: () {
               // TODO modify state
               Navigator.pop(context);

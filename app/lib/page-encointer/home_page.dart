@@ -17,7 +17,7 @@ import 'package:encointer_wallet/service/deep_link/deep_link.dart';
 import 'package:encointer_wallet/service/meetup/meetup.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class EncointerHomePage extends StatefulWidget {
   const EncointerHomePage({super.key});
@@ -61,7 +61,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           encointer.nextRegisteringPhaseStart!,
           encointer.currentCeremonyIndex!,
           encointer.ceremonyCycleDuration!,
-          I18n.of(context)!.translationsForLocale().encointer,
+          context.l10n,
           cid: cid,
         );
 
@@ -69,7 +69,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           encointer.assigningPhaseStart!,
           encointer.currentCeremonyIndex!,
           encointer.ceremonyCycleDuration!,
-          I18n.of(context)!.translationsForLocale().encointer,
+          context.l10n,
           cid: cid,
         );
       }

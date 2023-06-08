@@ -10,8 +10,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ScanClaimQrCode extends StatefulWidget {
   const ScanClaimQrCode(this.confirmedParticipantsCount, {super.key});
@@ -35,23 +34,23 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
   }
 
   /// Checks that the `attendeeAddress` is not equal to self and part of the meetup registry.
-  void validateAndStoreParticipant(AppStore store, String attendeeAddress, Translations dic) {
+  void validateAndStoreParticipant(AppStore store, String attendeeAddress, AppLocalizations dic) {
     final attendeePubKey = Fmt.ss58Decode(attendeeAddress).pubKey;
     final attendeeAddressPrefix42 = Fmt.ss58Encode(attendeePubKey);
 
     if (attendeeAddressPrefix42 == currentAddressPrefix42) {
-      RootSnackBar.showMsg(dic.encointer.meetupClaimantEqualToSelf);
+      RootSnackBar.showMsg(dic.meetupClaimantEqualToSelf);
       Log.d('Claimant: $attendeeAddressPrefix42 is equal to self', 'ScanClaimQrCode');
     } else {
       if (!allParticipantsPrefix42.contains(attendeeAddressPrefix42)) {
         // this is important because the runtime checks if there are too many claims trying to be registered.
-        RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
+        RootSnackBar.showMsg(dic.meetupClaimantInvalid);
         Log.d(
             'Claimant: $attendeeAddressPrefix42 is not part of registry: $allParticipantsPrefix42', 'ScanClaimQrCode');
       } else {
         final msg = store.encointer.communityAccount!.containsAttendee(attendeeAddressPrefix42)
-            ? dic.encointer.claimsScannedAlready
-            : dic.encointer.claimsScannedNew;
+            ? dic.claimsScannedAlready
+            : dic.claimsScannedNew;
 
         store.encointer.communityAccount!.addAttendee(attendeeAddressPrefix42);
         RootSnackBar.showMsg(msg);
@@ -59,18 +58,18 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
     }
   }
 
-  void onScan(AppStore store, Translations dic, String address) {
+  void onScan(AppStore store, AppLocalizations dic, String address) {
     if (Fmt.isAddress(address)) {
       validateAndStoreParticipant(store, address, dic);
     } else {
       Log.e('Claim is not an address: $address', 'ScanClaimQrCode');
-      RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed, durationMillis: 3000);
+      RootSnackBar.showMsg(dic.claimsScannedDecodeFailed, durationMillis: 3000);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final store = context.watch<AppStore>();
     return Scaffold(
       appBar: AppBar(
@@ -115,13 +114,11 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                         ),
                       ),
                       Observer(builder: (_) {
-                        final txt = dic.encointer.claimsScannedNOfM
-                            .replaceAll(
-                                'SCANNED_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString())
-                            .replaceAll(
-                              'TOTAL_COUNT',
-                              (widget.confirmedParticipantsCount - 1).toString(),
-                            );
+                        final txt = dic.claimsScannedNOfM(
+                          store.encointer.communityAccount!.scannedAttendeesCount.toString(),
+                          (widget.confirmedParticipantsCount - 1).toString(),
+                        );
+
                         return Text(
                           txt,
                           style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
@@ -168,19 +165,19 @@ Future<PermissionStatus> canOpenCamera() {
 }
 
 Widget permissionErrorDialog(BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
 
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text(dic.home.cameraPermissionError),
+    content: Text(dic.cameraPermissionError),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(dic.home.ok),
+        child: Text(dic.ok),
         onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
       ),
       CupertinoButton(
         onPressed: openAppSettings,
-        child: Text(dic.home.appSettings),
+        child: Text(dic.appSettings),
       ),
     ],
   );

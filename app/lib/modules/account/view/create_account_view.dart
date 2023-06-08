@@ -9,7 +9,7 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class CreateAccountView extends StatelessWidget {
   const CreateAccountView({super.key});
@@ -18,10 +18,10 @@ class CreateAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.home.create),
+        title: Text(dic.create),
         leading: const SizedBox.shrink(),
         actions: const [CloseButton()],
       ),
@@ -45,21 +45,21 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return ScrollableForm(
       formKey: _formKey,
       listViewChildren: [
         const SizedBox(height: 80),
         Center(
           child: Text(
-            dic.profile.accountNameChoose,
+            dic.accountNameChoose,
             style: context.textTheme.displayMedium,
           ),
         ),
         const SizedBox(height: 10),
         Center(
           child: Text(
-            dic.profile.accountNameChooseHint,
+            dic.accountNameChooseHint,
             textAlign: TextAlign.center,
             style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
           ),
@@ -67,8 +67,8 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
         const SizedBox(height: 30),
         EncointerTextFormField(
           key: const Key('create-account-name'),
-          hintText: dic.account.createHint,
-          labelText: dic.profile.accountName,
+          hintText: dic.createHint,
+          labelText: dic.accountName,
           controller: _nameCtrl,
           validator: (v) {
             return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.accountList);
@@ -100,7 +100,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
               const Icon(Iconsax.login_1),
               const SizedBox(width: 12),
               Text(
-                dic.account.next,
+                dic.next,
                 style: context.textTheme.displaySmall!.copyWith(
                   color: context.colorScheme.background,
                 ),

@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/maybe_date_time.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class CeremonyRegisterButton extends StatefulWidget {
   const CeremonyRegisterButton({super.key, this.registerUntil, this.onPressed});
@@ -33,7 +33,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
   @override
   Widget build(BuildContext context) {
     final languageCode = Localizations.localeOf(context).languageCode;
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
 
     return PrimaryButton(
       onPressed: !_submitting && widget.registerUntil != null ? _onPressed : null,
@@ -44,7 +44,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
                 children: [
                   const Icon(Iconsax.login_1),
                   const SizedBox(width: 6),
-                  Text('${dic.encointer.registerUntil} '),
+                  Text('${dic.registerUntil} '),
                   MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode).add_Hm())
                 ],
               ),

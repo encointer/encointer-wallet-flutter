@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/material.dart';
 
 class PhotoTiles extends StatelessWidget {
@@ -22,7 +22,7 @@ class PhotoTiles extends StatelessWidget {
           color: Colors.grey,
           child: ListTile(
             leading: const Icon(Icons.add_a_photo),
-            title: Text(I18n.of(context)!.translationsForLocale().bazaar.photoAdd),
+            title: Text(context.l10n.photoAdd),
           ),
         ),
       ],

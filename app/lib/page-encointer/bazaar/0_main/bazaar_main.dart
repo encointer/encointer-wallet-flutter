@@ -9,7 +9,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/1_home/home.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/2_offerings/offerings.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/businesses.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/4_favorites/favorites.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class BazaarMain extends StatelessWidget {
   const BazaarMain({super.key});
@@ -23,22 +23,16 @@ class BazaarMain extends StatelessWidget {
           length: bazaarTabBar.length,
           child: Scaffold(
             appBar: AppBar(
-              title: Text(I18n.of(context)!.translationsForLocale().bazaar.bazaarTitle),
+              title: Text(context.l10n.bazaarTitle),
               centerTitle: true,
               // leading: IconButton(icon: Image.asset('assets/images/assets/ert.png'), onPressed: () => _chooseCommunity()), // TODO
               leading: IconButton(icon: Assets.images.assets.ert.image(), onPressed: () {}),
               bottom: TabBar(
                 tabs: <Widget>[
                   const Tab(icon: Icon(Icons.home), text: 'Home'),
-                  Tab(
-                      icon: const Icon(Icons.local_offer),
-                      text: I18n.of(context)!.translationsForLocale().bazaar.offerings),
-                  Tab(
-                      icon: const Icon(Icons.business),
-                      text: I18n.of(context)!.translationsForLocale().bazaar.businesses),
-                  Tab(
-                      icon: const Icon(Icons.favorite, color: Colors.pink),
-                      text: I18n.of(context)!.translationsForLocale().bazaar.favorites),
+                  Tab(icon: const Icon(Icons.local_offer), text: context.l10n.offerings),
+                  Tab(icon: const Icon(Icons.business), text: context.l10n.businesses),
+                  Tab(icon: const Icon(Icons.favorite, color: Colors.pink), text: context.l10n.favorites),
                 ],
               ),
             ),

@@ -16,8 +16,7 @@ import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ReceivePage extends StatefulWidget {
@@ -61,7 +60,7 @@ class _ReceivePageState extends State<ReceivePage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final store = context.watch<AppStore>();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
@@ -93,14 +92,15 @@ class _ReceivePageState extends State<ReceivePage> {
             final delta = newBalance - oldBalance;
             Log.d('[receivePage] balance was $oldBalance, changed by $delta', 'ReceivePage');
             if (delta > demurrageRate!) {
-              final msg = dic.assets.incomingConfirmed
-                  .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', store.encointer.community?.metadata?.symbol ?? 'null')
-                  .replaceAll('ACCOUNT_NAME', store.account.currentAccount.name);
+              final msg = dic.incomingConfirmed(
+                store.account.currentAccount.name,
+                delta.toStringAsPrecision(5),
+                store.encointer.community?.metadata?.symbol ?? 'null',
+              );
               Log.d('[receivePage] $msg', 'ReceivePage');
               store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
 
-              NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
+              NotificationPlugin.showNotification(44, dic.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
         });
@@ -124,7 +124,7 @@ class _ReceivePageState extends State<ReceivePage> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: Text(dic.assets.receive),
+            title: Text(dic.receive),
             leading: Container(),
             actions: [
               IconButton(
@@ -144,7 +144,7 @@ class _ReceivePageState extends State<ReceivePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 48),
                       child: Text(
-                        dic.profile.qrScanHint,
+                        dic.qrScanHint,
                         style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerBlack),
                         textAlign: TextAlign.center,
                       ),
@@ -153,7 +153,7 @@ class _ReceivePageState extends State<ReceivePage> {
                     Padding(
                       padding: const EdgeInsets.all(30),
                       child: EncointerTextFormField(
-                        labelText: dic.assets.invoiceAmount,
+                        labelText: dic.invoiceAmount,
                         textStyle: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
@@ -179,7 +179,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   ],
                 ),
                 Text(
-                  '${dic.profile.receiverAccount} ${store.account.currentAccount.name}',
+                  '${dic.receiverAccount} ${store.account.currentAccount.name}',
                   style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey),
                   textAlign: TextAlign.center,
                 ),
@@ -191,9 +191,9 @@ class _ReceivePageState extends State<ReceivePage> {
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
                     QrCodeShareOrPrintView(
                       qrCode: invoice.toQrPayload(),
-                      shareText: dic.assets.shareInvoice,
-                      printText: dic.assets.print,
-                      previewText: dic.assets.preview,
+                      shareText: dic.shareInvoice,
+                      printText: dic.print,
+                      previewText: dic.preview,
                       onTap: () => {
                         if (_formKey.currentState!.validate())
                           {
@@ -215,7 +215,7 @@ class _ReceivePageState extends State<ReceivePage> {
 /// Shows a [SnackBar] if we found an extrinsic in a transaction pool addressed to the current account.
 ///
 /// Returns a true if such an extrinsic was found.
-Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translations dic) async {
+Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, AppLocalizations dic) async {
   var observedExtrinsics = false;
 
   try {
@@ -226,7 +226,7 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
       for (final xt in extrinsics) {
         if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {
           RootSnackBar.showMsg(
-            dic.profile.observedPendingExtrinsic,
+            dic.observedPendingExtrinsic,
             durationMillis: 5000,
             textColor: Colors.black,
             backgroundColor: Colors.lightBlue,

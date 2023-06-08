@@ -14,7 +14,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ImportAccountView extends StatelessWidget {
   const ImportAccountView({super.key});
@@ -23,10 +23,10 @@ class ImportAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.home.accountImport),
+        title: Text(dic.accountImport),
         leading: const SizedBox.shrink(),
         actions: const [CloseButton()],
       ),
@@ -48,7 +48,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final newAccountStore = context.watch<NewAccountStore>();
     final appStore = context.watch<AppStore>();
     return ScrollableForm(
@@ -56,21 +56,21 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
       listViewChildren: [
         const SizedBox(height: 50),
         Text(
-          dic.profile.detailsEnter,
+          dic.detailsEnter,
           textAlign: TextAlign.center,
           style: context.textTheme.displayMedium,
         ),
         const SizedBox(height: 10),
         Text(
-          dic.profile.personalKeyEnter,
+          dic.personalKeyEnter,
           textAlign: TextAlign.center,
           style: context.textTheme.displayMedium!.copyWith(color: Colors.black),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(
           key: const Key('create-account-name'),
-          hintText: dic.account.createHint,
-          labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
+          hintText: dic.createHint,
+          labelText: context.l10n.accountName,
           controller: _nameCtrl,
           validator: (v) {
             return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.accountList);
@@ -79,8 +79,8 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         TextFormField(
           key: const Key('account-source'),
           decoration: InputDecoration(
-            hintText: dic.account.mnemonic,
-            labelText: dic.profile.personalKey,
+            hintText: dic.mnemonic,
+            labelText: dic.personalKey,
           ),
           controller: _keyCtrl,
           maxLines: 2,
@@ -124,7 +124,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
             if (newAccountStore.loading) {
               return const CenteredActivityIndicator();
             } else {
-              return Text(appStore.account.accountList.isEmpty ? dic.home.next : dic.home.accountImport);
+              return Text(appStore.account.accountList.isEmpty ? dic.next : dic.accountImport);
             }
           }),
         ),
@@ -134,18 +134,18 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
   }
 
   Future<void> _onDuplicateAccount(BuildContext context, Map<String, dynamic> acc) async {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     await AppAlert.showDialog<void>(
       context,
       title: Text(Fmt.address(acc['address'] as String)!),
-      content: Text(dic.account.importDuplicate),
+      content: Text(dic.importDuplicate),
       actions: [
         CupertinoButton(
-          child: Text(dic.home.cancel),
+          child: Text(dic.cancel),
           onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
         ),
         CupertinoButton(
-          child: Text(dic.home.ok),
+          child: Text(dic.ok),
           onPressed: () async {
             final appStore = context.read<AppStore>();
             await context.read<NewAccountStore>().saveAccount(webApi, appStore, acc, appStore.settings.cachedPin);

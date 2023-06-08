@@ -11,7 +11,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Helpers to submit transactions.
@@ -52,7 +52,7 @@ Future<void> submitClaimRewards(
   Api api,
   CommunityIdentifier chosenCid,
 ) async {
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
   final txParams = claimRewardsParams(chosenCid, dic);
 
   return submitTx(
@@ -76,7 +76,7 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier? chosenCid,
   String? newbie,
 ) async {
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
   final txParams = endorseNewcomerParams(chosenCid!, newbie!, dic);
 
   return submitTx(
@@ -92,7 +92,7 @@ Future<void> submitEndorseNewcomer(
 }
 
 Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, Api api) {
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
 
   final lastProofOfAttendance = store.encointer.communityAccount?.participantType?.isReputable ?? false
       ? store.encointer.account
@@ -110,7 +110,7 @@ Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, A
 
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
   final proof = await api.encointer.getProofOfAttendance();
 
   return submitTx(
@@ -133,7 +133,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
           await CeremonyNotifications.scheduleMeetupReminders(
             ceremonyIndex: data.global.ceremonyIndex,
             meetupTime: store.encointer.community!.meetupTime!,
-            dic: I18n.of(context)!.translationsForLocale().encointer,
+            dic: context.l10n,
             cid: store.encointer.community?.cid.toFmtString(),
           );
         }
@@ -146,7 +146,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 }
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
   final params = attestAttendeesParams(
     store.encointer.chosenCid!,
     store.encointer.communityAccount!.participantCountVote!,
@@ -177,7 +177,7 @@ Future<Map<String, dynamic>> submitReapVoucher(
 }
 
 void _showEducationalDialog(ParticipantType registrationType, BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale();
+  final dic = context.l10n;
   final texts = _getEducationalDialogTexts(registrationType, context);
   final languageCode = Localizations.localeOf(context).languageCode;
 
@@ -196,13 +196,13 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
           if (registrationType == ParticipantType.Newbie) const SizedBox(),
           CupertinoButton(
             key: const Key('close-educate-dialog'),
-            child: Text(dic.home.ok),
+            child: Text(dic.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
           if (registrationType == ParticipantType.Newbie)
             CupertinoButton(
               child: Text(
-                dic.encointer.leuZurichFAQ,
+                dic.leuZurichFAQ,
                 textAlign: TextAlign.center,
               ),
               onPressed: () => AppLaunch.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
@@ -214,7 +214,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
 }
 
 Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale().encointer;
+  final dic = context.l10n;
   return switch (type) {
     ParticipantType.Newbie => {'title': dic.newbieTitle, 'content': dic.newbieContent},
     ParticipantType.Endorsee => {'title': dic.endorseeTitle, 'content': dic.endorseeContent},

@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/page/assets/qr_code_printing/widgets/store/preview_pdf_and_print_store.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pdf/pdf.dart';
@@ -36,7 +36,7 @@ class _PreviewPdfAndPrintState extends State<PreviewPdfAndPrint> {
   void didChangeDependencies() {
     store.createPdf(
       key: widget.args.renderObjectKey,
-      translations: I18n.of(context)!.translationsForLocale(),
+      translations: context.l10n,
     );
     super.didChangeDependencies();
   }

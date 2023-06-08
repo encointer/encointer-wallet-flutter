@@ -5,7 +5,7 @@ import 'package:encointer_wallet/common/components/map/encointer_map.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class MeetupLocationPage extends StatelessWidget {
   MeetupLocationPage(this.meetupLocation, {super.key});
@@ -17,10 +17,10 @@ class MeetupLocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.encointer.meetupLocation),
+        title: Text(dic.meetupLocation),
       ),
       body: EncointerMap(
         locations: [meetupLocation.toLatLng()],
@@ -28,7 +28,7 @@ class MeetupLocationPage extends StatelessWidget {
         // zoom level is equivalent to 1 km^2.
         initialZoom: 17,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
-          title: dic.encointer.showRouteMeetupLocation,
+          title: dic.showRouteMeetupLocation,
           description: '',
           onTap: () => AppLaunch.launchMap(meetupLocation),
           height: 40,
@@ -40,7 +40,7 @@ class MeetupLocationPage extends StatelessWidget {
               context: context,
               onOK: () => AppLaunch.launchMap(meetupLocation),
               onCancel: () => Navigator.pop(context),
-              title: Text(dic.home.openMapApplication),
+              title: Text(dic.openMapApplication),
             );
           }
         },

@@ -10,8 +10,7 @@ import 'package:encointer_wallet/page/qr_scan/qr_scan_service.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 export 'qr_codes/qr_code_base.dart';
 export 'qr_scan_service.dart';
@@ -38,7 +37,7 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final appSettingsStore = context.watch<AppSettings>();
 
     return Scaffold(
@@ -56,7 +55,7 @@ class ScanPage extends StatelessWidget {
     );
   }
 
-  FutureBuilder<PermissionStatus> _realAppBuild(AppSettings appSettingsStore, Translations dic) {
+  FutureBuilder<PermissionStatus> _realAppBuild(AppSettings appSettingsStore, AppLocalizations dic) {
     return FutureBuilder<PermissionStatus>(
       future: _canOpenCamera(),
       builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
@@ -104,7 +103,7 @@ class ScanPage extends StatelessWidget {
             ),
           ),
           Text(
-            I18n.of(context)!.translationsForLocale().account.qrScan,
+            context.l10n.qrScan,
             style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
           ),
         ],
@@ -112,7 +111,7 @@ class ScanPage extends StatelessWidget {
     );
   }
 
-  Widget _mockAppBuild(BuildContext context, Translations dic) {
+  Widget _mockAppBuild(BuildContext context, AppLocalizations dic) {
     return Stack(
       children: [
         _mockQrDataRow(dic, (v) => _onScan(context, v)),
@@ -123,27 +122,27 @@ class ScanPage extends StatelessWidget {
   }
 
   /// Adds some buttons to activate the scanner with mock data.
-  Widget _mockQrDataRow(Translations dic, void Function(String) onScan) {
+  Widget _mockQrDataRow(AppLocalizations dic, void Function(String) onScan) {
     return Wrap(
       key: const Key('mock-qr-data-row'),
       children: [
         ElevatedButton(
           key: const Key('profile-to-scan'),
-          child: Text(dic.profile.addContact),
+          child: Text(dic.addContact),
           onPressed: () => onScan(
             'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\n\n\nFirstContactToSave',
           ),
         ),
         ElevatedButton(
           key: const Key('contact-to-save-to-address'),
-          child: Text(dic.profile.addToContactFromQrContact),
+          child: Text(dic.addToContactFromQrContact),
           onPressed: () => onScan(
             'encointer-contact\nv1.0\nGexcuH8GaJgztyDN3vbFKGaXVePzBUX78Cx29JApZ1gvxyg\n\n\nFromContact',
           ),
         ),
         ElevatedButton(
           key: const Key('invoice-to-save-to-address'),
-          child: Text(dic.assets.addInvoiceQrToAddress),
+          child: Text(dic.addInvoiceQrToAddress),
           onPressed: () => onScan(
             'encointer-invoice\nv1.0\n5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty'
             '\nsqm1v79dF6b\n0.01\nFromInvoice',
@@ -151,7 +150,7 @@ class ScanPage extends StatelessWidget {
         ),
         ElevatedButton(
           key: const Key('invoice-with-amount-to-scan'),
-          child: Text(dic.assets.invoice),
+          child: Text(dic.invoice),
           onPressed: () => onScan(
             'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX'
             '\nsqm1v79dF6b\n0.023\nAubrey',
@@ -159,7 +158,7 @@ class ScanPage extends StatelessWidget {
         ),
         ElevatedButton(
           key: const Key('invoice-with-no-amount-to-scan'),
-          child: Text(dic.assets.noInvoice),
+          child: Text(dic.noInvoice),
           onPressed: () => onScan(
             'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\n\nAubrey',
           ),
@@ -183,19 +182,19 @@ class ScanPage extends StatelessWidget {
   }
 
   Widget _permissionErrorDialog(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
 
     return CupertinoAlertDialog(
       title: Container(),
-      content: Text(dic.home.cameraPermissionError),
+      content: Text(dic.cameraPermissionError),
       actions: <Widget>[
         CupertinoButton(
-          child: Text(dic.home.ok),
+          child: Text(dic.ok),
           onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
         ),
         CupertinoButton(
           onPressed: openAppSettings,
-          child: Text(dic.home.appSettings),
+          child: Text(dic.appSettings),
         ),
       ],
     );

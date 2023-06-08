@@ -10,7 +10,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class AccountSharePage extends StatefulWidget {
   const AccountSharePage({super.key});
@@ -24,7 +24,7 @@ class AccountSharePage extends StatefulWidget {
 class _AccountSharePageState extends State<AccountSharePage> {
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final dic = context.l10n;
     final store = context.watch<AppStore>();
 
     final accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
@@ -39,7 +39,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.profile.share),
+        title: Text(dic.share),
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
@@ -55,7 +55,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
           child: Column(
             children: [
               Text(
-                dic.profile.qrScanHintAccount,
+                dic.qrScanHintAccount,
                 style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
                 textAlign: TextAlign.center,
               ),
@@ -76,7 +76,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
               ),
               const Spacer(),
               Text(
-                dic.profile.shareLinkHint,
+                dic.shareLinkHint,
                 textAlign: TextAlign.center,
                 style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
               ),
@@ -88,7 +88,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   children: [
                     const Icon(Icons.share),
                     const SizedBox(width: 12),
-                    Text(dic.profile.sendLink, style: context.textTheme.displaySmall),
+                    Text(dic.sendLink, style: context.textTheme.displaySmall),
                   ],
                 ),
                 onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),
