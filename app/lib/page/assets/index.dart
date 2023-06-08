@@ -451,7 +451,10 @@ class _AssetsViewState extends State<AssetsView> {
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
               final msg = dic.incomingConfirmed(
-                  widget.store.account.currentAccount.name, delta.toStringAsPrecision(5), community.metadata!.symbol);
+                delta,
+                community.metadata!.symbol,
+                widget.store.account.currentAccount.name,
+              );
 
               Log.d('[home:balanceWatchdog] $msg', 'Assets');
               NotificationPlugin.showNotification(45, dic.fundsReceived, msg, cid: cidStr);

@@ -93,9 +93,9 @@ class _ReceivePageState extends State<ReceivePage> {
             Log.d('[receivePage] balance was $oldBalance, changed by $delta', 'ReceivePage');
             if (delta > demurrageRate!) {
               final msg = dic.incomingConfirmed(
-                store.account.currentAccount.name,
-                delta.toStringAsPrecision(5),
+                delta,
                 store.encointer.community?.metadata?.symbol ?? 'null',
+                store.account.currentAccount.name,
               );
               Log.d('[receivePage] $msg', 'ReceivePage');
               store.encointer.account?.addBalanceEntry(cid, balances[cid]!);

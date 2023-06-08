@@ -86,9 +86,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                         children: [
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 6),
-                          Text(dic.claimsSubmitN(
-                            store.encointer.communityAccount!.scannedAttendeesCount.toString(),
-                          )),
+                          Text(dic.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount)),
                         ],
                       ),
                       onPressed: (context) => submitAttestClaims(context, store, api),

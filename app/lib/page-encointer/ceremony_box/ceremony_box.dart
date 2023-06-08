@@ -101,9 +101,7 @@ class CeremonyBox extends StatelessWidget {
                         children: [
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 6),
-                          Text(
-                            dic.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount.toString()),
-                          ),
+                          Text(dic.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount)),
                         ],
                       ),
                       onPressed: () => submitAttestClaims(context, store, api),
@@ -181,7 +179,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
             notification: dic.successfullySentNAttestations(
-              store.encointer.communityAccount!.scannedAttendeesCount.toString(),
+              store.encointer.communityAccount!.scannedAttendeesCount,
             ),
           );
         } else {

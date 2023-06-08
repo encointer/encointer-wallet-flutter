@@ -22,9 +22,7 @@ class MeetupInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = context.l10n;
-    final info = dic.youAreAssignedToAGatheringWithNParticipants(
-      meetup.registry.length.toString(),
-    );
+    final info = dic.youAreAssignedToAGatheringWithNParticipants(meetup.registry.length);
 
     return Column(
       children: [

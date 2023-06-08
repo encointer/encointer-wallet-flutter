@@ -115,8 +115,8 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                       ),
                       Observer(builder: (_) {
                         final txt = dic.claimsScannedNOfM(
-                          store.encointer.communityAccount!.scannedAttendeesCount.toString(),
-                          (widget.confirmedParticipantsCount - 1).toString(),
+                          store.encointer.communityAccount!.scannedAttendeesCount,
+                          widget.confirmedParticipantsCount - 1,
                         );
 
                         return Text(

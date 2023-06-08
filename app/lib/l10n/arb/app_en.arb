@@ -29,8 +29,6 @@
     "switchCommunity": "Switch Community",
     "transactionQueued": "Queued",
     "transactionQueuedOffline": "App is not connected to the blockchain. Queued transaction (will be sent automatically upon reconnection).",
-    "unlockAccountPin": "Unlock Account with PIN",
-    "unlockAccount": "Unlock account {CURRENT_ACCOUNT_NAME} with PIN",
     "updateDownload": "Downloading...",
     "updateError": "Update Failed",
     "updateJsUp": "Metadata needs to be updated to continue.",
@@ -53,7 +51,6 @@
     "openMapApplication": "Open Map Application",
     "unregister": "Unregister",
     "unregisterDialogTitle": "Unregister from the next cycle?",
-    "errorMessageWithStatusCode": "Something went wrong, please try again! StatusCode: {value}",
     "badRequest": "The server couldn't process the request",
     "noAuthorizationError": "You don't have permission to access",
     "somethingWentWrong": "Something went wrong, please try again!",
@@ -120,10 +117,8 @@
     "amountToBeTransferred": "Send amount",
     "invoiceAmount": "Invoice amount",
     "shareInvoice": "Share Invoice",
-    "yourBalanceFor": "Your balance, {ACCOUNT_NAME}",
     "balance": "Balance",
     "invoice": "Invoice",
-    "incomingConfirmed": "incoming {AMOUNT} {CID_SYMBOL} for {ACCOUNT_NAME} confirmed",
     "fundsReceived": "funds received",
     "paymentDoYouWantToProceed": "Proceed with payment?",
     "paymentSubmitting": "Payment is being submitted...",
@@ -131,10 +126,7 @@
     "paymentError": "Payment error",
     "voucher": "Voucher",
     "voucherBalance": "Voucher Balance",
-    "voucherDifferentNetworkAndCommunity": "The voucher is for a different network. Do you want to change to {NETWORK_PLACEHOLDER} and {COMMUNITY_PLACEHOLDER}? You can change the network back under Profile > Developer mode",
-    "voucherDifferentCommunity": "The voucher is for a different community. Do you want to change to {COMMUNITY_PLACEHOLDER}?",
     "voucherContainsInexistentCommunity": "The voucher contains an inexistent community:",
-    "doYouWantToRedeemThisVoucher": "Do you want to redeem this voucher to {ACCOUNT_PLACEHOLDER}?",
     "fundVoucher": "Fund voucher",
     "redeemVoucher": "Redeem voucher",
     "redeemSuccess": "Successfully redeemed voucher.",
@@ -222,19 +214,15 @@
     "filter": "Filter",
     "registerParticipant": "Register",
     "claimsSubmit": "Submit claims",
-    "claimsSubmitN": "Submit {N_COUNT} claims",
     "claimsPurge": "Purge previously scanned claims",
     "claimsPurgeConfirm": "Are you sure, you want to purge all scanned claims?",
     "keySigningCycle": "Key-Signing Cycle",
     "nextCycleTimeLeft": "Next cycle is in",
     "nextCycleDateLabel": "Next cycle is on",
     "claimQr": "My Claim of Attendance",
-    "claimsScanned": "You have scanned {AMOUNT_PLACEHOLDER} claims",
     "claimsScannedAlready": "Updated previously scanned claim",
     "claimsScannedDecodeFailed": "Could not decode scanned claim. The other party needs to update the App.",
     "claimsScannedNew": "Scanned new claim",
-    "claimsScannedNOfM": "Scanned {SCANNED_COUNT} / {TOTAL_COUNT} Claims",
-    "claimsSubmitDetail": "Submitting AMOUNT claims for the recent gathering",
     "communities": "Communities",
     "noCommunitiesAreYouOffline": "No communities were found. You can choose one later. Are you offline?.",
     "meetupAttended": "Attended last meetup",
@@ -254,10 +242,7 @@
     "cycleWillTakePlaceOn": "The key-signing cycle will take place on",
     "gatheringSuccessfullyCompleted": "Gathering successfully completed",
     "fetchingReputations": "Checking if you have reputation",
-    "youAreRegisteredAs": "You have registered for the next gathering as {PARTICIPANT_TYPE}.",
     "youAreNotRegisteredPleaseRegisterNextTime": "You haven't been assigned for this key-signing cycle. Please join the next cycle to receive your community income.",
-    "youAreAssignedToAGatheringWithNParticipants": "You are assigned to a gathering with {P_COUNT} people.",
-    "successfullySentNAttestations": "You have successfully submitted attestations for {P_COUNT} other people.",
     "countParticipants": "Count",
     "numberOfAttendees": "Number of attendees",
     "next": "Next",
@@ -366,7 +351,6 @@
     "recoveryProxy": "recovery proxy",
     "reputation": "Reputation",
     "shareLinkHint": "Or you can share a link:",
-    "tokenSend": "Send {SYMBOL}",
     "addContact": "Add contact",
     "deleteAccount": "delete",
     "exportAccount": "export",
@@ -401,5 +385,157 @@
     "balanceTooLowBody": "You don't have sufficient funds in your account. You can't send all your money because you need some for the fees.",
     "balanceTooLowTitle": "Balance too low",
     "received": "Receved",
-    "sent": "Sent"
+    "sent": "Sent",
+    "unlockAccountPin": "Unlock Account with PIN",
+    "unlockAccount": "Unlock account {currentAccountName} with PIN",
+    "@unlockAccount": {
+        "placeholders": {
+            "currentAccountName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+    "errorMessageWithStatusCode": "Something went wrong, please try again! StatusCode: {errorText}",
+    "@errorMessageWithStatusCode": {
+        "placeholders": {
+            "errorText": {
+                "type": "String",
+                "example": "Format exaception"
+            }
+        }
+    },
+    "yourBalanceFor": "Your balance, {accountName}",
+    "@yourBalanceFor": {
+        "placeholders": {
+            "accountName": {
+                "type": "String",
+                "example": "Format exaception"
+            }
+        }
+    },
+    "incomingConfirmed": "incoming {amount} {cidSymbol} for {accountName} confirmed",
+    "@incomingConfirmed": {
+        "placeholders": {
+            "amount": {
+                "type": "num",
+                "example": "0.1"
+            },
+            "cidSymbol": {
+                "type": "String",
+                "example": "#"
+            },
+            "accountName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+    "voucherDifferentNetworkAndCommunity": "The voucher is for a different network. Do you want to change to {network} and {community}? You can change the network back under Profile > Developer mode",
+    "@voucherDifferentNetworkAndCommunity": {
+        "placeholders": {
+            "network": {
+                "type": "String",
+                "example": "Dev-Gessel"
+            },
+            "community": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "voucherDifferentCommunity": "The voucher is for a different community. Do you want to change to {community}?",
+    "@voucherDifferentCommunity": {
+        "placeholders": {
+            "community": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "doYouWantToRedeemThisVoucher": "Do you want to redeem this voucher to {accountName}?",
+    "@doYouWantToRedeemThisVoucher": {
+        "placeholders": {
+            "accountName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+    "claimsSubmitN": "Submit {count} claims",
+    "@claimsSubmitN": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "claimsScanned": "You have scanned {amount} claims",
+    "@claimsScanned": {
+        "placeholders": {
+            "amount": {
+                "type": "num",
+                "example": "0.1"
+            }
+        }
+    },
+    "claimsScannedNOfM": "Scanned {scannedCount} / {totalCount} Claims",
+    "@claimsScannedNOfM": {
+        "placeholders": {
+            "scannedCount": {
+                "type": "int",
+                "example": "2"
+            },
+            "totalCount": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "claimsSubmitDetail": "Submitting {amount} claims for the recent gathering",
+    "@claimsSubmitDetail": {
+        "placeholders": {
+            "amount": {
+                "type": "num",
+                "example": "0.1"
+            }
+        }
+    },
+    "youAreRegisteredAs": "You have registered for the next gathering as {participantType}.",
+    "@youAreRegisteredAs": {
+        "placeholders": {
+            "participantType": {
+                "type": "String",
+                "example": "Newbie"
+            }
+        }
+    },
+    "youAreAssignedToAGatheringWithNParticipants": "You are assigned to a gathering with {participantsCount} people.",
+    "@youAreAssignedToAGatheringWithNParticipants": {
+        "placeholders": {
+            "participantsCount": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "successfullySentNAttestations": "You have successfully submitted attestations for {participantsCount} other people.",
+    "@successfullySentNAttestations": {
+        "placeholders": {
+            "participantsCount": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "tokenSend": "Send {symbol}",
+    "@tokenSend": {
+        "placeholders": {
+            "symbol": {
+                "type": "String",
+                "example": "#"
+            }
+        }
+    }
 }
