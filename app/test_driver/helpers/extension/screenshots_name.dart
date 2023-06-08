@@ -27,6 +27,7 @@ class Screenshots {
   static const receiveView = '041-receive-view';
   static const sendView = '042-send-view';
   static const txConfirmationView = '043-tx-confirmation-view';
+  static const voucherDialog = '044-reap-voucher-dialog';
 
   /// 61-80 profile
   static const profileView = '061-profile-view';
@@ -48,7 +49,4 @@ class Screenshots {
   static const step1ConfirmNumberOfAttendees = '101-step-1-confirm-number-of-attendees';
   static const step2QrCode = '102-step-2-qr-code';
   static const step3FinishGathering = '103-step-3-finish-gathering';
-
-  /// voucher
-  static const voucherDialog = '044-reap-voucher-dialog';
 }
