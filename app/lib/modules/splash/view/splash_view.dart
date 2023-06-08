@@ -1,12 +1,9 @@
-import 'package:encointer_wallet/service/init_web_api/init_web_api.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/service/init_web_api/init_web_api.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-
 import 'package:encointer_wallet/gen/assets.gen.dart';
-
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/store/app.dart';
 

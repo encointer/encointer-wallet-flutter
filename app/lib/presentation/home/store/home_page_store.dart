@@ -1,19 +1,15 @@
-import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
-import 'package:encointer_wallet/service/deep_link/deep_link.dart';
-import 'package:encointer_wallet/service/init_web_api/init_web_api.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/meetup/notification_handler.dart';
-import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/repository_provider.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ew_http/ew_http.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
+
+import 'package:encointer_wallet/service/service.dart';
+import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/utils.dart';
+
 part 'home_page_store.g.dart';
 
 const _logTarget = 'HomePageStore';
