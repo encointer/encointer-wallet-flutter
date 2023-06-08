@@ -2,4 +2,4 @@
 
 set -euxo pipefail
 
-./flutterw pub global activate melos 3.0.1
+./flutterw pub global activate melos 3.1.0

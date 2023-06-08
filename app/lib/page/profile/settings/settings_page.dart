@@ -27,14 +27,11 @@ class _Settings extends State<SettingsPage> {
     final store = context.watch<AppStore>();
 
     String getLang(String code) {
-      switch (code) {
-        case 'en':
-          return 'English';
-        case 'de':
-          return 'Deutsch';
-        default:
-          return dic.profile.settingLangAuto;
-      }
+      return switch (code) {
+        'en' => 'English',
+        'de' => 'Deutsch',
+        _ => dic.profile.settingLangAuto,
+      };
     }
 
     void onLanguageTap() {

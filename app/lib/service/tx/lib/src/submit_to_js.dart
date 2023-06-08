@@ -150,20 +150,14 @@ void _onTxFinish(
 
 String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
   if (status == null) return '';
-  switch (status) {
-    case TxStatus.Queued:
-      return dic.txQueued;
-    case TxStatus.QueuedOffline:
-      return dic.txQueuedOffline;
-    case TxStatus.Ready:
-      return dic.txReady;
-    case TxStatus.Broadcast:
-      return dic.txBroadcast;
-    case TxStatus.InBlock:
-      return dic.txInBlock;
-    case TxStatus.Error:
-      return dic.txError;
-  }
+  return switch (status) {
+    TxStatus.Queued => dic.txQueued,
+    TxStatus.QueuedOffline => dic.txQueuedOffline,
+    TxStatus.Ready => dic.txReady,
+    TxStatus.Broadcast => dic.txBroadcast,
+    TxStatus.InBlock => dic.txInBlock,
+    TxStatus.Error => dic.txError,
+  };
 }
 
 Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, String txError) {
@@ -172,19 +166,28 @@ Map<String, String> getLocalizedTxErrorMessage(TranslationsTransaction dic, Stri
   } else if (txError.startsWith(insufficientFundsError)) {
     return {'title': dic.insufficientFundsErrorTitle, 'body': dic.insufficientFundsErrorBody};
   }
-  switch (txError) {
-    case 'encointerCeremonies.VotesNotDependable':
-      return {'title': dic.votesNotDependableErrorTitle, 'body': dic.votesNotDependableErrorBody};
-    case 'encointerCeremonies.AlreadyEndorsed':
-      return {'title': dic.alreadyEndorsedErrorTitle, 'body': dic.alreadyEndorsedErrorBody};
-    case 'encointerCeremonies.NoValidClaims':
-      return {'title': dic.noValidClaimsErrorTitle, 'body': dic.noValidClaimsErrorBody};
-    case 'encointerCeremonies.RewardsAlreadyIssued':
-      return {'title': dic.rewardsAlreadyIssuedErrorTitle, 'body': dic.rewardsAlreadyIssuedErrorBody};
-    case 'encointerBalances.BalanceTooLow':
-      return {'title': dic.balanceTooLowTitle, 'body': dic.balanceTooLowBody};
-    default:
-      // display plain tx error in case we don't recognize the error
-      return {'title': dic.transactionError, 'body': txError};
-  }
+
+  return switch (txError) {
+    'encointerCeremonies.VotesNotDependable' => {
+        'title': dic.votesNotDependableErrorTitle,
+        'body': dic.votesNotDependableErrorBody
+      },
+    'encointerCeremonies.AlreadyEndorsed' => {
+        'title': dic.alreadyEndorsedErrorTitle,
+        'body': dic.alreadyEndorsedErrorBody
+      },
+    'encointerCeremonies.NoValidClaims' => {
+        'title': dic.noValidClaimsErrorTitle,
+        'body': dic.noValidClaimsErrorBody,
+      },
+    'encointerCeremonies.RewardsAlreadyIssued' => {
+        'title': dic.rewardsAlreadyIssuedErrorTitle,
+        'body': dic.rewardsAlreadyIssuedErrorBody
+      },
+    'encointerBalances.BalanceTooLow' => {
+        'title': dic.balanceTooLowTitle,
+        'body': dic.balanceTooLowBody,
+      },
+    _ => {'title': dic.transactionError, 'body': txError},
+  };
 }
