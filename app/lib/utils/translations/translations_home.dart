@@ -111,11 +111,6 @@ class TranslationsEnHome implements TranslationsHome {
   // String get submitTransaction => 'Submit Transaction';
   // @override
   // String get success => 'Success';
-
-
-
-
-
   // @override
   // String get switchAccount => 'Switch Account';
   // @override
@@ -174,18 +169,10 @@ class TranslationsEnHome implements TranslationsHome {
   // String get unregister => 'Unregister';
   // @override
   // String get unregisterDialogTitle => 'Unregister from the next cycle?';
-
-
-
-
-
   // @override
   // String errorMessageWithStatusCode(String value) {
   //   return 'Something went wrong, please try again! StatusCode: $value';
   // }
-
-
-
   // @override
   // String get badRequest => "The server couldn't process the request";
   // @override
@@ -255,11 +242,6 @@ class TranslationsDeHome implements TranslationsHome {
   // String get switchCommunity => 'Gemeinschaft wechseln';
   // @override
   // String get transactionQueued => 'In der Warteschlange';
-
-
-
-
-
   // @override
   // String get transactionQueuedOffline =>
   //     'Die App ist nicht mit der Blockchain verbunden. Die Transaktionen in der Warteschlange werden automatisch bei erfolgreicher Verbindung versendet.';
@@ -314,16 +296,10 @@ class TranslationsDeHome implements TranslationsHome {
   // @override
   // String get unregisterDialogTitle => 'Vom nächsten Key-Signing Cycle abmelden?';
 
-
-
-
   // @override
   // String errorMessageWithStatusCode(String value) {
   //   return 'Etwas ist schief gelaufen. Bitte versuche es erneut! StatusCode: $value';
   // }
-
-
-
 
   // @override
   // String get badRequest => 'Der Server konnte die Anfrage nicht verarbeiten';
@@ -404,10 +380,6 @@ class TranslationsFrHome implements TranslationsHome {
   // @override
   // String get updateDownload => 'Téléchargement ...';
 
-
-
-
-
   // @override
   // String get updateError => 'Échec de la mise à jour';
   // @override
@@ -453,14 +425,10 @@ class TranslationsFrHome implements TranslationsHome {
   // @override
   // String get unregisterDialogTitle => 'Se désinscrire du prochain cycle?';
 
-
   // @override
   // String errorMessageWithStatusCode(String value) {
   //   return "Une erreur s'est produite. Veuillez réessayer! StatusCode: $value";
   // }
-
-
-
 
   // @override
   // String get badRequest => "Le serveur n'a pas pu traiter la demande";
@@ -553,10 +521,6 @@ class TranslationsRuHome implements TranslationsHome {
   // @override
   // String get txQueued => 'Транзакция поставлена в очередь';
 
-
-
-
-
   // @override
   // String get txQueuedOffline =>
   //     'Вы находитесь в оффлайн режиме. Транзакция будет отправлена, когда вы снова подключитесь к сети.';
@@ -591,15 +555,10 @@ class TranslationsRuHome implements TranslationsHome {
   // @override
   // String get unregisterDialogTitle => 'Отказаться от участия в следующем цикле?';
 
-
-
-
   // @override
   // String errorMessageWithStatusCode(String value) {
   //   return 'Что-то пошло не так. Пожалуйста, попробуйте еще раз! StatusCode: $value';
   // }
-
-
 
   // @override
   // String get badRequest => 'Сервер не смог обработать запрос';
