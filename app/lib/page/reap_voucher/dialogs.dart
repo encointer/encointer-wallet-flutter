@@ -25,7 +25,7 @@ class VoucherDialogs {
               onPressed: onOK,
               child: Text(
                 dic.home.ok,
-                key: const Key('voucher_dialog_ok'),
+                key: const Key('voucher-dialog-ok'),
               ),
             ),
           ],

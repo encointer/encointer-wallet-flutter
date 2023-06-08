@@ -15,15 +15,15 @@ Future<void> getQrVoucherAndFund(FlutterDriver driver) async {
 }
 
 Future<void> scanVoucherFromQrScanPage(FlutterDriver driver) async {
-  await driver.waitFor(VoucherKeysToFind.mockQrDataRow);
-  await driver.tap(VoucherKeysToFind.voucherToScan);
+  await driver.waitFor(find.byValueKey(VoucherKeys.mockQrDataRow));
+  await driver.tap(find.byValueKey(VoucherKeys.voucherToScan));
 }
 
 Future<void> voucherGetToTransferPageThenToVoucher(FlutterDriver driver) async {
-  await driver.tap(VoucherKeysToFind.openQrScannerOnSendPage);
+  await driver.tap(find.byValueKey(VoucherKeys.openQrScannerOnSendPage));
   await scanVoucherFromQrScanPage(driver);
-  await driver.waitFor(VoucherKeysToFind.voucherToTransferPage);
-  await driver.tap(VoucherKeysToFind.voucherToTransferPage);
+  await driver.waitFor(find.byValueKey(VoucherKeys.voucherToTransferPage));
+  await driver.tap(find.byValueKey(VoucherKeys.voucherToTransferPage));
 }
 
 Future<void> fundVoucher(FlutterDriver driver) async {
@@ -49,19 +49,19 @@ Future<void> fundVoucher(FlutterDriver driver) async {
 Future<void> getQrVoucherAndRedeem(FlutterDriver driver) async {
   await navigateToScanPage(driver);
   await scanVoucherFromQrScanPage(driver);
-  await driver.waitFor(VoucherKeysToFind.submitVoucher);
-  await driver.tap(VoucherKeysToFind.submitVoucher);
+  await driver.waitFor(find.byValueKey(VoucherKeys.submitVoucher));
+  await driver.tap(find.byValueKey(VoucherKeys.submitVoucher));
   await driver.runUnsynchronized(() async {
-    await driver.waitFor(VoucherKeysToFind.voucherDialogOk);
-    await driver.tap(VoucherKeysToFind.voucherDialogOk);
+    await driver.waitFor(find.byValueKey(VoucherKeys.voucherDialogOk));
+    await driver.tap(find.byValueKey(VoucherKeys.voucherDialogOk));
   });
 }
 
-class VoucherKeysToFind {
-  static final submitVoucher = find.byValueKey('submit_voucher');
-  static final mockQrDataRow = find.byValueKey('mock-qr-data-row');
-  static final voucherToScan = find.byValueKey('voucher-to-scan');
-  static final openQrScannerOnSendPage = find.byValueKey('open-qr-scanner-on-send-page');
-  static final voucherToTransferPage = find.byValueKey('voucher_to_transfer_page');
-  static final voucherDialogOk = find.byValueKey('voucher_dialog_ok');
+class VoucherKeys {
+  static const submitVoucher = 'submit-voucher';
+  static const mockQrDataRow = 'mock-qr-data-row';
+  static const voucherToScan = 'voucher-to-scan';
+  static const openQrScannerOnSendPage = 'open-qr-scanner-on-send-page';
+  static const voucherToTransferPage = 'voucher-to-transfer-page';
+  static const voucherDialogOk = 'voucher-dialog-ok';
 }

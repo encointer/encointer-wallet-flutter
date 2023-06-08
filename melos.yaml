@@ -161,5 +161,3 @@ scripts:
   flutter-config-no-analytics:
     run: cd app && flutter config --no-analytics
     description: "Disables the analytics data in the local configuration file of the Flutter tool"
-
-
