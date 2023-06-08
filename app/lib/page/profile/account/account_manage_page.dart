@@ -299,14 +299,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           onSelected: (AccountAction accountAction) {
-                            switch (accountAction) {
-                              case AccountAction.delete:
-                                _onDeleteAccount(context, accountToBeEdited);
-                                break;
-                              case AccountAction.export:
-                                _showPasswordDialog(context, accountToBeEdited);
-                                break;
-                            }
+                            return switch (accountAction) {
+                              AccountAction.delete => _onDeleteAccount(context, accountToBeEdited),
+                              AccountAction.export => _showPasswordDialog(context, accountToBeEdited),
+                            };
                           },
                           itemBuilder: (BuildContext context) => [
                                 AccountActionItemData(
