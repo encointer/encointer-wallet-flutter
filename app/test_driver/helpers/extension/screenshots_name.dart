@@ -50,5 +50,5 @@ class Screenshots {
   static const step3FinishGathering = '103-step-3-finish-gathering';
 
   /// voucher
-  static const voucherDialog = '031-reap_voucher_dialog';
+  static const voucherDialog = '044-reap-voucher-dialog';
 }
