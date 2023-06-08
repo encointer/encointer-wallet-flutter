@@ -326,8 +326,6 @@ class _AssetsViewState extends State<AssetsView> {
                 padding: EdgeInsets.symmetric(vertical: 6),
               ),
               Observer(builder: (_) {
-                final _dic = I18n.of(context)!.translationsForLocale();
-
                 final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
                     (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
 
@@ -407,7 +405,7 @@ class _AssetsViewState extends State<AssetsView> {
               Observer(builder: (BuildContext context) {
                 return SwitchAccountOrCommunity(
                   rowTitle: _dic.home.switchAccount,
-                  data: initAllAccounts(_dic),
+                  data: initAllAccounts(),
                   onTap: (int index) {
                     setState(() {
                       switchAccount(widget.store.account.accountListAll[index]);
@@ -467,7 +465,7 @@ class _AssetsViewState extends State<AssetsView> {
     }
   }
 
-  List<AccountOrCommunityData> initAllAccounts(Translations _dic) {
+  List<AccountOrCommunityData> initAllAccounts() {
     final allAccounts = <AccountOrCommunityData>[
       ...widget.store.account.accountListAll.map(
         (account) => AccountOrCommunityData(
