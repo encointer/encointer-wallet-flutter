@@ -27,7 +27,7 @@ class WalletApp extends StatelessWidget {
       child: Observer(builder: (_) {
         return MaterialApp(
           title: 'EncointerWallet',
-          locale: context.watch<AppSettings>().locale,
+          locale: appSettings.locale,
           localizationsDelegates: [
             AppLocalizationsDelegate(appSettings.locale),
             GlobalMaterialLocalizations.delegate,

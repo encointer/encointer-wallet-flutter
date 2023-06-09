@@ -61,7 +61,7 @@ class BusinessDetail extends StatelessWidget {
                           headingRowHeight: 32,
                           columnSpacing: 4,
                           horizontalMargin: 8,
-                          dataRowHeight: 32,
+                          dataRowMinHeight: 32,
                           rows: List<DataRow>.generate(
                             7,
                             (int index) => DataRow(

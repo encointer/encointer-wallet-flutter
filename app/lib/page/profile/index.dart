@@ -237,9 +237,9 @@ class _ProfileState extends State<Profile> {
                       padding: const EdgeInsets.all(8),
                       child: SubmitButton(
                         key: const Key('next-phase-button'),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Icon(Iconsax.login_1),
                             SizedBox(width: 6),
                             Text('Next-Phase (only works for local dev-network)'),

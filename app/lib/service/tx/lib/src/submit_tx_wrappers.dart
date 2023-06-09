@@ -215,16 +215,12 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
 
 Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
   final dic = I18n.of(context)!.translationsForLocale().encointer;
-  switch (type) {
-    case ParticipantType.Newbie:
-      return {'title': dic.newbieTitle, 'content': dic.newbieContent};
-    case ParticipantType.Endorsee:
-      return {'title': dic.endorseeTitle, 'content': dic.endorseeContent};
-    case ParticipantType.Reputable:
-      return {'title': dic.reputableTitle, 'content': dic.reputableContent};
-    case ParticipantType.Bootstrapper:
-      return {'title': dic.bootstrapperTitle, 'content': dic.bootstrapperContent};
-  }
+  return switch (type) {
+    ParticipantType.Newbie => {'title': dic.newbieTitle, 'content': dic.newbieContent},
+    ParticipantType.Endorsee => {'title': dic.endorseeTitle, 'content': dic.endorseeContent},
+    ParticipantType.Reputable => {'title': dic.reputableTitle, 'content': dic.reputableContent},
+    ParticipantType.Bootstrapper => {'title': dic.bootstrapperTitle, 'content': dic.bootstrapperContent},
+  };
 }
 
 /// Calls `encointerScheduler.nextPhase()` with Alice.

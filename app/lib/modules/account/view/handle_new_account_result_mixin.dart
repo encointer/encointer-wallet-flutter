@@ -13,25 +13,21 @@ mixin HandleNewAccountResultMixin on Widget {
     required void Function() onOk,
     void Function()? onDuplicateAccount,
   }) async {
-    switch (type) {
-      case NewAccountResultType.ok:
-        onOk();
-        break;
-      case NewAccountResultType.error:
-        final dic = I18n.of(context)!.translationsForLocale();
-        AppAlert.showErrorDialog(context, errorText: dic.account.createError, buttontext: dic.home.ok);
-        break;
-      case NewAccountResultType.emptyPassword:
-        final appStore = context.read<AppStore>();
-        await AppAlert.showPasswordInputDialog(
+    final dic = I18n.of(context)!.translationsForLocale();
+    final appStore = context.read<AppStore>();
+    return switch (type) {
+      NewAccountResultType.ok => onOk(),
+      NewAccountResultType.error => AppAlert.showErrorDialog(
+          context,
+          errorText: dic.account.createError,
+          buttontext: dic.home.ok,
+        ),
+      NewAccountResultType.emptyPassword => await AppAlert.showPasswordInputDialog(
           context,
           account: appStore.account.currentAccount,
           onSuccess: appStore.settings.setPin,
-        );
-        break;
-      case NewAccountResultType.duplicateAccount:
-        if (onDuplicateAccount != null) onDuplicateAccount();
-        break;
-    }
+        ),
+      NewAccountResultType.duplicateAccount => onDuplicateAccount != null ? onDuplicateAccount() : null,
+    };
   }
 }

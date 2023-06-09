@@ -503,19 +503,13 @@ abstract class _EncointerStore with Store {
 
   @computed
   int? get assigningPhaseStart {
-    if (nextPhaseTimestamp == null || phaseDurations.isEmpty) {
-      return null;
-    }
-    switch (currentPhase) {
-      case CeremonyPhase.Registering:
-        return nextPhaseTimestamp;
-      case CeremonyPhase.Assigning:
-        return nextPhaseTimestamp! - phaseDurations[CeremonyPhase.Assigning]!;
-      case CeremonyPhase.Attesting:
-        return nextPhaseTimestamp! -
-            phaseDurations[CeremonyPhase.Attesting]! -
-            phaseDurations[CeremonyPhase.Assigning]!;
-    }
+    if (nextPhaseTimestamp == null || phaseDurations.isEmpty) return null;
+    return switch (currentPhase) {
+      CeremonyPhase.Registering => nextPhaseTimestamp,
+      CeremonyPhase.Assigning => nextPhaseTimestamp! - phaseDurations[CeremonyPhase.Assigning]!,
+      CeremonyPhase.Attesting =>
+        nextPhaseTimestamp! - phaseDurations[CeremonyPhase.Attesting]! - phaseDurations[CeremonyPhase.Assigning]!,
+    };
   }
 
   @computed
