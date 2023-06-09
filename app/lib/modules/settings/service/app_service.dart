@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppService {
@@ -14,8 +15,8 @@ class AppService {
     final code = storage.getString(localStorageLocaleKey);
     if (code != null) return Locale(code);
     // ignore: deprecated_member_use
-    final deviceLocal = window.locale.languageCode;
-    return Locale(switch (deviceLocal) { 'en' || 'de' || 'ru' || 'fr' => deviceLocal, _ => 'en' });
+    final deviceLocal = window.locale;
+    return AppLocalizations.delegate.isSupported(deviceLocal) ? deviceLocal : const Locale('en');
   }
 
   Future<Locale> setLocale(String languageCode) async {

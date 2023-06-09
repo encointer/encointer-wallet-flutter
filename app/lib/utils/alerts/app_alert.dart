@@ -96,11 +96,13 @@ class AppAlert {
     bool canPop = true,
     bool showCancelButton = false,
     bool autoCloseOnSuccess = true,
+    String? title,
   }) async {
     return showCupertinoDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return PasswordInputDialog(
+          title: title,
           account: account,
           onSuccess: onSuccess,
           canPop: canPop,

@@ -16,6 +16,7 @@ class PasswordInputDialog extends StatefulWidget {
     this.canPop = true,
     this.showCancelButton = false,
     this.autoCloseOnSuccess = true,
+    this.title,
   });
 
   final AccountData account;
@@ -23,6 +24,7 @@ class PasswordInputDialog extends StatefulWidget {
   final bool canPop;
   final bool showCancelButton;
   final bool autoCloseOnSuccess;
+  final String? title;
 
   @override
   State<PasswordInputDialog> createState() => _PasswordInputDialogState();
@@ -66,7 +68,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
     return WillPopScope(
       onWillPop: () async => widget.canPop,
       child: CupertinoAlertDialog(
-        title: Text(l10n.unlock),
+        title: Text(widget.title ?? l10n.unlockAccountPin),
         content: Padding(
           padding: const EdgeInsets.only(top: 16),
           child: CupertinoTextFormFieldRow(
