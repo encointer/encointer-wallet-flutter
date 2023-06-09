@@ -11,7 +11,7 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
+import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/detail_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
