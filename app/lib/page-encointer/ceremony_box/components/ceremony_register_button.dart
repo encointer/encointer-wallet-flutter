@@ -33,7 +33,6 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
   @override
   Widget build(BuildContext context) {
     final languageCode = Localizations.localeOf(context).languageCode;
-    final dic = context.l10n;
 
     return PrimaryButton(
       onPressed: !_submitting && widget.registerUntil != null ? _onPressed : null,
@@ -44,7 +43,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
                 children: [
                   const Icon(Iconsax.login_1),
                   const SizedBox(width: 6),
-                  Text('${dic.registerUntil} '),
+                  Text('${context.l10n.registerUntil} '),
                   MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode).add_Hm())
                 ],
               ),

@@ -32,7 +32,7 @@ Future<void> submitToJS(
   String? password,
   BigInt? tip,
 }) async {
-  final dic = context.l10n;
+  final l10n = context.l10n;
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
@@ -50,7 +50,7 @@ Future<void> submitToJS(
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
       _showTxStatusSnackBar(
-        getTxStatusTranslation(dic, store.account.txStatus),
+        getTxStatusTranslation(l10n, store.account.txStatus),
         const CupertinoActivityIndicator(),
       );
     }
@@ -68,9 +68,9 @@ Future<void> submitToJS(
       _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
   } else {
-    _showTxStatusSnackBar(dic.txQueuedOffline, null);
-    txInfo['notificationTitle'] = dic.notifySubmittedQueued;
-    txInfo['txError'] = dic.txError;
+    _showTxStatusSnackBar(l10n.txQueuedOffline, null);
+    txInfo['notificationTitle'] = l10n.notifySubmittedQueued;
+    txInfo['txError'] = l10n.txError;
     store.account.queueTx(txParams);
   }
 }
@@ -78,10 +78,10 @@ Future<void> submitToJS(
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) RootSnackBar.removeCurrent();
-  final dic = context.l10n;
+  final l10n = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
 
-  final message = getLocalizedTxErrorMessage(dic, errorMsg);
+  final message = getLocalizedTxErrorMessage(l10n, errorMsg);
 
   AppAlert.showDialog<void>(
     context,
@@ -97,7 +97,7 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
         },
       ),
       CupertinoButton(
-        child: Text(dic.ok),
+        child: Text(l10n.ok),
         onPressed: () => Navigator.of(context).pop(),
       ),
     ],
@@ -146,46 +146,46 @@ void _onTxFinish(
   }
 }
 
-String getTxStatusTranslation(AppLocalizations dic, TxStatus? status) {
+String getTxStatusTranslation(AppLocalizations l10n, TxStatus? status) {
   if (status == null) return '';
   return switch (status) {
-    TxStatus.Queued => dic.txQueued,
-    TxStatus.QueuedOffline => dic.txQueuedOffline,
-    TxStatus.Ready => dic.txReady,
-    TxStatus.Broadcast => dic.txBroadcast,
-    TxStatus.InBlock => dic.txInBlock,
-    TxStatus.Error => dic.txError,
+    TxStatus.Queued => l10n.txQueued,
+    TxStatus.QueuedOffline => l10n.txQueuedOffline,
+    TxStatus.Ready => l10n.txReady,
+    TxStatus.Broadcast => l10n.txBroadcast,
+    TxStatus.InBlock => l10n.txInBlock,
+    TxStatus.Error => l10n.txError,
   };
 }
 
-Map<String, String> getLocalizedTxErrorMessage(AppLocalizations dic, String txError) {
+Map<String, String> getLocalizedTxErrorMessage(AppLocalizations l10n, String txError) {
   if (txError.startsWith(lowPriorityTx)) {
-    return {'title': dic.txTooLowPriorityErrorTitle, 'body': dic.txTooLowPriorityErrorBody};
+    return {'title': l10n.txTooLowPriorityErrorTitle, 'body': l10n.txTooLowPriorityErrorBody};
   } else if (txError.startsWith(insufficientFundsError)) {
-    return {'title': dic.insufficientFundsErrorTitle, 'body': dic.insufficientFundsErrorBody};
+    return {'title': l10n.insufficientFundsErrorTitle, 'body': l10n.insufficientFundsErrorBody};
   }
 
   return switch (txError) {
     'encointerCeremonies.VotesNotDependable' => {
-        'title': dic.votesNotDependableErrorTitle,
-        'body': dic.votesNotDependableErrorBody
+        'title': l10n.votesNotDependableErrorTitle,
+        'body': l10n.votesNotDependableErrorBody
       },
     'encointerCeremonies.AlreadyEndorsed' => {
-        'title': dic.alreadyEndorsedErrorTitle,
-        'body': dic.alreadyEndorsedErrorBody
+        'title': l10n.alreadyEndorsedErrorTitle,
+        'body': l10n.alreadyEndorsedErrorBody
       },
     'encointerCeremonies.NoValidClaims' => {
-        'title': dic.noValidClaimsErrorTitle,
-        'body': dic.noValidClaimsErrorBody,
+        'title': l10n.noValidClaimsErrorTitle,
+        'body': l10n.noValidClaimsErrorBody,
       },
     'encointerCeremonies.RewardsAlreadyIssued' => {
-        'title': dic.rewardsAlreadyIssuedErrorTitle,
-        'body': dic.rewardsAlreadyIssuedErrorBody
+        'title': l10n.rewardsAlreadyIssuedErrorTitle,
+        'body': l10n.rewardsAlreadyIssuedErrorBody
       },
     'encointerBalances.BalanceTooLow' => {
-        'title': dic.balanceTooLowTitle,
-        'body': dic.balanceTooLowBody,
+        'title': l10n.balanceTooLowTitle,
+        'body': l10n.balanceTooLowBody,
       },
-    _ => {'title': dic.transactionError, 'body': txError},
+    _ => {'title': l10n.transactionError, 'body': txError},
   };
 }

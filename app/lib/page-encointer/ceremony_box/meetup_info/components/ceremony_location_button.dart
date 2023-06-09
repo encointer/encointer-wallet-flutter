@@ -11,7 +11,6 @@ class CeremonyLocationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -30,7 +29,7 @@ class CeremonyLocationButton extends StatelessWidget {
         children: [
           const Icon(Iconsax.location),
           const SizedBox(width: 6),
-          Text(dic.meetingPoint),
+          Text(context.l10n.meetingPoint),
         ],
       ),
     );

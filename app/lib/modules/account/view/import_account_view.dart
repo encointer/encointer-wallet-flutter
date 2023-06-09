@@ -47,7 +47,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final newAccountStore = context.watch<NewAccountStore>();
     final appStore = context.watch<AppStore>();
     return ScrollableForm(
@@ -55,20 +55,20 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
       listViewChildren: [
         const SizedBox(height: 50),
         Text(
-          dic.detailsEnter,
+          l10n.detailsEnter,
           textAlign: TextAlign.center,
           style: context.textTheme.displayMedium,
         ),
         const SizedBox(height: 10),
         Text(
-          dic.personalKeyEnter,
+          l10n.personalKeyEnter,
           textAlign: TextAlign.center,
           style: context.textTheme.displayMedium!.copyWith(color: Colors.black),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(
           key: const Key('create-account-name'),
-          hintText: dic.createHint,
+          hintText: l10n.createHint,
           labelText: context.l10n.accountName,
           controller: _nameCtrl,
           validator: (v) {
@@ -78,12 +78,12 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         TextFormField(
           key: const Key('account-source'),
           decoration: InputDecoration(
-            hintText: dic.mnemonic,
-            labelText: dic.personalKey,
+            hintText: l10n.mnemonic,
+            labelText: l10n.personalKey,
           ),
           controller: _keyCtrl,
           maxLines: 2,
-          validator: (String? value) => context.read<NewAccountStore>().validateAccount(dic, value?.trim() ?? ''),
+          validator: (String? value) => context.read<NewAccountStore>().validateAccount(l10n, value?.trim() ?? ''),
         ),
         const SizedBox(height: 20),
       ],
@@ -123,7 +123,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
             if (newAccountStore.loading) {
               return const CenteredActivityIndicator();
             } else {
-              return Text(appStore.account.accountList.isEmpty ? dic.next : dic.accountImport);
+              return Text(appStore.account.accountList.isEmpty ? l10n.next : l10n.accountImport);
             }
           }),
         ),
@@ -133,18 +133,18 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
   }
 
   Future<void> _onDuplicateAccount(BuildContext context, Map<String, dynamic> acc) async {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     await AppAlert.showDialog<void>(
       context,
       title: Text(Fmt.address(acc['address'] as String)!),
-      content: Text(dic.importDuplicate),
+      content: Text(l10n.importDuplicate),
       actions: [
         CupertinoButton(
-          child: Text(dic.cancel),
+          child: Text(l10n.cancel),
           onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
         ),
         CupertinoButton(
-          child: Text(dic.ok),
+          child: Text(l10n.ok),
           onPressed: () async {
             final appStore = context.read<AppStore>();
             await context.read<NewAccountStore>().saveAccount(webApi, appStore, acc, appStore.settings.cachedPin);

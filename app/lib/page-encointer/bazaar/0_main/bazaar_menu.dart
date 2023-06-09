@@ -8,7 +8,7 @@ class BazaarMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -19,11 +19,11 @@ class BazaarMenu extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
               ),
-              child: Text(dic.menu),
+              child: Text(l10n.menu),
             ),
           ),
           ListTile(
-            title: Text(dic.offeringsMy),
+            title: Text(l10n.offeringsMy),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -35,7 +35,7 @@ class BazaarMenu extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(dic.businessesMy),
+            title: Text(l10n.businessesMy),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -50,7 +50,7 @@ class BazaarMenu extends StatelessWidget {
             height: 50,
           ),
           ListTile(
-            title: Text(dic.notifications),
+            title: Text(l10n.notifications),
             onTap: () {
               // Update the state of the app
               // ...

@@ -15,11 +15,11 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: context.theme.cardColor,
       appBar: AppBar(
-        title: Text(dic.about),
+        title: Text(l10n.about),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -30,7 +30,7 @@ class AboutPage extends StatelessWidget {
               child: Assets.images.public.logoAbout.image(),
             ),
             Text(
-              dic.aboutBrief,
+              l10n.aboutBrief,
               style: context.textTheme.headlineMedium,
             ),
             const SizedBox(height: 8),
@@ -39,7 +39,7 @@ class AboutPage extends StatelessWidget {
               builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
                 Log.d('$snapshot', 'AboutPage');
                 if (snapshot.hasData) {
-                  return Text('${dic.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
+                  return Text('${l10n.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
                 } else {
                   return const CupertinoActivityIndicator();
                 }

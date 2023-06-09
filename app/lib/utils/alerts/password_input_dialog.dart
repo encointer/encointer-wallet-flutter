@@ -41,12 +41,12 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       _submitting = false;
     });
     if (res == null) {
-      final dic = context.l10n;
+      final l10n = context.l10n;
       AppAlert.showErrorDialog(
         context,
-        errorText: dic.wrongPinHint,
-        buttontext: dic.ok,
-        title: Text(dic.wrongPin),
+        errorText: l10n.wrongPinHint,
+        buttontext: l10n.ok,
+        title: Text(l10n.wrongPin),
       );
     } else {
       await widget.onSuccess(_passCtrl.text.trim());
@@ -62,11 +62,11 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return WillPopScope(
       onWillPop: () async => widget.canPop,
       child: CupertinoAlertDialog(
-        title: Text(dic.unlock),
+        title: Text(l10n.unlock),
         content: Padding(
           padding: const EdgeInsets.only(top: 16),
           child: CupertinoTextFormFieldRow(
@@ -75,10 +75,10 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             padding: EdgeInsets.zero,
             autofocus: true,
             keyboardType: TextInputType.number,
-            placeholder: dic.passOld,
+            placeholder: l10n.passOld,
             controller: _passCtrl,
             validator: (v) {
-              if (v == null || !Fmt.checkPassword(v.trim())) return dic.createPasswordError;
+              if (v == null || !Fmt.checkPassword(v.trim())) return l10n.createPasswordError;
 
               return null;
             },
@@ -91,7 +91,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             CupertinoButton(
               key: const Key('cancel-button'),
               onPressed: () => Navigator.pop(context),
-              child: Text(dic.cancel),
+              child: Text(l10n.cancel),
             ),
           CupertinoButton(
             key: const Key('password-ok'),
@@ -100,7 +100,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (_submitting) const CupertinoActivityIndicator(),
-                Text(dic.ok),
+                Text(l10n.ok),
               ],
             ),
           ),

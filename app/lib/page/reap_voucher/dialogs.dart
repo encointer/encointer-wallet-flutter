@@ -13,14 +13,14 @@ Future<void> showRedeemSuccessDialog(BuildContext context) {
 }
 
 Widget redeemSuccessDialog(BuildContext context) {
-  final dic = context.l10n;
+  final l10n = context.l10n;
 
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text(dic.redeemSuccess),
+    content: Text(l10n.redeemSuccess),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(dic.ok),
+        child: Text(l10n.ok),
         onPressed: () {
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
@@ -39,14 +39,14 @@ Future<void> showRedeemFailedDialog(BuildContext context, String? error) {
 }
 
 Widget redeemFailedDialog(BuildContext context, String? error) {
-  final dic = context.l10n;
+  final l10n = context.l10n;
 
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text('${dic.redeemFailure} $error'),
+    content: Text('${l10n.redeemFailure} $error'),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(dic.ok),
+        child: Text(l10n.ok),
         onPressed: () {
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
@@ -65,14 +65,14 @@ Future<void> showErrorDialog(BuildContext context, String error) {
 }
 
 Widget errorDialog(BuildContext context, String errorMsg) {
-  final dic = context.l10n;
+  final l10n = context.l10n;
 
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text('${dic.errorOccurred} $errorMsg'),
+    content: Text('${l10n.errorOccurred} $errorMsg'),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(dic.ok),
+        child: Text(l10n.ok),
         onPressed: () {
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
@@ -91,20 +91,20 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      final dic = context.l10n;
+      final l10n = context.l10n;
 
-      final dialogContent = dic.voucherDifferentNetworkAndCommunity(cid.toFmtString(), network);
+      final dialogContent = l10n.voucherDifferentNetworkAndCommunity(cid.toFmtString(), network);
 
       return CupertinoAlertDialog(
         title: Container(),
         content: Text(dialogContent),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(dic.cancel),
+            child: Text(l10n.cancel),
             onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
           ),
           CupertinoButton(
-            child: Text(dic.ok),
+            child: Text(l10n.ok),
             onPressed: () async {
               final result =
                   await changeWithLoadingDialog(context, () => changeNetworkAndCommunity(store, api, network, cid));
@@ -149,20 +149,20 @@ Future<ChangeResult?> showChangeCommunityDialog(
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      final dic = context.l10n;
+      final l10n = context.l10n;
 
-      final dialogContent = dic.voucherDifferentCommunity(cid.toFmtString());
+      final dialogContent = l10n.voucherDifferentCommunity(cid.toFmtString());
 
       return CupertinoAlertDialog(
         title: Container(),
         content: Text(dialogContent),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(dic.cancel),
+            child: Text(l10n.cancel),
             onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
           ),
           CupertinoButton(
-            child: Text(dic.ok),
+            child: Text(l10n.ok),
             onPressed: () async {
               final result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
               Navigator.of(context).pop(result);

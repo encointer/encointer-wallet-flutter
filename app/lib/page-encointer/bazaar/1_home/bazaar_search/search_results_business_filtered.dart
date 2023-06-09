@@ -17,13 +17,13 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     const titleStyle = TextStyle(fontWeight: FontWeight.bold);
 
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            '${dic.filter} ${dic.businessesFound}',
+            '${l10n.filter} ${l10n.businessesFound}',
             style: titleStyle,
           ),
         ),

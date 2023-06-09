@@ -94,11 +94,11 @@ class _ProfileState extends State<Profile> {
         Navigator.pop(context);
       });
     }
-    final dic = context.l10n;
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.title),
+        title: Text(l10n.title),
         iconTheme: const IconThemeData(color: AppColors.encointerGrey), //change your color here,
         centerTitle: true,
         backgroundColor: Colors.transparent,
@@ -116,7 +116,7 @@ class _ProfileState extends State<Profile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      dic.accounts,
+                      l10n.accounts,
                       style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
                     ),
                     IconButton(
@@ -152,7 +152,7 @@ class _ProfileState extends State<Profile> {
               ),
               ListTile(
                 title: Text(
-                  dic.changeYourPin,
+                  l10n.changeYourPin,
                   style: context.textTheme.displaySmall,
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
@@ -160,26 +160,26 @@ class _ProfileState extends State<Profile> {
               ),
               ListTile(
                 key: const Key('remove-all-accounts'),
-                title: Text(dic.accountsDeleteAll, style: h3Grey),
+                title: Text(l10n.accountsDeleteAll, style: h3Grey),
                 onTap: () => showRemoveAccountsDialog(context, store),
               ),
               ListTile(
-                  title: Text(dic.reputationOverall, style: h3Grey),
+                  title: Text(l10n.reputationOverall, style: h3Grey),
                   trailing: store.encointer.account?.reputations != null
                       ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
-                      : Text(dic.fetchingReputations)),
+                      : Text(l10n.fetchingReputations)),
               ListTile(
-                title: Text(dic.about, style: context.textTheme.displaySmall),
+                title: Text(l10n.about, style: context.textTheme.displaySmall),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
                 key: const Key('settings-language'),
-                title: Text(dic.settingLang, style: h3Grey),
+                title: Text(l10n.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
               SwitchListTile(
-                title: Text(dic.biometricAuth, style: h3Grey),
+                title: Text(l10n.biometricAuth, style: h3Grey),
                 onChanged: (value) async {
                   final appStore = context.read<AppStore>();
                   final appSettings = context.read<AppSettings>();
@@ -194,7 +194,7 @@ class _ProfileState extends State<Profile> {
               ),
               const SendToTrelloListTile(),
               ListTile(
-                title: Text(dic.developer, style: h3Grey),
+                title: Text(l10n.developer, style: h3Grey),
                 trailing: Checkbox(
                   key: const Key('dev-mode'),
                   value: appSettingsStore.developerMode,
@@ -224,7 +224,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     ListTile(
-                      title: Text(dic.enableBazaar, style: h3Grey),
+                      title: Text(l10n.enableBazaar, style: h3Grey),
                       trailing: Checkbox(
                         value: store.settings.enableBazaar,
                         // Fixme: Need to change the tab to update the tabList. But, do we care? This is only
@@ -262,21 +262,21 @@ class _ProfileState extends State<Profile> {
 }
 
 Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
-  final dic = context.l10n;
+  final l10n = context.l10n;
 
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text(dic.accountsDelete),
+        title: Text(l10n.accountsDelete),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(dic.cancel),
+            child: Text(l10n.cancel),
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoButton(
             key: const Key('remove-all-accounts-check'),
-            child: Text(dic.ok),
+            child: Text(l10n.ok),
             onPressed: () async {
               final accounts = store.account.accountListAll;
 

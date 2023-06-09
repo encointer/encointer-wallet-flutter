@@ -13,24 +13,24 @@ class UnregisteredLinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return InkWell(
       key: const Key('unregister-button'),
       onTap: () async {
         final shouldUnregister = await AppAlert.showConfirmDialog<bool>(
           context: context,
           onCancel: () => Navigator.pop(context, false),
-          title: Text(dic.unregisterDialogTitle, key: const Key('unregister-dialog')),
+          title: Text(l10n.unregisterDialogTitle, key: const Key('unregister-dialog')),
           onOK: () => Navigator.pop(context, true),
         );
         if (shouldUnregister ?? false) {
-          AppAlert.showLoadingDialog(context, dic.loading);
+          AppAlert.showLoadingDialog(context, l10n.loading);
           await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
           Navigator.pop(context);
         }
       },
       child: Text(
-        dic.unregister,
+        l10n.unregister,
         style: context.textTheme.headlineMedium!
             .copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
       ),

@@ -122,7 +122,7 @@
 //   // String get balanceTransferNotificationTitle => 'Transaktion abgeschlossen';
 //   // @override
 //   // String get unregisterParticipantNotificationBody =>
-//   //     'Du hast dich abgemeldet vom nächsten Cycle. Du kannst dich wider anmelden, wenn du es dir anders überlegst.';
+//   //     'Du hast l10nh abgemeldet vom nächsten Cycle. Du kannst l10nh wider anmelden, wenn du es dir anders überlegst.';
 //   // @override
 //   // String get unregisterParticipantNotificationTitle => 'Registrierung storniert';
 //   // @override

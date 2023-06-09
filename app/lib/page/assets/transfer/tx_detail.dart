@@ -31,7 +31,7 @@ class TxDetail extends StatelessWidget {
   final List<DetailInfoItem>? info;
 
   List<Widget> _buildListView(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     Widget buildLabel(String name) {
       return Container(
           padding: const EdgeInsets.only(left: 8),
@@ -51,7 +51,7 @@ class TxDetail extends StatelessWidget {
             child: success! ? Assets.images.assets.success.image() : Assets.images.assets.assetsFail.image(),
           ),
           Text(
-            '$action ${success! ? dic.success : dic.fail}',
+            '$action ${success! ? l10n.success : l10n.fail}',
             style: context.textTheme.headlineMedium,
           ),
           Padding(
@@ -86,15 +86,15 @@ class TxDetail extends StatelessWidget {
     }
     list.addAll(<Widget>[
       ListTile(
-        leading: buildLabel(dic.event),
+        leading: buildLabel(l10n.event),
         title: Text(eventId!),
       ),
       ListTile(
-        leading: buildLabel(dic.block),
+        leading: buildLabel(l10n.block),
         title: Text('#$blockNum'),
       ),
       ListTile(
-        leading: buildLabel(dic.hash),
+        leading: buildLabel(l10n.hash),
         title: Text(Fmt.address(hash)!),
         trailing: SizedBox(
           width: 140,

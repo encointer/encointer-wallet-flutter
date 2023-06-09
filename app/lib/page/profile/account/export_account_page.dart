@@ -21,7 +21,7 @@ class ExportAccountPage extends StatelessWidget {
   final TextEditingController _passCtrl = TextEditingController();
 
   void _showPasswordDialog(BuildContext context, String seedType) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final store = context.read<AppStore>();
 
     Future<void> onOk() async {
@@ -34,8 +34,8 @@ class ExportAccountPage extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic.wrongPin),
-              content: Text(dic.wrongPinHint),
+              title: Text(l10n.wrongPin),
+              content: Text(l10n.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(context.l10n.ok),
@@ -60,19 +60,19 @@ class ExportAccountPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(dic.confirmPin),
+          title: Text(l10n.confirmPin),
           content: Padding(
             padding: const EdgeInsets.only(top: 16),
             child: CupertinoTextFormFieldRow(
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
               padding: EdgeInsets.zero,
               keyboardType: TextInputType.number,
-              placeholder: dic.passOld,
+              placeholder: l10n.passOld,
               controller: _passCtrl,
               // clearButtonMode: OverlayVisibilityMode.editing,
               validator: (v) {
                 if (v == null || !Fmt.checkPassword(v.trim())) {
-                  return dic.createPasswordError;
+                  return l10n.createPasswordError;
                 }
                 return null;
               },
@@ -100,16 +100,16 @@ class ExportAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.export),
+        title: Text(l10n.export),
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: Text(dic.keystore),
+            title: Text(l10n.keystore),
             trailing: const Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
               final json = AccountData.toJson(context.read<AppStore>().account.currentAccount)..remove('name');
@@ -128,7 +128,7 @@ class ExportAccountPage extends StatelessWidget {
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData && snapshot.data!) {
                 return ListTile(
-                  title: Text(dic.mnemonic),
+                  title: Text(l10n.mnemonic),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                   onTap: () => _showPasswordDialog(context, AccountStore.seedTypeMnemonic),
                 );
@@ -145,7 +145,7 @@ class ExportAccountPage extends StatelessWidget {
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData && snapshot.data!) {
                 return ListTile(
-                  title: Text(dic.rawSeed),
+                  title: Text(l10n.rawSeed),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                   onTap: () => _showPasswordDialog(context, AccountStore.seedTypeRawSeed),
                 );

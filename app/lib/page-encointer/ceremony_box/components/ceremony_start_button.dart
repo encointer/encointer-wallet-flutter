@@ -11,7 +11,6 @@ class CeremonyStartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return PrimaryButton(
       onPressed: onPressed,
       child: Row(
@@ -19,7 +18,7 @@ class CeremonyStartButton extends StatelessWidget {
         children: [
           const Icon(Iconsax.login_1),
           const SizedBox(width: 6),
-          Text(dic.startGathering),
+          Text(context.l10n.startGathering),
         ],
       ),
     );

@@ -24,7 +24,7 @@ class AccountSharePage extends StatefulWidget {
 class _AccountSharePageState extends State<AccountSharePage> {
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
 
     final accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
@@ -39,7 +39,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.share),
+        title: Text(l10n.share),
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
@@ -55,7 +55,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
           child: Column(
             children: [
               Text(
-                dic.qrScanHintAccount,
+                l10n.qrScanHintAccount,
                 style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
                 textAlign: TextAlign.center,
               ),
@@ -76,7 +76,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
               ),
               const Spacer(),
               Text(
-                dic.shareLinkHint,
+                l10n.shareLinkHint,
                 textAlign: TextAlign.center,
                 style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
               ),
@@ -88,7 +88,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   children: [
                     const Icon(Icons.share),
                     const SizedBox(width: 12),
-                    Text(dic.sendLink, style: context.textTheme.displaySmall),
+                    Text(l10n.sendLink, style: context.textTheme.displaySmall),
                   ],
                 ),
                 onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),

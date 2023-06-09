@@ -15,7 +15,7 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final textTheme = Theme.of(context).textTheme;
     return Center(
       child: Column(
@@ -24,13 +24,13 @@ class ErrorView extends StatelessWidget {
           const Icon(Icons.error_outline, size: 70),
           const SizedBox(height: 40),
           Text(
-            dic.error,
+            l10n.error,
             style: textTheme.displayLarge!.copyWith(color: AppColors.encointerGrey),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
           Text(
-            errorMessage ?? dic.unknownError,
+            errorMessage ?? l10n.unknownError,
             style: textTheme.titleLarge!.copyWith(color: AppColors.encointerGrey),
             textAlign: TextAlign.center,
           ),
@@ -38,7 +38,7 @@ class ErrorView extends StatelessWidget {
           if (onRetryPressed != null)
             ElevatedButton(
               onPressed: onRetryPressed,
-              child: Text(dic.retry),
+              child: Text(l10n.retry),
             ),
           const SizedBox(height: 40),
         ],

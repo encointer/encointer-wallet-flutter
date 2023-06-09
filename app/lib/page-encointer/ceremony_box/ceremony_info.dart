@@ -30,8 +30,6 @@ class CeremonyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final languageCode = Localizations.localeOf(context).languageCode;
-    final dic = context.l10n;
-
     return Container(
       child: meetupTime != null
           ? Column(
@@ -55,7 +53,7 @@ class CeremonyInfo extends StatelessWidget {
                       )
                     else
                       Text(
-                        dic.gatheringSuccessfullyCompleted,
+                        context.l10n.gatheringSuccessfullyCompleted,
                         style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerBlack),
                       ),
                     CeremonyInfoAndCalendar(

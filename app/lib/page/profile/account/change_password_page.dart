@@ -38,7 +38,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
         _submitting = true;
       });
 
-      final dic = context.l10n;
+      final l10n = context.l10n;
       final passOld = _passOldCtrl.text.trim();
       final passNew = _passCtrl.text.trim();
       // check password
@@ -51,8 +51,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic.wrongPin),
-              content: Text(dic.wrongPinHint),
+              title: Text(l10n.wrongPin),
+              content: Text(l10n.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(context.l10n.ok),
@@ -90,8 +90,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic.passSuccess),
-              content: Text(dic.passSuccessTxt),
+              title: Text(l10n.passSuccess),
+              content: Text(l10n.passSuccessTxt),
               actions: <Widget>[
                 CupertinoButton(
                     child: Text(context.l10n.ok),
@@ -109,10 +109,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.changeYourPin),
+        title: Text(l10n.changeYourPin),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -128,23 +128,23 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       shrinkWrap: true,
                       children: <Widget>[
                         Text(
-                          dic.hintEnterCurrentPin,
+                          l10n.hintEnterCurrentPin,
                           textAlign: TextAlign.center,
                           style: context.textTheme.displayMedium,
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          dic.hintThenEnterANewPin,
+                          l10n.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
                           style: context.textTheme.displayMedium!.copyWith(color: Colors.black),
                         ),
                         const SizedBox(height: 30),
                         EncointerTextFormField(
-                          labelText: dic.passOld,
+                          labelText: l10n.passOld,
                           controller: _passOldCtrl,
                           validator: (v) {
                             if (v == null || !Fmt.checkPassword(v.trim())) {
-                              return dic.createPasswordError;
+                              return l10n.createPasswordError;
                             }
                             return null;
                           },
@@ -154,11 +154,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         ),
                         const SizedBox(height: 20),
                         EncointerTextFormField(
-                          labelText: dic.yourNewPin,
+                          labelText: l10n.yourNewPin,
                           controller: _passCtrl,
                           validator: (v) {
                             if (v == null || !Fmt.checkPassword(v.trim())) {
-                              return dic.createPasswordError;
+                              return l10n.createPasswordError;
                             }
                             return null;
                           },
@@ -168,11 +168,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         ),
                         const SizedBox(height: 20),
                         EncointerTextFormField(
-                          labelText: dic.pleaseConfirmYourNewPin,
+                          labelText: l10n.pleaseConfirmYourNewPin,
                           controller: _pass2Ctrl,
                           validator: (v) {
                             if (v == null || v.trim() != _passCtrl.text) {
-                              return dic.createPassword2Error;
+                              return l10n.createPassword2Error;
                             }
                             return null;
                           },
@@ -192,7 +192,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                   children: [
                     if (_submitting) const CupertinoActivityIndicator(),
                     Text(
-                      dic.contactSave,
+                      l10n.contactSave,
                       style: context.textTheme.displaySmall,
                     ),
                   ],

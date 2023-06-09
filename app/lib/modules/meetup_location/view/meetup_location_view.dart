@@ -17,10 +17,10 @@ class MeetupLocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.meetupLocation),
+        title: Text(l10n.meetupLocation),
       ),
       body: EncointerMap(
         locations: [meetupLocation.toLatLng()],
@@ -28,7 +28,7 @@ class MeetupLocationPage extends StatelessWidget {
         // zoom level is equivalent to 1 km^2.
         initialZoom: 17,
         popupBuilder: (BuildContext context, Marker marker) => PopupBuilder(
-          title: dic.showRouteMeetupLocation,
+          title: l10n.showRouteMeetupLocation,
           description: '',
           onTap: () => AppLaunch.launchMap(meetupLocation),
           height: 40,
@@ -40,7 +40,7 @@ class MeetupLocationPage extends StatelessWidget {
               context: context,
               onOK: () => AppLaunch.launchMap(meetupLocation),
               onCancel: () => Navigator.pop(context),
-              title: Text(dic.openMapApplication),
+              title: Text(l10n.openMapApplication),
             );
           }
         },

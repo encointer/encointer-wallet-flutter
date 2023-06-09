@@ -54,10 +54,10 @@ enum TransactionType {
   incoming;
 
   String getText(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return switch (this) {
-      TransactionType.outgoing => dic.sent,
-      TransactionType.incoming => dic.received,
+      TransactionType.outgoing => l10n.sent,
+      TransactionType.incoming => l10n.received,
     };
   }
 }

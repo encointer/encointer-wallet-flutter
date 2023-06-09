@@ -23,14 +23,14 @@ class _Settings extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
 
     String getLang(String code) {
       return switch (code) {
         'en' => 'English',
         'de' => 'Deutsch',
-        _ => dic.settingLangAuto,
+        _ => l10n.settingLangAuto,
       };
     }
 
@@ -82,7 +82,7 @@ class _Settings extends State<SettingsPage> {
                   width: 36,
                   child: Image.asset('assets/images/public/${store.settings.endpoint.info}.png'),
                 ),
-                title: Text(dic.settingNode),
+                title: Text(l10n.settingNode),
                 subtitle: Text(store.settings.endpoint.text ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
@@ -92,13 +92,13 @@ class _Settings extends State<SettingsPage> {
                   width: 36,
                   child: Image.asset('assets/images/public/${store.settings.customSS58Format['info']}.png'),
                 ),
-                title: Text(dic.settingPrefix),
+                title: Text(l10n.settingPrefix),
                 subtitle: Text(store.settings.customSS58Format['text'] as String? ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
-                title: Text(dic.settingLang),
+                title: Text(l10n.settingLang),
                 subtitle: Text(getLang(store.settings.localeCode)),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: onLanguageTap,

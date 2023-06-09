@@ -102,7 +102,6 @@ class BusinessAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     final businessFormState = Provider.of<BusinessFormState>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +133,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.streetAddendum = value,
                   decoration: InputDecoration(
-                    labelText: dic.no,
+                    labelText: context.l10n.no,
                     errorText: businessFormState.errors.streetAddendum,
                   ),
                 ),

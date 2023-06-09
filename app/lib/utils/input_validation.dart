@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 class InputValidation {
   static String? validateAccountName(BuildContext context, String? input, List<AccountData> existingAccounts) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
 
-    if (input == null) return dic.contactNameError;
+    if (input == null) return l10n.contactNameError;
 
     final name = input.trim();
-    if (name.isEmpty) return dic.contactNameError;
+    if (name.isEmpty) return l10n.contactNameError;
 
     final exist = existingAccounts.indexWhere((i) => i.name == name);
-    if (exist > -1) return dic.contactNameAlreadyExists;
+    if (exist > -1) return l10n.contactNameAlreadyExists;
 
     return null;
   }

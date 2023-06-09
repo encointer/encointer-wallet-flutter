@@ -16,7 +16,6 @@ class RemoteNodeListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     final endpoints = List<EndpointData>.of(networkEndpoints)
       ..retainWhere((i) => i.info == context.watch<AppStore>().settings.endpoint.info);
     final list = endpoints
@@ -52,7 +51,7 @@ class RemoteNodeListPage extends StatelessWidget {
         .toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.settingNodeList),
+        title: Text(context.l10n.settingNodeList),
         centerTitle: true,
       ),
       body: SafeArea(

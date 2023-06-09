@@ -60,13 +60,13 @@ class _ReceivePageState extends State<ReceivePage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(_appStore, webApi, dic);
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(_appStore, webApi, l10n);
 
           resetObservedPendingExtrinsicCounter = 0;
         } else {
@@ -92,7 +92,7 @@ class _ReceivePageState extends State<ReceivePage> {
             final delta = newBalance - oldBalance;
             Log.d('[receivePage] balance was $oldBalance, changed by $delta', 'ReceivePage');
             if (delta > demurrageRate!) {
-              final msg = dic.incomingConfirmed(
+              final msg = l10n.incomingConfirmed(
                 delta,
                 store.encointer.community?.metadata?.symbol ?? 'null',
                 store.account.currentAccount.name,
@@ -100,7 +100,7 @@ class _ReceivePageState extends State<ReceivePage> {
               Log.d('[receivePage] $msg', 'ReceivePage');
               store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
 
-              NotificationPlugin.showNotification(44, dic.fundsReceived, msg, cid: cid.toFmtString());
+              NotificationPlugin.showNotification(44, l10n.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
         });
@@ -124,7 +124,7 @@ class _ReceivePageState extends State<ReceivePage> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: Text(dic.receive),
+            title: Text(l10n.receive),
             leading: Container(),
             actions: [
               IconButton(
@@ -144,7 +144,7 @@ class _ReceivePageState extends State<ReceivePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 48),
                       child: Text(
-                        dic.qrScanHint,
+                        l10n.qrScanHint,
                         style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerBlack),
                         textAlign: TextAlign.center,
                       ),
@@ -153,7 +153,7 @@ class _ReceivePageState extends State<ReceivePage> {
                     Padding(
                       padding: const EdgeInsets.all(30),
                       child: EncointerTextFormField(
-                        labelText: dic.invoiceAmount,
+                        labelText: l10n.invoiceAmount,
                         textStyle: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
@@ -179,7 +179,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   ],
                 ),
                 Text(
-                  '${dic.receiverAccount} ${store.account.currentAccount.name}',
+                  '${l10n.receiverAccount} ${store.account.currentAccount.name}',
                   style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey),
                   textAlign: TextAlign.center,
                 ),
@@ -191,9 +191,9 @@ class _ReceivePageState extends State<ReceivePage> {
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
                     QrCodeShareOrPrintView(
                       qrCode: invoice.toQrPayload(),
-                      shareText: dic.shareInvoice,
-                      printText: dic.print,
-                      previewText: dic.preview,
+                      shareText: l10n.shareInvoice,
+                      printText: l10n.print,
+                      previewText: l10n.preview,
                       onTap: () => {
                         if (_formKey.currentState!.validate())
                           {
@@ -215,7 +215,7 @@ class _ReceivePageState extends State<ReceivePage> {
 /// Shows a [SnackBar] if we found an extrinsic in a transaction pool addressed to the current account.
 ///
 /// Returns a true if such an extrinsic was found.
-Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, AppLocalizations dic) async {
+Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, AppLocalizations l10n) async {
   var observedExtrinsics = false;
 
   try {
@@ -226,7 +226,7 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, AppLocal
       for (final xt in extrinsics) {
         if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {
           RootSnackBar.showMsg(
-            dic.observedPendingExtrinsic,
+            l10n.observedPendingExtrinsic,
             durationMillis: 5000,
             textColor: Colors.black,
             backgroundColor: Colors.lightBlue,

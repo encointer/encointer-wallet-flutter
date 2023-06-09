@@ -12,7 +12,6 @@ class SearchResultsOffering extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Text('${results.length} ${context.l10n.offeringsFound}'),
@@ -23,7 +22,7 @@ class SearchResultsOffering extends StatelessWidget {
             aspectRatio: 6,
             child: ListTile(
               leading: const Icon(Icons.filter_alt),
-              title: Text(dic.filter),
+              title: Text(context.l10n.filter),
               onTap: () {
                 Navigator.push(
                   context,

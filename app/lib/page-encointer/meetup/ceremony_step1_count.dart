@@ -35,11 +35,11 @@ class CeremonyStep1Count extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.keySigningCycle),
+        title: Text(l10n.keySigningCycle),
         leading: Container(),
         actions: [
           IconButton(
@@ -61,20 +61,20 @@ class CeremonyStep1Count extends StatelessWidget {
                     const SizedBox(height: 48),
                     Center(
                       child: Text(
-                        dic.count,
+                        l10n.count,
                         style: context.textTheme.displayMedium,
                       ),
                     ),
                     Center(
                       child: Text(
-                        dic.howManyParticipantsShowedUp,
+                        l10n.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
                         style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 2),
                       ),
                     ),
                     const SizedBox(height: 48),
                     EncointerTextFormField(
-                      labelText: dic.numberOfAttendees,
+                      labelText: l10n.numberOfAttendees,
                       textStyle: context.textTheme.displayLarge!.copyWith(color: AppColors.encointerBlack),
                       controller: _attendeesCountController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -91,7 +91,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     const Icon(Iconsax.arrow_right_2),
                     const SizedBox(width: 12),
                     Text(
-                      dic.next,
+                      l10n.next,
                       style: context.textTheme.displaySmall!.copyWith(color: context.colorScheme.background),
                     ),
                   ],

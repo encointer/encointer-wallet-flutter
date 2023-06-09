@@ -42,7 +42,7 @@ class AppAlert {
     Widget? title,
     Widget? content,
   }) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return showCupertinoDialog<T>(
       context: context,
       builder: (BuildContext context) {
@@ -52,12 +52,12 @@ class AppAlert {
           actions: <Widget>[
             CupertinoButton(
               onPressed: onCancel,
-              child: Text(dic.cancel),
+              child: Text(l10n.cancel),
             ),
             CupertinoButton(
               key: const Key('ok-button'),
               onPressed: onOK,
-              child: Text(dic.ok),
+              child: Text(l10n.ok),
             ),
           ],
         );

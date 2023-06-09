@@ -31,8 +31,6 @@ class CeremonyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
-
     return Observer(builder: (BuildContext context) {
       final meetupTime = store.encointer.community?.meetupTimeOverride ??
           store.encointer.community?.meetupTime ??
@@ -101,7 +99,7 @@ class CeremonyBox extends StatelessWidget {
                         children: [
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 6),
-                          Text(dic.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount)),
+                          Text(context.l10n.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount)),
                         ],
                       ),
                       onPressed: () => submitAttestClaims(context, store, api),
@@ -121,7 +119,7 @@ class CeremonyBox extends StatelessWidget {
 }
 
 Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
-  final dic = context.l10n;
+  final l10n = context.l10n;
   final communityAccount = store.encointer.communityAccount;
 
   switch (store.encointer.currentPhase) {
@@ -133,7 +131,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
             CeremonyNotification(
               key: const Key('is-registered-info'),
               notificationIconData: Iconsax.tick_square,
-              notification: dic.youAreRegisteredAs(
+              notification: l10n.youAreRegisteredAs(
                 store.encointer.communityAccount!.participantType!.toValue(),
               ),
             ),
@@ -165,20 +163,20 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return CeremonyNotification(
           key: const Key('account-unassigned'),
           notificationIconData: Iconsax.close_square,
-          notification: dic.youAreNotRegisteredPleaseRegisterNextTime,
+          notification: l10n.youAreNotRegisteredPleaseRegisterNextTime,
         );
       }
     case CeremonyPhase.Attesting:
       if (!(store.encointer.communityAccount?.isAssigned ?? false)) {
         return CeremonyNotification(
           notificationIconData: Iconsax.close_square,
-          notification: dic.youAreNotRegisteredPleaseRegisterNextTime,
+          notification: l10n.youAreNotRegisteredPleaseRegisterNextTime,
         );
       } else {
         if (store.encointer.communityAccount?.meetupCompleted ?? false) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
-            notification: dic.successfullySentNAttestations(
+            notification: l10n.successfullySentNAttestations(
               store.encointer.communityAccount!.scannedAttendeesCount,
             ),
           );

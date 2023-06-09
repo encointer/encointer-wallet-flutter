@@ -66,9 +66,9 @@ abstract class _LoginStoreBase with Store {
 
   Future<void> useBiometricAuth(BuildContext context) async {
     if (deviceSupportedBiometricAuth) {
-      final dic = context.l10n;
-      final isPinCorrect = await localAuthenticate(dic.localizedReason);
-      await _navigate(context, isPinCorrect: isPinCorrect, dic: dic);
+      final l10n = context.l10n;
+      final isPinCorrect = await localAuthenticate(l10n.localizedReason);
+      await _navigate(context, isPinCorrect: isPinCorrect, l10n: l10n);
     }
   }
 
@@ -80,17 +80,16 @@ abstract class _LoginStoreBase with Store {
   }
 
   Future<void> usePincodeAuth(BuildContext context) async {
-    final dic = context.l10n;
     final appStore = context.read<AppStore>();
     final isPinCorrect = _checkPinCode(appStore.settings.cachedPin);
-    await _navigate(context, isPinCorrect: isPinCorrect, dic: dic);
+    await _navigate(context, isPinCorrect: isPinCorrect, l10n: context.l10n);
   }
 
-  Future<void> _navigate(BuildContext context, {required bool isPinCorrect, required AppLocalizations dic}) async {
+  Future<void> _navigate(BuildContext context, {required bool isPinCorrect, required AppLocalizations l10n}) async {
     if (isPinCorrect) {
       await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
-      RootSnackBar.showMsg(dic.pinError);
+      RootSnackBar.showMsg(l10n.pinError);
     }
   }
 

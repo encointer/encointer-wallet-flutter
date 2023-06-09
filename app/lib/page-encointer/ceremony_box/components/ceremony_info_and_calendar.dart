@@ -16,8 +16,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
-    final calendarEventToAdd = CeremonyBoxService.createCalendarEvent(nextCeremonyDate, dic);
+    final calendarEventToAdd = CeremonyBoxService.createCalendarEvent(nextCeremonyDate, context.l10n);
     final showAddToCalendarIconButton = CeremonyBoxService.showAddToCalendarIconButton();
     return Column(
       children: [

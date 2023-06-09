@@ -19,15 +19,15 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const titleStyle = TextStyle(fontWeight: FontWeight.bold, height: 2.5);
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Filter ${dic.found} ${dic.offerings}'),
+        title: Text('Filter ${l10n.found} ${l10n.offerings}'),
       ),
       body: ListView(children: [
-        ToggleButtonsWithTitle(dic.categories, categories, null),
+        ToggleButtonsWithTitle(l10n.categories, categories, null),
         Text(
-          dic.price,
+          l10n.price,
           style: titleStyle,
         ),
         RangeSlider(
@@ -43,7 +43,7 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
           },
         ),
         Text(
-          dic.delivery,
+          l10n.delivery,
           style: titleStyle,
         ),
         ToggleButtons(
@@ -51,7 +51,7 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
           children: deliveryOptions.map(Text.new).toList(),
         ),
         Text(
-          dic.productNewness,
+          l10n.productNewness,
           style: titleStyle,
         ),
         ToggleButtons(
@@ -63,10 +63,10 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
         children: [
           ElevatedButton(
               onPressed: () {}, // TODO state management
-              child: Text(dic.reset)),
+              child: Text(l10n.reset)),
           ElevatedButton(
               onPressed: () {}, //TODO state management
-              child: Text(dic.apply)),
+              child: Text(l10n.apply)),
         ],
       ),
     );

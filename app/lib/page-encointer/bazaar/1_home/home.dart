@@ -12,14 +12,14 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Stack(fit: StackFit.expand, children: [
       Padding(
         padding: const EdgeInsets.only(top: 54),
         child: ListView(children: [
-          HorizontalBazaarItemList(newInBazaar, dic.bazaarNew, cardHeight, cardWidth),
-          HorizontalBazaarItemList(businessesInVicinity, dic.businessesVicinity, cardHeight, cardWidth),
-          HorizontalBazaarItemList(lastVisited, dic.lastVisited, cardHeight, cardWidth),
+          HorizontalBazaarItemList(newInBazaar, l10n.bazaarNew, cardHeight, cardWidth),
+          HorizontalBazaarItemList(businessesInVicinity, l10n.businessesVicinity, cardHeight, cardWidth),
+          HorizontalBazaarItemList(lastVisited, l10n.lastVisited, cardHeight, cardWidth),
         ]),
       ),
     ]);

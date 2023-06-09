@@ -92,9 +92,9 @@ class _TransferPageState extends State<TransferPage> {
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          final dic = context.l10n;
+          final l10n = context.l10n;
           return CupertinoAlertDialog(
-            title: Text(dic.chosenRightCommunity),
+            title: Text(l10n.chosenRightCommunity),
           );
         },
       );
@@ -113,14 +113,14 @@ class _TransferPageState extends State<TransferPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
     Log.d('[transferPage]: available: $available', 'TransferPage');
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.transfer),
+        title: Text(l10n.transfer),
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
@@ -154,7 +154,7 @@ class _TransferPageState extends State<TransferPage> {
                       }
                     }),
                     Text(
-                      dic.yourBalanceFor(Fmt.accountName(context, store.account.currentAccount)),
+                      l10n.yourBalanceFor(Fmt.accountName(context, store.account.currentAccount)),
                       style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
                       textAlign: TextAlign.center,
                     ),
@@ -179,7 +179,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                     const SizedBox(height: 24),
                     EncointerTextFormField(
-                      labelText: dic.amountToBeTransferred,
+                      labelText: l10n.amountToBeTransferred,
                       textStyle: context.textTheme.displayLarge!.copyWith(color: AppColors.encointerBlack),
                       inputFormatters: [UI.decimalInputFormatter()],
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -187,10 +187,10 @@ class _TransferPageState extends State<TransferPage> {
                       textFormFieldKey: const Key('transfer-amount-input'),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return dic.amountError;
+                          return l10n.amountError;
                         }
                         if (balanceTooLow(value, available!, encointerCurrenciesDecimals)) {
-                          return dic.insufficientBalance;
+                          return l10n.insufficientBalance;
                         }
                         return null;
                       },
@@ -199,7 +199,7 @@ class _TransferPageState extends State<TransferPage> {
                     const SizedBox(height: 24),
                     AddressInputField(
                       store,
-                      label: dic.address,
+                      label: l10n.address,
                       initialValue: _accountTo,
                       onChanged: (AccountData acc) {
                         setState(() {
@@ -215,7 +215,7 @@ class _TransferPageState extends State<TransferPage> {
               if (context.select<AppSettings, bool>((store) => store.developerMode))
                 Center(
                   child: Text(
-                    '${dic.fee}: TODO compute Fee', // TODO compute fee #589
+                    '${l10n.fee}: TODO compute Fee', // TODO compute fee #589
                     style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
                   ),
                 ),
@@ -236,7 +236,7 @@ class _TransferPageState extends State<TransferPage> {
                     children: [
                       const Icon(Iconsax.login_1),
                       const SizedBox(width: 12),
-                      Text(dic.next),
+                      Text(l10n.next),
                     ],
                   ),
                 ),

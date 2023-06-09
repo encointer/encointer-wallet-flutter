@@ -39,7 +39,7 @@ class _Contact extends State<ContactPage> {
       setState(() {
         _submitting = true;
       });
-      final dic = context.l10n;
+      final l10n = context.l10n;
       final addr = _addressCtrl.text.replaceAll(' ', '');
       final pubKey = Fmt.ss58Decode(addr).pubKey;
 
@@ -62,7 +62,7 @@ class _Contact extends State<ContactPage> {
             builder: (BuildContext context) {
               return CupertinoAlertDialog(
                 title: Container(),
-                content: Text(dic.contactAlreadyExists),
+                content: Text(l10n.contactAlreadyExists),
                 actions: <Widget>[
                   CupertinoButton(
                     child: Text(context.l10n.ok),
@@ -103,7 +103,7 @@ class _Contact extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
     final qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
-    final dic = context.l10n;
+    final l10n = context.l10n;
     if (qrScanData != null) {
       _addressCtrl.text = qrScanData.account;
       _nameCtrl.text = qrScanData.label;
@@ -111,7 +111,7 @@ class _Contact extends State<ContactPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.addressBook),
+        title: Text(l10n.addressBook),
       ),
       body: SafeArea(
         child: Column(
@@ -127,13 +127,13 @@ class _Contact extends State<ContactPage> {
                       child: TextFormField(
                         key: const Key('contact-address'),
                         decoration: InputDecoration(
-                          hintText: dic.contactAddress,
-                          labelText: dic.contactAddress,
+                          hintText: l10n.contactAddress,
+                          labelText: l10n.contactAddress,
                         ),
                         controller: _addressCtrl,
                         validator: (v) {
                           if (!Fmt.isAddress(v!.replaceAll(' ', ''))) {
-                            return dic.contactAddressError;
+                            return l10n.contactAddressError;
                           }
                           return null;
                         },
@@ -145,12 +145,12 @@ class _Contact extends State<ContactPage> {
                       child: TextFormField(
                         key: const Key('contact-name'),
                         decoration: InputDecoration(
-                          hintText: dic.contactName,
-                          labelText: dic.contactName,
+                          hintText: l10n.contactName,
+                          labelText: l10n.contactName,
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v!.trim().isNotEmpty ? null : dic.contactNameError;
+                          return v!.trim().isNotEmpty ? null : l10n.contactNameError;
                         },
                       ),
                     ),
@@ -159,8 +159,8 @@ class _Contact extends State<ContactPage> {
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            hintText: dic.contactMemo,
-                            labelText: dic.contactMemo,
+                            hintText: l10n.contactMemo,
+                            labelText: l10n.contactMemo,
                           ),
                           controller: _memoCtrl,
                         ),
@@ -216,7 +216,7 @@ class _Contact extends State<ContactPage> {
               child: RoundedButton(
                 key: const Key('contact-save'),
                 submitting: _submitting,
-                text: dic.contactSave,
+                text: l10n.contactSave,
                 onPressed: _onSave,
               ),
             ),

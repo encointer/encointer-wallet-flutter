@@ -71,7 +71,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
     final h2Grey = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey);
     final h4Grey = context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey);
@@ -94,16 +94,16 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
           if (result == ChangeResult.ok && cid != null) {
             await fetchVoucherData(widget.api, voucherUri!, cid);
           } else if (result == ChangeResult.invalidNetwork) {
-            await showErrorDialog(context, dic.invalidNetwork);
+            await showErrorDialog(context, l10n.invalidNetwork);
           } else if (result == ChangeResult.invalidCommunity) {
-            await showErrorDialog(context, dic.invalidCommunity);
+            await showErrorDialog(context, l10n.invalidCommunity);
           }
         },
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(dic.voucher)),
+      appBar: AppBar(title: Text(l10n.voucher)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
@@ -125,12 +125,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     )
                   : const CupertinoActivityIndicator(),
             ),
-            Text('${dic.voucherBalance}, ${store.encointer.community?.symbol}', style: h4Grey),
+            Text('${l10n.voucherBalance}, ${store.encointer.community?.symbol}', style: h4Grey),
             Expanded(
               // fit: FlexFit.tight,
               child: Center(
                 child: Text(
-                  dic.doYouWantToRedeemThisVoucher(store.account.currentAccount.name),
+                  l10n.doYouWantToRedeemThisVoucher(store.account.currentAccount.name),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),
@@ -146,7 +146,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     children: [
                       const Icon(Iconsax.login_1),
                       const SizedBox(width: 6),
-                      Text(dic.fundVoucher),
+                      Text(l10n.fundVoucher),
                     ],
                   ),
                 ),
@@ -158,7 +158,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                 children: [
                   const Icon(Iconsax.login_1),
                   const SizedBox(width: 6),
-                  Text(dic.redeemVoucher),
+                  Text(l10n.redeemVoucher),
                 ],
               ),
             ),

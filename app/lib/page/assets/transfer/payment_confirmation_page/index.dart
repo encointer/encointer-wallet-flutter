@@ -62,7 +62,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final store = context.read<AppStore>();
     final params = ModalRoute.of(context)!.settings.arguments! as PaymentConfirmationParams;
 
@@ -72,7 +72,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     final recipientAddress = Fmt.ss58Encode(recipientAccount.pubKey, prefix: store.settings.endpoint.ss58!);
 
     return Scaffold(
-      appBar: AppBar(title: Text(dic.payment)),
+      appBar: AppBar(title: Text(l10n.payment)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Column(
@@ -120,7 +120,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                           children: [
                             const Icon(Iconsax.send_sqaure_2),
                             const SizedBox(width: 12),
-                            Text(dic.transfer),
+                            Text(l10n.transfer),
                           ],
                         )
                       : const CupertinoActivityIndicator(),
@@ -131,7 +131,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 key: const Key('transfer-done'),
                 child: SizedBox(
                   height: 24,
-                  child: Center(child: Text(dic.done)),
+                  child: Center(child: Text(l10n.done)),
                 ),
                 onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
               )
@@ -218,15 +218,15 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     final h1Grey = context.textTheme.displayLarge!.copyWith(color: AppColors.encointerGrey);
     final h2Grey = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey);
 
-    final dic = context.l10n;
+    final l10n = context.l10n;
     switch (state) {
       case TransferState.notStarted:
         {
-          return Text(dic.paymentDoYouWantToProceed, style: h2Grey);
+          return Text(l10n.paymentDoYouWantToProceed, style: h2Grey);
         }
       case TransferState.submitting:
         {
-          return Text(dic.paymentSubmitting, style: h2Grey);
+          return Text(l10n.paymentSubmitting, style: h2Grey);
         }
       case TransferState.finished:
         {
@@ -236,7 +236,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           return RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: '${dic.paymentFinished}: $date\n\n',
+              text: '${l10n.paymentFinished}: $date\n\n',
               style: h2Grey,
               children: [
                 TextSpan(
@@ -250,7 +250,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       case TransferState.failed:
         {
           return Text(
-            "${dic.paymentError}: ${_transactionResult['error']?.toString() ?? "Unknown Error"}",
+            "${l10n.paymentError}: ${_transactionResult['error']?.toString() ?? "Unknown Error"}",
             style: h2Grey,
           );
         }

@@ -50,7 +50,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final newAccountStore = context.watch<NewAccountStore>();
     return ScrollableForm(
       formKey: _formKey,
@@ -58,14 +58,14 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         const SizedBox(height: 80),
         Center(
           child: Text(
-            dic.pinSecure,
+            l10n.pinSecure,
             style: context.textTheme.displayMedium,
             textAlign: TextAlign.center,
           ),
         ),
         const SizedBox(height: 10),
         Text(
-          dic.pinHint,
+          l10n.pinHint,
           textAlign: TextAlign.center,
           style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
         ),
@@ -76,11 +76,11 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
           filled: true,
           obscureText: true,
           fillColor: context.colorScheme.background,
-          hintText: dic.createPassword,
-          labelText: dic.createPassword,
+          hintText: l10n.createPassword,
+          labelText: l10n.createPassword,
           controller: _passCtrl,
           borderRadius: 15,
-          validator: (v) => Fmt.checkPassword(v!.trim()) ? null : dic.createPasswordError,
+          validator: (v) => Fmt.checkPassword(v!.trim()) ? null : l10n.createPasswordError,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         ),
         const SizedBox(height: 20),
@@ -89,12 +89,12 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
           keyboardType: TextInputType.number,
           filled: true,
           fillColor: context.colorScheme.background,
-          hintText: dic.createPassword2,
-          labelText: dic.createPassword2,
+          hintText: l10n.createPassword2,
+          labelText: l10n.createPassword2,
           controller: _pass2Ctrl,
           borderRadius: 15,
           obscureText: true,
-          validator: (v) => _passCtrl.text != v ? dic.createPassword2Error : null,
+          validator: (v) => _passCtrl.text != v ? l10n.createPassword2Error : null,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         ),
         const SizedBox(height: 16),
@@ -123,7 +123,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
             if (newAccountStore.loading) {
               return const CenteredActivityIndicator();
             } else {
-              return Text(dic.next);
+              return Text(l10n.next);
             }
           }),
         ),

@@ -130,10 +130,9 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.settingNetwork),
+        title: Text(context.l10n.settingNetwork),
       ),
       body: Row(
         children: <Widget>[

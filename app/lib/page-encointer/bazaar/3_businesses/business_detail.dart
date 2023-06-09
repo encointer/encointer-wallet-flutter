@@ -16,7 +16,7 @@ class BusinessDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -54,7 +54,7 @@ class BusinessDetail extends StatelessWidget {
                       Card(
                         margin: const EdgeInsets.fromLTRB(4, 0, 2, 0),
                         child: DataTable(
-                          columns: [DataColumn(label: Text(dic.day)), DataColumn(label: Text(dic.openningHours))],
+                          columns: [DataColumn(label: Text(l10n.day)), DataColumn(label: Text(l10n.openningHours))],
                           headingRowHeight: 32,
                           columnSpacing: 4,
                           horizontalMargin: 8,
@@ -78,7 +78,7 @@ class BusinessDetail extends StatelessWidget {
                   )
                 ],
               ),
-              HorizontalBazaarItemList(business!.offerings, dic.offerings, cardHeight, cardWidth),
+              HorizontalBazaarItemList(business!.offerings, l10n.offerings, cardHeight, cardWidth),
             ],
           ),
         ],

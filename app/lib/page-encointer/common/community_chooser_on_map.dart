@@ -37,11 +37,11 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          dic.communityChoose,
+          l10n.communityChoose,
           maxLines: 2,
           textAlign: TextAlign.center,
         ),
@@ -80,10 +80,10 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
               color: Colors.white,
               child: CupertinoAlertDialog(
                 title: Container(),
-                content: Text(dic.noCommunitiesAreYouOffline),
+                content: Text(l10n.noCommunitiesAreYouOffline),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(dic.ok),
+                    child: Text(l10n.ok),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],

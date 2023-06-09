@@ -21,9 +21,7 @@ class MeetupInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
-    final info = dic.youAreAssignedToAGatheringWithNParticipants(meetup.registry.length);
-
+    final info = context.l10n.youAreAssignedToAGatheringWithNParticipants(meetup.registry.length);
     return Column(
       children: [
         CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),

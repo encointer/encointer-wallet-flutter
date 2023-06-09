@@ -44,21 +44,21 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return ScrollableForm(
       formKey: _formKey,
       listViewChildren: [
         const SizedBox(height: 80),
         Center(
           child: Text(
-            dic.accountNameChoose,
+            l10n.accountNameChoose,
             style: context.textTheme.displayMedium,
           ),
         ),
         const SizedBox(height: 10),
         Center(
           child: Text(
-            dic.accountNameChooseHint,
+            l10n.accountNameChooseHint,
             textAlign: TextAlign.center,
             style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
           ),
@@ -66,8 +66,8 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
         const SizedBox(height: 30),
         EncointerTextFormField(
           key: const Key('create-account-name'),
-          hintText: dic.createHint,
-          labelText: dic.accountName,
+          hintText: l10n.createHint,
+          labelText: l10n.accountName,
           controller: _nameCtrl,
           validator: (v) {
             return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.accountList);
@@ -99,7 +99,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
               const Icon(Iconsax.login_1),
               const SizedBox(width: 12),
               Text(
-                dic.next,
+                l10n.next,
                 style: context.textTheme.displaySmall!.copyWith(
                   color: context.colorScheme.background,
                 ),

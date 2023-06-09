@@ -14,10 +14,10 @@ class UI {
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        final dic = context.l10n;
+        final l10n = context.l10n;
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text('${dic.copy} ${dic.success}'),
+          content: Text('${l10n.copy} ${l10n.success}'),
         );
       },
     );

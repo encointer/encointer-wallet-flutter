@@ -22,12 +22,12 @@ class CeremonyStep3Finish extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final connectivityStore = context.watch<ConnectivityStore>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.keySigningCycle),
+        title: Text(l10n.keySigningCycle),
       ),
       body: SafeArea(
         child: Padding(
@@ -43,13 +43,13 @@ class CeremonyStep3Finish extends StatelessWidget {
                     const CommunityAvatar(avatarSize: 96),
                     Center(
                       child: Text(
-                        dic.thankYou,
+                        l10n.thankYou,
                         style: context.textTheme.displayMedium,
                       ),
                     ),
                     Center(
                       child: Text(
-                        dic.weHopeToSeeYouAtTheNextGathering,
+                        l10n.weHopeToSeeYouAtTheNextGathering,
                         textAlign: TextAlign.center,
                         style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.5),
                       ),
@@ -86,7 +86,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                         children: [
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 6),
-                          Text(dic.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount)),
+                          Text(l10n.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount)),
                         ],
                       ),
                       onPressed: (context) => submitAttestClaims(context, store, api),
@@ -101,7 +101,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                               const Icon(Iconsax.arrow_right_2),
                               const SizedBox(width: 12, height: 60),
                               Text(
-                                dic.finish,
+                                l10n.finish,
                                 style: Theme.of(context).textTheme.displaySmall,
                               ),
                             ],
@@ -112,7 +112,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          dic.offlineMessage,
+                          l10n.offlineMessage,
                           style: Theme.of(context).textTheme.bodySmall,
                           textAlign: TextAlign.center,
                         ),

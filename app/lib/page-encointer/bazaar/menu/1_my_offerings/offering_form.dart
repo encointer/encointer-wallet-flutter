@@ -18,10 +18,10 @@ class _OfferingFormState extends State<OfferingForm> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.offeringAdd),
+        title: Text(l10n.offeringAdd),
       ),
       body: Form(
         child: Padding(
@@ -44,7 +44,7 @@ class _OfferingFormState extends State<OfferingForm> {
                     color: Colors.grey,
                     child: ListTile(
                       leading: const Icon(Icons.add_a_photo),
-                      title: Text(dic.photoAdd),
+                      title: Text(l10n.photoAdd),
                     ),
                   ),
                 ],
@@ -52,24 +52,24 @@ class _OfferingFormState extends State<OfferingForm> {
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  hintText: dic.useDescriptiveName,
+                  hintText: l10n.useDescriptiveName,
                 ),
               ),
               TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: 4,
                 decoration: InputDecoration(
-                  labelText: dic.description,
+                  labelText: l10n.description,
                 ),
               ),
-              ToggleButtonsWithTitle(dic.categories, categories, null),
+              ToggleButtonsWithTitle(l10n.categories, categories, null),
               // TODO state mananagement
               ToggleButtonsWithTitle(
-                  dic.businessesOffered, businesses.map((business) => business.title).toList(), null),
+                  l10n.businessesOffered, businesses.map((business) => business.title).toList(), null),
               // TODO state mananagement, TODO has to be an business.id not just the title
-              ToggleButtonsWithTitle(dic.state, productNewness, null),
+              ToggleButtonsWithTitle(l10n.state, productNewness, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
-              ToggleButtonsWithTitle(dic.deliveryOptions, deliveryOptions, null),
+              ToggleButtonsWithTitle(l10n.deliveryOptions, deliveryOptions, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
             ],
           ),
@@ -78,14 +78,14 @@ class _OfferingFormState extends State<OfferingForm> {
       floatingActionButton: ButtonBar(
         children: <Widget>[
           ElevatedButton(
-            child: Row(children: [const Icon(Icons.delete), Text(dic.delete)]),
+            child: Row(children: [const Icon(Icons.delete), Text(l10n.delete)]),
             onPressed: () {
               // TODO modify state
               Navigator.pop(context);
             },
           ),
           ElevatedButton(
-            child: Row(children: [const Icon(Icons.check), Text(dic.save)]),
+            child: Row(children: [const Icon(Icons.check), Text(l10n.save)]),
             onPressed: () {
               // TODO modify state
               Navigator.pop(context);

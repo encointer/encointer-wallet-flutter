@@ -43,7 +43,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
     final address = Fmt.ss58Encode(account.pubKey, prefix: store.settings.endpoint.ss58!);
     return Scaffold(
@@ -129,7 +129,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     const Icon(Iconsax.send_sqaure_2),
                     const SizedBox(width: 12),
                     Text(
-                      dic.tokenSend(store.encointer.community?.symbol ?? 'null'),
+                      l10n.tokenSend(store.encointer.community?.symbol ?? 'null'),
                       style: context.textTheme.displaySmall,
                     ),
                   ],
@@ -154,7 +154,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   children: [
                     const Icon(Iconsax.trash),
                     const SizedBox(width: 12),
-                    Text(dic.contactDelete, style: context.textTheme.displaySmall)
+                    Text(l10n.contactDelete, style: context.textTheme.displaySmall)
                   ],
                 ),
               ),
@@ -166,20 +166,20 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   }
 
   void _removeItem(BuildContext context, AccountData account, AppStore store) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(dic.contactDeleteWarn),
+          title: Text(l10n.contactDeleteWarn),
           content: Text(Fmt.accountName(context, account)),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(dic.cancel),
+              child: Text(l10n.cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
-              child: Text(dic.ok),
+              child: Text(l10n.ok),
               onPressed: () {
                 Navigator.of(context).pop();
                 store.settings.removeContact(account);
@@ -205,7 +205,7 @@ class EndorseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -213,7 +213,7 @@ class EndorseButton extends StatelessWidget {
           return store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
               ? FittedBox(
                   child: Row(children: [
-                    Text(dic.remainingNewbieTicketsAsBootStrapper),
+                    Text(l10n.remainingNewbieTicketsAsBootStrapper),
                     Text(
                       ' ${store.encointer.communityAccount?.numberOfNewbieTicketsForBootstrapper ?? 0}',
                       style: TextStyle(fontSize: 15, color: context.colorScheme.primary),
@@ -226,7 +226,7 @@ class EndorseButton extends StatelessWidget {
           return store.encointer.account != null && store.encointer.account!.reputations.isNotEmpty
               ? FittedBox(
                   child: Row(children: [
-                    Text(dic.remainingNewbieTicketsAsReputable),
+                    Text(l10n.remainingNewbieTicketsAsReputable),
                     Text(
                       ' ${store.encointer.account?.numberOfNewbieTicketsForReputable ?? 0}',
                       style: TextStyle(fontSize: 15, color: context.colorScheme.primary),
@@ -234,7 +234,7 @@ class EndorseButton extends StatelessWidget {
                   ]),
                 )
               : !store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
-                  ? Text(dic.onlyReputablesCanEndorseAttendGatheringToBecomeOne)
+                  ? Text(l10n.onlyReputablesCanEndorseAttendGatheringToBecomeOne)
                   : const SizedBox();
         }),
         const SizedBox(height: 5),
@@ -248,7 +248,7 @@ class EndorseButton extends StatelessWidget {
                 children: [
                   const Icon(Iconsax.verify),
                   const SizedBox(width: 12),
-                  Text(dic.contactEndorse, style: context.textTheme.displaySmall)
+                  Text(l10n.contactEndorse, style: context.textTheme.displaySmall)
                 ],
               ),
             ),
@@ -275,13 +275,13 @@ class EndorseButton extends StatelessWidget {
   Future<void> onPressed(BuildContext context) async {
     final community = store.encointer.community;
     final bootstrappers = community?.bootstrappers;
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final address = Fmt.ss58Encode(contact.pubKey, prefix: store.settings.endpoint.ss58!);
 
     if (bootstrappers != null && bootstrappers.contains(address)) {
-      await _popupDialog(context, dic.cantEndorseBootstrapper);
+      await _popupDialog(context, l10n.cantEndorseBootstrapper);
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
-      await _popupDialog(context, dic.canEndorseInRegisteringPhaseOnly);
+      await _popupDialog(context, l10n.canEndorseInRegisteringPhaseOnly);
     } else {
       await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, address);
     }

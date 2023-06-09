@@ -122,12 +122,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
             'type': AccountStore.seedTypeMnemonic,
           });
         } else {
-          final dic = context.l10n;
+          final l10n = context.l10n;
           AppAlert.showErrorDialog(
             context,
-            title: Text(dic.noMnemonicFound),
-            errorText: dic.importedWithRawSeedHenceNoMnemonic,
-            buttontext: dic.ok,
+            title: Text(l10n.noMnemonicFound),
+            errorText: l10n.importedWithRawSeedHenceNoMnemonic,
+            buttontext: l10n.ok,
           );
         }
       },
@@ -136,7 +136,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
+    final l10n = context.l10n;
     final h3 = context.textTheme.displaySmall;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
@@ -225,7 +225,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           ),
                         ],
                       ),
-                      Text(dic.communities,
+                      Text(l10n.communities,
                           style: h3!.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
                     ],
                   ),
@@ -279,7 +279,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           children: [
                             const Icon(Iconsax.share),
                             const SizedBox(width: 12),
-                            Text(dic.accountShare, style: h3.copyWith(color: Colors.white)),
+                            Text(l10n.accountShare, style: h3.copyWith(color: Colors.white)),
                           ],
                         ),
                         onPressed: () =>
@@ -308,12 +308,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                 AccountActionItemData(
                                   accountAction: AccountAction.delete,
                                   icon: Iconsax.trash,
-                                  title: dic.deleteAccount,
+                                  title: l10n.deleteAccount,
                                 ),
                                 AccountActionItemData(
                                     accountAction: AccountAction.export,
                                     icon: Iconsax.export,
-                                    title: dic.exportAccount),
+                                    title: l10n.exportAccount),
                               ]
                                   .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
                                         key: Key(data.accountAction.name),

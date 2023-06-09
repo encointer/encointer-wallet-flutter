@@ -25,7 +25,6 @@ class SS58PrefixListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = context.l10n;
     final list = prefixList
         .map((i) => ListTile(
               leading: SizedBox(
@@ -53,7 +52,7 @@ class SS58PrefixListPage extends StatelessWidget {
         .toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.settingPrefixList),
+        title: Text(context.l10n.settingPrefixList),
         centerTitle: true,
       ),
       body: SafeArea(
