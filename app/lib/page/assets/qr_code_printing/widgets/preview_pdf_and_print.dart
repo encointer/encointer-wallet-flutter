@@ -36,7 +36,7 @@ class _PreviewPdfAndPrintState extends State<PreviewPdfAndPrint> {
   void didChangeDependencies() {
     store.createPdf(
       key: widget.args.renderObjectKey,
-      translations: context.l10n,
+      l10n: context.l10n,
     );
     super.didChangeDependencies();
   }

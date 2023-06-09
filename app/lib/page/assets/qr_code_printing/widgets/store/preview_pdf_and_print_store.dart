@@ -36,9 +36,9 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
   @action
   Future<void> createPdf({
     required GlobalKey key,
-    required AppLocalizations translations,
+    required AppLocalizations l10n,
   }) async {
-    Log.d('createPdf: key = $key, translations = $translations', _logTarget);
+    Log.d('createPdf: key = $key, translations = $l10n', _logTarget);
     renderObjectKey = key;
 
     final uint8list = await _getQrCodeImage();
@@ -72,7 +72,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                     padding: const pw.EdgeInsets.only(top: 50),
                     child: pw.FittedBox(
                       child: pw.Text(
-                        translations.payHereWithLeu,
+                        l10n.payHereWithLeu,
                         style: pw.TextStyle(
                           fontSize: 56,
                           font: poppinsBlack,
@@ -97,7 +97,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
                           pw.Text(
-                            translations.openTheEncointerApp,
+                            l10n.openTheEncointerApp,
                             style: pw.TextStyle(
                               fontSize: 22,
                               font: poppinsMedium,
@@ -106,7 +106,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                           ),
                           pw.SizedBox(height: 20),
                           pw.Text(
-                            translations.scanQrCodeOnTheLeft,
+                            l10n.scanQrCodeOnTheLeft,
                             style: pw.TextStyle(
                               fontSize: 22,
                               font: poppinsMedium,
@@ -115,7 +115,7 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                           ),
                           pw.SizedBox(height: 20),
                           pw.Text(
-                            translations.confirmThePayment,
+                            l10n.confirmThePayment,
                             style: pw.TextStyle(
                               fontSize: 22,
                               font: poppinsMedium,

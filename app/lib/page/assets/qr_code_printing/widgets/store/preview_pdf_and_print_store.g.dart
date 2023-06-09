@@ -63,8 +63,8 @@ mixin _$PreviewPdfAndPrintStore on _PreviewPdfAndPrintStoreBase, Store {
   late final _$createPdfAsyncAction = AsyncAction('_PreviewPdfAndPrintStoreBase.createPdf', context: context);
 
   @override
-  Future<void> createPdf({required GlobalKey<State<StatefulWidget>> key, required dynamic translations}) {
-    return _$createPdfAsyncAction.run(() => super.createPdf(key: key, translations: translations));
+  Future<void> createPdf({required GlobalKey<State<StatefulWidget>> key, required dynamic l10n}) {
+    return _$createPdfAsyncAction.run(() => super.createPdf(key: key, l10n: l10n));
   }
 
   late final _$_getQrCodeImageAsyncAction =
