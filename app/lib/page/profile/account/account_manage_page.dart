@@ -6,14 +6,14 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
-import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
+import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -103,48 +103,33 @@ class _AccountManagePageState extends State<AccountManagePage> {
     );
   }
 
-  void _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    showCupertinoDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin),
-            (String password) async {
-          Log.d('password is: $password', 'AccountManagePage');
-          setState(() {
-            _appStore.settings.setPin(password);
+  Future<void> _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) async {
+    await AppAlert.showPasswordInputDialog(
+      context,
+      showCancelButton: true,
+      autoCloseOnSuccess: false,
+      account: _appStore.account.currentAccount,
+      onSuccess: (password) async {
+        final isMnemonic =
+            await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
+        Navigator.pop(context);
+        if (isMnemonic) {
+          final seed =
+              await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
+
+          await Navigator.pushNamed(context, ExportResultPage.route, arguments: {
+            'key': seed,
+            'type': AccountStore.seedTypeMnemonic,
           });
-
-          final isMnemonic =
-              await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
-
-          if (isMnemonic) {
-            final seed =
-                await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
-
-            await Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-              'key': seed,
-              'type': AccountStore.seedTypeMnemonic,
-            });
-          } else {
-            // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
-            await showCupertinoDialog<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return CupertinoAlertDialog(
-                  title: Text(dic.profile.noMnemonicFound),
-                  content: Text(dic.profile.importedWithRawSeedHenceNoMnemonic),
-                  actions: <Widget>[
-                    CupertinoButton(
-                      child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-        });
+        } else {
+          final dic = I18n.of(context)!.translationsForLocale();
+          AppAlert.showErrorDialog(
+            context,
+            title: Text(dic.profile.noMnemonicFound),
+            errorText: dic.profile.importedWithRawSeedHenceNoMnemonic,
+            buttontext: dic.home.ok,
+          );
+        }
       },
     );
   }

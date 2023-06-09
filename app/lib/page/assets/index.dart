@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:focus_detector/focus_detector.dart';
@@ -15,10 +14,11 @@ import 'package:collection/collection.dart';
 
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
+import 'package:encointer_wallet/config/prod_community.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
@@ -59,32 +59,30 @@ class _AssetsViewState extends State<AssetsView> {
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
-
-  late PanelController panelController;
-
-  late PausableTimer balanceWatchdog;
-
+  late PanelController _panelController;
+  late PausableTimer _balanceWatchdog;
+  late Translations _dic;
+  late AppSettings _appSettingsStore;
   late double _panelHeightOpen;
   final double _panelHeightClosed = 0;
-  late Translations _dic;
-
-  var _allAccounts = <AccountOrCommunityData>[];
-
-  late AppSettings _appSettingsStore;
+  List<AccountOrCommunityData> _allAccounts = <AccountOrCommunityData>[];
 
   @override
   void initState() {
-    super.initState();
     _startBalanceWatchdog();
-    panelController = PanelController();
     _connectNodeAll();
+    _panelController = PanelController();
     _postFrameCallbacks();
+
+    super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    _appSettingsStore = context.watch<AppSettings>();
     _dic = I18n.of(context)!.translationsForLocale();
+
+    _appSettingsStore = context.watch<AppSettings>();
+
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
     _panelHeightOpen = min(
@@ -96,28 +94,31 @@ class _AssetsViewState extends State<AssetsView> {
 
   @override
   void dispose() {
-    balanceWatchdog.cancel();
+    _balanceWatchdog.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      key: const Key('assets-index-appbar'),
+      title: Text(_dic.assets.home),
+    );
     return FocusDetector(
       onFocusLost: () {
         Log.d('[home:FocusDetector] Focus Lost.');
-        balanceWatchdog.pause();
+        _balanceWatchdog.pause();
       },
       onFocusGained: () {
         Log.d('[home:FocusDetector] Focus Gained.');
         if (!widget.store.settings.loading) {
-          _refreshBalanceAndNotify();
+          _refreshBalanceAndNotify(_dic);
         }
-        balanceWatchdog
-          ..reset()
-          ..start();
+        _balanceWatchdog.reset();
+        _balanceWatchdog.start();
       },
       child: Scaffold(
-        appBar: _appBar(),
+        appBar: appBar,
         body: UpgradeAlert(
           upgrader: Upgrader(
             appcastConfig: RepositoryProvider.of<AppConfig>(context).appCast,
@@ -131,31 +132,148 @@ class _AssetsViewState extends State<AssetsView> {
             parallaxEnabled: true,
             parallaxOffset: .5,
             backdropEnabled: true,
-            controller: panelController,
+            controller: _panelController,
             // The padding is a hack for #559, which needs https://github.com/akshathjain/sliding_up_panel/pull/303
             body: Padding(
               padding:
                   // Fixme: 60 is hardcoded because we don't know the tabBar size here.
                   // Should be tackled in #607
-                  EdgeInsets.only(bottom: 60 + _appBar().preferredSize.height + MediaQuery.of(context).viewPadding.top),
+                  EdgeInsets.only(bottom: 60 + appBar.preferredSize.height + MediaQuery.of(context).viewPadding.top),
               child: RefreshIndicator(
                 onRefresh: _refreshEncointerState,
                 child: ListView(
                   key: const Key('list-view-wallet'),
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
-                    _topContent(),
+                    Observer(builder: (_) {
+                      return Column(
+                        children: <Widget>[
+                          InkWell(
+                            key: const Key('panel-controller'),
+                            child: CombinedCommunityAndAccountAvatar(widget.store),
+                            onTap: () {
+                              if (_panelController.isAttached) {
+                                _panelController.open();
+                              }
+                            },
+                          ),
+                          Observer(
+                            builder: (_) {
+                              return (widget.store.encointer.community?.name != null) &
+                                      (widget.store.encointer.chosenCid != null)
+                                  ? Column(
+                                      children: [
+                                        TextGradient(
+                                          text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
+                                          style: const TextStyle(fontSize: 60),
+                                        ),
+                                        Text(
+                                          '${_dic.assets.balance}, ${widget.store.encointer.community?.symbol}',
+                                          style: context.textTheme.headlineMedium!
+                                              .copyWith(color: AppColors.encointerGrey),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(
+                                      margin: const EdgeInsets.only(top: 16),
+                                      padding: const EdgeInsets.symmetric(vertical: 8),
+                                      child: (widget.store.encointer.chosenCid == null)
+                                          ? SizedBox(
+                                              width: double.infinity,
+                                              child:
+                                                  Text(_dic.assets.communityNotSelected, textAlign: TextAlign.center))
+                                          : const SizedBox(
+                                              width: double.infinity,
+                                              child: CupertinoActivityIndicator(),
+                                            ),
+                                    );
+                            },
+                          ),
+                          if (_appSettingsStore.developerMode)
+                            ElevatedButton(
+                              onPressed: widget.store.dataUpdate.setInvalidated,
+                              child: const Text('Invalidate data to trigger state update'),
+                            ),
+                          const SizedBox(height: 42),
+                          Row(
+                            children: [
+                              ActionButton(
+                                key: const Key('qr-receive'),
+                                icon: const Icon(Iconsax.receive_square_2),
+                                label: _dic.assets.receive,
+                                onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
+                              ),
+                              const SizedBox(width: 3),
+                              ActionButton(
+                                key: const Key('go-transfer-history'),
+                                icon: Assets.images.assets.receiveSquare2.svg(),
+                                label: _dic.home.transferHistory,
+                                onPressed: widget.store.encointer.communityBalance != null
+                                    ? () => Navigator.pushNamed(context, TransferHistoryView.route)
+                                    : null,
+                              ),
+                              const SizedBox(width: 3),
+                              ActionButton(
+                                key: const Key('transfer'),
+                                icon: const Icon(Iconsax.send_sqaure_2),
+                                label: _dic.assets.transfer,
+                                onPressed: widget.store.encointer.communityBalance != null
+                                    ? () => Navigator.pushNamed(context, TransferPage.route)
+                                    : null,
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    }),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 6),
                     ),
-                    _claim(),
+                    Observer(builder: (_) {
+                      final dic = I18n.of(context)!.translationsForLocale();
+
+                      final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
+                          (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
+
+                      return widget.store.settings.isConnected && shouldFetch
+                          ? FutureBuilder<bool?>(
+                              future: webApi.encointer.hasPendingIssuance(),
+                              builder: (_, AsyncSnapshot<bool?> snapshot) {
+                                if (snapshot.hasData) {
+                                  final hasPendingIssuance = snapshot.data!;
+
+                                  if (hasPendingIssuance) {
+                                    return SubmitButton(
+                                      key: const Key('claim-pending-dev'),
+                                      child: Text(dic.assets.issuancePending),
+                                      onPressed: (context) => submitClaimRewards(
+                                        context,
+                                        widget.store,
+                                        webApi,
+                                        widget.store.encointer.chosenCid!,
+                                      ),
+                                    );
+                                  } else {
+                                    return _appSettingsStore.developerMode
+                                        ? ElevatedButton(
+                                            onPressed: null,
+                                            child: Text(dic.assets.issuanceClaimed),
+                                          )
+                                        : const SizedBox.shrink();
+                                  }
+                                } else {
+                                  return const CupertinoActivityIndicator();
+                                }
+                              },
+                            )
+                          : Container();
+                    }),
                     const SizedBox(height: 24),
                     CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                     const SizedBox(height: 24),
-                    if (!_appSettingsStore.developerMode)
-                      AnnouncementView(
-                        cid: widget.store.encointer.community?.cid.toFmtString(),
-                      ),
+                    AnnouncementView(
+                      cid: Community.fromCid(widget.store.encointer.community?.cid.toFmtString()).cid,
+                    ),
                   ],
                 ),
               ),
@@ -170,8 +288,43 @@ class _AssetsViewState extends State<AssetsView> {
                   const SizedBox(height: 12),
                   const DragHandle(),
                   Column(children: [
-                    _switchCommunityBuild(),
-                    _switchAccountBuild(),
+                    Observer(builder: (_) {
+                      return SwitchAccountOrCommunity(
+                        rowTitle: _dic.home.switchCommunity,
+                        accountOrCommunityData: _allCommunities(),
+                        onTap: (int index) async {
+                          final store = context.read<AppStore>();
+                          final communityStores = store.encointer.communityStores?.values.toList() ?? [];
+                          await store.encointer.setChosenCid(communityStores[index].cid);
+                          if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+                            context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                          }
+                        },
+                        onAddIconPressed: () {
+                          Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
+                            _refreshBalanceAndNotify(_dic);
+                          });
+                        },
+                        addIconButtonKey: const Key('add-community'),
+                      );
+                    }),
+                    Observer(builder: (BuildContext context) {
+                      _allAccounts = initAllAccounts(_dic);
+                      return SwitchAccountOrCommunity(
+                        rowTitle: _dic.home.switchAccount,
+                        accountOrCommunityData: _allAccounts,
+                        onTap: (int index) {
+                          setState(() {
+                            switchAccount(widget.store.account.accountListAll[index]);
+                            _refreshBalanceAndNotify(_dic);
+                          });
+                        },
+                        onAddIconPressed: () {
+                          Navigator.of(context).pushNamed(AddAccountView.route);
+                        },
+                        addIconButtonKey: const Key('add-account-panel'),
+                      );
+                    }),
                   ]),
                 ],
               ),
@@ -183,234 +336,28 @@ class _AssetsViewState extends State<AssetsView> {
     );
   }
 
-  AppBar _appBar() {
-    return AppBar(
-      key: const Key('assets-index-appbar'),
-      title: Text(_dic.assets.home),
-    );
-  }
-
-  Observer _topContent() {
-    return Observer(builder: (_) {
-      return Column(
-        children: <Widget>[
-          InkWell(
-            key: const Key('panel-controller'),
-            child: CombinedCommunityAndAccountAvatar(widget.store),
-            onTap: () {
-              if (panelController.isAttached) {
-                panelController.open();
-              }
-            },
-          ),
-          _avatar(),
-          if (_appSettingsStore.developerMode)
-            ElevatedButton(
-              onPressed: widget.store.dataUpdate.setInvalidated,
-              child: const Text('Invalidate data to trigger state update'),
-            ),
-          const SizedBox(
-            height: 42,
-          ),
-          _sendAndRecieve(),
-        ],
-      );
-    });
-  }
-
-  Observer _avatar() {
-    return Observer(
-      builder: (_) {
-        return (widget.store.encointer.community?.name != null) & (widget.store.encointer.chosenCid != null)
-            ? Column(
-                children: [
-                  TextGradient(
-                    text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
-                    style: const TextStyle(fontSize: 60),
-                  ),
-                  Text(
-                    '${_dic.assets.balance}, ${widget.store.encointer.community?.symbol}',
-                    style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
-                  ),
-                ],
-              )
-            : Container(
-                margin: const EdgeInsets.only(top: 16),
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: (widget.store.encointer.chosenCid == null)
-                    ? SizedBox(
-                        width: double.infinity,
-                        child: Text(_dic.assets.communityNotSelected, textAlign: TextAlign.center))
-                    : const SizedBox(
-                        width: double.infinity,
-                        child: CupertinoActivityIndicator(),
-                      ),
-              );
-      },
-    );
-  }
-
-  Widget _sendAndRecieve() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: const RoundedRectangleBorder(
-                // don't redefine the entire style just the border radii
-                borderRadius: BorderRadius.horizontal(left: Radius.circular(15)),
-              ),
-            ),
-            key: const Key('qr-receive'),
-            onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Iconsax.receive_square_2),
-                  const SizedBox(width: 12),
-                  Text(_dic.assets.receive),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 2),
-        Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: const RoundedRectangleBorder(
-                // don't redefine the entire style just the border radii
-                borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
-              ),
-            ),
-            key: const Key('transfer'),
-            onPressed: widget.store.encointer.communityBalance != null
-                ? () => Navigator.pushNamed(context, TransferPage.route)
-                : null,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(_dic.assets.transfer),
-                  const SizedBox(width: 12),
-                  const Icon(Iconsax.send_sqaure_2),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Observer _claim() {
-    return Observer(builder: (_) {
-      final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
-          (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
-
-      return widget.store.settings.isConnected && shouldFetch
-          ? FutureBuilder<bool?>(
-              future: webApi.encointer.hasPendingIssuance(),
-              builder: (_, AsyncSnapshot<bool?> snapshot) {
-                if (snapshot.hasData) {
-                  final hasPendingIssuance = snapshot.data!;
-
-                  if (hasPendingIssuance) {
-                    return SubmitButton(
-                      key: const Key('claim-pending-dev'),
-                      child: Text(_dic.assets.issuancePending),
-                      onPressed: (context) => submitClaimRewards(
-                        context,
-                        widget.store,
-                        webApi,
-                        widget.store.encointer.chosenCid!,
-                      ),
-                    );
-                  } else {
-                    return _appSettingsStore.developerMode
-                        ? ElevatedButton(
-                            onPressed: null,
-                            child: Text(_dic.assets.issuanceClaimed),
-                          )
-                        : const SizedBox.shrink();
-                  }
-                } else {
-                  return const CupertinoActivityIndicator();
-                }
-              },
-            )
-          : Container();
-    });
-  }
-
-  Observer _switchAccountBuild() {
-    return Observer(builder: (BuildContext context) {
-      _allAccounts = _initAllAccounts();
-      return SwitchAccountOrCommunity(
-        rowTitle: _dic.home.switchAccount,
-        accountOrCommunityData: _allAccounts,
-        onTap: (int index) {
-          setState(() {
-            _switchAccountData(widget.store.account.accountListAll[index]);
-            _refreshBalanceAndNotify();
-          });
-        },
-        onAddIconPressed: () {
-          Navigator.of(context).pushNamed(AddAccountView.route);
-        },
-        addIconButtonKey: const Key('add-account-panel'),
-      );
-    });
-  }
-
-  Observer _switchCommunityBuild() {
-    return Observer(builder: (_) {
-      return SwitchAccountOrCommunity(
-        rowTitle: _dic.home.switchCommunity,
-        accountOrCommunityData: _allAccountOrCommunities(),
-        onTap: (int index) async {
-          final store = context.read<AppStore>();
-          final communityStores = store.encointer.communityStores?.values.toList() ?? [];
-          await store.encointer.setChosenCid(communityStores[index].cid);
-          if (RepositoryProvider.of<AppSettings>(context).developerMode) {
-            context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
-          }
-        },
-        onAddIconPressed: () {
-          Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-            _refreshBalanceAndNotify();
-          });
-        },
-        addIconButtonKey: const Key('add-community'),
-      );
-    });
-  }
-
-  List<AccountOrCommunityData> _allAccountOrCommunities() {
+  List<AccountOrCommunityData> _allCommunities() {
     final communityStores = context.read<AppStore>().encointer.communityStores?.values.toList();
-
     if (communityStores != null && communityStores.isNotEmpty) {
-      return communityStores.mapIndexed((index, communityStore) {
-        return AccountOrCommunityData(
-          avatar: Container(
-            height: avatarSize,
-            width: avatarSize,
-            decoration: BoxDecoration(
-              color: context.colorScheme.background,
-              shape: BoxShape.circle,
+      return communityStores
+          .mapIndexed(
+            (i, e) => AccountOrCommunityData(
+              avatar: Container(
+                height: avatarSize,
+                width: avatarSize,
+                decoration: BoxDecoration(
+                  color: context.colorScheme.background,
+                  shape: BoxShape.circle,
+                ),
+                child: e.communityIcon != null
+                    ? SvgPicture.string(e.communityIcon!)
+                    : SvgPicture.asset(fallBackCommunityIcon),
+              ),
+              name: e.name,
+              isSelected: widget.store.encointer.community?.cid == e.cid,
             ),
-            child: communityStore.communityIcon != null
-                ? SvgPicture.string(communityStore.communityIcon!)
-                : SvgPicture.asset(fallBackCommunityIcon),
-          ),
-          name: communityStore.name,
-          isSelected: widget.store.encointer.community?.cid == communityStore.cid,
-        );
-      }).toList();
+          )
+          .toList();
     } else {
       return [
         AccountOrCommunityData(
@@ -428,7 +375,7 @@ class _AssetsViewState extends State<AssetsView> {
     }
   }
 
-  List<AccountOrCommunityData> _initAllAccounts() {
+  List<AccountOrCommunityData> initAllAccounts(Translations dic) {
     final allAccounts = <AccountOrCommunityData>[
       ...widget.store.account.accountListAll.map(
         (account) => AccountOrCommunityData(
@@ -447,7 +394,7 @@ class _AssetsViewState extends State<AssetsView> {
     return allAccounts;
   }
 
-  Future<void> _switchAccountData(AccountData account) async {
+  Future<void> switchAccount(AccountData account) async {
     if (account.pubKey != widget.store.account.currentAccountPubKey) {
       await widget.store.setCurrentAccount(account.pubKey);
       await widget.store.loadAccountCache();
@@ -456,53 +403,23 @@ class _AssetsViewState extends State<AssetsView> {
     }
   }
 
-  Future<void> _showPasswordDialog() async {
-    await showCupertinoDialog<void>(
-      context: context,
-      builder: (_) {
-        return WillPopScope(
-          child: showPasswordInputDialog(
-            context,
-            widget.store.account.currentAccount,
-            Text(I18n.of(context)!.translationsForLocale().home.unlock),
-            (String password) {
-              setState(() {
-                widget.store.settings.setPin(password);
-              });
-            },
-          ),
-          // handles back button press
-          onWillPop: () async {
-            await _showPasswordNotEnteredDialog();
-            return false;
-          },
-        );
-      },
-    );
+  void _connectNodeAll() {
+    // if network connected failed, reconnect
+    if (!widget.store.settings.loading && widget.store.settings.networkName == null) {
+      widget.store.settings.setNetworkLoading(true);
+      webApi.connectNodeAll();
+    }
   }
 
-  Future<void> _showPasswordNotEnteredDialog() async {
-    await showCupertinoDialog<void>(
-      context: context,
-      builder: (_) {
-        return CupertinoAlertDialog(
-          title: Text(I18n.of(context)!.translationsForLocale().home.pinNeeded),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.closeApp),
-              onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
-            ),
-          ],
-        );
-      },
-    );
+  void _postFrameCallbacks() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
+        context.read<AppStore>().encointer.community?.getCommunityIcon();
+      }
+    });
   }
 
-  void _refreshBalanceAndNotify() {
+  void _refreshBalanceAndNotify(Translations? dic) {
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
       Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
       if (widget.store.encointer.chosenCid == null) {
@@ -522,24 +439,18 @@ class _AssetsViewState extends State<AssetsView> {
               ? community.applyDemurrage!(oldBalanceEntry) ?? 0
               : 0;
 
-// =======
-//           double newBalance = community.applyDemurrage(balanceEntry) as double;
-//           double oldBalance = community.applyDemurrage(widget.store.encointer
-//                   .accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) as double? ??
-//               0;
-// >>>>>>> 9d4143d3262181f3ad0429032d40bcd3c94c1b9f
           final delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
-              final msg = _dic.assets.incomingConfirmed
+              final msg = dic!.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
               Log.d('[home:balanceWatchdog] $msg', 'Assets');
-              NotificationPlugin.showNotification(45, _dic.assets.fundsReceived, msg, cid: cidStr);
+              NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }
           }
           if (cid == widget.store.encointer.chosenCid) {
@@ -560,36 +471,14 @@ class _AssetsViewState extends State<AssetsView> {
     });
   }
 
-  void _postFrameCallbacks() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (widget.store.settings.cachedPin.isEmpty & !widget.store.settings.endpointIsNoTee) {
-        _showPasswordDialog();
-      }
-
-      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
-        context.read<AppStore>().encointer.community?.getCommunityIcon();
-      }
-    });
-  }
-
-  void _connectNodeAll() {
-    // if network connected failed, reconnect
-    if (!widget.store.settings.loading && widget.store.settings.networkName == null) {
-      widget.store.settings.setNetworkLoading(true);
-
-      /// webApi.connectNodeAll() eventually fetches communities and sets them
-      webApi.connectNodeAll();
-    }
-  }
-
   void _startBalanceWatchdog() {
-    balanceWatchdog = PausableTimer(
+    _balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
       () {
         Log.d('[balanceWatchdog] triggered', 'Assets');
 
-        _refreshBalanceAndNotify();
-        balanceWatchdog
+        _refreshBalanceAndNotify(_dic);
+        _balanceWatchdog
           ..reset()
           ..start();
       },
@@ -599,5 +488,42 @@ class _AssetsViewState extends State<AssetsView> {
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
     await webApi.encointer.getCurrentPhase();
+  }
+}
+
+class ActionButton extends StatelessWidget {
+  const ActionButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    this.onPressed,
+  });
+
+  final Widget icon;
+  final String label;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
+          child: Column(
+            children: [
+              icon,
+              const SizedBox(height: 4),
+              Text(label, softWrap: false, overflow: TextOverflow.ellipsis),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

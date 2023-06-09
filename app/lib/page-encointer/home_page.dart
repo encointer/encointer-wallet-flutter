@@ -7,6 +7,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
@@ -46,6 +47,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         langCode: Localizations.localeOf(context).languageCode,
         cid: cid,
         ewHttp: RepositoryProvider.of<EwHttp>(context),
+        devMode: context.read<AppSettings>().developerMode,
       );
 
       // Should never be null, we either come from the splash screen, and hence we had
@@ -85,8 +87,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
         .map(
-          (i) => BottomNavigationBarItem(
-            icon: _tabList[activeItem] == i
+          (tabData) => BottomNavigationBarItem(
+            icon: _tabList[activeItem] == tabData
                 ? ShaderMask(
                     blendMode: BlendMode.srcIn,
                     shaderCallback: (bounds) => AppColors.primaryGradient(context).createShader(
@@ -94,8 +96,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                     ),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Icon(
-                        i.iconData,
-                        key: Key(i.key.name),
+                        tabData.iconData,
+                        key: Key(tabData.key.name),
                       ),
                       Container(
                         height: 4,
@@ -109,9 +111,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                     ]),
                   )
                 : Icon(
-                    i.iconData,
-                    key: Key(i.key.name),
-                    color: i.key == TabKey.scan ? context.colorScheme.onSurface : AppColors.encointerGrey,
+                    tabData.iconData,
+                    key: Key(tabData.key.name),
+                    color: tabData.key == TabKey.scan ? context.colorScheme.onSurface : AppColors.encointerGrey,
                   ),
             label: '',
           ),
@@ -154,12 +156,15 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         children: [
           AssetsView(store),
           if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
-          ScanPage(),
+
+          /// empty widget here because when qr code is clicked, we navigate to [ScanPage]
+          const SizedBox(),
           const ContactsPage(),
           const Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        key: const Key('bottom-nav'),
         currentIndex: _tabIndex,
         iconSize: 22,
         onTap: (index) async {

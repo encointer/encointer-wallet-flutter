@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 
-import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
@@ -29,21 +28,6 @@ Future<void> submitTx(
   Map<String, dynamic> txParams, {
   dynamic Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
-  if (store.settings.cachedPin.isEmpty) {
-    final unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
-    await showCupertinoDialog<void>(
-      context: context,
-      builder: (context) {
-        return showPasswordInputDialog(
-          context,
-          store.account.currentAccount,
-          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (String password) => store.settings.setPin(password),
-        );
-      },
-    );
-  }
-
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
   if (txPaymentAsset != null) {
@@ -127,20 +111,6 @@ Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, A
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   final dic = I18n.of(context)!.translationsForLocale();
-  if (store.settings.cachedPin.isEmpty) {
-    await showCupertinoDialog<void>(
-      context: context,
-      builder: (context) {
-        return showPasswordInputDialog(
-          context,
-          store.account.currentAccount,
-          Text(dic.home.unlockAccount.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (String password) => store.settings.setPin(password),
-        );
-      },
-    );
-  }
-
   final proof = await api.encointer.getProofOfAttendance();
 
   return submitTx(

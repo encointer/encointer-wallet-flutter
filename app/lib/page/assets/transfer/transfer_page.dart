@@ -123,14 +123,6 @@ class _TransferPageState extends State<TransferPage> {
         title: Text(dic.assets.transfer),
         leading: const SizedBox.shrink(),
         actions: [
-          if (context.select<AppSettings, bool>((store) => store.developerMode))
-            IconButton(
-              key: const Key('go-transfer-history'),
-              icon: const Icon(Icons.swap_vert_sharp),
-              onPressed: () {
-                Navigator.pushNamed(context, TransferHistoryView.route);
-              },
-            ),
           IconButton(
             key: const Key('close-transfer-page'),
             icon: const Icon(Icons.close),
@@ -171,6 +163,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                     const SizedBox(height: 24),
                     IconButton(
+                      key: const Key('open-qr-scanner-on-send-page'),
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
                       onPressed: () async {

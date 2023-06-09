@@ -11,8 +11,8 @@ class MockLocation extends Mock implements tz.Location {}
 
 class MockEwHttp extends Mock implements EwHttp {
   @override
-  Future<List<T>?> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
-    return <T>[];
+  Future<Either<List<T>, EwHttpException>> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
+    return Right<List<T>, EwHttpException>(const []);
   }
 }
 
@@ -39,6 +39,7 @@ void main() async {
       langCode: 'en',
       cid: Cids.leuKsm,
       ewHttp: MockEwHttp(),
+      devMode: true,
     );
   });
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
@@ -16,6 +18,7 @@ class ContactQrCode extends QrCode<ContactData> {
 
   factory ContactQrCode.fromQrFields(List<String> fields) {
     if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
+      log('fromQrField fields ${fields.length}');
       return ContactQrCode.withData(ContactData.fromQrFieldsV1(fields.sublist(2)));
     } else {
       return ContactQrCode.withData(

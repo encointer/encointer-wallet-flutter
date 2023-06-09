@@ -1,21 +1,31 @@
-class HttpRequestException implements Exception {
-  const HttpRequestException({this.error, this.stackTrace, this.statusCode});
+class EwHttpException implements Exception {
+  const EwHttpException(this.failureType, {this.error, this.stackTrace, this.statusCode});
 
   final dynamic error;
+  final FailureType failureType;
   final StackTrace? stackTrace;
   final int? statusCode;
 }
 
-class JsonDecodeException implements Exception {
-  const JsonDecodeException({this.error, this.stackTrace});
+enum FailureType {
+  /// Represents http error 400
+  badRequest,
 
-  final dynamic error;
-  final StackTrace? stackTrace;
-}
+  /// Represents http error 401
+  noAuthorization,
 
-class JsonDeserializationException implements Exception {
-  const JsonDeserializationException({this.error, this.stackTrace});
+  /// Forbidden http error 403
+  forbidden,
 
-  final dynamic error;
-  final StackTrace? stackTrace;
+  /// Internal server http error 500
+  internalServer,
+
+  /// Json decode error
+  decode,
+
+  /// Json deserialization error
+  deserialization,
+
+  /// Unknown error
+  unknown,
 }

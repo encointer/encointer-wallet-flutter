@@ -1,5 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
+import 'transfer/transfer_keys.dart';
+
 Future<void> goToCreateAccountViewFromAcoountEntryView(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('create-account'));
   await driver.waitFor(find.byValueKey('create-account-name'));
@@ -24,9 +26,29 @@ Future<void> goToAddAcoountViewFromPanel(FlutterDriver driver) async {
 
 Future<void> goToTransferViewFromHomeView(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('transfer'));
-  await driver.waitFor(find.byValueKey('transfer-listview'));
+  await driver.waitFor(find.byValueKey(TransferKeys.transferListview));
 }
 
 Future<void> goToContactViewFromNavBar(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('contacts'));
+}
+
+Future<void> navigateToHomePage(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('bottom-nav'));
+  await driver.tap(find.byValueKey('wallet'));
+}
+
+Future<void> navigateToScanPage(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('bottom-nav'));
+  await driver.tap(find.byValueKey('scan'));
+}
+
+Future<void> navigateToContactsPage(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('bottom-nav'));
+  await driver.tap(find.byValueKey('contacts'));
+}
+
+Future<void> navigateToProfilePage(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('bottom-nav'));
+  await driver.tap(find.byValueKey('profile'));
 }

@@ -272,22 +272,27 @@ class EncointerApi {
     return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
-  Future<void> getMeetupTimeOverride() async {
+  Future<void> getMeetupTimeOverride({bool devMode = false}) async {
     Log.d('api: Check if there are meetup time overrides', 'EncointerApi');
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
     try {
-      final overrides = await ewHttp.getTypeList(encointerFeedOverrides, fromJson: MeetupOverrides.fromJson);
-      final meetupTimeOverride = await feed.getMeetupTimeOverride(
-        network: store.encointer.network,
-        cid: cid,
-        phase: store.encointer.currentPhase,
-        overrides: overrides ?? [],
+      final response = await ewHttp.getTypeList(
+        '${getEncointerFeedLink(devMode: devMode)}/$encointerFeedOverridesPath',
+        fromJson: MeetupOverrides.fromJson,
       );
-      if (store.encointer.community != null) {
-        store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
-      }
+      response.fold((l) => Log.e(l.toString()), (overrides) async {
+        final meetupTimeOverride = await feed.getMeetupTimeOverride(
+          network: store.encointer.network,
+          cid: cid,
+          phase: store.encointer.currentPhase,
+          overrides: overrides,
+        );
+        if (store.encointer.community != null) {
+          store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
+        }
+      });
     } catch (e, s) {
       Log.e('api: exception: $e', 'EncointerApi', s);
     }

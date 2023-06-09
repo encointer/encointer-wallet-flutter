@@ -7,6 +7,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/common/components/error/error_view.dart';
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 
 class TransferHistoryView extends StatelessWidget {
@@ -19,7 +20,11 @@ class TransferHistoryView extends StatelessWidget {
     final transferHistoryStore = context.watch<TransferHistoryViewStore>();
     final dic = I18n.of(context)!.translationsForLocale().home;
     return Scaffold(
-      appBar: AppBar(title: Text(dic.transferHistory)),
+      appBar: AppBar(
+          title: Text(
+        dic.transferHistory,
+        style: context.textTheme.displayMedium,
+      )),
       body: Observer(builder: (_) {
         switch (transferHistoryStore.fetchStatus) {
           case FetchStatus.loading:
