@@ -5,33 +5,39 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/cupertino.dart';
 
-Future<void> showRedeemSuccessDialog(BuildContext context) {
-  return showCupertinoDialog(
-    context: context,
-    builder: redeemSuccessDialog,
-  );
-}
-
-Widget redeemSuccessDialog(BuildContext context) {
-  final l10n = context.l10n;
-
-  return CupertinoAlertDialog(
-    title: Container(),
-    content: Text(l10n.redeemSuccess),
-    actions: <Widget>[
-      CupertinoButton(
-        child: Text(l10n.ok),
-        onPressed: () {
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        },
-      ),
-    ],
-  );
+class VoucherDialogs {
+  static Future<void> showRedeemSuccessDialog({
+    required BuildContext context,
+    required VoidCallback onOK,
+  }) {
+    final l10n = context.l10n;
+    return showCupertinoDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          content: Text(
+            l10n.redeemSuccess,
+          ),
+          actions: <Widget>[
+            CupertinoButton(
+              onPressed: onOK,
+              child: Text(
+                l10n.ok,
+                key: const Key('voucher-dialog-ok'),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 Future<void> showRedeemFailedDialog(BuildContext context, String? error) {
   return showCupertinoDialog(
     context: context,
+    barrierDismissible: true,
     builder: (BuildContext context) {
       return redeemFailedDialog(context, error);
     },
@@ -40,13 +46,16 @@ Future<void> showRedeemFailedDialog(BuildContext context, String? error) {
 
 Widget redeemFailedDialog(BuildContext context, String? error) {
   final l10n = context.l10n;
-
   return CupertinoAlertDialog(
     title: Container(),
     content: Text('${l10n.redeemFailure} $error'),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(l10n.ok),
+        key: Key('voucher_dialog_error_${VoucherTestKeys.error.name}'),
+        child: Text(
+          l10n.ok,
+          key: Key('voucher_dialog_${VoucherTestKeys.error.name}'),
+        ),
         onPressed: () {
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
@@ -66,7 +75,6 @@ Future<void> showErrorDialog(BuildContext context, String error) {
 
 Widget errorDialog(BuildContext context, String errorMsg) {
   final l10n = context.l10n;
-
   return CupertinoAlertDialog(
     title: Container(),
     content: Text('${l10n.errorOccurred} $errorMsg'),
@@ -92,9 +100,7 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
     context: context,
     builder: (BuildContext context) {
       final l10n = context.l10n;
-
       final dialogContent = l10n.voucherDifferentNetworkAndCommunity(cid.toFmtString(), network);
-
       return CupertinoAlertDialog(
         title: Container(),
         content: Text(dialogContent),
@@ -173,3 +179,5 @@ Future<ChangeResult?> showChangeCommunityDialog(
     },
   );
 }
+
+enum VoucherTestKeys { success, error }

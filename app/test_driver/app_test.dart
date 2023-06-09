@@ -1,6 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+import 'app/voucher/voucher_integration_test.dart';
 import 'app/dev_qr_codes/dev_qr_codes_test.dart';
 import 'helpers/helper.dart';
 import 'app/app.dart';
@@ -79,6 +80,19 @@ void main() async {
     await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
   }, timeout: timeout120);
+
+  group('DevMode QR Voucher test', () {
+    test('get voucher by QR, fund', () async {
+      await getQrVoucherAndFund(driver);
+    });
+    test('get voucher by QR, redeem', () async {
+      await getQrVoucherAndRedeem(driver);
+    });
+
+    test('finished, go to HomePage', () async {
+      await goToHomeViewFromNavBar(driver);
+    });
+  });
 
   group('DevMode QR Codes tests', () {
     test('HomePage: save the contact from qr', () async {
