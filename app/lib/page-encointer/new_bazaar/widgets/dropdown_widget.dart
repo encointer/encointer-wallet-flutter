@@ -41,11 +41,11 @@ class _DropdownWidgetState extends State<DropdownWidget> {
             ),
           )
           .toList(),
-      onSelected: (category) async {
+      onSelected: (category) {
         if (category != null && selectedCategory != category) {
           selectedCategory = category;
 
-          await context.read<BusinessesStore>().getBusinesses(category: selectedCategory);
+          context.read<BusinessesStore>().sortBusinessesByCategories(category: selectedCategory);
         }
       },
       inputDecorationTheme: InputDecorationTheme(
@@ -79,7 +79,9 @@ enum Category {
   @JsonValue('food_beverage_store')
   foodAndBeverageStore('Food & Beverage Store'),
   @JsonValue('restaurants_bars')
-  restaurantsAndBars('Restaurants & Bars');
+  restaurantsAndBars('Restaurants & Bars'),
+  @JsonValue('food')
+  food('Food');
 
   const Category(this.name);
   final String name;

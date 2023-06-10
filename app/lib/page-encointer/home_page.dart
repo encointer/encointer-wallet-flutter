@@ -77,13 +77,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     super.initState();
   }
 
-  @override
-  Future<void> didChangeDependencies() async {
-    final encointer = context.read<AppStore>().encointer;
-    await encointer.bazaar?.bazaarGetBusinesses(encointer.community!.cid);
-    super.didChangeDependencies();
-  }
-
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
         .map(
@@ -155,7 +148,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         controller: _pageController,
         children: [
           AssetsView(store),
-          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
+          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar))
+            BazaarMain(args: BazaarMainArgs(cid: store.encointer.community!.cid)),
 
           /// empty widget here because when qr code is clicked, we navigate to [ScanPage]
           const SizedBox(),

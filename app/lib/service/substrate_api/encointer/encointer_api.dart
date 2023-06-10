@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -523,6 +524,19 @@ class EncointerApi {
 
   Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid) async {
     return _dartApi.bazaarGetBusinesses(cid);
+  }
+
+  Future<Either<Businesses, EwHttpException>> getBusinesseses(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    return ewHttp.getType(url, fromJson: Businesses.fromJson);
+  }
+
+  ///TODO(Azamat): method not working, fix it
+  Future<Either<Map<String, dynamic>, EwHttpException>> getBusinessesPhotos(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final response = ewHttp.get<Map<String, dynamic>>(url);
+
+    return response;
   }
 
   /// Get all the registered offerings for the current `chosenCid`

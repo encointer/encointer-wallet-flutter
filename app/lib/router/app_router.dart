@@ -185,7 +185,7 @@ class AppRoute {
         );
       case BazaarPage.route:
         return CupertinoPageRoute(
-          builder: (_) => const BazaarMain(),
+          builder: (_) => BazaarMain(args: arguments! as BazaarMainArgs),
           settings: settings,
         );
       case LangPage.route:

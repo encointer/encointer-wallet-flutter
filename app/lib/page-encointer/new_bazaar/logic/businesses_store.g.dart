@@ -12,15 +12,30 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
   late final _$businessesAtom = Atom(name: '_BusinessesStoreBase.businesses', context: context);
 
   @override
-  List<Businesses>? get businesses {
+  List<Businesses> get businesses {
     _$businessesAtom.reportRead();
     return super.businesses;
   }
 
   @override
-  set businesses(List<Businesses>? value) {
+  set businesses(List<Businesses> value) {
     _$businessesAtom.reportWrite(value, super.businesses, () {
       super.businesses = value;
+    });
+  }
+
+  late final _$sortedbBusinessesAtom = Atom(name: '_BusinessesStoreBase.sortedbBusinesses', context: context);
+
+  @override
+  List<Businesses> get sortedbBusinesses {
+    _$sortedbBusinessesAtom.reportRead();
+    return super.sortedbBusinesses;
+  }
+
+  @override
+  set sortedbBusinesses(List<Businesses> value) {
+    _$sortedbBusinessesAtom.reportWrite(value, super.sortedbBusinesses, () {
+      super.sortedbBusinesses = value;
     });
   }
 
@@ -39,18 +54,48 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
     });
   }
 
+  late final _$errorAtom = Atom(name: '_BusinessesStoreBase.error', context: context);
+
+  @override
+  String? get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String? value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   late final _$getBusinessesAsyncAction = AsyncAction('_BusinessesStoreBase.getBusinesses', context: context);
 
   @override
-  Future<void> getBusinesses({Category category = Category.all}) {
-    return _$getBusinessesAsyncAction.run(() => super.getBusinesses(category: category));
+  Future<void> getBusinesses() {
+    return _$getBusinessesAsyncAction.run(() => super.getBusinesses());
+  }
+
+  late final _$_BusinessesStoreBaseActionController = ActionController(name: '_BusinessesStoreBase', context: context);
+
+  @override
+  void sortBusinessesByCategories({required Category category}) {
+    final _$actionInfo =
+        _$_BusinessesStoreBaseActionController.startAction(name: '_BusinessesStoreBase.sortBusinessesByCategories');
+    try {
+      return super.sortBusinessesByCategories(category: category);
+    } finally {
+      _$_BusinessesStoreBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
   String toString() {
     return '''
 businesses: ${businesses},
-fetchStatus: ${fetchStatus}
+sortedbBusinesses: ${sortedbBusinesses},
+fetchStatus: ${fetchStatus},
+error: ${error}
     ''';
   }
 }

@@ -69,7 +69,6 @@ class _AssetsViewState extends State<AssetsView> {
 
   @override
   void initState() {
-    _startBalanceWatchdog();
     _connectNodeAll();
     _panelController = PanelController();
     _postFrameCallbacks();
@@ -80,8 +79,8 @@ class _AssetsViewState extends State<AssetsView> {
   @override
   void didChangeDependencies() {
     _dic = I18n.of(context)!.translationsForLocale();
-
     _appSettingsStore = context.watch<AppSettings>();
+    _startBalanceWatchdog();
 
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
@@ -112,10 +111,11 @@ class _AssetsViewState extends State<AssetsView> {
       onFocusGained: () {
         Log.d('[home:FocusDetector] Focus Gained.');
         if (!widget.store.settings.loading) {
-          _refreshBalanceAndNotify(_dic);
+          _refreshBalanceAndNotify();
         }
-        _balanceWatchdog.reset();
-        _balanceWatchdog.start();
+        _balanceWatchdog
+          ..reset()
+          ..start();
       },
       child: Scaffold(
         appBar: appBar,
@@ -230,8 +230,6 @@ class _AssetsViewState extends State<AssetsView> {
                       padding: EdgeInsets.symmetric(vertical: 6),
                     ),
                     Observer(builder: (_) {
-                      final dic = I18n.of(context)!.translationsForLocale();
-
                       final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
                           (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
 
@@ -245,7 +243,7 @@ class _AssetsViewState extends State<AssetsView> {
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
                                       key: const Key('claim-pending-dev'),
-                                      child: Text(dic.assets.issuancePending),
+                                      child: Text(_dic.assets.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
                                         widget.store,
@@ -257,7 +255,7 @@ class _AssetsViewState extends State<AssetsView> {
                                     return _appSettingsStore.developerMode
                                         ? ElevatedButton(
                                             onPressed: null,
-                                            child: Text(dic.assets.issuanceClaimed),
+                                            child: Text(_dic.assets.issuanceClaimed),
                                           )
                                         : const SizedBox.shrink();
                                   }
@@ -302,21 +300,21 @@ class _AssetsViewState extends State<AssetsView> {
                         },
                         onAddIconPressed: () {
                           Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-                            _refreshBalanceAndNotify(_dic);
+                            _refreshBalanceAndNotify();
                           });
                         },
                         addIconButtonKey: const Key('add-community'),
                       );
                     }),
                     Observer(builder: (BuildContext context) {
-                      _allAccounts = initAllAccounts(_dic);
+                      _allAccounts = initAllAccounts();
                       return SwitchAccountOrCommunity(
                         rowTitle: _dic.home.switchAccount,
                         accountOrCommunityData: _allAccounts,
                         onTap: (int index) {
                           setState(() {
                             switchAccount(widget.store.account.accountListAll[index]);
-                            _refreshBalanceAndNotify(_dic);
+                            _refreshBalanceAndNotify();
                           });
                         },
                         onAddIconPressed: () {
@@ -375,7 +373,7 @@ class _AssetsViewState extends State<AssetsView> {
     }
   }
 
-  List<AccountOrCommunityData> initAllAccounts(Translations dic) {
+  List<AccountOrCommunityData> initAllAccounts() {
     final allAccounts = <AccountOrCommunityData>[
       ...widget.store.account.accountListAll.map(
         (account) => AccountOrCommunityData(
@@ -419,7 +417,7 @@ class _AssetsViewState extends State<AssetsView> {
     });
   }
 
-  void _refreshBalanceAndNotify(Translations? dic) {
+  void _refreshBalanceAndNotify() {
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
       Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
       if (widget.store.encointer.chosenCid == null) {
@@ -445,12 +443,12 @@ class _AssetsViewState extends State<AssetsView> {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
-              final msg = dic!.assets.incomingConfirmed
+              final msg = _dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
               Log.d('[home:balanceWatchdog] $msg', 'Assets');
-              NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
+              NotificationPlugin.showNotification(45, _dic.assets.fundsReceived, msg, cid: cidStr);
             }
           }
           if (cid == widget.store.encointer.chosenCid) {
@@ -477,7 +475,7 @@ class _AssetsViewState extends State<AssetsView> {
       () {
         Log.d('[balanceWatchdog] triggered', 'Assets');
 
-        _refreshBalanceAndNotify(_dic);
+        _refreshBalanceAndNotify();
         _balanceWatchdog
           ..reset()
           ..start();

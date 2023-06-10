@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +7,27 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/logic/businesses_stor
 import 'package:encointer_wallet/page-encointer/new_bazaar/view/businesses_view.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+
+class BazaarMainArgs {
+  BazaarMainArgs({required this.cid});
+  final CommunityIdentifier cid;
+}
+
+class BazaarMain extends StatelessWidget {
+  const BazaarMain({
+    required this.args,
+    super.key,
+  });
+  final BazaarMainArgs args;
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider(
+      create: (context) => BusinessesStore(args.cid)..getBusinesses(),
+      child: const BazaarPage(),
+    );
+  }
+}
 
 class BazaarPage extends StatelessWidget {
   const BazaarPage({super.key});
@@ -41,25 +63,16 @@ class BazaarPage extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                const DropdownWidget(),
+                Provider.value(
+                  value: context.read<BusinessesStore>(),
+                  child: const DropdownWidget(),
+                ),
               ],
             ),
           ),
         ),
       ),
       body: const BusinessesView(),
-    );
-  }
-}
-
-class BazaarMain extends StatelessWidget {
-  const BazaarMain({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => BusinessesStore()..getBusinesses(),
-      child: const BazaarPage(),
     );
   }
 }

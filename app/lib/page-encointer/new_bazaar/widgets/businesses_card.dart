@@ -15,10 +15,16 @@ class BusinessesCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(businesses.photo, fit: BoxFit.fitHeight),
+          if (businesses.logo != null)
+            Image.network(
+              businesses.logo!,
+              fit: BoxFit.fitHeight,
+              height: 120,
+            ),
           Expanded(
             child: ListTile(
               title: Row(
