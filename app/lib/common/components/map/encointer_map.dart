@@ -63,8 +63,6 @@ class EncointerMap extends StatelessWidget {
                 anchorPos: AnchorPos.align(AnchorAlign.top),
               ),
             ),
-            // markerRotateAlignment: Alignment.bottomCenter,
-            // popupBuilder: popupBuilder,
           ),
         ),
       ],
