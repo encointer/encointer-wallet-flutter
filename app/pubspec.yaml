@@ -26,14 +26,13 @@ dependencies:
   # intl - format numbers
   intl: ^0.18.0
   json_annotation: ^4.8.1
-  bip39: ^1.0.6
+  bip39: ^1.0.6 # Todo(edliiar) Published 2 years ago 
   pointycastle: ^3.7.3
   # state management with mobx
   mobx: ^2.2.0
   flutter_mobx: ^2.0.6+5
   shared_preferences: ^2.1.2
   flutter_inappwebview: ^6.0.0-beta.24+1
-  rxdart: ^0.27.7
   flutter_local_notifications: ^14.1.1
   flutter:
     sdk: flutter
@@ -43,7 +42,7 @@ dependencies:
   package_info_plus: ^3.1.2
   quiver: ^3.2.1
   image_picker: ^0.8.8
-  animated_check: ^1.0.5
+  animated_check: ^1.0.5 # Todo(edliiar) Published 20 months ago 
   share_plus: ^6.3.4
   flutter_timezone: ^1.0.6
 
@@ -66,13 +65,13 @@ dependencies:
   provider: ^6.0.5
   flutter_map_marker_popup: ^5.1.0
   flutter_map: ^4.0.0
-  dart_geohash: ^2.0.2
-  iconsax: ^0.0.8
+  dart_geohash: ^2.0.2 # Todo(edliiar) Published 16 months ago
+  iconsax: ^0.0.8 # Todo(edliiar) Published 23 months ago
   add_2_calendar: ^2.2.3
-  sliding_up_panel: ^2.0.0+1
+  sliding_up_panel: ^2.0.0+1 # Todo(edliiar) Published 2 years ago 
   pausable_timer: ^2.0.0
-  focus_detector: ^2.0.1
-  jdenticon_dart: ^2.0.0
+  focus_detector: ^2.0.1 # Todo(edliiar) Published 17 months ago
+  jdenticon_dart: ^2.0.0 # Todo(edliiar) Published 2 years ago
   photo_view: ^0.14.0
   upgrader: ^6.5.0
   app_links: ^3.4.3
@@ -102,6 +101,7 @@ dev_dependencies:
   test: ^1.24.1
   mocktail: ^0.3.0
   very_good_analysis: ^5.0.0+1
+  rxdart: ^0.27.7
 
 flutter_icons:
   android: "launcher_icon"
