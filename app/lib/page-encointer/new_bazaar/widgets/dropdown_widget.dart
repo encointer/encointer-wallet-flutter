@@ -63,6 +63,10 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         Icons.keyboard_arrow_down_outlined,
         color: AppColors.encointerGrey,
       ),
+      selectedTrailingIcon: const Icon(
+        Icons.keyboard_arrow_up_outlined,
+        color: AppColors.encointerGrey,
+      ),
     );
   }
 }
