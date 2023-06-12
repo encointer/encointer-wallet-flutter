@@ -25,27 +25,27 @@ environment:
 dependencies:
   # intl - format numbers
   intl: ^0.18.0
-  json_annotation: ^4.8.1 # yes
+  json_annotation: ^4.8.1
   bip39: ^1.0.6
-  pointycastle: ^3.7.3 # yes
+  pointycastle: ^3.7.3
   # state management with mobx
-  mobx: ^2.2.0 # yes
+  mobx: ^2.2.0
   flutter_mobx: ^2.0.6+5
-  shared_preferences: ^2.1.2 # yes
-  flutter_inappwebview: ^6.0.0-beta.24 # yes
+  shared_preferences: ^2.1.2
+  flutter_inappwebview: ^6.0.0-beta.24
   rxdart: ^0.27.7
-  flutter_local_notifications: ^14.1.1 # yes
+  flutter_local_notifications: ^14.1.1
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   base58check: ^2.0.0
-  package_info_plus: ^3.1.2 # yes
+  package_info_plus: ^3.1.2
   quiver: ^3.2.1
-  image_picker: ^0.8.8 # yes
+  image_picker: ^0.8.8
   animated_check: ^1.0.5
-  share_plus: ^6.3.4 # yes
-  flutter_timezone: ^1.0.6 # yes
+  share_plus: ^6.3.4
+  flutter_timezone: ^1.0.6
 
   # Adjust screen brightness and keep awake for qrcodes
   wakelock: ^0.6.2
@@ -53,32 +53,32 @@ dependencies:
 
   # encointer dart api
   json_rpc_2: ^3.0.2
-  web_socket_channel: ^2.4.0 # yes
+  web_socket_channel: ^2.4.0
   cupertino_icons: ^1.0.5
   # QR code generator & reader
   pretty_qr_code: ^2.0.3
-  mobile_scanner: ^3.2.0 # yes
+  mobile_scanner: ^3.2.0
   aes_ecb_pkcs5_flutter: ^0.1.2
-  permission_handler: ^10.3.0 # yes
-  flutter_svg: ^2.0.6 # yes
-  url_launcher: ^6.1.11 # yes
-  dropdown_search: ^5.0.6 # yes
+  permission_handler: ^10.3.0
+  flutter_svg: ^2.0.6
+  url_launcher: ^6.1.11
+  dropdown_search: ^5.0.6
   provider: ^6.0.5
-  flutter_map_marker_popup: ^5.1.0 # yes
-  flutter_map: ^4.0.0 # yes
+  flutter_map_marker_popup: ^5.1.0
+  flutter_map: ^4.0.0
   dart_geohash: ^2.0.2
   iconsax: ^0.0.8
   add_2_calendar: ^2.2.3
   sliding_up_panel: ^2.0.0+1
-  pausable_timer: ^2.0.0 # yes
+  pausable_timer: ^2.0.0
   focus_detector: ^2.0.1
   jdenticon_dart: ^2.0.0
   photo_view: ^0.14.0
-  upgrader: ^6.5.0 # yes
-  app_links: ^3.4.3 # yes
+  upgrader: ^6.5.0
+  app_links: ^3.4.3
   local_auth: ^2.1.6
   printing: ^5.11.0
-  pdf: ^3.10.4 # yes
+  pdf: ^3.10.4
   connectivity_plus: ^4.0.1
   ew_storage:
     path: ../packages/ew_storage/
@@ -86,11 +86,11 @@ dependencies:
     path: ../packages/ew_http/
 
 dev_dependencies:
-  build_runner: ^2.4.5 # yes
-  flutter_gen_runner: ^5.3.1 # yes
-  json_serializable: ^6.7.0 # yes
+  build_runner: ^2.4.5
+  flutter_gen_runner: ^5.3.1
+  json_serializable: ^6.7.0
   json_serializable_mobx: ^0.10.3
-  mobx_codegen: ^2.3.0 # yes
+  mobx_codegen: ^2.3.0
   # Check unused dependencies. Note: Some packages are not imported by any dart files but are used
   # for their executables. If that is the case, they can be white-listed by using the --ignore option.
   # mobx_codegen, json_seriablizable belong to these.
@@ -99,7 +99,7 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  test: ^1.24.1 # yes
+  test: ^1.24.1
   mocktail: ^0.3.0
   very_good_analysis: ^5.0.0+1
 
