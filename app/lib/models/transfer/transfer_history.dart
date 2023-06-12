@@ -55,11 +55,9 @@ enum TransactionType {
 
   String getText(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale().transaction;
-    switch (this) {
-      case TransactionType.outgoing:
-        return dic.sent;
-      case TransactionType.incoming:
-        return dic.received;
-    }
+    return switch (this) {
+      TransactionType.outgoing => dic.sent,
+      TransactionType.incoming => dic.received,
+    };
   }
 }

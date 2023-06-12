@@ -6,9 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/common/components/rounded_card.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -103,10 +101,13 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     res.addAll(accounts.map((accountData) {
       final address = Fmt.ss58Encode(accountData.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
 
-      return RoundedCard(
-        border: address == context.read<AppStore>().account.currentAddress
-            ? Border.all(color: context.theme.primaryColorLight)
-            : Border.all(color: context.theme.cardColor),
+      return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: address == context.read<AppStore>().account.currentAddress
+              ? BorderSide(color: context.theme.primaryColorLight)
+              : BorderSide.none,
+        ),
         margin: const EdgeInsets.only(bottom: 16),
         child: ListTile(
           leading: AddressIcon(address, accountData.pubKey, size: 55),
@@ -132,51 +133,42 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.home.settingNetwork),
-        centerTitle: true,
       ),
       body: Row(
         children: <Widget>[
           // left side bar
-          Container(
-            padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-            decoration: BoxDecoration(
-              color: context.theme.cardColor,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 8, // has the effect of softening the shadow
-                  spreadRadius: 2, // ha
-                )
-              ],
-            ),
-            child: Column(
-              children: networks.map((endpointData) {
-                final network = endpointData.info;
-                final isCurrent = network == _selectedNetwork.info;
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  padding: const EdgeInsets.only(right: 8),
-                  decoration: isCurrent
-                      ? BoxDecoration(
-                          border: Border(right: BorderSide(width: 2, color: context.colorScheme.primary)),
-                        )
-                      : null,
-                  child: IconButton(
-                    key: Key(endpointData.info ?? '$endpointData'),
-                    icon: Image.asset(networkIconFromNetworkId(network!, isCurrent)),
-                    onPressed: () {
-                      if (!isCurrent) {
-                        setState(() {
-                          _selectedNetwork = endpointData;
-                        });
-                      }
-                    },
-                  ),
-                );
-              }).toList(),
+          Expanded(
+            child: Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+              child: Column(
+                children: networks.map((i) {
+                  final network = i.info;
+                  final isCurrent = network == _selectedNetwork.info;
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.only(right: 8),
+                    decoration: BoxDecoration(
+                      border:
+                          isCurrent ? Border(right: BorderSide(width: 2, color: context.colorScheme.primary)) : null,
+                    ),
+                    child: IconButton(
+                      key: Key(i.info ?? '$i'),
+                      icon: Image.asset(networkIconFromNetworkId(network!, isCurrent)),
+                      onPressed: () {
+                        if (!isCurrent) {
+                          setState(() {
+                            _selectedNetwork = i;
+                          });
+                        }
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
           ),
           Expanded(
+            flex: 4,
             child: Observer(builder: (_) {
               return ListView(
                 padding: const EdgeInsets.all(16),
@@ -190,17 +182,12 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   String networkIconFromNetworkId(String networkId, bool isCurrent) {
-    switch (networkId) {
-      case 'nctr-gsl':
-        return isCurrent ? Assets.images.public.nctrGsl.path : Assets.images.public.nctrGslGray.path;
-      case 'nctr-r':
-        return isCurrent ? Assets.images.public.nctrR.path : Assets.images.public.nctrRGray.path;
-      case 'nctr-k':
-        return isCurrent ? Assets.images.public.nctrK.path : Assets.images.public.nctrKGray.path;
-      case 'nctr-gsl-dev':
-        return isCurrent ? Assets.images.public.nctrGslDev.path : Assets.images.public.nctrGslDevGray.path;
-      default:
-        return Assets.images.public.nctrKGray.path;
-    }
+    return switch (networkId) {
+      'nctr-gsl' => isCurrent ? Assets.images.public.nctrGsl.path : Assets.images.public.nctrGslGray.path,
+      'nctr-r' => isCurrent ? Assets.images.public.nctrR.path : Assets.images.public.nctrRGray.path,
+      'nctr-k' => isCurrent ? Assets.images.public.nctrK.path : Assets.images.public.nctrKGray.path,
+      'nctr-gsl-dev' => isCurrent ? Assets.images.public.nctrGslDev.path : Assets.images.public.nctrGslDevGray.path,
+      _ => Assets.images.public.nctrKGray.path,
+    };
   }
 }

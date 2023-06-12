@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:ew_storage/ew_storage.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,6 +38,7 @@ Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
       providers: [
         RepositoryProvider(create: (context) => EwHttp()),
         RepositoryProvider(create: (context) => appConfig ?? const AppConfig()),
+        RepositoryProvider(create: (context) => SubstrateDartApi()),
       ],
       child: MultiProvider(
         providers: [

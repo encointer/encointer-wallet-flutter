@@ -54,18 +54,13 @@ class EwHttp {
   }
 
   EwHttpException _returnErrorResponse(Response response) {
-    switch (response.statusCode) {
-      case 400:
-        return EwHttpException(FailureType.badRequest, statusCode: response.statusCode);
-      case 401:
-        return EwHttpException(FailureType.noAuthorization, statusCode: response.statusCode);
-      case 403:
-        return EwHttpException(FailureType.forbidden, statusCode: response.statusCode);
-      case 500:
-        return EwHttpException(FailureType.internalServer, statusCode: response.statusCode);
-      default:
-        return EwHttpException(FailureType.unknown, error: response.statusCode, statusCode: response.statusCode);
-    }
+    return switch (response.statusCode) {
+      400 => EwHttpException(FailureType.badRequest, statusCode: response.statusCode),
+      401 => EwHttpException(FailureType.noAuthorization, statusCode: response.statusCode),
+      403 => EwHttpException(FailureType.forbidden, statusCode: response.statusCode),
+      500 => EwHttpException(FailureType.internalServer, statusCode: response.statusCode),
+      _ => EwHttpException(FailureType.unknown, error: response.statusCode, statusCode: response.statusCode),
+    };
   }
 }
 
