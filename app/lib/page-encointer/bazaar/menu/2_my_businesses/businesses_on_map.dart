@@ -55,9 +55,10 @@ class BMap extends StatelessWidget {
           options: PopupMarkerLayerOptions(
             popupController: _popupLayerController,
             markers: _markers,
-            // markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
-            // popupBuilder: (BuildContext context, Marker marker) =>
-            //     BusinessDetailsPopup(marker, bazaarBusinessDataFor[marker.point]),
+            popupDisplayOptions: PopupDisplayOptions(
+              builder: (BuildContext context, Marker marker) =>
+                  BusinessDetailsPopup(marker, bazaarBusinessDataFor[marker.point]),
+            ),
           ),
         ),
       ],
@@ -70,6 +71,7 @@ class BMap extends StatelessWidget {
             point: item.coordinates,
             width: 40,
             height: 40,
+            rotateAlignment: Alignment.topCenter,
             builder: (_) => const Icon(Icons.location_on, size: 40, color: Colors.blueAccent),
             anchorPos: AnchorPos.align(AnchorAlign.top)))
         .toList();
