@@ -37,6 +37,7 @@ class BusinessesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(14, 20, 14, 30),
       itemCount: businesses.length,
       itemBuilder: (BuildContext context, int index) {
         final business = businesses[index];
