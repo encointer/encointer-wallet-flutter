@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
