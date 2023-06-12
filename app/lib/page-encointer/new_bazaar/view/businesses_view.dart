@@ -21,7 +21,13 @@ class BusinessesView extends StatelessWidget {
         case FetchStatus.loading:
           return const CenteredActivityIndicator();
         case FetchStatus.success:
-          return BusinessesList(businesses: store.sortedbBusinesses);
+          if (store.sortedbBusinesses.isEmpty) {
+            return Center(
+              child: Text('no data'),
+            );
+          } else {
+            return BusinessesList(businesses: store.sortedbBusinesses);
+          }
         case FetchStatus.error:
           return const ErrorView();
       }

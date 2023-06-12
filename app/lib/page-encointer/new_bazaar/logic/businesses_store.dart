@@ -50,24 +50,13 @@ abstract class _BusinessesStoreBase with Store {
     fetchStatus = FetchStatus.loading;
     Log.d('getBusinesses: before update businesses = $businesses', _targetLogger);
 
-    await _addMocks();
-
     final accountBusinessTuples = await _bazaarGetBusinesses();
 
     await _getBusinessesLogosAndUpdate(accountBusinessTuples);
 
     Log.d('getBusinesses: after update businesses = $businesses', _targetLogger);
 
-    sortedbBusinesses = businesses;
-
     fetchStatus = FetchStatus.success;
-  }
-
-  Future<void> _addMocks() async {
-    await Future<void>.delayed(const Duration(seconds: 1));
-    final data = businessesMockData['businesses'];
-    final items = data!.map(Businesses.fromJson).toList();
-    businesses.addAll(items);
   }
 
   void _sortByStatus() {
@@ -111,18 +100,13 @@ abstract class _BusinessesStoreBase with Store {
   @action
   void sortBusinessesByCategories({required Category category}) {
     if (category == Category.all) {
-      sortedbBusinesses = businesses;
+      sortedbBusinesses = <Businesses>[];
+      sortedbBusinesses.addAll(businesses);
     } else {
-      sortedbBusinesses = businesses;
-      sortedbBusinesses.removeWhere((element) => element.category != category);
-      // final found = sortedbBusinesses.firstWhereOrNull((element) => element.category == category);
-      // if (found != null) {
-      //   sortedbBusinesses.removeWhere((element) => element.category != category);
-
-      //   log('BusinessesStore sortedbBusinesses ${sortedbBusinesses.toString()}');
-      // } else {
-      //   return;
-      // }
+      sortedbBusinesses = <Businesses>[];
+      sortedbBusinesses
+        ..addAll(businesses)
+        ..removeWhere((element) => element.category != category);
     }
 
     _sortByStatus();
@@ -144,8 +128,4 @@ abstract class _BusinessesStoreBase with Store {
       }
     });
   }
-}
-
-extension IterableModifier<E> on Iterable<E> {
-  E? firstWhereOrNull(bool Function(E) test) => cast<E?>().firstWhere((v) => v != null && test(v), orElse: () => null);
 }
