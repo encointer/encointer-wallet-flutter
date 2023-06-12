@@ -6,7 +6,7 @@ import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
+import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
