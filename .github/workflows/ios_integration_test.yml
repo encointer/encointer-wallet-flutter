@@ -2,11 +2,11 @@ name: IOS CI
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el/bump-dependencies]
     tags:
       - "*"
   pull_request:
-    branches: [master, f-droid]
+    branches: [master, f-droid, el/bump-dependencies]
 
 env:
   NODE_VERSION: 16.13.1
@@ -23,7 +23,7 @@ jobs:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
   ios_device_test:
-    runs-on: macos-latest
+    runs-on: macos-13
     timeout-minutes: 60
     strategy:
       matrix:
