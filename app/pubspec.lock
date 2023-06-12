@@ -469,10 +469,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_inappwebview
-      sha256: "6d6c741ddba1dba5229d63ba75767064791a7ce845196b45e31105e93d67c949"
+      sha256: ba00a966e5bb90c6fe672a47476e8200e59b4f4f09a82d1d4e9a0834163e22e8
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0-beta.22"
+    version: "6.0.0-beta.24"
   flutter_inappwebview_internal_annotations:
     dependency: transitive
     description:
@@ -485,26 +485,26 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: "293995f94e120c8afce768981bd1fa9c5d6de67c547568e3b42ae2defdcbb4a0"
+      sha256: "812791d43ccfc1b443a0d39fa02a206fc228c597e28ff9337e09e3ca8d370391"
       url: "https://pub.dev"
     source: hosted
-    version: "13.0.0"
+    version: "14.1.1"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
       name: flutter_local_notifications_linux
-      sha256: ccb08b93703aeedb58856e5637450bf3ffec899adb66dc325630b68994734b89
+      sha256: "33f741ef47b5f63cc7f78fe75eeeac7e19f171ff3c3df054d84c1e38bedb6a03"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0+1"
+    version: "4.0.0+1"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
       name: flutter_local_notifications_platform_interface
-      sha256: "5ec1feac5f7f7d9266759488bc5f76416152baba9aa1b26fe572246caa00d1ab"
+      sha256: "7cf643d6d5022f3baed0be777b0662cce5919c0a7b86e700299f22dc4ae660ef"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "7.0.0+1"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -514,18 +514,18 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_map
-      sha256: "59dfd14267b691bea55760786b47d3172d47cdcc0d79ff930746a5ad123491b8"
+      sha256: "52c65a977daae42f9aae6748418dd1535eaf27186e9bac9bf431843082bc75a3"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "4.0.0"
   flutter_map_marker_popup:
     dependency: "direct main"
     description:
       name: flutter_map_marker_popup
-      sha256: f5a40d006e07154a213345300217e8f995ddd3cd280dbe8dc8964f47e7d7fe7c
+      sha256: "71457476f91d6174c132577d37c11a78ad9502be65e699b22aa7a745b07414a5"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.3"
+    version: "5.1.0"
   flutter_mobx:
     dependency: "direct main"
     description:
@@ -961,10 +961,10 @@ packages:
     dependency: "direct main"
     description:
       name: mobile_scanner
-      sha256: "531725451c7506f4c57b4720da1fe33a1394cdf9d4a5075a3a2dd51e21113928"
+      sha256: da55204e5439bc8dc058df56231a7a1d513c6ec9cbad84492f56d493382d296f
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "3.2.0"
   mobx:
     dependency: "direct main"
     description:
@@ -1113,10 +1113,10 @@ packages:
     dependency: "direct main"
     description:
       name: pausable_timer
-      sha256: "1897e2c6a4e73b9486e4ff943bfd08585bc231400e6ae924a92f5b9fd8efc0a6"
+      sha256: d0fb70dea9e1d2ec59c4c2afba00c843fd34de989d5495130867724de0c5246d
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0+7"
+    version: "2.0.0"
   pdf:
     dependency: "direct main"
     description:
@@ -1221,14 +1221,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
-  positioned_tap_detector_2:
-    dependency: transitive
-    description:
-      name: positioned_tap_detector_2
-      sha256: "52e06863ad3e1f82b058fd05054fc8c9caeeb3b47d5cea7a24bd9320746059c1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
   pretty_qr_code:
     dependency: "direct main"
     description:
@@ -1870,10 +1862,10 @@ packages:
     dependency: transitive
     description:
       name: xdg_directories
-      sha256: bd512f03919aac5f1313eb8249f223bacf4927031bf60b02601f81f687689e86
+      sha256: ee1505df1426458f7f60aac270645098d318a8b4766d85fde75f76f2e21807d1
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.0+3"
+    version: "1.0.0"
   xml:
     dependency: transitive
     description:

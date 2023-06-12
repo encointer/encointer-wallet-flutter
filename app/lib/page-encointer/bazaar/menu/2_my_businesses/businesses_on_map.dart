@@ -51,13 +51,13 @@ class BMap extends StatelessWidget {
           urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           subdomains: const ['a', 'b', 'c'],
         ),
-        PopupMarkerLayerWidget(
+        PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
             popupController: _popupLayerController,
             markers: _markers,
-            markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
-            popupBuilder: (BuildContext context, Marker marker) =>
-                BusinessDetailsPopup(marker, bazaarBusinessDataFor[marker.point]),
+            // markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
+            // popupBuilder: (BuildContext context, Marker marker) =>
+            //     BusinessDetailsPopup(marker, bazaarBusinessDataFor[marker.point]),
           ),
         ),
       ],

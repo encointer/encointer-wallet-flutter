@@ -118,7 +118,7 @@ class NotificationPlugin {
       tz.TZDateTime.from(scheduledDate, tz.local),
       _platformChannelSpecifics(body, cid: cid),
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
   }
 }
