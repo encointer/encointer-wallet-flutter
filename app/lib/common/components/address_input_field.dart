@@ -111,6 +111,22 @@ class _AddressInputFieldState extends State<AddressInputField> {
           showSelectedItems: true,
           itemBuilder: _listItemBuilder,
           interceptCallBacks: true,
+          emptyBuilder: (context, searchEntry) {
+            if (Fmt.isAddress(searchEntry)) {
+              final address = searchEntry.replaceAll(' ', '');
+              final pubKey = Fmt.ss58Decode(address).pubKey;
+              final newAccount = AccountData()
+                ..address = address
+                ..pubKey = pubKey
+                ..name = '';
+              return _listItemBuilder(context, newAccount, false);
+            } else {
+              return Align(
+                alignment: Alignment.topCenter,
+                child: Text(dic.profile.contactAddressError),
+              );
+            }
+          },
         ),
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
