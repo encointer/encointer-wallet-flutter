@@ -183,7 +183,7 @@ class AppRoute {
           builder: (_) => const AboutPage(),
           settings: settings,
         );
-      case BazaarMain.route:
+      case BazaarPage.route:
         return CupertinoPageRoute(
           builder: (_) => const BazaarMain(),
           settings: settings,
