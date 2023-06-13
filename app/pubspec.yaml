@@ -26,7 +26,7 @@ dependencies:
   # intl - format numbers
   intl: ^0.18.0
   json_annotation: ^4.8.1
-  bip39: ^1.0.6 # Todo(edliiar) Replace with alternative package.
+  bip39: ^1.0.6 # Todo: #1268: replace with alternative package
   pointycastle: ^3.7.3
   # state management with mobx
   mobx: ^2.2.0
@@ -42,7 +42,7 @@ dependencies:
   package_info_plus: ^3.1.2
   quiver: ^3.2.1
   image_picker: ^0.8.8
-  animated_check: ^1.0.5 # Todo(edliiar) Replace with alternative package.
+  animated_check: ^1.0.5 # Todo: #1269: replace with alternative package
   share_plus: ^6.3.4
   flutter_timezone: ^1.0.6
 
@@ -65,13 +65,13 @@ dependencies:
   provider: ^6.0.5
   flutter_map_marker_popup: ^5.1.0
   flutter_map: ^4.0.0
-  dart_geohash: ^2.0.2 # Todo(edliiar) Replace with alternative package.
-  iconsax: ^0.0.8 # Todo(edliiar) Replace with alternative package.
+  dart_geohash: ^2.0.2 # Todo: #1270: replace with alternative package
+  iconsax: ^0.0.8 # Todo: #1271: replace with alternative package
   add_2_calendar: ^2.2.3
-  sliding_up_panel: ^2.0.0+1 # Todo(edliiar) Replace with alternative package.
+  sliding_up_panel: ^2.0.0+1 # Todo: #1272: replace with alternative package
   pausable_timer: ^2.0.0
-  focus_detector: ^2.0.1 # Todo(edliiar) Replace with alternative package.
-  jdenticon_dart: ^2.0.0 # Todo(edliiar) Replace with alternative package.
+  focus_detector: ^2.0.1 # Todo: #1273: replace with alternative package
+  jdenticon_dart: ^2.0.0 # Todo: #1274: replace with alternative package
   photo_view: ^0.14.0
   upgrader: ^6.5.0
   app_links: ^3.4.3
