@@ -71,6 +71,7 @@ abstract class TranslationsBazaar {
   String get zipCode;
   String get useDescriptiveName;
   String get filter;
+  String get acceptancePoints;
 }
 
 class TranslationsEnBazaar implements TranslationsBazaar {
@@ -117,7 +118,7 @@ class TranslationsEnBazaar implements TranslationsBazaar {
   @override
   String get city => 'City';
   @override
-  String get communityChoose => 'Choose community:';
+  String get communityChoose => 'Choose a community:';
   @override
   String get communityLoad => 'Loading community..';
   @override
@@ -214,6 +215,8 @@ class TranslationsEnBazaar implements TranslationsBazaar {
   String get useDescriptiveName => 'Please, use a descriptive name';
   @override
   String get filter => 'Filter';
+  @override
+  String get acceptancePoints => 'Acceptance Points';
 }
 
 class TranslationsDeBazaar implements TranslationsBazaar {
@@ -357,6 +360,8 @@ class TranslationsDeBazaar implements TranslationsBazaar {
   String get useDescriptiveName => 'Bitte wähle einen beschreibenden Name';
   @override
   String get filter => 'Filtern';
+  @override
+  String get acceptancePoints => 'Akzeptanzstellen';
 }
 
 class TranslationsFrBazaar implements TranslationsBazaar {
@@ -403,7 +408,7 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   @override
   String get city => 'Ville';
   @override
-  String get communityChoose => throw UnimplementedError();
+  String get communityChoose => 'Choisis une communauté:';
   @override
   String get communityLoad => 'Choisis une communauté:';
   @override
@@ -500,6 +505,8 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   String get useDescriptiveName => 'Veuillez choisir un nom descriptif';
   @override
   String get filter => 'Filtrer';
+  @override
+  String get acceptancePoints => "Points D'acceptation";
 }
 
 class TranslationsRuBazaar implements TranslationsBazaar {
@@ -643,4 +650,6 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   String get useDescriptiveName => 'Пожалуйста используйте информативное название';
   @override
   String get filter => 'Фильтр';
+  @override
+  String get acceptancePoints => 'Точки Приема';
 }
