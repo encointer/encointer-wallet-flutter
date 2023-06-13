@@ -164,17 +164,6 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   }
 
   @override
-  String? validateAccount(dynamic l10n, String key) {
-    final _$actionInfo =
-        _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.validateAccount');
-    try {
-      return super.validateAccount(l10n, key);
-    } finally {
-      _$_NewAccountStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 name: ${name},

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/utils/validate_keys.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
@@ -83,7 +84,18 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
           ),
           controller: _keyCtrl,
           maxLines: 2,
-          validator: (String? value) => context.read<NewAccountStore>().validateAccount(l10n, value?.trim() ?? ''),
+          validator: (String? value) {
+            if (value == null || value.isEmpty) return l10n.importMustNotBeEmpty;
+            if (ValidateKeys.isRawSeed(value)) {
+              context.read<NewAccountStore>().setKeyType(KeyType.rawSeed);
+              return ValidateKeys.validateRawSeed(value) ? null : l10n.importInvalidRawSeed;
+            } else if (ValidateKeys.isPrivateKey(value)) {
+              return l10n.importPrivateKeyUnsupported;
+            } else {
+              context.read<NewAccountStore>().setKeyType(KeyType.mnemonic);
+              return ValidateKeys.validateMnemonic(value) ? null : l10n.importInvalidMnemonic;
+            }
+          },
         ),
         const SizedBox(height: 20),
       ],
