@@ -20,6 +20,7 @@ SingleBusiness _$SingleBusinessFromJson(Map<String, dynamic> json) => SingleBusi
       photo: json['photo'] as String,
       status: json['status'] as String?,
       isLiked: json['isLiked'] as bool? ?? false,
+      isLikedPersonally: json['isLikedPersonally'] as bool? ?? false,
       countLikes: json['countLikes'] as int? ?? 0,
     );
 
@@ -37,5 +38,6 @@ Map<String, dynamic> _$SingleBusinessToJson(SingleBusiness instance) => <String,
       'photo': instance.photo,
       'status': instance.status,
       'isLiked': instance.isLiked,
+      'isLikedPersonally': instance.isLikedPersonally,
       'countLikes': instance.countLikes,
     };

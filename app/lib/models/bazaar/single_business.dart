@@ -18,6 +18,7 @@ class SingleBusiness {
     required this.photo,
     this.status,
     this.isLiked = false,
+    this.isLikedPersonally = false,
     this.countLikes = 0,
   });
   factory SingleBusiness.fromJson(Map<String, dynamic> json) => _$SingleBusinessFromJson(json);
@@ -36,6 +37,7 @@ class SingleBusiness {
   final String photo;
   final String? status;
   final bool isLiked;
+  final bool isLikedPersonally;
   final int countLikes;
 }
 
@@ -69,6 +71,7 @@ const singleBusinessMockData = {
       'photo': 'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha-lisa.png?raw=true',
       'status': 'Neu bei Leu',
       'isLiked': false,
+      'isLikedPersonally': false,
       'countLikes': 0
     },
   ]

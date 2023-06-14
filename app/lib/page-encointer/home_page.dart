@@ -1,5 +1,3 @@
-import 'package:encointer_wallet/page-encointer/new_bazaar/logic/single_business_store.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/views/single_business_view.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -10,7 +8,7 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
-// import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
@@ -150,12 +148,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         controller: _pageController,
         children: [
           AssetsView(store),
-          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar))
-            Provider(
-              create: (context) => SingleBusinessStore(),
-              child: const SingleBusinessView(),
-            ),
-          // const BazaarMain(),
+          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
 
           /// empty widget here because when qr code is clicked, we navigate to [ScanPage]
           const SizedBox(),

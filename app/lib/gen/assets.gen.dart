@@ -105,6 +105,19 @@ class $AssetsAvatarsGen {
       ];
 }
 
+class $AssetsIconsGen {
+  const $AssetsIconsGen();
+
+  /// File path: assets/icons/colored_lion_icon.svg
+  SvgGenImage get coloredLionIcon => const SvgGenImage('assets/icons/colored_lion_icon.svg');
+
+  /// File path: assets/icons/uncolored_lion_icon.svg
+  SvgGenImage get uncoloredLionIcon => const SvgGenImage('assets/icons/uncolored_lion_icon.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [coloredLionIcon, uncoloredLionIcon];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -274,6 +287,7 @@ class Assets {
   Assets._();
 
   static const $AssetsAvatarsGen avatars = $AssetsAvatarsGen();
+  static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const SvgGenImage nctrLogo = SvgGenImage('assets/nctr_logo.svg');
   static const SvgGenImage nctrLogoFacesOnlyThick = SvgGenImage('assets/nctr_logo_faces_only_thick.svg');
