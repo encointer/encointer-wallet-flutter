@@ -51,7 +51,6 @@ void main() {
     });
 
     testWidgets('Widget shows businesses list when fetchStatus is success', (WidgetTester tester) async {
-      // final businesses = mockBusinessesDataList.map(Businesses.fromJson).toList();
       when(() => mockStore.fetchStatus).thenReturn(FetchStatus.success);
       when(() => mockStore.businesses).thenReturn(mockBusinessesDataList.map(Businesses.fromJson).toList());
 
