@@ -36,8 +36,9 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
   @action
   Future<void> createPdf({
     required GlobalKey key,
-    required AppLocalizations l10n,
+    required BuildContext context,
   }) async {
+    final l10n = context.l10n;
     Log.d('createPdf: key = $key, translations = $l10n', _logTarget);
     renderObjectKey = key;
 
