@@ -5,33 +5,40 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 
-Future<void> showRedeemSuccessDialog(BuildContext context) {
-  return showCupertinoDialog(
-    context: context,
-    builder: redeemSuccessDialog,
-  );
-}
+class VoucherDialogs {
+  static Future<void> showRedeemSuccessDialog({
+    required BuildContext context,
+    required VoidCallback onOK,
+  }) {
+    final dic = I18n.of(context)!.translationsForLocale();
 
-Widget redeemSuccessDialog(BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale();
-
-  return CupertinoAlertDialog(
-    title: Container(),
-    content: Text(dic.assets.redeemSuccess),
-    actions: <Widget>[
-      CupertinoButton(
-        child: Text(dic.home.ok),
-        onPressed: () {
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        },
-      ),
-    ],
-  );
+    return showCupertinoDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          content: Text(
+            dic.assets.redeemSuccess,
+          ),
+          actions: <Widget>[
+            CupertinoButton(
+              onPressed: onOK,
+              child: Text(
+                dic.home.ok,
+                key: const Key('voucher-dialog-ok'),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 Future<void> showRedeemFailedDialog(BuildContext context, String? error) {
   return showCupertinoDialog(
     context: context,
+    barrierDismissible: true,
     builder: (BuildContext context) {
       return redeemFailedDialog(context, error);
     },
@@ -43,10 +50,16 @@ Widget redeemFailedDialog(BuildContext context, String? error) {
 
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text('${dic.assets.redeemFailure} $error'),
+    content: Text(
+      '${dic.assets.redeemFailure} $error',
+    ),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(dic.home.ok),
+        key: Key('voucher_dialog_error_${VoucherTestKeys.error.name}'),
+        child: Text(
+          dic.home.ok,
+          key: Key('voucher_dialog_${VoucherTestKeys.error.name}'),
+        ),
         onPressed: () {
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
@@ -175,3 +188,5 @@ Future<ChangeResult?> showChangeCommunityDialog(
     },
   );
 }
+
+enum VoucherTestKeys { success, error }

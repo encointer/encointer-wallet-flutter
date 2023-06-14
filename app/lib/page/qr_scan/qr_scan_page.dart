@@ -69,12 +69,12 @@ class ScanPage extends StatelessWidget {
           return Stack(
             children: [
               MobileScanner(
-                onDetect: (barcode, args) {
-                  if (barcode.rawValue == null) {
+                onDetect: (barcode) {
+                  if (barcode.barcodes.isEmpty) {
                     Log.d('Failed to scan Barcode', 'ScanPage');
                   } else {
-                    log('barcode.rawValue: ${barcode.rawValue}');
-                    _onScan(context, barcode.rawValue!);
+                    log('barcode.rawValue: ${barcode.barcodes}');
+                    _onScan(context, barcode.barcodes[0].rawValue!);
                   }
                 },
               ),
