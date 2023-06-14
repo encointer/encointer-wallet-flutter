@@ -92,11 +92,11 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
             }
             return Stack(
               children: [
-                MobileScanner(onDetect: (barcode, args) {
-                  if (barcode.rawValue == null) {
+                MobileScanner(onDetect: (barcode) {
+                  if (barcode.barcodes.isEmpty) {
                     Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
                   } else {
-                    onScan(context.read<AppStore>(), l10n, barcode.rawValue!);
+                    onScan(context.read<AppStore>(), l10n, barcode.barcodes[0].rawValue!);
                   }
                 }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
