@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
@@ -23,7 +24,7 @@ class BusinessesCard extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(businesses.photo),
+                  image: CachedNetworkImageProvider(businesses.photo),
                 ),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),

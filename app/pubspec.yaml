@@ -80,6 +80,7 @@ dependencies:
   printing: ^5.11.0
   pdf: ^3.10.1
   connectivity_plus: ^4.0.1
+  cached_network_image: ^3.2.3
   ew_storage:
     path: ../packages/ew_storage/
   ew_http:
