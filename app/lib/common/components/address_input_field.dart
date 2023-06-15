@@ -6,7 +6,7 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class AddressInputField extends StatefulWidget {
   const AddressInputField(
@@ -97,7 +97,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return DecoratedBox(
       decoration: BoxDecoration(
         color: context.colorScheme.background,
@@ -124,7 +123,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         ),
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
-        validator: (AccountData? u) => u == null ? dic.profile.errorUserNameIsRequired : null,
+        validator: (AccountData? u) => u == null ? context.l10n.errorUserNameIsRequired : null,
         items: widget.store.account.accountListAll,
         filterFn: filterByAddressOrName,
         onChanged: (AccountData? data) {
