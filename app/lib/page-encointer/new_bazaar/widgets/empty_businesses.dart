@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/utils.dart';
 
 class EmptyBusiness extends StatelessWidget {
   const EmptyBusiness({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Center(
       child: Text(
-        dic.bazaar.noItems,
+        context.l10n.noItems,
         style: context.textTheme.displayMedium,
       ),
     );
