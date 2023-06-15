@@ -118,7 +118,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
               final newAccount = AccountData()
                 ..address = address
                 ..pubKey = pubKey
-                ..name = '';
+                ..name = dic.account.unknownAccount;
               return _listItemBuilder(context, newAccount, false);
             } else {
               return Align(

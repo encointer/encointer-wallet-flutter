@@ -35,6 +35,7 @@ abstract class TranslationsAccount {
   String get signIn;
   String get localizedReason;
   String get biometricAuth;
+  String get unknownAccount;
 }
 
 class TranslationsEnAccount implements TranslationsAccount {
@@ -107,6 +108,8 @@ class TranslationsEnAccount implements TranslationsAccount {
   String get localizedReason => 'Authenticate to access your account.';
   @override
   String get biometricAuth => 'Biometric authentication';
+  @override
+  String get unknownAccount => 'Unknown account';
 }
 
 class TranslationsDeAccount implements TranslationsAccount {
@@ -179,6 +182,8 @@ class TranslationsDeAccount implements TranslationsAccount {
   String get localizedReason => 'Authentifizierung notwendig um auf dein Konto zuzugreifen.';
   @override
   String get biometricAuth => 'Biometrische Authentifizierung';
+  @override
+  String get unknownAccount => 'Unbekanntes Konto';
 }
 
 class TranslationsFrAccount implements TranslationsAccount {
@@ -251,6 +256,8 @@ class TranslationsFrAccount implements TranslationsAccount {
   String get localizedReason => 'Authentification nécessaire pour accéder à ton compte.';
   @override
   String get biometricAuth => 'Authentification biométrique';
+  @override
+  String get unknownAccount => 'Compte inconnu';
 }
 
 class TranslationsRuAccount implements TranslationsAccount {
@@ -323,4 +330,6 @@ class TranslationsRuAccount implements TranslationsAccount {
   String get localizedReason => 'Аутентифицируйтесь для доступа к вашей учетной записи.';
   @override
   String get biometricAuth => 'Биометрическая аутентификация';
+  @override
+  String get unknownAccount => 'Неизвестный аккаунт';
 }
