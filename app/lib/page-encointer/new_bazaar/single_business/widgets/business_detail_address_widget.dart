@@ -1,14 +1,14 @@
-import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 
 class BusinessDetailAddressWidget extends StatelessWidget {
   const BusinessDetailAddressWidget({
-    super.key,
     required this.text,
     required this.description,
     required this.address,
     required this.email,
     required this.phoneNum,
+    super.key,
   });
   final String text;
   final String description;
@@ -31,7 +31,6 @@ class BusinessDetailAddressWidget extends StatelessWidget {
               text: description,
               style: context.textTheme.bodyMedium!.copyWith(
                 fontWeight: FontWeight.bold,
-                height: 1.8,
               ),
             ),
             TextSpan(
@@ -39,16 +38,15 @@ class BusinessDetailAddressWidget extends StatelessWidget {
               style: context.textTheme.bodyMedium!.copyWith(height: 1.3),
             ),
             TextSpan(
-              text: email,
+              text: '$email\n',
               style: context.textTheme.bodyMedium!.copyWith(height: 1.3),
             ),
             TextSpan(
               text: phoneNum,
-              style: context.textTheme.bodyMedium!.copyWith(height: 1.3),
+              style: context.textTheme.bodyMedium!.copyWith(height: 1.5),
             ),
           ],
         ),
-        textAlign: TextAlign.left,
       ),
     );
   }

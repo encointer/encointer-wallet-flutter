@@ -9,6 +9,8 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widge
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/map_button.dart';
 import 'package:encointer_wallet/models/bazaar/single_business.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/models/location/location.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 
 class SingleBusinessDetail extends StatelessWidget {
   const SingleBusinessDetail({
@@ -28,7 +30,7 @@ class SingleBusinessDetail extends StatelessWidget {
             Image.network(
                 // singleBusiness.photo,
                 'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha_lisa_single_b.png?raw=true',
-                fit: BoxFit.fill),
+                fit: BoxFit.cover),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 20, 30, 60),
               child: Column(
@@ -38,11 +40,10 @@ class SingleBusinessDetail extends StatelessWidget {
                     children: [
                       Text(
                         singleBusiness.category,
-                        // 'Body & Soul',
                         style: context.textTheme.bodySmall,
                       ),
                       Text(
-                        'Nei bei Leu',
+                        singleBusiness.status!,
                         style: context.textTheme.bodySmall!.copyWith(color: const Color(0xFF35B731)),
                       )
                     ],
@@ -86,30 +87,30 @@ class SingleBusinessDetail extends StatelessWidget {
                   const SizedBox(height: 20),
                   Text(
                     singleBusiness.description,
-                    // 'Nutze deine Leu, um deinem Körper und Geist etwas Gutes zu tun. Besuche eine Yogastunde im Kreis 4 oder Kreis 5 mit Lisa Stähli, einer Hatha-Yoga-Lehrerin mit über 4 Jahren Unterrichtserfahrung. Die Klassen sind für alle Niveaus geeignet, werden auf Englisch unterrichtet und bieten sowohl eine Herausforderung als auch die Möglichkeit, sein Gleichgewicht zu finden.\n\nErfahre mehr oder kontaktiere uns:\nhttps://hathalisa.com/',
                     style: context.textTheme.bodyMedium!.copyWith(height: 1.5, fontSize: 16),
                   ),
                   const SizedBox(height: 40),
                   BusinessDetailTextWidget(
                     text: 'Opening Hours\n',
                     text1: singleBusiness.openingHours,
-                    // 'Mon-Fri 8h-18h',
                   ),
                   const SizedBox(height: 20),
                   BusinessDetailAddressWidget(
                     text: 'Address\n',
                     description: 'Yoga Studio Zürich\n',
                     address: singleBusiness.address,
-                    // 'Zwinglistrasse, 8 8004\n',
-
                     email: singleBusiness.email,
-                    // 'info@hathalisa.com\n',
                     phoneNum: singleBusiness.telephone,
-                    // '+41 123 456 789',
                   ),
                   const SizedBox(height: 20),
                   MapButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final location = Location(
+                        singleBusiness.latitude.toString(),
+                        singleBusiness.longitude.toString(),
+                      );
+                      AppLaunch.launchMap(location);
+                    },
                   ),
                   const SizedBox(height: 40),
                   const BusinessDetailTextWidget(

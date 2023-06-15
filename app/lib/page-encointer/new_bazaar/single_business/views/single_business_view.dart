@@ -15,16 +15,21 @@ class SingleBusinessView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<SingleBusinessStore>();
-    return Observer(builder: (_) {
-      switch (store.fetchStatus) {
-        case FetchStatus.loading:
-          return const CenteredActivityIndicator();
-        case FetchStatus.success:
-          return SingleBusinessList(singleBusiness: store.singleBusiness!);
-        case FetchStatus.error:
-          return const ErrorView();
-      }
-    });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Hatha Lisa'.toUpperCase()),
+      ),
+      body: Observer(builder: (_) {
+        switch (store.fetchStatus) {
+          case FetchStatus.loading:
+            return const CenteredActivityIndicator();
+          case FetchStatus.success:
+            return SingleBusinessList(singleBusiness: store.singleBusiness!);
+          case FetchStatus.error:
+            return const ErrorView();
+        }
+      }),
+    );
   }
 }
 
@@ -40,50 +45,10 @@ class SingleBusinessList extends StatelessWidget {
       itemCount: singleBusiness.length,
       itemBuilder: (BuildContext context, int index) {
         final business = singleBusiness[index];
-        return SingleBusinessDetail(singleBusiness: business);
+        return SingleBusinessDetail(
+          singleBusiness: business,
+        );
       },
     );
   }
 }
-//  @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           leading: IconButton(
-//             icon: const Icon(
-//               Icons.arrow_back_ios,
-//               size: 18,
-//             ),
-//             onPressed: () {},
-//           ),
-//           title: Builder(builder: (_) {
-//             return Text(
-//               'Hatha Lisa'.toUpperCase(),
-//               // singleBusiness.name.toUpperCase(),
-//               style: context.textTheme.titleLarge!.copyWith(color: context.colorScheme.primary),
-//             );
-//           }),
-//           actions: [
-//             IconButton(
-//               icon: const Icon(Icons.menu),
-//               onPressed: () {},
-//             ),
-//           ],
-//         ),
-//         body: MultiProvider(
-//           providers: [
-//             Provider<LikeIconStore>(
-//               create: (_) => LikeIconStore(),
-//             ),
-//             Provider<SingleBusinessStore>(
-//               create: (_) => SingleBusinessStore(),
-//             ),
-//           ],
-//           child: const SingleBusinessDetail(),
-//         )
-        // Provider(
-        //   create: (context) => LikeIconStore(),
-        //   child: const SingleBusinessDetail(),
-        // ),
-  //       );
-  // }
