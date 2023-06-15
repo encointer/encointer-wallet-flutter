@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/service/service.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -60,7 +61,7 @@ abstract class _HomePageStoreBase with Store, WidgetsBindingObserver {
         encointer.nextRegisteringPhaseStart!,
         encointer.currentCeremonyIndex!,
         encointer.ceremonyCycleDuration!,
-        I18n.of(buildContext)!.translationsForLocale().encointer,
+        buildContext.l10n,
         cid: cid,
       );
 
@@ -68,7 +69,7 @@ abstract class _HomePageStoreBase with Store, WidgetsBindingObserver {
         encointer.assigningPhaseStart!,
         encointer.currentCeremonyIndex!,
         encointer.ceremonyCycleDuration!,
-        I18n.of(buildContext)!.translationsForLocale().encointer,
+        buildContext.l10n,
         cid: cid,
       );
     }

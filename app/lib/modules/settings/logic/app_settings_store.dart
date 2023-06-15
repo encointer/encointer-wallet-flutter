@@ -24,13 +24,6 @@ abstract class _AppSettingsBase with Store {
   @observable
   bool developerMode = false;
 
-  final locales = const <Locale>[
-    Locale('en', ''),
-    Locale('de', ''),
-    Locale('fr', ''),
-    Locale('ru', ''),
-  ];
-
   @observable
   bool _isIntegrationTest = false;
 
@@ -65,12 +58,9 @@ abstract class _AppSettingsBase with Store {
     await _service.setIsBiometricAuthenticationEnabled(value);
   }
 
-  String getLocaleName(String code) => _service.getLocaleName(code);
-
   @action
   void toggleDeveloperMode() => developerMode = !developerMode;
 
-  /// TODO(edliiar): Activate GBD colors when received from designer.
   @action
   void changeTheme(String? cid) {
     final community = Community.fromCid(cid);

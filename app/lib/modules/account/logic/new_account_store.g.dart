@@ -164,17 +164,6 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   }
 
   @override
-  String? validateAccount(Translations dic, String key) {
-    final _$actionInfo =
-        _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.validateAccount');
-    try {
-      return super.validateAccount(dic, key);
-    } finally {
-      _$_NewAccountStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 name: ${name},

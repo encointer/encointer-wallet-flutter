@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/alerts/password_input_dialog.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class AppAlert {
   static Future<T?> showDialog<T>(
@@ -42,7 +42,7 @@ class AppAlert {
     Widget? title,
     Widget? content,
   }) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     return showCupertinoDialog<T>(
       context: context,
       builder: (BuildContext context) {
@@ -52,12 +52,12 @@ class AppAlert {
           actions: <Widget>[
             CupertinoButton(
               onPressed: onCancel,
-              child: Text(dic.home.cancel),
+              child: Text(l10n.cancel),
             ),
             CupertinoButton(
               key: const Key('ok-button'),
               onPressed: onOK,
-              child: Text(dic.home.ok),
+              child: Text(l10n.ok),
             ),
           ],
         );
@@ -96,11 +96,13 @@ class AppAlert {
     bool canPop = true,
     bool showCancelButton = false,
     bool autoCloseOnSuccess = true,
+    String? title,
   }) async {
     return showCupertinoDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return PasswordInputDialog(
+          title: title,
           account: account,
           onSuccess: onSuccess,
           canPop: canPop,

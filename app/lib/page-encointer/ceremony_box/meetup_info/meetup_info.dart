@@ -5,7 +5,7 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_location_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class MeetupInfo extends StatelessWidget {
   const MeetupInfo(
@@ -21,12 +21,7 @@ class MeetupInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    final info = dic.encointer.youAreAssignedToAGatheringWithNParticipants.replaceAll(
-      'P_COUNT',
-      meetup.registry.length.toString(),
-    );
-
+    final info = context.l10n.youAreAssignedToAGatheringWithNParticipants(meetup.registry.length);
     return Column(
       children: [
         CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),
