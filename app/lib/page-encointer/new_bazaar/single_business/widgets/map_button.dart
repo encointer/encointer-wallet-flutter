@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 
@@ -15,8 +16,9 @@ class MapButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          backgroundColor: context.colorScheme.onSecondary,
           padding: const EdgeInsets.fromLTRB(30, 12, 30, 12),
-          elevation: 3,
+          elevation: 7,
         ),
         child: Text(
           'Open Map',

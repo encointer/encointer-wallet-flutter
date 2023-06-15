@@ -7,15 +7,16 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widge
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/like_icon_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/business_detail_address_widget.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/map_button.dart';
-// import 'package:encointer_wallet/models/bazaar/single_business.dart';
+import 'package:encointer_wallet/models/bazaar/single_business.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 class SingleBusinessDetail extends StatelessWidget {
   const SingleBusinessDetail({
     super.key,
+    required this.singleBusiness,
   });
 
-  // final SingleBusiness singleBusiness;
+  final SingleBusiness singleBusiness;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,9 @@ class SingleBusinessDetail extends StatelessWidget {
         child: Column(
           children: [
             Image.network(
-              'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha_lisa_single_b.png?raw=true',
-              fit: BoxFit.fitWidth,
-            ),
+                // singleBusiness.photo,
+                'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha_lisa_single_b.png?raw=true',
+                fit: BoxFit.fill),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 20, 30, 60),
               child: Column(
@@ -36,8 +37,8 @@ class SingleBusinessDetail extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        // singleBusiness.category,
-                        'Body & Soul',
+                        singleBusiness.category,
+                        // 'Body & Soul',
                         style: context.textTheme.bodySmall,
                       ),
                       Text(
@@ -84,26 +85,27 @@ class SingleBusinessDetail extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    // singleBusiness.description,
-                    'Nutze deine Leu, um deinem Körper und Geist etwas Gutes zu tun. Besuche eine Yogastunde im Kreis 4 oder Kreis 5 mit Lisa Stähli, einer Hatha-Yoga-Lehrerin mit über 4 Jahren Unterrichtserfahrung. Die Klassen sind für alle Niveaus geeignet, werden auf Englisch unterrichtet und bieten sowohl eine Herausforderung als auch die Möglichkeit, sein Gleichgewicht zu finden.\n\nErfahre mehr oder kontaktiere uns:\nhttps://hathalisa.com/',
+                    singleBusiness.description,
+                    // 'Nutze deine Leu, um deinem Körper und Geist etwas Gutes zu tun. Besuche eine Yogastunde im Kreis 4 oder Kreis 5 mit Lisa Stähli, einer Hatha-Yoga-Lehrerin mit über 4 Jahren Unterrichtserfahrung. Die Klassen sind für alle Niveaus geeignet, werden auf Englisch unterrichtet und bieten sowohl eine Herausforderung als auch die Möglichkeit, sein Gleichgewicht zu finden.\n\nErfahre mehr oder kontaktiere uns:\nhttps://hathalisa.com/',
                     style: context.textTheme.bodyMedium!.copyWith(height: 1.5, fontSize: 16),
                   ),
                   const SizedBox(height: 40),
-                  const BusinessDetailTextWidget(
+                  BusinessDetailTextWidget(
                     text: 'Opening Hours\n',
-                    text1: 'Mon-Fri 8h-18h',
-                    //  singleBusiness.openingHours,
+                    text1: singleBusiness.openingHours,
+                    // 'Mon-Fri 8h-18h',
                   ),
                   const SizedBox(height: 20),
-                  const BusinessDetailAddressWidget(
+                  BusinessDetailAddressWidget(
                     text: 'Address\n',
                     description: 'Yoga Studio Zürich\n',
-                    address: 'Zwinglistrasse, 8 8004\n',
-                    // singleBusiness.address,
-                    email: 'info@hathalisa.com\n',
-                    // singleBusiness.email,
-                    phoneNum: '+41 123 456 789',
-                    // singleBusiness.telephone,
+                    address: singleBusiness.address,
+                    // 'Zwinglistrasse, 8 8004\n',
+
+                    email: singleBusiness.email,
+                    // 'info@hathalisa.com\n',
+                    phoneNum: singleBusiness.telephone,
+                    // '+41 123 456 789',
                   ),
                   const SizedBox(height: 20),
                   MapButton(

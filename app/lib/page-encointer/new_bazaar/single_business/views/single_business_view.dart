@@ -1,57 +1,89 @@
-import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/like_icon_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/single_business_detail.dart';
-// import 'package:encointer_wallet/models/bazaar/single_business.dart';
-import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
+import 'package:encointer_wallet/common/components/error/error_view.dart';
+import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
+import 'package:encointer_wallet/models/bazaar/single_business.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
+import 'package:encointer_wallet/utils/fetch_status.dart';
 
 class SingleBusinessView extends StatelessWidget {
   const SingleBusinessView({super.key});
 
-  // final SingleBusiness singleBusiness;
+  @override
+  Widget build(BuildContext context) {
+    final store = context.watch<SingleBusinessStore>();
+    return Observer(builder: (_) {
+      switch (store.fetchStatus) {
+        case FetchStatus.loading:
+          return const CenteredActivityIndicator();
+        case FetchStatus.success:
+          return SingleBusinessList(singleBusiness: store.singleBusiness!);
+        case FetchStatus.error:
+          return const ErrorView();
+      }
+    });
+  }
+}
+
+class SingleBusinessList extends StatelessWidget {
+  const SingleBusinessList({super.key, required this.singleBusiness});
+
+  final List<SingleBusiness> singleBusiness;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 18,
-            ),
-            onPressed: () {},
-          ),
-          title: Builder(builder: (_) {
-            return Text(
-              'Hatha Lisa'.toUpperCase(),
-              // singleBusiness.name.toUpperCase(),
-              style: context.textTheme.titleLarge!.copyWith(color: context.colorScheme.primary),
-            );
-          }),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {},
-            ),
-          ],
-        ),
-        body: MultiProvider(
-          providers: [
-            Provider<LikeIconStore>(
-              create: (_) => LikeIconStore(),
-            ),
-            Provider<SingleBusinessStore>(
-              create: (_) => SingleBusinessStore(),
-            ),
-          ],
-          child: const SingleBusinessDetail(),
-        )
+    return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(14, 20, 14, 30),
+      itemCount: singleBusiness.length,
+      itemBuilder: (BuildContext context, int index) {
+        final business = singleBusiness[index];
+        return SingleBusinessDetail(singleBusiness: business);
+      },
+    );
+  }
+}
+//  @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(
+//           leading: IconButton(
+//             icon: const Icon(
+//               Icons.arrow_back_ios,
+//               size: 18,
+//             ),
+//             onPressed: () {},
+//           ),
+//           title: Builder(builder: (_) {
+//             return Text(
+//               'Hatha Lisa'.toUpperCase(),
+//               // singleBusiness.name.toUpperCase(),
+//               style: context.textTheme.titleLarge!.copyWith(color: context.colorScheme.primary),
+//             );
+//           }),
+//           actions: [
+//             IconButton(
+//               icon: const Icon(Icons.menu),
+//               onPressed: () {},
+//             ),
+//           ],
+//         ),
+//         body: MultiProvider(
+//           providers: [
+//             Provider<LikeIconStore>(
+//               create: (_) => LikeIconStore(),
+//             ),
+//             Provider<SingleBusinessStore>(
+//               create: (_) => SingleBusinessStore(),
+//             ),
+//           ],
+//           child: const SingleBusinessDetail(),
+//         )
         // Provider(
         //   create: (context) => LikeIconStore(),
         //   child: const SingleBusinessDetail(),
         // ),
-        );
-  }
-}
+  //       );
+  // }

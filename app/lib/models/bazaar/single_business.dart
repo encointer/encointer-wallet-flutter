@@ -68,7 +68,7 @@ const singleBusinessMockData = {
       'latitude': 47.390349148891545,
       'openingHours': 'Mon-Fri 8h-18h',
       'logo': 'QmUH7W2eAWTfHRYYV1YitZaz54sTjEwv6udjZjh7Tg47Xv',
-      'photo': 'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha-lisa.png?raw=true',
+      'photo': 'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha_lisa_single_b.png?raw=true',
       'status': 'Neu bei Leu',
       'isLiked': false,
       'isLikedPersonally': false,

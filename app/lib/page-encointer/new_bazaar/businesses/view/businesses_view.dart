@@ -1,10 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/like_icon_store.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/error/error_view.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/views/single_business_view.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/businesses_card.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
@@ -41,7 +44,27 @@ class BusinessesList extends StatelessWidget {
       itemCount: businesses.length,
       itemBuilder: (BuildContext context, int index) {
         final business = businesses[index];
-        return BusinessesCard(businesses: business);
+        return GestureDetector(
+          onTap: () {
+            Navigator.push<Widget>(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MultiProvider(
+                  providers: [
+                    Provider<SingleBusinessStore>(
+                      create: (context) => SingleBusinessStore()..getSingleBusiness(),
+                    ),
+                    Provider<LikeIconStore>(
+                      create: (context) => LikeIconStore(),
+                    )
+                  ],
+                  child: const SingleBusinessView(),
+                ),
+              ),
+            );
+          },
+          child: BusinessesCard(businesses: business),
+        );
       },
     );
   }
