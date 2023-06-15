@@ -65,7 +65,6 @@ class _AssetsViewState extends State<AssetsView> {
   late AppSettings _appSettingsStore;
   late double _panelHeightOpen;
   final double _panelHeightClosed = 0;
-  List<AccountOrCommunityData> _allAccounts = <AccountOrCommunityData>[];
 
   @override
   void initState() {
@@ -172,8 +171,8 @@ class _AssetsViewState extends State<AssetsView> {
                       key: const Key('panel-controller'),
                       child: CombinedCommunityAndAccountAvatar(widget.store),
                       onTap: () {
-                        if (_panelController != null && _panelController!.isAttached) {
-                          _panelController!.open();
+                        if (_panelController.isAttached) {
+                          _panelController.open();
                         }
                       },
                     ),

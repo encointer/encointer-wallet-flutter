@@ -121,6 +121,7 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   ///TOOD(Azamat): Need to fix the method
+  // ignore: unused_element
   Future<void> _getBusinessesPhotos() async {
     await Future.forEach<Businesses>(businesses, (element) async {
       if (element.photos.isNotNullOrEmpty) {
