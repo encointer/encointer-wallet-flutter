@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';

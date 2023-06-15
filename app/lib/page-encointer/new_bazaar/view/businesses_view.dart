@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/empty_businesses.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -17,20 +18,12 @@ class BusinessesView extends StatelessWidget {
     final store = context.watch<BusinessesStore>();
 
     return Observer(builder: (_) {
-      switch (store.fetchStatus) {
-        case FetchStatus.loading:
-          return const CenteredActivityIndicator();
-        case FetchStatus.success:
-          if (store.sortedbBusinesses.isEmpty) {
-            return Center(
-              child: Text('no data'),
-            );
-          } else {
-            return BusinessesList(businesses: store.sortedbBusinesses);
-          }
-        case FetchStatus.error:
-          return const ErrorView();
-      }
+      return switch (store.fetchStatus) {
+        FetchStatus.loading => const CenteredActivityIndicator(),
+        FetchStatus.success => BusinessesList(businesses: store.businesses),
+        FetchStatus.error => const ErrorView(),
+        FetchStatus.noData => const EmptyBusiness(),
+      };
     });
   }
 }

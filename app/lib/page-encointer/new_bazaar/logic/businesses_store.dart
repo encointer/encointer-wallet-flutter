@@ -1,8 +1,7 @@
-import 'dart:developer';
-import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:mobx/mobx.dart';
 import 'package:ew_http/ew_http.dart';
 
+import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -56,7 +55,15 @@ abstract class _BusinessesStoreBase with Store {
 
     Log.d('getBusinesses: after update businesses = $businesses', _targetLogger);
 
-    fetchStatus = FetchStatus.success;
+    _update();
+  }
+
+  void _update() {
+    if (sortedbBusinesses.isEmpty) {
+      fetchStatus = FetchStatus.noData;
+    } else {
+      fetchStatus = FetchStatus.success;
+    }
   }
 
   void _sortByStatus() {
@@ -110,6 +117,7 @@ abstract class _BusinessesStoreBase with Store {
     }
 
     _sortByStatus();
+    _update();
   }
 
   ///TOOD(Azamat): Need to fix the method

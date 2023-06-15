@@ -8,11 +8,11 @@ import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 class EncointerMap extends StatelessWidget {
   EncointerMap({
     super.key,
+    required this.popupBuilder,
     required this.locations,
     this.initialZoom = 13,
     this.maxZoom = 20,
     this.center,
-    this.popupBuilder,
     this.mapController,
     this.onPointerDown,
   });
@@ -21,7 +21,7 @@ class EncointerMap extends StatelessWidget {
   final double initialZoom;
   final double maxZoom;
   final LatLng? center;
-  final Widget Function(BuildContext, Marker)? popupBuilder;
+  final Widget Function(BuildContext, Marker) popupBuilder;
   final MapController? mapController;
   final void Function(PointerDownEvent, LatLng)? onPointerDown;
 
@@ -44,14 +44,16 @@ class EncointerMap extends StatelessWidget {
           urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           subdomains: const ['a', 'b', 'c'],
         ),
-        PopupMarkerLayerWidget(
+        PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
             popupController: _popupLayerController,
+            popupDisplayOptions: PopupDisplayOptions(builder: popupBuilder),
             markers: List.generate(
               locations.length,
               (index) => Marker(
                 key: Key('cid-$index-marker'),
                 point: locations[index],
+                rotateAlignment: Alignment.bottomCenter,
                 builder: (_) => Icon(
                   Icons.location_on,
                   size: 40,
@@ -61,8 +63,6 @@ class EncointerMap extends StatelessWidget {
                 anchorPos: AnchorPos.align(AnchorAlign.top),
               ),
             ),
-            markerRotateAlignment: Alignment.bottomCenter,
-            popupBuilder: popupBuilder,
           ),
         ),
       ],
