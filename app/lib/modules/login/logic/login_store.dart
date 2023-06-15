@@ -10,8 +10,7 @@ import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 part 'login_store.g.dart';
 
@@ -67,9 +66,9 @@ abstract class _LoginStoreBase with Store {
 
   Future<void> useBiometricAuth(BuildContext context) async {
     if (deviceSupportedBiometricAuth) {
-      final dic = I18n.of(context)!.translationsForLocale();
-      final isPinCorrect = await localAuthenticate(dic.account.localizedReason);
-      await _navigate(context, isPinCorrect: isPinCorrect, dic: dic);
+      final l10n = context.l10n;
+      final isPinCorrect = await localAuthenticate(l10n.localizedReason);
+      await _navigate(context, isPinCorrect: isPinCorrect, l10n: l10n);
     }
   }
 
@@ -81,17 +80,16 @@ abstract class _LoginStoreBase with Store {
   }
 
   Future<void> usePincodeAuth(BuildContext context) async {
-    final dic = I18n.of(context)!.translationsForLocale();
     final appStore = context.read<AppStore>();
     final isPinCorrect = _checkPinCode(appStore.settings.cachedPin);
-    await _navigate(context, isPinCorrect: isPinCorrect, dic: dic);
+    await _navigate(context, isPinCorrect: isPinCorrect, l10n: context.l10n);
   }
 
-  Future<void> _navigate(BuildContext context, {required bool isPinCorrect, required Translations dic}) async {
+  Future<void> _navigate(BuildContext context, {required bool isPinCorrect, required AppLocalizations l10n}) async {
     if (isPinCorrect) {
       await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
-      RootSnackBar.showMsg(dic.account.pinError);
+      RootSnackBar.showMsg(l10n.pinError);
     }
   }
 

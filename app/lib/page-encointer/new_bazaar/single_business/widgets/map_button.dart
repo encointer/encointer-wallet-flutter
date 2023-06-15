@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class MapButton extends StatelessWidget {
   const MapButton({
@@ -13,7 +13,6 @@ class MapButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().home;
     return Align(
       alignment: Alignment.centerLeft,
       child: ElevatedButton(
@@ -24,7 +23,7 @@ class MapButton extends StatelessWidget {
           elevation: 7,
         ),
         child: Text(
-          dic.openMapApplication,
+          context.l10n.openMapApplication,
           style: context.textTheme.displaySmall!.copyWith(fontSize: 16),
         ),
       ),

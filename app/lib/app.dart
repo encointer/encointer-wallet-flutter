@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/router/app_router.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 
 class WalletApp extends StatelessWidget {
   const WalletApp({super.key});
@@ -28,13 +27,8 @@ class WalletApp extends StatelessWidget {
         return MaterialApp(
           title: 'EncointerWallet',
           locale: appSettings.locale,
-          localizationsDelegates: [
-            AppLocalizationsDelegate(appSettings.locale),
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: appSettings.locales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           initialRoute: SplashView.route,
           theme: appSettings.theme.light,
           scaffoldMessengerKey: rootScaffoldMessengerKey,
