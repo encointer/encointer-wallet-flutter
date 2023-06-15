@@ -48,8 +48,8 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
     if (uint8list == null || bgImage == null) {
       throw Exception();
     } else {
-      final poppinsBlack = await PdfGoogleFonts.poppinsBlack();
-      final poppinsMedium = await PdfGoogleFonts.poppinsMedium();
+      final poppinsBlack = await PdfGoogleFonts.rubikBlack();
+      final poppinsMedium = await PdfGoogleFonts.rubikMedium();
       _doc = pw.Document();
       // ignore: cascade_invocations
       _doc!.addPage(
