@@ -29,6 +29,7 @@ abstract class _TransferHistoryViewStoreBase with Store {
       appStore.account.currentAccountPubKey ?? '',
       prefix: appStore.settings.endpoint.ss58 ?? 42,
     );
+
     final response = await ewHttp.getTypeList<Transaction>(
       getTransactionHistoryUrl(appStore.encointer.community?.cid.toFmtString() ?? '', address),
       fromJson: Transaction.fromJson,
