@@ -172,6 +172,7 @@
     "importInvalidRawSeed": "Ungültigen raw seed eingegeben",
     "importMustNotBeEmpty": "Eingabe darf nicht leer sein",
     "importPrivateKeyUnsupported": "Konto importieren mit privatem Schlüssel wird noch nicht unterstützt",
+    "incomeIssuance": "einkommensausgabe",
     "insufficientBalance": "Ungenügender Saldo",
     "insufficientFundsErrorBody": "Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite deiner lokalen Gemeinschaft, wie du welches bekommen kannst.",
     "insufficientFundsErrorTitle": "Zu wenig Guthaben",
@@ -402,5 +403,6 @@
     "youAreRegisteredAs": "Du hast dich für die nächste Versammlung als {participantType} registriert.",
     "youAreAssignedToAGatheringWithNParticipants": "Du bist einer Versammlung mit {participantsCount} Leuten zugewiesen.",
     "successfullySentNAttestations": "Du hast erfolgreich Bezeugungen für {participantsCount} andere Leute eingereicht.",
-    "tokenSend": "{symbol} senden"
+    "tokenSend": "{symbol} senden",
+    "communityWithName": "{name} Gemeinschaft"
 }

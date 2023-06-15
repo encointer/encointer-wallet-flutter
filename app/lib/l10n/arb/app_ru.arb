@@ -172,6 +172,7 @@
     "importInvalidRawSeed": "Предоставлен недопустимый raw seed",
     "importMustNotBeEmpty": "Входные данные не должны быть пустыми",
     "importPrivateKeyUnsupported": "Импорт аккаунта с помощью секретного ключа пока не поддерживается",
+    "incomeIssuance": "выпуск дохода",
     "insufficientBalance": "Недостаточный баланс",
     "insufficientFundsErrorBody": "У вас недостаточно средств на этом аккаунте. Посмотрите на веб-сайте вашего местного сообщества, как их получить.",
     "insufficientFundsErrorTitle": "Недостаточно средств",
@@ -402,5 +403,6 @@
     "youAreRegisteredAs": "На следующую встречу вы зарегистрированы в качестве {participantType}.",
     "youAreAssignedToAGatheringWithNParticipants": "Вы записаны на встречу вместе с {participantsCount} участниками.",
     "successfullySentNAttestations": "Вы успешно отправили аттестации {participantsCount} других людей.",
-    "tokenSend": "Отправить {symbol}"
+    "tokenSend": "Отправить {symbol}",
+    "communityWithName": "Сообщество {name}"
 }

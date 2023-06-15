@@ -172,6 +172,7 @@
     "importInvalidRawSeed": "Raw seed invalide entré",
     "importMustNotBeEmpty": "L'entrée ne peut pas être vide",
     "importPrivateKeyUnsupported": "Le compte d'importation avec clé privée n'est pas encore pris en charge",
+    "incomeIssuance": "émission de revenu",
     "insufficientBalance": "Solde insuffisant",
     "insufficientFundsErrorBody": "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.",
     "insufficientFundsErrorTitle": "Trop peu de crédit",
@@ -402,5 +403,6 @@
     "youAreRegisteredAs": "Tu t'es inscrit comme {participantType} a la prochain rencontre.",
     "youAreAssignedToAGatheringWithNParticipants": "Tu es assigné à une rencontre avec des personnes de {participantsCount}.",
     "successfullySentNAttestations": "Tu as soumis avec succès des attestations pour {participantsCount} autres personnes.",
-    "tokenSend": "Envoyer {symbol}"
+    "tokenSend": "Envoyer {symbol}",
+    "communityWithName": "Communauté {name}"
 }
