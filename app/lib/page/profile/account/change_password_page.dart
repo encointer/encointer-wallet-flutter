@@ -12,7 +12,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
@@ -38,7 +38,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
         _submitting = true;
       });
 
-      final dic = I18n.of(context)!.translationsForLocale();
+      final l10n = context.l10n;
       final passOld = _passOldCtrl.text.trim();
       final passNew = _passCtrl.text.trim();
       // check password
@@ -51,11 +51,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic.profile.wrongPin),
-              content: Text(dic.profile.wrongPinHint),
+              title: Text(l10n.wrongPin),
+              content: Text(l10n.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                  child: Text(context.l10n.ok),
                   onPressed: () {
                     _passOldCtrl.clear();
                     setState(() {
@@ -90,11 +90,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic.profile.passSuccess),
-              content: Text(dic.profile.passSuccessTxt),
+              title: Text(l10n.passSuccess),
+              content: Text(l10n.passSuccessTxt),
               actions: <Widget>[
                 CupertinoButton(
-                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                    child: Text(context.l10n.ok),
                     onPressed: () {
                       // moving back to profile page after changing password
                       Navigator.of(context).popUntil((route) => route.isFirst);
@@ -109,10 +109,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.profile.changeYourPin),
+        title: Text(l10n.changeYourPin),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -128,23 +128,23 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       shrinkWrap: true,
                       children: <Widget>[
                         Text(
-                          dic.profile.hintEnterCurrentPin,
+                          l10n.hintEnterCurrentPin,
                           textAlign: TextAlign.center,
                           style: context.textTheme.displayMedium,
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          dic.profile.hintThenEnterANewPin,
+                          l10n.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
                           style: context.textTheme.displayMedium!.copyWith(color: Colors.black),
                         ),
                         const SizedBox(height: 30),
                         EncointerTextFormField(
-                          labelText: dic.profile.passOld,
+                          labelText: l10n.passOld,
                           controller: _passOldCtrl,
                           validator: (v) {
                             if (v == null || !Fmt.checkPassword(v.trim())) {
-                              return dic.account.createPasswordError;
+                              return l10n.createPasswordError;
                             }
                             return null;
                           },
@@ -154,11 +154,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         ),
                         const SizedBox(height: 20),
                         EncointerTextFormField(
-                          labelText: dic.profile.yourNewPin,
+                          labelText: l10n.yourNewPin,
                           controller: _passCtrl,
                           validator: (v) {
                             if (v == null || !Fmt.checkPassword(v.trim())) {
-                              return dic.account.createPasswordError;
+                              return l10n.createPasswordError;
                             }
                             return null;
                           },
@@ -168,11 +168,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         ),
                         const SizedBox(height: 20),
                         EncointerTextFormField(
-                          labelText: dic.profile.pleaseConfirmYourNewPin,
+                          labelText: l10n.pleaseConfirmYourNewPin,
                           controller: _pass2Ctrl,
                           validator: (v) {
                             if (v == null || v.trim() != _passCtrl.text) {
-                              return dic.account.createPassword2Error;
+                              return l10n.createPassword2Error;
                             }
                             return null;
                           },
@@ -192,7 +192,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                   children: [
                     if (_submitting) const CupertinoActivityIndicator(),
                     Text(
-                      dic.profile.contactSave,
+                      l10n.contactSave,
                       style: context.textTheme.displaySmall,
                     ),
                   ],

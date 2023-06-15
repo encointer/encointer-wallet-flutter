@@ -11,7 +11,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Helpers to submit transactions.
@@ -52,9 +52,7 @@ Future<void> submitClaimRewards(
   Api api,
   CommunityIdentifier chosenCid,
 ) async {
-  final dic = I18n.of(context)!.translationsForLocale();
-  final txParams = claimRewardsParams(chosenCid, dic);
-
+  final txParams = claimRewardsParams(chosenCid, context.l10n);
   return submitTx(
     context,
     store,
@@ -76,9 +74,7 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier? chosenCid,
   String? newbie,
 ) async {
-  final dic = I18n.of(context)!.translationsForLocale();
-  final txParams = endorseNewcomerParams(chosenCid!, newbie!, dic);
-
+  final txParams = endorseNewcomerParams(chosenCid!, newbie!, context.l10n);
   return submitTx(
     context,
     store,
@@ -92,8 +88,6 @@ Future<void> submitEndorseNewcomer(
 }
 
 Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, Api api) {
-  final dic = I18n.of(context)!.translationsForLocale();
-
   final lastProofOfAttendance = store.encointer.communityAccount?.participantType?.isReputable ?? false
       ? store.encointer.account
           ?.lastProofOfAttendance // can still be null if the participant did not register on the same phone.
@@ -103,21 +97,20 @@ Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, A
     context,
     store,
     webApi,
-    unregisterParticipantParams(store.encointer.chosenCid!, lastProofOfAttendance, dic),
+    unregisterParticipantParams(store.encointer.chosenCid!, lastProofOfAttendance, context.l10n),
     onFinish: (txPageContext, res) => store.dataUpdate.setInvalidated(),
   );
 }
 
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
-  final dic = I18n.of(context)!.translationsForLocale();
   final proof = await api.encointer.getProofOfAttendance();
 
   return submitTx(
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid!, dic, proof: proof),
+    registerParticipantParams(store.encointer.chosenCid!, context.l10n, proof: proof),
     onFinish: (BuildContext txPageContext, Map res) async {
       store.encointer.account!.lastProofOfAttendance = proof;
       final data = await webApi.encointer.getAggregatedAccountData(
@@ -133,7 +126,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
           await CeremonyNotifications.scheduleMeetupReminders(
             ceremonyIndex: data.global.ceremonyIndex,
             meetupTime: store.encointer.community!.meetupTime!,
-            dic: I18n.of(context)!.translationsForLocale().encointer,
+            l10n: context.l10n,
             cid: store.encointer.community?.cid.toFmtString(),
           );
         }
@@ -146,12 +139,11 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 }
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
-  final dic = I18n.of(context)!.translationsForLocale();
   final params = attestAttendeesParams(
     store.encointer.chosenCid!,
     store.encointer.communityAccount!.participantCountVote!,
     store.encointer.communityAccount!.attendees!.toList(),
-    dic,
+    context.l10n,
   );
 
   return submitTx(
@@ -177,7 +169,7 @@ Future<Map<String, dynamic>> submitReapVoucher(
 }
 
 void _showEducationalDialog(ParticipantType registrationType, BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale();
+  final l10n = context.l10n;
   final texts = _getEducationalDialogTexts(registrationType, context);
   final languageCode = Localizations.localeOf(context).languageCode;
 
@@ -196,13 +188,13 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
           if (registrationType == ParticipantType.Newbie) const SizedBox(),
           CupertinoButton(
             key: const Key('close-educate-dialog'),
-            child: Text(dic.home.ok),
+            child: Text(l10n.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
           if (registrationType == ParticipantType.Newbie)
             CupertinoButton(
               child: Text(
-                dic.encointer.leuZurichFAQ,
+                l10n.leuZurichFAQ,
                 textAlign: TextAlign.center,
               ),
               onPressed: () => AppLaunch.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
@@ -214,12 +206,12 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
 }
 
 Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
-  final dic = I18n.of(context)!.translationsForLocale().encointer;
+  final l10n = context.l10n;
   return switch (type) {
-    ParticipantType.Newbie => {'title': dic.newbieTitle, 'content': dic.newbieContent},
-    ParticipantType.Endorsee => {'title': dic.endorseeTitle, 'content': dic.endorseeContent},
-    ParticipantType.Reputable => {'title': dic.reputableTitle, 'content': dic.reputableContent},
-    ParticipantType.Bootstrapper => {'title': dic.bootstrapperTitle, 'content': dic.bootstrapperContent},
+    ParticipantType.Newbie => {'title': l10n.newbieTitle, 'content': l10n.newbieContent},
+    ParticipantType.Endorsee => {'title': l10n.endorseeTitle, 'content': l10n.endorseeContent},
+    ParticipantType.Reputable => {'title': l10n.reputableTitle, 'content': l10n.reputableContent},
+    ParticipantType.Bootstrapper => {'title': l10n.bootstrapperTitle, 'content': l10n.bootstrapperContent},
   };
 }
 

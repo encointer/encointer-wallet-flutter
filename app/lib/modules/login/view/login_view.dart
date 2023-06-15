@@ -8,7 +8,7 @@ import 'package:encointer_wallet/common/components/buttons/circle_button.dart';
 import 'package:encointer_wallet/modules/login/widget/widget.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -35,13 +35,12 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     final loginStore = context.watch<LoginStore>();
     final appStore = context.watch<AppStore>();
     final cachedPin = appStore.settings.cachedPin;
     return Scaffold(
       appBar: AppBar(
-        title: Text('${dic.account.welcome} ${appStore.account.currentAccount.name}'),
+        title: Text('${context.l10n.welcome} ${appStore.account.currentAccount.name}'),
       ),
       body: SingleChildScrollView(
         child: ReactionBuilder(
