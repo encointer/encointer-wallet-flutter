@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dart_geohash/dart_geohash.dart';
+import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -15,8 +16,20 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:provider/provider.dart';
 
+class CommunityChooserOnMapArgs {
+  const CommunityChooserOnMapArgs({
+    required this.isFirstTime,
+  });
+
+  final bool isFirstTime;
+}
+
 class CommunityChooserOnMap extends StatefulWidget {
-  const CommunityChooserOnMap({super.key});
+  const CommunityChooserOnMap({
+    this.args = const CommunityChooserOnMapArgs(isFirstTime: false),
+    super.key,
+  });
+  final CommunityChooserOnMapArgs args;
 
   static const route = '/community-chooser-on-map';
 
@@ -71,7 +84,12 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
                     if (RepositoryProvider.of<AppSettings>(context).developerMode) {
                       context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
                     }
-                    Navigator.pop(context);
+
+                    if (widget.args.isFirstTime) {
+                      await Navigator.pushNamed(context, EncointerHomePage.route);
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                 );
               },

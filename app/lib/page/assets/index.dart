@@ -395,7 +395,11 @@ class _AssetsViewState extends State<AssetsView> {
                     }
                   },
                   onAddIconPressed: () {
-                    Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
+                    Navigator.pushNamed(
+                      context,
+                      CommunityChooserOnMap.route,
+                      arguments: const CommunityChooserOnMapArgs(isFirstTime: false),
+                    ).then((_) {
                       _refreshBalanceAndNotify();
                     });
                   },

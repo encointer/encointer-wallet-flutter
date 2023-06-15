@@ -11,19 +11,21 @@ class PrimaryButton extends StatelessWidget {
     required this.child,
     this.onPressed,
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
+    this.backgroundGradient,
     super.key,
   });
 
   final void Function()? onPressed;
   final Widget child;
   final BorderRadiusGeometry borderRadius;
+  final LinearGradient? backgroundGradient;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: AppColors.primaryGradient(context),
+        gradient: backgroundGradient ?? AppColors.primaryGradient(context),
         borderRadius: borderRadius,
       ),
       child: ElevatedButton(

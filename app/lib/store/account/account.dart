@@ -246,9 +246,14 @@ abstract class _AccountStore with Store {
   @action
   Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
     final key = Fmt.passwordToEncryptKey(password);
+    print('encryptSeed seed: $seed');
     final encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
     final Map stored = await rootStore.localStorage.getSeeds(seedType);
+    print('encryptSeed 1 stored: $stored');
+    print('encryptSeed encrypted: $encrypted');
     stored[pubKey] = encrypted;
+    print('encryptSeed  2 stored: $stored');
+    print('encryptSeed stored[pubKey]: ${stored[pubKey]}');
     await rootStore.localStorage.setSeeds(seedType, stored);
   }
 

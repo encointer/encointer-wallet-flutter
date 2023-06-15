@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/presentation/secure_account/views/account_created_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,7 +11,6 @@ import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -140,7 +140,15 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         context.read<AppSettings>().changeTheme(appStore.encointer.community?.cid.toFmtString());
       }
     } else {
-      await Navigator.pushNamed(context, CommunityChooserOnMap.route);
+      await Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext _) => Provider.value(
+            value: context.read<NewAccountStore>(),
+            child: const AccountCreatedView(),
+          ),
+        ),
+      );
     }
     await Navigator.pushNamedAndRemoveUntil<void>(context, EncointerHomePage.route, (route) => false);
   }

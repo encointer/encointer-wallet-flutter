@@ -274,13 +274,14 @@ class Assets {
   Assets._();
 
   static const $AssetsAvatarsGen avatars = $AssetsAvatarsGen();
+  static const SvgGenImage encointerCopyIcons = SvgGenImage('assets/encointer_copy_icons.svg');
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const SvgGenImage nctrLogo = SvgGenImage('assets/nctr_logo.svg');
   static const SvgGenImage nctrLogoFacesOnlyThick = SvgGenImage('assets/nctr_logo_faces_only_thick.svg');
   static const $JsServiceEncointerGen jsServiceEncointer = $JsServiceEncointerGen();
 
   /// List of all assets
-  List<SvgGenImage> get values => [nctrLogo, nctrLogoFacesOnlyThick];
+  List<SvgGenImage> get values => [encointerCopyIcons, nctrLogo, nctrLogoFacesOnlyThick];
 }
 
 class AssetGenImage {

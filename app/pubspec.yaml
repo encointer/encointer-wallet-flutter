@@ -132,6 +132,7 @@ flutter:
     - assets/avatars/
     - assets/nctr_logo.svg
     - assets/nctr_logo_faces_only_thick.svg
+    - assets/encointer_copy_icons.svg
 
   # fonts:
   #   - family: Schyler

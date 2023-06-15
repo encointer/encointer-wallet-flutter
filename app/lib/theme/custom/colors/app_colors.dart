@@ -43,4 +43,26 @@ class AppColors {
       colors: [context.colorScheme.tertiary, context.colorScheme.secondary],
     );
   }
+
+  static LinearGradient primaryGradientLight(BuildContext context) {
+    return LinearGradient(
+      begin: const Alignment(-.9, 0),
+      end: const Alignment(0.1, -.1),
+      colors: [
+        context.colorScheme.tertiary.withOpacity(0.4),
+        context.colorScheme.secondary.withOpacity(0.4),
+      ],
+    );
+  }
+
+  static LinearGradient blackishGradient() {
+    return LinearGradient(
+      begin: const Alignment(-.9, 0),
+      end: const Alignment(0.1, -.1),
+      colors: [
+        encointerGrey.withOpacity(0.6),
+        encointerBlack.withOpacity(0.6),
+      ],
+    );
+  }
 }

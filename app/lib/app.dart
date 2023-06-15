@@ -8,6 +8,8 @@ import 'package:encointer_wallet/router/app_router.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
+import 'presentation/secure_account/views/account_created_view.dart';
+
 class WalletApp extends StatelessWidget {
   const WalletApp({super.key});
 
