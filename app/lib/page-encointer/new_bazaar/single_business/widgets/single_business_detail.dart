@@ -23,14 +23,12 @@ class SingleBusinessDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final likeStore = context.watch<LikeIconStore>();
+
     return SingleChildScrollView(
       child: Card(
         child: Column(
           children: [
-            Image.network(
-                // singleBusiness.photo,
-                'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha_lisa_single_b.png?raw=true',
-                fit: BoxFit.cover),
+            Image.network(singleBusiness.photo, width: double.infinity, fit: BoxFit.cover),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 20, 30, 60),
               child: Column(
@@ -53,12 +51,11 @@ class SingleBusinessDetail extends StatelessWidget {
                     children: [
                       IconButton(
                         icon: Observer(builder: (_) {
-                          return likeStore.isLikedPersonally
-                              ? Assets.avatars.participant00.svg(
-                                  height: 19,
-                                )
-                              : Assets.avatars.participant00
-                                  .svg(height: 19, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.color));
+                          return Assets.avatars.participant00.svg(
+                              height: 19,
+                              colorFilter: likeStore.isLikedPersonally
+                                  ? null
+                                  : const ColorFilter.mode(Colors.white, BlendMode.color));
                         }),
                         onPressed: context.read<LikeIconStore>().toggleOwnLikes,
                       ),

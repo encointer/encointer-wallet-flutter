@@ -12,13 +12,13 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
   late final _$singleBusinessAtom = Atom(name: '_SingleBusinessStoreBase.singleBusiness', context: context);
 
   @override
-  List<SingleBusiness>? get singleBusiness {
+  SingleBusiness? get singleBusiness {
     _$singleBusinessAtom.reportRead();
     return super.singleBusiness;
   }
 
   @override
-  set singleBusiness(List<SingleBusiness>? value) {
+  set singleBusiness(SingleBusiness? value) {
     _$singleBusinessAtom.reportWrite(value, super.singleBusiness, () {
       super.singleBusiness = value;
     });

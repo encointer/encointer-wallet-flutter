@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/models/bazaar/single_business.dart';
@@ -9,8 +10,12 @@ part 'single_business_store.g.dart';
 class SingleBusinessStore = _SingleBusinessStoreBase with _$SingleBusinessStore;
 
 abstract class _SingleBusinessStoreBase with Store {
+  _SingleBusinessStoreBase(this.businesses);
+
+  final Businesses businesses;
+
   @observable
-  List<SingleBusiness>? singleBusiness;
+  SingleBusiness? singleBusiness;
 
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;
@@ -19,8 +24,7 @@ abstract class _SingleBusinessStoreBase with Store {
   Future<void> getSingleBusiness() async {
     fetchStatus = FetchStatus.loading;
     await Future<void>.delayed(const Duration(seconds: 1));
-    final data = singleBusinessMockData['single_business'];
-    final items = data!.map(SingleBusiness.fromJson).toList();
+    final items = SingleBusiness.fromJson(singleBusinessMockData);
     singleBusiness = items;
     fetchStatus = FetchStatus.success;
   }
