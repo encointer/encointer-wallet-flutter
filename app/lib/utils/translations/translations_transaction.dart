@@ -93,7 +93,7 @@ class TranslationsEnTransaction implements TranslationsTransaction {
   @override
   String get balanceTooLowTitle => 'Balance too low';
   @override
-  String get received => 'Receved';
+  String get received => 'Received';
   @override
   String get sent => 'Sent';
 }
