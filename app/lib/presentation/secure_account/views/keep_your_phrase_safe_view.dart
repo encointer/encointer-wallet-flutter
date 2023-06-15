@@ -6,7 +6,6 @@ import 'package:encointer_wallet/presentation/secure_account/views/successfully_
 import 'package:encointer_wallet/presentation/secure_account/widgets/secure_account_title.dart';
 import 'package:encointer_wallet/presentation/secure_account/widgets/seed_phrase_box.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

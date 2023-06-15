@@ -102,7 +102,6 @@ class SuccesfullySecuredSeedView extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: PrimaryButton(
               backgroundGradient: AppColors.blackishGradient(),
-              onPressed: null,
               child: Row(
                 children: [
                   const SizedBox(width: 15),

@@ -37,7 +37,7 @@ class AccountCreatedView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Secure your account now with a secret recovery phrase to ensure you don\'t lose access to your account.',
+                  "Secure your account now with a secret recovery phrase to ensure you don't lose access to your account.",
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: context.colorScheme.onBackground,
                   ),

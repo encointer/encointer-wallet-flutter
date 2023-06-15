@@ -244,7 +244,7 @@ class AppRoute {
         );
       case SuccesfullySecuredSeedView.route:
         return CupertinoPageRoute(
-          builder: (_) => SuccesfullySecuredSeedView(),
+          builder: (_) => const SuccesfullySecuredSeedView(),
           settings: settings,
         );
       default:

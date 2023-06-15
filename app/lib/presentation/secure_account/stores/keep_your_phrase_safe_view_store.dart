@@ -13,9 +13,9 @@ abstract class _KeppYourPhraseSaveViewStoreBase with Store {
     _init();
   }
 
-  late AppStore _appStore;
+  late final AppStore _appStore;
 
-  late NewAccountStore _newAccountStore;
+  late final NewAccountStore _newAccountStore;
 
   @observable
   bool loading = true;
