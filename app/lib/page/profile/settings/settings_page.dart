@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -23,14 +23,14 @@ class _Settings extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
 
     String getLang(String code) {
       return switch (code) {
         'en' => 'English',
         'de' => 'Deutsch',
-        _ => dic.profile.settingLangAuto,
+        _ => l10n.settingLangAuto,
       };
     }
 
@@ -70,7 +70,7 @@ class _Settings extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context)!.translationsForLocale().profile.setting),
+        title: Text(context.l10n.setting),
         centerTitle: true,
       ),
       body: Observer(
@@ -82,7 +82,7 @@ class _Settings extends State<SettingsPage> {
                   width: 36,
                   child: Image.asset('assets/images/public/${store.settings.endpoint.info}.png'),
                 ),
-                title: Text(dic.profile.settingNode),
+                title: Text(l10n.settingNode),
                 subtitle: Text(store.settings.endpoint.text ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
@@ -92,13 +92,13 @@ class _Settings extends State<SettingsPage> {
                   width: 36,
                   child: Image.asset('assets/images/public/${store.settings.customSS58Format['info']}.png'),
                 ),
-                title: Text(dic.profile.settingPrefix),
+                title: Text(l10n.settingPrefix),
                 subtitle: Text(store.settings.customSS58Format['text'] as String? ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
-                title: Text(dic.profile.settingLang),
+                title: Text(l10n.settingLang),
                 subtitle: Text(getLang(store.settings.localeCode)),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: onLanguageTap,

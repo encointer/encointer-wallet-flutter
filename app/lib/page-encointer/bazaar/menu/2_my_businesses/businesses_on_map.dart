@@ -6,7 +6,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class BusinessesOnMap extends StatelessWidget {
   BusinessesOnMap({super.key});
@@ -17,7 +17,7 @@ class BusinessesOnMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context)!.translationsForLocale().bazaar.businesses),
+        title: Text(context.l10n.businesses),
       ),
       body: BMap(data),
     );

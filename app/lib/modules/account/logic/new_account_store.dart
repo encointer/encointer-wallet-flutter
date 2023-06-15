@@ -6,8 +6,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:encointer_wallet/utils/validate_keys.dart';
 
 part 'new_account_store.g.dart';
 
@@ -40,21 +38,6 @@ abstract class _NewAccountStoreBase with Store {
 
   @action
   void setKeyType(KeyType value) => keyType = value;
-
-  @action
-  String? validateAccount(Translations dic, String key) {
-    if (key.isEmpty) return dic.account.importMustNotBeEmpty;
-    if (ValidateKeys.isRawSeed(key)) {
-      keyType = KeyType.rawSeed;
-      return ValidateKeys.validateRawSeed(key) ? null : dic.account.importInvalidRawSeed;
-    } else if (ValidateKeys.isPrivateKey(key)) {
-      // Todo: #426
-      return dic.account.importPrivateKeyUnsupported;
-    } else {
-      keyType = KeyType.mnemonic;
-      return ValidateKeys.validateMnemonic(key) ? null : dic.account.importInvalidMnemonic;
-    }
-  }
 
   @action
   Future<NewAccountResult> generateAccount(AppStore appStore, Api webApi) async {

@@ -15,16 +15,12 @@ class BusinessesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<BusinessesStore>();
-
     return Observer(builder: (_) {
-      switch (store.fetchStatus) {
-        case FetchStatus.loading:
-          return const CenteredActivityIndicator();
-        case FetchStatus.success:
-          return BusinessesList(businesses: store.businesses!);
-        case FetchStatus.error:
-          return const ErrorView();
-      }
+      return switch (store.fetchStatus) {
+        FetchStatus.loading => const CenteredActivityIndicator(),
+        FetchStatus.success => BusinessesList(businesses: store.businesses!),
+        FetchStatus.error => const ErrorView(),
+      };
     });
   }
 }
