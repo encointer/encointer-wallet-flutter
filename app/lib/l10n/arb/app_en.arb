@@ -355,6 +355,7 @@
     "txReady": "Transaction is ready.",
     "txTooLowPriorityErrorBody": "Technical transaction priority error. This can happen if you tap twice on a submit button very quickly. Please wait for a few seconds.",
     "txTooLowPriorityErrorTitle": "Transaction priority error",
+    "unknownAccount": "Unknown account",
     "unknownError": "An error occurred. Please check your internet connection and try again.",
     "unlock": "You need to enter your PIN to add a new account",
     "unlockAccountPin": "Unlock Account with PIN",
