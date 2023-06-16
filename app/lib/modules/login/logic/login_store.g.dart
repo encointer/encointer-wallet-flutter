@@ -25,13 +25,6 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  late final _$isDeviceSupportedAsyncAction = AsyncAction('_LoginStoreBase.isDeviceSupported', context: context);
-
-  @override
-  Future<bool> isDeviceSupported() {
-    return _$isDeviceSupportedAsyncAction.run(() => super.isDeviceSupported());
-  }
-
   late final _$_LoginStoreBaseActionController = ActionController(name: '_LoginStoreBase', context: context);
 
   @override

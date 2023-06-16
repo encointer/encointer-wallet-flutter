@@ -8,6 +8,7 @@ import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/config/biometiric_auth_state.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
@@ -178,20 +179,26 @@ class _ProfileState extends State<Profile> {
                 title: Text(l10n.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
-              SwitchListTile(
-                title: Text(l10n.biometricAuth, style: h3Grey),
-                onChanged: (value) async {
-                  final appStore = context.read<AppStore>();
-                  final appSettings = context.read<AppSettings>();
-                  await AppAlert.showPasswordInputDialog(
-                    context,
-                    showCancelButton: true,
-                    account: appStore.account.currentAccount,
-                    onSuccess: (_) => appSettings.setIsBiometricAuthenticationEnabled(value),
-                  );
-                },
-                value: appSettings.isBiometricAuthenticationEnabled,
-              ),
+              Observer(builder: (_) {
+                return switch (appSettings.getBiometricAuthState) {
+                  BiometricAuthState.deviceNotSupported => const SizedBox.shrink(),
+                  _ => SwitchListTile(
+                      title: Text(l10n.biometricAuth, style: h3Grey),
+                      onChanged: (value) async {
+                        await AppAlert.showPasswordInputDialog(
+                          context,
+                          showCancelButton: true,
+                          account: context.read<AppStore>().account.currentAccount,
+                          onSuccess: (_) async {
+                            final biometricAuthState = value ? BiometricAuthState.enabled : BiometricAuthState.disabled;
+                            await context.read<AppSettings>().setBiometricAuthState(biometricAuthState);
+                          },
+                        );
+                      },
+                      value: appSettings.biometricAuthState == BiometricAuthState.enabled,
+                    ),
+                };
+              }),
               const SendToTrelloListTile(),
               ListTile(
                 title: Text(l10n.developer, style: h3Grey),

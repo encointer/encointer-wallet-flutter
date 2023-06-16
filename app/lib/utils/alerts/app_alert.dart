@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/alerts/password_input_dialog.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 
 class AppAlert {
   static Future<T?> showDialog<T>(
@@ -41,6 +44,8 @@ class AppAlert {
     required VoidCallback onCancel,
     Widget? title,
     Widget? content,
+    String? confirmText,
+    String? cancelText,
   }) {
     final l10n = context.l10n;
     return showCupertinoDialog<T>(
@@ -52,15 +57,35 @@ class AppAlert {
           actions: <Widget>[
             CupertinoButton(
               onPressed: onCancel,
-              child: Text(l10n.cancel),
+              child: Text(cancelText ?? l10n.cancel),
             ),
             CupertinoButton(
               key: const Key('ok-button'),
               onPressed: onOK,
-              child: Text(l10n.ok),
+              child: Text(confirmText ?? l10n.ok),
             ),
           ],
         );
+      },
+    );
+  }
+
+  static Future<void> showToggleBiometricAuthAlert(BuildContext context) {
+    final appSettings = context.read<AppSettings>();
+    return showConfirmDialog<void>(
+      context: context,
+      title: const Text('Biometric Authentication'),
+      content: const Text(
+          'Biometric authentication uses the biometric information stored on your phone to authenticate you, instead of using your pin. You can enable and disable biometric authentication anytime in the settings.'),
+      cancelText: 'Not now',
+      confirmText: 'Enable',
+      onOK: () async {
+        await appSettings.setBiometricAuthState(BiometricAuthState.enabled);
+        Navigator.pop(context);
+      },
+      onCancel: () async {
+        await appSettings.setBiometricAuthState(BiometricAuthState.disabled);
+        Navigator.pop(context);
       },
     );
   }
