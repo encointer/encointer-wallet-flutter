@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/business_detail_text_widget.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/like_icon_store.dart';
@@ -14,8 +15,8 @@ import 'package:encointer_wallet/service/launch/app_launch.dart';
 
 class SingleBusinessDetail extends StatelessWidget {
   const SingleBusinessDetail({
-    super.key,
     required this.singleBusiness,
+    super.key,
   });
 
   final SingleBusiness singleBusiness;
@@ -23,7 +24,7 @@ class SingleBusinessDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final likeStore = context.watch<LikeIconStore>();
-
+    final l10n = context.l10n;
     return SingleChildScrollView(
       child: Card(
         child: Column(
@@ -60,19 +61,17 @@ class SingleBusinessDetail extends StatelessWidget {
                         onPressed: context.read<LikeIconStore>().toggleOwnLikes,
                       ),
                       Text(
-                        'Gefällt mir',
+                        l10n.like,
                         style: context.textTheme.bodySmall!
                             .copyWith(decoration: TextDecoration.underline, fontWeight: FontWeight.bold),
                       ),
                       const Spacer(),
                       IconButton(
                         icon: Observer(builder: (_) {
-                          return likeStore.isLiked
-                              ? Assets.avatars.participant00.svg(
-                                  height: 25,
-                                )
-                              : Assets.avatars.participant00
-                                  .svg(height: 25, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.color));
+                          return Assets.avatars.participant00.svg(
+                              height: 25,
+                              colorFilter:
+                                  likeStore.isLiked ? null : const ColorFilter.mode(Colors.white, BlendMode.color));
                         }),
                         onPressed: context.read<LikeIconStore>().toggleLikes,
                       ),
@@ -88,14 +87,21 @@ class SingleBusinessDetail extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   BusinessDetailTextWidget(
-                    text: 'Opening Hours\n',
-                    text1: singleBusiness.openingHours,
+                    text: singleBusiness.offer,
+                    text1: singleBusiness.offerName1,
+                    text2: singleBusiness.offerName2,
+                  ),
+                  BusinessDetailTextWidget(
+                    text: l10n.openningHours,
+                    text1: singleBusiness.openingHours1,
+                    text2: singleBusiness.openingHours2,
                   ),
                   const SizedBox(height: 20),
                   BusinessDetailAddressWidget(
-                    text: 'Address\n',
-                    description: 'Yoga Studio Zürich\n',
+                    text: l10n.address,
+                    description: singleBusiness.addressDescription,
                     address: singleBusiness.address,
+                    zipCode: singleBusiness.zipcode,
                     email: singleBusiness.email,
                     phoneNum: singleBusiness.telephone,
                   ),
@@ -110,9 +116,10 @@ class SingleBusinessDetail extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 40),
-                  const BusinessDetailTextWidget(
-                    text: 'More Info:\n',
-                    text1: 'Bei Leu seit 01. Januar 2023',
+                  BusinessDetailTextWidget(
+                    text: l10n.moreInfo,
+                    text1: singleBusiness.moreInfo,
+                    text2: '',
                   ),
                 ],
               ),

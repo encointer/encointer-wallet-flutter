@@ -6,6 +6,7 @@ class BusinessDetailAddressWidget extends StatelessWidget {
     required this.text,
     required this.description,
     required this.address,
+    required this.zipCode,
     required this.email,
     required this.phoneNum,
     super.key,
@@ -13,6 +14,7 @@ class BusinessDetailAddressWidget extends StatelessWidget {
   final String text;
   final String description;
   final String address;
+  final String zipCode;
   final String email;
   final String phoneNum;
 
@@ -24,27 +26,17 @@ class BusinessDetailAddressWidget extends StatelessWidget {
         text: TextSpan(
           children: [
             TextSpan(
-              text: text,
+              text: '$text\n',
               style: context.textTheme.titleLarge!.copyWith(color: context.colorScheme.primary, fontSize: 18),
             ),
             TextSpan(
-              text: description,
-              style: context.textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              text: '$description\n',
+              style: context.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
             ),
-            TextSpan(
-              text: address,
-              style: context.textTheme.bodyMedium!.copyWith(height: 1.3),
-            ),
-            TextSpan(
-              text: '$email\n',
-              style: context.textTheme.bodyMedium!.copyWith(height: 1.3),
-            ),
-            TextSpan(
-              text: phoneNum,
-              style: context.textTheme.bodyMedium!.copyWith(height: 1.5),
-            ),
+            TextSpan(text: '$address\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.3)),
+            TextSpan(text: '$zipCode\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.3)),
+            TextSpan(text: '$email\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.3)),
+            TextSpan(text: phoneNum, style: context.textTheme.bodyMedium!.copyWith(height: 1.5)),
           ],
         ),
       ),
