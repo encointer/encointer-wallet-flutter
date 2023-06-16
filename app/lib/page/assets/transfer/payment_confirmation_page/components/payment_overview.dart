@@ -18,9 +18,8 @@ class PaymentOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recipientLabel = recipientAccount!.name.isNotEmpty
-        ? recipientAccount!.name
-        : Fmt.ss58Encode(recipientAccount!.pubKey, prefix: store.settings.endpoint.ss58!);
+    final recipientLabel = recipientAccount!.name;
+    final recipientAddress = Fmt.address(Fmt.ss58Encode(recipientAccount!.pubKey, prefix: store.settings.endpoint.ss58!))!;
 
     return IntrinsicHeight(
       child: Row(
@@ -45,7 +44,12 @@ class PaymentOverview extends StatelessWidget {
             children: [
               AddressIcon('', recipientAccount!.pubKey),
               Text(
-                Fmt.address(recipientLabel)!,
+                recipientLabel,
+                style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey, height: 1.5),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                recipientAddress,
                 style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
