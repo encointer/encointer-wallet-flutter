@@ -354,6 +354,7 @@
     "txReady": "Transaktion bereit.",
     "txTooLowPriorityErrorBody": "Technischer Transaktionsfehler. Das kann passieren, wenn du zweimal innerhalb sehr kurzer Zeit eine Transaktion abschickst. Bitte warte einige Sekunden.",
     "txTooLowPriorityErrorTitle": "Transaktions Prioritätsfehler",
+    "unknownAccount": "Unbekanntes Konto",
     "unknownError": "Es ist ein Fehler aufgetreten. Bitte überprüfe deine Internetverbindung und versuche es erneut.",
     "unlock": "Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen",
     "unlockAccountPin": "Konto entsperren mit PIN",
