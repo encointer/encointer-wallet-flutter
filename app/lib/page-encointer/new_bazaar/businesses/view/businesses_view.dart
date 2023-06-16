@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/error/error_view.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/empty_businesses.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/businesses_card.dart';
@@ -32,6 +33,7 @@ class BusinessesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (businesses.isEmpty) return const EmptyBusiness();
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(14, 20, 14, 30),
       itemCount: businesses.length,
