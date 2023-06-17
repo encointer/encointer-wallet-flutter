@@ -44,19 +44,22 @@ class TransactionCard extends StatelessWidget {
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  transaction.getNameFromContacts(appStore.settings.contactList) ?? 'No Name',
-                  style: context.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 4),
-                Text(Fmt.address(transaction.counterParty) ?? ''),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(transaction.getNameFromContacts(appStore.settings.contactList) ?? 'No Name',
+                      style: context.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 4),
+                  Text(
+                    Fmt.address(transaction.counterParty) ?? '',
+                    style: context.textTheme.bodySmall,
+                  ),
+                ],
+              ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text.rich(
@@ -84,7 +87,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(Fmt.dateTime(transaction.dateTime)),
+                Text(Fmt.dateTime(transaction.dateTime), style: context.textTheme.bodySmall),
               ],
             ),
           ],
