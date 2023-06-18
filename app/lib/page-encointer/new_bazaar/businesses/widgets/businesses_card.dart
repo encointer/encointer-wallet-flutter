@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/like_icon_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/views/single_business_view.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +19,8 @@ class BusinessesCard extends StatelessWidget {
         Navigator.push<Widget>(
           context,
           MaterialPageRoute(
-            builder: (context) => MultiProvider(
-              providers: [
-                Provider<SingleBusinessStore>(
-                  create: (context) => SingleBusinessStore(businesses)..getSingleBusiness(),
-                ),
-                Provider<LikeIconStore>(
-                  create: (context) => LikeIconStore(),
-                )
-              ],
+            builder: (context) => Provider(
+              create: (context) => SingleBusinessStore(businesses)..getSingleBusiness(),
               child: const SingleBusinessView(),
             ),
           ),

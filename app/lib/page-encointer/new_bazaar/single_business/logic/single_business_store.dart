@@ -10,9 +10,21 @@ part 'single_business_store.g.dart';
 class SingleBusinessStore = _SingleBusinessStoreBase with _$SingleBusinessStore;
 
 abstract class _SingleBusinessStoreBase with Store {
-  _SingleBusinessStoreBase(this.businesses);
-
+  _SingleBusinessStoreBase(this.businesses,
+      {bool isLiked1 = false, bool isLikedPersonally1 = false, int countLikes1 = 0})
+      : isLiked = isLiked1,
+        isLikedPersonally = isLikedPersonally1,
+        countLikes = countLikes1;
   final Businesses businesses;
+
+  @observable
+  late bool isLiked;
+
+  @observable
+  late bool isLikedPersonally;
+
+  @observable
+  late int countLikes;
 
   @observable
   SingleBusiness? singleBusiness;
@@ -27,5 +39,16 @@ abstract class _SingleBusinessStoreBase with Store {
     final items = SingleBusiness.fromJson(singleBusinessMockData);
     singleBusiness = items;
     fetchStatus = FetchStatus.success;
+  }
+
+  @action
+  void toggleLikes() {
+    isLiked = !isLiked;
+    isLiked ? countLikes++ : countLikes--;
+  }
+
+  @action
+  void toggleOwnLikes() {
+    isLikedPersonally = !isLikedPersonally;
   }
 }

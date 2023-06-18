@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/business_detail_text_widget.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/like_icon_store.dart';
+// import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/like_icon_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/business_detail_address_widget.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/map_button.dart';
 import 'package:encointer_wallet/models/bazaar/single_business.dart';
@@ -23,7 +24,7 @@ class SingleBusinessDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final likeStore = context.watch<LikeIconStore>();
+    final store = context.watch<SingleBusinessStore>();
     final l10n = context.l10n;
     return SingleChildScrollView(
       child: Card(
@@ -47,39 +48,45 @@ class SingleBusinessDetail extends StatelessWidget {
                       )
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: Observer(builder: (_) {
-                          return Assets.avatars.participant00.svg(
-                              height: 19,
-                              colorFilter: likeStore.isLikedPersonally
-                                  ? null
-                                  : const ColorFilter.mode(Colors.white, BlendMode.color));
-                        }),
-                        onPressed: context.read<LikeIconStore>().toggleOwnLikes,
-                      ),
-                      Text(
-                        l10n.like,
-                        style: context.textTheme.bodySmall!
-                            .copyWith(decoration: TextDecoration.underline, fontWeight: FontWeight.bold),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: Observer(builder: (_) {
-                          return Assets.avatars.participant00.svg(
-                              height: 25,
-                              colorFilter:
-                                  likeStore.isLiked ? null : const ColorFilter.mode(Colors.white, BlendMode.color));
-                        }),
-                        onPressed: context.read<LikeIconStore>().toggleLikes,
-                      ),
-                      Observer(builder: (_) {
-                        return Text('${likeStore.countLikes}');
-                      }),
-                    ],
-                  ),
+                  const SizedBox(height: 8),
+                  Observer(builder: (_) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: context.read<SingleBusinessStore>().toggleOwnLikes,
+                              child: Assets.avatars.participant00.svg(
+                                  height: 19,
+                                  colorFilter: store.isLikedPersonally
+                                      ? null
+                                      : const ColorFilter.mode(Colors.white, BlendMode.color)),
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              l10n.like,
+                              style: context.textTheme.bodySmall!
+                                  .copyWith(decoration: TextDecoration.underline, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: context.read<SingleBusinessStore>().toggleLikes,
+                              child: Assets.avatars.participant00.svg(
+                                  height: 25,
+                                  colorFilter:
+                                      store.isLiked ? null : const ColorFilter.mode(Colors.white, BlendMode.color)),
+                            ),
+                            const SizedBox(width: 10),
+                            Text('${store.countLikes}'),
+                          ],
+                        ),
+                      ],
+                    );
+                  }),
                   const SizedBox(height: 20),
                   Text(
                     singleBusiness.description,

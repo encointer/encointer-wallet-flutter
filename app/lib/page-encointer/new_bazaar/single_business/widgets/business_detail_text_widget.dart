@@ -21,10 +21,17 @@ class BusinessDetailTextWidget extends StatelessWidget {
         text: TextSpan(
           children: [
             TextSpan(
-                text: '$text\n',
-                style: context.textTheme.titleLarge!.copyWith(color: context.colorScheme.primary, fontSize: 18)),
-            TextSpan(text: '$text1\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.4)),
-            TextSpan(text: '$text2\n', style: context.textTheme.bodyMedium!.copyWith(height: 1.4)),
+              text: '$text\n',
+              style: context.textTheme.titleLarge!.copyWith(color: context.colorScheme.primary, fontSize: 18),
+            ),
+            TextSpan(
+              text: '$text1\n',
+              style: context.textTheme.bodyMedium!.copyWith(height: 1.4),
+            ),
+            TextSpan(
+              text: '$text2\n',
+              style: context.textTheme.bodyMedium!.copyWith(height: 1.4),
+            ),
           ],
         ),
       ),
