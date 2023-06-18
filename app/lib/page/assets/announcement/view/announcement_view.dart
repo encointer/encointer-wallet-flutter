@@ -12,10 +12,9 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
-import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
 import 'package:encointer_wallet/page/assets/announcement/widgets/announcement_card.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 const _logTarget = 'announcement_view';
 
@@ -38,7 +37,6 @@ class AnnouncementView extends StatefulWidget {
 
 class _AnnouncementViewState extends State<AnnouncementView> {
   late final AnnouncementStore _announcementStore;
-  late TranslationsHome _dic;
 
   List<ReactionDisposer> _disposers = <ReactionDisposer>[];
 
@@ -52,7 +50,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
           AppAlert.showErrorDialog(
             context,
             errorText: _getErrorMessages(failureType: FailureType.unknown, error: _announcementStore.error),
-            buttontext: _dic.ok,
+            buttontext: context.l10n.ok,
           );
         }
       }),
@@ -63,7 +61,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
           AppAlert.showErrorDialog(
             context,
             errorText: _getErrorMessages(failureType: _announcementStore.failureType!, error: _announcementStore.error),
-            buttontext: _dic.ok,
+            buttontext: context.l10n.ok,
           );
         }
       })
@@ -73,7 +71,6 @@ class _AnnouncementViewState extends State<AnnouncementView> {
 
   @override
   Future<void> didChangeDependencies() async {
-    _dic = I18n.of(context)!.translationsForLocale().home;
     await _getAnnouncements();
 
     super.didChangeDependencies();
@@ -136,12 +133,12 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   }) {
     Log.d('_getErrorMessages: failureType = $failureType, error = $error', _logTarget);
     if (error.isNotNullOrEmpty) {
-      return '${_dic.announcements} ${_dic.errorMessageWithStatusCode(error!)}';
+      return '${context.l10n.announcements} ${context.l10n.errorMessageWithStatusCode(error!)}';
     }
     return switch (failureType) {
-      FailureType.badRequest => '${_dic.announcements} ${_dic.badRequest}',
-      FailureType.noAuthorization => '${_dic.announcements} ${_dic.noAuthorizationError}',
-      _ => '${_dic.announcements} ${_dic.somethingWentWrong}',
+      FailureType.badRequest => '${context.l10n.announcements} ${context.l10n.badRequest}',
+      FailureType.noAuthorization => '${context.l10n.announcements} ${context.l10n.noAuthorizationError}',
+      _ => '${context.l10n.announcements} ${context.l10n.somethingWentWrong}',
     };
   }
 }
