@@ -44,6 +44,8 @@ class AppAlert {
     required BuildContext context,
     required VoidCallback onOK,
     required VoidCallback onCancel,
+    Key oKButtonKey = const Key('ok-button'),
+    Key cancelButtonKey = const Key('cansel-button'),
     Widget? title,
     Widget? content,
     String? confirmText,
@@ -58,11 +60,12 @@ class AppAlert {
           content: content,
           actions: <Widget>[
             CupertinoButton(
+              key: cancelButtonKey,
               onPressed: onCancel,
               child: Text(cancelText ?? l10n.cancel),
             ),
             CupertinoButton(
-              key: const Key('ok-button'),
+              key: oKButtonKey,
               onPressed: onOK,
               child: Text(confirmText ?? l10n.ok),
             ),
@@ -79,6 +82,7 @@ class AppAlert {
       context: context,
       title: Text(l10n.biometricAuth),
       content: Text(l10n.biometricAuthDescription),
+      cancelButtonKey: const Key('not-now-button'),
       cancelText: l10n.notNow,
       confirmText: l10n.enable,
       onOK: () async {
