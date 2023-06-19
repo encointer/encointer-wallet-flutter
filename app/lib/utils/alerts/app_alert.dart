@@ -74,13 +74,13 @@ class AppAlert {
 
   static Future<void> showToggleBiometricAuthAlert(BuildContext context) {
     final appSettings = context.read<AppSettings>();
+    final l10n = context.l10n;
     return showConfirmDialog<void>(
       context: context,
-      title: const Text('Biometric Authentication'),
-      content: const Text(
-          'Biometric authentication uses the biometric information stored on your phone to authenticate you, instead of using your pin. You can enable and disable biometric authentication anytime in the settings.'),
-      cancelText: 'Not now',
-      confirmText: 'Enable',
+      title: Text(l10n.biometricAuth),
+      content: Text(l10n.biometricAuthDescription),
+      cancelText: l10n.notNow,
+      confirmText: l10n.enable,
       onOK: () async {
         await appSettings.setBiometricAuthState(BiometricAuthState.enabled);
         Navigator.pop(context);
