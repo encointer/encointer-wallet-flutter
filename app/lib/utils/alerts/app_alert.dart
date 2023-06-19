@@ -13,9 +13,11 @@ class AppAlert {
     Widget? title,
     Widget? content,
     List<Widget> actions = const <Widget>[],
+    bool barrierDismissible = false,
   }) {
     return showCupertinoDialog<T>(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: title,
@@ -96,17 +98,18 @@ class AppAlert {
     required String errorText,
     required String buttontext,
     void Function()? onPressed,
+    TextStyle? textStyle,
   }) {
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: title,
-          content: Text(errorText),
+          content: Text(errorText, style: textStyle),
           actions: <Widget>[
             CupertinoButton(
               onPressed: onPressed ?? () => Navigator.of(context).pop(),
-              child: Text(buttontext),
+              child: Text(buttontext, style: textStyle),
             ),
           ],
         );

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -9,7 +10,8 @@ import 'package:encointer_wallet/modules/login/widget/widget.dart';
 import 'package:encointer_wallet/config/biometiric_auth_state.dart';
 import 'package:encointer_wallet/service/auth/local_auth_service.dart';
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/utils.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -81,10 +83,6 @@ class _LoginViewState extends State<LoginView> {
                     };
                   }),
                 ),
-                LoginButton(onPressed: () async {
-                  final value = context.read<LoginStore>().usePincodeAuth(context);
-                  await navigate(isPinCorrect: value, l10n: l10n);
-                }),
               ],
             ),
           ),
@@ -97,7 +95,20 @@ class _LoginViewState extends State<LoginView> {
     if (isPinCorrect) {
       await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
-      RootSnackBar.showMsg(l10n.pinError);
+      await AppAlert.showDialog<void>(
+        context,
+        barrierDismissible: true,
+        title: Text(
+          l10n.pinError,
+          style: context.textTheme.titleMedium!.copyWith(color: context.colorScheme.error),
+        ),
+        actions: <Widget>[
+          CupertinoButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n.ok),
+          ),
+        ],
+      );
     }
   }
 }
