@@ -187,6 +187,7 @@ class _ProfileState extends State<Profile> {
                       onChanged: (value) async {
                         await AppAlert.showPasswordInputDialog(
                           context,
+                          title: l10n.biometricAuthEnableDisableDescription,
                           showCancelButton: true,
                           account: context.read<AppStore>().account.currentAccount,
                           onSuccess: (_) async {

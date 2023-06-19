@@ -42,6 +42,7 @@
     "bazaarTitle": "The Bazaar",
     "biometricAuth": "Biometric authentication",
     "biometricAuthDescription": "Biometric authentication uses the biometric information stored on your phone to authenticate you, instead of using your pin. You can enable and disable biometric authentication anytime in the settings.",
+    "biometricAuthEnableDisableDescription": "Enter your PIN to enable or disable biometric authentication.",
     "block": "Block",
     "bootstrapperContent": "If you have endorsement tickets left, please consider endorsing newbies to help the community grow.",
     "bootstrapperTitle": "Registered as bootstrapper - your seat is guaranteed.",

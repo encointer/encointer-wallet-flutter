@@ -42,6 +42,7 @@
     "bazaarTitle": "Der Bazaar",
     "biometricAuth": "Biometrische Authentifizierung",
     "biometricAuthDescription": "Die biometrische Authentifizierung verwendet die auf Ihrem Telefon gespeicherten biometrischen Informationen, um Sie zu authentifizieren, anstatt Ihre PIN zu verwenden. Sie können die biometrische Authentifizierung jederzeit in den Einstellungen aktivieren und deaktivieren.",
+    "biometricAuthEnableDisableDescription": "Geben Sie Ihre PIN ein, um die biometrische Authentifizierung zu aktivieren oder zu deaktivieren.",
     "block": "Block",
     "bootstrapperContent": "Wenn Du noch Endorsement-Tickets übrig hast, vergiss nicht Newbies zu als vertrauenswürdig zu bestätigen.",
     "bootstrapperTitle": "Als Bootstrapper registriert - Dein Platz ist garantiert.",
