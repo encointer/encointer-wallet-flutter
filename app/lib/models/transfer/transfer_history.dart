@@ -46,6 +46,11 @@ class Transaction {
     }
     return null;
   }
+
+  /// If the value of [counterParty] is 'ISSUANCE', the income has been distributed by the community.
+  /// If the income is provided by the community, the [name] should be displayed as
+  /// `{CommunityName} Community` and the [address] as `income issuance`.
+  bool get isIssuance => counterParty == 'ISSUANCE';
 }
 
 /// An enumeration of the transaction types.
