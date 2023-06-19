@@ -48,6 +48,16 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
+  bool usePincodeAuth(BuildContext context) {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.usePincodeAuth');
+    try {
+      return super.usePincodeAuth(context);
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 deviceSupportedBiometricAuth: ${deviceSupportedBiometricAuth}
