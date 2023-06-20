@@ -20,8 +20,7 @@ class TransactionsList extends StatelessWidget {
           final transaction = transactions[index];
           return TransactionCard(transaction: transaction);
         } else if (index == transactions.length) {
-          final olderTransaction = DateTime.fromMillisecondsSinceEpoch(1670000000000);
-          if (olderTransaction.isBefore(DateTime.timestamp())) {
+          {
             return Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
