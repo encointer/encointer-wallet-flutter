@@ -13,10 +13,23 @@ class TransactionsList extends StatelessWidget {
     if (transactions.isEmpty) return const TransactionsEmpty();
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(14, 20, 14, 35),
-      itemCount: transactions.length,
+      itemCount: transactions.length + 1,
       itemBuilder: (BuildContext context, int index) {
-        final transaction = transactions[index];
-        return TransactionCard(transaction: transaction);
+        if (index < transactions.length) {
+          final transaction = transactions[index];
+          return TransactionCard(transaction: transaction);
+        } else if (index == transactions.length) {
+          final olderTransaction = DateTime.fromMillisecondsSinceEpoch(1670000000000);
+          if (olderTransaction.isBefore(DateTime.timestamp())) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Text('Loading older transactions not yet supported'),
+              ),
+            );
+          }
+        }
+        return const SizedBox();
       },
     );
   }
