@@ -172,6 +172,7 @@
     "importInvalidRawSeed": "Raw seed invalide entré",
     "importMustNotBeEmpty": "L'entrée ne peut pas être vide",
     "importPrivateKeyUnsupported": "Le compte d'importation avec clé privée n'est pas encore pris en charge",
+    "incomeIssuance": "Revenu communautaire",
     "insufficientBalance": "Solde insuffisant",
     "insufficientFundsErrorBody": "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.",
     "insufficientFundsErrorTitle": "Trop peu de crédit",
@@ -354,6 +355,7 @@
     "txReady": "La transaction est prête.",
     "txTooLowPriorityErrorBody": "Erreur technique de transaction. Cela peut arriver si tu envoies deux fois une transaction dans un laps de temps très court. Veuillez patienter quelques secondes'.",
     "txTooLowPriorityErrorTitle": "Erreur de priorité de transaction",
+    "unknown": "Inconnu",
     "unknownAccount": "Compte inconnu",
     "unknownError": "Une erreur est survenue. Vérifie ta connexion Internet et réessaye.",
     "unlock": "Tu dois saisir ton code NIP pour ajouter un nouveau compte.",
@@ -403,5 +405,6 @@
     "youAreRegisteredAs": "Tu t'es inscrit comme {participantType} a la prochain rencontre.",
     "youAreAssignedToAGatheringWithNParticipants": "Tu es assigné à une rencontre avec des personnes de {participantsCount}.",
     "successfullySentNAttestations": "Tu as soumis avec succès des attestations pour {participantsCount} autres personnes.",
-    "tokenSend": "Envoyer {symbol}"
+    "tokenSend": "Envoyer {symbol}",
+    "communityWithName": "Communauté {name}"
 }
