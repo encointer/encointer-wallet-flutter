@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class TransactionsList extends StatelessWidget {
   const TransactionsList({super.key, required this.transactions});
@@ -21,10 +22,11 @@ class TransactionsList extends StatelessWidget {
         } else if (index == transactions.length) {
           final olderTransaction = DateTime.fromMillisecondsSinceEpoch(1670000000000);
           if (olderTransaction.isBefore(DateTime.timestamp())) {
-            return const Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Text('Loading older transactions not yet supported'),
+            return Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                context.l10n.txMessage,
+                textAlign: TextAlign.center,
               ),
             );
           }

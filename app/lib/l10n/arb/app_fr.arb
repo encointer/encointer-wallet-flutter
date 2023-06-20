@@ -350,6 +350,7 @@
     "txBroadcast": "La transaction a été envoyée sur le réseau",
     "txError": "Erreur de transaction",
     "txInBlock": "Transaction est dans un bloc",
+    "txMessage": "Le chargement des transactions plus anciennes n'est pas encore pris en charge",
     "txQueued": "La transaction est dans la file d'attente.",
     "txQueuedOffline": "Tu es hors ligne. La transaction sera envoyée lorsque tu seras en ligne.",
     "txReady": "La transaction est prête.",

@@ -350,6 +350,7 @@
     "txBroadcast": "Transaction has been broadcast.",
     "txError": "Transaction error",
     "txInBlock": "Transaction is in a block.",
+    "txMessage": "Loading older transactions not yet supported",
     "txQueued": "Queued Transaction",
     "txQueuedOffline": "You are offline. Transaction will be sent when you are back online.",
     "txReady": "Transaction is ready.",

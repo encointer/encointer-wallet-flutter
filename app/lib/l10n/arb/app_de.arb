@@ -350,6 +350,7 @@
     "txBroadcast": "Transaktion wurde im Netzwerk",
     "txError": "Transaktionsfehler",
     "txInBlock": "Transaction ist in einem Block",
+    "txMessage": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "txQueued": "Transaktion is in der Warteschlange",
     "txQueuedOffline": "Du bist offline. Die Transaktion wird geschickt, wenn du wieder online bist.",
     "txReady": "Transaktion bereit.",
