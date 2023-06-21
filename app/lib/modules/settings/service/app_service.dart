@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-// import 'package:encointer_wallet/config/biometiric_auth_state.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +9,6 @@ class AppService {
   final SharedPreferences storage;
 
   static const String localStorageLocaleKey = 'locale';
-  // static const String biometricAuthStateKey = 'biometric-auth-state';
 
   Locale init() {
     final code = storage.getString(localStorageLocaleKey);
@@ -25,13 +23,4 @@ class AppService {
     await storage.setString(localStorageLocaleKey, languageCode);
     return Locale(languageCode);
   }
-
-  // BiometricAuthState? get getBiometricAuthState {
-  //   final biometricAuthState = storage.getString(biometricAuthStateKey);
-  //   return biometricAuthState != null ? BiometricAuthState.fromString(biometricAuthState) : null;
-  // }
-
-  // Future<void> setBiometricAuthState(BiometricAuthState biometricAuthState) async {
-  //   await storage.setString(biometricAuthStateKey, biometricAuthState.name);
-  // }
 }

@@ -21,6 +21,9 @@ abstract class _LoginStoreBase with Store {
   @observable
   BiometricAuthState? biometricAuthState;
 
+  @observable
+  bool loading = false;
+
   Future<String> getPin() async {
     if (cachedPin.isEmpty) cachedPin = await loginService.getPin() ?? '';
     return cachedPin;

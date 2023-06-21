@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/mocks/ipfs_api.dart';
 import 'package:flutter_test/flutter_test.dart';
-// import 'package:ew_storage/ew_storage.dart';
 
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';

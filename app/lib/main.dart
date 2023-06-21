@@ -15,13 +15,10 @@ import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/store/connectivity/connectivity_store.dart';
-// import 'package:encointer_wallet/service/auth/local_auth_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/http_overrides.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart' as util;
-
-// import 'modules/login/service/login_service.dart';
 
 Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
   late final AppSettings appSettings;
@@ -44,7 +41,6 @@ Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
         RepositoryProvider(create: (context) => EwHttp()),
         RepositoryProvider(create: (context) => appConfig ?? const AppConfig()),
         RepositoryProvider(create: (context) => SubstrateDartApi()),
-        // RepositoryProvider(create: (context) => LocalAuthService(LocalAuthentication())),
       ],
       child: MultiProvider(
         providers: [

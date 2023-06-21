@@ -32,6 +32,21 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
+  late final _$loadingAtom = Atom(name: '_LoginStoreBase.loading', context: context);
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   late final _$setBiometricAuthStateAsyncAction =
       AsyncAction('_LoginStoreBase.setBiometricAuthState', context: context);
 
@@ -44,6 +59,7 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   String toString() {
     return '''
 biometricAuthState: ${biometricAuthState},
+loading: ${loading},
 getBiometricAuthState: ${getBiometricAuthState}
     ''';
   }

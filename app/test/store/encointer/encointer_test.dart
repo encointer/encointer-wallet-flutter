@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/store/settings.dart';
-// import 'package:ew_storage/ew_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/models/index.dart';

@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-// import 'package:encointer_wallet/store/account/types/account_data.dart';
-// import 'package:encointer_wallet/utils/alerts/password_input_dialog.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
 class AppAlert {
@@ -96,28 +94,4 @@ class AppAlert {
       },
     );
   }
-
-  // static Future<bool?> showPasswordInputDialog(
-  //   BuildContext context, {
-  //   required AccountData account,
-  //   required Future<void> Function(String) onSuccess,
-  //   bool canPop = true,
-  //   bool showCancelButton = false,
-  //   bool autoCloseOnSuccess = true,
-  //   String? title,
-  // }) async {
-  //   return showCupertinoDialog<bool>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return PasswordInputDialog(
-  //         title: title,
-  //         account: account,
-  //         onSuccess: onSuccess,
-  //         canPop: canPop,
-  //         showCancelButton: showCancelButton,
-  //         autoCloseOnSuccess: autoCloseOnSuccess,
-  //       );
-  //     },
-  //   );
-  // }
 }

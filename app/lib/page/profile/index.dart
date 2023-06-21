@@ -90,10 +90,6 @@ class _ProfileState extends State<Profile> {
     // if all accounts are deleted, go to createAccountPage
     if (store.account.accountListAll.isEmpty) {
       Navigator.pop(context);
-      // store.settings.setPin('');
-      // Future.delayed(Duration.zero, () {
-      //   Navigator.pop(context);
-      // });
     }
     final l10n = context.l10n;
 

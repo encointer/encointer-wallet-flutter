@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-// import 'package:ew_storage/ew_storage.dart' as ew_storage;
 
 import 'package:encointer_wallet/store/app.dart';
 

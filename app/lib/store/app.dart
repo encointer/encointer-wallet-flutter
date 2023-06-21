@@ -1,4 +1,3 @@
-// import 'package:ew_storage/ew_storage.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
