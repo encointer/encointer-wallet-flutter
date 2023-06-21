@@ -347,6 +347,7 @@
     "transactionQueuedOffline": "Die App ist nicht mit der Blockchain verbunden. Die Transaktionen in der Warteschlange werden automatisch bei erfolgreicher Verbindung versendet.",
     "transfer": "Senden",
     "transferHistory": "Transfers",
+    "transferHistoryEnd": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "txBroadcast": "Transaktion wurde im Netzwerk",
     "txError": "Transaktionsfehler",
     "txInBlock": "Transaction ist in einem Block",
