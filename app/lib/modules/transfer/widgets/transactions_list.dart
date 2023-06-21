@@ -24,7 +24,7 @@ class TransactionsList extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
-                context.l10n.txMessage,
+                context.l10n.transferHistoryEnd,
                 textAlign: TextAlign.center,
               ),
             );
