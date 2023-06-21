@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/modules/account/logic/new_account_store.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/presentation/secure_account/views/secure_instructions_view.dart';
@@ -9,21 +10,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SecureYourAccountView extends StatelessWidget {
-  SecureYourAccountView({super.key});
+  const SecureYourAccountView({super.key});
 
   static const route = 'secure-your-account';
-
-  final List<String> _texts = [
-    'When you change your smartphone.',
-    'When your smartphone is lost.',
-    'If you forget your pin.',
-  ];
+  List<String> _getTexts(BuildContext context) {
+    return [
+      context.l10n.whenYouChangeYourPhone,
+      context.l10n.whenYourPhoneIsLost,
+      context.l10n.ifYouForgetYourPin,
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Secure your account'),
+        title: Text(context.l10n.secureYourAccount),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,19 +35,19 @@ class SecureYourAccountView extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 40),
-                const SecureAccountTitle(
-                  title: 'Secure your account with a secret recovery phrase',
+                SecureAccountTitle(
+                  title: context.l10n.secureYourAccountWithSecretRecoveryPhrase,
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'To avoid risking your credit, be sure to protect your account by keeping your secret recovery phrase in a safe place.',
+                  context.l10n.toAvoidRiskingYourCreditBeSureToProtectBySecretPhrase,
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: context.colorScheme.onBackground,
                   ),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'The recovery phrase is the only way to recover your wallet.',
+                  context.l10n.recoveryPhraseIsTheOnlyWayToRecoverYourWallet,
                   style: context.textTheme.labelLarge!.copyWith(
                     color: context.colorScheme.onBackground,
                     fontWeight: FontWeight.w600,
@@ -53,8 +55,8 @@ class SecureYourAccountView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 BulletPointsListWithTitle(
-                  title: 'Examples of when you need your recovery phrase',
-                  texts: _texts,
+                  title: context.l10n.examplesOfWhenYouNeedYourRecoveryPhrase,
+                  texts: _getTexts(context),
                   textStyle: context.textTheme.bodyMedium!.copyWith(
                     color: context.colorScheme.onBackground,
                   ),
@@ -71,7 +73,7 @@ class SecureYourAccountView extends StatelessWidget {
                   ),
                 ),
                 onPressed: () => _proceedWithoutSaving(context),
-                child: const Text('Proceed without saving. (Not recommended)'),
+                child: Text(context.l10n.proceedWithoutsavingNotRecommended),
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -83,7 +85,7 @@ class SecureYourAccountView extends StatelessWidget {
                 child: PrimaryButton(
                   onPressed: () => _onButtonClicked(context),
                   child: Text(
-                    'Start',
+                    context.l10n.start,
                     style: context.textTheme.displaySmall!.copyWith(
                       color: context.colorScheme.background,
                     ),

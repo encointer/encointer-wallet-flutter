@@ -1,9 +1,8 @@
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/presentation/secure_account/widgets/secure_account_title.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -14,10 +13,9 @@ class SuccesfullySecuredSeedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Secure your account'),
+        title: Text(context.l10n.secureYourAccount),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,39 +26,39 @@ class SuccesfullySecuredSeedView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 40),
-                const SecureAccountTitle(
-                  title: 'Congratulations!',
+                SecureAccountTitle(
+                  title: context.l10n.congratulations,
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'You have successfully secured your account. Remember to keep your recovery secret phrase safe.',
+                  context.l10n.youHaveSecuredYourAccountKeepYourSecretPhrase,
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: context.colorScheme.onBackground,
                   ),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'You are responsible for this!',
+                  context.l10n.youAreResponsibleForThis,
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: context.colorScheme.onBackground,
                   ),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Please note that Encointer cannot recover your account if you get locked out.',
+                  context.l10n.pleaseNoteEncointerCannotRecoverYourAccount,
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: context.colorScheme.onBackground,
                   ),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'You can find your secret recovery phrase in your profile under «export».',
+                  context.l10n.youCanFindYourSecretPhraseInYourProfile,
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: context.colorScheme.onBackground,
                   ),
                 ),
                 const SizedBox(height: 20),
-                _exportTutorial(context, dic)
+                _exportTutorial(context),
               ],
             ),
           ),
@@ -70,7 +68,7 @@ class SuccesfullySecuredSeedView extends StatelessWidget {
     );
   }
 
-  Widget _exportTutorial(BuildContext context, Translations dic) {
+  Widget _exportTutorial(BuildContext context) {
     return Card(
       color: Colors.white,
       child: Column(
@@ -84,16 +82,16 @@ class SuccesfullySecuredSeedView extends StatelessWidget {
               right: 15,
               bottom: 10,
             ),
-            child: const Column(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Iconsax.trash),
-                  title: Text('Delete'),
+                  leading: const Icon(Iconsax.trash),
+                  title: Text(context.l10n.delete.toUpperCase()),
                 ),
                 ListTile(
-                  leading: Icon(Iconsax.export),
-                  title: Text('Export'),
+                  leading: const Icon(Iconsax.export),
+                  title: Text(context.l10n.export.toUpperCase()),
                 ),
               ],
             ),
@@ -111,7 +109,7 @@ class SuccesfullySecuredSeedView extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    dic.profile.accountShare,
+                    context.l10n.accountShare,
                     style: context.textTheme.displaySmall?.copyWith(color: Colors.white),
                   ),
                   const Spacer(),
@@ -140,7 +138,7 @@ class SuccesfullySecuredSeedView extends StatelessWidget {
       child: PrimaryButton(
         onPressed: () => _onButtonClicked(context),
         child: Text(
-          'Choose your community',
+          context.l10n.choosYourCommunity,
           style: context.textTheme.displaySmall!.copyWith(
             color: context.colorScheme.background,
           ),

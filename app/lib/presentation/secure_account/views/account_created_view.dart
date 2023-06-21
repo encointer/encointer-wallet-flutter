@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/modules/account/logic/new_account_store.dart';
 import 'package:encointer_wallet/presentation/secure_account/views/secure_your_account_view.dart';
 import 'package:encointer_wallet/presentation/secure_account/widgets/secure_account_title.dart';
@@ -15,7 +16,7 @@ class AccountCreatedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account created'),
+        title: Text(context.l10n.accountCreated),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,12 +33,12 @@ class AccountCreatedView extends StatelessWidget {
                     color: Colors.green,
                   ),
                 ),
-                const SecureAccountTitle(
-                  title: 'Your account has been successfully created!',
+                SecureAccountTitle(
+                  title: context.l10n.yourAccountSuccessfullyCreated,
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  "Secure your account now with a secret recovery phrase to ensure you don't lose access to your account.",
+                  context.l10n.secureYourAccountWithSecretPhraseEnsureNotLoseIt,
                   style: context.textTheme.bodyMedium!.copyWith(
                     color: context.colorScheme.onBackground,
                   ),
@@ -53,7 +54,7 @@ class AccountCreatedView extends StatelessWidget {
             child: PrimaryButton(
               onPressed: () => _onButtonClicked(context),
               child: Text(
-                'Secure your account',
+                context.l10n.secureYourAccount,
                 style: context.textTheme.displaySmall!.copyWith(
                   color: context.colorScheme.background,
                 ),

@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/presentation/secure_account/stores/keep_your_phrase_safe_view_store.dart';
 import 'package:encointer_wallet/presentation/secure_account/views/successfully_secured_seed_view.dart';
@@ -38,7 +39,7 @@ class _KeepYourPhraseSafeViewState extends State<KeepYourPhraseSafeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Keep your secret recovery phrase safe.'),
+        title: Text(context.l10n.keepYourSecretPhraseSafe),
       ),
       body: Observer(
         builder: (_) {
@@ -50,14 +51,14 @@ class _KeepYourPhraseSafeViewState extends State<KeepYourPhraseSafeView> {
               children: [
                 Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(right: 40, left: 40, top: 40),
-                      child: SecureAccountTitle(title: 'Keep your secret recovery phrase safe.'),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 40, left: 40, top: 40),
+                      child: SecureAccountTitle(title: context.l10n.keepYourSecretPhraseSafe),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                       child: Text(
-                        "Here's your secret recovery phrase. Write them down on a piece of paper and keep it in a safe place..",
+                        context.l10n.heresYourPhraseWriteItDownOnPaper,
                         style: context.textTheme.bodyMedium!.copyWith(
                           color: context.colorScheme.onBackground,
                         ),
@@ -85,7 +86,7 @@ class _KeepYourPhraseSafeViewState extends State<KeepYourPhraseSafeView> {
                             ClipboardData(text: _store.seed!),
                           ).then((_) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Successfully copied!')),
+                              SnackBar(content: Text(context.l10n.successfullyCopied)),
                             );
                           });
                         },
@@ -94,7 +95,7 @@ class _KeepYourPhraseSafeViewState extends State<KeepYourPhraseSafeView> {
                           width: 18,
                           height: 18,
                         ),
-                        label: const Text('Copy recovery phrase'), // <-- Text
+                        label: Text(context.l10n.copyRecoveryPhrase), // <-- Text
                       ),
                     ),
                   ],
@@ -115,7 +116,7 @@ class _KeepYourPhraseSafeViewState extends State<KeepYourPhraseSafeView> {
                           ),
                           Expanded(
                             child: Text(
-                              'I have written down the recovery phrase and kept it safe and understand that Encointer cannot assist me with an account recovery.',
+                              context.l10n.iHaveWrittenDownPhraseAndUnderstandEncointerCannotAssistMe,
                               style: context.textTheme.labelSmall!.copyWith(
                                 color: context.colorScheme.onBackground.withOpacity(0.7),
                               ),
@@ -136,7 +137,7 @@ class _KeepYourPhraseSafeViewState extends State<KeepYourPhraseSafeView> {
                         onPressed: () => _store.isChecked ? _onButtonClicked(context) : null,
                         backgroundGradient: _store.isChecked ? null : AppColors.primaryGradientLight(context),
                         child: Text(
-                          'Complete',
+                          context.l10n.complete,
                           style: context.textTheme.displaySmall!.copyWith(
                             color: context.colorScheme.background,
                           ),

@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/modules/account/logic/new_account_store.dart';
 import 'package:encointer_wallet/presentation/secure_account/views/keep_your_phrase_safe_view.dart';
 import 'package:encointer_wallet/presentation/secure_account/widgets/bullet_points_list_with_title.dart';
@@ -8,27 +9,31 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SecureInstructionsView extends StatelessWidget {
-  SecureInstructionsView({super.key});
+  const SecureInstructionsView({super.key});
 
   static const route = 'secure-instructions';
 
-  final List<String> _risks = [
-    'Loss of recovery phrase',
-    'Forgetting the storage location',
-    'Forgetting the storage location',
-  ];
+  List<String> _getRisks(BuildContext context) {
+    return [
+      context.l10n.lossOfRecoveryPhrase,
+      context.l10n.forgettingStorageLocation,
+      context.l10n.unauthorizedAccessByThirdParties,
+    ];
+  }
 
-  final List<String> _tips = [
-    'Choose a safe and reliable storage method',
-    'Write down the storage locations in a safe place in case you forget them',
-    'Never share the recovery phrase with other people',
-  ];
+  List<String> _getTips(BuildContext context) {
+    return [
+      context.l10n.chooseSafeAndReliableStorageMethod,
+      context.l10n.writeDownStorageLocationsInSafePlace,
+      context.l10n.neverShareRecoveryPhraseWithOthers,
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Instructions'),
+        title: Text(context.l10n.instructions),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,7 +44,7 @@ class SecureInstructionsView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 40),
-                const SecureAccountTitle(title: 'Instructions'),
+                SecureAccountTitle(title: context.l10n.instructions),
                 const SizedBox(height: 20),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +58,7 @@ class SecureInstructionsView extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        'Write your secret recovery phrase on a piece of paper or choose another safe storage option.',
+                        context.l10n.writeYourSecretPhraseOnPaperOrChooseSafeOption,
                         style: context.textTheme.labelLarge!.copyWith(
                           color: context.colorScheme.onBackground,
                           fontWeight: FontWeight.w600,
@@ -75,7 +80,7 @@ class SecureInstructionsView extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        'Keep the recording in a safe place.',
+                        context.l10n.keepRecordingInSafePlace,
                         style: context.textTheme.labelLarge!.copyWith(
                           color: context.colorScheme.onBackground,
                           fontWeight: FontWeight.w600,
@@ -86,12 +91,12 @@ class SecureInstructionsView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 BulletPointsListWithTitle(
-                  texts: _risks,
-                  title: 'Risks',
+                  texts: _getRisks(context),
+                  title: context.l10n.risks,
                 ),
                 BulletPointsListWithTitle(
-                  texts: _tips,
-                  title: 'Tips',
+                  texts: _getTips(context),
+                  title: context.l10n.tips,
                 ),
               ],
             ),
@@ -104,7 +109,7 @@ class SecureInstructionsView extends StatelessWidget {
             child: PrimaryButton(
               onPressed: () => _onButtonClicked(context),
               child: Text(
-                'Show recovery phrase',
+                context.l10n.showRecoveryphrase,
                 style: context.textTheme.displaySmall!.copyWith(
                   color: context.colorScheme.background,
                 ),
