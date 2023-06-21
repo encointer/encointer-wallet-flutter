@@ -10,7 +10,6 @@ import 'package:encointer_wallet/common/components/launch/send_to_trello_list_ti
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/biometiric_auth_state.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
@@ -186,11 +185,10 @@ class _ProfileState extends State<Profile> {
                   _ => SwitchListTile(
                       title: Text(l10n.biometricAuth, style: h3Grey),
                       onChanged: (value) async {
-                        await AppAlert.showPasswordInputDialog(
+                        await LoginDialog.showPasswordInputDialog(
                           context,
-                          title: l10n.biometricAuthEnableDisableDescription,
+                          titleText: l10n.biometricAuthEnableDisableDescription,
                           showCancelButton: true,
-                          account: context.read<AppStore>().account.currentAccount,
                           onSuccess: (_) async {
                             final biometricAuthState = value ? BiometricAuthState.enabled : BiometricAuthState.disabled;
                             await context.read<LoginStore>().setBiometricAuthState(biometricAuthState);

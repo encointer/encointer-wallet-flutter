@@ -104,12 +104,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) async {
-    await AppAlert.showPasswordInputDialog(
+    await LoginDialog.showPasswordInputDialog(
       context,
-      title: context.l10n.confirmPin,
+      titleText: context.l10n.confirmPin,
       showCancelButton: true,
       autoCloseOnSuccess: false,
-      account: _appStore.account.currentAccount,
       onSuccess: (password) async {
         final isMnemonic =
             await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);

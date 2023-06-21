@@ -21,9 +21,8 @@ mixin HandleNewAccountResultMixin on Widget {
           errorText: context.l10n.createError,
           buttontext: context.l10n.ok,
         ),
-      NewAccountResultType.emptyPassword => await AppAlert.showPasswordInputDialog(
+      NewAccountResultType.emptyPassword => await LoginDialog.showPasswordInputDialog(
           context,
-          account: appStore.account.currentAccount,
           onSuccess: (v) async {
             await context.read<LoginStore>().setPin(v);
             appStore.settings.cachedPin = v;
