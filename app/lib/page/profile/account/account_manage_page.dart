@@ -104,7 +104,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) async {
-    await LoginDialog.showPasswordInputDialog(
+    await LoginDialog.askPin(
       context,
       titleText: context.l10n.confirmPin,
       showCancelButton: true,

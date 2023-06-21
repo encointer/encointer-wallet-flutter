@@ -21,7 +21,7 @@ mixin HandleNewAccountResultMixin on Widget {
           errorText: context.l10n.createError,
           buttontext: context.l10n.ok,
         ),
-      NewAccountResultType.emptyPassword => await LoginDialog.showPasswordInputDialog(
+      NewAccountResultType.emptyPassword => await LoginDialog.askPin(
           context,
           onSuccess: (v) async {
             await context.read<LoginStore>().setPin(v);

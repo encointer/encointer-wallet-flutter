@@ -45,9 +45,9 @@ final class LoginDialog {
   }) async {
     final loginStore = context.read<LoginStore>();
     if (loginStore.getBiometricAuthState == BiometricAuthState.enabled && loginStore.cachedPin.isNotEmpty) {
-      await loginStore.localAuthenticate(context);
+      await _showLocalAuth(context, onSuccess: onSuccess);
     } else {
-      await showPasswordInputDialog(
+      await _showPasswordInputDialog(
         context,
         onSuccess: onSuccess,
         barrierDismissible: barrierDismissible,
@@ -59,7 +59,7 @@ final class LoginDialog {
     }
   }
 
-  static Future<void> showLocalAuth(
+  static Future<void> _showLocalAuth(
     BuildContext context, {
     required Future<void> Function(String password) onSuccess,
   }) async {
@@ -68,10 +68,9 @@ final class LoginDialog {
     if (value) await onSuccess(loginStore.cachedPin);
   }
 
-  static Future<void> showPasswordInputDialog(
+  static Future<void> _showPasswordInputDialog(
     BuildContext context, {
     required Future<void> Function(String password) onSuccess,
-    List<Widget> actions = const <Widget>[],
     bool barrierDismissible = false,
     bool autoCloseOnSuccess = true,
     bool showCancelButton = false,

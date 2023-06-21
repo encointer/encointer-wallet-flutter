@@ -185,7 +185,7 @@ class _ProfileState extends State<Profile> {
                   _ => SwitchListTile(
                       title: Text(l10n.biometricAuth, style: h3Grey),
                       onChanged: (value) async {
-                        await LoginDialog.showPasswordInputDialog(
+                        await LoginDialog.askPin(
                           context,
                           titleText: l10n.biometricAuthEnableDisableDescription,
                           showCancelButton: true,
