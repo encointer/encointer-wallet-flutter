@@ -36,7 +36,7 @@ class AnnouncementCard extends StatelessWidget {
                 child: Text(DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
                     style: Theme.of(context).textTheme.bodySmall),
               ),
-              subtitle: Text(announcement.title, style: textTheme.titleLarge),
+              subtitle: Text(announcement.title, style: textTheme.titleMedium),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
