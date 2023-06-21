@@ -1,4 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
@@ -6,6 +7,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:provider/provider.dart';
 
 part 'new_account_store.g.dart';
 
@@ -40,24 +42,25 @@ abstract class _NewAccountStoreBase with Store {
   void setKeyType(KeyType value) => keyType = value;
 
   @action
-  Future<NewAccountResult> generateAccount(AppStore appStore, Api webApi) async {
-    final pin = password ?? appStore.settings.cachedPin;
+  Future<NewAccountResult> generateAccount(BuildContext context, Api webApi) async {
+    final pin = password ?? context.read<AppStore>().settings.cachedPin;
     if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
-    return _generateAccount(appStore, webApi, pin);
+    return _generateAccount(context, webApi, pin);
   }
 
   @action
-  Future<NewAccountResult> importAccount(AppStore appStore, Api webApi) async {
-    final pin = password ?? appStore.settings.cachedPin;
+  Future<NewAccountResult> importAccount(BuildContext context, Api webApi) async {
+    final pin = password ?? context.read<AppStore>().settings.cachedPin;
     if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
-    return _importAccount(appStore, webApi, pin);
+    return _importAccount(context, webApi, pin);
   }
 
   @action
-  Future<NewAccountResult> _generateAccount(AppStore appStore, Api webApi, String pin) async {
+  Future<NewAccountResult> _generateAccount(BuildContext context, Api webApi, String pin) async {
     try {
       _loading = true;
-      await appStore.settings.setPin(pin);
+      final appStore = context.read<AppStore>();
+      await context.read<LoginStore>().setPin(pin);
       final key = await webApi.account.generateAccount();
       final acc = await webApi.account.importAccount(key: key, password: pin);
       if (acc['error'] != null) {
@@ -75,10 +78,11 @@ abstract class _NewAccountStoreBase with Store {
   }
 
   @action
-  Future<NewAccountResult> _importAccount(AppStore appStore, Api webApi, String pin) async {
+  Future<NewAccountResult> _importAccount(BuildContext context, Api webApi, String pin) async {
     try {
       _loading = true;
-      await appStore.settings.setPin(pin);
+      final appStore = context.read<AppStore>();
+      await context.read<LoginStore>().setPin(pin);
       assert(accountKey != null && accountKey!.isNotEmpty, 'accountKey can not be null or empty');
       final acc = await webApi.account.importAccount(
         key: accountKey!,

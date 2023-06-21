@@ -76,7 +76,7 @@ class AppAlert {
   }
 
   static Future<void> showToggleBiometricAuthAlert(BuildContext context) {
-    final appSettings = context.read<AppSettings>();
+    final loginStore = context.read<LoginStore>();
     final l10n = context.l10n;
     return showConfirmDialog<void>(
       context: context,
@@ -86,11 +86,11 @@ class AppAlert {
       cancelText: l10n.notNow,
       confirmText: l10n.enable,
       onOK: () async {
-        await appSettings.setBiometricAuthState(BiometricAuthState.enabled);
+        await loginStore.setBiometricAuthState(BiometricAuthState.enabled);
         Navigator.pop(context);
       },
       onCancel: () async {
-        await appSettings.setBiometricAuthState(BiometricAuthState.disabled);
+        await loginStore.setBiometricAuthState(BiometricAuthState.disabled);
         Navigator.pop(context);
       },
     );

@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/mocks/ipfs_api.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ew_storage/ew_storage.dart';
+// import 'package:ew_storage/ew_storage.dart';
 
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -17,7 +17,7 @@ void main() {
       const communityStoreCacheKey = 'communityStore-test-cache';
 
       // Only to not get null errors in tests
-      webApi = getMockApi(AppStore(MockLocalStorage(), SecureStorage(MockFlutterSecureStorage())), withUI: false);
+      webApi = getMockApi(AppStore(MockLocalStorage()), withUI: false);
       await webApi.init();
 
       final communityStore = CommunityStore(

@@ -33,8 +33,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await _store.postFrameCallbacks();
-      final appSettings = context.read<AppSettings>();
-      if (appSettings.getBiometricAuthState == null) {
+      final loginStore = context.read<LoginStore>();
+      if (loginStore.getBiometricAuthState == null) {
         await AppAlert.showToggleBiometricAuthAlert(context);
       }
     });

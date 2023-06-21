@@ -3,24 +3,18 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/service/init_web_api/init_web_api.dart';
 import 'package:encointer_wallet/config/biometiric_auth_state.dart';
-import 'package:encointer_wallet/service/auth/local_auth_service.dart';
-import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-class SplashView extends StatefulWidget {
+class SplashView extends StatelessWidget {
   const SplashView({super.key});
 
   static const route = '/';
 
-  @override
-  State<SplashView> createState() => _SplashViewState();
-}
-
-class _SplashViewState extends State<SplashView> {
-  Future<void> _initPage() async {
+  Future<void> _initPage(BuildContext context) async {
     final store = context.read<AppStore>();
     await store.init(Localizations.localeOf(context).toString());
 
@@ -34,13 +28,13 @@ class _SplashViewState extends State<SplashView> {
 
     store.setApiReady(true);
 
-    final appSettings = context.read<AppSettings>();
-    if (appSettings.getBiometricAuthState == null) {
-      final isDeviceSupported = await RepositoryProvider.of<LocalAuthService>(context).isDeviceSupported();
-      if (!isDeviceSupported) await appSettings.setBiometricAuthState(BiometricAuthState.deviceNotSupported);
+    final loginStore = context.read<LoginStore>();
+    if (loginStore.getBiometricAuthState == null) {
+      final isDeviceSupported = await loginStore.isDeviceSupported();
+      if (!isDeviceSupported) await loginStore.setBiometricAuthState(BiometricAuthState.deviceNotSupported);
     }
     if (store.account.accountList.isNotEmpty) {
-      await Navigator.pushNamedAndRemoveUntil(context, LoginView.route, (route) => false);
+      await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
       await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
     }
@@ -51,7 +45,7 @@ class _SplashViewState extends State<SplashView> {
     return Scaffold(
       key: const Key('splashview'),
       body: FutureBuilder(
-        future: _initPage(),
+        future: _initPage(context),
         builder: (context, s) {
           return DecoratedBox(
             decoration: BoxDecoration(

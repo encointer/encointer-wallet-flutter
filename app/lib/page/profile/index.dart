@@ -84,16 +84,17 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final h3Grey = context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey);
     final store = context.watch<AppStore>();
-    final appSettings = context.watch<AppSettings>();
+    final loginStore = context.watch<LoginStore>();
     final appSettingsStore = context.watch<AppSettings>();
     _selectedNetwork = store.settings.endpoint;
 
     // if all accounts are deleted, go to createAccountPage
     if (store.account.accountListAll.isEmpty) {
-      store.settings.setPin('');
-      Future.delayed(Duration.zero, () {
-        Navigator.pop(context);
-      });
+      Navigator.pop(context);
+      // store.settings.setPin('');
+      // Future.delayed(Duration.zero, () {
+      //   Navigator.pop(context);
+      // });
     }
     final l10n = context.l10n;
 
@@ -180,7 +181,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
               Observer(builder: (_) {
-                return switch (appSettings.getBiometricAuthState) {
+                return switch (loginStore.getBiometricAuthState) {
                   BiometricAuthState.deviceNotSupported => const SizedBox.shrink(),
                   _ => SwitchListTile(
                       title: Text(l10n.biometricAuth, style: h3Grey),
@@ -192,11 +193,11 @@ class _ProfileState extends State<Profile> {
                           account: context.read<AppStore>().account.currentAccount,
                           onSuccess: (_) async {
                             final biometricAuthState = value ? BiometricAuthState.enabled : BiometricAuthState.disabled;
-                            await context.read<AppSettings>().setBiometricAuthState(biometricAuthState);
+                            await context.read<LoginStore>().setBiometricAuthState(biometricAuthState);
                           },
                         );
                       },
-                      value: appSettings.biometricAuthState == BiometricAuthState.enabled,
+                      value: loginStore.biometricAuthState == BiometricAuthState.enabled,
                     ),
                 };
               }),

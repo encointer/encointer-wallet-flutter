@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,7 +71,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
         );
       } else {
         // we need to iterate over all active accounts and update there password
-        await store.settings.setPin(passNew);
+        await context.read<LoginStore>().setPin(passNew);
+        store.settings.cachedPin = passNew;
         for (final account in store.account.accountListAll) {
           final acc = await api.evalJavascript(
             'account.changePassword("${account.pubKey}", "$passOld", "$passNew")',
