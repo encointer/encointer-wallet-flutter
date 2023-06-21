@@ -1,7 +1,4 @@
 // ignore_for_file: library_private_types_in_public_api
-
-import 'package:encointer_wallet/l10n/l10.dart';
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/config/biometiric_auth_state.dart';
@@ -34,6 +31,11 @@ abstract class _LoginStoreBase with Store {
     await loginService.setPin(pin);
   }
 
+  Future<void> clearPin() async {
+    cachedPin = '';
+    await loginService.clearPin();
+  }
+
   @computed
   BiometricAuthState? get getBiometricAuthState {
     return biometricAuthState ??= loginService.getBiometricAuthState;
@@ -49,7 +51,7 @@ abstract class _LoginStoreBase with Store {
     return loginService.isDeviceSupported();
   }
 
-  Future<bool> localAuthenticate(BuildContext context) {
-    return loginService.localAuthenticate(context.l10n.localizedReason);
+  Future<bool> localAuthenticate(String localizedReason) {
+    return loginService.localAuthenticate(localizedReason);
   }
 }

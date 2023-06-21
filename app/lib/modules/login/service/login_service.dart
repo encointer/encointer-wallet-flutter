@@ -26,13 +26,13 @@ final class LoginService {
     await preferences.setString(biometricAuthStateKey, biometricAuthState.name);
   }
 
-  Future<String?> getPin() {
-    return secureStorage.read(key: pinStorageKey);
-  }
+  Future<String?> getPin() => secureStorage.read(key: pinStorageKey);
 
   Future<void> setPin(String pin) async {
     await secureStorage.write(key: pinStorageKey, value: pin);
   }
+
+  Future<void> clearPin() => secureStorage.clear();
 
   /// Check if local authentication is supported on the device.
   /// Returns a `future` with `true` if supported, `false` otherwise.

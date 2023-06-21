@@ -62,9 +62,10 @@ final class LoginDialog {
   static Future<void> _showLocalAuth(
     BuildContext context, {
     required Future<void> Function(String password) onSuccess,
+    String? titleText,
   }) async {
     final loginStore = context.read<LoginStore>();
-    final value = await loginStore.localAuthenticate(context);
+    final value = await loginStore.localAuthenticate(titleText ?? context.l10n.localizedReason);
     if (value) await onSuccess(loginStore.cachedPin);
   }
 

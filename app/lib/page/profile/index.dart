@@ -158,7 +158,22 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 key: const Key('remove-all-accounts'),
                 title: Text(l10n.accountsDeleteAll, style: h3Grey),
-                onTap: () => showRemoveAccountsDialog(context, store),
+                onTap: () {
+                  LoginDialog.askPin(
+                    context,
+                    titleText: l10n.accountsDelete,
+                    barrierDismissible: true,
+                    showCancelButton: true,
+                    onSuccess: (v) async {
+                      for (final acc in context.read<AppStore>().account.accountListAll) {
+                        await store.account.removeAccount(acc);
+                      }
+                      await context.read<LoginStore>().clearPin();
+                      context.read<AppStore>().settings.cachedPin = '';
+                      await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
+                    },
+                  );
+                },
               ),
               ListTile(
                   title: Text(l10n.reputationOverall, style: h3Grey),
@@ -264,34 +279,34 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
-  final l10n = context.l10n;
+// Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
+//   // final l10n = context.l10n;
 
-  return showCupertinoDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return CupertinoAlertDialog(
-        title: Text(l10n.accountsDelete),
-        actions: <Widget>[
-          CupertinoButton(
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          CupertinoButton(
-            key: const Key('remove-all-accounts-check'),
-            child: Text(l10n.ok),
-            onPressed: () async {
-              final accounts = store.account.accountListAll;
+//   return showCupertinoDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return CupertinoAlertDialog(
+//         // title: Text(l10n.accountsDelete),
+//         actions: <Widget>[
+//           // CupertinoButton(
+//           //   child: Text(l10n.cancel),
+//           //   onPressed: () => Navigator.of(context).pop(),
+//           // ),
+//           // CupertinoButton(
+//           //   // key: const Key('remove-all-accounts-check'),
+//           //   // child: Text(l10n.ok),
+//           //   onPressed: () async {
+//           //     final accounts = store.account.accountListAll;
 
-              for (final acc in accounts) {
-                await store.account.removeAccount(acc);
-              }
+//           //     for (final acc in accounts) {
+//           //       await store.account.removeAccount(acc);
+//           //     }
 
-              await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+//           //     await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
+//           //   },
+//           // ),
+//         ],
+//       );
+//     },
+//   );
+// }
