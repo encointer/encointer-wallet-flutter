@@ -172,6 +172,7 @@
     "importInvalidRawSeed": "Предоставлен недопустимый raw seed",
     "importMustNotBeEmpty": "Входные данные не должны быть пустыми",
     "importPrivateKeyUnsupported": "Импорт аккаунта с помощью секретного ключа пока не поддерживается",
+    "incomeIssuance": "Доход сообщества",
     "insufficientBalance": "Недостаточный баланс",
     "insufficientFundsErrorBody": "У вас недостаточно средств на этом аккаунте. Посмотрите на веб-сайте вашего местного сообщества, как их получить.",
     "insufficientFundsErrorTitle": "Недостаточно средств",
@@ -347,6 +348,7 @@
     "transactionQueued": "В очереди",
     "transactionQueuedOffline": "Приложение не подключено к блокчейну. Транзакция, которая в очереди (будет отправлена автоматически при подключении).",
     "transfer": "Отправить",
+    "transferHistoryEnd": "Загрузка более старых транзакций пока не поддерживается",
     "transferHistory": "Транзакции",
     "txBroadcast": "Транзакция передана в эфир",
     "txError": "Ошибка транзакции",
@@ -356,6 +358,7 @@
     "txReady": "Транзакция готова.",
     "txTooLowPriorityErrorBody": "Техническая ошибка приоритета транзакции. Это может произойти, если вы быстро дважды нажмете на кнопку отправки. Пожалуйста, подождите несколько секунд.",
     "txTooLowPriorityErrorTitle": "Техническая ошибка приоритета транзакции",
+    "unknown": "Неизвестный",
     "unknownAccount": "Неизвестный аккаунт",
     "unknownError": "Извините, произошла ошибка. Пожалуйста, проверьте свое интернет-соединение и попробуйте еще раз.",
     "unlock": "Вам необходимо ввести свой PIN-код, чтобы добавить новую учетную запись",
@@ -405,5 +408,6 @@
     "youAreRegisteredAs": "На следующую встречу вы зарегистрированы в качестве {participantType}.",
     "youAreAssignedToAGatheringWithNParticipants": "Вы записаны на встречу вместе с {participantsCount} участниками.",
     "successfullySentNAttestations": "Вы успешно отправили аттестации {participantsCount} других людей.",
-    "tokenSend": "Отправить {symbol}"
+    "tokenSend": "Отправить {symbol}",
+    "communityWithName": "Сообщество {name}"
 }

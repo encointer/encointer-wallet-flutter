@@ -34,6 +34,8 @@ enum Community {
   final String notificationSound;
   final ColorScheme colorScheme;
   final String cid;
+
+  String get name => switch (this) { Community.leu => 'LEU', Community.gbd => 'GBD' };
 }
 
 class Cids {
