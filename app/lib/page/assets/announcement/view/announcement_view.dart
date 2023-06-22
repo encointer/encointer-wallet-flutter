@@ -104,12 +104,12 @@ class _AnnouncementViewState extends State<AnnouncementView> {
       children: [
         Observer(
           builder: (_) {
-            return buildAnnouncementList(_announcementStore.announcementsGlobal);
+            return buildAnnouncementList(_announcementStore.announcementsCommunnity);
           },
         ),
         Observer(
           builder: (_) {
-            return buildAnnouncementList(_announcementStore.announcementsCommunnity);
+            return buildAnnouncementList(_announcementStore.announcementsGlobal);
           },
         ),
       ],
@@ -151,6 +151,7 @@ class AnnouncementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    announcements.sort((a, b) => b.publishDate.compareTo(a.publishDate));
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
