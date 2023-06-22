@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:encointer_wallet/utils/extensions/double/double_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -29,6 +32,7 @@ class Transaction {
   final String counterParty;
 
   /// The amount of the transaction.
+  @ShortenedDouble()
   final double amount;
 
   /// Determines the type of this [Transaction] based on its amount.
@@ -65,4 +69,20 @@ enum TransactionType {
       TransactionType.incoming => l10n.received,
     };
   }
+}
+
+class ShortenedDouble implements JsonConverter<double, num> {
+  const ShortenedDouble();
+
+  @override
+  double fromJson(num val) {
+    if (val is int) {
+      return val.toDouble();
+    } else {
+      return (val as double).shortenBigNumber(val, 4);
+    }
+  }
+
+  @override
+  num toJson(num val) => val;
 }
