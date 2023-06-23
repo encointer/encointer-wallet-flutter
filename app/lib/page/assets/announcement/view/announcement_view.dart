@@ -135,7 +135,6 @@ class AnnouncementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    announcements.sort((a, b) => b.publishDate.compareTo(a.publishDate));
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
