@@ -229,12 +229,12 @@ class AppRoute {
         );
       case SecureYourAccountView.route:
         return CupertinoPageRoute(
-          builder: (_) => SecureYourAccountView(),
+          builder: (_) => const SecureYourAccountView(),
           settings: settings,
         );
       case SecureInstructionsView.route:
         return CupertinoPageRoute(
-          builder: (_) => SecureInstructionsView(),
+          builder: (_) => const SecureInstructionsView(),
           settings: settings,
         );
       case KeepYourPhraseSafeView.route:

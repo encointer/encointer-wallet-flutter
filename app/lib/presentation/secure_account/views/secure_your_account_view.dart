@@ -113,7 +113,7 @@ class SecureYourAccountView extends StatelessWidget {
       MaterialPageRoute<void>(
         builder: (BuildContext _) => Provider.value(
           value: context.read<NewAccountStore>(),
-          child: SecureInstructionsView(),
+          child: const SecureInstructionsView(),
         ),
       ),
     );
