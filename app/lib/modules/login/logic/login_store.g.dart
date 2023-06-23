@@ -25,13 +25,6 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  late final _$isDeviceSupportedAsyncAction = AsyncAction('_LoginStoreBase.isDeviceSupported', context: context);
-
-  @override
-  Future<bool> isDeviceSupported() {
-    return _$isDeviceSupportedAsyncAction.run(() => super.isDeviceSupported());
-  }
-
   late final _$_LoginStoreBaseActionController = ActionController(name: '_LoginStoreBase', context: context);
 
   @override
@@ -49,6 +42,16 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.removeLastDigit');
     try {
       return super.removeLastDigit();
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  bool usePincodeAuth(BuildContext context) {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.usePincodeAuth');
+    try {
+      return super.usePincodeAuth(context);
     } finally {
       _$_LoginStoreBaseActionController.endAction(_$actionInfo);
     }

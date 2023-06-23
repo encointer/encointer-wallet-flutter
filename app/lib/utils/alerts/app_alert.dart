@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/alerts/password_input_dialog.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 
 class AppAlert {
   static Future<T?> showDialog<T>(
@@ -10,9 +13,11 @@ class AppAlert {
     Widget? title,
     Widget? content,
     List<Widget> actions = const <Widget>[],
+    bool barrierDismissible = false,
   }) {
     return showCupertinoDialog<T>(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: title,
@@ -39,8 +44,12 @@ class AppAlert {
     required BuildContext context,
     required VoidCallback onOK,
     required VoidCallback onCancel,
+    Key oKButtonKey = const Key('ok-button'),
+    Key cancelButtonKey = const Key('cansel-button'),
     Widget? title,
     Widget? content,
+    String? confirmText,
+    String? cancelText,
   }) {
     final l10n = context.l10n;
     return showCupertinoDialog<T>(
@@ -51,16 +60,38 @@ class AppAlert {
           content: content,
           actions: <Widget>[
             CupertinoButton(
+              key: cancelButtonKey,
               onPressed: onCancel,
-              child: Text(l10n.cancel),
+              child: Text(cancelText ?? l10n.cancel),
             ),
             CupertinoButton(
-              key: const Key('ok-button'),
+              key: oKButtonKey,
               onPressed: onOK,
-              child: Text(l10n.ok),
+              child: Text(confirmText ?? l10n.ok),
             ),
           ],
         );
+      },
+    );
+  }
+
+  static Future<void> showToggleBiometricAuthAlert(BuildContext context) {
+    final appSettings = context.read<AppSettings>();
+    final l10n = context.l10n;
+    return showConfirmDialog<void>(
+      context: context,
+      title: Text(l10n.biometricAuth),
+      content: Text(l10n.biometricAuthDescription),
+      cancelButtonKey: const Key('not-now-button'),
+      cancelText: l10n.notNow,
+      confirmText: l10n.enable,
+      onOK: () async {
+        await appSettings.setBiometricAuthState(BiometricAuthState.enabled);
+        Navigator.pop(context);
+      },
+      onCancel: () async {
+        await appSettings.setBiometricAuthState(BiometricAuthState.disabled);
+        Navigator.pop(context);
       },
     );
   }
@@ -71,17 +102,18 @@ class AppAlert {
     required String errorText,
     required String buttontext,
     void Function()? onPressed,
+    TextStyle? textStyle,
   }) {
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: title,
-          content: Text(errorText),
+          content: Text(errorText, style: textStyle),
           actions: <Widget>[
             CupertinoButton(
               onPressed: onPressed ?? () => Navigator.of(context).pop(),
-              child: Text(buttontext),
+              child: Text(buttontext, style: textStyle),
             ),
           ],
         );
