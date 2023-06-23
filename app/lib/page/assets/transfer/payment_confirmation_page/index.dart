@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/payment_overview.dart';
@@ -112,11 +111,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             if (!_transferState.isFinishedOrFailed())
               PrimaryButton(
                 key: const Key('make-transfer-send'),
-                onPressed: () {
-                  LoginDialog.askPin(context, onSuccess: (v) async {
-                    await _submit(context, cid, recipientAddress, amount);
-                  });
-                },
+                onPressed: () => _submit(context, cid, recipientAddress, amount),
                 child: SizedBox(
                   height: 24,
                   child: !_transferState.isSubmitting()
