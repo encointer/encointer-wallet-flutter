@@ -59,8 +59,6 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> _generateAccount(BuildContext context, Api webApi, String pin) async {
     try {
       _loading = true;
-      final appStore = context.read<AppStore>();
-      await context.read<LoginStore>().setPin(pin);
       final key = await webApi.account.generateAccount();
       final acc = await webApi.account.importAccount(key: key, password: pin);
       if (acc['error'] != null) {
@@ -68,6 +66,8 @@ abstract class _NewAccountStoreBase with Store {
         return const NewAccountResult(NewAccountResultType.error);
       }
 
+      await context.read<LoginStore>().setPin(pin);
+      final appStore = context.read<AppStore>()..settings.cachedPin = pin;
       acc['address'] = Fmt.ss58Encode(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
       return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
@@ -81,8 +81,6 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> _importAccount(BuildContext context, Api webApi, String pin) async {
     try {
       _loading = true;
-      final appStore = context.read<AppStore>();
-      await context.read<LoginStore>().setPin(pin);
       assert(accountKey != null && accountKey!.isNotEmpty, 'accountKey can not be null or empty');
       final acc = await webApi.account.importAccount(
         key: accountKey!,
@@ -93,6 +91,8 @@ abstract class _NewAccountStoreBase with Store {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       } else {
+        await context.read<LoginStore>().setPin(pin);
+        final appStore = context.read<AppStore>()..settings.cachedPin = pin;
         acc['address'] = Fmt.ss58Encode(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
