@@ -42,13 +42,19 @@ final class LoginDialog {
     bool autoCloseOnSuccess = true,
     bool showCancelButton = true,
     bool canPop = true,
+    bool stickyAuth = false,
     String? titleText,
   }) async {
     final loginStore = context.read<LoginStore>();
     if (loginStore.getBiometricAuthState == BiometricAuthState.enabled && loginStore.cachedPin.isNotEmpty) {
-      await _showLocalAuth(context, onSuccess: onSuccess);
+      await showLocalAuth(
+        context,
+        onSuccess: onSuccess,
+        stickyAuth: stickyAuth,
+        titleText: titleText,
+      );
     } else {
-      await _showPasswordInputDialog(
+      await showPasswordInputDialog(
         context,
         onSuccess: onSuccess,
         barrierDismissible: barrierDismissible,
@@ -60,17 +66,18 @@ final class LoginDialog {
     }
   }
 
-  static Future<void> _showLocalAuth(
+  static Future<void> showLocalAuth(
     BuildContext context, {
     required Future<void> Function(String password) onSuccess,
     String? titleText,
+    bool stickyAuth = false,
   }) async {
     final loginStore = context.read<LoginStore>();
-    final value = await loginStore.localAuthenticate(titleText ?? context.l10n.localizedReason);
+    final value = await loginStore.localAuthenticate(titleText ?? context.l10n.localizedReason, stickyAuth);
     if (value) await onSuccess(loginStore.cachedPin);
   }
 
-  static Future<void> _showPasswordInputDialog(
+  static Future<void> showPasswordInputDialog(
     BuildContext context, {
     required Future<void> Function(String password) onSuccess,
     bool barrierDismissible = true,
@@ -84,6 +91,7 @@ final class LoginDialog {
     final loginStore = context.read<LoginStore>();
     return AppAlert.showDialog(
       context,
+      barrierDismissible: barrierDismissible,
       title: Text(titleText ?? l10n.unlockAccountPin),
       content: CupertinoTextFormFieldRow(
         key: const Key('input-password-dialog'),
@@ -93,14 +101,10 @@ final class LoginDialog {
         keyboardType: TextInputType.number,
         placeholder: l10n.passOld,
         controller: passCtrl,
-        validator: (v) {
-          if (v == null || !Fmt.checkPassword(v.trim())) return l10n.createPasswordError;
-          return null;
-        },
+        validator: (v) => validatePasswordInputField(v, l10n),
         obscureText: true,
         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
       ),
-      barrierDismissible: barrierDismissible,
       actions: [
         if (showCancelButton)
           CupertinoButton(
@@ -143,5 +147,9 @@ final class LoginDialog {
     final res = await webApi.account.checkAccountPassword(appStore.account.currentAccount, password);
     if (res == null) return false;
     return true;
+  }
+
+  static String? validatePasswordInputField(String? value, AppLocalizations l10n) {
+    return value == null || !Fmt.checkPassword(value.trim()) ? l10n.createPasswordError : null;
   }
 }

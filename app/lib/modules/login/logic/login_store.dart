@@ -51,7 +51,7 @@ abstract class _LoginStoreBase with Store {
     return loginService.isDeviceSupported();
   }
 
-  Future<bool> localAuthenticate(String localizedReason) {
-    return loginService.localAuthenticate(localizedReason);
+  Future<bool> localAuthenticate(String localizedReason, [bool stickyAuth = false]) {
+    return loginService.localAuthenticate(localizedReason, stickyAuth);
   }
 }
