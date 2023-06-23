@@ -73,7 +73,7 @@ final class LoginDialog {
     bool stickyAuth = false,
   }) async {
     final loginStore = context.read<LoginStore>();
-    final value = await loginStore.localAuthenticate(titleText ?? context.l10n.localizedReason, stickyAuth);
+    final value = await loginStore.localAuthenticate(titleText ?? context.l10n.verifyAuthTitle('true'), stickyAuth);
     if (value) await onSuccess(loginStore.cachedPin);
   }
 
@@ -92,7 +92,7 @@ final class LoginDialog {
     return AppAlert.showDialog(
       context,
       barrierDismissible: barrierDismissible,
-      title: Text(titleText ?? l10n.unlockAccountPin),
+      title: Text(titleText ?? l10n.verifyAuthTitle('false')),
       content: CupertinoTextFormFieldRow(
         key: const Key('input-password-dialog'),
         decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
