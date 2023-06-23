@@ -12,6 +12,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 
+@immutable
 final class LoginDialog {
   static Future<void> showToggleBiometricAuthAlert(BuildContext context) {
     final loginStore = context.read<LoginStore>();

@@ -17,7 +17,6 @@ import 'package:encointer_wallet/page/profile/account/change_password_page.dart'
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -30,8 +29,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  EndpointData? _selectedNetwork;
-
   List<Widget> _buildAccountList() {
     final allAccountsAsWidgets = <Widget>[];
 
@@ -85,14 +82,7 @@ class _ProfileState extends State<Profile> {
     final store = context.watch<AppStore>();
     final loginStore = context.watch<LoginStore>();
     final appSettingsStore = context.watch<AppSettings>();
-    _selectedNetwork = store.settings.endpoint;
-
-    // if all accounts are deleted, go to createAccountPage
-    if (store.account.accountListAll.isEmpty) {
-      Navigator.pop(context);
-    }
     final l10n = context.l10n;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.title),
@@ -103,7 +93,6 @@ class _ProfileState extends State<Profile> {
       ),
       body: Observer(
         builder: (_) {
-          if (_selectedNetwork == null) return Container();
           return ListView(
             key: const Key('profile-list-view'),
             children: <Widget>[
@@ -144,7 +133,6 @@ class _ProfileState extends State<Profile> {
                     scrollDirection: Axis.horizontal,
                     children: _buildAccountList(),
                   ),
-                  // blendMode: BlendMode.dstATop,
                 ),
               ),
               ListTile(
