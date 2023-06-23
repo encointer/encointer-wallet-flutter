@@ -97,7 +97,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
     await LoginDialog.askPin(
       context,
       titleText: context.l10n.confirmPin,
-      showCancelButton: true,
       autoCloseOnSuccess: false,
       onSuccess: (password) async {
         final isMnemonic =

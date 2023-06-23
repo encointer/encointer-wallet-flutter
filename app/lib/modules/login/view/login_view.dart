@@ -37,9 +37,9 @@ final class LoginDialog {
   static Future<void> askPin(
     BuildContext context, {
     required Future<void> Function(String password) onSuccess,
-    bool barrierDismissible = false,
+    bool barrierDismissible = true,
     bool autoCloseOnSuccess = true,
-    bool showCancelButton = false,
+    bool showCancelButton = true,
     bool canPop = true,
     String? titleText,
   }) async {
@@ -72,9 +72,9 @@ final class LoginDialog {
   static Future<void> _showPasswordInputDialog(
     BuildContext context, {
     required Future<void> Function(String password) onSuccess,
-    bool barrierDismissible = false,
+    bool barrierDismissible = true,
     bool autoCloseOnSuccess = true,
-    bool showCancelButton = false,
+    bool showCancelButton = true,
     bool canPop = true,
     String? titleText,
   }) async {

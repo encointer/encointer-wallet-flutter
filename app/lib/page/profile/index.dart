@@ -162,8 +162,6 @@ class _ProfileState extends State<Profile> {
                   LoginDialog.askPin(
                     context,
                     titleText: l10n.accountsDelete,
-                    barrierDismissible: true,
-                    showCancelButton: true,
                     onSuccess: (v) async {
                       for (final acc in context.read<AppStore>().account.accountListAll) {
                         await store.account.removeAccount(acc);
@@ -199,7 +197,6 @@ class _ProfileState extends State<Profile> {
                         await LoginDialog.askPin(
                           context,
                           titleText: l10n.biometricAuthEnableDisableDescription,
-                          showCancelButton: true,
                           onSuccess: (_) async {
                             final biometricAuthState = value ? BiometricAuthState.enabled : BiometricAuthState.disabled;
                             await context.read<LoginStore>().setBiometricAuthState(biometricAuthState);
