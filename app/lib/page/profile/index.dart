@@ -275,35 +275,3 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
-
-// Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
-//   // final l10n = context.l10n;
-
-//   return showCupertinoDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return CupertinoAlertDialog(
-//         // title: Text(l10n.accountsDelete),
-//         actions: <Widget>[
-//           // CupertinoButton(
-//           //   child: Text(l10n.cancel),
-//           //   onPressed: () => Navigator.of(context).pop(),
-//           // ),
-//           // CupertinoButton(
-//           //   // key: const Key('remove-all-accounts-check'),
-//           //   // child: Text(l10n.ok),
-//           //   onPressed: () async {
-//           //     final accounts = store.account.accountListAll;
-
-//           //     for (final acc in accounts) {
-//           //       await store.account.removeAccount(acc);
-//           //     }
-
-//           //     await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
-//           //   },
-//           // ),
-//         ],
-//       );
-//     },
-//   );
-// }
