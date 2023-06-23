@@ -37,12 +37,46 @@ class AnnouncementView extends StatefulWidget {
 
 class _AnnouncementViewState extends State<AnnouncementView> {
   late final AnnouncementStore _announcementStore;
-
   List<ReactionDisposer> _disposers = <ReactionDisposer>[];
 
   @override
   void initState() {
     _announcementStore = AnnouncementStore(RepositoryProvider.of<EwHttp>(context));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _getAnnouncements();
+    });
+
+    _listenToErrors();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    /// Important! Do not forget to dispose all disposable variables
+    /// which may lead to a memory leak issues
+    if (_disposers.isNotEmpty) {
+      for (final d in _disposers) {
+        d();
+      }
+    }
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (_) {
+      return switch (_announcementStore.fetchStatus) {
+        FetchStatus.loading => const Center(child: CupertinoActivityIndicator()),
+        FetchStatus.success => AnnouncementList(announcements: _announcementStore.announcements),
+        FetchStatus.error => const SizedBox.shrink(),
+      };
+    });
+  }
+
+  void _listenToErrors() {
     _disposers = <ReactionDisposer>[
       /// in case of an unknown error, it triggers dialog to popup
       reaction((_) => _announcementStore.error.isNotNullOrEmpty, (result) {
@@ -66,27 +100,6 @@ class _AnnouncementViewState extends State<AnnouncementView> {
         }
       })
     ];
-    super.initState();
-  }
-
-  @override
-  Future<void> didChangeDependencies() async {
-    await _getAnnouncements();
-
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    /// Important! Do not forget to dispose all disposable variables
-    /// which may lead to a memory leak issues
-    if (_disposers.isNotEmpty) {
-      for (final d in _disposers) {
-        d();
-      }
-    }
-
-    super.dispose();
   }
 
   Future<void> _getAnnouncements() async {
@@ -96,33 +109,6 @@ class _AnnouncementViewState extends State<AnnouncementView> {
       _announcementStore.getCommunityAnnouncements(widget.cid,
           devMode: devMode, langCode: Localizations.localeOf(context).languageCode),
     ]);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Observer(
-          builder: (_) {
-            return buildAnnouncementList(_announcementStore.announcementsGlobal);
-          },
-        ),
-        Observer(
-          builder: (_) {
-            return buildAnnouncementList(_announcementStore.announcementsCommunnity);
-          },
-        ),
-      ],
-    );
-  }
-
-  /// NOTE: Do not write any functions inside [build]!
-  Widget buildAnnouncementList(List<Announcement> announcements) {
-    return switch (_announcementStore.fetchStatus) {
-      FetchStatus.loading => const Center(child: CupertinoActivityIndicator()),
-      FetchStatus.success => AnnouncementList(announcements: announcements),
-      FetchStatus.error => const SizedBox.shrink(),
-    };
   }
 
   String _getErrorMessages({

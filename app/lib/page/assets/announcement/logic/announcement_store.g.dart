@@ -9,6 +9,21 @@ part of 'announcement_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
+  late final _$announcementsAtom = Atom(name: '_AnnouncementStoreBase.announcements', context: context);
+
+  @override
+  List<Announcement> get announcements {
+    _$announcementsAtom.reportRead();
+    return super.announcements;
+  }
+
+  @override
+  set announcements(List<Announcement> value) {
+    _$announcementsAtom.reportWrite(value, super.announcements, () {
+      super.announcements = value;
+    });
+  }
+
   late final _$errorAtom = Atom(name: '_AnnouncementStoreBase.error', context: context);
 
   @override
@@ -74,6 +89,7 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   @override
   String toString() {
     return '''
+announcements: ${announcements},
 error: ${error},
 failureType: ${failureType},
 fetchStatus: ${fetchStatus}
