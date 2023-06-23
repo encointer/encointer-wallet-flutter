@@ -172,6 +172,7 @@
     "importInvalidRawSeed": "Raw seed invalide entré",
     "importMustNotBeEmpty": "L'entrée ne peut pas être vide",
     "importPrivateKeyUnsupported": "Le compte d'importation avec clé privée n'est pas encore pris en charge",
+    "incomeIssuance": "Revenu communautaire",
     "insufficientBalance": "Solde insuffisant",
     "insufficientFundsErrorBody": "Tu n'as pas assez d'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.",
     "insufficientFundsErrorTitle": "Trop peu de crédit",
@@ -346,6 +347,7 @@
     "transactionQueuedOffline": "L'application n'est pas connectée à la blockchain. Les transactions dans la file d'attente sont envoyées automatiquement en cas de connexion réussie.",
     "transfer": "Envoyer",
     "transferHistory": "Transferts",
+    "transferHistoryEnd": "Le chargement des transactions plus anciennes n'est pas encore pris en charge",
     "txBroadcast": "La transaction a été envoyée sur le réseau",
     "txError": "Erreur de transaction",
     "txInBlock": "Transaction est dans un bloc",
@@ -354,6 +356,7 @@
     "txReady": "La transaction est prête.",
     "txTooLowPriorityErrorBody": "Erreur technique de transaction. Cela peut arriver si tu envoies deux fois une transaction dans un laps de temps très court. Veuillez patienter quelques secondes'.",
     "txTooLowPriorityErrorTitle": "Erreur de priorité de transaction",
+    "unknown": "Inconnu",
     "unknownAccount": "Compte inconnu",
     "unknownError": "Une erreur est survenue. Vérifie ta connexion Internet et réessaye.",
     "unlock": "Tu dois saisir ton code NIP pour ajouter un nouveau compte.",
@@ -440,5 +443,14 @@
     "recoveryPhraseIsTheOnlyWayToRecoverYourWallet":"La phrase de récupération est le seul moyen de récupérer votre portefeuille.",
     "examplesOfWhenYouNeedYourRecoveryPhrase":"Exemples où vous avez besoin de votre phrase de récupération",
     "proceedWithoutsavingNotRecommended":"Poursuivre sans enregistrer. (Non recommandé)",
-    "start":"Démarrer"
+    "start":"Démarrer",
+    "communityWithName": "Communauté {name}",
+    "@communityWithName": {
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }
