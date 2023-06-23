@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/settings/settings.dart';
 import 'package:encointer_wallet/config/prod_community.dart';
+import 'package:encointer_wallet/config/biometiric_auth_state.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 part 'app_settings_store.g.dart';
@@ -19,7 +20,7 @@ abstract class _AppSettingsBase with Store {
   Locale locale = const Locale('en');
 
   @observable
-  bool isBiometricAuthenticationEnabled = false;
+  BiometricAuthState? biometricAuthState;
 
   @observable
   bool developerMode = false;
@@ -40,11 +41,9 @@ abstract class _AppSettingsBase with Store {
   @action
   void init() => locale = _service.init();
 
-  @action
-  bool getIsBiometricAuthenticationEnabled() {
-    final value = _service.getIsBiometricAuthenticationEnabled();
-    if (value != null) isBiometricAuthenticationEnabled = value;
-    return isBiometricAuthenticationEnabled;
+  @computed
+  BiometricAuthState? get getBiometricAuthState {
+    return biometricAuthState ??= _service.getBiometricAuthState;
   }
 
   @action
@@ -53,9 +52,9 @@ abstract class _AppSettingsBase with Store {
   }
 
   @action
-  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
-    isBiometricAuthenticationEnabled = value;
-    await _service.setIsBiometricAuthenticationEnabled(value);
+  Future<void> setBiometricAuthState(BiometricAuthState value) async {
+    biometricAuthState = value;
+    await _service.setBiometricAuthState(value);
   }
 
   @action
