@@ -51,7 +51,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   void _onDeleteAccount(BuildContext context, AccountData accountToBeEdited) {
-    LoginDialog.askPin(
+    LoginDialog.verifyPinOrBioAuth(
       context,
       titleText: context.l10n.accountDelete,
       onSuccess: (v) async {
@@ -93,7 +93,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) async {
-    await LoginDialog.askPin(
+    await LoginDialog.verifyPinOrBioAuth(
       context,
       titleText: context.l10n.confirmPin,
       autoCloseOnSuccess: false,

@@ -147,7 +147,7 @@ class _ProfileState extends State<Profile> {
                 key: const Key('remove-all-accounts'),
                 title: Text(l10n.accountsDeleteAll, style: h3Grey),
                 onTap: () {
-                  LoginDialog.askPin(
+                  LoginDialog.verifyPinOrBioAuth(
                     context,
                     titleText: l10n.accountsDelete,
                     onSuccess: (v) async {
@@ -182,7 +182,7 @@ class _ProfileState extends State<Profile> {
                   _ => SwitchListTile(
                       title: Text(l10n.biometricAuth, style: h3Grey),
                       onChanged: (value) async {
-                        await LoginDialog.askPin(
+                        await LoginDialog.verifyPinOrBioAuth(
                           context,
                           titleText: l10n.biometricAuthEnableDisableDescription,
                           onSuccess: (_) async {

@@ -35,7 +35,7 @@ final class LoginDialog {
     );
   }
 
-  static Future<void> askPin(
+  static Future<void> verifyPinOrBioAuth(
     BuildContext context, {
     required Future<void> Function(String password) onSuccess,
     bool barrierDismissible = true,
