@@ -20,6 +20,13 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   CustomTheme get theme =>
       (_$themeComputed ??= Computed<CustomTheme>(() => super.theme, name: '_AppSettingsBase.theme')).value;
+  Computed<BiometricAuthState?>? _$getBiometricAuthStateComputed;
+
+  @override
+  BiometricAuthState? get getBiometricAuthState =>
+      (_$getBiometricAuthStateComputed ??= Computed<BiometricAuthState?>(() => super.getBiometricAuthState,
+              name: '_AppSettingsBase.getBiometricAuthState'))
+          .value;
 
   late final _$localeAtom = Atom(name: '_AppSettingsBase.locale', context: context);
 
@@ -36,19 +43,18 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$isBiometricAuthenticationEnabledAtom =
-      Atom(name: '_AppSettingsBase.isBiometricAuthenticationEnabled', context: context);
+  late final _$biometricAuthStateAtom = Atom(name: '_AppSettingsBase.biometricAuthState', context: context);
 
   @override
-  bool get isBiometricAuthenticationEnabled {
-    _$isBiometricAuthenticationEnabledAtom.reportRead();
-    return super.isBiometricAuthenticationEnabled;
+  BiometricAuthState? get biometricAuthState {
+    _$biometricAuthStateAtom.reportRead();
+    return super.biometricAuthState;
   }
 
   @override
-  set isBiometricAuthenticationEnabled(bool value) {
-    _$isBiometricAuthenticationEnabledAtom.reportWrite(value, super.isBiometricAuthenticationEnabled, () {
-      super.isBiometricAuthenticationEnabled = value;
+  set biometricAuthState(BiometricAuthState? value) {
+    _$biometricAuthStateAtom.reportWrite(value, super.biometricAuthState, () {
+      super.biometricAuthState = value;
     });
   }
 
@@ -89,12 +95,12 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     return _$setLocaleAsyncAction.run(() => super.setLocale(languageCode));
   }
 
-  late final _$setIsBiometricAuthenticationEnabledAsyncAction =
-      AsyncAction('_AppSettingsBase.setIsBiometricAuthenticationEnabled', context: context);
+  late final _$setBiometricAuthStateAsyncAction =
+      AsyncAction('_AppSettingsBase.setBiometricAuthState', context: context);
 
   @override
-  Future<void> setIsBiometricAuthenticationEnabled(bool value) {
-    return _$setIsBiometricAuthenticationEnabledAsyncAction.run(() => super.setIsBiometricAuthenticationEnabled(value));
+  Future<void> setBiometricAuthState(BiometricAuthState value) {
+    return _$setBiometricAuthStateAsyncAction.run(() => super.setBiometricAuthState(value));
   }
 
   late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
@@ -104,17 +110,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.init');
     try {
       return super.init();
-    } finally {
-      _$_AppSettingsBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  bool getIsBiometricAuthenticationEnabled() {
-    final _$actionInfo =
-        _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.getIsBiometricAuthenticationEnabled');
-    try {
-      return super.getIsBiometricAuthenticationEnabled();
     } finally {
       _$_AppSettingsBaseActionController.endAction(_$actionInfo);
     }
@@ -144,10 +139,11 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   String toString() {
     return '''
 locale: ${locale},
-isBiometricAuthenticationEnabled: ${isBiometricAuthenticationEnabled},
+biometricAuthState: ${biometricAuthState},
 developerMode: ${developerMode},
 isIntegrationTest: ${isIntegrationTest},
-theme: ${theme}
+theme: ${theme},
+getBiometricAuthState: ${getBiometricAuthState}
     ''';
   }
 }

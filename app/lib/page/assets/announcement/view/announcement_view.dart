@@ -93,35 +93,20 @@ class _AnnouncementViewState extends State<AnnouncementView> {
     final devMode = context.read<AppSettings>().developerMode;
     await Future.wait([
       _announcementStore.getGlobalAnnouncements(devMode: devMode),
-      _announcementStore.getCommunityAnnouncements(widget.cid, devMode: devMode),
+      _announcementStore.getCommunityAnnouncements(widget.cid,
+          devMode: devMode, langCode: Localizations.localeOf(context).languageCode),
     ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Observer(
-          builder: (_) {
-            return buildAnnouncementList(_announcementStore.announcementsGlobal);
-          },
-        ),
-        Observer(
-          builder: (_) {
-            return buildAnnouncementList(_announcementStore.announcementsCommunnity);
-          },
-        ),
-      ],
-    );
-  }
-
-  /// NOTE: Do not write any functions inside [build]!
-  Widget buildAnnouncementList(List<Announcement> announcements) {
-    return switch (_announcementStore.fetchStatus) {
-      FetchStatus.loading => const Center(child: CupertinoActivityIndicator()),
-      FetchStatus.success => AnnouncementList(announcements: announcements),
-      FetchStatus.error => const SizedBox.shrink(),
-    };
+    return Observer(builder: (_) {
+      return switch (_announcementStore.fetchStatus) {
+        FetchStatus.loading => const Center(child: CupertinoActivityIndicator()),
+        FetchStatus.success => AnnouncementList(announcements: _announcementStore.announcements),
+        FetchStatus.error => const SizedBox.shrink(),
+      };
+    });
   }
 
   String _getErrorMessages({

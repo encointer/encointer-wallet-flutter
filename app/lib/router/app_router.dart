@@ -1,6 +1,5 @@
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
@@ -53,7 +52,7 @@ class AppRoute {
       case LoginView.route:
         return CupertinoPageRoute(
           builder: (_) => Provider(
-            create: (context) => LoginStore(LocalAuthentication()),
+            create: (context) => LoginStore(),
             child: const LoginView(),
           ),
         );

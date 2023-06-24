@@ -16,9 +16,19 @@ abstract class _AnnouncementStoreBase with Store {
 
   final EwHttp ewHttp;
 
+  @observable
   List<Announcement> announcementsGlobal = <Announcement>[];
-
+  @observable
   List<Announcement> announcementsCommunnity = <Announcement>[];
+
+  @computed
+  List<Announcement> get announcements {
+    final announcements = announcementsGlobal
+      ..addAll(announcementsCommunnity)
+      ..sort((a, b) => b.publishDate.compareTo(a.publishDate));
+
+    return announcements;
+  }
 
   @observable
   String? error;
@@ -28,12 +38,11 @@ abstract class _AnnouncementStoreBase with Store {
 
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;
-
   @action
-  Future<void> getCommunityAnnouncements(String? cid, {bool devMode = false}) async {
+  Future<void> getCommunityAnnouncements(String? cid, {bool devMode = false, required String langCode}) async {
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final communityAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
-      '${getEncointerFeedLink(devMode: devMode)}/announcements/$cid/en/announcements.json',
+      '${getEncointerFeedLink(devMode: devMode)}/announcements/$cid/$langCode/announcements.json',
       fromJson: Announcement.fromJson,
     );
 

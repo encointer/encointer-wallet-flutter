@@ -9,6 +9,44 @@ part of 'announcement_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
+  Computed<List<Announcement>>? _$announcementsComputed;
+
+  @override
+  List<Announcement> get announcements => (_$announcementsComputed ??=
+          Computed<List<Announcement>>(() => super.announcements, name: '_AnnouncementStoreBase.announcements'))
+      .value;
+
+  late final _$announcementsGlobalAtom = Atom(name: '_AnnouncementStoreBase.announcementsGlobal', context: context);
+
+  @override
+  List<Announcement> get announcementsGlobal {
+    _$announcementsGlobalAtom.reportRead();
+    return super.announcementsGlobal;
+  }
+
+  @override
+  set announcementsGlobal(List<Announcement> value) {
+    _$announcementsGlobalAtom.reportWrite(value, super.announcementsGlobal, () {
+      super.announcementsGlobal = value;
+    });
+  }
+
+  late final _$announcementsCommunnityAtom =
+      Atom(name: '_AnnouncementStoreBase.announcementsCommunnity', context: context);
+
+  @override
+  List<Announcement> get announcementsCommunnity {
+    _$announcementsCommunnityAtom.reportRead();
+    return super.announcementsCommunnity;
+  }
+
+  @override
+  set announcementsCommunnity(List<Announcement> value) {
+    _$announcementsCommunnityAtom.reportWrite(value, super.announcementsCommunnity, () {
+      super.announcementsCommunnity = value;
+    });
+  }
+
   late final _$errorAtom = Atom(name: '_AnnouncementStoreBase.error', context: context);
 
   @override
@@ -58,8 +96,9 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
       AsyncAction('_AnnouncementStoreBase.getCommunityAnnouncements', context: context);
 
   @override
-  Future<void> getCommunityAnnouncements(String? cid, {bool devMode = false}) {
-    return _$getCommunityAnnouncementsAsyncAction.run(() => super.getCommunityAnnouncements(cid, devMode: devMode));
+  Future<void> getCommunityAnnouncements(String? cid, {bool devMode = false, required String langCode}) {
+    return _$getCommunityAnnouncementsAsyncAction
+        .run(() => super.getCommunityAnnouncements(cid, devMode: devMode, langCode: langCode));
   }
 
   late final _$getGlobalAnnouncementsAsyncAction =
@@ -73,9 +112,12 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   @override
   String toString() {
     return '''
+announcementsGlobal: ${announcementsGlobal},
+announcementsCommunnity: ${announcementsCommunnity},
 error: ${error},
 failureType: ${failureType},
-fetchStatus: ${fetchStatus}
+fetchStatus: ${fetchStatus},
+announcements: ${announcements}
     ''';
   }
 }
