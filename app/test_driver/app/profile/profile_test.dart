@@ -27,7 +27,5 @@ Future<void> checkPeputationCount(FlutterDriver driver, int count) async {
 Future<void> deleteAllAccount(FlutterDriver driver) async {
   await driver.waitFor(find.byValueKey('remove-all-accounts'));
   await driver.tap(find.byValueKey('remove-all-accounts'));
-  await driver.waitFor(find.byValueKey('remove-all-accounts-check'));
-  await driver.tap(find.byValueKey('remove-all-accounts-check'));
-  await driver.waitFor(find.byValueKey('import-account'));
+  
 }

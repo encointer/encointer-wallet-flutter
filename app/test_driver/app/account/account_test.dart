@@ -4,8 +4,6 @@ import '../../helpers/helper.dart';
 import 'account_helper.dart';
 
 Future<void> choosingCid(FlutterDriver driver, int index) async {
-  await driver.waitFor(find.byValueKey('not-now-button'));
-  await driver.tap(find.byValueKey('not-now-button'));
   await driver.waitFor(find.byValueKey('cid-$index-marker-icon'));
   await driver.tap(find.byValueKey('cid-$index-marker-icon'));
   await driver.waitFor(find.byValueKey('cid-$index-marker-description'));
