@@ -39,7 +39,7 @@ abstract class _AppSettingsBase with Store {
   CustomTheme get theme => CustomTheme(colorScheme);
 
   @action
-  void init() => locale = _service.init();
+  void init() => locale = _service.getLocale;
 
   @computed
   BiometricAuthState? get getBiometricAuthState {
