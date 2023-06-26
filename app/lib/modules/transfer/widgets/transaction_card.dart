@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/config/prod_community.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/theme/theme.dart';
@@ -12,9 +13,10 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class TransactionCard extends StatelessWidget {
-  const TransactionCard({required this.transaction, super.key});
+  const TransactionCard(this.transaction, this.contacts, {super.key});
 
   final Transaction transaction;
+  final List<AccountData> contacts;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class TransactionCard extends StatelessWidget {
                       transaction.isIssuance
                           ? l10n.communityWithName(
                               Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name)
-                          : transaction.getNameFromContacts(appStore.settings.contactList) ?? l10n.unknown,
+                          : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
                       style: context.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 4),

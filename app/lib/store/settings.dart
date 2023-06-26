@@ -122,6 +122,11 @@ abstract class _SettingsStore with Store {
     return ls;
   }
 
+  List<AccountData> contactListAllToSet() {
+    final uniqueIds = <String>{};
+    return contactListAll.where((data) => uniqueIds.add(data.pubKey)).toList();
+  }
+
   @action
   Future<void> init(String sysLocaleCode) async {
     await loadLocalCode();
