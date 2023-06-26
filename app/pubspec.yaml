@@ -83,6 +83,7 @@ dependencies:
     path: ../packages/ew_storage/
   ew_http:
     path: ../packages/ew_http/
+  decimal: ^2.3.2
 
 dev_dependencies:
   build_runner: ^2.4.5
