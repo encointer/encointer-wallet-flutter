@@ -12,11 +12,11 @@ class AppService {
   static const String localStorageLocaleKey = 'locale';
   static const String biometricAuthStateKey = 'biometric-auth-state';
 
-  Locale init() {
+  Locale get getLocale {
     final code = storage.getString(localStorageLocaleKey);
     if (code != null) return Locale(code);
     // ignore: deprecated_member_use
-    final deviceLocal = window.locale;
+    final deviceLocal = Locale(window.locale.languageCode);
     return AppLocalizations.delegate.isSupported(deviceLocal) ? deviceLocal : const Locale('en');
   }
 
