@@ -142,6 +142,17 @@ class _AssetsViewState extends State<AssetsView> {
         balanceWatchdog!.start();
       },
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            final cid = context.read<AppStore>().encointer.community?.cid.toFmtString();
+            NotificationPlugin.showNotification(
+              1,
+              'TestTitle',
+              'Test Body',
+              cid: cid,
+            );
+          },
+        ),
         appBar: _appBar(),
         body: RepositoryProvider.of<AppConfig>(context).isIntegrationTest
             ? _slidingUpPanel(_appBar(), appSettingsStore, allAccounts)
