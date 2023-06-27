@@ -58,94 +58,61 @@ class _AssetsViewState extends State<AssetsView> {
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
-
-  PanelController? panelController;
-
-  PausableTimer? balanceWatchdog;
-
+  late PanelController _panelController;
+  late PausableTimer _balanceWatchdog;
+  late AppSettings _appSettingsStore;
   late double _panelHeightOpen;
   final double _panelHeightClosed = 0;
   late AppLocalizations l10n;
 
   @override
   void initState() {
+    _connectNodeAll();
+    _panelController = PanelController();
+    _postFrameCallbacks();
+    _startBalanceWatchdog();
     super.initState();
-
-    // if network connected failed, reconnect
-    if (!widget.store.settings.loading && widget.store.settings.networkName == null) {
-      widget.store.settings.setNetworkLoading(true);
-      webApi.connectNodeAll();
-    }
-
-    panelController ??= PanelController();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
-        context.read<AppStore>().encointer.community?.getCommunityIcon();
-      }
-    });
   }
 
   @override
   void didChangeDependencies() {
     l10n = context.l10n;
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    balanceWatchdog!.cancel();
-    super.dispose();
-  }
-
-  Future<void> _refreshEncointerState() async {
-    // getCurrentPhase is the root of all state updates.
-    await webApi.encointer.getCurrentPhase();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final appSettingsStore = context.watch<AppSettings>();
-
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
     _panelHeightOpen = min(
       MediaQuery.of(context).size.height * fractionOfScreenHeight,
       panelHeight,
     );
+    super.didChangeDependencies();
+  }
 
-    final allAccounts = <AccountOrCommunityData>[];
+  @override
+  void dispose() {
+    _balanceWatchdog.cancel();
+    super.dispose();
+  }
 
-    balanceWatchdog = PausableTimer(
-      const Duration(seconds: 12),
-      () {
-        Log.d('[balanceWatchdog] triggered', 'Assets');
-
-        _refreshBalanceAndNotify();
-        balanceWatchdog!
-          ..reset()
-          ..start();
-      },
-    )..start();
-
+  @override
+  Widget build(BuildContext context) {
     return FocusDetector(
       onFocusLost: () {
         Log.d('[home:FocusDetector] Focus Lost.');
-        balanceWatchdog!.pause();
+        _balanceWatchdog.pause();
       },
       onFocusGained: () {
         Log.d('[home:FocusDetector] Focus Gained.');
         if (!widget.store.settings.loading) {
           _refreshBalanceAndNotify();
         }
-        balanceWatchdog!.reset();
-        balanceWatchdog!.start();
+        _balanceWatchdog
+          ..reset()
+          ..start();
       },
       child: Scaffold(
         appBar: _appBar(),
         body: RepositoryProvider.of<AppConfig>(context).isIntegrationTest
-            ? _slidingUpPanel(_appBar(), appSettingsStore, allAccounts)
-            : _upgradeAlert(_appBar(), appSettingsStore, allAccounts),
+            ? _slidingUpPanel(_appBar())
+            : _upgradeAlert(_appBar()),
       ),
     );
   }
@@ -159,8 +126,6 @@ class _AssetsViewState extends State<AssetsView> {
 
   UpgradeAlert _upgradeAlert(
     AppBar appBar,
-    AppSettings appSettingsStore,
-    List<AccountOrCommunityData> allAccounts,
   ) {
     return UpgradeAlert(
       upgrader: Upgrader(
@@ -169,14 +134,12 @@ class _AssetsViewState extends State<AssetsView> {
         shouldPopScope: () => true,
         canDismissDialog: true,
       ),
-      child: _slidingUpPanel(appBar, appSettingsStore, allAccounts),
+      child: _slidingUpPanel(appBar),
     );
   }
 
   SlidingUpPanel _slidingUpPanel(
     AppBar appBar,
-    AppSettings appSettingsStore,
-    List<AccountOrCommunityData> allAccounts,
   ) {
     return SlidingUpPanel(
       maxHeight: _panelHeightOpen,
@@ -184,7 +147,7 @@ class _AssetsViewState extends State<AssetsView> {
       parallaxEnabled: true,
       parallaxOffset: .5,
       backdropEnabled: true,
-      controller: panelController,
+      controller: _panelController,
       // The padding is a hack for #559, which needs https://github.com/akshathjain/sliding_up_panel/pull/303
       body: Padding(
         padding:
@@ -204,8 +167,8 @@ class _AssetsViewState extends State<AssetsView> {
                       key: const Key('panel-controller'),
                       child: CombinedCommunityAndAccountAvatar(widget.store),
                       onTap: () {
-                        if (panelController != null && panelController!.isAttached) {
-                          panelController!.open();
+                        if (_panelController.isAttached) {
+                          _panelController.open();
                         }
                       },
                     ),
@@ -239,7 +202,7 @@ class _AssetsViewState extends State<AssetsView> {
                               );
                       },
                     ),
-                    if (appSettingsStore.developerMode)
+                    if (_appSettingsStore.developerMode)
                       ElevatedButton(
                         onPressed: widget.store.dataUpdate.setInvalidated,
                         child: const Text('Invalidate data to trigger state update'),
@@ -302,7 +265,7 @@ class _AssetsViewState extends State<AssetsView> {
                                 ),
                               );
                             } else {
-                              return appSettingsStore.developerMode
+                              return _appSettingsStore.developerMode
                                   ? ElevatedButton(
                                       onPressed: null,
                                       child: Text(l10n.issuanceClaimed),
@@ -339,7 +302,7 @@ class _AssetsViewState extends State<AssetsView> {
               Observer(builder: (_) {
                 return SwitchAccountOrCommunity(
                   rowTitle: l10n.switchCommunity,
-                  data: _allCommunities(),
+                  accountOrCommunityData: _allCommunities(),
                   onTap: (int index) async {
                     final store = context.read<AppStore>();
                     final communityStores = store.encointer.communityStores?.values.toList() ?? [];
@@ -359,7 +322,7 @@ class _AssetsViewState extends State<AssetsView> {
               Observer(builder: (BuildContext context) {
                 return SwitchAccountOrCommunity(
                   rowTitle: l10n.switchAccount,
-                  data: initAllAccounts(),
+                  accountOrCommunityData: initAllAccounts(),
                   onTap: (int index) {
                     setState(() {
                       switchAccount(widget.store.account.accountListAll[index]);
@@ -447,6 +410,22 @@ class _AssetsViewState extends State<AssetsView> {
     }
   }
 
+  void _connectNodeAll() {
+    // if network connected failed, reconnect
+    if (!widget.store.settings.loading && widget.store.settings.networkName == null) {
+      widget.store.settings.setNetworkLoading(true);
+      webApi.connectNodeAll();
+    }
+  }
+
+  void _postFrameCallbacks() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
+        context.read<AppStore>().encointer.community?.getCommunityIcon();
+      }
+    });
+  }
+
   void _refreshBalanceAndNotify() {
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
       Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
@@ -498,6 +477,25 @@ class _AssetsViewState extends State<AssetsView> {
     }).catchError((Object? e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
+  }
+
+  void _startBalanceWatchdog() {
+    _balanceWatchdog = PausableTimer(
+      const Duration(seconds: 12),
+      () {
+        Log.d('[balanceWatchdog] triggered', 'Assets');
+
+        _refreshBalanceAndNotify();
+        _balanceWatchdog
+          ..reset()
+          ..start();
+      },
+    )..start();
+  }
+
+  Future<void> _refreshEncointerState() async {
+    // getCurrentPhase is the root of all state updates.
+    await webApi.encointer.getCurrentPhase();
   }
 }
 

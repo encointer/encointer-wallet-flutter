@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -43,6 +45,68 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   @override
   void initState() {
     _announcementStore = AnnouncementStore(RepositoryProvider.of<EwHttp>(context));
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _getAnnouncements();
+    });
+
+    _listenToErrors();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    /// Important! Do not forget to dispose all disposable variables
+    /// which may lead to a memory leak issues
+    if (_disposers.isNotEmpty) {
+      for (final d in _disposers) {
+        d();
+      }
+    }
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (_) {
+      return switch (_announcementStore.fetchStatus) {
+        FetchStatus.loading => const Center(child: CupertinoActivityIndicator()),
+        FetchStatus.success => AnnouncementList(announcements: _announcementStore.announcements),
+        FetchStatus.error => const SizedBox.shrink(),
+        FetchStatus.noData => Center(child: Text(context.l10n.noItems)),
+      };
+    });
+  }
+
+  String _getErrorMessages({
+    required FailureType failureType,
+
+    /// [error] is required because we check for it first
+    /// if it's not null we return needed localized text
+    required String? error,
+  }) {
+    Log.d('_getErrorMessages: failureType = $failureType, error = $error', _logTarget);
+    if (error.isNotNullOrEmpty) {
+      return '${context.l10n.announcements} ${context.l10n.errorMessageWithStatusCode(error!)}';
+    }
+    return switch (failureType) {
+      FailureType.badRequest => '${context.l10n.announcements} ${context.l10n.badRequest}',
+      FailureType.noAuthorization => '${context.l10n.announcements} ${context.l10n.noAuthorizationError}',
+      _ => '${context.l10n.announcements} ${context.l10n.somethingWentWrong}',
+    };
+  }
+
+  Future<void> _getAnnouncements() async {
+    final devMode = context.read<AppSettings>().developerMode;
+    await Future.wait([
+      _announcementStore.getGlobalAnnouncements(devMode: devMode),
+      _announcementStore.getCommunityAnnouncements(widget.cid,
+          devMode: devMode, langCode: Localizations.localeOf(context).languageCode),
+    ]);
+  }
+
+  void _listenToErrors() {
     _disposers = <ReactionDisposer>[
       /// in case of an unknown error, it triggers dialog to popup
       reaction((_) => _announcementStore.error.isNotNullOrEmpty, (result) {
@@ -66,65 +130,6 @@ class _AnnouncementViewState extends State<AnnouncementView> {
         }
       })
     ];
-    super.initState();
-  }
-
-  @override
-  Future<void> didChangeDependencies() async {
-    await _getAnnouncements();
-
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    /// Important! Do not forget to dispose all disposable variables
-    /// which may lead to a memory leak issues
-    if (_disposers.isNotEmpty) {
-      for (final d in _disposers) {
-        d();
-      }
-    }
-
-    super.dispose();
-  }
-
-  Future<void> _getAnnouncements() async {
-    final devMode = context.read<AppSettings>().developerMode;
-    await Future.wait([
-      _announcementStore.getGlobalAnnouncements(devMode: devMode),
-      _announcementStore.getCommunityAnnouncements(widget.cid,
-          devMode: devMode, langCode: Localizations.localeOf(context).languageCode),
-    ]);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return switch (_announcementStore.fetchStatus) {
-        FetchStatus.loading => const Center(child: CupertinoActivityIndicator()),
-        FetchStatus.success => AnnouncementList(announcements: _announcementStore.announcements),
-        FetchStatus.error => const SizedBox.shrink(),
-      };
-    });
-  }
-
-  String _getErrorMessages({
-    required FailureType failureType,
-
-    /// [error] is required because we check for it first
-    /// if it's not null we return needed localized text
-    required String? error,
-  }) {
-    Log.d('_getErrorMessages: failureType = $failureType, error = $error', _logTarget);
-    if (error.isNotNullOrEmpty) {
-      return '${context.l10n.announcements} ${context.l10n.errorMessageWithStatusCode(error!)}';
-    }
-    return switch (failureType) {
-      FailureType.badRequest => '${context.l10n.announcements} ${context.l10n.badRequest}',
-      FailureType.noAuthorization => '${context.l10n.announcements} ${context.l10n.noAuthorizationError}',
-      _ => '${context.l10n.announcements} ${context.l10n.somethingWentWrong}',
-    };
   }
 }
 

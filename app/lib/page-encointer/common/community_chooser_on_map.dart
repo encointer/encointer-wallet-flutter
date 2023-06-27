@@ -105,6 +105,9 @@ List<LatLng> getLocations(AppStore store) {
 }
 
 LatLng coordinatesOf(CidName community) {
+  if (community.name == 'EdisonPaula') {
+    return LatLng(47.394345, 8.495554);
+  }
   final coordinates = GeoHash(utf8.decode(community.cid.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }
