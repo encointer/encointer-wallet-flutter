@@ -413,5 +413,5 @@
     "successfullySentNAttestations": "Tu as soumis avec succès des attestations pour {participantsCount} autres personnes.",
     "tokenSend": "Envoyer {symbol}",
     "communityWithName": "Communauté {name}",
-    "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{votre identité} false{le code PIN} other{}} pour finaliser la transaction."
+    "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{ta identité} false{le NIP} other{}} pour finaliser la transaction."
 }
