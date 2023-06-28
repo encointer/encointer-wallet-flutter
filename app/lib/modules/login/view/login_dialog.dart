@@ -35,6 +35,18 @@ final class LoginDialog {
     );
   }
 
+  static Future<void> switchBiometricAuth(BuildContext context, {required bool isEnable}) => isEnable
+      ? showLocalAuth(
+          context,
+          titleText: context.l10n.biometricAuthEnableDisableDescription,
+          onSuccess: (_) => context.read<LoginStore>().setBiometricAuthState(BiometricAuthState.enabled),
+        )
+      : showPasswordInputDialog(
+          context,
+          titleText: context.l10n.biometricAuthEnableDisableDescription,
+          onSuccess: (_) => context.read<LoginStore>().setBiometricAuthState(BiometricAuthState.disabled),
+        );
+
   static Future<void> verifyPinOrBioAuth(
     BuildContext context, {
     required Future<void> Function(String password) onSuccess,

@@ -181,16 +181,7 @@ class _ProfileState extends State<Profile> {
                   BiometricAuthState.deviceNotSupported => const SizedBox.shrink(),
                   _ => SwitchListTile(
                       title: Text(l10n.biometricAuth, style: h3Grey),
-                      onChanged: (value) async {
-                        await LoginDialog.verifyPinOrBioAuth(
-                          context,
-                          titleText: l10n.biometricAuthEnableDisableDescription,
-                          onSuccess: (_) async {
-                            final biometricAuthState = value ? BiometricAuthState.enabled : BiometricAuthState.disabled;
-                            await context.read<LoginStore>().setBiometricAuthState(biometricAuthState);
-                          },
-                        );
-                      },
+                      onChanged: (value) => LoginDialog.switchBiometricAuth(context, isEnable: value),
                       value: loginStore.biometricAuthState == BiometricAuthState.enabled,
                     ),
                 };
