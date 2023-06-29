@@ -21,7 +21,7 @@ class TransactionsList extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         if (index < transactions.length) {
           final transaction = transactions[index];
-          return TransactionCard(transaction, appStore.settings.contactListAllToSet());
+          return TransactionCard(transaction, appStore.settings.knownAccounts());
         } else if (index == transactions.length) {
           return Padding(
             padding: const EdgeInsets.only(top: 10),

@@ -107,7 +107,8 @@ abstract class _SettingsStore with Store {
     return ls;
   }
 
-  List<AccountData> contactListAllToSet() {
+  /// Set of known accounts
+  List<AccountData> knownAccounts() {
     final uniqueIds = <String>{};
     return contactListAll.where((data) => uniqueIds.add(data.pubKey)).toList();
   }
