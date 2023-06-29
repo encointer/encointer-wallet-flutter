@@ -35,7 +35,9 @@ class TransactionCard extends StatelessWidget {
             children: [
               Icon(
                 transaction.type == TransactionType.incoming ? Iconsax.receive_square_2 : Iconsax.send_sqaure_2,
-                color: transaction.type == TransactionType.incoming ? Colors.green : const Color(0xffD76D89),
+                color: transaction.type == TransactionType.incoming
+                    ? context.colorScheme.primary
+                    : const Color(0xffD76D89),
                 size: 25,
               ),
               const SizedBox(width: 5),
