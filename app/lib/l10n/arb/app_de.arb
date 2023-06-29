@@ -414,5 +414,6 @@
     "youAreAssignedToAGatheringWithNParticipants": "Du bist einer Versammlung mit {participantsCount} Leuten zugewiesen.",
     "successfullySentNAttestations": "Du hast erfolgreich Bezeugungen für {participantsCount} andere Leute eingereicht.",
     "tokenSend": "{symbol} senden",
-    "communityWithName": "{name} Gemeinschaft"
+    "communityWithName": "{name} Gemeinschaft",
+    "verifyAuthTitle": "{useBioAuth, select, true{deine Identität} false{deine PIN} other{}} überprüfen, um die Transaktion abzuschließen."
 }

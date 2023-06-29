@@ -106,12 +106,11 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
           key: const Key('create-account-confirm'),
           onPressed: () async {
             final newAccount = context.read<NewAccountStore>();
-            final appStore = context.read<AppStore>();
             if (_formKey.currentState!.validate() && !newAccount.loading) {
               newAccount.setPassword(_passCtrl.text.trim());
               final res = fromImportPage
-                  ? await newAccount.importAccount(appStore, webApi)
-                  : await newAccount.generateAccount(appStore, webApi);
+                  ? await newAccount.importAccount(context, webApi)
+                  : await newAccount.generateAccount(context, webApi);
               await navigate(
                 context: context,
                 type: res.operationResult,

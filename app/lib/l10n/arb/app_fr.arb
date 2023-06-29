@@ -414,5 +414,6 @@
     "youAreAssignedToAGatheringWithNParticipants": "Tu es assigné à une rencontre avec des personnes de {participantsCount}.",
     "successfullySentNAttestations": "Tu as soumis avec succès des attestations pour {participantsCount} autres personnes.",
     "tokenSend": "Envoyer {symbol}",
-    "communityWithName": "Communauté {name}"
+    "communityWithName": "Communauté {name}",
+    "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{ta identité} false{le NIP} other{}} pour finaliser la transaction."
 }

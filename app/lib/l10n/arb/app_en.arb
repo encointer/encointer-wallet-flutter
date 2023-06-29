@@ -558,5 +558,14 @@
                 "example": "LEU"
             }
         }
+    },
+    "verifyAuthTitle": "Verify the {useBioAuth, select, true{your identity} false{the PIN code} other{ }} to complete the transaction.",
+    "@verifyAuthTitle": {
+        "placeholders": {
+            "useBioAuth": {
+                "type": "String",
+                "example": "true"
+            }
+        }
     }
 }

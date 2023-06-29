@@ -106,10 +106,9 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
         key: const Key('create-account-confirm'),
         onPressed: () async {
           final newAccount = context.read<NewAccountStore>();
-          final appStore = context.read<AppStore>();
           if (_formKey.currentState!.validate() && !newAccount.loading) {
             newAccount.setName(_nameCtrl.text.trim());
-            final res = await newAccount.generateAccount(appStore, webApi);
+            final res = await newAccount.generateAccount(context, webApi);
             await navigate(
               context: context,
               type: res.operationResult,
