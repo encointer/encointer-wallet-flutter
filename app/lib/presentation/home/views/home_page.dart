@@ -58,7 +58,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           AssetsView(_store.appStore),
           if (context.select<AppStore, bool>((store) => _store.appStore.settings.enableBazaar))
             BazaarMain(
-              args: BazaarMainArgs(cid: _store.appStore.encointer.community!.cid),
+              args: BazaarMainArgs(cid: _store.appStore.encointer.community!.cid, appStore: _store.appStore),
             ),
 
           /// empty widget here because when qr code is clicked, we navigate to [ScanPage]

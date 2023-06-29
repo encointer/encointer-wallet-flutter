@@ -22,6 +22,7 @@ class Businesses {
     this.telephone,
     this.email,
     this.status,
+    this.controller,
   });
   factory Businesses.fromJson(Map<String, dynamic> json) => _$BusinessesFromJson(json);
   Map<String, dynamic> toJson() => _$BusinessesToJson(this);
@@ -37,6 +38,7 @@ class Businesses {
   final String latitude;
   final String openingHours;
   String? photos;
+  String? controller;
   @ImageHashToLinkOrNullConverter()
   String? logo;
   final Status? status;

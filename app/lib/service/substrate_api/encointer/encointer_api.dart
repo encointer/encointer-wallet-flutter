@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
+import 'package:encointer_wallet/models/bazaar/item_offered.dart';
 import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -549,5 +551,19 @@ class EncointerApi {
   Future<List<OfferingData>> getOfferingsForBusiness(BusinessIdentifier bid) async {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.
     return business1MockOfferings;
+  }
+
+  Future<List<OfferingData>> bazaarGetOfferingsForBusines(CommunityIdentifier cid, String? controller) async {
+    return _dartApi.bazaarGetOfferingsForBusines(cid, controller);
+  }
+
+  Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    return ewHttp.getType(url, fromJson: ItemOffered.fromJson);
+  }
+
+  Future<Either<IpfsProduct, EwHttpException>> getSingleBusinessProduct(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    return ewHttp.getType(url, fromJson: IpfsProduct.fromJson);
   }
 }

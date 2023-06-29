@@ -2,39 +2,59 @@ import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 
-class BusinessDetailTextWidget extends StatelessWidget {
-  const BusinessDetailTextWidget({
-    required this.text,
-    required this.text1,
-    required this.text2,
+class BusinessOfferDetails extends StatelessWidget {
+  const BusinessOfferDetails({
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.openningHours,
+    required this.buisnessName,
     super.key,
   });
-  final String text;
-  final String text1;
-  final String text2;
+  final String title;
+  final String description;
+  final String price;
+  final String openningHours;
+  final String buisnessName;
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: '$text\n',
-              style: context.textTheme.titleLarge!.copyWith(color: context.colorScheme.primary, fontSize: 18),
-            ),
-            TextSpan(
-              text: '$text1\n',
-              style: context.textTheme.bodyMedium!.copyWith(height: 1.4),
-            ),
-            TextSpan(
-              text: '$text2\n',
-              style: context.textTheme.bodyMedium!.copyWith(height: 1.4),
-            ),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: '$title\n',
+                style: context.textTheme.bodyLarge!.copyWith(
+                  height: 1.4,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              TextSpan(
+                text: '$price\n',
+                style: context.textTheme.bodyMedium!.copyWith(height: 1.4),
+              ),
+            ],
+          ),
         ),
-      ),
+        Text(
+          description,
+          style: context.textTheme.bodyLarge!.copyWith(
+            height: 1.4,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Text(
+          openningHours,
+          style: context.textTheme.bodyMedium!.copyWith(height: 1.4),
+        ),
+        Text(
+          '@ $buisnessName',
+          style: context.textTheme.bodyMedium!.copyWith(height: 1.4),
+        ),
+      ],
     );
   }
 }

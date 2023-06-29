@@ -18,9 +18,10 @@ const _targetLogger = 'BusinessesStore';
 class BusinessesStore = _BusinessesStoreBase with _$BusinessesStore;
 
 abstract class _BusinessesStoreBase with Store {
-  _BusinessesStoreBase(this._cid);
+  _BusinessesStoreBase(this.cid);
 
-  late final CommunityIdentifier _cid;
+  @observable
+  late CommunityIdentifier cid;
 
   @observable
   List<Businesses> businesses = <Businesses>[];
@@ -35,8 +36,8 @@ abstract class _BusinessesStoreBase with Store {
   String? error;
 
   Future<List<AccountBusinessTuple>> _bazaarGetBusinesses() {
-    Log.d('_bazaarGetBusinesses: _cid = $_cid', _targetLogger);
-    return webApi.encointer.bazaarGetBusinesses(_cid);
+    Log.d('_bazaarGetBusinesses: cid = $cid', _targetLogger);
+    return webApi.encointer.bazaarGetBusinesses(cid);
   }
 
   Future<Either<Businesses, EwHttpException>> _getBusinesses(String ipfsUrlHash) {
@@ -93,6 +94,7 @@ abstract class _BusinessesStoreBase with Store {
           response.fold(
             (l) => error = l.failureType.name,
             (r) {
+              r.controller = element.controller;
               Log.d('_getBusinesses: right = ${r.toJson()}', _targetLogger);
               businesses.add(r);
             },
