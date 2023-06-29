@@ -20,13 +20,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   @override
   CustomTheme get theme =>
       (_$themeComputed ??= Computed<CustomTheme>(() => super.theme, name: '_AppSettingsBase.theme')).value;
-  Computed<BiometricAuthState?>? _$getBiometricAuthStateComputed;
-
-  @override
-  BiometricAuthState? get getBiometricAuthState =>
-      (_$getBiometricAuthStateComputed ??= Computed<BiometricAuthState?>(() => super.getBiometricAuthState,
-              name: '_AppSettingsBase.getBiometricAuthState'))
-          .value;
 
   late final _$localeAtom = Atom(name: '_AppSettingsBase.locale', context: context);
 
@@ -40,21 +33,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   set locale(Locale value) {
     _$localeAtom.reportWrite(value, super.locale, () {
       super.locale = value;
-    });
-  }
-
-  late final _$biometricAuthStateAtom = Atom(name: '_AppSettingsBase.biometricAuthState', context: context);
-
-  @override
-  BiometricAuthState? get biometricAuthState {
-    _$biometricAuthStateAtom.reportRead();
-    return super.biometricAuthState;
-  }
-
-  @override
-  set biometricAuthState(BiometricAuthState? value) {
-    _$biometricAuthStateAtom.reportWrite(value, super.biometricAuthState, () {
-      super.biometricAuthState = value;
     });
   }
 
@@ -95,14 +73,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     return _$setLocaleAsyncAction.run(() => super.setLocale(languageCode));
   }
 
-  late final _$setBiometricAuthStateAsyncAction =
-      AsyncAction('_AppSettingsBase.setBiometricAuthState', context: context);
-
-  @override
-  Future<void> setBiometricAuthState(BiometricAuthState value) {
-    return _$setBiometricAuthStateAsyncAction.run(() => super.setBiometricAuthState(value));
-  }
-
   late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
 
   @override
@@ -139,11 +109,9 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   String toString() {
     return '''
 locale: ${locale},
-biometricAuthState: ${biometricAuthState},
 developerMode: ${developerMode},
 isIntegrationTest: ${isIntegrationTest},
-theme: ${theme},
-getBiometricAuthState: ${getBiometricAuthState}
+theme: ${theme}
     ''';
   }
 }

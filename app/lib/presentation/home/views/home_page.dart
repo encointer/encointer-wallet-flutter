@@ -6,7 +6,6 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/presentation/home/store/home_page_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/page/page.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -33,9 +32,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await _store.postFrameCallbacks();
-      final appSettings = context.read<AppSettings>();
-      if (appSettings.getBiometricAuthState == null) {
-        await AppAlert.showToggleBiometricAuthAlert(context);
+      final loginStore = context.read<LoginStore>();
+      if (loginStore.getBiometricAuthState == null) {
+        await LoginDialog.showToggleBiometricAuthAlert(context);
       }
     });
     super.initState();

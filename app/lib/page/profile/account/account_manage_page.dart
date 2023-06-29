@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -52,30 +51,20 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   void _onDeleteAccount(BuildContext context, AccountData accountToBeEdited) {
-    showCupertinoDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(context.l10n.accountDelete),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(context.l10n.cancel),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            CupertinoButton(
-              key: const Key('delete-account'),
-              child: Text(context.l10n.ok),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                _appStore.account
-                    .removeAccount(accountToBeEdited)
-                    .then((_) => _appStore.loadAccountCache())
-                    .then((_) => webApi.fetchAccountData());
-              },
-            ),
-          ],
-        );
+    LoginDialog.verifyPinOrBioAuth(
+      context,
+      titleText: context.l10n.accountDelete,
+      onSuccess: (v) async {
+        await _appStore.account
+            .removeAccount(accountToBeEdited)
+            .then((_) => _appStore.loadAccountCache())
+            .then((_) => webApi.fetchAccountData());
+        if (_appStore.account.accountListAll.isEmpty) {
+          await context.read<LoginStore>().clearPin();
+          await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
+        } else {
+          Navigator.pop(context);
+        }
       },
     );
   }
@@ -104,12 +93,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) async {
-    await AppAlert.showPasswordInputDialog(
+    await LoginDialog.verifyPinOrBioAuth(
       context,
-      title: context.l10n.confirmPin,
-      showCancelButton: true,
+      titleText: context.l10n.confirmPin,
       autoCloseOnSuccess: false,
-      account: _appStore.account.currentAccount,
       onSuccess: (password) async {
         final isMnemonic =
             await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);

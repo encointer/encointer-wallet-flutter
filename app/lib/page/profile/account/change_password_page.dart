@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -70,7 +71,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
         );
       } else {
         // we need to iterate over all active accounts and update there password
-        await store.settings.setPin(passNew);
+        await context.read<LoginStore>().setPin(passNew);
+        store.settings.cachedPin = passNew;
         for (final account in store.account.accountListAll) {
           final acc = await api.evalJavascript(
             'account.changePassword("${account.pubKey}", "$passOld", "$passNew")',
