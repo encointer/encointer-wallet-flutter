@@ -109,6 +109,11 @@ abstract class _EncointerStore with Store {
     return chosenCid != null && communities!.isNotEmpty && communities!.where((cn) => cn.cid == chosenCid).isNotEmpty;
   }
 
+  @computed
+  bool get meetupCompleted {
+    return communityAccount?.meetupCompleted ?? false;
+  }
+
   // -- sub-stores
 
   /// Bazaar sub-stores.
