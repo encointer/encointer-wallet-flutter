@@ -20,6 +20,7 @@ Businesses _$BusinessesFromJson(Map<String, dynamic> json) => Businesses(
       telephone: json['telephone'] as String?,
       email: json['email'] as String?,
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
+      controller: json['controller'] as String?,
     );
 
 Map<String, dynamic> _$BusinessesToJson(Businesses instance) => <String, dynamic>{
@@ -34,6 +35,7 @@ Map<String, dynamic> _$BusinessesToJson(Businesses instance) => <String, dynamic
       'latitude': instance.latitude,
       'openingHours': instance.openingHours,
       'photos': instance.photos,
+      'controller': instance.controller,
       'logo': const ImageHashToLinkOrNullConverter().toJson(instance.logo),
       'status': _$StatusEnumMap[instance.status],
     };

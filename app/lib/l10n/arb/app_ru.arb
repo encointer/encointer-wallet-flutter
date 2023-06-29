@@ -414,5 +414,14 @@
     "youAreAssignedToAGatheringWithNParticipants": "Вы записаны на встречу вместе с {participantsCount} участниками.",
     "successfullySentNAttestations": "Вы успешно отправили аттестации {participantsCount} других людей.",
     "tokenSend": "Отправить {symbol}",
-    "communityWithName": "Сообщество {name}"
+    "communityWithName": "Сообщество {name}",
+    "offersForCommunity": "Предложения за {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }

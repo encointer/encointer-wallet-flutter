@@ -414,5 +414,14 @@
     "youAreAssignedToAGatheringWithNParticipants": "Du bist einer Versammlung mit {participantsCount} Leuten zugewiesen.",
     "successfullySentNAttestations": "Du hast erfolgreich Bezeugungen für {participantsCount} andere Leute eingereicht.",
     "tokenSend": "{symbol} senden",
-    "communityWithName": "{name} Gemeinschaft"
+    "communityWithName": "{name} Gemeinschaft",
+    "offersForCommunity": "Angebote für {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }

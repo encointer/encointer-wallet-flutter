@@ -414,5 +414,14 @@
     "youAreAssignedToAGatheringWithNParticipants": "Tu es assigné à une rencontre avec des personnes de {participantsCount}.",
     "successfullySentNAttestations": "Tu as soumis avec succès des attestations pour {participantsCount} autres personnes.",
     "tokenSend": "Envoyer {symbol}",
-    "communityWithName": "Communauté {name}"
+    "communityWithName": "Communauté {name}",
+    "offersForCommunity": "Des offres pour un {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }

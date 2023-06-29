@@ -1,5 +1,7 @@
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/views/single_business_view.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
@@ -7,9 +9,16 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class BusinessesCard extends StatelessWidget {
-  const BusinessesCard({super.key, required this.businesses});
+  const BusinessesCard({
+    super.key,
+    required this.businesses,
+    required this.cid,
+    required this.appStore,
+  });
 
   final Businesses businesses;
+  final CommunityIdentifier cid;
+  final AppStore appStore;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +29,8 @@ class BusinessesCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Provider(
-              create: (context) => SingleBusinessStore(businesses)..getSingleBusiness(),
-              child: const SingleBusinessView(),
+              create: (context) => SingleBusinessStore(businesses, cid)..getSingleBusiness(),
+              child: SingleBusinessView(appStore: appStore),
             ),
           ),
         );
@@ -38,7 +47,7 @@ class BusinessesCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(businesses.photo),
+                    image: NetworkImage(businesses.logo!),
                   ),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),

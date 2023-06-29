@@ -4,10 +4,12 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/dr
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 
+import '../../mock/data/mock_encointer_data.dart';
+
 void main() {
   late BusinessesStore businessesStore;
 
-  setUp(() => businessesStore = BusinessesStore());
+  setUp(() => businessesStore = BusinessesStore(cid));
 
   group('BusinessesStore Test', () {
     test('`getBusinesses()` should update fetchStatus to success and populate businesses list', () async {
@@ -22,10 +24,10 @@ void main() {
     });
 
     test('`getBusinesses()` should filter businesses by category', () async {
-      await businessesStore.getBusinesses(category: Category.artAndMusic);
+      await businessesStore.getBusinesses();
 
       expect(businessesStore.businesses, isNotNull);
-      expect(businessesStore.businesses!.every((business) => business.category == Category.artAndMusic), isTrue);
+      expect(businessesStore.businesses.every((business) => business.category == Category.artAndMusic), isTrue);
     });
   });
 }
