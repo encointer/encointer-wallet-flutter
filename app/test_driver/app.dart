@@ -18,6 +18,7 @@ void main() async {
   const appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
 
   late final AppSettings appSettings;
+  late final AppService appService;
   final appCast = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
   final appConfig = AppConfig(appCast: appCast, isIntegrationTest: true);
 
@@ -40,6 +41,8 @@ void main() async {
           return toggleDeveloperMode(appSettings, true);
         case TestCommand.devModeOff:
           return toggleDeveloperMode(appSettings, false);
+        case TestCommand.getBiometricAuthState:
+          return getBiometricAuthState(appService);
         default:
           return '';
       }
@@ -49,7 +52,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Clear settings to make upgrade dialog visible in subsequent test runs.
   await Upgrader.clearSavedSettings();
-  appSettings = AppSettings(AppService(await SharedPreferences.getInstance()))..isIntegrationTest = true;
+  appService = AppService(await SharedPreferences.getInstance());
+  appSettings = AppSettings(appService)..isIntegrationTest = true;
 
   WidgetsApp.debugAllowBannerOverride = false;
   await app.main(appConfig: appConfig, settings: appSettings);

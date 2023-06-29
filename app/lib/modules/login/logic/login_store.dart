@@ -1,105 +1,57 @@
 // ignore_for_file: library_private_types_in_public_api
-
-import 'package:flutter/cupertino.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
-import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/presentation/home/views/home_page.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/modules/login/service/login_service.dart';
 
 part 'login_store.g.dart';
 
 class LoginStore = _LoginStoreBase with _$LoginStore;
 
 abstract class _LoginStoreBase with Store {
-  _LoginStoreBase(LocalAuthentication localAuth) : _localAuth = localAuth;
+  _LoginStoreBase(this.loginService);
 
-  final LocalAuthentication _localAuth;
+  final LoginService loginService;
+
+  String cachedPin = '';
 
   @observable
-  bool deviceSupportedBiometricAuth = true;
+  BiometricAuthState? biometricAuthState;
 
-  final pinCode = ObservableList<int>();
+  @observable
+  bool loading = false;
 
-  @action
-  void addDigit(int value, int maxLength) {
-    if (pinCode.length < maxLength) pinCode.add(value);
+  Future<String> getPin() async {
+    if (cachedPin.isEmpty) cachedPin = await loginService.getPin() ?? '';
+    return cachedPin;
+  }
+
+  Future<void> setPin(String pin) async {
+    cachedPin = pin;
+    await loginService.setPin(pin);
+  }
+
+  Future<void> clearPin() async {
+    cachedPin = '';
+    await loginService.clearPin();
+  }
+
+  @computed
+  BiometricAuthState? get getBiometricAuthState {
+    return biometricAuthState ??= loginService.getBiometricAuthState;
   }
 
   @action
-  void removeLastDigit() {
-    if (pinCode.isNotEmpty) pinCode.removeLast();
+  Future<void> setBiometricAuthState(BiometricAuthState value) async {
+    biometricAuthState = value;
+    await loginService.setBiometricAuthState(value);
   }
 
-  /// Check if local authentication is supported on the device.
-  /// Returns a `future` with `true` if supported, `false` otherwise.
-  /// Returns `false` and logs errors if a `PlatformException` occurs.
-  @action
-  Future<bool> isDeviceSupported() async {
-    try {
-      return deviceSupportedBiometricAuth = await _localAuth.isDeviceSupported();
-    } catch (e, s) {
-      Log.e('$e', 'LoginStore', s);
-      return Future.value(false);
-    }
+  Future<bool> isDeviceSupported() {
+    return loginService.isDeviceSupported();
   }
 
-  /// Authenticates the user with biometrics or device authentication options available on the device.
-  /// Returns a `Future<bool>` which is `true` if successful, `false` otherwise.
-  /// [localizedReason] is the message displayed to the user during the authentication prompt.
-  Future<bool> localAuthenticate(String localizedReason) {
-    try {
-      return _localAuth.authenticate(
-        localizedReason: localizedReason,
-        options: const AuthenticationOptions(useErrorDialogs: false),
-      );
-    } catch (e, s) {
-      Log.e('$e', 'LoginStore', s);
-      return Future.value(false);
-    }
-  }
-
-  Future<void> useBiometricAuth(BuildContext context) async {
-    if (deviceSupportedBiometricAuth) {
-      final l10n = context.l10n;
-      final isPinCorrect = await localAuthenticate(l10n.localizedReason);
-      await _navigate(context, isPinCorrect: isPinCorrect, l10n: l10n);
-    }
-  }
-
-  bool _checkPinCode(String cachedPin) {
-    final pass = pinCode.map((e) => e.toString()).join();
-    if (cachedPin.isNotEmpty && pass == cachedPin) return true;
-    pinCode.clear();
-    return false;
-  }
-
-  Future<void> usePincodeAuth(BuildContext context) async {
-    final appStore = context.read<AppStore>();
-    final isPinCorrect = _checkPinCode(appStore.settings.cachedPin);
-    await _navigate(context, isPinCorrect: isPinCorrect, l10n: context.l10n);
-  }
-
-  Future<void> _navigate(BuildContext context, {required bool isPinCorrect, required AppLocalizations l10n}) async {
-    if (isPinCorrect) {
-      await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
-    } else {
-      RootSnackBar.showMsg(l10n.pinError);
-    }
-  }
-
-  Future<void> checkCachedPin(BuildContext context) async {
-    final appStore = context.read<AppStore>();
-    await AppAlert.showPasswordInputDialog(
-      context,
-      account: appStore.account.currentAccount,
-      onSuccess: appStore.settings.setPin,
-      canPop: false,
-    );
+  Future<bool> localAuthenticate(String localizedReason, [bool stickyAuth = false]) {
+    return loginService.localAuthenticate(localizedReason, stickyAuth);
   }
 }

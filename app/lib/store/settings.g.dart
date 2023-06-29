@@ -250,20 +250,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$getPinAsyncAction = AsyncAction('_SettingsStore.getPin', context: context);
-
-  @override
-  Future<String> getPin() {
-    return _$getPinAsyncAction.run(() => super.getPin());
-  }
-
-  late final _$setPinAsyncAction = AsyncAction('_SettingsStore.setPin', context: context);
-
-  @override
-  Future<void> setPin(String pin) {
-    return _$setPinAsyncAction.run(() => super.setPin(pin));
-  }
-
   late final _$initAsyncAction = AsyncAction('_SettingsStore.init', context: context);
 
   @override

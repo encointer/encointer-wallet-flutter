@@ -16,9 +16,19 @@ abstract class _AnnouncementStoreBase with Store {
 
   final EwHttp ewHttp;
 
+  @observable
   List<Announcement> announcementsGlobal = <Announcement>[];
-
+  @observable
   List<Announcement> announcementsCommunnity = <Announcement>[];
+
+  @computed
+  List<Announcement> get announcements {
+    final announcements = announcementsGlobal
+      ..addAll(announcementsCommunnity)
+      ..sort((a, b) => b.publishDate.compareTo(a.publishDate));
+
+    return announcements;
+  }
 
   @observable
   String? error;

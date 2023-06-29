@@ -19,9 +19,6 @@ abstract class _AppSettingsBase with Store {
   Locale locale = const Locale('en');
 
   @observable
-  bool isBiometricAuthenticationEnabled = false;
-
-  @observable
   bool developerMode = false;
 
   @observable
@@ -38,24 +35,11 @@ abstract class _AppSettingsBase with Store {
   CustomTheme get theme => CustomTheme(colorScheme);
 
   @action
-  void init() => locale = _service.init();
-
-  @action
-  bool getIsBiometricAuthenticationEnabled() {
-    final value = _service.getIsBiometricAuthenticationEnabled();
-    if (value != null) isBiometricAuthenticationEnabled = value;
-    return isBiometricAuthenticationEnabled;
-  }
+  void init() => locale = _service.getLocale;
 
   @action
   Future<void> setLocale(String languageCode) async {
     locale = await _service.setLocale(languageCode);
-  }
-
-  @action
-  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
-    isBiometricAuthenticationEnabled = value;
-    await _service.setIsBiometricAuthenticationEnabled(value);
   }
 
   @action
