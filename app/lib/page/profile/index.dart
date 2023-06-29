@@ -10,7 +10,6 @@ import 'package:encointer_wallet/common/components/launch/send_to_trello_list_ti
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/biometiric_auth_state.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
@@ -18,7 +17,6 @@ import 'package:encointer_wallet/page/profile/account/change_password_page.dart'
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -31,8 +29,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  EndpointData? _selectedNetwork;
-
   List<Widget> _buildAccountList() {
     final allAccountsAsWidgets = <Widget>[];
 
@@ -84,19 +80,9 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final h3Grey = context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey);
     final store = context.watch<AppStore>();
-    final appSettings = context.watch<AppSettings>();
+    final loginStore = context.watch<LoginStore>();
     final appSettingsStore = context.watch<AppSettings>();
-    _selectedNetwork = store.settings.endpoint;
-
-    // if all accounts are deleted, go to createAccountPage
-    if (store.account.accountListAll.isEmpty) {
-      store.settings.setPin('');
-      Future.delayed(Duration.zero, () {
-        Navigator.pop(context);
-      });
-    }
     final l10n = context.l10n;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.title),
@@ -107,7 +93,6 @@ class _ProfileState extends State<Profile> {
       ),
       body: Observer(
         builder: (_) {
-          if (_selectedNetwork == null) return Container();
           return ListView(
             key: const Key('profile-list-view'),
             children: <Widget>[
@@ -148,7 +133,6 @@ class _ProfileState extends State<Profile> {
                     scrollDirection: Axis.horizontal,
                     children: _buildAccountList(),
                   ),
-                  // blendMode: BlendMode.dstATop,
                 ),
               ),
               ListTile(
@@ -162,7 +146,20 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 key: const Key('remove-all-accounts'),
                 title: Text(l10n.accountsDeleteAll, style: h3Grey),
-                onTap: () => showRemoveAccountsDialog(context, store),
+                onTap: () {
+                  LoginDialog.verifyPinOrBioAuth(
+                    context,
+                    titleText: l10n.accountsDelete,
+                    onSuccess: (v) async {
+                      for (final acc in context.read<AppStore>().account.accountListAll) {
+                        await store.account.removeAccount(acc);
+                      }
+                      await context.read<LoginStore>().clearPin();
+                      context.read<AppStore>().settings.cachedPin = '';
+                      await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
+                    },
+                  );
+                },
               ),
               ListTile(
                   title: Text(l10n.reputationOverall, style: h3Grey),
@@ -180,23 +177,12 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
               Observer(builder: (_) {
-                return switch (appSettings.getBiometricAuthState) {
+                return switch (loginStore.getBiometricAuthState) {
                   BiometricAuthState.deviceNotSupported => const SizedBox.shrink(),
                   _ => SwitchListTile(
                       title: Text(l10n.biometricAuth, style: h3Grey),
-                      onChanged: (value) async {
-                        await AppAlert.showPasswordInputDialog(
-                          context,
-                          title: l10n.biometricAuthEnableDisableDescription,
-                          showCancelButton: true,
-                          account: context.read<AppStore>().account.currentAccount,
-                          onSuccess: (_) async {
-                            final biometricAuthState = value ? BiometricAuthState.enabled : BiometricAuthState.disabled;
-                            await context.read<AppSettings>().setBiometricAuthState(biometricAuthState);
-                          },
-                        );
-                      },
-                      value: appSettings.biometricAuthState == BiometricAuthState.enabled,
+                      onChanged: (value) => LoginDialog.switchBiometricAuth(context, isEnable: value),
+                      value: loginStore.biometricAuthState == BiometricAuthState.enabled,
                     ),
                 };
               }),
@@ -267,36 +253,4 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-}
-
-Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
-  final l10n = context.l10n;
-
-  return showCupertinoDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return CupertinoAlertDialog(
-        title: Text(l10n.accountsDelete),
-        actions: <Widget>[
-          CupertinoButton(
-            child: Text(l10n.cancel),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          CupertinoButton(
-            key: const Key('remove-all-accounts-check'),
-            child: Text(l10n.ok),
-            onPressed: () async {
-              final accounts = store.account.accountListAll;
-
-              for (final acc in accounts) {
-                await store.account.removeAccount(acc);
-              }
-
-              await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
-            },
-          ),
-        ],
-      );
-    },
-  );
 }
