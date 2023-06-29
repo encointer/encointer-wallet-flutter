@@ -1,11 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/utils/alerts/password_input_dialog.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
-import 'package:encointer_wallet/modules/modules.dart';
 
 class AppAlert {
   static Future<T?> showDialog<T>(
@@ -75,27 +70,6 @@ class AppAlert {
     );
   }
 
-  static Future<void> showToggleBiometricAuthAlert(BuildContext context) {
-    final appSettings = context.read<AppSettings>();
-    final l10n = context.l10n;
-    return showConfirmDialog<void>(
-      context: context,
-      title: Text(l10n.biometricAuth),
-      content: Text(l10n.biometricAuthDescription),
-      cancelButtonKey: const Key('not-now-button'),
-      cancelText: l10n.notNow,
-      confirmText: l10n.enable,
-      onOK: () async {
-        await appSettings.setBiometricAuthState(BiometricAuthState.enabled);
-        Navigator.pop(context);
-      },
-      onCancel: () async {
-        await appSettings.setBiometricAuthState(BiometricAuthState.disabled);
-        Navigator.pop(context);
-      },
-    );
-  }
-
   static void showErrorDialog(
     BuildContext context, {
     Widget? title,
@@ -116,30 +90,6 @@ class AppAlert {
               child: Text(buttontext, style: textStyle),
             ),
           ],
-        );
-      },
-    );
-  }
-
-  static Future<bool?> showPasswordInputDialog(
-    BuildContext context, {
-    required AccountData account,
-    required Future<void> Function(String) onSuccess,
-    bool canPop = true,
-    bool showCancelButton = false,
-    bool autoCloseOnSuccess = true,
-    String? title,
-  }) async {
-    return showCupertinoDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return PasswordInputDialog(
-          title: title,
-          account: account,
-          onSuccess: onSuccess,
-          canPop: canPop,
-          showCancelButton: showCancelButton,
-          autoCloseOnSuccess: autoCloseOnSuccess,
         );
       },
     );

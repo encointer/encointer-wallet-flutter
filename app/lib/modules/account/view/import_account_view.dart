@@ -105,12 +105,11 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
           key: const Key('account-import-next'),
           onPressed: () async {
             final newAccount = context.read<NewAccountStore>();
-            final appStore = context.read<AppStore>();
             if (_formKey.currentState!.validate() && !newAccount.loading) {
               newAccount
                 ..setName(_nameCtrl.text.trim())
                 ..setKey(_keyCtrl.text.trim());
-              if (appStore.account.isFirstAccount) {
+              if (context.read<AppStore>().account.isFirstAccount) {
                 await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
@@ -121,7 +120,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                   ),
                 );
               } else {
-                final res = await newAccount.importAccount(appStore, webApi);
+                final res = await newAccount.importAccount(context, webApi);
                 await navigate(
                   context: context,
                   type: res.operationResult,

@@ -49,13 +49,6 @@ class AppRoute {
         return CupertinoPageRoute(
           builder: (_) => const SplashView(),
         );
-      case LoginView.route:
-        return CupertinoPageRoute(
-          builder: (_) => Provider(
-            create: (context) => LoginStore(),
-            child: const LoginView(),
-          ),
-        );
       case EncointerHomePage.route:
         return CupertinoPageRoute(
           builder: (_) => const EncointerHomePage(),
