@@ -89,7 +89,7 @@ class CeremonyBox extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (store.encointer.showSubmitClaimsButton)
+                if (store.encointer.showSubmitClaimsButton && !store.encointer.communityAccount!.meetupCompleted!)
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
                     child: PrimaryButton(
