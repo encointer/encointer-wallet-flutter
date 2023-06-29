@@ -21,10 +21,12 @@ mixin HandleNewAccountResultMixin on Widget {
           errorText: context.l10n.createError,
           buttontext: context.l10n.ok,
         ),
-      NewAccountResultType.emptyPassword => await AppAlert.showPasswordInputDialog(
+      NewAccountResultType.emptyPassword => await LoginDialog.verifyPinOrBioAuth(
           context,
-          account: appStore.account.currentAccount,
-          onSuccess: appStore.settings.setPin,
+          onSuccess: (v) async {
+            await context.read<LoginStore>().setPin(v);
+            appStore.settings.cachedPin = v;
+          },
         ),
       NewAccountResultType.duplicateAccount => onDuplicateAccount != null ? onDuplicateAccount() : null,
     };

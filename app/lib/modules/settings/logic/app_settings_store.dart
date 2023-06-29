@@ -3,7 +3,6 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/settings/settings.dart';
 import 'package:encointer_wallet/config/prod_community.dart';
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 part 'app_settings_store.g.dart';
@@ -18,9 +17,6 @@ abstract class _AppSettingsBase with Store {
 
   @observable
   Locale locale = const Locale('en');
-
-  @observable
-  BiometricAuthState? biometricAuthState;
 
   @observable
   bool developerMode = false;
@@ -41,20 +37,9 @@ abstract class _AppSettingsBase with Store {
   @action
   void init() => locale = _service.getLocale;
 
-  @computed
-  BiometricAuthState? get getBiometricAuthState {
-    return biometricAuthState ??= _service.getBiometricAuthState;
-  }
-
   @action
   Future<void> setLocale(String languageCode) async {
     locale = await _service.setLocale(languageCode);
-  }
-
-  @action
-  Future<void> setBiometricAuthState(BiometricAuthState value) async {
-    biometricAuthState = value;
-    await _service.setBiometricAuthState(value);
   }
 
   @action

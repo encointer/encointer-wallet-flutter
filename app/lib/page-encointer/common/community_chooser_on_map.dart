@@ -7,7 +7,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
@@ -35,9 +34,9 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
     communityDataAt = getCommunityDataAt(context.read<AppStore>());
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      final appSettings = context.read<AppSettings>();
-      if (appSettings.getBiometricAuthState == null) {
-        await AppAlert.showToggleBiometricAuthAlert(context);
+      final loginStore = context.read<LoginStore>();
+      if (loginStore.getBiometricAuthState == null) {
+        await LoginDialog.showToggleBiometricAuthAlert(context);
       }
     });
   }
