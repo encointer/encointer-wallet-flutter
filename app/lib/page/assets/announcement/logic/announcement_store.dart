@@ -16,8 +16,9 @@ abstract class _AnnouncementStoreBase with Store {
 
   final EwHttp ewHttp;
 
+  @observable
   List<Announcement> announcementsGlobal = <Announcement>[];
-
+  @observable
   List<Announcement> announcementsCommunnity = <Announcement>[];
 
   @observable

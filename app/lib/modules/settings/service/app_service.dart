@@ -8,14 +8,14 @@ class AppService {
 
   final SharedPreferences storage;
 
-  static const String localStorageLocaleKey = 'locale';
-  static const String enableBiometricAuthKey = 'biometric-auth-enabled';
+  static const localStorageLocaleKey = 'locale';
+  static const biometricAuthStateKey = 'biometric-auth-state';
 
-  Locale init() {
+  Locale get getLocale {
     final code = storage.getString(localStorageLocaleKey);
     if (code != null) return Locale(code);
     // ignore: deprecated_member_use
-    final deviceLocal = window.locale;
+    final deviceLocal = Locale(window.locale.languageCode);
     return AppLocalizations.delegate.isSupported(deviceLocal) ? deviceLocal : const Locale('en');
   }
 
@@ -25,9 +25,5 @@ class AppService {
     return Locale(languageCode);
   }
 
-  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
-    await storage.setBool(enableBiometricAuthKey, value);
-  }
-
-  bool? getIsBiometricAuthenticationEnabled() => storage.getBool(enableBiometricAuthKey);
+  String? get getBiometricAuthState => storage.getString(biometricAuthStateKey);
 }

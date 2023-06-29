@@ -9,55 +9,58 @@ part of 'login_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$LoginStore on _LoginStoreBase, Store {
-  late final _$deviceSupportedBiometricAuthAtom =
-      Atom(name: '_LoginStoreBase.deviceSupportedBiometricAuth', context: context);
+  Computed<BiometricAuthState?>? _$getBiometricAuthStateComputed;
 
   @override
-  bool get deviceSupportedBiometricAuth {
-    _$deviceSupportedBiometricAuthAtom.reportRead();
-    return super.deviceSupportedBiometricAuth;
+  BiometricAuthState? get getBiometricAuthState =>
+      (_$getBiometricAuthStateComputed ??= Computed<BiometricAuthState?>(() => super.getBiometricAuthState,
+              name: '_LoginStoreBase.getBiometricAuthState'))
+          .value;
+
+  late final _$biometricAuthStateAtom = Atom(name: '_LoginStoreBase.biometricAuthState', context: context);
+
+  @override
+  BiometricAuthState? get biometricAuthState {
+    _$biometricAuthStateAtom.reportRead();
+    return super.biometricAuthState;
   }
 
   @override
-  set deviceSupportedBiometricAuth(bool value) {
-    _$deviceSupportedBiometricAuthAtom.reportWrite(value, super.deviceSupportedBiometricAuth, () {
-      super.deviceSupportedBiometricAuth = value;
+  set biometricAuthState(BiometricAuthState? value) {
+    _$biometricAuthStateAtom.reportWrite(value, super.biometricAuthState, () {
+      super.biometricAuthState = value;
     });
   }
 
-  late final _$isDeviceSupportedAsyncAction = AsyncAction('_LoginStoreBase.isDeviceSupported', context: context);
+  late final _$loadingAtom = Atom(name: '_LoginStoreBase.loading', context: context);
 
   @override
-  Future<bool> isDeviceSupported() {
-    return _$isDeviceSupportedAsyncAction.run(() => super.isDeviceSupported());
-  }
-
-  late final _$_LoginStoreBaseActionController = ActionController(name: '_LoginStoreBase', context: context);
-
-  @override
-  void addDigit(int value, int maxLength) {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.addDigit');
-    try {
-      return super.addDigit(value, maxLength);
-    } finally {
-      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
-    }
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
   }
 
   @override
-  void removeLastDigit() {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(name: '_LoginStoreBase.removeLastDigit');
-    try {
-      return super.removeLastDigit();
-    } finally {
-      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
-    }
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  late final _$setBiometricAuthStateAsyncAction =
+      AsyncAction('_LoginStoreBase.setBiometricAuthState', context: context);
+
+  @override
+  Future<void> setBiometricAuthState(BiometricAuthState value) {
+    return _$setBiometricAuthStateAsyncAction.run(() => super.setBiometricAuthState(value));
   }
 
   @override
   String toString() {
     return '''
-deviceSupportedBiometricAuth: ${deviceSupportedBiometricAuth}
+biometricAuthState: ${biometricAuthState},
+loading: ${loading},
+getBiometricAuthState: ${getBiometricAuthState}
     ''';
   }
 }

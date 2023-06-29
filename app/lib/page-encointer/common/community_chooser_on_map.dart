@@ -33,6 +33,12 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
     locations = getLocations(context.read<AppStore>());
     communityDataAt = getCommunityDataAt(context.read<AppStore>());
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final loginStore = context.read<LoginStore>();
+      if (loginStore.getBiometricAuthState == null) {
+        await LoginDialog.showToggleBiometricAuthAlert(context);
+      }
+    });
   }
 
   @override
