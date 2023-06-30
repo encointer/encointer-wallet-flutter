@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,57 +8,76 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/view/businesses_view.
 import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
+class BazaarMainArgs {
+  BazaarMainArgs({required this.cid});
+  final CommunityIdentifier cid;
+}
+
+class BazaarMain extends StatelessWidget {
+  const BazaarMain({
+    required this.args,
+    super.key,
+  });
+  final BazaarMainArgs args;
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider(
+      create: (context) => BusinessesStore(args.cid)..getBusinesses(),
+      child: BazaarPage(
+        cid: args.cid,
+      ),
+    );
+  }
+}
+
 class BazaarPage extends StatelessWidget {
-  const BazaarPage({super.key});
+  const BazaarPage({
+    super.key,
+    required this.cid,
+  });
+  final CommunityIdentifier cid;
   static const String route = '/bazaar';
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final l10n = context.l10n;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          l10n.acceptancePoints,
-          style: textTheme.displaySmall!.copyWith(color: context.colorScheme.secondary),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.menu),
+    return Provider.value(
+      value: (context) => BusinessesStore(cid),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            context.l10n.acceptancePoints,
+            style: textTheme.displaySmall!.copyWith(color: context.colorScheme.secondary),
           ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  l10n.categories,
-                  style: textTheme.bodySmall,
-                ),
-                const SizedBox(width: 10),
-                const DropdownWidget(),
-              ],
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.menu),
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    context.l10n.categories,
+                    style: textTheme.bodySmall,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const DropdownWidget(),
+                ],
+              ),
             ),
           ),
         ),
+        body: const BusinessesView(),
       ),
-      body: const BusinessesView(),
-    );
-  }
-}
-
-class BazaarMain extends StatelessWidget {
-  const BazaarMain({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => BusinessesStore()..getBusinesses(),
-      child: const BazaarPage(),
     );
   }
 }

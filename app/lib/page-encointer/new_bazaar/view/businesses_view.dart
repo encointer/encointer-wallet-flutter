@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/empty_businesses.dart';
 import 'package:encointer_wallet/common/components/error/error_view.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/empty_businesses.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/businesses_card.dart';
@@ -19,8 +19,9 @@ class BusinessesView extends StatelessWidget {
     return Observer(builder: (_) {
       return switch (store.fetchStatus) {
         FetchStatus.loading => const CenteredActivityIndicator(),
-        FetchStatus.success => BusinessesList(businesses: store.businesses!),
+        FetchStatus.success => BusinessesList(businesses: store.businesses),
         FetchStatus.error => const ErrorView(),
+        FetchStatus.noData => const EmptyBusiness(),
       };
     });
   }

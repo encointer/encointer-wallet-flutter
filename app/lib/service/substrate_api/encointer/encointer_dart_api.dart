@@ -1,8 +1,13 @@
+import 'dart:developer';
+
+import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
+
+const _targetLogger = 'EncointerDartApi';
 
 class EncointerDartApi {
   const EncointerDartApi(this._dartApi);
@@ -25,6 +30,18 @@ class EncointerDartApi {
   ///
   Future<List<String>> pendingExtrinsics() {
     return _dartApi.rpc<List<dynamic>>('author_pendingExtrinsics', <dynamic>[]).then(List.from);
+  }
+
+  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid) async {
+    final response = await _dartApi.rpc<List<dynamic>>('encointer_bazaarGetBusinesses', [cid.toJson()]);
+
+    log('$_targetLogger.bazaarGetBusinesses ${response.runtimeType} and $response');
+
+    if (response.isEmpty) {
+      return <AccountBusinessTuple>[];
+    }
+
+    return response.map((e) => AccountBusinessTuple.fromJson(e as Map<String, dynamic>)).toList();
   }
 
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {

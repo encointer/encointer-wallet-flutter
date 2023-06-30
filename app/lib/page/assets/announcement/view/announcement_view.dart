@@ -43,6 +43,11 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   @override
   void initState() {
     _announcementStore = AnnouncementStore(RepositoryProvider.of<EwHttp>(context));
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await _getAnnouncements();
+    });
+
     _disposers = <ReactionDisposer>[
       /// in case of an unknown error, it triggers dialog to popup
       reaction((_) => _announcementStore.error.isNotNullOrEmpty, (result) {
@@ -67,13 +72,6 @@ class _AnnouncementViewState extends State<AnnouncementView> {
       })
     ];
     super.initState();
-  }
-
-  @override
-  Future<void> didChangeDependencies() async {
-    await _getAnnouncements();
-
-    super.didChangeDependencies();
   }
 
   @override
@@ -105,6 +103,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
         FetchStatus.loading => const Center(child: CupertinoActivityIndicator()),
         FetchStatus.success => AnnouncementList(announcements: _announcementStore.announcements),
         FetchStatus.error => const SizedBox.shrink(),
+        FetchStatus.noData => const SizedBox.shrink(),
       };
     });
   }

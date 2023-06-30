@@ -17,6 +17,9 @@ const String businessIpfsCid3 = '0x3ebf164a5bb618ec6caad31488161b237e24d75efa304
 final CommunityIdentifier cid1 = CommunityIdentifier.fromFmtString('gbsuv7YXq9G');
 final CommunityIdentifier cid2 = CommunityIdentifier.fromFmtString('fbsuv7YXq9G');
 
+/// EdisonPaula
+final CommunityIdentifier cid3 = CommunityIdentifier.fromFmtString('u0qj94fxxJ6');
+
 final BusinessIdentifier bid1 = BusinessIdentifier(cid1, controller1);
 final BusinessIdentifier bid2 = BusinessIdentifier(cid1, controller2);
 final BusinessIdentifier bid3 = BusinessIdentifier(cid1, controller3);
@@ -96,3 +99,19 @@ final ipfsOffering3 = IpfsOffering('Harry Potter Heptalogy', 1, 'I am interestin
     'assets/images/assets/assets_nav_0.png');
 final ipfsOffering4 = IpfsOffering(
     'Picasso Fake as NFT by C.L.', 1, 'I am beautiful', 'Miami Beach', 'assets/images/assets/assets_nav_0.png');
+
+final mockBusinessData = {
+  'name': 'HIGHLIGHTED',
+  'description': 'wir offerieren kÃ¼hles Bier',
+  'category': 'food',
+  'photo': null,
+  'address': 'Technoparkstrasse 1, 8005 ZÃ¼rich',
+  'telephone': null,
+  'email': null,
+  'longitude': '8.515377938747404',
+  'latitude': '47.389401263868514',
+  'openingHours': 'Mon-Fri 8h-18h',
+  'photos': 'QmaQfq6Zr2yCMkSMe8VjSxoYd89hyzcJjeE8jTUG3uXpBG',
+  'logo': 'QmcULG6AN5wwMfuwtpsMcjQmFwwUnSHsvSEUFLrCoWMpWh',
+  'status': 'highlight',
+};

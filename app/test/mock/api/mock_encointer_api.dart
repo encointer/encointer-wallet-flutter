@@ -1,4 +1,10 @@
+import 'mock_js_api.dart';
+import 'mock_substrate_dart_api.dart';
+import 'package:ew_http/ew_http.dart';
+
+import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
+import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
@@ -7,8 +13,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 
 import '../data/mock_encointer_data.dart';
-import 'mock_js_api.dart';
-import 'mock_substrate_dart_api.dart';
 
 /// The key rationale behind this mock is that all the getters do not alter the app state.
 ///
@@ -133,5 +137,16 @@ class MockEncointerApi extends EncointerApi {
   @override
   Future<int> getNumberOfNewbieTicketsForReputable() {
     return Future.value(0);
+  }
+
+  @override
+  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid) async {
+    return Future.value(allMockBusinesses);
+  }
+
+  @override
+  Future<Either<Businesses, EwHttpException>> getBusinesseses(String ipfsUrlHash) async {
+    Either<Businesses, EwHttpException> getRight() => Right(Businesses.fromJson(mockBusinessData));
+    return Future.value(getRight());
   }
 }
