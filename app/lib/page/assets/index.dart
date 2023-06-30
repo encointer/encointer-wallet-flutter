@@ -46,15 +46,15 @@ import 'package:encointer_wallet/utils/format.dart';
 /// Getting confused with Assets (gen) while importing
 /// thus changed name to [AssetsView]
 class AssetsView extends StatefulWidget {
-  const AssetsView(this.store, {super.key});
-
-  final AppStore store;
+  const AssetsView({super.key});
 
   @override
   State<AssetsView> createState() => _AssetsViewState();
 }
 
 class _AssetsViewState extends State<AssetsView> {
+  late final AppStore _store;
+
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
@@ -71,17 +71,19 @@ class _AssetsViewState extends State<AssetsView> {
   void initState() {
     super.initState();
 
+    _store = context.read<AppStore>();
+
     // if network connected failed, reconnect
-    if (!widget.store.settings.loading && widget.store.settings.networkName == null) {
-      widget.store.settings.setNetworkLoading(true);
+    if (!_store.settings.loading && _store.settings.networkName == null) {
+      _store.settings.setNetworkLoading(true);
       webApi.connectNodeAll();
     }
 
     panelController ??= PanelController();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
-        context.read<AppStore>().encointer.community?.getCommunityIcon();
+      if (_store.encointer.community?.communityIcon == null) {
+        _store.encointer.community?.getCommunityIcon();
       }
     });
   }
@@ -135,7 +137,7 @@ class _AssetsViewState extends State<AssetsView> {
       },
       onFocusGained: () {
         Log.d('[home:FocusDetector] Focus Gained.');
-        if (!widget.store.settings.loading) {
+        if (!_store.settings.loading) {
           _refreshBalanceAndNotify();
         }
         balanceWatchdog!.reset();
@@ -202,7 +204,7 @@ class _AssetsViewState extends State<AssetsView> {
                   children: <Widget>[
                     InkWell(
                       key: const Key('panel-controller'),
-                      child: CombinedCommunityAndAccountAvatar(widget.store),
+                      child: CombinedCommunityAndAccountAvatar(_store),
                       onTap: () {
                         if (panelController != null && panelController!.isAttached) {
                           panelController!.open();
@@ -211,16 +213,15 @@ class _AssetsViewState extends State<AssetsView> {
                     ),
                     Observer(
                       builder: (_) {
-                        return (widget.store.encointer.community?.name != null) &
-                                (widget.store.encointer.chosenCid != null)
+                        return (_store.encointer.community?.name != null) & (_store.encointer.chosenCid != null)
                             ? Column(
                                 children: [
                                   TextGradient(
-                                    text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
+                                    text: '${Fmt.doubleFormat(_store.encointer.communityBalance)} ⵐ',
                                     style: const TextStyle(fontSize: 60),
                                   ),
                                   Text(
-                                    '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
+                                    '${l10n.balance}, ${_store.encointer.community?.symbol}',
                                     style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
                                   ),
                                 ],
@@ -228,7 +229,7 @@ class _AssetsViewState extends State<AssetsView> {
                             : Container(
                                 margin: const EdgeInsets.only(top: 16),
                                 padding: const EdgeInsets.symmetric(vertical: 8),
-                                child: (widget.store.encointer.chosenCid == null)
+                                child: (_store.encointer.chosenCid == null)
                                     ? SizedBox(
                                         width: double.infinity,
                                         child: Text(l10n.communityNotSelected, textAlign: TextAlign.center))
@@ -241,7 +242,7 @@ class _AssetsViewState extends State<AssetsView> {
                     ),
                     if (appSettingsStore.developerMode)
                       ElevatedButton(
-                        onPressed: widget.store.dataUpdate.setInvalidated,
+                        onPressed: _store.dataUpdate.setInvalidated,
                         child: const Text('Invalidate data to trigger state update'),
                       ),
                     const SizedBox(height: 42),
@@ -258,7 +259,7 @@ class _AssetsViewState extends State<AssetsView> {
                           key: const Key('go-transfer-history'),
                           icon: Assets.images.assets.receiveSquare2.svg(),
                           label: l10n.transferHistory,
-                          onPressed: widget.store.encointer.communityBalance != null
+                          onPressed: _store.encointer.communityBalance != null
                               ? () => Navigator.pushNamed(context, TransferHistoryView.route)
                               : null,
                         ),
@@ -267,7 +268,7 @@ class _AssetsViewState extends State<AssetsView> {
                           key: const Key('transfer'),
                           icon: const Icon(Iconsax.send_sqaure_2),
                           label: l10n.transfer,
-                          onPressed: widget.store.encointer.communityBalance != null
+                          onPressed: _store.encointer.communityBalance != null
                               ? () => Navigator.pushNamed(context, TransferPage.route)
                               : null,
                         ),
@@ -280,10 +281,10 @@ class _AssetsViewState extends State<AssetsView> {
                 padding: EdgeInsets.symmetric(vertical: 6),
               ),
               Observer(builder: (_) {
-                final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
-                    (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
+                final shouldFetch = _store.encointer.currentPhase == CeremonyPhase.Registering ||
+                    (_store.encointer.communityAccount?.meetupCompleted ?? false);
 
-                return widget.store.settings.isConnected && shouldFetch
+                return _store.settings.isConnected && shouldFetch
                     ? FutureBuilder<bool?>(
                         future: webApi.encointer.hasPendingIssuance(),
                         builder: (_, AsyncSnapshot<bool?> snapshot) {
@@ -296,9 +297,9 @@ class _AssetsViewState extends State<AssetsView> {
                                 child: Text(l10n.issuancePending),
                                 onPressed: (context) => submitClaimRewards(
                                   context,
-                                  widget.store,
+                                  _store,
                                   webApi,
-                                  widget.store.encointer.chosenCid!,
+                                  _store.encointer.chosenCid!,
                                 ),
                               );
                             } else {
@@ -317,10 +318,10 @@ class _AssetsViewState extends State<AssetsView> {
                     : Container();
               }),
               const SizedBox(height: 24),
-              CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
+              CeremonyBox(_store, webApi, key: const Key('ceremony-box-wallet')),
               const SizedBox(height: 24),
               AnnouncementView(
-                cid: Community.fromCid(widget.store.encointer.community?.cid.toFmtString()).cid,
+                cid: Community.fromCid(_store.encointer.community?.cid.toFmtString()).cid,
               ),
             ],
           ),
@@ -341,7 +342,7 @@ class _AssetsViewState extends State<AssetsView> {
                   rowTitle: l10n.switchCommunity,
                   data: _allCommunities(),
                   onTap: (int index) async {
-                    final store = context.read<AppStore>();
+                    final store = _store;
                     final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                     await store.encointer.setChosenCid(communityStores[index].cid);
                     if (RepositoryProvider.of<AppSettings>(context).developerMode) {
@@ -362,7 +363,7 @@ class _AssetsViewState extends State<AssetsView> {
                   data: initAllAccounts(),
                   onTap: (int index) {
                     setState(() {
-                      switchAccount(widget.store.account.accountListAll[index]);
+                      switchAccount(_store.account.accountListAll[index]);
                       _refreshBalanceAndNotify();
                     });
                   },
@@ -381,7 +382,7 @@ class _AssetsViewState extends State<AssetsView> {
   }
 
   List<AccountOrCommunityData> _allCommunities() {
-    final communityStores = context.read<AppStore>().encointer.communityStores?.values.toList();
+    final communityStores = _store.encointer.communityStores?.values.toList();
     if (communityStores != null && communityStores.isNotEmpty) {
       return communityStores
           .mapIndexed(
@@ -398,7 +399,7 @@ class _AssetsViewState extends State<AssetsView> {
                     : SvgPicture.asset(fallBackCommunityIcon),
               ),
               name: e.name,
-              isSelected: widget.store.encointer.community?.cid == e.cid,
+              isSelected: _store.encointer.community?.cid == e.cid,
             ),
           )
           .toList();
@@ -421,7 +422,7 @@ class _AssetsViewState extends State<AssetsView> {
 
   List<AccountOrCommunityData> initAllAccounts() {
     final allAccounts = <AccountOrCommunityData>[
-      ...widget.store.account.accountListAll.map(
+      ..._store.account.accountListAll.map(
         (account) => AccountOrCommunityData(
           avatar: AddressIcon(
             '',
@@ -431,7 +432,7 @@ class _AssetsViewState extends State<AssetsView> {
             tapToCopy: false,
           ),
           name: account.name,
-          isSelected: account.pubKey == widget.store.account.currentAccountPubKey,
+          isSelected: account.pubKey == _store.account.currentAccountPubKey,
         ),
       ),
     ];
@@ -439,28 +440,28 @@ class _AssetsViewState extends State<AssetsView> {
   }
 
   Future<void> switchAccount(AccountData account) async {
-    if (account.pubKey != widget.store.account.currentAccountPubKey) {
-      await widget.store.setCurrentAccount(account.pubKey);
-      await widget.store.loadAccountCache();
+    if (account.pubKey != _store.account.currentAccountPubKey) {
+      await _store.setCurrentAccount(account.pubKey);
+      await _store.loadAccountCache();
 
       webApi.fetchAccountData();
     }
   }
 
   void _refreshBalanceAndNotify() {
-    webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
+    webApi.encointer.getAllBalances(_store.account.currentAddress).then((balances) {
       Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
-      if (widget.store.encointer.chosenCid == null) {
+      if (_store.encointer.chosenCid == null) {
         Log.d('[home:refreshBalanceAndNotify] no community selected', 'Assets');
         return;
       }
       var activeAccountHasBalance = false;
       balances.forEach((cid, balanceEntry) {
         final cidStr = cid.toFmtString();
-        if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
-          final community = widget.store.encointer.communityStores![cidStr]!;
+        if (_store.encointer.communityStores!.containsKey(cidStr)) {
+          final community = _store.encointer.communityStores![cidStr]!;
           final oldBalanceEntry =
-              widget.store.encointer.accountStores?[widget.store.account.currentAddress]?.balanceEntries[cidStr];
+              _store.encointer.accountStores?[_store.account.currentAddress]?.balanceEntries[cidStr];
           final demurrageRate = community.demurrage!;
           final newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
           final oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
@@ -470,19 +471,18 @@ class _AssetsViewState extends State<AssetsView> {
           final delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
-            widget.store.encointer.accountStores![widget.store.account.currentAddress]
-                ?.addBalanceEntry(cid, balances[cid]!);
+            _store.encointer.accountStores![_store.account.currentAddress]?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
               final msg = l10n.incomingConfirmed(
                 delta,
                 community.metadata!.symbol,
-                widget.store.account.currentAccount.name,
+                _store.account.currentAccount.name,
               );
               Log.d('[home:balanceWatchdog] $msg', 'Assets');
               NotificationPlugin.showNotification(45, l10n.fundsReceived, msg, cid: cidStr);
             }
           }
-          if (cid == widget.store.encointer.chosenCid) {
+          if (cid == _store.encointer.chosenCid) {
             activeAccountHasBalance = true;
           }
         }
@@ -492,8 +492,8 @@ class _AssetsViewState extends State<AssetsView> {
           "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero",
           'Assets',
         );
-        widget.store.encointer.accountStores![widget.store.account.currentAddress]
-            ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
+        _store.encointer.accountStores![_store.account.currentAddress]
+            ?.addBalanceEntry(_store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
     }).catchError((Object? e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);

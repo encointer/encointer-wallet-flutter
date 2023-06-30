@@ -56,7 +56,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          AssetsView(_store.appStore),
+          const AssetsView(),
           if (context.select<AppStore, bool>((store) => _store.appStore.settings.enableBazaar)) const BazaarMain(),
 
           /// empty widget here because when qr code is clicked, we navigate to [ScanPage]
