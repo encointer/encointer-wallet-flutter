@@ -249,7 +249,7 @@ class _AssetsViewState extends State<AssetsView> {
                       children: [
                         ActionButton(
                           key: const Key('qr-receive'),
-                          icon: const Icon(Iconsax.receive_square_2),
+                          icon: const Icon(Iconsax.receive_square_2, ),
                           label: l10n.receive,
                           onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                         ),

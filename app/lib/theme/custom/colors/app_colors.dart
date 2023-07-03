@@ -19,9 +19,9 @@ class AppColors {
 
   /// TODO(eldiiar): Replace colors with designer's colors.
   static const ColorScheme gbd = ColorScheme(
-    primary: Color(0xFF79C943), // main color for almost all texts
+    primary: Color(0xFF7AC943), // main color for almost all texts
     onPrimary: Color(0xFFF6FAF1),
-    secondary: Color(0xFF35B731), // end color of gradient
+    secondary: Color.fromARGB(255, 44, 137, 81), // end color of gradient
     onSecondary: Color(0xFFF6FAF1),
     background: Color(0xFFF6FAF1), // used for light blue buttons (i.e. secondary buttons)
     onBackground: Color(0xFF000022),
@@ -29,7 +29,7 @@ class AppColors {
     onError: Color(0xFFF6FAF1),
     surface: Color(0xFFF6FAF1), // dark blue for the scan bottomButtonBar icon
     onSurface: Color(0xFF000022),
-    tertiary: Color(0xFF7CB342), // starting color of gradient
+    tertiary: Color.fromARGB(255, 78, 166, 60), // starting color of gradient
     brightness: Brightness.light,
   );
 
