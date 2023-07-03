@@ -38,7 +38,6 @@ Future<void> qrFromSendPageTestAndSendWithoutAmount(FlutterDriver driver) async 
 }
 
 Future<void> qrFromContactAddContactFromQrContact(FlutterDriver driver) async {
-  await navigateToContactsPage(driver);
   await driver.tap(find.byValueKey('add-contact'));
   await driver.tap(find.byValueKey('scan-barcode'));
   await saveContactFromQrContact(driver, true);

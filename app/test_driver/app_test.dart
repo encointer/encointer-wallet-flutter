@@ -119,6 +119,11 @@ void main() async {
       await qrFromSendPageTestAndSendWithoutAmount(driver);
     }, timeout: timeout120);
 
+    test('Check Contact Manas', () async {
+      await navigateToContactsPage(driver);
+      await driver.waitFor(find.text('Manas'));
+    }, timeout: timeout120);
+
     test('ContactPage: add contact from contact-qr', () async {
       await qrFromContactAddContactFromQrContact(driver);
     }, timeout: timeout120);
