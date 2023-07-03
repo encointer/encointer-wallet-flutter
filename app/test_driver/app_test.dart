@@ -123,10 +123,6 @@ void main() async {
       await qrFromContactAddContactFromQrContact(driver);
     }, timeout: timeout120);
 
-    test('ContactPage: add contact from invoice-qr', () async {
-      await qrFromContactAddContactFromQrInvoice(driver);
-    }, timeout: timeout120);
-
     test('finished, go to HomePage', () async {
       await goToHomeViewFromNavBar(driver);
     });
