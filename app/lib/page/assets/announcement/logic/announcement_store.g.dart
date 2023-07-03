@@ -9,13 +9,6 @@ part of 'announcement_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
-  Computed<List<Announcement>>? _$announcementsComputed;
-
-  @override
-  List<Announcement> get announcements => (_$announcementsComputed ??=
-          Computed<List<Announcement>>(() => super.announcements, name: '_AnnouncementStoreBase.announcements'))
-      .value;
-
   late final _$announcementsGlobalAtom = Atom(name: '_AnnouncementStoreBase.announcementsGlobal', context: context);
 
   @override
@@ -44,6 +37,21 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
   set announcementsCommunnity(List<Announcement> value) {
     _$announcementsCommunnityAtom.reportWrite(value, super.announcementsCommunnity, () {
       super.announcementsCommunnity = value;
+    });
+  }
+
+  late final _$announcementsAtom = Atom(name: '_AnnouncementStoreBase.announcements', context: context);
+
+  @override
+  List<Announcement> get announcements {
+    _$announcementsAtom.reportRead();
+    return super.announcements;
+  }
+
+  @override
+  set announcements(List<Announcement> value) {
+    _$announcementsAtom.reportWrite(value, super.announcements, () {
+      super.announcements = value;
     });
   }
 
@@ -114,10 +122,10 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
     return '''
 announcementsGlobal: ${announcementsGlobal},
 announcementsCommunnity: ${announcementsCommunnity},
+announcements: ${announcements},
 error: ${error},
 failureType: ${failureType},
-fetchStatus: ${fetchStatus},
-announcements: ${announcements}
+fetchStatus: ${fetchStatus}
     ''';
   }
 }
