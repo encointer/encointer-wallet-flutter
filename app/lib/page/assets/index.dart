@@ -249,14 +249,16 @@ class _AssetsViewState extends State<AssetsView> {
                       children: [
                         ActionButton(
                           key: const Key('qr-receive'),
-                          icon: const Icon(Iconsax.receive_square_2, ),
+                          icon: const Icon(
+                            Iconsax.receive_square_2,
+                          ),
                           label: l10n.receive,
                           onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                         ),
                         const SizedBox(width: 3),
                         ActionButton(
                           key: const Key('go-transfer-history'),
-                          icon: Assets.images.assets.receiveSquare2.svg(),
+                          icon: Assets.images.assets.receiveSquare2.svg(color: appSettingsStore.iconColor),
                           label: l10n.transferHistory,
                           onPressed: widget.store.encointer.communityBalance != null
                               ? () => Navigator.pushNamed(context, TransferHistoryView.route)

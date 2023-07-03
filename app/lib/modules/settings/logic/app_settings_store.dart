@@ -32,6 +32,9 @@ abstract class _AppSettingsBase with Store {
   @observable
   ColorScheme colorScheme = AppColors.leu;
 
+  @observable
+  Color iconColor = Colors.blue;
+
   @computed
   CustomTheme get theme => CustomTheme(colorScheme);
 
@@ -50,5 +53,11 @@ abstract class _AppSettingsBase with Store {
   void changeTheme(String? cid) {
     final community = Community.fromCid(cid);
     if (colorScheme != community.colorScheme) colorScheme = community.colorScheme;
+
+    if (colorScheme != AppColors.leu) {
+      iconColor = const Color.fromARGB(255, 44, 137, 81);
+    } else {
+      iconColor = const Color(0xff4374A3);
+    }
   }
 }
