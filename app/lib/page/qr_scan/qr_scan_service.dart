@@ -87,14 +87,14 @@ void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext,
 void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
   final contectAdresses = context.read<AppStore>().settings.contactListAll.map((e) => e.address).toList();
   if (!contectAdresses.contains(qrCode.data.account)) {
-    final con = {
+    final contactData = {
       'address': qrCode.data.account,
       'name': qrCode.data.label,
       'memo': '',
       'observation': false,
       'pubKey': Fmt.ss58Decode(qrCode.data.account).pubKey
     };
-    context.read<AppStore>().settings.addContact(con);
+    context.read<AppStore>().settings.addContact(contactData);
   }
   switch (scanContext) {
     case QrScannerContext.mainPage:
