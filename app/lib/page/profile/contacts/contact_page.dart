@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -42,7 +44,7 @@ class _Contact extends State<ContactPage> {
       final l10n = context.l10n;
       final addr = _addressCtrl.text.replaceAll(' ', '');
       final pubKey = Fmt.ss58Decode(addr).pubKey;
-
+      log('ContactPage pubKey : $pubKey');
       final con = {
         'address': addr,
         'name': _nameCtrl.text,
@@ -50,6 +52,8 @@ class _Contact extends State<ContactPage> {
         'observation': _isObservation,
         'pubKey': pubKey,
       };
+
+      log('ContactPage con : $con');
       setState(() {
         _submitting = false;
       });
