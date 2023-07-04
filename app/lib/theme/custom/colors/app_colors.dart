@@ -19,7 +19,7 @@ class AppColors {
 
   /// TODO(eldiiar): Replace colors with designer's colors.
   static const ColorScheme gbd = ColorScheme(
-    primary: Color(0xFF7AC943), // main color for almost all texts
+    primary: Color.fromARGB(255, 44, 137, 81), // main color for almost all texts
     onPrimary: Color(0xFFF6FAF1),
     secondary: Color.fromARGB(255, 44, 137, 81), // end color of gradient
     onSecondary: Color(0xFFF6FAF1),

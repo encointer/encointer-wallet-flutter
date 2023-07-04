@@ -258,7 +258,9 @@ class _AssetsViewState extends State<AssetsView> {
                         const SizedBox(width: 3),
                         ActionButton(
                           key: const Key('go-transfer-history'),
-                          icon: Assets.images.assets.receiveSquare2.svg(color: appSettingsStore.iconColor),
+                          icon: Assets.images.assets.receiveSquare2.svg(
+                            colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
+                          ),
                           label: l10n.transferHistory,
                           onPressed: widget.store.encointer.communityBalance != null
                               ? () => Navigator.pushNamed(context, TransferHistoryView.route)

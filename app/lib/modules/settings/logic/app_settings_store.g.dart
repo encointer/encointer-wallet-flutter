@@ -81,21 +81,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$iconColorAtom = Atom(name: '_AppSettingsBase.iconColor', context: context);
-
-  @override
-  Color get iconColor {
-    _$iconColorAtom.reportRead();
-    return super.iconColor;
-  }
-
-  @override
-  set iconColor(Color value) {
-    _$iconColorAtom.reportWrite(value, super.iconColor, () {
-      super.iconColor = value;
-    });
-  }
-
   late final _$setLocaleAsyncAction = AsyncAction('_AppSettingsBase.setLocale', context: context);
 
   @override
@@ -141,7 +126,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
 locale: ${locale},
 developerMode: ${developerMode},
 colorScheme: ${colorScheme},
-iconColor: ${iconColor},
 isIntegrationTest: ${isIntegrationTest},
 theme: ${theme}
     ''';
