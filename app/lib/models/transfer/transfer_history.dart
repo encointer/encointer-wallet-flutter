@@ -42,9 +42,14 @@ class Transaction {
 
   /// Returns the name of the [counterparty] in the transaction by checking against the provided [contacts] list.
   /// Returns null if no matching contact is found.
-  String? getNameFromContacts(List<AccountData> contacts) {
+  String? getNameFromContacts(BuildContext context, List<AccountData> contacts) {
     for (final contact in contacts) {
-      if (contact.address == counterParty) return contact.name;
+      if (contact.address == counterParty) {
+        if (contact.name == 'No Name' || contact.name.toLowerCase().contains('no name')) {
+          return context.l10n.unknown;
+        }
+        return contact.name;
+      }
     }
     return null;
   }

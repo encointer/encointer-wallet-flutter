@@ -44,7 +44,7 @@ class _Contact extends State<ContactPage> {
       final l10n = context.l10n;
       final addr = _addressCtrl.text.replaceAll(' ', '');
       final pubKey = Fmt.ss58Decode(addr).pubKey;
-      log('ContactPage pubKey : $pubKey');
+
       final con = {
         'address': addr,
         'name': _nameCtrl.text,
@@ -53,7 +53,6 @@ class _Contact extends State<ContactPage> {
         'pubKey': pubKey,
       };
 
-      log('ContactPage con : $con');
       setState(() {
         _submitting = false;
       });

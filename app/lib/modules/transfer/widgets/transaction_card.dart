@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +20,6 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('TransactionCard transaction ${transaction.toJson()}');
-
     final appStore = context.watch<AppStore>();
     final l10n = context.l10n;
     return Card(
@@ -61,9 +57,8 @@ class TransactionCard extends StatelessWidget {
                 children: [
                   Text(
                       transaction.isIssuance
-                          ? l10n.communityWithName(
-                              Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name)
-                          : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
+                          ? l10n.communityWithName(_getCommunityName(context, appStore))
+                          : transaction.getNameFromContacts(context, contacts) ?? l10n.unknown,
                       style: context.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 4),
@@ -106,5 +101,14 @@ class TransactionCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getCommunityName(BuildContext context, AppStore appStore) {
+    final name = Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name;
+    if (name == 'No Name' || name.toLowerCase().contains('no name')) {
+      return context.l10n.unknown;
+    } else {
+      return name;
+    }
   }
 }
