@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -72,7 +70,6 @@ class ScanPage extends StatelessWidget {
                   if (barcode.barcodes.isEmpty) {
                     Log.d('Failed to scan Barcode', 'ScanPage');
                   } else {
-                    log('barcode.rawValue: ${barcode.barcodes}');
                     _onScan(context, barcode.barcodes[0].rawValue!);
                   }
                 },
