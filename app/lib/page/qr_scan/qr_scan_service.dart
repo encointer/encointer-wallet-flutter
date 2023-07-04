@@ -40,7 +40,7 @@ class QrScanService {
     }
   }
 
-  void handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
+  Future<void> handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
     return switch (qrCode.context) {
       QrCodeContext.contact => handleContactQrCodeScan(context, scanContext, qrCode as ContactQrCode),
       QrCodeContext.invoice => handleInvoiceQrCodeScan(context, scanContext, qrCode as InvoiceQrCode),
@@ -50,11 +50,11 @@ class QrScanService {
 }
 
 /// Handles the `ContactQrCode` scan based on where it was scanned.
-void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) {
+Future<void> handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) async {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // show add contact and auto-fill data
-      Navigator.of(context).popAndPushNamed(
+      await Navigator.of(context).popAndPushNamed(
         ContactPage.route,
         arguments: qrCode.data,
       );
@@ -62,7 +62,7 @@ void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext,
     case QrScannerContext.transferPage:
       // go to transfer page and auto-fill data, but skip
       // the fields for cid or amount
-      Navigator.of(context).popAndPushNamed(
+      await Navigator.of(context).popAndPushNamed(
         TransferPage.route,
         arguments: TransferPageParams(
           cid: qrCode.data.cid,
@@ -72,7 +72,7 @@ void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext,
       );
       break;
     case QrScannerContext.contactsPage:
-      Navigator.of(context).popAndPushNamed(
+      await Navigator.of(context).popAndPushNamed(
         ContactPage.route,
         arguments: qrCode.data,
       );
@@ -81,11 +81,11 @@ void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext,
 }
 
 /// Handles the `InvoiceQrCode` scan based on where it was scanned.
-void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
+Future<void> handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) async {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // go to transfer page and auto-fill data
-      Navigator.of(context).popAndPushNamed(
+      await Navigator.of(context).popAndPushNamed(
         TransferPage.route,
         arguments: TransferPageParams.fromInvoiceData(qrCode.data),
       );
@@ -95,7 +95,7 @@ void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext,
       Navigator.of(context).pop(qrCode.data);
       break;
     case QrScannerContext.contactsPage:
-      Navigator.of(context).popAndPushNamed(ContactPage.route,
+      await Navigator.of(context).popAndPushNamed(ContactPage.route,
           arguments: ContactData(
             account: qrCode.data.account,
             label: qrCode.data.label,
@@ -105,13 +105,13 @@ void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext,
 }
 
 /// Handles the `VoucherQrCode` scan based on where it was scanned.
-void handleVoucherQrCodeScan(BuildContext context, QrScannerContext? scanContext, VoucherQrCode qrCode) {
+Future<void> handleVoucherQrCodeScan(BuildContext context, QrScannerContext? scanContext, VoucherQrCode qrCode) async {
   var showFundVoucher = false;
   if (scanContext == QrScannerContext.transferPage) {
     showFundVoucher = true;
   }
 
-  Navigator.of(context).popAndPushNamed(ReapVoucherPage.route,
+  await Navigator.of(context).popAndPushNamed(ReapVoucherPage.route,
       arguments: ReapVoucherParams(
         voucher: qrCode.data,
         showFundVoucher: showFundVoucher,
