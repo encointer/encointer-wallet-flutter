@@ -21,13 +21,16 @@ abstract class _AnnouncementStoreBase with Store {
   @observable
   List<Announcement> announcementsCommunnity = <Announcement>[];
 
-  @computed
-  List<Announcement> get announcements {
-    final announcements = announcementsGlobal
+  @observable
+  List<Announcement> announcements = <Announcement>[];
+
+  void _update() {
+    announcements = <Announcement>[];
+
+    announcements
+      ..addAll(announcementsGlobal)
       ..addAll(announcementsCommunnity)
       ..sort((a, b) => b.publishDate.compareTo(a.publishDate));
-
-    return announcements;
   }
 
   @observable
@@ -38,8 +41,13 @@ abstract class _AnnouncementStoreBase with Store {
 
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;
+
   @action
-  Future<void> getCommunityAnnouncements(String? cid, {bool devMode = false, required String langCode}) async {
+  Future<void> getCommunityAnnouncements(
+    String? cid, {
+    bool devMode = false,
+    required String langCode,
+  }) async {
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final communityAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
       '${getEncointerFeedLink(devMode: devMode)}/announcements/$cid/$langCode/announcements.json',
@@ -53,6 +61,8 @@ abstract class _AnnouncementStoreBase with Store {
       announcementsCommunnity = r;
       fetchStatus = FetchStatus.success;
     });
+
+    _update();
   }
 
   @action
@@ -70,5 +80,7 @@ abstract class _AnnouncementStoreBase with Store {
       announcementsGlobal = r;
       fetchStatus = FetchStatus.success;
     });
+
+    _update();
   }
 }
