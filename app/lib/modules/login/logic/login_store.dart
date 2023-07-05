@@ -1,37 +1,57 @@
 // ignore_for_file: library_private_types_in_public_api
-
-import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
-import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/modules/login/service/login_service.dart';
 
 part 'login_store.g.dart';
 
 class LoginStore = _LoginStoreBase with _$LoginStore;
 
 abstract class _LoginStoreBase with Store {
+  _LoginStoreBase(this.loginService);
+
+  final LoginService loginService;
+
+  String cachedPin = '';
+
   @observable
-  bool deviceSupportedBiometricAuth = true;
+  BiometricAuthState? biometricAuthState;
 
-  final pinCode = ObservableList<int>();
+  @observable
+  bool loading = false;
 
-  @action
-  void addDigit(int value, int maxLength) {
-    if (pinCode.length < maxLength) pinCode.add(value);
+  Future<String> getPin() async {
+    if (cachedPin.isEmpty) cachedPin = await loginService.getPin() ?? '';
+    return cachedPin;
+  }
+
+  Future<void> setPin(String pin) async {
+    cachedPin = pin;
+    await loginService.setPin(pin);
+  }
+
+  Future<void> clearPin() async {
+    cachedPin = '';
+    await loginService.clearPin();
+  }
+
+  @computed
+  BiometricAuthState? get getBiometricAuthState {
+    return biometricAuthState ??= loginService.getBiometricAuthState;
   }
 
   @action
-  void removeLastDigit() {
-    if (pinCode.isNotEmpty) pinCode.removeLast();
+  Future<void> setBiometricAuthState(BiometricAuthState value) async {
+    biometricAuthState = value;
+    await loginService.setBiometricAuthState(value);
   }
 
-  @action
-  bool usePincodeAuth(BuildContext context) {
-    final cachedPin = context.read<AppStore>().settings.cachedPin;
-    final pass = pinCode.map((e) => e.toString()).join();
-    if (cachedPin.isNotEmpty && pass == cachedPin) return true;
-    pinCode.clear();
-    return false;
+  Future<bool> isDeviceSupported() {
+    return loginService.isDeviceSupported();
+  }
+
+  Future<bool> localAuthenticate(String localizedReason, [bool stickyAuth = false]) {
+    return loginService.localAuthenticate(localizedReason, stickyAuth);
   }
 }

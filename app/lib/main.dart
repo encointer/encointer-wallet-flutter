@@ -15,7 +15,6 @@ import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/store/connectivity/connectivity_store.dart';
-import 'package:encointer_wallet/service/auth/local_auth_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/http_overrides.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -32,8 +31,9 @@ Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
   }
 
   HttpOverrides.global = MyHttpOverrides();
+  final pref = await SharedPreferences.getInstance();
 
-  appSettings = settings ?? AppSettings(AppService(await SharedPreferences.getInstance()));
+  appSettings = settings ?? AppSettings(AppService(pref));
 
   runApp(
     MultiRepositoryProvider(
@@ -41,13 +41,15 @@ Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
         RepositoryProvider(create: (context) => EwHttp()),
         RepositoryProvider(create: (context) => appConfig ?? const AppConfig()),
         RepositoryProvider(create: (context) => SubstrateDartApi()),
-        RepositoryProvider(create: (context) => LocalAuthService(LocalAuthentication())),
       ],
       child: MultiProvider(
         providers: [
           Provider<AppSettings>(create: (context) => appSettings..init()),
           Provider<ConnectivityStore>(create: (context) => ConnectivityStore(Connectivity())..listen()),
-          Provider<AppStore>(create: (context) => AppStore(util.LocalStorage(), const SecureStorage()))
+          Provider<AppStore>(create: (context) => AppStore(util.LocalStorage())),
+          Provider<LoginStore>(
+            create: (context) => LoginStore(LoginService(LocalAuthentication(), pref, const SecureStorage())),
+          )
         ],
         child: const WalletApp(),
       ),
