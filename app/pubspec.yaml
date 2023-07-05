@@ -56,7 +56,7 @@ dependencies:
   cupertino_icons: ^1.0.5
   # QR code generator & reader
   pretty_qr_code: ^2.0.3
-  mobile_scanner: ^3.2.0
+  mobile_scanner: ^3.3.0
   aes_ecb_pkcs5_flutter: ^0.1.2
   permission_handler: ^10.3.0
   flutter_svg: ^2.0.6
