@@ -24,7 +24,10 @@ class ScanPageParams {
 }
 
 class ScanPage extends StatelessWidget {
-  ScanPage({required this.arguments, super.key});
+  ScanPage({
+    required this.arguments,
+    super.key,
+  });
 
   final ScanPageParams arguments;
 
@@ -65,13 +68,12 @@ class ScanPage extends StatelessWidget {
           return Stack(
             children: [
               MobileScanner(
-                controller: MobileScannerController(detectionTimeoutMs: 1250),
-                onDetect: (barcode) async {
-                  if (barcode.barcodes.isNotEmpty) {
-                    log('barcode.rawValue: ${barcode.barcodes}');
-                    await _onScan(context, barcode.barcodes[0].rawValue!);
-                  } else {
+                onDetect: (barcode) {
+                  if (barcode.barcodes.isEmpty) {
                     Log.d('Failed to scan Barcode', 'ScanPage');
+                  } else {
+                    log('barcode.rawValue: ${barcode.barcodes}');
+                    _onScan(context, barcode.barcodes[0].rawValue!);
                   }
                 },
               ),
@@ -158,7 +160,7 @@ class ScanPage extends StatelessWidget {
           key: const Key('invoice-with-no-amount-to-scan'),
           child: Text(l10n.noInvoice),
           onPressed: () => onScan(
-            'encointer-invoice\nv1.0\n5Cz75Ln579ZZKt9PoAWPmnCNJFY6WNeB7avYqGokZuYSHMuK\nsqm1v79dF6b\n\nManas',
+            'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\n\nAubrey',
           ),
         ),
         ElevatedButton(
@@ -203,10 +205,10 @@ class ScanPage extends StatelessWidget {
     return Permission.camera.request();
   }
 
-  Future<void> _onScan(BuildContext context, String data) async {
+  void _onScan(BuildContext context, String data) {
     try {
       final qrCode = qrScanService.parse(data);
-      await qrScanService.handleQrScan(context, arguments.scannerContext, qrCode);
+      qrScanService.handleQrScan(context, arguments.scannerContext, qrCode);
     } catch (e) {
       RootSnackBar.showMsg(e.toString());
     }

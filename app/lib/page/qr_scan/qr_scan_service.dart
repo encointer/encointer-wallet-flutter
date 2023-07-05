@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 
 enum QrScannerContext {
   /// QrScanner was opened from the main page
@@ -43,7 +40,7 @@ class QrScanService {
     }
   }
 
-  Future<void> handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
+  void handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
     return switch (qrCode.context) {
       QrCodeContext.contact => handleContactQrCodeScan(context, scanContext, qrCode as ContactQrCode),
       QrCodeContext.invoice => handleInvoiceQrCodeScan(context, scanContext, qrCode as InvoiceQrCode),
@@ -53,11 +50,11 @@ class QrScanService {
 }
 
 /// Handles the `ContactQrCode` scan based on where it was scanned.
-Future<void> handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) async {
+void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // show add contact and auto-fill data
-      await Navigator.of(context).popAndPushNamed(
+      Navigator.of(context).popAndPushNamed(
         ContactPage.route,
         arguments: qrCode.data,
       );
@@ -65,7 +62,7 @@ Future<void> handleContactQrCodeScan(BuildContext context, QrScannerContext scan
     case QrScannerContext.transferPage:
       // go to transfer page and auto-fill data, but skip
       // the fields for cid or amount
-      await Navigator.of(context).popAndPushNamed(
+      Navigator.of(context).popAndPushNamed(
         TransferPage.route,
         arguments: TransferPageParams(
           cid: qrCode.data.cid,
@@ -75,7 +72,7 @@ Future<void> handleContactQrCodeScan(BuildContext context, QrScannerContext scan
       );
       break;
     case QrScannerContext.contactsPage:
-      await Navigator.of(context).popAndPushNamed(
+      Navigator.of(context).popAndPushNamed(
         ContactPage.route,
         arguments: qrCode.data,
       );
@@ -84,22 +81,11 @@ Future<void> handleContactQrCodeScan(BuildContext context, QrScannerContext scan
 }
 
 /// Handles the `InvoiceQrCode` scan based on where it was scanned.
-Future<void> handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) async {
-  final contectAdresses = context.read<AppStore>().settings.contactListAll.map((e) => e.address).toList();
-  if (!contectAdresses.contains(qrCode.data.account)) {
-    final contactData = {
-      'address': qrCode.data.account,
-      'name': qrCode.data.label,
-      'memo': '',
-      'observation': false,
-      'pubKey': Fmt.ss58Decode(qrCode.data.account).pubKey
-    };
-    await context.read<AppStore>().settings.addContact(contactData);
-  }
+void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // go to transfer page and auto-fill data
-      await Navigator.of(context).popAndPushNamed(
+      Navigator.of(context).popAndPushNamed(
         TransferPage.route,
         arguments: TransferPageParams.fromInvoiceData(qrCode.data),
       );
@@ -109,7 +95,7 @@ Future<void> handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scan
       Navigator.of(context).pop(qrCode.data);
       break;
     case QrScannerContext.contactsPage:
-      await Navigator.of(context).popAndPushNamed(ContactPage.route,
+      Navigator.of(context).popAndPushNamed(ContactPage.route,
           arguments: ContactData(
             account: qrCode.data.account,
             label: qrCode.data.label,
@@ -119,13 +105,13 @@ Future<void> handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scan
 }
 
 /// Handles the `VoucherQrCode` scan based on where it was scanned.
-Future<void> handleVoucherQrCodeScan(BuildContext context, QrScannerContext? scanContext, VoucherQrCode qrCode) async {
+void handleVoucherQrCodeScan(BuildContext context, QrScannerContext? scanContext, VoucherQrCode qrCode) {
   var showFundVoucher = false;
   if (scanContext == QrScannerContext.transferPage) {
     showFundVoucher = true;
   }
 
-  await Navigator.of(context).popAndPushNamed(ReapVoucherPage.route,
+  Navigator.of(context).popAndPushNamed(ReapVoucherPage.route,
       arguments: ReapVoucherParams(
         voucher: qrCode.data,
         showFundVoucher: showFundVoucher,

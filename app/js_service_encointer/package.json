@@ -23,17 +23,17 @@
     "tslib": "^2.3.1"
   },
   "dependencies": {
-    "@encointer/node-api": "^0.8.7",
-    "@encointer/types": "^0.8.7",
-    "@encointer/util": "^0.8.7",
-    "@encointer/worker-api": "^0.8.7",
-    "@polkadot/api": "^7.2.1",
-    "@polkadot/keyring": "^8.2.2",
-    "@polkadot/networks": "^8.2.2",
-    "@polkadot/rpc-provider": "^7.2.1",
-    "@polkadot/types": "^7.2.1",
-    "@polkadot/util": "^8.2.2",
-    "@polkadot/util-crypto": "^8.2.2",
+    "@encointer/node-api": "^0.10.0",
+    "@encointer/types": "^0.10.0",
+    "@encointer/util": "^0.10.0",
+    "@encointer/worker-api": "^0.10.0",
+    "@polkadot/api": "^10.9.1",
+    "@polkadot/keyring": "^12.3.2",
+    "@polkadot/networks": "^12.3.2",
+    "@polkadot/rpc-provider": "^10.9.1",
+    "@polkadot/types": "^10.9.1",
+    "@polkadot/util": "^12.3.2",
+    "@polkadot/util-crypto": "^12.3.2",
     "Buffer": "^0.0.0",
     "bn.js": "^4.12.0",
     "buffer": "^6.0.3",
@@ -93,5 +93,5 @@
       "no-extra-semi": 1
     }
   },
-  "packageManager": "yarn@3.0.2"
+  "packageManager": "yarn@3.6.1"
 }
