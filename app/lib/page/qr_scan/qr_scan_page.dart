@@ -158,7 +158,7 @@ class ScanPage extends StatelessWidget {
           key: const Key('invoice-with-no-amount-to-scan'),
           child: Text(l10n.noInvoice),
           onPressed: () => onScan(
-            'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\n\nAubrey',
+            'encointer-invoice\nv1.0\n5Cz75Ln579ZZKt9PoAWPmnCNJFY6WNeB7avYqGokZuYSHMuK\nsqm1v79dF6b\n\nManas',
           ),
         ),
         ElevatedButton(

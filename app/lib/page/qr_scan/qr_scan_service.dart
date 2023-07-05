@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/format.dart';
 
 enum QrScannerContext {
   /// QrScanner was opened from the main page
@@ -82,6 +85,17 @@ Future<void> handleContactQrCodeScan(BuildContext context, QrScannerContext scan
 
 /// Handles the `InvoiceQrCode` scan based on where it was scanned.
 Future<void> handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) async {
+  final contectAdresses = context.read<AppStore>().settings.contactListAll.map((e) => e.address).toList();
+  if (!contectAdresses.contains(qrCode.data.account)) {
+    final contactData = {
+      'address': qrCode.data.account,
+      'name': qrCode.data.label,
+      'memo': '',
+      'observation': false,
+      'pubKey': Fmt.ss58Decode(qrCode.data.account).pubKey
+    };
+    await context.read<AppStore>().settings.addContact(contactData);
+  }
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // go to transfer page and auto-fill data
