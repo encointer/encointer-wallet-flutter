@@ -143,12 +143,6 @@ class _AssetsViewState extends State<AssetsView> {
       },
       child: Scaffold(
         appBar: _appBar(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            final cid = context.read<AppStore>().encointer.community!.cid.toFmtString();
-            NotificationPlugin.showNotification(1, 'Example Titile', 'Example Body', cid: cid);
-          },
-        ),
         body: RepositoryProvider.of<AppConfig>(context).isIntegrationTest
             ? _slidingUpPanel(_appBar(), appSettingsStore, allAccounts)
             : _upgradeAlert(_appBar(), appSettingsStore, allAccounts),
