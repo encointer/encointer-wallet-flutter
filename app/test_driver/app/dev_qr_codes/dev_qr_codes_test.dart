@@ -38,17 +38,8 @@ Future<void> qrFromSendPageTestAndSendWithoutAmount(FlutterDriver driver) async 
 }
 
 Future<void> qrFromContactAddContactFromQrContact(FlutterDriver driver) async {
-  await navigateToContactsPage(driver);
   await driver.tap(find.byValueKey('add-contact'));
   await driver.tap(find.byValueKey('scan-barcode'));
   await saveContactFromQrContact(driver, true);
   await Future<void>.delayed(const Duration(milliseconds: 500));
-}
-
-Future<void> qrFromContactAddContactFromQrInvoice(FlutterDriver driver) async {
-  await navigateToContactsPage(driver);
-  await driver.tap(find.byValueKey('add-contact'));
-  await driver.tap(find.byValueKey('scan-barcode'));
-  await saveContactFromQrInvoice(driver);
-  await Future<void>.delayed(const Duration(milliseconds: 1000));
 }
