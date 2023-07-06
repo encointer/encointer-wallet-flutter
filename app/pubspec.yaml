@@ -84,7 +84,6 @@ dependencies:
   ew_http:
     path: ../packages/ew_http/
   decimal: ^2.3.2
-  flutter_native_splash: ^2.3.1
 
 dev_dependencies:
   build_runner: ^2.4.5
@@ -147,9 +146,3 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-
-flutter_native_splash:
-  color: "#ffffff"
-  image: assets/splash.png
-  android: true
-  ios: true
