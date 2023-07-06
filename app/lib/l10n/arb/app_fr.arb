@@ -353,6 +353,7 @@
     "transfer": "Envoyer",
     "transferHistory": "Transferts",
     "transferHistoryEnd": "Le chargement des transactions plus anciennes n'est pas encore pris en charge",
+    "transferHistoryTop": "Le transfert peut prendre jusqu'à 30 secondes avant d'apparaître ici",
     "txBroadcast": "La transaction a été envoyée sur le réseau",
     "txError": "Erreur de transaction",
     "txInBlock": "Transaction est dans un bloc",
