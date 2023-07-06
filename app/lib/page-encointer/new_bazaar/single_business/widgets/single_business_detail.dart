@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/business_detail_text_widget.dart';
-// import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/like_icon_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/business_detail_address_widget.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/map_button.dart';
 import 'package:encointer_wallet/models/bazaar/single_business.dart';
