@@ -1,6 +1,9 @@
 import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
+import 'package:encointer_wallet/models/bazaar/item_offered.dart';
+import 'package:encointer_wallet/models/bazaar/offering_data.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
@@ -146,6 +149,23 @@ class MockEncointerApi extends EncointerApi {
   @override
   Future<Either<Businesses, EwHttpException>> getBusinesseses(String ipfsUrlHash) async {
     Either<Businesses, EwHttpException> getRight() => Right(Businesses.fromJson(mockBusinessData));
+    return Future.value(getRight());
+  }
+
+  @override
+  Future<List<OfferingData>> bazaarGetOfferingsForBusines(CommunityIdentifier cid, String? controller) async {
+    return Future.value(offeringDataMockList);
+  }
+
+  @override
+  Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {
+    Either<ItemOffered, EwHttpException> getRight() => Right(ItemOffered.fromJson(itemOfferedMock));
+    return Future.value(getRight());
+  }
+
+  @override
+  Future<Either<IpfsProduct, EwHttpException>> getSingleBusinessProduct(String ipfsUrlHash) async {
+    Either<IpfsProduct, EwHttpException> getRight() => Right(IpfsProduct.fromJson(ipfsProductMock));
     return Future.value(getRight());
   }
 }

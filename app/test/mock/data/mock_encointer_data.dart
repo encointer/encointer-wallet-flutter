@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/bazaar/offering_data.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
@@ -68,3 +69,18 @@ EndpointData unitTestEndpoint = EndpointData.fromJson({
   'overrideConfig': Map<String, dynamic>.of({}),
   'ipfsGateway': 'Unit-Test network must no connect to ipfs'
 });
+
+final List<OfferingData> offeringDataMockList = [OfferingData(url: 'url')];
+
+const itemOfferedMock = {
+  'itemOffered': 'QmZ1f6v39DZXdmhLgaGD2i2XY8sucNaMGKJuoSHduqHp15',
+  'price': '0',
+};
+
+const ipfsProductMock = {
+  'name': 'Bier',
+  'description': 'Kühles Bier',
+  'category': 'food',
+  'image': 'Qmeh8yNeDn7WjoMLuRZYAtiE5D5tafTqBaB1RPwyU1pyKK',
+  'itemCondition': 'new'
+};
