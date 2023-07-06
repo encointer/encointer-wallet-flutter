@@ -195,7 +195,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     if (_submitting) const CupertinoActivityIndicator(),
                     Text(
                       l10n.contactSave,
-                      style: context.textTheme.displaySmall,
+                      style: context.textTheme.displaySmall!.copyWith(color: context.colorScheme.background),
                     ),
                   ],
                 ),
