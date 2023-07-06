@@ -30,7 +30,12 @@ void main() async {
 
   const channel = MethodChannel('flutter_timezone');
 
-  setUp(() => channel.setMockMethodCallHandler((MethodCall methodCall) async => '42'));
+  setUp(() {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+      channel,
+      (MethodCall methodCall) async => '42',
+    );
+  });
 
   test('executeTaskIsolate called', () async {
     await NotificationHandler.fetchMessagesAndScheduleNotifications(

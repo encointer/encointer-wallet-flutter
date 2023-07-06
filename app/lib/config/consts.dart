@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/config/prod_community.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
 const String androidLocalHost = '10.0.2.2';
@@ -119,25 +118,17 @@ const assignmentFAQLinkEN = 'https://leu.zuerich/en/#why-have-i-not-been-assigne
 const assignmentFAQLinkDE = 'https://leu.zuerich/#warum-wurde-ich-keinem-cycle-zugewiesen';
 
 String leuZurichCycleAssignmentFAQLink(String locale) {
-  switch (locale) {
-    case 'en':
-      return assignmentFAQLinkEN;
-    case 'de':
-      return assignmentFAQLinkDE;
-    default:
-      Log.d('[replaceLocale] unsupported locale, defaulting to english', 'consts.dart');
-      return assignmentFAQLinkEN;
-  }
+  return switch (locale) {
+    'en' => assignmentFAQLinkEN,
+    'de' => assignmentFAQLinkDE,
+    _ => assignmentFAQLinkEN,
+  };
 }
 
 String replaceLocalePlaceholder(String link, String locale) {
-  switch (locale) {
-    case 'en':
-      return link.replaceAll(localePlaceHolder, 'en');
-    case 'de':
-      return link.replaceAll(localePlaceHolder, '');
-    default:
-      Log.d('[replaceLocale] unsupported locale, defaulting to english', 'consts.dart');
-      return link.replaceAll(localePlaceHolder, 'en');
-  }
+  return switch (locale) {
+    'en' => link.replaceAll(localePlaceHolder, 'en'),
+    'de' => link.replaceAll(localePlaceHolder, ''),
+    _ => link.replaceAll(localePlaceHolder, 'en'),
+  };
 }

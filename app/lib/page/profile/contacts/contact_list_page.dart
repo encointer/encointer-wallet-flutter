@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/components/account_select_list.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ContactListPage extends StatelessWidget {
   const ContactListPage({super.key});
@@ -19,9 +19,7 @@ class ContactListPage extends StatelessWidget {
     final store = context.watch<AppStore>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(args == null
-            ? I18n.of(context)!.translationsForLocale().profile.addressBook
-            : I18n.of(context)!.translationsForLocale().account.list),
+        title: Text(args == null ? context.l10n.addressBook : context.l10n.list),
         centerTitle: true,
         actions: <Widget>[
           if (args == null)

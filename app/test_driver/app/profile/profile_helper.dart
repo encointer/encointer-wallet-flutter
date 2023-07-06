@@ -4,6 +4,7 @@ Future<void> scrollToDevMode(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('profile-list-view'),
     find.byValueKey('dev-mode'),
+    dyScroll: -150,
   );
 }
 

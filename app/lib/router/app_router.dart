@@ -1,6 +1,5 @@
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/location/location.dart';
@@ -11,7 +10,7 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
+import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/detail_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
@@ -49,13 +48,6 @@ class AppRoute {
       case SplashView.route:
         return CupertinoPageRoute(
           builder: (_) => const SplashView(),
-        );
-      case LoginView.route:
-        return CupertinoPageRoute(
-          builder: (_) => Provider(
-            create: (context) => LoginStore(LocalAuthentication()),
-            child: const LoginView(),
-          ),
         );
       case EncointerHomePage.route:
         return CupertinoPageRoute(
@@ -183,7 +175,7 @@ class AppRoute {
           builder: (_) => const AboutPage(),
           settings: settings,
         );
-      case BazaarMain.route:
+      case BazaarPage.route:
         return CupertinoPageRoute(
           builder: (_) => const BazaarMain(),
           settings: settings,

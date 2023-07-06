@@ -1,6 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 
 import '../../helpers/helper.dart';
+import '../app.dart';
 import 'account_manage_helper.dart';
 
 Future<void> accountDetailPage(FlutterDriver driver, String account) async {
@@ -16,8 +17,6 @@ Future<void> deleteAccountFromProfilePage(FlutterDriver driver, String account) 
 Future<void> deleteAccountFromAccountManagePage(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
   await driver.tap(find.byValueKey('delete'));
-  await driver.waitFor(find.byValueKey('delete-account'));
-  await driver.tap(find.byValueKey('delete-account'));
 }
 
 Future<String> getPublicKey(FlutterDriver driver, String accountName) async {
@@ -52,8 +51,7 @@ Future<String> exportAccount(FlutterDriver driver, String pin) async {
   await driver.takeLocalScreenshot(Screenshots.accountOptionsDialog);
   await driver.tap(find.byValueKey('export'));
   await driver.takeLocalScreenshot(Screenshots.accountPasswordDialog);
-  await enterPin(driver, pin);
-  await driver.tap(find.byValueKey('password-ok'));
+  await verifyInputPin(driver);
   await driver.waitFor(find.byValueKey('account-mnemonic-key'));
   final mnemonic = await driver.getText(find.byValueKey('account-mnemonic-key'));
   await driver.takeLocalScreenshot(Screenshots.exportAccountView);

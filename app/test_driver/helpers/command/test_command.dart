@@ -1,5 +1,6 @@
 class TestCommand {
-  static const String getPlatform = 'getPlatform';
+  static const String getBiometricAuthState = 'get-biometric-auth-state';
+  static const String getPlatform = 'get-platform';
   static const String locales = 'locales';
   static const String localeEn = 'local-en';
   static const String localeDe = 'local-de';

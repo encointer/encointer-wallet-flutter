@@ -143,7 +143,7 @@ class Api {
   Future<void> connectNodeAll() async {
     final nodes = store.settings.endpointList.map((e) => e.value).toList();
     final configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
-    Log.d('configs: $configs', 'Api');
+    Log.d('connectNodeAll: configs = $configs', 'Api');
 
     // do connect
     final res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');

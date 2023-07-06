@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_count_down.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 /// Shows primarily the date of the next ceremony.
 ///
@@ -45,14 +45,14 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
 
     final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate);
-    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
+    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, l10n, languageCode);
 
     return RichText(
       text: TextSpan(
-        text: '${dic.encointer.nextCycleDateLabel} ',
+        text: '${l10n.nextCycleDateLabel} ',
         style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
         children: [
           TextSpan(
@@ -73,14 +73,12 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-
     final timeLeftUntilCeremonyStartsDaysHours =
         CeremonyBoxService.getTimeLeftUntilCeremonyStartsDaysHours(nextCeremonyDate);
 
     return RichText(
       text: TextSpan(
-        text: '${dic.encointer.nextCycleTimeLeft} ',
+        text: '${context.l10n.nextCycleTimeLeft} ',
         style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
         children: [
           TextSpan(
@@ -101,9 +99,9 @@ class CeremonyDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     final h2BlackTheme = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack);
-    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
+    final nextCeremonyYearMonthDay =
+        CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, context.l10n, languageCode);
     final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
 
     return Row(

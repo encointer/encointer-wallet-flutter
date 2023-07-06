@@ -14,5 +14,6 @@ class CustomTheme with CompomnentTheme, TypographyTheme {
         appBarTheme: appBarTheme(colorScheme),
         textTheme: textTheme(colorScheme),
         iconTheme: iconTheme(colorScheme),
+        useMaterial3: true,
       );
 }

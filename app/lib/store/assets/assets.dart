@@ -62,14 +62,11 @@ abstract class _AssetsStore with Store {
   @computed
   ObservableList<TransferData> get txsView {
     return ObservableList.of(txs.where((i) {
-      switch (txsFilter) {
-        case 1:
-          return i.to == rootStore.account.currentAddress;
-        case 2:
-          return i.from == rootStore.account.currentAddress;
-        default:
-          return true;
-      }
+      return switch (txsFilter) {
+        1 => i.to == rootStore.account.currentAddress,
+        2 => i.from == rootStore.account.currentAddress,
+        _ => true,
+      };
     }));
   }
 

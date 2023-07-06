@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -33,17 +33,14 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
   @observable
   DateTime time = DateTime.now();
 
-  @observable
-  Translations? dic;
-
   @action
   Future<void> createPdf({
     required GlobalKey key,
-    required Translations translations,
+    required BuildContext context,
   }) async {
-    Log.d('createPdf: key = $key, translations = $translations', _logTarget);
+    final l10n = context.l10n;
+    Log.d('createPdf: key = $key, translations = $l10n', _logTarget);
     renderObjectKey = key;
-    dic = translations;
 
     final uint8list = await _getQrCodeImage();
 
@@ -51,8 +48,8 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
     if (uint8list == null || bgImage == null) {
       throw Exception();
     } else {
-      final poppinsBlack = await PdfGoogleFonts.poppinsBlack();
-      final poppinsMedium = await PdfGoogleFonts.poppinsMedium();
+      final poppinsBlack = await PdfGoogleFonts.rubikBlack();
+      final poppinsMedium = await PdfGoogleFonts.rubikMedium();
       _doc = pw.Document();
       // ignore: cascade_invocations
       _doc!.addPage(
@@ -76,13 +73,11 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                     padding: const pw.EdgeInsets.only(top: 50),
                     child: pw.FittedBox(
                       child: pw.Text(
-                        dic?.assets.payHereWithLeu ?? 'Zahle hier mit Leu',
+                        l10n.payHereWithLeu,
                         style: pw.TextStyle(
                           fontSize: 56,
                           font: poppinsBlack,
-                          color: PdfColor.fromHex(
-                            '3295C7',
-                          ),
+                          color: PdfColor.fromHex('3295C7'),
                         ),
                       ),
                     ),
@@ -103,35 +98,29 @@ abstract class _PreviewPdfAndPrintStoreBase with Store {
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
                           pw.Text(
-                            dic?.assets.openTheEncointerApp ?? '1. Öffne die App \n«Encointer Wallet»',
+                            l10n.openTheEncointerApp,
                             style: pw.TextStyle(
                               fontSize: 22,
                               font: poppinsMedium,
-                              color: PdfColor.fromHex(
-                                '3295C7',
-                              ),
+                              color: PdfColor.fromHex('3295C7'),
                             ),
                           ),
                           pw.SizedBox(height: 20),
                           pw.Text(
-                            dic?.assets.scanQrCodeOnTheLeft ?? '2. Scanne den QR-Code \nauf der linken Seite',
+                            l10n.scanQrCodeOnTheLeft,
                             style: pw.TextStyle(
                               fontSize: 22,
                               font: poppinsMedium,
-                              color: PdfColor.fromHex(
-                                '3295C7',
-                              ),
+                              color: PdfColor.fromHex('3295C7'),
                             ),
                           ),
                           pw.SizedBox(height: 20),
                           pw.Text(
-                            dic?.assets.confirmThePayment ?? '3. Bestätige die Zahlung',
+                            l10n.confirmThePayment,
                             style: pw.TextStyle(
                               fontSize: 22,
                               font: poppinsMedium,
-                              color: PdfColor.fromHex(
-                                '3295C7',
-                              ),
+                              color: PdfColor.fromHex('3295C7'),
                             ),
                           ),
                         ],

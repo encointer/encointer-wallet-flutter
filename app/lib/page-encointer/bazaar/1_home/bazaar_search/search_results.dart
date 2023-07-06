@@ -3,7 +3,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/sear
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/material.dart';
 
 class SearchResults extends StatelessWidget {
@@ -19,10 +19,10 @@ class SearchResults extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ResultSummaryListTile(businessResults, I18n.of(context)!.translationsForLocale().bazaar.businessesResults),
-        ResultSummaryListTile(offeringsResults, I18n.of(context)!.translationsForLocale().bazaar.offeringsResults),
+        ResultSummaryListTile(businessResults, context.l10n.businessesResults),
+        ResultSummaryListTile(offeringsResults, context.l10n.offeringsResults),
         Text(
-          I18n.of(context)!.translationsForLocale().bazaar.topResults,
+          context.l10n.topResults,
           style: const TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Column(

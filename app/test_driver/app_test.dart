@@ -1,6 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+import 'app/voucher/voucher_integration_test.dart';
 import 'app/dev_qr_codes/dev_qr_codes_test.dart';
 import 'helpers/helper.dart';
 import 'app/app.dart';
@@ -29,6 +30,10 @@ void main() async {
 
   test('create PIN by text 0001', () async {
     await createPin(driver, '0001');
+  }, timeout: timeout120);
+
+  test('close biometric auth dialog', () async {
+    await tapNotNowButtonBiometricAuthEnable(driver);
   }, timeout: timeout120);
 
   test('choosing cid', () async {
@@ -80,6 +85,19 @@ void main() async {
     await registerAndWait(driver, ParticipantTypeTestHelper.bootstrapper);
   }, timeout: timeout120);
 
+  group('DevMode QR Voucher test', () {
+    test('get voucher by QR, fund', () async {
+      await getQrVoucherAndFund(driver);
+    });
+    test('get voucher by QR, redeem', () async {
+      await getQrVoucherAndRedeem(driver);
+    });
+
+    test('finished, go to HomePage', () async {
+      await goToHomeViewFromNavBar(driver);
+    });
+  });
+
   group('DevMode QR Codes tests', () {
     test('HomePage: save the contact from qr', () async {
       await qrFromHomeTestAndSaveContact(driver);
@@ -101,12 +119,13 @@ void main() async {
       await qrFromSendPageTestAndSendWithoutAmount(driver);
     }, timeout: timeout120);
 
-    test('ContactPage: add contact from contact-qr', () async {
-      await qrFromContactAddContactFromQrContact(driver);
+    test('Check Contact Manas', () async {
+      await navigateToContactsPage(driver);
+      await driver.waitFor(find.text('Manas'));
     }, timeout: timeout120);
 
-    test('ContactPage: add contact from invoice-qr', () async {
-      await qrFromContactAddContactFromQrInvoice(driver);
+    test('ContactPage: add contact from contact-qr', () async {
+      await qrFromContactAddContactFromQrContact(driver);
     }, timeout: timeout120);
 
     test('finished, go to HomePage', () async {
@@ -232,10 +251,12 @@ void main() async {
   test('delete account Bob', () async {
     await goToProfileViewFromNavBar(driver);
     await deleteAccountFromProfilePage(driver, 'Bob');
+    await verifyInputPin(driver);
   }, timeout: timeout120);
 
   test('delete account Charlie', () async {
     await deleteAccountFromProfilePage(driver, 'Charlie');
+    await verifyInputPin(driver);
   }, timeout: timeout120);
 
   test('create niewbie Account', () async {
@@ -318,6 +339,7 @@ void main() async {
 
   test('account delete from account manage page', () async {
     await deleteAccountFromAccountManagePage(driver);
+    await verifyInputPin(driver);
   }, timeout: timeout120);
 
   test('import account with menemonic phrase', () async {
@@ -332,7 +354,10 @@ void main() async {
   }, timeout: timeout120);
 
   test('delete all accounts', () async {
+    await goToProfileViewFromNavBar(driver);
     await deleteAllAccount(driver);
+    await verifyInputPin(driver);
+    await driver.waitFor(find.byValueKey('import-account'));
   }, timeout: timeout120);
 
   tearDownAll(() async => driver.close());

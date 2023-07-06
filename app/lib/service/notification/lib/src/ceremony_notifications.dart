@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/utils/translations/translations_encointer.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Manages meetups reminder notifications.
@@ -10,7 +10,7 @@ class CeremonyNotifications {
   static Future<void> scheduleMeetupReminders({
     required int ceremonyIndex,
     required int meetupTime,
-    required TranslationsEncointer dic,
+    required AppLocalizations l10n,
     String? cid,
   }) async {
     final meetupDateTime = DateTime.fromMillisecondsSinceEpoch(meetupTime);
@@ -19,8 +19,8 @@ class CeremonyNotifications {
     if (oneHourBeforeMeetup.isAfter(DateTime.now())) {
       await NotificationPlugin.scheduleNotification(
         Notification.oneHourBeforeMeetupReminder.id(ceremonyIndex),
-        dic.meetupNotificationOneHourBeforeTitle,
-        dic.meetupNotificationOneHourBeforeContent,
+        l10n.meetupNotificationOneHourBeforeTitle,
+        l10n.meetupNotificationOneHourBeforeContent,
         oneHourBeforeMeetup,
         cid: cid,
       );
@@ -30,8 +30,8 @@ class CeremonyNotifications {
     if (oneDayBeforeMeetup.isAfter(DateTime.now())) {
       await NotificationPlugin.scheduleNotification(
         Notification.oneDayBeforeMeetupReminder.id(ceremonyIndex),
-        dic.meetupNotificationOneDayBeforeTitle,
-        dic.meetupNotificationOneDayBeforeContent,
+        l10n.meetupNotificationOneDayBeforeTitle,
+        l10n.meetupNotificationOneDayBeforeContent,
         oneDayBeforeMeetup,
         cid: cid,
       );
@@ -43,7 +43,7 @@ class CeremonyNotifications {
     int nextRegisteringPhase,
     int currentCeremonyIndex,
     int ceremonyCycleDuration,
-    TranslationsEncointer dic, {
+    AppLocalizations l10n, {
     int numberOfCyclesToSchedule = 5,
     String? cid,
   }) async {
@@ -52,8 +52,8 @@ class CeremonyNotifications {
       final scheduledDate = DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase + i * ceremonyCycleDuration);
       await NotificationPlugin.scheduleNotification(
         Notification.registeringPhaseStarted.id(currentCeremonyIndex) + i,
-        dic.registeringPhaseReminderTitle,
-        dic.registeringPhaseReminderContent,
+        l10n.registeringPhaseReminderTitle,
+        l10n.registeringPhaseReminderContent,
         scheduledDate,
         cid: cid,
       );
@@ -67,7 +67,7 @@ class CeremonyNotifications {
     int assigningPhaseStart,
     int currentCeremonyIndex,
     int ceremonyCycleDuration,
-    TranslationsEncointer dic, {
+    AppLocalizations l10n, {
     int numberOfCyclesToSchedule = 5,
     Duration showBeforeAssigningPhase = const Duration(hours: 24),
     String? cid,
@@ -79,8 +79,8 @@ class CeremonyNotifications {
       if (scheduledDate.isAfter(DateTime.now())) {
         await NotificationPlugin.scheduleNotification(
           Notification.lastDayOfRegisteringReminder.id(currentCeremonyIndex) + i,
-          dic.registeringPhaseReminderTitle,
-          dic.registeringPhaseReminderContent,
+          l10n.registeringPhaseReminderTitle,
+          l10n.registeringPhaseReminderContent,
           scheduledDate,
           cid: cid,
         );

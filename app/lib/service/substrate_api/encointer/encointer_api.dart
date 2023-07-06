@@ -257,7 +257,7 @@ class EncointerApi {
 
     final mLocation = locationIndex != null && store.encointer.community?.meetupLocations != null
         ? store.encointer.community?.meetupLocations![locationIndex]
-        : (store.encointer.community?.meetupLocations?.first);
+        : store.encointer.community?.meetupLocations?.first;
 
     if (mLocation == null) {
       Log.d("No meetup locations found, can't get meetup time.", 'EncointerApi');
@@ -349,7 +349,7 @@ class EncointerApi {
       final cid = store.encointer.chosenCid;
       final pubKey = store.account.currentAccountPubKey;
 
-      if (cid != null && pubKey != null) {
+      if (cid != null && pubKey != null && pubKey.isNotEmpty) {
         final address = store.account.currentAddress;
         final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
         store.encointer.setAggregatedAccountData(cid, address, data);

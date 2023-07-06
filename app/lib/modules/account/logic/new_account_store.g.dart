@@ -89,29 +89,29 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   late final _$generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase.generateAccount', context: context);
 
   @override
-  Future<NewAccountResult> generateAccount(AppStore appStore, Api webApi) {
-    return _$generateAccountAsyncAction.run(() => super.generateAccount(appStore, webApi));
+  Future<NewAccountResult> generateAccount(BuildContext context, Api webApi) {
+    return _$generateAccountAsyncAction.run(() => super.generateAccount(context, webApi));
   }
 
   late final _$importAccountAsyncAction = AsyncAction('_NewAccountStoreBase.importAccount', context: context);
 
   @override
-  Future<NewAccountResult> importAccount(AppStore appStore, Api webApi) {
-    return _$importAccountAsyncAction.run(() => super.importAccount(appStore, webApi));
+  Future<NewAccountResult> importAccount(BuildContext context, Api webApi) {
+    return _$importAccountAsyncAction.run(() => super.importAccount(context, webApi));
   }
 
   late final _$_generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase._generateAccount', context: context);
 
   @override
-  Future<NewAccountResult> _generateAccount(AppStore appStore, Api webApi, String pin) {
-    return _$_generateAccountAsyncAction.run(() => super._generateAccount(appStore, webApi, pin));
+  Future<NewAccountResult> _generateAccount(BuildContext context, Api webApi, String pin) {
+    return _$_generateAccountAsyncAction.run(() => super._generateAccount(context, webApi, pin));
   }
 
   late final _$_importAccountAsyncAction = AsyncAction('_NewAccountStoreBase._importAccount', context: context);
 
   @override
-  Future<NewAccountResult> _importAccount(AppStore appStore, Api webApi, String pin) {
-    return _$_importAccountAsyncAction.run(() => super._importAccount(appStore, webApi, pin));
+  Future<NewAccountResult> _importAccount(BuildContext context, Api webApi, String pin) {
+    return _$_importAccountAsyncAction.run(() => super._importAccount(context, webApi, pin));
   }
 
   late final _$saveAccountAsyncAction = AsyncAction('_NewAccountStoreBase.saveAccount', context: context);
@@ -158,17 +158,6 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setKeyType');
     try {
       return super.setKeyType(value);
-    } finally {
-      _$_NewAccountStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  String? validateAccount(Translations dic, String key) {
-    final _$actionInfo =
-        _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.validateAccount');
-    try {
-      return super.validateAccount(dic, key);
     } finally {
       _$_NewAccountStoreBaseActionController.endAction(_$actionInfo);
     }

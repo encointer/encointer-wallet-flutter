@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_picker_state.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_preview.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ImagePickerScaffold extends StatelessWidget {
   ImagePickerScaffold({super.key});
@@ -20,7 +20,7 @@ class ImagePickerScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context)!.translationsForLocale().bazaar.imagesAddRemove),
+        title: Text(context.l10n.imagesAddRemove),
       ),
       body: Center(
         child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
@@ -31,7 +31,7 @@ class ImagePickerScaffold extends StatelessWidget {
                     case ConnectionState.none:
                     case ConnectionState.waiting:
                       return Text(
-                        I18n.of(context)!.translationsForLocale().bazaar.waiting,
+                        context.l10n.waiting,
                         textAlign: TextAlign.center,
                       );
                     case ConnectionState.done:
@@ -39,7 +39,7 @@ class ImagePickerScaffold extends StatelessWidget {
                     //Here I'll need your help
                     case ConnectionState.active:
                       return Text(
-                        I18n.of(context)!.translationsForLocale().bazaar.imageNotPicked,
+                        context.l10n.imageNotPicked,
                         textAlign: TextAlign.center,
                       );
                   }
@@ -61,7 +61,7 @@ class ImagePickerScaffold extends StatelessWidget {
                 );
               },
               heroTag: 'image1',
-              tooltip: I18n.of(context)!.translationsForLocale().bazaar.imagesMultiplePick,
+              tooltip: context.l10n.imagesMultiplePick,
               child: const Icon(Icons.photo_library),
             ),
           ),
@@ -72,7 +72,7 @@ class ImagePickerScaffold extends StatelessWidget {
                 _onImageButtonPressed(imagePickerState, ImageSource.camera, context: context);
               },
               heroTag: 'image2',
-              tooltip: I18n.of(context)!.translationsForLocale().bazaar.photoTake,
+              tooltip: context.l10n.photoTake,
               child: const Icon(Icons.camera_alt),
             ),
           ),

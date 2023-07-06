@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:pointycastle/digests/blake2b.dart';
 
 class Fmt {
@@ -201,7 +201,7 @@ class Fmt {
   }
 
   static String accountName(BuildContext context, AccountData acc) {
-    return '${acc.name}${(acc.observation ?? false) ? ' (${I18n.of(context)!.translationsForLocale().account.observe})' : ''}';
+    return '${acc.name}${(acc.observation ?? false) ? ' (${context.l10n.observe})' : ''}';
   }
 
   /// The hexToBytes function converts a hexadecimal string to a byte array.

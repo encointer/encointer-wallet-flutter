@@ -104,6 +104,9 @@
 	<!-- local_auth -->
 	<key>NSFaceIDUsageDescription</key>
 	<string>Used to unlock the app to send transactions to other members</string>
+	<!-- Impeller -->
+	<key>FLTEnableImpeller</key>
+    <true/>
 	<!-- ... other tags -->
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>

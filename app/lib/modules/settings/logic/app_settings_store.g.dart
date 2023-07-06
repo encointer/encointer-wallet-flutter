@@ -36,22 +36,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$isBiometricAuthenticationEnabledAtom =
-      Atom(name: '_AppSettingsBase.isBiometricAuthenticationEnabled', context: context);
-
-  @override
-  bool get isBiometricAuthenticationEnabled {
-    _$isBiometricAuthenticationEnabledAtom.reportRead();
-    return super.isBiometricAuthenticationEnabled;
-  }
-
-  @override
-  set isBiometricAuthenticationEnabled(bool value) {
-    _$isBiometricAuthenticationEnabledAtom.reportWrite(value, super.isBiometricAuthenticationEnabled, () {
-      super.isBiometricAuthenticationEnabled = value;
-    });
-  }
-
   late final _$developerModeAtom = Atom(name: '_AppSettingsBase.developerMode', context: context);
 
   @override
@@ -89,14 +73,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     return _$setLocaleAsyncAction.run(() => super.setLocale(languageCode));
   }
 
-  late final _$setIsBiometricAuthenticationEnabledAsyncAction =
-      AsyncAction('_AppSettingsBase.setIsBiometricAuthenticationEnabled', context: context);
-
-  @override
-  Future<void> setIsBiometricAuthenticationEnabled(bool value) {
-    return _$setIsBiometricAuthenticationEnabledAsyncAction.run(() => super.setIsBiometricAuthenticationEnabled(value));
-  }
-
   late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
 
   @override
@@ -104,17 +80,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.init');
     try {
       return super.init();
-    } finally {
-      _$_AppSettingsBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  bool getIsBiometricAuthenticationEnabled() {
-    final _$actionInfo =
-        _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.getIsBiometricAuthenticationEnabled');
-    try {
-      return super.getIsBiometricAuthenticationEnabled();
     } finally {
       _$_AppSettingsBaseActionController.endAction(_$actionInfo);
     }
@@ -144,7 +109,6 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   String toString() {
     return '''
 locale: ${locale},
-isBiometricAuthenticationEnabled: ${isBiometricAuthenticationEnabled},
 developerMode: ${developerMode},
 isIntegrationTest: ${isIntegrationTest},
 theme: ${theme}
