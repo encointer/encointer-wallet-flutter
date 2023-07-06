@@ -62,20 +62,20 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         l10n.count,
-                        style: context.textTheme.displayMedium,
+                        style: context.displayMedium,
                       ),
                     ),
                     Center(
                       child: Text(
                         l10n.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
-                        style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 2),
+                        style: context.displayMedium.copyWith(color: Colors.black, height: 2),
                       ),
                     ),
                     const SizedBox(height: 48),
                     EncointerTextFormField(
                       labelText: l10n.numberOfAttendees,
-                      textStyle: context.textTheme.displayLarge!.copyWith(color: AppColors.encointerBlack),
+                      textStyle: context.displayLarge.copyWith(color: AppColors.encointerBlack),
                       controller: _attendeesCountController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       textFormFieldKey: const Key('attendees-count'),
@@ -92,7 +92,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     const SizedBox(width: 12),
                     Text(
                       l10n.next,
-                      style: context.textTheme.displaySmall!.copyWith(color: context.colorScheme.background),
+                      style: context.displaySmall.copyWith(color: context.colorScheme.background),
                     ),
                   ],
                 ),

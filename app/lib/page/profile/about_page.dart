@@ -17,7 +17,9 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      backgroundColor: context.theme.cardColor,
+      backgroundColor: context.colorScheme.background,
+
+      ///cardColor
       appBar: AppBar(
         title: Text(l10n.about),
         centerTitle: true,
@@ -31,7 +33,7 @@ class AboutPage extends StatelessWidget {
             ),
             Text(
               l10n.aboutBrief,
-              style: context.textTheme.headlineMedium,
+              style: context.headlineSmall,
             ),
             const SizedBox(height: 8),
             FutureBuilder<PackageInfo>(

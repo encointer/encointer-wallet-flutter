@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,6 +12,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:collection/collection.dart';
 
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:encointer_wallet/config/prod_community.dart';
@@ -221,7 +221,7 @@ class _AssetsViewState extends State<AssetsView> {
                                   ),
                                   Text(
                                     '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
-                                    style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
+                                    style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
                                   ),
                                 ],
                               )

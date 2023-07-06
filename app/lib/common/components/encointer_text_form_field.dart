@@ -52,7 +52,7 @@ class EncointerTextFormField extends StatelessWidget {
           hintText: hintText,
           fillColor: fillColor,
           filled: filled,
-          labelStyle: context.textTheme.headlineMedium,
+          labelStyle: context.titleMedium.copyWith(color: context.colorScheme.primary),
           contentPadding: const EdgeInsets.only(top: 16, bottom: 16, left: 25),
           suffixIcon: suffixIcon,
           border: UnderlineInputBorder(

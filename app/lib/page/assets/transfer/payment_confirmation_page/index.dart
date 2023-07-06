@@ -215,8 +215,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   Widget _txStateTextInfo(TransferState state) {
-    final h1Grey = context.textTheme.displayLarge!.copyWith(color: AppColors.encointerGrey);
-    final h2Grey = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey);
+    final h1Grey = context.displayLarge.copyWith(color: AppColors.encointerGrey);
+    final h2Grey = context.displayMedium.copyWith(color: AppColors.encointerGrey);
 
     final l10n = context.l10n;
     switch (state) {

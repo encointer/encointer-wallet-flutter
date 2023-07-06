@@ -44,7 +44,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             widget.itemData.name ?? '',
-            style: context.textTheme.headlineMedium,
+            style: context.bodyMedium.copyWith(color: context.colorScheme.secondary),
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

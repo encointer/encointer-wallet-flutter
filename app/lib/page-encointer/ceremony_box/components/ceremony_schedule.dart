@@ -53,11 +53,11 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: '${l10n.nextCycleDateLabel} ',
-        style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
+        style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
         children: [
           TextSpan(
             text: '$nextCeremonyYearMonthDay $nextCeremonyHourMinute',
-            style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerBlack),
+            style: context.bodyLarge.copyWith(color: AppColors.encointerBlack),
           ),
         ],
       ),
@@ -79,11 +79,11 @@ class CeremonyDateLabelRelative extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: '${context.l10n.nextCycleTimeLeft} ',
-        style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
+        style: context.labelLarge.copyWith(color: AppColors.encointerGrey),
         children: [
           TextSpan(
             text: timeLeftUntilCeremonyStartsDaysHours,
-            style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerBlack),
+            style: context.labelLarge.copyWith(color: AppColors.encointerBlack),
           ),
         ],
       ),
@@ -99,7 +99,7 @@ class CeremonyDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final h2BlackTheme = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack);
+    final h2BlackTheme = context.labelLarge.copyWith(color: AppColors.encointerBlack);
     final nextCeremonyYearMonthDay =
         CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, context.l10n, languageCode);
     final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);

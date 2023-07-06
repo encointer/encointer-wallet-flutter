@@ -58,13 +58,13 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         Text(
           l10n.detailsEnter,
           textAlign: TextAlign.center,
-          style: context.textTheme.displayMedium,
+          style: context.headlineSmall,
         ),
         const SizedBox(height: 10),
         Text(
           l10n.personalKeyEnter,
           textAlign: TextAlign.center,
-          style: context.textTheme.displayMedium!.copyWith(color: Colors.black),
+          style: context.headlineSmall.copyWith(color: Colors.black),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(

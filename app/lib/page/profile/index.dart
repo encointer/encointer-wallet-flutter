@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
             const SizedBox(height: 6),
             Text(
               Fmt.accountName(context, account),
-              style: context.textTheme.headlineMedium,
+              style: context.bodyLarge.copyWith(color: context.colorScheme.secondary),
             ),
             // This sizedBox is here to define a distance between the accounts
             const SizedBox(width: 100),
@@ -78,7 +78,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final h3Grey = context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey);
+    final h3Grey = context.headlineSmall.copyWith(color: AppColors.encointerGrey);
     final store = context.watch<AppStore>();
     final loginStore = context.watch<LoginStore>();
     final appSettingsStore = context.watch<AppSettings>();
@@ -103,7 +103,7 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     Text(
                       l10n.accounts,
-                      style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+                      style: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
                     ),
                     IconButton(
                       icon: const Icon(Iconsax.add_square),
@@ -121,10 +121,10 @@ class _ProfileState extends State<Profile> {
                       begin: Alignment.centerRight,
                       end: Alignment.centerLeft,
                       colors: [
-                        context.theme.scaffoldBackgroundColor.withOpacity(0),
-                        context.theme.scaffoldBackgroundColor,
-                        context.theme.scaffoldBackgroundColor,
-                        context.theme.scaffoldBackgroundColor.withOpacity(0),
+                        context.colorScheme.background.withOpacity(0),
+                        context.colorScheme.background,
+                        context.colorScheme.background,
+                        context.colorScheme.background.withOpacity(0),
                       ],
                       stops: const [0.0, 0.1, 0.9, 1.0],
                     ).createShader(bounds);
@@ -138,7 +138,7 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text(
                   l10n.changeYourPin,
-                  style: context.textTheme.displaySmall,
+                  style: context.headlineSmall,
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
@@ -167,7 +167,7 @@ class _ProfileState extends State<Profile> {
                       ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
                       : Text(l10n.fetchingReputations)),
               ListTile(
-                title: Text(l10n.about, style: context.textTheme.displaySmall),
+                title: Text(l10n.about, style: context.headlineSmall),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
@@ -205,7 +205,7 @@ class _ProfileState extends State<Profile> {
                         child: Observer(
                           builder: (_) => Text(
                             'Change network (current: ${store.settings.endpoint.info})', // for devs only
-                            style: context.textTheme.headlineMedium,
+                            style: context.headlineSmall,
                           ),
                         ),
                         onTap: () => Navigator.of(context).pushNamed(NetworkSelectPage.route),

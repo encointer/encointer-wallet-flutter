@@ -44,14 +44,14 @@ class CeremonyStep3Finish extends StatelessWidget {
                     Center(
                       child: Text(
                         l10n.thankYou,
-                        style: context.textTheme.displayMedium,
+                        style: context.displayMedium,
                       ),
                     ),
                     Center(
                       child: Text(
                         l10n.weHopeToSeeYouAtTheNextGathering,
                         textAlign: TextAlign.center,
-                        style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.5),
+                        style: context.displayMedium.copyWith(color: AppColors.encointerBlack, height: 1.5),
                       ),
                     ),
                     const SizedBox(height: 10),

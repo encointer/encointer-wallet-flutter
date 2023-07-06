@@ -50,7 +50,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
       appBar: AppBar(
         title: isEditing
             ? TextFormField(key: const Key('contact-name-field'), controller: _nameCtrl)
-            : Text(_nameCtrl.text, style: context.textTheme.displaySmall),
+            : Text(_nameCtrl.text, style: context.displaySmall),
         actions: [
           if (isEditing)
             IconButton(
@@ -130,7 +130,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     const SizedBox(width: 12),
                     Text(
                       l10n.tokenSend(store.encointer.community?.symbol ?? 'null'),
-                      style: context.textTheme.displaySmall,
+                      style: context.displaySmall,
                     ),
                   ],
                 ),
@@ -154,7 +154,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   children: [
                     const Icon(Iconsax.trash),
                     const SizedBox(width: 12),
-                    Text(l10n.contactDelete, style: context.textTheme.displaySmall)
+                    Text(l10n.contactDelete, style: context.displaySmall)
                   ],
                 ),
               ),
@@ -248,7 +248,7 @@ class EndorseButton extends StatelessWidget {
                 children: [
                   const Icon(Iconsax.verify),
                   const SizedBox(width: 12),
-                  Text(l10n.contactEndorse, style: context.textTheme.displaySmall)
+                  Text(l10n.contactEndorse, style: context.displaySmall)
                 ],
               ),
             ),

@@ -25,7 +25,7 @@ class ErrorView extends StatelessWidget {
           const SizedBox(height: 40),
           Text(
             l10n.error,
-            style: textTheme.displayLarge!.copyWith(color: AppColors.encointerGrey),
+            style: textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
