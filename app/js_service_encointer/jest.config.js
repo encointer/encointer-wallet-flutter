@@ -11,12 +11,6 @@ export default {
   transformIgnorePatterns: [],
   verbose: true,
   setupFilesAfterEnv: ['<rootDir>/setup-jest.js'],
-  transform: {
-    "^.+\\.tsx?$": "ts-jest",
-    "^.+\\.(js|jsx)$": "babel-jest"
-  },
-  transformIgnorePatterns: ['node_modules/(?!tslib|rxjs)'],
-  resolver: "jest-ts-webcompat-resolver",
   moduleNameMapper:{"^rxjs$": "rxjs"}
 
 };
