@@ -193,10 +193,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (_submitting) const CupertinoActivityIndicator(),
-                    Text(
-                      l10n.contactSave,
-                      style: context.textTheme.displaySmall!.copyWith(color: context.colorScheme.background),
-                    ),
+                    Text(l10n.contactSave),
                   ],
                 ),
               ),

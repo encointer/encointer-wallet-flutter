@@ -346,9 +346,8 @@ class _AssetsViewState extends State<AssetsView> {
                     final store = context.read<AppStore>();
                     final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                     await store.encointer.setChosenCid(communityStores[index].cid);
-                    if (RepositoryProvider.of<AppSettings>(context).developerMode) {
-                      context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
-                    }
+
+                    context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
                   },
                   onAddIconPressed: () {
                     Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
