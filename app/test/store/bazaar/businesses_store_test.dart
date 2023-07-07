@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:encointer_wallet/page-encointer/new_bazaar/logic/businesses_store.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/dropdown_widget.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/dropdown_widget.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 
 void main() {
