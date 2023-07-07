@@ -66,6 +66,21 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
+  late final _$colorSchemeAtom = Atom(name: '_AppSettingsBase.colorScheme', context: context);
+
+  @override
+  ColorScheme get colorScheme {
+    _$colorSchemeAtom.reportRead();
+    return super.colorScheme;
+  }
+
+  @override
+  set colorScheme(ColorScheme value) {
+    _$colorSchemeAtom.reportWrite(value, super.colorScheme, () {
+      super.colorScheme = value;
+    });
+  }
+
   late final _$setLocaleAsyncAction = AsyncAction('_AppSettingsBase.setLocale', context: context);
 
   @override
@@ -110,6 +125,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     return '''
 locale: ${locale},
 developerMode: ${developerMode},
+colorScheme: ${colorScheme},
 isIntegrationTest: ${isIntegrationTest},
 theme: ${theme}
     ''';
