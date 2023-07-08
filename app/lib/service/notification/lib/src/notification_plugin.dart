@@ -22,7 +22,7 @@ class NotificationPlugin {
   static Future<void> setup() async {
     await _configureLocalTimeZone();
 
-    const initializationSettingsAndroid = AndroidInitializationSettings('launcher_icon');
+    const initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
 
     const initializationSettingsIOS = DarwinInitializationSettings(
       requestAlertPermission: false,
