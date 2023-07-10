@@ -560,7 +560,7 @@ abstract class _EncointerStore with Store {
     final assigned = communityAccount?.isAssigned ?? false;
     final hasClaims = (communityAccount?.scannedAttendeesCount ?? 0) > 0;
 
-    return currentPhase == CeremonyPhase.Attesting && assigned && hasClaims;
+    return currentPhase == CeremonyPhase.Attesting && assigned && hasClaims && !meetupCompleted;
   }
 
   @computed
