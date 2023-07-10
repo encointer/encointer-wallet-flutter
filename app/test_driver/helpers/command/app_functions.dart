@@ -12,6 +12,4 @@ String toggleDeveloperMode(AppSettings appSettings, bool devMode) {
   return 'dev mode-${appSettings.developerMode}';
 }
 
-String getBiometricAuthState(AppService appService) {
-  return appService.getBiometricAuthState ?? '';
-}
+String getBiometricAuthState(AppService appService) => '';
