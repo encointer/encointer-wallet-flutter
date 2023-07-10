@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/custom/colors/app_colors.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/logic/businesses_store.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 
 class DropdownWidget extends StatefulWidget {
   const DropdownWidget({super.key});

@@ -2,9 +2,9 @@ import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/page-encointer/new_bazaar/logic/businesses_store.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/view/businesses_view.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/dropdown_widget.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/view/businesses_view.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
 class BazaarPage extends StatelessWidget {

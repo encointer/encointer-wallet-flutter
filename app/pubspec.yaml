@@ -14,7 +14,7 @@ description: EncointerWallet made with Flutter.
 
 # bump version already while working on new release, bumping build number at the same time
 # bump build number even more, if needed to clarify what's deployed
-version: 1.10.0+863
+version: 1.10.1+864
 
 publish_to: none
 
@@ -56,7 +56,7 @@ dependencies:
   cupertino_icons: ^1.0.5
   # QR code generator & reader
   pretty_qr_code: ^2.0.3
-  mobile_scanner: ^3.2.0
+  mobile_scanner: ^3.3.0
   aes_ecb_pkcs5_flutter: ^0.1.2
   permission_handler: ^10.3.0
   flutter_svg: ^2.0.6
@@ -134,6 +134,7 @@ flutter:
     - assets/avatars/
     - assets/nctr_logo.svg
     - assets/nctr_logo_faces_only_thick.svg
+   
 
   # fonts:
   #   - family: Schyler
