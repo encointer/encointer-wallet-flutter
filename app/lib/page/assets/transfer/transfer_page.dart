@@ -155,7 +155,7 @@ class _TransferPageState extends State<TransferPage> {
                     }),
                     Text(
                       l10n.yourBalanceFor(Fmt.accountName(context, store.account.currentAccount)),
-                      style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
+                      style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
@@ -293,7 +293,7 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
         // need text base line alignment
         text: TextSpan(
           text: '${Fmt.doubleFormat(available, length: 6)} ',
-          style: context.displayMedium.copyWith(color: AppColors.encointerBlack),
+          style: context.displaySmall.copyWith(color: AppColors.encointerBlack),
           children: const <TextSpan>[
             TextSpan(
               text: 'ⵐ',

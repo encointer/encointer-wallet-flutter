@@ -90,7 +90,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         children: <Widget>[
           Text(
             _selectedNetwork.info!.toUpperCase(),
-            style: context.titleMedium.copyWith(color: context.colorScheme.primary),
+            style: context.bodyLarge.copyWith(color: context.colorScheme.primary),
           ),
         ],
       ),

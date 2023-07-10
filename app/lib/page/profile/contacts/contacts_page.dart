@@ -23,7 +23,6 @@ class ContactsPage extends StatelessWidget {
             appBar: AppBar(
               title: Text(
                 context.l10n.addressBook,
-                style: Theme.of(context).textTheme.displaySmall,
               ),
               iconTheme: const IconThemeData(
                 color: Color(0xff666666), //change your color here

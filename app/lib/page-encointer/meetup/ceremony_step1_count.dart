@@ -62,14 +62,14 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         l10n.count,
-                        style: context.displayMedium,
+                        style: context.headlineSmall,
                       ),
                     ),
                     Center(
                       child: Text(
                         l10n.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
-                        style: context.displayMedium.copyWith(color: Colors.black, height: 2),
+                        style: context.headlineSmall.copyWith(color: Colors.black, height: 2),
                       ),
                     ),
                     const SizedBox(height: 48),
@@ -92,7 +92,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     const SizedBox(width: 12),
                     Text(
                       l10n.next,
-                      style: context.displaySmall.copyWith(color: context.colorScheme.background),
+                      // style: context.displaySmall.copyWith(color: context.colorScheme.background),
                     ),
                   ],
                 ),

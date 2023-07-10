@@ -46,7 +46,6 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
             widget.itemData.name ?? '',
             style: context.bodyMedium.copyWith(color: context.colorScheme.secondary),
             textAlign: TextAlign.center,
-            maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
         ),

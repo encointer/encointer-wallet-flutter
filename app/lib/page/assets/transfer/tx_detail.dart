@@ -37,9 +37,8 @@ class TxDetail extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8),
           width: 80,
           child: Text(name,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                // color: context.theme.unselectedWidgetColor,
               )));
     }
 

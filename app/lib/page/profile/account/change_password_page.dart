@@ -132,13 +132,13 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         Text(
                           l10n.hintEnterCurrentPin,
                           textAlign: TextAlign.center,
-                          style: context.displayMedium,
+                          style: context.headlineSmall,
                         ),
                         const SizedBox(height: 16),
                         Text(
                           l10n.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
-                          style: context.displayMedium.copyWith(color: Colors.black),
+                          style: context.headlineSmall.copyWith(color: Colors.black),
                         ),
                         const SizedBox(height: 30),
                         EncointerTextFormField(
@@ -195,7 +195,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     if (_submitting) const CupertinoActivityIndicator(),
                     Text(
                       l10n.contactSave,
-                      style: context.displaySmall,
                     ),
                   ],
                 ),

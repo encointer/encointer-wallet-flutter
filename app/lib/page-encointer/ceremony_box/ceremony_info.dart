@@ -54,7 +54,7 @@ class CeremonyInfo extends StatelessWidget {
                     else
                       Text(
                         context.l10n.gatheringSuccessfullyCompleted,
-                        style: context.headlineMedium.copyWith(color: AppColors.encointerBlack),
+                        style: context.titleMedium.copyWith(color: AppColors.encointerBlack),
                       ),
                     CeremonyInfoAndCalendar(
                       nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),

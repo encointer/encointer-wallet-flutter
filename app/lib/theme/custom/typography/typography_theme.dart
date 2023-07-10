@@ -15,12 +15,12 @@ extension TypographyTheme on BuildContext {
   TextStyle get titleLarge => textTheme.titleLarge!.copyWith(color: colorScheme.onSurface);
   TextStyle get titleMedium => textTheme.titleMedium!.copyWith(color: colorScheme.onSurface);
   TextStyle get titleSmall => textTheme.titleSmall!.copyWith(color: colorScheme.onSurface);
-  TextStyle get labelLarge => textTheme.labelLarge!.copyWith(color: colorScheme.onSurface);
-  TextStyle get labelMedium => textTheme.labelMedium!.copyWith(color: colorScheme.onSurface);
-  TextStyle get labelSmall => textTheme.labelSmall!.copyWith(color: colorScheme.onSurface);
   TextStyle get bodyLarge => textTheme.bodyLarge!.copyWith(color: colorScheme.onSurface);
   TextStyle get bodyMedium => textTheme.bodyMedium!.copyWith(color: colorScheme.onSurface);
   TextStyle get bodySmall => textTheme.bodySmall!.copyWith(color: colorScheme.onSurface);
+  TextStyle get labelLarge => textTheme.labelLarge!.copyWith(color: colorScheme.onSurface);
+  TextStyle get labelMedium => textTheme.labelMedium!.copyWith(color: colorScheme.onSurface);
+  TextStyle get labelSmall => textTheme.labelSmall!.copyWith(color: colorScheme.onSurface);
 }
 // mixin TypographyTheme {
 //   TextTheme textTheme(ColorScheme colorScheme) {

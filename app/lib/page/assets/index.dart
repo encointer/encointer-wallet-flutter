@@ -221,7 +221,7 @@ class _AssetsViewState extends State<AssetsView> {
                                   ),
                                   Text(
                                     '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
-                                    style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
+                                    style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
                                   ),
                                 ],
                               )

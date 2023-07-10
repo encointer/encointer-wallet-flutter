@@ -21,7 +21,7 @@ class PinInfo extends StatelessWidget {
               maxLines: 7,
               textAlign: TextAlign.justify,
               softWrap: true,
-              style: context.headlineMedium.copyWith(color: AppColors.encointerGrey),
+              style: context.bodyMedium.copyWith(color: AppColors.encointerGrey),
             ),
           ),
         ],

@@ -59,7 +59,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         Center(
           child: Text(
             l10n.pinSecure,
-            style: context.displayMedium,
+            style: context.headlineSmall,
             textAlign: TextAlign.center,
           ),
         ),
@@ -67,7 +67,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         Text(
           l10n.pinHint,
           textAlign: TextAlign.center,
-          style: context.displayMedium.copyWith(color: AppColors.encointerBlack),
+          style: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(

@@ -16,7 +16,6 @@ class AnnouncementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final local = Localizations.localeOf(context);
     final cardStore = context.watch<AnnouncementCardStore>();
     return Padding(
@@ -34,15 +33,15 @@ class AnnouncementCard extends StatelessWidget {
               title: Align(
                 alignment: Alignment.centerRight,
                 child: Text(DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
-                    style: Theme.of(context).textTheme.bodySmall),
+                    style: context.bodySmall),
               ),
-              subtitle: Text(announcement.title, style: textTheme.titleMedium),
+              subtitle: Text(announcement.title, style: context.titleMedium),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
               child: Text(
                 announcement.content,
-                style: textTheme.bodyMedium?.copyWith(height: 1.5),
+                style: context.bodyMedium.copyWith(height: 1.5),
               ),
             ),
             Row(
