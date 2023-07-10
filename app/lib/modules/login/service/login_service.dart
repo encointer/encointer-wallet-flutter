@@ -15,11 +15,18 @@ final class LoginService {
 
   static const isDeviceSupportKey = 'is-device-support-key';
   static const biometricAuthStateKey = 'biometric-auth-state';
+  static const oldBiometricAuthStateKey = 'biometric-auth-enabled';
   static const pinStorageKey = 'pin-key';
 
   BiometricAuthState? get getBiometricAuthState {
     final biometricAuthState = preferences.getString(biometricAuthStateKey);
-    return biometricAuthState != null ? BiometricAuthState.fromString(biometricAuthState) : null;
+    if (biometricAuthState != null) return BiometricAuthState.fromString(biometricAuthState);
+    final biometricAuthenticationEnabled = preferences.getBool(oldBiometricAuthStateKey);
+    return switch (biometricAuthenticationEnabled) {
+      true => BiometricAuthState.enabled,
+      false => BiometricAuthState.disabled,
+      _ => null,
+    };
   }
 
   Future<void> setBiometricAuthState(BiometricAuthState biometricAuthState) async {
