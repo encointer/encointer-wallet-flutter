@@ -68,10 +68,10 @@ abstract class _AnnouncementStoreBase with Store {
   }
 
   @action
-  Future<void> getGlobalAnnouncements({bool devMode = false}) async {
+  Future<void> getGlobalAnnouncements({bool devMode = false, required String langCode}) async {
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final globalAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
-      '${getEncointerFeedLink(devMode: devMode)}/announcements/global/en/announcements.json',
+      '${getEncointerFeedLink(devMode: devMode)}/announcements/global/$langCode/announcements.json',
       fromJson: Announcement.fromJson,
     );
 

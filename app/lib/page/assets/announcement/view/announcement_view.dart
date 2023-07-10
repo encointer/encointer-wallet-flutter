@@ -55,10 +55,10 @@ class _AnnouncementViewState extends State<AnnouncementView> {
 
   Future<void> _getAnnouncements() async {
     final devMode = context.read<AppSettings>().developerMode;
+    final languageCode = Localizations.localeOf(context).languageCode;
     await Future.wait([
-      _announcementStore.getGlobalAnnouncements(devMode: devMode),
-      _announcementStore.getCommunityAnnouncements(widget.cid,
-          devMode: devMode, langCode: Localizations.localeOf(context).languageCode),
+      _announcementStore.getGlobalAnnouncements(devMode: devMode, langCode: languageCode),
+      _announcementStore.getCommunityAnnouncements(widget.cid, devMode: devMode, langCode: languageCode),
     ]);
   }
 }
