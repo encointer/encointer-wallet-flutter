@@ -532,4 +532,16 @@ class EncointerApi {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.
     return business1MockOfferings;
   }
+
+  Future<Map<int, CommunityReputation>> getContactsReputation(String address) async {
+    final reputations =
+        await jsApi.evalJavascript<List<dynamic>>('encointer.getReputations("$address")').then(reputationsFromList);
+
+    Log.d('api: getContactsReputation: $reputations', 'EncointerApi');
+    if (reputations.isNotEmpty) {
+      return reputations;
+    } else {
+      return <int, CommunityReputation>{};
+    }
+  }
 }

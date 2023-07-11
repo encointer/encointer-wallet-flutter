@@ -566,5 +566,7 @@
                 "example": "true"
             }
         }
-    }
+    },
+    "newbie" : "Newbie",
+    "noContactsAvailable": "No contacts available"
 }

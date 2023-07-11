@@ -414,5 +414,7 @@
     "successfullySentNAttestations": "Du hast erfolgreich Bezeugungen für {participantsCount} andere Leute eingereicht.",
     "tokenSend": "{symbol} senden",
     "communityWithName": "{name} Gemeinschaft",
-    "verifyAuthTitle": "{useBioAuth, select, true{deine Identität} false{deine PIN} other{}} überprüfen, um die Transaktion abzuschließen."
+    "verifyAuthTitle": "{useBioAuth, select, true{deine Identität} false{deine PIN} other{}} überprüfen, um die Transaktion abzuschließen.",
+    "newbie" : "Neuling",
+    "noContactsAvailable": "Keine Kontakte verfügbar"
 }

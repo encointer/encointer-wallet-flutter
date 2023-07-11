@@ -59,6 +59,7 @@ abstract class _SettingsStore with Store {
   @observable
   Map? networkConst = {};
 
+  /// Contacts that a saved locally on a users phone
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
 
@@ -101,6 +102,7 @@ abstract class _SettingsStore with Store {
     return ls;
   }
 
+  /// All contacts, sum of a. cotnacts from user's device, b. contacts from server
   @computed
   List<AccountData> get contactListAll {
     final ls = List<AccountData>.of(rootStore.account.accountList)..addAll(contactList);

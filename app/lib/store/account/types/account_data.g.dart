@@ -14,7 +14,10 @@ AccountData _$AccountDataFromJson(Map<String, dynamic> json) => AccountData()
   ..encoding = json['encoding'] as Map<String, dynamic>?
   ..meta = json['meta'] as Map<String, dynamic>?
   ..memo = json['memo'] as String?
-  ..observation = json['observation'] as bool?;
+  ..observation = json['observation'] as bool?
+  ..reputation = (json['reputation'] as Map<String, dynamic>).map(
+    (k, e) => MapEntry(int.parse(k), CommunityReputation.fromJson(e as Map<String, dynamic>)),
+  );
 
 Map<String, dynamic> _$AccountDataToJson(AccountData instance) => <String, dynamic>{
       'name': instance.name,
@@ -25,4 +28,5 @@ Map<String, dynamic> _$AccountDataToJson(AccountData instance) => <String, dynam
       'meta': instance.meta,
       'memo': instance.memo,
       'observation': instance.observation,
+      'reputation': instance.reputation.map((k, e) => MapEntry(k.toString(), e.toJson())),
     };

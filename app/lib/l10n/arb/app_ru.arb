@@ -414,5 +414,7 @@
     "successfullySentNAttestations": "Вы успешно отправили аттестации {participantsCount} других людей.",
     "tokenSend": "Отправить {symbol}",
     "communityWithName": "Сообщество {name}",
-    "verifyAuthTitle": "Для завершения транзакции {useBioAuth, select, true{подтвердите вашу личность} false{введите PIN-код} other{}}."
+    "verifyAuthTitle": "Для завершения транзакции {useBioAuth, select, true{подтвердите вашу личность} false{введите PIN-код} other{}}.",
+    "newbie" : "Новичок",
+    "noContactsAvailable": "Нет доступных контактов"
 }
