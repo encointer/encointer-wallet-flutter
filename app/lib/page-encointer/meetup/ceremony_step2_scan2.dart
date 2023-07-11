@@ -58,7 +58,7 @@ class CeremonyStep2Scan extends StatelessWidget {
           Center(
             child: Text(
               l10n.scan,
-              style: context.titleLarge.copyWith(color: context.colorScheme.primary, height: 1.25),
+              style: context.titleLarge.copyWith(color: context.colorScheme.primary),
             ),
           ),
           Center(
@@ -67,7 +67,7 @@ class CeremonyStep2Scan extends StatelessWidget {
               child: Text(
                 l10n.scanDescriptionForMeetup,
                 textAlign: TextAlign.center,
-                style: context.titleLarge,
+                style: context.titleLarge.copyWith(height: 1.25),
               ),
             ),
           ),
@@ -94,7 +94,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(width: 12, height: 60),
                   Text(
                     l10n.closeGathering,
-                 
+                    style: context.bodyLarge.copyWith(color: context.colorScheme.primary),
                   ),
                 ],
               ),
@@ -114,7 +114,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     l10n.scanOthers,
-                    // style: context.displaySmall.copyWith(color: context.colorScheme.background),
+                    style: context.titleMedium.copyWith(color: context.colorScheme.background),
                   ),
                 ],
               ),

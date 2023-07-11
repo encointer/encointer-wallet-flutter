@@ -62,14 +62,14 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         l10n.count,
-                        style: context.headlineSmall,
+                        style: context.titleLarge.copyWith(color: context.colorScheme.primary),
                       ),
                     ),
                     Center(
                       child: Text(
                         l10n.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
-                        style: context.headlineSmall.copyWith(color: Colors.black, height: 2),
+                        style: context.titleLarge.copyWith(height: 2),
                       ),
                     ),
                     const SizedBox(height: 48),
