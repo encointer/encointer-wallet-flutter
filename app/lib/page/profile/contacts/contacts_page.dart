@@ -22,7 +22,7 @@ class ContactsPage extends StatefulWidget {
 }
 
 class _ContactsPageState extends State<ContactsPage> {
-  late final ContactsPageStore _contactsPageStore;
+  late ContactsPageStore _contactsPageStore;
 
   @override
   void didChangeDependencies() {

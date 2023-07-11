@@ -69,6 +69,13 @@ mixin _$ContactsPageStore on _ContactsPageStore, Store {
     return _$_getContactsReputationAsyncAction.run(() => super._getContactsReputation());
   }
 
+  late final _$_getParticipantTypeAsyncAction = AsyncAction('_ContactsPageStore._getParticipantType', context: context);
+
+  @override
+  Future<void> _getParticipantType() {
+    return _$_getParticipantTypeAsyncAction.run(() => super._getParticipantType());
+  }
+
   @override
   String toString() {
     return '''
