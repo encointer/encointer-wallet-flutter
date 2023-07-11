@@ -49,7 +49,7 @@ class BusinessesCard extends StatelessWidget {
               ),
               Expanded(
                 child: ListTile(
-                  contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+                  contentPadding: const EdgeInsets.all(10),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -64,7 +64,12 @@ class BusinessesCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 28),
-                      Text(businesses.name, style: textTheme.labelLarge),
+                      Text(
+                        businesses.name,
+                        style: textTheme.labelLarge,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
                       const SizedBox(height: 8),
                       Text(
                         businesses.description,
