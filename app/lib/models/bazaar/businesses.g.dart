@@ -50,5 +50,5 @@ const _$CategoryEnumMap = {
 
 const _$StatusEnumMap = {
   Status.highlight: 'highlight',
-  Status.newlyAdded: 'new',
+  Status.recently: 'new',
 };

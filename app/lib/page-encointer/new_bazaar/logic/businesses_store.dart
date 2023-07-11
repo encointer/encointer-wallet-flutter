@@ -68,8 +68,8 @@ abstract class _BusinessesStoreBase with Store {
 
   void _sortByStatus() {
     sortedbBusinesses.sort((a, b) {
-      if (a.status == Status.highlight && b.status == Status.newlyAdded) return -1;
-      if (a.status == Status.newlyAdded && b.status == Status.highlight) return 1;
+      if (a.status == Status.highlight && b.status == Status.recently) return -1;
+      if (a.status == Status.recently && b.status == Status.highlight) return 1;
       if (a.status == null && b.status == Status.highlight) return 1;
       if (a.status == Status.highlight && b.status == null) return -1;
       return 0;
@@ -105,7 +105,7 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   @action
-  void sortBusinessesByCategories({required Category category}) {
+  void filterBusinessesByCategory({required Category category}) {
     if (category == Category.all) {
       sortedbBusinesses = <Businesses>[];
       sortedbBusinesses.addAll(businesses);

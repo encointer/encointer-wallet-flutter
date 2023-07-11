@@ -79,11 +79,11 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
   late final _$_BusinessesStoreBaseActionController = ActionController(name: '_BusinessesStoreBase', context: context);
 
   @override
-  void sortBusinessesByCategories({required Category category}) {
+  void filterBusinessesByCategory({required Category category}) {
     final _$actionInfo =
-        _$_BusinessesStoreBaseActionController.startAction(name: '_BusinessesStoreBase.sortBusinessesByCategories');
+        _$_BusinessesStoreBaseActionController.startAction(name: '_BusinessesStoreBase.filterBusinessesByCategory');
     try {
-      return super.sortBusinessesByCategories(category: category);
+      return super.filterBusinessesByCategory(category: category);
     } finally {
       _$_BusinessesStoreBaseActionController.endAction(_$actionInfo);
     }

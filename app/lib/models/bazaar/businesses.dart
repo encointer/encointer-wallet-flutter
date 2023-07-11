@@ -43,7 +43,7 @@ class Businesses {
     switch (status) {
       case Status.highlight:
         return const Color(0xFFE8FBFF);
-      case Status.newlyAdded:
+      case Status.recently:
         return Colors.lightGreen.shade100;
       // ignore: no_default_cases
       default:
@@ -68,7 +68,7 @@ enum Status {
   @JsonValue('highlight')
   highlight('Highlight', Color(0xFF00A3FF)),
   @JsonValue('new')
-  newlyAdded('New', Color(0xFF00BA77));
+  recently('New', Color(0xFF00BA77));
 
   const Status(
     this.name,
@@ -86,10 +86,10 @@ const businessesMockData = {
   'businesses': [
     {
       'name': 'HIGHLIGHTED',
-      'description': 'wir offerieren kÃ¼hles Bier',
+      'description': 'wir offerieren kühles Bier',
       'category': 'food',
       'photo': null,
-      'address': 'Technoparkstrasse 1, 8005 ZÃ¼rich',
+      'address': 'Technoparkstrasse 1, 8005 Zürich',
       'telephone': null,
       'email': null,
       'longitude': '8.515377938747404',
@@ -101,10 +101,10 @@ const businessesMockData = {
     },
     {
       'name': 'NEW',
-      'description': 'wir offerieren kÃ¼hles Bier',
+      'description': 'wir offerieren kühles Bier',
       'category': 'fashion_clothing',
       'photo': null,
-      'address': 'Technoparkstrasse 1, 8005 ZÃ¼rich',
+      'address': 'Technoparkstrasse 1, 8005 Zürich',
       'telephone': null,
       'email': null,
       'longitude': '8.515377938747404',
@@ -116,10 +116,10 @@ const businessesMockData = {
     },
     {
       'name': 'NORMAL',
-      'description': 'wir offerieren kÃ¼hles Bier',
+      'description': 'wir offerieren kühles Bier',
       'category': 'food_beverage_store',
       'photo': null,
-      'address': 'Technoparkstrasse 1, 8005 ZÃ¼rich',
+      'address': 'Technoparkstrasse 1, 8005 Zürich',
       'telephone': null,
       'email': null,
       'longitude': '8.515377938747404',

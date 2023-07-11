@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
@@ -41,9 +43,9 @@ class BusinessesCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 28),
-                  Text(businesses.name, style: textTheme.labelLarge),
+                  Text(utf8convert(businesses.name), style: textTheme.labelLarge),
                   const SizedBox(height: 8),
-                  Text(businesses.description, style: textTheme.bodyMedium),
+                  Text(utf8convert(businesses.description), style: textTheme.bodyMedium),
                 ],
               ),
             ),
@@ -51,5 +53,11 @@ class BusinessesCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// To display, correctly, german names coming from server
+  String utf8convert(String text) {
+    final bytes = text.codeUnits;
+    return utf8.decode(bytes);
   }
 }

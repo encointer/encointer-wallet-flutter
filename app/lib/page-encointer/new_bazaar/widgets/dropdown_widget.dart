@@ -45,7 +45,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         if (category != null && selectedCategory != category) {
           selectedCategory = category;
 
-          context.read<BusinessesStore>().sortBusinessesByCategories(category: selectedCategory);
+          context.read<BusinessesStore>().filterBusinessesByCategory(category: selectedCategory);
         }
       },
       inputDecorationTheme: InputDecorationTheme(
