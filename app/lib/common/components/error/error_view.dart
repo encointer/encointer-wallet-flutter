@@ -26,14 +26,12 @@ class ErrorView extends StatelessWidget {
           Text(
             l10n.error,
             style: context.headlineMedium.copyWith(color: AppColors.encointerGrey),
-      
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
           Text(
             errorMessage ?? l10n.unknownError,
             style: context.titleLarge.copyWith(color: AppColors.encointerGrey),
-            
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),

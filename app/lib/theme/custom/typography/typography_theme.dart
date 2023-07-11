@@ -22,25 +22,3 @@ extension TypographyTheme on BuildContext {
   TextStyle get labelMedium => textTheme.labelMedium!.copyWith(color: colorScheme.onSurface);
   TextStyle get labelSmall => textTheme.labelSmall!.copyWith(color: colorScheme.onSurface);
 }
-// mixin TypographyTheme {
-//   TextTheme textTheme(ColorScheme colorScheme) {
-//     return TextTheme(
-//       displayLarge: TextStyle(
-//         fontSize: 66,
-//         color: colorScheme.primary,
-//       ),
-//       displayMedium: TextStyle(
-//         fontSize: 22,
-//         color: colorScheme.primary,
-//       ),
-//       displaySmall: TextStyle(
-//         fontSize: 19,
-//         color: colorScheme.primary,
-//       ),
-//       headlineMedium: TextStyle(
-//         fontSize: 14,
-//         color: colorScheme.primary,
-//       ),
-//     );
-//   }
-// }
