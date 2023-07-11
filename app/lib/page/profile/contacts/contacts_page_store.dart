@@ -39,7 +39,7 @@ abstract class _ContactsPageStore with Store {
       await Future.forEach(contactList, (AccountData contact) async {
         final address = Fmt.ss58Encode(contact.pubKey, prefix: appStore.settings.endpoint.ss58!);
         final reputation = await webApi.encointer.getContactsReputation(address);
-        Log.d('_getContactsReputation: reputation = $reputation', _targetLogger);
+        Log.d('_getContactsReputation:  reputation = $reputation for address: $address', _targetLogger);
 
         contact.reputation = reputation;
         Log.d('_getContactsReputation: contact.reputation = ${contact.reputation}', _targetLogger);
@@ -54,9 +54,12 @@ abstract class _ContactsPageStore with Store {
         appStore.encointer.chosenCid!,
         contact.pubKey,
       );
-      Log.d('_getParticipantType: data = $data', _targetLogger);
+      Log.d('_getParticipantType: data = $data for pubKey: ${contact.pubKey}', _targetLogger);
       final registrationType = data.personal?.participantType;
-      Log.d('_getParticipantType: registrationType = $registrationType', _targetLogger);
+      if (registrationType != null) {
+        Log.d('_getParticipantType: registrationType = $registrationType', _targetLogger);
+        contact.participantType = registrationType;
+      }
     });
   }
 }

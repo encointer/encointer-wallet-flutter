@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:encointer_wallet/page/profile/contacts/contacts_page_store.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/extensions/extensions.dart';
@@ -80,7 +82,7 @@ class _ContactsPageState extends State<ContactsPage> {
 
                     final address =
                         Fmt.ss58Encode(contact.pubKey, prefix: _contactsPageStore.appStore.settings.endpoint.ss58!);
-
+                    log('ContactsPage ContactsPageStore ${contact.reputation}');
                     return ListTile(
                       leading: AddressIcon(address, contact.pubKey, size: 45),
                       title: Row(
