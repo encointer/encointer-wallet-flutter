@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/dropdown_widget.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/dropdown_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 

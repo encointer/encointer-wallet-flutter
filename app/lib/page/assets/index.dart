@@ -256,7 +256,9 @@ class _AssetsViewState extends State<AssetsView> {
                         const SizedBox(width: 3),
                         ActionButton(
                           key: const Key('go-transfer-history'),
-                          icon: Assets.images.assets.receiveSquare2.svg(),
+                          icon: Assets.images.assets.receiveSquare2.svg(
+                            colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
+                          ),
                           label: l10n.transferHistory,
                           onPressed: widget.store.encointer.communityBalance != null
                               ? () => Navigator.pushNamed(context, TransferHistoryView.route)
@@ -344,9 +346,8 @@ class _AssetsViewState extends State<AssetsView> {
                     final store = context.read<AppStore>();
                     final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                     await store.encointer.setChosenCid(communityStores[index].cid);
-                    if (RepositoryProvider.of<AppSettings>(context).developerMode) {
-                      context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
-                    }
+
+                    context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
                   },
                   onAddIconPressed: () {
                     Navigator.pushNamed(
