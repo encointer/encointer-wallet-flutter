@@ -350,7 +350,7 @@ class EncointerApi {
       final cid = store.encointer.chosenCid;
       final pubKey = store.account.currentAccountPubKey;
 
-      if (cid != null && pubKey != null) {
+      if (cid != null && pubKey != null && pubKey.isNotEmpty) {
         final address = store.account.currentAddress;
         final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
         store.encointer.setAggregatedAccountData(cid, address, data);

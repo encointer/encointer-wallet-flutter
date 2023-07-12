@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -41,8 +42,6 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 /// Getting confused with Assets (gen) while importing
 /// thus changed name to [AssetsView]
@@ -61,10 +60,10 @@ class _AssetsViewState extends State<AssetsView> {
   static const double avatarSize = 70;
   late PanelController _panelController;
   late PausableTimer _balanceWatchdog;
-  late Translations _dic;
   late AppSettings _appSettingsStore;
   late double _panelHeightOpen;
   final double _panelHeightClosed = 0;
+  late AppLocalizations l10n;
 
   @override
   void initState() {
@@ -77,10 +76,9 @@ class _AssetsViewState extends State<AssetsView> {
 
   @override
   void didChangeDependencies() {
-    _dic = I18n.of(context)!.translationsForLocale();
     _appSettingsStore = context.watch<AppSettings>();
     _startBalanceWatchdog();
-
+    l10n = context.l10n;
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
     _panelHeightOpen = min(
@@ -124,7 +122,7 @@ class _AssetsViewState extends State<AssetsView> {
   AppBar _appBar() {
     return AppBar(
       key: const Key('assets-index-appbar'),
-      title: Text(_dic.assets.home),
+      title: Text(l10n.home),
     );
   }
 
@@ -187,7 +185,7 @@ class _AssetsViewState extends State<AssetsView> {
                                     style: const TextStyle(fontSize: 60),
                                   ),
                                   Text(
-                                    '${_dic.assets.balance}, ${widget.store.encointer.community?.symbol}',
+                                    '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
                                     style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
                                   ),
                                 ],
@@ -198,7 +196,7 @@ class _AssetsViewState extends State<AssetsView> {
                                 child: (widget.store.encointer.chosenCid == null)
                                     ? SizedBox(
                                         width: double.infinity,
-                                        child: Text(_dic.assets.communityNotSelected, textAlign: TextAlign.center))
+                                        child: Text(l10n.communityNotSelected, textAlign: TextAlign.center))
                                     : const SizedBox(
                                         width: double.infinity,
                                         child: CupertinoActivityIndicator(),
@@ -214,74 +212,31 @@ class _AssetsViewState extends State<AssetsView> {
                     const SizedBox(height: 42),
                     Row(
                       children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(15)),
-                              ),
-                            ),
-                            key: const Key('qr-receive'),
-                            onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                              child: Column(
-                                children: [
-                                  const Icon(Iconsax.receive_square_2),
-                                  const SizedBox(height: 4),
-                                  Text(_dic.assets.receive),
-                                ],
-                              ),
-                            ),
-                          ),
+                        ActionButton(
+                          key: const Key('qr-receive'),
+                          icon: const Icon(Iconsax.receive_square_2),
+                          label: l10n.receive,
+                          onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                         ),
                         const SizedBox(width: 3),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(15)),
-                              ),
-                            ),
-                            key: const Key('go-transfer-history'),
-                            onPressed: widget.store.encointer.communityBalance != null
-                                ? () => Navigator.pushNamed(context, TransferHistoryView.route)
-                                : null,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                              child: Column(
-                                children: [
-                                  Assets.images.assets.receiveSquare2.svg(),
-                                  const SizedBox(height: 4),
-                                  Text(_dic.home.transferHistory),
-                                ],
-                              ),
-                            ),
+                        ActionButton(
+                          key: const Key('go-transfer-history'),
+                          icon: Assets.images.assets.receiveSquare2.svg(
+                            colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
                           ),
+                          label: l10n.transferHistory,
+                          onPressed: widget.store.encointer.communityBalance != null
+                              ? () => Navigator.pushNamed(context, TransferHistoryView.route)
+                              : null,
                         ),
                         const SizedBox(width: 3),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(15)),
-                              ),
-                            ),
-                            key: const Key('transfer'),
-                            onPressed: widget.store.encointer.communityBalance != null
-                                ? () => Navigator.pushNamed(context, TransferPage.route)
-                                : null,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                              child: Column(
-                                children: [
-                                  const Icon(Iconsax.send_sqaure_2),
-                                  const SizedBox(height: 4),
-                                  Text(_dic.assets.transfer),
-                                ],
-                              ),
-                            ),
-                          ),
+                        ActionButton(
+                          key: const Key('transfer'),
+                          icon: const Icon(Iconsax.send_sqaure_2),
+                          label: l10n.transfer,
+                          onPressed: widget.store.encointer.communityBalance != null
+                              ? () => Navigator.pushNamed(context, TransferPage.route)
+                              : null,
                         ),
                       ],
                     ),
@@ -305,7 +260,7 @@ class _AssetsViewState extends State<AssetsView> {
                             if (hasPendingIssuance) {
                               return SubmitButton(
                                 key: const Key('claim-pending-dev'),
-                                child: Text(_dic.assets.issuancePending),
+                                child: Text(l10n.issuancePending),
                                 onPressed: (context) => submitClaimRewards(
                                   context,
                                   widget.store,
@@ -317,7 +272,7 @@ class _AssetsViewState extends State<AssetsView> {
                               return _appSettingsStore.developerMode
                                   ? ElevatedButton(
                                       onPressed: null,
-                                      child: Text(_dic.assets.issuanceClaimed),
+                                      child: Text(l10n.issuanceClaimed),
                                     )
                                   : const SizedBox.shrink();
                             }
@@ -350,15 +305,14 @@ class _AssetsViewState extends State<AssetsView> {
             Column(children: [
               Observer(builder: (_) {
                 return SwitchAccountOrCommunity(
-                  rowTitle: _dic.home.switchCommunity,
+                  rowTitle: l10n.switchCommunity,
                   accountOrCommunityData: _allCommunities(),
                   onTap: (int index) async {
                     final store = context.read<AppStore>();
                     final communityStores = store.encointer.communityStores?.values.toList() ?? [];
                     await store.encointer.setChosenCid(communityStores[index].cid);
-                    if (RepositoryProvider.of<AppSettings>(context).developerMode) {
-                      context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
-                    }
+
+                    context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
                   },
                   onAddIconPressed: () {
                     Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
@@ -370,7 +324,7 @@ class _AssetsViewState extends State<AssetsView> {
               }),
               Observer(builder: (BuildContext context) {
                 return SwitchAccountOrCommunity(
-                  rowTitle: _dic.home.switchAccount,
+                  rowTitle: l10n.switchAccount,
                   accountOrCommunityData: initAllAccounts(),
                   onTap: (int index) {
                     setState(() {
@@ -501,12 +455,13 @@ class _AssetsViewState extends State<AssetsView> {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
-              final msg = _dic.assets.incomingConfirmed
-                  .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', community.metadata!.symbol)
-                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+              final msg = l10n.incomingConfirmed(
+                delta,
+                community.metadata!.symbol,
+                widget.store.account.currentAccount.name,
+              );
               Log.d('[home:balanceWatchdog] $msg', 'Assets');
-              NotificationPlugin.showNotification(45, _dic.assets.fundsReceived, msg, cid: cidStr);
+              NotificationPlugin.showNotification(45, l10n.fundsReceived, msg, cid: cidStr);
             }
           }
           if (cid == widget.store.encointer.chosenCid) {

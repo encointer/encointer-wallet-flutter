@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -19,7 +18,7 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class AccountManagePage extends StatefulWidget {
@@ -52,30 +51,20 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   void _onDeleteAccount(BuildContext context, AccountData accountToBeEdited) {
-    showCupertinoDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(I18n.of(context)!.translationsForLocale().profile.accountDelete),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            CupertinoButton(
-              key: const Key('delete-account'),
-              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                _appStore.account
-                    .removeAccount(accountToBeEdited)
-                    .then((_) => _appStore.loadAccountCache())
-                    .then((_) => webApi.fetchAccountData());
-              },
-            ),
-          ],
-        );
+    LoginDialog.verifyPinOrBioAuth(
+      context,
+      titleText: context.l10n.accountDelete,
+      onSuccess: (v) async {
+        await _appStore.account
+            .removeAccount(accountToBeEdited)
+            .then((_) => _appStore.loadAccountCache())
+            .then((_) => webApi.fetchAccountData());
+        if (_appStore.account.accountListAll.isEmpty) {
+          await context.read<LoginStore>().clearPin();
+          await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
+        } else {
+          Navigator.pop(context);
+        }
       },
     );
   }
@@ -104,11 +93,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) async {
-    await AppAlert.showPasswordInputDialog(
+    await LoginDialog.verifyPinOrBioAuth(
       context,
-      showCancelButton: true,
+      titleText: context.l10n.confirmPin,
       autoCloseOnSuccess: false,
-      account: _appStore.account.currentAccount,
       onSuccess: (password) async {
         final isMnemonic =
             await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
@@ -122,12 +110,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
             'type': AccountStore.seedTypeMnemonic,
           });
         } else {
-          final dic = I18n.of(context)!.translationsForLocale();
+          final l10n = context.l10n;
           AppAlert.showErrorDialog(
             context,
-            title: Text(dic.profile.noMnemonicFound),
-            errorText: dic.profile.importedWithRawSeedHenceNoMnemonic,
-            buttontext: dic.home.ok,
+            title: Text(l10n.noMnemonicFound),
+            errorText: l10n.importedWithRawSeedHenceNoMnemonic,
+            buttontext: l10n.ok,
           );
         }
       },
@@ -136,7 +124,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     final h3 = context.textTheme.displaySmall;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
@@ -225,7 +213,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           ),
                         ],
                       ),
-                      Text(dic.encointer.communities,
+                      Text(l10n.communities,
                           style: h3!.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
                     ],
                   ),
@@ -279,7 +267,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           children: [
                             const Icon(Iconsax.share),
                             const SizedBox(width: 12),
-                            Text(dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
+                            Text(l10n.accountShare, style: h3.copyWith(color: Colors.white)),
                           ],
                         ),
                         onPressed: () =>
@@ -308,12 +296,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                 AccountActionItemData(
                                   accountAction: AccountAction.delete,
                                   icon: Iconsax.trash,
-                                  title: dic.profile.deleteAccount,
+                                  title: l10n.deleteAccount,
                                 ),
                                 AccountActionItemData(
                                     accountAction: AccountAction.export,
                                     icon: Iconsax.export,
-                                    title: dic.profile.exportAccount),
+                                    title: l10n.exportAccount),
                               ]
                                   .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
                                         key: Key(data.accountAction.name),

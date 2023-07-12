@@ -32,12 +32,32 @@ void main() async {
     await createPin(driver, '0001');
   }, timeout: timeout120);
 
+  test('close biometric auth dialog', () async {
+    await tapNotNowButtonBiometricAuthEnable(driver);
+  }, timeout: timeout120);
+
   test('choosing cid', () async {
     await choosingCid(driver, 0);
   }, timeout: timeout120);
 
   test('home-page', () async {
     await homeInit(driver);
+  }, timeout: timeout120);
+
+  test('transfer-history-empty', () async {
+    await navigateToTransferHistoryPage(driver);
+    await checkTransferHistoryEmpty(driver);
+  }, timeout: timeout120);
+
+  test('import account Alice', () async {
+    await goToAddAcoountViewFromPanel(driver);
+    await importAccount(driver, 'Alice', '//Alice');
+    await closePanel(driver);
+  }, timeout: timeout120);
+
+  test('transfer-history', () async {
+    await navigateToTransferHistoryPage(driver);
+    await checkTransferHistory(driver);
   }, timeout: timeout120);
 
   test('qr-receive page', () async {
@@ -52,18 +72,12 @@ void main() async {
 
   test('change-network', () async {
     await goToNetworkView(driver);
-    await changeDevNetwork(driver, 'Tom');
+    await changeDevNetwork(driver, 'Alice');
   }, timeout: timeout120);
 
   test('change-community', () async {
     await goToHomeViewFromNavBar(driver);
     await changeCommunity(driver);
-  }, timeout: timeout120);
-
-  test('import account Alice', () async {
-    await goToAddAcoountViewFromPanel(driver);
-    await importAccount(driver, 'Alice', '//Alice');
-    await closePanel(driver);
   }, timeout: timeout120);
 
   test('Register [Bootstrapper] Alice', () async {
@@ -115,12 +129,13 @@ void main() async {
       await qrFromSendPageTestAndSendWithoutAmount(driver);
     }, timeout: timeout120);
 
-    test('ContactPage: add contact from contact-qr', () async {
-      await qrFromContactAddContactFromQrContact(driver);
+    test('Check Contact Manas', () async {
+      await navigateToContactsPage(driver);
+      await driver.waitFor(find.text('Manas'));
     }, timeout: timeout120);
 
-    test('ContactPage: add contact from invoice-qr', () async {
-      await qrFromContactAddContactFromQrInvoice(driver);
+    test('ContactPage: add contact from contact-qr', () async {
+      await qrFromContactAddContactFromQrContact(driver);
     }, timeout: timeout120);
 
     test('finished, go to HomePage', () async {
@@ -246,10 +261,12 @@ void main() async {
   test('delete account Bob', () async {
     await goToProfileViewFromNavBar(driver);
     await deleteAccountFromProfilePage(driver, 'Bob');
+    await verifyInputPin(driver);
   }, timeout: timeout120);
 
   test('delete account Charlie', () async {
     await deleteAccountFromProfilePage(driver, 'Charlie');
+    await verifyInputPin(driver);
   }, timeout: timeout120);
 
   test('create niewbie Account', () async {
@@ -332,6 +349,7 @@ void main() async {
 
   test('account delete from account manage page', () async {
     await deleteAccountFromAccountManagePage(driver);
+    await verifyInputPin(driver);
   }, timeout: timeout120);
 
   test('import account with menemonic phrase', () async {
@@ -346,7 +364,10 @@ void main() async {
   }, timeout: timeout120);
 
   test('delete all accounts', () async {
+    await goToProfileViewFromNavBar(driver);
     await deleteAllAccount(driver);
+    await verifyInputPin(driver);
+    await driver.waitFor(find.byValueKey('import-account'));
   }, timeout: timeout120);
 
   tearDownAll(() async => driver.close());

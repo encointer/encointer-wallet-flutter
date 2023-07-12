@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class OpeningHours extends StatelessWidget {
   const OpeningHours({super.key});
@@ -159,8 +159,8 @@ class AddOpeningIntervalForDay extends StatelessWidget {
         // ],
         autofocus: true,
         decoration: InputDecoration(
-            labelText: I18n.of(context)!.translationsForLocale().bazaar.timeIntervalAdd,
-            hintText: I18n.of(context)!.translationsForLocale().bazaar.openningHoursInputHint,
+            labelText: context.l10n.timeIntervalAdd,
+            hintText: context.l10n.openningHoursInputHint,
             contentPadding: const EdgeInsets.all(8),
             errorText: openingHoursForDay!.timeFormatError),
         controller: _textController,

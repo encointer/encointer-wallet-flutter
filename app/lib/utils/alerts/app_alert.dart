@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/utils/alerts/password_input_dialog.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class AppAlert {
   static Future<T?> showDialog<T>(
@@ -10,9 +8,11 @@ class AppAlert {
     Widget? title,
     Widget? content,
     List<Widget> actions = const <Widget>[],
+    bool barrierDismissible = false,
   }) {
     return showCupertinoDialog<T>(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: title,
@@ -39,10 +39,14 @@ class AppAlert {
     required BuildContext context,
     required VoidCallback onOK,
     required VoidCallback onCancel,
+    Key oKButtonKey = const Key('ok-button'),
+    Key cancelButtonKey = const Key('cansel-button'),
     Widget? title,
     Widget? content,
+    String? confirmText,
+    String? cancelText,
   }) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     return showCupertinoDialog<T>(
       context: context,
       builder: (BuildContext context) {
@@ -51,13 +55,14 @@ class AppAlert {
           content: content,
           actions: <Widget>[
             CupertinoButton(
+              key: cancelButtonKey,
               onPressed: onCancel,
-              child: Text(dic.home.cancel),
+              child: Text(cancelText ?? l10n.cancel),
             ),
             CupertinoButton(
-              key: const Key('ok-button'),
+              key: oKButtonKey,
               onPressed: onOK,
-              child: Text(dic.home.ok),
+              child: Text(confirmText ?? l10n.ok),
             ),
           ],
         );
@@ -71,41 +76,20 @@ class AppAlert {
     required String errorText,
     required String buttontext,
     void Function()? onPressed,
+    TextStyle? textStyle,
   }) {
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: title,
-          content: Text(errorText),
+          content: Text(errorText, style: textStyle),
           actions: <Widget>[
             CupertinoButton(
               onPressed: onPressed ?? () => Navigator.of(context).pop(),
-              child: Text(buttontext),
+              child: Text(buttontext, style: textStyle),
             ),
           ],
-        );
-      },
-    );
-  }
-
-  static Future<bool?> showPasswordInputDialog(
-    BuildContext context, {
-    required AccountData account,
-    required Future<void> Function(String) onSuccess,
-    bool canPop = true,
-    bool showCancelButton = false,
-    bool autoCloseOnSuccess = true,
-  }) async {
-    return showCupertinoDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return PasswordInputDialog(
-          account: account,
-          onSuccess: onSuccess,
-          canPop: canPop,
-          showCancelButton: showCancelButton,
-          autoCloseOnSuccess: autoCloseOnSuccess,
         );
       },
     );

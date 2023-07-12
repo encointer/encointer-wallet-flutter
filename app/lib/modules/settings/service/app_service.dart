@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppService {
@@ -7,22 +8,15 @@ class AppService {
 
   final SharedPreferences storage;
 
-  static const String localStorageLocaleKey = 'locale';
-  static const String enableBiometricAuthKey = 'biometric-auth-enabled';
+  static const localStorageLocaleKey = 'locale';
+  static const biometricAuthStateKey = 'biometric-auth-state';
 
-  Locale init() {
+  Locale get getLocale {
     final code = storage.getString(localStorageLocaleKey);
-    if (code != null) {
-      return Locale(code);
-    } else {
-      // ignore: deprecated_member_use
-      final deviceLocal = window.locale.languageCode;
-      if (deviceLocal == 'en' || deviceLocal == 'de' || deviceLocal == 'ru' || deviceLocal == 'fr') {
-        return Locale(deviceLocal);
-      } else {
-        return const Locale('en');
-      }
-    }
+    if (code != null) return Locale(code);
+    // ignore: deprecated_member_use
+    final deviceLocal = Locale(window.locale.languageCode);
+    return AppLocalizations.delegate.isSupported(deviceLocal) ? deviceLocal : const Locale('en');
   }
 
   Future<Locale> setLocale(String languageCode) async {
@@ -31,19 +25,5 @@ class AppService {
     return Locale(languageCode);
   }
 
-  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
-    await storage.setBool(enableBiometricAuthKey, value);
-  }
-
-  bool? getIsBiometricAuthenticationEnabled() => storage.getBool(enableBiometricAuthKey);
-
-  String getLocaleName(String code) {
-    return switch (code) {
-      'en' => 'English',
-      'de' => 'Deutsch',
-      'fr' => 'Français',
-      'ru' => 'Русский',
-      _ => '',
-    };
-  }
+  String? get getBiometricAuthState => storage.getString(biometricAuthStateKey);
 }

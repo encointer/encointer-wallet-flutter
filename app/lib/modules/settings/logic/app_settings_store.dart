@@ -19,17 +19,7 @@ abstract class _AppSettingsBase with Store {
   Locale locale = const Locale('en');
 
   @observable
-  bool isBiometricAuthenticationEnabled = false;
-
-  @observable
   bool developerMode = false;
-
-  final locales = const <Locale>[
-    Locale('en', ''),
-    Locale('de', ''),
-    Locale('fr', ''),
-    Locale('ru', ''),
-  ];
 
   @observable
   bool _isIntegrationTest = false;
@@ -39,20 +29,14 @@ abstract class _AppSettingsBase with Store {
   @computed
   bool get isIntegrationTest => _isIntegrationTest;
 
+  @observable
   ColorScheme colorScheme = AppColors.leu;
 
   @computed
   CustomTheme get theme => CustomTheme(colorScheme);
 
   @action
-  void init() => locale = _service.init();
-
-  @action
-  bool getIsBiometricAuthenticationEnabled() {
-    final value = _service.getIsBiometricAuthenticationEnabled();
-    if (value != null) isBiometricAuthenticationEnabled = value;
-    return isBiometricAuthenticationEnabled;
-  }
+  void init() => locale = _service.getLocale;
 
   @action
   Future<void> setLocale(String languageCode) async {
@@ -60,17 +44,8 @@ abstract class _AppSettingsBase with Store {
   }
 
   @action
-  Future<void> setIsBiometricAuthenticationEnabled(bool value) async {
-    isBiometricAuthenticationEnabled = value;
-    await _service.setIsBiometricAuthenticationEnabled(value);
-  }
-
-  String getLocaleName(String code) => _service.getLocaleName(code);
-
-  @action
   void toggleDeveloperMode() => developerMode = !developerMode;
 
-  /// TODO(edliiar): Activate GBD colors when received from designer.
   @action
   void changeTheme(String? cid) {
     final community = Community.fromCid(cid);

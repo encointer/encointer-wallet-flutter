@@ -13,7 +13,7 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class AddAccountView extends StatelessWidget {
   const AddAccountView({super.key});
@@ -22,10 +22,9 @@ class AddAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.profile.addAccount),
+        title: Text(context.l10n.addAccount),
         leading: const SizedBox.shrink(),
         actions: const [CloseButton()],
       ),
@@ -49,20 +48,20 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     final newAccountStore = context.watch<NewAccountStore>();
     return ScrollableForm(formKey: _formKey, listViewChildren: [
       const SizedBox(height: 80),
       Center(
         child: Text(
-          dic.profile.accountNameChoose,
+          l10n.accountNameChoose,
           style: context.textTheme.displayMedium,
         ),
       ),
       const SizedBox(height: 10),
       Center(
         child: Text(
-          dic.profile.accountNameChooseHint,
+          l10n.accountNameChooseHint,
           textAlign: TextAlign.center,
           style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
         ),
@@ -70,8 +69,8 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
       const SizedBox(height: 30),
       EncointerTextFormField(
         key: const Key('create-account-name'),
-        hintText: dic.account.createHint,
-        labelText: dic.profile.accountName,
+        hintText: l10n.createHint,
+        labelText: l10n.accountName,
         controller: _nameCtrl,
         validator: (v) {
           return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.accountList);
@@ -87,7 +86,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
           children: [
             const Icon(Iconsax.import_2),
             const SizedBox(width: 10),
-            Text(dic.home.accountImport, style: context.textTheme.displaySmall),
+            Text(l10n.accountImport, style: context.textTheme.displaySmall),
           ],
         ),
         onPressed: () {
@@ -107,10 +106,9 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
         key: const Key('create-account-confirm'),
         onPressed: () async {
           final newAccount = context.read<NewAccountStore>();
-          final appStore = context.read<AppStore>();
           if (_formKey.currentState!.validate() && !newAccount.loading) {
             newAccount.setName(_nameCtrl.text.trim());
-            final res = await newAccount.generateAccount(appStore, webApi);
+            final res = await newAccount.generateAccount(context, webApi);
             await navigate(
               context: context,
               type: res.operationResult,
@@ -127,7 +125,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
               if (newAccountStore.loading) {
                 return const CenteredActivityIndicator();
               } else {
-                return Text(dic.home.create);
+                return Text(l10n.create);
               }
             }),
           ],

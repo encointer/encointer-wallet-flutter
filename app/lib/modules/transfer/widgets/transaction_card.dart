@@ -4,19 +4,24 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/config/prod_community.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class TransactionCard extends StatelessWidget {
-  const TransactionCard({required this.transaction, super.key});
+  const TransactionCard(this.transaction, this.contacts, {super.key});
 
   final Transaction transaction;
+  final List<AccountData> contacts;
 
   @override
   Widget build(BuildContext context) {
     final appStore = context.watch<AppStore>();
+    final l10n = context.l10n;
     return Card(
       margin: const EdgeInsets.only(top: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -30,7 +35,9 @@ class TransactionCard extends StatelessWidget {
             children: [
               Icon(
                 transaction.type == TransactionType.incoming ? Iconsax.receive_square_2 : Iconsax.send_sqaure_2,
-                color: context.colorScheme.primary,
+                color: transaction.type == TransactionType.incoming
+                    ? context.colorScheme.primary
+                    : const Color(0xffD76D89),
                 size: 25,
               ),
               const SizedBox(width: 5),
@@ -44,19 +51,23 @@ class TransactionCard extends StatelessWidget {
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  transaction.getNameFromContacts(appStore.settings.contactList) ?? 'No Name',
-                  style: context.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 4),
-                Text(Fmt.address(transaction.counterParty) ?? ''),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      transaction.isIssuance
+                          ? l10n.communityWithName(
+                              Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name)
+                          : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
+                      style: context.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 4),
+                  Text(transaction.isIssuance ? l10n.incomeIssuance : Fmt.address(transaction.counterParty) ?? ''),
+                ],
+              ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text.rich(
@@ -84,7 +95,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(Fmt.dateTime(transaction.dateTime)),
+                Text(Fmt.dateTime(transaction.dateTime), style: context.textTheme.bodySmall),
               ],
             ),
           ],

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:encointer_wallet/utils/extensions/double/double_extension.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 part 'transfer_history.g.dart';
 
@@ -29,6 +30,7 @@ class Transaction {
   final String counterParty;
 
   /// The amount of the transaction.
+  @ShortenedDouble()
   final double amount;
 
   /// Determines the type of this [Transaction] based on its amount.
@@ -46,6 +48,11 @@ class Transaction {
     }
     return null;
   }
+
+  /// If the value of [counterParty] is 'ISSUANCE', the income has been distributed by the community.
+  /// If the income is provided by the community, the [name] should be displayed as
+  /// `{CommunityName} Community` and the [address] as `income issuance`.
+  bool get isIssuance => counterParty == 'ISSUANCE';
 }
 
 /// An enumeration of the transaction types.
@@ -54,10 +61,26 @@ enum TransactionType {
   incoming;
 
   String getText(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().transaction;
+    final l10n = context.l10n;
     return switch (this) {
-      TransactionType.outgoing => dic.sent,
-      TransactionType.incoming => dic.received,
+      TransactionType.outgoing => l10n.sent,
+      TransactionType.incoming => l10n.received,
     };
   }
+}
+
+class ShortenedDouble implements JsonConverter<double, num> {
+  const ShortenedDouble();
+
+  @override
+  double fromJson(num val) {
+    if (val is int) {
+      return val.toDouble();
+    } else {
+      return (val as double).shortenBigNumber(val, 4);
+    }
+  }
+
+  @override
+  num toJson(num val) => val;
 }

@@ -7,7 +7,7 @@ import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart'
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ContactsPage extends StatelessWidget {
   const ContactsPage({super.key});
@@ -22,7 +22,7 @@ class ContactsPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                I18n.of(context)!.translationsForLocale().profile.addressBook,
+                context.l10n.addressBook,
                 style: Theme.of(context).textTheme.displaySmall,
               ),
               iconTheme: const IconThemeData(

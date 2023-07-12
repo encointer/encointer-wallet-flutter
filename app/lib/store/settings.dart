@@ -1,4 +1,3 @@
-import 'package:ew_storage/ew_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
@@ -13,16 +12,14 @@ import 'package:encointer_wallet/store/app.dart';
 part 'settings.g.dart';
 
 class SettingsStore extends _SettingsStore with _$SettingsStore {
-  SettingsStore(super.store, super.secureStorage);
+  SettingsStore(super.store);
 }
 
 abstract class _SettingsStore with Store {
-  _SettingsStore(this.rootStore, this.secureStorage);
+  _SettingsStore(this.rootStore);
 
   final AppStore rootStore;
-  final SecureStorage secureStorage;
 
-  static const String pinStorageKey = 'pin-key';
   final String localStorageLocaleKey = 'locale';
   final String localStorageEndpointKey = 'endpoint';
   final String localStorageSS58Key = 'custom_ss58';
@@ -69,18 +66,6 @@ abstract class _SettingsStore with Store {
   Locale locale = const Locale('en', '');
 
   @action
-  Future<String> getPin() async {
-    if (cachedPin.isEmpty) cachedPin = await secureStorage.read(key: pinStorageKey) ?? '';
-    return cachedPin;
-  }
-
-  @action
-  Future<void> setPin(String pin) async {
-    cachedPin = pin;
-    await secureStorage.write(key: pinStorageKey, value: pin);
-  }
-
-  @action
   void changeLang(BuildContext context, String? code) {
     locale = switch (code) {
       'en' => const Locale('en', ''),
@@ -122,6 +107,12 @@ abstract class _SettingsStore with Store {
     return ls;
   }
 
+  /// Set of known accounts
+  List<AccountData> knownAccounts() {
+    final uniqueIds = <String>{};
+    return contactListAll.where((data) => uniqueIds.add(data.pubKey)).toList();
+  }
+
   @action
   Future<void> init(String sysLocaleCode) async {
     await loadLocalCode();
@@ -130,7 +121,6 @@ abstract class _SettingsStore with Store {
       loadCustomSS58Format(),
       loadNetworkStateCache(),
       loadContacts(),
-      getPin(),
     ]);
   }
 
