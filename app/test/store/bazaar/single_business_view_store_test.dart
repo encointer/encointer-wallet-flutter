@@ -1,34 +1,56 @@
-// import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
-// import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-// import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/dropdown_widget.dart';
-// import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
-// import 'package:encointer_wallet/utils/fetch_status.dart';
+import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/fetch_status.dart';
 
-// import '../../mock/data/mock_encointer_data.dart';
+import '../../mock/api/mock_api.dart';
+import '../../mock/storage/mock_local_storage.dart';
 
-// void main() {
-//   late SingleBusinessStore businessesStore;
+void main() {
+  late SingleBusinessStore businessesStore;
 
-//   setUp(() => businessesStore = SingleBusinessStore(cid));
+  setUp(() async {
+    webApi = getMockApi(AppStore(MockLocalStorage()), withUI: false);
+    await webApi.init();
 
-//   group('BusinessesStore Test', () {
-//     test('`getBusinesses()` should update fetchStatus to success and populate businesses list', () async {
-//       expect(businessesStore.fetchStatus, FetchStatus.loading);
-//       expect(businessesStore.businesses, isNull);
+    businessesStore = SingleBusinessStore(businessesMockForSingleBusiness, cidEdisonPaula);
+  });
 
-//       await businessesStore.getBusinesses();
+  group('SingleBusinessStore Test', () {
+    test('`getSingleBusiness()` should update fetchStatus to success and populate ipfsProducts list and singleBusiness',
+        () async {
+      expect(businessesStore.fetchStatus, FetchStatus.loading);
+      expect(businessesStore.singleBusiness, isNull);
 
-//       expect(businessesStore.fetchStatus, FetchStatus.success);
-//       expect(businessesStore.businesses, isNotNull);
-//       expect(businessesStore.businesses!.length, greaterThan(0));
-//     });
+      await businessesStore.getSingleBusiness();
 
-//     test('`getBusinesses()` should filter businesses by category', () async {
-//       await businessesStore.getBusinesses();
+      expect(businessesStore.fetchStatus, FetchStatus.success);
+      expect(businessesStore.singleBusiness, isNotNull);
+      expect(businessesStore.singleBusiness!.name, businessesMockForSingleBusiness.name);
 
-//       expect(businessesStore.businesses, isNotNull);
-//       expect(businessesStore.businesses.every((business) => business.category == Category.artAndMusic), isTrue);
-//     });
-//   });
-// }
+      expect(businessesStore.ipfsProducts, isNotNull);
+      expect(businessesStore.ipfsProducts.length, greaterThan(0));
+    });
+
+    test('`toggleLikes()` test likes', () async {
+      expect(businessesStore.isLiked, false);
+
+      businessesStore.toggleLikes();
+
+      expect(businessesStore.isLiked, isNotNull);
+      expect(businessesStore.isLiked, isNot(!businessesStore.isLiked));
+    });
+
+    test('`toggleOwnLikes()` test own likes', () async {
+      expect(businessesStore.isLikedPersonally, false);
+
+      businessesStore.toggleOwnLikes();
+
+      expect(businessesStore.isLikedPersonally, isNotNull);
+      expect(businessesStore.isLikedPersonally, isNot(!businessesStore.isLikedPersonally));
+    });
+  });
+}

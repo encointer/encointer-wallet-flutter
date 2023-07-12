@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_data.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
+import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_offering.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
@@ -114,4 +115,7 @@ final mockBusinessData = {
   'photos': 'QmaQfq6Zr2yCMkSMe8VjSxoYd89hyzcJjeE8jTUG3uXpBG',
   'logo': 'QmcULG6AN5wwMfuwtpsMcjQmFwwUnSHsvSEUFLrCoWMpWh',
   'status': 'highlight',
+  'controller': controller1,
 };
+
+final Businesses businessesMockForSingleBusiness = Businesses.fromJson(mockBusinessData);
