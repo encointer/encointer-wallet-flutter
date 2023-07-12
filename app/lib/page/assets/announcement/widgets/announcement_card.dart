@@ -8,6 +8,8 @@ import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
 import 'package:encointer_wallet/models/announcement/announcement.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/common/components/logo/community_icon.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 class AnnouncementCard extends StatelessWidget {
@@ -31,11 +33,21 @@ class AnnouncementCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
-              leading: PublisherSVGandCommunityIcon(announcement.publisherSVG),
+              leading: PublisherSVGandCommunityIcon(
+                publisherSVG: announcement.publisherSVG,
+                child: announcement.isGlobal
+                    ? CircleAvatar(
+                        radius: 8,
+                        backgroundImage: Assets.images.public.app.provider(),
+                      )
+                    : const CommunityIconObserver(radius: 8),
+              ),
               title: Align(
                 alignment: Alignment.centerRight,
-                child: Text(DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
-                    style: Theme.of(context).textTheme.bodySmall),
+                child: Text(
+                  DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ),
               subtitle: Text(announcement.title, style: textTheme.titleMedium),
             ),

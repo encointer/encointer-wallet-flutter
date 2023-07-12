@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/models/announcement/announcement.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
+import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/config/consts.dart';
 
 part 'announcement_store.g.dart';
@@ -56,6 +57,7 @@ abstract class _AnnouncementStoreBase with Store {
 
     communityAnnouncementsResponse.fold((l) {
       error = l.error.toString();
+      Log.e('announcement_view', '${l.error}');
       fetchStatus = FetchStatus.error;
     }, (r) {
       announcementsCommunnity = r;
@@ -66,15 +68,16 @@ abstract class _AnnouncementStoreBase with Store {
   }
 
   @action
-  Future<void> getGlobalAnnouncements({bool devMode = false}) async {
+  Future<void> getGlobalAnnouncements({bool devMode = false, required String langCode}) async {
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final globalAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
-      '${getEncointerFeedLink(devMode: devMode)}/announcements/global/en/announcements.json',
+      '${getEncointerFeedLink(devMode: devMode)}/announcements/global/$langCode/announcements.json',
       fromJson: Announcement.fromJson,
     );
 
     globalAnnouncementsResponse.fold((l) {
       error = l.error.toString();
+      Log.e('announcement_view', '${l.error}');
       fetchStatus = FetchStatus.error;
     }, (r) {
       announcementsGlobal = r;
