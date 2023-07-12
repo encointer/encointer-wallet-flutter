@@ -1,4 +1,6 @@
-import 'dart:convert';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/business_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
@@ -6,11 +8,9 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/views/single_business_view.dart';
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:provider/provider.dart';
 
 class BusinessesCard extends StatelessWidget {
   const BusinessesCard({
@@ -93,14 +93,14 @@ class BusinessesCard extends StatelessWidget {
                     children: [
                       const SizedBox(height: 28),
                       Text(
-                        utf8convert(businesses.name),
+                        BusinessUtils.utf8convert(businesses.name),
                         style: textTheme.labelLarge,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        utf8convert(businesses.description),
+                        BusinessUtils.utf8convert(businesses.description),
                         style: textTheme.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
@@ -115,11 +115,5 @@ class BusinessesCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  /// To display, correctly, german names coming from server
-  String utf8convert(String text) {
-    final bytes = text.codeUnits;
-    return utf8.decode(bytes);
   }
 }
