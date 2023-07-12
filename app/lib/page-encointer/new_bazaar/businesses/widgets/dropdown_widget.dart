@@ -55,17 +55,19 @@ class _DropdownWidgetState extends State<DropdownWidget> {
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.only(left: 15),
+        contentPadding: const EdgeInsets.only(left: 18),
         constraints: const BoxConstraints(maxHeight: 40),
       ),
       textStyle: context.textTheme.bodyMedium,
       trailingIcon: const Icon(
         Icons.keyboard_arrow_down_outlined,
         color: AppColors.encointerGrey,
+        size: 18,
       ),
       selectedTrailingIcon: const Icon(
         Icons.keyboard_arrow_up_outlined,
         color: AppColors.encointerGrey,
+        size: 18,
       ),
     );
   }
