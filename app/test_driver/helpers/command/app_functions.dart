@@ -13,5 +13,5 @@ String toggleDeveloperMode(AppSettings appSettings, bool devMode) {
 }
 
 String getBiometricAuthState(AppService appService) {
-  return Platform.isAndroid ? 'device not sopport' : '';
+  return Platform.isAndroid ? 'Device not supported' : '';
 }
