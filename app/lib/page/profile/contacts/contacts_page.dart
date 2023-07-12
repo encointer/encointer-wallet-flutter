@@ -1,12 +1,10 @@
-import 'dart:developer';
-
-import 'package:encointer_wallet/page/profile/contacts/contacts_page_store.dart';
-import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
+import 'package:encointer_wallet/page/profile/contacts/contacts_page_store.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
@@ -82,23 +80,16 @@ class _ContactsPageState extends State<ContactsPage> {
 
                     final address =
                         Fmt.ss58Encode(contact.pubKey, prefix: _contactsPageStore.appStore.settings.endpoint.ss58!);
-                    log('ContactsPage ContactsPageStore ${contact.reputation}');
                     return ListTile(
                       leading: AddressIcon(address, contact.pubKey, size: 45),
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(Fmt.accountName(context, contact)),
-                          if (contact.reputation.isNotEmptyOrNull)
-                            Text(
-                              '${contact.reputation.entries.first.value.reputation.toString().split('.').last}: ${contact.reputation.length}',
-                              style: context.textTheme.labelSmall!.copyWith(color: AppColors.encointerGrey),
-                            )
-                          else
-                            Text(
-                              context.l10n.newbie,
-                              style: context.textTheme.labelSmall!.copyWith(color: AppColors.encointerGrey),
-                            ),
+                          Text(
+                            '${contact.participantType.getName}: ${contact.reputation.length}',
+                            style: context.textTheme.labelSmall!.copyWith(color: AppColors.encointerGrey),
+                          )
                         ],
                       ),
                       subtitle: Text(Fmt.address(address)!),
