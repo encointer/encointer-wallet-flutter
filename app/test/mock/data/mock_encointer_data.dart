@@ -84,3 +84,17 @@ const ipfsProductMock = {
   'image': 'Qmeh8yNeDn7WjoMLuRZYAtiE5D5tafTqBaB1RPwyU1pyKK',
   'itemCondition': 'new'
 };
+
+final businessesMock = {
+  'name': 'Kueche Edison',
+  'description': 'bei uns gibt es köstlichen Kaffe',
+  'category': 'food',
+  'address': 'Technoparkstrasse 1, 8005 Zürich',
+  'telephone': null,
+  'email': null,
+  'longitude': '8.515962660312653',
+  'latitude': '47.390349148891545',
+  'openingHours': 'Mon-Fri 8h-18h',
+  'logo': 'QmUH7W2eAWTfHRYYV1YitZaz54sTjEwv6udjZjh7Tg47Xv',
+  'photos': ''
+};
