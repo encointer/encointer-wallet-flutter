@@ -1,4 +1,3 @@
-
 const mockSingleBusiness = {
   'name': 'Hatha Lisa',
   'description':
