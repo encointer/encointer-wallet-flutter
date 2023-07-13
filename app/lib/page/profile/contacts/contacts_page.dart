@@ -87,7 +87,7 @@ class _ContactsPageState extends State<ContactsPage> {
                         children: [
                           Text(Fmt.accountName(context, contact)),
                           Text(
-                            '${contact.participantType.getName}: ${contact.reputation.length}',
+                            '${context.l10n.reputation}: ${contact.reputation.length}',
                             style: context.textTheme.labelSmall!.copyWith(color: AppColors.encointerGrey),
                           )
                         ],
