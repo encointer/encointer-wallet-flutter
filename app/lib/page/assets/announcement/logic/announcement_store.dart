@@ -55,9 +55,10 @@ abstract class _AnnouncementStoreBase with Store {
       fromJson: Announcement.fromJson,
     );
 
-    communityAnnouncementsResponse.fold((l) {
+    await communityAnnouncementsResponse.fold((l) {
       error = l.error.toString();
       Log.e('announcement_view', '${l.error}');
+      if (l.statusCode == 404) return getCommunityAnnouncements(cid, devMode: devMode, langCode: 'en');
       fetchStatus = FetchStatus.error;
     }, (r) {
       announcementsCommunnity = r;
@@ -75,9 +76,10 @@ abstract class _AnnouncementStoreBase with Store {
       fromJson: Announcement.fromJson,
     );
 
-    globalAnnouncementsResponse.fold((l) {
+    await globalAnnouncementsResponse.fold((l) {
       error = l.error.toString();
       Log.e('announcement_view', '${l.error}');
+      if (l.statusCode == 404) return getGlobalAnnouncements(devMode: devMode, langCode: 'en');
       fetchStatus = FetchStatus.error;
     }, (r) {
       announcementsGlobal = r;
