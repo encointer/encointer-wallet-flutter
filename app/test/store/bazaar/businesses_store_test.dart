@@ -23,21 +23,21 @@ void main() {
   group('BusinessesStore Test', () {
     test('`getBusinesses()` should update fetchStatus to success and populate businesses list', () async {
       expect(businessesStore.fetchStatus, FetchStatus.loading);
-      expect(businessesStore.sortedbBusinesses, isEmpty);
+      expect(businessesStore.sortedBusinesses, isEmpty);
 
       await businessesStore.getBusinesses();
 
       expect(businessesStore.fetchStatus, FetchStatus.success);
-      expect(businessesStore.sortedbBusinesses, isNotEmpty);
-      expect(businessesStore.sortedbBusinesses.length, greaterThan(0));
+      expect(businessesStore.sortedBusinesses, isNotEmpty);
+      expect(businessesStore.sortedBusinesses.length, greaterThan(0));
       expect(businessesStore.businesses.length, greaterThan(0));
     });
 
     test('`getBusinesses()` should filter businesses by category', () async {
       await businessesStore.getBusinesses();
 
-      expect(businessesStore.sortedbBusinesses, isNotEmpty);
-      expect(businessesStore.sortedbBusinesses.every((business) => business.category == Category.food), isTrue);
+      expect(businessesStore.sortedBusinesses, isNotEmpty);
+      expect(businessesStore.sortedBusinesses.every((business) => business.category == Category.food), isTrue);
     });
   });
 }

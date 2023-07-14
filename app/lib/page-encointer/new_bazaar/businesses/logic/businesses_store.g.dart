@@ -24,18 +24,18 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
     });
   }
 
-  late final _$sortedbBusinessesAtom = Atom(name: '_BusinessesStoreBase.sortedbBusinesses', context: context);
+  late final _$sortedBusinessesAtom = Atom(name: '_BusinessesStoreBase.sortedBusinesses', context: context);
 
   @override
-  List<Businesses> get sortedbBusinesses {
-    _$sortedbBusinessesAtom.reportRead();
-    return super.sortedbBusinesses;
+  List<Businesses> get sortedBusinesses {
+    _$sortedBusinessesAtom.reportRead();
+    return super.sortedBusinesses;
   }
 
   @override
-  set sortedbBusinesses(List<Businesses> value) {
-    _$sortedbBusinessesAtom.reportWrite(value, super.sortedbBusinesses, () {
-      super.sortedbBusinesses = value;
+  set sortedBusinesses(List<Businesses> value) {
+    _$sortedBusinessesAtom.reportWrite(value, super.sortedBusinesses, () {
+      super.sortedBusinesses = value;
     });
   }
 
@@ -93,7 +93,7 @@ mixin _$BusinessesStore on _BusinessesStoreBase, Store {
   String toString() {
     return '''
 businesses: ${businesses},
-sortedbBusinesses: ${sortedbBusinesses},
+sortedBusinesses: ${sortedBusinesses},
 fetchStatus: ${fetchStatus},
 error: ${error}
     ''';

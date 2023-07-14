@@ -26,7 +26,7 @@ abstract class _BusinessesStoreBase with Store {
   List<Businesses> businesses = <Businesses>[];
 
   @observable
-  List<Businesses> sortedbBusinesses = <Businesses>[];
+  List<Businesses> sortedBusinesses = <Businesses>[];
 
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;
@@ -59,7 +59,7 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   void _update() {
-    if (sortedbBusinesses.isEmpty) {
+    if (sortedBusinesses.isEmpty) {
       fetchStatus = FetchStatus.noData;
     } else {
       fetchStatus = FetchStatus.success;
@@ -67,7 +67,7 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   void _sortByStatus() {
-    sortedbBusinesses.sort((a, b) {
+    sortedBusinesses.sort((a, b) {
       if (a.status == Status.highlight && b.status == Status.recently) return -1;
       if (a.status == Status.recently && b.status == Status.highlight) return 1;
       if (a.status == null && b.status == Status.highlight) return 1;
@@ -101,17 +101,17 @@ abstract class _BusinessesStoreBase with Store {
       });
     }
 
-    sortedbBusinesses.addAll(businesses);
+    sortedBusinesses.addAll(businesses);
   }
 
   @action
   void filterBusinessesByCategory({required Category category}) {
     if (category == Category.all) {
-      sortedbBusinesses = <Businesses>[];
-      sortedbBusinesses.addAll(businesses);
+      sortedBusinesses = <Businesses>[];
+      sortedBusinesses.addAll(businesses);
     } else {
-      sortedbBusinesses = <Businesses>[];
-      sortedbBusinesses
+      sortedBusinesses = <Businesses>[];
+      sortedBusinesses
         ..addAll(businesses)
         ..removeWhere((element) => element.category != category);
     }
