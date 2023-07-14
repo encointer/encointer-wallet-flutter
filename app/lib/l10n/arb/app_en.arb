@@ -568,5 +568,14 @@
                 "example": "true"
             }
         }
+    },
+    "offersForCommunity": "Offers for {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
     }
 }
