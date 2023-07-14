@@ -102,10 +102,10 @@ final ipfsOffering4 = IpfsOffering(
 
 final mockBusinessData = {
   'name': 'HIGHLIGHTED',
-  'description': 'wir offerieren kÃ¼hles Bier',
+  'description': 'wir offerieren kühles Bier',
   'category': 'food',
   'photo': null,
-  'address': 'Technoparkstrasse 1, 8005 ZÃ¼rich',
+  'address': 'Technoparkstrasse 1, 8005 Zürich',
   'telephone': null,
   'email': null,
   'longitude': '8.515377938747404',
