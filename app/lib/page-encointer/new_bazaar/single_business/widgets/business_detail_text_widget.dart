@@ -7,15 +7,15 @@ class BusinessOfferDetails extends StatelessWidget {
     required this.title,
     required this.description,
     required this.price,
-    required this.openningHours,
-    required this.buisnessName,
+    required this.openingHours,
+    required this.businessName,
     super.key,
   });
   final String title;
   final String description;
   final String price;
-  final String openningHours;
-  final String buisnessName;
+  final String openingHours;
+  final String businessName;
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +47,11 @@ class BusinessOfferDetails extends StatelessWidget {
           ),
         ),
         Text(
-          openningHours,
+          openingHours,
           style: context.textTheme.bodyMedium!.copyWith(height: 1.4),
         ),
         Text(
-          '@ $buisnessName',
+          '@ $businessName',
           style: context.textTheme.bodyMedium!.copyWith(height: 1.4),
         ),
       ],

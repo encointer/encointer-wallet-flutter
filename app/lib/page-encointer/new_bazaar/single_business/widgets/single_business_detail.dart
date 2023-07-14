@@ -121,8 +121,8 @@ class SingleBusinessDetail extends StatelessWidget {
                               title: ipfsProduct.name,
                               description: ipfsProduct.description,
                               price: '${appStore.encointer.community?.symbol} ${ipfsProduct.price ?? 0}',
-                              openningHours: store.singleBusiness!.openingHours,
-                              buisnessName: store.singleBusiness!.name,
+                              openingHours: store.singleBusiness!.openingHours,
+                              businessName: store.singleBusiness!.name,
                             );
                           },
                         ),
