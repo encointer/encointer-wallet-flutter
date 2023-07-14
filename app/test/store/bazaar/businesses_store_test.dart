@@ -6,9 +6,7 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/dr
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 
-import '../../mock/api/mock_api.dart';
 import '../../mock/mock.dart';
-import '../../mock/storage/mock_local_storage.dart';
 
 void main() {
   late BusinessesStore businessesStore;
