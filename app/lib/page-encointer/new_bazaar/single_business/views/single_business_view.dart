@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/business_utils.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class SingleBusinessView extends StatelessWidget {
       appBar: AppBar(
         title: Observer(builder: (_) {
           return switch (store.fetchStatus) {
-            FetchStatus.success => Text(store.singleBusiness!.name.toUpperCase()),
+            FetchStatus.success => Text(BusinessUtils.utf8convert(store.singleBusiness!.name.toUpperCase())),
             _ => const SizedBox(),
           };
         }),

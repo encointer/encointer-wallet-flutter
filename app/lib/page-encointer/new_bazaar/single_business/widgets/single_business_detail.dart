@@ -1,12 +1,11 @@
-import 'dart:developer';
-
-import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/business_utils.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/business_detail_text_widget.dart';
@@ -30,7 +29,6 @@ class SingleBusinessDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<SingleBusinessStore>();
-    log('SingleBusinessDetail symbol: ${appStore.encointer.community?.symbol}');
     final l10n = context.l10n;
     return SingleChildScrollView(
       child: Card(
@@ -97,7 +95,7 @@ class SingleBusinessDetail extends StatelessWidget {
                   }),
                   const SizedBox(height: 20),
                   Text(
-                    singleBusiness.description,
+                    BusinessUtils.utf8convert(singleBusiness.description),
                     style: context.textTheme.bodyMedium!.copyWith(height: 1.5, fontSize: 16),
                   ),
                   const SizedBox(height: 40),
@@ -118,8 +116,8 @@ class SingleBusinessDetail extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final ipfsProduct = store.ipfsProducts[index];
                             return BusinessOfferDetails(
-                              title: ipfsProduct.name,
-                              description: ipfsProduct.description,
+                              title: BusinessUtils.utf8convert(ipfsProduct.name),
+                              description: BusinessUtils.utf8convert(ipfsProduct.description),
                               price: '${appStore.encointer.community?.symbol} ${ipfsProduct.price ?? 0}',
                               openingHours: store.singleBusiness!.openingHours,
                               businessName: store.singleBusiness!.name,
@@ -131,8 +129,8 @@ class SingleBusinessDetail extends StatelessWidget {
                   const SizedBox(height: 20),
                   BusinessDetailAddressWidget(
                     text: l10n.address,
-                    description: singleBusiness.addressDescription,
-                    address: singleBusiness.address,
+                    description: BusinessUtils.utf8convert(singleBusiness.addressDescription),
+                    address: BusinessUtils.utf8convert(singleBusiness.address),
                     zipCode: singleBusiness.zipcode,
                     email: singleBusiness.email,
                     phoneNum: singleBusiness.telephone,

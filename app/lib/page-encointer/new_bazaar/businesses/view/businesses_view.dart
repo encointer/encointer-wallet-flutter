@@ -1,10 +1,10 @@
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/common/components/error/error_view.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/empty_businesses.dart';

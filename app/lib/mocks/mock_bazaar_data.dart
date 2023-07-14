@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_data.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
+import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_offering.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
@@ -35,10 +36,10 @@ const String offeringIpfsCid2 = '0x77ebf164a5bb618ec6caad31488161b237e24d75efa30
 const String offeringIpfsCid3 = '0x87ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
 const String offeringIpfsCid4 = '0x97ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
 
-final OfferingData offeringData1 = OfferingData(offeringIpfsCid1);
-final OfferingData offeringData2 = OfferingData(offeringIpfsCid2);
-final OfferingData offeringData3 = OfferingData(offeringIpfsCid3);
-final OfferingData offeringData4 = OfferingData(offeringIpfsCid4);
+final OfferingData offeringData1 = OfferingData(url: offeringIpfsCid1);
+final OfferingData offeringData2 = OfferingData(url: offeringIpfsCid2);
+final OfferingData offeringData3 = OfferingData(url: offeringIpfsCid3);
+final OfferingData offeringData4 = OfferingData(url: offeringIpfsCid4);
 
 final Map<BusinessIdentifier, List<OfferingData>> offeringsForBusiness = {
   bid1: business1MockOfferings,
@@ -114,4 +115,7 @@ final mockBusinessData = {
   'photos': 'QmaQfq6Zr2yCMkSMe8VjSxoYd89hyzcJjeE8jTUG3uXpBG',
   'logo': 'QmcULG6AN5wwMfuwtpsMcjQmFwwUnSHsvSEUFLrCoWMpWh',
   'status': 'highlight',
+  'controller': controller1,
 };
+
+final Businesses businessesMockForSingleBusiness = Businesses.fromJson(mockBusinessData);
