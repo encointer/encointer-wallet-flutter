@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,8 +8,35 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/dr
 import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
+class BazaarMainArgs {
+  BazaarMainArgs({required this.cid});
+  final CommunityIdentifier cid;
+}
+
+class BazaarMain extends StatelessWidget {
+  const BazaarMain({
+    required this.args,
+    super.key,
+  });
+  final BazaarMainArgs args;
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider(
+      create: (context) => BusinessesStore(args.cid)..getBusinesses(),
+      child: BazaarPage(
+        cid: args.cid,
+      ),
+    );
+  }
+}
+
 class BazaarPage extends StatelessWidget {
-  const BazaarPage({super.key});
+  const BazaarPage({
+    super.key,
+    required this.cid,
+  });
+  final CommunityIdentifier cid;
   static const String route = '/bazaar';
 
   @override
@@ -46,18 +74,6 @@ class BazaarPage extends StatelessWidget {
         ),
       ),
       body: const BusinessesView(),
-    );
-  }
-}
-
-class BazaarMain extends StatelessWidget {
-  const BazaarMain({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => BusinessesStore()..getBusinesses(),
-      child: const BazaarPage(),
     );
   }
 }

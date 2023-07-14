@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/views/single_business_view.dart';
+import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
@@ -34,19 +38,34 @@ class BusinessesCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(businesses.photo),
+              if (businesses.logo.isNotNullOrEmpty)
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(businesses.logo!),
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    ),
                   ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
+                  child: const SizedBox(height: double.infinity, width: 130),
+                )
+              else
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(Assets.images.assets.mosaicBackground.path),
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    ),
                   ),
+                  child: const SizedBox(height: double.infinity, width: 130),
                 ),
-                child: const SizedBox(height: double.infinity, width: 130),
-              ),
               Expanded(
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(10),
@@ -65,14 +84,14 @@ class BusinessesCard extends StatelessWidget {
                     children: [
                       const SizedBox(height: 28),
                       Text(
-                        businesses.name,
+                        utf8convert(businesses.name),
                         style: textTheme.labelLarge,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        businesses.description,
+                        utf8convert(businesses.description),
                         style: textTheme.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
@@ -87,5 +106,11 @@ class BusinessesCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// To display, correctly, german names coming from server
+  String utf8convert(String text) {
+    final bytes = text.codeUnits;
+    return utf8.decode(bytes);
   }
 }

@@ -32,6 +32,8 @@ class SingleBusinessView extends StatelessWidget {
             return SingleBusinessDetail(singleBusiness: store.singleBusiness!);
           case FetchStatus.error:
             return const ErrorView();
+          case FetchStatus.noData:
+            return const SizedBox();
         }
       }),
     );

@@ -10,7 +10,15 @@ Businesses _$BusinessesFromJson(Map<String, dynamic> json) => Businesses(
       name: json['name'] as String,
       description: json['description'] as String,
       category: $enumDecode(_$CategoryEnumMap, json['category']),
-      photo: json['photo'] as String,
+      address: json['address'] as String,
+      longitude: json['longitude'] as String,
+      latitude: json['latitude'] as String,
+      openingHours: json['openingHours'] as String,
+      logo: const ImageHashToLinkOrNullConverter().fromJson(json['logo'] as String?),
+      photos: json['photos'] as String?,
+      photo: json['photo'] as String?,
+      telephone: json['telephone'] as String?,
+      email: json['email'] as String?,
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
     );
 
@@ -19,6 +27,14 @@ Map<String, dynamic> _$BusinessesToJson(Businesses instance) => <String, dynamic
       'description': instance.description,
       'category': _$CategoryEnumMap[instance.category]!,
       'photo': instance.photo,
+      'address': instance.address,
+      'telephone': instance.telephone,
+      'email': instance.email,
+      'longitude': instance.longitude,
+      'latitude': instance.latitude,
+      'openingHours': instance.openingHours,
+      'photos': instance.photos,
+      'logo': const ImageHashToLinkOrNullConverter().toJson(instance.logo),
       'status': _$StatusEnumMap[instance.status],
     };
 
@@ -29,9 +45,10 @@ const _$CategoryEnumMap = {
   Category.fashionAndClothing: 'fashion_clothing',
   Category.foodAndBeverageStore: 'food_beverage_store',
   Category.restaurantsAndBars: 'restaurants_bars',
+  Category.food: 'food',
 };
 
 const _$StatusEnumMap = {
   Status.highlight: 'highlight',
-  Status.neuBeiLeu: 'neu_bei_leu',
+  Status.recently: 'new',
 };

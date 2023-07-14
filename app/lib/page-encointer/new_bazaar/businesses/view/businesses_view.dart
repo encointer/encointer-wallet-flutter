@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,9 @@ class BusinessesView extends StatelessWidget {
     return Observer(builder: (_) {
       return switch (store.fetchStatus) {
         FetchStatus.loading => const CenteredActivityIndicator(),
-        FetchStatus.success => BusinessesList(businesses: store.businesses!),
+        FetchStatus.success => BusinessesList(businesses: store.sortedBusinesses),
         FetchStatus.error => const ErrorView(),
+        FetchStatus.noData => const EmptyBusiness(),
       };
     });
   }
