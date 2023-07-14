@@ -76,7 +76,7 @@ class _AssetsViewState extends State<AssetsView> {
 
   @override
   void didChangeDependencies() {
-    _appSettingsStore = context.watch<AppSettings>();
+    _appSettingsStore = context.read<AppSettings>();
     _startBalanceWatchdog();
     l10n = context.l10n;
     // Should typically not be higher than panelHeight, but on really small devices
