@@ -25,19 +25,24 @@ class TransferHistoryView extends StatelessWidget {
           style: context.textTheme.displayMedium,
         ),
       ),
-      body: Observer(builder: (_) {
-        return switch (transferHistoryStore.fetchStatus) {
-          FetchStatus.loading => const CenteredActivityIndicator(),
-          FetchStatus.success => TransactionsList(transactions: transferHistoryStore.transactions ?? []),
-          FetchStatus.error => ErrorView(
-              onRetryPressed: () {
-                final appStore = context.read<AppStore>();
-                context.read<TransferHistoryViewStore>().getTransfers(appStore);
-              },
-            ),
-          FetchStatus.noData => const SizedBox.shrink(),
-        };
-      }),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await context.read<TransferHistoryViewStore>().getTransfers(context.read<AppStore>());
+        },
+        child: Observer(builder: (_) {
+          return switch (transferHistoryStore.fetchStatus) {
+            FetchStatus.loading => const CenteredActivityIndicator(),
+            FetchStatus.success => TransactionsList(transactions: transferHistoryStore.transactions ?? []),
+            FetchStatus.error => ErrorView(
+                onRetryPressed: () {
+                  final appStore = context.read<AppStore>();
+                  context.read<TransferHistoryViewStore>().getTransfers(appStore);
+                },
+              ),
+            FetchStatus.noData => const SizedBox.shrink(),
+          };
+        }),
+      ),
     );
   }
 }
