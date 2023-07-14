@@ -27,7 +27,7 @@ class BusinessesView extends StatelessWidget {
     return Observer(builder: (_) {
       return switch (store.fetchStatus) {
         FetchStatus.loading => const CenteredActivityIndicator(),
-        FetchStatus.success => BusinessesList(businesses: store.sortedbBusinesses, cid: store.cid, appStore: appStore),
+        FetchStatus.success => BusinessesList(businesses: store.sortedBusinesses, cid: store.cid, appStore: appStore),
         FetchStatus.error => const ErrorView(),
         FetchStatus.noData => const EmptyBusiness(),
       };
