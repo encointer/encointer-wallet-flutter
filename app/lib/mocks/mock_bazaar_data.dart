@@ -36,10 +36,10 @@ const String offeringIpfsCid2 = '0x77ebf164a5bb618ec6caad31488161b237e24d75efa30
 const String offeringIpfsCid3 = '0x87ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
 const String offeringIpfsCid4 = '0x97ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
 
-final OfferingData offeringData1 = OfferingData(offeringIpfsCid1);
-final OfferingData offeringData2 = OfferingData(offeringIpfsCid2);
-final OfferingData offeringData3 = OfferingData(offeringIpfsCid3);
-final OfferingData offeringData4 = OfferingData(offeringIpfsCid4);
+final OfferingData offeringData1 = OfferingData(url: offeringIpfsCid1);
+final OfferingData offeringData2 = OfferingData(url: offeringIpfsCid2);
+final OfferingData offeringData3 = OfferingData(url: offeringIpfsCid3);
+final OfferingData offeringData4 = OfferingData(url: offeringIpfsCid4);
 
 final Map<BusinessIdentifier, List<OfferingData>> offeringsForBusiness = {
   bid1: business1MockOfferings,
