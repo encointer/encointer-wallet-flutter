@@ -267,7 +267,7 @@
     "pinSecure": "Защитите свой аккаунт с помощью PIN-кода",
     "pleaseCommunityChoose": "Пожалуйста выберите общину",
     "pleaseConfirmYourNewPin": "Подтвердите PIN-код",
-    "preview": "Предварительный просмотр",
+    "preview": "Предпросмотр",
     "price": "Цена",
     "print": "Распечатать",
     "productNewness": "Новые продукты",
@@ -320,7 +320,7 @@
     "settingPrefix": "Префикс адреса",
     "settingPrefixList": "Доступные префиксы",
     "share": "Поделиться",
-    "shareInvoice": "Поделиться инвойсом",
+    "shareInvoice": "Отправить инвойс",
     "shareLinkHint": "Или Вы можете поделиться ссылкой",
     "showAll": "+ Показать все",
     "showRouteMeetupLocation": "Показать маршрут",
@@ -416,5 +416,14 @@
     "successfullySentNAttestations": "Вы успешно отправили аттестации {participantsCount} других людей.",
     "tokenSend": "Отправить {symbol}",
     "communityWithName": "Сообщество {name}",
-    "verifyAuthTitle": "Для завершения транзакции {useBioAuth, select, true{подтвердите вашу личность} false{введите PIN-код} other{}}."
+    "verifyAuthTitle": "Для завершения транзакции {useBioAuth, select, true{подтвердите вашу личность} false{введите PIN-код} other{}}.",
+    "offersForCommunity": "Предложения за {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }

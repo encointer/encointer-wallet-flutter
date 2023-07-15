@@ -33,14 +33,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.13.0"
-  animated_check:
-    dependency: "direct main"
-    description:
-      name: animated_check
-      sha256: "1da103a44b6aeacbecec799343b7170e627f4af465ca642b430c1d94922868aa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.5"
   animated_stack_widget:
     dependency: transitive
     description:

@@ -22,7 +22,7 @@ class BusinessesCard extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(businesses.photo),
+                  image: NetworkImage(businesses.photo!),
                 ),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),

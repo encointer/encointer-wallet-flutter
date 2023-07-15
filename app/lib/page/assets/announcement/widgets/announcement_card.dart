@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_community_icon.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
 import 'package:encointer_wallet/models/announcement/announcement.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
@@ -74,7 +75,7 @@ class AnnouncementCard extends StatelessWidget {
                 }),
                 IconButton(
                   icon: const Icon(Icons.share, size: 20, color: AppColors.encointerGrey),
-                  onPressed: () => Share.share(announcement.content),
+                  onPressed: () => Share.share('${announcement.title}\n${announcement.content}\n${encointerLink}home'),
                 )
               ],
             )
