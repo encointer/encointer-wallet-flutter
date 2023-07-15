@@ -49,6 +49,7 @@ class _AnnouncementViewState extends State<AnnouncementView> {
         FetchStatus.loading => const Center(child: CupertinoActivityIndicator()),
         FetchStatus.success => AnnouncementList(announcements: _announcementStore.announcements),
         FetchStatus.error => const SizedBox.shrink(),
+        FetchStatus.noData => const SizedBox.shrink(),
       };
     });
   }

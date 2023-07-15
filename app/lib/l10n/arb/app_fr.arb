@@ -416,5 +416,14 @@
     "successfullySentNAttestations": "Tu as soumis avec succès des attestations pour {participantsCount} autres personnes.",
     "tokenSend": "Envoyer {symbol}",
     "communityWithName": "Communauté {name}",
-    "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{ta identité} false{le NIP} other{}} pour finaliser la transaction."
+    "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{ta identité} false{le NIP} other{}} pour finaliser la transaction.",
+    "offersForCommunity": "Des offres pour un {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }

@@ -64,11 +64,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     }
   }
 
-  Future<void> _onSelect(AccountData i, String? address) async {
+  Future<void> _onSelect(AccountData accountData, String? address) async {
     final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
     if (address != context.read<AppStore>().account.currentAddress || !isCurrentNetwork) {
       /// set current account
-      await context.read<AppStore>().setCurrentAccount(i.pubKey);
+      await context.read<AppStore>().setCurrentAccount(accountData.pubKey);
 
       if (isCurrentNetwork) {
         await context.read<AppStore>().loadAccountCache();
@@ -99,8 +99,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     /// first item is current account
     final accounts = <AccountData>[appStore.account.currentAccount, ...appStore.account.optionalAccounts];
 
-    res.addAll(accounts.map((i) {
-      final address = Fmt.ss58Encode(i.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
+    res.addAll(accounts.map((accountData) {
+      final address = Fmt.ss58Encode(accountData.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
 
       return Card(
         shape: RoundedRectangleBorder(
@@ -111,10 +111,10 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         ),
         margin: const EdgeInsets.only(bottom: 16),
         child: ListTile(
-          leading: AddressIcon(address, i.pubKey, size: 55),
-          title: Text(Fmt.accountName(context, i)),
+          leading: AddressIcon(address, accountData.pubKey, size: 55),
+          title: Text(Fmt.accountName(context, accountData)),
           subtitle: Text(Fmt.address(address)!, maxLines: 2),
-          onTap: _networkChanging ? null : () => _onSelect(i, address),
+          onTap: _networkChanging ? null : () => _onSelect(accountData, address),
         ),
       );
     }).toList());

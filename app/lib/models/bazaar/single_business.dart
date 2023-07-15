@@ -4,7 +4,7 @@ part 'single_business.g.dart';
 
 @JsonSerializable()
 class SingleBusiness {
-  const SingleBusiness({
+  SingleBusiness({
     required this.name,
     required this.description,
     required this.category,
@@ -15,8 +15,7 @@ class SingleBusiness {
     required this.email,
     required this.longitude,
     required this.latitude,
-    required this.openingHours1,
-    required this.openingHours2,
+    required this.openingHours,
     required this.logo,
     required this.photo,
     required this.offer,
@@ -31,28 +30,27 @@ class SingleBusiness {
   factory SingleBusiness.fromJson(Map<String, dynamic> json) => _$SingleBusinessFromJson(json);
   Map<String, dynamic> toJson() => _$SingleBusinessToJson(this);
 
-  final String name;
-  final String description;
-  final String category;
-  final String address;
-  final String zipcode;
-  final String addressDescription;
-  final String telephone;
-  final String email;
-  final double longitude;
-  final double latitude;
-  final String openingHours1;
-  final String openingHours2;
-  final String logo;
-  final String photo;
-  final String offer;
-  final String offerName1;
-  final String offerName2;
-  final String moreInfo;
-  final String? status;
-  final bool isLiked;
-  final bool isLikedPersonally;
-  final int countLikes;
+  String name;
+  String description;
+  String category;
+  String address;
+  String zipcode;
+  String addressDescription;
+  String telephone;
+  String email;
+  double longitude;
+  double latitude;
+  String openingHours;
+  String logo;
+  String photo;
+  String offer;
+  String offerName1;
+  String offerName2;
+  String moreInfo;
+  String? status;
+  bool isLiked;
+  bool isLikedPersonally;
+  int countLikes;
 }
 
 const singleBusinessMockData = {
