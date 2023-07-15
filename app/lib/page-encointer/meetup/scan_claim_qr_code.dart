@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -76,7 +77,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
-            key: const Key('close-scanner'),
+            key: const Key(EWTestKeys.closeScanner),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )

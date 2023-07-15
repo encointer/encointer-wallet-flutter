@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
@@ -29,7 +30,7 @@ void main() async {
   }, timeout: timeout120);
 
   test('create PIN by text 0001', () async {
-    await createPin(driver, '0001');
+    await createPin(driver, EWTestKeys.zero001);
   }, timeout: timeout120);
 
   test('close biometric auth dialog', () async {
@@ -344,7 +345,7 @@ void main() async {
   }, timeout: timeout120);
 
   test('account export', () async {
-    menemonic = await exportAccount(driver, '0001');
+    menemonic = await exportAccount(driver, EWTestKeys.zero001);
   }, timeout: timeout120);
 
   test('account delete from account manage page', () async {
@@ -367,7 +368,7 @@ void main() async {
     await goToProfileViewFromNavBar(driver);
     await deleteAllAccount(driver);
     await verifyInputPin(driver);
-    await driver.waitFor(find.byValueKey('import-account'));
+    await driver.waitFor(find.byValueKey(EWTestKeys.importAccount));
   }, timeout: timeout120);
 
   tearDownAll(() async => driver.close());

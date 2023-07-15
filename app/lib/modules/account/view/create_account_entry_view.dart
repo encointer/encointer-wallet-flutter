@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
@@ -28,7 +29,7 @@ class CreateAccountEntryView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SecondaryButtonWide(
-                key: const Key('create-account'),
+                key: const Key(EWTestKeys.createAccount),
                 onPressed: () => Navigator.pushNamed(context, CreateAccountView.route),
                 child: Text(context.l10n.create, style: context.textTheme.displaySmall),
               ),

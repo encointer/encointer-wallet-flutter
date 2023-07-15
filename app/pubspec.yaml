@@ -82,6 +82,8 @@ dependencies:
     path: ../packages/ew_storage/
   ew_http:
     path: ../packages/ew_http/
+  ew_test_keys:
+    path: ../packages/ew_test_keys/
   decimal: ^2.3.2
 
 dev_dependencies:

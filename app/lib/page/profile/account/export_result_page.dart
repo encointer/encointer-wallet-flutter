@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,7 +74,7 @@ class ExportResultPage extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       args['key'] as String,
-                      key: const Key('account-mnemonic-key'),
+                      key: const Key(EWTestKeys.accountMnemonicKey),
                       style: context.textTheme.headlineMedium,
                     ),
                   ),

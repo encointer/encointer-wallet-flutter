@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -49,12 +50,12 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: isEditing
-            ? TextFormField(key: const Key('contact-name-field'), controller: _nameCtrl)
+            ? TextFormField(key: const Key(EWTestKeys.contactNameField), controller: _nameCtrl)
             : Text(_nameCtrl.text, style: context.textTheme.displaySmall),
         actions: [
           if (isEditing)
             IconButton(
-              key: const Key('contact-name-edit-check'),
+              key: const Key(EWTestKeys.contactNameEditCheck),
               icon: const Icon(Icons.check),
               onPressed: () async {
                 if (_nameCtrl.text != widget.accountData.name) {
@@ -74,7 +75,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
             )
           else
             IconButton(
-              key: const Key('contact-name-edit'),
+              key: const Key(EWTestKeys.contactNameEdit),
               icon: const Icon(Iconsax.edit),
               onPressed: () {
                 setState(() {
@@ -122,7 +123,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
               EndorseButton(store, webApi, account),
               const SizedBox(height: 16),
               SecondaryButtonWide(
-                key: const Key('send-money-to-account'),
+                key: const Key(EWTestKeys.sendMoneyToAccount),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -240,7 +241,7 @@ class EndorseButton extends StatelessWidget {
         const SizedBox(height: 5),
         Observer(builder: (_) {
           return SubmitButtonSecondary(
-            key: const Key('tap-endorse-button'),
+            key: const Key(EWTestKeys.tapEndorseButton),
             onPressed: hasNewbieTickets() ? onPressed : null,
             child: FittedBox(
               child: Row(

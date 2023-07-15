@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -110,7 +111,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             ),
             if (!_transferState.isFinishedOrFailed())
               PrimaryButton(
-                key: const Key('make-transfer-send'),
+                key: const Key(EWTestKeys.makeTransferSend),
                 onPressed: () => _submit(context, cid, recipientAddress, amount),
                 child: SizedBox(
                   height: 24,
@@ -128,7 +129,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
               )
             else
               PrimaryButton(
-                key: const Key('transfer-done'),
+                key: const Key(EWTestKeys.transferDone),
                 child: SizedBox(
                   height: 24,
                   child: Center(child: Text(l10n.done)),

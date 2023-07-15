@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -68,7 +69,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
       ),
       const SizedBox(height: 30),
       EncointerTextFormField(
-        key: const Key('create-account-name'),
+        key: const Key(EWTestKeys.createAccountName),
         hintText: l10n.createHint,
         labelText: l10n.accountName,
         controller: _nameCtrl,
@@ -80,7 +81,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
     ], columnChildren: [
       const SizedBox(height: 10),
       SecondaryButtonWide(
-        key: const Key('import-account'),
+        key: const Key(EWTestKeys.importAccount),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -103,7 +104,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
       ),
       const SizedBox(height: 10),
       PrimaryButton(
-        key: const Key('create-account-confirm'),
+        key: const Key(EWTestKeys.createAccountConfirm),
         onPressed: () async {
           final newAccount = context.read<NewAccountStore>();
           if (_formKey.currentState!.validate() && !newAccount.loading) {
