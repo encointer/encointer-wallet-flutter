@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/bazaar/offering_data.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
@@ -68,3 +69,32 @@ EndpointData unitTestEndpoint = EndpointData.fromJson({
   'overrideConfig': Map<String, dynamic>.of({}),
   'ipfsGateway': 'Unit-Test network must no connect to ipfs'
 });
+
+final List<OfferingData> offeringDataMockList = [OfferingData(url: 'url')];
+
+const itemOfferedMock = {
+  'itemOffered': 'QmZ1f6v39DZXdmhLgaGD2i2XY8sucNaMGKJuoSHduqHp15',
+  'price': '0',
+};
+
+const ipfsProductMock = {
+  'name': 'Bier',
+  'description': 'Kühles Bier',
+  'category': 'food',
+  'image': 'Qmeh8yNeDn7WjoMLuRZYAtiE5D5tafTqBaB1RPwyU1pyKK',
+  'itemCondition': 'new'
+};
+
+final businessesMock = {
+  'name': 'Kueche Edison',
+  'description': 'bei uns gibt es köstlichen Kaffe',
+  'category': 'food',
+  'address': 'Technoparkstrasse 1, 8005 Zürich',
+  'telephone': null,
+  'email': null,
+  'longitude': '8.515962660312653',
+  'latitude': '47.390349148891545',
+  'openingHours': 'Mon-Fri 8h-18h',
+  'logo': 'QmUH7W2eAWTfHRYYV1YitZaz54sTjEwv6udjZjh7Tg47Xv',
+  'photos': ''
+};

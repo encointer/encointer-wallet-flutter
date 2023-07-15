@@ -7,7 +7,7 @@ part of 'offering_data.dart';
 // **************************************************************************
 
 OfferingData _$OfferingDataFromJson(Map<String, dynamic> json) => OfferingData(
-      json['url'] as String?,
+      url: json['url'] as String?,
     );
 
 Map<String, dynamic> _$OfferingDataToJson(OfferingData instance) => <String, dynamic>{

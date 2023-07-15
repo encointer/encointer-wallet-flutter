@@ -78,6 +78,12 @@ mixin _$EncointerStore on _EncointerStore, Store {
       (_$communitiesContainsChosenCidComputed ??= Computed<bool>(() => super.communitiesContainsChosenCid,
               name: '_EncointerStore.communitiesContainsChosenCid'))
           .value;
+  Computed<bool>? _$meetupCompletedComputed;
+
+  @override
+  bool get meetupCompleted => (_$meetupCompletedComputed ??=
+          Computed<bool>(() => super.meetupCompleted, name: '_EncointerStore.meetupCompleted'))
+      .value;
   Computed<BazaarStore?>? _$bazaarComputed;
 
   @override
@@ -429,6 +435,7 @@ bazaarStores: ${bazaarStores},
 accountStores: ${accountStores},
 currentPhaseDuration: ${currentPhaseDuration},
 communitiesContainsChosenCid: ${communitiesContainsChosenCid},
+meetupCompleted: ${meetupCompleted},
 bazaar: ${bazaar},
 community: ${community},
 communityAccount: ${communityAccount},

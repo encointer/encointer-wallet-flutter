@@ -104,6 +104,13 @@ List<LatLng> getLocations(AppStore store) {
 }
 
 LatLng coordinatesOf(CidName community) {
+  /// EdisonPaula has similar map data as to Leu
+  /// thus it is too close to Zurich Leu,
+  /// and very hard to choose it from map
+  /// thus moved little bit to the left on map
+  if (community.name == 'EdisonPaula') {
+    return LatLng(47.3962467, 8.4815019);
+  }
   final coordinates = GeoHash(utf8.decode(community.cid.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }

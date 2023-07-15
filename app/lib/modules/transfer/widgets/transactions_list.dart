@@ -13,9 +13,10 @@ class TransactionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (transactions.isEmpty) return const TransactionsEmpty();
+    if (transactions.isEmpty) return const TransactionsEmpty(key: Key('transactions-empty'));
     final appStore = context.watch<AppStore>();
     return ListView.builder(
+      key: const Key('transactions-list'),
       padding: const EdgeInsets.fromLTRB(14, 20, 14, 35),
       itemCount: transactions.length + 2,
       itemBuilder: (BuildContext context, int index) {

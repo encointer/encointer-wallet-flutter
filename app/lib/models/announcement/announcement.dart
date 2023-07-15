@@ -13,6 +13,7 @@ class Announcement {
     this.isFavorite = false,
     this.countFavorite = 0,
   });
+
   factory Announcement.fromJson(Map<String, dynamic> json) => _$AnnouncementFromJson(json);
   Map<String, dynamic> toJson() => _$AnnouncementToJson(this);
 
@@ -23,4 +24,6 @@ class Announcement {
   final DateTime publishDate;
   final bool isFavorite;
   final int countFavorite;
+
+  bool get isGlobal => communityIdentifier == 'global';
 }

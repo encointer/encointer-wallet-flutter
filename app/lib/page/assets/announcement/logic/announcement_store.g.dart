@@ -113,8 +113,9 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
       AsyncAction('_AnnouncementStoreBase.getGlobalAnnouncements', context: context);
 
   @override
-  Future<void> getGlobalAnnouncements({bool devMode = false}) {
-    return _$getGlobalAnnouncementsAsyncAction.run(() => super.getGlobalAnnouncements(devMode: devMode));
+  Future<void> getGlobalAnnouncements({bool devMode = false, required String langCode}) {
+    return _$getGlobalAnnouncementsAsyncAction
+        .run(() => super.getGlobalAnnouncements(devMode: devMode, langCode: langCode));
   }
 
   @override

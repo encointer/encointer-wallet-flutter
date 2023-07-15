@@ -52,3 +52,8 @@ Future<void> navigateToProfilePage(FlutterDriver driver) async {
   await driver.waitFor(find.byValueKey('bottom-nav'));
   await driver.tap(find.byValueKey('profile'));
 }
+
+Future<void> navigateToTransferHistoryPage(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('go-transfer-history'));
+  await driver.tap(find.byValueKey('go-transfer-history'));
+}

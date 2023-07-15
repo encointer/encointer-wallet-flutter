@@ -28,6 +28,8 @@ class Screenshots {
   static const sendView = '042-send-view';
   static const txConfirmationView = '043-tx-confirmation-view';
   static const voucherDialog = '044-reap-voucher-dialog';
+  static const txHistoryEmpty = '045-tx-history-empty';
+  static const txHistory = '046-tx-history';
 
   /// 61-80 profile
   static const profileView = '061-profile-view';

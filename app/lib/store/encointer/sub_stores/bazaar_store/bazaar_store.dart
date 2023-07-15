@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -47,6 +49,12 @@ abstract class _BazaarStore with Store {
 
   void initStore(Function? cacheFn) {
     _cacheFn = cacheFn as Future<void> Function()?;
+  }
+
+  Future<void> bazaarGetBusinesses(CommunityIdentifier cid) async {
+    final bazaars = await webApi.encointer.bazaarGetBusinesses(cid);
+    log('bazaarGetBusinesses bazaars: $bazaars');
+    setBusinessRegistry(bazaars);
   }
 
   Future<void> writeToCache() {

@@ -28,6 +28,7 @@ class CommunityIconObserver extends StatelessWidget {
               return SvgPicture.asset(fallBackCommunityIcon);
             }
           } else {
+            ///TODO(Azamat): Add some image saying community not selected
             return const CupertinoActivityIndicator();
           }
         },

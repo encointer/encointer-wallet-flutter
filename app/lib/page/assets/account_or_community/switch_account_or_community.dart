@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
 import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_item_horizontal.dart';
 import 'package:encointer_wallet/theme/theme.dart';
@@ -8,14 +7,14 @@ class SwitchAccountOrCommunity extends StatefulWidget {
   const SwitchAccountOrCommunity({
     super.key,
     this.rowTitle,
-    this.data,
+    this.accountOrCommunityData,
     this.onTap,
     required this.onAddIconPressed,
     required this.addIconButtonKey,
   });
 
   final String? rowTitle;
-  final List<AccountOrCommunityData>? data;
+  final List<AccountOrCommunityData>? accountOrCommunityData;
   final void Function(int index)? onTap;
   final VoidCallback onAddIconPressed;
   final Key addIconButtonKey;
@@ -66,9 +65,9 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemExtent: itemExtent,
-                itemCount: widget.data != null ? widget.data!.length : 0,
+                itemCount: widget.accountOrCommunityData != null ? widget.accountOrCommunityData!.length : 0,
                 itemBuilder: (context, index) => AccountOrCommunityItemHorizontal(
-                  itemData: widget.data![index],
+                  itemData: widget.accountOrCommunityData![index],
                   index: index,
                   onTap: widget.onTap,
                 ),

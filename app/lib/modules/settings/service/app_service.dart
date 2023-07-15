@@ -9,7 +9,6 @@ class AppService {
   final SharedPreferences storage;
 
   static const localStorageLocaleKey = 'locale';
-  static const biometricAuthStateKey = 'biometric-auth-state';
 
   Locale get getLocale {
     final code = storage.getString(localStorageLocaleKey);
@@ -24,6 +23,4 @@ class AppService {
     await storage.setString(localStorageLocaleKey, languageCode);
     return Locale(languageCode);
   }
-
-  String? get getBiometricAuthState => storage.getString(biometricAuthStateKey);
 }

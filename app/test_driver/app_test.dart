@@ -44,6 +44,22 @@ void main() async {
     await homeInit(driver);
   }, timeout: timeout120);
 
+  test('transfer-history-empty', () async {
+    await navigateToTransferHistoryPage(driver);
+    await checkTransferHistoryEmpty(driver);
+  }, timeout: timeout120);
+
+  test('import account Alice', () async {
+    await goToAddAcoountViewFromPanel(driver);
+    await importAccount(driver, 'Alice', '//Alice');
+    await closePanel(driver);
+  }, timeout: timeout120);
+
+  test('transfer-history', () async {
+    await navigateToTransferHistoryPage(driver);
+    await checkTransferHistory(driver);
+  }, timeout: timeout120);
+
   test('qr-receive page', () async {
     await goToReceiveViewFromHomeView(driver);
     await receiveView(driver);
@@ -56,18 +72,12 @@ void main() async {
 
   test('change-network', () async {
     await goToNetworkView(driver);
-    await changeDevNetwork(driver, 'Tom');
+    await changeDevNetwork(driver, 'Alice');
   }, timeout: timeout120);
 
   test('change-community', () async {
     await goToHomeViewFromNavBar(driver);
     await changeCommunity(driver);
-  }, timeout: timeout120);
-
-  test('import account Alice', () async {
-    await goToAddAcoountViewFromPanel(driver);
-    await importAccount(driver, 'Alice', '//Alice');
-    await closePanel(driver);
   }, timeout: timeout120);
 
   test('Register [Bootstrapper] Alice', () async {
