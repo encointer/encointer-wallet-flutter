@@ -76,7 +76,7 @@ class AnnouncementCard extends StatelessWidget {
                 }),
                 IconButton(
                   icon: const Icon(Icons.share, size: 20, color: AppColors.encointerGrey),
-                  onPressed: () => Share.share('${announcement.title}\n${announcement.content}\n$encointerLink/home'),
+                  onPressed: () => Share.share('${announcement.title}\n${announcement.content}\n${encointerLink}home'),
                 )
               ],
             )
