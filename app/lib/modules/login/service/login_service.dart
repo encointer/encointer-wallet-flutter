@@ -21,12 +21,23 @@ final class LoginService {
   BiometricAuthState? get getBiometricAuthState {
     final biometricAuthState = preferences.getString(biometricAuthStateKey);
     if (biometricAuthState != null) return BiometricAuthState.fromString(biometricAuthState);
-    final biometricAuthenticationEnabled = preferences.getBool(oldBiometricAuthStateKey);
-    return switch (biometricAuthenticationEnabled) {
+
+    // See if we had set a state in earlier app versions
+    final biometricAuthenticationEnabledOld = preferences.getBool(oldBiometricAuthStateKey);
+    if (biometricAuthenticationEnabledOld == null) return null;
+
+    // migrate old storage to new one and return state
+    final biometricAuthStateOld = switch (biometricAuthenticationEnabledOld) {
       true => BiometricAuthState.enabled,
       false => BiometricAuthState.disabled,
-      _ => null,
     };
+
+    // migrate the old storage to the new one
+    setBiometricAuthState(biometricAuthStateOld);
+    // clear the old storage
+    preferences.remove(oldBiometricAuthStateKey);
+
+    return biometricAuthStateOld;
   }
 
   Future<void> setBiometricAuthState(BiometricAuthState biometricAuthState) async {
