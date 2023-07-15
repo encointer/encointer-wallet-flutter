@@ -105,8 +105,7 @@ class SingleBusinessDetail extends StatelessWidget {
                       children: [
                         Text(
                           context.l10n.offersForCommunity(appStore.encointer.community?.symbol ?? 'LEU'),
-                          style:
-                              context.titleLarge.copyWith(color: context.colorScheme.primary, fontSize: 18),
+                          style: context.titleLarge.copyWith(color: context.colorScheme.primary, fontSize: 18),
                         ),
                         const SizedBox(height: 8),
                         ListView.builder(
