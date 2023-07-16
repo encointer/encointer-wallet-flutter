@@ -84,6 +84,36 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
     });
   }
 
+  late final _$ipfsProductsAtom = Atom(name: '_SingleBusinessStoreBase.ipfsProducts', context: context);
+
+  @override
+  List<IpfsProduct> get ipfsProducts {
+    _$ipfsProductsAtom.reportRead();
+    return super.ipfsProducts;
+  }
+
+  @override
+  set ipfsProducts(List<IpfsProduct> value) {
+    _$ipfsProductsAtom.reportWrite(value, super.ipfsProducts, () {
+      super.ipfsProducts = value;
+    });
+  }
+
+  late final _$errorAtom = Atom(name: '_SingleBusinessStoreBase.error', context: context);
+
+  @override
+  String? get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String? value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   late final _$getSingleBusinessAsyncAction =
       AsyncAction('_SingleBusinessStoreBase.getSingleBusiness', context: context);
 
@@ -124,7 +154,9 @@ isLiked: ${isLiked},
 isLikedPersonally: ${isLikedPersonally},
 countLikes: ${countLikes},
 singleBusiness: ${singleBusiness},
-fetchStatus: ${fetchStatus}
+fetchStatus: ${fetchStatus},
+ipfsProducts: ${ipfsProducts},
+error: ${error}
     ''';
   }
 }
