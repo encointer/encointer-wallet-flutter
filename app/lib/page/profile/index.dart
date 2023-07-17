@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
             const SizedBox(height: 6),
             Text(
               Fmt.accountName(context, account),
-              style: context.bodyLarge.copyWith(color: context.colorScheme.secondary),
+              style: context.bodyMedium.copyWith(color: context.colorScheme.secondary),
             ),
             // This sizedBox is here to define a distance between the accounts
             const SizedBox(width: 100),

@@ -267,7 +267,9 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           children: [
                             const Icon(Iconsax.share),
                             const SizedBox(width: 12),
-                            Text(l10n.accountShare, style: h3.copyWith(color: Colors.white)),
+                            Text(
+                              l10n.accountShare,
+                            ),
                           ],
                         ),
                         onPressed: () =>

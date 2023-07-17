@@ -92,7 +92,6 @@ class CeremonyStep1Count extends StatelessWidget {
                     const SizedBox(width: 12),
                     Text(
                       l10n.next,
-                      // style: context.displaySmall.copyWith(color: context.colorScheme.background),
                     ),
                   ],
                 ),
