@@ -96,7 +96,7 @@ class SingleBusinessDetail extends StatelessWidget {
                   const SizedBox(height: 20),
                   Text(
                     BusinessUtils.utf8convert(singleBusiness.description),
-                    style: context.bodyMedium.copyWith(height: 1.5, fontSize: 16),
+                    style: context.bodyMedium.copyWith(height: 1.5),
                   ),
                   const SizedBox(height: 40),
                   if (store.ipfsProducts.isNotEmpty)
