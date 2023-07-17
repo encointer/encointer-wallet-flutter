@@ -78,7 +78,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final h3Grey = context.titleLarge.copyWith(color: AppColors.encointerGrey);
+    final h3Grey = context.titleLarge.copyWith(color: AppColors.encointerGrey, fontSize: 19);
     final store = context.watch<AppStore>();
     final loginStore = context.watch<LoginStore>();
     final appSettingsStore = context.watch<AppSettings>();
@@ -138,7 +138,7 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text(
                   l10n.changeYourPin,
-                  style: context.titleLarge.copyWith(color: context.colorScheme.secondary),
+                  style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
@@ -167,7 +167,8 @@ class _ProfileState extends State<Profile> {
                       ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
                       : Text(l10n.fetchingReputations)),
               ListTile(
-                title: Text(l10n.about, style: context.titleLarge.copyWith(color: context.colorScheme.secondary)),
+                title: Text(l10n.about,
+                    style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19)),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
