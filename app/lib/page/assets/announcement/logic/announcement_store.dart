@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/models/announcement/announcement.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
+import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/config/consts.dart';
 
 part 'announcement_store.g.dart';
@@ -54,8 +55,12 @@ abstract class _AnnouncementStoreBase with Store {
       fromJson: Announcement.fromJson,
     );
 
-    communityAnnouncementsResponse.fold((l) {
+    await communityAnnouncementsResponse.fold((l) {
       error = l.error.toString();
+      Log.e('announcement_view', '${l.error}');
+
+      // fallback to English if the app language's one is not available
+      if (l.statusCode == 404) return getCommunityAnnouncements(cid, devMode: devMode, langCode: 'en');
       fetchStatus = FetchStatus.error;
     }, (r) {
       announcementsCommunnity = r;
@@ -66,15 +71,18 @@ abstract class _AnnouncementStoreBase with Store {
   }
 
   @action
-  Future<void> getGlobalAnnouncements({bool devMode = false}) async {
+  Future<void> getGlobalAnnouncements({bool devMode = false, required String langCode}) async {
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final globalAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
-      '${getEncointerFeedLink(devMode: devMode)}/announcements/global/en/announcements.json',
+      '${getEncointerFeedLink(devMode: devMode)}/announcements/global/$langCode/announcements.json',
       fromJson: Announcement.fromJson,
     );
 
-    globalAnnouncementsResponse.fold((l) {
+    await globalAnnouncementsResponse.fold((l) {
       error = l.error.toString();
+      Log.e('announcement_view', '${l.error}');
+      // fallback to English if the app language's one is not available
+      if (l.statusCode == 404) return getGlobalAnnouncements(devMode: devMode, langCode: 'en');
       fetchStatus = FetchStatus.error;
     }, (r) {
       announcementsGlobal = r;

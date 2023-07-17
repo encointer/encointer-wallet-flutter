@@ -461,5 +461,22 @@
             }
         }
     },
-    "verifyAuthTitle": "{useBioAuth, select, true{deine Identität} false{deine PIN} other{}} überprüfen, um die Transaktion abzuschließen."
+    "verifyAuthTitle": "{useBioAuth, select, true{deine Identität} false{deine PIN} other{}} überprüfen, um die Transaktion abzuschließen..",
+    "@verifyAuthTitle": {
+        "placeholders": {
+            "useBioAuth": {
+                "type": "String",
+                "example": "true"
+            }
+        }
+    },
+    "offersForCommunity": "Angebote für {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }

@@ -461,5 +461,22 @@
             }
         }
     },
-    "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{ta identité} false{le NIP} other{}} pour finaliser la transaction."
+    "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{ta identité} false{le NIP} other{}} pour finaliser la transaction.",
+    "@verifyAuthTitle": {
+        "placeholders": {
+            "useBioAuth": {
+                "type": "String",
+                "example": "true"
+            }
+        }
+    },
+    "offersForCommunity": "Des offres pour un {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }
