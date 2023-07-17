@@ -4,3 +4,5 @@ dependency_overrides:
     path: ../packages/ew_http
   ew_storage:
     path: ../packages/ew_storage
+  ew_test_keys:
+    path: ../packages/ew_test_keys
