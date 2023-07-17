@@ -135,6 +135,7 @@
     "endorseNewcomerNotificationBody": "Благодарим за одобрение новичка в нашем сообществе!",
     "endorseNewcomerNotificationTitle": "Новичок одобрен",
     "error": "Ошибка",
+    "errorMessageNoCommunity": "Сообщество не найдено. Пожалуйста, выберите сообщество.",
     "errorOccurred": "Возникла ошибка:",
     "errorUserNameIsRequired": "Имя пользователя не может быть пустым",
     "event": "ID события",

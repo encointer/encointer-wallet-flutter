@@ -15,7 +15,7 @@ void main() {
     webApi = getMockApi(AppStore(MockLocalStorage()), withUI: false);
     await webApi.init();
 
-    businessesStore = BusinessesStore(cid);
+    businessesStore = BusinessesStore();
   });
 
   group('BusinessesStore Test', () {
@@ -23,7 +23,7 @@ void main() {
       expect(businessesStore.fetchStatus, FetchStatus.loading);
       expect(businessesStore.sortedBusinesses, isEmpty);
 
-      await businessesStore.getBusinesses();
+      await businessesStore.getBusinesses(cid);
 
       expect(businessesStore.fetchStatus, FetchStatus.success);
       expect(businessesStore.sortedBusinesses, isNotEmpty);
@@ -32,7 +32,7 @@ void main() {
     });
 
     test('`getBusinesses()` should filter businesses by category', () async {
-      await businessesStore.getBusinesses();
+      await businessesStore.getBusinesses(cid);
 
       expect(businessesStore.businesses, isNotNull);
       expect(businessesStore.businesses.every((business) => business.category == Category.food), isTrue);

@@ -18,11 +18,6 @@ const _targetLogger = 'BusinessesStore';
 class BusinessesStore = _BusinessesStoreBase with _$BusinessesStore;
 
 abstract class _BusinessesStoreBase with Store {
-  _BusinessesStoreBase(this.cid);
-
-  @observable
-  late CommunityIdentifier cid;
-
   @observable
   List<Businesses> businesses = <Businesses>[];
 
@@ -35,7 +30,7 @@ abstract class _BusinessesStoreBase with Store {
   @observable
   String? error;
 
-  Future<List<AccountBusinessTuple>> _bazaarGetBusinesses() {
+  Future<List<AccountBusinessTuple>> _bazaarGetBusinesses(CommunityIdentifier cid) {
     Log.d('_bazaarGetBusinesses: cid = $cid', _targetLogger);
     return webApi.encointer.bazaarGetBusinesses(cid);
   }
@@ -46,11 +41,11 @@ abstract class _BusinessesStoreBase with Store {
   }
 
   @action
-  Future<void> getBusinesses() async {
+  Future<void> getBusinesses(CommunityIdentifier cid) async {
     fetchStatus = FetchStatus.loading;
     Log.d('getBusinesses: before update businesses = $businesses', _targetLogger);
 
-    final accountBusinessTuples = await _bazaarGetBusinesses();
+    final accountBusinessTuples = await _bazaarGetBusinesses(cid);
 
     await _getBusinessesLogosAndUpdate(accountBusinessTuples);
 
