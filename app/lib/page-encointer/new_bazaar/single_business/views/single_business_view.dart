@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/business_utils.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,11 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic
 import 'package:encointer_wallet/utils/fetch_status.dart';
 
 class SingleBusinessView extends StatelessWidget {
-  const SingleBusinessView({super.key});
+  const SingleBusinessView({
+    required this.appStore,
+    super.key,
+  });
+  final AppStore appStore;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class SingleBusinessView extends StatelessWidget {
       appBar: AppBar(
         title: Observer(builder: (_) {
           return switch (store.fetchStatus) {
-            FetchStatus.success => Text(store.singleBusiness!.name.toUpperCase()),
+            FetchStatus.success => Text(BusinessUtils.utf8convert(store.singleBusiness!.name.toUpperCase())),
             _ => const SizedBox(),
           };
         }),
@@ -29,9 +35,11 @@ class SingleBusinessView extends StatelessWidget {
           case FetchStatus.loading:
             return const CenteredActivityIndicator();
           case FetchStatus.success:
-            return SingleBusinessDetail(singleBusiness: store.singleBusiness!);
+            return SingleBusinessDetail(singleBusiness: store.singleBusiness!, appStore: appStore);
           case FetchStatus.error:
             return const ErrorView();
+          case FetchStatus.noData:
+            return const SizedBox.shrink();
         }
       }),
     );

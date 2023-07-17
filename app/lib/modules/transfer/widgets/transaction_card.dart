@@ -27,7 +27,7 @@ class TransactionCard extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(10, 15, 15, 10),
         isThreeLine: true,
-        leading: AddressIcon('', appStore.account.currentAccount.pubKey, size: 55, tapToCopy: false),
+        leading: AddressIcon(transaction.counterParty, Fmt.ss58Decode(transaction.counterParty).pubKey, size: 55),
         title: Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: Row(

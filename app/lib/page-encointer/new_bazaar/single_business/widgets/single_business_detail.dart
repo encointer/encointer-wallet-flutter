@@ -1,8 +1,11 @@
-import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/business_utils.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/widgets/business_detail_text_widget.dart';
@@ -16,10 +19,12 @@ import 'package:encointer_wallet/service/launch/app_launch.dart';
 class SingleBusinessDetail extends StatelessWidget {
   const SingleBusinessDetail({
     required this.singleBusiness,
+    required this.appStore,
     super.key,
   });
 
   final SingleBusiness singleBusiness;
+  final AppStore appStore;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +34,11 @@ class SingleBusinessDetail extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            Image.network(singleBusiness.photo, width: double.infinity, fit: BoxFit.cover),
+            Image.network(singleBusiness.logo, width: double.infinity, fit: BoxFit.cover),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 20, 30, 60),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,10 +47,11 @@ class SingleBusinessDetail extends StatelessWidget {
                         singleBusiness.category,
                         style: context.bodySmall,
                       ),
-                      Text(
-                        singleBusiness.status!,
-                        style: context.bodySmall.copyWith(color: const Color(0xFF35B731)),
-                      )
+                      if (singleBusiness.status.isNotNullOrEmpty)
+                        Text(
+                          singleBusiness.status!,
+                          style: context.bodySmall.copyWith(color: const Color(0xFF35B731)),
+                        )
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -88,30 +95,45 @@ class SingleBusinessDetail extends StatelessWidget {
                   }),
                   const SizedBox(height: 20),
                   Text(
-                    singleBusiness.description,
-                    style: context.bodyMedium.copyWith(height: 1.5),
+                    BusinessUtils.utf8convert(singleBusiness.description),
+                    style: context.bodyMedium.copyWith(height: 1.5, fontSize: 16),
                   ),
                   const SizedBox(height: 40),
-                  BusinessDetailTextWidget(
-                    text: singleBusiness.offer,
-                    text1: singleBusiness.offerName1,
-                    text2: singleBusiness.offerName2,
-                  ),
-                  BusinessDetailTextWidget(
-                    text: l10n.openningHours,
-                    text1: singleBusiness.openingHours1,
-                    text2: singleBusiness.openingHours2,
-                  ),
+                  if (store.ipfsProducts.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.l10n.offersForCommunity(appStore.encointer.community?.symbol ?? 'LEU'),
+                          style: context.titleLarge.copyWith(color: context.colorScheme.primary, fontSize: 18),
+                        ),
+                        const SizedBox(height: 8),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: store.ipfsProducts.length,
+                          itemBuilder: (context, index) {
+                            final ipfsProduct = store.ipfsProducts[index];
+                            return BusinessOfferDetails(
+                              title: BusinessUtils.utf8convert(ipfsProduct.name),
+                              description: BusinessUtils.utf8convert(ipfsProduct.description),
+                              price: '${appStore.encointer.community?.symbol} ${ipfsProduct.price ?? 0}',
+                              openingHours: store.singleBusiness!.openingHours,
+                              businessName: store.singleBusiness!.name,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   const SizedBox(height: 20),
                   BusinessDetailAddressWidget(
                     text: l10n.address,
-                    description: singleBusiness.addressDescription,
-                    address: singleBusiness.address,
+                    description: BusinessUtils.utf8convert(singleBusiness.addressDescription),
+                    address: BusinessUtils.utf8convert(singleBusiness.address),
                     zipCode: singleBusiness.zipcode,
                     email: singleBusiness.email,
                     phoneNum: singleBusiness.telephone,
                   ),
-                  const SizedBox(height: 20),
                   MapButton(
                     onPressed: () {
                       final location = Location(
@@ -122,11 +144,6 @@ class SingleBusinessDetail extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 40),
-                  BusinessDetailTextWidget(
-                    text: l10n.moreInfo,
-                    text1: singleBusiness.moreInfo,
-                    text2: '',
-                  ),
                 ],
               ),
             ),

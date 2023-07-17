@@ -7,6 +7,9 @@ import 'package:share_plus/share_plus.dart';
 import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_community_icon.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
 import 'package:encointer_wallet/models/announcement/announcement.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/common/components/logo/community_icon.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 class AnnouncementCard extends StatelessWidget {
@@ -29,11 +32,21 @@ class AnnouncementCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
-              leading: PublisherSVGandCommunityIcon(announcement.publisherSVG),
+              leading: PublisherSVGandCommunityIcon(
+                publisherSVG: announcement.publisherSVG,
+                child: announcement.isGlobal
+                    ? CircleAvatar(
+                        radius: 8,
+                        backgroundImage: Assets.images.public.app.provider(),
+                      )
+                    : const CommunityIconObserver(radius: 8),
+              ),
               title: Align(
                 alignment: Alignment.centerRight,
-                child: Text(DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
-                    style: context.bodySmall),
+                child: Text(
+                  DateFormat.MMMd(local.languageCode).format(announcement.publishDate),
+                  style: context.bodySmall,
+                ),
               ),
               subtitle: Text(announcement.title, style: context.titleMedium),
             ),
@@ -62,7 +75,7 @@ class AnnouncementCard extends StatelessWidget {
                 }),
                 IconButton(
                   icon: const Icon(Icons.share, size: 20, color: AppColors.encointerGrey),
-                  onPressed: () => Share.share(announcement.content),
+                  onPressed: () => Share.share('${announcement.title}\n${announcement.content}\n${encointerLink}home'),
                 )
               ],
             )
