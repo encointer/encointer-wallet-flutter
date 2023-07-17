@@ -92,13 +92,16 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
             }
             return Stack(
               children: [
-                MobileScanner(onDetect: (barcode) {
-                  if (barcode.barcodes.isEmpty) {
-                    Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
-                  } else {
-                    onScan(context.read<AppStore>(), l10n, barcode.barcodes[0].rawValue!);
-                  }
-                }),
+                MobileScanner(
+                  controller: MobileScannerController(detectionTimeoutMs: 1250),
+                  onDetect: (barcode) {
+                    if (barcode.barcodes.isEmpty) {
+                      Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
+                    } else {
+                      onScan(context.read<AppStore>(), l10n, barcode.barcodes[0].rawValue!);
+                    }
+                  },
+                ),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(
@@ -118,7 +121,6 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                           store.encointer.communityAccount!.scannedAttendeesCount,
                           widget.confirmedParticipantsCount - 1,
                         );
-
                         return Text(
                           txt,
                           style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
