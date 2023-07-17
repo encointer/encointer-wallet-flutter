@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page_store.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
