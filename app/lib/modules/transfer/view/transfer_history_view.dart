@@ -39,6 +39,7 @@ class TransferHistoryView extends StatelessWidget {
                   context.read<TransferHistoryViewStore>().getTransfers(appStore);
                 },
               ),
+            FetchStatus.noData => const SizedBox.shrink(),
           };
         }),
       ),

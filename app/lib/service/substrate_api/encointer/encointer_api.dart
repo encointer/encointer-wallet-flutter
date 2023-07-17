@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
+import 'package:encointer_wallet/models/bazaar/item_offered.dart';
 import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -240,7 +243,7 @@ class EncointerApi {
           (list) => list.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList(),
         );
 
-    Log.d('api: CidNames: $cn', 'EncointerApi');
+    Log.d('api: CidNames: ${cn.length} and $cn ', 'EncointerApi');
     store.encointer.setCommunities(cn);
   }
 
@@ -521,6 +524,23 @@ class EncointerApi {
     return allMockBusinesses;
   }
 
+  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid) async {
+    return _dartApi.bazaarGetBusinesses(cid);
+  }
+
+  Future<Either<Businesses, EwHttpException>> getBusinesseses(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    return ewHttp.getType(url, fromJson: Businesses.fromJson);
+  }
+
+  ///TODO(Azamat): method not working, fix it
+  Future<Either<Map<String, dynamic>, EwHttpException>> getBusinessesPhotos(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final response = ewHttp.get<Map<String, dynamic>>(url);
+
+    return response;
+  }
+
   /// Get all the registered offerings for the current `chosenCid`
   Future<List<OfferingData>> getOfferings() async {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.
@@ -531,6 +551,20 @@ class EncointerApi {
   Future<List<OfferingData>> getOfferingsForBusiness(BusinessIdentifier bid) async {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.
     return business1MockOfferings;
+  }
+
+  Future<List<OfferingData>> bazaarGetOfferingsForBusines(CommunityIdentifier cid, String? controller) async {
+    return _dartApi.bazaarGetOfferingsForBusines(cid, controller);
+  }
+
+  Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    return ewHttp.getType(url, fromJson: ItemOffered.fromJson);
+  }
+
+  Future<Either<IpfsProduct, EwHttpException>> getSingleBusinessProduct(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    return ewHttp.getType(url, fromJson: IpfsProduct.fromJson);
   }
 
   Future<Map<int, CommunityReputation>> getContactsReputation(String address) async {

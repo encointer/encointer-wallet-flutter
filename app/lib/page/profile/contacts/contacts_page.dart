@@ -67,7 +67,7 @@ class _ContactsPageState extends State<ContactsPage> {
               } else if (_contactsPageStore.contactList.isEmpty) {
                 return Center(
                   child: Text(
-                    context.l10n.noContactsAvailable,
+                    context.l10n.noContactsStored,
                     style: context.textTheme.bodyMedium,
                   ),
                 );

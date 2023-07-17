@@ -191,6 +191,7 @@
     "lang": "Langue",
     "lastVisited": "Dernière visite",
     "leuZurichFAQ": "leu.zuerich FAQ",
+    "like": "J'aime",
     "list": "Sélection de compte",
     "loading": "Chargement…",
     "localizedReason": "Authentification nécessaire pour accéder à ton compte",
@@ -207,6 +208,7 @@
     "meetupNotificationOneHourBeforeTitle": "Encore 1 heure",
     "menu": "Menu",
     "mnemonic": "Mnémonique",
+    "moreInfo": "Plus d'informations:",
     "newbieContent": "Tu t'es enregistré en tant que Novice Il n'est pas garanti que tu sois dans ce cycle Si le nombre de Novices est élevé, tu ne seras pas assigné. S'il te plaît, vérifie ton statut d'assignation le jour précédant le cycle pour savoir pour savoir si et où ta réunion aura lieu.",
     "newbieTitle": "Enregistré comme Novice - Ta place n'est pas encore garantie",
     "next": "Continuer",
@@ -416,5 +418,14 @@
     "communityWithName": "Communauté {name}",
     "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{ta identité} false{le NIP} other{}} pour finaliser la transaction.",
     "newbie" : "Débutant(e)",
-    "noContactsAvailable": "Aucun contact disponible"
+    "noContactsStored": "Aucun contact stocké",
+    "offersForCommunity": "Des offres pour un {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }

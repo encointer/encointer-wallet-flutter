@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/custom/colors/app_colors.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/logic/businesses_store.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 
 class DropdownWidget extends StatefulWidget {
   const DropdownWidget({super.key});
@@ -41,11 +41,11 @@ class _DropdownWidgetState extends State<DropdownWidget> {
             ),
           )
           .toList(),
-      onSelected: (category) async {
+      onSelected: (category) {
         if (category != null && selectedCategory != category) {
           selectedCategory = category;
 
-          await context.read<BusinessesStore>().getBusinesses(category: selectedCategory);
+          context.read<BusinessesStore>().filterBusinessesByCategory(category: selectedCategory);
         }
       },
       inputDecorationTheme: InputDecorationTheme(
@@ -55,17 +55,19 @@ class _DropdownWidgetState extends State<DropdownWidget> {
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.only(left: 15),
+        contentPadding: const EdgeInsets.only(left: 18),
         constraints: const BoxConstraints(maxHeight: 40),
       ),
       textStyle: context.textTheme.bodyMedium,
       trailingIcon: const Icon(
         Icons.keyboard_arrow_down_outlined,
         color: AppColors.encointerGrey,
+        size: 18,
       ),
       selectedTrailingIcon: const Icon(
         Icons.keyboard_arrow_up_outlined,
         color: AppColors.encointerGrey,
+        size: 18,
       ),
     );
   }
@@ -83,7 +85,9 @@ enum Category {
   @JsonValue('food_beverage_store')
   foodAndBeverageStore('Food & Beverage Store'),
   @JsonValue('restaurants_bars')
-  restaurantsAndBars('Restaurants & Bars');
+  restaurantsAndBars('Restaurants & Bars'),
+  @JsonValue('food')
+  food('Food');
 
   const Category(this.name);
   final String name;

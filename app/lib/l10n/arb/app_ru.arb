@@ -191,6 +191,7 @@
     "lang": "Язык",
     "lastVisited": "Последнее посещение",
     "leuZurichFAQ": "ЧЗВ leu.zuerich",
+    "like": "Нравится",
     "list": "Выбрать аккаунт",
     "loading": "Загружается...",
     "localizedReason": "Аутентифицируйтесь для доступа к вашей учетной записи",
@@ -207,6 +208,7 @@
     "meetupNotificationOneHourBeforeTitle": "Остался 1 час",
     "menu": "Меню",
     "mnemonic": "Мнемоническая фраза",
+    "moreInfo": "Дополнительная информация:",
     "newbieContent": "Вы зарегистрировались в качестве новичка без репутации. Нет гарантии, что Вас назначат на этот цикл, если в нем будет участвовать большое количество новичков. Пожалуйста, проверьте статус вашего назначения за день до цикла чтобы узнать, состоится ли ваше собрание и где оно будет проходить.",
     "newbieTitle": "Зарегистрирован в качестве Новичка - место не гарантировано.",
     "next": "Следующий",
@@ -265,7 +267,7 @@
     "pinSecure": "Защитите свой аккаунт с помощью PIN-кода",
     "pleaseCommunityChoose": "Пожалуйста выберите общину",
     "pleaseConfirmYourNewPin": "Подтвердите PIN-код",
-    "preview": "Предварительный просмотр",
+    "preview": "Предпросмотр",
     "price": "Цена",
     "print": "Распечатать",
     "productNewness": "Новые продукты",
@@ -318,7 +320,7 @@
     "settingPrefix": "Префикс адреса",
     "settingPrefixList": "Доступные префиксы",
     "share": "Поделиться",
-    "shareInvoice": "Поделиться инвойсом",
+    "shareInvoice": "Отправить инвойс",
     "shareLinkHint": "Или Вы можете поделиться ссылкой",
     "showAll": "+ Показать все",
     "showRouteMeetupLocation": "Показать маршрут",
@@ -416,5 +418,14 @@
     "communityWithName": "Сообщество {name}",
     "verifyAuthTitle": "Для завершения транзакции {useBioAuth, select, true{подтвердите вашу личность} false{введите PIN-код} other{}}.",
     "newbie" : "Новичок",
-    "noContactsAvailable": "Нет доступных контактов"
+    "noContactsStored": "Сохраненных контактов нету",
+    "offersForCommunity": "Предложения за {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
 }
