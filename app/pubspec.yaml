@@ -19,7 +19,7 @@ version: 1.10.2+865
 publish_to: none
 
 environment:
-  sdk: ">=3.0.3 <4.0.0"
+  sdk: ">=3.0.1 <4.0.0"
   flutter: "3.10.3"
 
 dependencies:
