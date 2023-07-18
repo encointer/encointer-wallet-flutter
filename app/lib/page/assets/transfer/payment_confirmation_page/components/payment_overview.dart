@@ -31,7 +31,7 @@ class PaymentOverview extends StatelessWidget {
               CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
               Text(
                 Fmt.accountName(context, store.account.currentAccount),
-                style: context.bodyLarge.copyWith(color: AppColors.encointerGrey, height: 1.5),
+                style: context.bodyMedium.copyWith(color: AppColors.encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
             ],
