@@ -93,6 +93,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
             return Stack(
               children: [
                 MobileScanner(
+                  // Timeout added because of https://github.com/juliansteenbakker/mobile_scanner/pull/594
                   controller: MobileScannerController(detectionTimeoutMs: 1250),
                   onDetect: (barcode) {
                     if (barcode.barcodes.isEmpty) {
