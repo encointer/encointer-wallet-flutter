@@ -28,12 +28,10 @@ class _AnimatedCheckState extends State<AnimatedCheck> with SingleTickerProvider
 
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
-
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1))..forward();
     _animation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc),
     );
-
     _timer = Timer.periodic(const Duration(seconds: 2), (timer) => _animateTick());
     super.initState();
   }
@@ -91,7 +89,6 @@ class AnimatedPathPainter extends CustomPainter {
       final metric = metricsIterator.current;
       final nextLength = currentLength + metric.length;
       final isLastSegment = nextLength > length;
-
       if (isLastSegment) {
         final remainingLength = length - currentLength;
         final pathSegment = metric.extractPath(0, remainingLength);
