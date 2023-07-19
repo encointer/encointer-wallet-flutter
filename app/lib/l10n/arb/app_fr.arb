@@ -135,7 +135,7 @@
     "endorseNewcomerNotificationBody": "Merci d'avoir endossé le Novice!",
     "endorseNewcomerNotificationTitle": "Novice endossé",
     "error": "Erreur",
-    "errorMessageNoCommunity": "Communauté non trouvée. Veuillez choisir une communauté.",
+    "errorMessageNoCommunity": "Communauté non trouvée. Choisis une communauté.",
     "errorOccurred": "Une erreur est apparue:",
     "errorUserNameIsRequired": "Le nom d'utilisateur ne doit pas être vide",
     "event": "ID d'événement",
