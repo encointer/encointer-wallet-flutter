@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -45,9 +46,15 @@ class Transaction {
   /// Returns null if no matching contact is found.
   String? getNameFromContacts(List<AccountData> contacts) {
     for (final contact in contacts) {
-      // Contact address might be with default prefix 42, or with Kusama prefix 2.
-      // So better to work with the universal pubKey.
-      if (contact.pubKey == Fmt.ss58Decode(counterParty).pubKey) return contact.name;
+      try {
+        // Contact address might be with default prefix 42, or with Kusama prefix 2.
+        // So better to work with the universal pubKey.
+        if (contact.pubKey == Fmt.ss58Decode(counterParty).pubKey) {
+          return contact.name;
+        }
+      } catch (e) {
+        Log.e('Could not decode counterparty address: $counterParty. Error: $e');
+      }
     }
     return null;
   }
