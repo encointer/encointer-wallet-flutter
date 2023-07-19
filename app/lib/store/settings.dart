@@ -102,7 +102,7 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
-  List<AccountData> get contactListAll {
+  List<AccountData> get allStoredAddresses {
     final ls = List<AccountData>.of(rootStore.account.accountList)..addAll(contactList);
     return ls;
   }
@@ -110,7 +110,7 @@ abstract class _SettingsStore with Store {
   /// Set of known accounts
   List<AccountData> knownAccounts() {
     final uniqueIds = <String>{};
-    return contactListAll.where((data) => uniqueIds.add(data.pubKey)).toList();
+    return allStoredAddresses.where((data) => uniqueIds.add(data.pubKey)).toList();
   }
 
   @action

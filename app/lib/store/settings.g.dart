@@ -73,11 +73,11 @@ mixin _$SettingsStore on _SettingsStore, Store {
   List<EndpointData> get endpointList => (_$endpointListComputed ??=
           Computed<List<EndpointData>>(() => super.endpointList, name: '_SettingsStore.endpointList'))
       .value;
-  Computed<List<AccountData>>? _$contactListAllComputed;
+  Computed<List<AccountData>>? _$allStoredAddressesComputed;
 
   @override
-  List<AccountData> get contactListAll => (_$contactListAllComputed ??=
-          Computed<List<AccountData>>(() => super.contactListAll, name: '_SettingsStore.contactListAll'))
+  List<AccountData> get allStoredAddresses => (_$allStoredAddressesComputed ??=
+          Computed<List<AccountData>>(() => super.allStoredAddresses, name: '_SettingsStore.allStoredAddresses'))
       .value;
   Computed<bool>? _$isConnectedComputed;
 
@@ -415,7 +415,7 @@ endpointIsNoTee: ${endpointIsNoTee},
 endpointIsTeeProxy: ${endpointIsTeeProxy},
 ipfsGateway: ${ipfsGateway},
 endpointList: ${endpointList},
-contactListAll: ${contactListAll},
+allStoredAddresses: ${allStoredAddresses},
 isConnected: ${isConnected}
     ''';
   }
