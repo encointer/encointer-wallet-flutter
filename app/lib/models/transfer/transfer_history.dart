@@ -47,7 +47,7 @@ class Transaction {
     for (final contact in contacts) {
       // Contact address might be with default prefix 42, or with Kusama prefix 2.
       // So better to work with the universal pubKey.
-      if (Fmt.ss58Decode(contact.address).pubKey == Fmt.ss58Decode(counterParty).pubKey) return contact.name;
+      if (contact.pubKey == Fmt.ss58Decode(counterParty).pubKey) return contact.name;
     }
     return null;
   }
