@@ -42,9 +42,7 @@ class CeremonyStep2Scan extends StatelessWidget {
         title: Text(l10n.keySigningCycle),
         actions: [
           UserMeetupAvatar(index: meetupIndexOfAccount(store.account.currentAccountPubKey!)),
-          const SizedBox(
-            width: 20,
-          )
+          const SizedBox(width: 20)
         ],
       ),
       body: Column(
