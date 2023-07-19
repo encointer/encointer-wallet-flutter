@@ -185,7 +185,7 @@
     "invoice": "Montant de la facture",
     "invoiceAmount": "Montant de la facture",
     "issuanceClaimed": "Pas de paiement communautaire à payer",
-    "issuancePending": "Demander le paiement communautaire en cours",
+    "issuancePending": "Demander paiement communautaire",
     "keySigningCycle": "Cycle de signature de clé",
     "keystore": "Keystore (json)",
     "lang": "Langue",
