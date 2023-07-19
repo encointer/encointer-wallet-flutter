@@ -186,7 +186,7 @@
     "invoice": "Rechnungsbetrag",
     "invoiceAmount": "Rechnungsbetrag",
     "issuanceClaimed": "Kein ausstehendes Gemeinschaftseinkommen",
-    "issuancePending": "Ausstehendes Gemeinschaftseinkommen einfordern",
+    "issuancePending": "Gemeinschaftseinkommen einfordern",
     "keySigningCycle": "Key-Signing Cycle",
     "keystore": "Keystore (json)",
     "lang": "Sprache",
