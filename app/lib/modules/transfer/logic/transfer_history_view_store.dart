@@ -54,8 +54,8 @@ abstract class _TransferHistoryViewStoreBase with Store {
       );
 
       response.fold(
-            (l) => fetchStatus = FetchStatus.error,
-            (r) {
+        (l) => fetchStatus = FetchStatus.error,
+        (r) {
           fetchStatus = FetchStatus.success;
           transactions = r.reversed.toList();
         },
