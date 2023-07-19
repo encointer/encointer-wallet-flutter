@@ -57,11 +57,10 @@ class _AddressInputFieldState extends State<AddressInputField> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(account.name),
-              Text(Fmt.address(address)!, style: context.titleMedium
-                  // TextStyle(fontSize: 12,
-                  // color: context.theme.unselectedWidgetColor
-                  // ),
-                  ),
+              Text(
+                Fmt.address(address)!,
+                style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
+              ),
             ],
           )
         ],

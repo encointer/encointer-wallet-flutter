@@ -125,7 +125,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final h3 = context.titleLarge;
+    final h3 = context.titleLarge.copyWith(fontSize: 19);
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
     final appSettingsStore = context.watch<AppSettings>();
@@ -269,6 +269,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             const SizedBox(width: 12),
                             Text(
                               l10n.accountShare,
+                              style: context.titleLarge.copyWith(color: context.colorScheme.background, fontSize: 19),
                             ),
                           ],
                         ),

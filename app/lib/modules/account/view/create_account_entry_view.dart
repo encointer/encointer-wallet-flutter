@@ -30,7 +30,8 @@ class CreateAccountEntryView extends StatelessWidget {
               child: SecondaryButtonWide(
                 key: const Key('create-account'),
                 onPressed: () => Navigator.pushNamed(context, CreateAccountView.route),
-                child: Text(context.l10n.create, style: context.headlineSmall),
+                child:
+                    Text(context.l10n.create, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
               ),
             ),
             const SizedBox(height: 16),

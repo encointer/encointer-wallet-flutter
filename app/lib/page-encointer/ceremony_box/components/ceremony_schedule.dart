@@ -53,11 +53,11 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: '${l10n.nextCycleDateLabel} ',
-        style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
+        style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
         children: [
           TextSpan(
             text: '$nextCeremonyYearMonthDay $nextCeremonyHourMinute',
-            style: context.bodyLarge.copyWith(color: AppColors.encointerBlack),
+            style: context.bodyMedium.copyWith(color: AppColors.encointerBlack),
           ),
         ],
       ),
