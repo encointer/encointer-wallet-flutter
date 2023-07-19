@@ -9,6 +9,8 @@ import 'package:encointer_wallet/utils/format.dart';
 
 part 'transfer_history.g.dart';
 
+const _target = 'transfer_history';
+
 /// A class representing an Encointer transaction.
 @JsonSerializable()
 class Transaction {
@@ -53,7 +55,7 @@ class Transaction {
           return contact.name;
         }
       } catch (e) {
-        Log.e('Could not decode counterparty address: $counterParty. Error: $e');
+        Log.e('Could not decode counterparty address: $counterParty. Error: $e', _target);
       }
     }
     return null;
