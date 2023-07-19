@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
+import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -124,7 +125,10 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                         );
                         return Text(
                           txt,
-                          style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                          style: context.textTheme.displayMedium!.copyWith(
+                            color: Colors.white,
+                            backgroundColor: Colors.black38,
+                          ),
                         );
                       }),
                       const SizedBox(height: 10),
