@@ -73,21 +73,6 @@ class SingleBusinessDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: context.read<SingleBusinessStore>().toggleLikes,
-                              child: Assets.avatars.participant00.svg(
-                                height: 25,
-                                colorFilter: singleBusinessStore.isLiked
-                                    ? null
-                                    : const ColorFilter.mode(Colors.white, BlendMode.color),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Text('${singleBusinessStore.countLikes}'),
-                          ],
-                        ),
                       ],
                     );
                   }),
