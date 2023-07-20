@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class TransactionCard extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(10, 15, 15, 10),
         isThreeLine: true,
-        leading: AddressIcon(transaction.counterParty, Fmt.ss58Decode(transaction.counterParty).pubKey, size: 55),
+        leading: AddressIcon(transaction.counterParty, tryGetPubKey(transaction), size: 55),
         title: Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: Row(
@@ -102,4 +103,18 @@ class TransactionCard extends StatelessWidget {
       ),
     );
   }
+}
+
+String tryGetPubKey(Transaction transaction) {
+  String counterPartyPubKey;
+
+  try {
+    counterPartyPubKey = Fmt.ss58Decode(transaction.counterParty).pubKey;
+  } catch (e) {
+    Log.e('Could not decode address. Error: $e');
+
+    // this is only used in the identicon, so we don't need to localize it.
+    counterPartyPubKey = 'invalid address';
+  }
+  return counterPartyPubKey;
 }
