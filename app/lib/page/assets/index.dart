@@ -260,7 +260,7 @@ class _AssetsViewState extends State<AssetsView> {
                             if (hasPendingIssuance) {
                               return SubmitButton(
                                 key: const Key('claim-pending-dev'),
-                                child: Text(l10n.issuancePending),
+                                child: Text(l10n.issuancePending, textAlign: TextAlign.center),
                                 onPressed: (context) => submitClaimRewards(
                                   context,
                                   widget.store,

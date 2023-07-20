@@ -90,9 +90,7 @@ class CeremonyStep1Count extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.arrow_right_2),
                     const SizedBox(width: 12),
-                    Text(
-                      l10n.next,
-                    ),
+                    Text(l10n.next),
                   ],
                 ),
                 onPressed: () => _attendeesCountController.text.trim().isNotEmpty
