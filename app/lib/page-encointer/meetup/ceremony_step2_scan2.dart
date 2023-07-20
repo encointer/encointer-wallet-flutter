@@ -92,7 +92,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(width: 12, height: 60),
                   Text(
                     l10n.closeGathering,
-                    style: context.bodyLarge.copyWith(color: context.colorScheme.primary),
+                    style: context.titleMedium.copyWith(color: context.colorScheme.primary),
                   ),
                 ],
               ),

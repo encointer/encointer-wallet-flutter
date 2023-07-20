@@ -52,7 +52,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
         Center(
           child: Text(
             l10n.accountNameChoose,
-            style: context.headlineMedium,
+            style: context.headlineSmall,
           ),
         ),
         const SizedBox(height: 10),

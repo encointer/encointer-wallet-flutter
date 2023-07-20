@@ -74,7 +74,7 @@ class ExportResultPage extends StatelessWidget {
                     child: Text(
                       args['key'] as String,
                       key: const Key('account-mnemonic-key'),
-                      style: context.headlineMedium,
+                      style: context.bodyMedium.copyWith(color: context.colorScheme.primary),
                     ),
                   ),
                 ],
