@@ -34,8 +34,8 @@ void main() {
     test('`getBusinesses()` should filter businesses by category', () async {
       await businessesStore.getBusinesses();
 
-      expect(businessesStore.businesses, isNotNull);
-      expect(businessesStore.businesses.every((business) => business.category == Category.food), isTrue);
+      expect(businessesStore.sortedBusinesses, isNotNull);
+      expect(businessesStore.sortedBusinesses.every((business) => business.category == Category.food), isTrue);
     });
   });
 }
