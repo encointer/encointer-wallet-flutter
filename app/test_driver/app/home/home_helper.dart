@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 
 import '../../helpers/helper.dart';
@@ -83,8 +84,8 @@ Future<void> checkIfErrorOccuredAfterSend(FlutterDriver driver) async {
     await driver.tap(find.byValueKey('close-send-error-dialog'));
     await goToProfileViewFromNavBar(driver);
     await goToHomeViewFromNavBar(driver);
-    print('checkIfErrorOccuredAfterSend: widget is present');
+    debugPrint('checkIfErrorOccuredAfterSend: widget is present');
   } else {
-    print('checkIfErrorOccuredAfterSend: widget is not present');
+    debugPrint('checkIfErrorOccuredAfterSend: widget is not present');
   }
 }
