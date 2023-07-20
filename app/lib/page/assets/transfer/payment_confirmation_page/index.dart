@@ -23,7 +23,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
 class PaymentConfirmationParams {
-  PaymentConfirmationParams({
+  const PaymentConfirmationParams({
     required this.cid,
     required this.communitySymbol,
     required this.recipientAccount,
@@ -148,30 +148,34 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       _transferState = TransferState.submitting;
     });
 
-    void onFinish(BuildContext txPageContext, Map res) {
-      Log.d('Transfer result $res', 'PaymentConfirmationPage');
-
-      if (res['hash'] == null) {
-        Log.d('Error sending transfer ${res['error']}', 'PaymentConfirmationPage');
-        _transferState = TransferState.failed;
-      } else {
-        _transferState = TransferState.finished;
-        _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
-      }
-    }
-
-    await submitTx(context, context.read<AppStore>(), widget.api, params, onFinish: onFinish);
-
-    // for debugging
-    // Future.delayed(const Duration(milliseconds: 1500), () {
-    //   setState(() {
-    //     _transferState = TransferState.finished;
-    //   });
-    // });
+    await submitTx(
+      context,
+      context.read<AppStore>(),
+      widget.api,
+      params,
+      onFinish: onFinish,
+      onError: onError,
+    );
 
     Log.d('TransferState after callback: $_transferState', 'PaymentConfirmationPage');
     // trigger rebuild after state update in callback
     setState(() {});
+  }
+
+  void onFinish(BuildContext txPageContext, Map res) {
+    Log.d('Transfer result $res', 'PaymentConfirmationPage');
+
+    if (res['hash'] == null) {
+      onError(res['error']);
+    } else {
+      _transferState = TransferState.finished;
+      _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
+    }
+  }
+
+  void onError(dynamic errorMessage) {
+    Log.d('Error sending transfer $errorMessage', 'PaymentConfirmationPage');
+    _transferState = TransferState.failed;
   }
 
   Widget _getTransferStateWidget(TransferState state) {
