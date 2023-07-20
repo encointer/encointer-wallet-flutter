@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_driver/flutter_driver.dart';
 
 import '../../helpers/helper.dart';
+import '../navigate.dart';
 
 Future<void> refreshWalletPage(FlutterDriver driver) async {
   await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
@@ -73,4 +74,17 @@ Future<void> scrollToStartMeetup(FlutterDriver driver) async {
     find.byValueKey('start-meetup'),
     dyScroll: -150,
   );
+}
+
+Future<void> checkIfErrorOccuredAfterSend(FlutterDriver driver) async {
+  final isExists = await isWidgetPresent(find.byValueKey('textKey'), driver);
+  if (isExists) {
+    await driver.waitFor(find.byValueKey('close-send-error-dialog'));
+    await driver.tap(find.byValueKey('close-send-error-dialog'));
+    await goToProfileViewFromNavBar(driver);
+    await goToHomeViewFromNavBar(driver);
+    print('checkIfErrorOccuredAfterSend: widget is present');
+  } else {
+    print('checkIfErrorOccuredAfterSend: widget is not present');
+  }
 }

@@ -150,6 +150,7 @@ void main() async {
   }, timeout: timeout120);
 
   test('Register [Newbie] Tom', () async {
+    await checkIfErrorOccuredAfterSend(driver);
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.newbie);

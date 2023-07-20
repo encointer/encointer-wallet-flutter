@@ -97,6 +97,7 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
         },
       ),
       CupertinoButton(
+        key: const Key('close-send-error-dialog'),
         child: Text(l10n.ok),
         onPressed: () => Navigator.of(context).pop(),
       ),
