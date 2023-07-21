@@ -77,16 +77,18 @@ Future<void> scrollToStartMeetup(FlutterDriver driver) async {
 }
 
 Future<void> checkIfErrorOccuredAfterSend(FlutterDriver driver) async {
-  final isExists = await isWidgetPresent(find.byValueKey('textKey'), driver);
-  if (isExists) {
-    await driver.waitFor(find.byValueKey('close-send-error-dialog'));
-    await driver.tap(find.byValueKey('close-send-error-dialog'));
-    await goToProfileViewFromNavBar(driver);
-    await goToHomeViewFromNavBar(driver);
-    log('checkIfErrorOccuredAfterSend: widget is present');
-  } else {
-    await goToProfileViewFromNavBar(driver);
-    await goToHomeViewFromNavBar(driver);
-    log('checkIfErrorOccuredAfterSend: widget is not present');
-  }
+  await driver.runUnsynchronized(() async {
+    final isExists = await isWidgetPresent(find.byValueKey('app-alert-on-tx-error'), driver);
+    if (isExists) {
+      await driver.waitFor(find.byValueKey('close-send-error-dialog'));
+      await driver.tap(find.byValueKey('close-send-error-dialog'));
+      await goToProfileViewFromNavBar(driver);
+      await goToHomeViewFromNavBar(driver);
+      log('checkIfErrorOccuredAfterSend: widget is present');
+    } else {
+      await goToProfileViewFromNavBar(driver);
+      await goToHomeViewFromNavBar(driver);
+      log('checkIfErrorOccuredAfterSend: widget is not present');
+    }
+  });
 }

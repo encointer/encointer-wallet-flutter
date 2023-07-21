@@ -86,7 +86,10 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
   AppAlert.showDialog<void>(
     context,
     title: Text('${message['title']}'),
-    content: Text('${message['body']}'),
+    content: Text(
+      key: const Key('app-alert-on-tx-error'),
+      '${message['body']}',
+    ),
     actions: [
       const SizedBox.shrink(),
       CupertinoButton(
@@ -97,8 +100,10 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
         },
       ),
       CupertinoButton(
-        key: const Key('close-send-error-dialog'),
-        child: Text(l10n.ok),
+        child: Text(
+          key: const Key('close-send-error-dialog'),
+          l10n.ok,
+        ),
         onPressed: () => Navigator.of(context).pop(),
       ),
     ],

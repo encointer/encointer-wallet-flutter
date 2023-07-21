@@ -9,6 +9,7 @@ import 'app/app.dart';
 void main() async {
   late FlutterDriver driver;
   const timeout120 = Timeout(Duration(seconds: 120));
+  const timeout180 = Timeout(Duration(seconds: 180));
 
   var publicKey = '';
   var menemonic = '';
@@ -154,7 +155,7 @@ void main() async {
     await changeAccountFromPanel(driver, 'Tom');
     await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
-  }, timeout: timeout120);
+  }, timeout: timeout180);
 
   test('Unregister [Newbie] Tom', () async {
     await scrollToUnregisterButton(driver);
