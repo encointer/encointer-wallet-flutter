@@ -78,7 +78,7 @@ Future<void> scrollToStartMeetup(FlutterDriver driver) async {
 
 Future<void> checkIfErrorOccuredAfterSend(FlutterDriver driver) async {
   await driver.runUnsynchronized(() async {
-    final isExists = await isWidgetPresent(find.byValueKey('app-alert-on-tx-error'), driver);
+    final isExists = await isWidgetPresent(find.byType('CupertinoAlertDialog'), driver);
     if (isExists) {
       await driver.waitFor(find.byValueKey('close-send-error-dialog'));
       await driver.tap(find.byValueKey('close-send-error-dialog'));
