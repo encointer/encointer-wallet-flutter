@@ -1,27 +1,60 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
 
-class AnimatedCheck extends StatelessWidget {
+class AnimatedCheck extends StatefulWidget {
   const AnimatedCheck({
-    required this.progress,
-    required this.size,
-    this.color,
+    this.size = 100,
+    this.animate = true,
+    this.color = Colors.white,
     super.key,
   });
 
-  final Animation<double> progress;
+  final bool animate;
   final double size;
   final Color? color;
 
   @override
+  State<AnimatedCheck> createState() => _AnimatedCheckState();
+}
+
+class _AnimatedCheckState extends State<AnimatedCheck> with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
+  late final Timer _timer;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1))..forward();
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc),
+    );
+    _timer = Timer.periodic(const Duration(seconds: 2), (timer) => _animateTick());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      foregroundPainter: AnimatedPathPainter(progress, color ?? context.colorScheme.primary),
-      child: SizedBox(width: size, height: size),
+      foregroundPainter: AnimatedPathPainter(_animation, widget.color ?? context.colorScheme.primary),
+      child: SizedBox(width: widget.size, height: widget.size),
     );
+  }
+
+  void _animateTick() {
+    if (widget.animate && context.mounted) {
+      _animationController.repeat(period: const Duration(milliseconds: 1500));
+    }
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _timer.cancel();
+    super.dispose();
   }
 }
 
@@ -56,7 +89,6 @@ class AnimatedPathPainter extends CustomPainter {
       final metric = metricsIterator.current;
       final nextLength = currentLength + metric.length;
       final isLastSegment = nextLength > length;
-
       if (isLastSegment) {
         final remainingLength = length - currentLength;
         final pathSegment = metric.extractPath(0, remainingLength);

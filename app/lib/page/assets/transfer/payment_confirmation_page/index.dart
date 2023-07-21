@@ -23,7 +23,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
 class PaymentConfirmationParams {
-  PaymentConfirmationParams({
+  const PaymentConfirmationParams({
     required this.cid,
     required this.communitySymbol,
     required this.recipientAccount,
@@ -46,26 +46,18 @@ class PaymentConfirmationPage extends StatefulWidget {
   State<PaymentConfirmationPage> createState() => _PaymentConfirmationPageState();
 }
 
-class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with SingleTickerProviderStateMixin {
-  TransferState _transferState = TransferState.notStarted;
+class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
+  var _transferState = TransferState.notStarted;
 
   /// Transaction result, will only be used in the error case.
-  late Map _transactionResult;
-
-  late DateTime _blockTimestamp;
-
-  // for the animated tick.
-  AnimationController? _animationController;
-  Animation<double>? _animation;
-  late Timer _timer;
-  bool _animationInitialized = false;
+  Map<dynamic, dynamic>? _transactionResult;
+  late final DateTime _blockTimestamp;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
     final params = ModalRoute.of(context)!.settings.arguments! as PaymentConfirmationParams;
-
     final cid = params.cid;
     final recipientAccount = params.recipientAccount;
     final amount = params.amount;
@@ -98,7 +90,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 duration: const Duration(milliseconds: 500),
                 transitionBuilder: (Widget child, Animation<double> animation) {
                   return RotationTransition(turns: animation, child: child);
-                  // return ScaleTransition(child: child, scale: animation);
                 },
                 child: _getTransferStateWidget(_transferState),
               ),
@@ -129,10 +120,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             else
               PrimaryButton(
                 key: const Key('transfer-done'),
-                child: SizedBox(
-                  height: 24,
-                  child: Center(child: Text(l10n.done)),
-                ),
+                child: SizedBox(height: 24, child: Center(child: Text(l10n.done))),
                 onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
               )
           ],
@@ -148,63 +136,42 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       _transferState = TransferState.submitting;
     });
 
-    void onFinish(BuildContext txPageContext, Map res) {
-      Log.d('Transfer result $res', 'PaymentConfirmationPage');
-
-      if (res['hash'] == null) {
-        Log.d('Error sending transfer ${res['error']}', 'PaymentConfirmationPage');
-        _transferState = TransferState.failed;
-      } else {
-        _transferState = TransferState.finished;
-        _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
-      }
-    }
-
     await submitTx(context, context.read<AppStore>(), widget.api, params, onFinish: onFinish);
-
-    // for debugging
-    // Future.delayed(const Duration(milliseconds: 1500), () {
-    //   setState(() {
-    //     _transferState = TransferState.finished;
-    //   });
-    // });
 
     Log.d('TransferState after callback: $_transferState', 'PaymentConfirmationPage');
     // trigger rebuild after state update in callback
     setState(() {});
   }
 
+  void onFinish(BuildContext txPageContext, Map res) {
+    Log.d('Transfer result $res', 'PaymentConfirmationPage');
+    _transactionResult = res;
+    if (res['hash'] == null) {
+      Log.d('Error sending transfer ${res['error']}', 'PaymentConfirmationPage');
+      _transferState = TransferState.failed;
+    } else {
+      _transferState = TransferState.finished;
+      _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
+    }
+  }
+
   Widget _getTransferStateWidget(TransferState state) {
     switch (state) {
       case TransferState.notStarted:
-        return Container();
+        return const SizedBox.shrink();
       case TransferState.submitting:
-        return const SizedBox(
-          height: 80,
-          width: 80,
-          child: CircularProgressIndicator(),
-        );
+        return const SizedBox(height: 80, width: 80, child: CircularProgressIndicator());
       case TransferState.finished:
-        {
-          if (!_animationInitialized) {
-            _initializeAnimation();
-          }
-
-          return DecoratedBox(
-            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.green),
-            child: AnimatedCheck(progress: _animation!, size: 100, color: Colors.white),
-          );
-        }
+        return DecoratedBox(
+          decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.green),
+          child: AnimatedCheck(animate: !RepositoryProvider.of<AppConfig>(context).isIntegrationTest),
+        );
       case TransferState.failed:
         return const DecoratedBox(
           decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
           child: Padding(
             padding: EdgeInsets.all(10),
-            child: Icon(
-              Icons.highlight_remove,
-              size: 80,
-              color: Colors.white,
-            ),
+            child: Icon(Icons.highlight_remove, size: 80, color: Colors.white),
           ),
         );
     }
@@ -215,74 +182,28 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     final h2Grey = context.headlineSmall.copyWith(color: AppColors.encointerGrey);
 
     final l10n = context.l10n;
+
     switch (state) {
       case TransferState.notStarted:
-        {
-          return Text(l10n.paymentDoYouWantToProceed, style: h2Grey);
-        }
+        return Text(l10n.paymentDoYouWantToProceed, style: h2Grey);
       case TransferState.submitting:
-        {
-          return Text(l10n.paymentSubmitting, style: h2Grey);
-        }
+        return Text(l10n.paymentSubmitting, style: h2Grey);
       case TransferState.finished:
-        {
-          final date = DateFormat.yMd().format(_blockTimestamp);
-          final time = DateFormat.Hms().format(_blockTimestamp);
-
-          return RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              text: '${l10n.paymentFinished}: $date\n\n',
-              style: h2Grey,
-              children: [
-                TextSpan(
-                  text: time,
-                  style: h1Grey,
-                ),
-              ],
-            ),
-          );
-        }
-      case TransferState.failed:
-        {
-          return Text(
-            "${l10n.paymentError}: ${_transactionResult['error']?.toString() ?? "Unknown Error"}",
+        final date = DateFormat.yMd().format(_blockTimestamp);
+        final time = DateFormat.Hms().format(_blockTimestamp);
+        return RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            text: '${l10n.paymentFinished}: $date\n\n',
             style: h2Grey,
-          );
-        }
+            children: [TextSpan(text: time, style: h1Grey)],
+          ),
+        );
+      case TransferState.failed:
+        return Text(
+          "${l10n.paymentError}: ${_transactionResult?['error']?.toString() ?? "Unknown Error"}",
+          style: h2Grey,
+        );
     }
-  }
-
-  void _animateTick() {
-    if (!RepositoryProvider.of<AppConfig>(context).isIntegrationTest) {
-      _animationController!.forward();
-      Future.delayed(const Duration(seconds: 1), () => _animationController!.reset());
-    }
-  }
-
-  void _initializeAnimation() {
-    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
-
-    _animation = Tween<double>(begin: 0, end: 1)
-        .animate(CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc));
-
-    _animationController!.forward();
-
-    _timer = Timer.periodic(
-      const Duration(seconds: 2),
-      (timer) => _animateTick(),
-    );
-
-    _animationInitialized = true;
-  }
-
-  @override
-  void dispose() {
-    if (_animationController != null) {
-      _animationController!.dispose();
-      _animation = null;
-      _timer.cancel();
-    }
-    super.dispose();
   }
 }
