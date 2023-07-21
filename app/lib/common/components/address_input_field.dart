@@ -141,7 +141,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? l10n.errorUserNameIsRequired : null,
-        items: widget.store.settings.knownAccounts(),
+        items: widget.store.settings.knownAccounts,
         filterFn: filterByAddressOrName,
         onChanged: (AccountData? data) {
           if (widget.onChanged != null && data != null) {
