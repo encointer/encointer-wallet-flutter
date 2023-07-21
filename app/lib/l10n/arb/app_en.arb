@@ -184,7 +184,6 @@
     "invalidCommunity": "Invalid Community",
     "invalidNetwork": "Invalid Network",
     "invoice": "Invoice",
-    "invoiceAmount": "Invoice amount",
     "issuanceClaimed": "No pending community income",
     "issuancePending": "Claim pending community income",
     "keySigningCycle": "Key-Signing Cycle",

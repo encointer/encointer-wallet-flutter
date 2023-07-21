@@ -184,7 +184,6 @@
     "invalidCommunity": "Несоотвествующая община",
     "invalidNetwork": "Неправильная сеть",
     "invoice": "Инвойс",
-    "invoiceAmount": "Сумма инвойса",
     "issuanceClaimed": "Ожидаемого поступления общины нет",
     "issuancePending": "Требовать рассмотрения ожидаемого дохода общины",
     "keySigningCycle": "Цикл подписания ключей",

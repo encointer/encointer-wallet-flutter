@@ -184,7 +184,6 @@
     "invalidCommunity": "Communauté non valide.",
     "invalidNetwork": "Réseau non valide",
     "invoice": "Montant de la facture",
-    "invoiceAmount": "Montant de la facture",
     "issuanceClaimed": "Pas de paiement communautaire à payer",
     "issuancePending": "Demander paiement communautaire",
     "keySigningCycle": "Cycle de signature de clé",

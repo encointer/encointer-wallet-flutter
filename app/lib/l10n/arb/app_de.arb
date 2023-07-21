@@ -184,7 +184,6 @@
     "invalidCommunity": "Ungülige Gemeinschaft",
     "invalidNetwork": "Ungültiges Netzwerk",
     "invoice": "Rechnungsbetrag",
-    "invoiceAmount": "Rechnungsbetrag",
     "issuanceClaimed": "Kein ausstehendes Gemeinschaftseinkommen",
     "issuancePending": "Gemeinschaftseinkommen einfordern",
     "keySigningCycle": "Key-Signing Cycle",
