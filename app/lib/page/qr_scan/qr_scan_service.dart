@@ -85,8 +85,8 @@ Future<void> handleContactQrCodeScan(BuildContext context, QrScannerContext scan
 
 /// Handles the `InvoiceQrCode` scan based on where it was scanned.
 Future<void> handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) async {
-  final contectAdresses = context.read<AppStore>().settings.allStoredAccounts.map((e) => e.address).toList();
-  if (!contectAdresses.contains(qrCode.data.account)) {
+  final contactAddresses = context.read<AppStore>().settings.allStoredAccounts.map((e) => e.address).toList();
+  if (!contactAddresses.contains(qrCode.data.account)) {
     final contactData = {
       'address': qrCode.data.account,
       'name': qrCode.data.label,
