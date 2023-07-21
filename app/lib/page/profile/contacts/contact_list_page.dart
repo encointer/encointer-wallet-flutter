@@ -35,7 +35,7 @@ class ContactListPage extends StatelessWidget {
       body: SafeArea(
         child: Observer(
           builder: (_) {
-            return AccountSelectList(store, args ?? store.settings.contactListAll.toList());
+            return AccountSelectList(store, args ?? store.settings.knownAccounts);
           },
         ),
       ),
