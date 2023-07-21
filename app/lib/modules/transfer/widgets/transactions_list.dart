@@ -15,7 +15,7 @@ class TransactionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (transactions.isEmpty) return const TransactionsEmpty(key: Key('transactions-empty'));
     final appStore = context.watch<AppStore>();
-    final knownAccounts = appStore.settings.knownAccounts;
+    final knownAccounts = appStore.settings.knownAccounts();
     return ListView.builder(
       key: const Key('transactions-list'),
       padding: const EdgeInsets.fromLTRB(14, 20, 14, 35),

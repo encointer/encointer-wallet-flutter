@@ -104,10 +104,9 @@ abstract class _SettingsStore with Store {
   /// Set of known accounts.
   ///
   /// Contains all the accounts and contacts stored on the device.
-  @computed
-  List<AccountData> get knownAccounts {
+  List<AccountData> knownAccounts() {
     final uniqueIds = <String>{};
-    final allAccountsWithDuplicates = rootStore.account.accountList..addAll(contactList);
+    final allAccountsWithDuplicates = rootStore.account.accountList.toList()..addAll(contactList);
     return allAccountsWithDuplicates.where((data) => uniqueIds.add(data.pubKey)).toList();
   }
 
