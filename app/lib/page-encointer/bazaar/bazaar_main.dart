@@ -3,9 +3,9 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/view/businesses_view.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/dropdown_widget.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/view/businesses_view.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 

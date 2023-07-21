@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/presentation/home/store/home_page_store.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/bazaar_main.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/page.dart';
 import 'package:encointer_wallet/store/app.dart';
