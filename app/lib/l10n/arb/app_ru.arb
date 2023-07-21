@@ -134,6 +134,7 @@
     "endorseeTitle": "Зарегистрирован в качестве Индоссанта - ваше место гарантировано",
     "endorseNewcomerNotificationBody": "Благодарим за одобрение новичка в нашем сообществе!",
     "endorseNewcomerNotificationTitle": "Новичок одобрен",
+    "enterAmount": "Введите сумму",
     "error": "Ошибка",
     "errorOccurred": "Возникла ошибка:",
     "errorUserNameIsRequired": "Имя пользователя не может быть пустым",

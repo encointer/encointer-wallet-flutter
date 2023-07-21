@@ -134,6 +134,7 @@
     "endorseeTitle": "Enregistré comme Endosser - Ta place est garantie.",
     "endorseNewcomerNotificationBody": "Merci d'avoir endossé le Novice!",
     "endorseNewcomerNotificationTitle": "Novice endossé",
+    "enterAmount": "Saisir le montant",
     "error": "Erreur",
     "errorOccurred": "Une erreur est apparue:",
     "errorUserNameIsRequired": "Le nom d'utilisateur ne doit pas être vide",
