@@ -49,23 +49,23 @@ void main() {
 
     test('fromJson() should return `amount` equal to 0.8571', () {
       for (final element in listToTestAmount) {
-        final singleBusiness = Transaction.fromJson(element);
-        expect(singleBusiness.amount, equals(0.8571));
+        final tx = Transaction.fromJson(element);
+        expect(tx.amount, equals(0.8571));
       }
     });
 
     test('fromJson() should return `type` equal to TransactionType.outgoing', () {
       for (final element in listToTestType) {
-        final singleBusiness = Transaction.fromJson(element);
-        expect(singleBusiness.type, equals(TransactionType.outgoing));
+        final tx = Transaction.fromJson(element);
+        expect(tx.type, equals(TransactionType.outgoing));
       }
     });
 
     test('fromJson() should return `DateTime` equal to  DateTime.fromMillisecondsSinceEpoch(int.parse(1680176568449))',
         () {
       for (final element in listToTestType) {
-        final singleBusiness = Transaction.fromJson(element);
-        expect(singleBusiness.dateTime, equals(DateTime.fromMillisecondsSinceEpoch(int.parse('1680176568449'))));
+        final tx = Transaction.fromJson(element);
+        expect(tx.dateTime, equals(DateTime.fromMillisecondsSinceEpoch(int.parse('1680176568449'))));
       }
     });
   });
