@@ -136,7 +136,7 @@
     "endorseNewcomerNotificationTitle": "Новичок одобрен",
     "enterAmount": "Введите сумму",
     "error": "Ошибка",
-    "errorMessageNoCommunity": "Сообщество не найдено. Пожалуйста, выберите сообщество.",
+    "errorMessageNoCommunity": "Пожалуйста, выберите сообщество.",
     "errorOccurred": "Возникла ошибка:",
     "errorUserNameIsRequired": "Имя пользователя не может быть пустым",
     "event": "ID события",

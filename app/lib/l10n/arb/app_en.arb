@@ -136,7 +136,7 @@
     "endorseNewcomerNotificationTitle": "Newbie endorsed",
     "enterAmount": "Enter amount",
     "error": "Error",
-    "errorMessageNoCommunity": "Community not found. Please choose a community.",
+    "errorMessageNoCommunity": "Please choose a community.",
     "errorOccurred": "An error occurred:",
     "errorUserNameIsRequired": "User name cannot be blank",
     "event": "Event ID",
