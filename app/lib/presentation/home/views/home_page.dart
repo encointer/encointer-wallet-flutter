@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/presentation/home/store/home_page_store.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/page.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -57,8 +58,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         children: [
           AssetsView(_store.appStore),
           if (context.select<AppStore, bool>((store) => _store.appStore.settings.enableBazaar))
-            BazaarMain(
-              args: BazaarMainArgs(cid: _store.appStore.encointer.community!.cid, appStore: _store.appStore),
+            Provider(
+              create: (context) => BusinessesStore(),
+              child: const BazaarPage(),
             ),
 
           /// empty widget here because when qr code is clicked, we navigate to [ScanPage]

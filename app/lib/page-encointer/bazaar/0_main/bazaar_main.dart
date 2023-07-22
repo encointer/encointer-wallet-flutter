@@ -1,51 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/view/businesses_view.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/dropdown_widget.dart';
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
-class BazaarMainArgs {
-  BazaarMainArgs({
-    required this.cid,
-    required this.appStore,
-  });
-  final CommunityIdentifier cid;
-  final AppStore appStore;
-}
+class BazaarPage extends StatefulWidget {
+  const BazaarPage({super.key});
 
-class BazaarMain extends StatelessWidget {
-  const BazaarMain({
-    required this.args,
-    super.key,
-  });
-  final BazaarMainArgs args;
+  static const String route = '/bazaar';
 
   @override
-  Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => BusinessesStore(args.cid)..getBusinesses(),
-      child: BazaarPage(
-        cid: args.cid,
-        appStore: args.appStore,
-      ),
-    );
-  }
+  State<BazaarPage> createState() => _BazaarPageState();
 }
 
-class BazaarPage extends StatelessWidget {
-  const BazaarPage({
-    super.key,
-    required this.cid,
-    required this.appStore,
-  });
-  final CommunityIdentifier cid;
-  static const String route = '/bazaar';
-  final AppStore appStore;
+class _BazaarPageState extends State<BazaarPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final cid = context.read<AppStore>().encointer.community?.cid;
+      if (cid != null) {
+        await context.read<BusinessesStore>().getBusinesses(cid);
+      } else {
+        AppAlert.showErrorDialog(
+          context,
+          errorText: context.l10n.errorMessageNoCommunity,
+          buttontext: context.l10n.ok,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +66,7 @@ class BazaarPage extends StatelessWidget {
           ),
         ),
       ),
-      body: BusinessesView(appStore: appStore),
+      body: const BusinessesView(),
     );
   }
 }

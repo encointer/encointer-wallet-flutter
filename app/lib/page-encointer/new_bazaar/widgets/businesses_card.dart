@@ -32,7 +32,7 @@ class BusinessesCard extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => Provider(
               create: (context) => SingleBusinessStore(businesses, cid)..getSingleBusiness(),
-              child: SingleBusinessView(appStore: appStore),
+              child: const SingleBusinessView(),
             ),
           ),
         );

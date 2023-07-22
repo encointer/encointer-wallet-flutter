@@ -17,18 +17,14 @@ import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 
 class SingleBusinessDetail extends StatelessWidget {
-  const SingleBusinessDetail({
-    required this.singleBusiness,
-    required this.appStore,
-    super.key,
-  });
+  const SingleBusinessDetail({required this.singleBusiness, super.key});
 
   final SingleBusiness singleBusiness;
-  final AppStore appStore;
 
   @override
   Widget build(BuildContext context) {
-    final store = context.watch<SingleBusinessStore>();
+    final singleBusinessStore = context.watch<SingleBusinessStore>();
+    final appStore = context.watch<AppStore>();
     final l10n = context.l10n;
     return SingleChildScrollView(
       child: Card(
@@ -65,7 +61,7 @@ class SingleBusinessDetail extends StatelessWidget {
                               onTap: context.read<SingleBusinessStore>().toggleOwnLikes,
                               child: Assets.avatars.participant00.svg(
                                   height: 19,
-                                  colorFilter: store.isLikedPersonally
+                                  colorFilter: singleBusinessStore.isLikedPersonally
                                       ? null
                                       : const ColorFilter.mode(Colors.white, BlendMode.color)),
                             ),
@@ -86,7 +82,7 @@ class SingleBusinessDetail extends StatelessWidget {
                     style: context.bodyMedium.copyWith(height: 1.5),
                   ),
                   const SizedBox(height: 40),
-                  if (store.ipfsProducts.isNotEmpty)
+                  if (singleBusinessStore.ipfsProducts.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -98,15 +94,15 @@ class SingleBusinessDetail extends StatelessWidget {
                         ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: store.ipfsProducts.length,
+                          itemCount: singleBusinessStore.ipfsProducts.length,
                           itemBuilder: (context, index) {
-                            final ipfsProduct = store.ipfsProducts[index];
+                            final ipfsProduct = singleBusinessStore.ipfsProducts[index];
                             return BusinessOfferDetails(
                               title: BusinessUtils.utf8convert(ipfsProduct.name),
                               description: BusinessUtils.utf8convert(ipfsProduct.description),
                               price: '${appStore.encointer.community?.symbol} ${ipfsProduct.price ?? 0}',
-                              openingHours: store.singleBusiness!.openingHours,
-                              businessName: store.singleBusiness!.name,
+                              openingHours: singleBusinessStore.singleBusiness!.openingHours,
+                              businessName: singleBusinessStore.singleBusiness!.name,
                             );
                           },
                         ),
