@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/common/components/error/error_view.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/empty_businesses.dart';
@@ -14,12 +12,7 @@ import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/bu
 import 'package:encointer_wallet/utils/fetch_status.dart';
 
 class BusinessesView extends StatelessWidget {
-  const BusinessesView({
-    required this.appStore,
-    super.key,
-  });
-
-  final AppStore appStore;
+  const BusinessesView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +20,7 @@ class BusinessesView extends StatelessWidget {
     return Observer(builder: (_) {
       return switch (store.fetchStatus) {
         FetchStatus.loading => const CenteredActivityIndicator(),
-        FetchStatus.success => BusinessesList(businesses: store.sortedBusinesses, cid: store.cid, appStore: appStore),
+        FetchStatus.success => BusinessesList(businesses: store.sortedBusinesses),
         FetchStatus.error => const ErrorView(),
         FetchStatus.noData => const EmptyBusiness(),
       };
@@ -36,16 +29,9 @@ class BusinessesView extends StatelessWidget {
 }
 
 class BusinessesList extends StatelessWidget {
-  const BusinessesList({
-    super.key,
-    required this.businesses,
-    required this.cid,
-    required this.appStore,
-  });
+  const BusinessesList({super.key, required this.businesses});
 
   final List<Businesses> businesses;
-  final CommunityIdentifier cid;
-  final AppStore appStore;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +41,7 @@ class BusinessesList extends StatelessWidget {
       itemCount: businesses.length,
       itemBuilder: (BuildContext context, int index) {
         final business = businesses[index];
-        return BusinessesCard(businesses: business, cid: cid, appStore: appStore);
+        return BusinessesCard(businesses: business);
       },
     );
   }

@@ -136,6 +136,7 @@
     "endorseNewcomerNotificationTitle": "Novice endossé",
     "enterAmount": "Saisir le montant",
     "error": "Erreur",
+    "errorMessageNoCommunity": "Choisis une communauté.",
     "errorOccurred": "Une erreur est apparue:",
     "errorUserNameIsRequired": "Le nom d'utilisateur ne doit pas être vide",
     "event": "ID d'événement",

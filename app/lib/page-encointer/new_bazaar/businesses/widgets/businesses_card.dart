@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/business_utils.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/page-encointer/new_bazaar/single_business/views/single_business_view.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -13,16 +12,9 @@ import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
 class BusinessesCard extends StatelessWidget {
-  const BusinessesCard({
-    super.key,
-    required this.businesses,
-    required this.cid,
-    required this.appStore,
-  });
+  const BusinessesCard({super.key, required this.businesses});
 
   final Businesses businesses;
-  final CommunityIdentifier cid;
-  final AppStore appStore;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +25,9 @@ class BusinessesCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Provider(
-              create: (context) => SingleBusinessStore(businesses, cid)..getSingleBusiness(),
-              child: SingleBusinessView(appStore: appStore),
+              create: (context) => SingleBusinessStore(businesses, context.read<AppStore>().encointer.community!.cid)
+                ..getSingleBusiness(),
+              child: const SingleBusinessView(),
             ),
           ),
         );

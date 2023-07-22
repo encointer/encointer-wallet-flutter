@@ -6,6 +6,7 @@ import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/page/assets/qr_code_printing/widgets/preview_pdf_and_print.dart';
+import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
@@ -177,7 +178,10 @@ class AppRoute {
         );
       case BazaarPage.route:
         return CupertinoPageRoute(
-          builder: (_) => BazaarMain(args: arguments! as BazaarMainArgs),
+          builder: (_) => Provider(
+            create: (context) => BusinessesStore(),
+            child: const BazaarPage(),
+          ),
           settings: settings,
         );
       case LangPage.route:
