@@ -22,7 +22,7 @@ void main() {
       'amount': 2
     }
   ];
-  final listToTestAmount = [
+  final incomingTxs = [
     {
       'blockNumber': '2596427',
       'timestamp': '1680176568449',
@@ -30,7 +30,7 @@ void main() {
       'amount': 0.8571145999707728
     },
   ];
-  final listToTestType = [
+  final outgoingTxs = [
     {
       'blockNumber': '2596427',
       'timestamp': '1680176568449',
@@ -42,28 +42,33 @@ void main() {
   group('Transaction Model', () {
     test('fromJson() should return a SingleBusiness object', () {
       for (final element in list) {
-        final singleBusiness = Transaction.fromJson(element);
-        expect(singleBusiness, isA<Transaction>());
+        final tx = Transaction.fromJson(element);
+        expect(tx, isA<Transaction>());
       }
     });
 
     test('fromJson() should return `amount` equal to 0.8571', () {
-      for (final element in listToTestAmount) {
+      for (final element in incomingTxs) {
         final tx = Transaction.fromJson(element);
         expect(tx.amount, equals(0.8571));
       }
     });
 
-    test('fromJson() should return `type` equal to TransactionType.outgoing', () {
-      for (final element in listToTestType) {
+    test('fromJson() should return correct transaction type', () {
+      for (final element in outgoingTxs) {
         final tx = Transaction.fromJson(element);
         expect(tx.type, equals(TransactionType.outgoing));
+      }
+
+      for (final element in incomingTxs) {
+        final tx = Transaction.fromJson(element);
+        expect(tx.type, equals(TransactionType.incoming));
       }
     });
 
     test('fromJson() should return `DateTime` equal to  DateTime.fromMillisecondsSinceEpoch(int.parse(1680176568449))',
         () {
-      for (final element in listToTestType) {
+      for (final element in outgoingTxs) {
         final tx = Transaction.fromJson(element);
         expect(tx.dateTime, equals(DateTime.fromMillisecondsSinceEpoch(int.parse('1680176568449'))));
       }
