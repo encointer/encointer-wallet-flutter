@@ -75,7 +75,7 @@ class TransactionCard extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: '${appStore.encointer.community?.symbol} ',
+                        text: '${appStore.encointer.community?.symbol}',
                         style: context.textTheme.titleMedium!.copyWith(
                           color: transaction.type == TransactionType.incoming
                               ? context.colorScheme.primary
