@@ -70,7 +70,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
-    final h3 = context.textTheme.displaySmall!;
+    final h3 = context.titleLarge.copyWith(color: context.colorScheme.primary);
 
     final community = _appStore.encointer.communityStores![cidFmt]!;
 
@@ -125,7 +125,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final h3 = context.textTheme.displaySmall;
+    final h3 = context.titleLarge.copyWith(fontSize: 19);
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
     final appSettingsStore = context.watch<AppSettings>();
@@ -214,7 +214,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         ],
                       ),
                       Text(l10n.communities,
-                          style: h3!.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
+                          style: h3.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
                     ],
                   ),
                 ),
@@ -267,7 +267,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           children: [
                             const Icon(Iconsax.share),
                             const SizedBox(width: 12),
-                            Text(l10n.accountShare, style: h3.copyWith(color: Colors.white)),
+                            Text(
+                              l10n.accountShare,
+                              style: context.titleLarge.copyWith(color: context.colorScheme.background, fontSize: 19),
+                            ),
                           ],
                         ),
                         onPressed: () =>

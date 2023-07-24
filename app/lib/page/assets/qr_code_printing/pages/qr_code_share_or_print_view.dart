@@ -57,13 +57,11 @@ class _QrCodeShareOrPrintViewState extends State<QrCodeShareOrPrintView> {
             TextButton.icon(
                 onPressed: () => _previewPdfAndPrint(context),
                 icon: Icon(Icons.print, color: context.colorScheme.secondary),
-                label: Text(widget.printText,
-                    style: context.textTheme.bodyMedium!.copyWith(color: context.colorScheme.primary))),
+                label: Text(widget.printText, style: context.bodyMedium.copyWith(color: context.colorScheme.primary))),
             TextButton.icon(
               onPressed: widget.onTap,
               icon: Icon(Icons.share, color: context.colorScheme.secondary),
-              label: Text(widget.shareText,
-                  style: context.textTheme.bodyMedium!.copyWith(color: context.colorScheme.primary)),
+              label: Text(widget.shareText, style: context.bodyMedium.copyWith(color: context.colorScheme.primary)),
             ),
           ],
         ),

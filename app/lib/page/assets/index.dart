@@ -182,11 +182,11 @@ class _AssetsViewState extends State<AssetsView> {
                                 children: [
                                   TextGradient(
                                     text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
-                                    style: const TextStyle(fontSize: 60),
+                                    style: const TextStyle(fontSize: 50),
                                   ),
                                   Text(
                                     '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
-                                    style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
+                                    style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
                                   ),
                                 ],
                               )

@@ -38,7 +38,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
         children: [
           Text(
             widget.rowTitle!,
-            style: context.textTheme.displayMedium,
+            style: context.headlineSmall,
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 6, left: 4),

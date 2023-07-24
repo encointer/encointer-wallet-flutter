@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
 
-class CustomTheme with CompomnentTheme, TypographyTheme {
+class CustomTheme with CompomnentTheme {
   const CustomTheme(this.colorScheme);
 
   final ColorScheme colorScheme;
@@ -12,7 +12,6 @@ class CustomTheme with CompomnentTheme, TypographyTheme {
         scaffoldBackgroundColor: Colors.white,
         elevatedButtonTheme: elevatedButtonThemeData(colorScheme),
         appBarTheme: appBarTheme(colorScheme),
-        textTheme: textTheme(colorScheme),
         iconTheme: iconTheme(colorScheme),
         useMaterial3: true,
       );

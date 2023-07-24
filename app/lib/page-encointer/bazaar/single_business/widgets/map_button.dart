@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
+
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
@@ -24,7 +24,7 @@ class MapButton extends StatelessWidget {
         ),
         child: Text(
           context.l10n.openMapApplication,
-          style: context.textTheme.displaySmall!.copyWith(fontSize: 16),
+          style: context.displaySmall,
         ),
       ),
     );
