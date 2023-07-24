@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/error/error_view.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/empty_businesses.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/empty_businesses.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/logic/businesses_store.dart';
-import 'package:encointer_wallet/page-encointer/new_bazaar/businesses/widgets/businesses_card.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/businesses_card.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 
 class BusinessesView extends StatelessWidget {
