@@ -315,7 +315,11 @@ class _AssetsViewState extends State<AssetsView> {
                     context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
                   },
                   onAddIconPressed: () {
-                    Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
+                    Navigator.pushNamed(
+                      context,
+                      CommunityChooserOnMap.route,
+                      arguments: const CommunityChooserOnMapArgs(isFirstTime: false),
+                    ).then((_) {
                       _refreshBalanceAndNotify();
                     });
                   },

@@ -1,3 +1,8 @@
+import 'package:encointer_wallet/presentation/secure_account/views/account_created_view.dart';
+import 'package:encointer_wallet/presentation/secure_account/views/keep_your_phrase_safe_view.dart';
+import 'package:encointer_wallet/presentation/secure_account/views/secure_instructions_view.dart';
+import 'package:encointer_wallet/presentation/secure_account/views/secure_your_account_view.dart';
+import 'package:encointer_wallet/presentation/secure_account/views/successfully_secured_seed_view.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -196,7 +201,7 @@ class AppRoute {
         );
       case CommunityChooserOnMap.route:
         return CupertinoPageRoute(
-          builder: (_) => const CommunityChooserOnMap(),
+          builder: (_) => CommunityChooserOnMap(args: arguments! as CommunityChooserOnMapArgs),
           settings: settings,
         );
       case TransferHistoryView.route:
@@ -211,6 +216,31 @@ class AppRoute {
       case PreviewPdfAndPrint.route:
         return CupertinoPageRoute(
           builder: (_) => PreviewPdfAndPrint(args: arguments! as PreviewPdfAndPrintArgs),
+          settings: settings,
+        );
+      case AccountCreatedView.route:
+        return CupertinoPageRoute(
+          builder: (_) => const AccountCreatedView(),
+          settings: settings,
+        );
+      case SecureYourAccountView.route:
+        return CupertinoPageRoute(
+          builder: (_) => const SecureYourAccountView(),
+          settings: settings,
+        );
+      case SecureInstructionsView.route:
+        return CupertinoPageRoute(
+          builder: (_) => const SecureInstructionsView(),
+          settings: settings,
+        );
+      case KeepYourPhraseSafeView.route:
+        return CupertinoPageRoute(
+          builder: (_) => const KeepYourPhraseSafeView(),
+          settings: settings,
+        );
+      case SuccesfullySecuredSeedView.route:
+        return CupertinoPageRoute(
+          builder: (_) => const SuccesfullySecuredSeedView(),
           settings: settings,
         );
       default:

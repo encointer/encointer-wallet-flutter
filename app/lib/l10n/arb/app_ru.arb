@@ -375,8 +375,61 @@
     "youAreAssignedToAGatheringWithNParticipants": "Вы записаны на встречу вместе с {participantsCount} участниками.",
     "successfullySentNAttestations": "Вы успешно отправили аттестации {participantsCount} других людей.",
     "tokenSend": "Отправить {symbol}",
+     "choosYourCommunity": "Выберите свое сообщество",
+    "secureYourAccount": "Защитите свой аккаунт",
+    "congratulations": "Поздравляем",
+    "youHaveSecuredYourAccountKeepYourSecretPhrase": "Вы успешно защитили свой аккаунт. Не забудьте сохранить секретную фразу восстановления в безопасности.",
+    "youAreResponsibleForThis": "Вы несете за это ответственность!",
+    "pleaseNoteEncointerCannotRecoverYourAccount":"Обратите внимание, что Encointer не может восстановить вашу учетную запись, если вы заблокированы.",
+    "youCanFindYourSecretPhraseInYourProfile":"Секретную фразу восстановления вы можете найти в своем профиле в разделе «Экспорт».",
+    "accountCreated":"Аккаунт создан",
+    "yourAccountSuccessfullyCreated":"Ваш аккаунт был успешно создан!",
+    "secureYourAccountWithSecretPhraseEnsureNotLoseIt":"Защитите свою учетную запись с помощью секретной фразы восстановления, чтобы не потерять доступ к своей учетной записи.",
+    "keepYourSecretPhraseSafe":"Сохраните секретную фразу восстановления в безопасности.",
+    "heresYourPhraseWriteItDownOnPaper":"Вот ваша секретная фраза для восстановления. Запишите их на листе бумаги и сохраните в надежном месте..",
+    "successfullyCopied": "Успешно скопировано!",
+    "copyRecoveryPhrase":"Скопировать фразу восстановления",
+    "iHaveWrittenDownPhraseAndUnderstandEncointerCannotAssistMe":"Я записал фразу восстановления и сохранил ее, и понимаю, что Encointer не может помочь мне с восстановлением учетной записи",
+    "complete": "Завершенный",
+    "lossOfRecoveryPhrase":"Потеря фразы восстановления",
+    "forgettingStorageLocation":"Забыть место хранения",
+    "unauthorizedAccessByThirdParties":"Несанкционированный доступ третьих лиц",
+    "chooseSafeAndReliableStorageMethod":"Выберите безопасный и надежный способ хранения",
+    "writeDownStorageLocationsInSafePlace":"Запишите места хранения в надежном месте на случай, если вы их забудете",
+    "neverShareRecoveryPhraseWithOthers":"Никогда не сообщайте фразу восстановления другим людям",
+    "instructions": "Инструкции",
+    "writeYourSecretPhraseOnPaperOrChooseSafeOption":"Напишите свою секретную фразу восстановления на листе бумаги или выберите другой вариант безопасного хранения.",
+    "keepRecordingInSafePlace": "Храните запись в надежном месте",
+    "risks": "Риски",
+    "tips": "Советы",
+    "showRecoveryphrase":"Показать фразу восстановления",
+    "whenYouChangeYourPhone":"При смене смартфона.",
+    "whenYourPhoneIsLost":"Когда ваш смартфон потерян.",
+    "ifYouForgetYourPin":"Если вы забыли свой PIN-код.",
+    "secureYourAccountWithSecretRecoveryPhrase":"Защитите свою учетную запись секретной фразой восстановления",
+    "toAvoidRiskingYourCreditBeSureToProtectBySecretPhrase":"Чтобы не рисковать своим кредитом, обязательно защитите свою учетную запись, сохранив секретную фразу восстановления в надежном месте.",
+    "recoveryPhraseIsTheOnlyWayToRecoverYourWallet":"Фраза восстановления — единственный способ восстановить ваш кошелек.",
+    "examplesOfWhenYouNeedYourRecoveryPhrase":"Примеры случаев, когда вам нужна фраза восстановления",
+    "proceedWithoutsavingNotRecommended":"Продолжить без сохранения. (Не рекомендуется)",
+    "start": "Старт",
     "communityWithName": "Сообщество {name}",
-    "verifyAuthTitle": "Для завершения транзакции {useBioAuth, select, true{подтвердите вашу личность} false{введите PIN-код} other{}}.",
+    "@communityWithName": {
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
+    "verifyAuthTitle": "Для завершения транзакции {useBioAuth, select, true{подтвердите вашу личность} false{введите PIN-код} other{}}",
+    "@verifyAuthTitle": {
+        "placeholders": {
+            "useBioAuth": {
+                "type": "String",
+                "example": "true"
+            }
+        }
+    },
     "offersForCommunity": "Предложения за {value}",
     "@offersForCommunity": {
         "placeholders": {

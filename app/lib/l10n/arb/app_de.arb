@@ -375,8 +375,61 @@
     "youAreAssignedToAGatheringWithNParticipants": "Du bist einer Versammlung mit {participantsCount} Leuten zugewiesen.",
     "successfullySentNAttestations": "Du hast erfolgreich Bezeugungen für {participantsCount} andere Leute eingereicht.",
     "tokenSend": "{symbol} senden",
+     "choosYourCommunity": "Wählen Sie Ihre Community",
+    "secureYourAccount": "Sichern Sie Ihr Konto",
+    "congratulations": "Glückwunsch",
+    "youHaveSecuredYourAccountKeepYourSecretPhrase": "Sie haben Ihr Konto erfolgreich gesichert. Denken Sie daran, Ihren Genesungsgeheimsatz sicher aufzubewahren.",
+    "youAreResponsibleForThis": "Dafür sind Sie verantwortlich!",
+    "pleaseNoteEncointerCannotRecoverYourAccount":"Bitte beachten Sie, dass Encoinr Ihr Konto nicht wiederherstellen kann, wenn Sie gesperrt werden",
+    "youCanFindYourSecretPhraseInYourProfile":"Ihre geheime Wiederherstellungsphrase finden Sie in Ihrem Profil unter <Exportieren>.",
+    "accountCreated":"Account erstellt",
+    "yourAccountSuccessfullyCreated":"Ihr Konto wurde erfolgreich erstellt!",
+    "secureYourAccountWithSecretPhraseEnsureNotLoseIt":"Sichern Sie Ihr Konto jetzt mit einer geheimen Wiederherstellungsphrase, um sicherzustellen, dass Sie den Zugriff auf Ihr Konto nicht verlieren.",
+    "keepYourSecretPhraseSafe": "Bewahren Sie Ihre geheime Wiederherstellungsphrase sicher auf.",
+    "heresYourPhraseWriteItDownOnPaper": "Hier ist Ihr geheimer Wiederherstellungssatz. Schreiben Sie ihn auf ein Blatt Papier und bewahren Sie es an einem sicheren Ort auf.",
+    "successfullyCopied": "Erfolgreich kopiert!",
+    "copyRecoveryPhrase": "Wiederherstellungsphrase kopieren",
+    "iHaveWrittenDownPhraseAndUnderstandEncointerCannotAssistMe": "Ich habe den Wiederherstellungssatz aufgeschrieben und sicher aufbewahrt und verstehe, dass Encoinr mir bei einer Kontowiederherstellung nicht helfen kann",
+    "complete": "Abgeschlossen",
+    "lossOfRecoveryPhrase": "Verlust der Wiederherstellungsphrase",
+    "forgettingStorageLocation": "Speicherort vergessen",
+    "unauthorizedAccessByThirdParties": "Unautorisierter Zugriff durch Dritte",
+    "chooseSafeAndReliableStorageMethod": "Wählen Sie eine sichere und zuverlässige Speichermethode",
+    "writeDownStorageLocationsInSafePlace": "Notieren Sie sich die Speicherorte an einem sicheren Ort, für den Fall, dass Sie sie vergessen",
+    "neverShareRecoveryPhraseWithOthers": "Teilen Sie den Wiederherstellungssatz niemals mit anderen Personen",
+    "instructions": "Anweisungen",
+    "writeYourSecretPhraseOnPaperOrChooseSafeOption": "Schreiben Sie Ihre geheime Wiederherstellungsphrase auf ein Blatt Papier oder wählen Sie eine andere sichere Speicheroption.",
+    "keepRecordingInSafePlace": "Bewahren Sie die Aufnahme an einem sicheren Ort auf",
+    "risks": "Risiken",
+    "tips": "Tipps",
+    "showRecoveryphrase": "Wiederherstellungsphrase anzeigen",
+    "whenYouChangeYourPhone": "Wenn Sie Ihr Smartphone wechseln.",
+    "whenYourPhoneIsLost": "Wenn Ihr Smartphone verloren geht.",
+    "ifYouForgetYourPin": "Wenn Sie Ihre PIN vergessen haben.",
+    "secureYourAccountWithSecretRecoveryPhrase": "Sichern Sie Ihr Konto mit einer geheimen Wiederherstellungsphrase",
+    "toAvoidRiskingYourCreditBeSureToProtectBySecretPhrase": "Um Ihr Guthaben nicht zu gefährden, schützen Sie Ihr Konto unbedingt, indem Sie Ihre geheime Wiederherstellungsphrase an einem sicheren Ort aufbewahren.",
+    "recoveryPhraseIsTheOnlyWayToRecoverYourWallet": "Die Wiederherstellungsphrase ist die einzige Möglichkeit, Ihr Wallet wiederherzustellen.",
+    "examplesOfWhenYouNeedYourRecoveryPhrase": "Beispiele dafür, wann Sie Ihre Wiederherstellungsphrase benötigen",
+    "proceedWithoutsavingNotRecommended": "Ohne Speichern fortfahren. (Nicht empfohlen)",
+    "start": "Start",
     "communityWithName": "{name} Gemeinschaft",
-    "verifyAuthTitle": "{useBioAuth, select, true{deine Identität} false{deine PIN} other{}} überprüfen, um die Transaktion abzuschließen.",
+    "@communityWithName": {
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
+    "verifyAuthTitle": "{useBioAuth, select, true{deine Identität} false{deine PIN} other{}} überprüfen, um die Transaktion abzuschließen..",
+    "@verifyAuthTitle": {
+        "placeholders": {
+            "useBioAuth": {
+                "type": "String",
+                "example": "true"
+            }
+        }
+    },
     "offersForCommunity": "Angebote für {value}",
     "@offersForCommunity": {
         "placeholders": {
