@@ -29,6 +29,7 @@ Future<void> submitToJS(
   Api api,
   bool showStatusSnackBar, {
   required Map<String, dynamic> txParams,
+  void Function(dynamic res)? onError,
   String? password,
   BigInt? tip,
 }) async {
@@ -63,7 +64,7 @@ Future<void> submitToJS(
     );
 
     if (res['hash'] == null) {
-      _onTxError(context, store, res['error'] as String, showStatusSnackBar);
+      _onTxError(context, store, res['error'] as String, showStatusSnackBar, onError: onError);
     } else {
       _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
@@ -75,13 +76,20 @@ Future<void> submitToJS(
   }
 }
 
-void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
+void _onTxError(
+  BuildContext context,
+  AppStore store,
+  String errorMsg,
+  bool mounted, {
+  void Function(dynamic res)? onError,
+}) {
   store.assets.setSubmitting(false);
   if (mounted) RootSnackBar.removeCurrent();
   final l10n = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
-
   final message = getLocalizedTxErrorMessage(l10n, errorMsg);
+
+  onError?.call(errorMsg);
 
   AppAlert.showDialog<void>(
     context,

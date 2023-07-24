@@ -27,9 +27,9 @@ Future<void> submitTx(
   Api api,
   Map<String, dynamic> txParams, {
   dynamic Function(BuildContext txPageContext, Map res)? onFinish,
+  void Function(dynamic res)? onError,
 }) async {
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
-
   if (txPaymentAsset != null) {
     (txParams['txInfo'] as Map<String, dynamic>)['txPaymentAsset'] = txPaymentAsset;
   }
@@ -43,6 +43,7 @@ Future<void> submitTx(
     false,
     txParams: txParams,
     password: store.settings.cachedPin,
+    onError: onError,
   );
 }
 
