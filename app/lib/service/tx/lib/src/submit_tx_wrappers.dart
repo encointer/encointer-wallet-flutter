@@ -43,6 +43,7 @@ Future<void> submitTx(
     false,
     txParams: txParams,
     password: store.settings.cachedPin,
+    onError: onError,
   );
 }
 
