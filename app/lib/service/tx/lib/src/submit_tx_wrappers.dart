@@ -29,26 +29,21 @@ Future<void> submitTx(
   dynamic Function(BuildContext txPageContext, Map res)? onFinish,
   void Function(dynamic res)? onError,
 }) async {
-  try {
-    final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
-    if (txPaymentAsset != null) {
-      (txParams['txInfo'] as Map<String, dynamic>)['txPaymentAsset'] = txPaymentAsset;
-    }
-
-    txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
-
-    return submitToJS(
-      context,
-      store,
-      api,
-      false,
-      txParams: txParams,
-      password: store.settings.cachedPin,
-    );
-  } catch (e) {
-    Log.e(e.toString(), 'submitTx');
-    onError?.call(e);
+  final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
+  if (txPaymentAsset != null) {
+    (txParams['txInfo'] as Map<String, dynamic>)['txPaymentAsset'] = txPaymentAsset;
   }
+
+  txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
+
+  return submitToJS(
+    context,
+    store,
+    api,
+    false,
+    txParams: txParams,
+    password: store.settings.cachedPin,
+  );
 }
 
 Future<void> submitClaimRewards(

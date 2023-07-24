@@ -164,13 +164,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
   void onFinish(BuildContext txPageContext, Map res) {
     Log.d('Transfer result $res', 'PaymentConfirmationPage');
-
-    if (res['hash'] == null) {
-      onError(res['error']);
-    } else {
-      _transferState = TransferState.finished;
-      _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
-    }
+    _transferState = TransferState.finished;
+    _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
   }
 
   void onError(dynamic errorMessage) {
