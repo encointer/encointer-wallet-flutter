@@ -47,7 +47,7 @@ class EwHttp {
   Future<Map<String, String>> _getRequestHeaders() async {
     final token = _tokenProvider != null ? await _tokenProvider!() : null;
     return <String, String>{
-      HttpHeaders.contentTypeHeader: ContentType.json.value,
+      HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
       HttpHeaders.acceptHeader: ContentType.json.value,
       if (token != null) HttpHeaders.authorizationHeader: 'Bearer $token',
     };
@@ -67,7 +67,7 @@ class EwHttp {
 extension on http.Response {
   T decode<T>() {
     try {
-      return jsonDecode(body) as T;
+      return jsonDecode(utf8.decode(bodyBytes)) as T;
     } catch (e, s) {
       throw EwHttpException(FailureType.decode, error: e, stackTrace: s);
     }

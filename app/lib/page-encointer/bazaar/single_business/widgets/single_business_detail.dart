@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/business_utils.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/widgets/business_detail_text_widget.dart';
@@ -78,7 +77,7 @@ class SingleBusinessDetail extends StatelessWidget {
                   }),
                   const SizedBox(height: 20),
                   Text(
-                    BusinessUtils.utf8convert(singleBusiness.description),
+                    singleBusiness.description,
                     style: context.textTheme.bodyMedium!.copyWith(height: 1.5, fontSize: 16),
                   ),
                   const SizedBox(height: 40),
@@ -101,8 +100,8 @@ class SingleBusinessDetail extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final ipfsProduct = singleBusinessStore.ipfsProducts[index];
                             return BusinessOfferDetails(
-                              title: BusinessUtils.utf8convert(ipfsProduct.name),
-                              description: BusinessUtils.utf8convert(ipfsProduct.description),
+                              title: ipfsProduct.name,
+                              description: ipfsProduct.description,
                               price: '${appStore.encointer.community?.symbol} ${ipfsProduct.price ?? 0}',
                               openingHours: singleBusinessStore.singleBusiness!.openingHours,
                               businessName: singleBusinessStore.singleBusiness!.name,
@@ -114,8 +113,8 @@ class SingleBusinessDetail extends StatelessWidget {
                   const SizedBox(height: 20),
                   BusinessDetailAddressWidget(
                     text: l10n.address,
-                    description: BusinessUtils.utf8convert(singleBusiness.addressDescription),
-                    address: BusinessUtils.utf8convert(singleBusiness.address),
+                    description: singleBusiness.addressDescription,
+                    address: singleBusiness.address,
                     zipCode: singleBusiness.zipcode,
                     email: singleBusiness.email,
                     phoneNum: singleBusiness.telephone,
