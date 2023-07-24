@@ -145,7 +145,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       padding: const EdgeInsets.all(30),
                       child: EncointerTextFormField(
                         labelText: l10n.enterAmount,
-                        textStyle: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+                        textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -171,7 +171,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 ),
                 Text(
                   '${l10n.receiverAccount} ${store.account.currentAccount.name}',
-                  style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey),
+                  style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),

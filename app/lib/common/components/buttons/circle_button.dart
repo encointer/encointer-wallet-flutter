@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
+
 class CircleButton extends StatelessWidget {
   const CircleButton({
     super.key,
@@ -13,7 +15,7 @@ class CircleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
+
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
@@ -22,7 +24,7 @@ class CircleButton extends StatelessWidget {
         backgroundColor: colorScheme.background,
         shadowColor: Colors.black,
         elevation: 3,
-        textStyle: textTheme.displayMedium!.copyWith(fontWeight: FontWeight.bold, fontSize: 34),
+        textStyle: context.bodyMedium.copyWith(fontWeight: FontWeight.bold),
       ),
       child: child,
     );

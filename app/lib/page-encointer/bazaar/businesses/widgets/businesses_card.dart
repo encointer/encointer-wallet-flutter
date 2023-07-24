@@ -17,7 +17,6 @@ class BusinessesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = context.textTheme;
     return InkWell(
       onTap: () {
         Navigator.push<Widget>(
@@ -73,10 +72,10 @@ class BusinessesCard extends StatelessWidget {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(child: Text(businesses.category.name, style: textTheme.bodySmall)),
+                      Expanded(child: Text(businesses.category.name, style: context.bodySmall)),
                       Text(
                         businesses.status?.name ?? '',
-                        style: textTheme.bodySmall!.copyWith(color: businesses.status?.textColor ?? Colors.black),
+                        style: context.bodySmall.copyWith(color: businesses.status?.textColor ?? Colors.black),
                       )
                     ],
                   ),
@@ -86,14 +85,14 @@ class BusinessesCard extends StatelessWidget {
                       const SizedBox(height: 28),
                       Text(
                         BusinessUtils.utf8convert(businesses.name),
-                        style: textTheme.labelLarge,
+                        style: context.labelLarge,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         BusinessUtils.utf8convert(businesses.description),
-                        style: textTheme.bodyMedium,
+                        style: context.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                       ),

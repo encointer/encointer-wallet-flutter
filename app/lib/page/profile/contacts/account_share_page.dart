@@ -56,7 +56,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
             children: [
               Text(
                 l10n.qrScanHintAccount,
-                style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+                style: context.titleLarge.copyWith(color: AppColors.encointerBlack),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
@@ -71,14 +71,14 @@ class _AccountSharePageState extends State<AccountSharePage> {
               const SizedBox(height: 16),
               Text(
                 accountToBeShared.name,
-                style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey),
+                style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
               Text(
                 l10n.shareLinkHint,
                 textAlign: TextAlign.center,
-                style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
+                style: context.bodyMedium.copyWith(color: AppColors.encointerGrey),
               ),
               const SizedBox(height: 8),
               ElevatedButton(
@@ -88,7 +88,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   children: [
                     const Icon(Icons.share),
                     const SizedBox(width: 12),
-                    Text(l10n.sendLink, style: context.textTheme.displaySmall),
+                    Text(l10n.sendLink, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
                   ],
                 ),
                 onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),

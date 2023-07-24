@@ -58,7 +58,7 @@ class ExportResultPage extends StatelessWidget {
                           padding: const EdgeInsets.all(8),
                           child: Text(
                             l10n.copy,
-                            style: TextStyle(fontSize: 14, color: context.colorScheme.primary),
+                            style: context.bodyMedium.copyWith(color: context.colorScheme.primary),
                           ),
                         ),
                       )
@@ -74,7 +74,7 @@ class ExportResultPage extends StatelessWidget {
                     child: Text(
                       args['key'] as String,
                       key: const Key('account-mnemonic-key'),
-                      style: context.textTheme.headlineMedium,
+                      style: context.bodyMedium.copyWith(color: context.colorScheme.primary),
                     ),
                   ),
                 ],

@@ -11,7 +11,7 @@ class EmptyBusiness extends StatelessWidget {
     return Center(
       child: Text(
         context.l10n.noItems,
-        style: context.textTheme.displayMedium,
+        style: context.headlineSmall,
       ),
     );
   }

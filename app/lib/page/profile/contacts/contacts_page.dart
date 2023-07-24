@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
-import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -22,7 +21,6 @@ class ContactsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           context.l10n.addressBook,
-          style: context.textTheme.displaySmall,
         ),
         centerTitle: true,
         actions: <Widget>[

@@ -4,7 +4,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/config/prod_community.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -44,7 +43,7 @@ class TransactionCard extends StatelessWidget {
               const SizedBox(width: 5),
               Text(
                 transaction.type.getText(context),
-                style: context.textTheme.bodySmall,
+                style: context.bodySmall,
               ),
             ],
           ),
@@ -61,7 +60,7 @@ class TransactionCard extends StatelessWidget {
                           ? l10n.communityWithName(
                               Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name)
                           : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
-                      style: context.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                      style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 4),
                   Text(transaction.isIssuance ? l10n.incomeIssuance : Fmt.address(transaction.counterParty) ?? ''),
@@ -76,7 +75,7 @@ class TransactionCard extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: '${appStore.encointer.community?.symbol}',
-                        style: context.textTheme.titleMedium!.copyWith(
+                        style: context.titleMedium.copyWith(
                           color: transaction.type == TransactionType.incoming
                               ? context.colorScheme.primary
                               : const Color(0xffD76D89),
@@ -85,7 +84,7 @@ class TransactionCard extends StatelessWidget {
                       const WidgetSpan(child: SizedBox(width: 5)),
                       TextSpan(
                         text: '${transaction.amount} ',
-                        style: context.textTheme.titleMedium!.copyWith(
+                        style: context.titleMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: transaction.type == TransactionType.incoming
                               ? context.colorScheme.primary
@@ -96,7 +95,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(Fmt.dateTime(transaction.dateTime), style: context.textTheme.bodySmall),
+                Text(Fmt.dateTime(transaction.dateTime), style: context.bodySmall),
               ],
             ),
           ],

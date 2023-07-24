@@ -155,7 +155,7 @@ class _TransferPageState extends State<TransferPage> {
                     }),
                     Text(
                       l10n.yourBalanceFor(Fmt.accountName(context, store.account.currentAccount)),
-                      style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
+                      style: context.bodyMedium.copyWith(color: AppColors.encointerGrey),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
@@ -180,7 +180,7 @@ class _TransferPageState extends State<TransferPage> {
                     const SizedBox(height: 24),
                     EncointerTextFormField(
                       labelText: l10n.amountToBeTransferred,
-                      textStyle: context.textTheme.displayLarge!.copyWith(color: AppColors.encointerBlack),
+                      textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
                       inputFormatters: [UI.decimalInputFormatter()],
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       controller: _amountCtrl,
@@ -216,7 +216,7 @@ class _TransferPageState extends State<TransferPage> {
                 Center(
                   child: Text(
                     '${l10n.fee}: TODO compute Fee', // TODO compute fee #589
-                    style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
+                    style: context.labelLarge.copyWith(color: AppColors.encointerGrey),
                   ),
                 ),
               const SizedBox(height: 8),
@@ -236,8 +236,7 @@ class _TransferPageState extends State<TransferPage> {
                     children: [
                       Icon(Iconsax.login_1, color: context.colorScheme.background),
                       const SizedBox(width: 12),
-                      Text(l10n.next,
-                          style: context.textTheme.bodyLarge!.copyWith(color: context.colorScheme.background)),
+                      Text(l10n.next, style: context.bodyLarge.copyWith(color: context.colorScheme.background)),
                     ],
                   ),
                 ),
@@ -294,7 +293,7 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
         // need text base line alignment
         text: TextSpan(
           text: '${Fmt.doubleFormat(available, length: 6)} ',
-          style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+          style: context.headlineLarge.copyWith(color: AppColors.encointerBlack),
           children: const <TextSpan>[
             TextSpan(
               text: 'ⵐ',

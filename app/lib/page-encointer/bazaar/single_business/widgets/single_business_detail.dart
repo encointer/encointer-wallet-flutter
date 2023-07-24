@@ -41,12 +41,12 @@ class SingleBusinessDetail extends StatelessWidget {
                     children: [
                       Text(
                         singleBusiness.category,
-                        style: context.textTheme.bodySmall,
+                        style: context.bodySmall,
                       ),
                       if (singleBusiness.status.isNotNullOrEmpty)
                         Text(
                           singleBusiness.status!,
-                          style: context.textTheme.bodySmall!.copyWith(color: const Color(0xFF35B731)),
+                          style: context.bodySmall.copyWith(color: const Color(0xFF35B731)),
                         )
                     ],
                   ),
@@ -68,7 +68,7 @@ class SingleBusinessDetail extends StatelessWidget {
                             const SizedBox(width: 10),
                             Text(
                               l10n.like,
-                              style: context.textTheme.bodySmall!
+                              style: context.bodySmall
                                   .copyWith(decoration: TextDecoration.underline, fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -79,7 +79,7 @@ class SingleBusinessDetail extends StatelessWidget {
                   const SizedBox(height: 20),
                   Text(
                     BusinessUtils.utf8convert(singleBusiness.description),
-                    style: context.textTheme.bodyMedium!.copyWith(height: 1.5, fontSize: 16),
+                    style: context.bodyMedium.copyWith(height: 1.5),
                   ),
                   const SizedBox(height: 40),
                   if (singleBusinessStore.ipfsProducts.isNotEmpty)
@@ -88,10 +88,7 @@ class SingleBusinessDetail extends StatelessWidget {
                       children: [
                         Text(
                           context.l10n.offersForCommunity(appStore.encointer.community?.symbol ?? 'LEU'),
-                          style: context.textTheme.titleLarge!.copyWith(
-                            color: context.colorScheme.primary,
-                            fontSize: 18,
-                          ),
+                          style: context.titleLarge.copyWith(color: context.colorScheme.primary, fontSize: 18),
                         ),
                         const SizedBox(height: 8),
                         ListView.builder(
