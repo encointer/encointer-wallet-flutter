@@ -49,8 +49,6 @@ class PaymentConfirmationPage extends StatefulWidget {
 class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   var _transferState = TransferState.notStarted;
 
-  /// Transaction result, will only be used in the error case.
-  Map<dynamic, dynamic>? _transactionResult;
   late final DateTime _blockTimestamp;
 
   @override
@@ -206,7 +204,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         );
       case TransferState.failed:
         return Text(
-          "${l10n.paymentError}: ${_transactionResult?['error']?.toString() ?? "Unknown Error"}",
+          l10n.paymentError,
           style: h2Grey,
         );
     }
