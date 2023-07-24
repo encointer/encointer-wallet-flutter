@@ -49,8 +49,6 @@ class PaymentConfirmationPage extends StatefulWidget {
 class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   var _transferState = TransferState.notStarted;
 
-  /// Transaction result, will only be used in the error case.
-  Map<dynamic, dynamic>? _transactionResult;
   late final DateTime _blockTimestamp;
 
   @override
@@ -136,7 +134,14 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       _transferState = TransferState.submitting;
     });
 
-    await submitTx(context, context.read<AppStore>(), widget.api, params, onFinish: onFinish);
+    await submitTx(
+      context,
+      context.read<AppStore>(),
+      widget.api,
+      params,
+      onFinish: onFinish,
+      onError: onError,
+    );
 
     Log.d('TransferState after callback: $_transferState', 'PaymentConfirmationPage');
     // trigger rebuild after state update in callback
@@ -145,14 +150,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
 
   void onFinish(BuildContext txPageContext, Map res) {
     Log.d('Transfer result $res', 'PaymentConfirmationPage');
-    _transactionResult = res;
-    if (res['hash'] == null) {
-      Log.d('Error sending transfer ${res['error']}', 'PaymentConfirmationPage');
-      _transferState = TransferState.failed;
-    } else {
-      _transferState = TransferState.finished;
-      _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
-    }
+    _transferState = TransferState.finished;
+    _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
+  }
+
+  void onError(dynamic errorMessage) {
+    Log.d('Error sending transfer $errorMessage', 'PaymentConfirmationPage');
+    _transferState = TransferState.failed;
   }
 
   Widget _getTransferStateWidget(TransferState state) {
@@ -201,7 +205,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         );
       case TransferState.failed:
         return Text(
-          "${l10n.paymentError}: ${_transactionResult?['error']?.toString() ?? "Unknown Error"}",
+          l10n.paymentError,
           style: h2Grey,
         );
     }
