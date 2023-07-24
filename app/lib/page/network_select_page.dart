@@ -107,8 +107,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
           borderRadius: BorderRadius.circular(10),
           side: address == context.read<AppStore>().account.currentAddress
               ? BorderSide(color: context.colorScheme.background)
-
-              ///primaryColorLight
               : BorderSide.none,
         ),
         margin: const EdgeInsets.only(bottom: 16),

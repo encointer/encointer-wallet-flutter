@@ -18,8 +18,6 @@ class AboutPage extends StatelessWidget {
     final l10n = context.l10n;
     return Scaffold(
       backgroundColor: context.colorScheme.background,
-
-      ///cardColor
       appBar: AppBar(
         title: Text(l10n.about),
         centerTitle: true,

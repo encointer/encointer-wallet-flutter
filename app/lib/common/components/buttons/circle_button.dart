@@ -18,12 +18,13 @@ class CircleButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-          shape: const CircleBorder(),
-          padding: const EdgeInsets.all(12),
-          backgroundColor: colorScheme.background,
-          shadowColor: Colors.black,
-          elevation: 3,
-          textStyle: context.bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(12),
+        backgroundColor: colorScheme.background,
+        shadowColor: Colors.black,
+        elevation: 3,
+        textStyle: context.bodyMedium.copyWith(fontWeight: FontWeight.bold),
+      ),
       child: child,
     );
   }
