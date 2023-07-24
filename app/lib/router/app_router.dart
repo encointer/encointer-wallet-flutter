@@ -2,6 +2,7 @@ import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -177,7 +178,10 @@ class AppRoute {
         );
       case BazaarPage.route:
         return CupertinoPageRoute(
-          builder: (_) => BazaarMain(args: arguments! as BazaarMainArgs),
+          builder: (_) => Provider(
+            create: (context) => BusinessesStore(),
+            child: const BazaarPage(),
+          ),
           settings: settings,
         );
       case LangPage.route:

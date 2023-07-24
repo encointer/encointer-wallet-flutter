@@ -8,14 +8,9 @@ import 'package:encointer_wallet/common/components/loading/centered_activity_ind
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/business_utils.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
-import 'package:encointer_wallet/store/app.dart';
 
 class SingleBusinessView extends StatelessWidget {
-  const SingleBusinessView({
-    required this.appStore,
-    super.key,
-  });
-  final AppStore appStore;
+  const SingleBusinessView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +29,7 @@ class SingleBusinessView extends StatelessWidget {
           case FetchStatus.loading:
             return const CenteredActivityIndicator();
           case FetchStatus.success:
-            return SingleBusinessDetail(singleBusiness: store.singleBusiness!, appStore: appStore);
+            return SingleBusinessDetail(singleBusiness: store.singleBusiness!);
           case FetchStatus.error:
             return const ErrorView();
           case FetchStatus.noData:
