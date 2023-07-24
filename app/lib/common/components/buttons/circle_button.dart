@@ -1,5 +1,6 @@
-import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:flutter/material.dart';
+
+import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 
 class CircleButton extends StatelessWidget {
   const CircleButton({
