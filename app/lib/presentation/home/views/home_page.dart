@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +71,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        key: const Key('bottom-nav'),
+        key: const Key(EWTestKeys.bottomNav),
         currentIndex: _tabIndex,
         iconSize: 22,
         onTap: (index) async {

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -159,14 +160,14 @@ class _AssetsViewState extends State<AssetsView> {
         child: RefreshIndicator(
           onRefresh: _refreshEncointerState,
           child: ListView(
-            key: const Key('list-view-wallet'),
+            key: const Key(EWTestKeys.listViewWallet),
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             children: [
               Observer(builder: (_) {
                 return Column(
                   children: <Widget>[
                     InkWell(
-                      key: const Key('panel-controller'),
+                      key: const Key(EWTestKeys.panelController),
                       child: CombinedCommunityAndAccountAvatar(widget.store),
                       onTap: () {
                         if (_panelController.isAttached) {
@@ -213,14 +214,14 @@ class _AssetsViewState extends State<AssetsView> {
                     Row(
                       children: [
                         ActionButton(
-                          key: const Key('qr-receive'),
+                          key: const Key(EWTestKeys.qrReceive),
                           icon: const Icon(Iconsax.receive_square_2),
                           label: l10n.receive,
                           onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                         ),
                         const SizedBox(width: 3),
                         ActionButton(
-                          key: const Key('go-transfer-history'),
+                          key: const Key(EWTestKeys.goTransferHistory),
                           icon: Assets.images.assets.receiveSquare2.svg(
                             colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
                           ),
@@ -231,7 +232,7 @@ class _AssetsViewState extends State<AssetsView> {
                         ),
                         const SizedBox(width: 3),
                         ActionButton(
-                          key: const Key('transfer'),
+                          key: const Key(EWTestKeys.transfer),
                           icon: const Icon(Iconsax.send_sqaure_2),
                           label: l10n.transfer,
                           onPressed: widget.store.encointer.communityBalance != null
@@ -259,7 +260,7 @@ class _AssetsViewState extends State<AssetsView> {
 
                             if (hasPendingIssuance) {
                               return SubmitButton(
-                                key: const Key('claim-pending-dev'),
+                                key: const Key(EWTestKeys.claimPendingDev),
                                 child: Text(l10n.issuancePending, textAlign: TextAlign.center),
                                 onPressed: (context) => submitClaimRewards(
                                   context,
@@ -284,7 +285,7 @@ class _AssetsViewState extends State<AssetsView> {
                     : Container();
               }),
               const SizedBox(height: 24),
-              CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
+              CeremonyBox(widget.store, webApi, key: const Key(EWTestKeys.ceremonyBoxWallet)),
               const SizedBox(height: 24),
               AnnouncementView(
                 cid: Community.fromCid(widget.store.encointer.community?.cid.toFmtString()).cid,
@@ -319,7 +320,7 @@ class _AssetsViewState extends State<AssetsView> {
                       _refreshBalanceAndNotify();
                     });
                   },
-                  addIconButtonKey: const Key('add-community'),
+                  addIconButtonKey: const Key(EWTestKeys.addCommunity),
                 );
               }),
               Observer(builder: (BuildContext context) {
@@ -335,7 +336,7 @@ class _AssetsViewState extends State<AssetsView> {
                   onAddIconPressed: () {
                     Navigator.of(context).pushNamed(AddAccountView.route);
                   },
-                  addIconButtonKey: const Key('add-account-panel'),
+                  addIconButtonKey: const Key(EWTestKeys.addAccountPanel),
                 );
               }),
             ]),

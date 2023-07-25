@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -43,7 +44,7 @@ class CeremonyStep1Count extends StatelessWidget {
         leading: Container(),
         actions: [
           IconButton(
-            key: const Key('close-encointer-ceremony-step1'),
+            key: const Key(EWTestKeys.closeEncointerCeremonyStep1),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
           )
@@ -78,13 +79,13 @@ class CeremonyStep1Count extends StatelessWidget {
                       textStyle: context.displayLarge.copyWith(color: AppColors.encointerBlack),
                       controller: _attendeesCountController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      textFormFieldKey: const Key('attendees-count'),
+                      textFormFieldKey: const Key(EWTestKeys.attendeesCount),
                     ),
                   ],
                 ),
               ),
               PrimaryButton(
-                key: const Key('ceremony-step-1-next'),
+                key: const Key(EWTestKeys.ceremonyStep1Next),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

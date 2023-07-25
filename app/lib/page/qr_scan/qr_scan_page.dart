@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -42,7 +43,7 @@ class ScanPage extends StatelessWidget {
         leading: Container(),
         actions: [
           IconButton(
-            key: const Key('close-scanner'),
+            key: const Key(EWTestKeys.closeScanner),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
@@ -122,24 +123,24 @@ class ScanPage extends StatelessWidget {
   /// Adds some buttons to activate the scanner with mock data.
   Widget _mockQrDataRow(AppLocalizations l10n, void Function(String) onScan) {
     return Wrap(
-      key: const Key('mock-qr-data-row'),
+      key: const Key(EWTestKeys.mockQrDataRow),
       children: [
         ElevatedButton(
-          key: const Key('profile-to-scan'),
+          key: const Key(EWTestKeys.profileToScan),
           child: Text(l10n.addContact),
           onPressed: () => onScan(
             'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\n\n\nFirstContactToSave',
           ),
         ),
         ElevatedButton(
-          key: const Key('contact-to-save-to-address'),
+          key: const Key(EWTestKeys.contactToSaveToAddress),
           child: Text(l10n.addToContactFromQrContact),
           onPressed: () => onScan(
             'encointer-contact\nv1.0\nGexcuH8GaJgztyDN3vbFKGaXVePzBUX78Cx29JApZ1gvxyg\n\n\nFromContact',
           ),
         ),
         ElevatedButton(
-          key: const Key('invoice-to-save-to-address'),
+          key: const Key(EWTestKeys.invoiceToSaveToAddress),
           child: Text(l10n.addInvoiceQrToAddress),
           onPressed: () => onScan(
             'encointer-invoice\nv1.0\n5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty'
@@ -147,7 +148,7 @@ class ScanPage extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-          key: const Key('invoice-with-amount-to-scan'),
+          key: const Key(EWTestKeys.invoiceWithAmountToScan),
           child: Text(l10n.invoice),
           onPressed: () => onScan(
             'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX'
@@ -155,14 +156,14 @@ class ScanPage extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-          key: const Key('invoice-with-no-amount-to-scan'),
+          key: const Key(EWTestKeys.invoiceWithNoAmountToScan),
           child: Text(l10n.noInvoice),
           onPressed: () => onScan(
             'encointer-invoice\nv1.0\n5Cz75Ln579ZZKt9PoAWPmnCNJFY6WNeB7avYqGokZuYSHMuK\nsqm1v79dF6b\n\nManas',
           ),
         ),
         ElevatedButton(
-          key: const Key('voucher-to-scan'),
+          key: const Key(EWTestKeys.voucherToScan),
           child: const Text('voucher'),
           // There is a unit test in `js_encointer_service/test/service/encointer.test
           // that deposits some funds to this voucher on the local dev-network.

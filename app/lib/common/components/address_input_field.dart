@@ -1,4 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
@@ -104,7 +105,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(
-        key: const Key('transfer-select-account'),
+        key: const Key(EWTestKeys.transferSelectAccount),
         popupProps: PopupProps.modalBottomSheet(
           isFilterOnline: true,
           showSearchBox: true,

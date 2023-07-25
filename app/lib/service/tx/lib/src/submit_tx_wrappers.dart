@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -179,7 +180,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
     context: context,
     builder: (context) {
       return CupertinoAlertDialog(
-        key: Key('educate-dialog-${registrationType.name}'),
+        key: Key(EWTestKeys.educateDialogRegistrationType(registrationType.name)),
         title: Text('${texts['title']}'),
         content: Text(
           '${texts['content']}',
@@ -188,7 +189,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
         actions: <Widget>[
           if (registrationType == ParticipantType.Newbie) const SizedBox(),
           CupertinoButton(
-            key: const Key('close-educate-dialog'),
+            key: const Key(EWTestKeys.closeEducateDialog),
             child: Text(l10n.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
