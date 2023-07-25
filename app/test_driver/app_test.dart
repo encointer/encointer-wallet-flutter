@@ -30,7 +30,7 @@ void main() async {
   }, timeout: timeout120);
 
   test('create PIN by text 0001', () async {
-    await createPin(driver, EWTestKeys.zero001);
+    await createPin(driver, EWTestKeys.testPIN);
   }, timeout: timeout120);
 
   test('close biometric auth dialog', () async {
@@ -345,7 +345,7 @@ void main() async {
   }, timeout: timeout120);
 
   test('account export', () async {
-    menemonic = await exportAccount(driver, EWTestKeys.zero001);
+    menemonic = await exportAccount(driver, EWTestKeys.testPIN);
   }, timeout: timeout120);
 
   test('account delete from account manage page', () async {

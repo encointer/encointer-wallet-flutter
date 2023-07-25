@@ -10,7 +10,7 @@ class EWTestKeys {
   static const accountSource = 'account-source';
   static const createAccountPin = 'create-account-pin';
   static const createAccountNext = 'create-account-next';
-  static const zero001 = '0001';
+  static const testPIN = '0001';
   static const transfer = 'transfer';
   static const contactNameField = 'contact-name-field';
   static const contactName = 'contact-name';

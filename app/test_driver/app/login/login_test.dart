@@ -10,7 +10,7 @@ Future<void> verifyAuthCancel(FlutterDriver driver) async {
 
 Future<void> verifyInputPin(FlutterDriver driver) async {
   await driver.tap(find.byValueKey(EWTestKeys.inputPasswordDialog));
-  await driver.enterText(EWTestKeys.zero001);
+  await driver.enterText(EWTestKeys.testPIN);
   await driver.tap(find.byValueKey(EWTestKeys.passwordOk));
 }
 

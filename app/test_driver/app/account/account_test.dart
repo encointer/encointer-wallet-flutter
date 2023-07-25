@@ -21,7 +21,7 @@ Future<void> createAccount(FlutterDriver driver, String account) async {
 Future<void> createPin(FlutterDriver driver, String pin) async {
   await driver.waitFor(find.byValueKey(EWTestKeys.createAccountPin));
   await driver.takeLocalScreenshot(Screenshots.pinEntry);
-  await enterPin(driver, EWTestKeys.zero001);
+  await enterPin(driver, EWTestKeys.testPIN);
   await driver.tap(find.byValueKey(EWTestKeys.createAccountConfirm));
 }
 
