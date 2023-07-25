@@ -135,6 +135,7 @@ class _TransferPageState extends State<TransferPage> {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: ScrollableForm(
           formKey: _formKey,
+          listViewKey: const Key('transfer-listview'),
           listViewChildren: [
             CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
             const SizedBox(height: 12),
