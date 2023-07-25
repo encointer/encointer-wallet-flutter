@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -71,7 +72,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(
-          key: const Key('create-account-pin'),
+          key: const Key(EWTestKeys.createAccountPin),
           keyboardType: TextInputType.number,
           filled: true,
           obscureText: true,
@@ -85,7 +86,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         ),
         const SizedBox(height: 20),
         EncointerTextFormField(
-          key: const Key('create-account-pin2'),
+          key: const Key(EWTestKeys.createAccountPin2),
           keyboardType: TextInputType.number,
           filled: true,
           fillColor: context.colorScheme.background,
@@ -103,7 +104,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
       columnChildren: [
         const SizedBox(height: 10),
         PrimaryButton(
-          key: const Key('create-account-confirm'),
+          key: const Key(EWTestKeys.createAccountConfirm),
           onPressed: () async {
             final newAccount = context.read<NewAccountStore>();
             if (_formKey.currentState!.validate() && !newAccount.loading) {

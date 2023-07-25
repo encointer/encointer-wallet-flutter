@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class ContactsPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             padding: const EdgeInsets.only(right: 8),
-            key: const Key('add-contact'),
+            key: const Key(EWTestKeys.addContact),
             icon: const Icon(Icons.add, size: 28),
             onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
           )

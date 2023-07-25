@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -80,7 +81,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                   if (connectivityStore.isConnectedToNetwork) {
                     return SubmitButton(
                       // todo: this will be removed because we do it automatically
-                      key: const Key('submit-claims'),
+                      key: const Key(EWTestKeys.submitClaims),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

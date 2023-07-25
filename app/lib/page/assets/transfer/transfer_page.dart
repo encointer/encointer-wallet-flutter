@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -125,7 +126,7 @@ class _TransferPageState extends State<TransferPage> {
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
-            key: const Key('close-transfer-page'),
+            key: const Key(EWTestKeys.closeTransferPage),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           ),
@@ -135,7 +136,7 @@ class _TransferPageState extends State<TransferPage> {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: ScrollableForm(
           formKey: _formKey,
-          listViewKey: const Key('transfer-listview'),
+          listViewKey: const Key(EWTestKeys.transferListview),
           listViewChildren: [
             CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
             const SizedBox(height: 12),
@@ -159,7 +160,7 @@ class _TransferPageState extends State<TransferPage> {
             FittedBox(
               fit: BoxFit.scaleDown,
               child: IconButton(
-                key: const Key('open-qr-scanner-on-send-page'),
+                key: const Key(EWTestKeys.openQrScannerOnSendPage),
                 iconSize: 48,
                 icon: const Icon(Iconsax.scan_barcode),
                 onPressed: () async {
@@ -184,7 +185,7 @@ class _TransferPageState extends State<TransferPage> {
               inputFormatters: [UI.decimalInputFormatter()],
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               controller: _amountCtrl,
-              textFormFieldKey: const Key('transfer-amount-input'),
+              textFormFieldKey: const Key(EWTestKeys.transferAmountInput),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return l10n.amountError;
@@ -220,7 +221,7 @@ class _TransferPageState extends State<TransferPage> {
               ),
             const SizedBox(height: 8),
             PrimaryButton(
-              key: const Key('make-transfer'),
+              key: const Key(EWTestKeys.makeTransfer),
               onPressed: _accountTo != null
                   ? () {
                       if (_cid != null && _communitySymbol != null) {
