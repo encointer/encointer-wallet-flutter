@@ -44,6 +44,8 @@ class TransactionCard extends StatelessWidget {
               transaction.type.getText(context),
               style: context.bodySmall,
             ),
+            const Spacer(),
+            Text(Fmt.dateTime(transaction.dateTime), style: context.bodySmall),
           ],
         ),
         subtitle: Row(
@@ -101,8 +103,6 @@ class TransactionCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(Fmt.dateTime(transaction.dateTime), style: context.bodySmall),
               ],
             ),
           ],
