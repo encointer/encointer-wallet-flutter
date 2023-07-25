@@ -28,7 +28,7 @@ class TransactionsList extends StatelessWidget {
           );
         } else if (index <= transactions.length) {
           final transaction = transactions[index - 1];
-          return TransactionCard(transaction, appStore.settings.knownAccounts());
+          return TransactionCard(transaction, appStore.settings.knownAccounts);
         } else {
           return Padding(
             padding: const EdgeInsets.only(top: 10),

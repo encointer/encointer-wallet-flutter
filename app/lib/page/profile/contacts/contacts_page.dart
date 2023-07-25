@@ -16,55 +16,40 @@ class ContactsPage extends StatelessWidget {
   static const String route = '/profile/contacts';
 
   @override
-  Widget build(BuildContext context) => Observer(
-        builder: (_) {
-          final store = context.watch<AppStore>();
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                context.l10n.addressBook,
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-              iconTheme: const IconThemeData(
-                color: Color(0xff666666), //change your color here
-              ),
-              centerTitle: true,
-              backgroundColor: Colors.transparent,
-              shadowColor: Colors.transparent,
-              actions: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: IconButton(
-                    key: const Key(EWTestKeys.addContact),
-                    icon: const Icon(Icons.add, size: 28),
-                    onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
-                  ),
-                )
-              ],
-            ),
-            body: SafeArea(
-              child: ListView(
-                children: context.watch<AppStore>().settings.contactList.map((contact) {
-                  final address = Fmt.ss58Encode(contact.pubKey, prefix: store.settings.endpoint.ss58!);
-
-                  return ListTile(
-                    leading: AddressIcon(address, contact.pubKey, size: 45),
-                    title: Text(Fmt.accountName(context, contact)),
-                    subtitle: Text(Fmt.address(address)!),
-                    trailing: SizedBox(
-                      width: 36,
-                      child: IconButton(
-                        key: Key(contact.name),
-                        icon: const Icon(Icons.arrow_forward_ios, size: 18),
-                        onPressed: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: contact),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          );
-        },
-      );
+  Widget build(BuildContext context) {
+    final appStore = context.watch<AppStore>();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          context.l10n.addressBook,
+        ),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            padding: const EdgeInsets.only(right: 8),
+            key: const Key(EWTestKeys.addContact),
+            icon: const Icon(Icons.add, size: 28),
+            onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
+          )
+        ],
+      ),
+      body: Observer(builder: (_) {
+        return ListView.builder(
+          itemCount: appStore.settings.contactList.length,
+          itemBuilder: (BuildContext context, int index) {
+            final contact = appStore.settings.contactList[index];
+            final address = Fmt.ss58Encode(contact.pubKey, prefix: appStore.settings.endpoint.ss58!);
+            return ListTile(
+              key: Key(contact.name),
+              leading: AddressIcon(address, contact.pubKey, size: 45),
+              title: Text(Fmt.accountName(context, contact)),
+              subtitle: Text(Fmt.address(address)!),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+              onTap: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: contact),
+            );
+          },
+        );
+      }),
+    );
+  }
 }

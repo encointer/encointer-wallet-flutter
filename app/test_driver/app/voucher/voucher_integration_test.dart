@@ -5,7 +5,6 @@ import '../../helpers/extension/screenshot_driver.dart';
 import '../app.dart';
 
 Future<void> getQrVoucherAndFund(FlutterDriver driver) async {
-  await navigateToHomePage(driver);
   await scrollToPanelController(driver);
   await goToTransferViewFromHomeView(driver);
   await voucherGetToTransferPageThenToVoucher(driver);

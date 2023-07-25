@@ -143,19 +143,10 @@ class _ReceivePageState extends State<ReceivePage> {
                 Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 48),
-                      child: Text(
-                        l10n.qrScanHint,
-                        style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerBlack),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Padding(
                       padding: const EdgeInsets.all(30),
                       child: EncointerTextFormField(
-                        labelText: l10n.invoiceAmount,
-                        textStyle: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+                        labelText: l10n.enterAmount,
+                        textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -181,7 +172,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 ),
                 Text(
                   '${l10n.receiverAccount} ${store.account.currentAccount.name}',
-                  style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey),
+                  style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),

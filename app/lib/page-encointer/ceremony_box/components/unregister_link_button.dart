@@ -32,8 +32,7 @@ class UnregisteredLinkButton extends StatelessWidget {
       },
       child: Text(
         l10n.unregister,
-        style: context.textTheme.headlineMedium!
-            .copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
+        style: context.bodyMedium.copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
       ),
     );
   }

@@ -56,7 +56,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
       Center(
         child: Text(
           l10n.accountNameChoose,
-          style: context.textTheme.displayMedium,
+          style: context.headlineSmall,
         ),
       ),
       const SizedBox(height: 10),
@@ -64,7 +64,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
         child: Text(
           l10n.accountNameChooseHint,
           textAlign: TextAlign.center,
-          style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+          style: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
         ),
       ),
       const SizedBox(height: 30),
@@ -87,7 +87,7 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
           children: [
             const Icon(Iconsax.import_2),
             const SizedBox(width: 10),
-            Text(l10n.accountImport, style: context.textTheme.displaySmall),
+            Text(l10n.accountImport, style: context.titleMedium.copyWith(color: context.colorScheme.primary)),
           ],
         ),
         onPressed: () {

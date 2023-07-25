@@ -132,13 +132,13 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         Text(
                           l10n.hintEnterCurrentPin,
                           textAlign: TextAlign.center,
-                          style: context.textTheme.displayMedium,
+                          style: context.headlineSmall,
                         ),
                         const SizedBox(height: 16),
                         Text(
                           l10n.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
-                          style: context.textTheme.displayMedium!.copyWith(color: Colors.black),
+                          style: context.headlineSmall.copyWith(color: Colors.black),
                         ),
                         const SizedBox(height: 30),
                         EncointerTextFormField(

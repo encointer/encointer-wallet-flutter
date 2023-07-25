@@ -53,7 +53,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
         Center(
           child: Text(
             l10n.accountNameChoose,
-            style: context.textTheme.displayMedium,
+            style: context.headlineSmall,
           ),
         ),
         const SizedBox(height: 10),
@@ -61,7 +61,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
           child: Text(
             l10n.accountNameChooseHint,
             textAlign: TextAlign.center,
-            style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+            style: context.headlineMedium.copyWith(color: AppColors.encointerBlack),
           ),
         ),
         const SizedBox(height: 30),
@@ -101,7 +101,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
               const SizedBox(width: 12),
               Text(
                 l10n.next,
-                style: context.textTheme.displaySmall!.copyWith(
+                style: context.titleMedium.copyWith(
                   color: context.colorScheme.background,
                 ),
               ),

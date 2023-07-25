@@ -43,9 +43,7 @@ class CeremonyStep2Scan extends StatelessWidget {
         title: Text(l10n.keySigningCycle),
         actions: [
           UserMeetupAvatar(index: meetupIndexOfAccount(store.account.currentAccountPubKey!)),
-          const SizedBox(
-            width: 20,
-          )
+          const SizedBox(width: 20)
         ],
       ),
       body: Column(
@@ -59,7 +57,7 @@ class CeremonyStep2Scan extends StatelessWidget {
           Center(
             child: Text(
               l10n.scan,
-              style: context.textTheme.displayMedium,
+              style: context.titleLarge.copyWith(color: context.colorScheme.primary),
             ),
           ),
           Center(
@@ -68,7 +66,7 @@ class CeremonyStep2Scan extends StatelessWidget {
               child: Text(
                 l10n.scanDescriptionForMeetup,
                 textAlign: TextAlign.center,
-                style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.25),
+                style: context.titleLarge.copyWith(height: 1.25),
               ),
             ),
           ),
@@ -93,7 +91,10 @@ class CeremonyStep2Scan extends StatelessWidget {
                 children: [
                   const Icon(Iconsax.arrow_right_2),
                   const SizedBox(width: 12, height: 60),
-                  Text(l10n.closeGathering, style: context.textTheme.displaySmall),
+                  Text(
+                    l10n.closeGathering,
+                    style: context.titleMedium.copyWith(color: context.colorScheme.primary),
+                  ),
                 ],
               ),
               onPressed: () {
@@ -112,7 +113,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     l10n.scanOthers,
-                    style: context.textTheme.displaySmall!.copyWith(color: context.colorScheme.background),
+                    style: context.titleMedium.copyWith(color: context.colorScheme.background),
                   ),
                 ],
               ),

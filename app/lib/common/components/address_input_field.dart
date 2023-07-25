@@ -60,7 +60,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
               Text(account.name),
               Text(
                 Fmt.address(address)!,
-                style: TextStyle(fontSize: 12, color: context.theme.unselectedWidgetColor),
+                style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
               ),
             ],
           )
@@ -132,7 +132,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
             labelText: widget.label,
-            labelStyle: context.textTheme.headlineMedium,
+            labelStyle: context.bodyLarge.copyWith(color: context.colorScheme.primary),
             contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
             border: const UnderlineInputBorder(
               borderSide: BorderSide(width: 0, style: BorderStyle.none),
@@ -142,7 +142,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? l10n.errorUserNameIsRequired : null,
-        items: widget.store.account.accountListAll,
+        items: widget.store.settings.knownAccounts,
         filterFn: filterByAddressOrName,
         onChanged: (AccountData? data) {
           if (widget.onChanged != null && data != null) {
