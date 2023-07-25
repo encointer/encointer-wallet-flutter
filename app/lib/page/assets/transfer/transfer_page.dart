@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -132,117 +133,114 @@ class _TransferPageState extends State<TransferPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  key: const Key('transfer-listview'),
-                  children: [
-                    CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
-                    const SizedBox(height: 12),
-                    Observer(builder: (_) {
-                      if (store.encointer.communityBalance != null) {
-                        return AccountBalanceWithMoreDigits(
-                          store: store,
-                          available: available,
-                          decimals: encointerCurrenciesDecimals,
-                        );
-                      } else {
-                        return const CupertinoActivityIndicator();
-                      }
-                    }),
-                    Text(
-                      l10n.yourBalanceFor(Fmt.accountName(context, store.account.currentAccount)),
-                      style: context.bodyMedium.copyWith(color: AppColors.encointerGrey),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 24),
-                    IconButton(
-                      key: const Key('open-qr-scanner-on-send-page'),
-                      iconSize: 48,
-                      icon: const Icon(Iconsax.scan_barcode),
-                      onPressed: () async {
-                        final invoiceData = await Navigator.of(context).pushNamed(
-                          ScanPage.route,
-                          arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
-                        );
-                        if (invoiceData != null && invoiceData is InvoiceData) {
-                          await handleTransferPageParams(
-                            TransferPageParams.fromInvoiceData(invoiceData),
-                            store,
-                          );
-                          setState(() {});
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    EncointerTextFormField(
-                      labelText: l10n.amountToBeTransferred,
-                      textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
-                      inputFormatters: [UI.decimalInputFormatter()],
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      controller: _amountCtrl,
-                      textFormFieldKey: const Key('transfer-amount-input'),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return l10n.amountError;
-                        }
-                        if (balanceTooLow(value, available!, encointerCurrenciesDecimals)) {
-                          return l10n.insufficientBalance;
-                        }
-                        return null;
-                      },
-                      suffixIcon: const Text('ⵐ', style: TextStyle(color: AppColors.encointerGrey, fontSize: 44)),
-                    ),
-                    const SizedBox(height: 24),
-                    AddressInputField(
+        child: ScrollableForm(
+          formKey: _formKey,
+          listViewKey: const Key('transfer-listview'),
+          listViewChildren: [
+            CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
+            const SizedBox(height: 12),
+            Observer(builder: (_) {
+              if (store.encointer.communityBalance != null) {
+                return AccountBalanceWithMoreDigits(
+                  store: store,
+                  available: available,
+                  decimals: encointerCurrenciesDecimals,
+                );
+              } else {
+                return const CupertinoActivityIndicator();
+              }
+            }),
+            Text(
+              l10n.yourBalanceFor(Fmt.accountName(context, store.account.currentAccount)),
+              style: context.bodyMedium.copyWith(color: AppColors.encointerGrey),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: IconButton(
+                key: const Key('open-qr-scanner-on-send-page'),
+                iconSize: 48,
+                icon: const Icon(Iconsax.scan_barcode),
+                onPressed: () async {
+                  final invoiceData = await Navigator.of(context).pushNamed(
+                    ScanPage.route,
+                    arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
+                  );
+                  if (invoiceData != null && invoiceData is InvoiceData) {
+                    await handleTransferPageParams(
+                      TransferPageParams.fromInvoiceData(invoiceData),
                       store,
-                      label: l10n.address,
-                      initialValue: _accountTo,
-                      onChanged: (AccountData acc) {
-                        setState(() {
-                          _accountTo = acc;
-                        });
-                      },
-                      hideIdenticon: true,
-                    ),
+                    );
+                    setState(() {});
+                  }
+                },
+              ),
+            ),
+            const SizedBox(height: 24),
+            EncointerTextFormField(
+              labelText: l10n.amountToBeTransferred,
+              textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
+              inputFormatters: [UI.decimalInputFormatter()],
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              controller: _amountCtrl,
+              textFormFieldKey: const Key('transfer-amount-input'),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return l10n.amountError;
+                }
+                if (balanceTooLow(value, available!, encointerCurrenciesDecimals)) {
+                  return l10n.insufficientBalance;
+                }
+                return null;
+              },
+              suffixIcon: const Text('ⵐ', style: TextStyle(color: AppColors.encointerGrey, fontSize: 44)),
+            ),
+            const SizedBox(height: 24),
+            AddressInputField(
+              store,
+              label: l10n.address,
+              initialValue: _accountTo,
+              onChanged: (AccountData acc) {
+                setState(() {
+                  _accountTo = acc;
+                });
+              },
+              hideIdenticon: true,
+            ),
+          ],
+          columnChildren: [
+            const SizedBox(height: 20),
+            if (context.select<AppSettings, bool>((store) => store.developerMode))
+              Center(
+                child: Text(
+                  '${l10n.fee}: TODO compute Fee', // TODO compute fee #589
+                  style: context.labelLarge.copyWith(color: AppColors.encointerGrey),
+                ),
+              ),
+            const SizedBox(height: 8),
+            PrimaryButton(
+              key: const Key('make-transfer'),
+              onPressed: _accountTo != null
+                  ? () {
+                      if (_cid != null && _communitySymbol != null) {
+                        _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
+                      }
+                    }
+                  : null,
+              child: SizedBox(
+                height: 24,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Iconsax.login_1, color: context.colorScheme.background),
+                    const SizedBox(width: 12),
+                    Text(l10n.next, style: context.bodyLarge.copyWith(color: context.colorScheme.background)),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              if (context.select<AppSettings, bool>((store) => store.developerMode))
-                Center(
-                  child: Text(
-                    '${l10n.fee}: TODO compute Fee', // TODO compute fee #589
-                    style: context.labelLarge.copyWith(color: AppColors.encointerGrey),
-                  ),
-                ),
-              const SizedBox(height: 8),
-              PrimaryButton(
-                key: const Key('make-transfer'),
-                onPressed: _accountTo != null
-                    ? () {
-                        if (_cid != null && _communitySymbol != null) {
-                          _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
-                        }
-                      }
-                    : null,
-                child: SizedBox(
-                  height: 24,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Iconsax.login_1, color: context.colorScheme.background),
-                      const SizedBox(width: 12),
-                      Text(l10n.next, style: context.bodyLarge.copyWith(color: context.colorScheme.background)),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
