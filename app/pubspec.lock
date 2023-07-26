@@ -33,14 +33,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.13.0"
-  animated_check:
-    dependency: "direct main"
-    description:
-      name: animated_check
-      sha256: "1da103a44b6aeacbecec799343b7170e627f4af465ca642b430c1d94922868aa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.5"
   animated_stack_widget:
     dependency: transitive
     description:
@@ -383,6 +375,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0+1"
+  ew_test_keys:
+    dependency: "direct main"
+    description:
+      path: "../packages/ew_test_keys"
+      relative: true
+    source: path
+    version: "0.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -1899,5 +1898,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.0.1 <4.0.0"
+  dart: ">=3.0.3 <4.0.0"
   flutter: ">=3.10.3"

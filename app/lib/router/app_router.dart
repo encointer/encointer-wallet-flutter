@@ -2,13 +2,14 @@ import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/page/assets/qr_code_printing/widgets/preview_pdf_and_print.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
@@ -23,7 +24,6 @@ import 'package:encointer_wallet/page/profile/account/export_account_page.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
-import 'package:encointer_wallet/page/profile/contacts/contact_list_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
@@ -127,11 +127,6 @@ class AppRoute {
           builder: (_) => const ContactsPage(),
           settings: settings,
         );
-      case ContactListPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const ContactListPage(),
-          settings: settings,
-        );
       case ContactPage.route:
         return CupertinoPageRoute(
           builder: (_) => const ContactPage(),
@@ -177,7 +172,10 @@ class AppRoute {
         );
       case BazaarPage.route:
         return CupertinoPageRoute(
-          builder: (_) => const BazaarMain(),
+          builder: (_) => Provider(
+            create: (context) => BusinessesStore(),
+            child: const BazaarPage(),
+          ),
           settings: settings,
         );
       case LangPage.route:

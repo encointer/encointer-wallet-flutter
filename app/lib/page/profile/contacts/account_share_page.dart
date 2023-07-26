@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
-            key: const Key('close-share-page'),
+            key: const Key(EWTestKeys.closeSharePage),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
@@ -56,7 +57,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
             children: [
               Text(
                 l10n.qrScanHintAccount,
-                style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+                style: context.titleLarge.copyWith(color: AppColors.encointerBlack),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
@@ -71,14 +72,14 @@ class _AccountSharePageState extends State<AccountSharePage> {
               const SizedBox(height: 16),
               Text(
                 accountToBeShared.name,
-                style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey),
+                style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
               Text(
                 l10n.shareLinkHint,
                 textAlign: TextAlign.center,
-                style: context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey),
+                style: context.bodyMedium.copyWith(color: AppColors.encointerGrey),
               ),
               const SizedBox(height: 8),
               ElevatedButton(
@@ -88,7 +89,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   children: [
                     const Icon(Icons.share),
                     const SizedBox(width: 12),
-                    Text(l10n.sendLink, style: context.textTheme.displaySmall),
+                    Text(l10n.sendLink, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
                   ],
                 ),
                 onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),

@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
@@ -29,7 +30,7 @@ void main() async {
   }, timeout: timeout120);
 
   test('create PIN by text 0001', () async {
-    await createPin(driver, '0001');
+    await createPin(driver, EWTestKeys.testPIN);
   }, timeout: timeout120);
 
   test('close biometric auth dialog', () async {
@@ -44,6 +45,22 @@ void main() async {
     await homeInit(driver);
   }, timeout: timeout120);
 
+  test('transfer-history-empty', () async {
+    await navigateToTransferHistoryPage(driver);
+    await checkTransferHistoryEmpty(driver);
+  }, timeout: timeout120);
+
+  test('import account Alice', () async {
+    await goToAddAcoountViewFromPanel(driver);
+    await importAccount(driver, 'Alice', '//Alice');
+    await closePanel(driver);
+  }, timeout: timeout120);
+
+  test('transfer-history', () async {
+    await navigateToTransferHistoryPage(driver);
+    await checkTransferHistory(driver);
+  }, timeout: timeout120);
+
   test('qr-receive page', () async {
     await goToReceiveViewFromHomeView(driver);
     await receiveView(driver);
@@ -56,18 +73,12 @@ void main() async {
 
   test('change-network', () async {
     await goToNetworkView(driver);
-    await changeDevNetwork(driver, 'Tom');
+    await changeDevNetwork(driver, 'Alice');
   }, timeout: timeout120);
 
   test('change-community', () async {
     await goToHomeViewFromNavBar(driver);
     await changeCommunity(driver);
-  }, timeout: timeout120);
-
-  test('import account Alice', () async {
-    await goToAddAcoountViewFromPanel(driver);
-    await importAccount(driver, 'Alice', '//Alice');
-    await closePanel(driver);
   }, timeout: timeout120);
 
   test('Register [Bootstrapper] Alice', () async {
@@ -333,7 +344,7 @@ void main() async {
   }, timeout: timeout120);
 
   test('account export', () async {
-    menemonic = await exportAccount(driver, '0001');
+    menemonic = await exportAccount(driver, EWTestKeys.testPIN);
   }, timeout: timeout120);
 
   test('account delete from account manage page', () async {
@@ -356,7 +367,7 @@ void main() async {
     await goToProfileViewFromNavBar(driver);
     await deleteAllAccount(driver);
     await verifyInputPin(driver);
-    await driver.waitFor(find.byValueKey('import-account'));
+    await driver.waitFor(find.byValueKey(EWTestKeys.importAccount));
   }, timeout: timeout120);
 
   tearDownAll(() async => driver.close());

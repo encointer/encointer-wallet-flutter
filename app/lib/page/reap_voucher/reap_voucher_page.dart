@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -73,8 +74,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final store = context.watch<AppStore>();
-    final h2Grey = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey);
-    final h4Grey = context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey);
+    final h2Grey = context.titleLarge.copyWith(color: AppColors.encointerGrey);
+    final h4Grey = context.bodyLarge.copyWith(color: AppColors.encointerGrey);
     final params = ModalRoute.of(context)?.settings.arguments as ReapVoucherParams?;
 
     final voucher = params?.voucher;
@@ -140,7 +141,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SecondaryButtonWide(
-                  key: const Key('voucher-to-transfer-page'),
+                  key: const Key(EWTestKeys.voucherToTransferPage),
                   onPressed: _isReady ? () => _pushTransferPage(context, voucher!, _voucherAddress!) : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -153,7 +154,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                 ),
               ),
             SubmitButton(
-              key: const Key('submit-voucher'),
+              key: const Key(EWTestKeys.submitVoucher),
               onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri!, cid!, recipient) : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

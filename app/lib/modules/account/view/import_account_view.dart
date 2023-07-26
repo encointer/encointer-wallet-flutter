@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -58,17 +59,17 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         Text(
           l10n.detailsEnter,
           textAlign: TextAlign.center,
-          style: context.textTheme.displayMedium,
+          style: context.headlineSmall,
         ),
         const SizedBox(height: 10),
         Text(
           l10n.personalKeyEnter,
           textAlign: TextAlign.center,
-          style: context.textTheme.displayMedium!.copyWith(color: Colors.black),
+          style: context.headlineSmall.copyWith(color: Colors.black),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(
-          key: const Key('create-account-name'),
+          key: const Key(EWTestKeys.createAccountName),
           hintText: l10n.createHint,
           labelText: context.l10n.accountName,
           controller: _nameCtrl,
@@ -77,7 +78,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
           },
         ),
         TextFormField(
-          key: const Key('account-source'),
+          key: const Key(EWTestKeys.accountSource),
           decoration: InputDecoration(
             hintText: l10n.mnemonic,
             labelText: l10n.personalKey,
@@ -102,7 +103,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
       columnChildren: [
         const SizedBox(height: 10),
         PrimaryButton(
-          key: const Key('account-import-next'),
+          key: const Key(EWTestKeys.accountImportNext),
           onPressed: () async {
             final newAccount = context.read<NewAccountStore>();
             if (_formKey.currentState!.validate() && !newAccount.loading) {

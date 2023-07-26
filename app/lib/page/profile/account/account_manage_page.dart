@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -70,7 +71,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
-    final h3 = context.textTheme.displaySmall!;
+    final h3 = context.titleLarge.copyWith(color: context.colorScheme.primary);
 
     final community = _appStore.encointer.communityStores![cidFmt]!;
 
@@ -125,7 +126,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final h3 = context.textTheme.displaySmall;
+    final h3 = context.titleLarge.copyWith(fontSize: 19);
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
     final appSettingsStore = context.watch<AppSettings>();
@@ -141,13 +142,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
       builder: (_) => Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            key: const Key('close-account-manage'),
+            key: const Key(EWTestKeys.closeAccountManage),
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.close),
           ),
           title: _isEditingText
               ? TextFormField(
-                  key: const Key('account-name-field'),
+                  key: const Key(EWTestKeys.accountNameField),
                   controller: _nameCtrl,
                   validator: (v) => InputValidation.validateAccountName(context, v, _appStore.account.accountList),
                 )
@@ -155,7 +156,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
           actions: <Widget>[
             if (!_isEditingText)
               IconButton(
-                key: const Key('account-name-edit'),
+                key: const Key(EWTestKeys.accountNameEdit),
                 icon: const Icon(Iconsax.edit),
                 onPressed: () {
                   setState(() {
@@ -165,7 +166,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               )
             else
               IconButton(
-                key: const Key('account-name-edit-check'),
+                key: const Key(EWTestKeys.accountNameEditCheck),
                 icon: const Icon(Icons.check),
                 onPressed: () async {
                   await _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
@@ -193,7 +194,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         ),
                       Text(
                         addressSS58,
-                        key: const Key('account-public-key'),
+                        key: const Key(EWTestKeys.accountPublicKey),
                         // Text only read `addressSS58` for integration test
                         style: const TextStyle(fontSize: 2, color: Colors.transparent),
                       ),
@@ -214,7 +215,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         ],
                       ),
                       Text(l10n.communities,
-                          style: h3!.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
+                          style: h3.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
                     ],
                   ),
                 ),
@@ -255,7 +256,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   child: Row(
                     children: [
                       ElevatedButton(
-                        key: const Key('go-to-account-share'),
+                        key: const Key(EWTestKeys.goToAccountShare),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(16), // make splash animation as high as the container
                           backgroundColor: Colors.transparent,
@@ -267,7 +268,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           children: [
                             const Icon(Iconsax.share),
                             const SizedBox(width: 12),
-                            Text(l10n.accountShare, style: h3.copyWith(color: Colors.white)),
+                            Text(
+                              l10n.accountShare,
+                              style: context.titleLarge.copyWith(color: context.colorScheme.background, fontSize: 19),
+                            ),
                           ],
                         ),
                         onPressed: () =>
@@ -278,7 +282,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           offset: const Offset(-10, -150),
                           icon: const Icon(
                             Iconsax.more,
-                            key: Key('popup-menu-account-trash-export'),
+                            key: Key(EWTestKeys.popupMenuAccountTrashExport),
                             color: Colors.white,
                           ),
                           color: context.colorScheme.background,

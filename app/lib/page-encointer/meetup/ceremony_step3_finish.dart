@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -44,14 +45,14 @@ class CeremonyStep3Finish extends StatelessWidget {
                     Center(
                       child: Text(
                         l10n.thankYou,
-                        style: context.textTheme.displayMedium,
+                        style: context.titleLarge,
                       ),
                     ),
                     Center(
                       child: Text(
                         l10n.weHopeToSeeYouAtTheNextGathering,
                         textAlign: TextAlign.center,
-                        style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.5),
+                        style: context.headlineSmall.copyWith(color: AppColors.encointerBlack, height: 1.5),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -80,7 +81,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                   if (connectivityStore.isConnectedToNetwork) {
                     return SubmitButton(
                       // todo: this will be removed because we do it automatically
-                      key: const Key('submit-claims'),
+                      key: const Key(EWTestKeys.submitClaims),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -102,7 +103,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                               const SizedBox(width: 12, height: 60),
                               Text(
                                 l10n.finish,
-                                style: Theme.of(context).textTheme.displaySmall,
+                                style: context.bodySmall,
                               ),
                             ],
                           ),
@@ -113,7 +114,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                         const SizedBox(height: 12),
                         Text(
                           l10n.offlineMessage,
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: context.bodySmall,
                           textAlign: TextAlign.center,
                         ),
                       ],

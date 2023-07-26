@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -57,7 +58,7 @@ class _ProfileState extends State<Profile> {
             const SizedBox(height: 6),
             Text(
               Fmt.accountName(context, account),
-              style: context.textTheme.headlineMedium,
+              style: context.bodyMedium.copyWith(color: context.colorScheme.secondary),
             ),
             // This sizedBox is here to define a distance between the accounts
             const SizedBox(width: 100),
@@ -78,7 +79,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final h3Grey = context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey);
+    final h3Grey = context.titleLarge.copyWith(color: AppColors.encointerGrey, fontSize: 19);
     final store = context.watch<AppStore>();
     final loginStore = context.watch<LoginStore>();
     final appSettingsStore = context.watch<AppSettings>();
@@ -94,7 +95,7 @@ class _ProfileState extends State<Profile> {
       body: Observer(
         builder: (_) {
           return ListView(
-            key: const Key('profile-list-view'),
+            key: const Key(EWTestKeys.profileListView),
             children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(16),
@@ -103,7 +104,7 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     Text(
                       l10n.accounts,
-                      style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+                      style: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
                     ),
                     IconButton(
                       icon: const Icon(Iconsax.add_square),
@@ -121,10 +122,10 @@ class _ProfileState extends State<Profile> {
                       begin: Alignment.centerRight,
                       end: Alignment.centerLeft,
                       colors: [
-                        context.theme.scaffoldBackgroundColor.withOpacity(0),
-                        context.theme.scaffoldBackgroundColor,
-                        context.theme.scaffoldBackgroundColor,
-                        context.theme.scaffoldBackgroundColor.withOpacity(0),
+                        context.colorScheme.background.withOpacity(0),
+                        context.colorScheme.background,
+                        context.colorScheme.background,
+                        context.colorScheme.background.withOpacity(0),
                       ],
                       stops: const [0.0, 0.1, 0.9, 1.0],
                     ).createShader(bounds);
@@ -138,13 +139,13 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text(
                   l10n.changeYourPin,
-                  style: context.textTheme.displaySmall,
+                  style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
               ),
               ListTile(
-                key: const Key('remove-all-accounts'),
+                key: const Key(EWTestKeys.removeAllAccounts),
                 title: Text(l10n.accountsDeleteAll, style: h3Grey),
                 onTap: () {
                   LoginDialog.verifyPinOrBioAuth(
@@ -167,12 +168,13 @@ class _ProfileState extends State<Profile> {
                       ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
                       : Text(l10n.fetchingReputations)),
               ListTile(
-                title: Text(l10n.about, style: context.textTheme.displaySmall),
+                title: Text(l10n.about,
+                    style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19)),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
-                key: const Key('settings-language'),
+                key: const Key(EWTestKeys.settingsLanguage),
                 title: Text(l10n.settingLang, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, LangPage.route),
               ),
@@ -190,7 +192,7 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text(l10n.developer, style: h3Grey),
                 trailing: Checkbox(
-                  key: const Key('dev-mode'),
+                  key: const Key(EWTestKeys.devMode),
                   value: appSettingsStore.developerMode,
                   onChanged: (v) => context.read<AppSettings>().toggleDeveloperMode(),
                 ),
@@ -201,11 +203,11 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     ListTile(
                       title: InkWell(
-                        key: const Key('choose-network'),
+                        key: const Key(EWTestKeys.chooseNetwork),
                         child: Observer(
                           builder: (_) => Text(
                             'Change network (current: ${store.settings.endpoint.info})', // for devs only
-                            style: context.textTheme.headlineMedium,
+                            style: context.titleMedium.copyWith(color: context.colorScheme.primary),
                           ),
                         ),
                         onTap: () => Navigator.of(context).pushNamed(NetworkSelectPage.route),
@@ -230,7 +232,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: SubmitButton(
-                        key: const Key('next-phase-button'),
+                        key: const Key(EWTestKeys.nextPhaseButton),
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

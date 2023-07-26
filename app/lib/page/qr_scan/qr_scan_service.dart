@@ -81,7 +81,18 @@ void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext,
 }
 
 /// Handles the `InvoiceQrCode` scan based on where it was scanned.
-void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
+Future<void> handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) async {
+  final knownAddresses = context.read<AppStore>().settings.knownAccounts.map((e) => e.address).toList();
+  if (!knownAddresses.contains(qrCode.data.account)) {
+    final contactData = {
+      'address': qrCode.data.account,
+      'name': qrCode.data.label,
+      'memo': '',
+      'observation': false,
+      'pubKey': Fmt.ss58Decode(qrCode.data.account).pubKey
+    };
+    await context.read<AppStore>().settings.addContact(contactData);
+  }
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // go to transfer page and auto-fill data

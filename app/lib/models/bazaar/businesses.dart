@@ -1,17 +1,28 @@
-import 'package:encointer_wallet/page-encointer/new_bazaar/widgets/dropdown_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
 
 part 'businesses.g.dart';
 
 @JsonSerializable()
 class Businesses {
-  const Businesses({
+  Businesses({
     required this.name,
     required this.description,
     required this.category,
-    required this.photo,
+    required this.address,
+    required this.longitude,
+    required this.latitude,
+    required this.openingHours,
+    this.logo,
+    this.photos,
+    this.photo,
+    this.telephone,
+    this.email,
     this.status,
+    this.controller,
   });
   factory Businesses.fromJson(Map<String, dynamic> json) => _$BusinessesFromJson(json);
   Map<String, dynamic> toJson() => _$BusinessesToJson(this);
@@ -19,13 +30,23 @@ class Businesses {
   final String name;
   final String description;
   final Category category;
-  final String photo;
+  final String? photo;
+  final String address;
+  final String? telephone;
+  final String? email;
+  final String longitude;
+  final String latitude;
+  final String openingHours;
+  String? photos;
+  String? controller;
+  @ImageHashToLinkOrNullConverter()
+  String? logo;
   final Status? status;
   Color get statusColor {
     switch (status) {
       case Status.highlight:
         return const Color(0xFFE8FBFF);
-      case Status.neuBeiLeu:
+      case Status.recently:
         return Colors.lightGreen.shade100;
       // ignore: no_default_cases
       default:
@@ -34,11 +55,23 @@ class Businesses {
   }
 }
 
+class ImageHashToLinkOrNullConverter implements JsonConverter<String?, String?> {
+  const ImageHashToLinkOrNullConverter();
+
+  @override
+  String? fromJson(String? value) {
+    return '$infuraIpfsUrl/$value';
+  }
+
+  @override
+  String? toJson(String? val) => val;
+}
+
 enum Status {
   @JsonValue('highlight')
   highlight('Highlight', Color(0xFF00A3FF)),
-  @JsonValue('neu_bei_leu')
-  neuBeiLeu('Neu bei Leu', Color(0xFF00BA77));
+  @JsonValue('new')
+  recently('New', Color(0xFF00BA77));
 
   const Status(
     this.name,
@@ -55,39 +88,49 @@ enum Status {
 const businessesMockData = {
   'businesses': [
     {
-      'name': 'Yoga-Kurse mit Hatha Lisa',
-      'description': 'Nutze deine Leu, um deinem Körper und Geist etwas Gutes zu tun. ...',
-      'category': 'body_soul',
-      'photo': 'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha-lisa.png?raw=true',
-      'status': 'highlight'
+      'name': 'HIGHLIGHTED',
+      'description': 'wir offerieren kühles Bier',
+      'category': 'food',
+      'photo': null,
+      'address': 'Technoparkstrasse 1, 8005 Zürich',
+      'telephone': null,
+      'email': null,
+      'longitude': '8.515377938747404',
+      'latitude': '47.389401263868514',
+      'openingHours': 'Mon-Fri 8h-18h',
+      'photos': 'QmaQfq6Zr2yCMkSMe8VjSxoYd89hyzcJjeE8jTUG3uXpBG',
+      'logo': 'QmcULG6AN5wwMfuwtpsMcjQmFwwUnSHsvSEUFLrCoWMpWh',
+      'status': 'highlight',
     },
     {
-      'name': 'Hardi – Kafi am Tag, Kultur am Abend und zwischen ...',
-      'description': 'Herzhaft unkompliziert empfängt das Hardi seine Gäste im ...',
-      'category': 'food_beverage_store',
-      'photo': 'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha-lisa-02.png?raw=true',
-      'status': 'highlight'
-    },
-    {
-      'name': 'KAOZ',
-      'description': 'Wir sind KAOZ. Das heisst: kreativ, authentisch, optimistisch und ...',
+      'name': 'NEW',
+      'description': 'wir offerieren kühles Bier',
       'category': 'fashion_clothing',
-      'photo': 'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha-lisa-02%20(1).png?raw=true'
+      'photo': null,
+      'address': 'Technoparkstrasse 1, 8005 Zürich',
+      'telephone': null,
+      'email': null,
+      'longitude': '8.515377938747404',
+      'latitude': '47.389401263868514',
+      'openingHours': 'Mon-Fri 8h-18h',
+      'photos': 'QmaQfq6Zr2yCMkSMe8VjSxoYd89hyzcJjeE8jTUG3uXpBG',
+      'logo': 'QmcULG6AN5wwMfuwtpsMcjQmFwwUnSHsvSEUFLrCoWMpWh',
+      'status': 'new',
     },
     {
-      'name': 'GRRRR',
-      'description': 'Papierware, Zines, Bücher, Zeichnungen aus Züri und anders...',
-      'category': 'art_music',
-      'photo':
-          'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/hatha-lisa-02%20(1)%203.png?raw=true',
-      'status': 'neu_bei_leu'
-    },
-    {
-      'name': 'Sørenbrød',
-      'description': 'Der Künstler Søren Berner (geb. 1977 in Dänemark) begann 1999, als er ...',
+      'name': 'NORMAL',
+      'description': 'wir offerieren kühles Bier',
       'category': 'food_beverage_store',
-      'photo': 'https://github.com/SourbaevaJanaraJ/lock_screen/blob/master/assets/sorenbrod.png?raw=true',
-      'status': 'neu_bei_leu'
+      'photo': null,
+      'address': 'Technoparkstrasse 1, 8005 Zürich',
+      'telephone': null,
+      'email': null,
+      'longitude': '8.515377938747404',
+      'latitude': '47.389401263868514',
+      'openingHours': 'Mon-Fri 8h-18h',
+      'photos': 'QmaQfq6Zr2yCMkSMe8VjSxoYd89hyzcJjeE8jTUG3uXpBG',
+      'logo': 'QmcULG6AN5wwMfuwtpsMcjQmFwwUnSHsvSEUFLrCoWMpWh',
+      'status': null,
     }
   ]
 };

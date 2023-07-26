@@ -1,4 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
@@ -59,7 +60,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
               Text(account.name),
               Text(
                 Fmt.address(address)!,
-                style: TextStyle(fontSize: 12, color: context.theme.unselectedWidgetColor),
+                style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
               ),
             ],
           )
@@ -104,7 +105,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(
-        key: const Key('transfer-select-account'),
+        key: const Key(EWTestKeys.transferSelectAccount),
         popupProps: PopupProps.modalBottomSheet(
           isFilterOnline: true,
           showSearchBox: true,
@@ -131,7 +132,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
             labelText: widget.label,
-            labelStyle: context.textTheme.headlineMedium,
+            labelStyle: context.bodyLarge.copyWith(color: context.colorScheme.primary),
             contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
             border: const UnderlineInputBorder(
               borderSide: BorderSide(width: 0, style: BorderStyle.none),
@@ -141,7 +142,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? l10n.errorUserNameIsRequired : null,
-        items: widget.store.account.accountListAll,
+        items: widget.store.settings.knownAccounts,
         filterFn: filterByAddressOrName,
         onChanged: (AccountData? data) {
           if (widget.onChanged != null && data != null) {

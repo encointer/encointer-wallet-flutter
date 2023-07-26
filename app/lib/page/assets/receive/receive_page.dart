@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -128,7 +129,7 @@ class _ReceivePageState extends State<ReceivePage> {
             leading: Container(),
             actions: [
               IconButton(
-                key: const Key('close-receive-page'),
+                key: const Key(EWTestKeys.closeReceivePage),
                 icon: const Icon(Icons.close),
                 onPressed: () {
                   Navigator.pop(context);
@@ -142,23 +143,14 @@ class _ReceivePageState extends State<ReceivePage> {
                 Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 48),
-                      child: Text(
-                        l10n.qrScanHint,
-                        style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerBlack),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Padding(
                       padding: const EdgeInsets.all(30),
                       child: EncointerTextFormField(
-                        labelText: l10n.invoiceAmount,
-                        textStyle: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+                        labelText: l10n.enterAmount,
+                        textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                        textFormFieldKey: const Key('invoice-amount-input'),
+                        textFormFieldKey: const Key(EWTestKeys.invoiceAmountInput),
                         onChanged: (value) {
                           setState(() {
                             final trimmed = _amountController.text.trim();
@@ -180,7 +172,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 ),
                 Text(
                   '${l10n.receiverAccount} ${store.account.currentAccount.name}',
-                  style: context.textTheme.displaySmall!.copyWith(color: AppColors.encointerGrey),
+                  style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
