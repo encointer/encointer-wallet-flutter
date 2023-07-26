@@ -552,7 +552,13 @@ abstract class _EncointerStore with Store {
   @computed
   bool get showStartCeremonyButton {
     final assigned = communityAccount?.isAssigned ?? false;
-    return currentPhase == CeremonyPhase.Attesting && assigned;
+    return currentPhase == CeremonyPhase.Attesting && !meetupCompleted && assigned;
+  }
+
+  @computed
+  bool get showReStartCeremonyButton {
+    final assigned = communityAccount?.isAssigned ?? false;
+    return currentPhase == CeremonyPhase.Attesting && meetupCompleted && assigned;
   }
 
   @computed

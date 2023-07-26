@@ -78,6 +78,21 @@ class CeremonyBox extends StatelessWidget {
                           await submitRegisterParticipant(context, store, api);
                         }),
                   ),
+                if (store.encointer.showReStartCeremonyButton)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: TextButton(
+                      key: const Key(EWTestKeys.startMeetup),
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (context) => CeremonyStep1Count(store, api),
+                        ),
+                      ),
+                      child: Text(context.l10n.restartGathering,
+                          style: context.bodyLarge
+                              .copyWith(color: AppColors.encointerBlack, decoration: TextDecoration.underline)),
+                    ),
+                  ),
                 if (store.encointer.showStartCeremonyButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
