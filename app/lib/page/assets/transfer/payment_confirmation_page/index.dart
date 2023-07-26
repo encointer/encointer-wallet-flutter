@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/common/components/animation/animated_check.dart';
@@ -101,7 +102,16 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
             if (!_transferState.isFinishedOrFailed())
               PrimaryButton(
                 key: const Key(EWTestKeys.makeTransferSend),
-                onPressed: () => _submit(context, cid, recipientAddress, amount),
+                onPressed: () async {
+                  if (amount >= 0.5) {
+                    await LoginDialog.verifyPinOrBioAuth(
+                      context,
+                      onSuccess: (String password) async => _submit(context, cid, recipientAddress, amount),
+                    );
+                  } else {
+                    await _submit(context, cid, recipientAddress, amount);
+                  }
+                },
                 child: SizedBox(
                   height: 24,
                   child: !_transferState.isSubmitting()
