@@ -13,7 +13,6 @@ import { beforeAll, describe, expect, it, jest } from '@jest/globals';
 import { parseI64F64, communityIdentifierFromString } from '@encointer/util';
 import { testSetup } from '../testUtils/testSetup';
 import { Keyring } from '@polkadot/api';
-import.meta.jest.useFakeTimers();
 
 
 describe('encointer', () => {
