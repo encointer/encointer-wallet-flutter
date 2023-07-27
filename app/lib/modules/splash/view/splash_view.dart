@@ -30,7 +30,7 @@ class SplashView extends StatelessWidget {
     store.setApiReady(true);
 
     final loginStore = context.read<LoginStore>();
-    store.settings.cachedPin = await loginStore.getPin();
+    // store.settings.cachedPin = await loginStore.getPin();
     if (loginStore.getBiometricAuthState == null) {
       final isDeviceSupported = await loginStore.isDeviceSupported();
       if (!isDeviceSupported) await loginStore.setBiometricAuthState(BiometricAuthState.deviceNotSupported);
