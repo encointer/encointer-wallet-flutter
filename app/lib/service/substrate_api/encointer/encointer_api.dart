@@ -331,12 +331,12 @@ class EncointerApi {
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
   ///
   /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::balance(cid, accountId).
-  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid) async {
+  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid, String pin) async {
     Log.d('Getting encointer balance for $pubKeyOrAddress and ${cid.toFmtString()}', 'EncointerApi');
 
     final balanceEntry = store.settings.endpointIsNoTee
         ? await _noTee.balance(cid, pubKeyOrAddress)
-        : await _teeProxy.balance(cid, pubKeyOrAddress, store.settings.cachedPin);
+        : await _teeProxy.balance(cid, pubKeyOrAddress, pin);
 
     Log.d('balanceEntryJson: $balanceEntry', 'EncointerApi');
 
@@ -459,7 +459,7 @@ class EncointerApi {
   /// Gets a proof of attendance for the oldest attended ceremony, if available.
   ///
   /// returns null, if none available.
-  Future<ProofOfAttendance?> getProofOfAttendance() async {
+  Future<ProofOfAttendance?> getProofOfAttendance(String pin) async {
     final pubKey = store.account.currentAccountPubKey;
     final cIndex = store.encointer.account?.ceremonyIndexForNextProofOfAttendance;
 
@@ -468,7 +468,6 @@ class EncointerApi {
     }
 
     final cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
-    final pin = store.settings.cachedPin;
     Log.d('getProofOfAttendance: cachedPin: $pin', 'EncointerApi');
     final proof = await jsApi
         .evalJavascript<Map<String, dynamic>>(

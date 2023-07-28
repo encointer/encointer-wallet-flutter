@@ -44,14 +44,14 @@ abstract class _NewAccountStoreBase with Store {
   @action
   Future<NewAccountResult> generateAccount(BuildContext context, Api webApi) async {
     final pin = password ?? context.read<LoginStore>().cachedPin;
-    if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
+    if (pin == null) return const NewAccountResult(NewAccountResultType.emptyPassword);
     return _generateAccount(context, webApi, pin);
   }
 
   @action
   Future<NewAccountResult> importAccount(BuildContext context, Api webApi) async {
     final pin = password ?? context.read<LoginStore>().cachedPin;
-    if (pin.isEmpty) return const NewAccountResult(NewAccountResultType.emptyPassword);
+    if (pin == null) return const NewAccountResult(NewAccountResultType.emptyPassword);
     return _importAccount(context, webApi, pin);
   }
 

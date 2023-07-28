@@ -102,16 +102,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
             if (!_transferState.isFinishedOrFailed())
               PrimaryButton(
                 key: const Key(EWTestKeys.makeTransferSend),
-                onPressed: () async {
-                  if (amount >= 0.5) {
-                    await LoginDialog.verifyPinOrBioAuth(
-                      context,
-                      onSuccess: (String password) async => _submit(context, cid, recipientAddress, amount),
-                    );
-                  } else {
-                    await _submit(context, cid, recipientAddress, amount);
-                  }
-                },
+                onPressed: () async => _submit(context, cid, recipientAddress, amount),
                 child: SizedBox(
                   height: 24,
                   child: !_transferState.isSubmitting()
@@ -145,18 +136,25 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       _transferState = TransferState.submitting;
     });
 
-    await submitTx(
-      context,
-      context.read<AppStore>(),
-      widget.api,
-      params,
-      onFinish: onFinish,
-      onError: onError,
-    );
+    final pin = await context.read<LoginStore>().getPin(context);
+    if (pin != null) {
+      await submitTx(
+        context,
+        context.read<AppStore>(),
+        widget.api,
+        params,
+        onFinish: onFinish,
+        onError: onError,
+      );
 
-    Log.d('TransferState after callback: $_transferState', 'PaymentConfirmationPage');
-    // trigger rebuild after state update in callback
-    setState(() {});
+      Log.d('TransferState after callback: $_transferState', 'PaymentConfirmationPage');
+      // trigger rebuild after state update in callback
+      setState(() {});
+    } else {
+      setState(() {
+        _transferState = TransferState.notStarted;
+      });
+    }
   }
 
   void onFinish(BuildContext txPageContext, Map res) {

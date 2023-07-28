@@ -30,7 +30,7 @@ Future<void> submitToJS(
   bool showStatusSnackBar, {
   required Map<String, dynamic> txParams,
   void Function(dynamic res)? onError,
-  String? password,
+  required String password,
   BigInt? tip,
 }) async {
   final l10n = context.l10n;

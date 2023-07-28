@@ -16,7 +16,7 @@ abstract class _LoginStoreBase with Store {
 
   final LoginService loginService;
 
-  String cachedPin = '';
+  String? cachedPin;
 
   @observable
   BiometricAuthState? biometricAuthState;
@@ -24,17 +24,13 @@ abstract class _LoginStoreBase with Store {
   @observable
   bool loading = false;
 
-  FutureOr<String> getPin(BuildContext context) async {
-    if (cachedPin.isNotEmpty) return cachedPin;
+  FutureOr<String?> getPin(BuildContext context) async {
+    if (cachedPin != null) return cachedPin!;
     await LoginDialog.verifyPinOrBioAuth(
       context,
-      onSuccess: (v) async {
-        cachedPin = await loginService.getPin() ?? '';
-      },
+      onSuccess: (v) async => cachedPin = await loginService.getPin(),
     );
     return cachedPin;
-    // if (cachedPin.isEmpty) cachedPin = await loginService.getPin() ?? '';
-    // return cachedPin;
   }
 
   Future<void> setPin(String pin) async {
@@ -43,7 +39,7 @@ abstract class _LoginStoreBase with Store {
   }
 
   Future<void> clearPin() async {
-    cachedPin = '';
+    cachedPin = null;
     await loginService.clearPin();
   }
 

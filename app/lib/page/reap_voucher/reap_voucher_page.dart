@@ -9,6 +9,7 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/modules/login/logic/login_store.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -57,17 +58,20 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     setState(() {});
 
-    final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-    if (context.read<AppStore>().chain.latestHeaderNumber != null) {
-      _voucherBalance = voucherBalanceEntry.applyDemurrage(
-        context.read<AppStore>().chain.latestHeaderNumber!,
-        context.read<AppStore>().encointer.community!.demurrage!,
-      );
+    final pin = await context.read<LoginStore>().getPin(context);
+    if (pin != null) {
+      final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid, pin);
+      if (context.read<AppStore>().chain.latestHeaderNumber != null) {
+        _voucherBalance = voucherBalanceEntry.applyDemurrage(
+          context.read<AppStore>().chain.latestHeaderNumber!,
+          context.read<AppStore>().encointer.community!.demurrage!,
+        );
+      }
+
+      _isReady = true;
+
+      setState(() {});
     }
-
-    _isReady = true;
-
-    setState(() {});
   }
 
   @override
