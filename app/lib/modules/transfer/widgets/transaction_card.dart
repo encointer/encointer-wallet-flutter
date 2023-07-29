@@ -51,15 +51,19 @@ class TransactionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      transaction.isIssuance
-                          ? l10n.communityWithName(
-                              Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name)
-                          : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
-                      style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.ellipsis),
+                    transaction.isIssuance
+                        ? l10n
+                            .communityWithName(Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name)
+                        : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
+                    style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   Row(
                     children: [
-                      Text(transaction.isIssuance ? l10n.incomeIssuance : Fmt.address(transaction.counterParty) ?? ''),
+                      Text(
+                        transaction.isIssuance ? l10n.incomeIssuance : Fmt.address(transaction.counterParty) ?? '',
+                        style: context.bodySmall,
+                      ),
                       IconButton(
                         onPressed: () => UI.copyAndNotify(context, transaction.counterParty),
                         icon: const Icon(Iconsax.copy, size: 14),
@@ -84,9 +88,8 @@ class TransactionCard extends StatelessWidget {
           TextSpan(
             text: '${appStore.encointer.community?.symbol}',
             style: context.titleMedium.copyWith(
-              color: transaction.type == TransactionType.incoming
-                  ? context.colorScheme.primary
-                  : const Color(0xffD76D89),
+              color:
+                  transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
             ),
           ),
           const WidgetSpan(child: SizedBox(width: 5)),
@@ -94,9 +97,8 @@ class TransactionCard extends StatelessWidget {
             text: '${transaction.amount}',
             style: context.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: transaction.type == TransactionType.incoming
-                  ? context.colorScheme.primary
-                  : const Color(0xffD76D89),
+              color:
+                  transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
             ),
           ),
         ],
@@ -108,8 +110,7 @@ class TransactionCard extends StatelessWidget {
 Widget incomingIcon(BuildContext context) {
   return Icon(
     Iconsax.receive_square_2,
-    color:
-    context.colorScheme.primary,
+    color: context.colorScheme.primary,
     size: 25,
   );
 }
@@ -117,8 +118,7 @@ Widget incomingIcon(BuildContext context) {
 Widget outgoingIcon() {
   return const Icon(
     Iconsax.send_sqaure_2,
-    color:
-    Color(0xffD76D89),
+    color: Color(0xffD76D89),
     size: 25,
   );
 }
