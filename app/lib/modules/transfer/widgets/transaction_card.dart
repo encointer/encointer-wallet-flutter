@@ -66,11 +66,9 @@ class TransactionCard extends StatelessWidget {
                     children: [
                       Text(transaction.isIssuance ? l10n.incomeIssuance : Fmt.address(transaction.counterParty) ?? ''),
                       IconButton(
-                          onPressed: () => UI.copyAndNotify(context, transaction.counterParty),
-                          icon: const Icon(
-                            Iconsax.copy,
-                            size: 14,
-                          ))
+                        onPressed: () => UI.copyAndNotify(context, transaction.counterParty),
+                        icon: const Icon(Iconsax.copy, size: 14),
+                      ),
                     ],
                   ),
                 ],
@@ -79,34 +77,38 @@ class TransactionCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: '${appStore.encointer.community?.symbol}',
-                        style: context.titleMedium.copyWith(
-                          color: transaction.type == TransactionType.incoming
-                              ? context.colorScheme.primary
-                              : const Color(0xffD76D89),
-                        ),
-                      ),
-                      const WidgetSpan(child: SizedBox(width: 5)),
-                      TextSpan(
-                        text: '${transaction.amount} ',
-                        style: context.titleMedium.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: transaction.type == TransactionType.incoming
-                              ? context.colorScheme.primary
-                              : const Color(0xffD76D89),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _transferAmount(context, appStore)
               ],
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _transferAmount(BuildContext context, AppStore appStore) {
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: '${appStore.encointer.community?.symbol}',
+            style: context.titleMedium.copyWith(
+              color: transaction.type == TransactionType.incoming
+                  ? context.colorScheme.primary
+                  : const Color(0xffD76D89),
+            ),
+          ),
+          const WidgetSpan(child: SizedBox(width: 5)),
+          TextSpan(
+            text: '${transaction.amount} ',
+            style: context.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+              color: transaction.type == TransactionType.incoming
+                  ? context.colorScheme.primary
+                  : const Color(0xffD76D89),
+            ),
+          ),
+        ],
       ),
     );
   }
