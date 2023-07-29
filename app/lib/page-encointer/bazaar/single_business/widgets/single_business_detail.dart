@@ -58,13 +58,10 @@ class SingleBusinessDetail extends StatelessWidget {
                         Row(
                           children: [
                             InkWell(
-                              onTap: context.read<SingleBusinessStore>().toggleOwnLikes,
-                              child: Assets.avatars.participant00.svg(
-                                  height: 19,
-                                  colorFilter: singleBusinessStore.isLikedPersonally
-                                      ? null
-                                      : const ColorFilter.mode(Colors.white, BlendMode.color)),
-                            ),
+                                onTap: context.read<SingleBusinessStore>().toggleOwnLikes,
+                                child: singleBusinessStore.isLikedPersonally
+                                    ? Assets.images.assets.lionIconColored.image()
+                                    : Assets.images.assets.lionIconUncolored.image()),
                             const SizedBox(width: 10),
                             Text(
                               l10n.like,
