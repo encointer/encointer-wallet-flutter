@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -141,13 +142,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
       builder: (_) => Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            key: const Key('close-account-manage'),
+            key: const Key(EWTestKeys.closeAccountManage),
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.close),
           ),
           title: _isEditingText
               ? TextFormField(
-                  key: const Key('account-name-field'),
+                  key: const Key(EWTestKeys.accountNameField),
                   controller: _nameCtrl,
                   validator: (v) => InputValidation.validateAccountName(context, v, _appStore.account.accountList),
                 )
@@ -155,7 +156,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
           actions: <Widget>[
             if (!_isEditingText)
               IconButton(
-                key: const Key('account-name-edit'),
+                key: const Key(EWTestKeys.accountNameEdit),
                 icon: const Icon(Iconsax.edit),
                 onPressed: () {
                   setState(() {
@@ -165,7 +166,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               )
             else
               IconButton(
-                key: const Key('account-name-edit-check'),
+                key: const Key(EWTestKeys.accountNameEditCheck),
                 icon: const Icon(Icons.check),
                 onPressed: () async {
                   await _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
@@ -193,7 +194,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         ),
                       Text(
                         addressSS58,
-                        key: const Key('account-public-key'),
+                        key: const Key(EWTestKeys.accountPublicKey),
                         // Text only read `addressSS58` for integration test
                         style: const TextStyle(fontSize: 2, color: Colors.transparent),
                       ),
@@ -255,7 +256,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   child: Row(
                     children: [
                       ElevatedButton(
-                        key: const Key('go-to-account-share'),
+                        key: const Key(EWTestKeys.goToAccountShare),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(16), // make splash animation as high as the container
                           backgroundColor: Colors.transparent,
@@ -281,7 +282,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           offset: const Offset(-10, -150),
                           icon: const Icon(
                             Iconsax.more,
-                            key: Key('popup-menu-account-trash-export'),
+                            key: Key(EWTestKeys.popupMenuAccountTrashExport),
                             color: Colors.white,
                           ),
                           color: context.colorScheme.background,

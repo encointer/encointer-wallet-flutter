@@ -24,7 +24,6 @@ import 'package:encointer_wallet/page/profile/account/export_account_page.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
-import 'package:encointer_wallet/page/profile/contacts/contact_list_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
@@ -126,11 +125,6 @@ class AppRoute {
       case ContactsPage.route:
         return CupertinoPageRoute(
           builder: (_) => const ContactsPage(),
-          settings: settings,
-        );
-      case ContactListPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const ContactListPage(),
           settings: settings,
         );
       case ContactPage.route:

@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -84,7 +85,7 @@ class CeremonyStep2Scan extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: ElevatedButton(
-              key: const Key('close-meetup'),
+              key: const Key(EWTestKeys.closeMeetup),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -130,7 +131,7 @@ class CeremonyStep2Scan extends StatelessWidget {
               return SizedBox(
                 height: 40,
                 child: ElevatedButton(
-                  key: const Key('attest-all-participants-dev'),
+                  key: const Key(EWTestKeys.attestAllParticipantsDev),
                   child: const Text('DEV ONLY: attest all participants'),
                   onPressed: () => attestAllParticipants(store, store.account.currentAddress),
                 ),

@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -128,7 +129,7 @@ class _ReceivePageState extends State<ReceivePage> {
             leading: Container(),
             actions: [
               IconButton(
-                key: const Key('close-receive-page'),
+                key: const Key(EWTestKeys.closeReceivePage),
                 icon: const Icon(Icons.close),
                 onPressed: () {
                   Navigator.pop(context);
@@ -149,7 +150,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         inputFormatters: [UI.decimalInputFormatter()],
                         controller: _amountController,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                        textFormFieldKey: const Key('invoice-amount-input'),
+                        textFormFieldKey: const Key(EWTestKeys.invoiceAmountInput),
                         onChanged: (value) {
                           setState(() {
                             final trimmed = _amountController.text.trim();

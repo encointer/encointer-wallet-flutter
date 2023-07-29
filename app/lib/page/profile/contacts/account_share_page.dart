@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
-            key: const Key('close-share-page'),
+            key: const Key(EWTestKeys.closeSharePage),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )

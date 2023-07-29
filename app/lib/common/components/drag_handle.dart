@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
@@ -11,7 +12,7 @@ class DragHandle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          key: const Key('drag-handle-panel'),
+          key: const Key(EWTestKeys.dragHandlePanel),
           width: 40,
           height: 4,
           decoration: BoxDecoration(
