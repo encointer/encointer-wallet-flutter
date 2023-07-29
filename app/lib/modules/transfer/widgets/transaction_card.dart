@@ -95,7 +95,7 @@ class TransactionCard extends StatelessWidget {
           ),
           const WidgetSpan(child: SizedBox(width: 5)),
           TextSpan(
-            text: '${transaction.amount} ',
+            text: '${transaction.amount}',
             style: context.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: transaction.type == TransactionType.incoming
