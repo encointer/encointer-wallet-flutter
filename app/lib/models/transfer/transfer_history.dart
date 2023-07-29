@@ -89,7 +89,7 @@ class ShortenedDouble implements JsonConverter<double, num> {
     if (val is int) {
       return val.toDouble();
     } else {
-      return (val as double).shortenBigNumber(val, 2);
+      return (val as double).shortenBigNumber(val, 4);
     }
   }
 
