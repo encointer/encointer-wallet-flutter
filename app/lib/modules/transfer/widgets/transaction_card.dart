@@ -52,8 +52,9 @@ class TransactionCard extends StatelessWidget {
                 children: [
                   Text(
                     transaction.isIssuance
-                        ? l10n
-                            .communityWithName(Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name)
+                        ? l10n.communityWithName(
+                            Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name,
+                          )
                         : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
                     style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
@@ -99,8 +100,7 @@ Widget transferAmount(BuildContext context, AppStore appStore, Transaction trans
         TextSpan(
           text: '${appStore.encointer.community?.symbol}',
           style: context.titleMedium.copyWith(
-            color:
-            transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
+            color: transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
           ),
         ),
         const WidgetSpan(child: SizedBox(width: 5)),
@@ -108,8 +108,7 @@ Widget transferAmount(BuildContext context, AppStore appStore, Transaction trans
           text: '${transaction.amount}',
           style: context.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color:
-            transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
+            color: transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
           ),
         ),
       ],
