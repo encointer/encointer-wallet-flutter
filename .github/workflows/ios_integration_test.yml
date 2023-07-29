@@ -118,4 +118,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: main.js
-          path: cd app/js_service_encointer/dist/main.js
+          path: ./app/js_service_encointer/dist/main.js
