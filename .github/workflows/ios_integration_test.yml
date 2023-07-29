@@ -112,3 +112,10 @@ jobs:
         with:
           name: ${{ matrix.device }}
           path: ${{ env.ARTIFACT_PATH }}
+
+      - name: "Upload JS binary"
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: main.js
+          path: cd app/js_service_encointer/dist/main.js
