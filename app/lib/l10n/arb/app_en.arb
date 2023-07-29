@@ -266,6 +266,7 @@
     "reputation": "Reputation",
     "reputationHistory": "Reputation history",
     "reputationOverall": "Overall reputation",
+    "restartGathering": "Restart gathering",
     "retry": "Retry",
     "rewardsAlreadyIssuedErrorBody": "Another attendee has triggered the payout for this gathering. You should have received your income already.",
     "rewardsAlreadyIssuedErrorTitle": "Rewards already issued",
