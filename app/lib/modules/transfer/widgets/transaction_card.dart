@@ -28,7 +28,7 @@ class TransactionCard extends StatelessWidget {
       margin: const EdgeInsets.only(top: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: ListTile(
-        contentPadding: const EdgeInsets.fromLTRB(10, 15, 15, 10),
+        contentPadding: const EdgeInsets.fromLTRB(10, 15, 15, 0),
         isThreeLine: true,
         leading: AddressIcon(transaction.counterParty, tryGetPubKey(transaction), size: 55),
         title: Row(
