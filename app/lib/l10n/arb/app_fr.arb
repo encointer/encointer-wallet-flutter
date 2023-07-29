@@ -266,6 +266,7 @@
     "reputation": "Réputation",
     "reputationHistory": "Historique de réputation",
     "reputationOverall": "Réputation générale",
+    "restartGathering": "Redémarrer la rencontre",
     "retry": "Réessayer",
     "rewardsAlreadyIssuedErrorBody": "Un autre participant a déclenché le paiement pour cette rencontre. Tu devrais avoir déjà reçu ton revenu.",
     "rewardsAlreadyIssuedErrorTitle": "Revenu déjà versé",
