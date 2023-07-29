@@ -28,7 +28,7 @@ class TransactionCard extends StatelessWidget {
       margin: const EdgeInsets.only(top: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: ListTile(
-        contentPadding: const EdgeInsets.fromLTRB(10, 15, 15, 0),
+        contentPadding: const EdgeInsets.fromLTRB(10, 15, 15, 10),
         isThreeLine: true,
         leading: AddressIcon(transaction.counterParty, tryGetPubKey(transaction), size: 55),
         title: Row(
@@ -60,16 +60,9 @@ class TransactionCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text(
-                        transaction.isIssuance ? l10n.incomeIssuance : Fmt.address(transaction.counterParty) ?? '',
-                        style: context.bodySmall,
-                      ),
-                      IconButton(
-                        onPressed: () => UI.copyAndNotify(context, transaction.counterParty),
-                        icon: const Icon(Iconsax.copy, size: 14),
-                      ),
+                      tappableAddress(context, transaction),
                       const Spacer(),
-                      _transferAmount(context, appStore)
+                      transferAmount(context, appStore, transaction),
                     ],
                   ),
                 ],
@@ -80,31 +73,48 @@ class TransactionCard extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _transferAmount(BuildContext context, AppStore appStore) {
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: '${appStore.encointer.community?.symbol}',
-            style: context.titleMedium.copyWith(
-              color:
-                  transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
-            ),
+Widget tappableAddress(BuildContext context, Transaction transaction) {
+  final l10n = context.l10n;
+  return GestureDetector(
+    child: Row(
+      children: [
+        Text(
+          transaction.isIssuance ? l10n.incomeIssuance : Fmt.address(transaction.counterParty) ?? '',
+          style: context.bodySmall,
+        ),
+        const SizedBox(width: 3),
+        const Icon(Iconsax.copy, size: 14),
+      ],
+    ),
+    onTap: () => UI.copyAndNotify(context, transaction.counterParty),
+  );
+}
+
+Widget transferAmount(BuildContext context, AppStore appStore, Transaction transaction) {
+  return Text.rich(
+    TextSpan(
+      children: [
+        TextSpan(
+          text: '${appStore.encointer.community?.symbol}',
+          style: context.titleMedium.copyWith(
+            color:
+            transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
           ),
-          const WidgetSpan(child: SizedBox(width: 5)),
-          TextSpan(
-            text: '${transaction.amount}',
-            style: context.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-              color:
-                  transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
-            ),
+        ),
+        const WidgetSpan(child: SizedBox(width: 5)),
+        TextSpan(
+          text: '${transaction.amount}',
+          style: context.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color:
+            transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
 }
 
 Widget incomingIcon(BuildContext context) {
