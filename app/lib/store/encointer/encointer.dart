@@ -556,7 +556,7 @@ abstract class _EncointerStore with Store {
   }
 
   @computed
-  bool get showReStartCeremonyButton {
+  bool get showRestartCeremonyButton {
     final assigned = communityAccount?.isAssigned ?? false;
     return currentPhase == CeremonyPhase.Attesting && meetupCompleted && assigned;
   }

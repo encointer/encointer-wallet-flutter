@@ -78,7 +78,7 @@ class CeremonyBox extends StatelessWidget {
                           await submitRegisterParticipant(context, store, api);
                         }),
                   ),
-                if (store.encointer.showReStartCeremonyButton)
+                if (store.encointer.showRestartCeremonyButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: TextButton(

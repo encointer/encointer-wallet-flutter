@@ -149,11 +149,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   bool get showStartCeremonyButton => (_$showStartCeremonyButtonComputed ??=
           Computed<bool>(() => super.showStartCeremonyButton, name: '_EncointerStore.showStartCeremonyButton'))
       .value;
-  Computed<bool>? _$showReStartCeremonyButtonComputed;
+  Computed<bool>? _$showRestartCeremonyButtonComputed;
 
   @override
-  bool get showReStartCeremonyButton => (_$showReStartCeremonyButtonComputed ??=
-          Computed<bool>(() => super.showReStartCeremonyButton, name: '_EncointerStore.showReStartCeremonyButton'))
+  bool get showRestartCeremonyButton => (_$showRestartCeremonyButtonComputed ??=
+          Computed<bool>(() => super.showRestartCeremonyButton, name: '_EncointerStore.showRestartCeremonyButton'))
       .value;
   Computed<bool>? _$showSubmitClaimsButtonComputed;
 
@@ -453,7 +453,7 @@ attestingPhaseStart: ${attestingPhaseStart},
 nextRegisteringPhaseStart: ${nextRegisteringPhaseStart},
 ceremonyCycleDuration: ${ceremonyCycleDuration},
 showStartCeremonyButton: ${showStartCeremonyButton},
-showReStartCeremonyButton: ${showReStartCeremonyButton},
+showRestartCeremonyButton: ${showRestartCeremonyButton},
 showSubmitClaimsButton: ${showSubmitClaimsButton},
 showMeetupInfo: ${showMeetupInfo}
     ''';
