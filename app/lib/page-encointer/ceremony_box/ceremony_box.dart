@@ -82,9 +82,7 @@ class CeremonyBox extends StatelessWidget {
                   TextButton(
                     key: const Key(EWTestKeys.restartMeetup),
                     onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (context) => CeremonyStep1Count(store, api)
-                      ),
+                      MaterialPageRoute<void>(builder: (context) => CeremonyStep1Count(store, api)),
                     ),
                     child: Text(
                       context.l10n.restartGathering,
