@@ -49,6 +49,7 @@ class EWTestKeys {
   static const dragHandlePanel = 'drag-handle-panel';
   static const ceremonyBoxWallet = 'ceremony-box-wallet';
   static const startMeetup = 'start-meetup';
+  static const restartMeetup = 'restart-meetup';
   static const ceremonyStep1Next = 'ceremony-step-1-next';
   static const attestAllParticipantsDev = 'attest-all-participants-dev';
   static const closeMeetup = 'close-meetup';

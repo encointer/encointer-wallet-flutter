@@ -82,7 +82,7 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: TextButton(
-                      key: const Key(EWTestKeys.startMeetup),
+                      key: const Key(EWTestKeys.restartMeetup),
                       onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute<void>(
                           builder: (context) => CeremonyStep1Count(store, api),
