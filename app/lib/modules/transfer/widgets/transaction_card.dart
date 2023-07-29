@@ -33,12 +33,7 @@ class TransactionCard extends StatelessWidget {
         leading: AddressIcon(transaction.counterParty, tryGetPubKey(transaction), size: 55),
         title: Row(
           children: [
-            Icon(
-              transaction.type == TransactionType.incoming ? Iconsax.receive_square_2 : Iconsax.send_sqaure_2,
-              color:
-                  transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
-              size: 25,
-            ),
+            if (transaction.type == TransactionType.incoming) incomingIcon(context) else outgoingIcon(),
             const SizedBox(width: 5),
             Text(
               transaction.type.getText(context),
@@ -112,6 +107,24 @@ class TransactionCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget incomingIcon(BuildContext context) {
+  return Icon(
+    Iconsax.receive_square_2,
+    color:
+    context.colorScheme.primary,
+    size: 25,
+  );
+}
+
+Widget outgoingIcon() {
+  return const Icon(
+    Iconsax.send_sqaure_2,
+    color:
+    Color(0xffD76D89),
+    size: 25,
+  );
 }
 
 String tryGetPubKey(Transaction transaction) {
