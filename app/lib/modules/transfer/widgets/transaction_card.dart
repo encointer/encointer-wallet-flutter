@@ -64,16 +64,12 @@ class TransactionCard extends StatelessWidget {
                         onPressed: () => UI.copyAndNotify(context, transaction.counterParty),
                         icon: const Icon(Iconsax.copy, size: 14),
                       ),
+                      const Spacer(),
+                      _transferAmount(context, appStore)
                     ],
                   ),
                 ],
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                _transferAmount(context, appStore)
-              ],
             ),
           ],
         ),
