@@ -88,7 +88,7 @@ class CeremonyBox extends StatelessWidget {
                     ),
                     child: Text(
                       context.l10n.restartGathering,
-                      style: context.bodyLarge
+                      style: context.bodyMedium
                           .copyWith(color: AppColors.encointerBlack, decoration: TextDecoration.underline),
                     ),
                   ),
