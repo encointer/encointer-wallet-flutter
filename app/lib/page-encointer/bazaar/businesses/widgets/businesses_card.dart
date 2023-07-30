@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/business_utils.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/utils/extensions/string/string_extensions.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/single_business_store.dart';
@@ -84,14 +83,14 @@ class BusinessesCard extends StatelessWidget {
                     children: [
                       const SizedBox(height: 28),
                       Text(
-                        BusinessUtils.utf8convert(businesses.name),
+                        businesses.name,
                         style: context.labelLarge,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        BusinessUtils.utf8convert(businesses.description),
+                        businesses.description,
                         style: context.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,

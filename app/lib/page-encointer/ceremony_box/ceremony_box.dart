@@ -48,7 +48,7 @@ class CeremonyBox extends StatelessWidget {
       return Column(
         children: [
           Container(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+            padding: EdgeInsets.fromLTRB(24, 24, 24, store.encointer.showMeetupInfo ? 12 : 24),
             decoration: BoxDecoration(
               color: context.colorScheme.background,
               borderRadius: BorderRadius.vertical(
@@ -77,6 +77,18 @@ class CeremonyBox extends StatelessWidget {
                           }
                           await submitRegisterParticipant(context, store, api);
                         }),
+                  ),
+                if (store.encointer.showRestartCeremonyButton)
+                  TextButton(
+                    key: const Key(EWTestKeys.restartMeetup),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (context) => CeremonyStep1Count(store, api)),
+                    ),
+                    child: Text(
+                      context.l10n.restartGathering,
+                      style: context.bodyMedium
+                          .copyWith(color: AppColors.encointerBlack, decoration: TextDecoration.underline),
+                    ),
                   ),
                 if (store.encointer.showStartCeremonyButton)
                   Padding(

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/widgets/single_business_detail.dart';
 import 'package:encointer_wallet/common/components/error/error_view.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/business_utils.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/single_business_store.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 
@@ -19,7 +18,7 @@ class SingleBusinessView extends StatelessWidget {
       appBar: AppBar(
         title: Observer(builder: (_) {
           return switch (store.fetchStatus) {
-            FetchStatus.success => Text(BusinessUtils.utf8convert(store.singleBusiness!.name.toUpperCase())),
+            FetchStatus.success => Text(store.singleBusiness!.name.toUpperCase()),
             _ => const SizedBox(),
           };
         }),
