@@ -1,4 +1,5 @@
 class EWTestKeys {
+  static const balanceText = 'balance-text';
   static const addContact = 'add-contact';
   static const addAccountPanel = 'add-account-panel';
   static const createAccount = 'create-account';

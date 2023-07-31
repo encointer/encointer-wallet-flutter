@@ -43,10 +43,11 @@ class PrimaryButton extends StatelessWidget {
 }
 
 class TextGradient extends StatelessWidget {
-  const TextGradient({required this.text, this.style, super.key});
+  const TextGradient({required this.text, this.style, super.key, this.textKey});
 
   final String text;
   final TextStyle? style;
+  final Key? textKey;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class TextGradient extends StatelessWidget {
       shaderCallback: (bounds) => AppColors.primaryGradient(context).createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
-      child: Text(text, style: style),
+      child: Text(text, style: style, key: textKey),
     );
   }
 }

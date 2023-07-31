@@ -182,6 +182,7 @@ class _AssetsViewState extends State<AssetsView> {
                             ? Column(
                                 children: [
                                   TextGradient(
+                                    textKey: const Key(EWTestKeys.balanceText),
                                     text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
                                     style: const TextStyle(fontSize: 50),
                                   ),

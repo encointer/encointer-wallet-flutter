@@ -151,7 +151,14 @@ void main() async {
   }, timeout: timeout120);
 
   test('Register [Newbie] Tom', () async {
+    var balance = '~ ⵐ';
     await changeAccountFromPanel(driver, 'Tom');
+    do {
+      balance = await driver.getText(find.byValueKey(EWTestKeys.balanceText));
+      // ignore: avoid_print
+      print('Tom balance $balance');
+    } while (balance == '~ ⵐ' || balance == '0 ⵐ');
+
     await scrollToRegisterButton(driver);
     await registerAndWait(driver, ParticipantTypeTestHelper.newbie);
   }, timeout: timeout120);
