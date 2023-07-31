@@ -463,6 +463,7 @@ class _AssetsViewState extends State<AssetsView> {
                 widget.store.account.currentAccount.name,
               );
               Log.d('[home:balanceWatchdog] $msg', 'Assets');
+              widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
               NotificationPlugin.showNotification(45, l10n.fundsReceived, msg, cid: cidStr);
             }
           }
