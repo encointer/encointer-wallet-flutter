@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,37 +54,28 @@ class AssetsView extends StatefulWidget {
 }
 
 class _AssetsViewState extends State<AssetsView> {
-  static const double panelHeight = 396;
-  static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
-  late PanelController _panelController;
-  late PausableTimer _balanceWatchdog;
-  late AppSettings _appSettingsStore;
-  late double _panelHeightOpen;
-  final double _panelHeightClosed = 0;
-  late AppLocalizations l10n;
+  late final PanelController _panelController;
+  late final PausableTimer _balanceWatchdog;
+  late final AppSettings _appSettingsStore;
 
   @override
   void initState() {
-    _connectNodeAll();
+    _appSettingsStore = context.read<AppSettings>();
     _panelController = PanelController();
+    _balanceWatchdog = PausableTimer(const Duration(seconds: 12), () {
+      Log.d('[balanceWatchdog] triggered', 'Assets');
+      _refreshBalanceAndNotify();
+      _balanceWatchdog
+        ..reset()
+        ..start();
+    })
+      ..start();
+
+    _connectNodeAll();
     _postFrameCallbacks();
 
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    _appSettingsStore = context.read<AppSettings>();
-    _startBalanceWatchdog();
-    l10n = context.l10n;
-    // Should typically not be higher than panelHeight, but on really small devices
-    // it should not exceed fractionOfScreenHeight x the screen height.
-    _panelHeightOpen = min(
-      MediaQuery.of(context).size.height * fractionOfScreenHeight,
-      panelHeight,
-    );
-    super.didChangeDependencies();
   }
 
   @override
@@ -113,9 +102,7 @@ class _AssetsViewState extends State<AssetsView> {
       },
       child: Scaffold(
         appBar: _appBar(),
-        body: RepositoryProvider.of<AppConfig>(context).isIntegrationTest
-            ? _slidingUpPanel(_appBar())
-            : _upgradeAlert(_appBar()),
+        body: RepositoryProvider.of<AppConfig>(context).isIntegrationTest ? _slidingUpPanel() : _upgradeAlert(),
       ),
     );
   }
@@ -123,13 +110,11 @@ class _AssetsViewState extends State<AssetsView> {
   AppBar _appBar() {
     return AppBar(
       key: const Key('assets-index-appbar'),
-      title: Text(l10n.home),
+      title: Text(context.l10n.home),
     );
   }
 
-  UpgradeAlert _upgradeAlert(
-    AppBar appBar,
-  ) {
+  UpgradeAlert _upgradeAlert() {
     return UpgradeAlert(
       upgrader: Upgrader(
         appcastConfig: RepositoryProvider.of<AppConfig>(context).appCast,
@@ -137,161 +122,148 @@ class _AssetsViewState extends State<AssetsView> {
         shouldPopScope: () => true,
         canDismissDialog: true,
       ),
-      child: _slidingUpPanel(appBar),
+      child: _slidingUpPanel(),
     );
   }
 
-  SlidingUpPanel _slidingUpPanel(
-    AppBar appBar,
-  ) {
+  SlidingUpPanel _slidingUpPanel() {
+    final l10n = context.l10n;
     return SlidingUpPanel(
-      maxHeight: _panelHeightOpen,
-      minHeight: _panelHeightClosed,
+      minHeight: 0,
+      maxHeight: 450,
       parallaxEnabled: true,
-      parallaxOffset: .5,
+      parallaxOffset: 0.5,
       backdropEnabled: true,
       controller: _panelController,
       // The padding is a hack for #559, which needs https://github.com/akshathjain/sliding_up_panel/pull/303
-      body: Padding(
-        padding:
-            // Fixme: 60 is hardcoded because we don't know the tabBar size here.
-            // Should be tackled in #607
-            EdgeInsets.only(bottom: 60 + appBar.preferredSize.height + MediaQuery.of(context).viewPadding.top),
-        child: RefreshIndicator(
-          onRefresh: _refreshEncointerState,
-          child: ListView(
-            key: const Key(EWTestKeys.listViewWallet),
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-            children: [
-              Observer(builder: (_) {
-                return Column(
-                  children: <Widget>[
-                    InkWell(
-                      key: const Key(EWTestKeys.panelController),
-                      child: CombinedCommunityAndAccountAvatar(widget.store),
-                      onTap: () {
-                        if (_panelController.isAttached) {
-                          _panelController.open();
+      body: RefreshIndicator(
+        onRefresh: _refreshEncointerState,
+        child: ListView(
+          key: const Key(EWTestKeys.listViewWallet),
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+          children: [
+            InkWell(
+              key: const Key(EWTestKeys.panelController),
+              child: CombinedCommunityAndAccountAvatar(widget.store),
+              onTap: () {
+                if (_panelController.isAttached) _panelController.open();
+              },
+            ),
+            Observer(
+              builder: (_) {
+                return (widget.store.encointer.community?.name != null) & (widget.store.encointer.chosenCid != null)
+                    ? Column(
+                        children: [
+                          TextGradient(
+                            text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
+                            style: const TextStyle(fontSize: 50),
+                          ),
+                          Text(
+                            '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
+                            style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
+                          ),
+                        ],
+                      )
+                    : Container(
+                        margin: const EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: (widget.store.encointer.chosenCid == null)
+                            ? SizedBox(
+                                width: double.infinity,
+                                child: Text(l10n.communityNotSelected, textAlign: TextAlign.center))
+                            : const SizedBox(
+                                width: double.infinity,
+                                child: CupertinoActivityIndicator(),
+                              ),
+                      );
+              },
+            ),
+            if (_appSettingsStore.developerMode)
+              ElevatedButton(
+                onPressed: widget.store.dataUpdate.setInvalidated,
+                child: const Text('Invalidate data to trigger state update'),
+              ),
+            const SizedBox(height: 42),
+            Row(
+              children: [
+                ActionButton(
+                  key: const Key(EWTestKeys.qrReceive),
+                  icon: const Icon(Iconsax.receive_square_2),
+                  label: l10n.receive,
+                  onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
+                ),
+                const SizedBox(width: 3),
+                Observer(builder: (_) {
+                  return ActionButton(
+                    key: const Key(EWTestKeys.goTransferHistory),
+                    icon: Assets.images.assets.receiveSquare2.svg(
+                      colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
+                    ),
+                    label: l10n.transferHistory,
+                    onPressed: widget.store.encointer.communityBalance != null
+                        ? () => Navigator.pushNamed(context, TransferHistoryView.route)
+                        : null,
+                  );
+                }),
+                const SizedBox(width: 3),
+                Observer(builder: (_) {
+                  return ActionButton(
+                    key: const Key(EWTestKeys.transfer),
+                    icon: const Icon(Iconsax.send_sqaure_2),
+                    label: l10n.transfer,
+                    onPressed: widget.store.encointer.communityBalance != null
+                        ? () => Navigator.pushNamed(context, TransferPage.route)
+                        : null,
+                  );
+                }),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Observer(builder: (_) {
+              final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
+                  (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
+
+              return widget.store.settings.isConnected && shouldFetch
+                  ? FutureBuilder<bool?>(
+                      future: webApi.encointer.hasPendingIssuance(),
+                      builder: (_, AsyncSnapshot<bool?> snapshot) {
+                        if (snapshot.hasData) {
+                          final hasPendingIssuance = snapshot.data!;
+
+                          if (hasPendingIssuance) {
+                            return SubmitButton(
+                              key: const Key(EWTestKeys.claimPendingDev),
+                              child: Text(l10n.issuancePending, textAlign: TextAlign.center),
+                              onPressed: (context) => submitClaimRewards(
+                                context,
+                                widget.store,
+                                webApi,
+                                widget.store.encointer.chosenCid!,
+                              ),
+                            );
+                          } else {
+                            return _appSettingsStore.developerMode
+                                ? ElevatedButton(
+                                    onPressed: null,
+                                    child: Text(l10n.issuanceClaimed),
+                                  )
+                                : const SizedBox.shrink();
+                          }
+                        } else {
+                          return const CupertinoActivityIndicator();
                         }
                       },
-                    ),
-                    Observer(
-                      builder: (_) {
-                        return (widget.store.encointer.community?.name != null) &
-                                (widget.store.encointer.chosenCid != null)
-                            ? Column(
-                                children: [
-                                  TextGradient(
-                                    text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
-                                    style: const TextStyle(fontSize: 50),
-                                  ),
-                                  Text(
-                                    '${l10n.balance}, ${widget.store.encointer.community?.symbol}',
-                                    style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
-                                  ),
-                                ],
-                              )
-                            : Container(
-                                margin: const EdgeInsets.only(top: 16),
-                                padding: const EdgeInsets.symmetric(vertical: 8),
-                                child: (widget.store.encointer.chosenCid == null)
-                                    ? SizedBox(
-                                        width: double.infinity,
-                                        child: Text(l10n.communityNotSelected, textAlign: TextAlign.center))
-                                    : const SizedBox(
-                                        width: double.infinity,
-                                        child: CupertinoActivityIndicator(),
-                                      ),
-                              );
-                      },
-                    ),
-                    if (_appSettingsStore.developerMode)
-                      ElevatedButton(
-                        onPressed: widget.store.dataUpdate.setInvalidated,
-                        child: const Text('Invalidate data to trigger state update'),
-                      ),
-                    const SizedBox(height: 42),
-                    Row(
-                      children: [
-                        ActionButton(
-                          key: const Key(EWTestKeys.qrReceive),
-                          icon: const Icon(Iconsax.receive_square_2),
-                          label: l10n.receive,
-                          onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
-                        ),
-                        const SizedBox(width: 3),
-                        ActionButton(
-                          key: const Key(EWTestKeys.goTransferHistory),
-                          icon: Assets.images.assets.receiveSquare2.svg(
-                            colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
-                          ),
-                          label: l10n.transferHistory,
-                          onPressed: widget.store.encointer.communityBalance != null
-                              ? () => Navigator.pushNamed(context, TransferHistoryView.route)
-                              : null,
-                        ),
-                        const SizedBox(width: 3),
-                        ActionButton(
-                          key: const Key(EWTestKeys.transfer),
-                          icon: const Icon(Iconsax.send_sqaure_2),
-                          label: l10n.transfer,
-                          onPressed: widget.store.encointer.communityBalance != null
-                              ? () => Navigator.pushNamed(context, TransferPage.route)
-                              : null,
-                        ),
-                      ],
-                    ),
-                  ],
-                );
-              }),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 6),
-              ),
-              Observer(builder: (_) {
-                final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
-                    (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
-
-                return widget.store.settings.isConnected && shouldFetch
-                    ? FutureBuilder<bool?>(
-                        future: webApi.encointer.hasPendingIssuance(),
-                        builder: (_, AsyncSnapshot<bool?> snapshot) {
-                          if (snapshot.hasData) {
-                            final hasPendingIssuance = snapshot.data!;
-
-                            if (hasPendingIssuance) {
-                              return SubmitButton(
-                                key: const Key(EWTestKeys.claimPendingDev),
-                                child: Text(l10n.issuancePending, textAlign: TextAlign.center),
-                                onPressed: (context) => submitClaimRewards(
-                                  context,
-                                  widget.store,
-                                  webApi,
-                                  widget.store.encointer.chosenCid!,
-                                ),
-                              );
-                            } else {
-                              return _appSettingsStore.developerMode
-                                  ? ElevatedButton(
-                                      onPressed: null,
-                                      child: Text(l10n.issuanceClaimed),
-                                    )
-                                  : const SizedBox.shrink();
-                            }
-                          } else {
-                            return const CupertinoActivityIndicator();
-                          }
-                        },
-                      )
-                    : Container();
-              }),
-              const SizedBox(height: 24),
-              CeremonyBox(widget.store, webApi, key: const Key(EWTestKeys.ceremonyBoxWallet)),
-              const SizedBox(height: 24),
-              AnnouncementView(
-                cid: Community.fromCid(widget.store.encointer.community?.cid.toFmtString()).cid,
-              ),
-            ],
-          ),
+                    )
+                  : const SizedBox.shrink();
+            }),
+            const SizedBox(height: 24),
+            CeremonyBox(widget.store, webApi, key: const Key(EWTestKeys.ceremonyBoxWallet)),
+            const SizedBox(height: 24),
+            AnnouncementView(
+              cid: Community.fromCid(widget.store.encointer.community?.cid.toFmtString()).cid,
+            ),
+            const SizedBox(height: 30),
+          ],
         ),
       ),
       // panel entering from below
@@ -370,16 +342,17 @@ class _AssetsViewState extends State<AssetsView> {
     } else {
       return [
         AccountOrCommunityData(
-            avatar: Container(
-              height: avatarSize,
-              width: avatarSize,
-              decoration: BoxDecoration(
-                color: context.colorScheme.background,
-                shape: BoxShape.circle,
-              ),
-              child: const CenteredActivityIndicator(),
+          name: '...',
+          avatar: Container(
+            height: avatarSize,
+            width: avatarSize,
+            decoration: BoxDecoration(
+              color: context.colorScheme.background,
+              shape: BoxShape.circle,
             ),
-            name: '...')
+            child: const CenteredActivityIndicator(),
+          ),
+        )
       ];
     }
   }
@@ -429,6 +402,7 @@ class _AssetsViewState extends State<AssetsView> {
   }
 
   void _refreshBalanceAndNotify() {
+    final l10n = context.l10n;
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
       Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
       if (widget.store.encointer.chosenCid == null) {
@@ -479,20 +453,6 @@ class _AssetsViewState extends State<AssetsView> {
     }).catchError((Object? e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
-  }
-
-  void _startBalanceWatchdog() {
-    _balanceWatchdog = PausableTimer(
-      const Duration(seconds: 12),
-      () {
-        Log.d('[balanceWatchdog] triggered', 'Assets');
-
-        _refreshBalanceAndNotify();
-        _balanceWatchdog
-          ..reset()
-          ..start();
-      },
-    )..start();
   }
 
   Future<void> _refreshEncointerState() async {
