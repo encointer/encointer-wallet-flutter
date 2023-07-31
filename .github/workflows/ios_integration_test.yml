@@ -23,7 +23,7 @@ jobs:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
   ios_device_test:
-    runs-on: macos-13
+    runs-on: macos-latest
     timeout-minutes: 60
     strategy:
       matrix:
