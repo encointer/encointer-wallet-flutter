@@ -134,19 +134,6 @@ extension ParticipantTypeExtension on ParticipantType {
     return toEnumValue(this);
   }
 
-  String get getName {
-    switch (this) {
-      case ParticipantType.Bootstrapper:
-        return 'Bootstrapper';
-      case ParticipantType.Endorsee:
-        return 'Endorsee';
-      case ParticipantType.Newbie:
-        return 'Newbie';
-      case ParticipantType.Reputable:
-        return 'Reputable';
-    }
-  }
-
   bool get isReputable => this == ParticipantType.Reputable;
 }
 
