@@ -3,8 +3,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
-import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_count_down.dart';
+import 'package:encointer_wallet/page_encointer/ceremony_box/ceremony_box_service.dart';
+import 'package:encointer_wallet/page_encointer/ceremony_box/components/ceremony_count_down.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
 /// Shows primarily the date of the next ceremony.

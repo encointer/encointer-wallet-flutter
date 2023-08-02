@@ -13,7 +13,7 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
+import 'package:encointer_wallet/page_encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';

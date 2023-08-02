@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
+import 'package:encointer_wallet/page_encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/theme.dart';
