@@ -59,7 +59,6 @@ abstract class _SettingsStore with Store {
   @observable
   Map? networkConst = {};
 
-  /// Contacts that a saved locally on a users phone
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
 
