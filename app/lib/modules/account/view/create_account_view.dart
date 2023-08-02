@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
         Center(
           child: Text(
             l10n.accountNameChoose,
-            style: context.textTheme.displayMedium,
+            style: context.headlineSmall,
           ),
         ),
         const SizedBox(height: 10),
@@ -60,12 +61,12 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
           child: Text(
             l10n.accountNameChooseHint,
             textAlign: TextAlign.center,
-            style: context.textTheme.displayMedium!.copyWith(color: AppColors.encointerBlack),
+            style: context.headlineMedium.copyWith(color: AppColors.encointerBlack),
           ),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(
-          key: const Key('create-account-name'),
+          key: const Key(EWTestKeys.createAccountName),
           hintText: l10n.createHint,
           labelText: l10n.accountName,
           controller: _nameCtrl,
@@ -78,7 +79,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
       columnChildren: [
         const SizedBox(height: 10),
         PrimaryButton(
-          key: const Key('create-account-next'),
+          key: const Key(EWTestKeys.createAccountNext),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               context.read<NewAccountStore>().setName(_nameCtrl.text.trim());
@@ -100,7 +101,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
               const SizedBox(width: 12),
               Text(
                 l10n.next,
-                style: context.textTheme.displaySmall!.copyWith(
+                style: context.titleMedium.copyWith(
                   color: context.colorScheme.background,
                 ),
               ),

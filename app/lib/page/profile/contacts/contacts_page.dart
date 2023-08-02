@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -39,23 +40,14 @@ class _ContactsPageState extends State<ContactsPage> {
         appBar: AppBar(
           title: Text(
             context.l10n.addressBook,
-            style: Theme.of(context).textTheme.displaySmall,
           ),
-          iconTheme: const IconThemeData(
-            color: Color(0xff666666), //change your color here
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
           actions: <Widget>[
-            Padding(
+            IconButton(
               padding: const EdgeInsets.only(right: 8),
-              child: IconButton(
-                key: const Key('add-contact'),
-                icon: const Icon(Icons.add, size: 28),
-                onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
-              ),
-            )
+              key: const Key(EWTestKeys.addContact),
+              icon: const Icon(Icons.add, size: 28),
+              onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
+            ),
           ],
         ),
         body: SafeArea(
@@ -67,7 +59,7 @@ class _ContactsPageState extends State<ContactsPage> {
                 return Center(
                   child: Text(
                     context.l10n.noContactsStored,
-                    style: context.textTheme.bodyMedium,
+                    style: context.bodyMedium,
                   ),
                 );
               } else {
@@ -76,10 +68,10 @@ class _ContactsPageState extends State<ContactsPage> {
                   itemCount: _contactsPageStore.contactList.length,
                   itemBuilder: (context, index) {
                     final contact = _contactsPageStore.contactList[index];
-
                     final address =
                         Fmt.ss58Encode(contact.pubKey, prefix: _contactsPageStore.appStore.settings.endpoint.ss58!);
                     return ListTile(
+                      key: Key(contact.name),
                       leading: AddressIcon(address, contact.pubKey, size: 45),
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,19 +79,13 @@ class _ContactsPageState extends State<ContactsPage> {
                           Text(Fmt.accountName(context, contact)),
                           Text(
                             '${context.l10n.reputation}: ${contact.reputation.length}',
-                            style: context.textTheme.labelSmall!.copyWith(color: AppColors.encointerGrey),
+                            style: context.labelSmall.copyWith(color: AppColors.encointerGrey),
                           )
                         ],
                       ),
                       subtitle: Text(Fmt.address(address)!),
-                      trailing: SizedBox(
-                        width: 36,
-                        child: IconButton(
-                          key: Key(contact.name),
-                          icon: const Icon(Icons.arrow_forward_ios, size: 18),
-                          onPressed: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: contact),
-                        ),
-                      ),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                      onTap: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: contact),
                     );
                   },
                 );

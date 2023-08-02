@@ -3,6 +3,7 @@ import 'package:encointer_wallet/page/reap_voucher/utils.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 
 class VoucherDialogs {
@@ -24,7 +25,7 @@ class VoucherDialogs {
               onPressed: onOK,
               child: Text(
                 l10n.ok,
-                key: const Key('voucher-dialog-ok'),
+                key: const Key(EWTestKeys.voucherDialogOk),
               ),
             ),
           ],

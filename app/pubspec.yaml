@@ -14,12 +14,12 @@ description: EncointerWallet made with Flutter.
 
 # bump version already while working on new release, bumping build number at the same time
 # bump build number even more, if needed to clarify what's deployed
-version: 1.10.2+865
+version: 1.10.3+866
 
 publish_to: none
 
 environment:
-  sdk: ">=3.0.1 <4.0.0"
+  sdk: ">=3.0.3 <4.0.0"
   flutter: "3.10.3"
 
 dependencies:
@@ -82,6 +82,8 @@ dependencies:
     path: ../packages/ew_storage/
   ew_http:
     path: ../packages/ew_http/
+  ew_test_keys:
+    path: ../packages/ew_test_keys/
   decimal: ^2.3.2
 
 dev_dependencies:

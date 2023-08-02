@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -39,8 +40,8 @@ class AppAlert {
     required BuildContext context,
     required VoidCallback onOK,
     required VoidCallback onCancel,
-    Key oKButtonKey = const Key('ok-button'),
-    Key cancelButtonKey = const Key('cansel-button'),
+    Key oKButtonKey = const Key(EWTestKeys.okButton),
+    Key cancelButtonKey = const Key(EWTestKeys.cancelButton),
     Widget? title,
     Widget? content,
     String? confirmText,

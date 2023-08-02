@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -42,9 +43,7 @@ class CeremonyStep2Scan extends StatelessWidget {
         title: Text(l10n.keySigningCycle),
         actions: [
           UserMeetupAvatar(index: meetupIndexOfAccount(store.account.currentAccountPubKey!)),
-          const SizedBox(
-            width: 20,
-          )
+          const SizedBox(width: 20)
         ],
       ),
       body: Column(
@@ -58,7 +57,7 @@ class CeremonyStep2Scan extends StatelessWidget {
           Center(
             child: Text(
               l10n.scan,
-              style: context.textTheme.displayMedium,
+              style: context.titleLarge.copyWith(color: context.colorScheme.primary),
             ),
           ),
           Center(
@@ -67,7 +66,7 @@ class CeremonyStep2Scan extends StatelessWidget {
               child: Text(
                 l10n.scanDescriptionForMeetup,
                 textAlign: TextAlign.center,
-                style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 1.25),
+                style: context.titleLarge.copyWith(height: 1.25),
               ),
             ),
           ),
@@ -86,13 +85,16 @@ class CeremonyStep2Scan extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: ElevatedButton(
-              key: const Key('close-meetup'),
+              key: const Key(EWTestKeys.closeMeetup),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Iconsax.arrow_right_2),
                   const SizedBox(width: 12, height: 60),
-                  Text(l10n.closeGathering, style: context.textTheme.displaySmall),
+                  Text(
+                    l10n.closeGathering,
+                    style: context.titleMedium.copyWith(color: context.colorScheme.primary),
+                  ),
                 ],
               ),
               onPressed: () {
@@ -111,7 +113,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     l10n.scanOthers,
-                    style: context.textTheme.displaySmall!.copyWith(color: context.colorScheme.background),
+                    style: context.titleMedium.copyWith(color: context.colorScheme.background),
                   ),
                 ],
               ),
@@ -129,7 +131,7 @@ class CeremonyStep2Scan extends StatelessWidget {
               return SizedBox(
                 height: 40,
                 child: ElevatedButton(
-                  key: const Key('attest-all-participants-dev'),
+                  key: const Key(EWTestKeys.attestAllParticipantsDev),
                   child: const Text('DEV ONLY: attest all participants'),
                   onPressed: () => attestAllParticipants(store, store.account.currentAddress),
                 ),

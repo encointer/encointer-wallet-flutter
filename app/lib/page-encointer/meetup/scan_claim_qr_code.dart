@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -6,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -76,7 +78,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
-            key: const Key('close-scanner'),
+            key: const Key(EWTestKeys.closeScanner),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
@@ -92,13 +94,17 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
             }
             return Stack(
               children: [
-                MobileScanner(onDetect: (barcode) {
-                  if (barcode.barcodes.isEmpty) {
-                    Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
-                  } else {
-                    onScan(context.read<AppStore>(), l10n, barcode.barcodes[0].rawValue!);
-                  }
-                }),
+                MobileScanner(
+                  // Timeout added because of https://github.com/juliansteenbakker/mobile_scanner/pull/594
+                  controller: MobileScannerController(detectionTimeoutMs: 1250),
+                  onDetect: (barcode) {
+                    if (barcode.barcodes.isEmpty) {
+                      Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
+                    } else {
+                      onScan(context.read<AppStore>(), l10n, barcode.barcodes[0].rawValue!);
+                    }
+                  },
+                ),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(
@@ -118,10 +124,12 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                           store.encointer.communityAccount!.scannedAttendeesCount,
                           widget.confirmedParticipantsCount - 1,
                         );
-
                         return Text(
                           txt,
-                          style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                          style: context.headlineLarge.copyWith(
+                            color: Colors.white,
+                            backgroundColor: Colors.black38,
+                          ),
                         );
                       }),
                       const SizedBox(height: 10),

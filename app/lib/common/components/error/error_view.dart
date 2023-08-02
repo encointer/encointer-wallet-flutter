@@ -16,7 +16,7 @@ class ErrorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final textTheme = Theme.of(context).textTheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,13 +25,13 @@ class ErrorView extends StatelessWidget {
           const SizedBox(height: 40),
           Text(
             l10n.error,
-            style: textTheme.displayLarge!.copyWith(color: AppColors.encointerGrey),
+            style: context.headlineMedium.copyWith(color: AppColors.encointerGrey),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
           Text(
             errorMessage ?? l10n.unknownError,
-            style: textTheme.titleLarge!.copyWith(color: AppColors.encointerGrey),
+            style: context.titleLarge.copyWith(color: AppColors.encointerGrey),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),

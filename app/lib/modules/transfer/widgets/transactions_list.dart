@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,10 +14,10 @@ class TransactionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (transactions.isEmpty) return const TransactionsEmpty(key: Key('transactions-empty'));
+    if (transactions.isEmpty) return const TransactionsEmpty(key: Key(EWTestKeys.transactionsEmpty));
     final appStore = context.watch<AppStore>();
     return ListView.builder(
-      key: const Key('transactions-list'),
+      key: const Key(EWTestKeys.transactionsList),
       padding: const EdgeInsets.fromLTRB(14, 20, 14, 35),
       itemCount: transactions.length + 2,
       itemBuilder: (BuildContext context, int index) {
@@ -27,7 +28,7 @@ class TransactionsList extends StatelessWidget {
           );
         } else if (index <= transactions.length) {
           final transaction = transactions[index - 1];
-          return TransactionCard(transaction, appStore.settings.knownAccounts());
+          return TransactionCard(transaction, appStore.settings.knownAccounts);
         } else {
           return Padding(
             padding: const EdgeInsets.only(top: 10),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -47,7 +48,7 @@ class CeremonyBox extends StatelessWidget {
       return Column(
         children: [
           Container(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+            padding: EdgeInsets.fromLTRB(24, 24, 24, store.encointer.showMeetupInfo ? 12 : 24),
             decoration: BoxDecoration(
               color: context.colorScheme.background,
               borderRadius: BorderRadius.vertical(
@@ -68,7 +69,7 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
-                        key: const Key('registration-meetup-button'),
+                        key: const Key(EWTestKeys.registrationMeetupButton),
                         registerUntil: assigningPhaseStart,
                         onPressed: (context) async {
                           if (store.dataUpdate.expired) {
@@ -77,11 +78,23 @@ class CeremonyBox extends StatelessWidget {
                           await submitRegisterParticipant(context, store, api);
                         }),
                   ),
+                if (store.encointer.showRestartCeremonyButton)
+                  TextButton(
+                    key: const Key(EWTestKeys.restartMeetup),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (context) => CeremonyStep1Count(store, api)),
+                    ),
+                    child: Text(
+                      context.l10n.restartGathering,
+                      style: context.bodyMedium
+                          .copyWith(color: AppColors.encointerBlack, decoration: TextDecoration.underline),
+                    ),
+                  ),
                 if (store.encointer.showStartCeremonyButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyStartButton(
-                      key: const Key('start-meetup'),
+                      key: const Key(EWTestKeys.startMeetup),
                       onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute<void>(
                           builder: (context) => CeremonyStep1Count(store, api),
@@ -129,7 +142,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             CeremonyNotification(
-              key: const Key('is-registered-info'),
+              key: const Key(EWTestKeys.isRegisteredInfo),
               notificationIconData: Iconsax.tick_square,
               notification: l10n.youAreRegisteredAs(
                 store.encointer.communityAccount!.participantType!.toValue(),
@@ -154,14 +167,14 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return MeetupInfo(
           meetup,
           location,
-          key: const Key('account-assigned'),
+          key: const Key(EWTestKeys.accountAssigned),
           onPressed: () {
             Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
           },
         );
       } else {
         return CeremonyNotification(
-          key: const Key('account-unassigned'),
+          key: const Key(EWTestKeys.accountUnassigned),
           notificationIconData: Iconsax.close_square,
           notification: l10n.youAreNotRegisteredPleaseRegisterNextTime,
         );
