@@ -529,7 +529,6 @@
             }
         }
     },
-    "newbie" : "Newbie",
     "noContactsStored": "No contacts stored",
     "offersForCommunity": "Offers for {value}",
     "@offersForCommunity": {

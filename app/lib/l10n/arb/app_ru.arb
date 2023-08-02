@@ -377,7 +377,6 @@
     "tokenSend": "Отправить {symbol}",
     "communityWithName": "Сообщество {name}",
     "verifyAuthTitle": "Для завершения транзакции {useBioAuth, select, true{подтвердите вашу личность} false{введите PIN-код} other{}}.",
-    "newbie" : "Новичок",
     "noContactsStored": "Сохраненных контактов нету",
     "offersForCommunity": "Предложения за {value}",
     "@offersForCommunity": {
