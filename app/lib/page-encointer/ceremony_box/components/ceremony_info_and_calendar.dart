@@ -2,7 +2,7 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:encointer_wallet/page_encointer/ceremony_box/ceremony_box_service.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
 class CeremonyInfoAndCalendar extends StatelessWidget {

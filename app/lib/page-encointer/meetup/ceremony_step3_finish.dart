@@ -7,8 +7,8 @@ import 'package:encointer_wallet/common/components/logo/participant_avatar.dart'
 import 'package:encointer_wallet/store/connectivity/connectivity_store.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/page_encointer/common/community_chooser_panel.dart';
-import 'package:encointer_wallet/page_encointer/meetup/ceremony_progress_bar.dart';
+import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';

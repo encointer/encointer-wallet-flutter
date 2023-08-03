@@ -2,15 +2,15 @@ import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/page_encointer/bazaar/businesses/logic/businesses_store.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/page/assets/qr_code_printing/widgets/preview_pdf_and_print.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
-import 'package:encointer_wallet/page_encointer/bazaar/bazaar_main.dart';
-import 'package:encointer_wallet/page_encointer/common/community_chooser_on_map.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/bazaar_main.dart';
+import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/detail_page.dart';

@@ -6,7 +6,7 @@ import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/page_encointer/bazaar/businesses/widgets/dropdown_widget.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 

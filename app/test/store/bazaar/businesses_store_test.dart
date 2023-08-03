@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/page_encointer/bazaar/businesses/widgets/dropdown_widget.dart';
-import 'package:encointer_wallet/page_encointer/bazaar/businesses/logic/businesses_store.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/widgets/dropdown_widget.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 
 import '../../mock/mock.dart';
