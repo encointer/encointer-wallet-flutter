@@ -152,6 +152,12 @@ class $AssetsImagesAssetsGen {
   /// File path: assets/images/assets/leu_steller_bg.png
   AssetGenImage get leuStellerBg => const AssetGenImage('assets/images/assets/leu_steller_bg.png');
 
+  /// File path: assets/images/assets/lion_icon_colored.png
+  AssetGenImage get lionIconColored => const AssetGenImage('assets/images/assets/lion_icon_colored.png');
+
+  /// File path: assets/images/assets/lion_icon_uncolored.png
+  AssetGenImage get lionIconUncolored => const AssetGenImage('assets/images/assets/lion_icon_uncolored.png');
+
   /// File path: assets/images/assets/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/assets/logo.png');
 
@@ -175,6 +181,8 @@ class $AssetsImagesAssetsGen {
         assetsUp,
         iconLeu,
         leuStellerBg,
+        lionIconColored,
+        lionIconUncolored,
         logo,
         mosaicBackground,
         receiveSquare2,

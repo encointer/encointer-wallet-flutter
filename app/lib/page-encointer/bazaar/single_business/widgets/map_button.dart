@@ -24,7 +24,7 @@ class MapButton extends StatelessWidget {
         ),
         child: Text(
           context.l10n.openMapApplication,
-          style: context.displaySmall,
+          style: context.bodyLarge.copyWith(color: context.colorScheme.primary),
         ),
       ),
     );
