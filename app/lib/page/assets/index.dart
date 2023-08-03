@@ -327,11 +327,9 @@ class _AssetsViewState extends State<AssetsView> {
                 return SwitchAccountOrCommunity(
                   rowTitle: l10n.switchAccount,
                   accountOrCommunityData: initAllAccounts(),
-                  onTap: (int index) {
-                    setState(() {
-                      switchAccount(widget.store.account.accountListAll[index]);
-                      _refreshBalanceAndNotify();
-                    });
+                  onTap: (int index) async {
+                    await switchAccount(widget.store.account.accountListAll[index]);
+                    _refreshBalanceAndNotify();
                   },
                   onAddIconPressed: () {
                     Navigator.of(context).pushNamed(AddAccountView.route);
