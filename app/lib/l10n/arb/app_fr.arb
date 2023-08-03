@@ -283,7 +283,7 @@
     "successfullySentNAttestations": "Tu as soumis avec succès des attestations pour {participantsCount} autres personnes.",
     "tokenSend": "Envoyer {symbol}",
     "communityWithName": "Communauté {name}",
-    "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{ta identité} false{le NIP} other{}} pour finaliser la transaction.",
+    "verifyAuthTitle": "Vérifie {useBioAuth, select, true{ta identité} false{ton NIP} other{}} s'il te plaît.",
     "offersForCommunity": "Des offres pour un {value}",
     "@offersForCommunity": {
         "placeholders": {

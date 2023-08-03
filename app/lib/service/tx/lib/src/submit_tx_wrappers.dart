@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
@@ -14,6 +15,7 @@ import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:encointer_wallet/modules/login/logic/login_store.dart';
 
 /// Helpers to submit transactions.
 
@@ -37,15 +39,18 @@ Future<void> submitTx(
 
   txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
 
-  return submitToJS(
-    context,
-    store,
-    api,
-    false,
-    txParams: txParams,
-    password: store.settings.cachedPin,
-    onError: onError,
-  );
+  final pin = await context.read<LoginStore>().getPin(context);
+  if (pin != null) {
+    return submitToJS(
+      context,
+      store,
+      api,
+      false,
+      txParams: txParams,
+      password: pin,
+      onError: onError,
+    );
+  }
 }
 
 Future<void> submitClaimRewards(
@@ -106,38 +111,41 @@ Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, A
 
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
-  final proof = await api.encointer.getProofOfAttendance();
+  final pin = await context.read<LoginStore>().getPin(context);
+  if (pin != null) {
+    final proof = await api.encointer.getProofOfAttendance(pin);
 
-  return submitTx(
-    context,
-    store,
-    api,
-    registerParticipantParams(store.encointer.chosenCid!, context.l10n, proof: proof),
-    onFinish: (BuildContext txPageContext, Map res) async {
-      store.encointer.account!.lastProofOfAttendance = proof;
-      final data = await webApi.encointer.getAggregatedAccountData(
-        store.encointer.chosenCid!,
-        store.account.currentAccountPubKey!,
-      );
-      Log.d('$data', 'AggregatedAccountData from register participant');
-      final registrationType = data.personal?.participantType;
+    return submitTx(
+      context,
+      store,
+      api,
+      registerParticipantParams(store.encointer.chosenCid!, context.l10n, proof: proof),
+      onFinish: (BuildContext txPageContext, Map res) async {
+        store.encointer.account!.lastProofOfAttendance = proof;
+        final data = await webApi.encointer.getAggregatedAccountData(
+          store.encointer.chosenCid!,
+          store.account.currentAccountPubKey!,
+        );
+        Log.d('$data', 'AggregatedAccountData from register participant');
+        final registrationType = data.personal?.participantType;
 
-      if (registrationType != null) {
-        _showEducationalDialog(registrationType, context);
-        if (store.settings.endpoint == networkEndpointEncointerMainnet) {
-          await CeremonyNotifications.scheduleMeetupReminders(
-            ceremonyIndex: data.global.ceremonyIndex,
-            meetupTime: store.encointer.community!.meetupTime!,
-            l10n: context.l10n,
-            cid: store.encointer.community?.cid.toFmtString(),
-          );
+        if (registrationType != null) {
+          _showEducationalDialog(registrationType, context);
+          if (store.settings.endpoint == networkEndpointEncointerMainnet) {
+            await CeremonyNotifications.scheduleMeetupReminders(
+              ceremonyIndex: data.global.ceremonyIndex,
+              meetupTime: store.encointer.community!.meetupTime!,
+              l10n: context.l10n,
+              cid: store.encointer.community?.cid.toFmtString(),
+            );
+          }
         }
-      }
-      // Registering the participant burns the reputation.
-      // Hence, we should fetch the new state afterwards.
-      store.dataUpdate.setInvalidated();
-    },
-  );
+        // Registering the participant burns the reputation.
+        // Hence, we should fetch the new state afterwards.
+        store.dataUpdate.setInvalidated();
+      },
+    );
+  }
 }
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {

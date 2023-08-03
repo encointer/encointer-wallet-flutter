@@ -36,9 +36,6 @@ abstract class _SettingsStore with Store {
   bool enableBazaar = false;
 
   @observable
-  String cachedPin = '';
-
-  @observable
   bool loading = true;
 
   @observable

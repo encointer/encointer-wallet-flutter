@@ -59,7 +59,7 @@ final class LoginDialog {
     String? titleText,
   }) async {
     final loginStore = context.read<LoginStore>();
-    if (loginStore.getBiometricAuthState == BiometricAuthState.enabled && loginStore.cachedPin.isNotEmpty) {
+    if (loginStore.getBiometricAuthState == BiometricAuthState.enabled) {
       await showLocalAuth(
         context,
         onSuccess: onSuccess,
@@ -87,7 +87,7 @@ final class LoginDialog {
   }) async {
     final loginStore = context.read<LoginStore>();
     final value = await loginStore.localAuthenticate(titleText ?? context.l10n.verifyAuthTitle('true'), stickyAuth);
-    if (value) await onSuccess(loginStore.cachedPin);
+    if (value) await onSuccess(loginStore.cachedPin ?? await loginStore.loginService.getPin() ?? '');
   }
 
   static Future<void> showPasswordInputDialog(
@@ -133,7 +133,7 @@ final class LoginDialog {
               loginStore.loading = true;
               final value = await _onOk(context, passCtrl.text.trim());
               if (value) {
-                if (loginStore.cachedPin.isEmpty) await loginStore.setPin(passCtrl.text.trim());
+                if (loginStore.cachedPin == null) await loginStore.setPin(passCtrl.text.trim());
                 await onSuccess(passCtrl.text.trim());
                 if (autoCloseOnSuccess) Navigator.of(context).pop();
               } else {

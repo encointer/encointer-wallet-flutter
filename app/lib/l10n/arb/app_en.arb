@@ -428,7 +428,7 @@
             }
         }
     },
-    "verifyAuthTitle": "Verify the {useBioAuth, select, true{your identity} false{the PIN code} other{ }} to complete the transaction.",
+    "verifyAuthTitle": "Please verify the {useBioAuth, select, true{your identity} false{your PIN} other{ }}.",
     "@verifyAuthTitle": {
         "placeholders": {
             "useBioAuth": {
