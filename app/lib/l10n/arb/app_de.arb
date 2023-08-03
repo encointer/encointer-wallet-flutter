@@ -285,6 +285,7 @@
     "tokenSend": "{symbol} senden",
     "communityWithName": "{name} Gemeinschaft",
     "verifyAuthTitle": "{useBioAuth, select, true{deine Identität} false{deine PIN} other{}} überprüfen, um die Transaktion abzuschließen.",
+    "noContactsStored": "Keine Kontakte gespeichert",
     "offersForCommunity": "Angebote für {value}",
     "@offersForCommunity": {
         "placeholders": {

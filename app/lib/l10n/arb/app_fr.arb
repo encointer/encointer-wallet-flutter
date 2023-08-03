@@ -284,6 +284,7 @@
     "tokenSend": "Envoyer {symbol}",
     "communityWithName": "Communauté {name}",
     "verifyAuthTitle": "Veuillez vérifier {useBioAuth, select, true{ta identité} false{le NIP} other{}} pour finaliser la transaction.",
+    "noContactsStored": "Aucun contact stocké",
     "offersForCommunity": "Des offres pour un {value}",
     "@offersForCommunity": {
         "placeholders": {

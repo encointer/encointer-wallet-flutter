@@ -120,7 +120,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   ],
                 ),
               ),
-              EndorseButton(store, webApi, account),
+              EndorseButton(store, account),
               const SizedBox(height: 16),
               SecondaryButtonWide(
                 key: const Key(EWTestKeys.sendMoneyToAccount),
@@ -198,10 +198,13 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
 }
 
 class EndorseButton extends StatelessWidget {
-  const EndorseButton(this.store, this.api, this.contact, {super.key});
+  const EndorseButton(
+    this.store,
+    this.contact, {
+    super.key,
+  });
 
   final AppStore store;
-  final Api api;
   final AccountData contact;
 
   @override
@@ -284,7 +287,7 @@ class EndorseButton extends StatelessWidget {
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
       await _popupDialog(context, l10n.canEndorseInRegisteringPhaseOnly);
     } else {
-      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, address);
+      await submitEndorseNewcomer(context, store, webApi, store.encointer.chosenCid, address);
     }
   }
 }

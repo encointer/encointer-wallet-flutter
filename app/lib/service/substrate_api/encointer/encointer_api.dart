@@ -566,4 +566,16 @@ class EncointerApi {
     final url = '$infuraIpfsUrl/$ipfsUrlHash';
     return ewHttp.getType(url, fromJson: IpfsProduct.fromJson);
   }
+
+  Future<Map<int, CommunityReputation>> getContactsReputation(String address) async {
+    final reputations =
+        await jsApi.evalJavascript<List<dynamic>>('encointer.getReputations("$address")').then(reputationsFromList);
+
+    Log.d('api: getContactsReputation: $reputations', 'EncointerApi');
+    if (reputations.isNotEmpty) {
+      return reputations;
+    } else {
+      return <int, CommunityReputation>{};
+    }
+  }
 }

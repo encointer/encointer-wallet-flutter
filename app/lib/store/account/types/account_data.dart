@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'account_data.g.dart';
@@ -19,4 +20,12 @@ abstract class _AccountData {
 
   String? memo = '';
   bool? observation = false;
+
+  @JsonKey(includeFromJson: false)
+  @JsonKey(includeToJson: false)
+  Map<int, CommunityReputation> reputation = <int, CommunityReputation>{};
+
+  @JsonKey(includeFromJson: false)
+  @JsonKey(includeToJson: false)
+  ParticipantType participantType = ParticipantType.Newbie;
 }

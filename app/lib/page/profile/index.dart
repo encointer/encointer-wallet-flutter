@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/utils/extensions/extensions.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
@@ -164,7 +165,7 @@ class _ProfileState extends State<Profile> {
               ),
               ListTile(
                   title: Text(l10n.reputationOverall, style: h3Grey),
-                  trailing: store.encointer.account?.reputations != null
+                  trailing: store.encointer.account!.reputations.isNotNull
                       ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
                       : Text(l10n.fetchingReputations)),
               ListTile(
