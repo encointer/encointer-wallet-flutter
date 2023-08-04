@@ -227,7 +227,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
                             : 0,
                         itemBuilder: (BuildContext context, int index) {
-                          final community = store.encointer.account!.balanceEntries.keys.elementAt(index);
+                          final community =
+                              store.encointer.accountStores![addressSS58]!.balanceEntries.keys.elementAt(index);
                           return _getBalanceEntryListTile(
                             community,
                             store.encointer.accountStores![addressSS58]!.balanceEntries[community],
