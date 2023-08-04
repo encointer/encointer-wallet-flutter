@@ -8,7 +8,6 @@ class TransactionsEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -17,7 +16,7 @@ class TransactionsEmpty extends StatelessWidget {
           const SizedBox(height: 25),
           Text(
             context.l10n.noTransactions,
-            style: textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey),
+            style: context.titleLarge.copyWith(color: AppColors.encointerGrey),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 50),

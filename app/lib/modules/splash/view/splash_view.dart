@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,6 @@ class SplashView extends StatelessWidget {
     store.setApiReady(true);
 
     final loginStore = context.read<LoginStore>();
-    store.settings.cachedPin = await loginStore.getPin();
     if (loginStore.getBiometricAuthState == null) {
       final isDeviceSupported = await loginStore.isDeviceSupported();
       if (!isDeviceSupported) await loginStore.setBiometricAuthState(BiometricAuthState.deviceNotSupported);
@@ -44,7 +44,7 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: const Key('splashview'),
+      key: const Key(EWTestKeys.splashview),
       body: FutureBuilder(
         future: _initPage(context),
         builder: (context, s) {

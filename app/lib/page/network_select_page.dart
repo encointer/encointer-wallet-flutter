@@ -90,7 +90,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         children: <Widget>[
           Text(
             _selectedNetwork.info!.toUpperCase(),
-            style: context.textTheme.headlineMedium,
+            style: context.bodyLarge.copyWith(color: context.colorScheme.primary),
           ),
         ],
       ),
@@ -106,7 +106,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: address == context.read<AppStore>().account.currentAddress
-              ? BorderSide(color: context.theme.primaryColorLight)
+              ? BorderSide(color: context.colorScheme.background)
               : BorderSide.none,
         ),
         margin: const EdgeInsets.only(bottom: 16),

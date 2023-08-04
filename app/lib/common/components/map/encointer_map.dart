@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -59,7 +60,7 @@ class EncointerMap extends StatelessWidget {
                   Icons.location_on,
                   size: 40,
                   color: Colors.blueAccent,
-                  key: Key('cid-$index-marker-icon'),
+                  key: Key(EWTestKeys.cidMarkerIcon(index)),
                 ),
                 anchorPos: AnchorPos.align(AnchorAlign.top),
               ),

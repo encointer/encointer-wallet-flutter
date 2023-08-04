@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -125,7 +126,7 @@ class _Contact extends State<ContactPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
-                        key: const Key('contact-address'),
+                        key: const Key(EWTestKeys.contactAddress),
                         decoration: InputDecoration(
                           hintText: l10n.contactAddress,
                           labelText: l10n.contactAddress,
@@ -143,7 +144,7 @@ class _Contact extends State<ContactPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
-                        key: const Key('contact-name'),
+                        key: const Key(EWTestKeys.contactName),
                         decoration: InputDecoration(
                           hintText: l10n.contactName,
                           labelText: l10n.contactName,
@@ -196,7 +197,7 @@ class _Contact extends State<ContactPage> {
                       ),
                     const SizedBox(height: 24),
                     IconButton(
-                      key: const Key('scan-barcode'),
+                      key: const Key(EWTestKeys.scanBarcode),
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
                       onPressed: () async {
@@ -214,7 +215,7 @@ class _Contact extends State<ContactPage> {
             Container(
               margin: const EdgeInsets.all(16),
               child: RoundedButton(
-                key: const Key('contact-save'),
+                key: const Key(EWTestKeys.contactSave),
                 submitting: _submitting,
                 text: l10n.contactSave,
                 onPressed: _onSave,

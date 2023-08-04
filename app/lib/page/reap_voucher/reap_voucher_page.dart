@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -8,6 +9,7 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/modules/login/logic/login_store.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -56,25 +58,28 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     setState(() {});
 
-    final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-    if (context.read<AppStore>().chain.latestHeaderNumber != null) {
-      _voucherBalance = voucherBalanceEntry.applyDemurrage(
-        context.read<AppStore>().chain.latestHeaderNumber!,
-        context.read<AppStore>().encointer.community!.demurrage!,
-      );
+    final pin = await context.read<LoginStore>().getPin(context);
+    if (pin != null) {
+      final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid, pin);
+      if (context.read<AppStore>().chain.latestHeaderNumber != null) {
+        _voucherBalance = voucherBalanceEntry.applyDemurrage(
+          context.read<AppStore>().chain.latestHeaderNumber!,
+          context.read<AppStore>().encointer.community!.demurrage!,
+        );
+      }
+
+      _isReady = true;
+
+      setState(() {});
     }
-
-    _isReady = true;
-
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final store = context.watch<AppStore>();
-    final h2Grey = context.textTheme.displayMedium!.copyWith(color: AppColors.encointerGrey);
-    final h4Grey = context.textTheme.headlineMedium!.copyWith(color: AppColors.encointerGrey);
+    final h2Grey = context.titleLarge.copyWith(color: AppColors.encointerGrey);
+    final h4Grey = context.bodyLarge.copyWith(color: AppColors.encointerGrey);
     final params = ModalRoute.of(context)?.settings.arguments as ReapVoucherParams?;
 
     final voucher = params?.voucher;
@@ -140,7 +145,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SecondaryButtonWide(
-                  key: const Key('voucher-to-transfer-page'),
+                  key: const Key(EWTestKeys.voucherToTransferPage),
                   onPressed: _isReady ? () => _pushTransferPage(context, voucher!, _voucherAddress!) : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -153,7 +158,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                 ),
               ),
             SubmitButton(
-              key: const Key('submit-voucher'),
+              key: const Key(EWTestKeys.submitVoucher),
               onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri!, cid!, recipient) : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

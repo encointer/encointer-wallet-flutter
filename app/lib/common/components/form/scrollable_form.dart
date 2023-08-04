@@ -6,11 +6,13 @@ class ScrollableForm extends StatelessWidget {
     required this.formKey,
     required this.listViewChildren,
     required this.columnChildren,
+    this.listViewKey,
   });
 
   final GlobalKey<FormState> formKey;
   final List<Widget> listViewChildren;
   final List<Widget> columnChildren;
+  final Key? listViewKey;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class ScrollableForm extends StatelessWidget {
       key: formKey,
       child: Column(
         children: [
-          Expanded(child: ListView(children: listViewChildren)),
+          Expanded(child: ListView(key: listViewKey, children: listViewChildren)),
           ...columnChildren,
         ],
       ),

@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -43,7 +44,7 @@ class CeremonyStep1Count extends StatelessWidget {
         leading: Container(),
         actions: [
           IconButton(
-            key: const Key('close-encointer-ceremony-step1'),
+            key: const Key(EWTestKeys.closeEncointerCeremonyStep1),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
           )
@@ -62,38 +63,35 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         l10n.count,
-                        style: context.textTheme.displayMedium,
+                        style: context.titleLarge.copyWith(color: context.colorScheme.primary),
                       ),
                     ),
                     Center(
                       child: Text(
                         l10n.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
-                        style: context.textTheme.displayMedium!.copyWith(color: Colors.black, height: 2),
+                        style: context.titleLarge.copyWith(height: 2),
                       ),
                     ),
                     const SizedBox(height: 48),
                     EncointerTextFormField(
                       labelText: l10n.numberOfAttendees,
-                      textStyle: context.textTheme.displayLarge!.copyWith(color: AppColors.encointerBlack),
+                      textStyle: context.displayLarge.copyWith(color: AppColors.encointerBlack),
                       controller: _attendeesCountController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      textFormFieldKey: const Key('attendees-count'),
+                      textFormFieldKey: const Key(EWTestKeys.attendeesCount),
                     ),
                   ],
                 ),
               ),
               PrimaryButton(
-                key: const Key('ceremony-step-1-next'),
+                key: const Key(EWTestKeys.ceremonyStep1Next),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Iconsax.arrow_right_2),
                     const SizedBox(width: 12),
-                    Text(
-                      l10n.next,
-                      style: context.textTheme.displaySmall!.copyWith(color: context.colorScheme.background),
-                    ),
+                    Text(l10n.next),
                   ],
                 ),
                 onPressed: () => _attendeesCountController.text.trim().isNotEmpty

@@ -30,7 +30,7 @@ class QrCodeImageWithButton extends StatelessWidget {
         TextButton.icon(
           onPressed: onTap,
           icon: const Icon(Icons.share),
-          label: Text(shareText, style: context.textTheme.displaySmall),
+          label: Text(shareText, style: context.displaySmall),
         ),
         const SizedBox(height: 20),
       ],

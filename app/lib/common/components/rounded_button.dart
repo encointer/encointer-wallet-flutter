@@ -37,7 +37,7 @@ class RoundedButton extends StatelessWidget {
     }
     row.add(Text(
       text,
-      style: context.textTheme.labelLarge,
+      style: context.labelLarge,
     ));
     return ElevatedButton(
       style: TextButton.styleFrom(

@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,12 +16,12 @@ class UnregisteredLinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return InkWell(
-      key: const Key('unregister-button'),
+      key: const Key(EWTestKeys.unregisterButton),
       onTap: () async {
         final shouldUnregister = await AppAlert.showConfirmDialog<bool>(
           context: context,
           onCancel: () => Navigator.pop(context, false),
-          title: Text(l10n.unregisterDialogTitle, key: const Key('unregister-dialog')),
+          title: Text(l10n.unregisterDialogTitle, key: const Key(EWTestKeys.unregisterDialog)),
           onOK: () => Navigator.pop(context, true),
         );
         if (shouldUnregister ?? false) {
@@ -31,8 +32,7 @@ class UnregisteredLinkButton extends StatelessWidget {
       },
       child: Text(
         l10n.unregister,
-        style: context.textTheme.headlineMedium!
-            .copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
+        style: context.bodyMedium.copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
@@ -18,7 +19,7 @@ class ImportAccountLink extends StatelessWidget {
           style: TextStyle(color: context.colorScheme.background),
         ),
         InkWell(
-          key: const Key('import-account'),
+          key: const Key(EWTestKeys.importAccount),
           onTap: onTap,
           child: Text(
             context.l10n.import,

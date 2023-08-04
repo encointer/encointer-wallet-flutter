@@ -37,9 +37,8 @@ class TxDetail extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8),
           width: 80,
           child: Text(name,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: context.theme.unselectedWidgetColor,
               )));
     }
 
@@ -52,7 +51,7 @@ class TxDetail extends StatelessWidget {
           ),
           Text(
             '$action ${success! ? l10n.success : l10n.fail}',
-            style: context.textTheme.headlineMedium,
+            style: context.headlineMedium,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 32),

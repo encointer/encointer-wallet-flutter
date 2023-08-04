@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 
 import '../../helpers/helper.dart';
@@ -10,12 +11,12 @@ Future<void> homeInit(FlutterDriver driver) async {
 
 Future<void> changeCommunity(FlutterDriver driver) async {
   await driver.runUnsynchronized(() async {
-    await driver.tap(find.byValueKey('panel-controller'));
-    await driver.tap(find.byValueKey('add-community'));
+    await driver.tap(find.byValueKey(EWTestKeys.panelController));
+    await driver.tap(find.byValueKey(EWTestKeys.addCommunity));
 
-    await driver.tap(find.byValueKey('cid-0-marker-icon'));
-    await driver.tap(find.byValueKey('cid-0-marker-description'));
-    await driver.waitFor(find.byValueKey('add-community'));
+    await driver.tap(find.byValueKey(EWTestKeys.cidMarkerIcon(0)));
+    await driver.tap(find.byValueKey(EWTestKeys.cidMarkerDescription(0)));
+    await driver.waitFor(find.byValueKey(EWTestKeys.addCommunity));
 
     await Future<void>.delayed(const Duration(milliseconds: 1000));
     await closePanel(driver);
@@ -24,38 +25,38 @@ Future<void> changeCommunity(FlutterDriver driver) async {
 }
 
 Future<void> registerAndWait(FlutterDriver driver, ParticipantTypeTestHelper registrationType) async {
-  await driver.tap(find.byValueKey('registration-meetup-button'));
-  await driver.waitFor(find.byValueKey('educate-dialog-${registrationType.type}'));
+  await driver.tap(find.byValueKey(EWTestKeys.registrationMeetupButton));
+  await driver.waitFor(find.byValueKey(EWTestKeys.educateDialogRegistrationType(registrationType.type)));
   await driver.takeLocalScreenshot(registrationType.educationDialogScreenshotName);
-  await driver.tap(find.byValueKey('close-educate-dialog'));
-  await driver.waitFor(find.byValueKey('is-registered-info'));
+  await driver.tap(find.byValueKey(EWTestKeys.closeEducateDialog));
+  await driver.waitFor(find.byValueKey(EWTestKeys.isRegisteredInfo));
   await driver.takeLocalScreenshot(registrationType.screenshotName);
 }
 
 Future<void> unregisterAndWait(FlutterDriver driver) async {
-  await driver.waitFor(find.byValueKey('unregister-button'));
-  await driver.tap(find.byValueKey('unregister-button'));
-  await driver.waitFor(find.byValueKey('unregister-dialog'));
+  await driver.waitFor(find.byValueKey(EWTestKeys.unregisterButton));
+  await driver.tap(find.byValueKey(EWTestKeys.unregisterButton));
+  await driver.waitFor(find.byValueKey(EWTestKeys.unregisterDialog));
   await driver.takeLocalScreenshot(Screenshots.homeUnregisterDialog);
-  await driver.tap(find.byValueKey('ok-button'));
-  await driver.waitFor(find.byValueKey('registration-meetup-button'));
+  await driver.tap(find.byValueKey(EWTestKeys.okButton));
+  await driver.waitFor(find.byValueKey(EWTestKeys.registrationMeetupButton));
 }
 
 Future<void> checkAssignPhaseAssigned(FlutterDriver driver) async {
-  await driver.waitFor(find.byValueKey('list-view-wallet'));
+  await driver.waitFor(find.byValueKey(EWTestKeys.listViewWallet));
   await scrollToCeremonyBox(driver);
-  await driver.waitFor(find.byValueKey('account-assigned'));
+  await driver.waitFor(find.byValueKey(EWTestKeys.accountAssigned));
   await driver.takeLocalScreenshot(Screenshots.homeAssigningPhaseAssigned);
 }
 
 Future<void> checkAssignPhaseUnassigned(FlutterDriver driver) async {
   await scrollToCeremonyBox(driver);
-  await driver.waitFor(find.byValueKey('account-unassigned'));
+  await driver.waitFor(find.byValueKey(EWTestKeys.accountUnassigned));
   await driver.takeLocalScreenshot(Screenshots.homeAssigningPhaseUnassigned);
 }
 
 Future<void> claimPendingDev(FlutterDriver driver) async {
   await driver.requestData(TestCommand.devModeOn);
-  await driver.waitFor(find.byValueKey('claim-pending-dev'));
-  await driver.tap(find.byValueKey('claim-pending-dev'));
+  await driver.waitFor(find.byValueKey(EWTestKeys.claimPendingDev));
+  await driver.tap(find.byValueKey(EWTestKeys.claimPendingDev));
 }

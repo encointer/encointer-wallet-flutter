@@ -36,9 +36,6 @@ abstract class _SettingsStore with Store {
   bool enableBazaar = false;
 
   @observable
-  String cachedPin = '';
-
-  @observable
   bool loading = true;
 
   @observable
@@ -101,16 +98,14 @@ abstract class _SettingsStore with Store {
     return ls;
   }
 
+  /// Set of known accounts.
+  ///
+  /// Contains all the accounts and contacts stored on the device.
   @computed
-  List<AccountData> get contactListAll {
-    final ls = List<AccountData>.of(rootStore.account.accountList)..addAll(contactList);
-    return ls;
-  }
-
-  /// Set of known accounts
-  List<AccountData> knownAccounts() {
+  List<AccountData> get knownAccounts {
     final uniqueIds = <String>{};
-    return contactListAll.where((data) => uniqueIds.add(data.pubKey)).toList();
+    final allAccountsWithDuplicates = rootStore.account.accountList.toList()..addAll(contactList);
+    return allAccountsWithDuplicates.where((data) => uniqueIds.add(data.pubKey)).toList();
   }
 
   @action

@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +22,7 @@ final class LoginDialog {
       context: context,
       title: Text(l10n.biometricAuth),
       content: Text(l10n.biometricAuthDescription),
-      cancelButtonKey: const Key('not-now-button'),
+      cancelButtonKey: const Key(EWTestKeys.notNowButton),
       cancelText: l10n.notNow,
       confirmText: l10n.enable,
       onOK: () async {
@@ -58,7 +59,7 @@ final class LoginDialog {
     String? titleText,
   }) async {
     final loginStore = context.read<LoginStore>();
-    if (loginStore.getBiometricAuthState == BiometricAuthState.enabled && loginStore.cachedPin.isNotEmpty) {
+    if (loginStore.getBiometricAuthState == BiometricAuthState.enabled) {
       await showLocalAuth(
         context,
         onSuccess: onSuccess,
@@ -86,7 +87,7 @@ final class LoginDialog {
   }) async {
     final loginStore = context.read<LoginStore>();
     final value = await loginStore.localAuthenticate(titleText ?? context.l10n.verifyAuthTitle('true'), stickyAuth);
-    if (value) await onSuccess(loginStore.cachedPin);
+    if (value) await onSuccess(loginStore.cachedPin ?? await loginStore.loginService.getPin() ?? '');
   }
 
   static Future<void> showPasswordInputDialog(
@@ -106,7 +107,7 @@ final class LoginDialog {
       barrierDismissible: barrierDismissible,
       title: Text(titleText ?? l10n.verifyAuthTitle('false')),
       content: CupertinoTextFormFieldRow(
-        key: const Key('input-password-dialog'),
+        key: const Key(EWTestKeys.inputPasswordDialog),
         decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
         padding: EdgeInsets.zero,
         autofocus: true,
@@ -120,19 +121,19 @@ final class LoginDialog {
       actions: [
         if (showCancelButton)
           CupertinoButton(
-            key: const Key('cancel-button'),
+            key: const Key(EWTestKeys.cancelButton),
             onPressed: () => Navigator.pop(context),
             child: Text(l10n.cancel),
           ),
         WillPopScope(
           onWillPop: () async => canPop,
           child: CupertinoButton(
-            key: const Key('password-ok'),
+            key: const Key(EWTestKeys.passwordOk),
             onPressed: () async {
               loginStore.loading = true;
               final value = await _onOk(context, passCtrl.text.trim());
               if (value) {
-                if (loginStore.cachedPin.isEmpty) await loginStore.setPin(passCtrl.text.trim());
+                if (loginStore.cachedPin == null) await loginStore.setPin(passCtrl.text.trim());
                 await onSuccess(passCtrl.text.trim());
                 if (autoCloseOnSuccess) Navigator.of(context).pop();
               } else {

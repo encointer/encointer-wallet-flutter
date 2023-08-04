@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -6,7 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/logo/participant_avatar.dart';
-import 'package:encointer_wallet/theme/custom/extension/theme_extension.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -77,7 +78,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
         leading: const SizedBox.shrink(),
         actions: [
           IconButton(
-            key: const Key('close-scanner'),
+            key: const Key(EWTestKeys.closeScanner),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
@@ -125,7 +126,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                         );
                         return Text(
                           txt,
-                          style: context.textTheme.displayMedium!.copyWith(
+                          style: context.headlineLarge.copyWith(
                             color: Colors.white,
                             backgroundColor: Colors.black38,
                           ),

@@ -1,8 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/config/biometiric_auth_state.dart';
-import 'package:encointer_wallet/modules/login/service/login_service.dart';
 
 part 'login_store.g.dart';
 
@@ -13,7 +16,7 @@ abstract class _LoginStoreBase with Store {
 
   final LoginService loginService;
 
-  String cachedPin = '';
+  String? cachedPin;
 
   @observable
   BiometricAuthState? biometricAuthState;
@@ -21,8 +24,12 @@ abstract class _LoginStoreBase with Store {
   @observable
   bool loading = false;
 
-  Future<String> getPin() async {
-    if (cachedPin.isEmpty) cachedPin = await loginService.getPin() ?? '';
+  FutureOr<String?> getPin(BuildContext context) async {
+    if (cachedPin != null) return cachedPin!;
+    await LoginDialog.verifyPinOrBioAuth(
+      context,
+      onSuccess: (v) async => cachedPin = await loginService.getPin(),
+    );
     return cachedPin;
   }
 
@@ -32,7 +39,7 @@ abstract class _LoginStoreBase with Store {
   }
 
   Future<void> clearPin() async {
-    cachedPin = '';
+    cachedPin = null;
     await loginService.clearPin();
   }
 
