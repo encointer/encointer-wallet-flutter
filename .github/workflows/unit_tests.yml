@@ -34,7 +34,7 @@ jobs:
 
       - name: "Check translations"
         run: |
-          cd app && flutter gen-l10n && cd ..
+          cd app && ./../flutterw gen-l10n && cd ..
           ./scripts/check_translations.sh ./app/.untranslated-messages.txt
 
       - name: "Run unit tests Encointer"
