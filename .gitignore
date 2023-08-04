@@ -55,5 +55,5 @@ app/android/fastlane/metadata/android/en-US/images/phoneScreenshots/
 # printscreens generated in tests
 /screenshots
 
-# Contains missing translations if any, otherwise the file is not generated.
+# Contains missing translations if any, otherwise it is an empty json: '{}'
 app/.untranslated-messages.txt
