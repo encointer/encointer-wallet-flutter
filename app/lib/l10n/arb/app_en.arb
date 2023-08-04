@@ -282,7 +282,7 @@
         "placeholders": {
             "errorText": {
                 "type": "String",
-                "example": "Format exaception"
+                "example": "Format exception"
             }
         }
     },
@@ -291,7 +291,7 @@
         "placeholders": {
             "accountName": {
                 "type": "String",
-                "example": "Format exaception"
+                "example": "Format exception"
             }
         }
     },
@@ -317,7 +317,7 @@
         "placeholders": {
             "network": {
                 "type": "String",
-                "example": "Dev-Gessel"
+                "example": "Dev-Gesell"
             },
             "community": {
                 "type": "String",
