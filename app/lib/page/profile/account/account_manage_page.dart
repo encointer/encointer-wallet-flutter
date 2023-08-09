@@ -9,6 +9,7 @@ import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
@@ -243,10 +244,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(),
-                  leading: CommunityIcon(
-                    store: _appStore,
-                    address: '',
-                    icon: const CommunityIconObserver(),
+                  leading: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      child: Assets.kusama
+                          .svg(fit: BoxFit.fitHeight, allowDrawingOutsideViewBox: true, clipBehavior: Clip.antiAlias),
+                    ),
                   ),
                   title: Row(
                     children: [
