@@ -214,7 +214,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 ),
                 Text(l10n.communities, style: h3Grey, textAlign: TextAlign.left),
                 if (appSettingsStore.developerMode)
-                  // Expanded needed to expand until bottom but without overflowing in case we have many list entries.
                   ListView.builder(
                       shrinkWrap: true,
                       // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
