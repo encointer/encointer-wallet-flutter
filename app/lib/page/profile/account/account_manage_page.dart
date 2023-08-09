@@ -211,11 +211,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ),
                   ],
                 ),
-                Text(l10n.communities,
-                    style: h3.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
+                Text(l10n.communities, style: h3.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
                 if (appSettingsStore.developerMode)
+                  // Expanded needed to expand until bottom but without overflowing in case we have many list entries.
                   Expanded(
                     child: ListView.builder(
+                        shrinkWrap: true,
                         // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
                         itemCount: store.encointer.accountStores!.containsKey(addressSS58)
                             ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
@@ -231,6 +232,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         }),
                   )
                 else
+                  // Expanded needed to expand until bottom but without overflowing in case we have many list entries.
                   Expanded(
                     child: ListView.builder(
                         itemCount: store.encointer.chosenCid != null ? 1 : 0,
@@ -336,6 +338,7 @@ class AccountActionItemData {
     required this.accountAction,
     required this.icon,
   });
+
   // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
   final String title;
   final AccountAction accountAction;
