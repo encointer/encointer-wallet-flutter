@@ -182,41 +182,37 @@ class _AccountManagePageState extends State<AccountManagePage> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    const SizedBox(height: 20),
-                    if (!isKeyboard)
-                      AddressIcon(
-                        addressSS58,
-                        accountToBeEditedPubKey,
-                        size: 130,
-                      ),
+                const SizedBox(height: 20),
+                if (!isKeyboard)
+                  AddressIcon(
+                    addressSS58,
+                    accountToBeEditedPubKey,
+                    size: 130,
+                  ),
+                Text(
+                  addressSS58,
+                  key: const Key(EWTestKeys.accountPublicKey),
+                  // Text only read `addressSS58` for integration test
+                  style: const TextStyle(fontSize: 2, color: Colors.transparent),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Text(
-                      addressSS58,
-                      key: const Key(EWTestKeys.accountPublicKey),
-                      // Text only read `addressSS58` for integration test
-                      style: const TextStyle(fontSize: 2, color: Colors.transparent),
+                      Fmt.address(addressSS58)!,
+                      style: const TextStyle(fontSize: 20),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          Fmt.address(addressSS58)!,
-                          style: const TextStyle(fontSize: 20),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        IconButton(
-                          icon: const Icon(Iconsax.copy),
-                          color: context.colorScheme.secondary,
-                          onPressed: () => UI.copyAndNotify(context, addressSS58),
-                        ),
-                      ],
+                    IconButton(
+                      icon: const Icon(Iconsax.copy),
+                      color: context.colorScheme.secondary,
+                      onPressed: () => UI.copyAndNotify(context, addressSS58),
                     ),
-                    Text(l10n.communities,
-                        style: h3.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
                   ],
                 ),
+                Text(l10n.communities,
+                    style: h3.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
                 if (appSettingsStore.developerMode)
                   Expanded(
                     child: ListView.builder(
