@@ -249,20 +249,17 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     height: 50,
                     child: CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      child: Assets.kusama
-                          .svg(fit: BoxFit.fitHeight, allowDrawingOutsideViewBox: true, clipBehavior: Clip.antiAlias),
+                      child: Assets.kusama.svg(fit: BoxFit.fitHeight),
                     ),
                   ),
-                  title: Row(
-                    children: [
-                      Text(l10n.kusamaFaucet, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
-                    ],
+                  title: Text(
+                    l10n.kusamaFaucet,
+                    style: context.titleLarge.copyWith(color: context.colorScheme.primary),
                   ),
                   trailing: ElevatedButton(
                     onPressed: () => (),
                     style: ElevatedButton.styleFrom(
-                      // make splash animation as high as the container
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                       backgroundColor: context.colorScheme.primary,
                       foregroundColor: Colors.white,
                       textStyle: context.titleSmall,
