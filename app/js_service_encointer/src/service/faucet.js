@@ -23,6 +23,14 @@ export async function getAllFaucetsWithAccount () {
   return combineListsIntoMap(accounts, faucets);
 }
 
+/**
+ * Checks if an account has already committed its reputation for a given purpose.
+ */
+export async function hasCommittedFor (cid, cIndex, purpose, account) {
+  const maybeCommitment = await api.query.encointerReputationCommitments.commitments([cid, cIndex], [purpose, account]);
+  return maybeCommitment.isSome;
+}
+
 function combineListsIntoMap (keys, values) {
   if (keys.length !== values.length) {
     throw new Error('Lists must have the same length');

@@ -9,8 +9,13 @@ import { u8aToHex } from '@polkadot/util';
 import { gesellNetwork } from './testUtils/networks';
 
 import { testSetup } from './testUtils/testSetup';
-import { getAllFaucetAccounts, getAllFaucetsWithAccount, getFaucetFor } from '../src/service/faucet.js';
-import { expect } from '@jest/globals';
+import {
+  getAllFaucetAccounts,
+  getAllFaucetsWithAccount,
+  getFaucetFor,
+  hasCommittedFor
+} from '../src/service/faucet.js';
+import { expect, it } from '@jest/globals';
 
 describe('encointer', () => {
   const network = gesellNetwork();
@@ -125,10 +130,16 @@ describe('encointer', () => {
       };
 
       const faucets = await getAllFaucetsWithAccount();
-
       console.log(`faucets ${JSON.stringify(faucets)}`);
 
       expect(faucets[wellKnownFaucetAccount].toJSON()).toStrictEqual(wellKnownFaucet);
+    });
+
+    it('Should confirm no commitment', async () => {
+      const someAccount = '5CTxhG3NJjhwti8kQRR9FYTT53Jq41We3MHdoJZa4RymAKhq';
+      const someCid = '0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53';
+      const hasCommitted = await hasCommittedFor(someCid, 0, 0, someAccount);
+      expect(hasCommitted).toBeFalsy();
     });
   });
 });
