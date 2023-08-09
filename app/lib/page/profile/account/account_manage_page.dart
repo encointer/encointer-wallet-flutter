@@ -126,7 +126,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final h3 = context.titleLarge.copyWith(fontSize: 19);
+    final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
     final appSettingsStore = context.watch<AppSettings>();
@@ -211,39 +211,62 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ),
                   ],
                 ),
-                Text(l10n.communities, style: h3.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
+                Text(l10n.communities, style: h3Grey, textAlign: TextAlign.left),
                 if (appSettingsStore.developerMode)
                   // Expanded needed to expand until bottom but without overflowing in case we have many list entries.
-                  Expanded(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                        itemCount: store.encointer.accountStores!.containsKey(addressSS58)
-                            ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
-                            : 0,
-                        itemBuilder: (BuildContext context, int index) {
-                          final community =
-                              store.encointer.accountStores![addressSS58]!.balanceEntries.keys.elementAt(index);
-                          return _getBalanceEntryListTile(
-                            community,
-                            store.encointer.accountStores![addressSS58]!.balanceEntries[community],
-                            addressSS58,
-                          );
-                        }),
-                  )
+                  ListView.builder(
+                      shrinkWrap: true,
+                      // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
+                      itemCount: store.encointer.accountStores!.containsKey(addressSS58)
+                          ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
+                          : 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        final community =
+                            store.encointer.accountStores![addressSS58]!.balanceEntries.keys.elementAt(index);
+                        return _getBalanceEntryListTile(
+                          community,
+                          store.encointer.accountStores![addressSS58]!.balanceEntries[community],
+                          addressSS58,
+                        );
+                      })
                 else
-                  // Expanded needed to expand until bottom but without overflowing in case we have many list entries.
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: store.encointer.chosenCid != null ? 1 : 0,
-                        itemBuilder: (BuildContext context, int index) {
-                          return _getBalanceEntryListTile(
-                            _appStore.encointer.chosenCid!.toFmtString(),
-                            _appStore.encointer.communityBalanceEntry,
-                            addressSS58,
-                          );
-                        }),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: store.encointer.chosenCid != null ? 1 : 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _getBalanceEntryListTile(
+                          _appStore.encointer.chosenCid!.toFmtString(),
+                          _appStore.encointer.communityBalanceEntry,
+                          addressSS58,
+                        );
+                      }),
+                Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(),
+                  leading: CommunityIcon(
+                    store: _appStore,
+                    address: '',
+                    icon: const CommunityIconObserver(),
                   ),
+                  title: Row(
+                    children: [
+                      Text(l10n.kusamaFaucet, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
+                    ],
+                  ),
+                  trailing: ElevatedButton(
+                    onPressed: () => (),
+                    style: ElevatedButton.styleFrom(
+                      // make splash animation as high as the container
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: context.colorScheme.primary,
+                      foregroundColor: Colors.white,
+                      textStyle: context.titleSmall,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    ),
+                    child: const Text('Claim'),
+                  ),
+                ),
+                const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
                   decoration: BoxDecoration(
