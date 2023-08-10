@@ -72,12 +72,6 @@ jobs:
       - name: "Build JS"
         run: ./flutterw pub global run melos yarn-build
 
-      - name: "Upload JS binary"
-        uses: actions/upload-artifact@v3
-        with:
-          name: main.js
-          path: ./app/js_service_encointer/dist/main.js
-
       - name: Melos Bootstrap
         run: ./flutterw pub global run melos bootstrap
 
