@@ -5,8 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'faucet.g.dart';
 
-// explicit = true as we have nested Json with location
-// field rename such that the fields match the ones defined in the runtime
+// explicit = true as we have a nested Json with cid.
 @JsonSerializable(explicitToJson: true)
 class Faucet {
   Faucet(
