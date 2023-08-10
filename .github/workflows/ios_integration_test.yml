@@ -69,11 +69,11 @@ jobs:
       - name: Melos Install
         run: ./scripts/install_melos.sh
 
-      - name: "Build JS"
-        run: ./flutterw pub global run melos yarn-build
-
       - name: Melos Bootstrap
         run: ./flutterw pub global run melos bootstrap
+
+      - name: "Build JS"
+        run: ./flutterw pub global run melos yarn-build
 
       - name: Start colima a docker runtime for MacOs
         run: |
