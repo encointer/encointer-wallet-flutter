@@ -35,7 +35,7 @@ void main() {
         "geohash": "0x6535647674"
       }''') as Map<String, dynamic>);
 
-      expect(faucet.whitelist[0], cid0);
+      expect(faucet.whitelist![0], cid0);
     });
   });
 }

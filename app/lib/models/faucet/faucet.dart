@@ -27,7 +27,7 @@ class Faucet {
   int purposeId;
 
   /// Communities whose reputation qualifies for a faucet drip.
-  List<CommunityIdentifier> whitelist;
+  List<CommunityIdentifier>? whitelist;
 
   /// The amount one gits per faucet drip.
   int dripAmount;
