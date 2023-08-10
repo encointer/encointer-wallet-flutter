@@ -69,11 +69,11 @@ jobs:
       - name: Melos Install
         run: ./scripts/install_melos.sh
 
-      - name: Melos Bootstrap
-        run: ./flutterw pub global run melos bootstrap
-
       - name: "Build JS"
         run: ./flutterw pub global run melos yarn-build
+
+      - name: Melos Bootstrap
+        run: ./flutterw pub global run melos bootstrap
 
       - name: Start colima a docker runtime for MacOs
         run: |
@@ -112,10 +112,3 @@ jobs:
         with:
           name: ${{ matrix.device }}
           path: ${{ env.ARTIFACT_PATH }}
-
-      - name: "Upload JS binary"
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: main.js
-          path: ./app/js_service_encointer/dist/main.js
