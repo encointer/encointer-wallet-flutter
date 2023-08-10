@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'faucet.g.dart';
@@ -20,6 +21,7 @@ class Faucet {
   Map<String, dynamic> toJson() => _$FaucetToJson(this);
 
   /// Name of the faucet.
+  @HexToUtf8Converter()
   String name;
 
   /// Onchain purpose identifier of a faucet. The faucet can only be dripped once per
@@ -38,5 +40,18 @@ class Faucet {
   @override
   String toString() {
     return jsonEncode(this);
+  }
+}
+
+class HexToUtf8Converter implements JsonConverter<String, String> {
+  const HexToUtf8Converter();
+  @override
+  String fromJson(String hexString) {
+    return utf8.decode(Fmt.hexToBytes(hexString));
+  }
+
+  @override
+  String toJson(String string) {
+    return string;
   }
 }

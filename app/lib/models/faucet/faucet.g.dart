@@ -7,7 +7,7 @@ part of 'faucet.dart';
 // **************************************************************************
 
 Faucet _$FaucetFromJson(Map<String, dynamic> json) => Faucet(
-      json['name'] as String,
+      const HexToUtf8Converter().fromJson(json['name'] as String),
       json['purposeId'] as int,
       (json['whitelist'] as List<dynamic>?)
           ?.map((e) => CommunityIdentifier.fromJson(e as Map<String, dynamic>))
@@ -17,7 +17,7 @@ Faucet _$FaucetFromJson(Map<String, dynamic> json) => Faucet(
     );
 
 Map<String, dynamic> _$FaucetToJson(Faucet instance) => <String, dynamic>{
-      'name': instance.name,
+      'name': const HexToUtf8Converter().toJson(instance.name),
       'purposeId': instance.purposeId,
       'whitelist': instance.whitelist?.map((e) => e.toJson()).toList(),
       'dripAmount': instance.dripAmount,
