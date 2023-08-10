@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
 import 'package:encointer_wallet/models/bazaar/item_offered.dart';
+import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:ew_http/ew_http.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -514,6 +515,34 @@ class EncointerApi {
       Log.e('Encointer Api', '$e', s);
     }
     return remainingTickets;
+  }
+
+  Future<Map<String, Faucet>> getAllFaucetsWithAccount() async {
+    try {
+      // faucets: Map<String, Faucet>
+      final faucets = await jsApi.evalJavascript<Map<String, dynamic>>(
+        'encointer.getAllFaucetsWithAccount()',
+      );
+      final f = faucets.map((address, faucet) => MapEntry(address, Faucet.fromJson(faucet as Map<String, dynamic>)));
+      Log.d('Encointer Api', 'all faucets2: $f');
+      return f;
+    } catch (e, s) {
+      Log.e('Encointer Api', '$e', s);
+      return Map.of({});
+    }
+  }
+
+  Future<bool> hasCommittedFor(CommunityIdentifier cid, int cIndex, int purposeId, String address) async {
+    try {
+      final hasCommitted = await jsApi.evalJavascript<bool>(
+        'encointer.hasCommittedFor(${jsonEncode(cid)}, "$cIndex", "$purposeId","$address")',
+      );
+      Log.d('Encointer Api', 'hasCommitted : $hasCommitted');
+      return hasCommitted;
+    } catch (e, s) {
+      Log.e('Encointer Api', '$e', s);
+      return false;
+    }
   }
 
   /// Get all the registered businesses for the current `chosenCid`

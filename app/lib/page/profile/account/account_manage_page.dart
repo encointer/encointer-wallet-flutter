@@ -39,11 +39,18 @@ class _AccountManagePageState extends State<AccountManagePage> {
   bool _isEditingText = false;
   late final AppStore _appStore;
 
+  Map<String, dynamic>? faucets;
+
   @override
   void initState() {
     super.initState();
     _appStore = context.read<AppStore>();
     if (_appStore.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
+    _init();
+  }
+
+  Future<void> _init() async {
+    faucets = await webApi.encointer.getAllFaucetsWithAccount();
   }
 
   @override
