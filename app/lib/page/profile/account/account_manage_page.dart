@@ -403,14 +403,14 @@ class _FaucetListTileState extends State<FaucetListTile> {
         children: [
           const Text('KSM: '),
           FutureBuilder(
-          future: nativeBalance,
-          builder: (BuildContext context, AsyncSnapshot<BigInt> snapshot) {
-            if (snapshot.hasData) {
-              return Text(Fmt.token(snapshot.data!, ertDecimals));
-            } else {
-              return const CupertinoActivityIndicator();
-            }
-          })
+              future: nativeBalance,
+              builder: (BuildContext context, AsyncSnapshot<BigInt> snapshot) {
+                if (snapshot.hasData) {
+                  return Text(Fmt.token(snapshot.data!, ertDecimals));
+                } else {
+                  return const CupertinoActivityIndicator();
+                }
+              })
         ],
       ),
       trailing: FutureBuilder(
@@ -428,9 +428,7 @@ class _FaucetListTileState extends State<FaucetListTile> {
                 child: const Text('Claim'),
               );
             } else {
-              return const SubmitButtonSmall(
-                  child: Text('No Claim')
-              );
+              return const SubmitButtonSmall(child: Text('No Claim'));
             }
           } else {
             return const CupertinoActivityIndicator();
