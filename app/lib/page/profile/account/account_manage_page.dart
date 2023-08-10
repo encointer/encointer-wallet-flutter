@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
@@ -251,14 +252,17 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         );
                       }),
                 Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
-                if (faucets != null) ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: faucets!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final faucetAccount = faucets!.keys.elementAt(index);
-                    return FaucetListTile(faucet: faucets![faucetAccount]!);
-                  },
-                ) else const CupertinoActivityIndicator(),
+                if (faucets != null)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: faucets!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final faucetAccount = faucets!.keys.elementAt(index);
+                      return FaucetListTile(store, faucet: faucets![faucetAccount]!);
+                    },
+                  )
+                else
+                  const CupertinoActivityIndicator(),
                 const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
@@ -349,10 +353,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
 }
 
 class FaucetListTile extends StatelessWidget {
-  const FaucetListTile({
+  const FaucetListTile(
+    this.store, {
     super.key,
     required this.faucet,
   });
+
+  final AppStore store;
 
   final Faucet faucet;
 
@@ -372,18 +379,70 @@ class FaucetListTile extends StatelessWidget {
         faucet.name,
         style: context.titleMedium.copyWith(color: context.colorScheme.primary),
       ),
-      trailing: ElevatedButton(
-        onPressed: () => (),
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          backgroundColor: context.colorScheme.primary,
-          foregroundColor: Colors.white,
-          textStyle: context.titleSmall,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      trailing: FutureBuilder(
+          future: _getUncommittedReputationIds(),
+          builder: (BuildContext context, AsyncSnapshot<Map<int, CommunityIdentifier>> snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data!.isNotEmpty) {
+                return ElevatedButton(
+                  onPressed: () => (),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    backgroundColor: context.colorScheme.primary,
+                    foregroundColor: Colors.white,
+                    textStyle: context.titleSmall,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                  ),
+                  child: const Text('Claim'),
+                );
+              } else {
+                return ElevatedButton(
+                  onPressed: null,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    backgroundColor: context.colorScheme.primary,
+                    foregroundColor: Colors.white,
+                    textStyle: context.titleSmall,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                  ),
+                  child: const Text('No Claim'),
+                );
+              }
+
+            } else {
+              return const CupertinoActivityIndicator();
+            }
+          },
         ),
-        child: const Text('Claim'),
-      ),
     );
+  }
+
+  /// Returns all reputation ids, which haven't been committed for this faucet's
+  /// purpose id yet, i.e., can be used to drip the faucet currently.
+  Future<Map<int, CommunityIdentifier>> _getUncommittedReputationIds() async {
+    final reputations = store.encointer.account!.reputations;
+    final ids = Map<int, CommunityIdentifier>.of({});
+
+    // Create a set of futures to await in parallel.
+    final futures = reputations.entries.map(
+      (e) async {
+        final cid = e.value.communityIdentifier!;
+        // Only check if the reputations community id is allowed to drip the faucet.
+        if (faucet.whitelist != null && faucet.whitelist!.contains(cid)) {
+          final hasCommitted = await webApi.encointer.hasCommittedFor(
+            cid,
+            e.key,
+            faucet.purposeId,
+            store.account.currentAddress,
+          );
+
+          if (!hasCommitted) ids[e.key] = e.value.communityIdentifier!;
+        }
+      },
+    );
+
+    await Future.wait(futures);
+    return ids;
   }
 }
 
