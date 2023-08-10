@@ -1,4 +1,6 @@
+import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -39,7 +41,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   bool _isEditingText = false;
   late final AppStore _appStore;
 
-  Map<String, dynamic>? faucets;
+  Map<String, Faucet>? faucets;
 
   @override
   void initState() {
@@ -51,6 +53,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   Future<void> _init() async {
     faucets = await webApi.encointer.getAllFaucetsWithAccount();
+    setState(() {});
   }
 
   @override
@@ -248,32 +251,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         );
                       }),
                 Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(),
-                  leading: SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      child: Assets.kusama.svg(fit: BoxFit.fitHeight),
-                    ),
-                  ),
-                  title: Text(
-                    l10n.kusamaFaucet,
-                    style: context.titleLarge.copyWith(color: context.colorScheme.primary),
-                  ),
-                  trailing: ElevatedButton(
-                    onPressed: () => (),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      backgroundColor: context.colorScheme.primary,
-                      foregroundColor: Colors.white,
-                      textStyle: context.titleSmall,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                    ),
-                    child: const Text('Claim'),
-                  ),
-                ),
+                if (faucets != null) ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: faucets!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final faucetAccount = faucets!.keys.elementAt(index);
+                    return FaucetListTile(faucet: faucets![faucetAccount]!);
+                  },
+                ) else const CupertinoActivityIndicator(),
                 const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
@@ -358,6 +343,45 @@ class _AccountManagePageState extends State<AccountManagePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class FaucetListTile extends StatelessWidget {
+  const FaucetListTile({
+    super.key,
+    required this.faucet,
+  });
+
+  final Faucet faucet;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(),
+      leading: SizedBox(
+        width: 50,
+        height: 50,
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          child: Assets.kusama.svg(fit: BoxFit.fitHeight),
+        ),
+      ),
+      title: Text(
+        faucet.name,
+        style: context.titleMedium.copyWith(color: context.colorScheme.primary),
+      ),
+      trailing: ElevatedButton(
+        onPressed: () => (),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          backgroundColor: context.colorScheme.primary,
+          foregroundColor: Colors.white,
+          textStyle: context.titleSmall,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        ),
+        child: const Text('Claim'),
       ),
     );
   }
