@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/submit_button.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_tx_wrappers.dart';
@@ -373,11 +374,13 @@ class FaucetListTile extends StatefulWidget {
 
 class _FaucetListTileState extends State<FaucetListTile> {
   late Future<Map<int, CommunityIdentifier>> future;
+  late Future<BigInt> nativeBalance;
 
   @override
   void initState() {
     super.initState();
     future = _getUncommittedReputationIds();
+    nativeBalance = getNativeFreeBalance();
   }
 
   @override
@@ -396,6 +399,20 @@ class _FaucetListTileState extends State<FaucetListTile> {
         widget.faucet.name,
         style: context.titleMedium.copyWith(color: context.colorScheme.primary),
       ),
+      subtitle: Row(
+        children: [
+          const Text('KSM: '),
+          FutureBuilder(
+          future: nativeBalance,
+          builder: (BuildContext context, AsyncSnapshot<BigInt> snapshot) {
+            if (snapshot.hasData) {
+              return Text(Fmt.token(snapshot.data!, ertDecimals));
+            } else {
+              return const CupertinoActivityIndicator();
+            }
+          })
+        ],
+      ),
       trailing: FutureBuilder(
         future: future,
         builder: (BuildContext context, AsyncSnapshot<Map<int, CommunityIdentifier>> snapshot) {
@@ -405,6 +422,7 @@ class _FaucetListTileState extends State<FaucetListTile> {
                 onPressed: (context) async {
                   await _submitFaucetDripTxs(context, snapshot.data!, widget.faucetAccount);
                   future = _getUncommittedReputationIds();
+                  nativeBalance = getNativeFreeBalance();
                   setState(() {});
                 },
                 child: const Text('Claim'),
@@ -458,6 +476,11 @@ class _FaucetListTileState extends State<FaucetListTile> {
     final futures =
         ids.entries.map((e) => submitFaucetDrip(context, widget.store, webApi, faucetAccount, e.value, e.key));
     await Future.wait(futures);
+  }
+
+  Future<BigInt> getNativeFreeBalance() async {
+    final balance = await webApi.assets.getBalance();
+    return balance.freeBalance;
   }
 }
 
