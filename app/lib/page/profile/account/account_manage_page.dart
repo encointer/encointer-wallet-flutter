@@ -449,7 +449,7 @@ class _FaucetListTileState extends State<FaucetListTile> {
       (e) async {
         final cid = e.value.communityIdentifier!;
         // Only check if the reputations community id is allowed to drip the faucet.
-        if (widget.faucet.whitelist != null && widget.faucet.whitelist!.contains(cid)) {
+        if (widget.faucet.whitelist == null || widget.faucet.whitelist!.contains(cid)) {
           final hasCommitted = await webApi.encointer.hasCommittedFor(
             cid,
             e.key,
