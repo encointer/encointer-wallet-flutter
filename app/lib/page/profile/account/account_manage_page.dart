@@ -1,5 +1,7 @@
+import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_tx_wrappers.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -258,7 +260,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     itemCount: faucets!.length,
                     itemBuilder: (BuildContext context, int index) {
                       final faucetAccount = faucets!.keys.elementAt(index);
-                      return FaucetListTile(store, faucet: faucets![faucetAccount]!);
+                      return FaucetListTile(store, faucet: faucets![faucetAccount]!, faucetAccount: faucetAccount);
                     },
                   )
                 else
@@ -352,16 +354,31 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 }
 
-class FaucetListTile extends StatelessWidget {
+class FaucetListTile extends StatefulWidget {
   const FaucetListTile(
     this.store, {
     super.key,
+    required this.faucetAccount,
     required this.faucet,
   });
 
   final AppStore store;
 
+  final String faucetAccount;
   final Faucet faucet;
+
+  @override
+  State<FaucetListTile> createState() => _FaucetListTileState();
+}
+
+class _FaucetListTileState extends State<FaucetListTile> {
+  late Future<Map<int, CommunityIdentifier>> future;
+
+  @override
+  void initState() {
+    super.initState();
+    future = _getUncommittedReputationIds();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -376,51 +393,39 @@ class FaucetListTile extends StatelessWidget {
         ),
       ),
       title: Text(
-        faucet.name,
+        widget.faucet.name,
         style: context.titleMedium.copyWith(color: context.colorScheme.primary),
       ),
       trailing: FutureBuilder(
-          future: _getUncommittedReputationIds(),
-          builder: (BuildContext context, AsyncSnapshot<Map<int, CommunityIdentifier>> snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data!.isNotEmpty) {
-                return ElevatedButton(
-                  onPressed: () => (),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    backgroundColor: context.colorScheme.primary,
-                    foregroundColor: Colors.white,
-                    textStyle: context.titleSmall,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                  ),
-                  child: const Text('Claim'),
-                );
-              } else {
-                return ElevatedButton(
-                  onPressed: null,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    backgroundColor: context.colorScheme.primary,
-                    foregroundColor: Colors.white,
-                    textStyle: context.titleSmall,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                  ),
-                  child: const Text('No Claim'),
-                );
-              }
-
+        future: future,
+        builder: (BuildContext context, AsyncSnapshot<Map<int, CommunityIdentifier>> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.isNotEmpty) {
+              return SubmitButtonSmall(
+                onPressed: (context) async {
+                  await _submitFaucetDripTxs(context, snapshot.data!, widget.faucetAccount);
+                  future = _getUncommittedReputationIds();
+                  setState(() {});
+                },
+                child: const Text('Claim'),
+              );
             } else {
-              return const CupertinoActivityIndicator();
+              return const SubmitButtonSmall(
+                  child: Text('No Claim')
+              );
             }
-          },
-        ),
+          } else {
+            return const CupertinoActivityIndicator();
+          }
+        },
+      ),
     );
   }
 
   /// Returns all reputation ids, which haven't been committed for this faucet's
   /// purpose id yet, i.e., can be used to drip the faucet currently.
   Future<Map<int, CommunityIdentifier>> _getUncommittedReputationIds() async {
-    final reputations = store.encointer.account!.reputations;
+    final reputations = widget.store.encointer.account!.reputations;
     final ids = Map<int, CommunityIdentifier>.of({});
 
     // Create a set of futures to await in parallel.
@@ -428,12 +433,12 @@ class FaucetListTile extends StatelessWidget {
       (e) async {
         final cid = e.value.communityIdentifier!;
         // Only check if the reputations community id is allowed to drip the faucet.
-        if (faucet.whitelist != null && faucet.whitelist!.contains(cid)) {
+        if (widget.faucet.whitelist != null && widget.faucet.whitelist!.contains(cid)) {
           final hasCommitted = await webApi.encointer.hasCommittedFor(
             cid,
             e.key,
-            faucet.purposeId,
-            store.account.currentAddress,
+            widget.faucet.purposeId,
+            widget.store.account.currentAddress,
           );
 
           if (!hasCommitted) ids[e.key] = e.value.communityIdentifier!;
@@ -443,6 +448,16 @@ class FaucetListTile extends StatelessWidget {
 
     await Future.wait(futures);
     return ids;
+  }
+
+  Future<void> _submitFaucetDripTxs(
+    BuildContext context,
+    Map<int, CommunityIdentifier> ids,
+    String faucetAccount,
+  ) async {
+    final futures =
+        ids.entries.map((e) => submitFaucetDrip(context, widget.store, webApi, faucetAccount, e.value, e.key));
+    await Future.wait(futures);
   }
 }
 

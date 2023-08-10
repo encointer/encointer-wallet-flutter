@@ -168,6 +168,29 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
   );
 }
 
+Future<void> submitFaucetDrip(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  String faucetAccount,
+  CommunityIdentifier cid,
+  int cIndex,
+) async {
+  final params = faucetDripParams(
+    faucetAccount,
+    cid,
+    cIndex,
+    context.l10n,
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    params,
+  );
+}
+
 // todo: replace this with `encointerBalances.transfer_all`, when we have it in the runtime.
 Future<Map<String, dynamic>> submitReapVoucher(
   Api api,

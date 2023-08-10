@@ -208,6 +208,8 @@
     "reputableTitle": "Als Reputable registriert. Dein Platz ist garantiert",
     "reputationOverall": "Allgemeine Reputation",
     "restartGathering": "Versammlung erneut starten",
+    "submittedFaucetDripTitle": "Faucet Belohnung",
+    "submittedFaucetDripContent": "Вы успешно получили вознаграждение от Faucet.",
     "retry": "Wiederholen",
     "rewardsAlreadyIssuedErrorBody": "Ein anderer Teilnehmer hat die Auszahlung für dieses Treffen ausgelöst. Du solltest dein Einkommen bereits erhalten haben.",
     "rewardsAlreadyIssuedErrorTitle": "Einkommen bereits ausgezahlt",
