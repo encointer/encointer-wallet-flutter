@@ -122,8 +122,8 @@ Map<String, dynamic> faucetDripParams(
       'module': 'encointerFaucet',
       'call': 'drip',
       'cid': cid,
-      'notificationTitle': l10n.unregisterParticipantNotificationTitle,
-      'notificationBody': l10n.unregisterParticipantNotificationBody,
+      'notificationTitle': l10n.submittedFaucetDripTitle,
+      'notificationBody': l10n.submittedFaucetDripBody,
     },
     'params': [faucetAccount, cid, cIndex],
   };

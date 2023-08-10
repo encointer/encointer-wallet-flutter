@@ -231,7 +231,7 @@
     "showRouteMeetupLocation": "Afficher la route",
     "startGathering": "Démarrer la rencontre",
     "submittedFaucetDripTitle": "Bénéfices",
-    "submittedFaucetDripContent": "Ta as réclamé avec succès tes récompenses de robinet.",
+    "submittedFaucetDripBody": "Ta as réclamé avec succès tes récompenses de robinet.",
     "success": "Réussite",
     "switchAccount": "Changer de compte",
     "switchCommunity": "Changer de communauté",

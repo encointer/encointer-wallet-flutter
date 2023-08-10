@@ -231,7 +231,7 @@
     "showRouteMeetupLocation": "Show route",
     "startGathering": "Start gathering",
     "submittedFaucetDripTitle": "Faucet rewards",
-    "submittedFaucetDripContent": "You have successfully claimed your faucet rewards.",
+    "submittedFaucetDripBody": "You have successfully claimed your faucet rewards.",
     "success": "Success",
     "switchAccount": "Switch Account",
     "switchCommunity": "Switch Community",
