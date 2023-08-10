@@ -219,8 +219,8 @@ class Fmt {
 
     // Convert hex string to bytes
     final bytes = <int>[];
-    for (var i = 0; i < hexString.length; i += 2) {
-      final hexByte = hexString.substring(i, i + 2);
+    for (var i = 0; i < hex.length; i += 2) {
+      final hexByte = hex.substring(i, i + 2);
       bytes.add(int.parse(hexByte, radix: 16));
     }
 
