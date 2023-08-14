@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-
 import '../../src';
 import account from '../../src/service/account';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
@@ -13,6 +12,7 @@ import { communityIdentifierFromString } from '@encointer/util';
 import { bnToU8a } from '@polkadot/util';
 import { stringToEncointerBalance } from '@encointer/types';
 import { extractEvents } from '@encointer/node-api';
+
 
 describe('account', () => {
   const network = localDevNetwork();
