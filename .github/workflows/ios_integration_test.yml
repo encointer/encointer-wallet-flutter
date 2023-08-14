@@ -31,16 +31,20 @@ jobs:
           - device: "iPhone 11 Pro Max"
             record_video: true
             # Check that it works with the old node and the new one
-            docker_tag: [ "0.0.2", "1.5.1" ]
+            docker_tag: "0.0.2"
+          - device: "iPhone 11 Pro Max"
+            record_video: true
+            # Check that it works with the old node and the new one
+            docker_tag: "1.5.1"
           - device: "iPhone 8 Plus"
             record_video: false
-            docker_tag: [ "1.5.1" ]
+            docker_tag: "1.5.1"
           - device: "iPad Pro (12.9-inch) (3rd generation)"
             record_video: false
-            docker_tag: [ "1.5.1" ]
+            docker_tag: "1.5.1"
           - device: "iPad Pro (12.9-inch) (2nd generation)"
             record_video: false
-            docker_tag: [ "1.5.1" ]
+            docker_tag: "1.5.1"
       fail-fast: false
     steps:
       # Setup Environment
