@@ -14,6 +14,9 @@ jobs:
   integration-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      matrix:
+        docker_tag: [ "1.5.1" ]
     steps:
       # Setup Environment
       - uses: actions/checkout@v3
@@ -24,10 +27,10 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Run encointer-node
-        run: ./scripts/docker_run_encointer_node_notee.sh &
+        run: ./scripts/docker_run_encointer_node_notee.sh ${{ matrix.docker_tag }} &
 
       - name: Bootstrap Demo Community
-        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
+        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh ${{ matrix.docker_tag }}
 
       - name: Test JS
         # We don't really have unit tests in the JS part. Most tests need a local node running.
