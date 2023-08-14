@@ -2,11 +2,11 @@ name: IOS CI
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [ master, f-droid ]
     tags:
       - "*"
   pull_request:
-    branches: [master, f-droid]
+    branches: [ master, f-droid ]
 
 env:
   NODE_VERSION: 16.13.1
@@ -30,12 +30,17 @@ jobs:
         include:
           - device: "iPhone 11 Pro Max"
             record_video: true
+            # With this flag we can run the CI against different node versions to check compatibility.
+            docker_tag: "1.5.1"
           - device: "iPhone 8 Plus"
             record_video: false
+            docker_tag: "1.5.1"
           - device: "iPad Pro (12.9-inch) (3rd generation)"
             record_video: false
+            docker_tag: "1.5.1"
           - device: "iPad Pro (12.9-inch) (2nd generation)"
             record_video: false
+            docker_tag: "1.5.1"
       fail-fast: false
     steps:
       # Setup Environment
@@ -81,10 +86,10 @@ jobs:
           colima start
 
       - name: Run encointer-node
-        run: ./scripts/docker_run_encointer_node_notee.sh &
+        run: ./scripts/docker_run_encointer_node_notee.sh ${{ matrix.docker_tag }} &
 
       - name: Bootstrap Demo Community
-        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
+        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh ${{ matrix.docker_tag }}
 
       - name: "Start Simulator"
         working-directory: ./scripts

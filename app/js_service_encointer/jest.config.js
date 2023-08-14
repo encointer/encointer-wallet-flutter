@@ -10,4 +10,7 @@ export default {
   transform: {},
   transformIgnorePatterns: [],
   verbose: true,
+  setupFilesAfterEnv: ['<rootDir>/setup-jest.js'],
+  moduleNameMapper:{"^rxjs$": "rxjs"}
+
 };
