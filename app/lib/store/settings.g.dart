@@ -100,21 +100,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$cachedPinAtom = Atom(name: '_SettingsStore.cachedPin', context: context);
-
-  @override
-  String get cachedPin {
-    _$cachedPinAtom.reportRead();
-    return super.cachedPin;
-  }
-
-  @override
-  set cachedPin(String value) {
-    _$cachedPinAtom.reportWrite(value, super.cachedPin, () {
-      super.cachedPin = value;
-    });
-  }
-
   late final _$loadingAtom = Atom(name: '_SettingsStore.loading', context: context);
 
   @override
@@ -400,7 +385,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   String toString() {
     return '''
 enableBazaar: ${enableBazaar},
-cachedPin: ${cachedPin},
 loading: ${loading},
 localeCode: ${localeCode},
 endpoint: ${endpoint},

@@ -159,8 +159,11 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
           child: Text(l10n.ok),
           onPressed: () async {
             final appStore = context.read<AppStore>();
-            await context.read<NewAccountStore>().saveAccount(webApi, appStore, acc, appStore.settings.cachedPin);
-            Navigator.of(context).popUntil((route) => route.isFirst);
+            final pin = await context.read<LoginStore>().getPin(context);
+            if (pin != null) {
+              await context.read<NewAccountStore>().saveAccount(webApi, appStore, acc, pin);
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            }
           },
         ),
       ],
