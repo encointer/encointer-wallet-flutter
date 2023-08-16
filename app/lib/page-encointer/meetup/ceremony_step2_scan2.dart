@@ -48,7 +48,8 @@ class CeremonyStep2Scan extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
+        child: ListView(
+          shrinkWrap: true,
           children: [
             const SizedBox(height: 24),
             const CeremonyProgressBar(progress: 2),
@@ -69,9 +70,7 @@ class CeremonyStep2Scan extends StatelessWidget {
             const SizedBox(height: 12),
             // Enhance brightness for the QR-code
             const WakeLockAndBrightnessEnhancer(brightness: 1),
-            Expanded(
-              child: QrCodeImage(qrCode: claimantAddress),
-            ),
+            QrCodeImage(qrCode: claimantAddress),
             const SizedBox(height: 12),
             ElevatedButton(
               key: const Key(EWTestKeys.closeMeetup),

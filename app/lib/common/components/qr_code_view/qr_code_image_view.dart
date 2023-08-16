@@ -51,15 +51,19 @@ class QrCodeImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = size ?? MediaQuery.of(context).size.height;
-    return PhotoView.customChild(
-      maxScale: 1.0,
-      minScale: 0.2,
-      backgroundDecoration: BoxDecoration(color: context.colorScheme.background),
-      child: PrettyQr(
-        data: qrCode,
-        errorCorrectLevel: errorCorrectionLevel,
-        size: s,
+    final s = size ?? MediaQuery.of(context).size.width;
+    return SizedBox(
+      width: s,
+      height: s,
+      child: PhotoView.customChild(
+        maxScale: 1.0,
+        minScale: 0.2,
+        backgroundDecoration: BoxDecoration(color: context.colorScheme.background),
+        child: PrettyQr(
+          data: qrCode,
+          errorCorrectLevel: errorCorrectionLevel,
+          size: s
+        ),
       ),
     );
   }
