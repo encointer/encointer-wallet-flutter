@@ -176,25 +176,19 @@ class _ReceivePageState extends State<ReceivePage> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Enhance brightness for the QR-code
-                    const WakeLockAndBrightnessEnhancer(brightness: 1),
-                    QrCodeShareOrPrintView(
-                      size: width - 2 * horizontalPadding,
-                      qrCode: invoice.toQrPayload(),
-                      shareText: l10n.shareInvoice,
-                      printText: l10n.print,
-                      previewText: l10n.preview,
-                      onTap: () => {
-                        if (_formKey.currentState!.validate())
-                          {
-                            Share.share(toDeepLink(invoice.toQrPayload())),
-                          }
-                      },
-                    ),
-                  ],
+                const WakeLockAndBrightnessEnhancer(brightness: 1),
+                QrCodeShareOrPrintView(
+                  size: width - 2 * horizontalPadding,
+                  qrCode: invoice.toQrPayload(),
+                  shareText: l10n.shareInvoice,
+                  printText: l10n.print,
+                  previewText: l10n.preview,
+                  onTap: () => {
+                    if (_formKey.currentState!.validate())
+                      {
+                        Share.share(toDeepLink(invoice.toQrPayload())),
+                      }
+                  },
                 )
               ],
             ),
