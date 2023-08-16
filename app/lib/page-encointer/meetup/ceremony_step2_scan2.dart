@@ -51,7 +51,7 @@ class CeremonyStep2Scan extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 24),
-            CeremonyProgressBar(progress: 2),
+            const CeremonyProgressBar(progress: 2),
             const SizedBox(height: 38),
             Center(
               child: Text(
