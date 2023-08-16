@@ -145,29 +145,25 @@ class _ReceivePageState extends State<ReceivePage> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: horizontalPadding),
-                  child: Column(
-                    children: <Widget>[
-                      EncointerTextFormField(
-                        labelText: l10n.enterAmount,
-                        textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
-                        inputFormatters: [UI.decimalInputFormatter()],
-                        controller: _amountController,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                        textFormFieldKey: const Key(EWTestKeys.invoiceAmountInput),
-                        onChanged: (value) {
-                          setState(() {
-                            final trimmed = _amountController.text.trim();
-                            if (trimmed.isNotEmpty) {
-                              invoice.data.amount = double.parse(trimmed);
-                            }
-                          });
-                        },
-                        suffixIcon: const Text(
-                          'ⵐ',
-                          style: TextStyle(color: AppColors.encointerGrey, fontSize: 26),
-                        ),
-                      ),
-                    ],
+                  child: EncointerTextFormField(
+                    labelText: l10n.enterAmount,
+                    textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
+                    inputFormatters: [UI.decimalInputFormatter()],
+                    controller: _amountController,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    textFormFieldKey: const Key(EWTestKeys.invoiceAmountInput),
+                    onChanged: (value) {
+                      setState(() {
+                        final trimmed = _amountController.text.trim();
+                        if (trimmed.isNotEmpty) {
+                          invoice.data.amount = double.parse(trimmed);
+                        }
+                      });
+                    },
+                    suffixIcon: const Text(
+                      'ⵐ',
+                      style: TextStyle(color: AppColors.encointerGrey, fontSize: 26),
+                    ),
                   ),
                 ),
                 Text(
