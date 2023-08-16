@@ -8,20 +8,19 @@ class QrCodeImage extends StatelessWidget {
   const QrCodeImage({
     super.key,
     required this.qrCode,
+    required this.size,
     this.errorCorrectionLevel = QrErrorCorrectLevel.L,
-    this.size,
   });
 
   final String qrCode;
+  final double size;
   final int errorCorrectionLevel;
-  final double? size;
 
   @override
   Widget build(BuildContext context) {
-    final s = size ?? MediaQuery.of(context).size.width;
     return SizedBox(
-      width: s,
-      height: s,
+      width: size,
+      height: size,
       child: PhotoView.customChild(
         maxScale: 1.0,
         minScale: 0.2,
@@ -29,7 +28,6 @@ class QrCodeImage extends StatelessWidget {
         child: PrettyQr(
           data: qrCode,
           errorCorrectLevel: errorCorrectionLevel,
-          size: s
         ),
       ),
     );

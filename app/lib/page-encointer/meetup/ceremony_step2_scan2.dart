@@ -38,6 +38,9 @@ class CeremonyStep2Scan extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final appSettingsStore = context.watch<AppSettings>();
+    final width = MediaQuery.of(context).size.width;
+    const horizontalPadding = 30.0;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.keySigningCycle),
@@ -47,7 +50,7 @@ class CeremonyStep2Scan extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
         child: ListView(
           shrinkWrap: true,
           children: [
@@ -70,7 +73,7 @@ class CeremonyStep2Scan extends StatelessWidget {
             const SizedBox(height: 12),
             // Enhance brightness for the QR-code
             const WakeLockAndBrightnessEnhancer(brightness: 1),
-            QrCodeImage(qrCode: claimantAddress),
+            QrCodeImage(qrCode: claimantAddress, size: width - 2 * horizontalPadding),
             const SizedBox(height: 12),
             ElevatedButton(
               key: const Key(EWTestKeys.closeMeetup),
