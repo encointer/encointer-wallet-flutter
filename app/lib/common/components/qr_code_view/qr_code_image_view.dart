@@ -3,7 +3,6 @@ import 'package:photo_view/photo_view.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/extensions/extensions.dart';
 
 class QrCodeImageWithButton extends StatelessWidget {
   const QrCodeImageWithButton({
@@ -50,16 +49,13 @@ class QrCodeImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return PhotoView.customChild(
-      maxScale: context.isMobile ? 1.0001 : 1.1,
-      minScale: context.isMobile ? 0.2 : 0.4,
-      initialScale: context.isMobile ? 0.8 : 0.5,
+      maxScale: 1.0,
+      minScale: 0.2,
       backgroundDecoration: BoxDecoration(color: context.colorScheme.background),
       child: PrettyQr(
         data: qrCode,
         errorCorrectLevel: errorCorrectionLevel,
-        size: size.height * 0.45,
       ),
     );
   }
