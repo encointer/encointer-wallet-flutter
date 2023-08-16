@@ -63,6 +63,9 @@ class _ReceivePageState extends State<ReceivePage> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final store = context.watch<AppStore>();
+    final width = MediaQuery.of(context).size.width;
+    const horizontalPadding = 30.0;
+
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () async {
@@ -140,11 +143,11 @@ class _ReceivePageState extends State<ReceivePage> {
           body: SafeArea(
             child: ListView(
               children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: EncointerTextFormField(
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: horizontalPadding),
+                  child: Column(
+                    children: <Widget>[
+                      EncointerTextFormField(
                         labelText: l10n.enterAmount,
                         textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
                         inputFormatters: [UI.decimalInputFormatter()],
@@ -161,14 +164,11 @@ class _ReceivePageState extends State<ReceivePage> {
                         },
                         suffixIcon: const Text(
                           'ⵐ',
-                          style: TextStyle(
-                            color: AppColors.encointerGrey,
-                            fontSize: 26,
-                          ),
+                          style: TextStyle(color: AppColors.encointerGrey, fontSize: 26),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Text(
                   '${l10n.receiverAccount} ${store.account.currentAccount.name}',
@@ -182,6 +182,7 @@ class _ReceivePageState extends State<ReceivePage> {
                     // Enhance brightness for the QR-code
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
                     QrCodeShareOrPrintView(
+                      size: width - 2 * horizontalPadding,
                       qrCode: invoice.toQrPayload(),
                       shareText: l10n.shareInvoice,
                       printText: l10n.print,
