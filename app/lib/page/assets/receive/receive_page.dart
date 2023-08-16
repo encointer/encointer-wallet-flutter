@@ -64,7 +64,7 @@ class _ReceivePageState extends State<ReceivePage> {
     final l10n = context.l10n;
     final store = context.watch<AppStore>();
     final width = MediaQuery.of(context).size.width;
-    const horizontalPadding = 30.0;
+    const horizontalPadding = 20.0;
 
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
@@ -141,11 +141,11 @@ class _ReceivePageState extends State<ReceivePage> {
             ],
           ),
           body: SafeArea(
-            child: ListView(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: horizontalPadding),
-                  child: EncointerTextFormField(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: horizontalPadding),
+              child: ListView(
+                children: <Widget>[
+                  EncointerTextFormField(
                     labelText: l10n.enterAmount,
                     textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
                     inputFormatters: [UI.decimalInputFormatter()],
@@ -165,28 +165,28 @@ class _ReceivePageState extends State<ReceivePage> {
                       style: TextStyle(color: AppColors.encointerGrey, fontSize: 26),
                     ),
                   ),
-                ),
-                Text(
-                  '${l10n.receiverAccount} ${store.account.currentAccount.name}',
-                  style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                const WakeLockAndBrightnessEnhancer(brightness: 1),
-                QrCodeShareOrPrintView(
-                  size: width - 2 * horizontalPadding,
-                  qrCode: invoice.toQrPayload(),
-                  shareText: l10n.shareInvoice,
-                  printText: l10n.print,
-                  previewText: l10n.preview,
-                  onTap: () => {
-                    if (_formKey.currentState!.validate())
-                      {
-                        Share.share(toDeepLink(invoice.toQrPayload())),
-                      }
-                  },
-                )
-              ],
+                  Text(
+                    '${l10n.receiverAccount} ${store.account.currentAccount.name}',
+                    style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  const WakeLockAndBrightnessEnhancer(brightness: 1),
+                  QrCodeShareOrPrintView(
+                    size: width - 2 * horizontalPadding,
+                    qrCode: invoice.toQrPayload(),
+                    shareText: l10n.shareInvoice,
+                    printText: l10n.print,
+                    previewText: l10n.preview,
+                    onTap: () => {
+                      if (_formKey.currentState!.validate())
+                        {
+                          Share.share(toDeepLink(invoice.toQrPayload())),
+                        }
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),
