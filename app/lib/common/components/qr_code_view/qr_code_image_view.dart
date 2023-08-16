@@ -4,39 +4,6 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
 
-class QrCodeImageWithButton extends StatelessWidget {
-  const QrCodeImageWithButton({
-    super.key,
-    required this.onTap,
-    required this.qrCode,
-    required this.shareText,
-    required this.printText,
-    required this.previewText,
-  });
-
-  final VoidCallback onTap;
-  final String qrCode;
-  final String shareText;
-  final String printText;
-  final String previewText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        QrCodeImage(qrCode: qrCode),
-        const SizedBox(height: 10),
-        TextButton.icon(
-          onPressed: onTap,
-          icon: const Icon(Icons.share),
-          label: Text(shareText, style: context.displaySmall),
-        ),
-        const SizedBox(height: 20),
-      ],
-    );
-  }
-}
-
 class QrCodeImage extends StatelessWidget {
   const QrCodeImage({
     super.key,
