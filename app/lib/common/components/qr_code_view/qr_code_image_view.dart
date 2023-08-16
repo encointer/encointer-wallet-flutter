@@ -42,13 +42,16 @@ class QrCodeImage extends StatelessWidget {
     super.key,
     required this.qrCode,
     this.errorCorrectionLevel = QrErrorCorrectLevel.L,
+    this.size,
   });
 
   final String qrCode;
   final int errorCorrectionLevel;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
+    final s = size ?? MediaQuery.of(context).size.height;
     return PhotoView.customChild(
       maxScale: 1.0,
       minScale: 0.2,
@@ -56,6 +59,7 @@ class QrCodeImage extends StatelessWidget {
       child: PrettyQr(
         data: qrCode,
         errorCorrectLevel: errorCorrectionLevel,
+        size: s,
       ),
     );
   }
