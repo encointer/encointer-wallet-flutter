@@ -46,45 +46,39 @@ class CeremonyStep2Scan extends StatelessWidget {
           const SizedBox(width: 20)
         ],
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 24),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: CeremonyProgressBar(progress: 2),
-          ),
-          const SizedBox(height: 38),
-          Center(
-            child: Text(
-              l10n.scan,
-              style: context.titleLarge.copyWith(color: context.colorScheme.primary),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: [
+            const SizedBox(height: 24),
+            CeremonyProgressBar(progress: 2),
+            const SizedBox(height: 38),
+            Center(
+              child: Text(
+                l10n.scan,
+                style: context.titleLarge.copyWith(color: context.colorScheme.primary),
+              ),
             ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+            Center(
               child: Text(
                 l10n.scanDescriptionForMeetup,
                 textAlign: TextAlign.center,
                 style: context.titleLarge.copyWith(height: 1.25),
               ),
             ),
-          ),
-          const SizedBox(height: 12),
-          // Enhance brightness for the QR-code
-          const WakeLockAndBrightnessEnhancer(brightness: 1),
-          Expanded(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                QrCodeImage(qrCode: claimantAddress),
-              ],
+            const SizedBox(height: 12),
+            // Enhance brightness for the QR-code
+            const WakeLockAndBrightnessEnhancer(brightness: 1),
+            Expanded(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  QrCodeImage(qrCode: claimantAddress),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: ElevatedButton(
+            const SizedBox(height: 12),
+            ElevatedButton(
               key: const Key(EWTestKeys.closeMeetup),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -101,11 +95,8 @@ class CeremonyStep2Scan extends StatelessWidget {
                 Navigator.push(context, CupertinoPageRoute<void>(builder: (_) => CeremonyStep3Finish(store, api)));
               },
             ),
-          ),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: PrimaryButton(
+            const SizedBox(height: 12),
+            PrimaryButton(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -125,23 +116,23 @@ class CeremonyStep2Scan extends StatelessWidget {
                 );
               },
             ),
-          ),
-          Observer(builder: (_) {
-            if (appSettingsStore.developerMode) {
-              return SizedBox(
-                height: 40,
-                child: ElevatedButton(
-                  key: const Key(EWTestKeys.attestAllParticipantsDev),
-                  child: const Text('DEV ONLY: attest all participants'),
-                  onPressed: () => attestAllParticipants(store, store.account.currentAddress),
-                ),
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          }),
-          const SizedBox(height: 12)
-        ],
+            Observer(builder: (_) {
+              if (appSettingsStore.developerMode) {
+                return SizedBox(
+                  height: 40,
+                  child: ElevatedButton(
+                    key: const Key(EWTestKeys.attestAllParticipantsDev),
+                    child: const Text('DEV ONLY: attest all participants'),
+                    onPressed: () => attestAllParticipants(store, store.account.currentAddress),
+                  ),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            }),
+            const SizedBox(height: 12)
+          ],
+        ),
       ),
     );
   }
