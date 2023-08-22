@@ -20,7 +20,7 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.3 <4.0.0"
-  flutter: "3.10.3"
+  flutter: "3.13.0"
 
 dependencies:
   # intl - format numbers
@@ -135,7 +135,6 @@ flutter:
     - assets/avatars/
     - assets/nctr_logo.svg
     - assets/nctr_logo_faces_only_thick.svg
-   
 
   # fonts:
   #   - family: Schyler
