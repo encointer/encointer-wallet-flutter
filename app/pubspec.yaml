@@ -32,7 +32,7 @@ dependencies:
   mobx: ^2.2.0
   flutter_mobx: ^2.0.6+5
   shared_preferences: ^2.2.0
-  flutter_inappwebview: ^6.0.0-beta.22 # see
+  flutter_inappwebview: ^6.0.0-beta.22 # Todo: #1461: bump package version
   flutter_local_notifications: ^15.1.0+1
   flutter:
     sdk: flutter
@@ -56,7 +56,7 @@ dependencies:
   # QR code generator & reader
   pretty_qr_code: ^2.0.3
   mobile_scanner: ^3.4.1
-  aes_ecb_pkcs5_flutter: ^0.1.2 # todo
+  aes_ecb_pkcs5_flutter: ^0.1.2 # Todo: #1460: replace with alternative package
   permission_handler: ^10.4.3 
   flutter_svg: ^2.0.7
   url_launcher: ^6.1.12
