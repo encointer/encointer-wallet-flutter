@@ -63,6 +63,9 @@ class _ReceivePageState extends State<ReceivePage> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final store = context.watch<AppStore>();
+    final width = MediaQuery.of(context).size.width;
+    const horizontalPadding = 20.0;
+
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () async {
@@ -138,64 +141,52 @@ class _ReceivePageState extends State<ReceivePage> {
             ],
           ),
           body: SafeArea(
-            child: ListView(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: EncointerTextFormField(
-                        labelText: l10n.enterAmount,
-                        textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
-                        inputFormatters: [UI.decimalInputFormatter()],
-                        controller: _amountController,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                        textFormFieldKey: const Key(EWTestKeys.invoiceAmountInput),
-                        onChanged: (value) {
-                          setState(() {
-                            final trimmed = _amountController.text.trim();
-                            if (trimmed.isNotEmpty) {
-                              invoice.data.amount = double.parse(trimmed);
-                            }
-                          });
-                        },
-                        suffixIcon: const Text(
-                          'ⵐ',
-                          style: TextStyle(
-                            color: AppColors.encointerGrey,
-                            fontSize: 26,
-                          ),
-                        ),
-                      ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: horizontalPadding),
+              child: ListView(
+                children: <Widget>[
+                  EncointerTextFormField(
+                    labelText: l10n.enterAmount,
+                    textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
+                    inputFormatters: [UI.decimalInputFormatter()],
+                    controller: _amountController,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    textFormFieldKey: const Key(EWTestKeys.invoiceAmountInput),
+                    onChanged: (value) {
+                      setState(() {
+                        final trimmed = _amountController.text.trim();
+                        if (trimmed.isNotEmpty) {
+                          invoice.data.amount = double.parse(trimmed);
+                        }
+                      });
+                    },
+                    suffixIcon: const Text(
+                      'ⵐ',
+                      style: TextStyle(color: AppColors.encointerGrey, fontSize: 26),
                     ),
-                  ],
-                ),
-                Text(
-                  '${l10n.receiverAccount} ${store.account.currentAccount.name}',
-                  style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Enhance brightness for the QR-code
-                    const WakeLockAndBrightnessEnhancer(brightness: 1),
-                    QrCodeShareOrPrintView(
-                      qrCode: invoice.toQrPayload(),
-                      shareText: l10n.shareInvoice,
-                      printText: l10n.print,
-                      previewText: l10n.preview,
-                      onTap: () => {
-                        if (_formKey.currentState!.validate())
-                          {
-                            Share.share(toDeepLink(invoice.toQrPayload())),
-                          }
-                      },
-                    ),
-                  ],
-                )
-              ],
+                  ),
+                  Text(
+                    '${l10n.receiverAccount} ${store.account.currentAccount.name}',
+                    style: context.titleMedium.copyWith(color: AppColors.encointerGrey),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  const WakeLockAndBrightnessEnhancer(brightness: 1),
+                  QrCodeShareOrPrintView(
+                    size: width - 2 * horizontalPadding,
+                    qrCode: invoice.toQrPayload(),
+                    shareText: l10n.shareInvoice,
+                    printText: l10n.print,
+                    previewText: l10n.preview,
+                    onTap: () => {
+                      if (_formKey.currentState!.validate())
+                        {
+                          Share.share(toDeepLink(invoice.toQrPayload())),
+                        }
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),
