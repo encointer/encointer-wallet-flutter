@@ -90,13 +90,16 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     final community = _appStore.encointer.communityStores![cidFmt]!;
 
+    final isBootstrapper = _appStore.encointer.community!.bootstrappers != null &&
+        _appStore.encointer.community!.bootstrappers!.contains(address);
+
     Log.d('_getBalanceEntryListTile: $community', 'AccountManagePage');
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(),
       leading: CommunityIcon(
         store: _appStore,
-        address: address,
+        isBootstrapper: isBootstrapper,
         icon: const CommunityIconObserver(),
       ),
       title: Text(community.name!, style: h3),
@@ -500,16 +503,15 @@ class CommunityIcon extends StatelessWidget {
     super.key,
     required this.store,
     required this.icon,
-    required this.address,
+    required this.isBootstrapper,
   });
 
   final AppStore store;
   final Widget icon;
-  final String? address;
+  final bool isBootstrapper;
 
   @override
   Widget build(BuildContext context) {
-    final store = context.watch<AppStore>();
     return Stack(
       children: [
         SizedBox(
@@ -517,20 +519,12 @@ class CommunityIcon extends StatelessWidget {
           height: 50,
           child: icon,
         ),
-        Observer(
-          builder: (_) {
-            if (store.encointer.community!.bootstrappers != null &&
-                store.encointer.community!.bootstrappers!.contains(address)) {
-              return const Positioned(
-                bottom: 0,
-                right: 0, //give the values according to your requirement
-                child: Icon(Iconsax.star, color: Colors.yellow),
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
-        ),
+        if (isBootstrapper)
+          const Positioned(
+            bottom: 0,
+            right: 0,
+            child: Icon(Iconsax.star, color: Colors.yellow),
+          )
       ],
     );
   }
