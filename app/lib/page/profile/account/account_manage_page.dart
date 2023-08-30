@@ -264,7 +264,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     itemCount: faucets!.length,
                     itemBuilder: (BuildContext context, int index) {
                       final faucetAccount = faucets!.keys.elementAt(index);
-                      return FaucetListTile(store, faucet: faucets![faucetAccount]!, faucetAccount: faucetAccount);
+                      return FaucetListTile(
+                        store,
+                        userAddress: addressSS58,
+                        faucet: faucets![faucetAccount]!,
+                        faucetAccount: faucetAccount,
+                      );
                     },
                   )
                 else
@@ -362,12 +367,14 @@ class FaucetListTile extends StatefulWidget {
   const FaucetListTile(
     this.store, {
     super.key,
+    required this.userAddress,
     required this.faucetAccount,
     required this.faucet,
   });
 
   final AppStore store;
 
+  final String userAddress;
   final String faucetAccount;
   final Faucet faucet;
 
@@ -382,8 +389,8 @@ class _FaucetListTileState extends State<FaucetListTile> {
   @override
   void initState() {
     super.initState();
-    future = _getUncommittedReputationIds();
-    nativeBalance = getNativeFreeBalance();
+    future = _getUncommittedReputationIds(widget.userAddress);
+    nativeBalance = getNativeFreeBalance(widget.userAddress);
   }
 
   @override
@@ -424,8 +431,8 @@ class _FaucetListTileState extends State<FaucetListTile> {
               return SubmitButtonSmall(
                 onPressed: (context) async {
                   await _submitFaucetDripTxs(context, snapshot.data!, widget.faucetAccount);
-                  future = _getUncommittedReputationIds();
-                  nativeBalance = getNativeFreeBalance();
+                  future = _getUncommittedReputationIds(widget.userAddress);
+                  nativeBalance = getNativeFreeBalance(widget.userAddress);
                   setState(() {});
                 },
                 child: const Text('Claim'),
@@ -443,8 +450,8 @@ class _FaucetListTileState extends State<FaucetListTile> {
 
   /// Returns all reputation ids, which haven't been committed for this faucet's
   /// purpose id yet, i.e., can be used to drip the faucet currently.
-  Future<Map<int, CommunityIdentifier>> _getUncommittedReputationIds() async {
-    final reputations = widget.store.encointer.account!.reputations;
+  Future<Map<int, CommunityIdentifier>> _getUncommittedReputationIds(String address) async {
+    final reputations = widget.store.encointer.accountStores![address]!.reputations;
     final ids = Map<int, CommunityIdentifier>.of({});
 
     // Create a set of futures to await in parallel.
@@ -457,7 +464,7 @@ class _FaucetListTileState extends State<FaucetListTile> {
             cid,
             e.key,
             widget.faucet.purposeId,
-            widget.store.account.currentAddress,
+            address,
           );
 
           if (!hasCommitted) ids[e.key] = e.value.communityIdentifier!;
@@ -479,8 +486,8 @@ class _FaucetListTileState extends State<FaucetListTile> {
     await Future.wait(futures);
   }
 
-  Future<BigInt> getNativeFreeBalance() async {
-    final balance = await webApi.assets.getBalance();
+  Future<BigInt> getNativeFreeBalance(String address) async {
+    final balance = await webApi.assets.getBalanceOf(address);
     return balance.freeBalance;
   }
 }

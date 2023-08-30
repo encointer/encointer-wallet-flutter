@@ -33,8 +33,11 @@ class AssetsApi {
   }
 
   Future<BalancesInfo> getBalance() async {
-    final res =
-        await jsApi.evalJavascript<Map<String, dynamic>>('account.getBalance("${store.account.currentAddress}")');
+    return getBalanceOf(store.account.currentAddress);
+  }
+
+  Future<BalancesInfo> getBalanceOf(String address) async {
+    final res = await jsApi.evalJavascript<Map<String, dynamic>>('account.getBalance("$address")');
     return BalancesInfo.fromJson(res);
   }
 
