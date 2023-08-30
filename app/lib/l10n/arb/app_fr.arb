@@ -38,6 +38,7 @@
     "block": "Bloc",
     "bootstrapperContent": "S'il te reste des tickets d'endossement, n'oublie pas de confirmer Novice comme digne de confiance.",
     "bootstrapperTitle": "Enregistré comme Bootstrapper - ta place est garantie.",
+    "canUseFaucetOnlyWithCurrentAccount": "Tu ne peux utiliser le Faucet que si le compte affiché est le compte actuellement sélectionné.",
     "calendarEntryDescription": "Participe à la rencontre pour recevoir ton paiement.",
     "cameraPermissionError": "Une erreur s'est produite lors de la vérification de l'autorisation de la caméra Tu peux aussi donner l'autorisation pour la caméra via les paramètres de l'app.",
     "cancel": "Annuler",

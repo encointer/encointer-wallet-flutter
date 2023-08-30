@@ -259,19 +259,21 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       }),
                 Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
                 if (faucets != null)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: faucets!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final faucetAccount = faucets!.keys.elementAt(index);
-                      return FaucetListTile(
-                        store,
-                        userAddress: addressSS58,
-                        faucet: faucets![faucetAccount]!,
-                        faucetAccount: faucetAccount,
-                      );
-                    },
-                  )
+                  store.account.currentAccountPubKey! == accountToBeEditedPubKey
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: faucets!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final faucetAccount = faucets!.keys.elementAt(index);
+                            return FaucetListTile(
+                              store,
+                              userAddress: addressSS58,
+                              faucet: faucets![faucetAccount]!,
+                              faucetAccount: faucetAccount,
+                            );
+                          },
+                        )
+                      : Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left)
                 else
                   const CupertinoActivityIndicator(),
                 const Spacer(),

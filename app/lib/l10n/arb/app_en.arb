@@ -44,6 +44,7 @@
     "canEndorseInRegisteringPhaseOnly": "Can endorse in registering phase only",
     "cantEndorseBootstrapper": "Bootstrappers are already marked as trusted",
     "categories": "Categories",
+    "canUseFaucetOnlyWithCurrentAccount": "You can only use the faucet features if this account page shows the currently active account.",
     "changeYourPin": "Change PIN",
     "checkEmailApp": "Check that you have downloaded the Email app",
     "chosenRightCommunity": "The data is for a different community. Please change the community to send funds.",

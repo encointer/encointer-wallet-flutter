@@ -44,6 +44,7 @@
     "canEndorseInRegisteringPhaseOnly": "Du kannst nur in der Registrierungsphase jemanden als zuverlässig markieren",
     "cantEndorseBootstrapper": "Bootstrapper sind bereits als zuverlässig markiert",
     "categories": "Kategorien",
+    "canUseFaucetOnlyWithCurrentAccount": "Du kannst das Faucet nur benutzen, wenn das angezeigte Konto das zurzeit gewählte Konto ist.",
     "changeYourPin": "PIN ändern",
     "checkEmailApp": "Keine Email-App installiert",
     "chosenRightCommunity": "Die Daten sind für eine andere Community. Bitte wechsle die Community um Geld zu senden.",
