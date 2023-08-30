@@ -28,6 +28,7 @@ export async function getAllFaucetsWithAccount () {
  */
 export async function hasCommittedFor (cid, cIndex, purpose, account) {
   const maybeCommitment = await api.query.encointerReputationCommitments.commitments([cid, cIndex], [purpose, account]);
+  console.log(`Commitment of: ${account} for [${cid}, [${cIndex}][${purpose}, ${account}]: ${JSON.stringify(maybeCommitment)}`);
   return maybeCommitment.isSome;
 }
 
