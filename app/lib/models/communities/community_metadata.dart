@@ -30,11 +30,8 @@ class CommunityMetadata {
     return jsonEncode(this);
   }
 
-  CommunityRules get communityRules => rules ?? CommunityRules.loCo;
+  CommunityRules get communityRules => rules ?? CommunityRules.LoCo;
 }
 
-enum CommunityRules {
-  loCo,
-  loCoLight,
-  beeDance,
-}
+// ignore: constant_identifier_names
+enum CommunityRules { LoCo, LoCoLight, BeeDance }

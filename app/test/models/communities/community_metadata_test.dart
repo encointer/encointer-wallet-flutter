@@ -22,7 +22,7 @@ void main() {
       expect(meta.theme, null);
       expect(meta.url, null);
       expect(meta.announcementSigner!['Bip340'], '0xceda72c19f11aebecf8fb4a0ab3fb2a03e03f283225655baab4728303a560a13');
-      expect(meta.rules, CommunityRules.loCoLight);
+      expect(meta.rules, CommunityRules.LoCoLight);
     });
 
     test('Corsica LocoLight without signer', () {
@@ -44,7 +44,7 @@ void main() {
       expect(meta.theme, null);
       expect(meta.url, null);
       expect(meta.announcementSigner, null);
-      expect(meta.rules, CommunityRules.loCoLight);
+      expect(meta.rules, CommunityRules.LoCoLight);
     });
   });
 }
