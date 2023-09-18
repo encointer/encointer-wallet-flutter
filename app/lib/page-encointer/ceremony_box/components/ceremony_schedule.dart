@@ -38,7 +38,8 @@ class CeremonySchedule extends StatelessWidget {
               nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode),
         const SizedBox(height: 8),
         if (showCountDown)
-          CeremonyCountDown(nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode,)
+          CeremonyCountDown(
+              nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode)
         else
           CeremonyDate(nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode)
       ],
