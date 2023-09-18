@@ -30,12 +30,7 @@ void main() {
       );
 
       final testMetadata = CommunityMetadata(
-        'Test-Community',
-        'TCM',
-        'AssetsCid',
-        'Community-Url',
-        'Theme-String',
-      );
+          'Test-Community', 'TCM', 'AssetsCid', 'Community-Url', 'Theme-String', null, CommunityRules.loCo);
 
       final bootstrappers = [aliceAddress, bobAddress, charlieAddress];
       final testLocations = [testLocation1, testLocation2, testLocation3];
