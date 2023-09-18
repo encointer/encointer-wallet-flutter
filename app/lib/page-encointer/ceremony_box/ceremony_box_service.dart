@@ -22,9 +22,15 @@ class CeremonyBoxService {
   }
 
   /// Returns a formatted string of days and hours till ceremony starts
-  static String getTimeLeftUntilCeremonyStartsDaysHours(DateTime nextCeremonyDate) {
+  static String ddHHUntilCeremony(DateTime nextCeremonyDate) {
     final timeLeftUntilCeremonyStarts = nextCeremonyDate.difference(DateTime.now());
     return '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h';
+  }
+
+  /// Returns a formatted string of days
+  static String ddUntilCeremony(DateTime nextCeremonyDate) {
+    final timeLeftUntilCeremonyStarts = nextCeremonyDate.difference(DateTime.now());
+    return '${timeLeftUntilCeremonyStarts.inDays}d';
   }
 
   /// If it is close to the ceremony show a countdown

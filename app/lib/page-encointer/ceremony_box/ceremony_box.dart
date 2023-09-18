@@ -15,6 +15,7 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_start_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/unregister_link_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/lower_ceremony_box_container.dart';
+import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/meetup_info.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step1_count.dart';
@@ -64,6 +65,7 @@ class CeremonyBox extends StatelessWidget {
                   meetupTime: meetupTime,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   meetupCompleted: store.encointer.communityAccount?.meetupCompleted ?? false,
+                  communityRules: store.encointer.community?.metadata?.rules ?? CommunityRules.LoCo,
                 ),
                 if (store.encointer.showRegisterButton)
                   Padding(
