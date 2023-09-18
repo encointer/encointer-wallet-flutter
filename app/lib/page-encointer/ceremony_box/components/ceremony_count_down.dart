@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/models/communities/community_metadata.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:quiver/async.dart';
@@ -8,11 +11,18 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 class CeremonyCountDown extends StatefulWidget {
-  const CeremonyCountDown(this.nextCeremonyDate, {super.key});
+  const CeremonyCountDown({
+    required this.nextCeremonyDate,
+    required this.communityRules,
+    this.languageCode,
+    super.key,
+  });
 
   static const String route = '/encointer/assigning';
 
-  final DateTime? nextCeremonyDate;
+  final DateTime nextCeremonyDate;
+  final CommunityRules communityRules;
+  final String? languageCode;
 
   @override
   State<CeremonyCountDown> createState() => _CeremonyCountDownState();
@@ -68,8 +78,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
   @override
   Widget build(BuildContext context) {
-    var timeToMeetup =
-        widget.nextCeremonyDate != null ? widget.nextCeremonyDate!.difference(DateTime.now()).inSeconds : 0;
+    var timeToMeetup = widget.nextCeremonyDate.difference(DateTime.now()).inSeconds;
 
     if (timeToMeetup <= 0) {
       timeToMeetup = 0;
@@ -81,6 +90,10 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
     final timeLeftUntilCeremonyStarts = Duration(seconds: timeToMeetup);
 
+    final countDownDisplay = widget.communityRules.isLoCoLight
+        ? CeremonyBoxService.formatDayRelative(widget.nextCeremonyDate, context.l10n, widget.languageCode)
+        : '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h ${timeLeftUntilCeremonyStarts.inMinutes.remainder(60)}min ${timeLeftUntilCeremonyStarts.inSeconds.remainder(60)}s';
+
     return Row(
       children: [
         const Icon(
@@ -90,7 +103,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
         ),
         const SizedBox(width: 8),
         Text(
-          '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h ${timeLeftUntilCeremonyStarts.inMinutes.remainder(60)}min ${timeLeftUntilCeremonyStarts.inSeconds.remainder(60)}s',
+          countDownDisplay,
           style: context.headlineMedium.copyWith(color: AppColors.encointerBlack),
         ),
       ],

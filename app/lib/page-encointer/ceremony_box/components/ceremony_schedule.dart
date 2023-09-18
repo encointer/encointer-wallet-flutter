@@ -38,9 +38,9 @@ class CeremonySchedule extends StatelessWidget {
               nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode),
         const SizedBox(height: 8),
         if (showCountDown)
-          CeremonyCountDown(nextCeremonyDate)
+          CeremonyCountDown(nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode,)
         else
-          CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+          CeremonyDate(nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode)
       ],
     );
   }
@@ -114,17 +114,22 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 }
 
 class CeremonyDate extends StatelessWidget {
-  const CeremonyDate({this.nextCeremonyDate, this.languageCode, super.key});
+  const CeremonyDate({
+    required this.nextCeremonyDate,
+    required this.communityRules,
+    this.languageCode,
+    super.key,
+  });
 
-  final DateTime? nextCeremonyDate;
+  final DateTime nextCeremonyDate;
+  final CommunityRules communityRules;
   final String? languageCode;
 
   @override
   Widget build(BuildContext context) {
     final h2BlackTheme = context.titleLarge.copyWith(color: AppColors.encointerBlack);
     final nextCeremonyYearMonthDay =
-        CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, context.l10n, languageCode);
-    final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
+        CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, context.l10n, languageCode);
 
     return Row(
       children: [
@@ -139,19 +144,21 @@ class CeremonyDate extends StatelessWidget {
           style: h2BlackTheme,
         ),
         const SizedBox(width: 12),
-        const Padding(
-          padding: EdgeInsets.only(bottom: 2),
-          child: Icon(
-            Iconsax.clock,
-            color: AppColors.encointerGrey,
-            size: 18,
+        if (!communityRules.isLoCoLight)
+          Row(
+            children: [
+              const Icon(
+                Iconsax.clock,
+                color: AppColors.encointerGrey,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                DateFormat.Hm(languageCode).format(nextCeremonyDate),
+                style: h2BlackTheme,
+              ),
+            ],
           ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          nextCeremonyHourMinute,
-          style: h2BlackTheme,
-        ),
       ],
     );
   }

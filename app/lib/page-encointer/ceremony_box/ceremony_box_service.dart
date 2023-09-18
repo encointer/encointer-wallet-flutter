@@ -8,17 +8,33 @@ import 'package:encointer_wallet/l10n/l10.dart';
 class CeremonyBoxService {
   /// Returns a formatted date yMd or tomorrow or today
   static String formatYearMonthDay(DateTime input, AppLocalizations l10n, String? languageCode) {
-    var formatted = DateFormat.yMd(languageCode).format(input);
-    final todayYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now());
-    final tomorrowYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now().add(const Duration(days: 1)));
-    final ceremonyIsToday = formatted == todayYearMonthDay;
-    if (ceremonyIsToday) {
-      formatted = l10n.today;
+    if (isToday(input)) {
+      return l10n.today;
     }
-    if (formatted == tomorrowYearMonthDay) {
-      formatted = l10n.tomorrow;
+    if (isTomorrow(input)) {
+      return l10n.tomorrow;
     }
-    return formatted;
+    return DateFormat.yMd(languageCode).format(input);
+  }
+
+  static String formatDayRelative(DateTime nextCeremonyDate, AppLocalizations l10n, String? languageCode) {
+    if (isToday(nextCeremonyDate)) {
+      return l10n.today;
+    }
+    if (isTomorrow(nextCeremonyDate)) {
+      return l10n.tomorrow;
+    }
+
+    final timeLeftUntilCeremonyStarts = nextCeremonyDate.difference(DateTime.now());
+    return '${timeLeftUntilCeremonyStarts.inDays}d';
+  }
+
+  static bool isToday(DateTime input) {
+    return DateFormat.yMd().format(DateTime.now()) == DateFormat.yMd().format(input);
+  }
+
+  static bool isTomorrow(DateTime input) {
+    return DateFormat.yMd().format(DateTime.now().add(const Duration(days: 1))) == DateFormat.yMd().format(input);
   }
 
   /// Returns a formatted string of days and hours till ceremony starts
