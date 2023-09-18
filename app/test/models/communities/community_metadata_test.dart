@@ -11,7 +11,7 @@ void main() {
         'theme': null,
         'url': null,
         'announcementSigner': {'Bip340': '0xceda72c19f11aebecf8fb4a0ab3fb2a03e03f283225655baab4728303a560a13'},
-        'rules': 'loCoLight'
+        'rules': 'LoCoLight'
       };
 
       final meta = CommunityMetadata.fromJson(corsicaLocoFlexMetadata);
@@ -33,7 +33,7 @@ void main() {
         'theme': null,
         'url': null,
         'announcementSigner': null,
-        'rules': 'loCoLight'
+        'rules': 'LoCoLight'
       };
 
       final meta = CommunityMetadata.fromJson(corsicaLocoFlexMetadata);
