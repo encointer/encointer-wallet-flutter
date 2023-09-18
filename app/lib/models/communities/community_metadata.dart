@@ -35,3 +35,9 @@ class CommunityMetadata {
 
 // ignore: constant_identifier_names
 enum CommunityRules { LoCo, LoCoLight, BeeDance }
+
+extension CommunityRulesExt on CommunityRules {
+  bool get isLoCo => this == CommunityRules.LoCo;
+  bool get isLoCoLight => this == CommunityRules.LoCoLight;
+  bool get isBeeDance => this == CommunityRules.BeeDance;
+}
