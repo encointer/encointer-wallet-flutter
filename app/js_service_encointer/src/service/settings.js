@@ -131,6 +131,24 @@ async function createApi(wsProvider, configOverride) {
             'MeetupValidationIndexOutOfBounds',
           ]
         },
+        CommunityMetadataType: {
+          name: 'Text',
+          symbol: 'Text',
+          assets: 'Text',
+          theme: 'Option<Text>',
+          url: 'Option<Text>',
+          announcementSigner: 'Option<AnnouncementSigner>',
+          rules: 'CommunityRules',
+        },
+        CommunityRules: {
+          _enum: ['LoCo', 'LoCoLight', 'BeeDance']
+        },
+        AnnouncementSigner: {
+          _enum: {
+            bip340: 'Bip340',
+          }
+        },
+        Bip340: 'AccountId',
       }
     }),
     signedExtensions: {
