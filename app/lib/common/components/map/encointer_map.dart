@@ -79,7 +79,7 @@ class PopupBuilder extends StatelessWidget {
     required this.description,
     this.bottom,
     this.width = 300,
-    this.height = 70,
+    this.height = 800,
   });
 
   final String title;
