@@ -68,7 +68,7 @@ class MeetupLocationPage extends StatelessWidget {
         ),
         onTap:  () => AppLaunch.launchMap(meetupLocationArgs.meetupLocation),
       ),
-      height: 300,
+      maxHeight: 300,
     );
   }
 

@@ -78,20 +78,20 @@ class PopupBuilder extends StatelessWidget {
     required this.title,
     required this.description,
     this.bottom,
-    this.width = 300,
-    this.height = 800,
+    this.maxWidth = 300,
+    this.maxHeight = 800,
   });
 
   final String title;
   final String description;
-  final double width;
-  final double height;
+  final double maxWidth;
+  final double maxHeight;
   final Widget? bottom;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints.loose(Size(width, height)),
+      constraints: BoxConstraints.loose(Size(maxWidth, maxHeight)),
       padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
       decoration: BoxDecoration(
         color: context.colorScheme.background,
