@@ -140,6 +140,8 @@
     "meetupClaimantEqualToSelf": "Fehler, Addresse ist aktueller account. Antrag wurde nicht gespeichert.",
     "meetupClaimantInvalid": "Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.",
     "meetupLocation": "Treffpunkt",
+    "meetupIndex": "Versammlungsnummer: {index}",
+    "meetupIndexPopupExplanation": "Verwende die Versammlungsnummer, um deinen tatsächlichen Versammlungsort zu finden. Der Community-Leader ist in deiner Gemeinschaft für die Festlegung der Versammlungsorte verantwortlich. Der tatsächliche Ort kann sich leicht von dem hier angezeigten unterscheiden.",
     "meetupNotificationOneDayBeforeContent": "Treffen beginnt in 24 Stunden",
     "meetupNotificationOneDayBeforeTitle": "Noch 24 Stunden",
     "meetupNotificationOneHourBeforeContent": "Treffen beginnt in einer Stunde",

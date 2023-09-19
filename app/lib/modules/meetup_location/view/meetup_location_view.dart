@@ -34,6 +34,7 @@ class MeetupLocationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final meetupLocation = meetupLocationArgs.meetupLocation;
+    final communityRules = meetupLocationArgs.communityRules;
 
     final l10n = context.l10n;
     return Scaffold(
@@ -46,20 +47,44 @@ class MeetupLocationPage extends StatelessWidget {
         // zoom level is equivalent to 1 km^2.
         initialZoom: 17,
         popupBuilder: (BuildContext context, Marker marker) =>
-            _loCoRulesPopupBuilder(context, marker, meetupLocationArgs),
+        communityRules.isLoCoFlex ?
+            _loCoFlexPopupBuilder(context, marker, meetupLocationArgs) :
+            _loCoPopupBuilder(context, marker, meetupLocationArgs),
         mapController: _mapController,
       ),
     );
   }
 
-  PopupBuilder _loCoRulesPopupBuilder(BuildContext context, Marker marker, MeetupLocationArgs meetupLocationArgs) {
+  PopupBuilder _loCoFlexPopupBuilder(BuildContext context, Marker marker, MeetupLocationArgs meetupLocationArgs) {
+    final l10n = context.l10n;
+
+    return PopupBuilder(
+      title: l10n.meetupIndex(meetupLocationArgs.meetup.index),
+      description: l10n.meetupIndexPopupExplanation,
+      bottom: InkWell(
+        child: Text(
+          l10n.showRouteMeetupLocation,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
+        ),
+        onTap:  () => AppLaunch.launchMap(meetupLocationArgs.meetupLocation),
+      ),
+      height: 300,
+    );
+  }
+
+  PopupBuilder _loCoPopupBuilder(BuildContext context, Marker marker, MeetupLocationArgs meetupLocationArgs) {
     final l10n = context.l10n;
 
     return PopupBuilder(
       title: l10n.meetupLocation,
-      description: l10n.showRouteMeetupLocation,
-      onTap: () => AppLaunch.launchMap(meetupLocationArgs.meetupLocation),
-      height: 50,
+      description: '',
+      bottom: InkWell(
+        child: Text(
+          l10n.showRouteMeetupLocation,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
+        ),
+        onTap:  () => AppLaunch.launchMap(meetupLocationArgs.meetupLocation),
+      ),
     );
   }
 }

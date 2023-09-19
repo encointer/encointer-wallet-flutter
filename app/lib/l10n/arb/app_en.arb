@@ -140,6 +140,8 @@
     "meetupClaimantEqualToSelf": "Error: Claimant is equal to self. Claim is not stored.",
     "meetupClaimantInvalid": "This claimant is not part of the meetup. Claim is not stored.",
     "meetupLocation": "Meetup Location",
+    "meetupIndex": "Gathering Number: {index}",
+    "meetupIndexPopupExplanation": "Use the gathering number to find your real gathering location. The community leader is responsible in your community for specifying the gathering locations. The real location could be slightly different from the one displayed here.",
     "meetupNotificationOneDayBeforeContent": "Gathering starts in 24 hours",
     "meetupNotificationOneDayBeforeTitle": "24 hours left",
     "meetupNotificationOneHourBeforeContent": "Gathering starts in one hour",

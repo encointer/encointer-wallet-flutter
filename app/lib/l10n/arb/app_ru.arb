@@ -140,6 +140,8 @@
     "meetupClaimantEqualToSelf": "Ошибка, адреса расчетного счета. Запрос не был сохранен.",
     "meetupClaimantInvalid": "Этот заявитель не является участником встречи. Заявление не сохраняется.",
     "meetupLocation": "Локация встречи",
+    "meetupIndex": "Встреча выпускников №: {index}",
+    "meetupIndexPopupExplanation": "Используйте номер собрания, чтобы найти реальное место сбора. Ответственность за определение места сбора в вашей общине несет руководитель общины. Реальное место встречи может несколько отличаться от представленного здесь.",
     "meetupNotificationOneDayBeforeContent": "Встреча начнется через 24 часа",
     "meetupNotificationOneDayBeforeTitle": "Осталось 24 часа",
     "meetupNotificationOneHourBeforeContent": "Встреча начнется через час",
