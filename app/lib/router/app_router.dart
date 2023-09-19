@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/businesses/logic/businesses_store.dart';
-import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/page/assets/qr_code_printing/widgets/preview_pdf_and_print.dart';
@@ -185,7 +184,7 @@ class AppRoute {
         );
       case MeetupLocationPage.route:
         return CupertinoPageRoute(
-          builder: (_) => MeetupLocationPage(settings.arguments! as Location),
+          builder: (_) => MeetupLocationPage(settings.arguments! as MeetupLocationArgs),
           settings: settings,
         );
       case CommunityChooserOnMap.route:

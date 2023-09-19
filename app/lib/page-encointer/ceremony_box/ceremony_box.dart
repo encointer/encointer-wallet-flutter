@@ -164,16 +164,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       }
     case CeremonyPhase.Assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
-        final meetup = store.encointer.communityAccount!.meetup!;
-        final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
-        return MeetupInfo(
-          meetup,
-          location,
-          key: const Key(EWTestKeys.accountAssigned),
-          onPressed: () {
-            Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
-          },
-        );
+        return _meetupInfo(context, store);
       } else {
         return CeremonyNotification(
           key: const Key(EWTestKeys.accountUnassigned),
@@ -196,18 +187,25 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
             ),
           );
         } else {
-          final meetup = store.encointer.communityAccount!.meetup!;
-          final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
-          return MeetupInfo(
-            meetup,
-            location,
-            onPressed: () {
-              Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
-            },
-          );
+          return _meetupInfo(context, store);
         }
       }
   }
+}
+
+Widget _meetupInfo(BuildContext context, AppStore store) {
+  final meetup = store.encointer.communityAccount!.meetup!;
+  final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
+  final rules = store.encointer.community!.metadata!.communityRules;
+  final args = MeetupLocationArgs(location, meetup, rules);
+  return MeetupInfo(
+    meetup,
+    location,
+    key: const Key(EWTestKeys.accountAssigned),
+    onPressed: () {
+      Navigator.pushNamed(context, MeetupLocationPage.route, arguments: args);
+    },
+  );
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
