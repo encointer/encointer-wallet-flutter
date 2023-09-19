@@ -123,10 +123,9 @@ class CeremonyBox extends StatelessWidget {
               ],
             ),
           ),
-          if (true)
+          if (store.encointer.showMeetupInfo)
             LowerCeremonyBoxContainer(
-              // child: getMeetupInfoWidget(context, store),
-              child: _meetupInfo(context, store),
+              child: getMeetupInfoWidget(context, store),
             )
         ],
       );
