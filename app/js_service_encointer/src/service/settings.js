@@ -141,7 +141,7 @@ async function createApi(wsProvider, configOverride) {
           rules: 'CommunityRules',
         },
         CommunityRules: {
-          _enum: ['LoCo', 'LoCoLight', 'BeeDance']
+          _enum: ['LoCo', 'LoCoFlex', 'BeeDance']
         },
         AnnouncementSigner: {
           _enum: {
