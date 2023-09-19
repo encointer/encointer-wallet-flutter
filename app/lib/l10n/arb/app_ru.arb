@@ -55,6 +55,7 @@
     "closeGathering": "Завершить встречу",
     "communities": "Сообщества",
     "communityChoose": "Выбрать общину:",
+    "communityDoChoose": "Выберите сообщество:",
     "communityNotSelected": "Если община не выбрана, нажмите на иконку для выбора одной из них",
     "confirmPin": "Для подтверждения введите свой PIN-код",
     "confirmThePayment": "3. Подтвердите платеж",

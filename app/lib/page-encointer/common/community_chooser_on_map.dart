@@ -73,7 +73,7 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
                       '${marker.key.toString().substring(3, marker.key.toString().length - 3)}-description',
                     ),
                     child: Text(
-                      l10n.showRouteMeetupLocation,
+                      l10n.communityDoChoose,
                       style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
                     ),
                     onTap: () async {

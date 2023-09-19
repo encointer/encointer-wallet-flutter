@@ -55,6 +55,7 @@
     "closeGathering": "Close meetup",
     "communities": "Communities",
     "communityChoose": "Choose community:",
+    "communityDoChoose": "Choose community",
     "communityNotSelected": "No community selected, hit the icon to select one",
     "confirmPin": "Input your PIN to confirm",
     "confirmThePayment": "3. Confirm the payment",
