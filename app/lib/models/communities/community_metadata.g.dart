@@ -30,6 +30,6 @@ Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <S
 
 const _$CommunityRulesEnumMap = {
   CommunityRules.LoCo: 'LoCo',
-  CommunityRules.LoCoLight: 'LoCoLight',
+  CommunityRules.LoCoFlex: 'LoCoFlex',
   CommunityRules.BeeDance: 'BeeDance',
 };

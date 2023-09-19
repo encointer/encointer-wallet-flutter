@@ -67,7 +67,7 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
     final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, l10n, languageCode);
 
     final timeDisplay =
-        communityRules.isLoCoLight ? nextCeremonyYearMonthDay : '$nextCeremonyYearMonthDay $nextCeremonyHourMinute';
+        communityRules.isLoCoFlex ? nextCeremonyYearMonthDay : '$nextCeremonyYearMonthDay $nextCeremonyHourMinute';
 
     return RichText(
       text: TextSpan(
@@ -95,7 +95,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timeUntilCeremony = communityRules.isLoCoLight
+    final timeUntilCeremony = communityRules.isLoCoFlex
         ? CeremonyBoxService.ddUntilCeremony(nextCeremonyDate)
         : CeremonyBoxService.ddHHUntilCeremony(nextCeremonyDate);
 
@@ -145,7 +145,7 @@ class CeremonyDate extends StatelessWidget {
           style: h2BlackTheme,
         ),
         const SizedBox(width: 12),
-        if (!communityRules.isLoCoLight)
+        if (!communityRules.isLoCoFlex)
           Row(
             children: [
               const Icon(

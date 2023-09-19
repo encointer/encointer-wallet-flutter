@@ -90,7 +90,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
     final timeLeftUntilCeremonyStarts = Duration(seconds: timeToMeetup);
 
-    final countDownDisplay = widget.communityRules.isLoCoLight
+    final countDownDisplay = widget.communityRules.isLoCoFlex
         ? CeremonyBoxService.formatDayRelative(widget.nextCeremonyDate, context.l10n, widget.languageCode)
         : '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h ${timeLeftUntilCeremonyStarts.inMinutes.remainder(60)}min ${timeLeftUntilCeremonyStarts.inSeconds.remainder(60)}s';
 
