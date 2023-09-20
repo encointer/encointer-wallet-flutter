@@ -7,11 +7,10 @@ import {
   u8aToBuffer,
   bufferToU8a,
   compactAddLength,
-  bnToU8a
 } from '@polkadot/util';
 import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
-import { createType } from '@polkadot/types';
+import { createType, } from '@polkadot/types';
 import { communityIdentifierFromString } from '@encointer/util';
 import { TrustedCallMap } from '../config/trustedCall.js';
 import { base58Decode } from '@polkadot/util-crypto/base58/bs58';
@@ -232,8 +231,10 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
 
     if (txInfo.module === encointerBalances && txInfo.call === transfer) {
       balanceHuman = paramList[2];
-      paramList[2] = stringNumberToEncointerBalanceU8(paramList[2]);
+      paramList[2] = api.createType('BalanceType', stringNumberToEncointerBalanceU8(paramList[2]));
     }
+
+    console.log(`[js-account/sendTx]: Params ${JSON.stringify(paramList)}`);
 
     const tx = api.tx[txInfo.module][txInfo.call](...paramList);
     const onStatusChange = (result) => {
@@ -282,7 +283,6 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
 
     console.log(`[js-account/sendTx]: ${JSON.stringify(txInfo)}`);
     console.log(`[js-account/sendTx]: ${JSON.stringify(signerOptions)}`);
-    console.log(`[js-account/sendTx]: ${JSON.stringify(paramList)}`);
 
     tx.signAndSend(keyPair, signerOptions, onStatusChange)
       .then((res) => {
