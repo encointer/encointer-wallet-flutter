@@ -232,7 +232,7 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
 
       if (txInfo.module === encointerBalances && txInfo.call === transfer) {
         balanceHuman = paramList[2];
-        paramList[2] = api.createType('BalanceType', stringNumberToEncointerBalanceU8(paramList[2]));
+        paramList[2] = stringNumberToEncointerBalanceU8(paramList[2]);
       }
 
       console.log(`[js-account/sendTx]: txInfo ${JSON.stringify(txInfo)}`);
@@ -281,7 +281,7 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
         tip: new BN(txInfo.tip || 0, 10)
       };
 
-      console.log(`[js-account/sendTx]: Adding payment asset ${txInfo.txPaymentAsset}`);
+      console.log(`[js-account/sendTx]: Adding payment asset ${JSON.stringify(txInfo.txPaymentAsset)}`);
       if (txInfo.txPaymentAsset != null) {
         signerOptions.assetId = api.createType(
           'Option<CommunityIdentifier>', txInfo.txPaymentAsset
