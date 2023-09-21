@@ -31,7 +31,6 @@ Future<void> submitToJS(
   required Map<String, dynamic> txParams,
   void Function(dynamic res)? onError,
   required String password,
-  BigInt? tip,
 }) async {
   final l10n = context.l10n;
 
@@ -42,7 +41,6 @@ Future<void> submitToJS(
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
-  txInfo['tip'] = tip.toString();
   Log.d('$txInfo', 'submitToJS');
   Log.d('${txParams['params']}', 'submitToJS');
 
