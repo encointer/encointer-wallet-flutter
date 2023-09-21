@@ -6,11 +6,11 @@ import {
   assert,
   u8aToBuffer,
   bufferToU8a,
-  compactAddLength,
+  compactAddLength
 } from '@polkadot/util';
 import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
-import { createType, } from '@polkadot/types';
+import { createType } from '@polkadot/types';
 import { communityIdentifierFromString } from '@encointer/util';
 import { TrustedCallMap } from '../config/trustedCall.js';
 import { base58Decode } from '@polkadot/util-crypto/base58/bs58';
@@ -25,7 +25,7 @@ import {
 import { unsubscribe } from '../utils/unsubscribe.js';
 import settings from './settings.js';
 import { extractEvents } from '@encointer/node-api';
-import { stringNumberToEncointerBalanceU8 } from '../utils/utils.js';
+import { stringNumberToEncointerBalanceU8a } from '../utils/utils.js';
 
 export const keyring = new Keyring({ ss58Format: 0, type: 'sr25519' });
 
@@ -180,7 +180,7 @@ function getBlockTime (blocks) {
 export async function txFeeEstimate (txInfo, paramList) {
   if (txInfo.module === 'encointerBalances' && txInfo.call === 'transfer') {
     paramList[1] = communityIdentifierFromString(api.registry, paramList[1]);
-    paramList[2] = stringNumberToEncointerBalanceU8(paramList[2]);
+    paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
   }
 
   let dispatchInfo;
@@ -232,7 +232,7 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
 
       if (txInfo.module === encointerBalances && txInfo.call === transfer) {
         balanceHuman = paramList[2];
-        paramList[2] = stringNumberToEncointerBalanceU8(paramList[2]);
+        paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
       }
 
       console.log(`[js-account/sendTx]: txInfo ${JSON.stringify(txInfo)}`);

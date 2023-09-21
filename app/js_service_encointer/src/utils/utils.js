@@ -7,7 +7,7 @@ export function applyDemurrage (balanceEntry, latestBlockNumber, demurrageRate) 
   return balanceEntry.principal * Math.pow(Math.E, exponent);
 }
 
-export function stringNumberToEncointerBalanceU8 (balance) {
+export function stringNumberToEncointerBalanceU8a (balance) {
   return bnToU8a(stringToEncointerBalance(balance), {
     bitLength: 128,
     isLe: true
