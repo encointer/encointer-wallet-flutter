@@ -12,7 +12,7 @@ class CidName {
 
   factory CidName.fromJson(Map<String, dynamic> json) => CidName(
         CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
-        utf8.decode(parseName(json['name'] as String)),
+        parseListIntOrReturnInput(json['name'] as String),
       );
 
   Map<String, dynamic> toJson() => _$CidNameToJson(this);
@@ -26,12 +26,18 @@ class CidName {
   }
 }
 
-/// For some reason JS returns: 1,2,4,3,5,6
+/// For some reason JS returns: 1,2,4,3,5,6 as a String. However if `input` doesn't contain a comma, we assume that
+/// the input is valid, which could happen at some point after a JS upgrade.
 ///
 /// This function parses the individual numbers into a List<int>.
-List<int> parseName(String input) {
+String parseListIntOrReturnInput(String input) {
   // Split the string by commas
   final stringValues = input.split(',');
+
+  if (stringValues.length < 2) {
+    // assume that the input is already a valid name.
+    return input;
+  }
 
   // Parse and convert to integers
   final result = <int>[];
@@ -42,5 +48,5 @@ List<int> parseName(String input) {
     }
   }
 
-  return result;
+  return utf8.decode(result);
 }
