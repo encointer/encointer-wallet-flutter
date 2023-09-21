@@ -6,8 +6,7 @@ import {
   assert,
   u8aToBuffer,
   bufferToU8a,
-  compactAddLength,
-  bnToU8a
+  compactAddLength
 } from '@polkadot/util';
 import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
@@ -25,8 +24,8 @@ import {
 } from '../config/consts.js';
 import { unsubscribe } from '../utils/unsubscribe.js';
 import settings from './settings.js';
-import { stringToEncointerBalance } from '@encointer/types';
 import { extractEvents } from '@encointer/node-api';
+import { stringNumberToEncointerBalanceU8a } from '../utils/utils.js';
 
 export const keyring = new Keyring({ ss58Format: 0, type: 'sr25519' });
 
@@ -181,7 +180,7 @@ function getBlockTime (blocks) {
 export async function txFeeEstimate (txInfo, paramList) {
   if (txInfo.module === 'encointerBalances' && txInfo.call === 'transfer') {
     paramList[1] = communityIdentifierFromString(api.registry, paramList[1]);
-    paramList[2] = bnToU8a(stringToEncointerBalance(paramList[2]), 128, true);
+    paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
   }
 
   let dispatchInfo;
@@ -227,69 +226,81 @@ export function sendTx (txInfo, paramList) {
  */
 export function sendTxWithPair (keyPair, txInfo, paramList) {
   return new Promise((resolve) => {
-    let unsub = () => {};
-    let balanceHuman;
+    try {
+      let unsub = () => {};
+      let balanceHuman;
 
-    if (txInfo.module === encointerBalances && txInfo.call === transfer) {
-      balanceHuman = paramList[2];
-      paramList[2] = bnToU8a(stringToEncointerBalance(paramList[2]), 128, true);
-    }
-
-    const tx = api.tx[txInfo.module][txInfo.call](...paramList);
-    const onStatusChange = (result) => {
-      if (result.status.isInBlock || result.status.isFinalized) {
-        const { success, error } = extractEvents(api, result);
-        if (success) {
-          if (txInfo.module === encointerBalances && txInfo.call === transfer) {
-            // make transfer amount human-readable again
-            paramList[2] = balanceHuman;
-          }
-
-          resolve({
-            hash: tx.hash.toString(),
-            time: new Date().getTime(),
-            params: paramList
-          });
-        }
-        if (error) {
-          resolve({ error });
-        }
-        unsub();
-      } else {
-        window.send('txStatusChange', result.status.type);
+      if (txInfo.module === encointerBalances && txInfo.call === transfer) {
+        balanceHuman = paramList[2];
+        paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
       }
-    };
-    if (txInfo.isUnsigned) {
-      tx.send(onStatusChange)
+
+      console.log(`[js-account/sendTx]: txInfo ${JSON.stringify(txInfo)}`);
+      console.log(`[js-account/sendTx]: Params ${JSON.stringify(paramList)}`);
+
+      const tx = api.tx[txInfo.module][txInfo.call](...paramList);
+      const onStatusChange = (result) => {
+        if (result.status.isInBlock || result.status.isFinalized) {
+          const {
+            success,
+            error
+          } = extractEvents(api, result);
+          if (success) {
+            if (txInfo.module === encointerBalances && txInfo.call === transfer) {
+              // make transfer amount human-readable again
+              paramList[2] = balanceHuman;
+            }
+
+            resolve({
+              hash: tx.hash.toString(),
+              time: new Date().getTime(),
+              params: paramList
+            });
+          }
+          if (error) {
+            resolve({ error });
+          }
+          unsub();
+        } else {
+          window.send('txStatusChange', result.status.type);
+        }
+      };
+      if (txInfo.isUnsigned) {
+        tx.send(onStatusChange)
+          .then((res) => {
+            unsub = res;
+          })
+          .catch((err) => {
+            resolve({ error: err.message });
+          });
+        return;
+      }
+
+      console.log(`[js-account/sendTx]: Adding tip: ${txInfo.tip}`);
+      const signerOptions = {
+        tip: new BN(txInfo.tip || 0, 10)
+      };
+
+      console.log(`[js-account/sendTx]: Adding payment asset ${JSON.stringify(txInfo.txPaymentAsset)}`);
+      if (txInfo.txPaymentAsset != null) {
+        signerOptions.assetId = api.createType(
+          'Option<CommunityIdentifier>', txInfo.txPaymentAsset
+        );
+      }
+
+      console.log(`[js-account/sendTx]: ${JSON.stringify(txInfo)}`);
+      console.log(`[js-account/sendTx]: ${JSON.stringify(signerOptions)}`);
+
+      tx.signAndSend(keyPair, signerOptions, onStatusChange)
         .then((res) => {
           unsub = res;
         })
         .catch((err) => {
           resolve({ error: err.message });
         });
-      return;
+    } catch (e) {
+      resolve({ error: e.message });
     }
-
-    const signerOptions = {
-      tip: new BN(txInfo.tip, 10)
-    }
-
-    if (txInfo.txPaymentAsset != null) {
-      signerOptions.assetId = api.createType(
-        'Option<CommunityIdentifier>', txInfo.txPaymentAsset
-        )
-    }
-
-    console.log(`[js-account/sendTx]: ${JSON.stringify(txInfo)}`)
-    console.log(`[js-account/sendTx]: ${JSON.stringify(signerOptions)}`)
-
-    tx.signAndSend(keyPair, signerOptions, onStatusChange)
-      .then((res) => {
-        unsub = res;
-      })
-      .catch((err) => {
-        resolve({ error: err.message });
-      });
   });
 }
 

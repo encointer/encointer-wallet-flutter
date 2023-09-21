@@ -15,7 +15,7 @@ import {
   getDemurrage as _getDemurrage, submitAndWatchTx,
 } from '@encointer/node-api';
 import { getFinalizedHeader } from './chain.js';
-import { applyDemurrage } from '../utils/apply-demurrage.js';
+import { applyDemurrage } from '../utils/utils.js';
 import { Keyring } from '@polkadot/keyring';
 
 export async function getCurrentPhase () {
