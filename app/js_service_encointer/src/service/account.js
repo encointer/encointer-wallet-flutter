@@ -276,10 +276,12 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
         return;
       }
 
+      console.log(`[js-account/sendTx]: Adding tip: ${txInfo.tip}`);
       const signerOptions = {
-        tip: new BN(txInfo.tip, 10)
+        tip: new BN(txInfo.tip || 0, 10)
       };
 
+      console.log(`[js-account/sendTx]: Adding payment asset ${txInfo.txPaymentAsset}`);
       if (txInfo.txPaymentAsset != null) {
         signerOptions.assetId = api.createType(
           'Option<CommunityIdentifier>', txInfo.txPaymentAsset
