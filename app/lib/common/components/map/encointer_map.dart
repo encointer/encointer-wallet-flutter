@@ -34,7 +34,7 @@ class EncointerMap extends StatelessWidget {
     return FlutterMap(
       mapController: mapController,
       options: MapOptions(
-        center: center ?? LatLng(47.389712, 8.517076),
+        center: center ?? const LatLng(47.389712, 8.517076),
         zoom: initialZoom,
         maxZoom: maxZoom,
         onPointerDown: onPointerDown,
