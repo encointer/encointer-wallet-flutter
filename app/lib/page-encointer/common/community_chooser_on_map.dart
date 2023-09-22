@@ -62,7 +62,7 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
       body: (locations.isNotEmpty && communityDataAt.isNotEmpty)
           ? EncointerMap(
               locations: locations,
-              center: LatLng(47.389712, 8.517076),
+              center: const LatLng(47.389712, 8.517076),
               initialZoom: 2,
               popupBuilder: (BuildContext context, Marker marker) {
                 return PopupBuilder(
@@ -109,7 +109,7 @@ LatLng coordinatesOf(CidName community) {
   /// and very hard to choose it from map
   /// thus moved little bit to the left on map
   if (community.name == 'EdisonPaula') {
-    return LatLng(47.3962467, 8.4815019);
+    return const LatLng(47.3962467, 8.4815019);
   }
   final coordinates = GeoHash(utf8.decode(community.cid.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());

@@ -20,33 +20,33 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.3 <4.0.0"
-  flutter: "3.10.3"
+  flutter: "3.13.0"
 
 dependencies:
   # intl - format numbers
-  intl: ^0.18.0
+  intl: ^0.18.1
   json_annotation: ^4.8.1
   bip39: ^1.0.6 # Todo: #1268: replace with alternative package
   pointycastle: ^3.7.3
   # state management with mobx
   mobx: ^2.2.0
   flutter_mobx: ^2.0.6+5
-  shared_preferences: ^2.1.2
-  flutter_inappwebview: ^6.0.0-beta.22
-  flutter_local_notifications: ^14.1.1
+  shared_preferences: ^2.2.0
+  flutter_inappwebview: ^6.0.0-beta.22 # Todo: #1461: bump package version
+  flutter_local_notifications: ^15.1.0+1
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   base58check: ^2.0.0
-  package_info_plus: ^3.1.2
+  package_info_plus: ^4.1.0
   quiver: ^3.2.1
-  image_picker: ^0.8.8
-  share_plus: ^6.3.4
-  flutter_timezone: ^1.0.6
+  image_picker: ^1.0.2
+  share_plus: ^7.1.0
+  flutter_timezone: ^1.0.7
 
   # Adjust screen brightness and keep awake for qrcodes
-  wakelock: ^0.6.2
+  wakelock_plus: ^1.1.1
   screen_brightness: ^0.2.2
 
   # encointer dart api
@@ -55,41 +55,41 @@ dependencies:
   cupertino_icons: ^1.0.5
   # QR code generator & reader
   pretty_qr_code: ^2.0.3
-  mobile_scanner: ^3.3.0
-  aes_ecb_pkcs5_flutter: ^0.1.2
-  permission_handler: ^10.3.0
-  flutter_svg: ^2.0.6
-  url_launcher: ^6.1.11
+  mobile_scanner: ^3.4.1
+  aes_ecb_pkcs5_flutter: ^0.1.2 # Todo: #1460: replace with alternative package
+  permission_handler: ^10.4.3 
+  flutter_svg: ^2.0.7
+  url_launcher: ^6.1.12
   dropdown_search: ^5.0.6
   provider: ^6.0.5
-  flutter_map_marker_popup: ^5.1.0
-  flutter_map: ^4.0.0
+  flutter_map_marker_popup: ^5.2.0
+  flutter_map: ^5.0.0
   dart_geohash: ^2.0.2 # Todo: #1270: replace with alternative package
   iconsax: ^0.0.8 # Todo: #1271: replace with alternative package
-  add_2_calendar: ^2.2.3
+  add_2_calendar: ^2.2.4
   sliding_up_panel: ^2.0.0+1 # Todo: #1272: replace with alternative package
   pausable_timer: ^2.0.0
   focus_detector: ^2.0.1 # Todo: #1273: replace with alternative package
   jdenticon_dart: ^2.0.0 # Todo: #1274: replace with alternative package
   photo_view: ^0.14.0
-  upgrader: ^6.5.0
+  upgrader: ^8.1.0
   app_links: ^3.4.3
   local_auth: ^2.1.6
   printing: ^5.11.0
   pdf: ^3.10.4
-  connectivity_plus: ^4.0.1
+  connectivity_plus: ^4.0.2
   ew_storage:
     path: ../packages/ew_storage/
   ew_http:
     path: ../packages/ew_http/
   ew_test_keys:
     path: ../packages/ew_test_keys/
-  decimal: ^2.3.2
+  decimal: ^2.3.3
 
 dev_dependencies:
-  build_runner: ^2.4.5
+  build_runner: ^2.4.6
   flutter_gen_runner: ^5.3.1
-  json_serializable: ^6.7.0
+  json_serializable: ^6.7.1
   json_serializable_mobx: ^0.10.3
   mobx_codegen: ^2.3.0
   # Check unused dependencies. Note: Some packages are not imported by any dart files but are used
@@ -100,8 +100,8 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  test: ^1.24.1
-  mocktail: ^0.3.0
+  test: ^1.24.3
+  mocktail: ^1.0.0
   very_good_analysis: ^5.0.0+1
   rxdart: ^0.27.7
 
@@ -135,7 +135,6 @@ flutter:
     - assets/avatars/
     - assets/nctr_logo.svg
     - assets/nctr_logo_faces_only_thick.svg
-   
 
   # fonts:
   #   - family: Schyler
