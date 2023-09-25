@@ -30,7 +30,7 @@ jobs:
         # See up to date screenshots specifications for Appstores:
         # https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications/
         include:
-          - device: "iPhone 14 Pro Max"
+          - device: "iPhone 14 Pro Max Simulator (17.0)"
             record_video: true
             # With this flag we can run the CI against different node versions to check compatibility.
             docker_tag: "1.5.1"
