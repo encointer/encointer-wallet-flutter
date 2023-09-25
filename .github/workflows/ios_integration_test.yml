@@ -27,6 +27,8 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
+        # See up to date screenshots specifications for Appstores:
+        # https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications/
         include:
           - device: "iPhone 11 Pro Max"
             record_video: true
