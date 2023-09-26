@@ -23,19 +23,21 @@ jobs:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
   ios_device_test:
-    runs-on: macos-latest
+    runs-on: macos-13
     timeout-minutes: 60
     strategy:
       matrix:
+        # See up to date screenshots specifications for Appstores:
+        # https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications/
         include:
-          - device: "iPhone 11 Pro Max"
+          - device: "iPhone 14 Pro Max"
             record_video: true
             # With this flag we can run the CI against different node versions to check compatibility.
             docker_tag: "1.5.1"
           - device: "iPhone 8 Plus"
             record_video: false
             docker_tag: "1.5.1"
-          - device: "iPad Pro (12.9-inch) (3rd generation)"
+          - device: "iPad Pro (12.9-inch) (6th generation)"
             record_video: false
             docker_tag: "1.5.1"
           - device: "iPad Pro (12.9-inch) (2nd generation)"
@@ -60,11 +62,17 @@ jobs:
 
       - name: "Create Simulator if iPad Pro 2nd gen"
         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
-        run: xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
+        # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
+        run: |
+          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-4" || \
+          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
 
-      - name: "Create Simulator if iPad Pro 3rd gen"
-        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (3rd generation)' }}
-        run: xcrun simctl create "iPad Pro (12.9-inch) (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---3rd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
+      - name: "Create Simulator if iPad 8 Plus"
+        if: ${{ matrix.device == 'iPhone 8 Plus' }}
+        # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
+        run: |
+          xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-4" || \
+          xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
 
       # JS Stuff
       - uses: actions/setup-node@v3
@@ -83,6 +91,7 @@ jobs:
       - name: Start colima a docker runtime for MacOs
         run: |
           brew install docker
+          brew install colima
           colima start
 
       - name: Run encointer-node
