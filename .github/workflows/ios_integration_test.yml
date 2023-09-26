@@ -62,11 +62,17 @@ jobs:
 
       - name: "Create Simulator if iPad Pro 2nd gen"
         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
-        run: xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-4"
+        # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
+        run: |
+          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-4" || \
+          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
 
       - name: "Create Simulator if iPad 8 Plus"
         if: ${{ matrix.device == 'iPhone 8 Plus' }}
-        run: xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-4"
+        # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
+        run: |
+          xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-4" || \
+          xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
 
       # JS Stuff
       - uses: actions/setup-node@v3
