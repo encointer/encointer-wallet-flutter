@@ -142,7 +142,7 @@
     "meetupClaimantInvalid": "L'auteur de la demande ne fait pas partie de ton rencontre. La demande n'a pas été enregistrée.",
     "meetupLocation": "Point de rencontre",
     "meetupIndex": "Réunion numéro: {index}",
-    "meetupIndexPopupExplanation": "Utilise le numéro de rassemblement pour trouver ton lieu de rassemblement réel. Dans ta communauté, c'est le responsable de la communauté qui est chargé de spécifier les lieux de rassemblement. Le lieu réel peut être légèrement différent de celui affiché ici.",
+    "meetupIndexPopupExplanation": "Utilise le numéro de réunion pour trouver ton lieu de réunion réel. Dans ta communauté, c'est le responsable de la communauté qui est chargé de spécifier les lieux de réunion. Le lieu réel peut être légèrement différent de celui affiché ici.",
     "meetupNotificationOneDayBeforeContent": "Réunion commence dans 24h",
     "meetupNotificationOneDayBeforeTitle": "24 heures restantes",
     "meetupNotificationOneHourBeforeContent": "Réunion commence dans une heure",
