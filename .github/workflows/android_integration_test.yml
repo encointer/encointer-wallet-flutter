@@ -49,7 +49,7 @@ jobs:
         run: ./scripts/install_flutter_wrapper.sh
 
       - name: Setup Android SDK and accept licences
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v2
 
       - name: List android images
         run: sdkmanager --list | grep system-images
