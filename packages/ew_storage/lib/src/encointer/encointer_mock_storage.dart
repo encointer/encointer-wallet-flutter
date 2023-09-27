@@ -75,12 +75,12 @@ Map<String, dynamic> endorphineCointer = {
   'encoding': {
     'content': ['pkcs8', 'sr25519'],
     'type': ['scrypt', 'xsalsa20-poly1305'],
-    'version': '3'
+    'version': '3',
   },
   'meta': {'genesisHash': '', 'name': 'Endorphine Cointer', 'whenCreated': 1616850683478},
   'mnemonic': 'clap mechanic diary rose vital current eyebrow mean limb pulse portion plate',
   'memo': null,
-  'observation': null
+  'observation': null,
 };
 List<Map<String, dynamic>> accList = [];
 String currentAccountPubKey = '';

@@ -240,12 +240,10 @@ class EncointerApi {
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
   Future<void> communitiesGetAll() async {
-    final cn = await jsApi.evalJavascript<List<dynamic>>('encointer.communitiesGetAll()').then(
-          (list) => list.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList(),
-        );
+    final cns = await jsApi.evalJavascript<List<dynamic>>('encointer.communitiesGetAll()');
 
-    Log.d('api: CidNames: ${cn.length} and $cn ', 'EncointerApi');
-    store.encointer.setCommunities(cn);
+    Log.d('api: CidNames: ${cns.length} and $cns ', 'EncointerApi');
+    store.encointer.setCommunities(cns.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList());
   }
 
   /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().
