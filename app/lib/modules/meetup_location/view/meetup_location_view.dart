@@ -39,7 +39,7 @@ class MeetupLocationPage extends StatelessWidget {
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.meetupLocation),
+        title: Text('${l10n.meetupLocation}: ${meetupLocationArgs.meetup.locationIndex}'),
       ),
       body: EncointerMap(
         locations: [meetupLocation.toLatLng()],
