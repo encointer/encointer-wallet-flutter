@@ -22,7 +22,7 @@ class CommunityMetadata {
   Map<String, String>? announcementSigner;
 
   /// Must be nullable to be backwards compatible with the cache for now.
-  /// Can be removed in the future.
+  /// Can be non-nullable in the future.
   CommunityRules? rules;
 
   @override
