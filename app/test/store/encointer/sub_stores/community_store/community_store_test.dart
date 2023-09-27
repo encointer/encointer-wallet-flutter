@@ -30,7 +30,14 @@ void main() {
       );
 
       final testMetadata = CommunityMetadata(
-          'Test-Community', 'TCM', 'AssetsCid', 'Community-Url', 'Theme-String', null, CommunityRules.LoCo);
+        'Test-Community',
+        'TCM',
+        'AssetsCid',
+        'Community-Url',
+        'Theme-String',
+        null,
+        CommunityRules.LoCo,
+      );
 
       final bootstrappers = [aliceAddress, bobAddress, charlieAddress];
       final testLocations = [testLocation1, testLocation2, testLocation3];
