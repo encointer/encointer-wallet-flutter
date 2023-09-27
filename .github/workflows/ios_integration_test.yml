@@ -9,7 +9,7 @@ on:
     branches: [ master, f-droid ]
 
 env:
-  NODE_VERSION: 16.13.1
+  NODE_VERSION: 18.14.2
   JAVA_VERSION: 12.x
   ARTIFACT_PATH: ./screenshots
 
