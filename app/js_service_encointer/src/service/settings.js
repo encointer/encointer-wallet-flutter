@@ -122,33 +122,7 @@ async function createApi(wsProvider, configOverride) {
   const api = await ApiPromise.create({
     ...options({
       types: {
-        ...configOverride.types !== null ? configOverride.types : {},
-        // Todo: integrate MeetupResult into encointer-js
-        MeetupResult: {
-          _enum: [
-            'Ok',
-            'VotesNotDependable',
-            'MeetupValidationIndexOutOfBounds',
-          ]
-        },
-        CommunityMetadataType: {
-          name: 'Text',
-          symbol: 'Text',
-          assets: 'Text',
-          theme: 'Option<Text>',
-          url: 'Option<Text>',
-          announcementSigner: 'Option<AnnouncementSigner>',
-          rules: 'CommunityRules',
-        },
-        CommunityRules: {
-          _enum: ['LoCo', 'LoCoFlex', 'BeeDance']
-        },
-        AnnouncementSigner: {
-          _enum: {
-            bip340: 'Bip340',
-          }
-        },
-        Bip340: 'AccountId',
+        ...configOverride.types !== null ? configOverride.types : {}
       }
     }),
     signedExtensions: {
