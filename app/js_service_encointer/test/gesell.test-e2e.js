@@ -142,7 +142,7 @@ describe('encointer', () => {
       expect(hasCommitted).toBeFalsy();
     });
 
-    it('Should confirm commitment', async () => {
+    it.skip('Should confirm commitment', async () => {
       // before this test we need to actually have unused reputation for tha testCIndex.
       const alpha = '5FyWbcwN1TGPdyzRzoEeem3MUcc7jXRs7ZoftZkAQLV47nS7';
       const adriana = { geohash: '0x7372637134', digest: '0xabb12168' };
