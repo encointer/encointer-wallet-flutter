@@ -159,18 +159,18 @@ class _AccountManagePageState extends State<AccountManagePage> {
         if (faucets != null)
           store.account.currentAccountPubKey! == accountToBeEditedPubKey
               ? ListView.builder(
-            shrinkWrap: true,
-            itemCount: faucets!.length,
-            itemBuilder: (BuildContext context, int index) {
-              final faucetAccount = faucets!.keys.elementAt(index);
-              return FaucetListTile(
-                store,
-                userAddress: addressSS58,
-                faucet: faucets![faucetAccount]!,
-                faucetAccount: faucetAccount,
-              );
-            },
-          )
+                  shrinkWrap: true,
+                  itemCount: faucets!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final faucetAccount = faucets!.keys.elementAt(index);
+                    return FaucetListTile(
+                      store,
+                      userAddress: addressSS58,
+                      faucet: faucets![faucetAccount]!,
+                      faucetAccount: faucetAccount,
+                    );
+                  },
+                )
               : Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left)
         else
           const CupertinoActivityIndicator(),
@@ -279,7 +279,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         );
                       }),
                 // spread the List<Widget> so that it does not create a nested list.
-                if (appSettingsStore.developerMode) ... benefits(),
+                if (appSettingsStore.developerMode) ...benefits(),
                 const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
