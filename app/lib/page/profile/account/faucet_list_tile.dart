@@ -130,9 +130,9 @@ class _FaucetListTileState extends State<FaucetListTile> {
     Map<int, CommunityIdentifier> ids,
     String faucetAccount,
   ) async {
-    final futures =
-        ids.entries.map((e) => submitFaucetDrip(context, widget.store, webApi, faucetAccount, e.value, e.key));
-    await Future.wait(futures);
+
+    final e = ids.entries.first;
+    return  submitFaucetDrip(context, widget.store, webApi, faucetAccount, e.value, e.key);
   }
 
   Future<BigInt> getNativeFreeBalance(String address) async {
