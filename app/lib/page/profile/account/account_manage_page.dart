@@ -152,6 +152,31 @@ class _AccountManagePageState extends State<AccountManagePage> {
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
 
+    // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
+    List<Widget> benefits() {
+      return [
+        Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
+        if (faucets != null)
+          store.account.currentAccountPubKey! == accountToBeEditedPubKey
+              ? ListView.builder(
+            shrinkWrap: true,
+            itemCount: faucets!.length,
+            itemBuilder: (BuildContext context, int index) {
+              final faucetAccount = faucets!.keys.elementAt(index);
+              return FaucetListTile(
+                store,
+                userAddress: addressSS58,
+                faucet: faucets![faucetAccount]!,
+                faucetAccount: faucetAccount,
+              );
+            },
+          )
+              : Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left)
+        else
+          const CupertinoActivityIndicator(),
+      ];
+    }
+
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
@@ -253,25 +278,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           addressSS58,
                         );
                       }),
-                Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
-                if (faucets != null)
-                  store.account.currentAccountPubKey! == accountToBeEditedPubKey
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: faucets!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final faucetAccount = faucets!.keys.elementAt(index);
-                            return FaucetListTile(
-                              store,
-                              userAddress: addressSS58,
-                              faucet: faucets![faucetAccount]!,
-                              faucetAccount: faucetAccount,
-                            );
-                          },
-                        )
-                      : Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left)
-                else
-                  const CupertinoActivityIndicator(),
+                // spread the List<Widget> so that it does not create a nested list.
+                if (appSettingsStore.developerMode) ... benefits(),
                 const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
