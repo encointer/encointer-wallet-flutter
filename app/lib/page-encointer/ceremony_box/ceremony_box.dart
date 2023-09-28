@@ -15,6 +15,7 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_start_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/unregister_link_button.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/lower_ceremony_box_container.dart';
+import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/meetup_info.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step1_count.dart';
@@ -64,6 +65,7 @@ class CeremonyBox extends StatelessWidget {
                   meetupTime: meetupTime,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   meetupCompleted: store.encointer.communityAccount?.meetupCompleted ?? false,
+                  communityRules: store.encointer.community?.metadata?.rules ?? CommunityRules.LoCo,
                 ),
                 if (store.encointer.showRegisterButton)
                   Padding(
@@ -162,16 +164,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       }
     case CeremonyPhase.Assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
-        final meetup = store.encointer.communityAccount!.meetup!;
-        final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
-        return MeetupInfo(
-          meetup,
-          location,
-          key: const Key(EWTestKeys.accountAssigned),
-          onPressed: () {
-            Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
-          },
-        );
+        return _meetupInfo(context, store);
       } else {
         return CeremonyNotification(
           key: const Key(EWTestKeys.accountUnassigned),
@@ -194,18 +187,25 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
             ),
           );
         } else {
-          final meetup = store.encointer.communityAccount!.meetup!;
-          final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
-          return MeetupInfo(
-            meetup,
-            location,
-            onPressed: () {
-              Navigator.pushNamed(context, MeetupLocationPage.route, arguments: location);
-            },
-          );
+          return _meetupInfo(context, store);
         }
       }
   }
+}
+
+Widget _meetupInfo(BuildContext context, AppStore store) {
+  final meetup = store.encointer.communityAccount!.meetup!;
+  final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
+  final rules = store.encointer.community!.metadata!.communityRules;
+  final args = MeetupLocationArgs(location, meetup, rules);
+  return MeetupInfo(
+    meetup,
+    location,
+    key: const Key(EWTestKeys.accountAssigned),
+    onPressed: () {
+      Navigator.pushNamed(context, MeetupLocationPage.route, arguments: args);
+    },
+  );
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {

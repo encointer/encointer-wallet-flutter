@@ -122,15 +122,7 @@ async function createApi(wsProvider, configOverride) {
   const api = await ApiPromise.create({
     ...options({
       types: {
-        ...configOverride.types !== null ? configOverride.types : {},
-        // Todo: integrate MeetupResult into encointer-js
-        MeetupResult: {
-          _enum: [
-            'Ok',
-            'VotesNotDependable',
-            'MeetupValidationIndexOutOfBounds',
-          ]
-        },
+        ...configOverride.types !== null ? configOverride.types : {}
       }
     }),
     signedExtensions: {
