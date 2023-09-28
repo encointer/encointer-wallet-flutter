@@ -27,9 +27,26 @@ export async function getAllFaucetsWithAccount () {
  * Checks if an account has already committed its reputation for a given purpose.
  */
 export async function hasCommittedFor (cid, cIndex, purpose, account) {
-  const maybeCommitment = await api.query.encointerReputationCommitments.commitments([cid, cIndex], [purpose, account]);
-  console.log(`Commitment of: ${account} for [${JSON.stringify(cid)}, [${cIndex}][${purpose}, ${account}]: ${JSON.stringify(maybeCommitment)}`);
-  return maybeCommitment.isSome;
+  // Commitment is an Option<H256>, so we need to see if the key exists, as None maps to null.
+  const keys = await api.query.encointerReputationCommitments.commitments.keys([cid, cIndex])
+    .then((keys) => keys.map(({ args: [[_cid, _cIndex], [purposeId, accountId]] }) => [purposeId, accountId]));
+
+  console.log(`Keys for [${JSON.stringify(cid)}, ${cIndex}]: ${JSON.stringify(keys)}`);
+
+  const accountTyped = api.createType('AccountId', account);
+  const purposeTyped = api.createType('u64', purpose);
+
+  for (const [purposeId, accountId] of keys) {
+    // prevent mismatch of ss58 prefix, types, codecs etc.
+    const acc = api.createType('AccountId', accountId);
+    const pur = api.createType('u64', purposeId);
+
+    if (purposeTyped.toHex() === pur.toHex() && accountTyped.toHex() === acc.toHex()) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function combineListsIntoMap (keys, values) {

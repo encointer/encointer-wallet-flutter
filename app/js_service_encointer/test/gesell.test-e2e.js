@@ -15,7 +15,7 @@ import {
   getFaucetFor,
   hasCommittedFor
 } from '../src/service/faucet.js';
-import { expect, it } from '@jest/globals';
+import { beforeAll, describe, expect, it } from '@jest/globals';
 
 describe('encointer', () => {
   const network = gesellNetwork();
@@ -140,6 +140,16 @@ describe('encointer', () => {
       const someCid = '0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53';
       const hasCommitted = await hasCommittedFor(someCid, 0, 0, someAccount);
       expect(hasCommitted).toBeFalsy();
+    });
+
+    it('Should confirm commitment', async () => {
+      // before this test we need to actually have unused reputation for tha testCIndex.
+      const alpha = '5FyWbcwN1TGPdyzRzoEeem3MUcc7jXRs7ZoftZkAQLV47nS7';
+      const adriana = { geohash: '0x7372637134', digest: '0xabb12168' };
+      const testCIndex = 187;
+      const testPurposeId = 0;
+      const hasCommitted = await hasCommittedFor(adriana, testCIndex, testPurposeId, alpha);
+      expect(hasCommitted).toBeTruthy();
     });
   });
 });
