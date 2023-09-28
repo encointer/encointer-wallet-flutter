@@ -35,6 +35,8 @@ void main() {
         'AssetsCid',
         'Community-Url',
         'Theme-String',
+        null,
+        CommunityRules.LoCo,
       );
 
       final bootstrappers = [aliceAddress, bobAddress, charlieAddress];

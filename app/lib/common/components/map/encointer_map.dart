@@ -77,50 +77,42 @@ class PopupBuilder extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    this.inkWellKey,
-    this.onTap,
-    this.width = 150,
-    this.height = 70,
+    this.bottom,
+    this.maxWidth = 300,
+    this.maxHeight = 800,
   });
 
   final String title;
   final String description;
-  final Key? inkWellKey;
-  final double width;
-  final double height;
-  final void Function()? onTap;
+  final double maxWidth;
+  final double maxHeight;
+  final Widget? bottom;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
+      constraints: BoxConstraints.loose(Size(maxWidth, maxHeight)),
       padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
       decoration: BoxDecoration(
         color: context.colorScheme.background,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: InkWell(
-        key: inkWellKey,
-        onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              description,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 12, color: Colors.black54),
-            ),
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(
+            description,
+            style: const TextStyle(fontSize: 12, color: Colors.black54),
+          ),
+          bottom ?? const SizedBox.shrink(),
+        ],
       ),
     );
   }

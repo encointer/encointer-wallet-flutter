@@ -66,19 +66,25 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
               initialZoom: 2,
               popupBuilder: (BuildContext context, Marker marker) {
                 return PopupBuilder(
-                  inkWellKey: Key(
-                    '${marker.key.toString().substring(3, marker.key.toString().length - 3)}-description',
-                  ),
                   title: communityDataAt[marker.point]!.name,
                   description: communityDataAt[marker.point]!.cid.toFmtString(),
-                  onTap: () async {
-                    final store = context.read<AppStore>();
-                    await store.encointer.setChosenCid(communityDataAt[marker.point]!.cid);
-                    if (RepositoryProvider.of<AppSettings>(context).developerMode) {
-                      context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
-                    }
-                    Navigator.pop(context);
-                  },
+                  bottom: InkWell(
+                    key: Key(
+                      '${marker.key.toString().substring(3, marker.key.toString().length - 3)}-description',
+                    ),
+                    child: Text(
+                      l10n.communityDoChoose,
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
+                    ),
+                    onTap: () async {
+                      final store = context.read<AppStore>();
+                      await store.encointer.setChosenCid(communityDataAt[marker.point]!.cid);
+                      if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+                        context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
                 );
               },
             )

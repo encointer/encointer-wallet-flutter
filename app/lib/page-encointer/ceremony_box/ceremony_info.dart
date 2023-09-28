@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class CeremonyInfo extends StatelessWidget {
     required this.meetupTime,
     required this.ceremonyPhaseDurations,
     required this.meetupCompleted,
+    required this.communityRules,
   });
 
   final int currentTime;
@@ -26,6 +28,7 @@ class CeremonyInfo extends StatelessWidget {
   final int? meetupTime;
   final Map<CeremonyPhase, int> ceremonyPhaseDurations;
   final bool meetupCompleted;
+  final CommunityRules communityRules;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +52,7 @@ class CeremonyInfo extends StatelessWidget {
                     if (!meetupCompleted)
                       CeremonySchedule(
                         nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
+                        communityRules: communityRules,
                         languageCode: languageCode,
                       )
                     else
