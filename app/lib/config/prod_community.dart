@@ -16,12 +16,13 @@ enum CommunityConfig {
     colorScheme: AppColors.gbd,
     cid: WellKnownCids.gbdKsm,
   ),
+
   /// Default config in case we don't have a community specific one.
   def(
-  notificationSound: _leuZurichSound,
-  webSiteLink: _leuZurichLink,
-  colorScheme: AppColors.leu,
-  cid: WellKnownCids.leuKsm,
+    notificationSound: _leuZurichSound,
+    webSiteLink: _leuZurichLink,
+    colorScheme: AppColors.leu,
+    cid: WellKnownCids.leuKsm,
   );
 
   const CommunityConfig({
