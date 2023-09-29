@@ -14,15 +14,10 @@ import 'package:encointer_wallet/page/assets/announcement/widgets/announcement_c
 class AnnouncementView extends StatefulWidget {
   const AnnouncementView({
     super.key,
-
-    /// [cid] is required because in Assets (page)
-    /// widget.store.encointer.community?.cid.toFmtString() can be null
-    /// required to escape any mistakes could be made by a developer
-    /// and not pass cid here
     required this.cid,
   });
 
-  final String? cid;
+  final String cid;
 
   @override
   State<AnnouncementView> createState() => _AnnouncementViewState();

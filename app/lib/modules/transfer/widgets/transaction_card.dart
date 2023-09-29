@@ -53,7 +53,7 @@ class TransactionCard extends StatelessWidget {
                   Text(
                     transaction.isIssuance
                         ? l10n.communityWithName(
-                            Community.fromCid(appStore.encointer.community?.cid.toFmtString()).name,
+                            CommunityConfig.fromCid(appStore.encointer.community?.cid.toFmtString()).name,
                           )
                         : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
                     style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),

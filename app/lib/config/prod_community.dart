@@ -3,42 +3,50 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
-enum Community {
+enum CommunityConfig {
   leu(
     notificationSound: _leuZurichSound,
     webSiteLink: _leuZurichLink,
     colorScheme: AppColors.leu,
-    cid: Cids.leuKsm,
+    cid: WellKnownCids.leuKsm,
   ),
   gbd(
     notificationSound: _greenbaySound,
     webSiteLink: _greenbayLink,
     colorScheme: AppColors.gbd,
-    cid: Cids.gbdKsm,
+    cid: WellKnownCids.gbdKsm,
+  ),
+  /// Default config in case we don't have a community specific one.
+  def(
+  notificationSound: _leuZurichSound,
+  webSiteLink: _leuZurichLink,
+  colorScheme: AppColors.leu,
+  cid: WellKnownCids.leuKsm,
   );
 
-  const Community({
+  const CommunityConfig({
     required this.webSiteLink,
     required this.notificationSound,
     required this.colorScheme,
     required this.cid,
   });
 
-  factory Community.fromCid(String? cid) {
-    if (Cids.isGbd(cid)) return gbd;
-    if (Cids.isLeu(cid)) return leu;
-    return leu;
+  /// Returns a community config based on the cid, or the default in case the
+  /// the cid does not match a configured one or is null.
+  factory CommunityConfig.fromCid(String? cid) {
+    if (cid == null) return def;
+    if (WellKnownCids.isGbd(cid)) return gbd;
+    if (WellKnownCids.isLeu(cid)) return leu;
+    return def;
   }
 
   final String webSiteLink;
   final String notificationSound;
   final ColorScheme colorScheme;
   final String cid;
-
-  String get name => switch (this) { Community.leu => 'LEU', Community.gbd => 'GBD' };
 }
 
-class Cids {
+class WellKnownCids {
   static const leuKsm = 'u0qj944rhWE';
   static const leuRoc = 'gb1bc2QX9PQ';
   // leu does not exist on Gesell.
@@ -50,8 +58,8 @@ class Cids {
   static const _leuCids = <String>[leuKsm, leuRoc];
   static const _gbdCids = <String>[gbdKsm, gbdRoc, gbdRoc];
 
-  static bool isLeu(String? cid) => _leuCids.contains(cid);
-  static bool isGbd(String? cid) => _gbdCids.contains(cid);
+  static bool isLeu(String cid) => _leuCids.contains(cid);
+  static bool isGbd(String cid) => _gbdCids.contains(cid);
 }
 
 const _leuZurichSound = 'lions_growl';

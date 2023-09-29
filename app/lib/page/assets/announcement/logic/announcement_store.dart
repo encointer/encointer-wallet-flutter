@@ -45,10 +45,12 @@ abstract class _AnnouncementStoreBase with Store {
 
   @action
   Future<void> getCommunityAnnouncements(
-    String? cid, {
+    String cid, {
     bool devMode = false,
     required String langCode,
   }) async {
+    Log.d('announcement_view', 'Getting announcements for $cid');
+
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final communityAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
       '${getEncointerFeedLink(devMode: devMode)}/announcements/$cid/$langCode/announcements.json',
