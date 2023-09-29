@@ -14,7 +14,11 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class TransactionCard extends StatelessWidget {
-  const TransactionCard(this.transaction, this.contacts, {super.key});
+  const TransactionCard(
+    this.transaction,
+    this.contacts, {
+    super.key,
+  });
 
   final Transaction transaction;
   final List<AccountData> contacts;
@@ -52,9 +56,7 @@ class TransactionCard extends StatelessWidget {
                 children: [
                   Text(
                     transaction.isIssuance
-                        ? l10n.communityWithName(
-                            CommunityConfig.fromCid(appStore.encointer.community?.cid.toFmtString()).name,
-                          )
+                        ? l10n.communityWithName(appStore.encointer.community!.name!)
                         : transaction.getNameFromContacts(contacts) ?? l10n.unknown,
                     style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
@@ -63,7 +65,7 @@ class TransactionCard extends StatelessWidget {
                     children: [
                       tappableAddress(context, transaction),
                       const Spacer(),
-                      transferAmount(context, appStore, transaction),
+                      transferAmount(context, appStore.encointer.community!.symbol!, transaction),
                     ],
                   ),
                 ],
@@ -93,12 +95,12 @@ Widget tappableAddress(BuildContext context, Transaction transaction) {
   );
 }
 
-Widget transferAmount(BuildContext context, AppStore appStore, Transaction transaction) {
+Widget transferAmount(BuildContext context, String symbol, Transaction transaction) {
   return Text.rich(
     TextSpan(
       children: [
         TextSpan(
-          text: '${appStore.encointer.community?.symbol}',
+          text: symbol,
           style: context.titleMedium.copyWith(
             color: transaction.type == TransactionType.incoming ? context.colorScheme.primary : const Color(0xffD76D89),
           ),
