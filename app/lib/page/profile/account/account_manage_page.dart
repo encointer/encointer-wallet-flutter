@@ -1,9 +1,10 @@
-import 'package:ew_test_keys/ew_test_keys.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/theme/theme.dart';
@@ -12,6 +13,7 @@ import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
+import 'package:encointer_wallet/page/profile/account/faucet_list_tile.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -21,6 +23,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 class AccountManagePage extends StatefulWidget {
   const AccountManagePage({super.key});
@@ -38,11 +41,19 @@ class _AccountManagePageState extends State<AccountManagePage> {
   bool _isEditingText = false;
   late final AppStore _appStore;
 
+  Map<String, Faucet>? faucets;
+
   @override
   void initState() {
     super.initState();
     _appStore = context.read<AppStore>();
     if (_appStore.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
+    _init();
+  }
+
+  Future<void> _init() async {
+    faucets = await webApi.encointer.getAllFaucetsWithAccount();
+    setState(() {});
   }
 
   @override
@@ -75,13 +86,16 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     final community = _appStore.encointer.communityStores![cidFmt]!;
 
+    final isBootstrapper = _appStore.encointer.community!.bootstrappers != null &&
+        _appStore.encointer.community!.bootstrappers!.contains(address);
+
     Log.d('_getBalanceEntryListTile: $community', 'AccountManagePage');
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(),
       leading: CommunityIcon(
         store: _appStore,
-        address: address,
+        isBootstrapper: isBootstrapper,
         icon: const CommunityIconObserver(),
       ),
       title: Text(community.name!, style: h3),
@@ -126,7 +140,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final h3 = context.titleLarge.copyWith(fontSize: 19);
+    final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
     final appSettingsStore = context.watch<AppSettings>();
@@ -137,6 +151,31 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
+
+    // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
+    List<Widget> benefits() {
+      return [
+        Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
+        if (faucets != null)
+          store.account.currentAccountPubKey! == accountToBeEditedPubKey
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: faucets!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final faucetAccount = faucets!.keys.elementAt(index);
+                    return FaucetListTile(
+                      store,
+                      userAddress: addressSS58,
+                      faucet: faucets![faucetAccount]!,
+                      faucetAccount: faucetAccount,
+                    );
+                  },
+                )
+              : Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left)
+        else
+          const CupertinoActivityIndicator(),
+      ];
+    }
 
     return Observer(
       builder: (_) => Scaffold(
@@ -182,72 +221,66 @@ class _AccountManagePageState extends State<AccountManagePage> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: <Widget>[
-                SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(height: 20),
-                      if (!isKeyboard)
-                        AddressIcon(
-                          addressSS58,
-                          accountToBeEditedPubKey,
-                          size: 130,
-                        ),
-                      Text(
-                        addressSS58,
-                        key: const Key(EWTestKeys.accountPublicKey),
-                        // Text only read `addressSS58` for integration test
-                        style: const TextStyle(fontSize: 2, color: Colors.transparent),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            Fmt.address(addressSS58)!,
-                            style: const TextStyle(fontSize: 20),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          IconButton(
-                            icon: const Icon(Iconsax.copy),
-                            color: context.colorScheme.secondary,
-                            onPressed: () => UI.copyAndNotify(context, addressSS58),
-                          ),
-                        ],
-                      ),
-                      Text(l10n.communities,
-                          style: h3.copyWith(color: AppColors.encointerGrey), textAlign: TextAlign.left),
-                    ],
+                const SizedBox(height: 20),
+                if (!isKeyboard)
+                  AddressIcon(
+                    addressSS58,
+                    accountToBeEditedPubKey,
+                    size: 130,
                   ),
+                Text(
+                  addressSS58,
+                  key: const Key(EWTestKeys.accountPublicKey),
+                  // Text only read `addressSS58` for integration test
+                  style: const TextStyle(fontSize: 2, color: Colors.transparent),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      Fmt.address(addressSS58)!,
+                      style: const TextStyle(fontSize: 20),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    IconButton(
+                      icon: const Icon(Iconsax.copy),
+                      color: context.colorScheme.secondary,
+                      onPressed: () => UI.copyAndNotify(context, addressSS58),
+                    ),
+                  ],
+                ),
+                Text(l10n.communities, style: h3Grey, textAlign: TextAlign.left),
                 if (appSettingsStore.developerMode)
-                  Expanded(
-                    child: ListView.builder(
-                        // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                        itemCount: store.encointer.accountStores!.containsKey(addressSS58)
-                            ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
-                            : 0,
-                        itemBuilder: (BuildContext context, int index) {
-                          final community =
-                              store.encointer.accountStores![addressSS58]!.balanceEntries.keys.elementAt(index);
-                          return _getBalanceEntryListTile(
-                            community,
-                            store.encointer.accountStores![addressSS58]!.balanceEntries[community],
-                            addressSS58,
-                          );
-                        }),
-                  )
+                  ListView.builder(
+                      shrinkWrap: true,
+                      // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
+                      itemCount: store.encointer.accountStores!.containsKey(addressSS58)
+                          ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
+                          : 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        final community =
+                            store.encointer.accountStores![addressSS58]!.balanceEntries.keys.elementAt(index);
+                        return _getBalanceEntryListTile(
+                          community,
+                          store.encointer.accountStores![addressSS58]!.balanceEntries[community],
+                          addressSS58,
+                        );
+                      })
                 else
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: store.encointer.chosenCid != null ? 1 : 0,
-                        itemBuilder: (BuildContext context, int index) {
-                          return _getBalanceEntryListTile(
-                            _appStore.encointer.chosenCid!.toFmtString(),
-                            _appStore.encointer.communityBalanceEntry,
-                            addressSS58,
-                          );
-                        }),
-                  ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: store.encointer.chosenCid != null ? 1 : 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _getBalanceEntryListTile(
+                          _appStore.encointer.chosenCid!.toFmtString(),
+                          _appStore.encointer.communityBalanceEntry,
+                          addressSS58,
+                        );
+                      }),
+                // spread the List<Widget> so that it does not create a nested list.
+                if (appSettingsStore.developerMode) ...benefits(),
+                const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
                   decoration: BoxDecoration(
@@ -342,6 +375,7 @@ class AccountActionItemData {
     required this.accountAction,
     required this.icon,
   });
+
   // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
   final String title;
   final AccountAction accountAction;
@@ -353,16 +387,15 @@ class CommunityIcon extends StatelessWidget {
     super.key,
     required this.store,
     required this.icon,
-    required this.address,
+    required this.isBootstrapper,
   });
 
   final AppStore store;
   final Widget icon;
-  final String? address;
+  final bool isBootstrapper;
 
   @override
   Widget build(BuildContext context) {
-    final store = context.watch<AppStore>();
     return Stack(
       children: [
         SizedBox(
@@ -370,20 +403,12 @@ class CommunityIcon extends StatelessWidget {
           height: 50,
           child: icon,
         ),
-        Observer(
-          builder: (_) {
-            if (store.encointer.community!.bootstrappers != null &&
-                store.encointer.community!.bootstrappers!.contains(address)) {
-              return const Positioned(
-                bottom: 0,
-                right: 0, //give the values according to your requirement
-                child: Icon(Iconsax.star, color: Colors.yellow),
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
-        ),
+        if (isBootstrapper)
+          const Positioned(
+            bottom: 0,
+            right: 0,
+            child: Icon(Iconsax.star, color: Colors.yellow),
+          )
       ],
     );
   }

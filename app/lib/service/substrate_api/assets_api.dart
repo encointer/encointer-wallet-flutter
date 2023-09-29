@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/assets/types/balances_info.dart';
 
 class AssetsApi {
   AssetsApi(this.store, this.jsApi);
@@ -29,6 +30,15 @@ class AssetsApi {
       await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res}));
     }
     await _fetchMarketPrice();
+  }
+
+  Future<BalancesInfo> getBalance() async {
+    return getBalanceOf(store.account.currentAddress);
+  }
+
+  Future<BalancesInfo> getBalanceOf(String address) async {
+    final res = await jsApi.evalJavascript<Map<String, dynamic>>('account.getBalance("$address")');
+    return BalancesInfo.fromJson(res);
   }
 
   Future<void> subscribeBalance() async {
