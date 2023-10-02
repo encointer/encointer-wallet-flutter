@@ -49,7 +49,7 @@ abstract class _AnnouncementStoreBase with Store {
     bool devMode = false,
     required String langCode,
   }) async {
-    Log.d('announcement_view', 'Getting announcements for $cid');
+    Log.d('Getting announcements for $cid', 'announcement_view');
 
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final communityAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
@@ -57,13 +57,18 @@ abstract class _AnnouncementStoreBase with Store {
       fromJson: Announcement.fromJson,
     );
 
-    await communityAnnouncementsResponse.fold((l) {
+    await communityAnnouncementsResponse.fold((l) async {
       error = l.error.toString();
-      Log.e('announcement_view', '${l.error}');
+      if (l.statusCode == 404) {
+        Log.d('No community announcements found for cid: $cid, and langCode: $langCode', 'announcement_view');
+        if (langCode != 'en') {
+          // fallback to English if the app language's one is not available
+          return getCommunityAnnouncements(cid, devMode: devMode, langCode: 'en');
+        }
 
-      // fallback to English if the app language's one is not available
-      if (l.statusCode == 404) return getCommunityAnnouncements(cid, devMode: devMode, langCode: 'en');
-      fetchStatus = FetchStatus.error;
+        Log.e('Error getting community announcements ${l.error}', 'announcement_view');
+        fetchStatus = FetchStatus.error;
+      }
     }, (r) {
       announcementsCommunnity = r;
       fetchStatus = FetchStatus.success;
