@@ -210,23 +210,21 @@ class Fmt {
   /// print(hexToBytes1('#ffffff')); // [255, 255, 255, 255]
   /// ```
   static List<int> hexToBytes(String hexString) {
-    const byteAlphabet = '0123456789abcdef';
-
     // The function first removes any spaces and "0x" prefixes from the input string,
     // then converts the input string to lowercase.
     var hex = hexString.replaceAll(' ', '').replaceAll('0x', '').toLowerCase();
 
     // If the input string contains an odd number of characters, it adds a "0" to the beginning.
     if (hex.length % 2 != 0) hex = '0$hex';
-    final result = Uint8List(hex.length ~/ 2);
-    for (var i = 0; i < result.length; i++) {
-      // Finally, it adds every two characters of the input string as a byte value to the array.
-      final value = (byteAlphabet.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
-          +
-          byteAlphabet.indexOf(hex[i * 2 + 1]);
-      result[i] = value;
+
+    // Convert hex string to bytes
+    final bytes = <int>[];
+    for (var i = 0; i < hex.length; i += 2) {
+      final hexByte = hex.substring(i, i + 2);
+      bytes.add(int.parse(hexByte, radix: 16));
     }
-    return result;
+
+    return bytes;
   }
 
   static String bytesToHex(List<int> bytes) {

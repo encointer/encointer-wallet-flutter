@@ -42,7 +42,7 @@ void main() async {
       local,
       mockScheduleNotification,
       langCode: 'en',
-      cid: Cids.leuKsm,
+      cid: WellKnownCids.leuKsm,
       ewHttp: MockEwHttp(),
       devMode: true,
     );

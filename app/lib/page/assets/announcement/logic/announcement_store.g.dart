@@ -104,7 +104,7 @@ mixin _$AnnouncementStore on _AnnouncementStoreBase, Store {
       AsyncAction('_AnnouncementStoreBase.getCommunityAnnouncements', context: context);
 
   @override
-  Future<void> getCommunityAnnouncements(String? cid, {bool devMode = false, required String langCode}) {
+  Future<void> getCommunityAnnouncements(String cid, {bool devMode = false, required String langCode}) {
     return _$getCommunityAnnouncementsAsyncAction
         .run(() => super.getCommunityAnnouncements(cid, devMode: devMode, langCode: langCode));
   }

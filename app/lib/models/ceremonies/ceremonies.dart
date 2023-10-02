@@ -149,6 +149,6 @@ Map<int, CommunityReputation> reputationsFromList(List<dynamic> reputationsList)
   final reputations = reputationsList.cast<List<dynamic>>();
 
   return {
-    for (var cr in reputations) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>),
+    for (final cr in reputations) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>),
   };
 }

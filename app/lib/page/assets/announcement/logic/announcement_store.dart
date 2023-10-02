@@ -45,10 +45,12 @@ abstract class _AnnouncementStoreBase with Store {
 
   @action
   Future<void> getCommunityAnnouncements(
-    String? cid, {
+    String cid, {
     bool devMode = false,
     required String langCode,
   }) async {
+    Log.d('Getting announcements for $cid', 'announcement_view');
+
     if (fetchStatus != FetchStatus.loading) fetchStatus = FetchStatus.loading;
     final communityAnnouncementsResponse = await ewHttp.getTypeList<Announcement>(
       '${getEncointerFeedLink(devMode: devMode)}/announcements/$cid/$langCode/announcements.json',
@@ -57,11 +59,16 @@ abstract class _AnnouncementStoreBase with Store {
 
     await communityAnnouncementsResponse.fold((l) {
       error = l.error.toString();
-      Log.e('announcement_view', '${l.error}');
+      if (l.statusCode == 404) {
+        Log.d('No community announcements found for cid: $cid, and langCode: $langCode', 'announcement_view');
+        if (langCode != 'en') {
+          // fallback to English if the app language's one is not available
+          return getCommunityAnnouncements(cid, devMode: devMode, langCode: 'en');
+        }
 
-      // fallback to English if the app language's one is not available
-      if (l.statusCode == 404) return getCommunityAnnouncements(cid, devMode: devMode, langCode: 'en');
-      fetchStatus = FetchStatus.error;
+        Log.e('Error getting community announcements ${l.error}', 'announcement_view');
+        fetchStatus = FetchStatus.error;
+      }
     }, (r) {
       announcementsCommunnity = r;
       fetchStatus = FetchStatus.success;
@@ -80,10 +87,16 @@ abstract class _AnnouncementStoreBase with Store {
 
     await globalAnnouncementsResponse.fold((l) {
       error = l.error.toString();
-      Log.e('announcement_view', '${l.error}');
-      // fallback to English if the app language's one is not available
-      if (l.statusCode == 404) return getGlobalAnnouncements(devMode: devMode, langCode: 'en');
-      fetchStatus = FetchStatus.error;
+      if (l.statusCode == 404) {
+        Log.d('No global announcements found for langCode: $langCode', 'announcement_view');
+        if (langCode != 'en') {
+          // fallback to English if the app language's one is not available
+          return getGlobalAnnouncements(devMode: devMode, langCode: 'en');
+        }
+
+        Log.e('Error getting global announcements ${l.error}', 'announcement_view');
+        fetchStatus = FetchStatus.error;
+      }
     }, (r) {
       announcementsGlobal = r;
       fetchStatus = FetchStatus.success;

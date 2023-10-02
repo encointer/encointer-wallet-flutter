@@ -15,8 +15,8 @@ source ./scripts/init_env.sh
 ######################### Setup phase
 
 DISTRO="linux-x64"
-NODE_VERSION="16.13.1" # should match the value from the CI.
-SHA_SUM="5f80197d654fd0b749cdeddf1f07a5eac1fcf6b423a00ffc8f2d3bea9c6dc8d1"
+NODE_VERSION="18.14.2" # should match the value from the CI.
+SHA_SUM="95bdaaf92265eefd40d2055fb9b5cd6cbc3cb2c4495e3ebd4b1b501822d69731"
 NODE="node-v${NODE_VERSION}-${DISTRO}"
 
 curl -Lo node.tar.gz "https://nodejs.org/dist/v${NODE_VERSION}/${NODE}.tar.gz"

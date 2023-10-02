@@ -8,6 +8,16 @@ export const gesellNetwork = () => {
   };
 };
 
+export const rococoNetwork = () => {
+  return {
+    chain: 'wss://rococo.api.encointer.org',
+    genesisHash: '0xa91674169884b8f312efbca48b3ad02bbf93eed0817502092c93f8f8f8a2884b',
+    chosenCid: '4oyxCDvpG6oZ93VmB73rE6P6enfdDZ9PvEvw9eRoqdeM',
+    customTypes: {},
+    palletOverrides: {}
+  };
+};
+
 export const cantillonNetwork = () => {
   return {
     chain: 'wss://cantillon.encointer.org',

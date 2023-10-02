@@ -16,7 +16,6 @@ import 'package:collection/collection.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
-import 'package:encointer_wallet/config/prod_community.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
@@ -287,9 +286,14 @@ class _AssetsViewState extends State<AssetsView> {
               const SizedBox(height: 24),
               CeremonyBox(widget.store, webApi, key: const Key(EWTestKeys.ceremonyBoxWallet)),
               const SizedBox(height: 24),
-              AnnouncementView(
-                cid: Community.fromCid(widget.store.encointer.community?.cid.toFmtString()).cid,
-              ),
+              if (widget.store.encointer.community != null)
+                Observer(
+                  builder: (_) => AnnouncementView(
+                    cid: widget.store.encointer.community!.cid.toFmtString(),
+                    devMode: context.read<AppSettings>().developerMode,
+                    languageCode: Localizations.localeOf(context).languageCode,
+                  ),
+                )
             ],
           ),
         ),

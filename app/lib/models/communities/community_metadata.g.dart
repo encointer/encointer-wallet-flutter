@@ -12,6 +12,10 @@ CommunityMetadata _$CommunityMetadataFromJson(Map<String, dynamic> json) => Comm
       json['assets'] as String,
       json['url'] as String?,
       json['theme'] as String?,
+      (json['announcementSigner'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      $enumDecodeNullable(_$CommunityRulesEnumMap, json['rules']),
     );
 
 Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <String, dynamic>{
@@ -20,4 +24,12 @@ Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <S
       'assets': instance.assets,
       'url': instance.url,
       'theme': instance.theme,
+      'announcementSigner': instance.announcementSigner,
+      'rules': _$CommunityRulesEnumMap[instance.rules],
     };
+
+const _$CommunityRulesEnumMap = {
+  CommunityRules.LoCo: 'LoCo',
+  CommunityRules.LoCoFlex: 'LoCoFlex',
+  CommunityRules.BeeDance: 'BeeDance',
+};

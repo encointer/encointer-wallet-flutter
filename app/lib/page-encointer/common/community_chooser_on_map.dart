@@ -62,23 +62,29 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
       body: (locations.isNotEmpty && communityDataAt.isNotEmpty)
           ? EncointerMap(
               locations: locations,
-              center: LatLng(47.389712, 8.517076),
+              center: const LatLng(47.389712, 8.517076),
               initialZoom: 2,
               popupBuilder: (BuildContext context, Marker marker) {
                 return PopupBuilder(
-                  inkWellKey: Key(
-                    '${marker.key.toString().substring(3, marker.key.toString().length - 3)}-description',
-                  ),
                   title: communityDataAt[marker.point]!.name,
                   description: communityDataAt[marker.point]!.cid.toFmtString(),
-                  onTap: () async {
-                    final store = context.read<AppStore>();
-                    await store.encointer.setChosenCid(communityDataAt[marker.point]!.cid);
-                    if (RepositoryProvider.of<AppSettings>(context).developerMode) {
-                      context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
-                    }
-                    Navigator.pop(context);
-                  },
+                  bottom: InkWell(
+                    key: Key(
+                      '${marker.key.toString().substring(3, marker.key.toString().length - 3)}-description',
+                    ),
+                    child: Text(
+                      l10n.communityDoChoose,
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
+                    ),
+                    onTap: () async {
+                      final store = context.read<AppStore>();
+                      await store.encointer.setChosenCid(communityDataAt[marker.point]!.cid);
+                      if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+                        context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
                 );
               },
             )
@@ -109,7 +115,7 @@ LatLng coordinatesOf(CidName community) {
   /// and very hard to choose it from map
   /// thus moved little bit to the left on map
   if (community.name == 'EdisonPaula') {
-    return LatLng(47.3962467, 8.4815019);
+    return const LatLng(47.3962467, 8.4815019);
   }
   final coordinates = GeoHash(utf8.decode(community.cid.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());

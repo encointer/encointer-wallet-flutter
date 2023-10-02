@@ -109,3 +109,22 @@ Map<String, dynamic> unregisterParticipantParams(
     'params': [cid, communityCeremony],
   };
 }
+
+Map<String, dynamic> faucetDripParams(
+  String faucetAccount,
+  CommunityIdentifier cid,
+  int cIndex,
+  AppLocalizations l10n,
+) {
+  return {
+    'title': 'encointerUnregisterParticipant',
+    'txInfo': {
+      'module': 'encointerFaucet',
+      'call': 'drip',
+      'cid': cid,
+      'notificationTitle': l10n.submittedFaucetDripTitle,
+      'notificationBody': l10n.submittedFaucetDripBody,
+    },
+    'params': [faucetAccount, cid, cIndex],
+  };
+}

@@ -283,12 +283,13 @@ class Assets {
 
   static const $AssetsAvatarsGen avatars = $AssetsAvatarsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const SvgGenImage kusama = SvgGenImage('assets/kusama.svg');
   static const SvgGenImage nctrLogo = SvgGenImage('assets/nctr_logo.svg');
   static const SvgGenImage nctrLogoFacesOnlyThick = SvgGenImage('assets/nctr_logo_faces_only_thick.svg');
   static const $JsServiceEncointerGen jsServiceEncointer = $JsServiceEncointerGen();
 
   /// List of all assets
-  List<SvgGenImage> get values => [nctrLogo, nctrLogoFacesOnlyThick];
+  List<SvgGenImage> get values => [kusama, nctrLogo, nctrLogoFacesOnlyThick];
 }
 
 class AssetGenImage {
