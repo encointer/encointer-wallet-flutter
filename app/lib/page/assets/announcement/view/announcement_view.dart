@@ -38,6 +38,15 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   }
 
   @override
+  void didUpdateWidget(AnnouncementView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _getAnnouncements();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return switch (_announcementStore.fetchStatus) {
