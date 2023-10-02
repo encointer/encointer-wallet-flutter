@@ -87,10 +87,16 @@ abstract class _AnnouncementStoreBase with Store {
 
     await globalAnnouncementsResponse.fold((l) {
       error = l.error.toString();
-      Log.e('announcement_view', '${l.error}');
-      // fallback to English if the app language's one is not available
-      if (l.statusCode == 404) return getGlobalAnnouncements(devMode: devMode, langCode: 'en');
-      fetchStatus = FetchStatus.error;
+      if (l.statusCode == 404) {
+        Log.d('No global announcements found for langCode: $langCode', 'announcement_view');
+        if (langCode != 'en') {
+          // fallback to English if the app language's one is not available
+          return getGlobalAnnouncements(devMode: devMode, langCode: 'en');
+        }
+
+        Log.e('Error getting global announcements ${l.error}', 'announcement_view');
+        fetchStatus = FetchStatus.error;
+      }
     }, (r) {
       announcementsGlobal = r;
       fetchStatus = FetchStatus.success;
