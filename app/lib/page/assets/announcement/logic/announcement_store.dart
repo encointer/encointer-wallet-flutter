@@ -57,7 +57,7 @@ abstract class _AnnouncementStoreBase with Store {
       fromJson: Announcement.fromJson,
     );
 
-    await communityAnnouncementsResponse.fold((l) async {
+    await communityAnnouncementsResponse.fold((l) {
       error = l.error.toString();
       if (l.statusCode == 404) {
         Log.d('No community announcements found for cid: $cid, and langCode: $langCode', 'announcement_view');
