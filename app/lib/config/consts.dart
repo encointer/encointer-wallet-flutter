@@ -110,7 +110,7 @@ String getTransactionHistoryUrl(String cid, String address, {DateTime? startTime
 }
 
 String ceremonyInfoLink(String locale, String? cid) {
-  final communityByCid = Community.fromCid(cid);
+  final communityByCid = CommunityConfig.fromCid(cid);
   return replaceLocalePlaceholder(communityByCid.webSiteLink, locale);
 }
 

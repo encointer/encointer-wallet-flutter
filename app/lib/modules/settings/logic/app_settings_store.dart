@@ -48,7 +48,7 @@ abstract class _AppSettingsBase with Store {
 
   @action
   void changeTheme(String? cid) {
-    final community = Community.fromCid(cid);
+    final community = CommunityConfig.fromCid(cid);
     if (colorScheme != community.colorScheme) colorScheme = community.colorScheme;
   }
 }
