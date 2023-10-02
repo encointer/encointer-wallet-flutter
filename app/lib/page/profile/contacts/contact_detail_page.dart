@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -7,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/submit_button_secondary.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -15,7 +16,7 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ContactDetailPage extends StatefulWidget {
@@ -43,19 +44,18 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
-    final textTheme = Theme.of(context).textTheme;
-
+    final address = Fmt.ss58Encode(account.pubKey, prefix: store.settings.endpoint.ss58!);
     return Scaffold(
       appBar: AppBar(
         title: isEditing
-            ? TextFormField(key: const Key('contact-name-field'), controller: _nameCtrl)
-            : Text(_nameCtrl.text, style: textTheme.displaySmall),
+            ? TextFormField(key: const Key(EWTestKeys.contactNameField), controller: _nameCtrl)
+            : Text(_nameCtrl.text),
         actions: [
           if (isEditing)
             IconButton(
-              key: const Key('contact-name-edit-check'),
+              key: const Key(EWTestKeys.contactNameEditCheck),
               icon: const Icon(Icons.check),
               onPressed: () async {
                 if (_nameCtrl.text != widget.accountData.name) {
@@ -75,7 +75,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
             )
           else
             IconButton(
-              key: const Key('contact-name-edit'),
+              key: const Key(EWTestKeys.contactNameEdit),
               icon: const Icon(Iconsax.edit),
               onPressed: () {
                 setState(() {
@@ -100,7 +100,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AddressIcon(account.address, account.pubKey, size: 130),
+                        AddressIcon(address, account.pubKey, size: 130),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -109,11 +109,11 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
+                        Text(Fmt.address(address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
-                          color: zurichLion.shade500,
-                          onPressed: () => UI.copyAndNotify(context, account.address),
+                          color: context.colorScheme.secondary,
+                          onPressed: () => UI.copyAndNotify(context, address),
                         ),
                       ],
                     ),
@@ -123,15 +123,15 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
               EndorseButton(store, webApi, account),
               const SizedBox(height: 16),
               SecondaryButtonWide(
-                key: const Key('send-money-to-account'),
+                key: const Key(EWTestKeys.sendMoneyToAccount),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Iconsax.send_sqaure_2),
                     const SizedBox(width: 12),
                     Text(
-                      dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? 'null'),
-                      style: textTheme.displaySmall,
+                      l10n.tokenSend(store.encointer.community?.symbol ?? 'null'),
+                      style: context.titleLarge.copyWith(color: context.colorScheme.primary),
                     ),
                   ],
                 ),
@@ -141,7 +141,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                     arguments: TransferPageParams(
                       cid: context.read<AppStore>().encointer.chosenCid,
                       communitySymbol: context.read<AppStore>().encointer.community?.symbol,
-                      recipient: account.address,
+                      recipientAddress: address,
                       label: _nameCtrl.text,
                     ),
                   );
@@ -155,7 +155,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   children: [
                     const Icon(Iconsax.trash),
                     const SizedBox(width: 12),
-                    Text(dic.profile.contactDelete, style: textTheme.displaySmall)
+                    Text(l10n.contactDelete, style: context.titleLarge.copyWith(color: context.colorScheme.primary))
                   ],
                 ),
               ),
@@ -167,20 +167,20 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   }
 
   void _removeItem(BuildContext context, AccountData account, AppStore store) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(dic.profile.contactDeleteWarn),
+          title: Text(l10n.contactDeleteWarn),
           content: Text(Fmt.accountName(context, account)),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(dic.home.cancel),
+              child: Text(l10n.cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
-              child: Text(dic.home.ok),
+              child: Text(l10n.ok),
               onPressed: () {
                 Navigator.of(context).pop();
                 store.settings.removeContact(account);
@@ -206,9 +206,7 @@ class EndorseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
-
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -216,10 +214,10 @@ class EndorseButton extends StatelessWidget {
           return store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
               ? FittedBox(
                   child: Row(children: [
-                    Text(dic.encointer.remainingNewbieTicketsAsBootStrapper),
+                    Text(l10n.remainingNewbieTicketsAsBootStrapper),
                     Text(
                       ' ${store.encointer.communityAccount?.numberOfNewbieTicketsForBootstrapper ?? 0}',
-                      style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                      style: TextStyle(fontSize: 15, color: context.colorScheme.primary),
                     ),
                   ]),
                 )
@@ -229,21 +227,21 @@ class EndorseButton extends StatelessWidget {
           return store.encointer.account != null && store.encointer.account!.reputations.isNotEmpty
               ? FittedBox(
                   child: Row(children: [
-                    Text(dic.encointer.remainingNewbieTicketsAsReputable),
+                    Text(l10n.remainingNewbieTicketsAsReputable),
                     Text(
                       ' ${store.encointer.account?.numberOfNewbieTicketsForReputable ?? 0}',
-                      style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                      style: TextStyle(fontSize: 15, color: context.colorScheme.primary),
                     ),
                   ]),
                 )
               : !store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
-                  ? Text(dic.encointer.onlyReputablesCanEndorseAttendGatheringToBecomeOne)
+                  ? Text(l10n.onlyReputablesCanEndorseAttendGatheringToBecomeOne)
                   : const SizedBox();
         }),
         const SizedBox(height: 5),
         Observer(builder: (_) {
           return SubmitButtonSecondary(
-            key: const Key('tap-endorse-button'),
+            key: const Key(EWTestKeys.tapEndorseButton),
             onPressed: hasNewbieTickets() ? onPressed : null,
             child: FittedBox(
               child: Row(
@@ -251,7 +249,7 @@ class EndorseButton extends StatelessWidget {
                 children: [
                   const Icon(Iconsax.verify),
                   const SizedBox(width: 12),
-                  Text(dic.profile.contactEndorse, style: textTheme.displaySmall)
+                  Text(l10n.contactEndorse, style: context.titleLarge.copyWith(color: context.colorScheme.primary))
                 ],
               ),
             ),
@@ -278,13 +276,15 @@ class EndorseButton extends StatelessWidget {
   Future<void> onPressed(BuildContext context) async {
     final community = store.encointer.community;
     final bootstrappers = community?.bootstrappers;
-    final dic = I18n.of(context)!.translationsForLocale();
-    if (bootstrappers != null && bootstrappers.contains(contact.address)) {
-      await _popupDialog(context, dic.profile.cantEndorseBootstrapper);
+    final l10n = context.l10n;
+    final address = Fmt.ss58Encode(contact.pubKey, prefix: store.settings.endpoint.ss58!);
+
+    if (bootstrappers != null && bootstrappers.contains(address)) {
+      await _popupDialog(context, l10n.cantEndorseBootstrapper);
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
-      await _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
+      await _popupDialog(context, l10n.canEndorseInRegisteringPhaseOnly);
     } else {
-      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
+      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, address);
     }
   }
 }
@@ -298,7 +298,7 @@ Future<void> _popupDialog(BuildContext context, String content) async {
         content: Text(content),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+            child: Text(context.l10n.ok),
             onPressed: () {
               Navigator.of(context).pop();
             },

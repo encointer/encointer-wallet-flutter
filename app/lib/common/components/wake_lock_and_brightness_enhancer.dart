@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_brightness/screen_brightness.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 
@@ -46,13 +46,13 @@ class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnh
   void initState() {
     super.initState();
 
-    Wakelock.enable();
+    WakelockPlus.enable();
     setBrightness(widget.brightness);
   }
 
   @override
   void dispose() {
-    Wakelock.disable();
+    WakelockPlus.disable();
     resetBrightness();
     super.dispose();
   }

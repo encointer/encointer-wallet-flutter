@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:encointer_wallet/theme/theme.dart';
+
 class RoundedButton extends StatelessWidget {
   const RoundedButton({
     super.key,
@@ -35,12 +37,12 @@ class RoundedButton extends StatelessWidget {
     }
     row.add(Text(
       text,
-      style: Theme.of(context).textTheme.labelLarge,
+      style: context.labelLarge,
     ));
     return ElevatedButton(
       style: TextButton.styleFrom(
         padding: const EdgeInsets.only(top: 12, bottom: 12),
-        backgroundColor: color ?? Theme.of(context).primaryColor,
+        backgroundColor: color ?? context.colorScheme.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

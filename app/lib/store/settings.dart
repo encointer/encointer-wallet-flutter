@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
@@ -37,9 +36,6 @@ abstract class _SettingsStore with Store {
   bool enableBazaar = false;
 
   @observable
-  String cachedPin = '';
-
-  @observable
   bool loading = true;
 
   @observable
@@ -66,28 +62,13 @@ abstract class _SettingsStore with Store {
   @observable
   Locale locale = const Locale('en', '');
 
-  @observable
-  ThemeData theme = appThemeEncointer;
-
   @action
   void changeLang(BuildContext context, String? code) {
-    switch (code) {
-      case 'en':
-        locale = const Locale('en', '');
-        break;
-      case 'de':
-        locale = const Locale('de', '');
-        break;
-      default:
-        locale = Localizations.localeOf(context);
-    }
-  }
-
-  @action
-  void changeTheme() {
-    // todo: Remove this. It was for the network dependent theme.
-    // But his can be done at the same time, when we refactor
-    // the network selection page.
+    locale = switch (code) {
+      'en' => const Locale('en', ''),
+      'de' => const Locale('de', ''),
+      _ => Localizations.localeOf(context),
+    };
   }
 
   @computed
@@ -117,10 +98,14 @@ abstract class _SettingsStore with Store {
     return ls;
   }
 
+  /// Set of known accounts.
+  ///
+  /// Contains all the accounts and contacts stored on the device.
   @computed
-  List<AccountData> get contactListAll {
-    final ls = List<AccountData>.of(rootStore.account.accountList)..addAll(contactList);
-    return ls;
+  List<AccountData> get knownAccounts {
+    final uniqueIds = <String>{};
+    final allAccountsWithDuplicates = rootStore.account.accountList.toList()..addAll(contactList);
+    return allAccountsWithDuplicates.where((data) => uniqueIds.add(data.pubKey)).toList();
   }
 
   @action
@@ -162,11 +147,6 @@ abstract class _SettingsStore with Store {
   void setNetworkName(String? name) {
     networkName = name;
     loading = false;
-  }
-
-  @action
-  void setPin(String pin) {
-    cachedPin = pin;
   }
 
   @computed
@@ -237,7 +217,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> removeContact(AccountData con) async {
-    await rootStore.localStorage.removeContact(con.address);
+    await rootStore.localStorage.removeContact(con.pubKey);
     await loadContacts();
   }
 

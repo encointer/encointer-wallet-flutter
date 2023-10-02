@@ -122,15 +122,7 @@ async function createApi(wsProvider, configOverride) {
   const api = await ApiPromise.create({
     ...options({
       types: {
-        ...configOverride.types !== null ? configOverride.types : {},
-        // Todo: integrate MeetupResult into encointer-js
-        MeetupResult: {
-          _enum: [
-            'Ok',
-            'VotesNotDependable',
-            'MeetupValidationIndexOutOfBounds',
-          ]
-        },
+        ...configOverride.types !== null ? configOverride.types : {}
       }
     }),
     signedExtensions: {
@@ -155,19 +147,6 @@ async function createApi(wsProvider, configOverride) {
     Object.assign(pallets, configOverride.pallets);
   }
   window.send('log', `overwritten pallet config: ${JSON.stringify(pallets)}`);
-
-  const chainProperties = api.registry.getChainProperties();
-  window.send('log', `chain properties: ${chainProperties}`);
-
-  // Hardcode SS58-prefix to 42, see https://github.com/encointer/encointer-wallet-flutter/issues/567
-  const properties = {
-    ss58Format: 42,
-    tokenDecimals: chainProperties.tokenDecimals,
-    tokenSymbol: chainProperties.tokenSymbol
-  };
-
-  window.send('log', `ss58 overwritten chain properties: ${JSON.stringify(properties)}`);
-  api.registry.setChainProperties(properties);
   return api;
 }
 

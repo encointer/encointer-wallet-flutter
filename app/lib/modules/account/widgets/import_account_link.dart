@@ -1,7 +1,8 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ImportAccountLink extends StatelessWidget {
   const ImportAccountLink({super.key, this.onTap});
@@ -10,20 +11,22 @@ class ImportAccountLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          '${dic.profile.doYouAlreadyHaveAnAccount} ',
-          style: TextStyle(color: zurichLion.shade50),
+          '${context.l10n.doYouAlreadyHaveAnAccount} ',
+          style: TextStyle(color: context.colorScheme.background),
         ),
         InkWell(
-          key: const Key('import-account'),
+          key: const Key(EWTestKeys.importAccount),
           onTap: onTap,
           child: Text(
-            dic.profile.import,
-            style: TextStyle(color: zurichLion.shade50, decoration: TextDecoration.underline),
+            context.l10n.import,
+            style: TextStyle(
+              color: context.colorScheme.background,
+              decoration: TextDecoration.underline,
+            ),
           ),
         ),
       ],

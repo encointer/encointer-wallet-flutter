@@ -1,17 +1,20 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 
 class EncointerMap extends StatelessWidget {
   EncointerMap({
     super.key,
+    required this.popupBuilder,
     required this.locations,
     this.initialZoom = 13,
-    this.maxZoom = 18,
+    // Higher values than 17 result in the map going blank
+    this.maxZoom = 17,
     this.center,
-    this.popupBuilder,
     this.mapController,
     this.onPointerDown,
   });
@@ -20,7 +23,7 @@ class EncointerMap extends StatelessWidget {
   final double initialZoom;
   final double maxZoom;
   final LatLng? center;
-  final Widget Function(BuildContext, Marker)? popupBuilder;
+  final Widget Function(BuildContext, Marker) popupBuilder;
   final MapController? mapController;
   final void Function(PointerDownEvent, LatLng)? onPointerDown;
 
@@ -31,7 +34,7 @@ class EncointerMap extends StatelessWidget {
     return FlutterMap(
       mapController: mapController,
       options: MapOptions(
-        center: center ?? LatLng(47.389712, 8.517076),
+        center: center ?? const LatLng(47.389712, 8.517076),
         zoom: initialZoom,
         maxZoom: maxZoom,
         onPointerDown: onPointerDown,
@@ -43,25 +46,25 @@ class EncointerMap extends StatelessWidget {
           urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           subdomains: const ['a', 'b', 'c'],
         ),
-        PopupMarkerLayerWidget(
+        PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
             popupController: _popupLayerController,
+            popupDisplayOptions: PopupDisplayOptions(builder: popupBuilder),
             markers: List.generate(
               locations.length,
               (index) => Marker(
                 key: Key('cid-$index-marker'),
                 point: locations[index],
+                rotateAlignment: Alignment.bottomCenter,
                 builder: (_) => Icon(
                   Icons.location_on,
                   size: 40,
                   color: Colors.blueAccent,
-                  key: Key('cid-$index-marker-icon'),
+                  key: Key(EWTestKeys.cidMarkerIcon(index)),
                 ),
                 anchorPos: AnchorPos.align(AnchorAlign.top),
               ),
             ),
-            markerRotateAlignment: Alignment.bottomCenter,
-            popupBuilder: popupBuilder,
           ),
         ),
       ],
@@ -74,50 +77,42 @@ class PopupBuilder extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    this.inkWellKey,
-    this.onTap,
-    this.width = 150,
-    this.height = 70,
+    this.bottom,
+    this.maxWidth = 300,
+    this.maxHeight = 800,
   });
 
   final String title;
   final String description;
-  final Key? inkWellKey;
-  final double width;
-  final double height;
-  final void Function()? onTap;
+  final double maxWidth;
+  final double maxHeight;
+  final Widget? bottom;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
+      constraints: BoxConstraints.loose(Size(maxWidth, maxHeight)),
       padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onBackground,
+        color: context.colorScheme.background,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: InkWell(
-        key: inkWellKey,
-        onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              description,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 12, color: Colors.black54),
-            ),
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(
+            description,
+            style: const TextStyle(fontSize: 12, color: Colors.black54),
+          ),
+          bottom ?? const SizedBox.shrink(),
+        ],
       ),
     );
   }

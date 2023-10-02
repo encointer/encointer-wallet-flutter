@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/config/prod_community.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
 const String androidLocalHost = '10.0.2.2';
@@ -28,7 +27,7 @@ EndpointData networkEndpointEncointerLietaer = EndpointData.fromJson({
 
 EndpointData networkEndpointEncointerMainnet = EndpointData.fromJson({
   'info': 'nctr-k',
-  'ss58': 42, // Fixme: #567
+  'ss58': 2,
   'text': 'Encointer Network on Kusama (Hosted by Encointer Association)',
   'value': 'wss://kusama.api.encointer.org',
   'overrideConfig': gesellConfig.toJson(),
@@ -76,18 +75,6 @@ List<EndpointData> networkEndpoints = [
   // networkEndpointEncointerCantillonDev,
 ];
 
-const networkSs58Map = {
-  'encointer': 42,
-  'nctr-gsl': 42,
-  'nctr-r': 42,
-  'nctr-k': 42, // Fixme: #567
-  'ss58': 42, // Fixme: #567
-  'nctr-cln': 42,
-  'nctr-gsl-dev': 42,
-  'nctr-cln-dev': 42,
-  'substrate': 42,
-};
-
 const fallBackCommunityIcon = 'assets/nctr_logo_faces_only_thick.svg';
 const communityIconName = 'community_icon.svg';
 
@@ -96,8 +83,13 @@ const String ipfsGatewayEncointer = 'http://ipfs.encointer.org:8080';
 // ignore: non_constant_identifier_names
 final String ipfs_gateway_local = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:8080';
 
-const String encointerFeed = 'https://encointer.github.io/feed';
-const String encointerFeedOverrides = '$encointerFeed/overrides.json';
+const encointerFeed = 'https://encointer.github.io/feed';
+const communityMessagesPath = 'community_messages/$localePlaceHolder/cm.json';
+const encointerFeedOverridesPath = 'overrides.json';
+
+String getEncointerFeedLink({bool devMode = false}) {
+  return devMode ? '$encointerFeed/dev' : encointerFeed;
+}
 
 const int ertDecimals = 12;
 const int encointerCurrenciesDecimals = 18;
@@ -107,10 +99,15 @@ const double faucetAmount = 0.1;
 // links
 const localePlaceHolder = 'LOCALE_PLACEHOLDER';
 const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';
-const meetupNotificationLink = 'https://encointer.github.io/feed/community_messages/$localePlaceHolder/cm.json';
 const encointerLink = 'https://wallet.encointer.org/app/';
+const encointerApi = 'https://api.encointer.org/v1/';
 
 String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
+String getTransactionHistoryUrl(String cid, String address, {DateTime? startTime, DateTime? endTime}) {
+  final start = startTime?.millisecondsSinceEpoch ?? 1670000000000;
+  final end = (endTime ?? DateTime.now()).millisecondsSinceEpoch;
+  return '$encointerApi/accounting/transaction-log?cid=$cid&start=$start&end=$end&account=$address';
+}
 
 String ceremonyInfoLink(String locale, String? cid) {
   final communityByCid = Community.fromCid(cid);
@@ -119,27 +116,20 @@ String ceremonyInfoLink(String locale, String? cid) {
 
 const assignmentFAQLinkEN = 'https://leu.zuerich/en/#why-have-i-not-been-assigned-to-a-cycle';
 const assignmentFAQLinkDE = 'https://leu.zuerich/#warum-wurde-ich-keinem-cycle-zugewiesen';
+const infuraIpfsUrl = 'https://encointer.infura-ipfs.io/ipfs';
 
 String leuZurichCycleAssignmentFAQLink(String locale) {
-  switch (locale) {
-    case 'en':
-      return assignmentFAQLinkEN;
-    case 'de':
-      return assignmentFAQLinkDE;
-    default:
-      Log.d('[replaceLocale] unsupported locale, defaulting to english', 'consts.dart');
-      return assignmentFAQLinkEN;
-  }
+  return switch (locale) {
+    'en' => assignmentFAQLinkEN,
+    'de' => assignmentFAQLinkDE,
+    _ => assignmentFAQLinkEN,
+  };
 }
 
 String replaceLocalePlaceholder(String link, String locale) {
-  switch (locale) {
-    case 'en':
-      return link.replaceAll(localePlaceHolder, 'en');
-    case 'de':
-      return link.replaceAll(localePlaceHolder, '');
-    default:
-      Log.d('[replaceLocale] unsupported locale, defaulting to english', 'consts.dart');
-      return link.replaceAll(localePlaceHolder, 'en');
-  }
+  return switch (locale) {
+    'en' => link.replaceAll(localePlaceHolder, 'en'),
+    'de' => link.replaceAll(localePlaceHolder, ''),
+    _ => link.replaceAll(localePlaceHolder, 'en'),
+  };
 }

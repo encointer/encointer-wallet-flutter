@@ -1,7 +1,13 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
+import 'package:encointer_wallet/models/bazaar/item_offered.dart';
+import 'package:encointer_wallet/models/faucet/faucet.dart';
+import 'package:ew_http/ew_http.dart';
+
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
+import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
@@ -33,13 +39,14 @@ import 'package:encointer_wallet/utils/format.dart';
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class EncointerApi {
-  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi)
+  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp)
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi),
         _dartApi = EncointerDartApi(dartApi);
 
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
+  final EwHttp ewHttp;
 
   final AppStore store;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
@@ -135,7 +142,11 @@ class EncointerApi {
 
   /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.
   ///
-  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String address) async {
+  /// Todo: Be able to handle pubKey and any address and transform it to the
+  /// address with prefix 42. Needs #1105.
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String pubKey) async {
+    final address = Fmt.ss58Encode(pubKey);
+
     try {
       final accountData = await _dartApi.getAggregatedAccountData(cid, address);
       Log.d(
@@ -229,12 +240,10 @@ class EncointerApi {
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
   Future<void> communitiesGetAll() async {
-    final cn = await jsApi.evalJavascript<List<dynamic>>('encointer.communitiesGetAll()').then(
-          (list) => list.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList(),
-        );
+    final cns = await jsApi.evalJavascript<List<dynamic>>('encointer.communitiesGetAll()');
 
-    Log.d('api: CidNames: $cn', 'EncointerApi');
-    store.encointer.setCommunities(cn);
+    Log.d('api: CidNames: ${cns.length} and $cns ', 'EncointerApi');
+    store.encointer.setCommunities(cns.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList());
   }
 
   /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().
@@ -250,7 +259,7 @@ class EncointerApi {
 
     final mLocation = locationIndex != null && store.encointer.community?.meetupLocations != null
         ? store.encointer.community?.meetupLocations![locationIndex]
-        : (store.encointer.community?.meetupLocations?.first);
+        : store.encointer.community?.meetupLocations?.first;
 
     if (mLocation == null) {
       Log.d("No meetup locations found, can't get meetup time.", 'EncointerApi');
@@ -265,20 +274,27 @@ class EncointerApi {
     return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
-  Future<void> getMeetupTimeOverride() async {
+  Future<void> getMeetupTimeOverride({bool devMode = false}) async {
     Log.d('api: Check if there are meetup time overrides', 'EncointerApi');
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
     try {
-      final meetupTimeOverride = await feed.getMeetupTimeOverride(
-        store.encointer.network,
-        cid,
-        store.encointer.currentPhase,
+      final response = await ewHttp.getTypeList(
+        '${getEncointerFeedLink(devMode: devMode)}/$encointerFeedOverridesPath',
+        fromJson: MeetupOverrides.fromJson,
       );
-      if (store.encointer.community != null) {
-        store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
-      }
+      response.fold((l) => Log.e(l.toString()), (overrides) async {
+        final meetupTimeOverride = await feed.getMeetupTimeOverride(
+          network: store.encointer.network,
+          cid: cid,
+          phase: store.encointer.currentPhase,
+          overrides: overrides,
+        );
+        if (store.encointer.community != null) {
+          store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
+        }
+      });
     } catch (e, s) {
       Log.e('api: exception: $e', 'EncointerApi', s);
     }
@@ -314,12 +330,12 @@ class EncointerApi {
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
   ///
   /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::balance(cid, accountId).
-  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid) async {
+  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid, String pin) async {
     Log.d('Getting encointer balance for $pubKeyOrAddress and ${cid.toFmtString()}', 'EncointerApi');
 
     final balanceEntry = store.settings.endpointIsNoTee
         ? await _noTee.balance(cid, pubKeyOrAddress)
-        : await _teeProxy.balance(cid, pubKeyOrAddress, store.settings.cachedPin);
+        : await _teeProxy.balance(cid, pubKeyOrAddress, pin);
 
     Log.d('balanceEntryJson: $balanceEntry', 'EncointerApi');
 
@@ -333,10 +349,11 @@ class EncointerApi {
       final phase = ceremonyPhaseFromString(data.toUpperCase())!;
 
       final cid = store.encointer.chosenCid;
-      final address = store.account.currentAddress;
+      final pubKey = store.account.currentAccountPubKey;
 
-      if (cid != null) {
-        final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, address);
+      if (cid != null && pubKey != null && pubKey.isNotEmpty) {
+        final address = store.account.currentAddress;
+        final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
         store.encointer.setAggregatedAccountData(cid, address, data);
       }
 
@@ -352,10 +369,10 @@ class EncointerApi {
   Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
     CeremonyPhase nextPhase,
     CommunityIdentifier cid,
-    String address,
+    String pubKey,
   ) async {
     while (true) {
-      final data = await getAggregatedAccountData(cid, address);
+      final data = await getAggregatedAccountData(cid, pubKey);
       final phase = data.global.ceremonyPhase;
 
       if (nextPhase == phase) {
@@ -441,7 +458,7 @@ class EncointerApi {
   /// Gets a proof of attendance for the oldest attended ceremony, if available.
   ///
   /// returns null, if none available.
-  Future<ProofOfAttendance?> getProofOfAttendance() async {
+  Future<ProofOfAttendance?> getProofOfAttendance(String pin) async {
     final pubKey = store.account.currentAccountPubKey;
     final cIndex = store.encointer.account?.ceremonyIndexForNextProofOfAttendance;
 
@@ -450,7 +467,6 @@ class EncointerApi {
     }
 
     final cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
-    final pin = store.settings.cachedPin;
     Log.d('getProofOfAttendance: cachedPin: $pin', 'EncointerApi');
     final proof = await jsApi
         .evalJavascript<Map<String, dynamic>>(
@@ -499,11 +515,56 @@ class EncointerApi {
     return remainingTickets;
   }
 
+  Future<Map<String, Faucet>> getAllFaucetsWithAccount() async {
+    try {
+      // faucets: Map<String, Faucet>
+      final faucets = await jsApi.evalJavascript<Map<String, dynamic>>(
+        'encointer.getAllFaucetsWithAccount()',
+      );
+      final f = faucets.map((address, faucet) => MapEntry(address, Faucet.fromJson(faucet as Map<String, dynamic>)));
+      Log.d('Encointer Api', 'all faucets2: $f');
+      return f;
+    } catch (e, s) {
+      Log.e('Encointer Api', '$e', s);
+      return Map.of({});
+    }
+  }
+
+  Future<bool> hasCommittedFor(CommunityIdentifier cid, int cIndex, int purposeId, String address) async {
+    try {
+      final hasCommitted = await jsApi.evalJavascript<bool>(
+        'encointer.hasCommittedFor(${jsonEncode(cid)}, "$cIndex", "$purposeId","$address")',
+      );
+      Log.d('Encointer Api', 'hasCommitted : $hasCommitted');
+      return hasCommitted;
+    } catch (e, s) {
+      Log.e('Encointer Api', '$e', s);
+      return false;
+    }
+  }
+
   /// Get all the registered businesses for the current `chosenCid`
   Future<List<AccountBusinessTuple>> getBusinesses() async {
     // set the store because the current bazaar data model reads the values from the store.
     store.encointer.bazaar?.setBusinessRegistry(allMockBusinesses);
     return allMockBusinesses;
+  }
+
+  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid) async {
+    return _dartApi.bazaarGetBusinesses(cid);
+  }
+
+  Future<Either<Businesses, EwHttpException>> getBusinesseses(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    return ewHttp.getType(url, fromJson: Businesses.fromJson);
+  }
+
+  ///TODO(Azamat): method not working, fix it
+  Future<Either<Map<String, dynamic>, EwHttpException>> getBusinessesPhotos(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    final response = ewHttp.get<Map<String, dynamic>>(url);
+
+    return response;
   }
 
   /// Get all the registered offerings for the current `chosenCid`
@@ -516,5 +577,19 @@ class EncointerApi {
   Future<List<OfferingData>> getOfferingsForBusiness(BusinessIdentifier bid) async {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.
     return business1MockOfferings;
+  }
+
+  Future<List<OfferingData>> bazaarGetOfferingsForBusines(CommunityIdentifier cid, String? controller) async {
+    return _dartApi.bazaarGetOfferingsForBusines(cid, controller);
+  }
+
+  Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    return ewHttp.getType(url, fromJson: ItemOffered.fromJson);
+  }
+
+  Future<Either<IpfsProduct, EwHttpException>> getSingleBusinessProduct(String ipfsUrlHash) async {
+    final url = '$infuraIpfsUrl/$ipfsUrlHash';
+    return ewHttp.getType(url, fromJson: IpfsProduct.fromJson);
   }
 }

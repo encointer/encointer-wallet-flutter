@@ -12,7 +12,7 @@ class BalancesInfo {
     return BalancesInfo(
       freeBalance: BigInt.parse(json['freeBalance'].toString()),
       transferable: BigInt.parse(json['availableBalance'].toString()),
-      bonded: BigInt.parse(json['frozenFee'].toString()),
+      bonded: BigInt.parse(json['frozenFee']?.toString() ?? '0'),
       reserved: BigInt.parse(json['reservedBalance'].toString()),
       lockedBalance: BigInt.parse(json['lockedBalance'].toString()),
       lockedBreakdown: List.of(json['lockedBreakdown'] as Iterable).map((i) {

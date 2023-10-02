@@ -1,64 +1,52 @@
-import 'package:flutter/cupertino.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
-import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
+import 'package:encointer_wallet/service/init_web_api/init_web_api.dart';
+import 'package:encointer_wallet/config/biometiric_auth_state.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
-import 'package:encointer_wallet/mocks/ipfs/ipfs_api.dart';
-import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
-import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
+import 'package:encointer_wallet/presentation/home/views/home_page.dart';
+import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-class SplashView extends StatefulWidget {
+class SplashView extends StatelessWidget {
   const SplashView({super.key});
 
   static const route = '/';
 
-  @override
-  State<SplashView> createState() => _SplashViewState();
-}
-
-class _SplashViewState extends State<SplashView> {
-  Future<void> _initPage() async {
+  Future<void> _initPage(BuildContext context) async {
     final store = context.read<AppStore>();
     await store.init(Localizations.localeOf(context).toString());
 
     // initialize it **after** the store was initialized.
     await initWebApi(context, store);
 
-    // We don't poll updates in tests because we mock the backend anyhow.
-    if (!store.config.isTestMode) {
-      // must be set after api is initialized.
-      store.dataUpdate.setupUpdateReaction(() async {
-        await store.encointer.updateState();
-      });
-    }
+    // must be set after api is initialized.
+    store.dataUpdate.setupUpdateReaction(() async {
+      await store.encointer.updateState();
+    });
 
     store.setApiReady(true);
 
-    if (store.account.accountListAll.isNotEmpty) {
-      await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
+    final loginStore = context.read<LoginStore>();
+    if (loginStore.getBiometricAuthState == null) {
+      final isDeviceSupported = await loginStore.isDeviceSupported();
+      if (!isDeviceSupported) await loginStore.setBiometricAuthState(BiometricAuthState.deviceNotSupported);
+    }
+    if (store.account.accountList.isNotEmpty) {
+      await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {
-      await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryView()), (route) => false);
+      await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: const Key('splashview'),
+      key: const Key(EWTestKeys.splashview),
       body: FutureBuilder(
-        future: _initPage(),
+        future: _initPage(context),
         builder: (context, s) {
           return DecoratedBox(
             decoration: BoxDecoration(
@@ -70,22 +58,4 @@ class _SplashViewState extends State<SplashView> {
       ),
     );
   }
-}
-
-/// Initialize an the webApi instance.
-///
-/// Currently, `store.init()` must be called before it is passed into the api
-/// due to some cyclic dependencies between webApi <> AppStore.
-Future<void> initWebApi(BuildContext context, AppStore store) async {
-  final js = await DefaultAssetBundle.of(context).loadString(Assets.jsServiceEncointer.dist.main);
-
-  webApi = !store.config.mockSubstrateApi
-      ? Api.create(store, JSApi(), SubstrateDartApi(), js,
-          store.config.isIntegrationTest ? MockIpfsApi() : IpfsApi(gateway: store.settings.ipfsGateway))
-      : MockApi(store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
-
-  await webApi.init().timeout(
-        const Duration(seconds: 20),
-        onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
-      );
 }

@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -5,11 +6,11 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class CreateAccountView extends StatelessWidget {
   const CreateAccountView({super.key});
@@ -18,10 +19,9 @@ class CreateAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.home.create),
+        title: Text(context.l10n.create),
         leading: const SizedBox.shrink(),
         actions: const [CloseButton()],
       ),
@@ -45,31 +45,30 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     return ScrollableForm(
       formKey: _formKey,
       listViewChildren: [
         const SizedBox(height: 80),
         Center(
           child: Text(
-            dic.profile.accountNameChoose,
-            style: textTheme.displayMedium,
+            l10n.accountNameChoose,
+            style: context.headlineSmall,
           ),
         ),
         const SizedBox(height: 10),
         Center(
           child: Text(
-            dic.profile.accountNameChooseHint,
+            l10n.accountNameChooseHint,
             textAlign: TextAlign.center,
-            style: textTheme.displayMedium!.copyWith(color: encointerBlack),
+            style: context.headlineMedium.copyWith(color: AppColors.encointerBlack),
           ),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(
-          key: const Key('create-account-name'),
-          hintText: dic.account.createHint,
-          labelText: dic.profile.accountName,
+          key: const Key(EWTestKeys.createAccountName),
+          hintText: l10n.createHint,
+          labelText: l10n.accountName,
           controller: _nameCtrl,
           validator: (v) {
             return InputValidation.validateAccountName(context, v, context.read<AppStore>().account.accountList);
@@ -80,7 +79,7 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
       columnChildren: [
         const SizedBox(height: 10),
         PrimaryButton(
-          key: const Key('create-account-next'),
+          key: const Key(EWTestKeys.createAccountNext),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               context.read<NewAccountStore>().setName(_nameCtrl.text.trim());
@@ -101,8 +100,10 @@ class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixi
               const Icon(Iconsax.login_1),
               const SizedBox(width: 12),
               Text(
-                dic.account.next,
-                style: textTheme.displaySmall!.copyWith(color: zurichLion.shade50),
+                l10n.next,
+                style: context.titleMedium.copyWith(
+                  color: context.colorScheme.background,
+                ),
               ),
             ],
           ),

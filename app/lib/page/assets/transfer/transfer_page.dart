@@ -1,13 +1,15 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -20,14 +22,14 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class TransferPageParams {
   const TransferPageParams({
     this.cid,
     this.communitySymbol,
-    required this.recipient,
+    required this.recipientAddress,
     required this.label,
     this.amount,
   });
@@ -35,7 +37,7 @@ class TransferPageParams {
   factory TransferPageParams.fromInvoiceData(InvoiceData data) {
     return TransferPageParams(
       cid: data.cid,
-      recipient: data.account,
+      recipientAddress: data.account,
       label: data.label,
       amount: data.amount as double?,
     );
@@ -43,7 +45,7 @@ class TransferPageParams {
 
   final CommunityIdentifier? cid;
   final String? communitySymbol;
-  final String recipient;
+  final String recipientAddress;
   final String label;
   final double? amount;
 }
@@ -76,35 +78,36 @@ class _TransferPageState extends State<TransferPage> {
       final store = context.read<AppStore>();
 
       if (widget.params != null) {
-        handleTransferPageParams(widget.params!, store);
+        handleTransferPageParams(widget.params!, store).then((value) => setState(() {}));
       } else {
         _communitySymbol = store.encointer.community!.symbol;
         _cid = store.encointer.chosenCid;
       }
 
-      setState(() {});
-
       webApi.fetchAccountData();
     });
   }
 
-  void handleTransferPageParams(TransferPageParams params, AppStore store) {
+  Future<void> handleTransferPageParams(TransferPageParams params, AppStore store) async {
     if (params.cid != store.encointer.chosenCid!) {
-      showCupertinoDialog<void>(
+      return showCupertinoDialog<void>(
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          final dic = I18n.of(context)!.translationsForLocale().assets;
+          final l10n = context.l10n;
           return CupertinoAlertDialog(
-            title: Text(dic.chosenRightCommunity),
+            title: Text(l10n.chosenRightCommunity),
           );
         },
       );
     } else {
       _communitySymbol = params.communitySymbol ?? store.encointer.community?.symbol;
       _cid = params.cid ?? store.encointer.chosenCid;
+
+      final pubKey = Fmt.ss58Decode(params.recipientAddress).pubKey;
+
       _accountTo = AccountData()
-        ..address = params.recipient
+        ..pubKey = pubKey
         ..name = params.label;
       if (params.amount != null) _amountCtrl.text = '${params.amount}';
     }
@@ -112,27 +115,18 @@ class _TransferPageState extends State<TransferPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     final store = context.watch<AppStore>();
-    final textTheme = Theme.of(context).textTheme;
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
     Log.d('[transferPage]: available: $available', 'TransferPage');
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.assets.transfer),
+        title: Text(l10n.transfer),
         leading: const SizedBox.shrink(),
         actions: [
-          if (context.select<AppSettings, bool>((store) => store.developerMode))
-            IconButton(
-              key: const Key('go-transfer-history'),
-              icon: const Icon(Icons.swap_vert_sharp),
-              onPressed: () {
-                Navigator.pushNamed(context, TransferHistoryView.route);
-              },
-            ),
           IconButton(
-            key: const Key('close-transfer-page'),
+            key: const Key(EWTestKeys.closeTransferPage),
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           ),
@@ -140,119 +134,114 @@ class _TransferPageState extends State<TransferPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  key: const Key('transfer-listview'),
-                  children: [
-                    CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
-                    const SizedBox(height: 12),
-                    Observer(builder: (_) {
-                      if (store.encointer.communityBalance != null) {
-                        return AccountBalanceWithMoreDigits(
-                          store: store,
-                          available: available,
-                          decimals: encointerCurrenciesDecimals,
-                        );
-                      } else {
-                        return const CupertinoActivityIndicator();
-                      }
-                    }),
-                    Text(
-                      dic.assets.yourBalanceFor.replaceAll(
-                        'ACCOUNT_NAME',
-                        Fmt.accountName(context, store.account.currentAccount),
-                      ),
-                      style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 24),
-                    IconButton(
-                      iconSize: 48,
-                      icon: const Icon(Iconsax.scan_barcode),
-                      onPressed: () async {
-                        final invoiceData = await Navigator.of(context).pushNamed(
-                          ScanPage.route,
-                          arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
-                        );
-                        if (invoiceData != null && invoiceData is InvoiceData) {
-                          handleTransferPageParams(
-                            TransferPageParams.fromInvoiceData(invoiceData),
-                            store,
-                          );
-                          setState(() {});
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    EncointerTextFormField(
-                      labelText: dic.assets.amountToBeTransferred,
-                      textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(color: encointerBlack),
-                      inputFormatters: [UI.decimalInputFormatter()],
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      controller: _amountCtrl,
-                      textFormFieldKey: const Key('transfer-amount-input'),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return dic.assets.amountError;
-                        }
-                        if (balanceTooLow(value, available!, encointerCurrenciesDecimals)) {
-                          return dic.assets.insufficientBalance;
-                        }
-                        return null;
-                      },
-                      suffixIcon: const Text('ⵐ', style: TextStyle(color: encointerGrey, fontSize: 44)),
-                    ),
-                    const SizedBox(height: 24),
-                    AddressInputField(
+        child: ScrollableForm(
+          formKey: _formKey,
+          listViewKey: const Key(EWTestKeys.transferListview),
+          listViewChildren: [
+            CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
+            const SizedBox(height: 12),
+            Observer(builder: (_) {
+              if (store.encointer.communityBalance != null) {
+                return AccountBalanceWithMoreDigits(
+                  store: store,
+                  available: available,
+                  decimals: encointerCurrenciesDecimals,
+                );
+              } else {
+                return const CupertinoActivityIndicator();
+              }
+            }),
+            Text(
+              l10n.yourBalanceFor(Fmt.accountName(context, store.account.currentAccount)),
+              style: context.bodyMedium.copyWith(color: AppColors.encointerGrey),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: IconButton(
+                key: const Key(EWTestKeys.openQrScannerOnSendPage),
+                iconSize: 48,
+                icon: const Icon(Iconsax.scan_barcode),
+                onPressed: () async {
+                  final invoiceData = await Navigator.of(context).pushNamed(
+                    ScanPage.route,
+                    arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
+                  );
+                  if (invoiceData != null && invoiceData is InvoiceData) {
+                    await handleTransferPageParams(
+                      TransferPageParams.fromInvoiceData(invoiceData),
                       store,
-                      label: dic.assets.address,
-                      initialValue: _accountTo,
-                      onChanged: (AccountData acc) {
-                        setState(() {
-                          _accountTo = acc;
-                        });
-                      },
-                      hideIdenticon: true,
-                    ),
+                    );
+                    setState(() {});
+                  }
+                },
+              ),
+            ),
+            const SizedBox(height: 24),
+            EncointerTextFormField(
+              labelText: l10n.amountToBeTransferred,
+              textStyle: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
+              inputFormatters: [UI.decimalInputFormatter()],
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              controller: _amountCtrl,
+              textFormFieldKey: const Key(EWTestKeys.transferAmountInput),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return l10n.amountError;
+                }
+                if (balanceTooLow(value, available!, encointerCurrenciesDecimals)) {
+                  return l10n.insufficientBalance;
+                }
+                return null;
+              },
+              suffixIcon: const Text('ⵐ', style: TextStyle(color: AppColors.encointerGrey, fontSize: 44)),
+            ),
+            const SizedBox(height: 24),
+            AddressInputField(
+              store,
+              label: l10n.address,
+              initialValue: _accountTo,
+              onChanged: (AccountData acc) {
+                setState(() {
+                  _accountTo = acc;
+                });
+              },
+              hideIdenticon: true,
+            ),
+          ],
+          columnChildren: [
+            const SizedBox(height: 20),
+            if (context.select<AppSettings, bool>((store) => store.developerMode))
+              Center(
+                child: Text(
+                  '${l10n.fee}: TODO compute Fee', // TODO compute fee #589
+                  style: context.labelLarge.copyWith(color: AppColors.encointerGrey),
+                ),
+              ),
+            const SizedBox(height: 8),
+            PrimaryButton(
+              key: const Key(EWTestKeys.makeTransfer),
+              onPressed: _accountTo != null
+                  ? () {
+                      if (_cid != null && _communitySymbol != null) {
+                        _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
+                      }
+                    }
+                  : null,
+              child: SizedBox(
+                height: 24,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Iconsax.login_1, color: context.colorScheme.background),
+                    const SizedBox(width: 12),
+                    Text(l10n.next, style: context.bodyLarge.copyWith(color: context.colorScheme.background)),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              if (context.select<AppSettings, bool>((store) => store.developerMode))
-                Center(
-                  child: Text(
-                    '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
-                    style: textTheme.headlineMedium!.copyWith(color: encointerGrey),
-                  ),
-                ),
-              const SizedBox(height: 8),
-              PrimaryButton(
-                key: const Key('make-transfer'),
-                onPressed: _accountTo != null
-                    ? () {
-                        if (_cid != null && _communitySymbol != null) {
-                          _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
-                        }
-                      }
-                    : null,
-                child: SizedBox(
-                  height: 24,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Iconsax.login_1),
-                      const SizedBox(width: 12),
-                      Text(dic.account.next),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -298,17 +287,16 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Center(
       child: RichText(
         // need text base line alignment
         text: TextSpan(
           text: '${Fmt.doubleFormat(available, length: 6)} ',
-          style: textTheme.displayMedium!.copyWith(color: encointerBlack),
+          style: context.headlineLarge.copyWith(color: AppColors.encointerBlack),
           children: const <TextSpan>[
             TextSpan(
               text: 'ⵐ',
-              style: TextStyle(color: encointerGrey),
+              style: TextStyle(color: AppColors.encointerGrey),
             ),
           ],
         ),

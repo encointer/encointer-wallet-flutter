@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -10,7 +11,7 @@ import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -39,10 +40,10 @@ class _Contact extends State<ContactPage> {
       setState(() {
         _submitting = true;
       });
-      final dic = I18n.of(context)!.translationsForLocale();
+      final l10n = context.l10n;
       final addr = _addressCtrl.text.replaceAll(' ', '');
-      final pubKeyAddress = await webApi.account.decodeAddress([addr]);
-      final pubKey = pubKeyAddress.keys.toList()[0] as String;
+      final pubKey = Fmt.ss58Decode(addr).pubKey;
+
       final con = {
         'address': addr,
         'name': _nameCtrl.text,
@@ -55,17 +56,17 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
+        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.pubKey == pubKey);
         if (exist > -1) {
           return showCupertinoDialog<void>(
             context: context,
             builder: (BuildContext context) {
               return CupertinoAlertDialog(
                 title: Container(),
-                content: Text(dic.profile.contactAlreadyExists),
+                content: Text(l10n.contactAlreadyExists),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                    child: Text(context.l10n.ok),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
@@ -81,9 +82,7 @@ class _Contact extends State<ContactPage> {
       }
 
       // get contact info
-      if (_isObservation!) {
-        await webApi.account.encodeAddress([pubKey]);
-      } else {
+      if (!_isObservation!) {
         // if this address was used as observation and current account,
         // we need to change current account
         if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {
@@ -105,7 +104,7 @@ class _Contact extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
     final qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     if (qrScanData != null) {
       _addressCtrl.text = qrScanData.account;
       _nameCtrl.text = qrScanData.label;
@@ -113,7 +112,7 @@ class _Contact extends State<ContactPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.profile.addressBook),
+        title: Text(l10n.addressBook),
       ),
       body: SafeArea(
         child: Column(
@@ -127,15 +126,15 @@ class _Contact extends State<ContactPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
-                        key: const Key('contact-address'),
+                        key: const Key(EWTestKeys.contactAddress),
                         decoration: InputDecoration(
-                          hintText: dic.profile.contactAddress,
-                          labelText: dic.profile.contactAddress,
+                          hintText: l10n.contactAddress,
+                          labelText: l10n.contactAddress,
                         ),
                         controller: _addressCtrl,
                         validator: (v) {
                           if (!Fmt.isAddress(v!.replaceAll(' ', ''))) {
-                            return dic.profile.contactAddressError;
+                            return l10n.contactAddressError;
                           }
                           return null;
                         },
@@ -145,14 +144,14 @@ class _Contact extends State<ContactPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
-                        key: const Key('contact-name'),
+                        key: const Key(EWTestKeys.contactName),
                         decoration: InputDecoration(
-                          hintText: dic.profile.contactName,
-                          labelText: dic.profile.contactName,
+                          hintText: l10n.contactName,
+                          labelText: l10n.contactName,
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v!.trim().isNotEmpty ? null : dic.profile.contactNameError;
+                          return v!.trim().isNotEmpty ? null : l10n.contactNameError;
                         },
                       ),
                     ),
@@ -161,8 +160,8 @@ class _Contact extends State<ContactPage> {
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            hintText: dic.profile.contactMemo,
-                            labelText: dic.profile.contactMemo,
+                            hintText: l10n.contactMemo,
+                            labelText: l10n.contactMemo,
                           ),
                           controller: _memoCtrl,
                         ),
@@ -179,7 +178,7 @@ class _Contact extends State<ContactPage> {
                             },
                           ),
                           GestureDetector(
-                            child: Text(I18n.of(context)!.translationsForLocale().account.observe),
+                            child: Text(context.l10n.observe),
                             onTap: () {
                               setState(() {
                                 _isObservation = !_isObservation!;
@@ -188,7 +187,7 @@ class _Contact extends State<ContactPage> {
                           ),
                           Tooltip(
                             triggerMode: TooltipTriggerMode.tap,
-                            message: I18n.of(context)!.translationsForLocale().account.observeBrief,
+                            message: context.l10n.observeBrief,
                             child: const Padding(
                               padding: EdgeInsets.only(left: 8),
                               child: Icon(Icons.info_outline, size: 16),
@@ -198,10 +197,15 @@ class _Contact extends State<ContactPage> {
                       ),
                     const SizedBox(height: 24),
                     IconButton(
+                      key: const Key(EWTestKeys.scanBarcode),
                       iconSize: 48,
                       icon: const Icon(Iconsax.scan_barcode),
-                      onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
-                          arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage)),
+                      onPressed: () async {
+                        await Navigator.of(context).popAndPushNamed(
+                          ScanPage.route,
+                          arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage),
+                        );
+                      },
                     ),
                     const SizedBox(height: 24),
                   ],
@@ -211,9 +215,9 @@ class _Contact extends State<ContactPage> {
             Container(
               margin: const EdgeInsets.all(16),
               child: RoundedButton(
-                key: const Key('contact-save'),
+                key: const Key(EWTestKeys.contactSave),
                 submitting: _submitting,
-                text: dic.profile.contactSave,
+                text: l10n.contactSave,
                 onPressed: _onSave,
               ),
             ),

@@ -7,10 +7,12 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'package:encointer_wallet/common/components/map/encointer_map.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:provider/provider.dart';
 
 class CommunityChooserOnMap extends StatefulWidget {
@@ -31,22 +33,28 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
     locations = getLocations(context.read<AppStore>());
     communityDataAt = getCommunityDataAt(context.read<AppStore>());
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final loginStore = context.read<LoginStore>();
+      if (loginStore.getBiometricAuthState == null) {
+        await LoginDialog.showToggleBiometricAuthAlert(context);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          dic.assets.communityChoose,
+          l10n.communityChoose,
           maxLines: 2,
           textAlign: TextAlign.center,
         ),
         leading: const SizedBox.shrink(),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.close, color: encointerGrey),
+            icon: const Icon(Icons.close, color: AppColors.encointerGrey),
             onPressed: () => Navigator.pop(context),
           )
         ],
@@ -54,19 +62,29 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
       body: (locations.isNotEmpty && communityDataAt.isNotEmpty)
           ? EncointerMap(
               locations: locations,
-              center: LatLng(47.389712, 8.517076),
+              center: const LatLng(47.389712, 8.517076),
               initialZoom: 2,
               popupBuilder: (BuildContext context, Marker marker) {
                 return PopupBuilder(
-                  inkWellKey: Key(
-                    '${marker.key.toString().substring(3, marker.key.toString().length - 3)}-description',
-                  ),
                   title: communityDataAt[marker.point]!.name,
                   description: communityDataAt[marker.point]!.cid.toFmtString(),
-                  onTap: () async {
-                    await context.read<AppStore>().encointer.setChosenCid(communityDataAt[marker.point]!.cid);
-                    Navigator.pop(context);
-                  },
+                  bottom: InkWell(
+                    key: Key(
+                      '${marker.key.toString().substring(3, marker.key.toString().length - 3)}-description',
+                    ),
+                    child: Text(
+                      l10n.communityDoChoose,
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
+                    ),
+                    onTap: () async {
+                      final store = context.read<AppStore>();
+                      await store.encointer.setChosenCid(communityDataAt[marker.point]!.cid);
+                      if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+                        context.read<AppSettings>().changeTheme(store.encointer.community?.cid.toFmtString());
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
                 );
               },
             )
@@ -74,10 +92,10 @@ class _CommunityChooserOnMapState extends State<CommunityChooserOnMap> {
               color: Colors.white,
               child: CupertinoAlertDialog(
                 title: Container(),
-                content: Text(dic.encointer.noCommunitiesAreYouOffline),
+                content: Text(l10n.noCommunitiesAreYouOffline),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(dic.home.ok),
+                    child: Text(l10n.ok),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],
@@ -92,6 +110,13 @@ List<LatLng> getLocations(AppStore store) {
 }
 
 LatLng coordinatesOf(CidName community) {
+  /// EdisonPaula has similar map data as to Leu
+  /// thus it is too close to Zurich Leu,
+  /// and very hard to choose it from map
+  /// thus moved little bit to the left on map
+  if (community.name == 'EdisonPaula') {
+    return const LatLng(47.3962467, 8.4815019);
+  }
   final coordinates = GeoHash(utf8.decode(community.cid.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }

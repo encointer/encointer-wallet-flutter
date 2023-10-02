@@ -22,7 +22,7 @@ class NotificationPlugin {
   static Future<void> setup() async {
     await _configureLocalTimeZone();
 
-    const initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+    const initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
 
     const initializationSettingsIOS = DarwinInitializationSettings(
       requestAlertPermission: false,
@@ -118,7 +118,7 @@ class NotificationPlugin {
       tz.TZDateTime.from(scheduledDate, tz.local),
       _platformChannelSpecifics(body, cid: cid),
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
   }
 }

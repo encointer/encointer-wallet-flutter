@@ -6,10 +6,8 @@ import {
   assert,
   u8aToBuffer,
   bufferToU8a,
-  compactAddLength,
-  bnToU8a
+  compactAddLength
 } from '@polkadot/util';
-import { ss58Decode } from 'oo7-substrate/src/ss58.js';
 import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
 import { createType } from '@polkadot/types';
@@ -26,8 +24,8 @@ import {
 } from '../config/consts.js';
 import { unsubscribe } from '../utils/unsubscribe.js';
 import settings from './settings.js';
-import { stringToEncointerBalance } from '@encointer/types';
 import { extractEvents } from '@encointer/node-api';
+import { stringNumberToEncointerBalanceU8a } from '../utils/utils.js';
 
 export const keyring = new Keyring({ ss58Format: 0, type: 'sr25519' });
 
@@ -92,69 +90,14 @@ async function recover (keyType, cryptoType, key, password) {
 }
 
 /**
- * Add user's accounts to keyring incedence,
- * so user can use them to sign txs with password.
- * We use a list of ss58Formats to encode the accounts
- * into different address formats for different networks.
+ * Import accounts in to the `keyring` that can be used to
+ * sign extrinsics from then on.
  *
  * @param {List<Keystore>} accounts
- * @param {List<int>} ss58Formats
- * @returns {Map<String, String>} pubKeyAddressMap
  */
-async function initKeys (accounts, ss58Formats) {
+async function initKeys (accounts) {
   await cryptoWaitReady();
-  const res = {};
-  ss58Formats.forEach((ss58) => {
-    res[ss58] = {};
-  });
-
-  accounts.forEach((i) => {
-    // import account to keyring
-    const keyPair = keyring.addFromJson(i);
-    // then encode address into different ss58 formats
-    ss58Formats.forEach((ss58) => {
-      const pubKey = u8aToHex(keyPair.publicKey);
-      res[ss58][pubKey] = keyring.encodeAddress(keyPair.publicKey, ss58);
-    });
-  });
-  return res;
-}
-
-/**
- * Decode address to it's publicKey
- * @param {List<String>} addresses
- * @returns {Map<String, String>} pubKeyAddressMap
- */
-async function decodeAddress (addresses) {
-  await cryptoWaitReady();
-  try {
-    const res = {};
-    addresses.forEach((i) => {
-      const pubKey = u8aToHex(keyring.decodeAddress(i));
-      res[pubKey] = i;
-    });
-    return res;
-  } catch (err) {
-    send('log', { error: err.message });
-    return null;
-  }
-}
-
-/**
- * encode pubKey to addresses with different prefixes
- * @param {List<String>} pubKeys
- * @returns {Map<String, String>} pubKeyAddressMap
- */
-async function encodeAddress (pubKeys, ss58Formats) {
-  await cryptoWaitReady();
-  const res = {};
-  ss58Formats.forEach((ss58) => {
-    res[ss58] = {};
-    pubKeys.forEach((i) => {
-      res[ss58][i] = keyring.encodeAddress(hexToU8a(i), ss58);
-    });
-  });
-  return res;
+  accounts.forEach((i) => keyring.addFromJson(i));
 }
 
 async function addressFromUri(uri) {
@@ -237,7 +180,7 @@ function getBlockTime (blocks) {
 export async function txFeeEstimate (txInfo, paramList) {
   if (txInfo.module === 'encointerBalances' && txInfo.call === 'transfer') {
     paramList[1] = communityIdentifierFromString(api.registry, paramList[1]);
-    paramList[2] = bnToU8a(stringToEncointerBalance(paramList[2]), 128, true);
+    paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
   }
 
   let dispatchInfo;
@@ -283,69 +226,81 @@ export function sendTx (txInfo, paramList) {
  */
 export function sendTxWithPair (keyPair, txInfo, paramList) {
   return new Promise((resolve) => {
-    let unsub = () => {};
-    let balanceHuman;
+    try {
+      let unsub = () => {};
+      let balanceHuman;
 
-    if (txInfo.module === encointerBalances && txInfo.call === transfer) {
-      balanceHuman = paramList[2];
-      paramList[2] = bnToU8a(stringToEncointerBalance(paramList[2]), 128, true);
-    }
-
-    const tx = api.tx[txInfo.module][txInfo.call](...paramList);
-    const onStatusChange = (result) => {
-      if (result.status.isInBlock || result.status.isFinalized) {
-        const { success, error } = extractEvents(api, result);
-        if (success) {
-          if (txInfo.module === encointerBalances && txInfo.call === transfer) {
-            // make transfer amount human-readable again
-            paramList[2] = balanceHuman;
-          }
-
-          resolve({
-            hash: tx.hash.toString(),
-            time: new Date().getTime(),
-            params: paramList
-          });
-        }
-        if (error) {
-          resolve({ error });
-        }
-        unsub();
-      } else {
-        window.send('txStatusChange', result.status.type);
+      if (txInfo.module === encointerBalances && txInfo.call === transfer) {
+        balanceHuman = paramList[2];
+        paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
       }
-    };
-    if (txInfo.isUnsigned) {
-      tx.send(onStatusChange)
+
+      console.log(`[js-account/sendTx]: txInfo ${JSON.stringify(txInfo)}`);
+      console.log(`[js-account/sendTx]: Params ${JSON.stringify(paramList)}`);
+
+      const tx = api.tx[txInfo.module][txInfo.call](...paramList);
+      const onStatusChange = (result) => {
+        if (result.status.isInBlock || result.status.isFinalized) {
+          const {
+            success,
+            error
+          } = extractEvents(api, result);
+          if (success) {
+            if (txInfo.module === encointerBalances && txInfo.call === transfer) {
+              // make transfer amount human-readable again
+              paramList[2] = balanceHuman;
+            }
+
+            resolve({
+              hash: tx.hash.toString(),
+              time: new Date().getTime(),
+              params: paramList
+            });
+          }
+          if (error) {
+            resolve({ error });
+          }
+          unsub();
+        } else {
+          window.send('txStatusChange', result.status.type);
+        }
+      };
+      if (txInfo.isUnsigned) {
+        tx.send(onStatusChange)
+          .then((res) => {
+            unsub = res;
+          })
+          .catch((err) => {
+            resolve({ error: err.message });
+          });
+        return;
+      }
+
+      console.log(`[js-account/sendTx]: Adding tip: ${txInfo.tip}`);
+      const signerOptions = {
+        tip: new BN(txInfo.tip || 0, 10)
+      };
+
+      console.log(`[js-account/sendTx]: Adding payment asset ${JSON.stringify(txInfo.txPaymentAsset)}`);
+      if (txInfo.txPaymentAsset != null) {
+        signerOptions.assetId = api.createType(
+          'Option<CommunityIdentifier>', txInfo.txPaymentAsset
+        );
+      }
+
+      console.log(`[js-account/sendTx]: ${JSON.stringify(txInfo)}`);
+      console.log(`[js-account/sendTx]: ${JSON.stringify(signerOptions)}`);
+
+      tx.signAndSend(keyPair, signerOptions, onStatusChange)
         .then((res) => {
           unsub = res;
         })
         .catch((err) => {
           resolve({ error: err.message });
         });
-      return;
+    } catch (e) {
+      resolve({ error: e.message });
     }
-
-    const signerOptions = {
-      tip: new BN(txInfo.tip, 10)
-    }
-
-    if (txInfo.txPaymentAsset != null) {
-      signerOptions.assetId = api.createType(
-        'Option<CommunityIdentifier>', txInfo.txPaymentAsset
-        )
-    }
-
-    console.log(`[js-account/sendTx]: ${JSON.stringify(txInfo)}`)
-    console.log(`[js-account/sendTx]: ${JSON.stringify(signerOptions)}`)
-
-    tx.signAndSend(keyPair, signerOptions, onStatusChange)
-      .then((res) => {
-        unsub = res;
-      })
-      .catch((err) => {
-        resolve({ error: err.message });
-      });
   });
 }
 
@@ -454,8 +409,6 @@ function changePassword (pubKey, passOld, passNew) {
 export default {
   initKeys,
   addressFromUri,
-  encodeAddress,
-  decodeAddress,
   gen,
   recover,
   getBalance,

@@ -73,11 +73,11 @@ mixin _$SettingsStore on _SettingsStore, Store {
   List<EndpointData> get endpointList => (_$endpointListComputed ??=
           Computed<List<EndpointData>>(() => super.endpointList, name: '_SettingsStore.endpointList'))
       .value;
-  Computed<List<AccountData>>? _$contactListAllComputed;
+  Computed<List<AccountData>>? _$knownAccountsComputed;
 
   @override
-  List<AccountData> get contactListAll => (_$contactListAllComputed ??=
-          Computed<List<AccountData>>(() => super.contactListAll, name: '_SettingsStore.contactListAll'))
+  List<AccountData> get knownAccounts => (_$knownAccountsComputed ??=
+          Computed<List<AccountData>>(() => super.knownAccounts, name: '_SettingsStore.knownAccounts'))
       .value;
   Computed<bool>? _$isConnectedComputed;
 
@@ -97,21 +97,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   set enableBazaar(bool value) {
     _$enableBazaarAtom.reportWrite(value, super.enableBazaar, () {
       super.enableBazaar = value;
-    });
-  }
-
-  late final _$cachedPinAtom = Atom(name: '_SettingsStore.cachedPin', context: context);
-
-  @override
-  String get cachedPin {
-    _$cachedPinAtom.reportRead();
-    return super.cachedPin;
-  }
-
-  @override
-  set cachedPin(String value) {
-    _$cachedPinAtom.reportWrite(value, super.cachedPin, () {
-      super.cachedPin = value;
     });
   }
 
@@ -250,21 +235,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$themeAtom = Atom(name: '_SettingsStore.theme', context: context);
-
-  @override
-  ThemeData get theme {
-    _$themeAtom.reportRead();
-    return super.theme;
-  }
-
-  @override
-  set theme(ThemeData value) {
-    _$themeAtom.reportWrite(value, super.theme, () {
-      super.theme = value;
-    });
-  }
-
   late final _$initAsyncAction = AsyncAction('_SettingsStore.init', context: context);
 
   @override
@@ -362,16 +332,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void changeTheme() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.changeTheme');
-    try {
-      return super.changeTheme();
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void toggleEnableBazaar() {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleEnableBazaar');
     try {
@@ -402,16 +362,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void setPin(String pin) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setPin');
-    try {
-      return super.setPin(pin);
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setEndpoint(EndpointData value) {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setEndpoint');
     try {
@@ -435,7 +385,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   String toString() {
     return '''
 enableBazaar: ${enableBazaar},
-cachedPin: ${cachedPin},
 loading: ${loading},
 localeCode: ${localeCode},
 endpoint: ${endpoint},
@@ -445,13 +394,12 @@ networkState: ${networkState},
 networkConst: ${networkConst},
 contactList: ${contactList},
 locale: ${locale},
-theme: ${theme},
 endpointIsEncointer: ${endpointIsEncointer},
 endpointIsNoTee: ${endpointIsNoTee},
 endpointIsTeeProxy: ${endpointIsTeeProxy},
 ipfsGateway: ${ipfsGateway},
 endpointList: ${endpointList},
-contactListAll: ${contactListAll},
+knownAccounts: ${knownAccounts},
 isConnected: ${isConnected}
     ''';
   }

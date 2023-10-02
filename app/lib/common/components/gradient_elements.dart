@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 /// In our UX-app design, we distinguish between "Primary" and "Secondary" Buttons. The former being the visually
 /// prominent one, the user is supposed to primarily interact with. The latter being a less important button, which
@@ -23,7 +23,7 @@ class PrimaryButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: primaryGradient,
+        gradient: AppColors.primaryGradient(context),
         borderRadius: borderRadius,
       ),
       child: ElevatedButton(
@@ -33,9 +33,8 @@ class PrimaryButton extends StatelessWidget {
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+          textStyle: context.titleMedium,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
         child: child,
       ),
@@ -53,7 +52,7 @@ class TextGradient extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShaderMask(
       blendMode: BlendMode.srcIn,
-      shaderCallback: (bounds) => primaryGradient.createShader(
+      shaderCallback: (bounds) => AppColors.primaryGradient(context).createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
       child: Text(text, style: style),

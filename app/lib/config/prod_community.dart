@@ -1,12 +1,27 @@
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 enum Community {
-  leu(notificationSound: _leuZurichSound, webSiteLink: _leuZurichLink),
-  gbd(notificationSound: _greenbaySound, webSiteLink: _greenbayLink);
+  leu(
+    notificationSound: _leuZurichSound,
+    webSiteLink: _leuZurichLink,
+    colorScheme: AppColors.leu,
+    cid: Cids.leuKsm,
+  ),
+  gbd(
+    notificationSound: _greenbaySound,
+    webSiteLink: _greenbayLink,
+    colorScheme: AppColors.gbd,
+    cid: Cids.gbdKsm,
+  );
 
   const Community({
     required this.webSiteLink,
     required this.notificationSound,
+    required this.colorScheme,
+    required this.cid,
   });
 
   factory Community.fromCid(String? cid) {
@@ -17,6 +32,10 @@ enum Community {
 
   final String webSiteLink;
   final String notificationSound;
+  final ColorScheme colorScheme;
+  final String cid;
+
+  String get name => switch (this) { Community.leu => 'LEU', Community.gbd => 'GBD' };
 }
 
 class Cids {
