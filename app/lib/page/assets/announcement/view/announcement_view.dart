@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:encointer_wallet/models/announcement/announcement.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
-import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_store.dart';
@@ -15,9 +14,13 @@ class AnnouncementView extends StatefulWidget {
   const AnnouncementView({
     super.key,
     required this.cid,
+    required this.devMode,
+    required this.languageCode,
   });
 
   final String cid;
+  final bool devMode;
+  final String languageCode;
 
   @override
   State<AnnouncementView> createState() => _AnnouncementViewState();
@@ -38,6 +41,15 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   }
 
   @override
+  void didUpdateWidget(AnnouncementView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _getAnnouncements();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return switch (_announcementStore.fetchStatus) {
@@ -50,11 +62,9 @@ class _AnnouncementViewState extends State<AnnouncementView> {
   }
 
   Future<void> _getAnnouncements() async {
-    final devMode = context.read<AppSettings>().developerMode;
-    final languageCode = Localizations.localeOf(context).languageCode;
     await Future.wait([
-      _announcementStore.getGlobalAnnouncements(devMode: devMode, langCode: languageCode),
-      _announcementStore.getCommunityAnnouncements(widget.cid, devMode: devMode, langCode: languageCode),
+      _announcementStore.getGlobalAnnouncements(devMode: widget.devMode, langCode: widget.languageCode),
+      _announcementStore.getCommunityAnnouncements(widget.cid, devMode: widget.devMode, langCode: widget.languageCode),
     ]);
   }
 }

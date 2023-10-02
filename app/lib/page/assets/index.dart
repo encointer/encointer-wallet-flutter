@@ -287,7 +287,13 @@ class _AssetsViewState extends State<AssetsView> {
               CeremonyBox(widget.store, webApi, key: const Key(EWTestKeys.ceremonyBoxWallet)),
               const SizedBox(height: 24),
               if (widget.store.encointer.community != null)
-                AnnouncementView(cid: widget.store.encointer.community!.cid.toFmtString())
+                Observer(
+                  builder: (_) => AnnouncementView(
+                    cid: widget.store.encointer.community!.cid.toFmtString(),
+                    devMode: context.read<AppSettings>().developerMode,
+                    languageCode: Localizations.localeOf(context).languageCode,
+                  ),
+                )
             ],
           ),
         ),
