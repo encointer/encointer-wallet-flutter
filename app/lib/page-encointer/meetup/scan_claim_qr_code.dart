@@ -105,15 +105,6 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
                   helpWidget: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        height: MediaQuery.of(context).size.width * 0.7,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(color: Colors.white38, width: 2),
-                          borderRadius: const BorderRadius.all(Radius.circular(24)),
-                        ),
-                      ),
                       Observer(builder: (_) {
                         final txt = l10n.claimsScannedNOfM(
                           store.encointer.communityAccount!.scannedAttendeesCount,
