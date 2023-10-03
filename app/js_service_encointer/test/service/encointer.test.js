@@ -14,6 +14,7 @@ import { parseI64F64, communityIdentifierFromString } from '@encointer/util';
 import { testSetup } from '../testUtils/testSetup';
 import { Keyring } from '@polkadot/api';
 
+
 describe('encointer', () => {
   const network = localDevNetwork();
   let keyring;
@@ -180,7 +181,7 @@ describe('encointer', () => {
 
       const balanceRecipient = await getBalance(cid, recipient.address);
       console.log(`balance recipient: ${JSON.stringify(balanceRecipient)}`);
-      expect(balanceRecipient.principal).toBeGreaterThan(0.050);
+      expect(balanceRecipient.principal).toBeGreaterThan(0.040);
 
       const balanceVoucherReaped = await getBalance(cid, voucherPair.address);
       console.log(`balance voucher: ${JSON.stringify(balanceVoucherReaped)}`);

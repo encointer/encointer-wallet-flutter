@@ -1,10 +1,10 @@
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
 import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
@@ -30,13 +30,11 @@ const encointerCacheVersion = 'v1.0';
 ///
 /// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
 class AppStore extends _AppStore with _$AppStore {
-  AppStore(super.localStorage, {required super.config});
+  AppStore(super.localStorage);
 }
 
 abstract class _AppStore with Store {
-  _AppStore(this.localStorage, {required this.config});
-
-  final AppConfig config;
+  _AppStore(this.localStorage);
 
   // Note, following pattern of a nullable field with a non-nullable getter
   // is here because mobx can't handle `late` initialization:
@@ -47,30 +45,36 @@ abstract class _AppStore with Store {
   // it removes the `null`-compiler checks and turns them into runtime-checks.
   @observable
   SettingsStore? _settings;
+
   SettingsStore get settings => _settings!;
 
   @observable
   DataUpdateStore? _dataUpdate;
+
   @computed
   DataUpdateStore get dataUpdate => _dataUpdate!;
 
   @observable
   AccountStore? _account;
+
   @computed
   AccountStore get account => _account!;
 
   @observable
   AssetsStore? _assets;
+
   @computed
   AssetsStore get assets => _assets!;
 
   @observable
   ChainStore? _chain;
+
   @computed
   ChainStore get chain => _chain!;
 
   @observable
   EncointerStore? _encointer;
+
   @computed
   EncointerStore get encointer => _encointer!;
 
@@ -125,21 +129,13 @@ abstract class _AppStore with Store {
   }
 
   /// Returns the network dependant cache key.
-  ///
-  /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
-  /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
-    final cacheKey = '${settings.endpoint.info}_$key';
-    return config.isTestMode ? 'test-$cacheKey' : cacheKey;
+    return '${settings.endpoint.info}_$key';
   }
 
   /// Returns the cache key for the encointer-storage.
-  ///
-  /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
-  /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
-    final key = '$encointerCachePrefix-$networkInfo';
-    return config.isTestMode ? 'test-$key' : key;
+    return '$encointerCachePrefix-$networkInfo';
   }
 
   Future<bool> purgeEncointerCache(String networkInfo) async {
@@ -225,9 +221,12 @@ abstract class _AppStore with Store {
       return Future.value();
     }
 
-    final address = account.getNetworkAddress(pubKey);
-    Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
-    await encointer.initializeUninitializedStores(address);
+    if (pubKey != null) {
+      // Todo: #1072
+      final address = Fmt.ss58Encode(pubKey, prefix: settings.endpoint.ss58!);
+      Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
+      await encointer.initializeUninitializedStores(address);
+    }
 
     if (!settings.loading) {
       dataUpdate.setInvalidated();

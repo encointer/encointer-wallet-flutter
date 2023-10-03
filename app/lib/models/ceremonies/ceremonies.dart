@@ -95,6 +95,8 @@ class Meetup {
   int locationIndex;
   // time is null in assigning phase
   int? time;
+
+  /// Addresses belonging to the meetup encoded with prefix 42.
   List<String> registry;
 
   @override
@@ -147,6 +149,6 @@ Map<int, CommunityReputation> reputationsFromList(List<dynamic> reputationsList)
   final reputations = reputationsList.cast<List<dynamic>>();
 
   return {
-    for (var cr in reputations) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>),
+    for (final cr in reputations) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>),
   };
 }

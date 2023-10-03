@@ -1,18 +1,17 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:pointycastle/digests/blake2b.dart';
 
 class Fmt {
@@ -202,7 +201,7 @@ class Fmt {
   }
 
   static String accountName(BuildContext context, AccountData acc) {
-    return '${acc.name}${(acc.observation ?? false) ? ' (${I18n.of(context)!.translationsForLocale().account.observe})' : ''}';
+    return '${acc.name}${(acc.observation ?? false) ? ' (${context.l10n.observe})' : ''}';
   }
 
   /// The hexToBytes function converts a hexadecimal string to a byte array.
@@ -211,23 +210,21 @@ class Fmt {
   /// print(hexToBytes1('#ffffff')); // [255, 255, 255, 255]
   /// ```
   static List<int> hexToBytes(String hexString) {
-    const byteAlphabet = '0123456789abcdef';
-
     // The function first removes any spaces and "0x" prefixes from the input string,
     // then converts the input string to lowercase.
     var hex = hexString.replaceAll(' ', '').replaceAll('0x', '').toLowerCase();
 
     // If the input string contains an odd number of characters, it adds a "0" to the beginning.
     if (hex.length % 2 != 0) hex = '0$hex';
-    final result = Uint8List(hex.length ~/ 2);
-    for (var i = 0; i < result.length; i++) {
-      // Finally, it adds every two characters of the input string as a byte value to the array.
-      final value = (byteAlphabet.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
-          +
-          byteAlphabet.indexOf(hex[i * 2 + 1]);
-      result[i] = value;
+
+    // Convert hex string to bytes
+    final bytes = <int>[];
+    for (var i = 0; i < hex.length; i += 2) {
+      final hexByte = hex.substring(i, i + 2);
+      bytes.add(int.parse(hexByte, radix: 16));
     }
-    return result;
+
+    return bytes;
   }
 
   static String bytesToHex(List<int> bytes) {
@@ -255,18 +252,6 @@ class Fmt {
     return tokenView;
   }
 
-  /// Returns the address of an account encoded with the ss58-prefix of the current network, if
-  /// available. Otherwise, it falls back the ss58 prefix of the connect network at account creation
-  /// time.
-  ///
-  /// This was inherited from upstream, and I have never observed that the fallback had to be
-  /// used.
-  ///
-  /// Todo: Improve handling of ss58-prefix: #1019
-  static String addressOfAccount(AccountData acc, AppStore store) {
-    return store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![acc.pubKey] ?? acc.address;
-  }
-
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].
   static String degree(String degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
     return (double.tryParse(degree) ?? 0.0).toStringAsFixed(fractionDisplay);
@@ -274,12 +259,14 @@ class Fmt {
 
   static const base58Codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
+  /// Convert a pubKey into an SS58-address.
+  ///
   /// Based on the rust version: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L324
   ///
   /// Note: This only supports prefixes < 64, bigger prefixes require
   /// special handling.
   static String ss58Encode(String pubKey, {int prefix = 42}) {
-    assert(prefix < 64, 'prefixes >= 64 are currently not supported');
+    if (prefix >= 64) throw Exception('prefixes >= 64 are currently not supported');
 
     final body = Uint8List.fromList([prefix, ...Fmt.hexToBytes(pubKey)]);
     final hash = blake2WithSs58Pre(body);
@@ -288,8 +275,44 @@ class Fmt {
     return base58Codec.encode(complete);
   }
 
+  /// General pubKey length used in substrate and Encointer.
+  static const pubKeyLen = 32;
+
+  /// Length of the checksum in an SS58-address.
+  static const checkSumLen = 2;
+
+  /// If the SS58-address has a prefix < 64 the prefix length is 1 else it is 2.
+  ///
+  /// All Encointer networks use the prefix 2 or 42, so we can only implement a subset of the
+  /// SS58-codec.
+  static const prefixLenForPrefixesSmallerThan64 = 1;
+
+  /// Convert an SS58-address into a pubKey.
+  ///
+  /// Based on the rust version: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L269
+  ///
+  /// Note: This only supports prefixes < 64, bigger prefixes require
+  /// special handling.
+  static Ss58DecodeResult ss58Decode(String address) {
+    const prefixLen = prefixLenForPrefixesSmallerThan64;
+
+    final data = base58Codec.decode(address);
+    final prefix = data[0];
+
+    if (prefix >= 64) throw Exception('prefixes >= 64 are currently not supported');
+    if (data.length != prefixLen + pubKeyLen + checkSumLen) throw Exception('Bad address length ${data.length}');
+
+    final hash = blake2WithSs58Pre(Uint8List.fromList(data.sublist(0, pubKeyLen + prefixLen)));
+    final checksum = hash.sublist(0, checkSumLen);
+    final checksumData = data.sublist(pubKeyLen + prefixLen, pubKeyLen + prefixLen + checkSumLen);
+    if (!listEquals(checksumData, checksum)) throw Exception('Invalid checksum: $checksumData != $checksum');
+
+    return Ss58DecodeResult(bytesToHex(data.sublist(prefixLen, prefixLen + pubKeyLen)), prefix);
+  }
+
   static final ss58Prefix = 'SS58PRE'.codeUnits;
 
+  /// Corresponds to the `ss58hash`: https://github.com/paritytech/substrate/blob/48e7cb147cb9a27125fd2e82edbcf4d0ed5927c4/primitives/core/src/crypto.rs#L374
   static Uint8List blake2WithSs58Pre(Uint8List data) {
     final ss58Pre = Uint8List.fromList(ss58Prefix);
 
@@ -303,4 +326,14 @@ class Fmt {
 
     return hash;
   }
+}
+
+class Ss58DecodeResult {
+  const Ss58DecodeResult(this.pubKey, this.prefix);
+
+  /// The pubKey corresponding to the input address.
+  final String pubKey;
+
+  /// The prefix of the input address.
+  final int prefix;
 }

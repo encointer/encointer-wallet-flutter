@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -65,20 +65,18 @@ class CeremonyProgressBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
-        border: Border.all(color: zurichLion.shade300),
+        border: Border.all(color: context.colorScheme.secondary),
         color: Colors.white,
       ),
       height: 10,
       child: Stack(
         children: [
-          SizedBox(
-            width: width * progressElapsed,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
-                gradient: primaryGradient,
-              ),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
+              gradient: AppColors.primaryGradient(context),
             ),
+            child: SizedBox(width: width * progressElapsed, height: 10),
           ),
           Row(
             children: [
@@ -90,7 +88,7 @@ class CeremonyProgressBar extends StatelessWidget {
                   foregroundDecoration: BoxDecoration(
                     // draw the vertical phase dividers
                     border: Border.symmetric(
-                      vertical: BorderSide(color: zurichLion.shade300),
+                      vertical: BorderSide(color: context.colorScheme.secondary),
                     ),
                   ),
                 ),

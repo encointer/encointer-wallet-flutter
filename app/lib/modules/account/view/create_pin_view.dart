@@ -1,3 +1,4 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -5,16 +6,17 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
+import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/modules/account/account.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
+import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class CreatePinView extends StatelessWidget {
   const CreatePinView({super.key, this.fromImportPage = false});
@@ -25,10 +27,9 @@ class CreatePinView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.home.create),
+        title: Text(context.l10n.create),
         actions: const [CloseButton()],
       ),
       body: Padding(
@@ -50,8 +51,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
+    final l10n = context.l10n;
     final newAccountStore = context.watch<NewAccountStore>();
     return ScrollableForm(
       formKey: _formKey,
@@ -59,43 +59,43 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
         const SizedBox(height: 80),
         Center(
           child: Text(
-            dic.profile.pinSecure,
-            style: textTheme.displayMedium,
+            l10n.pinSecure,
+            style: context.headlineSmall,
             textAlign: TextAlign.center,
           ),
         ),
         const SizedBox(height: 10),
         Text(
-          dic.profile.pinHint,
+          l10n.pinHint,
           textAlign: TextAlign.center,
-          style: textTheme.displayMedium!.copyWith(color: encointerBlack),
+          style: context.headlineSmall.copyWith(color: AppColors.encointerBlack),
         ),
         const SizedBox(height: 30),
         EncointerTextFormField(
-          key: const Key('create-account-pin'),
+          key: const Key(EWTestKeys.createAccountPin),
           keyboardType: TextInputType.number,
           filled: true,
           obscureText: true,
-          fillColor: zurichLion.shade50,
-          hintText: dic.account.createPassword,
-          labelText: dic.account.createPassword,
+          fillColor: context.colorScheme.background,
+          hintText: l10n.createPassword,
+          labelText: l10n.createPassword,
           controller: _passCtrl,
           borderRadius: 15,
-          validator: (v) => Fmt.checkPassword(v!.trim()) ? null : dic.account.createPasswordError,
+          validator: (v) => Fmt.checkPassword(v!.trim()) ? null : l10n.createPasswordError,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         ),
         const SizedBox(height: 20),
         EncointerTextFormField(
-          key: const Key('create-account-pin2'),
+          key: const Key(EWTestKeys.createAccountPin2),
           keyboardType: TextInputType.number,
           filled: true,
-          fillColor: const Color(0xffF4F8F9),
-          hintText: dic.account.createPassword2,
-          labelText: dic.account.createPassword2,
+          fillColor: context.colorScheme.background,
+          hintText: l10n.createPassword2,
+          labelText: l10n.createPassword2,
           controller: _pass2Ctrl,
           borderRadius: 15,
           obscureText: true,
-          validator: (v) => _passCtrl.text != v ? dic.account.createPassword2Error : null,
+          validator: (v) => _passCtrl.text != v ? l10n.createPassword2Error : null,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         ),
         const SizedBox(height: 16),
@@ -104,15 +104,14 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
       columnChildren: [
         const SizedBox(height: 10),
         PrimaryButton(
-          key: const Key('create-account-confirm'),
+          key: const Key(EWTestKeys.createAccountConfirm),
           onPressed: () async {
             final newAccount = context.read<NewAccountStore>();
-            final appStore = context.read<AppStore>();
             if (_formKey.currentState!.validate() && !newAccount.loading) {
               newAccount.setPassword(_passCtrl.text.trim());
               final res = fromImportPage
-                  ? await newAccount.importAccount(appStore, webApi)
-                  : await newAccount.generateAccount(appStore, webApi);
+                  ? await newAccount.importAccount(context, webApi)
+                  : await newAccount.generateAccount(context, webApi);
               await navigate(
                 context: context,
                 type: res.operationResult,
@@ -124,7 +123,7 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
             if (newAccountStore.loading) {
               return const CenteredActivityIndicator();
             } else {
-              return Text(dic.home.next);
+              return Text(l10n.next);
             }
           }),
         ),
@@ -136,6 +135,9 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
     final appStore = context.read<AppStore>();
     if (appStore.encointer.communityIdentifiers.length == 1) {
       await appStore.encointer.setChosenCid(appStore.encointer.communityIdentifiers[0]);
+      if (RepositoryProvider.of<AppSettings>(context).developerMode) {
+        context.read<AppSettings>().changeTheme(appStore.encointer.community?.cid.toFmtString());
+      }
     } else {
       await Navigator.pushNamed(context, CommunityChooserOnMap.route);
     }

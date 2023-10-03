@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -55,9 +54,6 @@ abstract class _AccountStore with Store {
   ObservableList<AccountData> accountList = ObservableList<AccountData>();
 
   @observable
-  ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
-
-  @observable
   List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
 
   @computed
@@ -97,30 +93,9 @@ abstract class _AccountStore with Store {
 
   @computed
   String get currentAddress {
-    return getNetworkAddress(currentAccountPubKey);
-  }
-
-  /// Gets the address (SS58) for the corresponding network.
-  String getNetworkAddress(String? pubKey) {
-    // _log("currentAddress: endpoint.info: ${rootStore.settings.endpoint.info}");
-    // _log("currentAddress: endpoint.ss58: ${rootStore.settings.endpoint.ss58}");
-    // _log("currentAddress: customSS58: ${rootStore.settings.customSS58Format.toString()}");
-    // _log("currentAddress: AddressMap 42: ${pubKeyAddressMap[42].toString()}");
-    // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
-
-    var ss58 = rootStore.settings.customSS58Format['value'] as int?;
-    if (rootStore.settings.customSS58Format['info'] == defaultSs58Prefix['info']) {
-      ss58 = rootStore.settings.endpoint.ss58;
-    }
-
-    final address = pubKeyAddressMap[ss58!] != null ? pubKeyAddressMap[ss58]![pubKey!] : null;
-
-    if (address != null) {
-      return address;
-    } else {
-      Log.d('getNetworkAddress: could not get address (SS58)', 'AccountStore');
-      return currentAccount.address;
-    }
+    // Todo #1110: `currentAccountPubkey` should be non-nullable.
+    if (currentAccountPubKey == null || currentAccountPubKey!.isEmpty) return '';
+    return Fmt.ss58Encode(currentAccountPubKey ?? '', prefix: rootStore.settings.endpoint.ss58!);
   }
 
   @action
@@ -320,20 +295,6 @@ abstract class _AccountStore with Store {
     if (stored[pubKey] != null) {
       stored.remove(pubKey);
       await rootStore.localStorage.setSeeds(seedType, stored);
-    }
-  }
-
-  @action
-  void setPubKeyAddressMap(Map<String, Map> data) {
-    for (final ss58 in data.keys) {
-      // get old data map
-      final addresses = Map<String, String>.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
-      // set new data
-      Map.of(data[ss58]!).forEach((k, v) {
-        addresses[k as String] = v as String;
-      });
-      // update state
-      pubKeyAddressMap[int.parse(ss58)] = addresses;
     }
   }
 }

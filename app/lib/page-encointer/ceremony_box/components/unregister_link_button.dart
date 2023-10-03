@@ -1,10 +1,11 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -13,26 +14,25 @@ class UnregisteredLinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     return InkWell(
-      key: const Key('unregister-button'),
+      key: const Key(EWTestKeys.unregisterButton),
       onTap: () async {
         final shouldUnregister = await AppAlert.showConfirmDialog<bool>(
           context: context,
           onCancel: () => Navigator.pop(context, false),
-          title: Text(dic.home.unregisterDialogTitle, key: const Key('unregister-dialog')),
+          title: Text(l10n.unregisterDialogTitle, key: const Key(EWTestKeys.unregisterDialog)),
           onOK: () => Navigator.pop(context, true),
         );
         if (shouldUnregister ?? false) {
-          AppAlert.showLoadingDialog(context, dic.home.loading);
+          AppAlert.showLoadingDialog(context, l10n.loading);
           await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
           Navigator.pop(context);
         }
       },
       child: Text(
-        dic.home.unregister,
-        style: textTheme.headlineMedium!.copyWith(color: encointerGrey, decoration: TextDecoration.underline),
+        l10n.unregister,
+        style: context.bodyMedium.copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
       ),
     );
   }

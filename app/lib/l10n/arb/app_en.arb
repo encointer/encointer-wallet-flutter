@@ -1,0 +1,457 @@
+{
+    "@@locale": "en",
+    "about": "About",
+    "aboutBrief": "Mobile Wallet for Encointer",
+    "aboutVersion": "Version",
+    "acceptancePoints": "Acceptance Points",
+    "accountDelete": "Are you sure you want to delete the account?",
+    "accountImport": "Import account",
+    "accountName": "Account name",
+    "accountNameChoose": "Choose an account name.",
+    "accountNameChooseHint": "You can change it later in your profile settings.",
+    "accounts": "Accounts",
+    "accountsDelete": "Are you sure you want to delete all accounts?",
+    "accountsDeleteAll": "Remove all Accounts",
+    "accountShare": "Share Account",
+    "addAccount": "Add account",
+    "addContact": "Add contact",
+    "addInvoiceQrToAddress": "Add QR-invoice to Address",
+    "address": "Address",
+    "addressBook": "Address Book",
+    "addToContactFromQrContact": "Add Contact-Qr",
+    "alreadyEndorsedErrorBody": "This account has already been endorsed for this cycle.",
+    "alreadyEndorsedErrorTitle": "Already Endorsed",
+    "amountError": "Invalid amount",
+    "amountToBeTransferred": "Send amount",
+    "appSettings": "App settings",
+    "attestNotificationBody": "If all participants have sent the attestations, you can try to claim the income.",
+    "attestNotificationTitle": "Attested attendees",
+    "balance": "Balance",
+    "balanceTooLowBody": "You don't have sufficient funds in your account. You can't send all your money because you need some for the fees.",
+    "balanceTooLowTitle": "Balance too low",
+    "balanceTransferNotificationBody": "The recipient has received the tokens.",
+    "balanceTransferNotificationTitle": "Transaction completed",
+    "benefits": "Benefits",
+    "biometricAuth": "Biometric authentication",
+    "biometricAuthDescription": "Biometric authentication uses the biometric information stored on your phone to authenticate you, instead of using your pin. You can enable and disable biometric authentication anytime in the settings.",
+    "biometricAuthEnableDisableDescription": "Enter your PIN to enable or disable biometric authentication.",
+    "block": "Block",
+    "bootstrapperContent": "If you have endorsement tickets left, please consider endorsing newbies to help the community grow.",
+    "bootstrapperTitle": "Registered as bootstrapper - your seat is guaranteed.",
+    "calendarEntryDescription": "Gathering to get your community income",
+    "cameraPermissionError": "There was an error String getting the camera permission. Alternatively, you can grant permission in the app settings.",
+    "cancel": "Cancel",
+    "canEndorseInRegisteringPhaseOnly": "Can endorse in registering phase only",
+    "cantEndorseBootstrapper": "Bootstrappers are already marked as trusted",
+    "categories": "Categories",
+    "canUseFaucetOnlyWithCurrentAccount": "You can only use the faucet features if this account page shows the currently active account.",
+    "changeYourPin": "Change PIN",
+    "checkEmailApp": "Check that you have downloaded the Email app",
+    "chosenRightCommunity": "The data is for a different community. Please change the community to send funds.",
+    "claimRewardsNotificationBody": "You have already received your community income!",
+    "claimRewardsNotificationTitle": "Claimed the community income",
+    "claimsScannedAlready": "Updated previously scanned claim",
+    "claimsScannedDecodeFailed": "Could not decode scanned claim. The other party needs to update the App.",
+    "claimsScannedNew": "Scanned new claim",
+    "claimsSubmit": "Submit claims",
+    "closeGathering": "Close meetup",
+    "communities": "Communities",
+    "communityChoose": "Choose community:",
+    "communityDoChoose": "Choose community",
+    "communityNotSelected": "No community selected, hit the icon to select one",
+    "confirmPin": "Input your PIN to confirm",
+    "confirmThePayment": "3. Confirm the payment",
+    "contactAddress": "Address",
+    "contactAddressError": "Invalid address",
+    "contactAlreadyExists": "Address exists already",
+    "contactDelete": "Delete",
+    "contactDeleteWarn": "Are you sure you want to delete this address?",
+    "contactEndorse": "Endorse as trusted contact",
+    "contactMemo": "Contact information",
+    "contactName": "Name",
+    "contactNameAlreadyExists": "Name exists already",
+    "contactNameError": "Name can not be empty",
+    "contactSave": "Save",
+    "contactUs": "Contact Us",
+    "copy": "Copy",
+    "count": "Count",
+    "create": "Create Account",
+    "createError": "There was an error creating your account",
+    "createHint": "(Example: Alice)",
+    "createPassword": "PIN",
+    "createPassword2": "Confirm PIN",
+    "createPassword2Error": "Inconsistent PINs",
+    "createPasswordError": "PIN must contain at least 4 digits and no other signs",
+    "deleteAccount": "delete",
+    "detail": "Detail",
+    "detailsEnter": "Enter your details.",
+    "developer": "Developer mode",
+    "done": "done",
+    "doYouAlreadyHaveAnAccount": "Do you already have an account?",
+    "enable": "Enable",
+    "enableBazaar": "Enable Bazaar",
+    "endorseeContent": "You have been endorsed as a trustworthy community member. Hence, you are guaranteed to be assigned to a gathering this cycle.",
+    "endorseeTitle": "Registered as endorsee - your seat is guaranteed",
+    "endorseNewcomerNotificationBody": "Thanks for endorsing the newbie!",
+    "endorseNewcomerNotificationTitle": "Newbie endorsed",
+    "enterAmount": "Enter amount",
+    "error": "Error",
+    "errorMessageNoCommunity": "Please choose a community.",
+    "errorOccurred": "An error occurred:",
+    "errorUserNameIsRequired": "User name cannot be blank",
+    "event": "Event ID",
+    "export": "Export Account",
+    "exportAccount": "export",
+    "exportMnemonicOk": "Mnemonic was copied to clipboard.",
+    "exportWarn": "Write these words down on paper. Keep the backup paper safe. These words allows anyone to recover this account and access its funds.",
+    "fail": "Failed",
+    "fee": "Fee",
+    "fetchingReputations": "Checking if you have reputation",
+    "finish": "Finish",
+    "from": "From",
+    "fundsReceived": "funds received",
+    "fundVoucher": "Fund voucher",
+    "gatheringSuccessfullyCompleted": "Gathering successfully completed",
+    "hash": "transaction hash",
+    "hintEnterCurrentPin": "To change your PIN please enter the current one.",
+    "hintThenEnterANewPin": "Then you can choose a new one and you’re all set.",
+    "home": "Home",
+     "howManyParticipantsShowedUp": "How many attendees are present including yourself?",
+    "import": "Import",
+    "importDuplicate": "Account exists, do you want to override the existing account?",
+    "importedWithRawSeedHenceNoMnemonic": "Account was imported with a raw seed and therefore does not have a mnemonic",
+    "importInvalidMnemonic": "Invalid mnemonic supplied",
+    "importInvalidRawSeed": "Invalid raw seed supplied",
+    "importMustNotBeEmpty": "Input must not be empty",
+    "importPrivateKeyUnsupported": "Private key account import is not yet supported.",
+    "incomeIssuance": "Community income",
+    "insufficientBalance": "Insufficient balance",
+    "insufficientFundsErrorBody": "You do not have sufficient funds on this account. See on the website of your local community how to get some.",
+    "insufficientFundsErrorTitle": "Insufficient Funds",
+    "invalidCommunity": "Invalid Community",
+    "invalidNetwork": "Invalid Network",
+    "invoice": "Invoice",
+    "issuanceClaimed": "No pending community income",
+    "issuancePending": "Claim pending community income",
+    "keySigningCycle": "Key-Signing Cycle",
+    "keystore": "Keystore (json)",
+    "kusamaFaucet": "Kusama Faucet",
+    "lang": "Language",
+    "leuZurichFAQ": "leu.zuerich FAQ",
+    "like": "Like",
+    "loading": "Loading...",
+    "meetingPoint": "Meeting Point",
+    "meetupClaimantEqualToSelf": "Error: Claimant is equal to self. Claim is not stored.",
+    "meetupClaimantInvalid": "This claimant is not part of the meetup. Claim is not stored.",
+    "meetupLocation": "Gathering location",
+    "meetupIndex": "Gathering Number: {index}",
+    "meetupIndexPopupExplanation": "Use the gathering number to find your real gathering location. The community leader is responsible in your community for specifying the gathering locations. The real location could be slightly different from the one displayed here.",
+    "meetupNotificationOneDayBeforeContent": "Gathering starts in 24 hours",
+    "meetupNotificationOneDayBeforeTitle": "24 hours left",
+    "meetupNotificationOneHourBeforeContent": "Gathering starts in one hour",
+    "meetupNotificationOneHourBeforeTitle": "1 hour left",
+    "mnemonic": "Mnemonic",
+    "newbieContent": "With your current status the participation for the upcoming cycle is not guaranteed. Please ask your contacts for an Endorsement.",
+    "newbieTitle": "Tentative Participation",
+    "next": "Next",
+    "nextCycleDateLabel": "Next cycle is on",
+    "nextCycleTimeLeft": "Next cycle is in",
+    "noCommunitiesAreYouOffline": "No communities were found. You can choose one later. Are you offline?.",
+    "noInvoice": "No invoice",
+    "noItems": "No items found",
+    "noMnemonicFound": "No Mnemonic found",
+    "notNow": "Not now",
+    "notifySubmittedQueued": "Queued transaction Submitted",
+    "noTransactions": "No Transactions",
+    "noValidClaimsErrorBody": "You did not send any valid claims. Did you scan the other attendees?",
+    "noValidClaimsErrorTitle": "No Valid Claims",
+    "numberOfAttendees": "Number of attendees",
+    "observe": "Observation",
+    "observeBrief": "Mark this address as observation, then you can select this address in account select page, to watch its assets and actions",
+    "observedPendingExtrinsic": "Pending transaction observed. Please wait for confirmation!",
+    "offlineMessage": "You are currently offline. Your claims can be submitted later on the Home Screen.",
+    "ok": "OK",
+    "onlyReputablesCanEndorseAttendGatheringToBecomeOne": "Only reputables can endorse. Attend a gathering to get reputation!",
+    "openMapApplication": "Open Map Application",
+    "openTheEncointerApp": "1. Open the app \n«Encointer Wallet»",
+    "passOld": "Current PIN",
+    "passSuccess": "Success",
+    "passSuccessTxt": "PIN changed successfully",
+    "payHereWithLeu": "Pay here with Leu",
+    "payment": "Payment",
+    "paymentDoYouWantToProceed": "Proceed with payment?",
+    "paymentError": "Payment error",
+    "paymentFinished": "Payment complete",
+    "paymentSubmitting": "Payment is being submitted...",
+    "personalKey": "Personal key",
+    "personalKeyEnter": "Please enter your personal key (12 words) to import the new account.",
+    "pinHint": "You will need this PIN for transactions and adding a new account.",
+    "pinInfo": "PIN should consist of at least 4 digits. If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.",
+    "pinSecure": "Secure your account with a PIN.",
+    "pleaseCommunityChoose": "Please choose a community",
+    "pleaseConfirmYourNewPin": "Confirm New PIN",
+    "preview": "Preview",
+    "print": "Print",
+    "qrScan": "Scan QR code",
+    "qrScanHintAccount": "Ask the recipient to scan the QR-code in the encointer app.",
+    "rawSeed": "Raw Seed",
+    "receive": "Receive",
+    "received": "Received",
+    "receiverAccount": "Receiving account:",
+    "redeemFailure": "There was an error while redeeming the voucher. Cause:",
+    "redeemSuccess": "Successfully redeemed voucher.",
+    "redeemVoucher": "Redeem voucher",
+    "registeringPhaseReminderContent": "Registration for the next gathering has started.",
+    "registeringPhaseReminderTitle": "Register now!",
+    "registerParticipantNotificationBody": "You will receive a reminder one day before.",
+    "registerParticipantNotificationTitle": "Registered for the next cycle!",
+    "registerUntil": "Register before",
+    "remainingNewbieTicketsAsBootStrapper": "Remaining newbie tickets as bootsrapper:",
+    "remainingNewbieTicketsAsReputable": "Remaining newbie tickets as reputable:",
+    "reputableContent": "You used your reputation to get a guaranteed seat. Caution: Should you register, but not show up at the cycle, you become a newbie again.",
+    "reputableTitle": "Registered as reputable - your seat is guaranteed",
+    "reputationOverall": "Overall reputation",
+    "restartGathering": "Restart gathering",
+    "retry": "Retry",
+    "rewardsAlreadyIssuedErrorBody": "Another attendee has triggered the payout for this gathering. You should have received your income already.",
+    "rewardsAlreadyIssuedErrorTitle": "Rewards already issued",
+    "scan": "Scan",
+    "scanDescriptionForMeetup": "Every attendee must scan and be scanned by everyone else.",
+    "scanOthers": "Scan others",
+    "scanQrCodeOnTheLeft": "2. Scan the QR code \non the left",
+    "sendLink": "Send link",
+    "sent": "Sent",
+    "setting": "Settings",
+    "settingLang": "Language",
+    "settingLangAuto": "Auto Detect",
+    "settingNetwork": "Select Wallet",
+    "settingNode": "Remote Node",
+    "settingNodeList": "Available Nodes",
+    "settingPrefix": "Address Prefix",
+    "settingPrefixList": "Available Prefixes",
+    "share": "Share",
+    "shareInvoice": "Share Invoice",
+    "shareLinkHint": "Or you can share a link:",
+    "showRouteMeetupLocation": "Show route",
+    "startGathering": "Start gathering",
+    "submittedFaucetDripTitle": "Faucet rewards",
+    "submittedFaucetDripBody": "You have successfully claimed your faucet rewards.",
+    "success": "Success",
+    "switchAccount": "Switch Account",
+    "switchCommunity": "Switch Community",
+    "thankYou": "Thank you",
+    "title": "Profile",
+    "to": "To",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "transactionError": "Transaction error",
+    "transactionQueuedOffline": "App is not connected to the blockchain. Queued transaction (will be sent automatically upon reconnection).",
+    "transfer": "Send",
+    "transferHistory": "Transfers",
+    "transferHistoryEnd": "Loading older transactions is not yet supported",
+    "transferHistoryTop": "It may take up to 30 seconds for a transfer to appear here",
+    "txBroadcast": "Transaction has been broadcast.",
+    "txError": "Transaction error",
+    "txInBlock": "Transaction is in a block.",
+    "txQueued": "Queued Transaction",
+    "txQueuedOffline": "You are offline. Transaction will be sent when you are back online.",
+    "txReady": "Transaction is ready.",
+    "txTooLowPriorityErrorBody": "Technical transaction priority error. This can happen if you tap twice on a submit button very quickly. Please wait for a few seconds.",
+    "txTooLowPriorityErrorTitle": "Transaction priority error",
+    "unknown": "Unknown",
+    "unknownAccount": "Unknown account",
+    "unknownError": "An error occurred. Please check your internet connection and try again.",
+    "unregister": "Unregister",
+    "unregisterDialogTitle": "Unregister from the next cycle?",
+    "unregisterParticipantNotificationBody": "Your registration for the next cycle has been cancelled. If you change your mind, you can register again.",
+    "unregisterParticipantNotificationTitle": "Registration cancelled",
+    "updatingAppState": "Updating the app state...",
+    "value": "Value",
+    "votesNotDependableErrorBody": "Only half or less of the assigned participants were attested for this gathering. It could also be that some attendees haven't submitted their attestation yet. This prevents the early payout, and you need to wait for 48 hours.",
+    "votesNotDependableErrorTitle": "Votes not dependable",
+    "voucher": "Voucher",
+    "voucherBalance": "Voucher Balance",
+    "weHopeToSeeYouAtTheNextGathering": "We hope to see you at the next gathering.",
+    "wrongPin": "Wrong PIN",
+    "wrongPinHint": "Failed to unlock account, please check PIN.",
+    "youAreNotRegisteredPleaseRegisterNextTime": "You haven't been assigned for this key-signing cycle. Please join the next cycle to receive your community income.",
+    "yourNewPin": "New PIN",
+    "unlockAccount": "Unlock account {currentAccountName} with PIN",
+    "@unlockAccount": {
+        "placeholders": {
+            "currentAccountName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+    "errorMessageWithStatusCode": "Something went wrong, please try again! StatusCode: {errorText}",
+    "@errorMessageWithStatusCode": {
+        "placeholders": {
+            "errorText": {
+                "type": "String",
+                "example": "Format exception"
+            }
+        }
+    },
+    "yourBalanceFor": "Your balance, {accountName}",
+    "@yourBalanceFor": {
+        "placeholders": {
+            "accountName": {
+                "type": "String",
+                "example": "Format exception"
+            }
+        }
+    },
+    "incomingConfirmed": "incoming {amount} {cidSymbol} for {accountName} confirmed",
+    "@incomingConfirmed": {
+        "placeholders": {
+            "amount": {
+                "type": "num",
+                "example": "0.1"
+            },
+            "cidSymbol": {
+                "type": "String",
+                "example": "#"
+            },
+            "accountName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+    "voucherDifferentNetworkAndCommunity": "The voucher is for a different network. Do you want to change to {network} and {community}? You can change the network back under Profile > Developer mode",
+    "@voucherDifferentNetworkAndCommunity": {
+        "placeholders": {
+            "network": {
+                "type": "String",
+                "example": "Dev-Gesell"
+            },
+            "community": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "voucherDifferentCommunity": "The voucher is for a different community. Do you want to change to {community}?",
+    "@voucherDifferentCommunity": {
+        "placeholders": {
+            "community": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "doYouWantToRedeemThisVoucher": "Do you want to redeem this voucher to {accountName}?",
+    "@doYouWantToRedeemThisVoucher": {
+        "placeholders": {
+            "accountName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+    "claimsSubmitN": "Submit {count} claims",
+    "@claimsSubmitN": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "claimsScanned": "You have scanned {amount} claims",
+    "@claimsScanned": {
+        "placeholders": {
+            "amount": {
+                "type": "num",
+                "example": "0.1"
+            }
+        }
+    },
+    "claimsScannedNOfM": "Scanned {scannedCount} / {totalCount} Claims",
+    "@claimsScannedNOfM": {
+        "placeholders": {
+            "scannedCount": {
+                "type": "int",
+                "example": "2"
+            },
+            "totalCount": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "claimsSubmitDetail": "Submitting {amount} claims for the recent gathering",
+    "@claimsSubmitDetail": {
+        "placeholders": {
+            "amount": {
+                "type": "num",
+                "example": "0.1"
+            }
+        }
+    },
+    "youAreRegisteredAs": "You have registered for the next gathering as {participantType}.",
+    "@youAreRegisteredAs": {
+        "placeholders": {
+            "participantType": {
+                "type": "String",
+                "example": "Newbie"
+            }
+        }
+    },
+    "youAreAssignedToAGatheringWithNParticipants": "You are assigned to a gathering with {participantsCount} people.",
+    "@youAreAssignedToAGatheringWithNParticipants": {
+        "placeholders": {
+            "participantsCount": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "successfullySentNAttestations": "You have successfully submitted attestations for {participantsCount} other people.",
+    "@successfullySentNAttestations": {
+        "placeholders": {
+            "participantsCount": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "tokenSend": "Send {symbol}",
+    "@tokenSend": {
+        "placeholders": {
+            "symbol": {
+                "type": "String",
+                "example": "#"
+            }
+        }
+    },
+    "communityWithName": "{name} Community",
+    "@communityWithName": {
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
+    "verifyAuthTitle": "Please verify the {useBioAuth, select, true{your identity} false{your PIN} other{ }}.",
+    "@verifyAuthTitle": {
+        "placeholders": {
+            "useBioAuth": {
+                "type": "String",
+                "example": "true"
+            }
+        }
+    },
+    "offersForCommunity": "Offers for {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    }
+}

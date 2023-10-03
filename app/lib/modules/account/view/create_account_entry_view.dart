@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 import 'package:encointer_wallet/gen/assets.gen.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class CreateAccountEntryView extends StatelessWidget {
   const CreateAccountEntryView({super.key});
@@ -14,8 +16,6 @@ class CreateAccountEntryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: DecoratedBox(
         decoration: BoxDecoration(
@@ -29,9 +29,10 @@ class CreateAccountEntryView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SecondaryButtonWide(
-                key: const Key('create-account'),
+                key: const Key(EWTestKeys.createAccount),
                 onPressed: () => Navigator.pushNamed(context, CreateAccountView.route),
-                child: Text(dic.home.create, style: textTheme.displaySmall),
+                child:
+                    Text(context.l10n.create, style: context.titleLarge.copyWith(color: context.colorScheme.primary)),
               ),
             ),
             const SizedBox(height: 16),

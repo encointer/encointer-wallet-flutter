@@ -1,9 +1,11 @@
+import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class ExportResultPage extends StatelessWidget {
   const ExportResultPage({super.key});
@@ -11,7 +13,7 @@ class ExportResultPage extends StatelessWidget {
   static const String route = '/account/key';
 
   void _showExportDialog(BuildContext context, Map args) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     Clipboard.setData(ClipboardData(
       text: args['key'] as String,
     ));
@@ -19,11 +21,11 @@ class ExportResultPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(dic.profile.export),
-          content: Text(dic.profile.exportMnemonicOk),
+          title: Text(l10n.export),
+          content: Text(l10n.exportMnemonicOk),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+              child: Text(context.l10n.ok),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
@@ -34,11 +36,11 @@ class ExportResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     final args = ModalRoute.of(context)!.settings.arguments! as Map<dynamic, dynamic>;
 
     return Scaffold(
-      appBar: AppBar(title: Text(dic.profile.export)),
+      appBar: AppBar(title: Text(l10n.export)),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,7 +49,7 @@ class ExportResultPage extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: <Widget>[
-                  if (args['type'] != AccountStore.seedTypeKeystore) Text(dic.profile.exportWarn),
+                  if (args['type'] != AccountStore.seedTypeKeystore) Text(l10n.exportWarn),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -56,8 +58,8 @@ class ExportResultPage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: Text(
-                            I18n.of(context)!.translationsForLocale().home.copy,
-                            style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
+                            l10n.copy,
+                            style: context.bodyMedium.copyWith(color: context.colorScheme.primary),
                           ),
                         ),
                       )
@@ -65,16 +67,15 @@ class ExportResultPage extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.black12,
-                        ),
-                        borderRadius: const BorderRadius.all(Radius.circular(4))),
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black12),
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    ),
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       args['key'] as String,
-                      key: const Key('account-mnemonic-key'),
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      key: const Key(EWTestKeys.accountMnemonicKey),
+                      style: context.bodyMedium.copyWith(color: context.colorScheme.primary),
                     ),
                   ),
                 ],

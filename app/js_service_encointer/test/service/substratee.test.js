@@ -13,6 +13,9 @@ import { base58Decode } from '@polkadot/util-crypto/base58/bs58';
 import { JSDOM } from 'jsdom';
 import { testSetup } from '../testUtils/testSetup';
 const { window } = new JSDOM();
+
+import.meta.jest.useFakeTimers();
+
 global.window = window;
 
 // we skip it as we don't have a node with the teerex pallet-currently.

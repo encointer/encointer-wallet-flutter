@@ -2,18 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
+import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_count_down.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 /// Shows primarily the date of the next ceremony.
 ///
 /// If the current time is close to the meetup time, a countdown is shown.
 class CeremonySchedule extends StatelessWidget {
-  const CeremonySchedule({required this.nextCeremonyDate, this.languageCode, super.key});
+  const CeremonySchedule({
+    required this.nextCeremonyDate,
+    required this.communityRules,
+    this.languageCode,
+    super.key,
+  });
 
   final DateTime nextCeremonyDate;
+  final CommunityRules communityRules;
   final String? languageCode;
 
   @override
@@ -24,41 +31,50 @@ class CeremonySchedule extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (showCountDown)
-          CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+          CeremonyDateLabelAbsolute(
+              nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode)
         else
-          CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
+          CeremonyDateLabelRelative(
+              nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode),
         const SizedBox(height: 8),
         if (showCountDown)
-          CeremonyCountDown(nextCeremonyDate)
+          CeremonyCountDown(
+              nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode)
         else
-          CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+          CeremonyDate(nextCeremonyDate: nextCeremonyDate, communityRules: communityRules, languageCode: languageCode)
       ],
     );
   }
 }
 
 class CeremonyDateLabelAbsolute extends StatelessWidget {
-  const CeremonyDateLabelAbsolute({required this.nextCeremonyDate, this.languageCode, super.key});
+  const CeremonyDateLabelAbsolute({
+    required this.nextCeremonyDate,
+    required this.communityRules,
+    this.languageCode,
+    super.key,
+  });
 
   final DateTime nextCeremonyDate;
+  final CommunityRules communityRules;
   final String? languageCode;
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
 
     final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate);
-    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
+    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, l10n, languageCode);
+
+    final timeDisplay =
+        communityRules.isLoCoFlex ? nextCeremonyYearMonthDay : '$nextCeremonyYearMonthDay $nextCeremonyHourMinute';
 
     return RichText(
       text: TextSpan(
-        text: '${dic.encointer.nextCycleDateLabel} ',
-        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
+        text: '${l10n.nextCycleDateLabel} ',
+        style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
         children: [
-          TextSpan(
-            text: '$nextCeremonyYearMonthDay $nextCeremonyHourMinute',
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerBlack),
-          ),
+          TextSpan(text: timeDisplay, style: context.bodyMedium.copyWith(color: AppColors.encointerBlack)),
         ],
       ),
     );
@@ -66,26 +82,31 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
 }
 
 class CeremonyDateLabelRelative extends StatelessWidget {
-  const CeremonyDateLabelRelative({required this.nextCeremonyDate, this.languageCode, super.key});
+  const CeremonyDateLabelRelative({
+    required this.nextCeremonyDate,
+    required this.communityRules,
+    this.languageCode,
+    super.key,
+  });
 
   final DateTime nextCeremonyDate;
+  final CommunityRules communityRules;
   final String? languageCode;
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-
-    final timeLeftUntilCeremonyStartsDaysHours =
-        CeremonyBoxService.getTimeLeftUntilCeremonyStartsDaysHours(nextCeremonyDate);
+    final timeUntilCeremony = communityRules.isLoCoFlex
+        ? CeremonyBoxService.ddUntilCeremony(nextCeremonyDate)
+        : CeremonyBoxService.ddHHUntilCeremony(nextCeremonyDate);
 
     return RichText(
       text: TextSpan(
-        text: '${dic.encointer.nextCycleTimeLeft} ',
-        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerGrey),
+        text: '${context.l10n.nextCycleTimeLeft} ',
+        style: context.bodyLarge.copyWith(color: AppColors.encointerGrey),
         children: [
           TextSpan(
-            text: timeLeftUntilCeremonyStartsDaysHours,
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: encointerBlack),
+            text: timeUntilCeremony,
+            style: context.bodyLarge.copyWith(color: AppColors.encointerBlack),
           ),
         ],
       ),
@@ -94,23 +115,28 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 }
 
 class CeremonyDate extends StatelessWidget {
-  const CeremonyDate({this.nextCeremonyDate, this.languageCode, super.key});
+  const CeremonyDate({
+    required this.nextCeremonyDate,
+    required this.communityRules,
+    this.languageCode,
+    super.key,
+  });
 
-  final DateTime? nextCeremonyDate;
+  final DateTime nextCeremonyDate;
+  final CommunityRules communityRules;
   final String? languageCode;
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
-    final h2BlackTheme = Theme.of(context).textTheme.displayMedium!.copyWith(color: encointerBlack);
-    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
-    final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
+    final h2BlackTheme = context.titleLarge.copyWith(color: AppColors.encointerBlack);
+    final nextCeremonyYearMonthDay =
+        CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, context.l10n, languageCode);
 
     return Row(
       children: [
         const Icon(
           Iconsax.calendar_1,
-          color: encointerGrey,
+          color: AppColors.encointerGrey,
           size: 18,
         ),
         const SizedBox(width: 6),
@@ -119,19 +145,21 @@ class CeremonyDate extends StatelessWidget {
           style: h2BlackTheme,
         ),
         const SizedBox(width: 12),
-        const Padding(
-          padding: EdgeInsets.only(bottom: 2),
-          child: Icon(
-            Iconsax.clock,
-            color: encointerGrey,
-            size: 18,
+        if (!communityRules.isLoCoFlex)
+          Row(
+            children: [
+              const Icon(
+                Iconsax.clock,
+                color: AppColors.encointerGrey,
+                size: 18,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                DateFormat.Hm(languageCode).format(nextCeremonyDate),
+                style: h2BlackTheme,
+              ),
+            ],
           ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          nextCeremonyHourMinute,
-          style: h2BlackTheme,
-        ),
       ],
     );
   }

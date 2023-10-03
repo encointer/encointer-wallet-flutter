@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
 
 class LangPage extends StatefulWidget {
   const LangPage({super.key});
@@ -16,20 +16,21 @@ class LangPage extends StatefulWidget {
 class _LangPageState extends State<LangPage> {
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale().profile;
     final settings = context.watch<AppSettings>();
     return Scaffold(
-      appBar: AppBar(title: Text(dic.settingLang)),
+      appBar: AppBar(title: Text(context.l10n.lang)),
       body: ListView.builder(
-        itemCount: settings.locales.length,
+        itemCount: AppLocalizations.supportedLocales.length,
         itemBuilder: (BuildContext context, int index) {
-          final lang = settings.getName(settings.locales[index].languageCode);
+          final locale = AppLocalizations.supportedLocales[index];
+          final lang = context.localeName(locale.languageCode);
           return RadioListTile(
+            key: Key('locale-${locale.languageCode}'),
             title: Text(lang),
-            value: settings.locales[index],
+            value: locale,
             groupValue: settings.locale,
             onChanged: (v) async {
-              await context.read<AppSettings>().setLocale(index);
+              await context.read<AppSettings>().setLocale(locale.languageCode);
             },
           );
         },

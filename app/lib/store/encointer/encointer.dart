@@ -109,6 +109,11 @@ abstract class _EncointerStore with Store {
     return chosenCid != null && communities!.isNotEmpty && communities!.where((cn) => cn.cid == chosenCid).isNotEmpty;
   }
 
+  @computed
+  bool get meetupCompleted {
+    return communityAccount?.meetupCompleted ?? false;
+  }
+
   // -- sub-stores
 
   /// Bazaar sub-stores.
@@ -348,7 +353,9 @@ abstract class _EncointerStore with Store {
   Future<void> updateAggregatedAccountData() async {
     try {
       if (chosenCid != null) {
-        final data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
+        if (_rootStore.account.currentAccountPubKey == null) return;
+        final data =
+            await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAccountPubKey!);
         setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
       } else {
         Log.d('chosenCid is null', 'Encointer updateAggregatedAccountData');
@@ -501,19 +508,13 @@ abstract class _EncointerStore with Store {
 
   @computed
   int? get assigningPhaseStart {
-    if (nextPhaseTimestamp == null || phaseDurations.isEmpty) {
-      return null;
-    }
-    switch (currentPhase) {
-      case CeremonyPhase.Registering:
-        return nextPhaseTimestamp;
-      case CeremonyPhase.Assigning:
-        return nextPhaseTimestamp! - phaseDurations[CeremonyPhase.Assigning]!;
-      case CeremonyPhase.Attesting:
-        return nextPhaseTimestamp! -
-            phaseDurations[CeremonyPhase.Attesting]! -
-            phaseDurations[CeremonyPhase.Assigning]!;
-    }
+    if (nextPhaseTimestamp == null || phaseDurations.isEmpty) return null;
+    return switch (currentPhase) {
+      CeremonyPhase.Registering => nextPhaseTimestamp,
+      CeremonyPhase.Assigning => nextPhaseTimestamp! - phaseDurations[CeremonyPhase.Assigning]!,
+      CeremonyPhase.Attesting =>
+        nextPhaseTimestamp! - phaseDurations[CeremonyPhase.Attesting]! - phaseDurations[CeremonyPhase.Assigning]!,
+    };
   }
 
   @computed
@@ -551,7 +552,13 @@ abstract class _EncointerStore with Store {
   @computed
   bool get showStartCeremonyButton {
     final assigned = communityAccount?.isAssigned ?? false;
-    return currentPhase == CeremonyPhase.Attesting && assigned;
+    return currentPhase == CeremonyPhase.Attesting && !meetupCompleted && assigned;
+  }
+
+  @computed
+  bool get showRestartCeremonyButton {
+    final assigned = communityAccount?.isAssigned ?? false;
+    return currentPhase == CeremonyPhase.Attesting && meetupCompleted && assigned;
   }
 
   @computed
@@ -559,7 +566,7 @@ abstract class _EncointerStore with Store {
     final assigned = communityAccount?.isAssigned ?? false;
     final hasClaims = (communityAccount?.scannedAttendeesCount ?? 0) > 0;
 
-    return currentPhase == CeremonyPhase.Attesting && assigned && hasClaims;
+    return currentPhase == CeremonyPhase.Attesting && assigned && hasClaims && !meetupCompleted;
   }
 
   @computed

@@ -1,11 +1,12 @@
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:encointer_wallet/theme/theme.dart';
 
 class TxDetail extends StatelessWidget {
   const TxDetail({
@@ -30,15 +31,14 @@ class TxDetail extends StatelessWidget {
   final List<DetailInfoItem>? info;
 
   List<Widget> _buildListView(BuildContext context) {
-    final dic = I18n.of(context)!.translationsForLocale();
+    final l10n = context.l10n;
     Widget buildLabel(String name) {
       return Container(
           padding: const EdgeInsets.only(left: 8),
           width: 80,
           child: Text(name,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).unselectedWidgetColor,
               )));
     }
 
@@ -50,8 +50,8 @@ class TxDetail extends StatelessWidget {
             child: success! ? Assets.images.assets.success.image() : Assets.images.assets.assetsFail.image(),
           ),
           Text(
-            '$action ${success! ? dic.assets.success : dic.assets.fail}',
-            style: Theme.of(context).textTheme.headlineMedium,
+            '$action ${success! ? l10n.success : l10n.fail}',
+            style: context.headlineMedium,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 32),
@@ -85,15 +85,15 @@ class TxDetail extends StatelessWidget {
     }
     list.addAll(<Widget>[
       ListTile(
-        leading: buildLabel(dic.assets.event),
+        leading: buildLabel(l10n.event),
         title: Text(eventId!),
       ),
       ListTile(
-        leading: buildLabel(dic.assets.block),
+        leading: buildLabel(l10n.block),
         title: Text('#$blockNum'),
       ),
       ListTile(
-        leading: buildLabel(dic.assets.hash),
+        leading: buildLabel(l10n.hash),
         title: Text(Fmt.address(hash)!),
         trailing: SizedBox(
           width: 140,
@@ -121,7 +121,7 @@ class TxDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context)!.translationsForLocale().assets.detail),
+        title: Text(context.l10n.detail),
         centerTitle: true,
       ),
       body: SafeArea(
