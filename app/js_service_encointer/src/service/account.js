@@ -225,47 +225,46 @@ export function sendTx (txInfo, paramList) {
  *  SendTx function that accepts a ready to sign keypair.
  */
 export function sendTxWithPair (keyPair, txInfo, paramList) {
-  return new Promise((resolve) => {
-    try {
-      let unsub = () => {};
-      let balanceHuman;
+  let balanceHuman;
 
-      if (txInfo.module === encointerBalances && txInfo.call === transfer) {
-        balanceHuman = paramList[2];
-        paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
-      }
+  if (txInfo.module === encointerBalances && txInfo.call === transfer) {
+    balanceHuman = paramList[2];
+  }
 
-      console.log(`[js-account/sendTx]: txInfo ${JSON.stringify(txInfo)}`);
-      console.log(`[js-account/sendTx]: Params ${JSON.stringify(paramList)}`);
+  return getMaybeSignedXt(keyPair, txInfo, paramList)
+    .then(function (tx) {
+      // The promise syntax is necessary because we need fine-grained control over when the overarching
+      // future returns based on what happens within the `onStatusChange` callback. I could not find another
+      // solution.
+      return new Promise((resolve) => {
+        let unsub = () => {};
+        const onStatusChange = (result) => {
+          if (result.status.isInBlock || result.status.isFinalized) {
+            const {
+              success,
+              error
+            } = extractEvents(api, result);
+            if (success) {
+              if (txInfo.module === encointerBalances && txInfo.call === transfer) {
+                // make transfer amount human-readable again
+                paramList[2] = balanceHuman;
+              }
 
-      const tx = api.tx[txInfo.module][txInfo.call](...paramList);
-      const onStatusChange = (result) => {
-        if (result.status.isInBlock || result.status.isFinalized) {
-          const {
-            success,
-            error
-          } = extractEvents(api, result);
-          if (success) {
-            if (txInfo.module === encointerBalances && txInfo.call === transfer) {
-              // make transfer amount human-readable again
-              paramList[2] = balanceHuman;
+              resolve({
+                hash: tx.hash.toString(),
+                time: new Date().getTime(),
+                params: paramList
+              });
             }
+            if (error) {
+              resolve({ error });
+            }
+            unsub();
+          } else {
+            window.send('txStatusChange', result.status.type);
+          }
+        };
 
-            resolve({
-              hash: tx.hash.toString(),
-              time: new Date().getTime(),
-              params: paramList
-            });
-          }
-          if (error) {
-            resolve({ error });
-          }
-          unsub();
-        } else {
-          window.send('txStatusChange', result.status.type);
-        }
-      };
-      if (txInfo.isUnsigned) {
         tx.send(onStatusChange)
           .then((res) => {
             unsub = res;
@@ -273,35 +272,59 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
           .catch((err) => {
             resolve({ error: err.message });
           });
-        return;
-      }
+      });
+    }).catch((err) => {
+      return { error: err.message };
+    });
+}
 
-      console.log(`[js-account/sendTx]: Adding tip: ${txInfo.tip}`);
-      const signerOptions = {
-        tip: new BN(txInfo.tip || 0, 10)
-      };
+/**
+ *  Creates a extrinsic and signs it if the txInfo says so.
+ */
+export async function getMaybeSignedXt (keyPair, txInfo, paramList) {
+  if (txInfo.module === encointerBalances && txInfo.call === transfer) {
+    paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
+  }
 
-      console.log(`[js-account/sendTx]: Adding payment asset ${JSON.stringify(txInfo.txPaymentAsset)}`);
-      if (txInfo.txPaymentAsset != null) {
-        signerOptions.assetId = api.createType(
-          'Option<CommunityIdentifier>', txInfo.txPaymentAsset
-        );
-      }
+  console.log(`[js-account/getMaybeSignedXt]: txInfo ${JSON.stringify(txInfo)}`);
+  console.log(`[js-account/getMaybeSignedXt]: Params ${JSON.stringify(paramList)}`);
 
-      console.log(`[js-account/sendTx]: ${JSON.stringify(txInfo)}`);
-      console.log(`[js-account/sendTx]: ${JSON.stringify(signerOptions)}`);
+  const tx = api.tx[txInfo.module][txInfo.call](...paramList);
 
-      tx.signAndSend(keyPair, signerOptions, onStatusChange)
-        .then((res) => {
-          unsub = res;
-        })
-        .catch((err) => {
-          resolve({ error: err.message });
-        });
-    } catch (e) {
-      resolve({ error: e.message });
-    }
-  });
+  if (txInfo.isUnsigned) {
+    return tx;
+  }
+
+  console.log(`[js-account/getMaybeSignedXt]: Adding tip: ${txInfo.tip}`);
+  const signerOptions = {
+    tip: new BN(txInfo.tip || 0, 10)
+  };
+
+  console.log(`[js-account/getMaybeSignedXt]: Adding payment asset ${JSON.stringify(txInfo.txPaymentAsset)}`);
+  if (txInfo.txPaymentAsset != null) {
+    signerOptions.assetId = api.createType(
+      'Option<CommunityIdentifier>', txInfo.txPaymentAsset
+    );
+  }
+
+  console.log(`[js-account/getMaybeSignedXt]: ${JSON.stringify(txInfo)}`);
+  console.log(`[js-account/getMaybeSignedXt]: ${JSON.stringify(signerOptions)}`);
+
+  return tx.signAsync(keyPair, signerOptions);
+}
+
+/**
+ *  Creates a extrinsic, signs it according to txInfo, and returns it as a scale-encoded hex value.
+ */
+export function getMaybeSignedXtHex (keyPair, txInfo, paramList) {
+  // unused currently, will be used when #1474 is implemented.
+  try {
+    return getMaybeSignedXt(keyPair, txInfo, paramList).toHex();
+  } catch (e) {
+    console.log(`[js-account/getMaybeSignedXtHex] error while creating xt: ${e.message}`);
+    // this is intended for the Dart<>JS interface, which expects errors like that.
+    return { error: e.message };
+  }
 }
 
 export function _sendTrustedTx (keyPair, txInfo, paramList) {
@@ -417,6 +440,8 @@ export default {
   txFeeEstimate,
   sendTx,
   sendTxWithPair,
+  getMaybeSignedXt,
+  getMaybeSignedXtHex,
   sendFaucetTx,
   checkPassword,
   changePassword,
