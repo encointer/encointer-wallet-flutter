@@ -36,19 +36,23 @@ class JSApi {
             callback: (args) {
               Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
-              final res = args[0] as Map<String, dynamic>;
+              try {
+                final res = args[0] as Map<String, dynamic>;
+                final path = res['path'] as String?;
 
-              final path = res['path'] as String?;
-              if (_msgCompleters[path!] != null) {
-                _msgCompleters[path]!.complete(res['data']);
-                if (path.contains('uid=')) {
-                  _msgCompleters.remove(path);
+                if (_msgCompleters[path!] != null) {
+                  _msgCompleters[path]!.complete(res['data']);
+                  if (path.contains('uid=')) {
+                    _msgCompleters.remove(path);
+                  }
                 }
-              }
-              if (_msgHandlers[path] != null) {
-                final handler = _msgHandlers[path]!;
-                // ignore: avoid_dynamic_calls
-                handler(res['data']);
+                if (_msgHandlers[path] != null) {
+                  final handler = _msgHandlers[path]!;
+                  // ignore: avoid_dynamic_calls
+                  handler(res['data']);
+                }
+              } catch (e) {
+                Log.e('Error in JS callback: $e', 'JsApi');
               }
             });
       },
