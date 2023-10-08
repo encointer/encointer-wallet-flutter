@@ -13,7 +13,6 @@ import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
-import 'package:encointer_wallet/service/substrate_api/types/gen_external_links_params.dart';
 
 /// Global api instance
 ///
@@ -226,12 +225,5 @@ class Api {
   Future<void> closeWebView() async {
     await stopSubscriptions();
     return js.closeWebView();
-  }
-
-  Future<List?> getExternalLinks(GenExternalLinksParams params) async {
-    final res = await evalJavascript(
-      'settings.genLinks(${jsonEncode(GenExternalLinksParams.toJson(params))})',
-    );
-    return res as List?;
   }
 }
