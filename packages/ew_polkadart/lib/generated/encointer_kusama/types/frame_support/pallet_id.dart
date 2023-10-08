@@ -1,0 +1,1 @@
+typedef PalletId = List<int>;

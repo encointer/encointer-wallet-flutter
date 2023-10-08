@@ -1,0 +1,1 @@
+typedef Permill = int;

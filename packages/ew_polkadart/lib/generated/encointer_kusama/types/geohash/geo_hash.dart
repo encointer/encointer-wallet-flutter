@@ -1,0 +1,1 @@
+typedef GeoHash = List<int>;

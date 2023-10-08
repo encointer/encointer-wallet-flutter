@@ -1,0 +1,1 @@
+typedef CheckGenesis = dynamic;

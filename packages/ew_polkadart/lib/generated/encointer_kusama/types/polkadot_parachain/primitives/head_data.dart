@@ -1,0 +1,1 @@
+typedef HeadData = List<int>;
