@@ -1,8 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../encointer_primitives/communities/community_identifier.dart'
-    as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../encointer_primitives/ceremonies/participant_type.dart' as _i4;
 import '../../sp_core/crypto/account_id32.dart' as _i5;
 import '../../encointer_meetup_validation/exclusion_reason.dart' as _i6;
@@ -92,15 +91,13 @@ class $Event {
     );
   }
 
-  EndorsementTicketsPerBootstrapperUpdated
-      endorsementTicketsPerBootstrapperUpdated({required int value0}) {
+  EndorsementTicketsPerBootstrapperUpdated endorsementTicketsPerBootstrapperUpdated({required int value0}) {
     return EndorsementTicketsPerBootstrapperUpdated(
       value0: value0,
     );
   }
 
-  EndorsementTicketsPerReputableUpdated endorsementTicketsPerReputableUpdated(
-      {required int value0}) {
+  EndorsementTicketsPerReputableUpdated endorsementTicketsPerReputableUpdated({required int value0}) {
     return EndorsementTicketsPerReputableUpdated(
       value0: value0,
     );
@@ -273,8 +270,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as MeetupEvaluated).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -312,8 +308,7 @@ class $EventCodec with _i1.Codec<Event> {
       case MeetupEvaluated:
         return (value as MeetupEvaluated)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -610,8 +605,7 @@ class EndorsementTicketsPerBootstrapperUpdated extends Event {
   final int value0;
 
   @override
-  Map<String, int> toJson() =>
-      {'EndorsementTicketsPerBootstrapperUpdated': value0};
+  Map<String, int> toJson() => {'EndorsementTicketsPerBootstrapperUpdated': value0};
 
   int _sizeHint() {
     int size = 1;
@@ -644,8 +638,7 @@ class EndorsementTicketsPerReputableUpdated extends Event {
   final int value0;
 
   @override
-  Map<String, int> toJson() =>
-      {'EndorsementTicketsPerReputableUpdated': value0};
+  Map<String, int> toJson() => {'EndorsementTicketsPerReputableUpdated': value0};
 
   int _sizeHint() {
     int size = 1;

@@ -87,8 +87,7 @@ class $AbridgedHrmpChannelCodec with _i1.Codec<AbridgedHrmpChannel> {
       maxMessageSize: _i1.U32Codec.codec.decode(input),
       msgCount: _i1.U32Codec.codec.decode(input),
       totalSize: _i1.U32Codec.codec.decode(input),
-      mqcHead:
-          const _i1.OptionCodec<_i2.H256>(_i1.U8ArrayCodec(32)).decode(input),
+      mqcHead: const _i1.OptionCodec<_i2.H256>(_i1.U8ArrayCodec(32)).decode(input),
     );
   }
 
@@ -100,9 +99,7 @@ class $AbridgedHrmpChannelCodec with _i1.Codec<AbridgedHrmpChannel> {
     size = size + _i1.U32Codec.codec.sizeHint(obj.maxMessageSize);
     size = size + _i1.U32Codec.codec.sizeHint(obj.msgCount);
     size = size + _i1.U32Codec.codec.sizeHint(obj.totalSize);
-    size = size +
-        const _i1.OptionCodec<_i2.H256>(_i1.U8ArrayCodec(32))
-            .sizeHint(obj.mqcHead);
+    size = size + const _i1.OptionCodec<_i2.H256>(_i1.U8ArrayCodec(32)).sizeHint(obj.mqcHead);
     return size;
   }
 }

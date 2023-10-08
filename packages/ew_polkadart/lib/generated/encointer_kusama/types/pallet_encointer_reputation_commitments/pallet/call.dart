@@ -1,8 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../encointer_primitives/communities/community_identifier.dart'
-    as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../primitive_types/h256.dart' as _i4;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -83,8 +82,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as CommitReputation).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -96,8 +94,7 @@ class $CallCodec with _i1.Codec<Call> {
       case CommitReputation:
         return (value as CommitReputation)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -151,8 +148,7 @@ class CommitReputation extends Call {
       cid: _i3.CommunityIdentifier.codec.decode(input),
       cindex: _i1.U32Codec.codec.decode(input),
       purpose: _i1.U64Codec.codec.decode(input),
-      commitmentHash:
-          const _i1.OptionCodec<_i4.H256>(_i1.U8ArrayCodec(32)).decode(input),
+      commitmentHash: const _i1.OptionCodec<_i4.H256>(_i1.U8ArrayCodec(32)).decode(input),
     );
   }
 
@@ -179,9 +175,7 @@ class CommitReputation extends Call {
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
     size = size + _i1.U32Codec.codec.sizeHint(cindex);
     size = size + _i1.U64Codec.codec.sizeHint(purpose);
-    size = size +
-        const _i1.OptionCodec<_i4.H256>(_i1.U8ArrayCodec(32))
-            .sizeHint(commitmentHash);
+    size = size + const _i1.OptionCodec<_i4.H256>(_i1.U8ArrayCodec(32)).sizeHint(commitmentHash);
     return size;
   }
 

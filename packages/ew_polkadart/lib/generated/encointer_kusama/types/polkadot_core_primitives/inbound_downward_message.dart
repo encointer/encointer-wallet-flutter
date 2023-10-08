@@ -16,8 +16,7 @@ class InboundDownwardMessage {
 
   final List<int> msg;
 
-  static const $InboundDownwardMessageCodec codec =
-      $InboundDownwardMessageCodec();
+  static const $InboundDownwardMessageCodec codec = $InboundDownwardMessageCodec();
 
   _i2.Uint8List encode() {
     return codec.encode(this);

@@ -1,8 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../encointer_primitives/communities/community_identifier.dart'
-    as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -126,8 +125,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as SetReserveAmount).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -145,8 +143,7 @@ class $CallCodec with _i1.Codec<Call> {
       case SetReserveAmount:
         return (value as SetReserveAmount)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -165,8 +162,7 @@ class CreateFaucet extends Call {
       name: _i1.U8SequenceCodec.codec.decode(input),
       amount: _i1.U128Codec.codec.decode(input),
       whitelist: const _i1.OptionCodec<List<_i3.CommunityIdentifier>>(
-              _i1.SequenceCodec<_i3.CommunityIdentifier>(
-                  _i3.CommunityIdentifier.codec))
+              _i1.SequenceCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec))
           .decode(input),
       dripAmount: _i1.U128Codec.codec.decode(input),
     );
@@ -196,8 +192,7 @@ class CreateFaucet extends Call {
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     size = size +
         const _i1.OptionCodec<List<_i3.CommunityIdentifier>>(
-                _i1.SequenceCodec<_i3.CommunityIdentifier>(
-                    _i3.CommunityIdentifier.codec))
+                _i1.SequenceCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec))
             .sizeHint(whitelist);
     size = size + _i1.U128Codec.codec.sizeHint(dripAmount);
     return size;
@@ -217,8 +212,7 @@ class CreateFaucet extends Call {
       output,
     );
     const _i1.OptionCodec<List<_i3.CommunityIdentifier>>(
-            _i1.SequenceCodec<_i3.CommunityIdentifier>(
-                _i3.CommunityIdentifier.codec))
+            _i1.SequenceCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec))
         .encodeTo(
       whitelist,
       output,

@@ -27,8 +27,7 @@ class MessagingStateSnapshot {
 
   final List<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>> egressChannels;
 
-  static const $MessagingStateSnapshotCodec codec =
-      $MessagingStateSnapshotCodec();
+  static const $MessagingStateSnapshotCodec codec = $MessagingStateSnapshotCodec();
 
   _i7.Uint8List encode() {
     return codec.encode(this);
@@ -91,15 +90,13 @@ class $MessagingStateSnapshotCodec with _i1.Codec<MessagingStateSnapshot> {
     return MessagingStateSnapshot(
       dmqMqcHead: const _i1.U8ArrayCodec(32).decode(input),
       relayDispatchQueueSize: _i3.RelayDispachQueueSize.codec.decode(input),
-      ingressChannels:
-          const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
-              _i4.Tuple2Codec<_i5.Id, _i6.AbridgedHrmpChannel>(
+      ingressChannels: const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
+          _i4.Tuple2Codec<_i5.Id, _i6.AbridgedHrmpChannel>(
         _i1.U32Codec.codec,
         _i6.AbridgedHrmpChannel.codec,
       )).decode(input),
-      egressChannels:
-          const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
-              _i4.Tuple2Codec<_i5.Id, _i6.AbridgedHrmpChannel>(
+      egressChannels: const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
+          _i4.Tuple2Codec<_i5.Id, _i6.AbridgedHrmpChannel>(
         _i1.U32Codec.codec,
         _i6.AbridgedHrmpChannel.codec,
       )).decode(input),
@@ -110,8 +107,7 @@ class $MessagingStateSnapshotCodec with _i1.Codec<MessagingStateSnapshot> {
   int sizeHint(MessagingStateSnapshot obj) {
     int size = 0;
     size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.dmqMqcHead);
-    size = size +
-        _i3.RelayDispachQueueSize.codec.sizeHint(obj.relayDispatchQueueSize);
+    size = size + _i3.RelayDispachQueueSize.codec.sizeHint(obj.relayDispatchQueueSize);
     size = size +
         const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
             _i4.Tuple2Codec<_i5.Id, _i6.AbridgedHrmpChannel>(

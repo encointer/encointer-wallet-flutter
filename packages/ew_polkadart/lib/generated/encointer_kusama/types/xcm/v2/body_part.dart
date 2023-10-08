@@ -114,8 +114,7 @@ class $BodyPartCodec with _i1.Codec<BodyPart> {
         (value as MoreThanProportion).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'BodyPart: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('BodyPart: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -133,8 +132,7 @@ class $BodyPartCodec with _i1.Codec<BodyPart> {
       case MoreThanProportion:
         return (value as MoreThanProportion)._sizeHint();
       default:
-        throw Exception(
-            'BodyPart: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('BodyPart: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

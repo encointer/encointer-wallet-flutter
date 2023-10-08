@@ -17,8 +17,7 @@ class Queries {
     valueCodec: _i2.U32Codec.codec,
   );
 
-  final _i1.StorageMap<int, _i3.Proposal> _proposals =
-      const _i1.StorageMap<int, _i3.Proposal>(
+  final _i1.StorageMap<int, _i3.Proposal> _proposals = const _i1.StorageMap<int, _i3.Proposal>(
     prefix: 'Treasury',
     storage: 'Proposals',
     valueCodec: _i3.Proposal.codec,
@@ -31,8 +30,7 @@ class Queries {
     valueCodec: _i2.U128Codec.codec,
   );
 
-  final _i1.StorageValue<List<int>> _approvals =
-      const _i1.StorageValue<List<int>>(
+  final _i1.StorageValue<List<int>> _approvals = const _i1.StorageValue<List<int>>(
     prefix: 'Treasury',
     storage: 'Approvals',
     valueCodec: _i2.U32SequenceCodec.codec,

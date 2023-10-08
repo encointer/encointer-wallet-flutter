@@ -1,13 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:polkadart/polkadart.dart' as _i1;
 import '../types/geohash/geo_hash.dart' as _i2;
-import '../types/encointer_primitives/communities/community_identifier.dart'
-    as _i3;
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i3;
 import 'package:polkadart/scale_codec.dart' as _i4;
 import '../types/encointer_primitives/communities/location.dart' as _i5;
 import '../types/sp_core/crypto/account_id32.dart' as _i6;
-import '../types/encointer_primitives/communities/community_metadata.dart'
-    as _i7;
+import '../types/encointer_primitives/communities/community_metadata.dart' as _i7;
 import '../types/substrate_fixed/fixed_u128.dart' as _i8;
 import 'dart:async' as _i9;
 import '../types/encointer_primitives/communities/community_rules.dart' as _i10;
@@ -17,20 +15,16 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<_i2.GeoHash, List<_i3.CommunityIdentifier>>
-      _communityIdentifiersByGeohash =
+  final _i1.StorageMap<_i2.GeoHash, List<_i3.CommunityIdentifier>> _communityIdentifiersByGeohash =
       const _i1.StorageMap<_i2.GeoHash, List<_i3.CommunityIdentifier>>(
     prefix: 'EncointerCommunities',
     storage: 'CommunityIdentifiersByGeohash',
-    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(
-        _i3.CommunityIdentifier.codec),
+    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec),
     hasher: _i1.StorageHasher.identity(_i4.U8ArrayCodec(5)),
   );
 
-  final _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash,
-          List<_i5.Location>> _locations =
-      const _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash,
-          List<_i5.Location>>(
+  final _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash, List<_i5.Location>> _locations =
+      const _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash, List<_i5.Location>>(
     prefix: 'EncointerCommunities',
     storage: 'Locations',
     valueCodec: _i4.SequenceCodec<_i5.Location>(_i5.Location.codec),
@@ -38,8 +32,7 @@ class Queries {
     hasher2: _i1.StorageHasher.identity(_i4.U8ArrayCodec(5)),
   );
 
-  final _i1.StorageMap<_i3.CommunityIdentifier, List<_i6.AccountId32>>
-      _bootstrappers =
+  final _i1.StorageMap<_i3.CommunityIdentifier, List<_i6.AccountId32>> _bootstrappers =
       const _i1.StorageMap<_i3.CommunityIdentifier, List<_i6.AccountId32>>(
     prefix: 'EncointerCommunities',
     storage: 'Bootstrappers',
@@ -51,12 +44,10 @@ class Queries {
       const _i1.StorageValue<List<_i3.CommunityIdentifier>>(
     prefix: 'EncointerCommunities',
     storage: 'CommunityIdentifiers',
-    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(
-        _i3.CommunityIdentifier.codec),
+    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec),
   );
 
-  final _i1.StorageMap<_i3.CommunityIdentifier, _i7.CommunityMetadata>
-      _communityMetadata =
+  final _i1.StorageMap<_i3.CommunityIdentifier, _i7.CommunityMetadata> _communityMetadata =
       const _i1.StorageMap<_i3.CommunityIdentifier, _i7.CommunityMetadata>(
     prefix: 'EncointerCommunities',
     storage: 'CommunityMetadata',
@@ -133,8 +124,7 @@ class Queries {
     return const []; /* Default */
   }
 
-  _i9.Future<List<_i3.CommunityIdentifier>> communityIdentifiers(
-      {_i1.BlockHash? at}) async {
+  _i9.Future<List<_i3.CommunityIdentifier>> communityIdentifiers({_i1.BlockHash? at}) async {
     final hashedKey = _communityIdentifiers.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,

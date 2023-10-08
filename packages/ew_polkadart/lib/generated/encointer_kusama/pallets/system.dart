@@ -40,8 +40,7 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageValue<_i5.PerDispatchClass> _blockWeight =
-      const _i1.StorageValue<_i5.PerDispatchClass>(
+  final _i1.StorageValue<_i5.PerDispatchClass> _blockWeight = const _i1.StorageValue<_i5.PerDispatchClass>(
     prefix: 'System',
     storage: 'BlockWeight',
     valueCodec: _i5.PerDispatchClass.codec,
@@ -53,16 +52,14 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageMap<int, _i6.H256> _blockHash =
-      const _i1.StorageMap<int, _i6.H256>(
+  final _i1.StorageMap<int, _i6.H256> _blockHash = const _i1.StorageMap<int, _i6.H256>(
     prefix: 'System',
     storage: 'BlockHash',
     valueCodec: _i4.U8ArrayCodec(32),
     hasher: _i1.StorageHasher.twoxx64Concat(_i4.U32Codec.codec),
   );
 
-  final _i1.StorageMap<int, List<int>> _extrinsicData =
-      const _i1.StorageMap<int, List<int>>(
+  final _i1.StorageMap<int, List<int>> _extrinsicData = const _i1.StorageMap<int, List<int>>(
     prefix: 'System',
     storage: 'ExtrinsicData',
     valueCodec: _i4.U8SequenceCodec.codec,
@@ -75,22 +72,19 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageValue<_i6.H256> _parentHash =
-      const _i1.StorageValue<_i6.H256>(
+  final _i1.StorageValue<_i6.H256> _parentHash = const _i1.StorageValue<_i6.H256>(
     prefix: 'System',
     storage: 'ParentHash',
     valueCodec: _i4.U8ArrayCodec(32),
   );
 
-  final _i1.StorageValue<_i7.Digest> _digest =
-      const _i1.StorageValue<_i7.Digest>(
+  final _i1.StorageValue<_i7.Digest> _digest = const _i1.StorageValue<_i7.Digest>(
     prefix: 'System',
     storage: 'Digest',
     valueCodec: _i7.Digest.codec,
   );
 
-  final _i1.StorageValue<List<_i8.EventRecord>> _events =
-      const _i1.StorageValue<List<_i8.EventRecord>>(
+  final _i1.StorageValue<List<_i8.EventRecord>> _events = const _i1.StorageValue<List<_i8.EventRecord>>(
     prefix: 'System',
     storage: 'Events',
     valueCodec: _i4.SequenceCodec<_i8.EventRecord>(_i8.EventRecord.codec),
@@ -106,8 +100,7 @@ class Queries {
       const _i1.StorageMap<_i6.H256, List<_i9.Tuple2<int, int>>>(
     prefix: 'System',
     storage: 'EventTopics',
-    valueCodec:
-        _i4.SequenceCodec<_i9.Tuple2<int, int>>(_i9.Tuple2Codec<int, int>(
+    valueCodec: _i4.SequenceCodec<_i9.Tuple2<int, int>>(_i9.Tuple2Codec<int, int>(
       _i4.U32Codec.codec,
       _i4.U32Codec.codec,
     )),
@@ -121,22 +114,19 @@ class Queries {
     valueCodec: _i10.LastRuntimeUpgradeInfo.codec,
   );
 
-  final _i1.StorageValue<bool> _upgradedToU32RefCount =
-      const _i1.StorageValue<bool>(
+  final _i1.StorageValue<bool> _upgradedToU32RefCount = const _i1.StorageValue<bool>(
     prefix: 'System',
     storage: 'UpgradedToU32RefCount',
     valueCodec: _i4.BoolCodec.codec,
   );
 
-  final _i1.StorageValue<bool> _upgradedToTripleRefCount =
-      const _i1.StorageValue<bool>(
+  final _i1.StorageValue<bool> _upgradedToTripleRefCount = const _i1.StorageValue<bool>(
     prefix: 'System',
     storage: 'UpgradedToTripleRefCount',
     valueCodec: _i4.BoolCodec.codec,
   );
 
-  final _i1.StorageValue<_i11.Phase> _executionPhase =
-      const _i1.StorageValue<_i11.Phase>(
+  final _i1.StorageValue<_i11.Phase> _executionPhase = const _i1.StorageValue<_i11.Phase>(
     prefix: 'System',
     storage: 'ExecutionPhase',
     valueCodec: _i11.Phase.codec,
@@ -365,8 +355,7 @@ class Queries {
   }
 
   /// Stores the `spec_version` and `spec_name` of when the last runtime upgrade happened.
-  _i12.Future<_i10.LastRuntimeUpgradeInfo?> lastRuntimeUpgrade(
-      {_i1.BlockHash? at}) async {
+  _i12.Future<_i10.LastRuntimeUpgradeInfo?> lastRuntimeUpgrade({_i1.BlockHash? at}) async {
     final hashedKey = _lastRuntimeUpgrade.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,

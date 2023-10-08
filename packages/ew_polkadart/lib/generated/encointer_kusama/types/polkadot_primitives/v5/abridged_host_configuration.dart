@@ -37,8 +37,7 @@ class AbridgedHostConfiguration {
 
   final int validationUpgradeDelay;
 
-  static const $AbridgedHostConfigurationCodec codec =
-      $AbridgedHostConfigurationCodec();
+  static const $AbridgedHostConfigurationCodec codec = $AbridgedHostConfigurationCodec();
 
   _i2.Uint8List encode() {
     return codec.encode(this);
@@ -57,8 +56,7 @@ class AbridgedHostConfiguration {
       };
 }
 
-class $AbridgedHostConfigurationCodec
-    with _i1.Codec<AbridgedHostConfiguration> {
+class $AbridgedHostConfigurationCodec with _i1.Codec<AbridgedHostConfiguration> {
   const $AbridgedHostConfigurationCodec();
 
   @override
@@ -127,10 +125,8 @@ class $AbridgedHostConfigurationCodec
     size = size + _i1.U32Codec.codec.sizeHint(obj.maxUpwardQueueCount);
     size = size + _i1.U32Codec.codec.sizeHint(obj.maxUpwardQueueSize);
     size = size + _i1.U32Codec.codec.sizeHint(obj.maxUpwardMessageSize);
-    size =
-        size + _i1.U32Codec.codec.sizeHint(obj.maxUpwardMessageNumPerCandidate);
-    size =
-        size + _i1.U32Codec.codec.sizeHint(obj.hrmpMaxMessageNumPerCandidate);
+    size = size + _i1.U32Codec.codec.sizeHint(obj.maxUpwardMessageNumPerCandidate);
+    size = size + _i1.U32Codec.codec.sizeHint(obj.hrmpMaxMessageNumPerCandidate);
     size = size + _i1.U32Codec.codec.sizeHint(obj.validationUpgradeCooldown);
     size = size + _i1.U32Codec.codec.sizeHint(obj.validationUpgradeDelay);
     return size;

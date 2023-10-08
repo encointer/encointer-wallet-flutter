@@ -80,8 +80,7 @@ class $MaybeErrorCodeCodec with _i1.Codec<MaybeErrorCode> {
         (value as TruncatedError).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'MaybeErrorCode: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('MaybeErrorCode: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -95,8 +94,7 @@ class $MaybeErrorCodeCodec with _i1.Codec<MaybeErrorCode> {
       case TruncatedError:
         return (value as TruncatedError)._sizeHint();
       default:
-        throw Exception(
-            'MaybeErrorCode: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('MaybeErrorCode: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

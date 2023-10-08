@@ -2863,8 +2863,7 @@ class $EraCodec with _i1.Codec<Era> {
         (value as Mortal255).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Era: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Era: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -3384,8 +3383,7 @@ class $EraCodec with _i1.Codec<Era> {
       case Mortal255:
         return (value as Mortal255)._sizeHint();
       default:
-        throw Exception(
-            'Era: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Era: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

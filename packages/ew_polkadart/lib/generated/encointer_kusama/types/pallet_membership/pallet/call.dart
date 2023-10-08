@@ -131,8 +131,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as ClearPrime).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -154,8 +153,7 @@ class $CallCodec with _i1.Codec<Call> {
       case ClearPrime:
         return 1;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -285,8 +283,7 @@ class ResetMembers extends Call {
 
   factory ResetMembers._decode(_i1.Input input) {
     return ResetMembers(
-      members: const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32))
-          .decode(input),
+      members: const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
     );
   }
 
@@ -294,16 +291,12 @@ class ResetMembers extends Call {
 
   @override
   Map<String, Map<String, List<List<int>>>> toJson() => {
-        'reset_members': {
-          'members': members.map((value) => value.toList()).toList()
-        }
+        'reset_members': {'members': members.map((value) => value.toList()).toList()}
       };
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32))
-            .sizeHint(members);
+    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(members);
     return size;
   }
 

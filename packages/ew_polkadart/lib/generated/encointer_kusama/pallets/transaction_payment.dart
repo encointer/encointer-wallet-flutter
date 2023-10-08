@@ -10,15 +10,13 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.FixedU128> _nextFeeMultiplier =
-      const _i1.StorageValue<_i2.FixedU128>(
+  final _i1.StorageValue<_i2.FixedU128> _nextFeeMultiplier = const _i1.StorageValue<_i2.FixedU128>(
     prefix: 'TransactionPayment',
     storage: 'NextFeeMultiplier',
     valueCodec: _i3.U128Codec.codec,
   );
 
-  final _i1.StorageValue<_i4.Releases> _storageVersion =
-      const _i1.StorageValue<_i4.Releases>(
+  final _i1.StorageValue<_i4.Releases> _storageVersion = const _i1.StorageValue<_i4.Releases>(
     prefix: 'TransactionPayment',
     storage: 'StorageVersion',
     valueCodec: _i4.Releases.codec,

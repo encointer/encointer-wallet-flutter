@@ -89,8 +89,7 @@ class $ProofOfAttendanceCodec with _i1.Codec<ProofOfAttendance> {
     int size = 0;
     size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.proverPublic);
     size = size + _i1.U32Codec.codec.sizeHint(obj.ceremonyIndex);
-    size =
-        size + _i3.CommunityIdentifier.codec.sizeHint(obj.communityIdentifier);
+    size = size + _i3.CommunityIdentifier.codec.sizeHint(obj.communityIdentifier);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.attendeePublic);
     size = size + _i4.MultiSignature.codec.sizeHint(obj.attendeeSignature);
     return size;

@@ -58,8 +58,7 @@ class $VersionedMultiAssetsCodec with _i1.Codec<VersionedMultiAssets> {
       case 3:
         return V3._decode(input);
       default:
-        throw Exception(
-            'VersionedMultiAssets: Invalid variant index: "$index"');
+        throw Exception('VersionedMultiAssets: Invalid variant index: "$index"');
     }
   }
 
@@ -76,8 +75,7 @@ class $VersionedMultiAssetsCodec with _i1.Codec<VersionedMultiAssets> {
         (value as V3).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'VersionedMultiAssets: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionedMultiAssets: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -89,8 +87,7 @@ class $VersionedMultiAssetsCodec with _i1.Codec<VersionedMultiAssets> {
       case V3:
         return (value as V3)._sizeHint();
       default:
-        throw Exception(
-            'VersionedMultiAssets: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionedMultiAssets: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -100,8 +97,7 @@ class V2 extends VersionedMultiAssets {
 
   factory V2._decode(_i1.Input input) {
     return V2(
-      value0: const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).decode(input),
     );
   }
 
@@ -113,9 +109,7 @@ class V2 extends VersionedMultiAssets {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -136,8 +130,7 @@ class V3 extends VersionedMultiAssets {
 
   factory V3._decode(_i1.Input input) {
     return V3(
-      value0: const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).decode(input),
     );
   }
 
@@ -149,9 +142,7 @@ class V3 extends VersionedMultiAssets {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 

@@ -2,8 +2,7 @@
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 import '../types/tuples.dart' as _i3;
-import '../types/encointer_primitives/communities/community_identifier.dart'
-    as _i4;
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i4;
 import '../types/sp_core/crypto/account_id32.dart' as _i5;
 import '../types/primitive_types/h256.dart' as _i6;
 import 'dart:async' as _i7;
@@ -13,35 +12,30 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<BigInt> _currentPurposeId =
-      const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _currentPurposeId = const _i1.StorageValue<BigInt>(
     prefix: 'EncointerReputationCommitments',
     storage: 'CurrentPurposeId',
     valueCodec: _i2.U64Codec.codec,
   );
 
-  final _i1.StorageMap<BigInt, List<int>> _purposes =
-      const _i1.StorageMap<BigInt, List<int>>(
+  final _i1.StorageMap<BigInt, List<int>> _purposes = const _i1.StorageMap<BigInt, List<int>>(
     prefix: 'EncointerReputationCommitments',
     storage: 'Purposes',
     valueCodec: _i2.U8SequenceCodec.codec,
     hasher: _i1.StorageHasher.identity(_i2.U64Codec.codec),
   );
 
-  final _i1.StorageDoubleMap<_i3.Tuple2<_i4.CommunityIdentifier, int>,
-          _i3.Tuple2<BigInt, _i5.AccountId32>, _i6.H256?> _commitments =
-      const _i1.StorageDoubleMap<_i3.Tuple2<_i4.CommunityIdentifier, int>,
-          _i3.Tuple2<BigInt, _i5.AccountId32>, _i6.H256?>(
+  final _i1.StorageDoubleMap<_i3.Tuple2<_i4.CommunityIdentifier, int>, _i3.Tuple2<BigInt, _i5.AccountId32>, _i6.H256?>
+      _commitments = const _i1
+          .StorageDoubleMap<_i3.Tuple2<_i4.CommunityIdentifier, int>, _i3.Tuple2<BigInt, _i5.AccountId32>, _i6.H256?>(
     prefix: 'EncointerReputationCommitments',
     storage: 'Commitments',
     valueCodec: _i2.OptionCodec<_i6.H256>(_i2.U8ArrayCodec(32)),
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i3.Tuple2Codec<_i4.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i3.Tuple2Codec<_i4.CommunityIdentifier, int>(
       _i4.CommunityIdentifier.codec,
       _i2.U32Codec.codec,
     )),
-    hasher2:
-        _i1.StorageHasher.identity(_i3.Tuple2Codec<BigInt, _i5.AccountId32>(
+    hasher2: _i1.StorageHasher.identity(_i3.Tuple2Codec<BigInt, _i5.AccountId32>(
       _i2.U64Codec.codec,
       _i2.U8ArrayCodec(32),
     )),

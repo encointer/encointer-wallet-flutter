@@ -414,8 +414,7 @@ class $ErrorCodec with _i1.Codec<Error> {
         (value as ExceedsStackLimit).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Error: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Error: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -503,8 +502,7 @@ class $ErrorCodec with _i1.Codec<Error> {
       case ExceedsStackLimit:
         return 1;
       default:
-        throw Exception(
-            'Error: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Error: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -1043,8 +1041,7 @@ class WeightLimitReached extends Error {
   final _i3.Weight value0;
 
   @override
-  Map<String, Map<String, BigInt>> toJson() =>
-      {'WeightLimitReached': value0.toJson()};
+  Map<String, Map<String, BigInt>> toJson() => {'WeightLimitReached': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

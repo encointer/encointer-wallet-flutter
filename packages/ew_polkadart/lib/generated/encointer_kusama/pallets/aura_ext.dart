@@ -9,8 +9,7 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<List<_i2.Public>> _authorities =
-      const _i1.StorageValue<List<_i2.Public>>(
+  final _i1.StorageValue<List<_i2.Public>> _authorities = const _i1.StorageValue<List<_i2.Public>>(
     prefix: 'AuraExt',
     storage: 'Authorities',
     valueCodec: _i3.SequenceCodec<_i2.Public>(_i3.U8ArrayCodec(32)),

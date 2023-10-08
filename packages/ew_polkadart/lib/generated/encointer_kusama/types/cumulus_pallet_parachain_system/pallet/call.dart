@@ -1,8 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../cumulus_primitives_parachain_inherent/parachain_inherent_data.dart'
-    as _i3;
+import '../../cumulus_primitives_parachain_inherent/parachain_inherent_data.dart' as _i3;
 import '../../primitive_types/h256.dart' as _i4;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -33,8 +32,7 @@ abstract class Call {
 class $Call {
   const $Call();
 
-  SetValidationData setValidationData(
-      {required _i3.ParachainInherentData data}) {
+  SetValidationData setValidationData({required _i3.ParachainInherentData data}) {
     return SetValidationData(
       data: data,
     );
@@ -102,8 +100,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as EnactAuthorizedUpgrade).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -119,8 +116,7 @@ class $CallCodec with _i1.Codec<Call> {
       case EnactAuthorizedUpgrade:
         return (value as EnactAuthorizedUpgrade)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

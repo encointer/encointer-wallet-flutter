@@ -187,8 +187,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as ForceSetBalance).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -214,8 +213,7 @@ class $CallCodec with _i1.Codec<Call> {
       case ForceSetBalance:
         return (value as ForceSetBalance)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -540,8 +538,7 @@ class UpgradeAccounts extends Call {
 
   factory UpgradeAccounts._decode(_i1.Input input) {
     return UpgradeAccounts(
-      who: const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32))
-          .decode(input),
+      who: const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
     );
   }
 
@@ -554,9 +551,7 @@ class UpgradeAccounts extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32))
-            .sizeHint(who);
+    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(who);
     return size;
   }
 

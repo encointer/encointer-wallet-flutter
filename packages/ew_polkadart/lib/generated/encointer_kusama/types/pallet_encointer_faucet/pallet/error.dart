@@ -11,8 +11,7 @@ enum Error {
   communityNotInWhitelist('CommunityNotInWhitelist', 5),
   faucetNotEmpty('FaucetNotEmpty', 6),
   notCreator('NotCreator', 7),
-  invalidCommunityIdentifierInWhitelist(
-      'InvalidCommunityIdentifierInWhitelist', 8),
+  invalidCommunityIdentifierInWhitelist('InvalidCommunityIdentifierInWhitelist', 8),
   dripAmountTooSmall('DripAmountTooSmall', 9);
 
   const Error(

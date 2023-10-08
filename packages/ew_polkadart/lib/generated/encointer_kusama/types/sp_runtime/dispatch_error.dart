@@ -187,8 +187,7 @@ class $DispatchErrorCodec with _i1.Codec<DispatchError> {
         (value as RootNotAllowed).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'DispatchError: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('DispatchError: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -224,8 +223,7 @@ class $DispatchErrorCodec with _i1.Codec<DispatchError> {
       case RootNotAllowed:
         return 1;
       default:
-        throw Exception(
-            'DispatchError: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('DispatchError: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

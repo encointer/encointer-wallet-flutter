@@ -17,17 +17,14 @@ class Queries {
     valueCodec: _i2.U32Codec.codec,
   );
 
-  final _i1.StorageMap<int, List<_i3.Scheduled?>> _agenda =
-      const _i1.StorageMap<int, List<_i3.Scheduled?>>(
+  final _i1.StorageMap<int, List<_i3.Scheduled?>> _agenda = const _i1.StorageMap<int, List<_i3.Scheduled?>>(
     prefix: 'Scheduler',
     storage: 'Agenda',
-    valueCodec: _i2.SequenceCodec<_i3.Scheduled?>(
-        _i2.OptionCodec<_i3.Scheduled>(_i3.Scheduled.codec)),
+    valueCodec: _i2.SequenceCodec<_i3.Scheduled?>(_i2.OptionCodec<_i3.Scheduled>(_i3.Scheduled.codec)),
     hasher: _i1.StorageHasher.twoxx64Concat(_i2.U32Codec.codec),
   );
 
-  final _i1.StorageMap<List<int>, _i4.Tuple2<int, int>> _lookup =
-      const _i1.StorageMap<List<int>, _i4.Tuple2<int, int>>(
+  final _i1.StorageMap<List<int>, _i4.Tuple2<int, int>> _lookup = const _i1.StorageMap<List<int>, _i4.Tuple2<int, int>>(
     prefix: 'Scheduler',
     storage: 'Lookup',
     valueCodec: _i4.Tuple2Codec<int, int>(

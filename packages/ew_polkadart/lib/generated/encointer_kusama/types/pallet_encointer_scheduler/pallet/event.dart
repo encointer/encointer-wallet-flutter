@@ -71,8 +71,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as CeremonySchedulePushedByOneDay).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -84,8 +83,7 @@ class $EventCodec with _i1.Codec<Event> {
       case CeremonySchedulePushedByOneDay:
         return 1;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

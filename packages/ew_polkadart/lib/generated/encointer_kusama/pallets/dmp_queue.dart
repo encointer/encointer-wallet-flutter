@@ -12,15 +12,13 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.ConfigData> _configuration =
-      const _i1.StorageValue<_i2.ConfigData>(
+  final _i1.StorageValue<_i2.ConfigData> _configuration = const _i1.StorageValue<_i2.ConfigData>(
     prefix: 'DmpQueue',
     storage: 'Configuration',
     valueCodec: _i2.ConfigData.codec,
   );
 
-  final _i1.StorageValue<_i3.PageIndexData> _pageIndex =
-      const _i1.StorageValue<_i3.PageIndexData>(
+  final _i1.StorageValue<_i3.PageIndexData> _pageIndex = const _i1.StorageValue<_i3.PageIndexData>(
     prefix: 'DmpQueue',
     storage: 'PageIndex',
     valueCodec: _i3.PageIndexData.codec,
@@ -30,8 +28,7 @@ class Queries {
       const _i1.StorageMap<int, List<_i4.Tuple2<int, List<int>>>>(
     prefix: 'DmpQueue',
     storage: 'Pages',
-    valueCodec: _i5.SequenceCodec<_i4.Tuple2<int, List<int>>>(
-        _i4.Tuple2Codec<int, List<int>>(
+    valueCodec: _i5.SequenceCodec<_i4.Tuple2<int, List<int>>>(_i4.Tuple2Codec<int, List<int>>(
       _i5.U32Codec.codec,
       _i5.U8SequenceCodec.codec,
     )),
@@ -49,8 +46,7 @@ class Queries {
     hasher: _i1.StorageHasher.blake2b128Concat(_i5.U64Codec.codec),
   );
 
-  final _i1.StorageValue<int> _counterForOverweight =
-      const _i1.StorageValue<int>(
+  final _i1.StorageValue<int> _counterForOverweight = const _i1.StorageValue<int>(
     prefix: 'DmpQueue',
     storage: 'CounterForOverweight',
     valueCodec: _i5.U32Codec.codec,

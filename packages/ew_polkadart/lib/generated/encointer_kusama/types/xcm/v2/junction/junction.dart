@@ -165,8 +165,7 @@ class $JunctionCodec with _i1.Codec<Junction> {
         (value as Plurality).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Junction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Junction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -192,8 +191,7 @@ class $JunctionCodec with _i1.Codec<Junction> {
       case Plurality:
         return (value as Plurality)._sizeHint();
       default:
-        throw Exception(
-            'Junction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Junction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

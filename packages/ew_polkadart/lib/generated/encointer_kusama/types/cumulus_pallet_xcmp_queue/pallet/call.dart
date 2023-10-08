@@ -73,15 +73,13 @@ class $Call {
     );
   }
 
-  UpdateWeightRestrictDecay updateWeightRestrictDecay(
-      {required _i3.Weight new_}) {
+  UpdateWeightRestrictDecay updateWeightRestrictDecay({required _i3.Weight new_}) {
     return UpdateWeightRestrictDecay(
       new_: new_,
     );
   }
 
-  UpdateXcmpMaxIndividualWeight updateXcmpMaxIndividualWeight(
-      {required _i3.Weight new_}) {
+  UpdateXcmpMaxIndividualWeight updateXcmpMaxIndividualWeight({required _i3.Weight new_}) {
     return UpdateXcmpMaxIndividualWeight(
       new_: new_,
     );
@@ -152,8 +150,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as UpdateXcmpMaxIndividualWeight).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -179,8 +176,7 @@ class $CallCodec with _i1.Codec<Call> {
       case UpdateXcmpMaxIndividualWeight:
         return (value as UpdateXcmpMaxIndividualWeight)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

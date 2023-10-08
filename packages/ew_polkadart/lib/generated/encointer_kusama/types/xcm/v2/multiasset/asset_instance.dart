@@ -124,8 +124,7 @@ class $AssetInstanceCodec with _i1.Codec<AssetInstance> {
         (value as Blob).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'AssetInstance: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('AssetInstance: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -147,8 +146,7 @@ class $AssetInstanceCodec with _i1.Codec<AssetInstance> {
       case Blob:
         return (value as Blob)._sizeHint();
       default:
-        throw Exception(
-            'AssetInstance: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('AssetInstance: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

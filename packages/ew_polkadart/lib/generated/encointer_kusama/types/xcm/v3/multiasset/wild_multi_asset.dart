@@ -103,8 +103,7 @@ class $WildMultiAssetCodec with _i1.Codec<WildMultiAsset> {
         (value as AllOfCounted).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'WildMultiAsset: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('WildMultiAsset: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -120,8 +119,7 @@ class $WildMultiAssetCodec with _i1.Codec<WildMultiAsset> {
       case AllOfCounted:
         return (value as AllOfCounted)._sizeHint();
       default:
-        throw Exception(
-            'WildMultiAsset: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('WildMultiAsset: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

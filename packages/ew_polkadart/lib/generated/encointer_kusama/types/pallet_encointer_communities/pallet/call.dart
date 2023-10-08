@@ -6,8 +6,7 @@ import '../../sp_core/crypto/account_id32.dart' as _i4;
 import '../../encointer_primitives/communities/community_metadata.dart' as _i5;
 import '../../substrate_fixed/fixed_i128.dart' as _i6;
 import '../../substrate_fixed/fixed_u128.dart' as _i7;
-import '../../encointer_primitives/communities/community_identifier.dart'
-    as _i8;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i8;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -186,8 +185,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as PurgeCommunity).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -213,8 +211,7 @@ class $CallCodec with _i1.Codec<Call> {
       case PurgeCommunity:
         return (value as PurgeCommunity)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -232,14 +229,10 @@ class NewCommunity extends Call {
   factory NewCommunity._decode(_i1.Input input) {
     return NewCommunity(
       location: _i3.Location.codec.decode(input),
-      bootstrappers:
-          const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32))
-              .decode(input),
+      bootstrappers: const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
       communityMetadata: _i5.CommunityMetadata.codec.decode(input),
-      demurrage: const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec)
-          .decode(input),
-      nominalIncome: const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec)
-          .decode(input),
+      demurrage: const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec).decode(input),
+      nominalIncome: const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec).decode(input),
     );
   }
 
@@ -257,8 +250,7 @@ class NewCommunity extends Call {
   Map<String, Map<String, dynamic>> toJson() => {
         'new_community': {
           'location': location.toJson(),
-          'bootstrappers':
-              bootstrappers.map((value) => value.toList()).toList(),
+          'bootstrappers': bootstrappers.map((value) => value.toList()).toList(),
           'communityMetadata': communityMetadata.toJson(),
           'demurrage': demurrage?.toJson(),
           'nominalIncome': nominalIncome?.toJson(),
@@ -268,16 +260,10 @@ class NewCommunity extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.Location.codec.sizeHint(location);
-    size = size +
-        const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32))
-            .sizeHint(bootstrappers);
+    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(bootstrappers);
     size = size + _i5.CommunityMetadata.codec.sizeHint(communityMetadata);
-    size = size +
-        const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec)
-            .sizeHint(demurrage);
-    size = size +
-        const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec)
-            .sizeHint(nominalIncome);
+    size = size + const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec).sizeHint(demurrage);
+    size = size + const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec).sizeHint(nominalIncome);
     return size;
   }
 

@@ -95,8 +95,7 @@ class $ResponseCodec with _i1.Codec<Response> {
         (value as Version).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Response: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Response: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -112,8 +111,7 @@ class $ResponseCodec with _i1.Codec<Response> {
       case Version:
         return (value as Version)._sizeHint();
       default:
-        throw Exception(
-            'Response: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Response: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -137,8 +135,7 @@ class Assets extends Response {
 
   factory Assets._decode(_i1.Input input) {
     return Assets(
-      value0: const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).decode(input),
     );
   }
 
@@ -150,9 +147,7 @@ class Assets extends Response {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -173,8 +168,7 @@ class ExecutionResult extends Response {
 
   factory ExecutionResult._decode(_i1.Input input) {
     return ExecutionResult(
-      value0: const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(
-          _i4.Tuple2Codec<int, _i5.Error>(
+      value0: const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(_i4.Tuple2Codec<int, _i5.Error>(
         _i1.U32Codec.codec,
         _i5.Error.codec,
       )).decode(input),
@@ -194,8 +188,7 @@ class ExecutionResult extends Response {
   int _sizeHint() {
     int size = 1;
     size = size +
-        const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(
-            _i4.Tuple2Codec<int, _i5.Error>(
+        const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(_i4.Tuple2Codec<int, _i5.Error>(
           _i1.U32Codec.codec,
           _i5.Error.codec,
         )).sizeHint(value0);
@@ -207,8 +200,7 @@ class ExecutionResult extends Response {
       2,
       output,
     );
-    const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(
-        _i4.Tuple2Codec<int, _i5.Error>(
+    const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(_i4.Tuple2Codec<int, _i5.Error>(
       _i1.U32Codec.codec,
       _i5.Error.codec,
     )).encodeTo(

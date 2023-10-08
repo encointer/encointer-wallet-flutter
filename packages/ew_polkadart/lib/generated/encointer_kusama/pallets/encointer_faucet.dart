@@ -11,16 +11,14 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<_i2.AccountId32, _i3.Faucet> _faucets =
-      const _i1.StorageMap<_i2.AccountId32, _i3.Faucet>(
+  final _i1.StorageMap<_i2.AccountId32, _i3.Faucet> _faucets = const _i1.StorageMap<_i2.AccountId32, _i3.Faucet>(
     prefix: 'EncointerFaucet',
     storage: 'Faucets',
     valueCodec: _i3.Faucet.codec,
     hasher: _i1.StorageHasher.identity(_i4.U8ArrayCodec(32)),
   );
 
-  final _i1.StorageValue<BigInt> _reserveAmount =
-      const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _reserveAmount = const _i1.StorageValue<BigInt>(
     prefix: 'EncointerFaucet',
     storage: 'ReserveAmount',
     valueCodec: _i4.U128Codec.codec,

@@ -1,8 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../encointer_primitives/communities/community_identifier.dart'
-    as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../encointer_primitives/ceremonies/proof_of_attendance.dart' as _i4;
 import '../../tuples.dart' as _i5;
 import '../../sp_core/crypto/account_id32.dart' as _i6;
@@ -110,15 +109,13 @@ class $Call {
     );
   }
 
-  SetEndorsementTicketsPerReputable setEndorsementTicketsPerReputable(
-      {required int endorsementTicketsPerReputable}) {
+  SetEndorsementTicketsPerReputable setEndorsementTicketsPerReputable({required int endorsementTicketsPerReputable}) {
     return SetEndorsementTicketsPerReputable(
       endorsementTicketsPerReputable: endorsementTicketsPerReputable,
     );
   }
 
-  SetReputationLifetime setReputationLifetime(
-      {required int reputationLifetime}) {
+  SetReputationLifetime setReputationLifetime({required int reputationLifetime}) {
     return SetReputationLifetime(
       reputationLifetime: reputationLifetime,
     );
@@ -142,8 +139,7 @@ class $Call {
     );
   }
 
-  PurgeCommunityCeremony purgeCommunityCeremony(
-      {required _i5.Tuple2<_i3.CommunityIdentifier, int> communityCeremony}) {
+  PurgeCommunityCeremony purgeCommunityCeremony({required _i5.Tuple2<_i3.CommunityIdentifier, int> communityCeremony}) {
     return PurgeCommunityCeremony(
       communityCeremony: communityCeremony,
     );
@@ -239,8 +235,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as PurgeCommunityCeremony).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -276,8 +271,7 @@ class $CallCodec with _i1.Codec<Call> {
       case PurgeCommunityCeremony:
         return (value as PurgeCommunityCeremony)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -292,9 +286,7 @@ class RegisterParticipant extends Call {
   factory RegisterParticipant._decode(_i1.Input input) {
     return RegisterParticipant(
       cid: _i3.CommunityIdentifier.codec.decode(input),
-      proof: const _i1.OptionCodec<_i4.ProofOfAttendance>(
-              _i4.ProofOfAttendance.codec)
-          .decode(input),
+      proof: const _i1.OptionCodec<_i4.ProofOfAttendance>(_i4.ProofOfAttendance.codec).decode(input),
     );
   }
 
@@ -313,10 +305,7 @@ class RegisterParticipant extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
-    size = size +
-        const _i1.OptionCodec<_i4.ProofOfAttendance>(
-                _i4.ProofOfAttendance.codec)
-            .sizeHint(proof);
+    size = size + const _i1.OptionCodec<_i4.ProofOfAttendance>(_i4.ProofOfAttendance.codec).sizeHint(proof);
     return size;
   }
 
@@ -329,8 +318,7 @@ class RegisterParticipant extends Call {
       cid,
       output,
     );
-    const _i1.OptionCodec<_i4.ProofOfAttendance>(_i4.ProofOfAttendance.codec)
-        .encodeTo(
+    const _i1.OptionCodec<_i4.ProofOfAttendance>(_i4.ProofOfAttendance.codec).encodeTo(
       proof,
       output,
     );
@@ -397,8 +385,7 @@ class UnregisterParticipant extends Call {
     return UnregisterParticipant(
       cid: _i3.CommunityIdentifier.codec.decode(input),
       maybeReputationCommunityCeremony:
-          const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(
-              _i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
+          const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(_i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
         _i3.CommunityIdentifier.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -407,8 +394,7 @@ class UnregisterParticipant extends Call {
 
   final _i3.CommunityIdentifier cid;
 
-  final _i5.Tuple2<_i3.CommunityIdentifier, int>?
-      maybeReputationCommunityCeremony;
+  final _i5.Tuple2<_i3.CommunityIdentifier, int>? maybeReputationCommunityCeremony;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
@@ -425,8 +411,7 @@ class UnregisterParticipant extends Call {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
     size = size +
-        const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(
-            _i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
+        const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(_i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
           _i3.CommunityIdentifier.codec,
           _i1.U32Codec.codec,
         )).sizeHint(maybeReputationCommunityCeremony);
@@ -442,8 +427,7 @@ class UnregisterParticipant extends Call {
       cid,
       output,
     );
-    const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(
-        _i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
+    const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(_i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
       _i3.CommunityIdentifier.codec,
       _i1.U32Codec.codec,
     )).encodeTo(
@@ -465,9 +449,7 @@ class AttestAttendees extends Call {
     return AttestAttendees(
       cid: _i3.CommunityIdentifier.codec.decode(input),
       numberOfParticipantsVote: _i1.U32Codec.codec.decode(input),
-      attestations:
-          const _i1.SequenceCodec<_i6.AccountId32>(_i1.U8ArrayCodec(32))
-              .decode(input),
+      attestations: const _i1.SequenceCodec<_i6.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
     );
   }
 
@@ -490,9 +472,7 @@ class AttestAttendees extends Call {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
     size = size + _i1.U32Codec.codec.sizeHint(numberOfParticipantsVote);
-    size = size +
-        const _i1.SequenceCodec<_i6.AccountId32>(_i1.U8ArrayCodec(32))
-            .sizeHint(attestations);
+    size = size + const _i1.SequenceCodec<_i6.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(attestations);
     return size;
   }
 
@@ -575,8 +555,7 @@ class ClaimRewards extends Call {
   factory ClaimRewards._decode(_i1.Input input) {
     return ClaimRewards(
       cid: _i3.CommunityIdentifier.codec.decode(input),
-      maybeMeetupIndex:
-          const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).decode(input),
+      maybeMeetupIndex: const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).decode(input),
     );
   }
 
@@ -595,9 +574,7 @@ class ClaimRewards extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
-    size = size +
-        const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec)
-            .sizeHint(maybeMeetupIndex);
+    size = size + const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).sizeHint(maybeMeetupIndex);
     return size;
   }
 
@@ -654,8 +631,7 @@ class SetInactivityTimeout extends Call {
 
 /// See [`Pallet::set_endorsement_tickets_per_bootstrapper`].
 class SetEndorsementTicketsPerBootstrapper extends Call {
-  const SetEndorsementTicketsPerBootstrapper(
-      {required this.endorsementTicketsPerBootstrapper});
+  const SetEndorsementTicketsPerBootstrapper({required this.endorsementTicketsPerBootstrapper});
 
   factory SetEndorsementTicketsPerBootstrapper._decode(_i1.Input input) {
     return SetEndorsementTicketsPerBootstrapper(
@@ -692,8 +668,7 @@ class SetEndorsementTicketsPerBootstrapper extends Call {
 
 /// See [`Pallet::set_endorsement_tickets_per_reputable`].
 class SetEndorsementTicketsPerReputable extends Call {
-  const SetEndorsementTicketsPerReputable(
-      {required this.endorsementTicketsPerReputable});
+  const SetEndorsementTicketsPerReputable({required this.endorsementTicketsPerReputable});
 
   factory SetEndorsementTicketsPerReputable._decode(_i1.Input input) {
     return SetEndorsementTicketsPerReputable(
@@ -705,9 +680,7 @@ class SetEndorsementTicketsPerReputable extends Call {
 
   @override
   Map<String, Map<String, int>> toJson() => {
-        'set_endorsement_tickets_per_reputable': {
-          'endorsementTicketsPerReputable': endorsementTicketsPerReputable
-        }
+        'set_endorsement_tickets_per_reputable': {'endorsementTicketsPerReputable': endorsementTicketsPerReputable}
       };
 
   int _sizeHint() {

@@ -36,8 +36,7 @@ class $Event {
     return const ValidationFunctionStored();
   }
 
-  ValidationFunctionApplied validationFunctionApplied(
-      {required int relayChainBlockNum}) {
+  ValidationFunctionApplied validationFunctionApplied({required int relayChainBlockNum}) {
     return ValidationFunctionApplied(
       relayChainBlockNum: relayChainBlockNum,
     );
@@ -130,8 +129,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as UpwardMessageSent).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -153,8 +151,7 @@ class $EventCodec with _i1.Codec<Event> {
       case UpwardMessageSent:
         return (value as UpwardMessageSent)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -349,8 +346,7 @@ class UpwardMessageSent extends Event {
 
   factory UpwardMessageSent._decode(_i1.Input input) {
     return UpwardMessageSent(
-      messageHash:
-          const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).decode(input),
+      messageHash: const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).decode(input),
     );
   }
 
@@ -363,9 +359,7 @@ class UpwardMessageSent extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32))
-            .sizeHint(messageHash);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(messageHash);
     return size;
   }
 

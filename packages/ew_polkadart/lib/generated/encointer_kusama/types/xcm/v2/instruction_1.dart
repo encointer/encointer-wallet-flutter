@@ -46,15 +46,13 @@ class $Instruction {
     );
   }
 
-  ReserveAssetDeposited reserveAssetDeposited(
-      {required _i3.MultiAssets value0}) {
+  ReserveAssetDeposited reserveAssetDeposited({required _i3.MultiAssets value0}) {
     return ReserveAssetDeposited(
       value0: value0,
     );
   }
 
-  ReceiveTeleportedAsset receiveTeleportedAsset(
-      {required _i3.MultiAssets value0}) {
+  ReceiveTeleportedAsset receiveTeleportedAsset({required _i3.MultiAssets value0}) {
     return ReceiveTeleportedAsset(
       value0: value0,
     );
@@ -452,8 +450,7 @@ class $InstructionCodec with _i1.Codec<Instruction> {
         (value as UnsubscribeVersion).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Instruction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Instruction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -517,8 +514,7 @@ class $InstructionCodec with _i1.Codec<Instruction> {
       case UnsubscribeVersion:
         return 1;
       default:
-        throw Exception(
-            'Instruction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Instruction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -528,8 +524,7 @@ class WithdrawAsset extends Instruction {
 
   factory WithdrawAsset._decode(_i1.Input input) {
     return WithdrawAsset(
-      value0: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).decode(input),
     );
   }
 
@@ -541,9 +536,7 @@ class WithdrawAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -564,8 +557,7 @@ class ReserveAssetDeposited extends Instruction {
 
   factory ReserveAssetDeposited._decode(_i1.Input input) {
     return ReserveAssetDeposited(
-      value0: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).decode(input),
     );
   }
 
@@ -577,9 +569,7 @@ class ReserveAssetDeposited extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -600,23 +590,19 @@ class ReceiveTeleportedAsset extends Instruction {
 
   factory ReceiveTeleportedAsset._decode(_i1.Input input) {
     return ReceiveTeleportedAsset(
-      value0: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).decode(input),
     );
   }
 
   final _i3.MultiAssets value0;
 
   @override
-  Map<String, List<Map<String, Map<String, dynamic>>>> toJson() => {
-        'ReceiveTeleportedAsset': value0.map((value) => value.toJson()).toList()
-      };
+  Map<String, List<Map<String, Map<String, dynamic>>>> toJson() =>
+      {'ReceiveTeleportedAsset': value0.map((value) => value.toJson()).toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -698,8 +684,7 @@ class TransferAsset extends Instruction {
 
   factory TransferAsset._decode(_i1.Input input) {
     return TransferAsset(
-      assets: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-          .decode(input),
+      assets: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).decode(input),
       beneficiary: _i5.MultiLocation.codec.decode(input),
     );
   }
@@ -718,9 +703,7 @@ class TransferAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-            .sizeHint(assets);
+    size = size + const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).sizeHint(assets);
     size = size + _i5.MultiLocation.codec.sizeHint(beneficiary);
     return size;
   }
@@ -750,11 +733,9 @@ class TransferReserveAsset extends Instruction {
 
   factory TransferReserveAsset._decode(_i1.Input input) {
     return TransferReserveAsset(
-      assets: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-          .decode(input),
+      assets: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).decode(input),
       dest: _i5.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-          .decode(input),
+      xcm: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).decode(input),
     );
   }
 
@@ -775,13 +756,9 @@ class TransferReserveAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-            .sizeHint(assets);
+    size = size + const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).sizeHint(assets);
     size = size + _i5.MultiLocation.codec.sizeHint(dest);
-    size = size +
-        const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-            .sizeHint(xcm);
+    size = size + const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).sizeHint(xcm);
     return size;
   }
 
@@ -1039,8 +1016,7 @@ class DescendOrigin extends Instruction {
   final _i9.Junctions value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'DescendOrigin': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'DescendOrigin': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1189,8 +1165,7 @@ class DepositReserveAsset extends Instruction {
       assets: _i10.MultiAssetFilter.codec.decode(input),
       maxAssets: _i1.CompactBigIntCodec.codec.decode(input),
       dest: _i5.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-          .decode(input),
+      xcm: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).decode(input),
     );
   }
 
@@ -1217,9 +1192,7 @@ class DepositReserveAsset extends Instruction {
     size = size + _i10.MultiAssetFilter.codec.sizeHint(assets);
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(maxAssets);
     size = size + _i5.MultiLocation.codec.sizeHint(dest);
-    size = size +
-        const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-            .sizeHint(xcm);
+    size = size + const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).sizeHint(xcm);
     return size;
   }
 
@@ -1256,8 +1229,7 @@ class ExchangeAsset extends Instruction {
   factory ExchangeAsset._decode(_i1.Input input) {
     return ExchangeAsset(
       give: _i10.MultiAssetFilter.codec.decode(input),
-      receive: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-          .decode(input),
+      receive: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).decode(input),
     );
   }
 
@@ -1276,9 +1248,7 @@ class ExchangeAsset extends Instruction {
   int _sizeHint() {
     int size = 1;
     size = size + _i10.MultiAssetFilter.codec.sizeHint(give);
-    size = size +
-        const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-            .sizeHint(receive);
+    size = size + const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).sizeHint(receive);
     return size;
   }
 
@@ -1309,8 +1279,7 @@ class InitiateReserveWithdraw extends Instruction {
     return InitiateReserveWithdraw(
       assets: _i10.MultiAssetFilter.codec.decode(input),
       reserve: _i5.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-          .decode(input),
+      xcm: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).decode(input),
     );
   }
 
@@ -1333,9 +1302,7 @@ class InitiateReserveWithdraw extends Instruction {
     int size = 1;
     size = size + _i10.MultiAssetFilter.codec.sizeHint(assets);
     size = size + _i5.MultiLocation.codec.sizeHint(reserve);
-    size = size +
-        const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-            .sizeHint(xcm);
+    size = size + const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).sizeHint(xcm);
     return size;
   }
 
@@ -1370,8 +1337,7 @@ class InitiateTeleport extends Instruction {
     return InitiateTeleport(
       assets: _i10.MultiAssetFilter.codec.decode(input),
       dest: _i5.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-          .decode(input),
+      xcm: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).decode(input),
     );
   }
 
@@ -1394,9 +1360,7 @@ class InitiateTeleport extends Instruction {
     int size = 1;
     size = size + _i10.MultiAssetFilter.codec.sizeHint(assets);
     size = size + _i5.MultiLocation.codec.sizeHint(dest);
-    size = size +
-        const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-            .sizeHint(xcm);
+    size = size + const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).sizeHint(xcm);
     return size;
   }
 
@@ -1555,8 +1519,7 @@ class SetErrorHandler extends Instruction {
 
   factory SetErrorHandler._decode(_i1.Input input) {
     return SetErrorHandler(
-      value0: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).decode(input),
     );
   }
 
@@ -1568,9 +1531,7 @@ class SetErrorHandler extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).sizeHint(value0);
     return size;
   }
 
@@ -1591,22 +1552,18 @@ class SetAppendix extends Instruction {
 
   factory SetAppendix._decode(_i1.Input input) {
     return SetAppendix(
-      value0: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).decode(input),
     );
   }
 
   final _i6.Xcm value0;
 
   @override
-  Map<String, List<Map<String, dynamic>>> toJson() =>
-      {'SetAppendix': value0.map((value) => value.toJson()).toList()};
+  Map<String, List<Map<String, dynamic>>> toJson() => {'SetAppendix': value0.map((value) => value.toJson()).toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).sizeHint(value0);
     return size;
   }
 
@@ -1644,8 +1601,7 @@ class ClaimAsset extends Instruction {
 
   factory ClaimAsset._decode(_i1.Input input) {
     return ClaimAsset(
-      assets: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-          .decode(input),
+      assets: const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).decode(input),
       ticket: _i5.MultiLocation.codec.decode(input),
     );
   }
@@ -1664,9 +1620,7 @@ class ClaimAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec)
-            .sizeHint(assets);
+    size = size + const _i1.SequenceCodec<_i11.MultiAsset>(_i11.MultiAsset.codec).sizeHint(assets);
     size = size + _i5.MultiLocation.codec.sizeHint(ticket);
     return size;
   }

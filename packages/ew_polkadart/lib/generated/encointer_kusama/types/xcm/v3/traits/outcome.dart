@@ -88,8 +88,7 @@ class $OutcomeCodec with _i1.Codec<Outcome> {
         (value as Error).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Outcome: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Outcome: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -103,8 +102,7 @@ class $OutcomeCodec with _i1.Codec<Outcome> {
       case Error:
         return (value as Error)._sizeHint();
       default:
-        throw Exception(
-            'Outcome: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Outcome: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

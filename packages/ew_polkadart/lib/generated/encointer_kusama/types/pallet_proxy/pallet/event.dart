@@ -34,8 +34,7 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  ProxyExecuted proxyExecuted(
-      {required _i1.Result<dynamic, _i3.DispatchError> result}) {
+  ProxyExecuted proxyExecuted({required _i1.Result<dynamic, _i3.DispatchError> result}) {
     return ProxyExecuted(
       result: result,
     );
@@ -140,8 +139,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as ProxyRemoved).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -159,8 +157,7 @@ class $EventCodec with _i1.Codec<Event> {
       case ProxyRemoved:
         return (value as ProxyRemoved)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

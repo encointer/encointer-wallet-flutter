@@ -70,8 +70,7 @@ class $OriginCodec with _i1.Codec<Origin> {
         (value as SiblingParachain).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Origin: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Origin: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -83,8 +82,7 @@ class $OriginCodec with _i1.Codec<Origin> {
       case SiblingParachain:
         return (value as SiblingParachain)._sizeHint();
       default:
-        throw Exception(
-            'Origin: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Origin: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

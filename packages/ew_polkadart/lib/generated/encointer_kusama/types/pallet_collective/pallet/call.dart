@@ -150,8 +150,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as Close).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -171,8 +170,7 @@ class $CallCodec with _i1.Codec<Call> {
       case Close:
         return (value as Close)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -187,10 +185,8 @@ class SetMembers extends Call {
 
   factory SetMembers._decode(_i1.Input input) {
     return SetMembers(
-      newMembers: const _i1.SequenceCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32))
-          .decode(input),
-      prime: const _i1.OptionCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32))
-          .decode(input),
+      newMembers: const _i1.SequenceCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
+      prime: const _i1.OptionCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
       oldCount: _i1.U32Codec.codec.decode(input),
     );
   }
@@ -212,12 +208,8 @@ class SetMembers extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32))
-            .sizeHint(newMembers);
-    size = size +
-        const _i1.OptionCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32))
-            .sizeHint(prime);
+    size = size + const _i1.SequenceCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(newMembers);
+    size = size + const _i1.OptionCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(prime);
     size = size + _i1.U32Codec.codec.sizeHint(oldCount);
     return size;
   }

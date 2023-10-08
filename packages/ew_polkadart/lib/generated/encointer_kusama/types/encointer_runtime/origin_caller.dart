@@ -109,8 +109,7 @@ class $OriginCallerCodec with _i1.Codec<OriginCaller> {
         (value as Void).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'OriginCaller: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('OriginCaller: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -128,8 +127,7 @@ class $OriginCallerCodec with _i1.Codec<OriginCaller> {
       case Void:
         return (value as Void)._sizeHint();
       default:
-        throw Exception(
-            'OriginCaller: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('OriginCaller: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -178,8 +176,7 @@ class PolkadotXcm extends OriginCaller {
   final _i4.Origin value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'PolkadotXcm': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'PolkadotXcm': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

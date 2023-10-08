@@ -87,8 +87,7 @@ class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
       obj.implVersion,
       output,
     );
-    const _i1.SequenceCodec<_i4.Tuple2<List<int>, int>>(
-        _i4.Tuple2Codec<List<int>, int>(
+    const _i1.SequenceCodec<_i4.Tuple2<List<int>, int>>(_i4.Tuple2Codec<List<int>, int>(
       _i1.U8ArrayCodec(8),
       _i1.U32Codec.codec,
     )).encodeTo(
@@ -113,8 +112,7 @@ class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
       authoringVersion: _i1.U32Codec.codec.decode(input),
       specVersion: _i1.U32Codec.codec.decode(input),
       implVersion: _i1.U32Codec.codec.decode(input),
-      apis: const _i1.SequenceCodec<_i4.Tuple2<List<int>, int>>(
-          _i4.Tuple2Codec<List<int>, int>(
+      apis: const _i1.SequenceCodec<_i4.Tuple2<List<int>, int>>(_i4.Tuple2Codec<List<int>, int>(
         _i1.U8ArrayCodec(8),
         _i1.U32Codec.codec,
       )).decode(input),
@@ -132,8 +130,7 @@ class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
     size = size + _i1.U32Codec.codec.sizeHint(obj.specVersion);
     size = size + _i1.U32Codec.codec.sizeHint(obj.implVersion);
     size = size +
-        const _i1.SequenceCodec<_i4.Tuple2<List<int>, int>>(
-            _i4.Tuple2Codec<List<int>, int>(
+        const _i1.SequenceCodec<_i4.Tuple2<List<int>, int>>(_i4.Tuple2Codec<List<int>, int>(
           _i1.U8ArrayCodec(8),
           _i1.U32Codec.codec,
         )).sizeHint(obj.apis);

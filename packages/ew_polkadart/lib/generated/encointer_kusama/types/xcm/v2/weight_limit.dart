@@ -69,8 +69,7 @@ class $WeightLimitCodec with _i1.Codec<WeightLimit> {
         (value as Limited).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'WeightLimit: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('WeightLimit: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -82,8 +81,7 @@ class $WeightLimitCodec with _i1.Codec<WeightLimit> {
       case Limited:
         return (value as Limited)._sizeHint();
       default:
-        throw Exception(
-            'WeightLimit: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('WeightLimit: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

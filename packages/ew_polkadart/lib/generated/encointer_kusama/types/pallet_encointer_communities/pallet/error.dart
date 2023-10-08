@@ -5,8 +5,7 @@ import 'dart:typed_data' as _i2;
 enum Error {
   invalidLocation('InvalidLocation', 0),
   invalidAmountBootstrappers('InvalidAmountBootstrappers', 1),
-  minimumDistanceViolationToOtherLocation(
-      'MinimumDistanceViolationToOtherLocation', 2),
+  minimumDistanceViolationToOtherLocation('MinimumDistanceViolationToOtherLocation', 2),
   minimumDistanceViolationToDateLine('MinimumDistanceViolationToDateLine', 3),
   communityAlreadyRegistered('CommunityAlreadyRegistered', 4),
   communityInexistent('CommunityInexistent', 5),
@@ -18,8 +17,7 @@ enum Error {
   badOrigin('BadOrigin', 11),
   registrationPhaseRequired('RegistrationPhaseRequired', 12),
   tooManyCommunityIdentifiers('TooManyCommunityIdentifiers', 13),
-  tooManyCommunityIdentifiersPerGeohash(
-      'TooManyCommunityIdentifiersPerGeohash', 14),
+  tooManyCommunityIdentifiersPerGeohash('TooManyCommunityIdentifiersPerGeohash', 14),
   tooManyLocationsPerGeohash('TooManyLocationsPerGeohash', 15),
   tooManyBootstrappers('TooManyBootstrappers', 16);
 

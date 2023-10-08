@@ -18,8 +18,7 @@ class StorageProof {
     return codec.encode(this);
   }
 
-  Map<String, List<List<int>>> toJson() =>
-      {'trieNodes': trieNodes.map((value) => value).toList()};
+  Map<String, List<List<int>>> toJson() => {'trieNodes': trieNodes.map((value) => value).toList()};
 }
 
 class $StorageProofCodec with _i1.Codec<StorageProof> {
@@ -38,17 +37,13 @@ class $StorageProofCodec with _i1.Codec<StorageProof> {
 
   @override
   StorageProof decode(_i1.Input input) {
-    return StorageProof(
-        trieNodes: const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec)
-            .decode(input));
+    return StorageProof(trieNodes: const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input));
   }
 
   @override
   int sizeHint(StorageProof obj) {
     int size = 0;
-    size = size +
-        const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec)
-            .sizeHint(obj.trieNodes);
+    size = size + const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).sizeHint(obj.trieNodes);
     return size;
   }
 }

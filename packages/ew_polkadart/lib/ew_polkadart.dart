@@ -1,4 +1,3 @@
-
 /// Encointer Polkadart Package
 library ew_polkadart;
 

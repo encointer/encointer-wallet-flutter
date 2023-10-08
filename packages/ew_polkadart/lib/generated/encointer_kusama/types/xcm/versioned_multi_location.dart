@@ -11,8 +11,7 @@ abstract class VersionedMultiLocation {
     return codec.decode(input);
   }
 
-  static const $VersionedMultiLocationCodec codec =
-      $VersionedMultiLocationCodec();
+  static const $VersionedMultiLocationCodec codec = $VersionedMultiLocationCodec();
 
   static const $VersionedMultiLocation values = $VersionedMultiLocation();
 
@@ -57,8 +56,7 @@ class $VersionedMultiLocationCodec with _i1.Codec<VersionedMultiLocation> {
       case 3:
         return V3._decode(input);
       default:
-        throw Exception(
-            'VersionedMultiLocation: Invalid variant index: "$index"');
+        throw Exception('VersionedMultiLocation: Invalid variant index: "$index"');
     }
   }
 
@@ -75,8 +73,7 @@ class $VersionedMultiLocationCodec with _i1.Codec<VersionedMultiLocation> {
         (value as V3).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'VersionedMultiLocation: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionedMultiLocation: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -88,8 +85,7 @@ class $VersionedMultiLocationCodec with _i1.Codec<VersionedMultiLocation> {
       case V3:
         return (value as V3)._sizeHint();
       default:
-        throw Exception(
-            'VersionedMultiLocation: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionedMultiLocation: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

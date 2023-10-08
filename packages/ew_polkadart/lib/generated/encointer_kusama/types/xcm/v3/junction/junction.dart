@@ -180,8 +180,7 @@ class $JunctionCodec with _i1.Codec<Junction> {
         (value as GlobalConsensus).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Junction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Junction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -209,8 +208,7 @@ class $JunctionCodec with _i1.Codec<Junction> {
       case GlobalConsensus:
         return (value as GlobalConsensus)._sizeHint();
       default:
-        throw Exception(
-            'Junction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Junction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -255,8 +253,7 @@ class AccountId32 extends Junction {
 
   factory AccountId32._decode(_i1.Input input) {
     return AccountId32(
-      network: const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec)
-          .decode(input),
+      network: const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec).decode(input),
       id: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
@@ -275,9 +272,7 @@ class AccountId32 extends Junction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec)
-            .sizeHint(network);
+    size = size + const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec).sizeHint(network);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(id);
     return size;
   }
@@ -306,8 +301,7 @@ class AccountIndex64 extends Junction {
 
   factory AccountIndex64._decode(_i1.Input input) {
     return AccountIndex64(
-      network: const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec)
-          .decode(input),
+      network: const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec).decode(input),
       index: _i1.CompactBigIntCodec.codec.decode(input),
     );
   }
@@ -326,9 +320,7 @@ class AccountIndex64 extends Junction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec)
-            .sizeHint(network);
+    size = size + const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec).sizeHint(network);
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(index);
     return size;
   }
@@ -357,8 +349,7 @@ class AccountKey20 extends Junction {
 
   factory AccountKey20._decode(_i1.Input input) {
     return AccountKey20(
-      network: const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec)
-          .decode(input),
+      network: const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec).decode(input),
       key: const _i1.U8ArrayCodec(20).decode(input),
     );
   }
@@ -377,9 +368,7 @@ class AccountKey20 extends Junction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec)
-            .sizeHint(network);
+    size = size + const _i1.OptionCodec<_i3.NetworkId>(_i3.NetworkId.codec).sizeHint(network);
     size = size + const _i1.U8ArrayCodec(20).sizeHint(key);
     return size;
   }
@@ -586,8 +575,7 @@ class GlobalConsensus extends Junction {
   final _i3.NetworkId value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'GlobalConsensus': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'GlobalConsensus': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

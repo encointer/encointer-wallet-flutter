@@ -24,8 +24,7 @@ class PersistedValidationData {
 
   final int maxPovSize;
 
-  static const $PersistedValidationDataCodec codec =
-      $PersistedValidationDataCodec();
+  static const $PersistedValidationDataCodec codec = $PersistedValidationDataCodec();
 
   _i4.Uint8List encode() {
     return codec.encode(this);
@@ -80,8 +79,7 @@ class $PersistedValidationDataCodec with _i1.Codec<PersistedValidationData> {
     int size = 0;
     size = size + _i1.U8SequenceCodec.codec.sizeHint(obj.parentHead);
     size = size + _i1.U32Codec.codec.sizeHint(obj.relayParentNumber);
-    size =
-        size + const _i1.U8ArrayCodec(32).sizeHint(obj.relayParentStorageRoot);
+    size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.relayParentStorageRoot);
     size = size + _i1.U32Codec.codec.sizeHint(obj.maxPovSize);
     return size;
   }

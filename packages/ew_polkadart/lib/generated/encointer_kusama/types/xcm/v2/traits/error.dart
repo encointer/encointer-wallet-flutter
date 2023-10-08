@@ -287,8 +287,7 @@ class $ErrorCodec with _i1.Codec<Error> {
         (value as WeightNotComputable).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Error: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Error: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -348,8 +347,7 @@ class $ErrorCodec with _i1.Codec<Error> {
       case WeightNotComputable:
         return 1;
       default:
-        throw Exception(
-            'Error: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Error: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

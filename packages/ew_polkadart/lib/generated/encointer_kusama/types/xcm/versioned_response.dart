@@ -73,8 +73,7 @@ class $VersionedResponseCodec with _i1.Codec<VersionedResponse> {
         (value as V3).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'VersionedResponse: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionedResponse: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -86,8 +85,7 @@ class $VersionedResponseCodec with _i1.Codec<VersionedResponse> {
       case V3:
         return (value as V3)._sizeHint();
       default:
-        throw Exception(
-            'VersionedResponse: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionedResponse: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

@@ -116,8 +116,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as FaucetClosed).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -135,8 +134,7 @@ class $EventCodec with _i1.Codec<Event> {
       case FaucetClosed:
         return (value as FaucetClosed)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

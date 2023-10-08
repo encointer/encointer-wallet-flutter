@@ -9,8 +9,7 @@ abstract class VersionMigrationStage {
     return codec.decode(input);
   }
 
-  static const $VersionMigrationStageCodec codec =
-      $VersionMigrationStageCodec();
+  static const $VersionMigrationStageCodec codec = $VersionMigrationStageCodec();
 
   static const $VersionMigrationStage values = $VersionMigrationStage();
 
@@ -65,8 +64,7 @@ class $VersionMigrationStageCodec with _i1.Codec<VersionMigrationStage> {
       case 3:
         return const MigrateAndNotifyOldTargets();
       default:
-        throw Exception(
-            'VersionMigrationStage: Invalid variant index: "$index"');
+        throw Exception('VersionMigrationStage: Invalid variant index: "$index"');
     }
   }
 
@@ -89,8 +87,7 @@ class $VersionMigrationStageCodec with _i1.Codec<VersionMigrationStage> {
         (value as MigrateAndNotifyOldTargets).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'VersionMigrationStage: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionMigrationStage: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -106,8 +103,7 @@ class $VersionMigrationStageCodec with _i1.Codec<VersionMigrationStage> {
       case MigrateAndNotifyOldTargets:
         return 1;
       default:
-        throw Exception(
-            'VersionMigrationStage: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionMigrationStage: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -145,8 +141,7 @@ class NotifyCurrentTargets extends VersionMigrationStage {
 
   factory NotifyCurrentTargets._decode(_i1.Input input) {
     return NotifyCurrentTargets(
-      value0: const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec)
-          .decode(input),
+      value0: const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input),
     );
   }
 
@@ -157,9 +152,7 @@ class NotifyCurrentTargets extends VersionMigrationStage {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec)
-            .sizeHint(value0);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).sizeHint(value0);
     return size;
   }
 

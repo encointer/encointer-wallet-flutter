@@ -72,8 +72,7 @@ class $FungibilityCodec with _i1.Codec<Fungibility> {
         (value as NonFungible).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Fungibility: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Fungibility: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -85,8 +84,7 @@ class $FungibilityCodec with _i1.Codec<Fungibility> {
       case NonFungible:
         return (value as NonFungible)._sizeHint();
       default:
-        throw Exception(
-            'Fungibility: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Fungibility: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -135,8 +133,7 @@ class NonFungible extends Fungibility {
   final _i3.AssetInstance value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'NonFungible': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'NonFungible': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

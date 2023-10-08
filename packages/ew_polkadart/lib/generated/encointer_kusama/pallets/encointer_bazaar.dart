@@ -1,7 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:polkadart/polkadart.dart' as _i1;
-import '../types/encointer_primitives/communities/community_identifier.dart'
-    as _i2;
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 import '../types/encointer_primitives/bazaar/business_data.dart' as _i4;
 import 'package:polkadart/scale_codec.dart' as _i5;
@@ -14,10 +13,8 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32,
-          _i4.BusinessData> _businessRegistry =
-      const _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32,
-          _i4.BusinessData>(
+  final _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32, _i4.BusinessData> _businessRegistry =
+      const _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32, _i4.BusinessData>(
     prefix: 'EncointerBazaar',
     storage: 'BusinessRegistry',
     valueCodec: _i4.BusinessData.codec,
@@ -25,8 +22,7 @@ class Queries {
     hasher2: _i1.StorageHasher.blake2b128Concat(_i5.U8ArrayCodec(32)),
   );
 
-  final _i1.StorageDoubleMap<_i6.BusinessIdentifier, int, _i7.OfferingData>
-      _offeringRegistry =
+  final _i1.StorageDoubleMap<_i6.BusinessIdentifier, int, _i7.OfferingData> _offeringRegistry =
       const _i1.StorageDoubleMap<_i6.BusinessIdentifier, int, _i7.OfferingData>(
     prefix: 'EncointerBazaar',
     storage: 'OfferingRegistry',

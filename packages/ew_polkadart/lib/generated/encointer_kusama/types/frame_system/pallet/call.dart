@@ -55,8 +55,7 @@ class $Call {
     );
   }
 
-  SetStorage setStorage(
-      {required List<_i3.Tuple2<List<int>, List<int>>> items}) {
+  SetStorage setStorage({required List<_i3.Tuple2<List<int>, List<int>>> items}) {
     return SetStorage(
       items: items,
     );
@@ -144,8 +143,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as RemarkWithEvent).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -169,8 +167,7 @@ class $CallCodec with _i1.Codec<Call> {
       case RemarkWithEvent:
         return (value as RemarkWithEvent)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -321,8 +318,7 @@ class SetStorage extends Call {
 
   factory SetStorage._decode(_i1.Input input) {
     return SetStorage(
-      items: const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(
-          _i3.Tuple2Codec<List<int>, List<int>>(
+      items: const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(_i3.Tuple2Codec<List<int>, List<int>>(
         _i1.U8SequenceCodec.codec,
         _i1.U8SequenceCodec.codec,
       )).decode(input),
@@ -346,8 +342,7 @@ class SetStorage extends Call {
   int _sizeHint() {
     int size = 1;
     size = size +
-        const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(
-            _i3.Tuple2Codec<List<int>, List<int>>(
+        const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(_i3.Tuple2Codec<List<int>, List<int>>(
           _i1.U8SequenceCodec.codec,
           _i1.U8SequenceCodec.codec,
         )).sizeHint(items);
@@ -359,8 +354,7 @@ class SetStorage extends Call {
       4,
       output,
     );
-    const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(
-        _i3.Tuple2Codec<List<int>, List<int>>(
+    const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(_i3.Tuple2Codec<List<int>, List<int>>(
       _i1.U8SequenceCodec.codec,
       _i1.U8SequenceCodec.codec,
     )).encodeTo(
@@ -376,8 +370,7 @@ class KillStorage extends Call {
 
   factory KillStorage._decode(_i1.Input input) {
     return KillStorage(
-      keys: const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec)
-          .decode(input),
+      keys: const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input),
     );
   }
 
@@ -390,9 +383,7 @@ class KillStorage extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec)
-            .sizeHint(keys);
+    size = size + const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).sizeHint(keys);
     return size;
   }
 

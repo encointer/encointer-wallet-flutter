@@ -16,8 +16,7 @@ class LastRuntimeUpgradeInfo {
 
   final String specName;
 
-  static const $LastRuntimeUpgradeInfoCodec codec =
-      $LastRuntimeUpgradeInfoCodec();
+  static const $LastRuntimeUpgradeInfoCodec codec = $LastRuntimeUpgradeInfoCodec();
 
   _i2.Uint8List encode() {
     return codec.encode(this);

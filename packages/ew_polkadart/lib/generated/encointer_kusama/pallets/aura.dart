@@ -10,15 +10,13 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<List<_i2.Public>> _authorities =
-      const _i1.StorageValue<List<_i2.Public>>(
+  final _i1.StorageValue<List<_i2.Public>> _authorities = const _i1.StorageValue<List<_i2.Public>>(
     prefix: 'Aura',
     storage: 'Authorities',
     valueCodec: _i3.SequenceCodec<_i2.Public>(_i3.U8ArrayCodec(32)),
   );
 
-  final _i1.StorageValue<_i4.Slot> _currentSlot =
-      const _i1.StorageValue<_i4.Slot>(
+  final _i1.StorageValue<_i4.Slot> _currentSlot = const _i1.StorageValue<_i4.Slot>(
     prefix: 'Aura',
     storage: 'CurrentSlot',
     valueCodec: _i3.U64Codec.codec,

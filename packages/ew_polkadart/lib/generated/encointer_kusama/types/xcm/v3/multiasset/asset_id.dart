@@ -72,8 +72,7 @@ class $AssetIdCodec with _i1.Codec<AssetId> {
         (value as Abstract).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'AssetId: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('AssetId: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -85,8 +84,7 @@ class $AssetIdCodec with _i1.Codec<AssetId> {
       case Abstract:
         return (value as Abstract)._sizeHint();
       default:
-        throw Exception(
-            'AssetId: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('AssetId: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

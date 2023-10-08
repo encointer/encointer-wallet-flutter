@@ -61,8 +61,7 @@ class $VersionedAssetIdCodec with _i1.Codec<VersionedAssetId> {
         (value as V3).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'VersionedAssetId: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionedAssetId: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -72,8 +71,7 @@ class $VersionedAssetIdCodec with _i1.Codec<VersionedAssetId> {
       case V3:
         return (value as V3)._sizeHint();
       default:
-        throw Exception(
-            'VersionedAssetId: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('VersionedAssetId: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

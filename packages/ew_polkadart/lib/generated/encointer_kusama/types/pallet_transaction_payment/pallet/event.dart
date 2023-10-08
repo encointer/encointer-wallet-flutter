@@ -68,8 +68,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as TransactionFeePaid).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -79,8 +78,7 @@ class $EventCodec with _i1.Codec<Event> {
       case TransactionFeePaid:
         return (value as TransactionFeePaid)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

@@ -18,8 +18,7 @@ class ConfigData {
     return codec.encode(this);
   }
 
-  Map<String, Map<String, BigInt>> toJson() =>
-      {'maxIndividual': maxIndividual.toJson()};
+  Map<String, Map<String, BigInt>> toJson() => {'maxIndividual': maxIndividual.toJson()};
 }
 
 class $ConfigDataCodec with _i1.Codec<ConfigData> {

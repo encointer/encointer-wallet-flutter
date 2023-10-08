@@ -3,8 +3,7 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import '../types/cumulus_pallet_xcmp_queue/inbound_channel_details.dart' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i3;
 import '../types/polkadot_parachain/primitives/id.dart' as _i4;
-import '../types/cumulus_pallet_xcmp_queue/outbound_channel_details.dart'
-    as _i5;
+import '../types/cumulus_pallet_xcmp_queue/outbound_channel_details.dart' as _i5;
 import '../types/cumulus_pallet_xcmp_queue/queue_config_data.dart' as _i6;
 import '../types/tuples_2.dart' as _i7;
 import 'dart:async' as _i8;
@@ -19,8 +18,7 @@ class Queries {
       const _i1.StorageValue<List<_i2.InboundChannelDetails>>(
     prefix: 'XcmpQueue',
     storage: 'InboundXcmpStatus',
-    valueCodec: _i3.SequenceCodec<_i2.InboundChannelDetails>(
-        _i2.InboundChannelDetails.codec),
+    valueCodec: _i3.SequenceCodec<_i2.InboundChannelDetails>(_i2.InboundChannelDetails.codec),
   );
 
   final _i1.StorageDoubleMap<_i4.Id, int, List<int>> _inboundXcmpMessages =
@@ -36,8 +34,7 @@ class Queries {
       const _i1.StorageValue<List<_i5.OutboundChannelDetails>>(
     prefix: 'XcmpQueue',
     storage: 'OutboundXcmpStatus',
-    valueCodec: _i3.SequenceCodec<_i5.OutboundChannelDetails>(
-        _i5.OutboundChannelDetails.codec),
+    valueCodec: _i3.SequenceCodec<_i5.OutboundChannelDetails>(_i5.OutboundChannelDetails.codec),
   );
 
   final _i1.StorageDoubleMap<_i4.Id, int, List<int>> _outboundXcmpMessages =
@@ -49,16 +46,14 @@ class Queries {
     hasher2: _i1.StorageHasher.twoxx64Concat(_i3.U16Codec.codec),
   );
 
-  final _i1.StorageMap<_i4.Id, List<int>> _signalMessages =
-      const _i1.StorageMap<_i4.Id, List<int>>(
+  final _i1.StorageMap<_i4.Id, List<int>> _signalMessages = const _i1.StorageMap<_i4.Id, List<int>>(
     prefix: 'XcmpQueue',
     storage: 'SignalMessages',
     valueCodec: _i3.U8SequenceCodec.codec,
     hasher: _i1.StorageHasher.blake2b128Concat(_i3.U32Codec.codec),
   );
 
-  final _i1.StorageValue<_i6.QueueConfigData> _queueConfig =
-      const _i1.StorageValue<_i6.QueueConfigData>(
+  final _i1.StorageValue<_i6.QueueConfigData> _queueConfig = const _i1.StorageValue<_i6.QueueConfigData>(
     prefix: 'XcmpQueue',
     storage: 'QueueConfig',
     valueCodec: _i6.QueueConfigData.codec,
@@ -76,15 +71,13 @@ class Queries {
     hasher: _i1.StorageHasher.twoxx64Concat(_i3.U64Codec.codec),
   );
 
-  final _i1.StorageValue<int> _counterForOverweight =
-      const _i1.StorageValue<int>(
+  final _i1.StorageValue<int> _counterForOverweight = const _i1.StorageValue<int>(
     prefix: 'XcmpQueue',
     storage: 'CounterForOverweight',
     valueCodec: _i3.U32Codec.codec,
   );
 
-  final _i1.StorageValue<BigInt> _overweightCount =
-      const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _overweightCount = const _i1.StorageValue<BigInt>(
     prefix: 'XcmpQueue',
     storage: 'OverweightCount',
     valueCodec: _i3.U64Codec.codec,
@@ -97,8 +90,7 @@ class Queries {
   );
 
   /// Status of the inbound XCMP channels.
-  _i8.Future<List<_i2.InboundChannelDetails>> inboundXcmpStatus(
-      {_i1.BlockHash? at}) async {
+  _i8.Future<List<_i2.InboundChannelDetails>> inboundXcmpStatus({_i1.BlockHash? at}) async {
     final hashedKey = _inboundXcmpStatus.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -140,8 +132,7 @@ class Queries {
   /// than 65535 items. Queue indices for normal messages begin at one; zero is reserved in
   /// case of the need to send a high-priority signal message this block.
   /// The bool is true if there is a signal message waiting to be sent.
-  _i8.Future<List<_i5.OutboundChannelDetails>> outboundXcmpStatus(
-      {_i1.BlockHash? at}) async {
+  _i8.Future<List<_i5.OutboundChannelDetails>> outboundXcmpStatus({_i1.BlockHash? at}) async {
     final hashedKey = _outboundXcmpStatus.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,

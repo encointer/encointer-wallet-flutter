@@ -16,8 +16,7 @@ class RelayDispachQueueSize {
 
   final int remainingSize;
 
-  static const $RelayDispachQueueSizeCodec codec =
-      $RelayDispachQueueSizeCodec();
+  static const $RelayDispachQueueSizeCodec codec = $RelayDispachQueueSizeCodec();
 
   _i2.Uint8List encode() {
     return codec.encode(this);

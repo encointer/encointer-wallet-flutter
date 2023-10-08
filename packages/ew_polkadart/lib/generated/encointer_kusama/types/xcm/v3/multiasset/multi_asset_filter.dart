@@ -74,8 +74,7 @@ class $MultiAssetFilterCodec with _i1.Codec<MultiAssetFilter> {
         (value as Wild).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'MultiAssetFilter: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('MultiAssetFilter: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -87,8 +86,7 @@ class $MultiAssetFilterCodec with _i1.Codec<MultiAssetFilter> {
       case Wild:
         return (value as Wild)._sizeHint();
       default:
-        throw Exception(
-            'MultiAssetFilter: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('MultiAssetFilter: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -98,8 +96,7 @@ class Definite extends MultiAssetFilter {
 
   factory Definite._decode(_i1.Input input) {
     return Definite(
-      value0: const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).decode(input),
     );
   }
 
@@ -111,9 +108,7 @@ class Definite extends MultiAssetFilter {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 

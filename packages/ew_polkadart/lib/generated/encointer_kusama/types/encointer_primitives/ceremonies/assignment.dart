@@ -76,8 +76,7 @@ class $AssignmentCodec with _i1.Codec<Assignment> {
   @override
   int sizeHint(Assignment obj) {
     int size = 0;
-    size =
-        size + _i2.AssignmentParams.codec.sizeHint(obj.bootstrappersReputables);
+    size = size + _i2.AssignmentParams.codec.sizeHint(obj.bootstrappersReputables);
     size = size + _i2.AssignmentParams.codec.sizeHint(obj.endorsees);
     size = size + _i2.AssignmentParams.codec.sizeHint(obj.newbies);
     size = size + _i2.AssignmentParams.codec.sizeHint(obj.locations);

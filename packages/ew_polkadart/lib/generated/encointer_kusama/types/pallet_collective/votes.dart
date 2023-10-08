@@ -76,10 +76,8 @@ class $VotesCodec with _i1.Codec<Votes> {
     return Votes(
       index: _i1.U32Codec.codec.decode(input),
       threshold: _i1.U32Codec.codec.decode(input),
-      ayes: const _i1.SequenceCodec<_i2.AccountId32>(_i1.U8ArrayCodec(32))
-          .decode(input),
-      nays: const _i1.SequenceCodec<_i2.AccountId32>(_i1.U8ArrayCodec(32))
-          .decode(input),
+      ayes: const _i1.SequenceCodec<_i2.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
+      nays: const _i1.SequenceCodec<_i2.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
       end: _i1.U32Codec.codec.decode(input),
     );
   }
@@ -89,12 +87,8 @@ class $VotesCodec with _i1.Codec<Votes> {
     int size = 0;
     size = size + _i1.U32Codec.codec.sizeHint(obj.index);
     size = size + _i1.U32Codec.codec.sizeHint(obj.threshold);
-    size = size +
-        const _i1.SequenceCodec<_i2.AccountId32>(_i1.U8ArrayCodec(32))
-            .sizeHint(obj.ayes);
-    size = size +
-        const _i1.SequenceCodec<_i2.AccountId32>(_i1.U8ArrayCodec(32))
-            .sizeHint(obj.nays);
+    size = size + const _i1.SequenceCodec<_i2.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(obj.ayes);
+    size = size + const _i1.SequenceCodec<_i2.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(obj.nays);
     size = size + _i1.U32Codec.codec.sizeHint(obj.end);
     return size;
   }

@@ -217,8 +217,7 @@ class $JunctionsCodec with _i1.Codec<Junctions> {
         (value as X8).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Junctions: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Junctions: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -244,8 +243,7 @@ class $JunctionsCodec with _i1.Codec<Junctions> {
       case X8:
         return (value as X8)._sizeHint();
       default:
-        throw Exception(
-            'Junctions: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Junctions: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

@@ -67,12 +67,9 @@ class $WeightsPerClassCodec with _i1.Codec<WeightsPerClass> {
   WeightsPerClass decode(_i1.Input input) {
     return WeightsPerClass(
       baseExtrinsic: _i2.Weight.codec.decode(input),
-      maxExtrinsic:
-          const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).decode(input),
-      maxTotal:
-          const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).decode(input),
-      reserved:
-          const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).decode(input),
+      maxExtrinsic: const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).decode(input),
+      maxTotal: const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).decode(input),
+      reserved: const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).decode(input),
     );
   }
 
@@ -80,15 +77,9 @@ class $WeightsPerClassCodec with _i1.Codec<WeightsPerClass> {
   int sizeHint(WeightsPerClass obj) {
     int size = 0;
     size = size + _i2.Weight.codec.sizeHint(obj.baseExtrinsic);
-    size = size +
-        const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec)
-            .sizeHint(obj.maxExtrinsic);
-    size = size +
-        const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec)
-            .sizeHint(obj.maxTotal);
-    size = size +
-        const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec)
-            .sizeHint(obj.reserved);
+    size = size + const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).sizeHint(obj.maxExtrinsic);
+    size = size + const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).sizeHint(obj.maxTotal);
+    size = size + const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).sizeHint(obj.reserved);
     return size;
   }
 }

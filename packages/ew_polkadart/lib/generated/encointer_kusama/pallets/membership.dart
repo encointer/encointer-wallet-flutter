@@ -9,15 +9,13 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<List<_i2.AccountId32>> _members =
-      const _i1.StorageValue<List<_i2.AccountId32>>(
+  final _i1.StorageValue<List<_i2.AccountId32>> _members = const _i1.StorageValue<List<_i2.AccountId32>>(
     prefix: 'Membership',
     storage: 'Members',
     valueCodec: _i3.SequenceCodec<_i2.AccountId32>(_i3.U8ArrayCodec(32)),
   );
 
-  final _i1.StorageValue<_i2.AccountId32> _prime =
-      const _i1.StorageValue<_i2.AccountId32>(
+  final _i1.StorageValue<_i2.AccountId32> _prime = const _i1.StorageValue<_i2.AccountId32>(
     prefix: 'Membership',
     storage: 'Prime',
     valueCodec: _i3.U8ArrayCodec(32),

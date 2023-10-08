@@ -171,8 +171,7 @@ class $RuntimeEvent {
     );
   }
 
-  EncointerReputationCommitments encointerReputationCommitments(
-      {required _i23.Event value0}) {
+  EncointerReputationCommitments encointerReputationCommitments({required _i23.Event value0}) {
     return EncointerReputationCommitments(
       value0: value0,
     );
@@ -314,8 +313,7 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         (value as EncointerFaucet).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -367,8 +365,7 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
       case EncointerFaucet:
         return (value as EncointerFaucet)._sizeHint();
       default:
-        throw Exception(
-            'RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -417,8 +414,7 @@ class ParachainSystem extends RuntimeEvent {
   final _i4.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'ParachainSystem': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'ParachainSystem': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -450,8 +446,7 @@ class Balances extends RuntimeEvent {
   final _i5.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Balances': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Balances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -483,8 +478,7 @@ class TransactionPayment extends RuntimeEvent {
   final _i6.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'TransactionPayment': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'TransactionPayment': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -516,8 +510,7 @@ class AssetTxPayment extends RuntimeEvent {
   final _i7.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'AssetTxPayment': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'AssetTxPayment': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -549,8 +542,7 @@ class XcmpQueue extends RuntimeEvent {
   final _i8.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'XcmpQueue': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'XcmpQueue': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -582,8 +574,7 @@ class PolkadotXcm extends RuntimeEvent {
   final _i9.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'PolkadotXcm': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'PolkadotXcm': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -615,8 +606,7 @@ class CumulusXcm extends RuntimeEvent {
   final _i10.Event value0;
 
   @override
-  Map<String, Map<String, List<dynamic>>> toJson() =>
-      {'CumulusXcm': value0.toJson()};
+  Map<String, Map<String, List<dynamic>>> toJson() => {'CumulusXcm': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -648,8 +638,7 @@ class DmpQueue extends RuntimeEvent {
   final _i11.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'DmpQueue': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'DmpQueue': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -713,8 +702,7 @@ class Treasury extends RuntimeEvent {
   final _i13.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Treasury': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Treasury': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -746,8 +734,7 @@ class Proxy extends RuntimeEvent {
   final _i14.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Proxy': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Proxy': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -779,8 +766,7 @@ class Scheduler extends RuntimeEvent {
   final _i15.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Scheduler': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Scheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -812,8 +798,7 @@ class Collective extends RuntimeEvent {
   final _i16.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Collective': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Collective': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -877,8 +862,7 @@ class EncointerScheduler extends RuntimeEvent {
   final _i18.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerScheduler': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerScheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -910,8 +894,7 @@ class EncointerCeremonies extends RuntimeEvent {
   final _i19.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerCeremonies': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerCeremonies': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -943,8 +926,7 @@ class EncointerCommunities extends RuntimeEvent {
   final _i20.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerCommunities': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerCommunities': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -976,8 +958,7 @@ class EncointerBalances extends RuntimeEvent {
   final _i21.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerBalances': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerBalances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1009,8 +990,7 @@ class EncointerBazaar extends RuntimeEvent {
   final _i22.Event value0;
 
   @override
-  Map<String, Map<String, List<dynamic>>> toJson() =>
-      {'EncointerBazaar': value0.toJson()};
+  Map<String, Map<String, List<dynamic>>> toJson() => {'EncointerBazaar': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1042,8 +1022,7 @@ class EncointerReputationCommitments extends RuntimeEvent {
   final _i23.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerReputationCommitments': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerReputationCommitments': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1075,8 +1054,7 @@ class EncointerFaucet extends RuntimeEvent {
   final _i24.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerFaucet': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerFaucet': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

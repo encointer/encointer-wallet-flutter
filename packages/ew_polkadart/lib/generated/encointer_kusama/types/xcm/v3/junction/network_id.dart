@@ -149,8 +149,7 @@ class $NetworkIdCodec with _i1.Codec<NetworkId> {
         (value as BitcoinCash).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'NetworkId: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('NetworkId: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -178,8 +177,7 @@ class $NetworkIdCodec with _i1.Codec<NetworkId> {
       case BitcoinCash:
         return 1;
       default:
-        throw Exception(
-            'NetworkId: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('NetworkId: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

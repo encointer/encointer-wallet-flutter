@@ -27,8 +27,7 @@ class ParachainInherentData {
 
   final Map<_i5.Id, List<_i6.InboundHrmpMessage>> horizontalMessages;
 
-  static const $ParachainInherentDataCodec codec =
-      $ParachainInherentDataCodec();
+  static const $ParachainInherentDataCodec codec = $ParachainInherentDataCodec();
 
   _i7.Uint8List encode() {
     return codec.encode(this);
@@ -37,8 +36,7 @@ class ParachainInherentData {
   Map<String, dynamic> toJson() => {
         'validationData': validationData.toJson(),
         'relayChainState': relayChainState.toJson(),
-        'downwardMessages':
-            downwardMessages.map((value) => value.toJson()).toList(),
+        'downwardMessages': downwardMessages.map((value) => value.toJson()).toList(),
         'horizontalMessages': horizontalMessages.map((
           key,
           value,
@@ -66,16 +64,13 @@ class $ParachainInherentDataCodec with _i1.Codec<ParachainInherentData> {
       obj.relayChainState,
       output,
     );
-    const _i1.SequenceCodec<_i4.InboundDownwardMessage>(
-            _i4.InboundDownwardMessage.codec)
-        .encodeTo(
+    const _i1.SequenceCodec<_i4.InboundDownwardMessage>(_i4.InboundDownwardMessage.codec).encodeTo(
       obj.downwardMessages,
       output,
     );
     const _i1.BTreeMapCodec<_i5.Id, List<_i6.InboundHrmpMessage>>(
       keyCodec: _i1.U32Codec.codec,
-      valueCodec: _i1.SequenceCodec<_i6.InboundHrmpMessage>(
-          _i6.InboundHrmpMessage.codec),
+      valueCodec: _i1.SequenceCodec<_i6.InboundHrmpMessage>(_i6.InboundHrmpMessage.codec),
     ).encodeTo(
       obj.horizontalMessages,
       output,
@@ -87,14 +82,11 @@ class $ParachainInherentDataCodec with _i1.Codec<ParachainInherentData> {
     return ParachainInherentData(
       validationData: _i2.PersistedValidationData.codec.decode(input),
       relayChainState: _i3.StorageProof.codec.decode(input),
-      downwardMessages: const _i1.SequenceCodec<_i4.InboundDownwardMessage>(
-              _i4.InboundDownwardMessage.codec)
-          .decode(input),
-      horizontalMessages:
-          const _i1.BTreeMapCodec<_i5.Id, List<_i6.InboundHrmpMessage>>(
+      downwardMessages:
+          const _i1.SequenceCodec<_i4.InboundDownwardMessage>(_i4.InboundDownwardMessage.codec).decode(input),
+      horizontalMessages: const _i1.BTreeMapCodec<_i5.Id, List<_i6.InboundHrmpMessage>>(
         keyCodec: _i1.U32Codec.codec,
-        valueCodec: _i1.SequenceCodec<_i6.InboundHrmpMessage>(
-            _i6.InboundHrmpMessage.codec),
+        valueCodec: _i1.SequenceCodec<_i6.InboundHrmpMessage>(_i6.InboundHrmpMessage.codec),
       ).decode(input),
     );
   }
@@ -102,18 +94,15 @@ class $ParachainInherentDataCodec with _i1.Codec<ParachainInherentData> {
   @override
   int sizeHint(ParachainInherentData obj) {
     int size = 0;
-    size =
-        size + _i2.PersistedValidationData.codec.sizeHint(obj.validationData);
+    size = size + _i2.PersistedValidationData.codec.sizeHint(obj.validationData);
     size = size + _i3.StorageProof.codec.sizeHint(obj.relayChainState);
     size = size +
-        const _i1.SequenceCodec<_i4.InboundDownwardMessage>(
-                _i4.InboundDownwardMessage.codec)
+        const _i1.SequenceCodec<_i4.InboundDownwardMessage>(_i4.InboundDownwardMessage.codec)
             .sizeHint(obj.downwardMessages);
     size = size +
         const _i1.BTreeMapCodec<_i5.Id, List<_i6.InboundHrmpMessage>>(
           keyCodec: _i1.U32Codec.codec,
-          valueCodec: _i1.SequenceCodec<_i6.InboundHrmpMessage>(
-              _i6.InboundHrmpMessage.codec),
+          valueCodec: _i1.SequenceCodec<_i6.InboundHrmpMessage>(_i6.InboundHrmpMessage.codec),
         ).sizeHint(obj.horizontalMessages);
     return size;
   }

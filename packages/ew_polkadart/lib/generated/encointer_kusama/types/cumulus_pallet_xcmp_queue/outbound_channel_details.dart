@@ -27,8 +27,7 @@ class OutboundChannelDetails {
 
   final int lastIndex;
 
-  static const $OutboundChannelDetailsCodec codec =
-      $OutboundChannelDetailsCodec();
+  static const $OutboundChannelDetailsCodec codec = $OutboundChannelDetailsCodec();
 
   _i4.Uint8List encode() {
     return codec.encode(this);

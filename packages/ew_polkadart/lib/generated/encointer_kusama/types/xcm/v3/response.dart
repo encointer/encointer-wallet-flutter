@@ -119,8 +119,7 @@ class $ResponseCodec with _i1.Codec<Response> {
         (value as DispatchResult).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Response: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Response: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -140,8 +139,7 @@ class $ResponseCodec with _i1.Codec<Response> {
       case DispatchResult:
         return (value as DispatchResult)._sizeHint();
       default:
-        throw Exception(
-            'Response: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Response: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -165,8 +163,7 @@ class Assets extends Response {
 
   factory Assets._decode(_i1.Input input) {
     return Assets(
-      value0: const _i1.SequenceCodec<_i8.MultiAsset>(_i8.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i8.MultiAsset>(_i8.MultiAsset.codec).decode(input),
     );
   }
 
@@ -178,9 +175,7 @@ class Assets extends Response {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i8.MultiAsset>(_i8.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i8.MultiAsset>(_i8.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -201,8 +196,7 @@ class ExecutionResult extends Response {
 
   factory ExecutionResult._decode(_i1.Input input) {
     return ExecutionResult(
-      value0: const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(
-          _i4.Tuple2Codec<int, _i5.Error>(
+      value0: const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(_i4.Tuple2Codec<int, _i5.Error>(
         _i1.U32Codec.codec,
         _i5.Error.codec,
       )).decode(input),
@@ -222,8 +216,7 @@ class ExecutionResult extends Response {
   int _sizeHint() {
     int size = 1;
     size = size +
-        const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(
-            _i4.Tuple2Codec<int, _i5.Error>(
+        const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(_i4.Tuple2Codec<int, _i5.Error>(
           _i1.U32Codec.codec,
           _i5.Error.codec,
         )).sizeHint(value0);
@@ -235,8 +228,7 @@ class ExecutionResult extends Response {
       2,
       output,
     );
-    const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(
-        _i4.Tuple2Codec<int, _i5.Error>(
+    const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(_i4.Tuple2Codec<int, _i5.Error>(
       _i1.U32Codec.codec,
       _i5.Error.codec,
     )).encodeTo(
@@ -283,22 +275,18 @@ class PalletsInfo extends Response {
 
   factory PalletsInfo._decode(_i1.Input input) {
     return PalletsInfo(
-      value0: const _i1.SequenceCodec<_i6.PalletInfo>(_i6.PalletInfo.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i6.PalletInfo>(_i6.PalletInfo.codec).decode(input),
     );
   }
 
   final List<_i6.PalletInfo> value0;
 
   @override
-  Map<String, List<Map<String, dynamic>>> toJson() =>
-      {'PalletsInfo': value0.map((value) => value.toJson()).toList()};
+  Map<String, List<Map<String, dynamic>>> toJson() => {'PalletsInfo': value0.map((value) => value.toJson()).toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i6.PalletInfo>(_i6.PalletInfo.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i6.PalletInfo>(_i6.PalletInfo.codec).sizeHint(value0);
     return size;
   }
 
@@ -326,8 +314,7 @@ class DispatchResult extends Response {
   final _i7.MaybeErrorCode value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'DispatchResult': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'DispatchResult': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

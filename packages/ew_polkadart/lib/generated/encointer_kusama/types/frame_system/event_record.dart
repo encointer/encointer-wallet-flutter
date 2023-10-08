@@ -62,8 +62,7 @@ class $EventRecordCodec with _i1.Codec<EventRecord> {
     return EventRecord(
       phase: _i2.Phase.codec.decode(input),
       event: _i3.RuntimeEvent.codec.decode(input),
-      topics:
-          const _i1.SequenceCodec<_i4.H256>(_i1.U8ArrayCodec(32)).decode(input),
+      topics: const _i1.SequenceCodec<_i4.H256>(_i1.U8ArrayCodec(32)).decode(input),
     );
   }
 
@@ -72,9 +71,7 @@ class $EventRecordCodec with _i1.Codec<EventRecord> {
     int size = 0;
     size = size + _i2.Phase.codec.sizeHint(obj.phase);
     size = size + _i3.RuntimeEvent.codec.sizeHint(obj.event);
-    size = size +
-        const _i1.SequenceCodec<_i4.H256>(_i1.U8ArrayCodec(32))
-            .sizeHint(obj.topics);
+    size = size + const _i1.SequenceCodec<_i4.H256>(_i1.U8ArrayCodec(32)).sizeHint(obj.topics);
     return size;
   }
 }

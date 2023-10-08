@@ -13,15 +13,13 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<BigInt> _totalIssuance =
-      const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _totalIssuance = const _i1.StorageValue<BigInt>(
     prefix: 'Balances',
     storage: 'TotalIssuance',
     valueCodec: _i2.U128Codec.codec,
   );
 
-  final _i1.StorageValue<BigInt> _inactiveIssuance =
-      const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _inactiveIssuance = const _i1.StorageValue<BigInt>(
     prefix: 'Balances',
     storage: 'InactiveIssuance',
     valueCodec: _i2.U128Codec.codec,

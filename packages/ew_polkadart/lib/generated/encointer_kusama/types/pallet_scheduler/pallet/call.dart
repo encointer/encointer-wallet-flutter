@@ -158,8 +158,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as ScheduleNamedAfter).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -179,8 +178,7 @@ class $CallCodec with _i1.Codec<Call> {
       case ScheduleNamedAfter:
         return (value as ScheduleNamedAfter)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -197,8 +195,7 @@ class Schedule extends Call {
   factory Schedule._decode(_i1.Input input) {
     return Schedule(
       when: _i1.U32Codec.codec.decode(input),
-      maybePeriodic:
-          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -331,8 +328,7 @@ class ScheduleNamed extends Call {
     return ScheduleNamed(
       id: const _i1.U8ArrayCodec(32).decode(input),
       when: _i1.U32Codec.codec.decode(input),
-      maybePeriodic:
-          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -457,8 +453,7 @@ class ScheduleAfter extends Call {
   factory ScheduleAfter._decode(_i1.Input input) {
     return ScheduleAfter(
       after: _i1.U32Codec.codec.decode(input),
-      maybePeriodic:
-          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -542,8 +537,7 @@ class ScheduleNamedAfter extends Call {
     return ScheduleNamedAfter(
       id: const _i1.U8ArrayCodec(32).decode(input),
       after: _i1.U32Codec.codec.decode(input),
-      maybePeriodic:
-          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),

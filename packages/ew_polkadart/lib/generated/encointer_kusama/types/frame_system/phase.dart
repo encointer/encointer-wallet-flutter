@@ -78,8 +78,7 @@ class $PhaseCodec with _i1.Codec<Phase> {
         (value as Initialization).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Phase: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Phase: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -93,8 +92,7 @@ class $PhaseCodec with _i1.Codec<Phase> {
       case Initialization:
         return 1;
       default:
-        throw Exception(
-            'Phase: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Phase: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

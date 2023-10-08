@@ -144,8 +144,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as PermanentlyOverweight).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -165,8 +164,7 @@ class $EventCodec with _i1.Codec<Event> {
       case PermanentlyOverweight:
         return (value as PermanentlyOverweight)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -316,8 +314,7 @@ class Dispatched extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     size = size +
         const _i1.ResultCodec<dynamic, _i4.DispatchError>(
           _i1.NullCodec.codec,
@@ -391,8 +388,7 @@ class CallUnavailable extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     return size;
   }
 
@@ -454,8 +450,7 @@ class PeriodicFailed extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     return size;
   }
 
@@ -517,8 +512,7 @@ class PermanentlyOverweight extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     return size;
   }
 

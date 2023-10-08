@@ -53,15 +53,13 @@ class $Instruction {
     );
   }
 
-  ReserveAssetDeposited reserveAssetDeposited(
-      {required _i3.MultiAssets value0}) {
+  ReserveAssetDeposited reserveAssetDeposited({required _i3.MultiAssets value0}) {
     return ReserveAssetDeposited(
       value0: value0,
     );
   }
 
-  ReceiveTeleportedAsset receiveTeleportedAsset(
-      {required _i3.MultiAssets value0}) {
+  ReceiveTeleportedAsset receiveTeleportedAsset({required _i3.MultiAssets value0}) {
     return ReceiveTeleportedAsset(
       value0: value0,
     );
@@ -313,8 +311,7 @@ class $Instruction {
     );
   }
 
-  ExpectTransactStatus expectTransactStatus(
-      {required _i17.MaybeErrorCode value0}) {
+  ExpectTransactStatus expectTransactStatus({required _i17.MaybeErrorCode value0}) {
     return ExpectTransactStatus(
       value0: value0,
     );
@@ -346,8 +343,7 @@ class $Instruction {
     );
   }
 
-  ReportTransactStatus reportTransactStatus(
-      {required _i11.QueryResponseInfo value0}) {
+  ReportTransactStatus reportTransactStatus({required _i11.QueryResponseInfo value0}) {
     return ReportTransactStatus(
       value0: value0,
     );
@@ -707,8 +703,7 @@ class $InstructionCodec with _i1.Codec<Instruction> {
         (value as UnpaidExecution).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Instruction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Instruction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -812,8 +807,7 @@ class $InstructionCodec with _i1.Codec<Instruction> {
       case UnpaidExecution:
         return (value as UnpaidExecution)._sizeHint();
       default:
-        throw Exception(
-            'Instruction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Instruction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -823,8 +817,7 @@ class WithdrawAsset extends Instruction {
 
   factory WithdrawAsset._decode(_i1.Input input) {
     return WithdrawAsset(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
     );
   }
 
@@ -836,9 +829,7 @@ class WithdrawAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -859,8 +850,7 @@ class ReserveAssetDeposited extends Instruction {
 
   factory ReserveAssetDeposited._decode(_i1.Input input) {
     return ReserveAssetDeposited(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
     );
   }
 
@@ -872,9 +862,7 @@ class ReserveAssetDeposited extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -895,23 +883,19 @@ class ReceiveTeleportedAsset extends Instruction {
 
   factory ReceiveTeleportedAsset._decode(_i1.Input input) {
     return ReceiveTeleportedAsset(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
     );
   }
 
   final _i3.MultiAssets value0;
 
   @override
-  Map<String, List<Map<String, Map<String, dynamic>>>> toJson() => {
-        'ReceiveTeleportedAsset': value0.map((value) => value.toJson()).toList()
-      };
+  Map<String, List<Map<String, Map<String, dynamic>>>> toJson() =>
+      {'ReceiveTeleportedAsset': value0.map((value) => value.toJson()).toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -940,8 +924,7 @@ class QueryResponse extends Instruction {
       queryId: _i1.CompactBigIntCodec.codec.decode(input),
       response: _i4.Response.codec.decode(input),
       maxWeight: _i5.Weight.codec.decode(input),
-      querier: const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec)
-          .decode(input),
+      querier: const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec).decode(input),
     );
   }
 
@@ -968,9 +951,7 @@ class QueryResponse extends Instruction {
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(queryId);
     size = size + _i4.Response.codec.sizeHint(response);
     size = size + _i5.Weight.codec.sizeHint(maxWeight);
-    size = size +
-        const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec)
-            .sizeHint(querier);
+    size = size + const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec).sizeHint(querier);
     return size;
   }
 
@@ -1006,8 +987,7 @@ class TransferAsset extends Instruction {
 
   factory TransferAsset._decode(_i1.Input input) {
     return TransferAsset(
-      assets: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-          .decode(input),
+      assets: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
       beneficiary: _i6.MultiLocation.codec.decode(input),
     );
   }
@@ -1026,9 +1006,7 @@ class TransferAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-            .sizeHint(assets);
+    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(beneficiary);
     return size;
   }
@@ -1058,11 +1036,9 @@ class TransferReserveAsset extends Instruction {
 
   factory TransferReserveAsset._decode(_i1.Input input) {
     return TransferReserveAsset(
-      assets: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-          .decode(input),
+      assets: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
       dest: _i6.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-          .decode(input),
+      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
     );
   }
 
@@ -1083,13 +1059,9 @@ class TransferReserveAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-            .sizeHint(assets);
+    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(dest);
-    size = size +
-        const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-            .sizeHint(xcm);
+    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
     return size;
   }
 
@@ -1347,8 +1319,7 @@ class DescendOrigin extends Instruction {
   final _i10.Junctions value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'DescendOrigin': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'DescendOrigin': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1380,8 +1351,7 @@ class ReportError extends Instruction {
   final _i11.QueryResponseInfo value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'ReportError': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'ReportError': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1460,8 +1430,7 @@ class DepositReserveAsset extends Instruction {
     return DepositReserveAsset(
       assets: _i12.MultiAssetFilter.codec.decode(input),
       dest: _i6.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-          .decode(input),
+      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
     );
   }
 
@@ -1484,9 +1453,7 @@ class DepositReserveAsset extends Instruction {
     int size = 1;
     size = size + _i12.MultiAssetFilter.codec.sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(dest);
-    size = size +
-        const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-            .sizeHint(xcm);
+    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
     return size;
   }
 
@@ -1520,8 +1487,7 @@ class ExchangeAsset extends Instruction {
   factory ExchangeAsset._decode(_i1.Input input) {
     return ExchangeAsset(
       give: _i12.MultiAssetFilter.codec.decode(input),
-      want: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-          .decode(input),
+      want: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
       maximal: _i1.BoolCodec.codec.decode(input),
     );
   }
@@ -1544,9 +1510,7 @@ class ExchangeAsset extends Instruction {
   int _sizeHint() {
     int size = 1;
     size = size + _i12.MultiAssetFilter.codec.sizeHint(give);
-    size = size +
-        const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-            .sizeHint(want);
+    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(want);
     size = size + _i1.BoolCodec.codec.sizeHint(maximal);
     return size;
   }
@@ -1582,8 +1546,7 @@ class InitiateReserveWithdraw extends Instruction {
     return InitiateReserveWithdraw(
       assets: _i12.MultiAssetFilter.codec.decode(input),
       reserve: _i6.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-          .decode(input),
+      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
     );
   }
 
@@ -1606,9 +1569,7 @@ class InitiateReserveWithdraw extends Instruction {
     int size = 1;
     size = size + _i12.MultiAssetFilter.codec.sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(reserve);
-    size = size +
-        const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-            .sizeHint(xcm);
+    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
     return size;
   }
 
@@ -1643,8 +1604,7 @@ class InitiateTeleport extends Instruction {
     return InitiateTeleport(
       assets: _i12.MultiAssetFilter.codec.decode(input),
       dest: _i6.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-          .decode(input),
+      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
     );
   }
 
@@ -1667,9 +1627,7 @@ class InitiateTeleport extends Instruction {
     int size = 1;
     size = size + _i12.MultiAssetFilter.codec.sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(dest);
-    size = size +
-        const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-            .sizeHint(xcm);
+    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
     return size;
   }
 
@@ -1808,8 +1766,7 @@ class SetErrorHandler extends Instruction {
 
   factory SetErrorHandler._decode(_i1.Input input) {
     return SetErrorHandler(
-      value0: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
     );
   }
 
@@ -1821,9 +1778,7 @@ class SetErrorHandler extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(value0);
     return size;
   }
 
@@ -1844,22 +1799,18 @@ class SetAppendix extends Instruction {
 
   factory SetAppendix._decode(_i1.Input input) {
     return SetAppendix(
-      value0: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
     );
   }
 
   final _i7.Xcm value0;
 
   @override
-  Map<String, List<Map<String, dynamic>>> toJson() =>
-      {'SetAppendix': value0.map((value) => value.toJson()).toList()};
+  Map<String, List<Map<String, dynamic>>> toJson() => {'SetAppendix': value0.map((value) => value.toJson()).toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(value0);
     return size;
   }
 
@@ -1897,8 +1848,7 @@ class ClaimAsset extends Instruction {
 
   factory ClaimAsset._decode(_i1.Input input) {
     return ClaimAsset(
-      assets: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-          .decode(input),
+      assets: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
       ticket: _i6.MultiLocation.codec.decode(input),
     );
   }
@@ -1917,9 +1867,7 @@ class ClaimAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-            .sizeHint(assets);
+    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(ticket);
     return size;
   }
@@ -2039,8 +1987,7 @@ class BurnAsset extends Instruction {
 
   factory BurnAsset._decode(_i1.Input input) {
     return BurnAsset(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
     );
   }
 
@@ -2052,9 +1999,7 @@ class BurnAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -2075,8 +2020,7 @@ class ExpectAsset extends Instruction {
 
   factory ExpectAsset._decode(_i1.Input input) {
     return ExpectAsset(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-          .decode(input),
+      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
     );
   }
 
@@ -2088,9 +2032,7 @@ class ExpectAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec)
-            .sizeHint(value0);
+    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
     return size;
   }
 
@@ -2111,22 +2053,18 @@ class ExpectOrigin extends Instruction {
 
   factory ExpectOrigin._decode(_i1.Input input) {
     return ExpectOrigin(
-      value0: const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec)
-          .decode(input),
+      value0: const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec).decode(input),
     );
   }
 
   final _i6.MultiLocation? value0;
 
   @override
-  Map<String, Map<String, dynamic>?> toJson() =>
-      {'ExpectOrigin': value0?.toJson()};
+  Map<String, Map<String, dynamic>?> toJson() => {'ExpectOrigin': value0?.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec)
-            .sizeHint(value0);
+    size = size + const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec).sizeHint(value0);
     return size;
   }
 
@@ -2147,8 +2085,7 @@ class ExpectError extends Instruction {
 
   factory ExpectError._decode(_i1.Input input) {
     return ExpectError(
-      value0: const _i1.OptionCodec<_i15.Tuple2<int, _i16.Error>>(
-          _i15.Tuple2Codec<int, _i16.Error>(
+      value0: const _i1.OptionCodec<_i15.Tuple2<int, _i16.Error>>(_i15.Tuple2Codec<int, _i16.Error>(
         _i1.U32Codec.codec,
         _i16.Error.codec,
       )).decode(input),
@@ -2168,8 +2105,7 @@ class ExpectError extends Instruction {
   int _sizeHint() {
     int size = 1;
     size = size +
-        const _i1.OptionCodec<_i15.Tuple2<int, _i16.Error>>(
-            _i15.Tuple2Codec<int, _i16.Error>(
+        const _i1.OptionCodec<_i15.Tuple2<int, _i16.Error>>(_i15.Tuple2Codec<int, _i16.Error>(
           _i1.U32Codec.codec,
           _i16.Error.codec,
         )).sizeHint(value0);
@@ -2181,8 +2117,7 @@ class ExpectError extends Instruction {
       31,
       output,
     );
-    const _i1.OptionCodec<_i15.Tuple2<int, _i16.Error>>(
-        _i15.Tuple2Codec<int, _i16.Error>(
+    const _i1.OptionCodec<_i15.Tuple2<int, _i16.Error>>(_i15.Tuple2Codec<int, _i16.Error>(
       _i1.U32Codec.codec,
       _i16.Error.codec,
     )).encodeTo(
@@ -2204,8 +2139,7 @@ class ExpectTransactStatus extends Instruction {
   final _i17.MaybeErrorCode value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'ExpectTransactStatus': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'ExpectTransactStatus': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -2363,8 +2297,7 @@ class ReportTransactStatus extends Instruction {
   final _i11.QueryResponseInfo value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'ReportTransactStatus': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'ReportTransactStatus': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -2410,8 +2343,7 @@ class UniversalOrigin extends Instruction {
   final _i18.Junction value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'UniversalOrigin': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'UniversalOrigin': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -2442,8 +2374,7 @@ class ExportMessage extends Instruction {
     return ExportMessage(
       network: _i19.NetworkId.codec.decode(input),
       destination: _i10.Junctions.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-          .decode(input),
+      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
     );
   }
 
@@ -2466,9 +2397,7 @@ class ExportMessage extends Instruction {
     int size = 1;
     size = size + _i19.NetworkId.codec.sizeHint(network);
     size = size + _i10.Junctions.codec.sizeHint(destination);
-    size = size +
-        const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec)
-            .sizeHint(xcm);
+    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
     return size;
   }
 
@@ -2776,8 +2705,7 @@ class AliasOrigin extends Instruction {
   final _i6.MultiLocation value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'AliasOrigin': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'AliasOrigin': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -2806,9 +2734,7 @@ class UnpaidExecution extends Instruction {
   factory UnpaidExecution._decode(_i1.Input input) {
     return UnpaidExecution(
       weightLimit: _i14.WeightLimit.codec.decode(input),
-      checkOrigin:
-          const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec)
-              .decode(input),
+      checkOrigin: const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec).decode(input),
     );
   }
 
@@ -2827,9 +2753,7 @@ class UnpaidExecution extends Instruction {
   int _sizeHint() {
     int size = 1;
     size = size + _i14.WeightLimit.codec.sizeHint(weightLimit);
-    size = size +
-        const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec)
-            .sizeHint(checkOrigin);
+    size = size + const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec).sizeHint(checkOrigin);
     return size;
   }
 

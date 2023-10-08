@@ -10,8 +10,7 @@ enum Error {
   meetupTimeCalculationError('MeetupTimeCalculationError', 4),
   noValidAttestations('NoValidAttestations', 5),
   attestationPhaseRequired('AttestationPhaseRequired', 6),
-  registeringOrAttestationPhaseRequired(
-      'RegisteringOrAttestationPhaseRequired', 7),
+  registeringOrAttestationPhaseRequired('RegisteringOrAttestationPhaseRequired', 7),
   inexistentCommunity('InexistentCommunity', 8),
   proofOutdated('ProofOutdated', 9),
   proofAcausal('ProofAcausal', 10),
@@ -28,8 +27,7 @@ enum Error {
   registryOverflow('RegistryOverflow', 21),
   checkedMath('CheckedMath', 22),
   onlyBootstrappers('OnlyBootstrappers', 23),
-  wrongPhaseForChangingMeetupTimeOffset(
-      'WrongPhaseForChangingMeetupTimeOffset', 24),
+  wrongPhaseForChangingMeetupTimeOffset('WrongPhaseForChangingMeetupTimeOffset', 24),
   invalidMeetupTimeOffset('InvalidMeetupTimeOffset', 25),
   communityCeremonyHistoryPurged('CommunityCeremonyHistoryPurged', 26),
   wrongPhaseForUnregistering('WrongPhaseForUnregistering', 27),
@@ -37,8 +35,7 @@ enum Error {
   meetupValidationIndexOutOfBounds('MeetupValidationIndexOutOfBounds', 29),
   earlyRewardsNotPossible('EarlyRewardsNotPossible', 30),
   mustBeNewbieToUpgradeRegistration('MustBeNewbieToUpgradeRegistration', 31),
-  reputationCommunityCeremonyRequired(
-      'ReputationCommunityCeremonyRequired', 32),
+  reputationCommunityCeremonyRequired('ReputationCommunityCeremonyRequired', 32),
   reputationMustBeLinked('ReputationMustBeLinked', 33),
   invalidMeetupIndex('InvalidMeetupIndex', 34),
   tooManyAttestationsInBoundedVec('TooManyAttestationsInBoundedVec', 35);

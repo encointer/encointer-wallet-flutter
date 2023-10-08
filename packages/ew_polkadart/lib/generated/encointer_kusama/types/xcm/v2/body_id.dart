@@ -143,8 +143,7 @@ class $BodyIdCodec with _i1.Codec<BodyId> {
         (value as Treasury).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'BodyId: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('BodyId: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -172,8 +171,7 @@ class $BodyIdCodec with _i1.Codec<BodyId> {
       case Treasury:
         return 1;
       default:
-        throw Exception(
-            'BodyId: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('BodyId: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

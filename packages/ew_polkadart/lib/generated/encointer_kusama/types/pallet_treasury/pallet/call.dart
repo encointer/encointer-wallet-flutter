@@ -114,8 +114,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as RemoveApproval).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -133,8 +132,7 @@ class $CallCodec with _i1.Codec<Call> {
       case RemoveApproval:
         return (value as RemoveApproval)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
