@@ -361,6 +361,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.6"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   ew_http:
     dependency: "direct main"
     description:
@@ -368,6 +376,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0+1"
+  ew_polkadart:
+    dependency: "direct main"
+    description:
+      path: "../packages/ew_polkadart"
+      relative: true
+    source: path
+    version: "0.1.0"
   ew_storage:
     dependency: "direct main"
     description:
@@ -828,6 +843,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  json_schema2:
+    dependency: transitive
+    description:
+      name: json_schema2
+      sha256: "094e60d3605333c0816eeb2e5310b4f71ffaea2c0abc026b27418c1ac41a5db3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.4+9"
   json_serializable:
     dependency: "direct dev"
     description:
@@ -1212,6 +1235,23 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.7.3"
+  polkadart:
+    dependency: transitive
+    description:
+      path: "packages/polkadart"
+      ref: HEAD
+      resolved-ref: "500a3824beca7589b152351192ccc6cb6fbdc1df"
+      url: "https://github.com/encointer/polkadart.git"
+    source: git
+    version: "0.1.0"
+  polkadart_scale_codec:
+    dependency: transitive
+    description:
+      name: polkadart_scale_codec
+      sha256: "6f3bc401b676156d94e75cb6f7df55e020d4af76aea6293815888c357db4006b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   polylabel:
     dependency: transitive
     description:
@@ -1308,6 +1348,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.2"
+  rest_client:
+    dependency: transitive
+    description:
+      name: rest_client
+      sha256: ff26b0dd3b0dac951014ce1ea0da450290cb80a4bfee905a43285fd34cb3aa65
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3+2"
   rxdart:
     dependency: "direct dev"
     description:
@@ -1553,6 +1601,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  substrate_metadata:
+    dependency: transitive
+    description:
+      name: substrate_metadata
+      sha256: "8c0b7216595664fd28007fb042ea3561bac133884edbbb353d3f6f5880074f13"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   sync_http:
     dependency: transitive
     description:
@@ -1641,6 +1697,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.1.0"
+  uri:
+    dependency: transitive
+    description:
+      name: uri
+      sha256: "889eea21e953187c6099802b7b4cf5219ba8f3518f604a1033064d45b1b8268a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   url_launcher:
     dependency: "direct main"
     description:
@@ -1705,6 +1769,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
+  utility:
+    dependency: transitive
+    description:
+      name: utility
+      sha256: "200d264c3804e87da7ea36aa81bd73fb845d2cb7b2e820f3f357a0a2bd4e37f5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   uuid:
     dependency: transitive
     description:
@@ -1881,6 +1953,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  yaon:
+    dependency: transitive
+    description:
+      name: yaon
+      sha256: "28273a6501db20e09879f80268ea6e32720f60ff133f49368e3f5e26416fbd4b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2+4"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
   flutter: ">=3.13.0"

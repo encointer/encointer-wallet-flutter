@@ -41,6 +41,13 @@ dependency_overrides:
       branch: cl/bump-http
       path: packages/polkadart_scale_codec
 
+  substrate_metadata:
+    git:
+      url: https://github.com/encointer/polkadart.git
+      # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
+      branch: cl/bump-http
+      path: packages/substrate_metadata
+
 # This only generates valid files on UNIX machines.
 # The imports statements use `\` otherwise, which is
 # invalid.

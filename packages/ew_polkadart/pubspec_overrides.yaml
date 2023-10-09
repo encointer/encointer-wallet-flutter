@@ -1,0 +1,14 @@
+# melos_managed_dependency_overrides: polkadart,polkadart_scale_codec,substrate_metadata
+dependency_overrides:
+  polkadart:
+    git:
+      url: https://github.com/encointer/polkadart.git
+      path: packages/polkadart
+  polkadart_scale_codec:
+    git:
+      url: https://github.com/encointer/polkadart.git
+      path: packages/polkadart_scale_codec
+  substrate_metadata:
+    git:
+      url: https://github.com/encointer/polkadart.git
+      path: packages/substrate_metadata

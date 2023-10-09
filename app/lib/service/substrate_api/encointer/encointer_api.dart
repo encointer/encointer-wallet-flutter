@@ -27,6 +27,7 @@ import 'package:encointer_wallet/service/substrate_api/encointer/no_tee_api.dart
 import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -42,11 +43,13 @@ class EncointerApi {
   EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp)
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi),
-        _dartApi = EncointerDartApi(dartApi);
+        _dartApi = EncointerDartApi(dartApi),
+        _encointerKusama = EncointerKusama.url(Uri.parse(dartApi.endpoint!));
 
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
   final EwHttp ewHttp;
+  final EncointerKusama _encointerKusama;
 
   final AppStore store;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
@@ -119,7 +122,8 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<int> getNextPhaseTimestamp() async {
     Log.d('api: getNextPhaseTimestamp', 'EncointerApi');
-    final timestamp = await jsApi.evalJavascript<String>('encointer.getNextPhaseTimestamp()').then(int.parse);
+    final timestampBigInt = await _encointerKusama.query.encointerScheduler.nextPhaseTimestamp();
+    final timestamp = timestampBigInt.toInt();
 
     Log.d('api: next phase timestamp: $timestamp', 'EncointerApi');
     store.encointer.setNextPhaseTimestamp(timestamp);
