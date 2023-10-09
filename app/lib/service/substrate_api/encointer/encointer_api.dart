@@ -44,7 +44,9 @@ class EncointerApi {
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi),
         _dartApi = EncointerDartApi(dartApi),
-        _encointerKusama = EncointerKusama.url(Uri.parse(dartApi.endpoint!));
+        // Todo: better solution, but we can rethink the initialization anyhow after getting
+        // rid of JS.
+        _encointerKusama = EncointerKusama.url(Uri.parse(store.settings.endpoint.value!));
 
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
