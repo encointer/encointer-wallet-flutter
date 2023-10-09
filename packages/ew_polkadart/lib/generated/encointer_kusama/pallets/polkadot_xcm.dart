@@ -1,16 +1,18 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i12;
+
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
+
 import '../types/pallet_xcm/pallet/query_status.dart' as _i3;
-import '../types/primitive_types/h256.dart' as _i4;
-import '../types/xcm/versioned_multi_location.dart' as _i5;
-import '../types/tuples.dart' as _i6;
-import '../types/sp_weights/weight_v2/weight.dart' as _i7;
-import '../types/pallet_xcm/pallet/version_migration_stage.dart' as _i8;
-import '../types/sp_core/crypto/account_id32.dart' as _i9;
-import '../types/xcm/versioned_asset_id.dart' as _i10;
 import '../types/pallet_xcm/pallet/remote_locked_fungible_record.dart' as _i11;
-import 'dart:async' as _i12;
+import '../types/pallet_xcm/pallet/version_migration_stage.dart' as _i8;
+import '../types/primitive_types/h256.dart' as _i4;
+import '../types/sp_core/crypto/account_id32.dart' as _i9;
+import '../types/sp_weights/weight_v2/weight.dart' as _i7;
+import '../types/tuples.dart' as _i6;
+import '../types/xcm/versioned_asset_id.dart' as _i10;
+import '../types/xcm/versioned_multi_location.dart' as _i5;
 
 class Queries {
   const Queries(this.__api);
@@ -34,7 +36,7 @@ class Queries {
     prefix: 'PolkadotXcm',
     storage: 'AssetTraps',
     valueCodec: _i2.U32Codec.codec,
-    hasher: _i1.StorageHasher.identity(_i2.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.identity(_i4.H256Codec()),
   );
 
   final _i1.StorageValue<int> _safeXcmVersion = const _i1.StorageValue<int>(
@@ -100,7 +102,7 @@ class Queries {
     storage: 'RemoteLockedFungibles',
     valueCodec: _i11.RemoteLockedFungibleRecord.codec,
     hasher1: _i1.StorageHasher.twoxx64Concat(_i2.U32Codec.codec),
-    hasher2: _i1.StorageHasher.blake2b128Concat(_i2.U8ArrayCodec(32)),
+    hasher2: _i1.StorageHasher.blake2b128Concat(_i9.AccountId32Codec()),
     hasher3: _i1.StorageHasher.blake2b128Concat(_i10.VersionedAssetId.codec),
   );
 
@@ -113,7 +115,7 @@ class Queries {
       _i2.U128Codec.codec,
       _i5.VersionedMultiLocation.codec,
     )),
-    hasher: _i1.StorageHasher.blake2b128Concat(_i2.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i9.AccountId32Codec()),
   );
 
   final _i1.StorageValue<bool> _xcmExecutionSuspended = const _i1.StorageValue<bool>(
@@ -257,7 +259,7 @@ class Queries {
     if (bytes != null) {
       return _versionDiscoveryQueue.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// The current migration's stage, if any.

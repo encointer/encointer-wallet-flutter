@@ -1,18 +1,21 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../xcm/v3/traits/outcome.dart' as _i3;
-import '../../xcm/v3/multilocation/multi_location.dart' as _i4;
-import '../../xcm/v3/xcm_1.dart' as _i5;
-import '../../xcm/v3/response.dart' as _i6;
-import '../../sp_weights/weight_v2/weight.dart' as _i7;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i14;
+
 import '../../primitive_types/h256.dart' as _i8;
-import '../../xcm/versioned_multi_assets.dart' as _i9;
-import '../../xcm/v3/multiasset/multi_assets.dart' as _i10;
-import '../../xcm/v3/traits/error.dart' as _i11;
-import '../../xcm/versioned_multi_location.dart' as _i12;
+import '../../sp_weights/weight_v2/weight.dart' as _i7;
 import '../../xcm/v3/instruction_1.dart' as _i13;
-import '../../xcm/v3/multiasset/multi_asset.dart' as _i14;
+import '../../xcm/v3/multiasset/multi_asset.dart' as _i15;
+import '../../xcm/v3/multiasset/multi_assets.dart' as _i10;
+import '../../xcm/v3/multilocation/multi_location.dart' as _i4;
+import '../../xcm/v3/response.dart' as _i6;
+import '../../xcm/v3/traits/error.dart' as _i11;
+import '../../xcm/v3/traits/outcome.dart' as _i3;
+import '../../xcm/v3/xcm_1.dart' as _i5;
+import '../../xcm/versioned_multi_assets.dart' as _i9;
+import '../../xcm/versioned_multi_location.dart' as _i12;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -43,9 +46,7 @@ class $Event {
   const $Event();
 
   Attempted attempted({required _i3.Outcome outcome}) {
-    return Attempted(
-      outcome: outcome,
-    );
+    return Attempted(outcome: outcome);
   }
 
   Sent sent({
@@ -157,9 +158,7 @@ class $Event {
   }
 
   ResponseTaken responseTaken({required BigInt queryId}) {
-    return ResponseTaken(
-      queryId: queryId,
-    );
+    return ResponseTaken(queryId: queryId);
   }
 
   AssetsTrapped assetsTrapped({
@@ -501,11 +500,10 @@ class Attempted extends Event {
   const Attempted({required this.outcome});
 
   factory Attempted._decode(_i1.Input input) {
-    return Attempted(
-      outcome: _i3.Outcome.codec.decode(input),
-    );
+    return Attempted(outcome: _i3.Outcome.codec.decode(input));
   }
 
+  /// xcm::latest::Outcome
   final _i3.Outcome outcome;
 
   @override
@@ -529,6 +527,17 @@ class Attempted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Attempted && other.outcome == outcome;
+
+  @override
+  int get hashCode => outcome.hashCode;
 }
 
 /// A XCM message was sent.
@@ -549,12 +558,16 @@ class Sent extends Event {
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation origin;
 
+  /// MultiLocation
   final _i4.MultiLocation destination;
 
+  /// Xcm<()>
   final _i5.Xcm message;
 
+  /// XcmHash
   final List<int> messageId;
 
   @override
@@ -571,7 +584,7 @@ class Sent extends Event {
     int size = 1;
     size = size + _i4.MultiLocation.codec.sizeHint(origin);
     size = size + _i4.MultiLocation.codec.sizeHint(destination);
-    size = size + const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).sizeHint(message);
+    size = size + const _i5.XcmCodec().sizeHint(message);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
   }
@@ -598,6 +611,32 @@ class Sent extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Sent &&
+          other.origin == origin &&
+          other.destination == destination &&
+          _i14.listsEqual(
+            other.message,
+            message,
+          ) &&
+          _i14.listsEqual(
+            other.messageId,
+            messageId,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        origin,
+        destination,
+        message,
+        messageId,
+      );
 }
 
 /// Query response received which does not match a registered query. This may be because a
@@ -616,8 +655,10 @@ class UnexpectedResponse extends Event {
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation origin;
 
+  /// QueryId
   final BigInt queryId;
 
   @override
@@ -649,6 +690,20 @@ class UnexpectedResponse extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UnexpectedResponse && other.origin == origin && other.queryId == queryId;
+
+  @override
+  int get hashCode => Object.hash(
+        origin,
+        queryId,
+      );
 }
 
 /// Query response has been received and is ready for taking with `take_response`. There is
@@ -666,8 +721,10 @@ class ResponseReady extends Event {
     );
   }
 
+  /// QueryId
   final BigInt queryId;
 
+  /// Response
   final _i6.Response response;
 
   @override
@@ -699,6 +756,20 @@ class ResponseReady extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ResponseReady && other.queryId == queryId && other.response == response;
+
+  @override
+  int get hashCode => Object.hash(
+        queryId,
+        response,
+      );
 }
 
 /// Query response has been received and query is removed. The registered notification has
@@ -718,10 +789,13 @@ class Notified extends Event {
     );
   }
 
+  /// QueryId
   final BigInt queryId;
 
+  /// u8
   final int palletIndex;
 
+  /// u8
   final int callIndex;
 
   @override
@@ -759,6 +833,21 @@ class Notified extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Notified && other.queryId == queryId && other.palletIndex == palletIndex && other.callIndex == callIndex;
+
+  @override
+  int get hashCode => Object.hash(
+        queryId,
+        palletIndex,
+        callIndex,
+      );
 }
 
 /// Query response has been received and query is removed. The registered notification could
@@ -783,14 +872,19 @@ class NotifyOverweight extends Event {
     );
   }
 
+  /// QueryId
   final BigInt queryId;
 
+  /// u8
   final int palletIndex;
 
+  /// u8
   final int callIndex;
 
+  /// Weight
   final _i7.Weight actualWeight;
 
+  /// Weight
   final _i7.Weight maxBudgetedWeight;
 
   @override
@@ -840,6 +934,28 @@ class NotifyOverweight extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NotifyOverweight &&
+          other.queryId == queryId &&
+          other.palletIndex == palletIndex &&
+          other.callIndex == callIndex &&
+          other.actualWeight == actualWeight &&
+          other.maxBudgetedWeight == maxBudgetedWeight;
+
+  @override
+  int get hashCode => Object.hash(
+        queryId,
+        palletIndex,
+        callIndex,
+        actualWeight,
+        maxBudgetedWeight,
+      );
 }
 
 /// Query response has been received and query is removed. There was a general error with
@@ -859,10 +975,13 @@ class NotifyDispatchError extends Event {
     );
   }
 
+  /// QueryId
   final BigInt queryId;
 
+  /// u8
   final int palletIndex;
 
+  /// u8
   final int callIndex;
 
   @override
@@ -900,6 +1019,24 @@ class NotifyDispatchError extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NotifyDispatchError &&
+          other.queryId == queryId &&
+          other.palletIndex == palletIndex &&
+          other.callIndex == callIndex;
+
+  @override
+  int get hashCode => Object.hash(
+        queryId,
+        palletIndex,
+        callIndex,
+      );
 }
 
 /// Query response has been received and query is removed. The dispatch was unable to be
@@ -920,10 +1057,13 @@ class NotifyDecodeFailed extends Event {
     );
   }
 
+  /// QueryId
   final BigInt queryId;
 
+  /// u8
   final int palletIndex;
 
+  /// u8
   final int callIndex;
 
   @override
@@ -961,6 +1101,24 @@ class NotifyDecodeFailed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NotifyDecodeFailed &&
+          other.queryId == queryId &&
+          other.palletIndex == palletIndex &&
+          other.callIndex == callIndex;
+
+  @override
+  int get hashCode => Object.hash(
+        queryId,
+        palletIndex,
+        callIndex,
+      );
 }
 
 /// Expected query response has been received but the origin location of the response does
@@ -981,10 +1139,13 @@ class InvalidResponder extends Event {
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation origin;
 
+  /// QueryId
   final BigInt queryId;
 
+  /// Option<MultiLocation>
   final _i4.MultiLocation? expectedLocation;
 
   @override
@@ -1022,6 +1183,24 @@ class InvalidResponder extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InvalidResponder &&
+          other.origin == origin &&
+          other.queryId == queryId &&
+          other.expectedLocation == expectedLocation;
+
+  @override
+  int get hashCode => Object.hash(
+        origin,
+        queryId,
+        expectedLocation,
+      );
 }
 
 /// Expected query response has been received but the expected origin location placed in
@@ -1044,8 +1223,10 @@ class InvalidResponderVersion extends Event {
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation origin;
 
+  /// QueryId
   final BigInt queryId;
 
   @override
@@ -1077,6 +1258,20 @@ class InvalidResponderVersion extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InvalidResponderVersion && other.origin == origin && other.queryId == queryId;
+
+  @override
+  int get hashCode => Object.hash(
+        origin,
+        queryId,
+      );
 }
 
 /// Received query response has been read and removed.
@@ -1084,11 +1279,10 @@ class ResponseTaken extends Event {
   const ResponseTaken({required this.queryId});
 
   factory ResponseTaken._decode(_i1.Input input) {
-    return ResponseTaken(
-      queryId: _i1.U64Codec.codec.decode(input),
-    );
+    return ResponseTaken(queryId: _i1.U64Codec.codec.decode(input));
   }
 
+  /// QueryId
   final BigInt queryId;
 
   @override
@@ -1112,6 +1306,17 @@ class ResponseTaken extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ResponseTaken && other.queryId == queryId;
+
+  @override
+  int get hashCode => queryId.hashCode;
 }
 
 /// Some assets have been placed in an asset trap.
@@ -1130,10 +1335,13 @@ class AssetsTrapped extends Event {
     );
   }
 
+  /// H256
   final _i8.H256 hash;
 
+  /// MultiLocation
   final _i4.MultiLocation origin;
 
+  /// VersionedMultiAssets
   final _i9.VersionedMultiAssets assets;
 
   @override
@@ -1147,7 +1355,7 @@ class AssetsTrapped extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(hash);
+    size = size + const _i8.H256Codec().sizeHint(hash);
     size = size + _i4.MultiLocation.codec.sizeHint(origin);
     size = size + _i9.VersionedMultiAssets.codec.sizeHint(assets);
     return size;
@@ -1171,6 +1379,27 @@ class AssetsTrapped extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AssetsTrapped &&
+          _i14.listsEqual(
+            other.hash,
+            hash,
+          ) &&
+          other.origin == origin &&
+          other.assets == assets;
+
+  @override
+  int get hashCode => Object.hash(
+        hash,
+        origin,
+        assets,
+      );
 }
 
 /// An XCM version change notification message has been attempted to be sent.
@@ -1188,17 +1417,21 @@ class VersionChangeNotified extends Event {
     return VersionChangeNotified(
       destination: _i4.MultiLocation.codec.decode(input),
       result: _i1.U32Codec.codec.decode(input),
-      cost: const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).decode(input),
+      cost: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
       messageId: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation destination;
 
+  /// XcmVersion
   final int result;
 
+  /// MultiAssets
   final _i10.MultiAssets cost;
 
+  /// XcmHash
   final List<int> messageId;
 
   @override
@@ -1215,7 +1448,7 @@ class VersionChangeNotified extends Event {
     int size = 1;
     size = size + _i4.MultiLocation.codec.sizeHint(destination);
     size = size + _i1.U32Codec.codec.sizeHint(result);
-    size = size + const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).sizeHint(cost);
+    size = size + const _i10.MultiAssetsCodec().sizeHint(cost);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
   }
@@ -1233,7 +1466,7 @@ class VersionChangeNotified extends Event {
       result,
       output,
     );
-    const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
       cost,
       output,
     );
@@ -1242,6 +1475,32 @@ class VersionChangeNotified extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is VersionChangeNotified &&
+          other.destination == destination &&
+          other.result == result &&
+          _i14.listsEqual(
+            other.cost,
+            cost,
+          ) &&
+          _i14.listsEqual(
+            other.messageId,
+            messageId,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        destination,
+        result,
+        cost,
+        messageId,
+      );
 }
 
 /// The supported version of a location has been changed. This might be through an
@@ -1259,8 +1518,10 @@ class SupportedVersionChanged extends Event {
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation location;
 
+  /// XcmVersion
   final int version;
 
   @override
@@ -1292,6 +1553,20 @@ class SupportedVersionChanged extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SupportedVersionChanged && other.location == location && other.version == version;
+
+  @override
+  int get hashCode => Object.hash(
+        location,
+        version,
+      );
 }
 
 /// A given location which had a version change subscription was dropped owing to an error
@@ -1311,10 +1586,13 @@ class NotifyTargetSendFail extends Event {
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation location;
 
+  /// QueryId
   final BigInt queryId;
 
+  /// XcmError
   final _i11.Error error;
 
   @override
@@ -1352,6 +1630,21 @@ class NotifyTargetSendFail extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NotifyTargetSendFail && other.location == location && other.queryId == queryId && other.error == error;
+
+  @override
+  int get hashCode => Object.hash(
+        location,
+        queryId,
+        error,
+      );
 }
 
 /// A given location which had a version change subscription was dropped owing to an error
@@ -1369,8 +1662,10 @@ class NotifyTargetMigrationFail extends Event {
     );
   }
 
+  /// VersionedMultiLocation
   final _i12.VersionedMultiLocation location;
 
+  /// QueryId
   final BigInt queryId;
 
   @override
@@ -1402,6 +1697,20 @@ class NotifyTargetMigrationFail extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NotifyTargetMigrationFail && other.location == location && other.queryId == queryId;
+
+  @override
+  int get hashCode => Object.hash(
+        location,
+        queryId,
+      );
 }
 
 /// Expected query response has been received but the expected querier location placed in
@@ -1424,8 +1733,10 @@ class InvalidQuerierVersion extends Event {
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation origin;
 
+  /// QueryId
   final BigInt queryId;
 
   @override
@@ -1457,6 +1768,20 @@ class InvalidQuerierVersion extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InvalidQuerierVersion && other.origin == origin && other.queryId == queryId;
+
+  @override
+  int get hashCode => Object.hash(
+        origin,
+        queryId,
+      );
 }
 
 /// Expected query response has been received but the querier location of the response does
@@ -1479,12 +1804,16 @@ class InvalidQuerier extends Event {
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation origin;
 
+  /// QueryId
   final BigInt queryId;
 
+  /// MultiLocation
   final _i4.MultiLocation expectedQuerier;
 
+  /// Option<MultiLocation>
   final _i4.MultiLocation? maybeActualQuerier;
 
   @override
@@ -1528,6 +1857,26 @@ class InvalidQuerier extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InvalidQuerier &&
+          other.origin == origin &&
+          other.queryId == queryId &&
+          other.expectedQuerier == expectedQuerier &&
+          other.maybeActualQuerier == maybeActualQuerier;
+
+  @override
+  int get hashCode => Object.hash(
+        origin,
+        queryId,
+        expectedQuerier,
+        maybeActualQuerier,
+      );
 }
 
 /// A remote has requested XCM version change notification from us and we have honored it.
@@ -1542,15 +1891,18 @@ class VersionNotifyStarted extends Event {
   factory VersionNotifyStarted._decode(_i1.Input input) {
     return VersionNotifyStarted(
       destination: _i4.MultiLocation.codec.decode(input),
-      cost: const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).decode(input),
+      cost: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
       messageId: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation destination;
 
+  /// MultiAssets
   final _i10.MultiAssets cost;
 
+  /// XcmHash
   final List<int> messageId;
 
   @override
@@ -1565,7 +1917,7 @@ class VersionNotifyStarted extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i4.MultiLocation.codec.sizeHint(destination);
-    size = size + const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).sizeHint(cost);
+    size = size + const _i10.MultiAssetsCodec().sizeHint(cost);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
   }
@@ -1579,7 +1931,7 @@ class VersionNotifyStarted extends Event {
       destination,
       output,
     );
-    const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
       cost,
       output,
     );
@@ -1588,6 +1940,30 @@ class VersionNotifyStarted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is VersionNotifyStarted &&
+          other.destination == destination &&
+          _i14.listsEqual(
+            other.cost,
+            cost,
+          ) &&
+          _i14.listsEqual(
+            other.messageId,
+            messageId,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        destination,
+        cost,
+        messageId,
+      );
 }
 
 /// We have requested that a remote chain send us XCM version change notifications.
@@ -1601,15 +1977,18 @@ class VersionNotifyRequested extends Event {
   factory VersionNotifyRequested._decode(_i1.Input input) {
     return VersionNotifyRequested(
       destination: _i4.MultiLocation.codec.decode(input),
-      cost: const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).decode(input),
+      cost: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
       messageId: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation destination;
 
+  /// MultiAssets
   final _i10.MultiAssets cost;
 
+  /// XcmHash
   final List<int> messageId;
 
   @override
@@ -1624,7 +2003,7 @@ class VersionNotifyRequested extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i4.MultiLocation.codec.sizeHint(destination);
-    size = size + const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).sizeHint(cost);
+    size = size + const _i10.MultiAssetsCodec().sizeHint(cost);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
   }
@@ -1638,7 +2017,7 @@ class VersionNotifyRequested extends Event {
       destination,
       output,
     );
-    const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
       cost,
       output,
     );
@@ -1647,6 +2026,30 @@ class VersionNotifyRequested extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is VersionNotifyRequested &&
+          other.destination == destination &&
+          _i14.listsEqual(
+            other.cost,
+            cost,
+          ) &&
+          _i14.listsEqual(
+            other.messageId,
+            messageId,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        destination,
+        cost,
+        messageId,
+      );
 }
 
 /// We have requested that a remote chain stops sending us XCM version change notifications.
@@ -1660,15 +2063,18 @@ class VersionNotifyUnrequested extends Event {
   factory VersionNotifyUnrequested._decode(_i1.Input input) {
     return VersionNotifyUnrequested(
       destination: _i4.MultiLocation.codec.decode(input),
-      cost: const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).decode(input),
+      cost: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
       messageId: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation destination;
 
+  /// MultiAssets
   final _i10.MultiAssets cost;
 
+  /// XcmHash
   final List<int> messageId;
 
   @override
@@ -1683,7 +2089,7 @@ class VersionNotifyUnrequested extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i4.MultiLocation.codec.sizeHint(destination);
-    size = size + const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).sizeHint(cost);
+    size = size + const _i10.MultiAssetsCodec().sizeHint(cost);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
   }
@@ -1697,7 +2103,7 @@ class VersionNotifyUnrequested extends Event {
       destination,
       output,
     );
-    const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
       cost,
       output,
     );
@@ -1706,6 +2112,30 @@ class VersionNotifyUnrequested extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is VersionNotifyUnrequested &&
+          other.destination == destination &&
+          _i14.listsEqual(
+            other.cost,
+            cost,
+          ) &&
+          _i14.listsEqual(
+            other.messageId,
+            messageId,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        destination,
+        cost,
+        messageId,
+      );
 }
 
 /// Fees were paid from a location for an operation (often for using `SendXcm`).
@@ -1718,12 +2148,14 @@ class FeesPaid extends Event {
   factory FeesPaid._decode(_i1.Input input) {
     return FeesPaid(
       paying: _i4.MultiLocation.codec.decode(input),
-      fees: const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).decode(input),
+      fees: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
     );
   }
 
+  /// MultiLocation
   final _i4.MultiLocation paying;
 
+  /// MultiAssets
   final _i10.MultiAssets fees;
 
   @override
@@ -1737,7 +2169,7 @@ class FeesPaid extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i4.MultiLocation.codec.sizeHint(paying);
-    size = size + const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).sizeHint(fees);
+    size = size + const _i10.MultiAssetsCodec().sizeHint(fees);
     return size;
   }
 
@@ -1750,11 +2182,30 @@ class FeesPaid extends Event {
       paying,
       output,
     );
-    const _i1.SequenceCodec<_i14.MultiAsset>(_i14.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
       fees,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is FeesPaid &&
+          other.paying == paying &&
+          _i14.listsEqual(
+            other.fees,
+            fees,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        paying,
+        fees,
+      );
 }
 
 /// Some assets have been claimed from an asset trap
@@ -1773,10 +2224,13 @@ class AssetsClaimed extends Event {
     );
   }
 
+  /// H256
   final _i8.H256 hash;
 
+  /// MultiLocation
   final _i4.MultiLocation origin;
 
+  /// VersionedMultiAssets
   final _i9.VersionedMultiAssets assets;
 
   @override
@@ -1790,7 +2244,7 @@ class AssetsClaimed extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(hash);
+    size = size + const _i8.H256Codec().sizeHint(hash);
     size = size + _i4.MultiLocation.codec.sizeHint(origin);
     size = size + _i9.VersionedMultiAssets.codec.sizeHint(assets);
     return size;
@@ -1814,4 +2268,25 @@ class AssetsClaimed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AssetsClaimed &&
+          _i14.listsEqual(
+            other.hash,
+            hash,
+          ) &&
+          other.origin == origin &&
+          other.assets == assets;
+
+  @override
+  int get hashCode => Object.hash(
+        hash,
+        origin,
+        assets,
+      );
 }

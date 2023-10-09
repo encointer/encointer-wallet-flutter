@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 abstract class DigestItem {
   const DigestItem();
@@ -29,44 +31,42 @@ abstract class DigestItem {
 class $DigestItem {
   const $DigestItem();
 
-  PreRuntime preRuntime({
-    required List<int> value0,
-    required List<int> value1,
-  }) {
+  PreRuntime preRuntime(
+    List<int> value0,
+    List<int> value1,
+  ) {
     return PreRuntime(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  Consensus consensus({
-    required List<int> value0,
-    required List<int> value1,
-  }) {
+  Consensus consensus(
+    List<int> value0,
+    List<int> value1,
+  ) {
     return Consensus(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  Seal seal({
-    required List<int> value0,
-    required List<int> value1,
-  }) {
+  Seal seal(
+    List<int> value0,
+    List<int> value1,
+  ) {
     return Seal(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  Other other({required List<int> value0}) {
-    return Other(
-      value0: value0,
-    );
+  Other other(List<int> value0) {
+    return Other(value0);
   }
 
   RuntimeEnvironmentUpdated runtimeEnvironmentUpdated() {
-    return const RuntimeEnvironmentUpdated();
+    return RuntimeEnvironmentUpdated();
   }
 }
 
@@ -138,20 +138,22 @@ class $DigestItemCodec with _i1.Codec<DigestItem> {
 }
 
 class PreRuntime extends DigestItem {
-  const PreRuntime({
-    required this.value0,
-    required this.value1,
-  });
+  const PreRuntime(
+    this.value0,
+    this.value1,
+  );
 
   factory PreRuntime._decode(_i1.Input input) {
     return PreRuntime(
-      value0: const _i1.U8ArrayCodec(4).decode(input),
-      value1: _i1.U8SequenceCodec.codec.decode(input),
+      const _i1.U8ArrayCodec(4).decode(input),
+      _i1.U8SequenceCodec.codec.decode(input),
     );
   }
 
+  /// ConsensusEngineId
   final List<int> value0;
 
+  /// Vec<u8>
   final List<int> value1;
 
   @override
@@ -183,23 +185,47 @@ class PreRuntime extends DigestItem {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PreRuntime &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          ) &&
+          _i3.listsEqual(
+            other.value1,
+            value1,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 class Consensus extends DigestItem {
-  const Consensus({
-    required this.value0,
-    required this.value1,
-  });
+  const Consensus(
+    this.value0,
+    this.value1,
+  );
 
   factory Consensus._decode(_i1.Input input) {
     return Consensus(
-      value0: const _i1.U8ArrayCodec(4).decode(input),
-      value1: _i1.U8SequenceCodec.codec.decode(input),
+      const _i1.U8ArrayCodec(4).decode(input),
+      _i1.U8SequenceCodec.codec.decode(input),
     );
   }
 
+  /// ConsensusEngineId
   final List<int> value0;
 
+  /// Vec<u8>
   final List<int> value1;
 
   @override
@@ -231,23 +257,47 @@ class Consensus extends DigestItem {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Consensus &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          ) &&
+          _i3.listsEqual(
+            other.value1,
+            value1,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 class Seal extends DigestItem {
-  const Seal({
-    required this.value0,
-    required this.value1,
-  });
+  const Seal(
+    this.value0,
+    this.value1,
+  );
 
   factory Seal._decode(_i1.Input input) {
     return Seal(
-      value0: const _i1.U8ArrayCodec(4).decode(input),
-      value1: _i1.U8SequenceCodec.codec.decode(input),
+      const _i1.U8ArrayCodec(4).decode(input),
+      _i1.U8SequenceCodec.codec.decode(input),
     );
   }
 
+  /// ConsensusEngineId
   final List<int> value0;
 
+  /// Vec<u8>
   final List<int> value1;
 
   @override
@@ -279,17 +329,38 @@ class Seal extends DigestItem {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Seal &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          ) &&
+          _i3.listsEqual(
+            other.value1,
+            value1,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 class Other extends DigestItem {
-  const Other({required this.value0});
+  const Other(this.value0);
 
   factory Other._decode(_i1.Input input) {
-    return Other(
-      value0: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return Other(_i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// Vec<u8>
   final List<int> value0;
 
   @override
@@ -311,6 +382,21 @@ class Other extends DigestItem {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Other &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class RuntimeEnvironmentUpdated extends DigestItem {
@@ -325,4 +411,10 @@ class RuntimeEnvironmentUpdated extends DigestItem {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is RuntimeEnvironmentUpdated;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

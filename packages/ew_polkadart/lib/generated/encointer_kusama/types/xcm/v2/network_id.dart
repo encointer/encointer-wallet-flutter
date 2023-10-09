@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 abstract class NetworkId {
   const NetworkId();
@@ -30,21 +32,19 @@ class $NetworkId {
   const $NetworkId();
 
   Any any() {
-    return const Any();
+    return Any();
   }
 
-  Named named({required List<int> value0}) {
-    return Named(
-      value0: value0,
-    );
+  Named named(List<int> value0) {
+    return Named(value0);
   }
 
   Polkadot polkadot() {
-    return const Polkadot();
+    return Polkadot();
   }
 
   Kusama kusama() {
-    return const Kusama();
+    return Kusama();
   }
 }
 
@@ -120,17 +120,22 @@ class Any extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Any;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Named extends NetworkId {
-  const Named({required this.value0});
+  const Named(this.value0);
 
   factory Named._decode(_i1.Input input) {
-    return Named(
-      value0: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return Named(_i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// WeakBoundedVec<u8, ConstU32<32>>
   final List<int> value0;
 
   @override
@@ -152,6 +157,21 @@ class Named extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Named &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Polkadot extends NetworkId {
@@ -166,6 +186,12 @@ class Polkadot extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Polkadot;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Kusama extends NetworkId {
@@ -180,4 +206,10 @@ class Kusama extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Kusama;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

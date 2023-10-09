@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../pallet_balances/types/account_data.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../pallet_balances/types/account_data.dart' as _i2;
 
 class AccountInfo {
   const AccountInfo({
@@ -16,14 +18,19 @@ class AccountInfo {
     return codec.decode(input);
   }
 
+  /// Nonce
   final int nonce;
 
+  /// RefCount
   final int consumers;
 
+  /// RefCount
   final int providers;
 
+  /// RefCount
   final int sufficients;
 
+  /// AccountData
   final _i2.AccountData data;
 
   static const $AccountInfoCodec codec = $AccountInfoCodec();
@@ -39,6 +46,28 @@ class AccountInfo {
         'sufficients': sufficients,
         'data': data.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AccountInfo &&
+          other.nonce == nonce &&
+          other.consumers == consumers &&
+          other.providers == providers &&
+          other.sufficients == sufficients &&
+          other.data == data;
+
+  @override
+  int get hashCode => Object.hash(
+        nonce,
+        consumers,
+        providers,
+        sufficients,
+        data,
+      );
 }
 
 class $AccountInfoCodec with _i1.Codec<AccountInfo> {

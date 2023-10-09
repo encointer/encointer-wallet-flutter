@@ -1,24 +1,27 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import 'multiasset/multi_assets.dart' as _i3;
-import 'response.dart' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i20;
+
 import '../../sp_weights/weight_v2/weight.dart' as _i5;
-import 'multilocation/multi_location.dart' as _i6;
-import 'xcm_1.dart' as _i7;
-import '../v2/origin_kind.dart' as _i8;
-import '../double_encoded/double_encoded_1.dart' as _i9;
-import 'junctions/junctions.dart' as _i10;
-import 'query_response_info.dart' as _i11;
-import 'multiasset/multi_asset_filter.dart' as _i12;
-import 'multiasset/multi_asset.dart' as _i13;
-import 'weight_limit.dart' as _i14;
 import '../../tuples_1.dart' as _i15;
-import 'traits/error.dart' as _i16;
-import 'maybe_error_code.dart' as _i17;
+import '../double_encoded/double_encoded_1.dart' as _i9;
+import '../v2/origin_kind.dart' as _i8;
+import 'instruction_1.dart' as _i21;
 import 'junction/junction.dart' as _i18;
 import 'junction/network_id.dart' as _i19;
-import 'instruction_1.dart' as _i20;
+import 'junctions/junctions.dart' as _i10;
+import 'maybe_error_code.dart' as _i17;
+import 'multiasset/multi_asset.dart' as _i13;
+import 'multiasset/multi_asset_filter.dart' as _i12;
+import 'multiasset/multi_assets.dart' as _i3;
+import 'multilocation/multi_location.dart' as _i6;
+import 'query_response_info.dart' as _i11;
+import 'response.dart' as _i4;
+import 'traits/error.dart' as _i16;
+import 'weight_limit.dart' as _i14;
+import 'xcm_1.dart' as _i7;
 
 abstract class Instruction {
   const Instruction();
@@ -47,22 +50,16 @@ abstract class Instruction {
 class $Instruction {
   const $Instruction();
 
-  WithdrawAsset withdrawAsset({required _i3.MultiAssets value0}) {
-    return WithdrawAsset(
-      value0: value0,
-    );
+  WithdrawAsset withdrawAsset(_i3.MultiAssets value0) {
+    return WithdrawAsset(value0);
   }
 
-  ReserveAssetDeposited reserveAssetDeposited({required _i3.MultiAssets value0}) {
-    return ReserveAssetDeposited(
-      value0: value0,
-    );
+  ReserveAssetDeposited reserveAssetDeposited(_i3.MultiAssets value0) {
+    return ReserveAssetDeposited(value0);
   }
 
-  ReceiveTeleportedAsset receiveTeleportedAsset({required _i3.MultiAssets value0}) {
-    return ReceiveTeleportedAsset(
-      value0: value0,
-    );
+  ReceiveTeleportedAsset receiveTeleportedAsset(_i3.MultiAssets value0) {
+    return ReceiveTeleportedAsset(value0);
   }
 
   QueryResponse queryResponse({
@@ -126,9 +123,7 @@ class $Instruction {
   }
 
   HrmpChannelAccepted hrmpChannelAccepted({required BigInt recipient}) {
-    return HrmpChannelAccepted(
-      recipient: recipient,
-    );
+    return HrmpChannelAccepted(recipient: recipient);
   }
 
   HrmpChannelClosing hrmpChannelClosing({
@@ -144,19 +139,15 @@ class $Instruction {
   }
 
   ClearOrigin clearOrigin() {
-    return const ClearOrigin();
+    return ClearOrigin();
   }
 
-  DescendOrigin descendOrigin({required _i10.Junctions value0}) {
-    return DescendOrigin(
-      value0: value0,
-    );
+  DescendOrigin descendOrigin(_i10.Junctions value0) {
+    return DescendOrigin(value0);
   }
 
-  ReportError reportError({required _i11.QueryResponseInfo value0}) {
-    return ReportError(
-      value0: value0,
-    );
+  ReportError reportError(_i11.QueryResponseInfo value0) {
+    return ReportError(value0);
   }
 
   DepositAsset depositAsset({
@@ -238,23 +229,19 @@ class $Instruction {
   }
 
   RefundSurplus refundSurplus() {
-    return const RefundSurplus();
+    return RefundSurplus();
   }
 
-  SetErrorHandler setErrorHandler({required _i7.Xcm value0}) {
-    return SetErrorHandler(
-      value0: value0,
-    );
+  SetErrorHandler setErrorHandler(_i7.Xcm value0) {
+    return SetErrorHandler(value0);
   }
 
-  SetAppendix setAppendix({required _i7.Xcm value0}) {
-    return SetAppendix(
-      value0: value0,
-    );
+  SetAppendix setAppendix(_i7.Xcm value0) {
+    return SetAppendix(value0);
   }
 
   ClearError clearError() {
-    return const ClearError();
+    return ClearError();
   }
 
   ClaimAsset claimAsset({
@@ -267,10 +254,8 @@ class $Instruction {
     );
   }
 
-  Trap trap({required BigInt value0}) {
-    return Trap(
-      value0: value0,
-    );
+  Trap trap(BigInt value0) {
+    return Trap(value0);
   }
 
   SubscribeVersion subscribeVersion({
@@ -284,37 +269,27 @@ class $Instruction {
   }
 
   UnsubscribeVersion unsubscribeVersion() {
-    return const UnsubscribeVersion();
+    return UnsubscribeVersion();
   }
 
-  BurnAsset burnAsset({required _i3.MultiAssets value0}) {
-    return BurnAsset(
-      value0: value0,
-    );
+  BurnAsset burnAsset(_i3.MultiAssets value0) {
+    return BurnAsset(value0);
   }
 
-  ExpectAsset expectAsset({required _i3.MultiAssets value0}) {
-    return ExpectAsset(
-      value0: value0,
-    );
+  ExpectAsset expectAsset(_i3.MultiAssets value0) {
+    return ExpectAsset(value0);
   }
 
-  ExpectOrigin expectOrigin({_i6.MultiLocation? value0}) {
-    return ExpectOrigin(
-      value0: value0,
-    );
+  ExpectOrigin expectOrigin(_i6.MultiLocation? value0) {
+    return ExpectOrigin(value0);
   }
 
-  ExpectError expectError({_i15.Tuple2<int, _i16.Error>? value0}) {
-    return ExpectError(
-      value0: value0,
-    );
+  ExpectError expectError(_i15.Tuple2<int, _i16.Error>? value0) {
+    return ExpectError(value0);
   }
 
-  ExpectTransactStatus expectTransactStatus({required _i17.MaybeErrorCode value0}) {
-    return ExpectTransactStatus(
-      value0: value0,
-    );
+  ExpectTransactStatus expectTransactStatus(_i17.MaybeErrorCode value0) {
+    return ExpectTransactStatus(value0);
   }
 
   QueryPallet queryPallet({
@@ -343,20 +318,16 @@ class $Instruction {
     );
   }
 
-  ReportTransactStatus reportTransactStatus({required _i11.QueryResponseInfo value0}) {
-    return ReportTransactStatus(
-      value0: value0,
-    );
+  ReportTransactStatus reportTransactStatus(_i11.QueryResponseInfo value0) {
+    return ReportTransactStatus(value0);
   }
 
   ClearTransactStatus clearTransactStatus() {
-    return const ClearTransactStatus();
+    return ClearTransactStatus();
   }
 
-  UniversalOrigin universalOrigin({required _i18.Junction value0}) {
-    return UniversalOrigin(
-      value0: value0,
-    );
+  UniversalOrigin universalOrigin(_i18.Junction value0) {
+    return UniversalOrigin(value0);
   }
 
   ExportMessage exportMessage({
@@ -412,25 +383,19 @@ class $Instruction {
   }
 
   SetFeesMode setFeesMode({required bool jitWithdraw}) {
-    return SetFeesMode(
-      jitWithdraw: jitWithdraw,
-    );
+    return SetFeesMode(jitWithdraw: jitWithdraw);
   }
 
-  SetTopic setTopic({required List<int> value0}) {
-    return SetTopic(
-      value0: value0,
-    );
+  SetTopic setTopic(List<int> value0) {
+    return SetTopic(value0);
   }
 
   ClearTopic clearTopic() {
-    return const ClearTopic();
+    return ClearTopic();
   }
 
-  AliasOrigin aliasOrigin({required _i6.MultiLocation value0}) {
-    return AliasOrigin(
-      value0: value0,
-    );
+  AliasOrigin aliasOrigin(_i6.MultiLocation value0) {
+    return AliasOrigin(value0);
   }
 
   UnpaidExecution unpaidExecution({
@@ -813,14 +778,13 @@ class $InstructionCodec with _i1.Codec<Instruction> {
 }
 
 class WithdrawAsset extends Instruction {
-  const WithdrawAsset({required this.value0});
+  const WithdrawAsset(this.value0);
 
   factory WithdrawAsset._decode(_i1.Input input) {
-    return WithdrawAsset(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
-    );
+    return WithdrawAsset(const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input));
   }
 
+  /// MultiAssets
   final _i3.MultiAssets value0;
 
   @override
@@ -829,7 +793,7 @@ class WithdrawAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(value0);
     return size;
   }
 
@@ -843,17 +807,31 @@ class WithdrawAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is WithdrawAsset &&
+          _i20.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ReserveAssetDeposited extends Instruction {
-  const ReserveAssetDeposited({required this.value0});
+  const ReserveAssetDeposited(this.value0);
 
   factory ReserveAssetDeposited._decode(_i1.Input input) {
-    return ReserveAssetDeposited(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
-    );
+    return ReserveAssetDeposited(const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input));
   }
 
+  /// MultiAssets
   final _i3.MultiAssets value0;
 
   @override
@@ -862,7 +840,7 @@ class ReserveAssetDeposited extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(value0);
     return size;
   }
 
@@ -876,17 +854,31 @@ class ReserveAssetDeposited extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ReserveAssetDeposited &&
+          _i20.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ReceiveTeleportedAsset extends Instruction {
-  const ReceiveTeleportedAsset({required this.value0});
+  const ReceiveTeleportedAsset(this.value0);
 
   factory ReceiveTeleportedAsset._decode(_i1.Input input) {
-    return ReceiveTeleportedAsset(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
-    );
+    return ReceiveTeleportedAsset(const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input));
   }
 
+  /// MultiAssets
   final _i3.MultiAssets value0;
 
   @override
@@ -895,7 +887,7 @@ class ReceiveTeleportedAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(value0);
     return size;
   }
 
@@ -909,6 +901,21 @@ class ReceiveTeleportedAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ReceiveTeleportedAsset &&
+          _i20.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class QueryResponse extends Instruction {
@@ -928,12 +935,16 @@ class QueryResponse extends Instruction {
     );
   }
 
+  /// QueryId
   final BigInt queryId;
 
+  /// Response
   final _i4.Response response;
 
+  /// Weight
   final _i5.Weight maxWeight;
 
+  /// Option<MultiLocation>
   final _i6.MultiLocation? querier;
 
   @override
@@ -977,6 +988,26 @@ class QueryResponse extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is QueryResponse &&
+          other.queryId == queryId &&
+          other.response == response &&
+          other.maxWeight == maxWeight &&
+          other.querier == querier;
+
+  @override
+  int get hashCode => Object.hash(
+        queryId,
+        response,
+        maxWeight,
+        querier,
+      );
 }
 
 class TransferAsset extends Instruction {
@@ -992,8 +1023,10 @@ class TransferAsset extends Instruction {
     );
   }
 
+  /// MultiAssets
   final _i3.MultiAssets assets;
 
+  /// MultiLocation
   final _i6.MultiLocation beneficiary;
 
   @override
@@ -1006,7 +1039,7 @@ class TransferAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(assets);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(beneficiary);
     return size;
   }
@@ -1025,6 +1058,25 @@ class TransferAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransferAsset &&
+          _i20.listsEqual(
+            other.assets,
+            assets,
+          ) &&
+          other.beneficiary == beneficiary;
+
+  @override
+  int get hashCode => Object.hash(
+        assets,
+        beneficiary,
+      );
 }
 
 class TransferReserveAsset extends Instruction {
@@ -1038,14 +1090,17 @@ class TransferReserveAsset extends Instruction {
     return TransferReserveAsset(
       assets: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
       dest: _i6.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
+      xcm: const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).decode(input),
     );
   }
 
+  /// MultiAssets
   final _i3.MultiAssets assets;
 
+  /// MultiLocation
   final _i6.MultiLocation dest;
 
+  /// Xcm<()>
   final _i7.Xcm xcm;
 
   @override
@@ -1059,9 +1114,9 @@ class TransferReserveAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(assets);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(dest);
-    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
+    size = size + const _i7.XcmCodec().sizeHint(xcm);
     return size;
   }
 
@@ -1078,11 +1133,35 @@ class TransferReserveAsset extends Instruction {
       dest,
       output,
     );
-    const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).encodeTo(
+    const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).encodeTo(
       xcm,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransferReserveAsset &&
+          _i20.listsEqual(
+            other.assets,
+            assets,
+          ) &&
+          other.dest == dest &&
+          _i20.listsEqual(
+            other.xcm,
+            xcm,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        assets,
+        dest,
+        xcm,
+      );
 }
 
 class Transact extends Instruction {
@@ -1100,10 +1179,13 @@ class Transact extends Instruction {
     );
   }
 
+  /// OriginKind
   final _i8.OriginKind originKind;
 
+  /// Weight
   final _i5.Weight requireWeightAtMost;
 
+  /// DoubleEncoded<Call>
   final _i9.DoubleEncoded call;
 
   @override
@@ -1141,6 +1223,24 @@ class Transact extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Transact &&
+          other.originKind == originKind &&
+          other.requireWeightAtMost == requireWeightAtMost &&
+          other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        originKind,
+        requireWeightAtMost,
+        call,
+      );
 }
 
 class HrmpNewChannelOpenRequest extends Instruction {
@@ -1158,10 +1258,13 @@ class HrmpNewChannelOpenRequest extends Instruction {
     );
   }
 
+  /// u32
   final BigInt sender;
 
+  /// u32
   final BigInt maxMessageSize;
 
+  /// u32
   final BigInt maxCapacity;
 
   @override
@@ -1199,17 +1302,34 @@ class HrmpNewChannelOpenRequest extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is HrmpNewChannelOpenRequest &&
+          other.sender == sender &&
+          other.maxMessageSize == maxMessageSize &&
+          other.maxCapacity == maxCapacity;
+
+  @override
+  int get hashCode => Object.hash(
+        sender,
+        maxMessageSize,
+        maxCapacity,
+      );
 }
 
 class HrmpChannelAccepted extends Instruction {
   const HrmpChannelAccepted({required this.recipient});
 
   factory HrmpChannelAccepted._decode(_i1.Input input) {
-    return HrmpChannelAccepted(
-      recipient: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return HrmpChannelAccepted(recipient: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u32
   final BigInt recipient;
 
   @override
@@ -1233,6 +1353,17 @@ class HrmpChannelAccepted extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is HrmpChannelAccepted && other.recipient == recipient;
+
+  @override
+  int get hashCode => recipient.hashCode;
 }
 
 class HrmpChannelClosing extends Instruction {
@@ -1250,10 +1381,13 @@ class HrmpChannelClosing extends Instruction {
     );
   }
 
+  /// u32
   final BigInt initiator;
 
+  /// u32
   final BigInt sender;
 
+  /// u32
   final BigInt recipient;
 
   @override
@@ -1291,6 +1425,24 @@ class HrmpChannelClosing extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is HrmpChannelClosing &&
+          other.initiator == initiator &&
+          other.sender == sender &&
+          other.recipient == recipient;
+
+  @override
+  int get hashCode => Object.hash(
+        initiator,
+        sender,
+        recipient,
+      );
 }
 
 class ClearOrigin extends Instruction {
@@ -1305,17 +1457,22 @@ class ClearOrigin extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ClearOrigin;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class DescendOrigin extends Instruction {
-  const DescendOrigin({required this.value0});
+  const DescendOrigin(this.value0);
 
   factory DescendOrigin._decode(_i1.Input input) {
-    return DescendOrigin(
-      value0: _i10.Junctions.codec.decode(input),
-    );
+    return DescendOrigin(_i10.Junctions.codec.decode(input));
   }
 
+  /// InteriorMultiLocation
   final _i10.Junctions value0;
 
   @override
@@ -1337,17 +1494,27 @@ class DescendOrigin extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DescendOrigin && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ReportError extends Instruction {
-  const ReportError({required this.value0});
+  const ReportError(this.value0);
 
   factory ReportError._decode(_i1.Input input) {
-    return ReportError(
-      value0: _i11.QueryResponseInfo.codec.decode(input),
-    );
+    return ReportError(_i11.QueryResponseInfo.codec.decode(input));
   }
 
+  /// QueryResponseInfo
   final _i11.QueryResponseInfo value0;
 
   @override
@@ -1369,6 +1536,17 @@ class ReportError extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ReportError && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class DepositAsset extends Instruction {
@@ -1384,8 +1562,10 @@ class DepositAsset extends Instruction {
     );
   }
 
+  /// MultiAssetFilter
   final _i12.MultiAssetFilter assets;
 
+  /// MultiLocation
   final _i6.MultiLocation beneficiary;
 
   @override
@@ -1417,6 +1597,20 @@ class DepositAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DepositAsset && other.assets == assets && other.beneficiary == beneficiary;
+
+  @override
+  int get hashCode => Object.hash(
+        assets,
+        beneficiary,
+      );
 }
 
 class DepositReserveAsset extends Instruction {
@@ -1430,14 +1624,17 @@ class DepositReserveAsset extends Instruction {
     return DepositReserveAsset(
       assets: _i12.MultiAssetFilter.codec.decode(input),
       dest: _i6.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
+      xcm: const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).decode(input),
     );
   }
 
+  /// MultiAssetFilter
   final _i12.MultiAssetFilter assets;
 
+  /// MultiLocation
   final _i6.MultiLocation dest;
 
+  /// Xcm<()>
   final _i7.Xcm xcm;
 
   @override
@@ -1453,7 +1650,7 @@ class DepositReserveAsset extends Instruction {
     int size = 1;
     size = size + _i12.MultiAssetFilter.codec.sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(dest);
-    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
+    size = size + const _i7.XcmCodec().sizeHint(xcm);
     return size;
   }
 
@@ -1470,11 +1667,32 @@ class DepositReserveAsset extends Instruction {
       dest,
       output,
     );
-    const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).encodeTo(
+    const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).encodeTo(
       xcm,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DepositReserveAsset &&
+          other.assets == assets &&
+          other.dest == dest &&
+          _i20.listsEqual(
+            other.xcm,
+            xcm,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        assets,
+        dest,
+        xcm,
+      );
 }
 
 class ExchangeAsset extends Instruction {
@@ -1492,10 +1710,13 @@ class ExchangeAsset extends Instruction {
     );
   }
 
+  /// MultiAssetFilter
   final _i12.MultiAssetFilter give;
 
+  /// MultiAssets
   final _i3.MultiAssets want;
 
+  /// bool
   final bool maximal;
 
   @override
@@ -1510,7 +1731,7 @@ class ExchangeAsset extends Instruction {
   int _sizeHint() {
     int size = 1;
     size = size + _i12.MultiAssetFilter.codec.sizeHint(give);
-    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(want);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(want);
     size = size + _i1.BoolCodec.codec.sizeHint(maximal);
     return size;
   }
@@ -1533,6 +1754,27 @@ class ExchangeAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExchangeAsset &&
+          other.give == give &&
+          _i20.listsEqual(
+            other.want,
+            want,
+          ) &&
+          other.maximal == maximal;
+
+  @override
+  int get hashCode => Object.hash(
+        give,
+        want,
+        maximal,
+      );
 }
 
 class InitiateReserveWithdraw extends Instruction {
@@ -1546,14 +1788,17 @@ class InitiateReserveWithdraw extends Instruction {
     return InitiateReserveWithdraw(
       assets: _i12.MultiAssetFilter.codec.decode(input),
       reserve: _i6.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
+      xcm: const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).decode(input),
     );
   }
 
+  /// MultiAssetFilter
   final _i12.MultiAssetFilter assets;
 
+  /// MultiLocation
   final _i6.MultiLocation reserve;
 
+  /// Xcm<()>
   final _i7.Xcm xcm;
 
   @override
@@ -1569,7 +1814,7 @@ class InitiateReserveWithdraw extends Instruction {
     int size = 1;
     size = size + _i12.MultiAssetFilter.codec.sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(reserve);
-    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
+    size = size + const _i7.XcmCodec().sizeHint(xcm);
     return size;
   }
 
@@ -1586,11 +1831,32 @@ class InitiateReserveWithdraw extends Instruction {
       reserve,
       output,
     );
-    const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).encodeTo(
+    const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).encodeTo(
       xcm,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InitiateReserveWithdraw &&
+          other.assets == assets &&
+          other.reserve == reserve &&
+          _i20.listsEqual(
+            other.xcm,
+            xcm,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        assets,
+        reserve,
+        xcm,
+      );
 }
 
 class InitiateTeleport extends Instruction {
@@ -1604,14 +1870,17 @@ class InitiateTeleport extends Instruction {
     return InitiateTeleport(
       assets: _i12.MultiAssetFilter.codec.decode(input),
       dest: _i6.MultiLocation.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
+      xcm: const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).decode(input),
     );
   }
 
+  /// MultiAssetFilter
   final _i12.MultiAssetFilter assets;
 
+  /// MultiLocation
   final _i6.MultiLocation dest;
 
+  /// Xcm<()>
   final _i7.Xcm xcm;
 
   @override
@@ -1627,7 +1896,7 @@ class InitiateTeleport extends Instruction {
     int size = 1;
     size = size + _i12.MultiAssetFilter.codec.sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(dest);
-    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
+    size = size + const _i7.XcmCodec().sizeHint(xcm);
     return size;
   }
 
@@ -1644,11 +1913,32 @@ class InitiateTeleport extends Instruction {
       dest,
       output,
     );
-    const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).encodeTo(
+    const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).encodeTo(
       xcm,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InitiateTeleport &&
+          other.assets == assets &&
+          other.dest == dest &&
+          _i20.listsEqual(
+            other.xcm,
+            xcm,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        assets,
+        dest,
+        xcm,
+      );
 }
 
 class ReportHolding extends Instruction {
@@ -1664,8 +1954,10 @@ class ReportHolding extends Instruction {
     );
   }
 
+  /// QueryResponseInfo
   final _i11.QueryResponseInfo responseInfo;
 
+  /// MultiAssetFilter
   final _i12.MultiAssetFilter assets;
 
   @override
@@ -1697,6 +1989,20 @@ class ReportHolding extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ReportHolding && other.responseInfo == responseInfo && other.assets == assets;
+
+  @override
+  int get hashCode => Object.hash(
+        responseInfo,
+        assets,
+      );
 }
 
 class BuyExecution extends Instruction {
@@ -1712,8 +2018,10 @@ class BuyExecution extends Instruction {
     );
   }
 
+  /// MultiAsset
   final _i13.MultiAsset fees;
 
+  /// WeightLimit
   final _i14.WeightLimit weightLimit;
 
   @override
@@ -1745,6 +2053,20 @@ class BuyExecution extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BuyExecution && other.fees == fees && other.weightLimit == weightLimit;
+
+  @override
+  int get hashCode => Object.hash(
+        fees,
+        weightLimit,
+      );
 }
 
 class RefundSurplus extends Instruction {
@@ -1759,26 +2081,30 @@ class RefundSurplus extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is RefundSurplus;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class SetErrorHandler extends Instruction {
-  const SetErrorHandler({required this.value0});
+  const SetErrorHandler(this.value0);
 
   factory SetErrorHandler._decode(_i1.Input input) {
-    return SetErrorHandler(
-      value0: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
-    );
+    return SetErrorHandler(const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).decode(input));
   }
 
+  /// Xcm<Call>
   final _i7.Xcm value0;
 
   @override
-  Map<String, List<Map<String, dynamic>>> toJson() =>
-      {'SetErrorHandler': value0.map((value) => value.toJson()).toList()};
+  Map<String, List<dynamic>> toJson() => {'SetErrorHandler': value0.map((value) => value.toJson()).toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(value0);
+    size = size + const _i7.XcmCodec().sizeHint(value0);
     return size;
   }
 
@@ -1787,30 +2113,44 @@ class SetErrorHandler extends Instruction {
       21,
       output,
     );
-    const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).encodeTo(
+    const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).encodeTo(
       value0,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetErrorHandler &&
+          _i20.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class SetAppendix extends Instruction {
-  const SetAppendix({required this.value0});
+  const SetAppendix(this.value0);
 
   factory SetAppendix._decode(_i1.Input input) {
-    return SetAppendix(
-      value0: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
-    );
+    return SetAppendix(const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).decode(input));
   }
 
+  /// Xcm<Call>
   final _i7.Xcm value0;
 
   @override
-  Map<String, List<Map<String, dynamic>>> toJson() => {'SetAppendix': value0.map((value) => value.toJson()).toList()};
+  Map<String, List<dynamic>> toJson() => {'SetAppendix': value0.map((value) => value.toJson()).toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(value0);
+    size = size + const _i7.XcmCodec().sizeHint(value0);
     return size;
   }
 
@@ -1819,11 +2159,26 @@ class SetAppendix extends Instruction {
       22,
       output,
     );
-    const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).encodeTo(
+    const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).encodeTo(
       value0,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetAppendix &&
+          _i20.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ClearError extends Instruction {
@@ -1838,6 +2193,12 @@ class ClearError extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ClearError;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class ClaimAsset extends Instruction {
@@ -1853,8 +2214,10 @@ class ClaimAsset extends Instruction {
     );
   }
 
+  /// MultiAssets
   final _i3.MultiAssets assets;
 
+  /// MultiLocation
   final _i6.MultiLocation ticket;
 
   @override
@@ -1867,7 +2230,7 @@ class ClaimAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(assets);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(assets);
     size = size + _i6.MultiLocation.codec.sizeHint(ticket);
     return size;
   }
@@ -1886,17 +2249,35 @@ class ClaimAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ClaimAsset &&
+          _i20.listsEqual(
+            other.assets,
+            assets,
+          ) &&
+          other.ticket == ticket;
+
+  @override
+  int get hashCode => Object.hash(
+        assets,
+        ticket,
+      );
 }
 
 class Trap extends Instruction {
-  const Trap({required this.value0});
+  const Trap(this.value0);
 
   factory Trap._decode(_i1.Input input) {
-    return Trap(
-      value0: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Trap(_i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u64
   final BigInt value0;
 
   @override
@@ -1918,6 +2299,17 @@ class Trap extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Trap && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class SubscribeVersion extends Instruction {
@@ -1933,8 +2325,10 @@ class SubscribeVersion extends Instruction {
     );
   }
 
+  /// QueryId
   final BigInt queryId;
 
+  /// Weight
   final _i5.Weight maxResponseWeight;
 
   @override
@@ -1966,6 +2360,20 @@ class SubscribeVersion extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SubscribeVersion && other.queryId == queryId && other.maxResponseWeight == maxResponseWeight;
+
+  @override
+  int get hashCode => Object.hash(
+        queryId,
+        maxResponseWeight,
+      );
 }
 
 class UnsubscribeVersion extends Instruction {
@@ -1980,17 +2388,22 @@ class UnsubscribeVersion extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is UnsubscribeVersion;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class BurnAsset extends Instruction {
-  const BurnAsset({required this.value0});
+  const BurnAsset(this.value0);
 
   factory BurnAsset._decode(_i1.Input input) {
-    return BurnAsset(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
-    );
+    return BurnAsset(const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input));
   }
 
+  /// MultiAssets
   final _i3.MultiAssets value0;
 
   @override
@@ -1999,7 +2412,7 @@ class BurnAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(value0);
     return size;
   }
 
@@ -2013,17 +2426,31 @@ class BurnAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BurnAsset &&
+          _i20.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ExpectAsset extends Instruction {
-  const ExpectAsset({required this.value0});
+  const ExpectAsset(this.value0);
 
   factory ExpectAsset._decode(_i1.Input input) {
-    return ExpectAsset(
-      value0: const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input),
-    );
+    return ExpectAsset(const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).decode(input));
   }
 
+  /// MultiAssets
   final _i3.MultiAssets value0;
 
   @override
@@ -2032,7 +2459,7 @@ class ExpectAsset extends Instruction {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i13.MultiAsset>(_i13.MultiAsset.codec).sizeHint(value0);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(value0);
     return size;
   }
 
@@ -2046,17 +2473,31 @@ class ExpectAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExpectAsset &&
+          _i20.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ExpectOrigin extends Instruction {
-  const ExpectOrigin({this.value0});
+  const ExpectOrigin(this.value0);
 
   factory ExpectOrigin._decode(_i1.Input input) {
-    return ExpectOrigin(
-      value0: const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec).decode(input),
-    );
+    return ExpectOrigin(const _i1.OptionCodec<_i6.MultiLocation>(_i6.MultiLocation.codec).decode(input));
   }
 
+  /// Option<MultiLocation>
   final _i6.MultiLocation? value0;
 
   @override
@@ -2078,20 +2519,30 @@ class ExpectOrigin extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExpectOrigin && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ExpectError extends Instruction {
-  const ExpectError({this.value0});
+  const ExpectError(this.value0);
 
   factory ExpectError._decode(_i1.Input input) {
-    return ExpectError(
-      value0: const _i1.OptionCodec<_i15.Tuple2<int, _i16.Error>>(_i15.Tuple2Codec<int, _i16.Error>(
-        _i1.U32Codec.codec,
-        _i16.Error.codec,
-      )).decode(input),
-    );
+    return ExpectError(const _i1.OptionCodec<_i15.Tuple2<int, _i16.Error>>(_i15.Tuple2Codec<int, _i16.Error>(
+      _i1.U32Codec.codec,
+      _i16.Error.codec,
+    )).decode(input));
   }
 
+  /// Option<(u32, Error)>
   final _i15.Tuple2<int, _i16.Error>? value0;
 
   @override
@@ -2125,17 +2576,27 @@ class ExpectError extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExpectError && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ExpectTransactStatus extends Instruction {
-  const ExpectTransactStatus({required this.value0});
+  const ExpectTransactStatus(this.value0);
 
   factory ExpectTransactStatus._decode(_i1.Input input) {
-    return ExpectTransactStatus(
-      value0: _i17.MaybeErrorCode.codec.decode(input),
-    );
+    return ExpectTransactStatus(_i17.MaybeErrorCode.codec.decode(input));
   }
 
+  /// MaybeErrorCode
   final _i17.MaybeErrorCode value0;
 
   @override
@@ -2157,6 +2618,17 @@ class ExpectTransactStatus extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExpectTransactStatus && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class QueryPallet extends Instruction {
@@ -2172,8 +2644,10 @@ class QueryPallet extends Instruction {
     );
   }
 
+  /// Vec<u8>
   final List<int> moduleName;
 
+  /// QueryResponseInfo
   final _i11.QueryResponseInfo responseInfo;
 
   @override
@@ -2205,6 +2679,25 @@ class QueryPallet extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is QueryPallet &&
+          _i20.listsEqual(
+            other.moduleName,
+            moduleName,
+          ) &&
+          other.responseInfo == responseInfo;
+
+  @override
+  int get hashCode => Object.hash(
+        moduleName,
+        responseInfo,
+      );
 }
 
 class ExpectPallet extends Instruction {
@@ -2226,14 +2719,19 @@ class ExpectPallet extends Instruction {
     );
   }
 
+  /// u32
   final BigInt index;
 
+  /// Vec<u8>
   final List<int> name;
 
+  /// Vec<u8>
   final List<int> moduleName;
 
+  /// u32
   final BigInt crateMajor;
 
+  /// u32
   final BigInt minCrateMinor;
 
   @override
@@ -2283,17 +2781,44 @@ class ExpectPallet extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExpectPallet &&
+          other.index == index &&
+          _i20.listsEqual(
+            other.name,
+            name,
+          ) &&
+          _i20.listsEqual(
+            other.moduleName,
+            moduleName,
+          ) &&
+          other.crateMajor == crateMajor &&
+          other.minCrateMinor == minCrateMinor;
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        name,
+        moduleName,
+        crateMajor,
+        minCrateMinor,
+      );
 }
 
 class ReportTransactStatus extends Instruction {
-  const ReportTransactStatus({required this.value0});
+  const ReportTransactStatus(this.value0);
 
   factory ReportTransactStatus._decode(_i1.Input input) {
-    return ReportTransactStatus(
-      value0: _i11.QueryResponseInfo.codec.decode(input),
-    );
+    return ReportTransactStatus(_i11.QueryResponseInfo.codec.decode(input));
   }
 
+  /// QueryResponseInfo
   final _i11.QueryResponseInfo value0;
 
   @override
@@ -2315,6 +2840,17 @@ class ReportTransactStatus extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ReportTransactStatus && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ClearTransactStatus extends Instruction {
@@ -2329,17 +2865,22 @@ class ClearTransactStatus extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ClearTransactStatus;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class UniversalOrigin extends Instruction {
-  const UniversalOrigin({required this.value0});
+  const UniversalOrigin(this.value0);
 
   factory UniversalOrigin._decode(_i1.Input input) {
-    return UniversalOrigin(
-      value0: _i18.Junction.codec.decode(input),
-    );
+    return UniversalOrigin(_i18.Junction.codec.decode(input));
   }
 
+  /// Junction
   final _i18.Junction value0;
 
   @override
@@ -2361,6 +2902,17 @@ class UniversalOrigin extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UniversalOrigin && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ExportMessage extends Instruction {
@@ -2374,14 +2926,17 @@ class ExportMessage extends Instruction {
     return ExportMessage(
       network: _i19.NetworkId.codec.decode(input),
       destination: _i10.Junctions.codec.decode(input),
-      xcm: const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).decode(input),
+      xcm: const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).decode(input),
     );
   }
 
+  /// NetworkId
   final _i19.NetworkId network;
 
+  /// InteriorMultiLocation
   final _i10.Junctions destination;
 
+  /// Xcm<()>
   final _i7.Xcm xcm;
 
   @override
@@ -2397,7 +2952,7 @@ class ExportMessage extends Instruction {
     int size = 1;
     size = size + _i19.NetworkId.codec.sizeHint(network);
     size = size + _i10.Junctions.codec.sizeHint(destination);
-    size = size + const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).sizeHint(xcm);
+    size = size + const _i7.XcmCodec().sizeHint(xcm);
     return size;
   }
 
@@ -2414,11 +2969,32 @@ class ExportMessage extends Instruction {
       destination,
       output,
     );
-    const _i1.SequenceCodec<_i20.Instruction>(_i20.Instruction.codec).encodeTo(
+    const _i1.SequenceCodec<_i21.Instruction>(_i21.Instruction.codec).encodeTo(
       xcm,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExportMessage &&
+          other.network == network &&
+          other.destination == destination &&
+          _i20.listsEqual(
+            other.xcm,
+            xcm,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        network,
+        destination,
+        xcm,
+      );
 }
 
 class LockAsset extends Instruction {
@@ -2434,8 +3010,10 @@ class LockAsset extends Instruction {
     );
   }
 
+  /// MultiAsset
   final _i13.MultiAsset asset;
 
+  /// MultiLocation
   final _i6.MultiLocation unlocker;
 
   @override
@@ -2467,6 +3045,20 @@ class LockAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is LockAsset && other.asset == asset && other.unlocker == unlocker;
+
+  @override
+  int get hashCode => Object.hash(
+        asset,
+        unlocker,
+      );
 }
 
 class UnlockAsset extends Instruction {
@@ -2482,8 +3074,10 @@ class UnlockAsset extends Instruction {
     );
   }
 
+  /// MultiAsset
   final _i13.MultiAsset asset;
 
+  /// MultiLocation
   final _i6.MultiLocation target;
 
   @override
@@ -2515,6 +3109,20 @@ class UnlockAsset extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UnlockAsset && other.asset == asset && other.target == target;
+
+  @override
+  int get hashCode => Object.hash(
+        asset,
+        target,
+      );
 }
 
 class NoteUnlockable extends Instruction {
@@ -2530,8 +3138,10 @@ class NoteUnlockable extends Instruction {
     );
   }
 
+  /// MultiAsset
   final _i13.MultiAsset asset;
 
+  /// MultiLocation
   final _i6.MultiLocation owner;
 
   @override
@@ -2563,6 +3173,20 @@ class NoteUnlockable extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NoteUnlockable && other.asset == asset && other.owner == owner;
+
+  @override
+  int get hashCode => Object.hash(
+        asset,
+        owner,
+      );
 }
 
 class RequestUnlock extends Instruction {
@@ -2578,8 +3202,10 @@ class RequestUnlock extends Instruction {
     );
   }
 
+  /// MultiAsset
   final _i13.MultiAsset asset;
 
+  /// MultiLocation
   final _i6.MultiLocation locker;
 
   @override
@@ -2611,17 +3237,30 @@ class RequestUnlock extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RequestUnlock && other.asset == asset && other.locker == locker;
+
+  @override
+  int get hashCode => Object.hash(
+        asset,
+        locker,
+      );
 }
 
 class SetFeesMode extends Instruction {
   const SetFeesMode({required this.jitWithdraw});
 
   factory SetFeesMode._decode(_i1.Input input) {
-    return SetFeesMode(
-      jitWithdraw: _i1.BoolCodec.codec.decode(input),
-    );
+    return SetFeesMode(jitWithdraw: _i1.BoolCodec.codec.decode(input));
   }
 
+  /// bool
   final bool jitWithdraw;
 
   @override
@@ -2645,17 +3284,27 @@ class SetFeesMode extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetFeesMode && other.jitWithdraw == jitWithdraw;
+
+  @override
+  int get hashCode => jitWithdraw.hashCode;
 }
 
 class SetTopic extends Instruction {
-  const SetTopic({required this.value0});
+  const SetTopic(this.value0);
 
   factory SetTopic._decode(_i1.Input input) {
-    return SetTopic(
-      value0: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return SetTopic(const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// [u8; 32]
   final List<int> value0;
 
   @override
@@ -2677,6 +3326,21 @@ class SetTopic extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetTopic &&
+          _i20.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ClearTopic extends Instruction {
@@ -2691,17 +3355,22 @@ class ClearTopic extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ClearTopic;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class AliasOrigin extends Instruction {
-  const AliasOrigin({required this.value0});
+  const AliasOrigin(this.value0);
 
   factory AliasOrigin._decode(_i1.Input input) {
-    return AliasOrigin(
-      value0: _i6.MultiLocation.codec.decode(input),
-    );
+    return AliasOrigin(_i6.MultiLocation.codec.decode(input));
   }
 
+  /// MultiLocation
   final _i6.MultiLocation value0;
 
   @override
@@ -2723,6 +3392,17 @@ class AliasOrigin extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AliasOrigin && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class UnpaidExecution extends Instruction {
@@ -2738,8 +3418,10 @@ class UnpaidExecution extends Instruction {
     );
   }
 
+  /// WeightLimit
   final _i14.WeightLimit weightLimit;
 
+  /// Option<MultiLocation>
   final _i6.MultiLocation? checkOrigin;
 
   @override
@@ -2771,4 +3453,18 @@ class UnpaidExecution extends Instruction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UnpaidExecution && other.weightLimit == weightLimit && other.checkOrigin == checkOrigin;
+
+  @override
+  int get hashCode => Object.hash(
+        weightLimit,
+        checkOrigin,
+      );
 }

@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../communities/community_identifier.dart' as _i2;
-import '../../sp_core/crypto/account_id32.dart' as _i3;
 import 'dart:typed_data' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
+import '../../sp_core/crypto/account_id32.dart' as _i3;
+import '../communities/community_identifier.dart' as _i2;
 
 class Faucet {
   const Faucet({
@@ -17,14 +20,19 @@ class Faucet {
     return codec.decode(input);
   }
 
+  /// FaucetNameType
   final List<int> name;
 
+  /// PurposeIdType
   final BigInt purposeId;
 
+  /// Option<WhiteListType>
   final List<_i2.CommunityIdentifier>? whitelist;
 
+  /// Balance
   final BigInt dripAmount;
 
+  /// AccountId
   final _i3.AccountId32 creator;
 
   static const $FaucetCodec codec = $FaucetCodec();
@@ -40,6 +48,34 @@ class Faucet {
         'dripAmount': dripAmount,
         'creator': creator.toList(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Faucet &&
+          _i5.listsEqual(
+            other.name,
+            name,
+          ) &&
+          other.purposeId == purposeId &&
+          other.whitelist == whitelist &&
+          other.dripAmount == dripAmount &&
+          _i5.listsEqual(
+            other.creator,
+            creator,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        name,
+        purposeId,
+        whitelist,
+        dripAmount,
+        creator,
+      );
 }
 
 class $FaucetCodec with _i1.Codec<Faucet> {
@@ -97,7 +133,7 @@ class $FaucetCodec with _i1.Codec<Faucet> {
                 _i1.SequenceCodec<_i2.CommunityIdentifier>(_i2.CommunityIdentifier.codec))
             .sizeHint(obj.whitelist);
     size = size + _i1.U128Codec.codec.sizeHint(obj.dripAmount);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.creator);
+    size = size + const _i3.AccountId32Codec().sizeHint(obj.creator);
     return size;
   }
 }

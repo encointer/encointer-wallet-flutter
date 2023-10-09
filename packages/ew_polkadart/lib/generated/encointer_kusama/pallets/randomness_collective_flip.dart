@@ -1,8 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/polkadart.dart' as _i1;
-import '../types/primitive_types/h256.dart' as _i2;
-import 'package:polkadart/scale_codec.dart' as _i3;
 import 'dart:async' as _i4;
+
+import 'package:polkadart/polkadart.dart' as _i1;
+import 'package:polkadart/scale_codec.dart' as _i3;
+
+import '../types/primitive_types/h256.dart' as _i2;
 
 class Queries {
   const Queries(this.__api);
@@ -12,7 +14,7 @@ class Queries {
   final _i1.StorageValue<List<_i2.H256>> _randomMaterial = const _i1.StorageValue<List<_i2.H256>>(
     prefix: 'RandomnessCollectiveFlip',
     storage: 'RandomMaterial',
-    valueCodec: _i3.SequenceCodec<_i2.H256>(_i3.U8ArrayCodec(32)),
+    valueCodec: _i3.SequenceCodec<_i2.H256>(_i2.H256Codec()),
   );
 
   /// Series of block headers from the last 81 blocks that acts as random seed material. This
@@ -27,6 +29,6 @@ class Queries {
     if (bytes != null) {
       return _randomMaterial.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 }

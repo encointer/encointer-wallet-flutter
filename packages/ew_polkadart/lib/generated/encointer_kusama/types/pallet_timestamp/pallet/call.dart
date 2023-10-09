@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -31,9 +32,7 @@ class $Call {
   const $Call();
 
   Set set({required BigInt now}) {
-    return Set(
-      now: now,
-    );
+    return Set(now: now);
   }
 }
 
@@ -81,11 +80,10 @@ class Set extends Call {
   const Set({required this.now});
 
   factory Set._decode(_i1.Input input) {
-    return Set(
-      now: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Set(now: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// T::Moment
   final BigInt now;
 
   @override
@@ -109,4 +107,15 @@ class Set extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Set && other.now == now;
+
+  @override
+  int get hashCode => now.hashCode;
 }

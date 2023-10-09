@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../sp_core/crypto/account_id32.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../frame_support/traits/tokens/misc/balance_status.dart' as _i4;
+import '../../sp_core/crypto/account_id32.dart' as _i3;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -179,21 +182,15 @@ class $Event {
   }
 
   Upgraded upgraded({required _i3.AccountId32 who}) {
-    return Upgraded(
-      who: who,
-    );
+    return Upgraded(who: who);
   }
 
   Issued issued({required BigInt amount}) {
-    return Issued(
-      amount: amount,
-    );
+    return Issued(amount: amount);
   }
 
   Rescinded rescinded({required BigInt amount}) {
-    return Rescinded(
-      amount: amount,
-    );
+    return Rescinded(amount: amount);
   }
 
   Locked locked({
@@ -430,8 +427,10 @@ class Endowed extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 account;
 
+  /// T::Balance
   final BigInt freeBalance;
 
   @override
@@ -444,7 +443,7 @@ class Endowed extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(account);
+    size = size + const _i3.AccountId32Codec().sizeHint(account);
     size = size + _i1.U128Codec.codec.sizeHint(freeBalance);
     return size;
   }
@@ -463,6 +462,25 @@ class Endowed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Endowed &&
+          _i5.listsEqual(
+            other.account,
+            account,
+          ) &&
+          other.freeBalance == freeBalance;
+
+  @override
+  int get hashCode => Object.hash(
+        account,
+        freeBalance,
+      );
 }
 
 /// An account was removed whose balance was non-zero but below ExistentialDeposit,
@@ -480,8 +498,10 @@ class DustLost extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 account;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -494,7 +514,7 @@ class DustLost extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(account);
+    size = size + const _i3.AccountId32Codec().sizeHint(account);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -513,6 +533,25 @@ class DustLost extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DustLost &&
+          _i5.listsEqual(
+            other.account,
+            account,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        account,
+        amount,
+      );
 }
 
 /// Transfer succeeded.
@@ -531,10 +570,13 @@ class Transfer extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 from;
 
+  /// T::AccountId
   final _i3.AccountId32 to;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -548,8 +590,8 @@ class Transfer extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(from);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(to);
+    size = size + const _i3.AccountId32Codec().sizeHint(from);
+    size = size + const _i3.AccountId32Codec().sizeHint(to);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -572,6 +614,30 @@ class Transfer extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Transfer &&
+          _i5.listsEqual(
+            other.from,
+            from,
+          ) &&
+          _i5.listsEqual(
+            other.to,
+            to,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        from,
+        to,
+        amount,
+      );
 }
 
 /// A balance was set by root.
@@ -588,8 +654,10 @@ class BalanceSet extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt free;
 
   @override
@@ -602,7 +670,7 @@ class BalanceSet extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(free);
     return size;
   }
@@ -621,6 +689,25 @@ class BalanceSet extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BalanceSet &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.free == free;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        free,
+      );
 }
 
 /// Some balance was reserved (moved from free to reserved).
@@ -637,8 +724,10 @@ class Reserved extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -651,7 +740,7 @@ class Reserved extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -670,6 +759,25 @@ class Reserved extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Reserved &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some balance was unreserved (moved from reserved to free).
@@ -686,8 +794,10 @@ class Unreserved extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -700,7 +810,7 @@ class Unreserved extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -719,6 +829,25 @@ class Unreserved extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Unreserved &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some balance was moved from the reserve of the first account to the second account.
@@ -740,12 +869,16 @@ class ReserveRepatriated extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 from;
 
+  /// T::AccountId
   final _i3.AccountId32 to;
 
+  /// T::Balance
   final BigInt amount;
 
+  /// Status
   final _i4.BalanceStatus destinationStatus;
 
   @override
@@ -760,8 +893,8 @@ class ReserveRepatriated extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(from);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(to);
+    size = size + const _i3.AccountId32Codec().sizeHint(from);
+    size = size + const _i3.AccountId32Codec().sizeHint(to);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     size = size + _i4.BalanceStatus.codec.sizeHint(destinationStatus);
     return size;
@@ -789,6 +922,32 @@ class ReserveRepatriated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ReserveRepatriated &&
+          _i5.listsEqual(
+            other.from,
+            from,
+          ) &&
+          _i5.listsEqual(
+            other.to,
+            to,
+          ) &&
+          other.amount == amount &&
+          other.destinationStatus == destinationStatus;
+
+  @override
+  int get hashCode => Object.hash(
+        from,
+        to,
+        amount,
+        destinationStatus,
+      );
 }
 
 /// Some amount was deposited (e.g. for transaction fees).
@@ -805,8 +964,10 @@ class Deposit extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -819,7 +980,7 @@ class Deposit extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -838,6 +999,25 @@ class Deposit extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Deposit &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some amount was withdrawn from the account (e.g. for transaction fees).
@@ -854,8 +1034,10 @@ class Withdraw extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -868,7 +1050,7 @@ class Withdraw extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -887,6 +1069,25 @@ class Withdraw extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Withdraw &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some amount was removed from the account (e.g. for misbehavior).
@@ -903,8 +1104,10 @@ class Slashed extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -917,7 +1120,7 @@ class Slashed extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -936,6 +1139,25 @@ class Slashed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Slashed &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some amount was minted into an account.
@@ -952,8 +1174,10 @@ class Minted extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -966,7 +1190,7 @@ class Minted extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -985,6 +1209,25 @@ class Minted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Minted &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some amount was burned from an account.
@@ -1001,8 +1244,10 @@ class Burned extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -1015,7 +1260,7 @@ class Burned extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -1034,6 +1279,25 @@ class Burned extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Burned &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some amount was suspended from an account (it can be restored later).
@@ -1050,8 +1314,10 @@ class Suspended extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -1064,7 +1330,7 @@ class Suspended extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -1083,6 +1349,25 @@ class Suspended extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Suspended &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some amount was restored into an account.
@@ -1099,8 +1384,10 @@ class Restored extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -1113,7 +1400,7 @@ class Restored extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -1132,6 +1419,25 @@ class Restored extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Restored &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// An account was upgraded.
@@ -1139,11 +1445,10 @@ class Upgraded extends Event {
   const Upgraded({required this.who});
 
   factory Upgraded._decode(_i1.Input input) {
-    return Upgraded(
-      who: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Upgraded(who: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
   @override
@@ -1153,7 +1458,7 @@ class Upgraded extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     return size;
   }
 
@@ -1167,6 +1472,21 @@ class Upgraded extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Upgraded &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          );
+
+  @override
+  int get hashCode => who.hashCode;
 }
 
 /// Total issuance was increased by `amount`, creating a credit to be balanced.
@@ -1174,11 +1494,10 @@ class Issued extends Event {
   const Issued({required this.amount});
 
   factory Issued._decode(_i1.Input input) {
-    return Issued(
-      amount: _i1.U128Codec.codec.decode(input),
-    );
+    return Issued(amount: _i1.U128Codec.codec.decode(input));
   }
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -1202,6 +1521,17 @@ class Issued extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Issued && other.amount == amount;
+
+  @override
+  int get hashCode => amount.hashCode;
 }
 
 /// Total issuance was decreased by `amount`, creating a debt to be balanced.
@@ -1209,11 +1539,10 @@ class Rescinded extends Event {
   const Rescinded({required this.amount});
 
   factory Rescinded._decode(_i1.Input input) {
-    return Rescinded(
-      amount: _i1.U128Codec.codec.decode(input),
-    );
+    return Rescinded(amount: _i1.U128Codec.codec.decode(input));
   }
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -1237,6 +1566,17 @@ class Rescinded extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Rescinded && other.amount == amount;
+
+  @override
+  int get hashCode => amount.hashCode;
 }
 
 /// Some balance was locked.
@@ -1253,8 +1593,10 @@ class Locked extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -1267,7 +1609,7 @@ class Locked extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -1286,6 +1628,25 @@ class Locked extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Locked &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some balance was unlocked.
@@ -1302,8 +1663,10 @@ class Unlocked extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -1316,7 +1679,7 @@ class Unlocked extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -1335,6 +1698,25 @@ class Unlocked extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Unlocked &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some balance was frozen.
@@ -1351,8 +1733,10 @@ class Frozen extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -1365,7 +1749,7 @@ class Frozen extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -1384,6 +1768,25 @@ class Frozen extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Frozen &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// Some balance was thawed.
@@ -1400,8 +1803,10 @@ class Thawed extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -1414,7 +1819,7 @@ class Thawed extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
@@ -1433,4 +1838,23 @@ class Thawed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Thawed &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }

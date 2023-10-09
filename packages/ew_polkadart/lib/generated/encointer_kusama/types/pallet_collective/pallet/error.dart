@@ -1,17 +1,38 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// Account is not a member
   notMember('NotMember', 0),
+
+  /// Duplicate proposals not allowed
   duplicateProposal('DuplicateProposal', 1),
+
+  /// Proposal must exist
   proposalMissing('ProposalMissing', 2),
+
+  /// Mismatched index
   wrongIndex('WrongIndex', 3),
+
+  /// Duplicate vote ignored
   duplicateVote('DuplicateVote', 4),
+
+  /// Members are already initialized!
   alreadyInitialized('AlreadyInitialized', 5),
+
+  /// The close call was made too early, before the end of the voting.
   tooEarly('TooEarly', 6),
+
+  /// There can only be a maximum of `MaxProposals` active proposals.
   tooManyProposals('TooManyProposals', 7),
+
+  /// The given weight bound for the proposal was too low.
   wrongProposalWeight('WrongProposalWeight', 8),
+
+  /// The given length bound for the proposal was too low.
   wrongProposalLength('WrongProposalLength', 9);
 
   const Error(

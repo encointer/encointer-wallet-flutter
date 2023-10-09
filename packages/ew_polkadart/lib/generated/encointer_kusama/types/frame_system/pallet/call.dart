@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../../tuples.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -32,39 +35,27 @@ class $Call {
   const $Call();
 
   Remark remark({required List<int> remark}) {
-    return Remark(
-      remark: remark,
-    );
+    return Remark(remark: remark);
   }
 
   SetHeapPages setHeapPages({required BigInt pages}) {
-    return SetHeapPages(
-      pages: pages,
-    );
+    return SetHeapPages(pages: pages);
   }
 
   SetCode setCode({required List<int> code}) {
-    return SetCode(
-      code: code,
-    );
+    return SetCode(code: code);
   }
 
   SetCodeWithoutChecks setCodeWithoutChecks({required List<int> code}) {
-    return SetCodeWithoutChecks(
-      code: code,
-    );
+    return SetCodeWithoutChecks(code: code);
   }
 
   SetStorage setStorage({required List<_i3.Tuple2<List<int>, List<int>>> items}) {
-    return SetStorage(
-      items: items,
-    );
+    return SetStorage(items: items);
   }
 
   KillStorage killStorage({required List<List<int>> keys}) {
-    return KillStorage(
-      keys: keys,
-    );
+    return KillStorage(keys: keys);
   }
 
   KillPrefix killPrefix({
@@ -78,9 +69,7 @@ class $Call {
   }
 
   RemarkWithEvent remarkWithEvent({required List<int> remark}) {
-    return RemarkWithEvent(
-      remark: remark,
-    );
+    return RemarkWithEvent(remark: remark);
   }
 }
 
@@ -177,11 +166,10 @@ class Remark extends Call {
   const Remark({required this.remark});
 
   factory Remark._decode(_i1.Input input) {
-    return Remark(
-      remark: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return Remark(remark: _i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// Vec<u8>
   final List<int> remark;
 
   @override
@@ -205,6 +193,21 @@ class Remark extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Remark &&
+          _i4.listsEqual(
+            other.remark,
+            remark,
+          );
+
+  @override
+  int get hashCode => remark.hashCode;
 }
 
 /// See [`Pallet::set_heap_pages`].
@@ -212,11 +215,10 @@ class SetHeapPages extends Call {
   const SetHeapPages({required this.pages});
 
   factory SetHeapPages._decode(_i1.Input input) {
-    return SetHeapPages(
-      pages: _i1.U64Codec.codec.decode(input),
-    );
+    return SetHeapPages(pages: _i1.U64Codec.codec.decode(input));
   }
 
+  /// u64
   final BigInt pages;
 
   @override
@@ -240,6 +242,17 @@ class SetHeapPages extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetHeapPages && other.pages == pages;
+
+  @override
+  int get hashCode => pages.hashCode;
 }
 
 /// See [`Pallet::set_code`].
@@ -247,11 +260,10 @@ class SetCode extends Call {
   const SetCode({required this.code});
 
   factory SetCode._decode(_i1.Input input) {
-    return SetCode(
-      code: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return SetCode(code: _i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// Vec<u8>
   final List<int> code;
 
   @override
@@ -275,6 +287,21 @@ class SetCode extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetCode &&
+          _i4.listsEqual(
+            other.code,
+            code,
+          );
+
+  @override
+  int get hashCode => code.hashCode;
 }
 
 /// See [`Pallet::set_code_without_checks`].
@@ -282,11 +309,10 @@ class SetCodeWithoutChecks extends Call {
   const SetCodeWithoutChecks({required this.code});
 
   factory SetCodeWithoutChecks._decode(_i1.Input input) {
-    return SetCodeWithoutChecks(
-      code: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return SetCodeWithoutChecks(code: _i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// Vec<u8>
   final List<int> code;
 
   @override
@@ -310,6 +336,21 @@ class SetCodeWithoutChecks extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetCodeWithoutChecks &&
+          _i4.listsEqual(
+            other.code,
+            code,
+          );
+
+  @override
+  int get hashCode => code.hashCode;
 }
 
 /// See [`Pallet::set_storage`].
@@ -318,13 +359,13 @@ class SetStorage extends Call {
 
   factory SetStorage._decode(_i1.Input input) {
     return SetStorage(
-      items: const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(_i3.Tuple2Codec<List<int>, List<int>>(
-        _i1.U8SequenceCodec.codec,
-        _i1.U8SequenceCodec.codec,
-      )).decode(input),
-    );
+        items: const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(_i3.Tuple2Codec<List<int>, List<int>>(
+      _i1.U8SequenceCodec.codec,
+      _i1.U8SequenceCodec.codec,
+    )).decode(input));
   }
 
+  /// Vec<KeyValue>
   final List<_i3.Tuple2<List<int>, List<int>>> items;
 
   @override
@@ -362,6 +403,21 @@ class SetStorage extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetStorage &&
+          _i4.listsEqual(
+            other.items,
+            items,
+          );
+
+  @override
+  int get hashCode => items.hashCode;
 }
 
 /// See [`Pallet::kill_storage`].
@@ -369,11 +425,10 @@ class KillStorage extends Call {
   const KillStorage({required this.keys});
 
   factory KillStorage._decode(_i1.Input input) {
-    return KillStorage(
-      keys: const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input),
-    );
+    return KillStorage(keys: const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input));
   }
 
+  /// Vec<Key>
   final List<List<int>> keys;
 
   @override
@@ -397,6 +452,21 @@ class KillStorage extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is KillStorage &&
+          _i4.listsEqual(
+            other.keys,
+            keys,
+          );
+
+  @override
+  int get hashCode => keys.hashCode;
 }
 
 /// See [`Pallet::kill_prefix`].
@@ -413,8 +483,10 @@ class KillPrefix extends Call {
     );
   }
 
+  /// Key
   final List<int> prefix;
 
+  /// u32
   final int subkeys;
 
   @override
@@ -446,6 +518,25 @@ class KillPrefix extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is KillPrefix &&
+          _i4.listsEqual(
+            other.prefix,
+            prefix,
+          ) &&
+          other.subkeys == subkeys;
+
+  @override
+  int get hashCode => Object.hash(
+        prefix,
+        subkeys,
+      );
 }
 
 /// See [`Pallet::remark_with_event`].
@@ -453,11 +544,10 @@ class RemarkWithEvent extends Call {
   const RemarkWithEvent({required this.remark});
 
   factory RemarkWithEvent._decode(_i1.Input input) {
-    return RemarkWithEvent(
-      remark: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return RemarkWithEvent(remark: _i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// Vec<u8>
   final List<int> remark;
 
   @override
@@ -481,4 +571,19 @@ class RemarkWithEvent extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RemarkWithEvent &&
+          _i4.listsEqual(
+            other.remark,
+            remark,
+          );
+
+  @override
+  int get hashCode => remark.hashCode;
 }

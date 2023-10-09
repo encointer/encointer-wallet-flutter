@@ -1,15 +1,33 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// Attempt to upgrade validation function while existing upgrade pending.
   overlappingUpgrades('OverlappingUpgrades', 0),
+
+  /// Polkadot currently prohibits this parachain from upgrading its validation function.
   prohibitedByPolkadot('ProhibitedByPolkadot', 1),
+
+  /// The supplied validation function has compiled into a blob larger than Polkadot is
+  /// willing to run.
   tooBig('TooBig', 2),
+
+  /// The inherent which supplies the validation data did not run this block.
   validationDataNotAvailable('ValidationDataNotAvailable', 3),
+
+  /// The inherent which supplies the host configuration did not run this block.
   hostConfigurationNotAvailable('HostConfigurationNotAvailable', 4),
+
+  /// No validation function upgrade is currently scheduled.
   notScheduled('NotScheduled', 5),
+
+  /// No code upgrade has been authorized.
   nothingAuthorized('NothingAuthorized', 6),
+
+  /// The given code upgrade has not been authorized.
   unauthorized('Unauthorized', 7);
 
   const Error(

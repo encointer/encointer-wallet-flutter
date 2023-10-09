@@ -1,11 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i7;
+
 import 'package:polkadart/polkadart.dart' as _i1;
+import 'package:polkadart/scale_codec.dart' as _i5;
+
+import '../types/pallet_proxy/announcement.dart' as _i6;
+import '../types/pallet_proxy/proxy_definition.dart' as _i4;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
 import '../types/tuples.dart' as _i3;
-import '../types/pallet_proxy/proxy_definition.dart' as _i4;
-import 'package:polkadart/scale_codec.dart' as _i5;
-import '../types/pallet_proxy/announcement.dart' as _i6;
-import 'dart:async' as _i7;
 
 class Queries {
   const Queries(this.__api);
@@ -20,7 +22,7 @@ class Queries {
       _i5.SequenceCodec<_i4.ProxyDefinition>(_i4.ProxyDefinition.codec),
       _i5.U128Codec.codec,
     ),
-    hasher: _i1.StorageHasher.twoxx64Concat(_i5.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.twoxx64Concat(_i2.AccountId32Codec()),
   );
 
   final _i1.StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i6.Announcement>, BigInt>> _announcements =
@@ -31,7 +33,7 @@ class Queries {
       _i5.SequenceCodec<_i6.Announcement>(_i6.Announcement.codec),
       _i5.U128Codec.codec,
     ),
-    hasher: _i1.StorageHasher.twoxx64Concat(_i5.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.twoxx64Concat(_i2.AccountId32Codec()),
   );
 
   /// The set of account proxies. Maps the account which has delegated to the accounts
@@ -49,7 +51,7 @@ class Queries {
       return _proxies.decodeValue(bytes);
     }
     return _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>(
-      const [],
+      [],
       BigInt.zero,
     ); /* Default */
   }
@@ -68,7 +70,7 @@ class Queries {
       return _announcements.decodeValue(bytes);
     }
     return _i3.Tuple2<List<_i6.Announcement>, BigInt>(
-      const [],
+      [],
       BigInt.zero,
     ); /* Default */
   }

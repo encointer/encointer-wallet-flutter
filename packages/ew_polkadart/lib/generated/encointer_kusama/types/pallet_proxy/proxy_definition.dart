@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../sp_core/crypto/account_id32.dart' as _i2;
-import '../encointer_runtime/proxy_type.dart' as _i3;
 import 'dart:typed_data' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
+import '../encointer_runtime/proxy_type.dart' as _i3;
+import '../sp_core/crypto/account_id32.dart' as _i2;
 
 class ProxyDefinition {
   const ProxyDefinition({
@@ -15,10 +18,13 @@ class ProxyDefinition {
     return codec.decode(input);
   }
 
+  /// AccountId
   final _i2.AccountId32 delegate;
 
+  /// ProxyType
   final _i3.ProxyType proxyType;
 
+  /// BlockNumber
   final int delay;
 
   static const $ProxyDefinitionCodec codec = $ProxyDefinitionCodec();
@@ -32,6 +38,27 @@ class ProxyDefinition {
         'proxyType': proxyType.toJson(),
         'delay': delay,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ProxyDefinition &&
+          _i5.listsEqual(
+            other.delegate,
+            delegate,
+          ) &&
+          other.proxyType == proxyType &&
+          other.delay == delay;
+
+  @override
+  int get hashCode => Object.hash(
+        delegate,
+        proxyType,
+        delay,
+      );
 }
 
 class $ProxyDefinitionCodec with _i1.Codec<ProxyDefinition> {
@@ -68,7 +95,7 @@ class $ProxyDefinitionCodec with _i1.Codec<ProxyDefinition> {
   @override
   int sizeHint(ProxyDefinition obj) {
     int size = 0;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.delegate);
+    size = size + const _i2.AccountId32Codec().sizeHint(obj.delegate);
     size = size + _i3.ProxyType.codec.sizeHint(obj.proxyType);
     size = size + _i1.U32Codec.codec.sizeHint(obj.delay);
     return size;

@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -42,15 +44,11 @@ class $Call {
   }
 
   RejectProposal rejectProposal({required BigInt proposalId}) {
-    return RejectProposal(
-      proposalId: proposalId,
-    );
+    return RejectProposal(proposalId: proposalId);
   }
 
   ApproveProposal approveProposal({required BigInt proposalId}) {
-    return ApproveProposal(
-      proposalId: proposalId,
-    );
+    return ApproveProposal(proposalId: proposalId);
   }
 
   Spend spend({
@@ -64,9 +62,7 @@ class $Call {
   }
 
   RemoveApproval removeApproval({required BigInt proposalId}) {
-    return RemoveApproval(
-      proposalId: proposalId,
-    );
+    return RemoveApproval(proposalId: proposalId);
   }
 }
 
@@ -151,8 +147,10 @@ class ProposeSpend extends Call {
     );
   }
 
+  /// BalanceOf<T, I>
   final BigInt value;
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress beneficiary;
 
   @override
@@ -184,6 +182,20 @@ class ProposeSpend extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ProposeSpend && other.value == value && other.beneficiary == beneficiary;
+
+  @override
+  int get hashCode => Object.hash(
+        value,
+        beneficiary,
+      );
 }
 
 /// See [`Pallet::reject_proposal`].
@@ -191,11 +203,10 @@ class RejectProposal extends Call {
   const RejectProposal({required this.proposalId});
 
   factory RejectProposal._decode(_i1.Input input) {
-    return RejectProposal(
-      proposalId: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return RejectProposal(proposalId: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// ProposalIndex
   final BigInt proposalId;
 
   @override
@@ -219,6 +230,17 @@ class RejectProposal extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RejectProposal && other.proposalId == proposalId;
+
+  @override
+  int get hashCode => proposalId.hashCode;
 }
 
 /// See [`Pallet::approve_proposal`].
@@ -226,11 +248,10 @@ class ApproveProposal extends Call {
   const ApproveProposal({required this.proposalId});
 
   factory ApproveProposal._decode(_i1.Input input) {
-    return ApproveProposal(
-      proposalId: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return ApproveProposal(proposalId: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// ProposalIndex
   final BigInt proposalId;
 
   @override
@@ -254,6 +275,17 @@ class ApproveProposal extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ApproveProposal && other.proposalId == proposalId;
+
+  @override
+  int get hashCode => proposalId.hashCode;
 }
 
 /// See [`Pallet::spend`].
@@ -270,8 +302,10 @@ class Spend extends Call {
     );
   }
 
+  /// BalanceOf<T, I>
   final BigInt amount;
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress beneficiary;
 
   @override
@@ -303,6 +337,20 @@ class Spend extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Spend && other.amount == amount && other.beneficiary == beneficiary;
+
+  @override
+  int get hashCode => Object.hash(
+        amount,
+        beneficiary,
+      );
 }
 
 /// See [`Pallet::remove_approval`].
@@ -310,11 +358,10 @@ class RemoveApproval extends Call {
   const RemoveApproval({required this.proposalId});
 
   factory RemoveApproval._decode(_i1.Input input) {
-    return RemoveApproval(
-      proposalId: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return RemoveApproval(proposalId: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// ProposalIndex
   final BigInt proposalId;
 
   @override
@@ -338,4 +385,15 @@ class RemoveApproval extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RemoveApproval && other.proposalId == proposalId;
+
+  @override
+  int get hashCode => proposalId.hashCode;
 }

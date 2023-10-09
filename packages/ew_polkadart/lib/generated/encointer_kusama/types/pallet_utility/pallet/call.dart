@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../encointer_runtime/runtime_call.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
 import '../../encointer_runtime/origin_caller.dart' as _i4;
+import '../../encointer_runtime/runtime_call.dart' as _i3;
 import '../../sp_weights/weight_v2/weight.dart' as _i5;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -34,9 +37,7 @@ class $Call {
   const $Call();
 
   Batch batch({required List<_i3.RuntimeCall> calls}) {
-    return Batch(
-      calls: calls,
-    );
+    return Batch(calls: calls);
   }
 
   AsDerivative asDerivative({
@@ -50,9 +51,7 @@ class $Call {
   }
 
   BatchAll batchAll({required List<_i3.RuntimeCall> calls}) {
-    return BatchAll(
-      calls: calls,
-    );
+    return BatchAll(calls: calls);
   }
 
   DispatchAs dispatchAs({
@@ -66,9 +65,7 @@ class $Call {
   }
 
   ForceBatch forceBatch({required List<_i3.RuntimeCall> calls}) {
-    return ForceBatch(
-      calls: calls,
-    );
+    return ForceBatch(calls: calls);
   }
 
   WithWeight withWeight({
@@ -161,11 +158,10 @@ class Batch extends Call {
   const Batch({required this.calls});
 
   factory Batch._decode(_i1.Input input) {
-    return Batch(
-      calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).decode(input),
-    );
+    return Batch(calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).decode(input));
   }
 
+  /// Vec<<T as Config>::RuntimeCall>
   final List<_i3.RuntimeCall> calls;
 
   @override
@@ -189,6 +185,21 @@ class Batch extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Batch &&
+          _i6.listsEqual(
+            other.calls,
+            calls,
+          );
+
+  @override
+  int get hashCode => calls.hashCode;
 }
 
 /// See [`Pallet::as_derivative`].
@@ -205,8 +216,10 @@ class AsDerivative extends Call {
     );
   }
 
+  /// u16
   final int index;
 
+  /// Box<<T as Config>::RuntimeCall>
   final _i3.RuntimeCall call;
 
   @override
@@ -238,6 +251,20 @@ class AsDerivative extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AsDerivative && other.index == index && other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        call,
+      );
 }
 
 /// See [`Pallet::batch_all`].
@@ -245,15 +272,14 @@ class BatchAll extends Call {
   const BatchAll({required this.calls});
 
   factory BatchAll._decode(_i1.Input input) {
-    return BatchAll(
-      calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).decode(input),
-    );
+    return BatchAll(calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).decode(input));
   }
 
+  /// Vec<<T as Config>::RuntimeCall>
   final List<_i3.RuntimeCall> calls;
 
   @override
-  Map<String, Map<String, List<Map<String, Map<String, dynamic>>>>> toJson() => {
+  Map<String, Map<String, List<dynamic>>> toJson() => {
         'batch_all': {'calls': calls.map((value) => value.toJson()).toList()}
       };
 
@@ -273,6 +299,21 @@ class BatchAll extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BatchAll &&
+          _i6.listsEqual(
+            other.calls,
+            calls,
+          );
+
+  @override
+  int get hashCode => calls.hashCode;
 }
 
 /// See [`Pallet::dispatch_as`].
@@ -289,8 +330,10 @@ class DispatchAs extends Call {
     );
   }
 
+  /// Box<T::PalletsOrigin>
   final _i4.OriginCaller asOrigin;
 
+  /// Box<<T as Config>::RuntimeCall>
   final _i3.RuntimeCall call;
 
   @override
@@ -322,6 +365,20 @@ class DispatchAs extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DispatchAs && other.asOrigin == asOrigin && other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        asOrigin,
+        call,
+      );
 }
 
 /// See [`Pallet::force_batch`].
@@ -329,15 +386,14 @@ class ForceBatch extends Call {
   const ForceBatch({required this.calls});
 
   factory ForceBatch._decode(_i1.Input input) {
-    return ForceBatch(
-      calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).decode(input),
-    );
+    return ForceBatch(calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).decode(input));
   }
 
+  /// Vec<<T as Config>::RuntimeCall>
   final List<_i3.RuntimeCall> calls;
 
   @override
-  Map<String, Map<String, List<Map<String, Map<String, dynamic>>>>> toJson() => {
+  Map<String, Map<String, List<dynamic>>> toJson() => {
         'force_batch': {'calls': calls.map((value) => value.toJson()).toList()}
       };
 
@@ -357,6 +413,21 @@ class ForceBatch extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceBatch &&
+          _i6.listsEqual(
+            other.calls,
+            calls,
+          );
+
+  @override
+  int get hashCode => calls.hashCode;
 }
 
 /// See [`Pallet::with_weight`].
@@ -373,8 +444,10 @@ class WithWeight extends Call {
     );
   }
 
+  /// Box<<T as Config>::RuntimeCall>
   final _i3.RuntimeCall call;
 
+  /// Weight
   final _i5.Weight weight;
 
   @override
@@ -406,4 +479,18 @@ class WithWeight extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is WithWeight && other.call == call && other.weight == weight;
+
+  @override
+  int get hashCode => Object.hash(
+        call,
+        weight,
+      );
 }

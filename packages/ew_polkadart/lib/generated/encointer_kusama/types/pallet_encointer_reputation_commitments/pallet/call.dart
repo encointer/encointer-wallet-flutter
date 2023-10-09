@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../primitive_types/h256.dart' as _i4;
 
@@ -33,9 +36,7 @@ class $Call {
   const $Call();
 
   RegisterPurpose registerPurpose({required List<int> descriptor}) {
-    return RegisterPurpose(
-      descriptor: descriptor,
-    );
+    return RegisterPurpose(descriptor: descriptor);
   }
 
   CommitReputation commitReputation({
@@ -104,11 +105,10 @@ class RegisterPurpose extends Call {
   const RegisterPurpose({required this.descriptor});
 
   factory RegisterPurpose._decode(_i1.Input input) {
-    return RegisterPurpose(
-      descriptor: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return RegisterPurpose(descriptor: _i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// DescriptorType
   final List<int> descriptor;
 
   @override
@@ -132,6 +132,21 @@ class RegisterPurpose extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RegisterPurpose &&
+          _i5.listsEqual(
+            other.descriptor,
+            descriptor,
+          );
+
+  @override
+  int get hashCode => descriptor.hashCode;
 }
 
 /// See [`Pallet::commit_reputation`].
@@ -148,16 +163,20 @@ class CommitReputation extends Call {
       cid: _i3.CommunityIdentifier.codec.decode(input),
       cindex: _i1.U32Codec.codec.decode(input),
       purpose: _i1.U64Codec.codec.decode(input),
-      commitmentHash: const _i1.OptionCodec<_i4.H256>(_i1.U8ArrayCodec(32)).decode(input),
+      commitmentHash: const _i1.OptionCodec<_i4.H256>(_i4.H256Codec()).decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// CeremonyIndexType
   final int cindex;
 
+  /// PurposeIdType
   final BigInt purpose;
 
+  /// Option<H256>
   final _i4.H256? commitmentHash;
 
   @override
@@ -175,7 +194,7 @@ class CommitReputation extends Call {
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
     size = size + _i1.U32Codec.codec.sizeHint(cindex);
     size = size + _i1.U64Codec.codec.sizeHint(purpose);
-    size = size + const _i1.OptionCodec<_i4.H256>(_i1.U8ArrayCodec(32)).sizeHint(commitmentHash);
+    size = size + const _i1.OptionCodec<_i4.H256>(_i4.H256Codec()).sizeHint(commitmentHash);
     return size;
   }
 
@@ -196,9 +215,29 @@ class CommitReputation extends Call {
       purpose,
       output,
     );
-    const _i1.OptionCodec<_i4.H256>(_i1.U8ArrayCodec(32)).encodeTo(
+    const _i1.OptionCodec<_i4.H256>(_i4.H256Codec()).encodeTo(
       commitmentHash,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CommitReputation &&
+          other.cid == cid &&
+          other.cindex == cindex &&
+          other.purpose == purpose &&
+          other.commitmentHash == commitmentHash;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        cindex,
+        purpose,
+        commitmentHash,
+      );
 }

@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../primitive_types/h256.dart' as _i3;
 import '../../sp_weights/weight_v2/weight.dart' as _i4;
 
@@ -33,29 +36,23 @@ class $Event {
   const $Event();
 
   ValidationFunctionStored validationFunctionStored() {
-    return const ValidationFunctionStored();
+    return ValidationFunctionStored();
   }
 
   ValidationFunctionApplied validationFunctionApplied({required int relayChainBlockNum}) {
-    return ValidationFunctionApplied(
-      relayChainBlockNum: relayChainBlockNum,
-    );
+    return ValidationFunctionApplied(relayChainBlockNum: relayChainBlockNum);
   }
 
   ValidationFunctionDiscarded validationFunctionDiscarded() {
-    return const ValidationFunctionDiscarded();
+    return ValidationFunctionDiscarded();
   }
 
   UpgradeAuthorized upgradeAuthorized({required _i3.H256 codeHash}) {
-    return UpgradeAuthorized(
-      codeHash: codeHash,
-    );
+    return UpgradeAuthorized(codeHash: codeHash);
   }
 
   DownwardMessagesReceived downwardMessagesReceived({required int count}) {
-    return DownwardMessagesReceived(
-      count: count,
-    );
+    return DownwardMessagesReceived(count: count);
   }
 
   DownwardMessagesProcessed downwardMessagesProcessed({
@@ -69,9 +66,7 @@ class $Event {
   }
 
   UpwardMessageSent upwardMessageSent({List<int>? messageHash}) {
-    return UpwardMessageSent(
-      messageHash: messageHash,
-    );
+    return UpwardMessageSent(messageHash: messageHash);
   }
 }
 
@@ -169,6 +164,12 @@ class ValidationFunctionStored extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ValidationFunctionStored;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// The validation function was applied as of the contained relay chain block number.
@@ -176,11 +177,10 @@ class ValidationFunctionApplied extends Event {
   const ValidationFunctionApplied({required this.relayChainBlockNum});
 
   factory ValidationFunctionApplied._decode(_i1.Input input) {
-    return ValidationFunctionApplied(
-      relayChainBlockNum: _i1.U32Codec.codec.decode(input),
-    );
+    return ValidationFunctionApplied(relayChainBlockNum: _i1.U32Codec.codec.decode(input));
   }
 
+  /// RelayChainBlockNumber
   final int relayChainBlockNum;
 
   @override
@@ -204,6 +204,17 @@ class ValidationFunctionApplied extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ValidationFunctionApplied && other.relayChainBlockNum == relayChainBlockNum;
+
+  @override
+  int get hashCode => relayChainBlockNum.hashCode;
 }
 
 /// The relay-chain aborted the upgrade process.
@@ -219,6 +230,12 @@ class ValidationFunctionDiscarded extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ValidationFunctionDiscarded;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// An upgrade has been authorized.
@@ -226,11 +243,10 @@ class UpgradeAuthorized extends Event {
   const UpgradeAuthorized({required this.codeHash});
 
   factory UpgradeAuthorized._decode(_i1.Input input) {
-    return UpgradeAuthorized(
-      codeHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return UpgradeAuthorized(codeHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// T::Hash
   final _i3.H256 codeHash;
 
   @override
@@ -240,7 +256,7 @@ class UpgradeAuthorized extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(codeHash);
+    size = size + const _i3.H256Codec().sizeHint(codeHash);
     return size;
   }
 
@@ -254,6 +270,21 @@ class UpgradeAuthorized extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpgradeAuthorized &&
+          _i5.listsEqual(
+            other.codeHash,
+            codeHash,
+          );
+
+  @override
+  int get hashCode => codeHash.hashCode;
 }
 
 /// Some downward messages have been received and will be processed.
@@ -261,11 +292,10 @@ class DownwardMessagesReceived extends Event {
   const DownwardMessagesReceived({required this.count});
 
   factory DownwardMessagesReceived._decode(_i1.Input input) {
-    return DownwardMessagesReceived(
-      count: _i1.U32Codec.codec.decode(input),
-    );
+    return DownwardMessagesReceived(count: _i1.U32Codec.codec.decode(input));
   }
 
+  /// u32
   final int count;
 
   @override
@@ -289,6 +319,17 @@ class DownwardMessagesReceived extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DownwardMessagesReceived && other.count == count;
+
+  @override
+  int get hashCode => count.hashCode;
 }
 
 /// Downward messages were processed using the given weight.
@@ -305,8 +346,10 @@ class DownwardMessagesProcessed extends Event {
     );
   }
 
+  /// Weight
   final _i4.Weight weightUsed;
 
+  /// relay_chain::Hash
   final _i3.H256 dmqHead;
 
   @override
@@ -320,7 +363,7 @@ class DownwardMessagesProcessed extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i4.Weight.codec.sizeHint(weightUsed);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(dmqHead);
+    size = size + const _i3.H256Codec().sizeHint(dmqHead);
     return size;
   }
 
@@ -338,6 +381,25 @@ class DownwardMessagesProcessed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DownwardMessagesProcessed &&
+          other.weightUsed == weightUsed &&
+          _i5.listsEqual(
+            other.dmqHead,
+            dmqHead,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        weightUsed,
+        dmqHead,
+      );
 }
 
 /// An upward message was sent to the relay chain.
@@ -345,11 +407,10 @@ class UpwardMessageSent extends Event {
   const UpwardMessageSent({this.messageHash});
 
   factory UpwardMessageSent._decode(_i1.Input input) {
-    return UpwardMessageSent(
-      messageHash: const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).decode(input),
-    );
+    return UpwardMessageSent(messageHash: const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).decode(input));
   }
 
+  /// Option<XcmHash>
   final List<int>? messageHash;
 
   @override
@@ -373,4 +434,15 @@ class UpwardMessageSent extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpwardMessageSent && other.messageHash == messageHash;
+
+  @override
+  int get hashCode => messageHash.hashCode;
 }

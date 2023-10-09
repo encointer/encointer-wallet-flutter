@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 class AssignmentCount {
   const AssignmentCount({
@@ -14,12 +15,16 @@ class AssignmentCount {
     return codec.decode(input);
   }
 
+  /// ParticipantIndexType
   final BigInt bootstrappers;
 
+  /// ParticipantIndexType
   final BigInt reputables;
 
+  /// ParticipantIndexType
   final BigInt endorsees;
 
+  /// ParticipantIndexType
   final BigInt newbies;
 
   static const $AssignmentCountCodec codec = $AssignmentCountCodec();
@@ -34,6 +39,26 @@ class AssignmentCount {
         'endorsees': endorsees,
         'newbies': newbies,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AssignmentCount &&
+          other.bootstrappers == bootstrappers &&
+          other.reputables == reputables &&
+          other.endorsees == endorsees &&
+          other.newbies == newbies;
+
+  @override
+  int get hashCode => Object.hash(
+        bootstrappers,
+        reputables,
+        endorsees,
+        newbies,
+      );
 }
 
 class $AssignmentCountCodec with _i1.Codec<AssignmentCount> {

@@ -1,9 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../sp_arithmetic/arithmetic_error.dart' as _i5;
 import 'module_error.dart' as _i3;
 import 'token_error.dart' as _i4;
-import '../sp_arithmetic/arithmetic_error.dart' as _i5;
 import 'transactional_error.dart' as _i6;
 
 abstract class DispatchError {
@@ -34,67 +36,59 @@ class $DispatchError {
   const $DispatchError();
 
   Other other() {
-    return const Other();
+    return Other();
   }
 
   CannotLookup cannotLookup() {
-    return const CannotLookup();
+    return CannotLookup();
   }
 
   BadOrigin badOrigin() {
-    return const BadOrigin();
+    return BadOrigin();
   }
 
-  Module module({required _i3.ModuleError value0}) {
-    return Module(
-      value0: value0,
-    );
+  Module module(_i3.ModuleError value0) {
+    return Module(value0);
   }
 
   ConsumerRemaining consumerRemaining() {
-    return const ConsumerRemaining();
+    return ConsumerRemaining();
   }
 
   NoProviders noProviders() {
-    return const NoProviders();
+    return NoProviders();
   }
 
   TooManyConsumers tooManyConsumers() {
-    return const TooManyConsumers();
+    return TooManyConsumers();
   }
 
-  Token token({required _i4.TokenError value0}) {
-    return Token(
-      value0: value0,
-    );
+  Token token(_i4.TokenError value0) {
+    return Token(value0);
   }
 
-  Arithmetic arithmetic({required _i5.ArithmeticError value0}) {
-    return Arithmetic(
-      value0: value0,
-    );
+  Arithmetic arithmetic(_i5.ArithmeticError value0) {
+    return Arithmetic(value0);
   }
 
-  Transactional transactional({required _i6.TransactionalError value0}) {
-    return Transactional(
-      value0: value0,
-    );
+  Transactional transactional(_i6.TransactionalError value0) {
+    return Transactional(value0);
   }
 
   Exhausted exhausted() {
-    return const Exhausted();
+    return Exhausted();
   }
 
   Corruption corruption() {
-    return const Corruption();
+    return Corruption();
   }
 
   Unavailable unavailable() {
-    return const Unavailable();
+    return Unavailable();
   }
 
   RootNotAllowed rootNotAllowed() {
-    return const RootNotAllowed();
+    return RootNotAllowed();
   }
 }
 
@@ -240,6 +234,12 @@ class Other extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Other;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class CannotLookup extends DispatchError {
@@ -254,6 +254,12 @@ class CannotLookup extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is CannotLookup;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class BadOrigin extends DispatchError {
@@ -268,17 +274,22 @@ class BadOrigin extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is BadOrigin;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Module extends DispatchError {
-  const Module({required this.value0});
+  const Module(this.value0);
 
   factory Module._decode(_i1.Input input) {
-    return Module(
-      value0: _i3.ModuleError.codec.decode(input),
-    );
+    return Module(_i3.ModuleError.codec.decode(input));
   }
 
+  /// ModuleError
   final _i3.ModuleError value0;
 
   @override
@@ -300,6 +311,17 @@ class Module extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Module && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ConsumerRemaining extends DispatchError {
@@ -314,6 +336,12 @@ class ConsumerRemaining extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ConsumerRemaining;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NoProviders extends DispatchError {
@@ -328,6 +356,12 @@ class NoProviders extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NoProviders;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class TooManyConsumers extends DispatchError {
@@ -342,17 +376,22 @@ class TooManyConsumers extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is TooManyConsumers;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Token extends DispatchError {
-  const Token({required this.value0});
+  const Token(this.value0);
 
   factory Token._decode(_i1.Input input) {
-    return Token(
-      value0: _i4.TokenError.codec.decode(input),
-    );
+    return Token(_i4.TokenError.codec.decode(input));
   }
 
+  /// TokenError
   final _i4.TokenError value0;
 
   @override
@@ -374,17 +413,27 @@ class Token extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Token && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Arithmetic extends DispatchError {
-  const Arithmetic({required this.value0});
+  const Arithmetic(this.value0);
 
   factory Arithmetic._decode(_i1.Input input) {
-    return Arithmetic(
-      value0: _i5.ArithmeticError.codec.decode(input),
-    );
+    return Arithmetic(_i5.ArithmeticError.codec.decode(input));
   }
 
+  /// ArithmeticError
   final _i5.ArithmeticError value0;
 
   @override
@@ -406,17 +455,27 @@ class Arithmetic extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Arithmetic && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Transactional extends DispatchError {
-  const Transactional({required this.value0});
+  const Transactional(this.value0);
 
   factory Transactional._decode(_i1.Input input) {
-    return Transactional(
-      value0: _i6.TransactionalError.codec.decode(input),
-    );
+    return Transactional(_i6.TransactionalError.codec.decode(input));
   }
 
+  /// TransactionalError
   final _i6.TransactionalError value0;
 
   @override
@@ -438,6 +497,17 @@ class Transactional extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Transactional && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Exhausted extends DispatchError {
@@ -452,6 +522,12 @@ class Exhausted extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Exhausted;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Corruption extends DispatchError {
@@ -466,6 +542,12 @@ class Corruption extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Corruption;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Unavailable extends DispatchError {
@@ -480,6 +562,12 @@ class Unavailable extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Unavailable;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class RootNotAllowed extends DispatchError {
@@ -494,4 +582,10 @@ class RootNotAllowed extends DispatchError {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is RootNotAllowed;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

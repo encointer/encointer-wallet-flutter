@@ -1,10 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i4;
+
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
-import '../types/pallet_treasury/proposal.dart' as _i3;
-import 'dart:async' as _i4;
-import '../types/sp_arithmetic/per_things/permill.dart' as _i5;
+
 import '../types/frame_support/pallet_id.dart' as _i6;
+import '../types/pallet_treasury/proposal.dart' as _i3;
+import '../types/sp_arithmetic/per_things/permill.dart' as _i5;
 
 class Queries {
   const Queries(this.__api);

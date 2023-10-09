@@ -1,12 +1,23 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// Failed to send XCM message.
   failedToSend('FailedToSend', 0),
+
+  /// Bad XCM origin.
   badXcmOrigin('BadXcmOrigin', 1),
+
+  /// Bad XCM data.
   badXcm('BadXcm', 2),
+
+  /// Bad overweight index.
   badOverweightIndex('BadOverweightIndex', 3),
+
+  /// Provided weight is possibly not enough to execute the message.
   weightOverLimit('WeightOverLimit', 4);
 
   const Error(

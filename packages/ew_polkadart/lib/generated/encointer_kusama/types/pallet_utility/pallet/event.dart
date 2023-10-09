@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../sp_runtime/dispatch_error.dart' as _i3;
 
 /// The `Event` enum of this pallet
@@ -42,27 +44,23 @@ class $Event {
   }
 
   BatchCompleted batchCompleted() {
-    return const BatchCompleted();
+    return BatchCompleted();
   }
 
   BatchCompletedWithErrors batchCompletedWithErrors() {
-    return const BatchCompletedWithErrors();
+    return BatchCompletedWithErrors();
   }
 
   ItemCompleted itemCompleted() {
-    return const ItemCompleted();
+    return ItemCompleted();
   }
 
   ItemFailed itemFailed({required _i3.DispatchError error}) {
-    return ItemFailed(
-      error: error,
-    );
+    return ItemFailed(error: error);
   }
 
   DispatchedAs dispatchedAs({required _i1.Result<dynamic, _i3.DispatchError> result}) {
-    return DispatchedAs(
-      result: result,
-    );
+    return DispatchedAs(result: result);
   }
 }
 
@@ -155,8 +153,10 @@ class BatchInterrupted extends Event {
     );
   }
 
+  /// u32
   final int index;
 
+  /// DispatchError
   final _i3.DispatchError error;
 
   @override
@@ -188,6 +188,20 @@ class BatchInterrupted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BatchInterrupted && other.index == index && other.error == error;
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        error,
+      );
 }
 
 /// Batch of dispatches completed fully with no error.
@@ -203,6 +217,12 @@ class BatchCompleted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is BatchCompleted;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// Batch of dispatches completed but has errors.
@@ -218,6 +238,12 @@ class BatchCompletedWithErrors extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is BatchCompletedWithErrors;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// A single item within a Batch of dispatches has completed with no error.
@@ -233,6 +259,12 @@ class ItemCompleted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ItemCompleted;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// A single item within a Batch of dispatches has completed with error.
@@ -240,11 +272,10 @@ class ItemFailed extends Event {
   const ItemFailed({required this.error});
 
   factory ItemFailed._decode(_i1.Input input) {
-    return ItemFailed(
-      error: _i3.DispatchError.codec.decode(input),
-    );
+    return ItemFailed(error: _i3.DispatchError.codec.decode(input));
   }
 
+  /// DispatchError
   final _i3.DispatchError error;
 
   @override
@@ -268,6 +299,17 @@ class ItemFailed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ItemFailed && other.error == error;
+
+  @override
+  int get hashCode => error.hashCode;
 }
 
 /// A call was dispatched.
@@ -276,13 +318,13 @@ class DispatchedAs extends Event {
 
   factory DispatchedAs._decode(_i1.Input input) {
     return DispatchedAs(
-      result: const _i1.ResultCodec<dynamic, _i3.DispatchError>(
-        _i1.NullCodec.codec,
-        _i3.DispatchError.codec,
-      ).decode(input),
-    );
+        result: const _i1.ResultCodec<dynamic, _i3.DispatchError>(
+      _i1.NullCodec.codec,
+      _i3.DispatchError.codec,
+    ).decode(input));
   }
 
+  /// DispatchResult
   final _i1.Result<dynamic, _i3.DispatchError> result;
 
   @override
@@ -313,4 +355,15 @@ class DispatchedAs extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DispatchedAs && other.result == result;
+
+  @override
+  int get hashCode => result.hashCode;
 }

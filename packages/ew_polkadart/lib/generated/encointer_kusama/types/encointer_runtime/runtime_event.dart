@@ -1,28 +1,30 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../frame_system/pallet/event.dart' as _i3;
-import '../cumulus_pallet_parachain_system/pallet/event.dart' as _i4;
-import '../pallet_balances/pallet/event.dart' as _i5;
-import '../pallet_transaction_payment/pallet/event.dart' as _i6;
-import '../pallet_asset_tx_payment/pallet/event.dart' as _i7;
-import '../cumulus_pallet_xcmp_queue/pallet/event.dart' as _i8;
-import '../pallet_xcm/pallet/event.dart' as _i9;
-import '../cumulus_pallet_xcm/pallet/event.dart' as _i10;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../cumulus_pallet_dmp_queue/pallet/event.dart' as _i11;
-import '../pallet_utility/pallet/event.dart' as _i12;
-import '../pallet_treasury/pallet/event.dart' as _i13;
-import '../pallet_proxy/pallet/event.dart' as _i14;
-import '../pallet_scheduler/pallet/event.dart' as _i15;
+import '../cumulus_pallet_parachain_system/pallet/event.dart' as _i4;
+import '../cumulus_pallet_xcm/pallet/event.dart' as _i10;
+import '../cumulus_pallet_xcmp_queue/pallet/event.dart' as _i8;
+import '../frame_system/pallet/event.dart' as _i3;
+import '../pallet_asset_tx_payment/pallet/event.dart' as _i7;
+import '../pallet_balances/pallet/event.dart' as _i5;
 import '../pallet_collective/pallet/event.dart' as _i16;
-import '../pallet_membership/pallet/event.dart' as _i17;
-import '../pallet_encointer_scheduler/pallet/event.dart' as _i18;
-import '../pallet_encointer_ceremonies/pallet/event.dart' as _i19;
-import '../pallet_encointer_communities/pallet/event.dart' as _i20;
 import '../pallet_encointer_balances/pallet/event.dart' as _i21;
 import '../pallet_encointer_bazaar/pallet/event.dart' as _i22;
-import '../pallet_encointer_reputation_commitments/pallet/event.dart' as _i23;
+import '../pallet_encointer_ceremonies/pallet/event.dart' as _i19;
+import '../pallet_encointer_communities/pallet/event.dart' as _i20;
 import '../pallet_encointer_faucet/pallet/event.dart' as _i24;
+import '../pallet_encointer_reputation_commitments/pallet/event.dart' as _i23;
+import '../pallet_encointer_scheduler/pallet/event.dart' as _i18;
+import '../pallet_membership/pallet/event.dart' as _i17;
+import '../pallet_proxy/pallet/event.dart' as _i14;
+import '../pallet_scheduler/pallet/event.dart' as _i15;
+import '../pallet_transaction_payment/pallet/event.dart' as _i6;
+import '../pallet_treasury/pallet/event.dart' as _i13;
+import '../pallet_utility/pallet/event.dart' as _i12;
+import '../pallet_xcm/pallet/event.dart' as _i9;
 
 abstract class RuntimeEvent {
   const RuntimeEvent();
@@ -51,136 +53,92 @@ abstract class RuntimeEvent {
 class $RuntimeEvent {
   const $RuntimeEvent();
 
-  System system({required _i3.Event value0}) {
-    return System(
-      value0: value0,
-    );
+  System system(_i3.Event value0) {
+    return System(value0);
   }
 
-  ParachainSystem parachainSystem({required _i4.Event value0}) {
-    return ParachainSystem(
-      value0: value0,
-    );
+  ParachainSystem parachainSystem(_i4.Event value0) {
+    return ParachainSystem(value0);
   }
 
-  Balances balances({required _i5.Event value0}) {
-    return Balances(
-      value0: value0,
-    );
+  Balances balances(_i5.Event value0) {
+    return Balances(value0);
   }
 
-  TransactionPayment transactionPayment({required _i6.Event value0}) {
-    return TransactionPayment(
-      value0: value0,
-    );
+  TransactionPayment transactionPayment(_i6.Event value0) {
+    return TransactionPayment(value0);
   }
 
-  AssetTxPayment assetTxPayment({required _i7.Event value0}) {
-    return AssetTxPayment(
-      value0: value0,
-    );
+  AssetTxPayment assetTxPayment(_i7.Event value0) {
+    return AssetTxPayment(value0);
   }
 
-  XcmpQueue xcmpQueue({required _i8.Event value0}) {
-    return XcmpQueue(
-      value0: value0,
-    );
+  XcmpQueue xcmpQueue(_i8.Event value0) {
+    return XcmpQueue(value0);
   }
 
-  PolkadotXcm polkadotXcm({required _i9.Event value0}) {
-    return PolkadotXcm(
-      value0: value0,
-    );
+  PolkadotXcm polkadotXcm(_i9.Event value0) {
+    return PolkadotXcm(value0);
   }
 
-  CumulusXcm cumulusXcm({required _i10.Event value0}) {
-    return CumulusXcm(
-      value0: value0,
-    );
+  CumulusXcm cumulusXcm(_i10.Event value0) {
+    return CumulusXcm(value0);
   }
 
-  DmpQueue dmpQueue({required _i11.Event value0}) {
-    return DmpQueue(
-      value0: value0,
-    );
+  DmpQueue dmpQueue(_i11.Event value0) {
+    return DmpQueue(value0);
   }
 
-  Utility utility({required _i12.Event value0}) {
-    return Utility(
-      value0: value0,
-    );
+  Utility utility(_i12.Event value0) {
+    return Utility(value0);
   }
 
-  Treasury treasury({required _i13.Event value0}) {
-    return Treasury(
-      value0: value0,
-    );
+  Treasury treasury(_i13.Event value0) {
+    return Treasury(value0);
   }
 
-  Proxy proxy({required _i14.Event value0}) {
-    return Proxy(
-      value0: value0,
-    );
+  Proxy proxy(_i14.Event value0) {
+    return Proxy(value0);
   }
 
-  Scheduler scheduler({required _i15.Event value0}) {
-    return Scheduler(
-      value0: value0,
-    );
+  Scheduler scheduler(_i15.Event value0) {
+    return Scheduler(value0);
   }
 
-  Collective collective({required _i16.Event value0}) {
-    return Collective(
-      value0: value0,
-    );
+  Collective collective(_i16.Event value0) {
+    return Collective(value0);
   }
 
-  Membership membership({required _i17.Event value0}) {
-    return Membership(
-      value0: value0,
-    );
+  Membership membership(_i17.Event value0) {
+    return Membership(value0);
   }
 
-  EncointerScheduler encointerScheduler({required _i18.Event value0}) {
-    return EncointerScheduler(
-      value0: value0,
-    );
+  EncointerScheduler encointerScheduler(_i18.Event value0) {
+    return EncointerScheduler(value0);
   }
 
-  EncointerCeremonies encointerCeremonies({required _i19.Event value0}) {
-    return EncointerCeremonies(
-      value0: value0,
-    );
+  EncointerCeremonies encointerCeremonies(_i19.Event value0) {
+    return EncointerCeremonies(value0);
   }
 
-  EncointerCommunities encointerCommunities({required _i20.Event value0}) {
-    return EncointerCommunities(
-      value0: value0,
-    );
+  EncointerCommunities encointerCommunities(_i20.Event value0) {
+    return EncointerCommunities(value0);
   }
 
-  EncointerBalances encointerBalances({required _i21.Event value0}) {
-    return EncointerBalances(
-      value0: value0,
-    );
+  EncointerBalances encointerBalances(_i21.Event value0) {
+    return EncointerBalances(value0);
   }
 
-  EncointerBazaar encointerBazaar({required _i22.Event value0}) {
-    return EncointerBazaar(
-      value0: value0,
-    );
+  EncointerBazaar encointerBazaar(_i22.Event value0) {
+    return EncointerBazaar(value0);
   }
 
-  EncointerReputationCommitments encointerReputationCommitments({required _i23.Event value0}) {
-    return EncointerReputationCommitments(
-      value0: value0,
-    );
+  EncointerReputationCommitments encointerReputationCommitments(_i23.Event value0) {
+    return EncointerReputationCommitments(value0);
   }
 
-  EncointerFaucet encointerFaucet({required _i24.Event value0}) {
-    return EncointerFaucet(
-      value0: value0,
-    );
+  EncointerFaucet encointerFaucet(_i24.Event value0) {
+    return EncointerFaucet(value0);
   }
 }
 
@@ -371,14 +329,13 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
 }
 
 class System extends RuntimeEvent {
-  const System({required this.value0});
+  const System(this.value0);
 
   factory System._decode(_i1.Input input) {
-    return System(
-      value0: _i3.Event.codec.decode(input),
-    );
+    return System(_i3.Event.codec.decode(input));
   }
 
+  /// frame_system::Event<Runtime>
   final _i3.Event value0;
 
   @override
@@ -400,17 +357,27 @@ class System extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is System && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ParachainSystem extends RuntimeEvent {
-  const ParachainSystem({required this.value0});
+  const ParachainSystem(this.value0);
 
   factory ParachainSystem._decode(_i1.Input input) {
-    return ParachainSystem(
-      value0: _i4.Event.codec.decode(input),
-    );
+    return ParachainSystem(_i4.Event.codec.decode(input));
   }
 
+  /// cumulus_pallet_parachain_system::Event<Runtime>
   final _i4.Event value0;
 
   @override
@@ -432,17 +399,27 @@ class ParachainSystem extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ParachainSystem && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Balances extends RuntimeEvent {
-  const Balances({required this.value0});
+  const Balances(this.value0);
 
   factory Balances._decode(_i1.Input input) {
-    return Balances(
-      value0: _i5.Event.codec.decode(input),
-    );
+    return Balances(_i5.Event.codec.decode(input));
   }
 
+  /// pallet_balances::Event<Runtime>
   final _i5.Event value0;
 
   @override
@@ -464,17 +441,27 @@ class Balances extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Balances && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class TransactionPayment extends RuntimeEvent {
-  const TransactionPayment({required this.value0});
+  const TransactionPayment(this.value0);
 
   factory TransactionPayment._decode(_i1.Input input) {
-    return TransactionPayment(
-      value0: _i6.Event.codec.decode(input),
-    );
+    return TransactionPayment(_i6.Event.codec.decode(input));
   }
 
+  /// pallet_transaction_payment::Event<Runtime>
   final _i6.Event value0;
 
   @override
@@ -496,17 +483,27 @@ class TransactionPayment extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransactionPayment && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class AssetTxPayment extends RuntimeEvent {
-  const AssetTxPayment({required this.value0});
+  const AssetTxPayment(this.value0);
 
   factory AssetTxPayment._decode(_i1.Input input) {
-    return AssetTxPayment(
-      value0: _i7.Event.codec.decode(input),
-    );
+    return AssetTxPayment(_i7.Event.codec.decode(input));
   }
 
+  /// pallet_asset_tx_payment::Event<Runtime>
   final _i7.Event value0;
 
   @override
@@ -528,17 +525,27 @@ class AssetTxPayment extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AssetTxPayment && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class XcmpQueue extends RuntimeEvent {
-  const XcmpQueue({required this.value0});
+  const XcmpQueue(this.value0);
 
   factory XcmpQueue._decode(_i1.Input input) {
-    return XcmpQueue(
-      value0: _i8.Event.codec.decode(input),
-    );
+    return XcmpQueue(_i8.Event.codec.decode(input));
   }
 
+  /// cumulus_pallet_xcmp_queue::Event<Runtime>
   final _i8.Event value0;
 
   @override
@@ -560,17 +567,27 @@ class XcmpQueue extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is XcmpQueue && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class PolkadotXcm extends RuntimeEvent {
-  const PolkadotXcm({required this.value0});
+  const PolkadotXcm(this.value0);
 
   factory PolkadotXcm._decode(_i1.Input input) {
-    return PolkadotXcm(
-      value0: _i9.Event.codec.decode(input),
-    );
+    return PolkadotXcm(_i9.Event.codec.decode(input));
   }
 
+  /// pallet_xcm::Event<Runtime>
   final _i9.Event value0;
 
   @override
@@ -592,17 +609,27 @@ class PolkadotXcm extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PolkadotXcm && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class CumulusXcm extends RuntimeEvent {
-  const CumulusXcm({required this.value0});
+  const CumulusXcm(this.value0);
 
   factory CumulusXcm._decode(_i1.Input input) {
-    return CumulusXcm(
-      value0: _i10.Event.codec.decode(input),
-    );
+    return CumulusXcm(_i10.Event.codec.decode(input));
   }
 
+  /// cumulus_pallet_xcm::Event<Runtime>
   final _i10.Event value0;
 
   @override
@@ -624,17 +651,27 @@ class CumulusXcm extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CumulusXcm && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class DmpQueue extends RuntimeEvent {
-  const DmpQueue({required this.value0});
+  const DmpQueue(this.value0);
 
   factory DmpQueue._decode(_i1.Input input) {
-    return DmpQueue(
-      value0: _i11.Event.codec.decode(input),
-    );
+    return DmpQueue(_i11.Event.codec.decode(input));
   }
 
+  /// cumulus_pallet_dmp_queue::Event<Runtime>
   final _i11.Event value0;
 
   @override
@@ -656,17 +693,27 @@ class DmpQueue extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DmpQueue && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Utility extends RuntimeEvent {
-  const Utility({required this.value0});
+  const Utility(this.value0);
 
   factory Utility._decode(_i1.Input input) {
-    return Utility(
-      value0: _i12.Event.codec.decode(input),
-    );
+    return Utility(_i12.Event.codec.decode(input));
   }
 
+  /// pallet_utility::Event
   final _i12.Event value0;
 
   @override
@@ -688,17 +735,27 @@ class Utility extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Utility && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Treasury extends RuntimeEvent {
-  const Treasury({required this.value0});
+  const Treasury(this.value0);
 
   factory Treasury._decode(_i1.Input input) {
-    return Treasury(
-      value0: _i13.Event.codec.decode(input),
-    );
+    return Treasury(_i13.Event.codec.decode(input));
   }
 
+  /// pallet_treasury::Event<Runtime>
   final _i13.Event value0;
 
   @override
@@ -720,17 +777,27 @@ class Treasury extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Treasury && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Proxy extends RuntimeEvent {
-  const Proxy({required this.value0});
+  const Proxy(this.value0);
 
   factory Proxy._decode(_i1.Input input) {
-    return Proxy(
-      value0: _i14.Event.codec.decode(input),
-    );
+    return Proxy(_i14.Event.codec.decode(input));
   }
 
+  /// pallet_proxy::Event<Runtime>
   final _i14.Event value0;
 
   @override
@@ -752,17 +819,27 @@ class Proxy extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Proxy && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Scheduler extends RuntimeEvent {
-  const Scheduler({required this.value0});
+  const Scheduler(this.value0);
 
   factory Scheduler._decode(_i1.Input input) {
-    return Scheduler(
-      value0: _i15.Event.codec.decode(input),
-    );
+    return Scheduler(_i15.Event.codec.decode(input));
   }
 
+  /// pallet_scheduler::Event<Runtime>
   final _i15.Event value0;
 
   @override
@@ -784,17 +861,27 @@ class Scheduler extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Scheduler && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Collective extends RuntimeEvent {
-  const Collective({required this.value0});
+  const Collective(this.value0);
 
   factory Collective._decode(_i1.Input input) {
-    return Collective(
-      value0: _i16.Event.codec.decode(input),
-    );
+    return Collective(_i16.Event.codec.decode(input));
   }
 
+  /// pallet_collective::Event<Runtime, pallet_collective::Instance1>
   final _i16.Event value0;
 
   @override
@@ -816,17 +903,27 @@ class Collective extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Collective && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Membership extends RuntimeEvent {
-  const Membership({required this.value0});
+  const Membership(this.value0);
 
   factory Membership._decode(_i1.Input input) {
-    return Membership(
-      value0: _i17.Event.codec.decode(input),
-    );
+    return Membership(_i17.Event.codec.decode(input));
   }
 
+  /// pallet_membership::Event<Runtime, pallet_membership::Instance1>
   final _i17.Event value0;
 
   @override
@@ -848,17 +945,27 @@ class Membership extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Membership && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class EncointerScheduler extends RuntimeEvent {
-  const EncointerScheduler({required this.value0});
+  const EncointerScheduler(this.value0);
 
   factory EncointerScheduler._decode(_i1.Input input) {
-    return EncointerScheduler(
-      value0: _i18.Event.codec.decode(input),
-    );
+    return EncointerScheduler(_i18.Event.codec.decode(input));
   }
 
+  /// pallet_encointer_scheduler::Event
   final _i18.Event value0;
 
   @override
@@ -880,17 +987,27 @@ class EncointerScheduler extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerScheduler && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class EncointerCeremonies extends RuntimeEvent {
-  const EncointerCeremonies({required this.value0});
+  const EncointerCeremonies(this.value0);
 
   factory EncointerCeremonies._decode(_i1.Input input) {
-    return EncointerCeremonies(
-      value0: _i19.Event.codec.decode(input),
-    );
+    return EncointerCeremonies(_i19.Event.codec.decode(input));
   }
 
+  /// pallet_encointer_ceremonies::Event<Runtime>
   final _i19.Event value0;
 
   @override
@@ -912,17 +1029,27 @@ class EncointerCeremonies extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerCeremonies && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class EncointerCommunities extends RuntimeEvent {
-  const EncointerCommunities({required this.value0});
+  const EncointerCommunities(this.value0);
 
   factory EncointerCommunities._decode(_i1.Input input) {
-    return EncointerCommunities(
-      value0: _i20.Event.codec.decode(input),
-    );
+    return EncointerCommunities(_i20.Event.codec.decode(input));
   }
 
+  /// pallet_encointer_communities::Event<Runtime>
   final _i20.Event value0;
 
   @override
@@ -944,17 +1071,27 @@ class EncointerCommunities extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerCommunities && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class EncointerBalances extends RuntimeEvent {
-  const EncointerBalances({required this.value0});
+  const EncointerBalances(this.value0);
 
   factory EncointerBalances._decode(_i1.Input input) {
-    return EncointerBalances(
-      value0: _i21.Event.codec.decode(input),
-    );
+    return EncointerBalances(_i21.Event.codec.decode(input));
   }
 
+  /// pallet_encointer_balances::Event<Runtime>
   final _i21.Event value0;
 
   @override
@@ -976,17 +1113,27 @@ class EncointerBalances extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerBalances && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class EncointerBazaar extends RuntimeEvent {
-  const EncointerBazaar({required this.value0});
+  const EncointerBazaar(this.value0);
 
   factory EncointerBazaar._decode(_i1.Input input) {
-    return EncointerBazaar(
-      value0: _i22.Event.codec.decode(input),
-    );
+    return EncointerBazaar(_i22.Event.codec.decode(input));
   }
 
+  /// pallet_encointer_bazaar::Event<Runtime>
   final _i22.Event value0;
 
   @override
@@ -1008,17 +1155,27 @@ class EncointerBazaar extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerBazaar && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class EncointerReputationCommitments extends RuntimeEvent {
-  const EncointerReputationCommitments({required this.value0});
+  const EncointerReputationCommitments(this.value0);
 
   factory EncointerReputationCommitments._decode(_i1.Input input) {
-    return EncointerReputationCommitments(
-      value0: _i23.Event.codec.decode(input),
-    );
+    return EncointerReputationCommitments(_i23.Event.codec.decode(input));
   }
 
+  /// pallet_encointer_reputation_commitments::Event<Runtime>
   final _i23.Event value0;
 
   @override
@@ -1040,17 +1197,27 @@ class EncointerReputationCommitments extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerReputationCommitments && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class EncointerFaucet extends RuntimeEvent {
-  const EncointerFaucet({required this.value0});
+  const EncointerFaucet(this.value0);
 
   factory EncointerFaucet._decode(_i1.Input input) {
-    return EncointerFaucet(
-      value0: _i24.Event.codec.decode(input),
-    );
+    return EncointerFaucet(_i24.Event.codec.decode(input));
   }
 
+  /// pallet_encointer_faucet::Event<Runtime>
   final _i24.Event value0;
 
   @override
@@ -1072,4 +1239,15 @@ class EncointerFaucet extends RuntimeEvent {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerFaucet && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

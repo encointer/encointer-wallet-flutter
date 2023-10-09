@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../tuples.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../encointer_runtime/runtime_call.dart' as _i4;
+import '../../tuples.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -73,9 +76,7 @@ class $Call {
   }
 
   CancelNamed cancelNamed({required List<int> id}) {
-    return CancelNamed(
-      id: id,
-    );
+    return CancelNamed(id: id);
   }
 
   ScheduleAfter scheduleAfter({
@@ -204,12 +205,16 @@ class Schedule extends Call {
     );
   }
 
+  /// BlockNumberFor<T>
   final int when;
 
+  /// Option<schedule::Period<BlockNumberFor<T>>>
   final _i3.Tuple2<int, int>? maybePeriodic;
 
+  /// schedule::Priority
   final int priority;
 
+  /// Box<<T as Config>::RuntimeCall>
   final _i4.RuntimeCall call;
 
   @override
@@ -263,6 +268,26 @@ class Schedule extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Schedule &&
+          other.when == when &&
+          other.maybePeriodic == maybePeriodic &&
+          other.priority == priority &&
+          other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        when,
+        maybePeriodic,
+        priority,
+        call,
+      );
 }
 
 /// See [`Pallet::cancel`].
@@ -279,8 +304,10 @@ class Cancel extends Call {
     );
   }
 
+  /// BlockNumberFor<T>
   final int when;
 
+  /// u32
   final int index;
 
   @override
@@ -312,6 +339,20 @@ class Cancel extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Cancel && other.when == when && other.index == index;
+
+  @override
+  int get hashCode => Object.hash(
+        when,
+        index,
+      );
 }
 
 /// See [`Pallet::schedule_named`].
@@ -337,14 +378,19 @@ class ScheduleNamed extends Call {
     );
   }
 
+  /// TaskName
   final List<int> id;
 
+  /// BlockNumberFor<T>
   final int when;
 
+  /// Option<schedule::Period<BlockNumberFor<T>>>
   final _i3.Tuple2<int, int>? maybePeriodic;
 
+  /// schedule::Priority
   final int priority;
 
+  /// Box<<T as Config>::RuntimeCall>
   final _i4.RuntimeCall call;
 
   @override
@@ -404,6 +450,31 @@ class ScheduleNamed extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ScheduleNamed &&
+          _i5.listsEqual(
+            other.id,
+            id,
+          ) &&
+          other.when == when &&
+          other.maybePeriodic == maybePeriodic &&
+          other.priority == priority &&
+          other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        when,
+        maybePeriodic,
+        priority,
+        call,
+      );
 }
 
 /// See [`Pallet::cancel_named`].
@@ -411,11 +482,10 @@ class CancelNamed extends Call {
   const CancelNamed({required this.id});
 
   factory CancelNamed._decode(_i1.Input input) {
-    return CancelNamed(
-      id: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return CancelNamed(id: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// TaskName
   final List<int> id;
 
   @override
@@ -439,6 +509,21 @@ class CancelNamed extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CancelNamed &&
+          _i5.listsEqual(
+            other.id,
+            id,
+          );
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 /// See [`Pallet::schedule_after`].
@@ -462,12 +547,16 @@ class ScheduleAfter extends Call {
     );
   }
 
+  /// BlockNumberFor<T>
   final int after;
 
+  /// Option<schedule::Period<BlockNumberFor<T>>>
   final _i3.Tuple2<int, int>? maybePeriodic;
 
+  /// schedule::Priority
   final int priority;
 
+  /// Box<<T as Config>::RuntimeCall>
   final _i4.RuntimeCall call;
 
   @override
@@ -521,6 +610,26 @@ class ScheduleAfter extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ScheduleAfter &&
+          other.after == after &&
+          other.maybePeriodic == maybePeriodic &&
+          other.priority == priority &&
+          other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        after,
+        maybePeriodic,
+        priority,
+        call,
+      );
 }
 
 /// See [`Pallet::schedule_named_after`].
@@ -546,14 +655,19 @@ class ScheduleNamedAfter extends Call {
     );
   }
 
+  /// TaskName
   final List<int> id;
 
+  /// BlockNumberFor<T>
   final int after;
 
+  /// Option<schedule::Period<BlockNumberFor<T>>>
   final _i3.Tuple2<int, int>? maybePeriodic;
 
+  /// schedule::Priority
   final int priority;
 
+  /// Box<<T as Config>::RuntimeCall>
   final _i4.RuntimeCall call;
 
   @override
@@ -613,4 +727,29 @@ class ScheduleNamedAfter extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ScheduleNamedAfter &&
+          _i5.listsEqual(
+            other.id,
+            id,
+          ) &&
+          other.after == after &&
+          other.maybePeriodic == maybePeriodic &&
+          other.priority == priority &&
+          other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        after,
+        maybePeriodic,
+        priority,
+        call,
+      );
 }

@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../../sp_core/crypto/account_id32.dart' as _i3;
 
 abstract class RawOrigin {
@@ -31,17 +34,15 @@ class $RawOrigin {
   const $RawOrigin();
 
   Root root() {
-    return const Root();
+    return Root();
   }
 
-  Signed signed({required _i3.AccountId32 value0}) {
-    return Signed(
-      value0: value0,
-    );
+  Signed signed(_i3.AccountId32 value0) {
+    return Signed(value0);
   }
 
   None none() {
-    return const None();
+    return None();
   }
 }
 
@@ -110,17 +111,22 @@ class Root extends RawOrigin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Root;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Signed extends RawOrigin {
-  const Signed({required this.value0});
+  const Signed(this.value0);
 
   factory Signed._decode(_i1.Input input) {
-    return Signed(
-      value0: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Signed(const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// AccountId
   final _i3.AccountId32 value0;
 
   @override
@@ -128,7 +134,7 @@ class Signed extends RawOrigin {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value0);
+    size = size + const _i3.AccountId32Codec().sizeHint(value0);
     return size;
   }
 
@@ -142,6 +148,21 @@ class Signed extends RawOrigin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Signed &&
+          _i4.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class None extends RawOrigin {
@@ -156,4 +177,10 @@ class None extends RawOrigin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is None;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

@@ -1,12 +1,24 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// Error for the treasury pallet.
 enum Error {
+  /// Proposer's balance is too low.
   insufficientProposersBalance('InsufficientProposersBalance', 0),
+
+  /// No proposal or bounty at that index.
   invalidIndex('InvalidIndex', 1),
+
+  /// Too many approvals in the queue.
   tooManyApprovals('TooManyApprovals', 2),
+
+  /// The spend origin is valid but the amount it is allowed to spend is lower than the
+  /// amount to be spent.
   insufficientPermission('InsufficientPermission', 3),
+
+  /// Proposal has not been approved.
   proposalNotApproved('ProposalNotApproved', 4);
 
   const Error(

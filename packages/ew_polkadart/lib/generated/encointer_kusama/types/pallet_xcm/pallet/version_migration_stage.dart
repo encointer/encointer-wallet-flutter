@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 abstract class VersionMigrationStage {
   const VersionMigrationStage();
@@ -30,21 +31,19 @@ class $VersionMigrationStage {
   const $VersionMigrationStage();
 
   MigrateSupportedVersion migrateSupportedVersion() {
-    return const MigrateSupportedVersion();
+    return MigrateSupportedVersion();
   }
 
   MigrateVersionNotifiers migrateVersionNotifiers() {
-    return const MigrateVersionNotifiers();
+    return MigrateVersionNotifiers();
   }
 
-  NotifyCurrentTargets notifyCurrentTargets({List<int>? value0}) {
-    return NotifyCurrentTargets(
-      value0: value0,
-    );
+  NotifyCurrentTargets notifyCurrentTargets(List<int>? value0) {
+    return NotifyCurrentTargets(value0);
   }
 
   MigrateAndNotifyOldTargets migrateAndNotifyOldTargets() {
-    return const MigrateAndNotifyOldTargets();
+    return MigrateAndNotifyOldTargets();
   }
 }
 
@@ -120,6 +119,12 @@ class MigrateSupportedVersion extends VersionMigrationStage {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is MigrateSupportedVersion;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class MigrateVersionNotifiers extends VersionMigrationStage {
@@ -134,17 +139,22 @@ class MigrateVersionNotifiers extends VersionMigrationStage {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is MigrateVersionNotifiers;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NotifyCurrentTargets extends VersionMigrationStage {
-  const NotifyCurrentTargets({this.value0});
+  const NotifyCurrentTargets(this.value0);
 
   factory NotifyCurrentTargets._decode(_i1.Input input) {
-    return NotifyCurrentTargets(
-      value0: const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input),
-    );
+    return NotifyCurrentTargets(const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input));
   }
 
+  /// Option<Vec<u8>>
   final List<int>? value0;
 
   @override
@@ -166,6 +176,17 @@ class NotifyCurrentTargets extends VersionMigrationStage {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NotifyCurrentTargets && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class MigrateAndNotifyOldTargets extends VersionMigrationStage {
@@ -180,4 +201,10 @@ class MigrateAndNotifyOldTargets extends VersionMigrationStage {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is MigrateAndNotifyOldTargets;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

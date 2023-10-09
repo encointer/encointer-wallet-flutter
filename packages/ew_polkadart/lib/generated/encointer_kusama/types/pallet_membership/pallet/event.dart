@@ -1,13 +1,26 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Event` enum of this pallet
 enum Event {
+  /// The given member was added; see the transaction for who.
   memberAdded('MemberAdded', 0),
+
+  /// The given member was removed; see the transaction for who.
   memberRemoved('MemberRemoved', 1),
+
+  /// Two members were swapped; see the transaction for who.
   membersSwapped('MembersSwapped', 2),
+
+  /// The membership was reset; see the transaction for who the new set is.
   membersReset('MembersReset', 3),
+
+  /// One of the members' keys changed.
   keyChanged('KeyChanged', 4),
+
+  /// Phantom member, never used.
   dummy('Dummy', 5);
 
   const Event(

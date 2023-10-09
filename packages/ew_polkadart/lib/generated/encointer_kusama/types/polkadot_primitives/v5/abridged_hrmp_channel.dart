@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../../primitive_types/h256.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../../primitive_types/h256.dart' as _i2;
 
 class AbridgedHrmpChannel {
   const AbridgedHrmpChannel({
@@ -17,16 +19,22 @@ class AbridgedHrmpChannel {
     return codec.decode(input);
   }
 
+  /// u32
   final int maxCapacity;
 
+  /// u32
   final int maxTotalSize;
 
+  /// u32
   final int maxMessageSize;
 
+  /// u32
   final int msgCount;
 
+  /// u32
   final int totalSize;
 
+  /// Option<Hash>
   final _i2.H256? mqcHead;
 
   static const $AbridgedHrmpChannelCodec codec = $AbridgedHrmpChannelCodec();
@@ -43,6 +51,30 @@ class AbridgedHrmpChannel {
         'totalSize': totalSize,
         'mqcHead': mqcHead?.toList(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AbridgedHrmpChannel &&
+          other.maxCapacity == maxCapacity &&
+          other.maxTotalSize == maxTotalSize &&
+          other.maxMessageSize == maxMessageSize &&
+          other.msgCount == msgCount &&
+          other.totalSize == totalSize &&
+          other.mqcHead == mqcHead;
+
+  @override
+  int get hashCode => Object.hash(
+        maxCapacity,
+        maxTotalSize,
+        maxMessageSize,
+        msgCount,
+        totalSize,
+        mqcHead,
+      );
 }
 
 class $AbridgedHrmpChannelCodec with _i1.Codec<AbridgedHrmpChannel> {
@@ -73,7 +105,7 @@ class $AbridgedHrmpChannelCodec with _i1.Codec<AbridgedHrmpChannel> {
       obj.totalSize,
       output,
     );
-    const _i1.OptionCodec<_i2.H256>(_i1.U8ArrayCodec(32)).encodeTo(
+    const _i1.OptionCodec<_i2.H256>(_i2.H256Codec()).encodeTo(
       obj.mqcHead,
       output,
     );
@@ -87,7 +119,7 @@ class $AbridgedHrmpChannelCodec with _i1.Codec<AbridgedHrmpChannel> {
       maxMessageSize: _i1.U32Codec.codec.decode(input),
       msgCount: _i1.U32Codec.codec.decode(input),
       totalSize: _i1.U32Codec.codec.decode(input),
-      mqcHead: const _i1.OptionCodec<_i2.H256>(_i1.U8ArrayCodec(32)).decode(input),
+      mqcHead: const _i1.OptionCodec<_i2.H256>(_i2.H256Codec()).decode(input),
     );
   }
 
@@ -99,7 +131,7 @@ class $AbridgedHrmpChannelCodec with _i1.Codec<AbridgedHrmpChannel> {
     size = size + _i1.U32Codec.codec.sizeHint(obj.maxMessageSize);
     size = size + _i1.U32Codec.codec.sizeHint(obj.msgCount);
     size = size + _i1.U32Codec.codec.sizeHint(obj.totalSize);
-    size = size + const _i1.OptionCodec<_i2.H256>(_i1.U8ArrayCodec(32)).sizeHint(obj.mqcHead);
+    size = size + const _i1.OptionCodec<_i2.H256>(_i2.H256Codec()).sizeHint(obj.mqcHead);
     return size;
   }
 }

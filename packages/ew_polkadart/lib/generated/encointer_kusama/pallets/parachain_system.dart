@@ -1,17 +1,19 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i13;
+
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
+
+import '../types/cumulus_pallet_parachain_system/code_upgrade_authorization.dart' as _i12;
+import '../types/cumulus_pallet_parachain_system/relay_state_snapshot/messaging_state_snapshot.dart' as _i6;
+import '../types/cumulus_primitives_parachain_inherent/message_queue_chain.dart' as _i8;
+import '../types/polkadot_core_primitives/outbound_hrmp_message.dart' as _i10;
+import '../types/polkadot_parachain/primitives/id.dart' as _i9;
+import '../types/polkadot_primitives/v5/abridged_host_configuration.dart' as _i7;
 import '../types/polkadot_primitives/v5/persisted_validation_data.dart' as _i3;
 import '../types/polkadot_primitives/v5/upgrade_restriction.dart' as _i4;
 import '../types/sp_trie/storage_proof/storage_proof.dart' as _i5;
-import '../types/cumulus_pallet_parachain_system/relay_state_snapshot/messaging_state_snapshot.dart' as _i6;
-import '../types/polkadot_primitives/v5/abridged_host_configuration.dart' as _i7;
-import '../types/cumulus_primitives_parachain_inherent/message_queue_chain.dart' as _i8;
-import '../types/polkadot_parachain/primitives/id.dart' as _i9;
-import '../types/polkadot_core_primitives/outbound_hrmp_message.dart' as _i10;
 import '../types/sp_weights/weight_v2/weight.dart' as _i11;
-import '../types/cumulus_pallet_parachain_system/code_upgrade_authorization.dart' as _i12;
-import 'dart:async' as _i13;
 
 class Queries {
   const Queries(this.__api);
@@ -79,7 +81,7 @@ class Queries {
   final _i1.StorageValue<_i8.MessageQueueChain> _lastDmqMqcHead = const _i1.StorageValue<_i8.MessageQueueChain>(
     prefix: 'ParachainSystem',
     storage: 'LastDmqMqcHead',
-    valueCodec: _i2.U8ArrayCodec(32),
+    valueCodec: _i8.MessageQueueChainCodec(),
   );
 
   final _i1.StorageValue<Map<_i9.Id, _i8.MessageQueueChain>> _lastHrmpMqcHeads =
@@ -87,8 +89,8 @@ class Queries {
     prefix: 'ParachainSystem',
     storage: 'LastHrmpMqcHeads',
     valueCodec: _i2.BTreeMapCodec<_i9.Id, _i8.MessageQueueChain>(
-      keyCodec: _i2.U32Codec.codec,
-      valueCodec: _i2.U8ArrayCodec(32),
+      keyCodec: _i9.IdCodec(),
+      valueCodec: _i8.MessageQueueChainCodec(),
     ),
   );
 
@@ -339,7 +341,7 @@ class Queries {
     if (bytes != null) {
       return _lastHrmpMqcHeads.decodeValue(bytes);
     }
-    return const <_i9.Id, _i8.MessageQueueChain>{}; /* Default */
+    return <_i9.Id, _i8.MessageQueueChain>{}; /* Default */
   }
 
   /// Number of downward messages processed in a block.
@@ -384,7 +386,7 @@ class Queries {
     if (bytes != null) {
       return _hrmpOutboundMessages.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// Upward messages that were sent in a block.
@@ -399,7 +401,7 @@ class Queries {
     if (bytes != null) {
       return _upwardMessages.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// Upward messages that are still pending and not yet send to the relay chain.
@@ -412,7 +414,7 @@ class Queries {
     if (bytes != null) {
       return _pendingUpwardMessages.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// The number of HRMP messages we observed in `on_initialize` and thus used that number for

@@ -1,11 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i7;
+
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
-import '../types/tuples.dart' as _i3;
+
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i4;
-import '../types/sp_core/crypto/account_id32.dart' as _i5;
 import '../types/primitive_types/h256.dart' as _i6;
-import 'dart:async' as _i7;
+import '../types/sp_core/crypto/account_id32.dart' as _i5;
+import '../types/tuples.dart' as _i3;
 
 class Queries {
   const Queries(this.__api);
@@ -30,14 +32,14 @@ class Queries {
           .StorageDoubleMap<_i3.Tuple2<_i4.CommunityIdentifier, int>, _i3.Tuple2<BigInt, _i5.AccountId32>, _i6.H256?>(
     prefix: 'EncointerReputationCommitments',
     storage: 'Commitments',
-    valueCodec: _i2.OptionCodec<_i6.H256>(_i2.U8ArrayCodec(32)),
+    valueCodec: _i2.OptionCodec<_i6.H256>(_i6.H256Codec()),
     hasher1: _i1.StorageHasher.blake2b128Concat(_i3.Tuple2Codec<_i4.CommunityIdentifier, int>(
       _i4.CommunityIdentifier.codec,
       _i2.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.identity(_i3.Tuple2Codec<BigInt, _i5.AccountId32>(
       _i2.U64Codec.codec,
-      _i2.U8ArrayCodec(32),
+      _i5.AccountId32Codec(),
     )),
   );
 

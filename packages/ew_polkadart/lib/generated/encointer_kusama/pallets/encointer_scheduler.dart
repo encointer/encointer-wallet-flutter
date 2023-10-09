@@ -1,8 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i4;
+
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
+
 import '../types/encointer_primitives/scheduler/ceremony_phase_type.dart' as _i3;
-import 'dart:async' as _i4;
 
 class Queries {
   const Queries(this.__api);

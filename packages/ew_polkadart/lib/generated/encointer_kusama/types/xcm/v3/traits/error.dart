@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../../sp_weights/weight_v2/weight.dart' as _i3;
 
 abstract class Error {
@@ -31,167 +33,163 @@ class $Error {
   const $Error();
 
   Overflow overflow() {
-    return const Overflow();
+    return Overflow();
   }
 
   Unimplemented unimplemented() {
-    return const Unimplemented();
+    return Unimplemented();
   }
 
   UntrustedReserveLocation untrustedReserveLocation() {
-    return const UntrustedReserveLocation();
+    return UntrustedReserveLocation();
   }
 
   UntrustedTeleportLocation untrustedTeleportLocation() {
-    return const UntrustedTeleportLocation();
+    return UntrustedTeleportLocation();
   }
 
   LocationFull locationFull() {
-    return const LocationFull();
+    return LocationFull();
   }
 
   LocationNotInvertible locationNotInvertible() {
-    return const LocationNotInvertible();
+    return LocationNotInvertible();
   }
 
   BadOrigin badOrigin() {
-    return const BadOrigin();
+    return BadOrigin();
   }
 
   InvalidLocation invalidLocation() {
-    return const InvalidLocation();
+    return InvalidLocation();
   }
 
   AssetNotFound assetNotFound() {
-    return const AssetNotFound();
+    return AssetNotFound();
   }
 
   FailedToTransactAsset failedToTransactAsset() {
-    return const FailedToTransactAsset();
+    return FailedToTransactAsset();
   }
 
   NotWithdrawable notWithdrawable() {
-    return const NotWithdrawable();
+    return NotWithdrawable();
   }
 
   LocationCannotHold locationCannotHold() {
-    return const LocationCannotHold();
+    return LocationCannotHold();
   }
 
   ExceedsMaxMessageSize exceedsMaxMessageSize() {
-    return const ExceedsMaxMessageSize();
+    return ExceedsMaxMessageSize();
   }
 
   DestinationUnsupported destinationUnsupported() {
-    return const DestinationUnsupported();
+    return DestinationUnsupported();
   }
 
   Transport transport() {
-    return const Transport();
+    return Transport();
   }
 
   Unroutable unroutable() {
-    return const Unroutable();
+    return Unroutable();
   }
 
   UnknownClaim unknownClaim() {
-    return const UnknownClaim();
+    return UnknownClaim();
   }
 
   FailedToDecode failedToDecode() {
-    return const FailedToDecode();
+    return FailedToDecode();
   }
 
   MaxWeightInvalid maxWeightInvalid() {
-    return const MaxWeightInvalid();
+    return MaxWeightInvalid();
   }
 
   NotHoldingFees notHoldingFees() {
-    return const NotHoldingFees();
+    return NotHoldingFees();
   }
 
   TooExpensive tooExpensive() {
-    return const TooExpensive();
+    return TooExpensive();
   }
 
-  Trap trap({required BigInt value0}) {
-    return Trap(
-      value0: value0,
-    );
+  Trap trap(BigInt value0) {
+    return Trap(value0);
   }
 
   ExpectationFalse expectationFalse() {
-    return const ExpectationFalse();
+    return ExpectationFalse();
   }
 
   PalletNotFound palletNotFound() {
-    return const PalletNotFound();
+    return PalletNotFound();
   }
 
   NameMismatch nameMismatch() {
-    return const NameMismatch();
+    return NameMismatch();
   }
 
   VersionIncompatible versionIncompatible() {
-    return const VersionIncompatible();
+    return VersionIncompatible();
   }
 
   HoldingWouldOverflow holdingWouldOverflow() {
-    return const HoldingWouldOverflow();
+    return HoldingWouldOverflow();
   }
 
   ExportError exportError() {
-    return const ExportError();
+    return ExportError();
   }
 
   ReanchorFailed reanchorFailed() {
-    return const ReanchorFailed();
+    return ReanchorFailed();
   }
 
   NoDeal noDeal() {
-    return const NoDeal();
+    return NoDeal();
   }
 
   FeesNotMet feesNotMet() {
-    return const FeesNotMet();
+    return FeesNotMet();
   }
 
   LockError lockError() {
-    return const LockError();
+    return LockError();
   }
 
   NoPermission noPermission() {
-    return const NoPermission();
+    return NoPermission();
   }
 
   Unanchored unanchored() {
-    return const Unanchored();
+    return Unanchored();
   }
 
   NotDepositable notDepositable() {
-    return const NotDepositable();
+    return NotDepositable();
   }
 
   UnhandledXcmVersion unhandledXcmVersion() {
-    return const UnhandledXcmVersion();
+    return UnhandledXcmVersion();
   }
 
-  WeightLimitReached weightLimitReached({required _i3.Weight value0}) {
-    return WeightLimitReached(
-      value0: value0,
-    );
+  WeightLimitReached weightLimitReached(_i3.Weight value0) {
+    return WeightLimitReached(value0);
   }
 
   Barrier barrier() {
-    return const Barrier();
+    return Barrier();
   }
 
   WeightNotComputable weightNotComputable() {
-    return const WeightNotComputable();
+    return WeightNotComputable();
   }
 
   ExceedsStackLimit exceedsStackLimit() {
-    return const ExceedsStackLimit();
+    return ExceedsStackLimit();
   }
 }
 
@@ -519,6 +517,12 @@ class Overflow extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Overflow;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Unimplemented extends Error {
@@ -533,6 +537,12 @@ class Unimplemented extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Unimplemented;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class UntrustedReserveLocation extends Error {
@@ -547,6 +557,12 @@ class UntrustedReserveLocation extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is UntrustedReserveLocation;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class UntrustedTeleportLocation extends Error {
@@ -561,6 +577,12 @@ class UntrustedTeleportLocation extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is UntrustedTeleportLocation;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class LocationFull extends Error {
@@ -575,6 +597,12 @@ class LocationFull extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is LocationFull;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class LocationNotInvertible extends Error {
@@ -589,6 +617,12 @@ class LocationNotInvertible extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is LocationNotInvertible;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class BadOrigin extends Error {
@@ -603,6 +637,12 @@ class BadOrigin extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is BadOrigin;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class InvalidLocation extends Error {
@@ -617,6 +657,12 @@ class InvalidLocation extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is InvalidLocation;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class AssetNotFound extends Error {
@@ -631,6 +677,12 @@ class AssetNotFound extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is AssetNotFound;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class FailedToTransactAsset extends Error {
@@ -645,6 +697,12 @@ class FailedToTransactAsset extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is FailedToTransactAsset;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NotWithdrawable extends Error {
@@ -659,6 +717,12 @@ class NotWithdrawable extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NotWithdrawable;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class LocationCannotHold extends Error {
@@ -673,6 +737,12 @@ class LocationCannotHold extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is LocationCannotHold;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class ExceedsMaxMessageSize extends Error {
@@ -687,6 +757,12 @@ class ExceedsMaxMessageSize extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ExceedsMaxMessageSize;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class DestinationUnsupported extends Error {
@@ -701,6 +777,12 @@ class DestinationUnsupported extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is DestinationUnsupported;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Transport extends Error {
@@ -715,6 +797,12 @@ class Transport extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Transport;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Unroutable extends Error {
@@ -729,6 +817,12 @@ class Unroutable extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Unroutable;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class UnknownClaim extends Error {
@@ -743,6 +837,12 @@ class UnknownClaim extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is UnknownClaim;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class FailedToDecode extends Error {
@@ -757,6 +857,12 @@ class FailedToDecode extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is FailedToDecode;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class MaxWeightInvalid extends Error {
@@ -771,6 +877,12 @@ class MaxWeightInvalid extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is MaxWeightInvalid;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NotHoldingFees extends Error {
@@ -785,6 +897,12 @@ class NotHoldingFees extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NotHoldingFees;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class TooExpensive extends Error {
@@ -799,17 +917,22 @@ class TooExpensive extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is TooExpensive;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Trap extends Error {
-  const Trap({required this.value0});
+  const Trap(this.value0);
 
   factory Trap._decode(_i1.Input input) {
-    return Trap(
-      value0: _i1.U64Codec.codec.decode(input),
-    );
+    return Trap(_i1.U64Codec.codec.decode(input));
   }
 
+  /// u64
   final BigInt value0;
 
   @override
@@ -831,6 +954,17 @@ class Trap extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Trap && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ExpectationFalse extends Error {
@@ -845,6 +979,12 @@ class ExpectationFalse extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ExpectationFalse;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class PalletNotFound extends Error {
@@ -859,6 +999,12 @@ class PalletNotFound extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is PalletNotFound;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NameMismatch extends Error {
@@ -873,6 +1019,12 @@ class NameMismatch extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NameMismatch;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class VersionIncompatible extends Error {
@@ -887,6 +1039,12 @@ class VersionIncompatible extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is VersionIncompatible;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class HoldingWouldOverflow extends Error {
@@ -901,6 +1059,12 @@ class HoldingWouldOverflow extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is HoldingWouldOverflow;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class ExportError extends Error {
@@ -915,6 +1079,12 @@ class ExportError extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ExportError;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class ReanchorFailed extends Error {
@@ -929,6 +1099,12 @@ class ReanchorFailed extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ReanchorFailed;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NoDeal extends Error {
@@ -943,6 +1119,12 @@ class NoDeal extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NoDeal;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class FeesNotMet extends Error {
@@ -957,6 +1139,12 @@ class FeesNotMet extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is FeesNotMet;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class LockError extends Error {
@@ -971,6 +1159,12 @@ class LockError extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is LockError;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NoPermission extends Error {
@@ -985,6 +1179,12 @@ class NoPermission extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NoPermission;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Unanchored extends Error {
@@ -999,6 +1199,12 @@ class Unanchored extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Unanchored;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NotDepositable extends Error {
@@ -1013,6 +1219,12 @@ class NotDepositable extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NotDepositable;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class UnhandledXcmVersion extends Error {
@@ -1027,17 +1239,22 @@ class UnhandledXcmVersion extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is UnhandledXcmVersion;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class WeightLimitReached extends Error {
-  const WeightLimitReached({required this.value0});
+  const WeightLimitReached(this.value0);
 
   factory WeightLimitReached._decode(_i1.Input input) {
-    return WeightLimitReached(
-      value0: _i3.Weight.codec.decode(input),
-    );
+    return WeightLimitReached(_i3.Weight.codec.decode(input));
   }
 
+  /// Weight
   final _i3.Weight value0;
 
   @override
@@ -1059,6 +1276,17 @@ class WeightLimitReached extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is WeightLimitReached && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Barrier extends Error {
@@ -1073,6 +1301,12 @@ class Barrier extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Barrier;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class WeightNotComputable extends Error {
@@ -1087,6 +1321,12 @@ class WeightNotComputable extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is WeightNotComputable;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class ExceedsStackLimit extends Error {
@@ -1101,4 +1341,10 @@ class ExceedsStackLimit extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ExceedsStackLimit;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

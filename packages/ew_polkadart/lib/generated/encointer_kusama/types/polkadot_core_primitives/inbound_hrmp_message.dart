@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 class InboundHrmpMessage {
   const InboundHrmpMessage({
@@ -12,8 +14,10 @@ class InboundHrmpMessage {
     return codec.decode(input);
   }
 
+  /// BlockNumber
   final int sentAt;
 
+  /// sp_std::vec::Vec<u8>
   final List<int> data;
 
   static const $InboundHrmpMessageCodec codec = $InboundHrmpMessageCodec();
@@ -26,6 +30,25 @@ class InboundHrmpMessage {
         'sentAt': sentAt,
         'data': data,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InboundHrmpMessage &&
+          other.sentAt == sentAt &&
+          _i3.listsEqual(
+            other.data,
+            data,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        sentAt,
+        data,
+      );
 }
 
 class $InboundHrmpMessageCodec with _i1.Codec<InboundHrmpMessage> {

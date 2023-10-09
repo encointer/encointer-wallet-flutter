@@ -1,7 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../primitive_types/h256.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
+import '../primitive_types/h256.dart' as _i2;
 
 class CodeUpgradeAuthorization {
   const CodeUpgradeAuthorization({
@@ -13,8 +16,10 @@ class CodeUpgradeAuthorization {
     return codec.decode(input);
   }
 
+  /// T::Hash
   final _i2.H256 codeHash;
 
+  /// bool
   final bool checkVersion;
 
   static const $CodeUpgradeAuthorizationCodec codec = $CodeUpgradeAuthorizationCodec();
@@ -27,6 +32,25 @@ class CodeUpgradeAuthorization {
         'codeHash': codeHash.toList(),
         'checkVersion': checkVersion,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CodeUpgradeAuthorization &&
+          _i4.listsEqual(
+            other.codeHash,
+            codeHash,
+          ) &&
+          other.checkVersion == checkVersion;
+
+  @override
+  int get hashCode => Object.hash(
+        codeHash,
+        checkVersion,
+      );
 }
 
 class $CodeUpgradeAuthorizationCodec with _i1.Codec<CodeUpgradeAuthorization> {
@@ -58,7 +82,7 @@ class $CodeUpgradeAuthorizationCodec with _i1.Codec<CodeUpgradeAuthorization> {
   @override
   int sizeHint(CodeUpgradeAuthorization obj) {
     int size = 0;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.codeHash);
+    size = size + const _i2.H256Codec().sizeHint(obj.codeHash);
     size = size + _i1.BoolCodec.codec.sizeHint(obj.checkVersion);
     return size;
   }

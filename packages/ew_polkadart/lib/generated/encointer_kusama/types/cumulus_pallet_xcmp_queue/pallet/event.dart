@@ -1,9 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
+import '../../polkadot_parachain/primitives/id.dart' as _i5;
 import '../../sp_weights/weight_v2/weight.dart' as _i3;
 import '../../xcm/v3/traits/error.dart' as _i4;
-import '../../polkadot_parachain/primitives/id.dart' as _i5;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -60,21 +63,15 @@ class $Event {
   }
 
   BadVersion badVersion({required List<int> messageHash}) {
-    return BadVersion(
-      messageHash: messageHash,
-    );
+    return BadVersion(messageHash: messageHash);
   }
 
   BadFormat badFormat({required List<int> messageHash}) {
-    return BadFormat(
-      messageHash: messageHash,
-    );
+    return BadFormat(messageHash: messageHash);
   }
 
   XcmpMessageSent xcmpMessageSent({required List<int> messageHash}) {
-    return XcmpMessageSent(
-      messageHash: messageHash,
-    );
+    return XcmpMessageSent(messageHash: messageHash);
   }
 
   OverweightEnqueued overweightEnqueued({
@@ -199,10 +196,13 @@ class Success extends Event {
     );
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
+  /// XcmHash
   final List<int> messageId;
 
+  /// Weight
   final _i3.Weight weight;
 
   @override
@@ -240,6 +240,30 @@ class Success extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Success &&
+          _i6.listsEqual(
+            other.messageHash,
+            messageHash,
+          ) &&
+          _i6.listsEqual(
+            other.messageId,
+            messageId,
+          ) &&
+          other.weight == weight;
+
+  @override
+  int get hashCode => Object.hash(
+        messageHash,
+        messageId,
+        weight,
+      );
 }
 
 /// Some XCM failed.
@@ -260,12 +284,16 @@ class Fail extends Event {
     );
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
+  /// XcmHash
   final List<int> messageId;
 
+  /// XcmError
   final _i4.Error error;
 
+  /// Weight
   final _i3.Weight weight;
 
   @override
@@ -309,6 +337,32 @@ class Fail extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Fail &&
+          _i6.listsEqual(
+            other.messageHash,
+            messageHash,
+          ) &&
+          _i6.listsEqual(
+            other.messageId,
+            messageId,
+          ) &&
+          other.error == error &&
+          other.weight == weight;
+
+  @override
+  int get hashCode => Object.hash(
+        messageHash,
+        messageId,
+        error,
+        weight,
+      );
 }
 
 /// Bad XCM version used.
@@ -316,11 +370,10 @@ class BadVersion extends Event {
   const BadVersion({required this.messageHash});
 
   factory BadVersion._decode(_i1.Input input) {
-    return BadVersion(
-      messageHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return BadVersion(messageHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
   @override
@@ -344,6 +397,21 @@ class BadVersion extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BadVersion &&
+          _i6.listsEqual(
+            other.messageHash,
+            messageHash,
+          );
+
+  @override
+  int get hashCode => messageHash.hashCode;
 }
 
 /// Bad XCM format used.
@@ -351,11 +419,10 @@ class BadFormat extends Event {
   const BadFormat({required this.messageHash});
 
   factory BadFormat._decode(_i1.Input input) {
-    return BadFormat(
-      messageHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return BadFormat(messageHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
   @override
@@ -379,6 +446,21 @@ class BadFormat extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BadFormat &&
+          _i6.listsEqual(
+            other.messageHash,
+            messageHash,
+          );
+
+  @override
+  int get hashCode => messageHash.hashCode;
 }
 
 /// An HRMP message was sent to a sibling parachain.
@@ -386,11 +468,10 @@ class XcmpMessageSent extends Event {
   const XcmpMessageSent({required this.messageHash});
 
   factory XcmpMessageSent._decode(_i1.Input input) {
-    return XcmpMessageSent(
-      messageHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return XcmpMessageSent(messageHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
   @override
@@ -414,6 +495,21 @@ class XcmpMessageSent extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is XcmpMessageSent &&
+          _i6.listsEqual(
+            other.messageHash,
+            messageHash,
+          );
+
+  @override
+  int get hashCode => messageHash.hashCode;
 }
 
 /// An XCM exceeded the individual message weight budget.
@@ -434,12 +530,16 @@ class OverweightEnqueued extends Event {
     );
   }
 
+  /// ParaId
   final _i5.Id sender;
 
+  /// RelayBlockNumber
   final int sentAt;
 
+  /// OverweightIndex
   final BigInt index;
 
+  /// Weight
   final _i3.Weight required;
 
   @override
@@ -454,7 +554,7 @@ class OverweightEnqueued extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i1.U32Codec.codec.sizeHint(sender);
+    size = size + const _i5.IdCodec().sizeHint(sender);
     size = size + _i1.U32Codec.codec.sizeHint(sentAt);
     size = size + _i1.U64Codec.codec.sizeHint(index);
     size = size + _i3.Weight.codec.sizeHint(required);
@@ -483,6 +583,26 @@ class OverweightEnqueued extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is OverweightEnqueued &&
+          other.sender == sender &&
+          other.sentAt == sentAt &&
+          other.index == index &&
+          other.required == required;
+
+  @override
+  int get hashCode => Object.hash(
+        sender,
+        sentAt,
+        index,
+        required,
+      );
 }
 
 /// An XCM from the overweight queue was executed with the given actual weight used.
@@ -499,8 +619,10 @@ class OverweightServiced extends Event {
     );
   }
 
+  /// OverweightIndex
   final BigInt index;
 
+  /// Weight
   final _i3.Weight used;
 
   @override
@@ -532,4 +654,18 @@ class OverweightServiced extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is OverweightServiced && other.index == index && other.used == used;
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        used,
+      );
 }

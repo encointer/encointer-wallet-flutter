@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../multilocation/multi_location.dart' as _i3;
 
 abstract class AssetId {
@@ -30,16 +33,12 @@ abstract class AssetId {
 class $AssetId {
   const $AssetId();
 
-  Concrete concrete({required _i3.MultiLocation value0}) {
-    return Concrete(
-      value0: value0,
-    );
+  Concrete concrete(_i3.MultiLocation value0) {
+    return Concrete(value0);
   }
 
-  Abstract abstract({required List<int> value0}) {
-    return Abstract(
-      value0: value0,
-    );
+  Abstract abstract(List<int> value0) {
+    return Abstract(value0);
   }
 }
 
@@ -90,14 +89,13 @@ class $AssetIdCodec with _i1.Codec<AssetId> {
 }
 
 class Concrete extends AssetId {
-  const Concrete({required this.value0});
+  const Concrete(this.value0);
 
   factory Concrete._decode(_i1.Input input) {
-    return Concrete(
-      value0: _i3.MultiLocation.codec.decode(input),
-    );
+    return Concrete(_i3.MultiLocation.codec.decode(input));
   }
 
+  /// MultiLocation
   final _i3.MultiLocation value0;
 
   @override
@@ -119,17 +117,27 @@ class Concrete extends AssetId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Concrete && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Abstract extends AssetId {
-  const Abstract({required this.value0});
+  const Abstract(this.value0);
 
   factory Abstract._decode(_i1.Input input) {
-    return Abstract(
-      value0: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return Abstract(_i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// Vec<u8>
   final List<int> value0;
 
   @override
@@ -151,4 +159,19 @@ class Abstract extends AssetId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Abstract &&
+          _i4.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }

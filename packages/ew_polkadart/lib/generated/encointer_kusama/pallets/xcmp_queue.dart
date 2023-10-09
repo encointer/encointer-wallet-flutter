@@ -1,13 +1,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i8;
+
 import 'package:polkadart/polkadart.dart' as _i1;
-import '../types/cumulus_pallet_xcmp_queue/inbound_channel_details.dart' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i3;
-import '../types/polkadot_parachain/primitives/id.dart' as _i4;
+
+import '../types/cumulus_pallet_xcmp_queue/inbound_channel_details.dart' as _i2;
 import '../types/cumulus_pallet_xcmp_queue/outbound_channel_details.dart' as _i5;
 import '../types/cumulus_pallet_xcmp_queue/queue_config_data.dart' as _i6;
-import '../types/tuples_2.dart' as _i7;
-import 'dart:async' as _i8;
+import '../types/polkadot_parachain/primitives/id.dart' as _i4;
 import '../types/sp_weights/weight_v2/weight.dart' as _i9;
+import '../types/tuples_2.dart' as _i7;
 
 class Queries {
   const Queries(this.__api);
@@ -26,7 +28,7 @@ class Queries {
     prefix: 'XcmpQueue',
     storage: 'InboundXcmpMessages',
     valueCodec: _i3.U8SequenceCodec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(_i3.U32Codec.codec),
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i4.IdCodec()),
     hasher2: _i1.StorageHasher.twoxx64Concat(_i3.U32Codec.codec),
   );
 
@@ -42,7 +44,7 @@ class Queries {
     prefix: 'XcmpQueue',
     storage: 'OutboundXcmpMessages',
     valueCodec: _i3.U8SequenceCodec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(_i3.U32Codec.codec),
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i4.IdCodec()),
     hasher2: _i1.StorageHasher.twoxx64Concat(_i3.U16Codec.codec),
   );
 
@@ -50,7 +52,7 @@ class Queries {
     prefix: 'XcmpQueue',
     storage: 'SignalMessages',
     valueCodec: _i3.U8SequenceCodec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(_i3.U32Codec.codec),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i4.IdCodec()),
   );
 
   final _i1.StorageValue<_i6.QueueConfigData> _queueConfig = const _i1.StorageValue<_i6.QueueConfigData>(
@@ -64,7 +66,7 @@ class Queries {
     prefix: 'XcmpQueue',
     storage: 'Overweight',
     valueCodec: _i7.Tuple3Codec<_i4.Id, int, List<int>>(
-      _i3.U32Codec.codec,
+      _i4.IdCodec(),
       _i3.U32Codec.codec,
       _i3.U8SequenceCodec.codec,
     ),
@@ -99,7 +101,7 @@ class Queries {
     if (bytes != null) {
       return _inboundXcmpStatus.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// Inbound aggregate XCMP messages. It can only be one per ParaId/block.
@@ -141,7 +143,7 @@ class Queries {
     if (bytes != null) {
       return _outboundXcmpStatus.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// The messages outbound in a given XCMP channel.

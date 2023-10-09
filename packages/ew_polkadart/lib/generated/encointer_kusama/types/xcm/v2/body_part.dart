@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 abstract class BodyPart {
   const BodyPart();
@@ -30,13 +31,11 @@ class $BodyPart {
   const $BodyPart();
 
   Voice voice() {
-    return const Voice();
+    return Voice();
   }
 
   Members members({required BigInt count}) {
-    return Members(
-      count: count,
-    );
+    return Members(count: count);
   }
 
   Fraction fraction({
@@ -149,17 +148,22 @@ class Voice extends BodyPart {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Voice;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Members extends BodyPart {
   const Members({required this.count});
 
   factory Members._decode(_i1.Input input) {
-    return Members(
-      count: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Members(count: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u32
   final BigInt count;
 
   @override
@@ -183,6 +187,17 @@ class Members extends BodyPart {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Members && other.count == count;
+
+  @override
+  int get hashCode => count.hashCode;
 }
 
 class Fraction extends BodyPart {
@@ -198,8 +213,10 @@ class Fraction extends BodyPart {
     );
   }
 
+  /// u32
   final BigInt nom;
 
+  /// u32
   final BigInt denom;
 
   @override
@@ -231,6 +248,20 @@ class Fraction extends BodyPart {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Fraction && other.nom == nom && other.denom == denom;
+
+  @override
+  int get hashCode => Object.hash(
+        nom,
+        denom,
+      );
 }
 
 class AtLeastProportion extends BodyPart {
@@ -246,8 +277,10 @@ class AtLeastProportion extends BodyPart {
     );
   }
 
+  /// u32
   final BigInt nom;
 
+  /// u32
   final BigInt denom;
 
   @override
@@ -279,6 +312,20 @@ class AtLeastProportion extends BodyPart {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AtLeastProportion && other.nom == nom && other.denom == denom;
+
+  @override
+  int get hashCode => Object.hash(
+        nom,
+        denom,
+      );
 }
 
 class MoreThanProportion extends BodyPart {
@@ -294,8 +341,10 @@ class MoreThanProportion extends BodyPart {
     );
   }
 
+  /// u32
   final BigInt nom;
 
+  /// u32
   final BigInt denom;
 
   @override
@@ -327,4 +376,18 @@ class MoreThanProportion extends BodyPart {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MoreThanProportion && other.nom == nom && other.denom == denom;
+
+  @override
+  int get hashCode => Object.hash(
+        nom,
+        denom,
+      );
 }

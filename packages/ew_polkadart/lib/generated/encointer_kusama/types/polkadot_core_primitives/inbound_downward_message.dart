@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 class InboundDownwardMessage {
   const InboundDownwardMessage({
@@ -12,8 +14,10 @@ class InboundDownwardMessage {
     return codec.decode(input);
   }
 
+  /// BlockNumber
   final int sentAt;
 
+  /// DownwardMessage
   final List<int> msg;
 
   static const $InboundDownwardMessageCodec codec = $InboundDownwardMessageCodec();
@@ -26,6 +30,25 @@ class InboundDownwardMessage {
         'sentAt': sentAt,
         'msg': msg,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InboundDownwardMessage &&
+          other.sentAt == sentAt &&
+          _i3.listsEqual(
+            other.msg,
+            msg,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        sentAt,
+        msg,
+      );
 }
 
 class $InboundDownwardMessageCodec with _i1.Codec<InboundDownwardMessage> {

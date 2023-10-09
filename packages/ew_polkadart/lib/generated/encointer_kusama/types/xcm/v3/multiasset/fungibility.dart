@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import 'asset_instance.dart' as _i3;
 
 abstract class Fungibility {
@@ -30,16 +32,12 @@ abstract class Fungibility {
 class $Fungibility {
   const $Fungibility();
 
-  Fungible fungible({required BigInt value0}) {
-    return Fungible(
-      value0: value0,
-    );
+  Fungible fungible(BigInt value0) {
+    return Fungible(value0);
   }
 
-  NonFungible nonFungible({required _i3.AssetInstance value0}) {
-    return NonFungible(
-      value0: value0,
-    );
+  NonFungible nonFungible(_i3.AssetInstance value0) {
+    return NonFungible(value0);
   }
 }
 
@@ -90,14 +88,13 @@ class $FungibilityCodec with _i1.Codec<Fungibility> {
 }
 
 class Fungible extends Fungibility {
-  const Fungible({required this.value0});
+  const Fungible(this.value0);
 
   factory Fungible._decode(_i1.Input input) {
-    return Fungible(
-      value0: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Fungible(_i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u128
   final BigInt value0;
 
   @override
@@ -119,17 +116,27 @@ class Fungible extends Fungibility {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Fungible && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class NonFungible extends Fungibility {
-  const NonFungible({required this.value0});
+  const NonFungible(this.value0);
 
   factory NonFungible._decode(_i1.Input input) {
-    return NonFungible(
-      value0: _i3.AssetInstance.codec.decode(input),
-    );
+    return NonFungible(_i3.AssetInstance.codec.decode(input));
   }
 
+  /// AssetInstance
   final _i3.AssetInstance value0;
 
   @override
@@ -151,4 +158,15 @@ class NonFungible extends Fungibility {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NonFungible && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

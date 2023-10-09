@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../../substrate_fixed/fixed_u128.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../../substrate_fixed/fixed_u128.dart' as _i2;
 
 class BalanceEntry {
   const BalanceEntry({
@@ -13,8 +15,10 @@ class BalanceEntry {
     return codec.decode(input);
   }
 
+  /// BalanceType
   final _i2.FixedU128 principal;
 
+  /// BlockNumber
   final int lastUpdate;
 
   static const $BalanceEntryCodec codec = $BalanceEntryCodec();
@@ -27,6 +31,20 @@ class BalanceEntry {
         'principal': principal.toJson(),
         'lastUpdate': lastUpdate,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BalanceEntry && other.principal == principal && other.lastUpdate == lastUpdate;
+
+  @override
+  int get hashCode => Object.hash(
+        principal,
+        lastUpdate,
+      );
 }
 
 class $BalanceEntryCodec with _i1.Codec<BalanceEntry> {

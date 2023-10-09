@@ -1,9 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:typed_data' as _i5;
+
 import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../encointer_runtime/origin_caller.dart' as _i4;
 import '../frame_support/traits/preimages/bounded.dart' as _i2;
 import '../tuples.dart' as _i3;
-import '../encointer_runtime/origin_caller.dart' as _i4;
-import 'dart:typed_data' as _i5;
 
 class Scheduled {
   const Scheduled({
@@ -18,14 +20,19 @@ class Scheduled {
     return codec.decode(input);
   }
 
+  /// Option<Name>
   final List<int>? maybeId;
 
+  /// schedule::Priority
   final int priority;
 
+  /// Call
   final _i2.Bounded call;
 
+  /// Option<schedule::Period<BlockNumber>>
   final _i3.Tuple2<int, int>? maybePeriodic;
 
+  /// PalletsOrigin
   final _i4.OriginCaller origin;
 
   static const $ScheduledCodec codec = $ScheduledCodec();
@@ -44,6 +51,28 @@ class Scheduled {
         ],
         'origin': origin.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Scheduled &&
+          other.maybeId == maybeId &&
+          other.priority == priority &&
+          other.call == call &&
+          other.maybePeriodic == maybePeriodic &&
+          other.origin == origin;
+
+  @override
+  int get hashCode => Object.hash(
+        maybeId,
+        priority,
+        call,
+        maybePeriodic,
+        origin,
+      );
 }
 
 class $ScheduledCodec with _i1.Codec<Scheduled> {

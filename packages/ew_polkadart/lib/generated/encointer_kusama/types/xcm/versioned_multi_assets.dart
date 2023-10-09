@@ -1,10 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import 'v2/multiasset/multi_assets.dart' as _i3;
-import 'v3/multiasset/multi_assets.dart' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
 import 'v2/multiasset/multi_asset.dart' as _i5;
-import 'v3/multiasset/multi_asset.dart' as _i6;
+import 'v2/multiasset/multi_assets.dart' as _i3;
+import 'v3/multiasset/multi_asset.dart' as _i7;
+import 'v3/multiasset/multi_assets.dart' as _i4;
 
 abstract class VersionedMultiAssets {
   const VersionedMultiAssets();
@@ -33,16 +36,12 @@ abstract class VersionedMultiAssets {
 class $VersionedMultiAssets {
   const $VersionedMultiAssets();
 
-  V2 v2({required _i3.MultiAssets value0}) {
-    return V2(
-      value0: value0,
-    );
+  V2 v2(_i3.MultiAssets value0) {
+    return V2(value0);
   }
 
-  V3 v3({required _i4.MultiAssets value0}) {
-    return V3(
-      value0: value0,
-    );
+  V3 v3(_i4.MultiAssets value0) {
+    return V3(value0);
   }
 }
 
@@ -93,14 +92,13 @@ class $VersionedMultiAssetsCodec with _i1.Codec<VersionedMultiAssets> {
 }
 
 class V2 extends VersionedMultiAssets {
-  const V2({required this.value0});
+  const V2(this.value0);
 
   factory V2._decode(_i1.Input input) {
-    return V2(
-      value0: const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).decode(input),
-    );
+    return V2(const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).decode(input));
   }
 
+  /// v2::MultiAssets
   final _i3.MultiAssets value0;
 
   @override
@@ -109,7 +107,7 @@ class V2 extends VersionedMultiAssets {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).sizeHint(value0);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(value0);
     return size;
   }
 
@@ -123,17 +121,31 @@ class V2 extends VersionedMultiAssets {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is V2 &&
+          _i6.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class V3 extends VersionedMultiAssets {
-  const V3({required this.value0});
+  const V3(this.value0);
 
   factory V3._decode(_i1.Input input) {
-    return V3(
-      value0: const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).decode(input),
-    );
+    return V3(const _i1.SequenceCodec<_i7.MultiAsset>(_i7.MultiAsset.codec).decode(input));
   }
 
+  /// v3::MultiAssets
   final _i4.MultiAssets value0;
 
   @override
@@ -142,7 +154,7 @@ class V3 extends VersionedMultiAssets {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).sizeHint(value0);
+    size = size + const _i4.MultiAssetsCodec().sizeHint(value0);
     return size;
   }
 
@@ -151,9 +163,24 @@ class V3 extends VersionedMultiAssets {
       3,
       output,
     );
-    const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i7.MultiAsset>(_i7.MultiAsset.codec).encodeTo(
       value0,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is V3 &&
+          _i6.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }

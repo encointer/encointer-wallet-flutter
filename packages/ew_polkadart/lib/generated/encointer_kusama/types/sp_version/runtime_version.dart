@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../cow.dart' as _i2;
 import 'dart:typed_data' as _i3;
-import '../tuples.dart' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
+import '../cow.dart' as _i2;
+import '../tuples.dart' as _i5;
 
 class RuntimeVersion {
   const RuntimeVersion({
@@ -20,20 +23,28 @@ class RuntimeVersion {
     return codec.decode(input);
   }
 
+  /// RuntimeString
   final String specName;
 
+  /// RuntimeString
   final String implName;
 
+  /// u32
   final int authoringVersion;
 
+  /// u32
   final int specVersion;
 
+  /// u32
   final int implVersion;
 
+  /// ApisVec
   final _i2.Cow apis;
 
+  /// u32
   final int transactionVersion;
 
+  /// u8
   final int stateVersion;
 
   static const $RuntimeVersionCodec codec = $RuntimeVersionCodec();
@@ -57,6 +68,37 @@ class RuntimeVersion {
         'transactionVersion': transactionVersion,
         'stateVersion': stateVersion,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RuntimeVersion &&
+          other.specName == specName &&
+          other.implName == implName &&
+          other.authoringVersion == authoringVersion &&
+          other.specVersion == specVersion &&
+          other.implVersion == implVersion &&
+          _i4.listsEqual(
+            other.apis,
+            apis,
+          ) &&
+          other.transactionVersion == transactionVersion &&
+          other.stateVersion == stateVersion;
+
+  @override
+  int get hashCode => Object.hash(
+        specName,
+        implName,
+        authoringVersion,
+        specVersion,
+        implVersion,
+        apis,
+        transactionVersion,
+        stateVersion,
+      );
 }
 
 class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
@@ -87,7 +129,7 @@ class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
       obj.implVersion,
       output,
     );
-    const _i1.SequenceCodec<_i4.Tuple2<List<int>, int>>(_i4.Tuple2Codec<List<int>, int>(
+    const _i1.SequenceCodec<_i5.Tuple2<List<int>, int>>(_i5.Tuple2Codec<List<int>, int>(
       _i1.U8ArrayCodec(8),
       _i1.U32Codec.codec,
     )).encodeTo(
@@ -112,7 +154,7 @@ class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
       authoringVersion: _i1.U32Codec.codec.decode(input),
       specVersion: _i1.U32Codec.codec.decode(input),
       implVersion: _i1.U32Codec.codec.decode(input),
-      apis: const _i1.SequenceCodec<_i4.Tuple2<List<int>, int>>(_i4.Tuple2Codec<List<int>, int>(
+      apis: const _i1.SequenceCodec<_i5.Tuple2<List<int>, int>>(_i5.Tuple2Codec<List<int>, int>(
         _i1.U8ArrayCodec(8),
         _i1.U32Codec.codec,
       )).decode(input),
@@ -129,11 +171,7 @@ class $RuntimeVersionCodec with _i1.Codec<RuntimeVersion> {
     size = size + _i1.U32Codec.codec.sizeHint(obj.authoringVersion);
     size = size + _i1.U32Codec.codec.sizeHint(obj.specVersion);
     size = size + _i1.U32Codec.codec.sizeHint(obj.implVersion);
-    size = size +
-        const _i1.SequenceCodec<_i4.Tuple2<List<int>, int>>(_i4.Tuple2Codec<List<int>, int>(
-          _i1.U8ArrayCodec(8),
-          _i1.U32Codec.codec,
-        )).sizeHint(obj.apis);
+    size = size + const _i2.CowCodec().sizeHint(obj.apis);
     size = size + _i1.U32Codec.codec.sizeHint(obj.transactionVersion);
     size = size + _i1.U8Codec.codec.sizeHint(obj.stateVersion);
     return size;

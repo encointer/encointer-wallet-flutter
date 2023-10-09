@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 abstract class AssetInstance {
   const AssetInstance();
@@ -30,43 +32,31 @@ class $AssetInstance {
   const $AssetInstance();
 
   Undefined undefined() {
-    return const Undefined();
+    return Undefined();
   }
 
-  Index index({required BigInt value0}) {
-    return Index(
-      value0: value0,
-    );
+  Index index(BigInt value0) {
+    return Index(value0);
   }
 
-  Array4 array4({required List<int> value0}) {
-    return Array4(
-      value0: value0,
-    );
+  Array4 array4(List<int> value0) {
+    return Array4(value0);
   }
 
-  Array8 array8({required List<int> value0}) {
-    return Array8(
-      value0: value0,
-    );
+  Array8 array8(List<int> value0) {
+    return Array8(value0);
   }
 
-  Array16 array16({required List<int> value0}) {
-    return Array16(
-      value0: value0,
-    );
+  Array16 array16(List<int> value0) {
+    return Array16(value0);
   }
 
-  Array32 array32({required List<int> value0}) {
-    return Array32(
-      value0: value0,
-    );
+  Array32 array32(List<int> value0) {
+    return Array32(value0);
   }
 
-  Blob blob({required List<int> value0}) {
-    return Blob(
-      value0: value0,
-    );
+  Blob blob(List<int> value0) {
+    return Blob(value0);
   }
 }
 
@@ -163,17 +153,22 @@ class Undefined extends AssetInstance {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Undefined;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Index extends AssetInstance {
-  const Index({required this.value0});
+  const Index(this.value0);
 
   factory Index._decode(_i1.Input input) {
-    return Index(
-      value0: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Index(_i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u128
   final BigInt value0;
 
   @override
@@ -195,17 +190,27 @@ class Index extends AssetInstance {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Index && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Array4 extends AssetInstance {
-  const Array4({required this.value0});
+  const Array4(this.value0);
 
   factory Array4._decode(_i1.Input input) {
-    return Array4(
-      value0: const _i1.U8ArrayCodec(4).decode(input),
-    );
+    return Array4(const _i1.U8ArrayCodec(4).decode(input));
   }
 
+  /// [u8; 4]
   final List<int> value0;
 
   @override
@@ -227,17 +232,31 @@ class Array4 extends AssetInstance {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Array4 &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Array8 extends AssetInstance {
-  const Array8({required this.value0});
+  const Array8(this.value0);
 
   factory Array8._decode(_i1.Input input) {
-    return Array8(
-      value0: const _i1.U8ArrayCodec(8).decode(input),
-    );
+    return Array8(const _i1.U8ArrayCodec(8).decode(input));
   }
 
+  /// [u8; 8]
   final List<int> value0;
 
   @override
@@ -259,17 +278,31 @@ class Array8 extends AssetInstance {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Array8 &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Array16 extends AssetInstance {
-  const Array16({required this.value0});
+  const Array16(this.value0);
 
   factory Array16._decode(_i1.Input input) {
-    return Array16(
-      value0: const _i1.U8ArrayCodec(16).decode(input),
-    );
+    return Array16(const _i1.U8ArrayCodec(16).decode(input));
   }
 
+  /// [u8; 16]
   final List<int> value0;
 
   @override
@@ -291,17 +324,31 @@ class Array16 extends AssetInstance {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Array16 &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Array32 extends AssetInstance {
-  const Array32({required this.value0});
+  const Array32(this.value0);
 
   factory Array32._decode(_i1.Input input) {
-    return Array32(
-      value0: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Array32(const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// [u8; 32]
   final List<int> value0;
 
   @override
@@ -323,17 +370,31 @@ class Array32 extends AssetInstance {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Array32 &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Blob extends AssetInstance {
-  const Blob({required this.value0});
+  const Blob(this.value0);
 
   factory Blob._decode(_i1.Input input) {
-    return Blob(
-      value0: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return Blob(_i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// Vec<u8>
   final List<int> value0;
 
   @override
@@ -355,4 +416,19 @@ class Blob extends AssetInstance {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Blob &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }

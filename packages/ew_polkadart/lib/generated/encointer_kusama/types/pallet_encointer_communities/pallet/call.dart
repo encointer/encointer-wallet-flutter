@@ -1,12 +1,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i9;
+
+import '../../encointer_primitives/communities/community_identifier.dart' as _i8;
+import '../../encointer_primitives/communities/community_metadata.dart' as _i5;
 import '../../encointer_primitives/communities/location.dart' as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
-import '../../encointer_primitives/communities/community_metadata.dart' as _i5;
 import '../../substrate_fixed/fixed_i128.dart' as _i6;
 import '../../substrate_fixed/fixed_u128.dart' as _i7;
-import '../../encointer_primitives/communities/community_identifier.dart' as _i8;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -103,21 +106,15 @@ class $Call {
   }
 
   SetMinSolarTripTimeS setMinSolarTripTimeS({required int minSolarTripTimeS}) {
-    return SetMinSolarTripTimeS(
-      minSolarTripTimeS: minSolarTripTimeS,
-    );
+    return SetMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS);
   }
 
   SetMaxSpeedMps setMaxSpeedMps({required int maxSpeedMps}) {
-    return SetMaxSpeedMps(
-      maxSpeedMps: maxSpeedMps,
-    );
+    return SetMaxSpeedMps(maxSpeedMps: maxSpeedMps);
   }
 
   PurgeCommunity purgeCommunity({required _i8.CommunityIdentifier cid}) {
-    return PurgeCommunity(
-      cid: cid,
-    );
+    return PurgeCommunity(cid: cid);
   }
 }
 
@@ -229,21 +226,26 @@ class NewCommunity extends Call {
   factory NewCommunity._decode(_i1.Input input) {
     return NewCommunity(
       location: _i3.Location.codec.decode(input),
-      bootstrappers: const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
+      bootstrappers: const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).decode(input),
       communityMetadata: _i5.CommunityMetadata.codec.decode(input),
       demurrage: const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec).decode(input),
       nominalIncome: const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec).decode(input),
     );
   }
 
+  /// Location
   final _i3.Location location;
 
+  /// Vec<T::AccountId>
   final List<_i4.AccountId32> bootstrappers;
 
+  /// CommunityMetadataType
   final _i5.CommunityMetadata communityMetadata;
 
+  /// Option<Demurrage>
   final _i6.FixedI128? demurrage;
 
+  /// Option<NominalIncomeType>
   final _i7.FixedU128? nominalIncome;
 
   @override
@@ -260,7 +262,7 @@ class NewCommunity extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.Location.codec.sizeHint(location);
-    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(bootstrappers);
+    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).sizeHint(bootstrappers);
     size = size + _i5.CommunityMetadata.codec.sizeHint(communityMetadata);
     size = size + const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec).sizeHint(demurrage);
     size = size + const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec).sizeHint(nominalIncome);
@@ -276,7 +278,7 @@ class NewCommunity extends Call {
       location,
       output,
     );
-    const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).encodeTo(
+    const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).encodeTo(
       bootstrappers,
       output,
     );
@@ -293,6 +295,31 @@ class NewCommunity extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NewCommunity &&
+          other.location == location &&
+          _i9.listsEqual(
+            other.bootstrappers,
+            bootstrappers,
+          ) &&
+          other.communityMetadata == communityMetadata &&
+          other.demurrage == demurrage &&
+          other.nominalIncome == nominalIncome;
+
+  @override
+  int get hashCode => Object.hash(
+        location,
+        bootstrappers,
+        communityMetadata,
+        demurrage,
+        nominalIncome,
+      );
 }
 
 /// See [`Pallet::add_location`].
@@ -309,8 +336,10 @@ class AddLocation extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i8.CommunityIdentifier cid;
 
+  /// Location
   final _i3.Location location;
 
   @override
@@ -342,6 +371,20 @@ class AddLocation extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AddLocation && other.cid == cid && other.location == location;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        location,
+      );
 }
 
 /// See [`Pallet::remove_location`].
@@ -358,8 +401,10 @@ class RemoveLocation extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i8.CommunityIdentifier cid;
 
+  /// Location
   final _i3.Location location;
 
   @override
@@ -391,6 +436,20 @@ class RemoveLocation extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RemoveLocation && other.cid == cid && other.location == location;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        location,
+      );
 }
 
 /// See [`Pallet::update_community_metadata`].
@@ -407,8 +466,10 @@ class UpdateCommunityMetadata extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i8.CommunityIdentifier cid;
 
+  /// CommunityMetadataType
   final _i5.CommunityMetadata communityMetadata;
 
   @override
@@ -440,6 +501,20 @@ class UpdateCommunityMetadata extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateCommunityMetadata && other.cid == cid && other.communityMetadata == communityMetadata;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        communityMetadata,
+      );
 }
 
 /// See [`Pallet::update_demurrage`].
@@ -456,8 +531,10 @@ class UpdateDemurrage extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i8.CommunityIdentifier cid;
 
+  /// Demurrage
   final _i6.FixedI128 demurrage;
 
   @override
@@ -489,6 +566,20 @@ class UpdateDemurrage extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateDemurrage && other.cid == cid && other.demurrage == demurrage;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        demurrage,
+      );
 }
 
 /// See [`Pallet::update_nominal_income`].
@@ -505,8 +596,10 @@ class UpdateNominalIncome extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i8.CommunityIdentifier cid;
 
+  /// NominalIncomeType
   final _i7.FixedU128 nominalIncome;
 
   @override
@@ -538,6 +631,20 @@ class UpdateNominalIncome extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateNominalIncome && other.cid == cid && other.nominalIncome == nominalIncome;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        nominalIncome,
+      );
 }
 
 /// See [`Pallet::set_min_solar_trip_time_s`].
@@ -545,11 +652,10 @@ class SetMinSolarTripTimeS extends Call {
   const SetMinSolarTripTimeS({required this.minSolarTripTimeS});
 
   factory SetMinSolarTripTimeS._decode(_i1.Input input) {
-    return SetMinSolarTripTimeS(
-      minSolarTripTimeS: _i1.U32Codec.codec.decode(input),
-    );
+    return SetMinSolarTripTimeS(minSolarTripTimeS: _i1.U32Codec.codec.decode(input));
   }
 
+  /// MinSolarTripTimeType
   final int minSolarTripTimeS;
 
   @override
@@ -573,6 +679,17 @@ class SetMinSolarTripTimeS extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetMinSolarTripTimeS && other.minSolarTripTimeS == minSolarTripTimeS;
+
+  @override
+  int get hashCode => minSolarTripTimeS.hashCode;
 }
 
 /// See [`Pallet::set_max_speed_mps`].
@@ -580,11 +697,10 @@ class SetMaxSpeedMps extends Call {
   const SetMaxSpeedMps({required this.maxSpeedMps});
 
   factory SetMaxSpeedMps._decode(_i1.Input input) {
-    return SetMaxSpeedMps(
-      maxSpeedMps: _i1.U32Codec.codec.decode(input),
-    );
+    return SetMaxSpeedMps(maxSpeedMps: _i1.U32Codec.codec.decode(input));
   }
 
+  /// MaxSpeedMpsType
   final int maxSpeedMps;
 
   @override
@@ -608,6 +724,17 @@ class SetMaxSpeedMps extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetMaxSpeedMps && other.maxSpeedMps == maxSpeedMps;
+
+  @override
+  int get hashCode => maxSpeedMps.hashCode;
 }
 
 /// See [`Pallet::purge_community`].
@@ -615,11 +742,10 @@ class PurgeCommunity extends Call {
   const PurgeCommunity({required this.cid});
 
   factory PurgeCommunity._decode(_i1.Input input) {
-    return PurgeCommunity(
-      cid: _i8.CommunityIdentifier.codec.decode(input),
-    );
+    return PurgeCommunity(cid: _i8.CommunityIdentifier.codec.decode(input));
   }
 
+  /// CommunityIdentifier
   final _i8.CommunityIdentifier cid;
 
   @override
@@ -643,4 +769,15 @@ class PurgeCommunity extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PurgeCommunity && other.cid == cid;
+
+  @override
+  int get hashCode => cid.hashCode;
 }

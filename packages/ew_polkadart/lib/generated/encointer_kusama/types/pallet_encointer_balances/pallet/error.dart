@@ -1,11 +1,20 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// the balance is too low to perform this action
   balanceTooLow('BalanceTooLow', 0),
+
+  /// the total issuance would overflow
   totalIssuanceOverflow('TotalIssuanceOverflow', 1),
+
+  /// Account to alter does not exist in community
   noAccount('NoAccount', 2),
+
+  /// Balance too low to create an account
   existentialDeposit('ExistentialDeposit', 3);
 
   const Error(

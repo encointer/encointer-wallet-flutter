@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../sp_core/crypto/account_id32.dart' as _i3;
 
 abstract class RawOrigin {
@@ -30,24 +33,22 @@ abstract class RawOrigin {
 class $RawOrigin {
   const $RawOrigin();
 
-  Members members({
-    required int value0,
-    required int value1,
-  }) {
+  Members members(
+    int value0,
+    int value1,
+  ) {
     return Members(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  Member member({required _i3.AccountId32 value0}) {
-    return Member(
-      value0: value0,
-    );
+  Member member(_i3.AccountId32 value0) {
+    return Member(value0);
   }
 
   Phantom phantom() {
-    return const Phantom();
+    return Phantom();
   }
 }
 
@@ -105,20 +106,22 @@ class $RawOriginCodec with _i1.Codec<RawOrigin> {
 }
 
 class Members extends RawOrigin {
-  const Members({
-    required this.value0,
-    required this.value1,
-  });
+  const Members(
+    this.value0,
+    this.value1,
+  );
 
   factory Members._decode(_i1.Input input) {
     return Members(
-      value0: _i1.U32Codec.codec.decode(input),
-      value1: _i1.U32Codec.codec.decode(input),
+      _i1.U32Codec.codec.decode(input),
+      _i1.U32Codec.codec.decode(input),
     );
   }
 
+  /// MemberCount
   final int value0;
 
+  /// MemberCount
   final int value1;
 
   @override
@@ -150,17 +153,30 @@ class Members extends RawOrigin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Members && other.value0 == value0 && other.value1 == value1;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 class Member extends RawOrigin {
-  const Member({required this.value0});
+  const Member(this.value0);
 
   factory Member._decode(_i1.Input input) {
-    return Member(
-      value0: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Member(const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// AccountId
   final _i3.AccountId32 value0;
 
   @override
@@ -168,7 +184,7 @@ class Member extends RawOrigin {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value0);
+    size = size + const _i3.AccountId32Codec().sizeHint(value0);
     return size;
   }
 
@@ -182,6 +198,21 @@ class Member extends RawOrigin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Member &&
+          _i4.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Phantom extends RawOrigin {
@@ -196,4 +227,10 @@ class Phantom extends RawOrigin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Phantom;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

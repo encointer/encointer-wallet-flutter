@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../xcm/v3/multilocation/multi_location.dart' as _i3;
 
 abstract class Origin {
@@ -30,16 +32,12 @@ abstract class Origin {
 class $Origin {
   const $Origin();
 
-  Xcm xcm({required _i3.MultiLocation value0}) {
-    return Xcm(
-      value0: value0,
-    );
+  Xcm xcm(_i3.MultiLocation value0) {
+    return Xcm(value0);
   }
 
-  Response response({required _i3.MultiLocation value0}) {
-    return Response(
-      value0: value0,
-    );
+  Response response(_i3.MultiLocation value0) {
+    return Response(value0);
   }
 }
 
@@ -90,14 +88,13 @@ class $OriginCodec with _i1.Codec<Origin> {
 }
 
 class Xcm extends Origin {
-  const Xcm({required this.value0});
+  const Xcm(this.value0);
 
   factory Xcm._decode(_i1.Input input) {
-    return Xcm(
-      value0: _i3.MultiLocation.codec.decode(input),
-    );
+    return Xcm(_i3.MultiLocation.codec.decode(input));
   }
 
+  /// MultiLocation
   final _i3.MultiLocation value0;
 
   @override
@@ -119,17 +116,27 @@ class Xcm extends Origin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Xcm && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Response extends Origin {
-  const Response({required this.value0});
+  const Response(this.value0);
 
   factory Response._decode(_i1.Input input) {
-    return Response(
-      value0: _i3.MultiLocation.codec.decode(input),
-    );
+    return Response(_i3.MultiLocation.codec.decode(input));
   }
 
+  /// MultiLocation
   final _i3.MultiLocation value0;
 
   @override
@@ -151,4 +158,15 @@ class Response extends Origin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Response && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

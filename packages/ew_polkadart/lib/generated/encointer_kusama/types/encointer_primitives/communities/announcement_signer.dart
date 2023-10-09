@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../../ep_core/bip340/bip340.dart' as _i3;
 
 abstract class AnnouncementSigner {
@@ -30,10 +33,8 @@ abstract class AnnouncementSigner {
 class $AnnouncementSigner {
   const $AnnouncementSigner();
 
-  Bip340 bip340({required _i3.Bip340 value0}) {
-    return Bip340(
-      value0: value0,
-    );
+  Bip340 bip340(_i3.Bip340 value0) {
+    return Bip340(value0);
   }
 }
 
@@ -77,14 +78,13 @@ class $AnnouncementSignerCodec with _i1.Codec<AnnouncementSigner> {
 }
 
 class Bip340 extends AnnouncementSigner {
-  const Bip340({required this.value0});
+  const Bip340(this.value0);
 
   factory Bip340._decode(_i1.Input input) {
-    return Bip340(
-      value0: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Bip340(const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// Bip340
   final _i3.Bip340 value0;
 
   @override
@@ -92,7 +92,7 @@ class Bip340 extends AnnouncementSigner {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value0);
+    size = size + const _i3.Bip340Codec().sizeHint(value0);
     return size;
   }
 
@@ -106,4 +106,19 @@ class Bip340 extends AnnouncementSigner {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Bip340 &&
+          _i4.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }

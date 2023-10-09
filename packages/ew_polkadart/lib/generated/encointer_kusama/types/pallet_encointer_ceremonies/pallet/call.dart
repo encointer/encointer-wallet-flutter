@@ -1,10 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i7;
+
 import '../../encointer_primitives/ceremonies/proof_of_attendance.dart' as _i4;
-import '../../tuples.dart' as _i5;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i6;
+import '../../tuples.dart' as _i5;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -97,52 +100,36 @@ class $Call {
   }
 
   SetInactivityTimeout setInactivityTimeout({required int inactivityTimeout}) {
-    return SetInactivityTimeout(
-      inactivityTimeout: inactivityTimeout,
-    );
+    return SetInactivityTimeout(inactivityTimeout: inactivityTimeout);
   }
 
   SetEndorsementTicketsPerBootstrapper setEndorsementTicketsPerBootstrapper(
       {required int endorsementTicketsPerBootstrapper}) {
-    return SetEndorsementTicketsPerBootstrapper(
-      endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper,
-    );
+    return SetEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
   }
 
   SetEndorsementTicketsPerReputable setEndorsementTicketsPerReputable({required int endorsementTicketsPerReputable}) {
-    return SetEndorsementTicketsPerReputable(
-      endorsementTicketsPerReputable: endorsementTicketsPerReputable,
-    );
+    return SetEndorsementTicketsPerReputable(endorsementTicketsPerReputable: endorsementTicketsPerReputable);
   }
 
   SetReputationLifetime setReputationLifetime({required int reputationLifetime}) {
-    return SetReputationLifetime(
-      reputationLifetime: reputationLifetime,
-    );
+    return SetReputationLifetime(reputationLifetime: reputationLifetime);
   }
 
   SetMeetupTimeOffset setMeetupTimeOffset({required int meetupTimeOffset}) {
-    return SetMeetupTimeOffset(
-      meetupTimeOffset: meetupTimeOffset,
-    );
+    return SetMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
   }
 
   SetTimeTolerance setTimeTolerance({required BigInt timeTolerance}) {
-    return SetTimeTolerance(
-      timeTolerance: timeTolerance,
-    );
+    return SetTimeTolerance(timeTolerance: timeTolerance);
   }
 
   SetLocationTolerance setLocationTolerance({required int locationTolerance}) {
-    return SetLocationTolerance(
-      locationTolerance: locationTolerance,
-    );
+    return SetLocationTolerance(locationTolerance: locationTolerance);
   }
 
   PurgeCommunityCeremony purgeCommunityCeremony({required _i5.Tuple2<_i3.CommunityIdentifier, int> communityCeremony}) {
-    return PurgeCommunityCeremony(
-      communityCeremony: communityCeremony,
-    );
+    return PurgeCommunityCeremony(communityCeremony: communityCeremony);
   }
 }
 
@@ -290,8 +277,10 @@ class RegisterParticipant extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// Option<ProofOfAttendance<T::Signature, T::AccountId>>
   final _i4.ProofOfAttendance? proof;
 
   @override
@@ -323,6 +312,20 @@ class RegisterParticipant extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RegisterParticipant && other.cid == cid && other.proof == proof;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        proof,
+      );
 }
 
 /// See [`Pallet::upgrade_registration`].
@@ -339,8 +342,10 @@ class UpgradeRegistration extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// ProofOfAttendance<T::Signature, T::AccountId>
   final _i4.ProofOfAttendance proof;
 
   @override
@@ -372,6 +377,20 @@ class UpgradeRegistration extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpgradeRegistration && other.cid == cid && other.proof == proof;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        proof,
+      );
 }
 
 /// See [`Pallet::unregister_participant`].
@@ -392,8 +411,10 @@ class UnregisterParticipant extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// Option<CommunityCeremony>
   final _i5.Tuple2<_i3.CommunityIdentifier, int>? maybeReputationCommunityCeremony;
 
   @override
@@ -435,6 +456,22 @@ class UnregisterParticipant extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UnregisterParticipant &&
+          other.cid == cid &&
+          other.maybeReputationCommunityCeremony == maybeReputationCommunityCeremony;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        maybeReputationCommunityCeremony,
+      );
 }
 
 /// See [`Pallet::attest_attendees`].
@@ -449,14 +486,17 @@ class AttestAttendees extends Call {
     return AttestAttendees(
       cid: _i3.CommunityIdentifier.codec.decode(input),
       numberOfParticipantsVote: _i1.U32Codec.codec.decode(input),
-      attestations: const _i1.SequenceCodec<_i6.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
+      attestations: const _i1.SequenceCodec<_i6.AccountId32>(_i6.AccountId32Codec()).decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// u32
   final int numberOfParticipantsVote;
 
+  /// BoundedVec<T::AccountId, T::MaxAttestations>
   final List<_i6.AccountId32> attestations;
 
   @override
@@ -472,7 +512,7 @@ class AttestAttendees extends Call {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
     size = size + _i1.U32Codec.codec.sizeHint(numberOfParticipantsVote);
-    size = size + const _i1.SequenceCodec<_i6.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(attestations);
+    size = size + const _i1.SequenceCodec<_i6.AccountId32>(_i6.AccountId32Codec()).sizeHint(attestations);
     return size;
   }
 
@@ -489,11 +529,32 @@ class AttestAttendees extends Call {
       numberOfParticipantsVote,
       output,
     );
-    const _i1.SequenceCodec<_i6.AccountId32>(_i1.U8ArrayCodec(32)).encodeTo(
+    const _i1.SequenceCodec<_i6.AccountId32>(_i6.AccountId32Codec()).encodeTo(
       attestations,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AttestAttendees &&
+          other.cid == cid &&
+          other.numberOfParticipantsVote == numberOfParticipantsVote &&
+          _i7.listsEqual(
+            other.attestations,
+            attestations,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        numberOfParticipantsVote,
+        attestations,
+      );
 }
 
 /// See [`Pallet::endorse_newcomer`].
@@ -510,8 +571,10 @@ class EndorseNewcomer extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// T::AccountId
   final _i6.AccountId32 newbie;
 
   @override
@@ -525,7 +588,7 @@ class EndorseNewcomer extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(newbie);
+    size = size + const _i6.AccountId32Codec().sizeHint(newbie);
     return size;
   }
 
@@ -543,6 +606,25 @@ class EndorseNewcomer extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EndorseNewcomer &&
+          other.cid == cid &&
+          _i7.listsEqual(
+            other.newbie,
+            newbie,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        newbie,
+      );
 }
 
 /// See [`Pallet::claim_rewards`].
@@ -559,8 +641,10 @@ class ClaimRewards extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// Option<MeetupIndexType>
   final BigInt? maybeMeetupIndex;
 
   @override
@@ -592,6 +676,20 @@ class ClaimRewards extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ClaimRewards && other.cid == cid && other.maybeMeetupIndex == maybeMeetupIndex;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        maybeMeetupIndex,
+      );
 }
 
 /// See [`Pallet::set_inactivity_timeout`].
@@ -599,11 +697,10 @@ class SetInactivityTimeout extends Call {
   const SetInactivityTimeout({required this.inactivityTimeout});
 
   factory SetInactivityTimeout._decode(_i1.Input input) {
-    return SetInactivityTimeout(
-      inactivityTimeout: _i1.U32Codec.codec.decode(input),
-    );
+    return SetInactivityTimeout(inactivityTimeout: _i1.U32Codec.codec.decode(input));
   }
 
+  /// InactivityTimeoutType
   final int inactivityTimeout;
 
   @override
@@ -627,6 +724,17 @@ class SetInactivityTimeout extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetInactivityTimeout && other.inactivityTimeout == inactivityTimeout;
+
+  @override
+  int get hashCode => inactivityTimeout.hashCode;
 }
 
 /// See [`Pallet::set_endorsement_tickets_per_bootstrapper`].
@@ -634,11 +742,10 @@ class SetEndorsementTicketsPerBootstrapper extends Call {
   const SetEndorsementTicketsPerBootstrapper({required this.endorsementTicketsPerBootstrapper});
 
   factory SetEndorsementTicketsPerBootstrapper._decode(_i1.Input input) {
-    return SetEndorsementTicketsPerBootstrapper(
-      endorsementTicketsPerBootstrapper: _i1.U8Codec.codec.decode(input),
-    );
+    return SetEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: _i1.U8Codec.codec.decode(input));
   }
 
+  /// EndorsementTicketsType
   final int endorsementTicketsPerBootstrapper;
 
   @override
@@ -664,6 +771,18 @@ class SetEndorsementTicketsPerBootstrapper extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetEndorsementTicketsPerBootstrapper &&
+          other.endorsementTicketsPerBootstrapper == endorsementTicketsPerBootstrapper;
+
+  @override
+  int get hashCode => endorsementTicketsPerBootstrapper.hashCode;
 }
 
 /// See [`Pallet::set_endorsement_tickets_per_reputable`].
@@ -671,11 +790,10 @@ class SetEndorsementTicketsPerReputable extends Call {
   const SetEndorsementTicketsPerReputable({required this.endorsementTicketsPerReputable});
 
   factory SetEndorsementTicketsPerReputable._decode(_i1.Input input) {
-    return SetEndorsementTicketsPerReputable(
-      endorsementTicketsPerReputable: _i1.U8Codec.codec.decode(input),
-    );
+    return SetEndorsementTicketsPerReputable(endorsementTicketsPerReputable: _i1.U8Codec.codec.decode(input));
   }
 
+  /// EndorsementTicketsType
   final int endorsementTicketsPerReputable;
 
   @override
@@ -699,6 +817,18 @@ class SetEndorsementTicketsPerReputable extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetEndorsementTicketsPerReputable &&
+          other.endorsementTicketsPerReputable == endorsementTicketsPerReputable;
+
+  @override
+  int get hashCode => endorsementTicketsPerReputable.hashCode;
 }
 
 /// See [`Pallet::set_reputation_lifetime`].
@@ -706,11 +836,10 @@ class SetReputationLifetime extends Call {
   const SetReputationLifetime({required this.reputationLifetime});
 
   factory SetReputationLifetime._decode(_i1.Input input) {
-    return SetReputationLifetime(
-      reputationLifetime: _i1.U32Codec.codec.decode(input),
-    );
+    return SetReputationLifetime(reputationLifetime: _i1.U32Codec.codec.decode(input));
   }
 
+  /// ReputationLifetimeType
   final int reputationLifetime;
 
   @override
@@ -734,6 +863,17 @@ class SetReputationLifetime extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetReputationLifetime && other.reputationLifetime == reputationLifetime;
+
+  @override
+  int get hashCode => reputationLifetime.hashCode;
 }
 
 /// See [`Pallet::set_meetup_time_offset`].
@@ -741,11 +881,10 @@ class SetMeetupTimeOffset extends Call {
   const SetMeetupTimeOffset({required this.meetupTimeOffset});
 
   factory SetMeetupTimeOffset._decode(_i1.Input input) {
-    return SetMeetupTimeOffset(
-      meetupTimeOffset: _i1.I32Codec.codec.decode(input),
-    );
+    return SetMeetupTimeOffset(meetupTimeOffset: _i1.I32Codec.codec.decode(input));
   }
 
+  /// MeetupTimeOffsetType
   final int meetupTimeOffset;
 
   @override
@@ -769,6 +908,17 @@ class SetMeetupTimeOffset extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetMeetupTimeOffset && other.meetupTimeOffset == meetupTimeOffset;
+
+  @override
+  int get hashCode => meetupTimeOffset.hashCode;
 }
 
 /// See [`Pallet::set_time_tolerance`].
@@ -776,11 +926,10 @@ class SetTimeTolerance extends Call {
   const SetTimeTolerance({required this.timeTolerance});
 
   factory SetTimeTolerance._decode(_i1.Input input) {
-    return SetTimeTolerance(
-      timeTolerance: _i1.U64Codec.codec.decode(input),
-    );
+    return SetTimeTolerance(timeTolerance: _i1.U64Codec.codec.decode(input));
   }
 
+  /// T::Moment
   final BigInt timeTolerance;
 
   @override
@@ -804,6 +953,17 @@ class SetTimeTolerance extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetTimeTolerance && other.timeTolerance == timeTolerance;
+
+  @override
+  int get hashCode => timeTolerance.hashCode;
 }
 
 /// See [`Pallet::set_location_tolerance`].
@@ -811,11 +971,10 @@ class SetLocationTolerance extends Call {
   const SetLocationTolerance({required this.locationTolerance});
 
   factory SetLocationTolerance._decode(_i1.Input input) {
-    return SetLocationTolerance(
-      locationTolerance: _i1.U32Codec.codec.decode(input),
-    );
+    return SetLocationTolerance(locationTolerance: _i1.U32Codec.codec.decode(input));
   }
 
+  /// u32
   final int locationTolerance;
 
   @override
@@ -839,6 +998,17 @@ class SetLocationTolerance extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetLocationTolerance && other.locationTolerance == locationTolerance;
+
+  @override
+  int get hashCode => locationTolerance.hashCode;
 }
 
 /// See [`Pallet::purge_community_ceremony`].
@@ -847,13 +1017,13 @@ class PurgeCommunityCeremony extends Call {
 
   factory PurgeCommunityCeremony._decode(_i1.Input input) {
     return PurgeCommunityCeremony(
-      communityCeremony: const _i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
-        _i3.CommunityIdentifier.codec,
-        _i1.U32Codec.codec,
-      ).decode(input),
-    );
+        communityCeremony: const _i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
+      _i3.CommunityIdentifier.codec,
+      _i1.U32Codec.codec,
+    ).decode(input));
   }
 
+  /// CommunityCeremony
   final _i5.Tuple2<_i3.CommunityIdentifier, int> communityCeremony;
 
   @override
@@ -889,4 +1059,15 @@ class PurgeCommunityCeremony extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PurgeCommunityCeremony && other.communityCeremony == communityCeremony;
+
+  @override
+  int get hashCode => communityCeremony.hashCode;
 }

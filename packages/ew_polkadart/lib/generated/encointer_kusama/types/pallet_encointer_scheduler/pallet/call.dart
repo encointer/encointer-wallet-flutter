@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../encointer_primitives/scheduler/ceremony_phase_type.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -32,11 +34,11 @@ class $Call {
   const $Call();
 
   NextPhase nextPhase() {
-    return const NextPhase();
+    return NextPhase();
   }
 
   PushByOneDay pushByOneDay() {
-    return const PushByOneDay();
+    return PushByOneDay();
   }
 
   SetPhaseDuration setPhaseDuration({
@@ -50,9 +52,7 @@ class $Call {
   }
 
   SetNextPhaseTimestamp setNextPhaseTimestamp({required BigInt timestamp}) {
-    return SetNextPhaseTimestamp(
-      timestamp: timestamp,
-    );
+    return SetNextPhaseTimestamp(timestamp: timestamp);
   }
 }
 
@@ -129,6 +129,12 @@ class NextPhase extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NextPhase;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// See [`Pallet::push_by_one_day`].
@@ -144,6 +150,12 @@ class PushByOneDay extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is PushByOneDay;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// See [`Pallet::set_phase_duration`].
@@ -160,8 +172,10 @@ class SetPhaseDuration extends Call {
     );
   }
 
+  /// CeremonyPhaseType
   final _i3.CeremonyPhaseType ceremonyPhase;
 
+  /// T::Moment
   final BigInt duration;
 
   @override
@@ -193,6 +207,20 @@ class SetPhaseDuration extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetPhaseDuration && other.ceremonyPhase == ceremonyPhase && other.duration == duration;
+
+  @override
+  int get hashCode => Object.hash(
+        ceremonyPhase,
+        duration,
+      );
 }
 
 /// See [`Pallet::set_next_phase_timestamp`].
@@ -200,11 +228,10 @@ class SetNextPhaseTimestamp extends Call {
   const SetNextPhaseTimestamp({required this.timestamp});
 
   factory SetNextPhaseTimestamp._decode(_i1.Input input) {
-    return SetNextPhaseTimestamp(
-      timestamp: _i1.U64Codec.codec.decode(input),
-    );
+    return SetNextPhaseTimestamp(timestamp: _i1.U64Codec.codec.decode(input));
   }
 
+  /// T::Moment
   final BigInt timestamp;
 
   @override
@@ -228,4 +255,15 @@ class SetNextPhaseTimestamp extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetNextPhaseTimestamp && other.timestamp == timestamp;
+
+  @override
+  int get hashCode => timestamp.hashCode;
 }

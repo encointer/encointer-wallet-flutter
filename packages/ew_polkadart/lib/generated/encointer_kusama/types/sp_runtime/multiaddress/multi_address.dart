@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../../sp_core/crypto/account_id32.dart' as _i3;
 
 abstract class MultiAddress {
@@ -30,34 +33,24 @@ abstract class MultiAddress {
 class $MultiAddress {
   const $MultiAddress();
 
-  Id id({required _i3.AccountId32 value0}) {
-    return Id(
-      value0: value0,
-    );
+  Id id(_i3.AccountId32 value0) {
+    return Id(value0);
   }
 
-  Index index({required BigInt value0}) {
-    return Index(
-      value0: value0,
-    );
+  Index index(BigInt value0) {
+    return Index(value0);
   }
 
-  Raw raw({required List<int> value0}) {
-    return Raw(
-      value0: value0,
-    );
+  Raw raw(List<int> value0) {
+    return Raw(value0);
   }
 
-  Address32 address32({required List<int> value0}) {
-    return Address32(
-      value0: value0,
-    );
+  Address32 address32(List<int> value0) {
+    return Address32(value0);
   }
 
-  Address20 address20({required List<int> value0}) {
-    return Address20(
-      value0: value0,
-    );
+  Address20 address20(List<int> value0) {
+    return Address20(value0);
   }
 }
 
@@ -129,14 +122,13 @@ class $MultiAddressCodec with _i1.Codec<MultiAddress> {
 }
 
 class Id extends MultiAddress {
-  const Id({required this.value0});
+  const Id(this.value0);
 
   factory Id._decode(_i1.Input input) {
-    return Id(
-      value0: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Id(const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// AccountId
   final _i3.AccountId32 value0;
 
   @override
@@ -144,7 +136,7 @@ class Id extends MultiAddress {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value0);
+    size = size + const _i3.AccountId32Codec().sizeHint(value0);
     return size;
   }
 
@@ -158,17 +150,31 @@ class Id extends MultiAddress {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Id &&
+          _i4.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Index extends MultiAddress {
-  const Index({required this.value0});
+  const Index(this.value0);
 
   factory Index._decode(_i1.Input input) {
-    return Index(
-      value0: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Index(_i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// AccountIndex
   final BigInt value0;
 
   @override
@@ -190,17 +196,27 @@ class Index extends MultiAddress {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Index && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Raw extends MultiAddress {
-  const Raw({required this.value0});
+  const Raw(this.value0);
 
   factory Raw._decode(_i1.Input input) {
-    return Raw(
-      value0: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return Raw(_i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// Vec<u8>
   final List<int> value0;
 
   @override
@@ -222,17 +238,31 @@ class Raw extends MultiAddress {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Raw &&
+          _i4.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Address32 extends MultiAddress {
-  const Address32({required this.value0});
+  const Address32(this.value0);
 
   factory Address32._decode(_i1.Input input) {
-    return Address32(
-      value0: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Address32(const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// [u8; 32]
   final List<int> value0;
 
   @override
@@ -254,17 +284,31 @@ class Address32 extends MultiAddress {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Address32 &&
+          _i4.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Address20 extends MultiAddress {
-  const Address20({required this.value0});
+  const Address20(this.value0);
 
   factory Address20._decode(_i1.Input input) {
-    return Address20(
-      value0: const _i1.U8ArrayCodec(20).decode(input),
-    );
+    return Address20(const _i1.U8ArrayCodec(20).decode(input));
   }
 
+  /// [u8; 20]
   final List<int> value0;
 
   @override
@@ -286,4 +330,19 @@ class Address20 extends MultiAddress {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Address20 &&
+          _i4.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }

@@ -1,17 +1,38 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// Vesting balance too high to send value.
   vestingBalance('VestingBalance', 0),
+
+  /// Account liquidity restrictions prevent withdrawal.
   liquidityRestrictions('LiquidityRestrictions', 1),
+
+  /// Balance too low to send value.
   insufficientBalance('InsufficientBalance', 2),
+
+  /// Value too low to create account due to existential deposit.
   existentialDeposit('ExistentialDeposit', 3),
+
+  /// Transfer/payment would kill account.
   expendability('Expendability', 4),
+
+  /// A vesting schedule already exists for this account.
   existingVestingSchedule('ExistingVestingSchedule', 5),
+
+  /// Beneficiary account must pre-exist.
   deadAccount('DeadAccount', 6),
+
+  /// Number of named reserves exceed `MaxReserves`.
   tooManyReserves('TooManyReserves', 7),
+
+  /// Number of holds exceed `MaxHolds`.
   tooManyHolds('TooManyHolds', 8),
+
+  /// Number of freezes exceed `MaxFreezes`.
   tooManyFreezes('TooManyFreezes', 9);
 
   const Error(

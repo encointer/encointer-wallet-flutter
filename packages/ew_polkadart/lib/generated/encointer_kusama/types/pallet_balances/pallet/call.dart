@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../sp_core/crypto/account_id32.dart' as _i4;
+import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -97,9 +100,7 @@ class $Call {
   }
 
   UpgradeAccounts upgradeAccounts({required List<_i4.AccountId32> who}) {
-    return UpgradeAccounts(
-      who: who,
-    );
+    return UpgradeAccounts(who: who);
   }
 
   Transfer transfer({
@@ -232,8 +233,10 @@ class TransferAllowDeath extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress dest;
 
+  /// T::Balance
   final BigInt value;
 
   @override
@@ -265,6 +268,20 @@ class TransferAllowDeath extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransferAllowDeath && other.dest == dest && other.value == value;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        value,
+      );
 }
 
 /// See [`Pallet::set_balance_deprecated`].
@@ -283,10 +300,13 @@ class SetBalanceDeprecated extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress who;
 
+  /// T::Balance
   final BigInt newFree;
 
+  /// T::Balance
   final BigInt oldReserved;
 
   @override
@@ -324,6 +344,21 @@ class SetBalanceDeprecated extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetBalanceDeprecated && other.who == who && other.newFree == newFree && other.oldReserved == oldReserved;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        newFree,
+        oldReserved,
+      );
 }
 
 /// See [`Pallet::force_transfer`].
@@ -342,10 +377,13 @@ class ForceTransfer extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress source;
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress dest;
 
+  /// T::Balance
   final BigInt value;
 
   @override
@@ -383,6 +421,21 @@ class ForceTransfer extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceTransfer && other.source == source && other.dest == dest && other.value == value;
+
+  @override
+  int get hashCode => Object.hash(
+        source,
+        dest,
+        value,
+      );
 }
 
 /// See [`Pallet::transfer_keep_alive`].
@@ -399,8 +452,10 @@ class TransferKeepAlive extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress dest;
 
+  /// T::Balance
   final BigInt value;
 
   @override
@@ -432,6 +487,20 @@ class TransferKeepAlive extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransferKeepAlive && other.dest == dest && other.value == value;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        value,
+      );
 }
 
 /// See [`Pallet::transfer_all`].
@@ -448,8 +517,10 @@ class TransferAll extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress dest;
 
+  /// bool
   final bool keepAlive;
 
   @override
@@ -481,6 +552,20 @@ class TransferAll extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransferAll && other.dest == dest && other.keepAlive == keepAlive;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        keepAlive,
+      );
 }
 
 /// See [`Pallet::force_unreserve`].
@@ -497,8 +582,10 @@ class ForceUnreserve extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress who;
 
+  /// T::Balance
   final BigInt amount;
 
   @override
@@ -530,6 +617,20 @@ class ForceUnreserve extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceUnreserve && other.who == who && other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        amount,
+      );
 }
 
 /// See [`Pallet::upgrade_accounts`].
@@ -537,11 +638,10 @@ class UpgradeAccounts extends Call {
   const UpgradeAccounts({required this.who});
 
   factory UpgradeAccounts._decode(_i1.Input input) {
-    return UpgradeAccounts(
-      who: const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
-    );
+    return UpgradeAccounts(who: const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).decode(input));
   }
 
+  /// Vec<T::AccountId>
   final List<_i4.AccountId32> who;
 
   @override
@@ -551,7 +651,7 @@ class UpgradeAccounts extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(who);
+    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).sizeHint(who);
     return size;
   }
 
@@ -560,11 +660,26 @@ class UpgradeAccounts extends Call {
       6,
       output,
     );
-    const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).encodeTo(
+    const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).encodeTo(
       who,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpgradeAccounts &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          );
+
+  @override
+  int get hashCode => who.hashCode;
 }
 
 /// See [`Pallet::transfer`].
@@ -581,8 +696,10 @@ class Transfer extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress dest;
 
+  /// T::Balance
   final BigInt value;
 
   @override
@@ -614,6 +731,20 @@ class Transfer extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Transfer && other.dest == dest && other.value == value;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        value,
+      );
 }
 
 /// See [`Pallet::force_set_balance`].
@@ -630,8 +761,10 @@ class ForceSetBalance extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress who;
 
+  /// T::Balance
   final BigInt newFree;
 
   @override
@@ -663,4 +796,18 @@ class ForceSetBalance extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceSetBalance && other.who == who && other.newFree == newFree;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        newFree,
+      );
 }

@@ -1,9 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../../sp_core/crypto/account_id32.dart' as _i2;
-import '../communities/community_identifier.dart' as _i3;
-import '../../sp_runtime/multi_signature.dart' as _i4;
 import 'dart:typed_data' as _i5;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
+import '../../sp_core/crypto/account_id32.dart' as _i2;
+import '../../sp_runtime/multi_signature.dart' as _i4;
+import '../communities/community_identifier.dart' as _i3;
 
 class ProofOfAttendance {
   const ProofOfAttendance({
@@ -18,14 +21,19 @@ class ProofOfAttendance {
     return codec.decode(input);
   }
 
+  /// AccountId
   final _i2.AccountId32 proverPublic;
 
+  /// CeremonyIndexType
   final int ceremonyIndex;
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier communityIdentifier;
 
+  /// AccountId
   final _i2.AccountId32 attendeePublic;
 
+  /// Signature
   final _i4.MultiSignature attendeeSignature;
 
   static const $ProofOfAttendanceCodec codec = $ProofOfAttendanceCodec();
@@ -41,6 +49,34 @@ class ProofOfAttendance {
         'attendeePublic': attendeePublic.toList(),
         'attendeeSignature': attendeeSignature.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ProofOfAttendance &&
+          _i6.listsEqual(
+            other.proverPublic,
+            proverPublic,
+          ) &&
+          other.ceremonyIndex == ceremonyIndex &&
+          other.communityIdentifier == communityIdentifier &&
+          _i6.listsEqual(
+            other.attendeePublic,
+            attendeePublic,
+          ) &&
+          other.attendeeSignature == attendeeSignature;
+
+  @override
+  int get hashCode => Object.hash(
+        proverPublic,
+        ceremonyIndex,
+        communityIdentifier,
+        attendeePublic,
+        attendeeSignature,
+      );
 }
 
 class $ProofOfAttendanceCodec with _i1.Codec<ProofOfAttendance> {
@@ -87,10 +123,10 @@ class $ProofOfAttendanceCodec with _i1.Codec<ProofOfAttendance> {
   @override
   int sizeHint(ProofOfAttendance obj) {
     int size = 0;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.proverPublic);
+    size = size + const _i2.AccountId32Codec().sizeHint(obj.proverPublic);
     size = size + _i1.U32Codec.codec.sizeHint(obj.ceremonyIndex);
     size = size + _i3.CommunityIdentifier.codec.sizeHint(obj.communityIdentifier);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.attendeePublic);
+    size = size + const _i2.AccountId32Codec().sizeHint(obj.attendeePublic);
     size = size + _i4.MultiSignature.codec.sizeHint(obj.attendeeSignature);
     return size;
   }

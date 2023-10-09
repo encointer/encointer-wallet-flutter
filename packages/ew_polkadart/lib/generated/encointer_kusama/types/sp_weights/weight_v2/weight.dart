@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 class Weight {
   const Weight({
@@ -12,8 +13,10 @@ class Weight {
     return codec.decode(input);
   }
 
+  /// u64
   final BigInt refTime;
 
+  /// u64
   final BigInt proofSize;
 
   static const $WeightCodec codec = $WeightCodec();
@@ -26,6 +29,20 @@ class Weight {
         'refTime': refTime,
         'proofSize': proofSize,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Weight && other.refTime == refTime && other.proofSize == proofSize;
+
+  @override
+  int get hashCode => Object.hash(
+        refTime,
+        proofSize,
+      );
 }
 
 class $WeightCodec with _i1.Codec<Weight> {

@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../xcm/v3/traits/outcome.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../sp_weights/weight_v2/weight.dart' as _i4;
+import '../../xcm/v3/traits/outcome.dart' as _i3;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -33,15 +36,11 @@ class $Event {
   const $Event();
 
   InvalidFormat invalidFormat({required List<int> messageHash}) {
-    return InvalidFormat(
-      messageHash: messageHash,
-    );
+    return InvalidFormat(messageHash: messageHash);
   }
 
   UnsupportedVersion unsupportedVersion({required List<int> messageHash}) {
-    return UnsupportedVersion(
-      messageHash: messageHash,
-    );
+    return UnsupportedVersion(messageHash: messageHash);
   }
 
   ExecutedDownward executedDownward({
@@ -95,9 +94,7 @@ class $Event {
   }
 
   MaxMessagesExhausted maxMessagesExhausted({required List<int> messageHash}) {
-    return MaxMessagesExhausted(
-      messageHash: messageHash,
-    );
+    return MaxMessagesExhausted(messageHash: messageHash);
   }
 }
 
@@ -187,11 +184,10 @@ class InvalidFormat extends Event {
   const InvalidFormat({required this.messageHash});
 
   factory InvalidFormat._decode(_i1.Input input) {
-    return InvalidFormat(
-      messageHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return InvalidFormat(messageHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
   @override
@@ -215,6 +211,21 @@ class InvalidFormat extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InvalidFormat &&
+          _i5.listsEqual(
+            other.messageHash,
+            messageHash,
+          );
+
+  @override
+  int get hashCode => messageHash.hashCode;
 }
 
 /// Downward message is unsupported version of XCM.
@@ -222,11 +233,10 @@ class UnsupportedVersion extends Event {
   const UnsupportedVersion({required this.messageHash});
 
   factory UnsupportedVersion._decode(_i1.Input input) {
-    return UnsupportedVersion(
-      messageHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return UnsupportedVersion(messageHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
   @override
@@ -250,6 +260,21 @@ class UnsupportedVersion extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UnsupportedVersion &&
+          _i5.listsEqual(
+            other.messageHash,
+            messageHash,
+          );
+
+  @override
+  int get hashCode => messageHash.hashCode;
 }
 
 /// Downward message executed with the given outcome.
@@ -268,10 +293,13 @@ class ExecutedDownward extends Event {
     );
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
+  /// XcmHash
   final List<int> messageId;
 
+  /// Outcome
   final _i3.Outcome outcome;
 
   @override
@@ -309,6 +337,30 @@ class ExecutedDownward extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExecutedDownward &&
+          _i5.listsEqual(
+            other.messageHash,
+            messageHash,
+          ) &&
+          _i5.listsEqual(
+            other.messageId,
+            messageId,
+          ) &&
+          other.outcome == outcome;
+
+  @override
+  int get hashCode => Object.hash(
+        messageHash,
+        messageId,
+        outcome,
+      );
 }
 
 /// The weight limit for handling downward messages was reached.
@@ -329,12 +381,16 @@ class WeightExhausted extends Event {
     );
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
+  /// XcmHash
   final List<int> messageId;
 
+  /// Weight
   final _i4.Weight remainingWeight;
 
+  /// Weight
   final _i4.Weight requiredWeight;
 
   @override
@@ -378,6 +434,32 @@ class WeightExhausted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is WeightExhausted &&
+          _i5.listsEqual(
+            other.messageHash,
+            messageHash,
+          ) &&
+          _i5.listsEqual(
+            other.messageId,
+            messageId,
+          ) &&
+          other.remainingWeight == remainingWeight &&
+          other.requiredWeight == requiredWeight;
+
+  @override
+  int get hashCode => Object.hash(
+        messageHash,
+        messageId,
+        remainingWeight,
+        requiredWeight,
+      );
 }
 
 /// Downward message is overweight and was placed in the overweight queue.
@@ -398,12 +480,16 @@ class OverweightEnqueued extends Event {
     );
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
+  /// XcmHash
   final List<int> messageId;
 
+  /// OverweightIndex
   final BigInt overweightIndex;
 
+  /// Weight
   final _i4.Weight requiredWeight;
 
   @override
@@ -447,6 +533,32 @@ class OverweightEnqueued extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is OverweightEnqueued &&
+          _i5.listsEqual(
+            other.messageHash,
+            messageHash,
+          ) &&
+          _i5.listsEqual(
+            other.messageId,
+            messageId,
+          ) &&
+          other.overweightIndex == overweightIndex &&
+          other.requiredWeight == requiredWeight;
+
+  @override
+  int get hashCode => Object.hash(
+        messageHash,
+        messageId,
+        overweightIndex,
+        requiredWeight,
+      );
 }
 
 /// Downward message from the overweight queue was executed.
@@ -463,8 +575,10 @@ class OverweightServiced extends Event {
     );
   }
 
+  /// OverweightIndex
   final BigInt overweightIndex;
 
+  /// Weight
   final _i4.Weight weightUsed;
 
   @override
@@ -496,6 +610,20 @@ class OverweightServiced extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is OverweightServiced && other.overweightIndex == overweightIndex && other.weightUsed == weightUsed;
+
+  @override
+  int get hashCode => Object.hash(
+        overweightIndex,
+        weightUsed,
+      );
 }
 
 /// The maximum number of downward messages was reached.
@@ -503,11 +631,10 @@ class MaxMessagesExhausted extends Event {
   const MaxMessagesExhausted({required this.messageHash});
 
   factory MaxMessagesExhausted._decode(_i1.Input input) {
-    return MaxMessagesExhausted(
-      messageHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return MaxMessagesExhausted(messageHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// XcmHash
   final List<int> messageHash;
 
   @override
@@ -531,4 +658,19 @@ class MaxMessagesExhausted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MaxMessagesExhausted &&
+          _i5.listsEqual(
+            other.messageHash,
+            messageHash,
+          );
+
+  @override
+  int get hashCode => messageHash.hashCode;
 }

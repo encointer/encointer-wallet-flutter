@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 abstract class WeightLimit {
   const WeightLimit();
@@ -30,13 +31,11 @@ class $WeightLimit {
   const $WeightLimit();
 
   Unlimited unlimited() {
-    return const Unlimited();
+    return Unlimited();
   }
 
-  Limited limited({required BigInt value0}) {
-    return Limited(
-      value0: value0,
-    );
+  Limited limited(BigInt value0) {
+    return Limited(value0);
   }
 }
 
@@ -98,17 +97,22 @@ class Unlimited extends WeightLimit {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Unlimited;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Limited extends WeightLimit {
-  const Limited({required this.value0});
+  const Limited(this.value0);
 
   factory Limited._decode(_i1.Input input) {
-    return Limited(
-      value0: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Limited(_i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u64
   final BigInt value0;
 
   @override
@@ -130,4 +134,15 @@ class Limited extends WeightLimit {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Limited && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

@@ -1,8 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../../sp_weights/weight_v2/weight.dart' as _i2;
-import '../../frame_support/dispatch/per_dispatch_class_2.dart' as _i3;
 import 'dart:typed_data' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../../frame_support/dispatch/per_dispatch_class_2.dart' as _i3;
+import '../../sp_weights/weight_v2/weight.dart' as _i2;
 
 class BlockWeights {
   const BlockWeights({
@@ -15,10 +17,13 @@ class BlockWeights {
     return codec.decode(input);
   }
 
+  /// Weight
   final _i2.Weight baseBlock;
 
+  /// Weight
   final _i2.Weight maxBlock;
 
+  /// PerDispatchClass<WeightsPerClass>
   final _i3.PerDispatchClass perClass;
 
   static const $BlockWeightsCodec codec = $BlockWeightsCodec();
@@ -32,6 +37,21 @@ class BlockWeights {
         'maxBlock': maxBlock.toJson(),
         'perClass': perClass.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BlockWeights && other.baseBlock == baseBlock && other.maxBlock == maxBlock && other.perClass == perClass;
+
+  @override
+  int get hashCode => Object.hash(
+        baseBlock,
+        maxBlock,
+        perClass,
+      );
 }
 
 class $BlockWeightsCodec with _i1.Codec<BlockWeights> {

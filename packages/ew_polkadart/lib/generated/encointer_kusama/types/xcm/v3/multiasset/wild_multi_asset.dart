@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import 'asset_id.dart' as _i3;
 import 'wild_fungibility.dart' as _i4;
 
@@ -32,7 +34,7 @@ class $WildMultiAsset {
   const $WildMultiAsset();
 
   All all() {
-    return const All();
+    return All();
   }
 
   AllOf allOf({
@@ -45,10 +47,8 @@ class $WildMultiAsset {
     );
   }
 
-  AllCounted allCounted({required BigInt value0}) {
-    return AllCounted(
-      value0: value0,
-    );
+  AllCounted allCounted(BigInt value0) {
+    return AllCounted(value0);
   }
 
   AllOfCounted allOfCounted({
@@ -136,6 +136,12 @@ class All extends WildMultiAsset {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is All;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class AllOf extends WildMultiAsset {
@@ -151,8 +157,10 @@ class AllOf extends WildMultiAsset {
     );
   }
 
+  /// AssetId
   final _i3.AssetId id;
 
+  /// WildFungibility
   final _i4.WildFungibility fun;
 
   @override
@@ -184,17 +192,30 @@ class AllOf extends WildMultiAsset {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AllOf && other.id == id && other.fun == fun;
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        fun,
+      );
 }
 
 class AllCounted extends WildMultiAsset {
-  const AllCounted({required this.value0});
+  const AllCounted(this.value0);
 
   factory AllCounted._decode(_i1.Input input) {
-    return AllCounted(
-      value0: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return AllCounted(_i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u32
   final BigInt value0;
 
   @override
@@ -216,6 +237,17 @@ class AllCounted extends WildMultiAsset {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AllCounted && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class AllOfCounted extends WildMultiAsset {
@@ -233,10 +265,13 @@ class AllOfCounted extends WildMultiAsset {
     );
   }
 
+  /// AssetId
   final _i3.AssetId id;
 
+  /// WildFungibility
   final _i4.WildFungibility fun;
 
+  /// u32
   final BigInt count;
 
   @override
@@ -274,4 +309,19 @@ class AllOfCounted extends WildMultiAsset {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AllOfCounted && other.id == id && other.fun == fun && other.count == count;
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        fun,
+        count,
+      );
 }

@@ -1,7 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../sp_core/crypto/account_id32.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
+import '../sp_core/crypto/account_id32.dart' as _i2;
 
 class Proposal {
   const Proposal({
@@ -15,12 +18,16 @@ class Proposal {
     return codec.decode(input);
   }
 
+  /// AccountId
   final _i2.AccountId32 proposer;
 
+  /// Balance
   final BigInt value;
 
+  /// AccountId
   final _i2.AccountId32 beneficiary;
 
+  /// Balance
   final BigInt bond;
 
   static const $ProposalCodec codec = $ProposalCodec();
@@ -35,6 +42,32 @@ class Proposal {
         'beneficiary': beneficiary.toList(),
         'bond': bond,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Proposal &&
+          _i4.listsEqual(
+            other.proposer,
+            proposer,
+          ) &&
+          other.value == value &&
+          _i4.listsEqual(
+            other.beneficiary,
+            beneficiary,
+          ) &&
+          other.bond == bond;
+
+  @override
+  int get hashCode => Object.hash(
+        proposer,
+        value,
+        beneficiary,
+        bond,
+      );
 }
 
 class $ProposalCodec with _i1.Codec<Proposal> {
@@ -76,9 +109,9 @@ class $ProposalCodec with _i1.Codec<Proposal> {
   @override
   int sizeHint(Proposal obj) {
     int size = 0;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.proposer);
+    size = size + const _i2.AccountId32Codec().sizeHint(obj.proposer);
     size = size + _i1.U128Codec.codec.sizeHint(obj.value);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.beneficiary);
+    size = size + const _i2.AccountId32Codec().sizeHint(obj.beneficiary);
     size = size + _i1.U128Codec.codec.sizeHint(obj.bond);
     return size;
   }

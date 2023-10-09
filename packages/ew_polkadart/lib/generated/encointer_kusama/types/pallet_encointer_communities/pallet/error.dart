@@ -1,24 +1,59 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// Location is not a valid geolocation
   invalidLocation('InvalidLocation', 0),
+
+  /// Invalid amount of bootstrappers supplied. Needs to be /[3, 12/]
   invalidAmountBootstrappers('InvalidAmountBootstrappers', 1),
+
+  /// minimum distance violation to other location
   minimumDistanceViolationToOtherLocation('MinimumDistanceViolationToOtherLocation', 2),
+
+  /// minimum distance violated towards dateline
   minimumDistanceViolationToDateLine('MinimumDistanceViolationToDateLine', 3),
+
+  /// Can't register community that already exists
   communityAlreadyRegistered('CommunityAlreadyRegistered', 4),
+
+  /// Community does not exist yet
   communityInexistent('CommunityInexistent', 5),
+
+  /// Invalid Metadata supplied
   invalidCommunityMetadata('InvalidCommunityMetadata', 6),
+
+  /// Invalid demurrage supplied
   invalidDemurrage('InvalidDemurrage', 7),
+
+  /// Invalid demurrage supplied
   invalidNominalIncome('InvalidNominalIncome', 8),
+
+  /// Invalid location provided when computing geohash
   invalidLocationForGeohash('InvalidLocationForGeohash', 9),
+
+  /// Invalid Geohash provided
   invalidGeohash('InvalidGeohash', 10),
+
+  /// sender is not authorized
   badOrigin('BadOrigin', 11),
+
+  /// Locations can only be added in Registration Phase
   registrationPhaseRequired('RegistrationPhaseRequired', 12),
+
+  /// CommunityIdentifiers BoundedVec is full
   tooManyCommunityIdentifiers('TooManyCommunityIdentifiers', 13),
+
+  /// CommunityIdentifiersPerGeohash BoundedVec is full
   tooManyCommunityIdentifiersPerGeohash('TooManyCommunityIdentifiersPerGeohash', 14),
+
+  /// LocationsPerGeohash BoundedVec is full
   tooManyLocationsPerGeohash('TooManyLocationsPerGeohash', 15),
+
+  /// Bootstrappers BoundedVec is full
   tooManyBootstrappers('TooManyBootstrappers', 16);
 
   const Error(

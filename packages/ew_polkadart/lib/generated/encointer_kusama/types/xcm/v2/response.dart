@@ -1,10 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import 'multiasset/multi_assets.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i7;
+
 import '../../tuples.dart' as _i4;
-import 'traits/error.dart' as _i5;
 import 'multiasset/multi_asset.dart' as _i6;
+import 'multiasset/multi_assets.dart' as _i3;
+import 'traits/error.dart' as _i5;
 
 abstract class Response {
   const Response();
@@ -34,25 +37,19 @@ class $Response {
   const $Response();
 
   Null null_() {
-    return const Null();
+    return Null();
   }
 
-  Assets assets({required _i3.MultiAssets value0}) {
-    return Assets(
-      value0: value0,
-    );
+  Assets assets(_i3.MultiAssets value0) {
+    return Assets(value0);
   }
 
-  ExecutionResult executionResult({_i4.Tuple2<int, _i5.Error>? value0}) {
-    return ExecutionResult(
-      value0: value0,
-    );
+  ExecutionResult executionResult(_i4.Tuple2<int, _i5.Error>? value0) {
+    return ExecutionResult(value0);
   }
 
-  Version version({required int value0}) {
-    return Version(
-      value0: value0,
-    );
+  Version version(int value0) {
+    return Version(value0);
   }
 }
 
@@ -128,17 +125,22 @@ class Null extends Response {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Null;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Assets extends Response {
-  const Assets({required this.value0});
+  const Assets(this.value0);
 
   factory Assets._decode(_i1.Input input) {
-    return Assets(
-      value0: const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).decode(input),
-    );
+    return Assets(const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).decode(input));
   }
 
+  /// MultiAssets
   final _i3.MultiAssets value0;
 
   @override
@@ -147,7 +149,7 @@ class Assets extends Response {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i6.MultiAsset>(_i6.MultiAsset.codec).sizeHint(value0);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(value0);
     return size;
   }
 
@@ -161,20 +163,34 @@ class Assets extends Response {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Assets &&
+          _i7.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ExecutionResult extends Response {
-  const ExecutionResult({this.value0});
+  const ExecutionResult(this.value0);
 
   factory ExecutionResult._decode(_i1.Input input) {
-    return ExecutionResult(
-      value0: const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(_i4.Tuple2Codec<int, _i5.Error>(
-        _i1.U32Codec.codec,
-        _i5.Error.codec,
-      )).decode(input),
-    );
+    return ExecutionResult(const _i1.OptionCodec<_i4.Tuple2<int, _i5.Error>>(_i4.Tuple2Codec<int, _i5.Error>(
+      _i1.U32Codec.codec,
+      _i5.Error.codec,
+    )).decode(input));
   }
 
+  /// Option<(u32, Error)>
   final _i4.Tuple2<int, _i5.Error>? value0;
 
   @override
@@ -208,17 +224,27 @@ class ExecutionResult extends Response {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExecutionResult && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Version extends Response {
-  const Version({required this.value0});
+  const Version(this.value0);
 
   factory Version._decode(_i1.Input input) {
-    return Version(
-      value0: _i1.U32Codec.codec.decode(input),
-    );
+    return Version(_i1.U32Codec.codec.decode(input));
   }
 
+  /// super::Version
   final int value0;
 
   @override
@@ -240,4 +266,15 @@ class Version extends Response {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Version && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

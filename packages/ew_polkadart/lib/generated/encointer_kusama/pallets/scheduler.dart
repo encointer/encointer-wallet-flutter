@@ -1,10 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i5;
+
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
+
 import '../types/pallet_scheduler/scheduled.dart' as _i3;
-import '../types/tuples.dart' as _i4;
-import 'dart:async' as _i5;
 import '../types/sp_weights/weight_v2/weight.dart' as _i6;
+import '../types/tuples.dart' as _i4;
 
 class Queries {
   const Queries(this.__api);
@@ -59,7 +61,7 @@ class Queries {
     if (bytes != null) {
       return _agenda.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// Lookup from a name to the block number and index of the task.

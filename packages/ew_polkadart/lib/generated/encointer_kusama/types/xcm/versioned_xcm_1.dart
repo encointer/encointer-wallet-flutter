@@ -1,10 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import 'v2/xcm_1.dart' as _i3;
-import 'v3/xcm_1.dart' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
 import 'v2/instruction_1.dart' as _i5;
-import 'v3/instruction_1.dart' as _i6;
+import 'v2/xcm_1.dart' as _i3;
+import 'v3/instruction_1.dart' as _i7;
+import 'v3/xcm_1.dart' as _i4;
 
 abstract class VersionedXcm {
   const VersionedXcm();
@@ -33,16 +36,12 @@ abstract class VersionedXcm {
 class $VersionedXcm {
   const $VersionedXcm();
 
-  V2 v2({required _i3.Xcm value0}) {
-    return V2(
-      value0: value0,
-    );
+  V2 v2(_i3.Xcm value0) {
+    return V2(value0);
   }
 
-  V3 v3({required _i4.Xcm value0}) {
-    return V3(
-      value0: value0,
-    );
+  V3 v3(_i4.Xcm value0) {
+    return V3(value0);
   }
 }
 
@@ -93,14 +92,13 @@ class $VersionedXcmCodec with _i1.Codec<VersionedXcm> {
 }
 
 class V2 extends VersionedXcm {
-  const V2({required this.value0});
+  const V2(this.value0);
 
   factory V2._decode(_i1.Input input) {
-    return V2(
-      value0: const _i1.SequenceCodec<_i5.Instruction>(_i5.Instruction.codec).decode(input),
-    );
+    return V2(const _i1.SequenceCodec<_i5.Instruction>(_i5.Instruction.codec).decode(input));
   }
 
+  /// v2::Xcm<RuntimeCall>
   final _i3.Xcm value0;
 
   @override
@@ -108,7 +106,7 @@ class V2 extends VersionedXcm {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i5.Instruction>(_i5.Instruction.codec).sizeHint(value0);
+    size = size + const _i3.XcmCodec().sizeHint(value0);
     return size;
   }
 
@@ -122,17 +120,31 @@ class V2 extends VersionedXcm {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is V2 &&
+          _i6.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class V3 extends VersionedXcm {
-  const V3({required this.value0});
+  const V3(this.value0);
 
   factory V3._decode(_i1.Input input) {
-    return V3(
-      value0: const _i1.SequenceCodec<_i6.Instruction>(_i6.Instruction.codec).decode(input),
-    );
+    return V3(const _i1.SequenceCodec<_i7.Instruction>(_i7.Instruction.codec).decode(input));
   }
 
+  /// v3::Xcm<RuntimeCall>
   final _i4.Xcm value0;
 
   @override
@@ -140,7 +152,7 @@ class V3 extends VersionedXcm {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i6.Instruction>(_i6.Instruction.codec).sizeHint(value0);
+    size = size + const _i4.XcmCodec().sizeHint(value0);
     return size;
   }
 
@@ -149,9 +161,24 @@ class V3 extends VersionedXcm {
       3,
       output,
     );
-    const _i1.SequenceCodec<_i6.Instruction>(_i6.Instruction.codec).encodeTo(
+    const _i1.SequenceCodec<_i7.Instruction>(_i7.Instruction.codec).encodeTo(
       value0,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is V3 &&
+          _i6.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }

@@ -1,27 +1,71 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// The desired destination was unreachable, generally because there is a no way of routing
+  /// to it.
   unreachable('Unreachable', 0),
+
+  /// There was some other issue (i.e. not to do with routing) in sending the message. Perhaps
+  /// a lack of space for buffering the message.
   sendFailure('SendFailure', 1),
+
+  /// The message execution fails the filter.
   filtered('Filtered', 2),
+
+  /// The message's weight could not be determined.
   unweighableMessage('UnweighableMessage', 3),
+
+  /// The destination `MultiLocation` provided cannot be inverted.
   destinationNotInvertible('DestinationNotInvertible', 4),
+
+  /// The assets to be sent are empty.
   empty('Empty', 5),
+
+  /// Could not re-anchor the assets to declare the fees for the destination chain.
   cannotReanchor('CannotReanchor', 6),
+
+  /// Too many assets have been attempted for transfer.
   tooManyAssets('TooManyAssets', 7),
+
+  /// Origin is invalid for sending.
   invalidOrigin('InvalidOrigin', 8),
+
+  /// The version of the `Versioned` value used is not able to be interpreted.
   badVersion('BadVersion', 9),
+
+  /// The given location could not be used (e.g. because it cannot be expressed in the
+  /// desired version of XCM).
   badLocation('BadLocation', 10),
+
+  /// The referenced subscription could not be found.
   noSubscription('NoSubscription', 11),
+
+  /// The location is invalid since it already has a subscription from us.
   alreadySubscribed('AlreadySubscribed', 12),
+
+  /// Invalid asset for the operation.
   invalidAsset('InvalidAsset', 13),
+
+  /// The owner does not own (all) of the asset that they wish to do the operation on.
   lowBalance('LowBalance', 14),
+
+  /// The asset owner has too many locks on the asset.
   tooManyLocks('TooManyLocks', 15),
+
+  /// The given account is not an identifiable sovereign account for any location.
   accountNotSovereign('AccountNotSovereign', 16),
+
+  /// The operation required fees to be paid which the initiator could not meet.
   feesNotMet('FeesNotMet', 17),
+
+  /// A remote lock with the corresponding data could not be found.
   lockNotFound('LockNotFound', 18),
+
+  /// The unlock operation cannot succeed because there are still consumers of the lock.
   inUse('InUse', 19);
 
   const Error(

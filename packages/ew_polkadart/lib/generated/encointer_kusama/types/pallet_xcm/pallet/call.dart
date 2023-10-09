@@ -1,13 +1,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../xcm/versioned_multi_location.dart' as _i3;
-import '../../xcm/versioned_xcm_1.dart' as _i4;
-import '../../xcm/versioned_multi_assets.dart' as _i5;
-import '../../xcm/versioned_xcm_2.dart' as _i6;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../sp_weights/weight_v2/weight.dart' as _i7;
 import '../../xcm/v3/multilocation/multi_location.dart' as _i8;
 import '../../xcm/v3/weight_limit.dart' as _i9;
+import '../../xcm/versioned_multi_assets.dart' as _i5;
+import '../../xcm/versioned_multi_location.dart' as _i3;
+import '../../xcm/versioned_xcm_1.dart' as _i4;
+import '../../xcm/versioned_xcm_2.dart' as _i6;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -96,21 +98,15 @@ class $Call {
   }
 
   ForceDefaultXcmVersion forceDefaultXcmVersion({int? maybeXcmVersion}) {
-    return ForceDefaultXcmVersion(
-      maybeXcmVersion: maybeXcmVersion,
-    );
+    return ForceDefaultXcmVersion(maybeXcmVersion: maybeXcmVersion);
   }
 
   ForceSubscribeVersionNotify forceSubscribeVersionNotify({required _i3.VersionedMultiLocation location}) {
-    return ForceSubscribeVersionNotify(
-      location: location,
-    );
+    return ForceSubscribeVersionNotify(location: location);
   }
 
   ForceUnsubscribeVersionNotify forceUnsubscribeVersionNotify({required _i3.VersionedMultiLocation location}) {
-    return ForceUnsubscribeVersionNotify(
-      location: location,
-    );
+    return ForceUnsubscribeVersionNotify(location: location);
   }
 
   LimitedReserveTransferAssets limitedReserveTransferAssets({
@@ -146,9 +142,7 @@ class $Call {
   }
 
   ForceSuspension forceSuspension({required bool suspended}) {
-    return ForceSuspension(
-      suspended: suspended,
-    );
+    return ForceSuspension(suspended: suspended);
   }
 }
 
@@ -275,8 +269,10 @@ class Send extends Call {
     );
   }
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation dest;
 
+  /// Box<VersionedXcm<()>>
   final _i4.VersionedXcm message;
 
   @override
@@ -308,6 +304,20 @@ class Send extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Send && other.dest == dest && other.message == message;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        message,
+      );
 }
 
 /// See [`Pallet::teleport_assets`].
@@ -328,12 +338,16 @@ class TeleportAssets extends Call {
     );
   }
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation dest;
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation beneficiary;
 
+  /// Box<VersionedMultiAssets>
   final _i5.VersionedMultiAssets assets;
 
+  /// u32
   final int feeAssetItem;
 
   @override
@@ -377,6 +391,26 @@ class TeleportAssets extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TeleportAssets &&
+          other.dest == dest &&
+          other.beneficiary == beneficiary &&
+          other.assets == assets &&
+          other.feeAssetItem == feeAssetItem;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        beneficiary,
+        assets,
+        feeAssetItem,
+      );
 }
 
 /// See [`Pallet::reserve_transfer_assets`].
@@ -397,12 +431,16 @@ class ReserveTransferAssets extends Call {
     );
   }
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation dest;
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation beneficiary;
 
+  /// Box<VersionedMultiAssets>
   final _i5.VersionedMultiAssets assets;
 
+  /// u32
   final int feeAssetItem;
 
   @override
@@ -446,6 +484,26 @@ class ReserveTransferAssets extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ReserveTransferAssets &&
+          other.dest == dest &&
+          other.beneficiary == beneficiary &&
+          other.assets == assets &&
+          other.feeAssetItem == feeAssetItem;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        beneficiary,
+        assets,
+        feeAssetItem,
+      );
 }
 
 /// See [`Pallet::execute`].
@@ -462,8 +520,10 @@ class Execute extends Call {
     );
   }
 
+  /// Box<VersionedXcm<<T as SysConfig>::RuntimeCall>>
   final _i6.VersionedXcm message;
 
+  /// Weight
   final _i7.Weight maxWeight;
 
   @override
@@ -495,6 +555,20 @@ class Execute extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Execute && other.message == message && other.maxWeight == maxWeight;
+
+  @override
+  int get hashCode => Object.hash(
+        message,
+        maxWeight,
+      );
 }
 
 /// See [`Pallet::force_xcm_version`].
@@ -511,8 +585,10 @@ class ForceXcmVersion extends Call {
     );
   }
 
+  /// Box<MultiLocation>
   final _i8.MultiLocation location;
 
+  /// XcmVersion
   final int version;
 
   @override
@@ -544,6 +620,20 @@ class ForceXcmVersion extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceXcmVersion && other.location == location && other.version == version;
+
+  @override
+  int get hashCode => Object.hash(
+        location,
+        version,
+      );
 }
 
 /// See [`Pallet::force_default_xcm_version`].
@@ -551,11 +641,10 @@ class ForceDefaultXcmVersion extends Call {
   const ForceDefaultXcmVersion({this.maybeXcmVersion});
 
   factory ForceDefaultXcmVersion._decode(_i1.Input input) {
-    return ForceDefaultXcmVersion(
-      maybeXcmVersion: const _i1.OptionCodec<int>(_i1.U32Codec.codec).decode(input),
-    );
+    return ForceDefaultXcmVersion(maybeXcmVersion: const _i1.OptionCodec<int>(_i1.U32Codec.codec).decode(input));
   }
 
+  /// Option<XcmVersion>
   final int? maybeXcmVersion;
 
   @override
@@ -579,6 +668,17 @@ class ForceDefaultXcmVersion extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceDefaultXcmVersion && other.maybeXcmVersion == maybeXcmVersion;
+
+  @override
+  int get hashCode => maybeXcmVersion.hashCode;
 }
 
 /// See [`Pallet::force_subscribe_version_notify`].
@@ -586,11 +686,10 @@ class ForceSubscribeVersionNotify extends Call {
   const ForceSubscribeVersionNotify({required this.location});
 
   factory ForceSubscribeVersionNotify._decode(_i1.Input input) {
-    return ForceSubscribeVersionNotify(
-      location: _i3.VersionedMultiLocation.codec.decode(input),
-    );
+    return ForceSubscribeVersionNotify(location: _i3.VersionedMultiLocation.codec.decode(input));
   }
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation location;
 
   @override
@@ -614,6 +713,17 @@ class ForceSubscribeVersionNotify extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceSubscribeVersionNotify && other.location == location;
+
+  @override
+  int get hashCode => location.hashCode;
 }
 
 /// See [`Pallet::force_unsubscribe_version_notify`].
@@ -621,11 +731,10 @@ class ForceUnsubscribeVersionNotify extends Call {
   const ForceUnsubscribeVersionNotify({required this.location});
 
   factory ForceUnsubscribeVersionNotify._decode(_i1.Input input) {
-    return ForceUnsubscribeVersionNotify(
-      location: _i3.VersionedMultiLocation.codec.decode(input),
-    );
+    return ForceUnsubscribeVersionNotify(location: _i3.VersionedMultiLocation.codec.decode(input));
   }
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation location;
 
   @override
@@ -649,6 +758,17 @@ class ForceUnsubscribeVersionNotify extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceUnsubscribeVersionNotify && other.location == location;
+
+  @override
+  int get hashCode => location.hashCode;
 }
 
 /// See [`Pallet::limited_reserve_transfer_assets`].
@@ -671,14 +791,19 @@ class LimitedReserveTransferAssets extends Call {
     );
   }
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation dest;
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation beneficiary;
 
+  /// Box<VersionedMultiAssets>
   final _i5.VersionedMultiAssets assets;
 
+  /// u32
   final int feeAssetItem;
 
+  /// WeightLimit
   final _i9.WeightLimit weightLimit;
 
   @override
@@ -728,6 +853,28 @@ class LimitedReserveTransferAssets extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is LimitedReserveTransferAssets &&
+          other.dest == dest &&
+          other.beneficiary == beneficiary &&
+          other.assets == assets &&
+          other.feeAssetItem == feeAssetItem &&
+          other.weightLimit == weightLimit;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        beneficiary,
+        assets,
+        feeAssetItem,
+        weightLimit,
+      );
 }
 
 /// See [`Pallet::limited_teleport_assets`].
@@ -750,14 +897,19 @@ class LimitedTeleportAssets extends Call {
     );
   }
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation dest;
 
+  /// Box<VersionedMultiLocation>
   final _i3.VersionedMultiLocation beneficiary;
 
+  /// Box<VersionedMultiAssets>
   final _i5.VersionedMultiAssets assets;
 
+  /// u32
   final int feeAssetItem;
 
+  /// WeightLimit
   final _i9.WeightLimit weightLimit;
 
   @override
@@ -807,6 +959,28 @@ class LimitedTeleportAssets extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is LimitedTeleportAssets &&
+          other.dest == dest &&
+          other.beneficiary == beneficiary &&
+          other.assets == assets &&
+          other.feeAssetItem == feeAssetItem &&
+          other.weightLimit == weightLimit;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        beneficiary,
+        assets,
+        feeAssetItem,
+        weightLimit,
+      );
 }
 
 /// See [`Pallet::force_suspension`].
@@ -814,11 +988,10 @@ class ForceSuspension extends Call {
   const ForceSuspension({required this.suspended});
 
   factory ForceSuspension._decode(_i1.Input input) {
-    return ForceSuspension(
-      suspended: _i1.BoolCodec.codec.decode(input),
-    );
+    return ForceSuspension(suspended: _i1.BoolCodec.codec.decode(input));
   }
 
+  /// bool
   final bool suspended;
 
   @override
@@ -842,4 +1015,15 @@ class ForceSuspension extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceSuspension && other.suspended == suspended;
+
+  @override
+  int get hashCode => suspended.hashCode;
 }

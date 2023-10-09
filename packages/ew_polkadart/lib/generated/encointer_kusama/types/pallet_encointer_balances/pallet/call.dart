@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../sp_core/crypto/account_id32.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
 import '../../encointer_primitives/communities/community_identifier.dart' as _i4;
+import '../../sp_core/crypto/account_id32.dart' as _i3;
 import '../../substrate_fixed/fixed_u128.dart' as _i5;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -46,9 +49,7 @@ class $Call {
   }
 
   SetFeeConversionFactor setFeeConversionFactor({required BigInt feeConversionFactor}) {
-    return SetFeeConversionFactor(
-      feeConversionFactor: feeConversionFactor,
-    );
+    return SetFeeConversionFactor(feeConversionFactor: feeConversionFactor);
   }
 
   TransferAll transferAll({
@@ -131,10 +132,13 @@ class Transfer extends Call {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 dest;
 
+  /// CommunityIdentifier
   final _i4.CommunityIdentifier communityId;
 
+  /// BalanceType
   final _i5.FixedU128 amount;
 
   @override
@@ -148,7 +152,7 @@ class Transfer extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(dest);
+    size = size + const _i3.AccountId32Codec().sizeHint(dest);
     size = size + _i4.CommunityIdentifier.codec.sizeHint(communityId);
     size = size + _i5.FixedU128.codec.sizeHint(amount);
     return size;
@@ -172,6 +176,27 @@ class Transfer extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Transfer &&
+          _i6.listsEqual(
+            other.dest,
+            dest,
+          ) &&
+          other.communityId == communityId &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        communityId,
+        amount,
+      );
 }
 
 /// See [`Pallet::set_fee_conversion_factor`].
@@ -179,11 +204,10 @@ class SetFeeConversionFactor extends Call {
   const SetFeeConversionFactor({required this.feeConversionFactor});
 
   factory SetFeeConversionFactor._decode(_i1.Input input) {
-    return SetFeeConversionFactor(
-      feeConversionFactor: _i1.U128Codec.codec.decode(input),
-    );
+    return SetFeeConversionFactor(feeConversionFactor: _i1.U128Codec.codec.decode(input));
   }
 
+  /// FeeConversionFactorType
   final BigInt feeConversionFactor;
 
   @override
@@ -207,6 +231,17 @@ class SetFeeConversionFactor extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetFeeConversionFactor && other.feeConversionFactor == feeConversionFactor;
+
+  @override
+  int get hashCode => feeConversionFactor.hashCode;
 }
 
 /// See [`Pallet::transfer_all`].
@@ -223,8 +258,10 @@ class TransferAll extends Call {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 dest;
 
+  /// CommunityIdentifier
   final _i4.CommunityIdentifier cid;
 
   @override
@@ -237,7 +274,7 @@ class TransferAll extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(dest);
+    size = size + const _i3.AccountId32Codec().sizeHint(dest);
     size = size + _i4.CommunityIdentifier.codec.sizeHint(cid);
     return size;
   }
@@ -256,4 +293,23 @@ class TransferAll extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransferAll &&
+          _i6.listsEqual(
+            other.dest,
+            dest,
+          ) &&
+          other.cid == cid;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        cid,
+      );
 }

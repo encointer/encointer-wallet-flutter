@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../sp_weights/weight_v2/weight.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -42,47 +44,35 @@ class $Call {
   }
 
   SuspendXcmExecution suspendXcmExecution() {
-    return const SuspendXcmExecution();
+    return SuspendXcmExecution();
   }
 
   ResumeXcmExecution resumeXcmExecution() {
-    return const ResumeXcmExecution();
+    return ResumeXcmExecution();
   }
 
   UpdateSuspendThreshold updateSuspendThreshold({required int new_}) {
-    return UpdateSuspendThreshold(
-      new_: new_,
-    );
+    return UpdateSuspendThreshold(new_: new_);
   }
 
   UpdateDropThreshold updateDropThreshold({required int new_}) {
-    return UpdateDropThreshold(
-      new_: new_,
-    );
+    return UpdateDropThreshold(new_: new_);
   }
 
   UpdateResumeThreshold updateResumeThreshold({required int new_}) {
-    return UpdateResumeThreshold(
-      new_: new_,
-    );
+    return UpdateResumeThreshold(new_: new_);
   }
 
   UpdateThresholdWeight updateThresholdWeight({required _i3.Weight new_}) {
-    return UpdateThresholdWeight(
-      new_: new_,
-    );
+    return UpdateThresholdWeight(new_: new_);
   }
 
   UpdateWeightRestrictDecay updateWeightRestrictDecay({required _i3.Weight new_}) {
-    return UpdateWeightRestrictDecay(
-      new_: new_,
-    );
+    return UpdateWeightRestrictDecay(new_: new_);
   }
 
   UpdateXcmpMaxIndividualWeight updateXcmpMaxIndividualWeight({required _i3.Weight new_}) {
-    return UpdateXcmpMaxIndividualWeight(
-      new_: new_,
-    );
+    return UpdateXcmpMaxIndividualWeight(new_: new_);
   }
 }
 
@@ -195,8 +185,10 @@ class ServiceOverweight extends Call {
     );
   }
 
+  /// OverweightIndex
   final BigInt index;
 
+  /// Weight
   final _i3.Weight weightLimit;
 
   @override
@@ -228,6 +220,20 @@ class ServiceOverweight extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ServiceOverweight && other.index == index && other.weightLimit == weightLimit;
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        weightLimit,
+      );
 }
 
 /// See [`Pallet::suspend_xcm_execution`].
@@ -243,6 +249,12 @@ class SuspendXcmExecution extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is SuspendXcmExecution;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// See [`Pallet::resume_xcm_execution`].
@@ -258,6 +270,12 @@ class ResumeXcmExecution extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ResumeXcmExecution;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// See [`Pallet::update_suspend_threshold`].
@@ -265,11 +283,10 @@ class UpdateSuspendThreshold extends Call {
   const UpdateSuspendThreshold({required this.new_});
 
   factory UpdateSuspendThreshold._decode(_i1.Input input) {
-    return UpdateSuspendThreshold(
-      new_: _i1.U32Codec.codec.decode(input),
-    );
+    return UpdateSuspendThreshold(new_: _i1.U32Codec.codec.decode(input));
   }
 
+  /// u32
   final int new_;
 
   @override
@@ -293,6 +310,17 @@ class UpdateSuspendThreshold extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateSuspendThreshold && other.new_ == new_;
+
+  @override
+  int get hashCode => new_.hashCode;
 }
 
 /// See [`Pallet::update_drop_threshold`].
@@ -300,11 +328,10 @@ class UpdateDropThreshold extends Call {
   const UpdateDropThreshold({required this.new_});
 
   factory UpdateDropThreshold._decode(_i1.Input input) {
-    return UpdateDropThreshold(
-      new_: _i1.U32Codec.codec.decode(input),
-    );
+    return UpdateDropThreshold(new_: _i1.U32Codec.codec.decode(input));
   }
 
+  /// u32
   final int new_;
 
   @override
@@ -328,6 +355,17 @@ class UpdateDropThreshold extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateDropThreshold && other.new_ == new_;
+
+  @override
+  int get hashCode => new_.hashCode;
 }
 
 /// See [`Pallet::update_resume_threshold`].
@@ -335,11 +373,10 @@ class UpdateResumeThreshold extends Call {
   const UpdateResumeThreshold({required this.new_});
 
   factory UpdateResumeThreshold._decode(_i1.Input input) {
-    return UpdateResumeThreshold(
-      new_: _i1.U32Codec.codec.decode(input),
-    );
+    return UpdateResumeThreshold(new_: _i1.U32Codec.codec.decode(input));
   }
 
+  /// u32
   final int new_;
 
   @override
@@ -363,6 +400,17 @@ class UpdateResumeThreshold extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateResumeThreshold && other.new_ == new_;
+
+  @override
+  int get hashCode => new_.hashCode;
 }
 
 /// See [`Pallet::update_threshold_weight`].
@@ -370,11 +418,10 @@ class UpdateThresholdWeight extends Call {
   const UpdateThresholdWeight({required this.new_});
 
   factory UpdateThresholdWeight._decode(_i1.Input input) {
-    return UpdateThresholdWeight(
-      new_: _i3.Weight.codec.decode(input),
-    );
+    return UpdateThresholdWeight(new_: _i3.Weight.codec.decode(input));
   }
 
+  /// Weight
   final _i3.Weight new_;
 
   @override
@@ -398,6 +445,17 @@ class UpdateThresholdWeight extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateThresholdWeight && other.new_ == new_;
+
+  @override
+  int get hashCode => new_.hashCode;
 }
 
 /// See [`Pallet::update_weight_restrict_decay`].
@@ -405,11 +463,10 @@ class UpdateWeightRestrictDecay extends Call {
   const UpdateWeightRestrictDecay({required this.new_});
 
   factory UpdateWeightRestrictDecay._decode(_i1.Input input) {
-    return UpdateWeightRestrictDecay(
-      new_: _i3.Weight.codec.decode(input),
-    );
+    return UpdateWeightRestrictDecay(new_: _i3.Weight.codec.decode(input));
   }
 
+  /// Weight
   final _i3.Weight new_;
 
   @override
@@ -433,6 +490,17 @@ class UpdateWeightRestrictDecay extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateWeightRestrictDecay && other.new_ == new_;
+
+  @override
+  int get hashCode => new_.hashCode;
 }
 
 /// See [`Pallet::update_xcmp_max_individual_weight`].
@@ -440,11 +508,10 @@ class UpdateXcmpMaxIndividualWeight extends Call {
   const UpdateXcmpMaxIndividualWeight({required this.new_});
 
   factory UpdateXcmpMaxIndividualWeight._decode(_i1.Input input) {
-    return UpdateXcmpMaxIndividualWeight(
-      new_: _i3.Weight.codec.decode(input),
-    );
+    return UpdateXcmpMaxIndividualWeight(new_: _i3.Weight.codec.decode(input));
   }
 
+  /// Weight
   final _i3.Weight new_;
 
   @override
@@ -468,4 +535,15 @@ class UpdateXcmpMaxIndividualWeight extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateXcmpMaxIndividualWeight && other.new_ == new_;
+
+  @override
+  int get hashCode => new_.hashCode;
 }

@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 abstract class MaybeErrorCode {
   const MaybeErrorCode();
@@ -30,19 +32,15 @@ class $MaybeErrorCode {
   const $MaybeErrorCode();
 
   Success success() {
-    return const Success();
+    return Success();
   }
 
-  Error error({required List<int> value0}) {
-    return Error(
-      value0: value0,
-    );
+  Error error(List<int> value0) {
+    return Error(value0);
   }
 
-  TruncatedError truncatedError({required List<int> value0}) {
-    return TruncatedError(
-      value0: value0,
-    );
+  TruncatedError truncatedError(List<int> value0) {
+    return TruncatedError(value0);
   }
 }
 
@@ -111,17 +109,22 @@ class Success extends MaybeErrorCode {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Success;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Error extends MaybeErrorCode {
-  const Error({required this.value0});
+  const Error(this.value0);
 
   factory Error._decode(_i1.Input input) {
-    return Error(
-      value0: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return Error(_i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// BoundedVec<u8, MaxDispatchErrorLen>
   final List<int> value0;
 
   @override
@@ -143,17 +146,31 @@ class Error extends MaybeErrorCode {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Error &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class TruncatedError extends MaybeErrorCode {
-  const TruncatedError({required this.value0});
+  const TruncatedError(this.value0);
 
   factory TruncatedError._decode(_i1.Input input) {
-    return TruncatedError(
-      value0: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return TruncatedError(_i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// BoundedVec<u8, MaxDispatchErrorLen>
   final List<int> value0;
 
   @override
@@ -175,4 +192,19 @@ class TruncatedError extends MaybeErrorCode {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TruncatedError &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }

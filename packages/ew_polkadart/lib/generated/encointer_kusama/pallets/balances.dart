@@ -1,12 +1,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i8;
+
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
-import '../types/sp_core/crypto/account_id32.dart' as _i3;
+
 import '../types/pallet_balances/types/account_data.dart' as _i4;
 import '../types/pallet_balances/types/balance_lock.dart' as _i5;
-import '../types/pallet_balances/types/reserve_data.dart' as _i6;
 import '../types/pallet_balances/types/id_amount.dart' as _i7;
-import 'dart:async' as _i8;
+import '../types/pallet_balances/types/reserve_data.dart' as _i6;
+import '../types/sp_core/crypto/account_id32.dart' as _i3;
 
 class Queries {
   const Queries(this.__api);
@@ -30,7 +32,7 @@ class Queries {
     prefix: 'Balances',
     storage: 'Account',
     valueCodec: _i4.AccountData.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(_i2.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
   final _i1.StorageMap<_i3.AccountId32, List<_i5.BalanceLock>> _locks =
@@ -38,7 +40,7 @@ class Queries {
     prefix: 'Balances',
     storage: 'Locks',
     valueCodec: _i2.SequenceCodec<_i5.BalanceLock>(_i5.BalanceLock.codec),
-    hasher: _i1.StorageHasher.blake2b128Concat(_i2.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
   final _i1.StorageMap<_i3.AccountId32, List<_i6.ReserveData>> _reserves =
@@ -46,7 +48,7 @@ class Queries {
     prefix: 'Balances',
     storage: 'Reserves',
     valueCodec: _i2.SequenceCodec<_i6.ReserveData>(_i6.ReserveData.codec),
-    hasher: _i1.StorageHasher.blake2b128Concat(_i2.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
   final _i1.StorageMap<_i3.AccountId32, List<_i7.IdAmount>> _holds =
@@ -54,7 +56,7 @@ class Queries {
     prefix: 'Balances',
     storage: 'Holds',
     valueCodec: _i2.SequenceCodec<_i7.IdAmount>(_i7.IdAmount.codec),
-    hasher: _i1.StorageHasher.blake2b128Concat(_i2.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
   final _i1.StorageMap<_i3.AccountId32, List<_i7.IdAmount>> _freezes =
@@ -62,7 +64,7 @@ class Queries {
     prefix: 'Balances',
     storage: 'Freezes',
     valueCodec: _i2.SequenceCodec<_i7.IdAmount>(_i7.IdAmount.codec),
-    hasher: _i1.StorageHasher.blake2b128Concat(_i2.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
   /// The total units issued in the system.
@@ -152,7 +154,7 @@ class Queries {
     if (bytes != null) {
       return _locks.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// Named reserves on some account balances.
@@ -168,7 +170,7 @@ class Queries {
     if (bytes != null) {
       return _reserves.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// Holds on account balances.
@@ -184,7 +186,7 @@ class Queries {
     if (bytes != null) {
       return _holds.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// Freeze locks on account balances.
@@ -200,7 +202,7 @@ class Queries {
     if (bytes != null) {
       return _freezes.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 }
 

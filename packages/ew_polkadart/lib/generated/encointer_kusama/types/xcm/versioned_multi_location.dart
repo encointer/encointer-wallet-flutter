@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import 'v2/multilocation/multi_location.dart' as _i3;
 import 'v3/multilocation/multi_location.dart' as _i4;
 
@@ -31,16 +33,12 @@ abstract class VersionedMultiLocation {
 class $VersionedMultiLocation {
   const $VersionedMultiLocation();
 
-  V2 v2({required _i3.MultiLocation value0}) {
-    return V2(
-      value0: value0,
-    );
+  V2 v2(_i3.MultiLocation value0) {
+    return V2(value0);
   }
 
-  V3 v3({required _i4.MultiLocation value0}) {
-    return V3(
-      value0: value0,
-    );
+  V3 v3(_i4.MultiLocation value0) {
+    return V3(value0);
   }
 }
 
@@ -91,14 +89,13 @@ class $VersionedMultiLocationCodec with _i1.Codec<VersionedMultiLocation> {
 }
 
 class V2 extends VersionedMultiLocation {
-  const V2({required this.value0});
+  const V2(this.value0);
 
   factory V2._decode(_i1.Input input) {
-    return V2(
-      value0: _i3.MultiLocation.codec.decode(input),
-    );
+    return V2(_i3.MultiLocation.codec.decode(input));
   }
 
+  /// v2::MultiLocation
   final _i3.MultiLocation value0;
 
   @override
@@ -120,17 +117,27 @@ class V2 extends VersionedMultiLocation {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is V2 && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class V3 extends VersionedMultiLocation {
-  const V3({required this.value0});
+  const V3(this.value0);
 
   factory V3._decode(_i1.Input input) {
-    return V3(
-      value0: _i4.MultiLocation.codec.decode(input),
-    );
+    return V3(_i4.MultiLocation.codec.decode(input));
   }
 
+  /// v3::MultiLocation
   final _i4.MultiLocation value0;
 
   @override
@@ -152,4 +159,15 @@ class V3 extends VersionedMultiLocation {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is V3 && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../../sp_core/crypto/account_id32.dart' as _i3;
 
 /// The `Event` enum of this pallet
@@ -100,10 +103,13 @@ class TransactionFeePaid extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// BalanceOf<T>
   final BigInt actualFee;
 
+  /// BalanceOf<T>
   final BigInt tip;
 
   @override
@@ -117,7 +123,7 @@ class TransactionFeePaid extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(actualFee);
     size = size + _i1.U128Codec.codec.sizeHint(tip);
     return size;
@@ -141,4 +147,25 @@ class TransactionFeePaid extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransactionFeePaid &&
+          _i4.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.actualFee == actualFee &&
+          other.tip == tip;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        actualFee,
+        tip,
+      );
 }

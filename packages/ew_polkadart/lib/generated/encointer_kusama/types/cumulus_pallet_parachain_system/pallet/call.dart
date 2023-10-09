@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../cumulus_primitives_parachain_inherent/parachain_inherent_data.dart' as _i3;
 import '../../primitive_types/h256.dart' as _i4;
 
@@ -33,15 +36,11 @@ class $Call {
   const $Call();
 
   SetValidationData setValidationData({required _i3.ParachainInherentData data}) {
-    return SetValidationData(
-      data: data,
-    );
+    return SetValidationData(data: data);
   }
 
   SudoSendUpwardMessage sudoSendUpwardMessage({required List<int> message}) {
-    return SudoSendUpwardMessage(
-      message: message,
-    );
+    return SudoSendUpwardMessage(message: message);
   }
 
   AuthorizeUpgrade authorizeUpgrade({
@@ -55,9 +54,7 @@ class $Call {
   }
 
   EnactAuthorizedUpgrade enactAuthorizedUpgrade({required List<int> code}) {
-    return EnactAuthorizedUpgrade(
-      code: code,
-    );
+    return EnactAuthorizedUpgrade(code: code);
   }
 }
 
@@ -126,11 +123,10 @@ class SetValidationData extends Call {
   const SetValidationData({required this.data});
 
   factory SetValidationData._decode(_i1.Input input) {
-    return SetValidationData(
-      data: _i3.ParachainInherentData.codec.decode(input),
-    );
+    return SetValidationData(data: _i3.ParachainInherentData.codec.decode(input));
   }
 
+  /// ParachainInherentData
   final _i3.ParachainInherentData data;
 
   @override
@@ -154,6 +150,17 @@ class SetValidationData extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetValidationData && other.data == data;
+
+  @override
+  int get hashCode => data.hashCode;
 }
 
 /// See [`Pallet::sudo_send_upward_message`].
@@ -161,11 +168,10 @@ class SudoSendUpwardMessage extends Call {
   const SudoSendUpwardMessage({required this.message});
 
   factory SudoSendUpwardMessage._decode(_i1.Input input) {
-    return SudoSendUpwardMessage(
-      message: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return SudoSendUpwardMessage(message: _i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// UpwardMessage
   final List<int> message;
 
   @override
@@ -189,6 +195,21 @@ class SudoSendUpwardMessage extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SudoSendUpwardMessage &&
+          _i5.listsEqual(
+            other.message,
+            message,
+          );
+
+  @override
+  int get hashCode => message.hashCode;
 }
 
 /// See [`Pallet::authorize_upgrade`].
@@ -205,8 +226,10 @@ class AuthorizeUpgrade extends Call {
     );
   }
 
+  /// T::Hash
   final _i4.H256 codeHash;
 
+  /// bool
   final bool checkVersion;
 
   @override
@@ -219,7 +242,7 @@ class AuthorizeUpgrade extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(codeHash);
+    size = size + const _i4.H256Codec().sizeHint(codeHash);
     size = size + _i1.BoolCodec.codec.sizeHint(checkVersion);
     return size;
   }
@@ -238,6 +261,25 @@ class AuthorizeUpgrade extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AuthorizeUpgrade &&
+          _i5.listsEqual(
+            other.codeHash,
+            codeHash,
+          ) &&
+          other.checkVersion == checkVersion;
+
+  @override
+  int get hashCode => Object.hash(
+        codeHash,
+        checkVersion,
+      );
 }
 
 /// See [`Pallet::enact_authorized_upgrade`].
@@ -245,11 +287,10 @@ class EnactAuthorizedUpgrade extends Call {
   const EnactAuthorizedUpgrade({required this.code});
 
   factory EnactAuthorizedUpgrade._decode(_i1.Input input) {
-    return EnactAuthorizedUpgrade(
-      code: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return EnactAuthorizedUpgrade(code: _i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// Vec<u8>
   final List<int> code;
 
   @override
@@ -273,4 +314,19 @@ class EnactAuthorizedUpgrade extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EnactAuthorizedUpgrade &&
+          _i5.listsEqual(
+            other.code,
+            code,
+          );
+
+  @override
+  int get hashCode => code.hashCode;
 }

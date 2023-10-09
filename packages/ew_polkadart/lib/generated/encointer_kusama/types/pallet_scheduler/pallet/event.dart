@@ -1,8 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../tuples.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../sp_runtime/dispatch_error.dart' as _i4;
+import '../../tuples.dart' as _i3;
 
 /// Events type.
 abstract class Event {
@@ -183,8 +185,10 @@ class Scheduled extends Event {
     );
   }
 
+  /// BlockNumberFor<T>
   final int when;
 
+  /// u32
   final int index;
 
   @override
@@ -216,6 +220,20 @@ class Scheduled extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Scheduled && other.when == when && other.index == index;
+
+  @override
+  int get hashCode => Object.hash(
+        when,
+        index,
+      );
 }
 
 /// Canceled some task.
@@ -232,8 +250,10 @@ class Canceled extends Event {
     );
   }
 
+  /// BlockNumberFor<T>
   final int when;
 
+  /// u32
   final int index;
 
   @override
@@ -265,6 +285,20 @@ class Canceled extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Canceled && other.when == when && other.index == index;
+
+  @override
+  int get hashCode => Object.hash(
+        when,
+        index,
+      );
 }
 
 /// Dispatched some task.
@@ -289,10 +323,13 @@ class Dispatched extends Event {
     );
   }
 
+  /// TaskAddress<BlockNumberFor<T>>
   final _i3.Tuple2<int, int> task;
 
+  /// Option<TaskName>
   final List<int>? id;
 
+  /// DispatchResult
   final _i1.Result<dynamic, _i4.DispatchError> result;
 
   @override
@@ -347,6 +384,21 @@ class Dispatched extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Dispatched && other.task == task && other.id == id && other.result == result;
+
+  @override
+  int get hashCode => Object.hash(
+        task,
+        id,
+        result,
+      );
 }
 
 /// The call for the provided hash was not found so the task has been aborted.
@@ -366,8 +418,10 @@ class CallUnavailable extends Event {
     );
   }
 
+  /// TaskAddress<BlockNumberFor<T>>
   final _i3.Tuple2<int, int> task;
 
+  /// Option<TaskName>
   final List<int>? id;
 
   @override
@@ -409,6 +463,20 @@ class CallUnavailable extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CallUnavailable && other.task == task && other.id == id;
+
+  @override
+  int get hashCode => Object.hash(
+        task,
+        id,
+      );
 }
 
 /// The given task was unable to be renewed since the agenda is full at that block.
@@ -428,8 +496,10 @@ class PeriodicFailed extends Event {
     );
   }
 
+  /// TaskAddress<BlockNumberFor<T>>
   final _i3.Tuple2<int, int> task;
 
+  /// Option<TaskName>
   final List<int>? id;
 
   @override
@@ -471,6 +541,20 @@ class PeriodicFailed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PeriodicFailed && other.task == task && other.id == id;
+
+  @override
+  int get hashCode => Object.hash(
+        task,
+        id,
+      );
 }
 
 /// The given task can never be executed since it is overweight.
@@ -490,8 +574,10 @@ class PermanentlyOverweight extends Event {
     );
   }
 
+  /// TaskAddress<BlockNumberFor<T>>
   final _i3.Tuple2<int, int> task;
 
+  /// Option<TaskName>
   final List<int>? id;
 
   @override
@@ -533,4 +619,18 @@ class PermanentlyOverweight extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PermanentlyOverweight && other.task == task && other.id == id;
+
+  @override
+  int get hashCode => Object.hash(
+        task,
+        id,
+      );
 }

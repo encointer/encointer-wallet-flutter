@@ -1,9 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:typed_data' as _i5;
+
 import 'package:polkadart/scale_codec.dart' as _i1;
-import 'phase.dart' as _i2;
+import 'package:quiver/collection.dart' as _i6;
+
 import '../encointer_runtime/runtime_event.dart' as _i3;
 import '../primitive_types/h256.dart' as _i4;
-import 'dart:typed_data' as _i5;
+import 'phase.dart' as _i2;
 
 class EventRecord {
   const EventRecord({
@@ -16,10 +19,13 @@ class EventRecord {
     return codec.decode(input);
   }
 
+  /// Phase
   final _i2.Phase phase;
 
+  /// E
   final _i3.RuntimeEvent event;
 
+  /// Vec<T>
   final List<_i4.H256> topics;
 
   static const $EventRecordCodec codec = $EventRecordCodec();
@@ -33,6 +39,27 @@ class EventRecord {
         'event': event.toJson(),
         'topics': topics.map((value) => value.toList()).toList(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EventRecord &&
+          other.phase == phase &&
+          other.event == event &&
+          _i6.listsEqual(
+            other.topics,
+            topics,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        phase,
+        event,
+        topics,
+      );
 }
 
 class $EventRecordCodec with _i1.Codec<EventRecord> {
@@ -51,7 +78,7 @@ class $EventRecordCodec with _i1.Codec<EventRecord> {
       obj.event,
       output,
     );
-    const _i1.SequenceCodec<_i4.H256>(_i1.U8ArrayCodec(32)).encodeTo(
+    const _i1.SequenceCodec<_i4.H256>(_i4.H256Codec()).encodeTo(
       obj.topics,
       output,
     );
@@ -62,7 +89,7 @@ class $EventRecordCodec with _i1.Codec<EventRecord> {
     return EventRecord(
       phase: _i2.Phase.codec.decode(input),
       event: _i3.RuntimeEvent.codec.decode(input),
-      topics: const _i1.SequenceCodec<_i4.H256>(_i1.U8ArrayCodec(32)).decode(input),
+      topics: const _i1.SequenceCodec<_i4.H256>(_i4.H256Codec()).decode(input),
     );
   }
 
@@ -71,7 +98,7 @@ class $EventRecordCodec with _i1.Codec<EventRecord> {
     int size = 0;
     size = size + _i2.Phase.codec.sizeHint(obj.phase);
     size = size + _i3.RuntimeEvent.codec.sizeHint(obj.event);
-    size = size + const _i1.SequenceCodec<_i4.H256>(_i1.U8ArrayCodec(32)).sizeHint(obj.topics);
+    size = size + const _i1.SequenceCodec<_i4.H256>(_i4.H256Codec()).sizeHint(obj.topics);
     return size;
   }
 }

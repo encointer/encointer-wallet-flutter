@@ -1,8 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../xcm/versioned_multi_location.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../tuples.dart' as _i4;
+import '../../xcm/versioned_multi_location.dart' as _i3;
 import '../../xcm/versioned_response.dart' as _i5;
 
 abstract class QueryStatus {
@@ -141,12 +143,16 @@ class Pending extends QueryStatus {
     );
   }
 
+  /// VersionedMultiLocation
   final _i3.VersionedMultiLocation responder;
 
+  /// Option<VersionedMultiLocation>
   final _i3.VersionedMultiLocation? maybeMatchQuerier;
 
+  /// Option<(u8, u8)>
   final _i4.Tuple2<int, int>? maybeNotify;
 
+  /// BlockNumber
   final int timeout;
 
   @override
@@ -201,6 +207,26 @@ class Pending extends QueryStatus {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Pending &&
+          other.responder == responder &&
+          other.maybeMatchQuerier == maybeMatchQuerier &&
+          other.maybeNotify == maybeNotify &&
+          other.timeout == timeout;
+
+  @override
+  int get hashCode => Object.hash(
+        responder,
+        maybeMatchQuerier,
+        maybeNotify,
+        timeout,
+      );
 }
 
 class VersionNotifier extends QueryStatus {
@@ -216,8 +242,10 @@ class VersionNotifier extends QueryStatus {
     );
   }
 
+  /// VersionedMultiLocation
   final _i3.VersionedMultiLocation origin;
 
+  /// bool
   final bool isActive;
 
   @override
@@ -249,6 +277,20 @@ class VersionNotifier extends QueryStatus {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is VersionNotifier && other.origin == origin && other.isActive == isActive;
+
+  @override
+  int get hashCode => Object.hash(
+        origin,
+        isActive,
+      );
 }
 
 class Ready extends QueryStatus {
@@ -264,8 +306,10 @@ class Ready extends QueryStatus {
     );
   }
 
+  /// VersionedResponse
   final _i5.VersionedResponse response;
 
+  /// BlockNumber
   final int at;
 
   @override
@@ -297,4 +341,18 @@ class Ready extends QueryStatus {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Ready && other.response == response && other.at == at;
+
+  @override
+  int get hashCode => Object.hash(
+        response,
+        at,
+      );
 }

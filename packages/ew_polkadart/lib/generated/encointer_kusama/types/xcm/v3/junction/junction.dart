@@ -1,9 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import 'network_id.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
 import 'body_id.dart' as _i4;
 import 'body_part.dart' as _i5;
+import 'network_id.dart' as _i3;
 
 abstract class Junction {
   const Junction();
@@ -32,10 +35,8 @@ abstract class Junction {
 class $Junction {
   const $Junction();
 
-  Parachain parachain({required BigInt value0}) {
-    return Parachain(
-      value0: value0,
-    );
+  Parachain parachain(BigInt value0) {
+    return Parachain(value0);
   }
 
   AccountId32 accountId32({
@@ -68,16 +69,12 @@ class $Junction {
     );
   }
 
-  PalletInstance palletInstance({required int value0}) {
-    return PalletInstance(
-      value0: value0,
-    );
+  PalletInstance palletInstance(int value0) {
+    return PalletInstance(value0);
   }
 
-  GeneralIndex generalIndex({required BigInt value0}) {
-    return GeneralIndex(
-      value0: value0,
-    );
+  GeneralIndex generalIndex(BigInt value0) {
+    return GeneralIndex(value0);
   }
 
   GeneralKey generalKey({
@@ -91,7 +88,7 @@ class $Junction {
   }
 
   OnlyChild onlyChild() {
-    return const OnlyChild();
+    return OnlyChild();
   }
 
   Plurality plurality({
@@ -104,10 +101,8 @@ class $Junction {
     );
   }
 
-  GlobalConsensus globalConsensus({required _i3.NetworkId value0}) {
-    return GlobalConsensus(
-      value0: value0,
-    );
+  GlobalConsensus globalConsensus(_i3.NetworkId value0) {
+    return GlobalConsensus(value0);
   }
 }
 
@@ -214,14 +209,13 @@ class $JunctionCodec with _i1.Codec<Junction> {
 }
 
 class Parachain extends Junction {
-  const Parachain({required this.value0});
+  const Parachain(this.value0);
 
   factory Parachain._decode(_i1.Input input) {
-    return Parachain(
-      value0: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Parachain(_i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u32
   final BigInt value0;
 
   @override
@@ -243,6 +237,17 @@ class Parachain extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Parachain && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class AccountId32 extends Junction {
@@ -258,8 +263,10 @@ class AccountId32 extends Junction {
     );
   }
 
+  /// Option<NetworkId>
   final _i3.NetworkId? network;
 
+  /// [u8; 32]
   final List<int> id;
 
   @override
@@ -291,6 +298,25 @@ class AccountId32 extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AccountId32 &&
+          other.network == network &&
+          _i6.listsEqual(
+            other.id,
+            id,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        network,
+        id,
+      );
 }
 
 class AccountIndex64 extends Junction {
@@ -306,8 +332,10 @@ class AccountIndex64 extends Junction {
     );
   }
 
+  /// Option<NetworkId>
   final _i3.NetworkId? network;
 
+  /// u64
   final BigInt index;
 
   @override
@@ -339,6 +367,20 @@ class AccountIndex64 extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AccountIndex64 && other.network == network && other.index == index;
+
+  @override
+  int get hashCode => Object.hash(
+        network,
+        index,
+      );
 }
 
 class AccountKey20 extends Junction {
@@ -354,8 +396,10 @@ class AccountKey20 extends Junction {
     );
   }
 
+  /// Option<NetworkId>
   final _i3.NetworkId? network;
 
+  /// [u8; 20]
   final List<int> key;
 
   @override
@@ -387,17 +431,35 @@ class AccountKey20 extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AccountKey20 &&
+          other.network == network &&
+          _i6.listsEqual(
+            other.key,
+            key,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        network,
+        key,
+      );
 }
 
 class PalletInstance extends Junction {
-  const PalletInstance({required this.value0});
+  const PalletInstance(this.value0);
 
   factory PalletInstance._decode(_i1.Input input) {
-    return PalletInstance(
-      value0: _i1.U8Codec.codec.decode(input),
-    );
+    return PalletInstance(_i1.U8Codec.codec.decode(input));
   }
 
+  /// u8
   final int value0;
 
   @override
@@ -419,17 +481,27 @@ class PalletInstance extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PalletInstance && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class GeneralIndex extends Junction {
-  const GeneralIndex({required this.value0});
+  const GeneralIndex(this.value0);
 
   factory GeneralIndex._decode(_i1.Input input) {
-    return GeneralIndex(
-      value0: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return GeneralIndex(_i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u128
   final BigInt value0;
 
   @override
@@ -451,6 +523,17 @@ class GeneralIndex extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is GeneralIndex && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class GeneralKey extends Junction {
@@ -466,8 +549,10 @@ class GeneralKey extends Junction {
     );
   }
 
+  /// u8
   final int length;
 
+  /// [u8; 32]
   final List<int> data;
 
   @override
@@ -499,6 +584,25 @@ class GeneralKey extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is GeneralKey &&
+          other.length == length &&
+          _i6.listsEqual(
+            other.data,
+            data,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        length,
+        data,
+      );
 }
 
 class OnlyChild extends Junction {
@@ -513,6 +617,12 @@ class OnlyChild extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is OnlyChild;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Plurality extends Junction {
@@ -528,8 +638,10 @@ class Plurality extends Junction {
     );
   }
 
+  /// BodyId
   final _i4.BodyId id;
 
+  /// BodyPart
   final _i5.BodyPart part;
 
   @override
@@ -561,17 +673,30 @@ class Plurality extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Plurality && other.id == id && other.part == part;
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        part,
+      );
 }
 
 class GlobalConsensus extends Junction {
-  const GlobalConsensus({required this.value0});
+  const GlobalConsensus(this.value0);
 
   factory GlobalConsensus._decode(_i1.Input input) {
-    return GlobalConsensus(
-      value0: _i3.NetworkId.codec.decode(input),
-    );
+    return GlobalConsensus(_i3.NetworkId.codec.decode(input));
   }
 
+  /// NetworkId
   final _i3.NetworkId value0;
 
   @override
@@ -593,4 +718,15 @@ class GlobalConsensus extends Junction {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is GlobalConsensus && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 abstract class NetworkId {
   const NetworkId();
@@ -29,10 +31,8 @@ abstract class NetworkId {
 class $NetworkId {
   const $NetworkId();
 
-  ByGenesis byGenesis({required List<int> value0}) {
-    return ByGenesis(
-      value0: value0,
-    );
+  ByGenesis byGenesis(List<int> value0) {
+    return ByGenesis(value0);
   }
 
   ByFork byFork({
@@ -46,37 +46,35 @@ class $NetworkId {
   }
 
   Polkadot polkadot() {
-    return const Polkadot();
+    return Polkadot();
   }
 
   Kusama kusama() {
-    return const Kusama();
+    return Kusama();
   }
 
   Westend westend() {
-    return const Westend();
+    return Westend();
   }
 
   Rococo rococo() {
-    return const Rococo();
+    return Rococo();
   }
 
   Wococo wococo() {
-    return const Wococo();
+    return Wococo();
   }
 
   Ethereum ethereum({required BigInt chainId}) {
-    return Ethereum(
-      chainId: chainId,
-    );
+    return Ethereum(chainId: chainId);
   }
 
   BitcoinCore bitcoinCore() {
-    return const BitcoinCore();
+    return BitcoinCore();
   }
 
   BitcoinCash bitcoinCash() {
-    return const BitcoinCash();
+    return BitcoinCash();
   }
 }
 
@@ -183,14 +181,13 @@ class $NetworkIdCodec with _i1.Codec<NetworkId> {
 }
 
 class ByGenesis extends NetworkId {
-  const ByGenesis({required this.value0});
+  const ByGenesis(this.value0);
 
   factory ByGenesis._decode(_i1.Input input) {
-    return ByGenesis(
-      value0: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return ByGenesis(const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// [u8; 32]
   final List<int> value0;
 
   @override
@@ -212,6 +209,21 @@ class ByGenesis extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ByGenesis &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class ByFork extends NetworkId {
@@ -227,8 +239,10 @@ class ByFork extends NetworkId {
     );
   }
 
+  /// u64
   final BigInt blockNumber;
 
+  /// [u8; 32]
   final List<int> blockHash;
 
   @override
@@ -260,6 +274,25 @@ class ByFork extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ByFork &&
+          other.blockNumber == blockNumber &&
+          _i3.listsEqual(
+            other.blockHash,
+            blockHash,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        blockNumber,
+        blockHash,
+      );
 }
 
 class Polkadot extends NetworkId {
@@ -274,6 +307,12 @@ class Polkadot extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Polkadot;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Kusama extends NetworkId {
@@ -288,6 +327,12 @@ class Kusama extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Kusama;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Westend extends NetworkId {
@@ -302,6 +347,12 @@ class Westend extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Westend;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Rococo extends NetworkId {
@@ -316,6 +367,12 @@ class Rococo extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Rococo;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Wococo extends NetworkId {
@@ -330,17 +387,22 @@ class Wococo extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Wococo;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Ethereum extends NetworkId {
   const Ethereum({required this.chainId});
 
   factory Ethereum._decode(_i1.Input input) {
-    return Ethereum(
-      chainId: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Ethereum(chainId: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u64
   final BigInt chainId;
 
   @override
@@ -364,6 +426,17 @@ class Ethereum extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Ethereum && other.chainId == chainId;
+
+  @override
+  int get hashCode => chainId.hashCode;
 }
 
 class BitcoinCore extends NetworkId {
@@ -378,6 +451,12 @@ class BitcoinCore extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is BitcoinCore;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class BitcoinCash extends NetworkId {
@@ -392,4 +471,10 @@ class BitcoinCash extends NetworkId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is BitcoinCash;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

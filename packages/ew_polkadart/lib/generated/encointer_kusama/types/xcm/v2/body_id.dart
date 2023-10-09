@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 abstract class BodyId {
   const BodyId();
@@ -30,47 +32,43 @@ class $BodyId {
   const $BodyId();
 
   Unit unit() {
-    return const Unit();
+    return Unit();
   }
 
-  Named named({required List<int> value0}) {
-    return Named(
-      value0: value0,
-    );
+  Named named(List<int> value0) {
+    return Named(value0);
   }
 
-  Index index({required BigInt value0}) {
-    return Index(
-      value0: value0,
-    );
+  Index index(BigInt value0) {
+    return Index(value0);
   }
 
   Executive executive() {
-    return const Executive();
+    return Executive();
   }
 
   Technical technical() {
-    return const Technical();
+    return Technical();
   }
 
   Legislative legislative() {
-    return const Legislative();
+    return Legislative();
   }
 
   Judicial judicial() {
-    return const Judicial();
+    return Judicial();
   }
 
   Defense defense() {
-    return const Defense();
+    return Defense();
   }
 
   Administration administration() {
-    return const Administration();
+    return Administration();
   }
 
   Treasury treasury() {
-    return const Treasury();
+    return Treasury();
   }
 }
 
@@ -188,17 +186,22 @@ class Unit extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Unit;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Named extends BodyId {
-  const Named({required this.value0});
+  const Named(this.value0);
 
   factory Named._decode(_i1.Input input) {
-    return Named(
-      value0: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return Named(_i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// WeakBoundedVec<u8, ConstU32<32>>
   final List<int> value0;
 
   @override
@@ -220,17 +223,31 @@ class Named extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Named &&
+          _i3.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Index extends BodyId {
-  const Index({required this.value0});
+  const Index(this.value0);
 
   factory Index._decode(_i1.Input input) {
-    return Index(
-      value0: _i1.CompactBigIntCodec.codec.decode(input),
-    );
+    return Index(_i1.CompactBigIntCodec.codec.decode(input));
   }
 
+  /// u32
   final BigInt value0;
 
   @override
@@ -252,6 +269,17 @@ class Index extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Index && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Executive extends BodyId {
@@ -266,6 +294,12 @@ class Executive extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Executive;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Technical extends BodyId {
@@ -280,6 +314,12 @@ class Technical extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Technical;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Legislative extends BodyId {
@@ -294,6 +334,12 @@ class Legislative extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Legislative;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Judicial extends BodyId {
@@ -308,6 +354,12 @@ class Judicial extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Judicial;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Defense extends BodyId {
@@ -322,6 +374,12 @@ class Defense extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Defense;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Administration extends BodyId {
@@ -336,6 +394,12 @@ class Administration extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Administration;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Treasury extends BodyId {
@@ -350,4 +414,10 @@ class Treasury extends BodyId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Treasury;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 class RelayDispachQueueSize {
   const RelayDispachQueueSize({
@@ -12,8 +13,10 @@ class RelayDispachQueueSize {
     return codec.decode(input);
   }
 
+  /// u32
   final int remainingCount;
 
+  /// u32
   final int remainingSize;
 
   static const $RelayDispachQueueSizeCodec codec = $RelayDispachQueueSizeCodec();
@@ -26,6 +29,20 @@ class RelayDispachQueueSize {
         'remainingCount': remainingCount,
         'remainingSize': remainingSize,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RelayDispachQueueSize && other.remainingCount == remainingCount && other.remainingSize == remainingSize;
+
+  @override
+  int get hashCode => Object.hash(
+        remainingCount,
+        remainingSize,
+      );
 }
 
 class $RelayDispachQueueSizeCodec with _i1.Codec<RelayDispachQueueSize> {

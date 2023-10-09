@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import 'extra_flags.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import 'extra_flags.dart' as _i2;
 
 class AccountData {
   const AccountData({
@@ -15,12 +17,16 @@ class AccountData {
     return codec.decode(input);
   }
 
+  /// Balance
   final BigInt free;
 
+  /// Balance
   final BigInt reserved;
 
+  /// Balance
   final BigInt frozen;
 
+  /// ExtraFlags
   final _i2.ExtraFlags flags;
 
   static const $AccountDataCodec codec = $AccountDataCodec();
@@ -35,6 +41,26 @@ class AccountData {
         'frozen': frozen,
         'flags': flags,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AccountData &&
+          other.free == free &&
+          other.reserved == reserved &&
+          other.frozen == frozen &&
+          other.flags == flags;
+
+  @override
+  int get hashCode => Object.hash(
+        free,
+        reserved,
+        frozen,
+        flags,
+      );
 }
 
 class $AccountDataCodec with _i1.Codec<AccountData> {
@@ -79,7 +105,7 @@ class $AccountDataCodec with _i1.Codec<AccountData> {
     size = size + _i1.U128Codec.codec.sizeHint(obj.free);
     size = size + _i1.U128Codec.codec.sizeHint(obj.reserved);
     size = size + _i1.U128Codec.codec.sizeHint(obj.frozen);
-    size = size + _i1.U128Codec.codec.sizeHint(obj.flags);
+    size = size + const _i2.ExtraFlagsCodec().sizeHint(obj.flags);
     return size;
   }
 }

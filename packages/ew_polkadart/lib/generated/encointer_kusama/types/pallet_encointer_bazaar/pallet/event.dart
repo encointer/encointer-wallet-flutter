@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 
@@ -32,69 +35,69 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  BusinessCreated businessCreated({
-    required _i3.CommunityIdentifier value0,
-    required _i4.AccountId32 value1,
-  }) {
+  BusinessCreated businessCreated(
+    _i3.CommunityIdentifier value0,
+    _i4.AccountId32 value1,
+  ) {
     return BusinessCreated(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  BusinessUpdated businessUpdated({
-    required _i3.CommunityIdentifier value0,
-    required _i4.AccountId32 value1,
-  }) {
+  BusinessUpdated businessUpdated(
+    _i3.CommunityIdentifier value0,
+    _i4.AccountId32 value1,
+  ) {
     return BusinessUpdated(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  BusinessDeleted businessDeleted({
-    required _i3.CommunityIdentifier value0,
-    required _i4.AccountId32 value1,
-  }) {
+  BusinessDeleted businessDeleted(
+    _i3.CommunityIdentifier value0,
+    _i4.AccountId32 value1,
+  ) {
     return BusinessDeleted(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  OfferingCreated offeringCreated({
-    required _i3.CommunityIdentifier value0,
-    required _i4.AccountId32 value1,
-    required int value2,
-  }) {
+  OfferingCreated offeringCreated(
+    _i3.CommunityIdentifier value0,
+    _i4.AccountId32 value1,
+    int value2,
+  ) {
     return OfferingCreated(
-      value0: value0,
-      value1: value1,
-      value2: value2,
+      value0,
+      value1,
+      value2,
     );
   }
 
-  OfferingUpdated offeringUpdated({
-    required _i3.CommunityIdentifier value0,
-    required _i4.AccountId32 value1,
-    required int value2,
-  }) {
+  OfferingUpdated offeringUpdated(
+    _i3.CommunityIdentifier value0,
+    _i4.AccountId32 value1,
+    int value2,
+  ) {
     return OfferingUpdated(
-      value0: value0,
-      value1: value1,
-      value2: value2,
+      value0,
+      value1,
+      value2,
     );
   }
 
-  OfferingDeleted offeringDeleted({
-    required _i3.CommunityIdentifier value0,
-    required _i4.AccountId32 value1,
-    required int value2,
-  }) {
+  OfferingDeleted offeringDeleted(
+    _i3.CommunityIdentifier value0,
+    _i4.AccountId32 value1,
+    int value2,
+  ) {
     return OfferingDeleted(
-      value0: value0,
-      value1: value1,
-      value2: value2,
+      value0,
+      value1,
+      value2,
     );
   }
 }
@@ -175,20 +178,22 @@ class $EventCodec with _i1.Codec<Event> {
 
 /// Event emitted when a business is created. [community, who]
 class BusinessCreated extends Event {
-  const BusinessCreated({
-    required this.value0,
-    required this.value1,
-  });
+  const BusinessCreated(
+    this.value0,
+    this.value1,
+  );
 
   factory BusinessCreated._decode(_i1.Input input) {
     return BusinessCreated(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: const _i1.U8ArrayCodec(32).decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// T::AccountId
   final _i4.AccountId32 value1;
 
   @override
@@ -202,7 +207,7 @@ class BusinessCreated extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value1);
+    size = size + const _i4.AccountId32Codec().sizeHint(value1);
     return size;
   }
 
@@ -220,24 +225,45 @@ class BusinessCreated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BusinessCreated &&
+          other.value0 == value0 &&
+          _i5.listsEqual(
+            other.value1,
+            value1,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 /// Event emitted when a business is updated. [community, who]
 class BusinessUpdated extends Event {
-  const BusinessUpdated({
-    required this.value0,
-    required this.value1,
-  });
+  const BusinessUpdated(
+    this.value0,
+    this.value1,
+  );
 
   factory BusinessUpdated._decode(_i1.Input input) {
     return BusinessUpdated(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: const _i1.U8ArrayCodec(32).decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// T::AccountId
   final _i4.AccountId32 value1;
 
   @override
@@ -251,7 +277,7 @@ class BusinessUpdated extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value1);
+    size = size + const _i4.AccountId32Codec().sizeHint(value1);
     return size;
   }
 
@@ -269,24 +295,45 @@ class BusinessUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BusinessUpdated &&
+          other.value0 == value0 &&
+          _i5.listsEqual(
+            other.value1,
+            value1,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 /// Event emitted when a business is deleted. [community, who]
 class BusinessDeleted extends Event {
-  const BusinessDeleted({
-    required this.value0,
-    required this.value1,
-  });
+  const BusinessDeleted(
+    this.value0,
+    this.value1,
+  );
 
   factory BusinessDeleted._decode(_i1.Input input) {
     return BusinessDeleted(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: const _i1.U8ArrayCodec(32).decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// T::AccountId
   final _i4.AccountId32 value1;
 
   @override
@@ -300,7 +347,7 @@ class BusinessDeleted extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value1);
+    size = size + const _i4.AccountId32Codec().sizeHint(value1);
     return size;
   }
 
@@ -318,28 +365,50 @@ class BusinessDeleted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BusinessDeleted &&
+          other.value0 == value0 &&
+          _i5.listsEqual(
+            other.value1,
+            value1,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 /// Event emitted when an offering is created. [community, who, oid]
 class OfferingCreated extends Event {
-  const OfferingCreated({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-  });
+  const OfferingCreated(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
 
   factory OfferingCreated._decode(_i1.Input input) {
     return OfferingCreated(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: const _i1.U8ArrayCodec(32).decode(input),
-      value2: _i1.U32Codec.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      _i1.U32Codec.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// T::AccountId
   final _i4.AccountId32 value1;
 
+  /// OfferingIdentifier
   final int value2;
 
   @override
@@ -354,7 +423,7 @@ class OfferingCreated extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value1);
+    size = size + const _i4.AccountId32Codec().sizeHint(value1);
     size = size + _i1.U32Codec.codec.sizeHint(value2);
     return size;
   }
@@ -377,28 +446,52 @@ class OfferingCreated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is OfferingCreated &&
+          other.value0 == value0 &&
+          _i5.listsEqual(
+            other.value1,
+            value1,
+          ) &&
+          other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }
 
 /// Event emitted when an offering is updated. [community, who, oid]
 class OfferingUpdated extends Event {
-  const OfferingUpdated({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-  });
+  const OfferingUpdated(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
 
   factory OfferingUpdated._decode(_i1.Input input) {
     return OfferingUpdated(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: const _i1.U8ArrayCodec(32).decode(input),
-      value2: _i1.U32Codec.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      _i1.U32Codec.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// T::AccountId
   final _i4.AccountId32 value1;
 
+  /// OfferingIdentifier
   final int value2;
 
   @override
@@ -413,7 +506,7 @@ class OfferingUpdated extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value1);
+    size = size + const _i4.AccountId32Codec().sizeHint(value1);
     size = size + _i1.U32Codec.codec.sizeHint(value2);
     return size;
   }
@@ -436,28 +529,52 @@ class OfferingUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is OfferingUpdated &&
+          other.value0 == value0 &&
+          _i5.listsEqual(
+            other.value1,
+            value1,
+          ) &&
+          other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }
 
 /// Event emitted when an offering is deleted. [community, who, oid]
 class OfferingDeleted extends Event {
-  const OfferingDeleted({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-  });
+  const OfferingDeleted(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
 
   factory OfferingDeleted._decode(_i1.Input input) {
     return OfferingDeleted(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: const _i1.U8ArrayCodec(32).decode(input),
-      value2: _i1.U32Codec.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      _i1.U32Codec.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// T::AccountId
   final _i4.AccountId32 value1;
 
+  /// OfferingIdentifier
   final int value2;
 
   @override
@@ -472,7 +589,7 @@ class OfferingDeleted extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value1);
+    size = size + const _i4.AccountId32Codec().sizeHint(value1);
     size = size + _i1.U32Codec.codec.sizeHint(value2);
     return size;
   }
@@ -495,4 +612,25 @@ class OfferingDeleted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is OfferingDeleted &&
+          other.value0 == value0 &&
+          _i5.listsEqual(
+            other.value1,
+            value1,
+          ) &&
+          other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }

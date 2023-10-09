@@ -1,9 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:typed_data' as _i5;
+
 import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../sp_weights/weight_v2/weight.dart' as _i2;
 import 'dispatch_class.dart' as _i3;
 import 'pays.dart' as _i4;
-import 'dart:typed_data' as _i5;
 
 class DispatchInfo {
   const DispatchInfo({
@@ -16,10 +18,13 @@ class DispatchInfo {
     return codec.decode(input);
   }
 
+  /// Weight
   final _i2.Weight weight;
 
+  /// DispatchClass
   final _i3.DispatchClass class_;
 
+  /// Pays
   final _i4.Pays paysFee;
 
   static const $DispatchInfoCodec codec = $DispatchInfoCodec();
@@ -33,6 +38,21 @@ class DispatchInfo {
         'class': class_.toJson(),
         'paysFee': paysFee.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DispatchInfo && other.weight == weight && other.class_ == class_ && other.paysFee == paysFee;
+
+  @override
+  int get hashCode => Object.hash(
+        weight,
+        class_,
+        paysFee,
+      );
 }
 
 class $DispatchInfoCodec with _i1.Codec<DispatchInfo> {

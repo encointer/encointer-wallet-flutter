@@ -1,10 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../sp_runtime/dispatch_error.dart' as _i3;
-import '../../sp_core/crypto/account_id32.dart' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i7;
+
 import '../../encointer_runtime/proxy_type.dart' as _i5;
 import '../../primitive_types/h256.dart' as _i6;
+import '../../sp_core/crypto/account_id32.dart' as _i4;
+import '../../sp_runtime/dispatch_error.dart' as _i3;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -35,9 +38,7 @@ class $Event {
   const $Event();
 
   ProxyExecuted proxyExecuted({required _i1.Result<dynamic, _i3.DispatchError> result}) {
-    return ProxyExecuted(
-      result: result,
-    );
+    return ProxyExecuted(result: result);
   }
 
   PureCreated pureCreated({
@@ -168,13 +169,13 @@ class ProxyExecuted extends Event {
 
   factory ProxyExecuted._decode(_i1.Input input) {
     return ProxyExecuted(
-      result: const _i1.ResultCodec<dynamic, _i3.DispatchError>(
-        _i1.NullCodec.codec,
-        _i3.DispatchError.codec,
-      ).decode(input),
-    );
+        result: const _i1.ResultCodec<dynamic, _i3.DispatchError>(
+      _i1.NullCodec.codec,
+      _i3.DispatchError.codec,
+    ).decode(input));
   }
 
+  /// DispatchResult
   final _i1.Result<dynamic, _i3.DispatchError> result;
 
   @override
@@ -205,6 +206,17 @@ class ProxyExecuted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ProxyExecuted && other.result == result;
+
+  @override
+  int get hashCode => result.hashCode;
 }
 
 /// A pure account has been created by new proxy with given
@@ -226,12 +238,16 @@ class PureCreated extends Event {
     );
   }
 
+  /// T::AccountId
   final _i4.AccountId32 pure;
 
+  /// T::AccountId
   final _i4.AccountId32 who;
 
+  /// T::ProxyType
   final _i5.ProxyType proxyType;
 
+  /// u16
   final int disambiguationIndex;
 
   @override
@@ -246,8 +262,8 @@ class PureCreated extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(pure);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i4.AccountId32Codec().sizeHint(pure);
+    size = size + const _i4.AccountId32Codec().sizeHint(who);
     size = size + _i5.ProxyType.codec.sizeHint(proxyType);
     size = size + _i1.U16Codec.codec.sizeHint(disambiguationIndex);
     return size;
@@ -275,6 +291,32 @@ class PureCreated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PureCreated &&
+          _i7.listsEqual(
+            other.pure,
+            pure,
+          ) &&
+          _i7.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.proxyType == proxyType &&
+          other.disambiguationIndex == disambiguationIndex;
+
+  @override
+  int get hashCode => Object.hash(
+        pure,
+        who,
+        proxyType,
+        disambiguationIndex,
+      );
 }
 
 /// An announcement was placed to make a call in the future.
@@ -293,10 +335,13 @@ class Announced extends Event {
     );
   }
 
+  /// T::AccountId
   final _i4.AccountId32 real;
 
+  /// T::AccountId
   final _i4.AccountId32 proxy;
 
+  /// CallHashOf<T>
   final _i6.H256 callHash;
 
   @override
@@ -310,9 +355,9 @@ class Announced extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(real);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proxy);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(callHash);
+    size = size + const _i4.AccountId32Codec().sizeHint(real);
+    size = size + const _i4.AccountId32Codec().sizeHint(proxy);
+    size = size + const _i6.H256Codec().sizeHint(callHash);
     return size;
   }
 
@@ -334,6 +379,33 @@ class Announced extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Announced &&
+          _i7.listsEqual(
+            other.real,
+            real,
+          ) &&
+          _i7.listsEqual(
+            other.proxy,
+            proxy,
+          ) &&
+          _i7.listsEqual(
+            other.callHash,
+            callHash,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        real,
+        proxy,
+        callHash,
+      );
 }
 
 /// A proxy was added.
@@ -354,12 +426,16 @@ class ProxyAdded extends Event {
     );
   }
 
+  /// T::AccountId
   final _i4.AccountId32 delegator;
 
+  /// T::AccountId
   final _i4.AccountId32 delegatee;
 
+  /// T::ProxyType
   final _i5.ProxyType proxyType;
 
+  /// BlockNumberFor<T>
   final int delay;
 
   @override
@@ -374,8 +450,8 @@ class ProxyAdded extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(delegator);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(delegatee);
+    size = size + const _i4.AccountId32Codec().sizeHint(delegator);
+    size = size + const _i4.AccountId32Codec().sizeHint(delegatee);
     size = size + _i5.ProxyType.codec.sizeHint(proxyType);
     size = size + _i1.U32Codec.codec.sizeHint(delay);
     return size;
@@ -403,6 +479,32 @@ class ProxyAdded extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ProxyAdded &&
+          _i7.listsEqual(
+            other.delegator,
+            delegator,
+          ) &&
+          _i7.listsEqual(
+            other.delegatee,
+            delegatee,
+          ) &&
+          other.proxyType == proxyType &&
+          other.delay == delay;
+
+  @override
+  int get hashCode => Object.hash(
+        delegator,
+        delegatee,
+        proxyType,
+        delay,
+      );
 }
 
 /// A proxy was removed.
@@ -423,12 +525,16 @@ class ProxyRemoved extends Event {
     );
   }
 
+  /// T::AccountId
   final _i4.AccountId32 delegator;
 
+  /// T::AccountId
   final _i4.AccountId32 delegatee;
 
+  /// T::ProxyType
   final _i5.ProxyType proxyType;
 
+  /// BlockNumberFor<T>
   final int delay;
 
   @override
@@ -443,8 +549,8 @@ class ProxyRemoved extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(delegator);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(delegatee);
+    size = size + const _i4.AccountId32Codec().sizeHint(delegator);
+    size = size + const _i4.AccountId32Codec().sizeHint(delegatee);
     size = size + _i5.ProxyType.codec.sizeHint(proxyType);
     size = size + _i1.U32Codec.codec.sizeHint(delay);
     return size;
@@ -472,4 +578,30 @@ class ProxyRemoved extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ProxyRemoved &&
+          _i7.listsEqual(
+            other.delegator,
+            delegator,
+          ) &&
+          _i7.listsEqual(
+            other.delegatee,
+            delegatee,
+          ) &&
+          other.proxyType == proxyType &&
+          other.delay == delay;
+
+  @override
+  int get hashCode => Object.hash(
+        delegator,
+        delegatee,
+        proxyType,
+        delay,
+      );
 }

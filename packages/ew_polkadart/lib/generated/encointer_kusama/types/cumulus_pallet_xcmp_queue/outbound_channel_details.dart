@@ -1,8 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:typed_data' as _i4;
+
 import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../polkadot_parachain/primitives/id.dart' as _i2;
 import 'outbound_state.dart' as _i3;
-import 'dart:typed_data' as _i4;
 
 class OutboundChannelDetails {
   const OutboundChannelDetails({
@@ -17,14 +19,19 @@ class OutboundChannelDetails {
     return codec.decode(input);
   }
 
+  /// ParaId
   final _i2.Id recipient;
 
+  /// OutboundState
   final _i3.OutboundState state;
 
+  /// bool
   final bool signalsExist;
 
+  /// u16
   final int firstIndex;
 
+  /// u16
   final int lastIndex;
 
   static const $OutboundChannelDetailsCodec codec = $OutboundChannelDetailsCodec();
@@ -40,6 +47,28 @@ class OutboundChannelDetails {
         'firstIndex': firstIndex,
         'lastIndex': lastIndex,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is OutboundChannelDetails &&
+          other.recipient == recipient &&
+          other.state == state &&
+          other.signalsExist == signalsExist &&
+          other.firstIndex == firstIndex &&
+          other.lastIndex == lastIndex;
+
+  @override
+  int get hashCode => Object.hash(
+        recipient,
+        state,
+        signalsExist,
+        firstIndex,
+        lastIndex,
+      );
 }
 
 class $OutboundChannelDetailsCodec with _i1.Codec<OutboundChannelDetails> {
@@ -86,7 +115,7 @@ class $OutboundChannelDetailsCodec with _i1.Codec<OutboundChannelDetails> {
   @override
   int sizeHint(OutboundChannelDetails obj) {
     int size = 0;
-    size = size + _i1.U32Codec.codec.sizeHint(obj.recipient);
+    size = size + const _i2.IdCodec().sizeHint(obj.recipient);
     size = size + _i3.OutboundState.codec.sizeHint(obj.state);
     size = size + _i1.BoolCodec.codec.sizeHint(obj.signalsExist);
     size = size + _i1.U16Codec.codec.sizeHint(obj.firstIndex);

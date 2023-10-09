@@ -1,9 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i4;
+
 import 'package:polkadart/polkadart.dart' as _i1;
+
+import '../types/pallet_transaction_payment/releases.dart' as _i3;
 import '../types/sp_arithmetic/fixed_point/fixed_u128.dart' as _i2;
-import 'package:polkadart/scale_codec.dart' as _i3;
-import '../types/pallet_transaction_payment/releases.dart' as _i4;
-import 'dart:async' as _i5;
 
 class Queries {
   const Queries(this.__api);
@@ -13,16 +14,16 @@ class Queries {
   final _i1.StorageValue<_i2.FixedU128> _nextFeeMultiplier = const _i1.StorageValue<_i2.FixedU128>(
     prefix: 'TransactionPayment',
     storage: 'NextFeeMultiplier',
-    valueCodec: _i3.U128Codec.codec,
+    valueCodec: _i2.FixedU128Codec(),
   );
 
-  final _i1.StorageValue<_i4.Releases> _storageVersion = const _i1.StorageValue<_i4.Releases>(
+  final _i1.StorageValue<_i3.Releases> _storageVersion = const _i1.StorageValue<_i3.Releases>(
     prefix: 'TransactionPayment',
     storage: 'StorageVersion',
-    valueCodec: _i4.Releases.codec,
+    valueCodec: _i3.Releases.codec,
   );
 
-  _i5.Future<_i2.FixedU128> nextFeeMultiplier({_i1.BlockHash? at}) async {
+  _i4.Future<_i2.FixedU128> nextFeeMultiplier({_i1.BlockHash? at}) async {
     final hashedKey = _nextFeeMultiplier.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -37,7 +38,7 @@ class Queries {
     ); /* Default */
   }
 
-  _i5.Future<_i4.Releases> storageVersion({_i1.BlockHash? at}) async {
+  _i4.Future<_i3.Releases> storageVersion({_i1.BlockHash? at}) async {
     final hashedKey = _storageVersion.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -46,7 +47,7 @@ class Queries {
     if (bytes != null) {
       return _storageVersion.decodeValue(bytes);
     }
-    return _i4.Releases.v1Ancient; /* Default */
+    return _i3.Releases.v1Ancient; /* Default */
   }
 }
 

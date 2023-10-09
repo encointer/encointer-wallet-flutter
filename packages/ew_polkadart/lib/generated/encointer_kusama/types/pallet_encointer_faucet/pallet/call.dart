@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 
@@ -69,15 +72,11 @@ class $Call {
   }
 
   CloseFaucet closeFaucet({required _i4.AccountId32 faucetAccount}) {
-    return CloseFaucet(
-      faucetAccount: faucetAccount,
-    );
+    return CloseFaucet(faucetAccount: faucetAccount);
   }
 
   SetReserveAmount setReserveAmount({required BigInt reserveAmount}) {
-    return SetReserveAmount(
-      reserveAmount: reserveAmount,
-    );
+    return SetReserveAmount(reserveAmount: reserveAmount);
   }
 }
 
@@ -168,12 +167,16 @@ class CreateFaucet extends Call {
     );
   }
 
+  /// FaucetNameType
   final List<int> name;
 
+  /// BalanceOf<T>
   final BigInt amount;
 
+  /// Option<WhiteListType>
   final List<_i3.CommunityIdentifier>? whitelist;
 
+  /// BalanceOf<T>
   final BigInt dripAmount;
 
   @override
@@ -222,6 +225,29 @@ class CreateFaucet extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CreateFaucet &&
+          _i5.listsEqual(
+            other.name,
+            name,
+          ) &&
+          other.amount == amount &&
+          other.whitelist == whitelist &&
+          other.dripAmount == dripAmount;
+
+  @override
+  int get hashCode => Object.hash(
+        name,
+        amount,
+        whitelist,
+        dripAmount,
+      );
 }
 
 /// See [`Pallet::drip`].
@@ -240,10 +266,13 @@ class Drip extends Call {
     );
   }
 
+  /// T::AccountId
   final _i4.AccountId32 faucetAccount;
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// CeremonyIndexType
   final int cindex;
 
   @override
@@ -257,7 +286,7 @@ class Drip extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(faucetAccount);
+    size = size + const _i4.AccountId32Codec().sizeHint(faucetAccount);
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
     size = size + _i1.U32Codec.codec.sizeHint(cindex);
     return size;
@@ -281,6 +310,27 @@ class Drip extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Drip &&
+          _i5.listsEqual(
+            other.faucetAccount,
+            faucetAccount,
+          ) &&
+          other.cid == cid &&
+          other.cindex == cindex;
+
+  @override
+  int get hashCode => Object.hash(
+        faucetAccount,
+        cid,
+        cindex,
+      );
 }
 
 /// See [`Pallet::dissolve_faucet`].
@@ -297,8 +347,10 @@ class DissolveFaucet extends Call {
     );
   }
 
+  /// T::AccountId
   final _i4.AccountId32 faucetAccount;
 
+  /// T::AccountId
   final _i4.AccountId32 beneficiary;
 
   @override
@@ -311,8 +363,8 @@ class DissolveFaucet extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(faucetAccount);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(beneficiary);
+    size = size + const _i4.AccountId32Codec().sizeHint(faucetAccount);
+    size = size + const _i4.AccountId32Codec().sizeHint(beneficiary);
     return size;
   }
 
@@ -330,6 +382,28 @@ class DissolveFaucet extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DissolveFaucet &&
+          _i5.listsEqual(
+            other.faucetAccount,
+            faucetAccount,
+          ) &&
+          _i5.listsEqual(
+            other.beneficiary,
+            beneficiary,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        faucetAccount,
+        beneficiary,
+      );
 }
 
 /// See [`Pallet::close_faucet`].
@@ -337,11 +411,10 @@ class CloseFaucet extends Call {
   const CloseFaucet({required this.faucetAccount});
 
   factory CloseFaucet._decode(_i1.Input input) {
-    return CloseFaucet(
-      faucetAccount: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return CloseFaucet(faucetAccount: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// T::AccountId
   final _i4.AccountId32 faucetAccount;
 
   @override
@@ -351,7 +424,7 @@ class CloseFaucet extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(faucetAccount);
+    size = size + const _i4.AccountId32Codec().sizeHint(faucetAccount);
     return size;
   }
 
@@ -365,6 +438,21 @@ class CloseFaucet extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CloseFaucet &&
+          _i5.listsEqual(
+            other.faucetAccount,
+            faucetAccount,
+          );
+
+  @override
+  int get hashCode => faucetAccount.hashCode;
 }
 
 /// See [`Pallet::set_reserve_amount`].
@@ -372,11 +460,10 @@ class SetReserveAmount extends Call {
   const SetReserveAmount({required this.reserveAmount});
 
   factory SetReserveAmount._decode(_i1.Input input) {
-    return SetReserveAmount(
-      reserveAmount: _i1.U128Codec.codec.decode(input),
-    );
+    return SetReserveAmount(reserveAmount: _i1.U128Codec.codec.decode(input));
   }
 
+  /// BalanceOf<T>
   final BigInt reserveAmount;
 
   @override
@@ -400,4 +487,15 @@ class SetReserveAmount extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetReserveAmount && other.reserveAmount == reserveAmount;
+
+  @override
+  int get hashCode => reserveAmount.hashCode;
 }

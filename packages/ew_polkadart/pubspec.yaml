@@ -7,7 +7,14 @@ environment:
   sdk: ">=3.0.1 <4.0.0"
 
 dependencies:
-  polkadart: ^0.1.0
+  # Generated files depend on quiver
+  quiver: ^3.2.1
+  polkadart:
+    git:
+      url: https://github.com/encointer/polkadart.git
+      # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
+      branch: cl/bump-http
+      path: packages/polkadart
 
 dev_dependencies:
   # The generated files do not satisfy the `very_good_analysis` lints.
@@ -18,6 +25,21 @@ dev_dependencies:
       # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
       branch: cl/bump-http
       path: packages/polkadart_cli
+
+dependency_overrides:
+  polkadart:
+    git:
+      url: https://github.com/encointer/polkadart.git
+      # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
+      branch: cl/bump-http
+      path: packages/polkadart
+
+  polkadart_scale_codec:
+    git:
+      url: https://github.com/encointer/polkadart.git
+      # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
+      branch: cl/bump-http
+      path: packages/polkadart_scale_codec
 
 # This only generates valid files on UNIX machines.
 # The imports statements use `\` otherwise, which is

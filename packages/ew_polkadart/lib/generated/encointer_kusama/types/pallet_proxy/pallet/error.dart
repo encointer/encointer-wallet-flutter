@@ -1,15 +1,32 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// There are too many proxies registered or too many announcements pending.
   tooMany('TooMany', 0),
+
+  /// Proxy registration not found.
   notFound('NotFound', 1),
+
+  /// Sender is not a proxy of the account to be proxied.
   notProxy('NotProxy', 2),
+
+  /// A call which is incompatible with the proxy type's filter was attempted.
   unproxyable('Unproxyable', 3),
+
+  /// Account is already a proxy.
   duplicate('Duplicate', 4),
+
+  /// Call may not be made by proxy because it may escalate its privileges.
   noPermission('NoPermission', 5),
+
+  /// Announcement, if made at all, was made too recently.
   unannounced('Unannounced', 6),
+
+  /// Cannot add self as proxy.
   noSelfProxy('NoSelfProxy', 7);
 
   const Error(

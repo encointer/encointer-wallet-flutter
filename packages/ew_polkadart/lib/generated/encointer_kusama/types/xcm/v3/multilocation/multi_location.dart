@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../junctions/junctions.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../junctions/junctions.dart' as _i2;
 
 class MultiLocation {
   const MultiLocation({
@@ -13,8 +15,10 @@ class MultiLocation {
     return codec.decode(input);
   }
 
+  /// u8
   final int parents;
 
+  /// Junctions
   final _i2.Junctions interior;
 
   static const $MultiLocationCodec codec = $MultiLocationCodec();
@@ -27,6 +31,20 @@ class MultiLocation {
         'parents': parents,
         'interior': interior.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MultiLocation && other.parents == parents && other.interior == interior;
+
+  @override
+  int get hashCode => Object.hash(
+        parents,
+        interior,
+      );
 }
 
 class $MultiLocationCodec with _i1.Codec<MultiLocation> {

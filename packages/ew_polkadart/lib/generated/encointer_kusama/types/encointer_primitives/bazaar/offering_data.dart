@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 class OfferingData {
   const OfferingData({required this.url});
@@ -9,6 +11,7 @@ class OfferingData {
     return codec.decode(input);
   }
 
+  /// PalletString
   final List<int> url;
 
   static const $OfferingDataCodec codec = $OfferingDataCodec();
@@ -18,6 +21,21 @@ class OfferingData {
   }
 
   Map<String, List<int>> toJson() => {'url': url};
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is OfferingData &&
+          _i3.listsEqual(
+            other.url,
+            url,
+          );
+
+  @override
+  int get hashCode => url.hashCode;
 }
 
 class $OfferingDataCodec with _i1.Codec<OfferingData> {

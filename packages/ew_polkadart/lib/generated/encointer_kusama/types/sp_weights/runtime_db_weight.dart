@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 class RuntimeDbWeight {
   const RuntimeDbWeight({
@@ -12,8 +13,10 @@ class RuntimeDbWeight {
     return codec.decode(input);
   }
 
+  /// u64
   final BigInt read;
 
+  /// u64
   final BigInt write;
 
   static const $RuntimeDbWeightCodec codec = $RuntimeDbWeightCodec();
@@ -26,6 +29,20 @@ class RuntimeDbWeight {
         'read': read,
         'write': write,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RuntimeDbWeight && other.read == read && other.write == write;
+
+  @override
+  int get hashCode => Object.hash(
+        read,
+        write,
+      );
 }
 
 class $RuntimeDbWeightCodec with _i1.Codec<RuntimeDbWeight> {

@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 class FixedI128 {
   const FixedI128({required this.bits});
@@ -9,6 +10,7 @@ class FixedI128 {
     return codec.decode(input);
   }
 
+  /// i128
   final BigInt bits;
 
   static const $FixedI128Codec codec = $FixedI128Codec();
@@ -18,6 +20,17 @@ class FixedI128 {
   }
 
   Map<String, BigInt> toJson() => {'bits': bits};
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is FixedI128 && other.bits == bits;
+
+  @override
+  int get hashCode => bits.hashCode;
 }
 
 class $FixedI128Codec with _i1.Codec<FixedI128> {

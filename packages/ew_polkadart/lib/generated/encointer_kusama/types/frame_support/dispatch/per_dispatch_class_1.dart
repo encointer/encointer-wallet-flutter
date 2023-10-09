@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../../sp_weights/weight_v2/weight.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../../sp_weights/weight_v2/weight.dart' as _i2;
 
 class PerDispatchClass {
   const PerDispatchClass({
@@ -14,10 +16,13 @@ class PerDispatchClass {
     return codec.decode(input);
   }
 
+  /// T
   final _i2.Weight normal;
 
+  /// T
   final _i2.Weight operational;
 
+  /// T
   final _i2.Weight mandatory;
 
   static const $PerDispatchClassCodec codec = $PerDispatchClassCodec();
@@ -31,6 +36,24 @@ class PerDispatchClass {
         'operational': operational.toJson(),
         'mandatory': mandatory.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PerDispatchClass &&
+          other.normal == normal &&
+          other.operational == operational &&
+          other.mandatory == mandatory;
+
+  @override
+  int get hashCode => Object.hash(
+        normal,
+        operational,
+        mandatory,
+      );
 }
 
 class $PerDispatchClassCodec with _i1.Codec<PerDispatchClass> {

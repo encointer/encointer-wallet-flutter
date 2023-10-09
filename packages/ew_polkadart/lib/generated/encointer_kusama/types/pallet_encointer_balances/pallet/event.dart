@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
 import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 import '../../substrate_fixed/fixed_u128.dart' as _i5;
@@ -45,36 +48,34 @@ class $Event {
     );
   }
 
-  Transferred transferred({
-    required _i3.CommunityIdentifier value0,
-    required _i4.AccountId32 value1,
-    required _i4.AccountId32 value2,
-    required _i5.FixedU128 value3,
-  }) {
+  Transferred transferred(
+    _i3.CommunityIdentifier value0,
+    _i4.AccountId32 value1,
+    _i4.AccountId32 value2,
+    _i5.FixedU128 value3,
+  ) {
     return Transferred(
-      value0: value0,
-      value1: value1,
-      value2: value2,
-      value3: value3,
+      value0,
+      value1,
+      value2,
+      value3,
     );
   }
 
-  Issued issued({
-    required _i3.CommunityIdentifier value0,
-    required _i4.AccountId32 value1,
-    required _i5.FixedU128 value2,
-  }) {
+  Issued issued(
+    _i3.CommunityIdentifier value0,
+    _i4.AccountId32 value1,
+    _i5.FixedU128 value2,
+  ) {
     return Issued(
-      value0: value0,
-      value1: value1,
-      value2: value2,
+      value0,
+      value1,
+      value2,
     );
   }
 
-  FeeConversionFactorUpdated feeConversionFactorUpdated({required BigInt value0}) {
-    return FeeConversionFactorUpdated(
-      value0: value0,
-    );
+  FeeConversionFactorUpdated feeConversionFactorUpdated(BigInt value0) {
+    return FeeConversionFactorUpdated(value0);
   }
 }
 
@@ -154,10 +155,13 @@ class Endowed extends Event {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// T::AccountId
   final _i4.AccountId32 who;
 
+  /// BalanceType
   final _i5.FixedU128 balance;
 
   @override
@@ -172,7 +176,7 @@ class Endowed extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i4.AccountId32Codec().sizeHint(who);
     size = size + _i5.FixedU128.codec.sizeHint(balance);
     return size;
   }
@@ -195,32 +199,57 @@ class Endowed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Endowed &&
+          other.cid == cid &&
+          _i6.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.balance == balance;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        who,
+        balance,
+      );
 }
 
 /// Token transfer success `[community_id, from, to, amount]`
 class Transferred extends Event {
-  const Transferred({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-    required this.value3,
-  });
+  const Transferred(
+    this.value0,
+    this.value1,
+    this.value2,
+    this.value3,
+  );
 
   factory Transferred._decode(_i1.Input input) {
     return Transferred(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: const _i1.U8ArrayCodec(32).decode(input),
-      value2: const _i1.U8ArrayCodec(32).decode(input),
-      value3: _i5.FixedU128.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      _i5.FixedU128.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// T::AccountId
   final _i4.AccountId32 value1;
 
+  /// T::AccountId
   final _i4.AccountId32 value2;
 
+  /// BalanceType
   final _i5.FixedU128 value3;
 
   @override
@@ -236,8 +265,8 @@ class Transferred extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value1);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value2);
+    size = size + const _i4.AccountId32Codec().sizeHint(value1);
+    size = size + const _i4.AccountId32Codec().sizeHint(value2);
     size = size + _i5.FixedU128.codec.sizeHint(value3);
     return size;
   }
@@ -264,28 +293,57 @@ class Transferred extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Transferred &&
+          other.value0 == value0 &&
+          _i6.listsEqual(
+            other.value1,
+            value1,
+          ) &&
+          _i6.listsEqual(
+            other.value2,
+            value2,
+          ) &&
+          other.value3 == value3;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+        value3,
+      );
 }
 
 /// Token issuance success `[community_id, beneficiary, amount]`
 class Issued extends Event {
-  const Issued({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-  });
+  const Issued(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
 
   factory Issued._decode(_i1.Input input) {
     return Issued(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: const _i1.U8ArrayCodec(32).decode(input),
-      value2: _i5.FixedU128.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      _i5.FixedU128.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// T::AccountId
   final _i4.AccountId32 value1;
 
+  /// BalanceType
   final _i5.FixedU128 value2;
 
   @override
@@ -300,7 +358,7 @@ class Issued extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value1);
+    size = size + const _i4.AccountId32Codec().sizeHint(value1);
     size = size + _i5.FixedU128.codec.sizeHint(value2);
     return size;
   }
@@ -323,18 +381,38 @@ class Issued extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Issued &&
+          other.value0 == value0 &&
+          _i6.listsEqual(
+            other.value1,
+            value1,
+          ) &&
+          other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }
 
 /// fee conversion factor updated successfully
 class FeeConversionFactorUpdated extends Event {
-  const FeeConversionFactorUpdated({required this.value0});
+  const FeeConversionFactorUpdated(this.value0);
 
   factory FeeConversionFactorUpdated._decode(_i1.Input input) {
-    return FeeConversionFactorUpdated(
-      value0: _i1.U128Codec.codec.decode(input),
-    );
+    return FeeConversionFactorUpdated(_i1.U128Codec.codec.decode(input));
   }
 
+  /// FeeConversionFactorType
   final BigInt value0;
 
   @override
@@ -356,4 +434,15 @@ class FeeConversionFactorUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is FeeConversionFactorUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

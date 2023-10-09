@@ -1,9 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../sp_core/crypto/account_id32.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i7;
+
 import '../../encointer_runtime/runtime_call.dart' as _i4;
 import '../../primitive_types/h256.dart' as _i5;
+import '../../sp_core/crypto/account_id32.dart' as _i3;
 import '../../sp_weights/weight_v2/weight.dart' as _i6;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -81,9 +84,7 @@ class $Call {
   }
 
   DisapproveProposal disapproveProposal({required _i5.H256 proposalHash}) {
-    return DisapproveProposal(
-      proposalHash: proposalHash,
-    );
+    return DisapproveProposal(proposalHash: proposalHash);
   }
 
   Close close({
@@ -185,16 +186,19 @@ class SetMembers extends Call {
 
   factory SetMembers._decode(_i1.Input input) {
     return SetMembers(
-      newMembers: const _i1.SequenceCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
-      prime: const _i1.OptionCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
+      newMembers: const _i1.SequenceCodec<_i3.AccountId32>(_i3.AccountId32Codec()).decode(input),
+      prime: const _i1.OptionCodec<_i3.AccountId32>(_i3.AccountId32Codec()).decode(input),
       oldCount: _i1.U32Codec.codec.decode(input),
     );
   }
 
+  /// Vec<T::AccountId>
   final List<_i3.AccountId32> newMembers;
 
+  /// Option<T::AccountId>
   final _i3.AccountId32? prime;
 
+  /// MemberCount
   final int oldCount;
 
   @override
@@ -208,8 +212,8 @@ class SetMembers extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(newMembers);
-    size = size + const _i1.OptionCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(prime);
+    size = size + const _i1.SequenceCodec<_i3.AccountId32>(_i3.AccountId32Codec()).sizeHint(newMembers);
+    size = size + const _i1.OptionCodec<_i3.AccountId32>(_i3.AccountId32Codec()).sizeHint(prime);
     size = size + _i1.U32Codec.codec.sizeHint(oldCount);
     return size;
   }
@@ -219,11 +223,11 @@ class SetMembers extends Call {
       0,
       output,
     );
-    const _i1.SequenceCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).encodeTo(
+    const _i1.SequenceCodec<_i3.AccountId32>(_i3.AccountId32Codec()).encodeTo(
       newMembers,
       output,
     );
-    const _i1.OptionCodec<_i3.AccountId32>(_i1.U8ArrayCodec(32)).encodeTo(
+    const _i1.OptionCodec<_i3.AccountId32>(_i3.AccountId32Codec()).encodeTo(
       prime,
       output,
     );
@@ -232,6 +236,27 @@ class SetMembers extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetMembers &&
+          _i7.listsEqual(
+            other.newMembers,
+            newMembers,
+          ) &&
+          other.prime == prime &&
+          other.oldCount == oldCount;
+
+  @override
+  int get hashCode => Object.hash(
+        newMembers,
+        prime,
+        oldCount,
+      );
 }
 
 /// See [`Pallet::execute`].
@@ -248,8 +273,10 @@ class Execute extends Call {
     );
   }
 
+  /// Box<<T as Config<I>>::Proposal>
   final _i4.RuntimeCall proposal;
 
+  /// u32
   final BigInt lengthBound;
 
   @override
@@ -281,6 +308,20 @@ class Execute extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Execute && other.proposal == proposal && other.lengthBound == lengthBound;
+
+  @override
+  int get hashCode => Object.hash(
+        proposal,
+        lengthBound,
+      );
 }
 
 /// See [`Pallet::propose`].
@@ -299,10 +340,13 @@ class Propose extends Call {
     );
   }
 
+  /// MemberCount
   final BigInt threshold;
 
+  /// Box<<T as Config<I>>::Proposal>
   final _i4.RuntimeCall proposal;
 
+  /// u32
   final BigInt lengthBound;
 
   @override
@@ -340,6 +384,24 @@ class Propose extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Propose &&
+          other.threshold == threshold &&
+          other.proposal == proposal &&
+          other.lengthBound == lengthBound;
+
+  @override
+  int get hashCode => Object.hash(
+        threshold,
+        proposal,
+        lengthBound,
+      );
 }
 
 /// See [`Pallet::vote`].
@@ -358,10 +420,13 @@ class Vote extends Call {
     );
   }
 
+  /// T::Hash
   final _i5.H256 proposal;
 
+  /// ProposalIndex
   final BigInt index;
 
+  /// bool
   final bool approve;
 
   @override
@@ -375,7 +440,7 @@ class Vote extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposal);
+    size = size + const _i5.H256Codec().sizeHint(proposal);
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(index);
     size = size + _i1.BoolCodec.codec.sizeHint(approve);
     return size;
@@ -399,6 +464,27 @@ class Vote extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Vote &&
+          _i7.listsEqual(
+            other.proposal,
+            proposal,
+          ) &&
+          other.index == index &&
+          other.approve == approve;
+
+  @override
+  int get hashCode => Object.hash(
+        proposal,
+        index,
+        approve,
+      );
 }
 
 /// See [`Pallet::disapprove_proposal`].
@@ -406,11 +492,10 @@ class DisapproveProposal extends Call {
   const DisapproveProposal({required this.proposalHash});
 
   factory DisapproveProposal._decode(_i1.Input input) {
-    return DisapproveProposal(
-      proposalHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return DisapproveProposal(proposalHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// T::Hash
   final _i5.H256 proposalHash;
 
   @override
@@ -420,7 +505,7 @@ class DisapproveProposal extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposalHash);
+    size = size + const _i5.H256Codec().sizeHint(proposalHash);
     return size;
   }
 
@@ -434,6 +519,21 @@ class DisapproveProposal extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DisapproveProposal &&
+          _i7.listsEqual(
+            other.proposalHash,
+            proposalHash,
+          );
+
+  @override
+  int get hashCode => proposalHash.hashCode;
 }
 
 /// See [`Pallet::close`].
@@ -454,12 +554,16 @@ class Close extends Call {
     );
   }
 
+  /// T::Hash
   final _i5.H256 proposalHash;
 
+  /// ProposalIndex
   final BigInt index;
 
+  /// Weight
   final _i6.Weight proposalWeightBound;
 
+  /// u32
   final BigInt lengthBound;
 
   @override
@@ -474,7 +578,7 @@ class Close extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposalHash);
+    size = size + const _i5.H256Codec().sizeHint(proposalHash);
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(index);
     size = size + _i6.Weight.codec.sizeHint(proposalWeightBound);
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(lengthBound);
@@ -503,4 +607,27 @@ class Close extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Close &&
+          _i7.listsEqual(
+            other.proposalHash,
+            proposalHash,
+          ) &&
+          other.index == index &&
+          other.proposalWeightBound == proposalWeightBound &&
+          other.lengthBound == lengthBound;
+
+  @override
+  int get hashCode => Object.hash(
+        proposalHash,
+        index,
+        proposalWeightBound,
+        lengthBound,
+      );
 }

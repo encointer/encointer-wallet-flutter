@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:typed_data' as _i4;
+
 import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import 'announcement_signer.dart' as _i2;
 import 'community_rules.dart' as _i3;
-import 'dart:typed_data' as _i4;
 
 class CommunityMetadata {
   const CommunityMetadata({
@@ -19,18 +22,25 @@ class CommunityMetadata {
     return codec.decode(input);
   }
 
+  /// PalletString
   final List<int> name;
 
+  /// PalletString
   final List<int> symbol;
 
+  /// BoundedIpfsCid
   final List<int> assets;
 
+  /// Option<BoundedIpfsCid>
   final List<int>? theme;
 
+  /// Option<PalletString>
   final List<int>? url;
 
+  /// Option<AnnouncementSigner>
   final _i2.AnnouncementSigner? announcementSigner;
 
+  /// CommunityRules
   final _i3.CommunityRules rules;
 
   static const $CommunityMetadataCodec codec = $CommunityMetadataCodec();
@@ -48,6 +58,41 @@ class CommunityMetadata {
         'announcementSigner': announcementSigner?.toJson(),
         'rules': rules.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CommunityMetadata &&
+          _i5.listsEqual(
+            other.name,
+            name,
+          ) &&
+          _i5.listsEqual(
+            other.symbol,
+            symbol,
+          ) &&
+          _i5.listsEqual(
+            other.assets,
+            assets,
+          ) &&
+          other.theme == theme &&
+          other.url == url &&
+          other.announcementSigner == announcementSigner &&
+          other.rules == rules;
+
+  @override
+  int get hashCode => Object.hash(
+        name,
+        symbol,
+        assets,
+        theme,
+        url,
+        announcementSigner,
+        rules,
+      );
 }
 
 class $CommunityMetadataCodec with _i1.Codec<CommunityMetadata> {

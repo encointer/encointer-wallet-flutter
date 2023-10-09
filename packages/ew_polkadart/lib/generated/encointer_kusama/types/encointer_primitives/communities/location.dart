@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../../substrate_fixed/fixed_i128.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../../substrate_fixed/fixed_i128.dart' as _i2;
 
 class Location {
   const Location({
@@ -13,8 +15,10 @@ class Location {
     return codec.decode(input);
   }
 
+  /// Degree
   final _i2.FixedI128 lat;
 
+  /// Degree
   final _i2.FixedI128 lon;
 
   static const $LocationCodec codec = $LocationCodec();
@@ -27,6 +31,20 @@ class Location {
         'lat': lat.toJson(),
         'lon': lon.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Location && other.lat == lat && other.lon == lon;
+
+  @override
+  int get hashCode => Object.hash(
+        lat,
+        lon,
+      );
 }
 
 class $LocationCodec with _i1.Codec<Location> {

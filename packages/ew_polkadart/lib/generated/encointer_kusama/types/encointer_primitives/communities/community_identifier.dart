@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 class CommunityIdentifier {
   const CommunityIdentifier({
@@ -12,8 +14,10 @@ class CommunityIdentifier {
     return codec.decode(input);
   }
 
+  /// [u8; 5]
   final List<int> geohash;
 
+  /// [u8; 4]
   final List<int> digest;
 
   static const $CommunityIdentifierCodec codec = $CommunityIdentifierCodec();
@@ -26,6 +30,28 @@ class CommunityIdentifier {
         'geohash': geohash.toList(),
         'digest': digest.toList(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CommunityIdentifier &&
+          _i3.listsEqual(
+            other.geohash,
+            geohash,
+          ) &&
+          _i3.listsEqual(
+            other.digest,
+            digest,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        geohash,
+        digest,
+      );
 }
 
 class $CommunityIdentifierCodec with _i1.Codec<CommunityIdentifier> {

@@ -1,10 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/polkadart.dart' as _i1;
-import '../types/sp_core/crypto/account_id32.dart' as _i2;
-import '../types/encointer_primitives/faucet/faucet.dart' as _i3;
-import 'package:polkadart/scale_codec.dart' as _i4;
 import 'dart:async' as _i5;
+
+import 'package:polkadart/polkadart.dart' as _i1;
+import 'package:polkadart/scale_codec.dart' as _i4;
+
+import '../types/encointer_primitives/faucet/faucet.dart' as _i3;
 import '../types/frame_support/pallet_id.dart' as _i6;
+import '../types/sp_core/crypto/account_id32.dart' as _i2;
 
 class Queries {
   const Queries(this.__api);
@@ -15,7 +17,7 @@ class Queries {
     prefix: 'EncointerFaucet',
     storage: 'Faucets',
     valueCodec: _i3.Faucet.codec,
-    hasher: _i1.StorageHasher.identity(_i4.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.identity(_i2.AccountId32Codec()),
   );
 
   final _i1.StorageValue<BigInt> _reserveAmount = const _i1.StorageValue<BigInt>(

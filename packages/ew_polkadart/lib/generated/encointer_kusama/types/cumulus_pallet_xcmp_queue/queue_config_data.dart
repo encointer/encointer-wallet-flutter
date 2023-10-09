@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../sp_weights/weight_v2/weight.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../sp_weights/weight_v2/weight.dart' as _i2;
 
 class QueueConfigData {
   const QueueConfigData({
@@ -17,16 +19,22 @@ class QueueConfigData {
     return codec.decode(input);
   }
 
+  /// u32
   final int suspendThreshold;
 
+  /// u32
   final int dropThreshold;
 
+  /// u32
   final int resumeThreshold;
 
+  /// Weight
   final _i2.Weight thresholdWeight;
 
+  /// Weight
   final _i2.Weight weightRestrictDecay;
 
+  /// Weight
   final _i2.Weight xcmpMaxIndividualWeight;
 
   static const $QueueConfigDataCodec codec = $QueueConfigDataCodec();
@@ -43,6 +51,30 @@ class QueueConfigData {
         'weightRestrictDecay': weightRestrictDecay.toJson(),
         'xcmpMaxIndividualWeight': xcmpMaxIndividualWeight.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is QueueConfigData &&
+          other.suspendThreshold == suspendThreshold &&
+          other.dropThreshold == dropThreshold &&
+          other.resumeThreshold == resumeThreshold &&
+          other.thresholdWeight == thresholdWeight &&
+          other.weightRestrictDecay == weightRestrictDecay &&
+          other.xcmpMaxIndividualWeight == xcmpMaxIndividualWeight;
+
+  @override
+  int get hashCode => Object.hash(
+        suspendThreshold,
+        dropThreshold,
+        resumeThreshold,
+        thresholdWeight,
+        weightRestrictDecay,
+        xcmpMaxIndividualWeight,
+      );
 }
 
 class $QueueConfigDataCodec with _i1.Codec<QueueConfigData> {

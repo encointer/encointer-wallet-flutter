@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../../../primitive_types/h256.dart' as _i3;
 
 abstract class Bounded {
@@ -31,15 +34,11 @@ class $Bounded {
   const $Bounded();
 
   Legacy legacy({required _i3.H256 hash}) {
-    return Legacy(
-      hash: hash,
-    );
+    return Legacy(hash: hash);
   }
 
-  Inline inline({required List<int> value0}) {
-    return Inline(
-      value0: value0,
-    );
+  Inline inline(List<int> value0) {
+    return Inline(value0);
   }
 
   Lookup lookup({
@@ -110,11 +109,10 @@ class Legacy extends Bounded {
   const Legacy({required this.hash});
 
   factory Legacy._decode(_i1.Input input) {
-    return Legacy(
-      hash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Legacy(hash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// Hash
   final _i3.H256 hash;
 
   @override
@@ -124,7 +122,7 @@ class Legacy extends Bounded {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(hash);
+    size = size + const _i3.H256Codec().sizeHint(hash);
     return size;
   }
 
@@ -138,17 +136,31 @@ class Legacy extends Bounded {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Legacy &&
+          _i4.listsEqual(
+            other.hash,
+            hash,
+          );
+
+  @override
+  int get hashCode => hash.hashCode;
 }
 
 class Inline extends Bounded {
-  const Inline({required this.value0});
+  const Inline(this.value0);
 
   factory Inline._decode(_i1.Input input) {
-    return Inline(
-      value0: _i1.U8SequenceCodec.codec.decode(input),
-    );
+    return Inline(_i1.U8SequenceCodec.codec.decode(input));
   }
 
+  /// BoundedInline
   final List<int> value0;
 
   @override
@@ -170,6 +182,21 @@ class Inline extends Bounded {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Inline &&
+          _i4.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Lookup extends Bounded {
@@ -185,8 +212,10 @@ class Lookup extends Bounded {
     );
   }
 
+  /// Hash
   final _i3.H256 hash;
 
+  /// u32
   final int len;
 
   @override
@@ -199,7 +228,7 @@ class Lookup extends Bounded {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(hash);
+    size = size + const _i3.H256Codec().sizeHint(hash);
     size = size + _i1.U32Codec.codec.sizeHint(len);
     return size;
   }
@@ -218,4 +247,23 @@ class Lookup extends Bounded {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Lookup &&
+          _i4.listsEqual(
+            other.hash,
+            hash,
+          ) &&
+          other.len == len;
+
+  @override
+  int get hashCode => Object.hash(
+        hash,
+        len,
+      );
 }

@@ -1,10 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../frame_support/dispatch/raw_origin.dart' as _i3;
-import '../pallet_xcm/pallet/origin.dart' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../cumulus_pallet_xcm/pallet/origin.dart' as _i5;
+import '../frame_support/dispatch/raw_origin.dart' as _i3;
 import '../pallet_collective/raw_origin.dart' as _i6;
+import '../pallet_xcm/pallet/origin.dart' as _i4;
 import '../sp_core/void.dart' as _i7;
 
 abstract class OriginCaller {
@@ -34,34 +36,24 @@ abstract class OriginCaller {
 class $OriginCaller {
   const $OriginCaller();
 
-  System system({required _i3.RawOrigin value0}) {
-    return System(
-      value0: value0,
-    );
+  System system(_i3.RawOrigin value0) {
+    return System(value0);
   }
 
-  PolkadotXcm polkadotXcm({required _i4.Origin value0}) {
-    return PolkadotXcm(
-      value0: value0,
-    );
+  PolkadotXcm polkadotXcm(_i4.Origin value0) {
+    return PolkadotXcm(value0);
   }
 
-  CumulusXcm cumulusXcm({required _i5.Origin value0}) {
-    return CumulusXcm(
-      value0: value0,
-    );
+  CumulusXcm cumulusXcm(_i5.Origin value0) {
+    return CumulusXcm(value0);
   }
 
-  Collective collective({required _i6.RawOrigin value0}) {
-    return Collective(
-      value0: value0,
-    );
+  Collective collective(_i6.RawOrigin value0) {
+    return Collective(value0);
   }
 
-  Void void_({required _i7.Void value0}) {
-    return Void(
-      value0: value0,
-    );
+  Void void_(_i7.Void value0) {
+    return Void(value0);
   }
 }
 
@@ -133,14 +125,13 @@ class $OriginCallerCodec with _i1.Codec<OriginCaller> {
 }
 
 class System extends OriginCaller {
-  const System({required this.value0});
+  const System(this.value0);
 
   factory System._decode(_i1.Input input) {
-    return System(
-      value0: _i3.RawOrigin.codec.decode(input),
-    );
+    return System(_i3.RawOrigin.codec.decode(input));
   }
 
+  /// frame_system::Origin<Runtime>
   final _i3.RawOrigin value0;
 
   @override
@@ -162,17 +153,27 @@ class System extends OriginCaller {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is System && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class PolkadotXcm extends OriginCaller {
-  const PolkadotXcm({required this.value0});
+  const PolkadotXcm(this.value0);
 
   factory PolkadotXcm._decode(_i1.Input input) {
-    return PolkadotXcm(
-      value0: _i4.Origin.codec.decode(input),
-    );
+    return PolkadotXcm(_i4.Origin.codec.decode(input));
   }
 
+  /// pallet_xcm::Origin
   final _i4.Origin value0;
 
   @override
@@ -194,17 +195,27 @@ class PolkadotXcm extends OriginCaller {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PolkadotXcm && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class CumulusXcm extends OriginCaller {
-  const CumulusXcm({required this.value0});
+  const CumulusXcm(this.value0);
 
   factory CumulusXcm._decode(_i1.Input input) {
-    return CumulusXcm(
-      value0: _i5.Origin.codec.decode(input),
-    );
+    return CumulusXcm(_i5.Origin.codec.decode(input));
   }
 
+  /// cumulus_pallet_xcm::Origin
   final _i5.Origin value0;
 
   @override
@@ -226,17 +237,27 @@ class CumulusXcm extends OriginCaller {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CumulusXcm && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Collective extends OriginCaller {
-  const Collective({required this.value0});
+  const Collective(this.value0);
 
   factory Collective._decode(_i1.Input input) {
-    return Collective(
-      value0: _i6.RawOrigin.codec.decode(input),
-    );
+    return Collective(_i6.RawOrigin.codec.decode(input));
   }
 
+  /// pallet_collective::Origin<Runtime, pallet_collective::Instance1>
   final _i6.RawOrigin value0;
 
   @override
@@ -258,17 +279,27 @@ class Collective extends OriginCaller {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Collective && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Void extends OriginCaller {
-  const Void({required this.value0});
+  const Void(this.value0);
 
   factory Void._decode(_i1.Input input) {
-    return Void(
-      value0: _i1.NullCodec.codec.decode(input),
-    );
+    return Void(_i1.NullCodec.codec.decode(input));
   }
 
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::Void
   final _i7.Void value0;
 
   @override
@@ -276,7 +307,7 @@ class Void extends OriginCaller {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i1.NullCodec.codec.sizeHint(value0);
+    size = size + const _i7.VoidCodec().sizeHint(value0);
     return size;
   }
 
@@ -290,4 +321,15 @@ class Void extends OriginCaller {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Void && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

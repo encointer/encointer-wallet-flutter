@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 abstract class Error {
   const Error();
@@ -30,111 +31,107 @@ class $Error {
   const $Error();
 
   Overflow overflow() {
-    return const Overflow();
+    return Overflow();
   }
 
   Unimplemented unimplemented() {
-    return const Unimplemented();
+    return Unimplemented();
   }
 
   UntrustedReserveLocation untrustedReserveLocation() {
-    return const UntrustedReserveLocation();
+    return UntrustedReserveLocation();
   }
 
   UntrustedTeleportLocation untrustedTeleportLocation() {
-    return const UntrustedTeleportLocation();
+    return UntrustedTeleportLocation();
   }
 
   MultiLocationFull multiLocationFull() {
-    return const MultiLocationFull();
+    return MultiLocationFull();
   }
 
   MultiLocationNotInvertible multiLocationNotInvertible() {
-    return const MultiLocationNotInvertible();
+    return MultiLocationNotInvertible();
   }
 
   BadOrigin badOrigin() {
-    return const BadOrigin();
+    return BadOrigin();
   }
 
   InvalidLocation invalidLocation() {
-    return const InvalidLocation();
+    return InvalidLocation();
   }
 
   AssetNotFound assetNotFound() {
-    return const AssetNotFound();
+    return AssetNotFound();
   }
 
   FailedToTransactAsset failedToTransactAsset() {
-    return const FailedToTransactAsset();
+    return FailedToTransactAsset();
   }
 
   NotWithdrawable notWithdrawable() {
-    return const NotWithdrawable();
+    return NotWithdrawable();
   }
 
   LocationCannotHold locationCannotHold() {
-    return const LocationCannotHold();
+    return LocationCannotHold();
   }
 
   ExceedsMaxMessageSize exceedsMaxMessageSize() {
-    return const ExceedsMaxMessageSize();
+    return ExceedsMaxMessageSize();
   }
 
   DestinationUnsupported destinationUnsupported() {
-    return const DestinationUnsupported();
+    return DestinationUnsupported();
   }
 
   Transport transport() {
-    return const Transport();
+    return Transport();
   }
 
   Unroutable unroutable() {
-    return const Unroutable();
+    return Unroutable();
   }
 
   UnknownClaim unknownClaim() {
-    return const UnknownClaim();
+    return UnknownClaim();
   }
 
   FailedToDecode failedToDecode() {
-    return const FailedToDecode();
+    return FailedToDecode();
   }
 
   MaxWeightInvalid maxWeightInvalid() {
-    return const MaxWeightInvalid();
+    return MaxWeightInvalid();
   }
 
   NotHoldingFees notHoldingFees() {
-    return const NotHoldingFees();
+    return NotHoldingFees();
   }
 
   TooExpensive tooExpensive() {
-    return const TooExpensive();
+    return TooExpensive();
   }
 
-  Trap trap({required BigInt value0}) {
-    return Trap(
-      value0: value0,
-    );
+  Trap trap(BigInt value0) {
+    return Trap(value0);
   }
 
   UnhandledXcmVersion unhandledXcmVersion() {
-    return const UnhandledXcmVersion();
+    return UnhandledXcmVersion();
   }
 
-  WeightLimitReached weightLimitReached({required BigInt value0}) {
-    return WeightLimitReached(
-      value0: value0,
-    );
+  WeightLimitReached weightLimitReached(BigInt value0) {
+    return WeightLimitReached(value0);
   }
 
   Barrier barrier() {
-    return const Barrier();
+    return Barrier();
   }
 
   WeightNotComputable weightNotComputable() {
-    return const WeightNotComputable();
+    return WeightNotComputable();
   }
 }
 
@@ -364,6 +361,12 @@ class Overflow extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Overflow;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Unimplemented extends Error {
@@ -378,6 +381,12 @@ class Unimplemented extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Unimplemented;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class UntrustedReserveLocation extends Error {
@@ -392,6 +401,12 @@ class UntrustedReserveLocation extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is UntrustedReserveLocation;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class UntrustedTeleportLocation extends Error {
@@ -406,6 +421,12 @@ class UntrustedTeleportLocation extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is UntrustedTeleportLocation;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class MultiLocationFull extends Error {
@@ -420,6 +441,12 @@ class MultiLocationFull extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is MultiLocationFull;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class MultiLocationNotInvertible extends Error {
@@ -434,6 +461,12 @@ class MultiLocationNotInvertible extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is MultiLocationNotInvertible;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class BadOrigin extends Error {
@@ -448,6 +481,12 @@ class BadOrigin extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is BadOrigin;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class InvalidLocation extends Error {
@@ -462,6 +501,12 @@ class InvalidLocation extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is InvalidLocation;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class AssetNotFound extends Error {
@@ -476,6 +521,12 @@ class AssetNotFound extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is AssetNotFound;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class FailedToTransactAsset extends Error {
@@ -490,6 +541,12 @@ class FailedToTransactAsset extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is FailedToTransactAsset;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NotWithdrawable extends Error {
@@ -504,6 +561,12 @@ class NotWithdrawable extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NotWithdrawable;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class LocationCannotHold extends Error {
@@ -518,6 +581,12 @@ class LocationCannotHold extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is LocationCannotHold;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class ExceedsMaxMessageSize extends Error {
@@ -532,6 +601,12 @@ class ExceedsMaxMessageSize extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ExceedsMaxMessageSize;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class DestinationUnsupported extends Error {
@@ -546,6 +621,12 @@ class DestinationUnsupported extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is DestinationUnsupported;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Transport extends Error {
@@ -560,6 +641,12 @@ class Transport extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Transport;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Unroutable extends Error {
@@ -574,6 +661,12 @@ class Unroutable extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Unroutable;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class UnknownClaim extends Error {
@@ -588,6 +681,12 @@ class UnknownClaim extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is UnknownClaim;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class FailedToDecode extends Error {
@@ -602,6 +701,12 @@ class FailedToDecode extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is FailedToDecode;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class MaxWeightInvalid extends Error {
@@ -616,6 +721,12 @@ class MaxWeightInvalid extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is MaxWeightInvalid;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class NotHoldingFees extends Error {
@@ -630,6 +741,12 @@ class NotHoldingFees extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is NotHoldingFees;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class TooExpensive extends Error {
@@ -644,17 +761,22 @@ class TooExpensive extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is TooExpensive;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Trap extends Error {
-  const Trap({required this.value0});
+  const Trap(this.value0);
 
   factory Trap._decode(_i1.Input input) {
-    return Trap(
-      value0: _i1.U64Codec.codec.decode(input),
-    );
+    return Trap(_i1.U64Codec.codec.decode(input));
   }
 
+  /// u64
   final BigInt value0;
 
   @override
@@ -676,6 +798,17 @@ class Trap extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Trap && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class UnhandledXcmVersion extends Error {
@@ -690,17 +823,22 @@ class UnhandledXcmVersion extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is UnhandledXcmVersion;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class WeightLimitReached extends Error {
-  const WeightLimitReached({required this.value0});
+  const WeightLimitReached(this.value0);
 
   factory WeightLimitReached._decode(_i1.Input input) {
-    return WeightLimitReached(
-      value0: _i1.U64Codec.codec.decode(input),
-    );
+    return WeightLimitReached(_i1.U64Codec.codec.decode(input));
   }
 
+  /// Weight
   final BigInt value0;
 
   @override
@@ -722,6 +860,17 @@ class WeightLimitReached extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is WeightLimitReached && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Barrier extends Error {
@@ -736,6 +885,12 @@ class Barrier extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Barrier;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class WeightNotComputable extends Error {
@@ -750,4 +905,10 @@ class WeightNotComputable extends Error {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is WeightNotComputable;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

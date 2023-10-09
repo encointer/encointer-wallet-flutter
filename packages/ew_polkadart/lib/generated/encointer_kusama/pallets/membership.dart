@@ -1,8 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/polkadart.dart' as _i1;
-import '../types/sp_core/crypto/account_id32.dart' as _i2;
-import 'package:polkadart/scale_codec.dart' as _i3;
 import 'dart:async' as _i4;
+
+import 'package:polkadart/polkadart.dart' as _i1;
+import 'package:polkadart/scale_codec.dart' as _i3;
+
+import '../types/sp_core/crypto/account_id32.dart' as _i2;
 
 class Queries {
   const Queries(this.__api);
@@ -12,13 +14,13 @@ class Queries {
   final _i1.StorageValue<List<_i2.AccountId32>> _members = const _i1.StorageValue<List<_i2.AccountId32>>(
     prefix: 'Membership',
     storage: 'Members',
-    valueCodec: _i3.SequenceCodec<_i2.AccountId32>(_i3.U8ArrayCodec(32)),
+    valueCodec: _i3.SequenceCodec<_i2.AccountId32>(_i2.AccountId32Codec()),
   );
 
   final _i1.StorageValue<_i2.AccountId32> _prime = const _i1.StorageValue<_i2.AccountId32>(
     prefix: 'Membership',
     storage: 'Prime',
-    valueCodec: _i3.U8ArrayCodec(32),
+    valueCodec: _i2.AccountId32Codec(),
   );
 
   /// The current membership, stored as an ordered Vec.
@@ -31,7 +33,7 @@ class Queries {
     if (bytes != null) {
       return _members.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// The current prime member, if one exists.

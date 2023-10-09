@@ -1,10 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i7;
+
 import '../../encointer_runtime/proxy_type.dart' as _i4;
 import '../../encointer_runtime/runtime_call.dart' as _i5;
 import '../../primitive_types/h256.dart' as _i6;
+import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -71,7 +74,7 @@ class $Call {
   }
 
   RemoveProxies removeProxies() {
-    return const RemoveProxies();
+    return RemoveProxies();
   }
 
   CreatePure createPure({
@@ -265,10 +268,13 @@ class Proxy extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress real;
 
+  /// Option<T::ProxyType>
   final _i4.ProxyType? forceProxyType;
 
+  /// Box<<T as Config>::RuntimeCall>
   final _i5.RuntimeCall call;
 
   @override
@@ -306,6 +312,21 @@ class Proxy extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Proxy && other.real == real && other.forceProxyType == forceProxyType && other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        real,
+        forceProxyType,
+        call,
+      );
 }
 
 /// See [`Pallet::add_proxy`].
@@ -324,10 +345,13 @@ class AddProxy extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress delegate;
 
+  /// T::ProxyType
   final _i4.ProxyType proxyType;
 
+  /// BlockNumberFor<T>
   final int delay;
 
   @override
@@ -365,6 +389,21 @@ class AddProxy extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AddProxy && other.delegate == delegate && other.proxyType == proxyType && other.delay == delay;
+
+  @override
+  int get hashCode => Object.hash(
+        delegate,
+        proxyType,
+        delay,
+      );
 }
 
 /// See [`Pallet::remove_proxy`].
@@ -383,10 +422,13 @@ class RemoveProxy extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress delegate;
 
+  /// T::ProxyType
   final _i4.ProxyType proxyType;
 
+  /// BlockNumberFor<T>
   final int delay;
 
   @override
@@ -424,6 +466,21 @@ class RemoveProxy extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RemoveProxy && other.delegate == delegate && other.proxyType == proxyType && other.delay == delay;
+
+  @override
+  int get hashCode => Object.hash(
+        delegate,
+        proxyType,
+        delay,
+      );
 }
 
 /// See [`Pallet::remove_proxies`].
@@ -439,6 +496,12 @@ class RemoveProxies extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is RemoveProxies;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// See [`Pallet::create_pure`].
@@ -457,10 +520,13 @@ class CreatePure extends Call {
     );
   }
 
+  /// T::ProxyType
   final _i4.ProxyType proxyType;
 
+  /// BlockNumberFor<T>
   final int delay;
 
+  /// u16
   final int index;
 
   @override
@@ -498,6 +564,21 @@ class CreatePure extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CreatePure && other.proxyType == proxyType && other.delay == delay && other.index == index;
+
+  @override
+  int get hashCode => Object.hash(
+        proxyType,
+        delay,
+        index,
+      );
 }
 
 /// See [`Pallet::kill_pure`].
@@ -520,14 +601,19 @@ class KillPure extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress spawner;
 
+  /// T::ProxyType
   final _i4.ProxyType proxyType;
 
+  /// u16
   final int index;
 
+  /// BlockNumberFor<T>
   final BigInt height;
 
+  /// u32
   final BigInt extIndex;
 
   @override
@@ -577,6 +663,28 @@ class KillPure extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is KillPure &&
+          other.spawner == spawner &&
+          other.proxyType == proxyType &&
+          other.index == index &&
+          other.height == height &&
+          other.extIndex == extIndex;
+
+  @override
+  int get hashCode => Object.hash(
+        spawner,
+        proxyType,
+        index,
+        height,
+        extIndex,
+      );
 }
 
 /// See [`Pallet::announce`].
@@ -593,8 +701,10 @@ class Announce extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress real;
 
+  /// CallHashOf<T>
   final _i6.H256 callHash;
 
   @override
@@ -608,7 +718,7 @@ class Announce extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.MultiAddress.codec.sizeHint(real);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(callHash);
+    size = size + const _i6.H256Codec().sizeHint(callHash);
     return size;
   }
 
@@ -626,6 +736,25 @@ class Announce extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Announce &&
+          other.real == real &&
+          _i7.listsEqual(
+            other.callHash,
+            callHash,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        real,
+        callHash,
+      );
 }
 
 /// See [`Pallet::remove_announcement`].
@@ -642,8 +771,10 @@ class RemoveAnnouncement extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress real;
 
+  /// CallHashOf<T>
   final _i6.H256 callHash;
 
   @override
@@ -657,7 +788,7 @@ class RemoveAnnouncement extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.MultiAddress.codec.sizeHint(real);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(callHash);
+    size = size + const _i6.H256Codec().sizeHint(callHash);
     return size;
   }
 
@@ -675,6 +806,25 @@ class RemoveAnnouncement extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RemoveAnnouncement &&
+          other.real == real &&
+          _i7.listsEqual(
+            other.callHash,
+            callHash,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        real,
+        callHash,
+      );
 }
 
 /// See [`Pallet::reject_announcement`].
@@ -691,8 +841,10 @@ class RejectAnnouncement extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress delegate;
 
+  /// CallHashOf<T>
   final _i6.H256 callHash;
 
   @override
@@ -706,7 +858,7 @@ class RejectAnnouncement extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.MultiAddress.codec.sizeHint(delegate);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(callHash);
+    size = size + const _i6.H256Codec().sizeHint(callHash);
     return size;
   }
 
@@ -724,6 +876,25 @@ class RejectAnnouncement extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RejectAnnouncement &&
+          other.delegate == delegate &&
+          _i7.listsEqual(
+            other.callHash,
+            callHash,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        delegate,
+        callHash,
+      );
 }
 
 /// See [`Pallet::proxy_announced`].
@@ -744,12 +915,16 @@ class ProxyAnnounced extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress delegate;
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress real;
 
+  /// Option<T::ProxyType>
   final _i4.ProxyType? forceProxyType;
 
+  /// Box<<T as Config>::RuntimeCall>
   final _i5.RuntimeCall call;
 
   @override
@@ -793,4 +968,24 @@ class ProxyAnnounced extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ProxyAnnounced &&
+          other.delegate == delegate &&
+          other.real == real &&
+          other.forceProxyType == forceProxyType &&
+          other.call == call;
+
+  @override
+  int get hashCode => Object.hash(
+        delegate,
+        real,
+        forceProxyType,
+        call,
+      );
 }

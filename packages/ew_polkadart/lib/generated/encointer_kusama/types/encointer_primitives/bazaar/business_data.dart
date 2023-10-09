@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 class BusinessData {
   const BusinessData({
@@ -12,8 +14,10 @@ class BusinessData {
     return codec.decode(input);
   }
 
+  /// PalletString
   final List<int> url;
 
+  /// u32
   final int lastOid;
 
   static const $BusinessDataCodec codec = $BusinessDataCodec();
@@ -26,6 +30,25 @@ class BusinessData {
         'url': url,
         'lastOid': lastOid,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BusinessData &&
+          _i3.listsEqual(
+            other.url,
+            url,
+          ) &&
+          other.lastOid == lastOid;
+
+  @override
+  int get hashCode => Object.hash(
+        url,
+        lastOid,
+      );
 }
 
 class $BusinessDataCodec with _i1.Codec<BusinessData> {

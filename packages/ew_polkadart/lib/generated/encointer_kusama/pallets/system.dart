@@ -1,25 +1,27 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/polkadart.dart' as _i1;
-import '../types/sp_core/crypto/account_id32.dart' as _i2;
-import '../types/frame_system/account_info.dart' as _i3;
-import 'package:polkadart/scale_codec.dart' as _i4;
-import '../types/frame_support/dispatch/per_dispatch_class_1.dart' as _i5;
-import '../types/primitive_types/h256.dart' as _i6;
-import '../types/sp_runtime/generic/digest/digest.dart' as _i7;
-import '../types/frame_system/event_record.dart' as _i8;
-import '../types/tuples.dart' as _i9;
-import '../types/frame_system/last_runtime_upgrade_info.dart' as _i10;
-import '../types/frame_system/phase.dart' as _i11;
 import 'dart:async' as _i12;
-import '../types/pallet_balances/types/account_data.dart' as _i13;
-import '../types/sp_weights/weight_v2/weight.dart' as _i14;
-import '../types/frame_system/limits/block_weights.dart' as _i15;
+
+import 'package:polkadart/polkadart.dart' as _i1;
+import 'package:polkadart/scale_codec.dart' as _i4;
+
+import '../types/frame_support/dispatch/per_dispatch_class_1.dart' as _i5;
 import '../types/frame_support/dispatch/per_dispatch_class_2.dart' as _i16;
-import '../types/frame_system/limits/weights_per_class.dart' as _i17;
-import '../types/frame_system/limits/block_length.dart' as _i18;
 import '../types/frame_support/dispatch/per_dispatch_class_3.dart' as _i19;
-import '../types/sp_weights/runtime_db_weight.dart' as _i20;
+import '../types/frame_system/account_info.dart' as _i3;
+import '../types/frame_system/event_record.dart' as _i8;
+import '../types/frame_system/last_runtime_upgrade_info.dart' as _i10;
+import '../types/frame_system/limits/block_length.dart' as _i18;
+import '../types/frame_system/limits/block_weights.dart' as _i15;
+import '../types/frame_system/limits/weights_per_class.dart' as _i17;
+import '../types/frame_system/phase.dart' as _i11;
+import '../types/pallet_balances/types/account_data.dart' as _i13;
+import '../types/primitive_types/h256.dart' as _i6;
+import '../types/sp_core/crypto/account_id32.dart' as _i2;
+import '../types/sp_runtime/generic/digest/digest.dart' as _i7;
 import '../types/sp_version/runtime_version.dart' as _i21;
+import '../types/sp_weights/runtime_db_weight.dart' as _i20;
+import '../types/sp_weights/weight_v2/weight.dart' as _i14;
+import '../types/tuples.dart' as _i9;
 
 class Queries {
   const Queries(this.__api);
@@ -31,7 +33,7 @@ class Queries {
     prefix: 'System',
     storage: 'Account',
     valueCodec: _i3.AccountInfo.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(_i4.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i2.AccountId32Codec()),
   );
 
   final _i1.StorageValue<int> _extrinsicCount = const _i1.StorageValue<int>(
@@ -55,7 +57,7 @@ class Queries {
   final _i1.StorageMap<int, _i6.H256> _blockHash = const _i1.StorageMap<int, _i6.H256>(
     prefix: 'System',
     storage: 'BlockHash',
-    valueCodec: _i4.U8ArrayCodec(32),
+    valueCodec: _i6.H256Codec(),
     hasher: _i1.StorageHasher.twoxx64Concat(_i4.U32Codec.codec),
   );
 
@@ -75,7 +77,7 @@ class Queries {
   final _i1.StorageValue<_i6.H256> _parentHash = const _i1.StorageValue<_i6.H256>(
     prefix: 'System',
     storage: 'ParentHash',
-    valueCodec: _i4.U8ArrayCodec(32),
+    valueCodec: _i6.H256Codec(),
   );
 
   final _i1.StorageValue<_i7.Digest> _digest = const _i1.StorageValue<_i7.Digest>(
@@ -104,7 +106,7 @@ class Queries {
       _i4.U32Codec.codec,
       _i4.U32Codec.codec,
     )),
-    hasher: _i1.StorageHasher.blake2b128Concat(_i4.U8ArrayCodec(32)),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i6.H256Codec()),
   );
 
   final _i1.StorageValue<_i10.LastRuntimeUpgradeInfo> _lastRuntimeUpgrade =
@@ -294,7 +296,7 @@ class Queries {
     if (bytes != null) {
       return _digest.decodeValue(bytes);
     }
-    return _i7.Digest(logs: const []); /* Default */
+    return _i7.Digest(logs: []); /* Default */
   }
 
   /// Events deposited for the current block.
@@ -313,7 +315,7 @@ class Queries {
     if (bytes != null) {
       return _events.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// The number of events in the `Events<T>` list.
@@ -351,7 +353,7 @@ class Queries {
     if (bytes != null) {
       return _eventTopics.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// Stores the `spec_version` and `spec_name` of when the last runtime upgrade happened.
@@ -471,7 +473,7 @@ class Constants {
   );
 
   /// The maximum length of a block (in bytes).
-  final _i18.BlockLength blockLength = _i18.BlockLength(
+  final _i18.BlockLength blockLength = const _i18.BlockLength(
       max: _i19.PerDispatchClass(
     normal: 3932160,
     operational: 5242880,
@@ -488,7 +490,7 @@ class Constants {
   );
 
   /// Get the chain's current version.
-  final _i21.RuntimeVersion version = _i21.RuntimeVersion(
+  final _i21.RuntimeVersion version = const _i21.RuntimeVersion(
     specName: 'encointer-parachain',
     implName: 'encointer-parachain',
     authoringVersion: 1,
@@ -496,7 +498,7 @@ class Constants {
     implVersion: 1,
     apis: [
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           221,
           113,
           141,
@@ -509,7 +511,7 @@ class Constants {
         1,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           223,
           106,
           203,
@@ -522,7 +524,7 @@ class Constants {
         4,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           55,
           227,
           151,
@@ -535,7 +537,7 @@ class Constants {
         2,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           64,
           254,
           58,
@@ -548,7 +550,7 @@ class Constants {
         6,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           210,
           188,
           152,
@@ -561,7 +563,7 @@ class Constants {
         3,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           247,
           139,
           39,
@@ -574,7 +576,7 @@ class Constants {
         2,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           171,
           60,
           5,
@@ -587,7 +589,7 @@ class Constants {
         1,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           188,
           157,
           137,
@@ -600,7 +602,7 @@ class Constants {
         1,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           55,
           200,
           187,
@@ -613,7 +615,7 @@ class Constants {
         4,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           234,
           147,
           227,
@@ -626,7 +628,7 @@ class Constants {
         2,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           140,
           223,
           158,
@@ -639,7 +641,7 @@ class Constants {
         1,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           117,
           119,
           173,
@@ -652,7 +654,7 @@ class Constants {
         1,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           186,
           224,
           47,
@@ -665,7 +667,7 @@ class Constants {
         1,
       ),
       _i9.Tuple2<List<int>, int>(
-        const <int>[
+        <int>[
           139,
           229,
           222,

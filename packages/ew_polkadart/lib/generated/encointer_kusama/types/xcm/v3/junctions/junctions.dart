@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../junction/junction.dart' as _i3;
 
 abstract class Junctions {
@@ -31,124 +33,122 @@ class $Junctions {
   const $Junctions();
 
   Here here() {
-    return const Here();
+    return Here();
   }
 
-  X1 x1({required _i3.Junction value0}) {
-    return X1(
-      value0: value0,
-    );
+  X1 x1(_i3.Junction value0) {
+    return X1(value0);
   }
 
-  X2 x2({
-    required _i3.Junction value0,
-    required _i3.Junction value1,
-  }) {
+  X2 x2(
+    _i3.Junction value0,
+    _i3.Junction value1,
+  ) {
     return X2(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  X3 x3({
-    required _i3.Junction value0,
-    required _i3.Junction value1,
-    required _i3.Junction value2,
-  }) {
+  X3 x3(
+    _i3.Junction value0,
+    _i3.Junction value1,
+    _i3.Junction value2,
+  ) {
     return X3(
-      value0: value0,
-      value1: value1,
-      value2: value2,
+      value0,
+      value1,
+      value2,
     );
   }
 
-  X4 x4({
-    required _i3.Junction value0,
-    required _i3.Junction value1,
-    required _i3.Junction value2,
-    required _i3.Junction value3,
-  }) {
+  X4 x4(
+    _i3.Junction value0,
+    _i3.Junction value1,
+    _i3.Junction value2,
+    _i3.Junction value3,
+  ) {
     return X4(
-      value0: value0,
-      value1: value1,
-      value2: value2,
-      value3: value3,
+      value0,
+      value1,
+      value2,
+      value3,
     );
   }
 
-  X5 x5({
-    required _i3.Junction value0,
-    required _i3.Junction value1,
-    required _i3.Junction value2,
-    required _i3.Junction value3,
-    required _i3.Junction value4,
-  }) {
+  X5 x5(
+    _i3.Junction value0,
+    _i3.Junction value1,
+    _i3.Junction value2,
+    _i3.Junction value3,
+    _i3.Junction value4,
+  ) {
     return X5(
-      value0: value0,
-      value1: value1,
-      value2: value2,
-      value3: value3,
-      value4: value4,
+      value0,
+      value1,
+      value2,
+      value3,
+      value4,
     );
   }
 
-  X6 x6({
-    required _i3.Junction value0,
-    required _i3.Junction value1,
-    required _i3.Junction value2,
-    required _i3.Junction value3,
-    required _i3.Junction value4,
-    required _i3.Junction value5,
-  }) {
+  X6 x6(
+    _i3.Junction value0,
+    _i3.Junction value1,
+    _i3.Junction value2,
+    _i3.Junction value3,
+    _i3.Junction value4,
+    _i3.Junction value5,
+  ) {
     return X6(
-      value0: value0,
-      value1: value1,
-      value2: value2,
-      value3: value3,
-      value4: value4,
-      value5: value5,
+      value0,
+      value1,
+      value2,
+      value3,
+      value4,
+      value5,
     );
   }
 
-  X7 x7({
-    required _i3.Junction value0,
-    required _i3.Junction value1,
-    required _i3.Junction value2,
-    required _i3.Junction value3,
-    required _i3.Junction value4,
-    required _i3.Junction value5,
-    required _i3.Junction value6,
-  }) {
+  X7 x7(
+    _i3.Junction value0,
+    _i3.Junction value1,
+    _i3.Junction value2,
+    _i3.Junction value3,
+    _i3.Junction value4,
+    _i3.Junction value5,
+    _i3.Junction value6,
+  ) {
     return X7(
-      value0: value0,
-      value1: value1,
-      value2: value2,
-      value3: value3,
-      value4: value4,
-      value5: value5,
-      value6: value6,
+      value0,
+      value1,
+      value2,
+      value3,
+      value4,
+      value5,
+      value6,
     );
   }
 
-  X8 x8({
-    required _i3.Junction value0,
-    required _i3.Junction value1,
-    required _i3.Junction value2,
-    required _i3.Junction value3,
-    required _i3.Junction value4,
-    required _i3.Junction value5,
-    required _i3.Junction value6,
-    required _i3.Junction value7,
-  }) {
+  X8 x8(
+    _i3.Junction value0,
+    _i3.Junction value1,
+    _i3.Junction value2,
+    _i3.Junction value3,
+    _i3.Junction value4,
+    _i3.Junction value5,
+    _i3.Junction value6,
+    _i3.Junction value7,
+  ) {
     return X8(
-      value0: value0,
-      value1: value1,
-      value2: value2,
-      value3: value3,
-      value4: value4,
-      value5: value5,
-      value6: value6,
-      value7: value7,
+      value0,
+      value1,
+      value2,
+      value3,
+      value4,
+      value5,
+      value6,
+      value7,
     );
   }
 }
@@ -260,17 +260,22 @@ class Here extends Junctions {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Here;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class X1 extends Junctions {
-  const X1({required this.value0});
+  const X1(this.value0);
 
   factory X1._decode(_i1.Input input) {
-    return X1(
-      value0: _i3.Junction.codec.decode(input),
-    );
+    return X1(_i3.Junction.codec.decode(input));
   }
 
+  /// Junction
   final _i3.Junction value0;
 
   @override
@@ -292,23 +297,36 @@ class X1 extends Junctions {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is X1 && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class X2 extends Junctions {
-  const X2({
-    required this.value0,
-    required this.value1,
-  });
+  const X2(
+    this.value0,
+    this.value1,
+  );
 
   factory X2._decode(_i1.Input input) {
     return X2(
-      value0: _i3.Junction.codec.decode(input),
-      value1: _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
     );
   }
 
+  /// Junction
   final _i3.Junction value0;
 
+  /// Junction
   final _i3.Junction value1;
 
   @override
@@ -340,27 +358,44 @@ class X2 extends Junctions {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is X2 && other.value0 == value0 && other.value1 == value1;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 class X3 extends Junctions {
-  const X3({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-  });
+  const X3(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
 
   factory X3._decode(_i1.Input input) {
     return X3(
-      value0: _i3.Junction.codec.decode(input),
-      value1: _i3.Junction.codec.decode(input),
-      value2: _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
     );
   }
 
+  /// Junction
   final _i3.Junction value0;
 
+  /// Junction
   final _i3.Junction value1;
 
+  /// Junction
   final _i3.Junction value2;
 
   @override
@@ -398,31 +433,50 @@ class X3 extends Junctions {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is X3 && other.value0 == value0 && other.value1 == value1 && other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }
 
 class X4 extends Junctions {
-  const X4({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-    required this.value3,
-  });
+  const X4(
+    this.value0,
+    this.value1,
+    this.value2,
+    this.value3,
+  );
 
   factory X4._decode(_i1.Input input) {
     return X4(
-      value0: _i3.Junction.codec.decode(input),
-      value1: _i3.Junction.codec.decode(input),
-      value2: _i3.Junction.codec.decode(input),
-      value3: _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
     );
   }
 
+  /// Junction
   final _i3.Junction value0;
 
+  /// Junction
   final _i3.Junction value1;
 
+  /// Junction
   final _i3.Junction value2;
 
+  /// Junction
   final _i3.Junction value3;
 
   @override
@@ -466,35 +520,60 @@ class X4 extends Junctions {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is X4 &&
+          other.value0 == value0 &&
+          other.value1 == value1 &&
+          other.value2 == value2 &&
+          other.value3 == value3;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+        value3,
+      );
 }
 
 class X5 extends Junctions {
-  const X5({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-    required this.value3,
-    required this.value4,
-  });
+  const X5(
+    this.value0,
+    this.value1,
+    this.value2,
+    this.value3,
+    this.value4,
+  );
 
   factory X5._decode(_i1.Input input) {
     return X5(
-      value0: _i3.Junction.codec.decode(input),
-      value1: _i3.Junction.codec.decode(input),
-      value2: _i3.Junction.codec.decode(input),
-      value3: _i3.Junction.codec.decode(input),
-      value4: _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
     );
   }
 
+  /// Junction
   final _i3.Junction value0;
 
+  /// Junction
   final _i3.Junction value1;
 
+  /// Junction
   final _i3.Junction value2;
 
+  /// Junction
   final _i3.Junction value3;
 
+  /// Junction
   final _i3.Junction value4;
 
   @override
@@ -544,39 +623,67 @@ class X5 extends Junctions {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is X5 &&
+          other.value0 == value0 &&
+          other.value1 == value1 &&
+          other.value2 == value2 &&
+          other.value3 == value3 &&
+          other.value4 == value4;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+        value3,
+        value4,
+      );
 }
 
 class X6 extends Junctions {
-  const X6({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-    required this.value3,
-    required this.value4,
-    required this.value5,
-  });
+  const X6(
+    this.value0,
+    this.value1,
+    this.value2,
+    this.value3,
+    this.value4,
+    this.value5,
+  );
 
   factory X6._decode(_i1.Input input) {
     return X6(
-      value0: _i3.Junction.codec.decode(input),
-      value1: _i3.Junction.codec.decode(input),
-      value2: _i3.Junction.codec.decode(input),
-      value3: _i3.Junction.codec.decode(input),
-      value4: _i3.Junction.codec.decode(input),
-      value5: _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
     );
   }
 
+  /// Junction
   final _i3.Junction value0;
 
+  /// Junction
   final _i3.Junction value1;
 
+  /// Junction
   final _i3.Junction value2;
 
+  /// Junction
   final _i3.Junction value3;
 
+  /// Junction
   final _i3.Junction value4;
 
+  /// Junction
   final _i3.Junction value5;
 
   @override
@@ -632,43 +739,74 @@ class X6 extends Junctions {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is X6 &&
+          other.value0 == value0 &&
+          other.value1 == value1 &&
+          other.value2 == value2 &&
+          other.value3 == value3 &&
+          other.value4 == value4 &&
+          other.value5 == value5;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+        value3,
+        value4,
+        value5,
+      );
 }
 
 class X7 extends Junctions {
-  const X7({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-    required this.value3,
-    required this.value4,
-    required this.value5,
-    required this.value6,
-  });
+  const X7(
+    this.value0,
+    this.value1,
+    this.value2,
+    this.value3,
+    this.value4,
+    this.value5,
+    this.value6,
+  );
 
   factory X7._decode(_i1.Input input) {
     return X7(
-      value0: _i3.Junction.codec.decode(input),
-      value1: _i3.Junction.codec.decode(input),
-      value2: _i3.Junction.codec.decode(input),
-      value3: _i3.Junction.codec.decode(input),
-      value4: _i3.Junction.codec.decode(input),
-      value5: _i3.Junction.codec.decode(input),
-      value6: _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
     );
   }
 
+  /// Junction
   final _i3.Junction value0;
 
+  /// Junction
   final _i3.Junction value1;
 
+  /// Junction
   final _i3.Junction value2;
 
+  /// Junction
   final _i3.Junction value3;
 
+  /// Junction
   final _i3.Junction value4;
 
+  /// Junction
   final _i3.Junction value5;
 
+  /// Junction
   final _i3.Junction value6;
 
   @override
@@ -730,47 +868,81 @@ class X7 extends Junctions {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is X7 &&
+          other.value0 == value0 &&
+          other.value1 == value1 &&
+          other.value2 == value2 &&
+          other.value3 == value3 &&
+          other.value4 == value4 &&
+          other.value5 == value5 &&
+          other.value6 == value6;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+        value3,
+        value4,
+        value5,
+        value6,
+      );
 }
 
 class X8 extends Junctions {
-  const X8({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-    required this.value3,
-    required this.value4,
-    required this.value5,
-    required this.value6,
-    required this.value7,
-  });
+  const X8(
+    this.value0,
+    this.value1,
+    this.value2,
+    this.value3,
+    this.value4,
+    this.value5,
+    this.value6,
+    this.value7,
+  );
 
   factory X8._decode(_i1.Input input) {
     return X8(
-      value0: _i3.Junction.codec.decode(input),
-      value1: _i3.Junction.codec.decode(input),
-      value2: _i3.Junction.codec.decode(input),
-      value3: _i3.Junction.codec.decode(input),
-      value4: _i3.Junction.codec.decode(input),
-      value5: _i3.Junction.codec.decode(input),
-      value6: _i3.Junction.codec.decode(input),
-      value7: _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
+      _i3.Junction.codec.decode(input),
     );
   }
 
+  /// Junction
   final _i3.Junction value0;
 
+  /// Junction
   final _i3.Junction value1;
 
+  /// Junction
   final _i3.Junction value2;
 
+  /// Junction
   final _i3.Junction value3;
 
+  /// Junction
   final _i3.Junction value4;
 
+  /// Junction
   final _i3.Junction value5;
 
+  /// Junction
   final _i3.Junction value6;
 
+  /// Junction
   final _i3.Junction value7;
 
   @override
@@ -838,4 +1010,32 @@ class X8 extends Junctions {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is X8 &&
+          other.value0 == value0 &&
+          other.value1 == value1 &&
+          other.value2 == value2 &&
+          other.value3 == value3 &&
+          other.value4 == value4 &&
+          other.value5 == value5 &&
+          other.value6 == value6 &&
+          other.value7 == value7;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+        value3,
+        value4,
+        value5,
+        value6,
+        value7,
+      );
 }

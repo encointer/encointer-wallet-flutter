@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../sp_core/crypto/account_id32.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../encointer_primitives/communities/community_identifier.dart' as _i4;
+import '../../sp_core/crypto/account_id32.dart' as _i3;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -105,12 +108,16 @@ class AssetTxFeePaid extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 who;
 
+  /// AssetBalanceOf<T>
   final BigInt actualFee;
 
+  /// AssetBalanceOf<T>
   final BigInt tip;
 
+  /// Option<ChargeAssetIdOf<T>>
   final _i4.CommunityIdentifier? assetId;
 
   @override
@@ -125,7 +132,7 @@ class AssetTxFeePaid extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(who);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(actualFee);
     size = size + _i1.U128Codec.codec.sizeHint(tip);
     size = size + const _i1.OptionCodec<_i4.CommunityIdentifier>(_i4.CommunityIdentifier.codec).sizeHint(assetId);
@@ -154,4 +161,27 @@ class AssetTxFeePaid extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AssetTxFeePaid &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          ) &&
+          other.actualFee == actualFee &&
+          other.tip == tip &&
+          other.assetId == assetId;
+
+  @override
+  int get hashCode => Object.hash(
+        who,
+        actualFee,
+        tip,
+        assetId,
+      );
 }

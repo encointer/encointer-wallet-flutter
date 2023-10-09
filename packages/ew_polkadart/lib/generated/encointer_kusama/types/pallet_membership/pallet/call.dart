@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../sp_core/crypto/account_id32.dart' as _i4;
+import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -33,15 +36,11 @@ class $Call {
   const $Call();
 
   AddMember addMember({required _i3.MultiAddress who}) {
-    return AddMember(
-      who: who,
-    );
+    return AddMember(who: who);
   }
 
   RemoveMember removeMember({required _i3.MultiAddress who}) {
-    return RemoveMember(
-      who: who,
-    );
+    return RemoveMember(who: who);
   }
 
   SwapMember swapMember({
@@ -55,25 +54,19 @@ class $Call {
   }
 
   ResetMembers resetMembers({required List<_i4.AccountId32> members}) {
-    return ResetMembers(
-      members: members,
-    );
+    return ResetMembers(members: members);
   }
 
   ChangeKey changeKey({required _i3.MultiAddress new_}) {
-    return ChangeKey(
-      new_: new_,
-    );
+    return ChangeKey(new_: new_);
   }
 
   SetPrime setPrime({required _i3.MultiAddress who}) {
-    return SetPrime(
-      who: who,
-    );
+    return SetPrime(who: who);
   }
 
   ClearPrime clearPrime() {
-    return const ClearPrime();
+    return ClearPrime();
   }
 }
 
@@ -163,11 +156,10 @@ class AddMember extends Call {
   const AddMember({required this.who});
 
   factory AddMember._decode(_i1.Input input) {
-    return AddMember(
-      who: _i3.MultiAddress.codec.decode(input),
-    );
+    return AddMember(who: _i3.MultiAddress.codec.decode(input));
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress who;
 
   @override
@@ -191,6 +183,17 @@ class AddMember extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AddMember && other.who == who;
+
+  @override
+  int get hashCode => who.hashCode;
 }
 
 /// See [`Pallet::remove_member`].
@@ -198,11 +201,10 @@ class RemoveMember extends Call {
   const RemoveMember({required this.who});
 
   factory RemoveMember._decode(_i1.Input input) {
-    return RemoveMember(
-      who: _i3.MultiAddress.codec.decode(input),
-    );
+    return RemoveMember(who: _i3.MultiAddress.codec.decode(input));
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress who;
 
   @override
@@ -226,6 +228,17 @@ class RemoveMember extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RemoveMember && other.who == who;
+
+  @override
+  int get hashCode => who.hashCode;
 }
 
 /// See [`Pallet::swap_member`].
@@ -242,8 +255,10 @@ class SwapMember extends Call {
     );
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress remove;
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress add;
 
   @override
@@ -275,6 +290,20 @@ class SwapMember extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SwapMember && other.remove == remove && other.add == add;
+
+  @override
+  int get hashCode => Object.hash(
+        remove,
+        add,
+      );
 }
 
 /// See [`Pallet::reset_members`].
@@ -282,11 +311,10 @@ class ResetMembers extends Call {
   const ResetMembers({required this.members});
 
   factory ResetMembers._decode(_i1.Input input) {
-    return ResetMembers(
-      members: const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).decode(input),
-    );
+    return ResetMembers(members: const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).decode(input));
   }
 
+  /// Vec<T::AccountId>
   final List<_i4.AccountId32> members;
 
   @override
@@ -296,7 +324,7 @@ class ResetMembers extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).sizeHint(members);
+    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).sizeHint(members);
     return size;
   }
 
@@ -305,11 +333,26 @@ class ResetMembers extends Call {
       3,
       output,
     );
-    const _i1.SequenceCodec<_i4.AccountId32>(_i1.U8ArrayCodec(32)).encodeTo(
+    const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).encodeTo(
       members,
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ResetMembers &&
+          _i5.listsEqual(
+            other.members,
+            members,
+          );
+
+  @override
+  int get hashCode => members.hashCode;
 }
 
 /// See [`Pallet::change_key`].
@@ -317,11 +360,10 @@ class ChangeKey extends Call {
   const ChangeKey({required this.new_});
 
   factory ChangeKey._decode(_i1.Input input) {
-    return ChangeKey(
-      new_: _i3.MultiAddress.codec.decode(input),
-    );
+    return ChangeKey(new_: _i3.MultiAddress.codec.decode(input));
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress new_;
 
   @override
@@ -345,6 +387,17 @@ class ChangeKey extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ChangeKey && other.new_ == new_;
+
+  @override
+  int get hashCode => new_.hashCode;
 }
 
 /// See [`Pallet::set_prime`].
@@ -352,11 +405,10 @@ class SetPrime extends Call {
   const SetPrime({required this.who});
 
   factory SetPrime._decode(_i1.Input input) {
-    return SetPrime(
-      who: _i3.MultiAddress.codec.decode(input),
-    );
+    return SetPrime(who: _i3.MultiAddress.codec.decode(input));
   }
 
+  /// AccountIdLookupOf<T>
   final _i3.MultiAddress who;
 
   @override
@@ -380,6 +432,17 @@ class SetPrime extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetPrime && other.who == who;
+
+  @override
+  int get hashCode => who.hashCode;
 }
 
 /// See [`Pallet::clear_prime`].
@@ -395,4 +458,10 @@ class ClearPrime extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is ClearPrime;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

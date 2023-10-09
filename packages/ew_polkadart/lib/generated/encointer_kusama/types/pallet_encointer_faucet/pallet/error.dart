@@ -1,17 +1,38 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// faucet is empty
   faucetEmpty('FaucetEmpty', 0),
+
+  /// insufficient balance to create the faucet
   insuffiecientBalance('InsuffiecientBalance', 1),
+
+  /// faucet already exists
   faucetAlreadyExists('FaucetAlreadyExists', 2),
+
+  /// faucet does not exist
   inexsistentFaucet('InexsistentFaucet', 3),
+
+  /// purposeId creation failed
   purposeIdCreationFailed('PurposeIdCreationFailed', 4),
+
+  /// cid not in whitelist
   communityNotInWhitelist('CommunityNotInWhitelist', 5),
+
+  /// facuet is not empty
   faucetNotEmpty('FaucetNotEmpty', 6),
+
+  /// sender is not faucet creator
   notCreator('NotCreator', 7),
+
+  /// invalid community identifier in whitelist
   invalidCommunityIdentifierInWhitelist('InvalidCommunityIdentifierInWhitelist', 8),
+
+  /// drip amount too small
   dripAmountTooSmall('DripAmountTooSmall', 9);
 
   const Error(

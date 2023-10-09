@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../polkadot_parachain/primitives/id.dart' as _i3;
 
 abstract class Origin {
@@ -31,13 +33,11 @@ class $Origin {
   const $Origin();
 
   Relay relay() {
-    return const Relay();
+    return Relay();
   }
 
-  SiblingParachain siblingParachain({required _i3.Id value0}) {
-    return SiblingParachain(
-      value0: value0,
-    );
+  SiblingParachain siblingParachain(_i3.Id value0) {
+    return SiblingParachain(value0);
   }
 }
 
@@ -99,17 +99,22 @@ class Relay extends Origin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Relay;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class SiblingParachain extends Origin {
-  const SiblingParachain({required this.value0});
+  const SiblingParachain(this.value0);
 
   factory SiblingParachain._decode(_i1.Input input) {
-    return SiblingParachain(
-      value0: _i1.U32Codec.codec.decode(input),
-    );
+    return SiblingParachain(_i1.U32Codec.codec.decode(input));
   }
 
+  /// ParaId
   final _i3.Id value0;
 
   @override
@@ -117,7 +122,7 @@ class SiblingParachain extends Origin {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i1.U32Codec.codec.sizeHint(value0);
+    size = size + const _i3.IdCodec().sizeHint(value0);
     return size;
   }
 
@@ -131,4 +136,15 @@ class SiblingParachain extends Origin {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SiblingParachain && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

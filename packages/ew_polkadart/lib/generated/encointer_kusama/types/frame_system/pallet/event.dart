@@ -1,10 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i7;
+
 import '../../frame_support/dispatch/dispatch_info.dart' as _i3;
-import '../../sp_runtime/dispatch_error.dart' as _i4;
-import '../../sp_core/crypto/account_id32.dart' as _i5;
 import '../../primitive_types/h256.dart' as _i6;
+import '../../sp_core/crypto/account_id32.dart' as _i5;
+import '../../sp_runtime/dispatch_error.dart' as _i4;
 
 /// Event for the System pallet.
 abstract class Event {
@@ -35,9 +38,7 @@ class $Event {
   const $Event();
 
   ExtrinsicSuccess extrinsicSuccess({required _i3.DispatchInfo dispatchInfo}) {
-    return ExtrinsicSuccess(
-      dispatchInfo: dispatchInfo,
-    );
+    return ExtrinsicSuccess(dispatchInfo: dispatchInfo);
   }
 
   ExtrinsicFailed extrinsicFailed({
@@ -51,19 +52,15 @@ class $Event {
   }
 
   CodeUpdated codeUpdated() {
-    return const CodeUpdated();
+    return CodeUpdated();
   }
 
   NewAccount newAccount({required _i5.AccountId32 account}) {
-    return NewAccount(
-      account: account,
-    );
+    return NewAccount(account: account);
   }
 
   KilledAccount killedAccount({required _i5.AccountId32 account}) {
-    return KilledAccount(
-      account: account,
-    );
+    return KilledAccount(account: account);
   }
 
   Remarked remarked({
@@ -156,11 +153,10 @@ class ExtrinsicSuccess extends Event {
   const ExtrinsicSuccess({required this.dispatchInfo});
 
   factory ExtrinsicSuccess._decode(_i1.Input input) {
-    return ExtrinsicSuccess(
-      dispatchInfo: _i3.DispatchInfo.codec.decode(input),
-    );
+    return ExtrinsicSuccess(dispatchInfo: _i3.DispatchInfo.codec.decode(input));
   }
 
+  /// DispatchInfo
   final _i3.DispatchInfo dispatchInfo;
 
   @override
@@ -184,6 +180,17 @@ class ExtrinsicSuccess extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExtrinsicSuccess && other.dispatchInfo == dispatchInfo;
+
+  @override
+  int get hashCode => dispatchInfo.hashCode;
 }
 
 /// An extrinsic failed.
@@ -200,8 +207,10 @@ class ExtrinsicFailed extends Event {
     );
   }
 
+  /// DispatchError
   final _i4.DispatchError dispatchError;
 
+  /// DispatchInfo
   final _i3.DispatchInfo dispatchInfo;
 
   @override
@@ -233,6 +242,20 @@ class ExtrinsicFailed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ExtrinsicFailed && other.dispatchError == dispatchError && other.dispatchInfo == dispatchInfo;
+
+  @override
+  int get hashCode => Object.hash(
+        dispatchError,
+        dispatchInfo,
+      );
 }
 
 /// `:code` was updated.
@@ -248,6 +271,12 @@ class CodeUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is CodeUpdated;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 /// A new account was created.
@@ -255,11 +284,10 @@ class NewAccount extends Event {
   const NewAccount({required this.account});
 
   factory NewAccount._decode(_i1.Input input) {
-    return NewAccount(
-      account: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return NewAccount(account: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// T::AccountId
   final _i5.AccountId32 account;
 
   @override
@@ -269,7 +297,7 @@ class NewAccount extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(account);
+    size = size + const _i5.AccountId32Codec().sizeHint(account);
     return size;
   }
 
@@ -283,6 +311,21 @@ class NewAccount extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NewAccount &&
+          _i7.listsEqual(
+            other.account,
+            account,
+          );
+
+  @override
+  int get hashCode => account.hashCode;
 }
 
 /// An account was reaped.
@@ -290,11 +333,10 @@ class KilledAccount extends Event {
   const KilledAccount({required this.account});
 
   factory KilledAccount._decode(_i1.Input input) {
-    return KilledAccount(
-      account: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return KilledAccount(account: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// T::AccountId
   final _i5.AccountId32 account;
 
   @override
@@ -304,7 +346,7 @@ class KilledAccount extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(account);
+    size = size + const _i5.AccountId32Codec().sizeHint(account);
     return size;
   }
 
@@ -318,6 +360,21 @@ class KilledAccount extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is KilledAccount &&
+          _i7.listsEqual(
+            other.account,
+            account,
+          );
+
+  @override
+  int get hashCode => account.hashCode;
 }
 
 /// On on-chain remark happened.
@@ -334,8 +391,10 @@ class Remarked extends Event {
     );
   }
 
+  /// T::AccountId
   final _i5.AccountId32 sender;
 
+  /// T::Hash
   final _i6.H256 hash;
 
   @override
@@ -348,8 +407,8 @@ class Remarked extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(sender);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(hash);
+    size = size + const _i5.AccountId32Codec().sizeHint(sender);
+    size = size + const _i6.H256Codec().sizeHint(hash);
     return size;
   }
 
@@ -367,4 +426,26 @@ class Remarked extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Remarked &&
+          _i7.listsEqual(
+            other.sender,
+            sender,
+          ) &&
+          _i7.listsEqual(
+            other.hash,
+            hash,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        sender,
+        hash,
+      );
 }

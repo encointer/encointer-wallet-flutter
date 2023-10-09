@@ -1,11 +1,20 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// community identifier not found
   nonexistentCommunity('NonexistentCommunity', 0),
+
+  /// business already registered for this cid
   existingBusiness('ExistingBusiness', 1),
+
+  /// business does not exist
   nonexistentBusiness('NonexistentBusiness', 2),
+
+  /// offering does not exist
   nonexistentOffering('NonexistentOffering', 3);
 
   const Error(

@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:typed_data' as _i4;
+
 import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
 import '../../polkadot_parachain/primitives/head_data.dart' as _i2;
 import '../../primitive_types/h256.dart' as _i3;
-import 'dart:typed_data' as _i4;
 
 class PersistedValidationData {
   const PersistedValidationData({
@@ -16,12 +19,16 @@ class PersistedValidationData {
     return codec.decode(input);
   }
 
+  /// HeadData
   final _i2.HeadData parentHead;
 
+  /// N
   final int relayParentNumber;
 
+  /// H
   final _i3.H256 relayParentStorageRoot;
 
+  /// u32
   final int maxPovSize;
 
   static const $PersistedValidationDataCodec codec = $PersistedValidationDataCodec();
@@ -36,6 +43,32 @@ class PersistedValidationData {
         'relayParentStorageRoot': relayParentStorageRoot.toList(),
         'maxPovSize': maxPovSize,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PersistedValidationData &&
+          _i5.listsEqual(
+            other.parentHead,
+            parentHead,
+          ) &&
+          other.relayParentNumber == relayParentNumber &&
+          _i5.listsEqual(
+            other.relayParentStorageRoot,
+            relayParentStorageRoot,
+          ) &&
+          other.maxPovSize == maxPovSize;
+
+  @override
+  int get hashCode => Object.hash(
+        parentHead,
+        relayParentNumber,
+        relayParentStorageRoot,
+        maxPovSize,
+      );
 }
 
 class $PersistedValidationDataCodec with _i1.Codec<PersistedValidationData> {
@@ -77,9 +110,9 @@ class $PersistedValidationDataCodec with _i1.Codec<PersistedValidationData> {
   @override
   int sizeHint(PersistedValidationData obj) {
     int size = 0;
-    size = size + _i1.U8SequenceCodec.codec.sizeHint(obj.parentHead);
+    size = size + const _i2.HeadDataCodec().sizeHint(obj.parentHead);
     size = size + _i1.U32Codec.codec.sizeHint(obj.relayParentNumber);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(obj.relayParentStorageRoot);
+    size = size + const _i3.H256Codec().sizeHint(obj.relayParentStorageRoot);
     size = size + _i1.U32Codec.codec.sizeHint(obj.maxPovSize);
     return size;
   }

@@ -1,11 +1,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
-import '../../encointer_primitives/ceremonies/participant_type.dart' as _i4;
-import '../../sp_core/crypto/account_id32.dart' as _i5;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i8;
+
 import '../../encointer_meetup_validation/exclusion_reason.dart' as _i6;
 import '../../encointer_primitives/ceremonies/meetup_result.dart' as _i7;
+import '../../encointer_primitives/ceremonies/participant_type.dart' as _i4;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
+import '../../sp_core/crypto/account_id32.dart' as _i5;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -35,105 +38,91 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  ParticipantRegistered participantRegistered({
-    required _i3.CommunityIdentifier value0,
-    required _i4.ParticipantType value1,
-    required _i5.AccountId32 value2,
-  }) {
+  ParticipantRegistered participantRegistered(
+    _i3.CommunityIdentifier value0,
+    _i4.ParticipantType value1,
+    _i5.AccountId32 value2,
+  ) {
     return ParticipantRegistered(
-      value0: value0,
-      value1: value1,
-      value2: value2,
+      value0,
+      value1,
+      value2,
     );
   }
 
-  EndorsedParticipant endorsedParticipant({
-    required _i3.CommunityIdentifier value0,
-    required _i5.AccountId32 value1,
-    required _i5.AccountId32 value2,
-  }) {
+  EndorsedParticipant endorsedParticipant(
+    _i3.CommunityIdentifier value0,
+    _i5.AccountId32 value1,
+    _i5.AccountId32 value2,
+  ) {
     return EndorsedParticipant(
-      value0: value0,
-      value1: value1,
-      value2: value2,
+      value0,
+      value1,
+      value2,
     );
   }
 
-  AttestationsRegistered attestationsRegistered({
-    required _i3.CommunityIdentifier value0,
-    required BigInt value1,
-    required int value2,
-    required _i5.AccountId32 value3,
-  }) {
+  AttestationsRegistered attestationsRegistered(
+    _i3.CommunityIdentifier value0,
+    BigInt value1,
+    int value2,
+    _i5.AccountId32 value3,
+  ) {
     return AttestationsRegistered(
-      value0: value0,
-      value1: value1,
-      value2: value2,
-      value3: value3,
+      value0,
+      value1,
+      value2,
+      value3,
     );
   }
 
-  RewardsIssued rewardsIssued({
-    required _i3.CommunityIdentifier value0,
-    required BigInt value1,
-    required int value2,
-  }) {
+  RewardsIssued rewardsIssued(
+    _i3.CommunityIdentifier value0,
+    BigInt value1,
+    int value2,
+  ) {
     return RewardsIssued(
-      value0: value0,
-      value1: value1,
-      value2: value2,
+      value0,
+      value1,
+      value2,
     );
   }
 
-  InactivityTimeoutUpdated inactivityTimeoutUpdated({required int value0}) {
-    return InactivityTimeoutUpdated(
-      value0: value0,
-    );
+  InactivityTimeoutUpdated inactivityTimeoutUpdated(int value0) {
+    return InactivityTimeoutUpdated(value0);
   }
 
-  EndorsementTicketsPerBootstrapperUpdated endorsementTicketsPerBootstrapperUpdated({required int value0}) {
-    return EndorsementTicketsPerBootstrapperUpdated(
-      value0: value0,
-    );
+  EndorsementTicketsPerBootstrapperUpdated endorsementTicketsPerBootstrapperUpdated(int value0) {
+    return EndorsementTicketsPerBootstrapperUpdated(value0);
   }
 
-  EndorsementTicketsPerReputableUpdated endorsementTicketsPerReputableUpdated({required int value0}) {
-    return EndorsementTicketsPerReputableUpdated(
-      value0: value0,
-    );
+  EndorsementTicketsPerReputableUpdated endorsementTicketsPerReputableUpdated(int value0) {
+    return EndorsementTicketsPerReputableUpdated(value0);
   }
 
-  ReputationLifetimeUpdated reputationLifetimeUpdated({required int value0}) {
-    return ReputationLifetimeUpdated(
-      value0: value0,
-    );
+  ReputationLifetimeUpdated reputationLifetimeUpdated(int value0) {
+    return ReputationLifetimeUpdated(value0);
   }
 
-  MeetupTimeOffsetUpdated meetupTimeOffsetUpdated({required int value0}) {
-    return MeetupTimeOffsetUpdated(
-      value0: value0,
-    );
+  MeetupTimeOffsetUpdated meetupTimeOffsetUpdated(int value0) {
+    return MeetupTimeOffsetUpdated(value0);
   }
 
-  TimeToleranceUpdated timeToleranceUpdated({required BigInt value0}) {
-    return TimeToleranceUpdated(
-      value0: value0,
-    );
+  TimeToleranceUpdated timeToleranceUpdated(BigInt value0) {
+    return TimeToleranceUpdated(value0);
   }
 
-  LocationToleranceUpdated locationToleranceUpdated({required int value0}) {
-    return LocationToleranceUpdated(
-      value0: value0,
-    );
+  LocationToleranceUpdated locationToleranceUpdated(int value0) {
+    return LocationToleranceUpdated(value0);
   }
 
-  CommunityCeremonyHistoryPurged communityCeremonyHistoryPurged({
-    required _i3.CommunityIdentifier value0,
-    required int value1,
-  }) {
+  CommunityCeremonyHistoryPurged communityCeremonyHistoryPurged(
+    _i3.CommunityIdentifier value0,
+    int value1,
+  ) {
     return CommunityCeremonyHistoryPurged(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
@@ -153,25 +142,25 @@ class $Event {
     );
   }
 
-  InactivityCounterUpdated inactivityCounterUpdated({
-    required _i3.CommunityIdentifier value0,
-    required int value1,
-  }) {
+  InactivityCounterUpdated inactivityCounterUpdated(
+    _i3.CommunityIdentifier value0,
+    int value1,
+  ) {
     return InactivityCounterUpdated(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  MeetupEvaluated meetupEvaluated({
-    required _i3.CommunityIdentifier value0,
-    required BigInt value1,
-    required _i7.MeetupResult value2,
-  }) {
+  MeetupEvaluated meetupEvaluated(
+    _i3.CommunityIdentifier value0,
+    BigInt value1,
+    _i7.MeetupResult value2,
+  ) {
     return MeetupEvaluated(
-      value0: value0,
-      value1: value1,
-      value2: value2,
+      value0,
+      value1,
+      value2,
     );
   }
 }
@@ -315,24 +304,27 @@ class $EventCodec with _i1.Codec<Event> {
 
 /// Participant registered for next ceremony [community, participant type, who]
 class ParticipantRegistered extends Event {
-  const ParticipantRegistered({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-  });
+  const ParticipantRegistered(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
 
   factory ParticipantRegistered._decode(_i1.Input input) {
     return ParticipantRegistered(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i4.ParticipantType.codec.decode(input),
-      value2: const _i1.U8ArrayCodec(32).decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i4.ParticipantType.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// ParticipantType
   final _i4.ParticipantType value1;
 
+  /// T::AccountId
   final _i5.AccountId32 value2;
 
   @override
@@ -348,7 +340,7 @@ class ParticipantRegistered extends Event {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
     size = size + _i4.ParticipantType.codec.sizeHint(value1);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value2);
+    size = size + const _i5.AccountId32Codec().sizeHint(value2);
     return size;
   }
 
@@ -370,28 +362,52 @@ class ParticipantRegistered extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ParticipantRegistered &&
+          other.value0 == value0 &&
+          other.value1 == value1 &&
+          _i8.listsEqual(
+            other.value2,
+            value2,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }
 
 /// A bootstrapper (first accountid) has endorsed a participant (second accountid) who can now register as endorsee for this ceremony
 class EndorsedParticipant extends Event {
-  const EndorsedParticipant({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-  });
+  const EndorsedParticipant(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
 
   factory EndorsedParticipant._decode(_i1.Input input) {
     return EndorsedParticipant(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: const _i1.U8ArrayCodec(32).decode(input),
-      value2: const _i1.U8ArrayCodec(32).decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// T::AccountId
   final _i5.AccountId32 value1;
 
+  /// T::AccountId
   final _i5.AccountId32 value2;
 
   @override
@@ -406,8 +422,8 @@ class EndorsedParticipant extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value1);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value2);
+    size = size + const _i5.AccountId32Codec().sizeHint(value1);
+    size = size + const _i5.AccountId32Codec().sizeHint(value2);
     return size;
   }
 
@@ -429,32 +445,60 @@ class EndorsedParticipant extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EndorsedParticipant &&
+          other.value0 == value0 &&
+          _i8.listsEqual(
+            other.value1,
+            value1,
+          ) &&
+          _i8.listsEqual(
+            other.value2,
+            value2,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }
 
 /// A participant has registered N attestations for fellow meetup participants
 class AttestationsRegistered extends Event {
-  const AttestationsRegistered({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-    required this.value3,
-  });
+  const AttestationsRegistered(
+    this.value0,
+    this.value1,
+    this.value2,
+    this.value3,
+  );
 
   factory AttestationsRegistered._decode(_i1.Input input) {
     return AttestationsRegistered(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i1.U64Codec.codec.decode(input),
-      value2: _i1.U32Codec.codec.decode(input),
-      value3: const _i1.U8ArrayCodec(32).decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i1.U64Codec.codec.decode(input),
+      _i1.U32Codec.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// MeetupIndexType
   final BigInt value1;
 
+  /// u32
   final int value2;
 
+  /// T::AccountId
   final _i5.AccountId32 value3;
 
   @override
@@ -472,7 +516,7 @@ class AttestationsRegistered extends Event {
     size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
     size = size + _i1.U64Codec.codec.sizeHint(value1);
     size = size + _i1.U32Codec.codec.sizeHint(value2);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(value3);
+    size = size + const _i5.AccountId32Codec().sizeHint(value3);
     return size;
   }
 
@@ -498,28 +542,54 @@ class AttestationsRegistered extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AttestationsRegistered &&
+          other.value0 == value0 &&
+          other.value1 == value1 &&
+          other.value2 == value2 &&
+          _i8.listsEqual(
+            other.value3,
+            value3,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+        value3,
+      );
 }
 
 /// rewards have been claimed and issued successfully for N participants for their meetup at the previous ceremony
 class RewardsIssued extends Event {
-  const RewardsIssued({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-  });
+  const RewardsIssued(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
 
   factory RewardsIssued._decode(_i1.Input input) {
     return RewardsIssued(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i1.U64Codec.codec.decode(input),
-      value2: _i1.U8Codec.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i1.U64Codec.codec.decode(input),
+      _i1.U8Codec.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// MeetupIndexType
   final BigInt value1;
 
+  /// MeetupParticipantIndexType
   final int value2;
 
   @override
@@ -557,18 +627,32 @@ class RewardsIssued extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RewardsIssued && other.value0 == value0 && other.value1 == value1 && other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }
 
 /// inactivity timeout has changed. affects how many ceremony cycles a community can be idle before getting purged
 class InactivityTimeoutUpdated extends Event {
-  const InactivityTimeoutUpdated({required this.value0});
+  const InactivityTimeoutUpdated(this.value0);
 
   factory InactivityTimeoutUpdated._decode(_i1.Input input) {
-    return InactivityTimeoutUpdated(
-      value0: _i1.U32Codec.codec.decode(input),
-    );
+    return InactivityTimeoutUpdated(_i1.U32Codec.codec.decode(input));
   }
 
+  /// InactivityTimeoutType
   final int value0;
 
   @override
@@ -590,18 +674,28 @@ class InactivityTimeoutUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InactivityTimeoutUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// The number of endorsement tickets which bootstrappers can give out has changed
 class EndorsementTicketsPerBootstrapperUpdated extends Event {
-  const EndorsementTicketsPerBootstrapperUpdated({required this.value0});
+  const EndorsementTicketsPerBootstrapperUpdated(this.value0);
 
   factory EndorsementTicketsPerBootstrapperUpdated._decode(_i1.Input input) {
-    return EndorsementTicketsPerBootstrapperUpdated(
-      value0: _i1.U8Codec.codec.decode(input),
-    );
+    return EndorsementTicketsPerBootstrapperUpdated(_i1.U8Codec.codec.decode(input));
   }
 
+  /// EndorsementTicketsType
   final int value0;
 
   @override
@@ -623,18 +717,28 @@ class EndorsementTicketsPerBootstrapperUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EndorsementTicketsPerBootstrapperUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// The number of endorsement tickets which bootstrappers can give out has changed
 class EndorsementTicketsPerReputableUpdated extends Event {
-  const EndorsementTicketsPerReputableUpdated({required this.value0});
+  const EndorsementTicketsPerReputableUpdated(this.value0);
 
   factory EndorsementTicketsPerReputableUpdated._decode(_i1.Input input) {
-    return EndorsementTicketsPerReputableUpdated(
-      value0: _i1.U8Codec.codec.decode(input),
-    );
+    return EndorsementTicketsPerReputableUpdated(_i1.U8Codec.codec.decode(input));
   }
 
+  /// EndorsementTicketsType
   final int value0;
 
   @override
@@ -656,18 +760,28 @@ class EndorsementTicketsPerReputableUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EndorsementTicketsPerReputableUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// reputation lifetime has changed. After this many ceremony cycles, reputations is outdated
 class ReputationLifetimeUpdated extends Event {
-  const ReputationLifetimeUpdated({required this.value0});
+  const ReputationLifetimeUpdated(this.value0);
 
   factory ReputationLifetimeUpdated._decode(_i1.Input input) {
-    return ReputationLifetimeUpdated(
-      value0: _i1.U32Codec.codec.decode(input),
-    );
+    return ReputationLifetimeUpdated(_i1.U32Codec.codec.decode(input));
   }
 
+  /// ReputationLifetimeType
   final int value0;
 
   @override
@@ -689,18 +803,28 @@ class ReputationLifetimeUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ReputationLifetimeUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// meetup time offset has changed. affects the exact time the upcoming ceremony meetups will take place
 class MeetupTimeOffsetUpdated extends Event {
-  const MeetupTimeOffsetUpdated({required this.value0});
+  const MeetupTimeOffsetUpdated(this.value0);
 
   factory MeetupTimeOffsetUpdated._decode(_i1.Input input) {
-    return MeetupTimeOffsetUpdated(
-      value0: _i1.I32Codec.codec.decode(input),
-    );
+    return MeetupTimeOffsetUpdated(_i1.I32Codec.codec.decode(input));
   }
 
+  /// MeetupTimeOffsetType
   final int value0;
 
   @override
@@ -722,18 +846,28 @@ class MeetupTimeOffsetUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MeetupTimeOffsetUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// meetup time tolerance has changed
 class TimeToleranceUpdated extends Event {
-  const TimeToleranceUpdated({required this.value0});
+  const TimeToleranceUpdated(this.value0);
 
   factory TimeToleranceUpdated._decode(_i1.Input input) {
-    return TimeToleranceUpdated(
-      value0: _i1.U64Codec.codec.decode(input),
-    );
+    return TimeToleranceUpdated(_i1.U64Codec.codec.decode(input));
   }
 
+  /// T::Moment
   final BigInt value0;
 
   @override
@@ -755,18 +889,28 @@ class TimeToleranceUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TimeToleranceUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// meetup location tolerance changed [m]
 class LocationToleranceUpdated extends Event {
-  const LocationToleranceUpdated({required this.value0});
+  const LocationToleranceUpdated(this.value0);
 
   factory LocationToleranceUpdated._decode(_i1.Input input) {
-    return LocationToleranceUpdated(
-      value0: _i1.U32Codec.codec.decode(input),
-    );
+    return LocationToleranceUpdated(_i1.U32Codec.codec.decode(input));
   }
 
+  /// u32
   final int value0;
 
   @override
@@ -788,24 +932,37 @@ class LocationToleranceUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is LocationToleranceUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// the registry for given ceremony index and community has been purged
 class CommunityCeremonyHistoryPurged extends Event {
-  const CommunityCeremonyHistoryPurged({
-    required this.value0,
-    required this.value1,
-  });
+  const CommunityCeremonyHistoryPurged(
+    this.value0,
+    this.value1,
+  );
 
   factory CommunityCeremonyHistoryPurged._decode(_i1.Input input) {
     return CommunityCeremonyHistoryPurged(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i1.U32Codec.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i1.U32Codec.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// CeremonyIndexType
   final int value1;
 
   @override
@@ -837,6 +994,20 @@ class CommunityCeremonyHistoryPurged extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CommunityCeremonyHistoryPurged && other.value0 == value0 && other.value1 == value1;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 class NoReward extends Event {
@@ -858,14 +1029,19 @@ class NoReward extends Event {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// CeremonyIndexType
   final int cindex;
 
+  /// MeetupIndexType
   final BigInt meetupIndex;
 
+  /// T::AccountId
   final _i5.AccountId32 account;
 
+  /// ExclusionReason
   final _i6.ExclusionReason reason;
 
   @override
@@ -884,7 +1060,7 @@ class NoReward extends Event {
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
     size = size + _i1.U32Codec.codec.sizeHint(cindex);
     size = size + _i1.U64Codec.codec.sizeHint(meetupIndex);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(account);
+    size = size + const _i5.AccountId32Codec().sizeHint(account);
     size = size + _i6.ExclusionReason.codec.sizeHint(reason);
     return size;
   }
@@ -915,24 +1091,51 @@ class NoReward extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NoReward &&
+          other.cid == cid &&
+          other.cindex == cindex &&
+          other.meetupIndex == meetupIndex &&
+          _i8.listsEqual(
+            other.account,
+            account,
+          ) &&
+          other.reason == reason;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        cindex,
+        meetupIndex,
+        account,
+        reason,
+      );
 }
 
 /// The inactivity counter of a community has been increased
 class InactivityCounterUpdated extends Event {
-  const InactivityCounterUpdated({
-    required this.value0,
-    required this.value1,
-  });
+  const InactivityCounterUpdated(
+    this.value0,
+    this.value1,
+  );
 
   factory InactivityCounterUpdated._decode(_i1.Input input) {
     return InactivityCounterUpdated(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i1.U32Codec.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i1.U32Codec.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// u32
   final int value1;
 
   @override
@@ -964,28 +1167,45 @@ class InactivityCounterUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is InactivityCounterUpdated && other.value0 == value0 && other.value1 == value1;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 /// Result of the meetup at the previous ceremony
 class MeetupEvaluated extends Event {
-  const MeetupEvaluated({
-    required this.value0,
-    required this.value1,
-    required this.value2,
-  });
+  const MeetupEvaluated(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
 
   factory MeetupEvaluated._decode(_i1.Input input) {
     return MeetupEvaluated(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i1.U64Codec.codec.decode(input),
-      value2: _i7.MeetupResult.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i1.U64Codec.codec.decode(input),
+      _i7.MeetupResult.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// MeetupIndexType
   final BigInt value1;
 
+  /// MeetupResult
   final _i7.MeetupResult value2;
 
   @override
@@ -1023,4 +1243,19 @@ class MeetupEvaluated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MeetupEvaluated && other.value0 == value0 && other.value1 == value1 && other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }

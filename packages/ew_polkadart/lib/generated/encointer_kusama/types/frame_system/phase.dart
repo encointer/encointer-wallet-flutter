@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 abstract class Phase {
   const Phase();
@@ -29,18 +30,16 @@ abstract class Phase {
 class $Phase {
   const $Phase();
 
-  ApplyExtrinsic applyExtrinsic({required int value0}) {
-    return ApplyExtrinsic(
-      value0: value0,
-    );
+  ApplyExtrinsic applyExtrinsic(int value0) {
+    return ApplyExtrinsic(value0);
   }
 
   Finalization finalization() {
-    return const Finalization();
+    return Finalization();
   }
 
   Initialization initialization() {
-    return const Initialization();
+    return Initialization();
   }
 }
 
@@ -98,14 +97,13 @@ class $PhaseCodec with _i1.Codec<Phase> {
 }
 
 class ApplyExtrinsic extends Phase {
-  const ApplyExtrinsic({required this.value0});
+  const ApplyExtrinsic(this.value0);
 
   factory ApplyExtrinsic._decode(_i1.Input input) {
-    return ApplyExtrinsic(
-      value0: _i1.U32Codec.codec.decode(input),
-    );
+    return ApplyExtrinsic(_i1.U32Codec.codec.decode(input));
   }
 
+  /// u32
   final int value0;
 
   @override
@@ -127,6 +125,17 @@ class ApplyExtrinsic extends Phase {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ApplyExtrinsic && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Finalization extends Phase {
@@ -141,6 +150,12 @@ class Finalization extends Phase {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Finalization;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }
 
 class Initialization extends Phase {
@@ -155,4 +170,10 @@ class Initialization extends Phase {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is Initialization;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

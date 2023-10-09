@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
-import '../../sp_core/crypto/account_id32.dart' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
 import '../../primitive_types/h256.dart' as _i4;
+import '../../sp_core/crypto/account_id32.dart' as _i3;
 import '../../sp_runtime/dispatch_error.dart' as _i5;
 
 /// The `Event` enum of this pallet
@@ -64,15 +67,11 @@ class $Event {
   }
 
   Approved approved({required _i4.H256 proposalHash}) {
-    return Approved(
-      proposalHash: proposalHash,
-    );
+    return Approved(proposalHash: proposalHash);
   }
 
   Disapproved disapproved({required _i4.H256 proposalHash}) {
-    return Disapproved(
-      proposalHash: proposalHash,
-    );
+    return Disapproved(proposalHash: proposalHash);
   }
 
   Executed executed({
@@ -208,12 +207,16 @@ class Proposed extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 account;
 
+  /// ProposalIndex
   final int proposalIndex;
 
+  /// T::Hash
   final _i4.H256 proposalHash;
 
+  /// MemberCount
   final int threshold;
 
   @override
@@ -228,9 +231,9 @@ class Proposed extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(account);
+    size = size + const _i3.AccountId32Codec().sizeHint(account);
     size = size + _i1.U32Codec.codec.sizeHint(proposalIndex);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposalHash);
+    size = size + const _i4.H256Codec().sizeHint(proposalHash);
     size = size + _i1.U32Codec.codec.sizeHint(threshold);
     return size;
   }
@@ -257,6 +260,32 @@ class Proposed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Proposed &&
+          _i6.listsEqual(
+            other.account,
+            account,
+          ) &&
+          other.proposalIndex == proposalIndex &&
+          _i6.listsEqual(
+            other.proposalHash,
+            proposalHash,
+          ) &&
+          other.threshold == threshold;
+
+  @override
+  int get hashCode => Object.hash(
+        account,
+        proposalIndex,
+        proposalHash,
+        threshold,
+      );
 }
 
 /// A motion (given hash) has been voted on by given account, leaving
@@ -280,14 +309,19 @@ class Voted extends Event {
     );
   }
 
+  /// T::AccountId
   final _i3.AccountId32 account;
 
+  /// T::Hash
   final _i4.H256 proposalHash;
 
+  /// bool
   final bool voted;
 
+  /// MemberCount
   final int yes;
 
+  /// MemberCount
   final int no;
 
   @override
@@ -303,8 +337,8 @@ class Voted extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(account);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposalHash);
+    size = size + const _i3.AccountId32Codec().sizeHint(account);
+    size = size + const _i4.H256Codec().sizeHint(proposalHash);
     size = size + _i1.BoolCodec.codec.sizeHint(voted);
     size = size + _i1.U32Codec.codec.sizeHint(yes);
     size = size + _i1.U32Codec.codec.sizeHint(no);
@@ -337,6 +371,34 @@ class Voted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Voted &&
+          _i6.listsEqual(
+            other.account,
+            account,
+          ) &&
+          _i6.listsEqual(
+            other.proposalHash,
+            proposalHash,
+          ) &&
+          other.voted == voted &&
+          other.yes == yes &&
+          other.no == no;
+
+  @override
+  int get hashCode => Object.hash(
+        account,
+        proposalHash,
+        voted,
+        yes,
+        no,
+      );
 }
 
 /// A motion was approved by the required threshold.
@@ -344,11 +406,10 @@ class Approved extends Event {
   const Approved({required this.proposalHash});
 
   factory Approved._decode(_i1.Input input) {
-    return Approved(
-      proposalHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Approved(proposalHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// T::Hash
   final _i4.H256 proposalHash;
 
   @override
@@ -358,7 +419,7 @@ class Approved extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposalHash);
+    size = size + const _i4.H256Codec().sizeHint(proposalHash);
     return size;
   }
 
@@ -372,6 +433,21 @@ class Approved extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Approved &&
+          _i6.listsEqual(
+            other.proposalHash,
+            proposalHash,
+          );
+
+  @override
+  int get hashCode => proposalHash.hashCode;
 }
 
 /// A motion was not approved by the required threshold.
@@ -379,11 +455,10 @@ class Disapproved extends Event {
   const Disapproved({required this.proposalHash});
 
   factory Disapproved._decode(_i1.Input input) {
-    return Disapproved(
-      proposalHash: const _i1.U8ArrayCodec(32).decode(input),
-    );
+    return Disapproved(proposalHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
+  /// T::Hash
   final _i4.H256 proposalHash;
 
   @override
@@ -393,7 +468,7 @@ class Disapproved extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposalHash);
+    size = size + const _i4.H256Codec().sizeHint(proposalHash);
     return size;
   }
 
@@ -407,6 +482,21 @@ class Disapproved extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Disapproved &&
+          _i6.listsEqual(
+            other.proposalHash,
+            proposalHash,
+          );
+
+  @override
+  int get hashCode => proposalHash.hashCode;
 }
 
 /// A motion was executed; result will be `Ok` if it returned without error.
@@ -426,8 +516,10 @@ class Executed extends Event {
     );
   }
 
+  /// T::Hash
   final _i4.H256 proposalHash;
 
+  /// DispatchResult
   final _i1.Result<dynamic, _i5.DispatchError> result;
 
   @override
@@ -440,7 +532,7 @@ class Executed extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposalHash);
+    size = size + const _i4.H256Codec().sizeHint(proposalHash);
     size = size +
         const _i1.ResultCodec<dynamic, _i5.DispatchError>(
           _i1.NullCodec.codec,
@@ -466,6 +558,25 @@ class Executed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Executed &&
+          _i6.listsEqual(
+            other.proposalHash,
+            proposalHash,
+          ) &&
+          other.result == result;
+
+  @override
+  int get hashCode => Object.hash(
+        proposalHash,
+        result,
+      );
 }
 
 /// A single member did some action; result will be `Ok` if it returned without error.
@@ -485,8 +596,10 @@ class MemberExecuted extends Event {
     );
   }
 
+  /// T::Hash
   final _i4.H256 proposalHash;
 
+  /// DispatchResult
   final _i1.Result<dynamic, _i5.DispatchError> result;
 
   @override
@@ -499,7 +612,7 @@ class MemberExecuted extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposalHash);
+    size = size + const _i4.H256Codec().sizeHint(proposalHash);
     size = size +
         const _i1.ResultCodec<dynamic, _i5.DispatchError>(
           _i1.NullCodec.codec,
@@ -525,6 +638,25 @@ class MemberExecuted extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MemberExecuted &&
+          _i6.listsEqual(
+            other.proposalHash,
+            proposalHash,
+          ) &&
+          other.result == result;
+
+  @override
+  int get hashCode => Object.hash(
+        proposalHash,
+        result,
+      );
 }
 
 /// A proposal was closed because its threshold was reached or after its duration was up.
@@ -543,10 +675,13 @@ class Closed extends Event {
     );
   }
 
+  /// T::Hash
   final _i4.H256 proposalHash;
 
+  /// MemberCount
   final int yes;
 
+  /// MemberCount
   final int no;
 
   @override
@@ -560,7 +695,7 @@ class Closed extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(proposalHash);
+    size = size + const _i4.H256Codec().sizeHint(proposalHash);
     size = size + _i1.U32Codec.codec.sizeHint(yes);
     size = size + _i1.U32Codec.codec.sizeHint(no);
     return size;
@@ -584,4 +719,25 @@ class Closed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Closed &&
+          _i6.listsEqual(
+            other.proposalHash,
+            proposalHash,
+          ) &&
+          other.yes == yes &&
+          other.no == no;
+
+  @override
+  int get hashCode => Object.hash(
+        proposalHash,
+        yes,
+        no,
+      );
 }

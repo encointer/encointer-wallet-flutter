@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../../sp_weights/weight_v2/weight.dart' as _i3;
 import 'error.dart' as _i4;
 
@@ -31,26 +33,22 @@ abstract class Outcome {
 class $Outcome {
   const $Outcome();
 
-  Complete complete({required _i3.Weight value0}) {
-    return Complete(
-      value0: value0,
-    );
+  Complete complete(_i3.Weight value0) {
+    return Complete(value0);
   }
 
-  Incomplete incomplete({
-    required _i3.Weight value0,
-    required _i4.Error value1,
-  }) {
+  Incomplete incomplete(
+    _i3.Weight value0,
+    _i4.Error value1,
+  ) {
     return Incomplete(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  Error error({required _i4.Error value0}) {
-    return Error(
-      value0: value0,
-    );
+  Error error(_i4.Error value0) {
+    return Error(value0);
   }
 }
 
@@ -108,14 +106,13 @@ class $OutcomeCodec with _i1.Codec<Outcome> {
 }
 
 class Complete extends Outcome {
-  const Complete({required this.value0});
+  const Complete(this.value0);
 
   factory Complete._decode(_i1.Input input) {
-    return Complete(
-      value0: _i3.Weight.codec.decode(input),
-    );
+    return Complete(_i3.Weight.codec.decode(input));
   }
 
+  /// Weight
   final _i3.Weight value0;
 
   @override
@@ -137,23 +134,36 @@ class Complete extends Outcome {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Complete && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Incomplete extends Outcome {
-  const Incomplete({
-    required this.value0,
-    required this.value1,
-  });
+  const Incomplete(
+    this.value0,
+    this.value1,
+  );
 
   factory Incomplete._decode(_i1.Input input) {
     return Incomplete(
-      value0: _i3.Weight.codec.decode(input),
-      value1: _i4.Error.codec.decode(input),
+      _i3.Weight.codec.decode(input),
+      _i4.Error.codec.decode(input),
     );
   }
 
+  /// Weight
   final _i3.Weight value0;
 
+  /// Error
   final _i4.Error value1;
 
   @override
@@ -185,17 +195,30 @@ class Incomplete extends Outcome {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Incomplete && other.value0 == value0 && other.value1 == value1;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 class Error extends Outcome {
-  const Error({required this.value0});
+  const Error(this.value0);
 
   factory Error._decode(_i1.Input input) {
-    return Error(
-      value0: _i4.Error.codec.decode(input),
-    );
+    return Error(_i4.Error.codec.decode(input));
   }
 
+  /// Error
   final _i4.Error value0;
 
   @override
@@ -217,4 +240,15 @@ class Error extends Outcome {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Error && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

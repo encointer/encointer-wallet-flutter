@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -52,9 +55,7 @@ class $Call {
   }
 
   DeleteBusiness deleteBusiness({required _i3.CommunityIdentifier cid}) {
-    return DeleteBusiness(
-      cid: cid,
-    );
+    return DeleteBusiness(cid: cid);
   }
 
   CreateOffering createOffering({
@@ -178,8 +179,10 @@ class CreateBusiness extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// PalletString
   final List<int> url;
 
   @override
@@ -211,6 +214,25 @@ class CreateBusiness extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CreateBusiness &&
+          other.cid == cid &&
+          _i4.listsEqual(
+            other.url,
+            url,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        url,
+      );
 }
 
 /// See [`Pallet::update_business`].
@@ -227,8 +249,10 @@ class UpdateBusiness extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// PalletString
   final List<int> url;
 
   @override
@@ -260,6 +284,25 @@ class UpdateBusiness extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateBusiness &&
+          other.cid == cid &&
+          _i4.listsEqual(
+            other.url,
+            url,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        url,
+      );
 }
 
 /// See [`Pallet::delete_business`].
@@ -267,11 +310,10 @@ class DeleteBusiness extends Call {
   const DeleteBusiness({required this.cid});
 
   factory DeleteBusiness._decode(_i1.Input input) {
-    return DeleteBusiness(
-      cid: _i3.CommunityIdentifier.codec.decode(input),
-    );
+    return DeleteBusiness(cid: _i3.CommunityIdentifier.codec.decode(input));
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
   @override
@@ -295,6 +337,17 @@ class DeleteBusiness extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DeleteBusiness && other.cid == cid;
+
+  @override
+  int get hashCode => cid.hashCode;
 }
 
 /// See [`Pallet::create_offering`].
@@ -311,8 +364,10 @@ class CreateOffering extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// PalletString
   final List<int> url;
 
   @override
@@ -344,6 +399,25 @@ class CreateOffering extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CreateOffering &&
+          other.cid == cid &&
+          _i4.listsEqual(
+            other.url,
+            url,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        url,
+      );
 }
 
 /// See [`Pallet::update_offering`].
@@ -362,10 +436,13 @@ class UpdateOffering extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// OfferingIdentifier
   final int oid;
 
+  /// PalletString
   final List<int> url;
 
   @override
@@ -403,6 +480,27 @@ class UpdateOffering extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdateOffering &&
+          other.cid == cid &&
+          other.oid == oid &&
+          _i4.listsEqual(
+            other.url,
+            url,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        oid,
+        url,
+      );
 }
 
 /// See [`Pallet::delete_offering`].
@@ -419,8 +517,10 @@ class DeleteOffering extends Call {
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier cid;
 
+  /// OfferingIdentifier
   final int oid;
 
   @override
@@ -452,4 +552,18 @@ class DeleteOffering extends Call {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DeleteOffering && other.cid == cid && other.oid == oid;
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        oid,
+      );
 }

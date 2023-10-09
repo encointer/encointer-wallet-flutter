@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 class AbridgedHostConfiguration {
   const AbridgedHostConfiguration({
@@ -19,22 +20,31 @@ class AbridgedHostConfiguration {
     return codec.decode(input);
   }
 
+  /// u32
   final int maxCodeSize;
 
+  /// u32
   final int maxHeadDataSize;
 
+  /// u32
   final int maxUpwardQueueCount;
 
+  /// u32
   final int maxUpwardQueueSize;
 
+  /// u32
   final int maxUpwardMessageSize;
 
+  /// u32
   final int maxUpwardMessageNumPerCandidate;
 
+  /// u32
   final int hrmpMaxMessageNumPerCandidate;
 
+  /// BlockNumber
   final int validationUpgradeCooldown;
 
+  /// BlockNumber
   final int validationUpgradeDelay;
 
   static const $AbridgedHostConfigurationCodec codec = $AbridgedHostConfigurationCodec();
@@ -54,6 +64,36 @@ class AbridgedHostConfiguration {
         'validationUpgradeCooldown': validationUpgradeCooldown,
         'validationUpgradeDelay': validationUpgradeDelay,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AbridgedHostConfiguration &&
+          other.maxCodeSize == maxCodeSize &&
+          other.maxHeadDataSize == maxHeadDataSize &&
+          other.maxUpwardQueueCount == maxUpwardQueueCount &&
+          other.maxUpwardQueueSize == maxUpwardQueueSize &&
+          other.maxUpwardMessageSize == maxUpwardMessageSize &&
+          other.maxUpwardMessageNumPerCandidate == maxUpwardMessageNumPerCandidate &&
+          other.hrmpMaxMessageNumPerCandidate == hrmpMaxMessageNumPerCandidate &&
+          other.validationUpgradeCooldown == validationUpgradeCooldown &&
+          other.validationUpgradeDelay == validationUpgradeDelay;
+
+  @override
+  int get hashCode => Object.hash(
+        maxCodeSize,
+        maxHeadDataSize,
+        maxUpwardQueueCount,
+        maxUpwardQueueSize,
+        maxUpwardMessageSize,
+        maxUpwardMessageNumPerCandidate,
+        hrmpMaxMessageNumPerCandidate,
+        validationUpgradeCooldown,
+        validationUpgradeDelay,
+      );
 }
 
 class $AbridgedHostConfigurationCodec with _i1.Codec<AbridgedHostConfiguration> {

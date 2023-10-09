@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import 'v3/multiasset/asset_id.dart' as _i3;
 
 abstract class VersionedAssetId {
@@ -30,10 +32,8 @@ abstract class VersionedAssetId {
 class $VersionedAssetId {
   const $VersionedAssetId();
 
-  V3 v3({required _i3.AssetId value0}) {
-    return V3(
-      value0: value0,
-    );
+  V3 v3(_i3.AssetId value0) {
+    return V3(value0);
   }
 }
 
@@ -77,14 +77,13 @@ class $VersionedAssetIdCodec with _i1.Codec<VersionedAssetId> {
 }
 
 class V3 extends VersionedAssetId {
-  const V3({required this.value0});
+  const V3(this.value0);
 
   factory V3._decode(_i1.Input input) {
-    return V3(
-      value0: _i3.AssetId.codec.decode(input),
-    );
+    return V3(_i3.AssetId.codec.decode(input));
   }
 
+  /// v3::AssetId
   final _i3.AssetId value0;
 
   @override
@@ -106,4 +105,15 @@ class V3 extends VersionedAssetId {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is V3 && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

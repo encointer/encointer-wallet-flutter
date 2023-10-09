@@ -1,7 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i3;
+
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
-import 'dart:async' as _i3;
 
 class Queries {
   const Queries(this.__api);

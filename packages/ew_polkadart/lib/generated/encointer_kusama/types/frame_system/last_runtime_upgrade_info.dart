@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 class LastRuntimeUpgradeInfo {
   const LastRuntimeUpgradeInfo({
@@ -12,8 +13,10 @@ class LastRuntimeUpgradeInfo {
     return codec.decode(input);
   }
 
+  /// codec::Compact<u32>
   final BigInt specVersion;
 
+  /// sp_runtime::RuntimeString
   final String specName;
 
   static const $LastRuntimeUpgradeInfoCodec codec = $LastRuntimeUpgradeInfoCodec();
@@ -26,6 +29,20 @@ class LastRuntimeUpgradeInfo {
         'specVersion': specVersion,
         'specName': specName,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is LastRuntimeUpgradeInfo && other.specVersion == specVersion && other.specName == specName;
+
+  @override
+  int get hashCode => Object.hash(
+        specVersion,
+        specName,
+      );
 }
 
 class $LastRuntimeUpgradeInfoCodec with _i1.Codec<LastRuntimeUpgradeInfo> {

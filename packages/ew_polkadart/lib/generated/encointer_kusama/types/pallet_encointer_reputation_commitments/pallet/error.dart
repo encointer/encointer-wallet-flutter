@@ -1,11 +1,20 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// Participant already commited their reputation for this purpose
   alreadyCommited('AlreadyCommited', 0),
+
+  /// Participant does not have reputation for the specified cid, cindex
   noReputation('NoReputation', 1),
+
+  /// Purposose registry is full
   purposeRegistryOverflow('PurposeRegistryOverflow', 2),
+
+  /// Inexsitent purpose
   inexistentPurpose('InexistentPurpose', 3);
 
   const Error(

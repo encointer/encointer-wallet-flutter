@@ -1,9 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i6;
+
+import 'multi_asset.dart' as _i5;
 import 'multi_assets.dart' as _i3;
 import 'wild_multi_asset.dart' as _i4;
-import 'multi_asset.dart' as _i5;
 
 abstract class MultiAssetFilter {
   const MultiAssetFilter();
@@ -32,16 +35,12 @@ abstract class MultiAssetFilter {
 class $MultiAssetFilter {
   const $MultiAssetFilter();
 
-  Definite definite({required _i3.MultiAssets value0}) {
-    return Definite(
-      value0: value0,
-    );
+  Definite definite(_i3.MultiAssets value0) {
+    return Definite(value0);
   }
 
-  Wild wild({required _i4.WildMultiAsset value0}) {
-    return Wild(
-      value0: value0,
-    );
+  Wild wild(_i4.WildMultiAsset value0) {
+    return Wild(value0);
   }
 }
 
@@ -92,14 +91,13 @@ class $MultiAssetFilterCodec with _i1.Codec<MultiAssetFilter> {
 }
 
 class Definite extends MultiAssetFilter {
-  const Definite({required this.value0});
+  const Definite(this.value0);
 
   factory Definite._decode(_i1.Input input) {
-    return Definite(
-      value0: const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).decode(input),
-    );
+    return Definite(const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).decode(input));
   }
 
+  /// MultiAssets
   final _i3.MultiAssets value0;
 
   @override
@@ -108,7 +106,7 @@ class Definite extends MultiAssetFilter {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i5.MultiAsset>(_i5.MultiAsset.codec).sizeHint(value0);
+    size = size + const _i3.MultiAssetsCodec().sizeHint(value0);
     return size;
   }
 
@@ -122,17 +120,31 @@ class Definite extends MultiAssetFilter {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Definite &&
+          _i6.listsEqual(
+            other.value0,
+            value0,
+          );
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class Wild extends MultiAssetFilter {
-  const Wild({required this.value0});
+  const Wild(this.value0);
 
   factory Wild._decode(_i1.Input input) {
-    return Wild(
-      value0: _i4.WildMultiAsset.codec.decode(input),
-    );
+    return Wild(_i4.WildMultiAsset.codec.decode(input));
   }
 
+  /// WildMultiAsset
   final _i4.WildMultiAsset value0;
 
   @override
@@ -154,4 +166,15 @@ class Wild extends MultiAssetFilter {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Wild && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

@@ -1,10 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
-import '../../substrate_fixed/fixed_u128.dart' as _i4;
-import '../../substrate_fixed/fixed_i128.dart' as _i5;
 import '../../encointer_primitives/communities/location.dart' as _i6;
+import '../../substrate_fixed/fixed_i128.dart' as _i5;
+import '../../substrate_fixed/fixed_u128.dart' as _i4;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -34,74 +36,64 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  CommunityRegistered communityRegistered({required _i3.CommunityIdentifier value0}) {
-    return CommunityRegistered(
-      value0: value0,
-    );
+  CommunityRegistered communityRegistered(_i3.CommunityIdentifier value0) {
+    return CommunityRegistered(value0);
   }
 
-  MetadataUpdated metadataUpdated({required _i3.CommunityIdentifier value0}) {
-    return MetadataUpdated(
-      value0: value0,
-    );
+  MetadataUpdated metadataUpdated(_i3.CommunityIdentifier value0) {
+    return MetadataUpdated(value0);
   }
 
-  NominalIncomeUpdated nominalIncomeUpdated({
-    required _i3.CommunityIdentifier value0,
-    required _i4.FixedU128 value1,
-  }) {
+  NominalIncomeUpdated nominalIncomeUpdated(
+    _i3.CommunityIdentifier value0,
+    _i4.FixedU128 value1,
+  ) {
     return NominalIncomeUpdated(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  DemurrageUpdated demurrageUpdated({
-    required _i3.CommunityIdentifier value0,
-    required _i5.FixedI128 value1,
-  }) {
+  DemurrageUpdated demurrageUpdated(
+    _i3.CommunityIdentifier value0,
+    _i5.FixedI128 value1,
+  ) {
     return DemurrageUpdated(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  LocationAdded locationAdded({
-    required _i3.CommunityIdentifier value0,
-    required _i6.Location value1,
-  }) {
+  LocationAdded locationAdded(
+    _i3.CommunityIdentifier value0,
+    _i6.Location value1,
+  ) {
     return LocationAdded(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  LocationRemoved locationRemoved({
-    required _i3.CommunityIdentifier value0,
-    required _i6.Location value1,
-  }) {
+  LocationRemoved locationRemoved(
+    _i3.CommunityIdentifier value0,
+    _i6.Location value1,
+  ) {
     return LocationRemoved(
-      value0: value0,
-      value1: value1,
+      value0,
+      value1,
     );
   }
 
-  MinSolarTripTimeSUpdated minSolarTripTimeSUpdated({required int value0}) {
-    return MinSolarTripTimeSUpdated(
-      value0: value0,
-    );
+  MinSolarTripTimeSUpdated minSolarTripTimeSUpdated(int value0) {
+    return MinSolarTripTimeSUpdated(value0);
   }
 
-  MaxSpeedMpsUpdated maxSpeedMpsUpdated({required int value0}) {
-    return MaxSpeedMpsUpdated(
-      value0: value0,
-    );
+  MaxSpeedMpsUpdated maxSpeedMpsUpdated(int value0) {
+    return MaxSpeedMpsUpdated(value0);
   }
 
-  CommunityPurged communityPurged({required _i3.CommunityIdentifier value0}) {
-    return CommunityPurged(
-      value0: value0,
-    );
+  CommunityPurged communityPurged(_i3.CommunityIdentifier value0) {
+    return CommunityPurged(value0);
   }
 }
 
@@ -202,14 +194,13 @@ class $EventCodec with _i1.Codec<Event> {
 
 /// A new community was registered [community_identifier]
 class CommunityRegistered extends Event {
-  const CommunityRegistered({required this.value0});
+  const CommunityRegistered(this.value0);
 
   factory CommunityRegistered._decode(_i1.Input input) {
-    return CommunityRegistered(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-    );
+    return CommunityRegistered(_i3.CommunityIdentifier.codec.decode(input));
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
   @override
@@ -231,18 +222,28 @@ class CommunityRegistered extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CommunityRegistered && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// CommunityMetadata was updated [community_identifier]
 class MetadataUpdated extends Event {
-  const MetadataUpdated({required this.value0});
+  const MetadataUpdated(this.value0);
 
   factory MetadataUpdated._decode(_i1.Input input) {
-    return MetadataUpdated(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-    );
+    return MetadataUpdated(_i3.CommunityIdentifier.codec.decode(input));
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
   @override
@@ -264,24 +265,37 @@ class MetadataUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MetadataUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// A community's nominal income was updated [community_identifier, new_income]
 class NominalIncomeUpdated extends Event {
-  const NominalIncomeUpdated({
-    required this.value0,
-    required this.value1,
-  });
+  const NominalIncomeUpdated(
+    this.value0,
+    this.value1,
+  );
 
   factory NominalIncomeUpdated._decode(_i1.Input input) {
     return NominalIncomeUpdated(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i4.FixedU128.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i4.FixedU128.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// NominalIncomeType
   final _i4.FixedU128 value1;
 
   @override
@@ -313,24 +327,40 @@ class NominalIncomeUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is NominalIncomeUpdated && other.value0 == value0 && other.value1 == value1;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 /// A community's demurrage was updated [community_identifier, new_demurrage]
 class DemurrageUpdated extends Event {
-  const DemurrageUpdated({
-    required this.value0,
-    required this.value1,
-  });
+  const DemurrageUpdated(
+    this.value0,
+    this.value1,
+  );
 
   factory DemurrageUpdated._decode(_i1.Input input) {
     return DemurrageUpdated(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i5.FixedI128.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i5.FixedI128.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// Demurrage
   final _i5.FixedI128 value1;
 
   @override
@@ -362,24 +392,40 @@ class DemurrageUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is DemurrageUpdated && other.value0 == value0 && other.value1 == value1;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 /// A location has been added
 class LocationAdded extends Event {
-  const LocationAdded({
-    required this.value0,
-    required this.value1,
-  });
+  const LocationAdded(
+    this.value0,
+    this.value1,
+  );
 
   factory LocationAdded._decode(_i1.Input input) {
     return LocationAdded(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i6.Location.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i6.Location.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// Location
   final _i6.Location value1;
 
   @override
@@ -411,24 +457,40 @@ class LocationAdded extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is LocationAdded && other.value0 == value0 && other.value1 == value1;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 /// A location has been removed
 class LocationRemoved extends Event {
-  const LocationRemoved({
-    required this.value0,
-    required this.value1,
-  });
+  const LocationRemoved(
+    this.value0,
+    this.value1,
+  );
 
   factory LocationRemoved._decode(_i1.Input input) {
     return LocationRemoved(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-      value1: _i6.Location.codec.decode(input),
+      _i3.CommunityIdentifier.codec.decode(input),
+      _i6.Location.codec.decode(input),
     );
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
+  /// Location
   final _i6.Location value1;
 
   @override
@@ -460,18 +522,31 @@ class LocationRemoved extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is LocationRemoved && other.value0 == value0 && other.value1 == value1;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
 }
 
 /// A security parameter for minimum meetup location distance has changed
 class MinSolarTripTimeSUpdated extends Event {
-  const MinSolarTripTimeSUpdated({required this.value0});
+  const MinSolarTripTimeSUpdated(this.value0);
 
   factory MinSolarTripTimeSUpdated._decode(_i1.Input input) {
-    return MinSolarTripTimeSUpdated(
-      value0: _i1.U32Codec.codec.decode(input),
-    );
+    return MinSolarTripTimeSUpdated(_i1.U32Codec.codec.decode(input));
   }
 
+  /// MinSolarTripTimeType
   final int value0;
 
   @override
@@ -493,18 +568,28 @@ class MinSolarTripTimeSUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MinSolarTripTimeSUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// A security parameter for minimum meetup location distance has changed
 class MaxSpeedMpsUpdated extends Event {
-  const MaxSpeedMpsUpdated({required this.value0});
+  const MaxSpeedMpsUpdated(this.value0);
 
   factory MaxSpeedMpsUpdated._decode(_i1.Input input) {
-    return MaxSpeedMpsUpdated(
-      value0: _i1.U32Codec.codec.decode(input),
-    );
+    return MaxSpeedMpsUpdated(_i1.U32Codec.codec.decode(input));
   }
 
+  /// MaxSpeedMpsType
   final int value0;
 
   @override
@@ -526,18 +611,28 @@ class MaxSpeedMpsUpdated extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MaxSpeedMpsUpdated && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 /// a community has been purged
 class CommunityPurged extends Event {
-  const CommunityPurged({required this.value0});
+  const CommunityPurged(this.value0);
 
   factory CommunityPurged._decode(_i1.Input input) {
-    return CommunityPurged(
-      value0: _i3.CommunityIdentifier.codec.decode(input),
-    );
+    return CommunityPurged(_i3.CommunityIdentifier.codec.decode(input));
   }
 
+  /// CommunityIdentifier
   final _i3.CommunityIdentifier value0;
 
   @override
@@ -559,4 +654,15 @@ class CommunityPurged extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CommunityPurged && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }

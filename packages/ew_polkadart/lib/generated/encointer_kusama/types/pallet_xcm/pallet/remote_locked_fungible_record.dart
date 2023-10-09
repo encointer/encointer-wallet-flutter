@@ -1,8 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../../xcm/versioned_multi_location.dart' as _i2;
-import '../../tuples.dart' as _i3;
 import 'dart:typed_data' as _i4;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
+
+import '../../tuples.dart' as _i3;
+import '../../xcm/versioned_multi_location.dart' as _i2;
 
 class RemoteLockedFungibleRecord {
   const RemoteLockedFungibleRecord({
@@ -16,12 +19,16 @@ class RemoteLockedFungibleRecord {
     return codec.decode(input);
   }
 
+  /// u128
   final BigInt amount;
 
+  /// VersionedMultiLocation
   final _i2.VersionedMultiLocation owner;
 
+  /// VersionedMultiLocation
   final _i2.VersionedMultiLocation locker;
 
+  /// BoundedVec<(ConsumerIdentifier, u128), MaxConsumers>
   final List<_i3.Tuple2<dynamic, BigInt>> consumers;
 
   static const $RemoteLockedFungibleRecordCodec codec = $RemoteLockedFungibleRecordCodec();
@@ -41,6 +48,29 @@ class RemoteLockedFungibleRecord {
                 ])
             .toList(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RemoteLockedFungibleRecord &&
+          other.amount == amount &&
+          other.owner == owner &&
+          other.locker == locker &&
+          _i5.listsEqual(
+            other.consumers,
+            consumers,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        amount,
+        owner,
+        locker,
+        consumers,
+      );
 }
 
 class $RemoteLockedFungibleRecordCodec with _i1.Codec<RemoteLockedFungibleRecord> {

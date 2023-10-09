@@ -1,11 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i6;
+
 import 'package:polkadart/polkadart.dart' as _i1;
+import 'package:polkadart/scale_codec.dart' as _i5;
+
 import '../types/cumulus_pallet_dmp_queue/config_data.dart' as _i2;
 import '../types/cumulus_pallet_dmp_queue/page_index_data.dart' as _i3;
-import '../types/tuples.dart' as _i4;
-import 'package:polkadart/scale_codec.dart' as _i5;
-import 'dart:async' as _i6;
 import '../types/sp_weights/weight_v2/weight.dart' as _i7;
+import '../types/tuples.dart' as _i4;
 
 class Queries {
   const Queries(this.__api);
@@ -99,7 +101,7 @@ class Queries {
     if (bytes != null) {
       return _pages.decodeValue(bytes);
     }
-    return const []; /* Default */
+    return []; /* Default */
   }
 
   /// The overweight messages.

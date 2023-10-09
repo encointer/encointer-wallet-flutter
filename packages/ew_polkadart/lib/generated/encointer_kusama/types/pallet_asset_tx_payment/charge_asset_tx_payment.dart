@@ -1,7 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import '../encointer_primitives/communities/community_identifier.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+import '../encointer_primitives/communities/community_identifier.dart' as _i2;
 
 class ChargeAssetTxPayment {
   const ChargeAssetTxPayment({
@@ -13,8 +15,10 @@ class ChargeAssetTxPayment {
     return codec.decode(input);
   }
 
+  /// BalanceOf<T>
   final BigInt tip;
 
+  /// Option<ChargeAssetIdOf<T>>
   final _i2.CommunityIdentifier? assetId;
 
   static const $ChargeAssetTxPaymentCodec codec = $ChargeAssetTxPaymentCodec();
@@ -27,6 +31,20 @@ class ChargeAssetTxPayment {
         'tip': tip,
         'assetId': assetId?.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ChargeAssetTxPayment && other.tip == tip && other.assetId == assetId;
+
+  @override
+  int get hashCode => Object.hash(
+        tip,
+        assetId,
+      );
 }
 
 class $ChargeAssetTxPaymentCodec with _i1.Codec<ChargeAssetTxPayment> {

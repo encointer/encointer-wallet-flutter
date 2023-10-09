@@ -1,11 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/polkadart.dart' as _i1;
-import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
-import '../types/encointer_primitives/balances/balance_entry.dart' as _i3;
-import '../types/sp_core/crypto/account_id32.dart' as _i4;
-import 'package:polkadart/scale_codec.dart' as _i5;
-import '../types/substrate_fixed/fixed_i128.dart' as _i6;
 import 'dart:async' as _i7;
+
+import 'package:polkadart/polkadart.dart' as _i1;
+import 'package:polkadart/scale_codec.dart' as _i6;
+
+import '../types/encointer_primitives/balances/balance_entry.dart' as _i3;
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
+import '../types/sp_core/crypto/account_id32.dart' as _i4;
+import '../types/substrate_fixed/fixed_i128.dart' as _i5;
 import '../types/substrate_fixed/fixed_u128.dart' as _i8;
 
 class Queries {
@@ -27,21 +29,21 @@ class Queries {
     storage: 'Balance',
     valueCodec: _i3.BalanceEntry.codec,
     hasher1: _i1.StorageHasher.blake2b128Concat(_i2.CommunityIdentifier.codec),
-    hasher2: _i1.StorageHasher.blake2b128Concat(_i5.U8ArrayCodec(32)),
+    hasher2: _i1.StorageHasher.blake2b128Concat(_i4.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i2.CommunityIdentifier, _i6.FixedI128> _demurragePerBlock =
-      const _i1.StorageMap<_i2.CommunityIdentifier, _i6.FixedI128>(
+  final _i1.StorageMap<_i2.CommunityIdentifier, _i5.FixedI128> _demurragePerBlock =
+      const _i1.StorageMap<_i2.CommunityIdentifier, _i5.FixedI128>(
     prefix: 'EncointerBalances',
     storage: 'DemurragePerBlock',
-    valueCodec: _i6.FixedI128.codec,
+    valueCodec: _i5.FixedI128.codec,
     hasher: _i1.StorageHasher.blake2b128Concat(_i2.CommunityIdentifier.codec),
   );
 
   final _i1.StorageValue<BigInt> _feeConversionFactor = const _i1.StorageValue<BigInt>(
     prefix: 'EncointerBalances',
     storage: 'FeeConversionFactor',
-    valueCodec: _i5.U128Codec.codec,
+    valueCodec: _i6.U128Codec.codec,
   );
 
   _i7.Future<_i3.BalanceEntry> totalIssuance(
@@ -84,7 +86,7 @@ class Queries {
     ); /* Default */
   }
 
-  _i7.Future<_i6.FixedI128> demurragePerBlock(
+  _i7.Future<_i5.FixedI128> demurragePerBlock(
     _i2.CommunityIdentifier key1, {
     _i1.BlockHash? at,
   }) async {
@@ -96,7 +98,7 @@ class Queries {
     if (bytes != null) {
       return _demurragePerBlock.decodeValue(bytes);
     }
-    return _i6.FixedI128(bits: BigInt.zero); /* Default */
+    return _i5.FixedI128(bits: BigInt.zero); /* Default */
   }
 
   _i7.Future<BigInt> feeConversionFactor({_i1.BlockHash? at}) async {
@@ -116,7 +118,7 @@ class Constants {
   Constants();
 
   /// the default demurrage rate applied to community balances
-  final _i6.FixedI128 defaultDemurrage = _i6.FixedI128(bits: BigInt.from(2078506789235));
+  final _i5.FixedI128 defaultDemurrage = _i5.FixedI128(bits: BigInt.from(2078506789235));
 
   /// Existential deposit needed to have an account in the respective community currency
   ///

@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 class PalletInfo {
   const PalletInfo({
@@ -16,16 +18,22 @@ class PalletInfo {
     return codec.decode(input);
   }
 
+  /// u32
   final BigInt index;
 
+  /// BoundedVec<u8, MaxPalletNameLen>
   final List<int> name;
 
+  /// BoundedVec<u8, MaxPalletNameLen>
   final List<int> moduleName;
 
+  /// u32
   final BigInt major;
 
+  /// u32
   final BigInt minor;
 
+  /// u32
   final BigInt patch;
 
   static const $PalletInfoCodec codec = $PalletInfoCodec();
@@ -42,6 +50,36 @@ class PalletInfo {
         'minor': minor,
         'patch': patch,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PalletInfo &&
+          other.index == index &&
+          _i3.listsEqual(
+            other.name,
+            name,
+          ) &&
+          _i3.listsEqual(
+            other.moduleName,
+            moduleName,
+          ) &&
+          other.major == major &&
+          other.minor == minor &&
+          other.patch == patch;
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        name,
+        moduleName,
+        major,
+        minor,
+        patch,
+      );
 }
 
 class $PalletInfoCodec with _i1.Codec<PalletInfo> {

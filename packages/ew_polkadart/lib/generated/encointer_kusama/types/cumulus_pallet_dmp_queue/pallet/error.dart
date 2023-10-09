@@ -1,9 +1,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
 
+import 'package:polkadart/scale_codec.dart' as _i1;
+
+/// The `Error` enum of this pallet.
 enum Error {
+  /// The message index given is unknown.
   unknown('Unknown', 0),
+
+  /// The amount of weight given is possibly not enough for executing the message.
   overLimit('OverLimit', 1);
 
   const Error(

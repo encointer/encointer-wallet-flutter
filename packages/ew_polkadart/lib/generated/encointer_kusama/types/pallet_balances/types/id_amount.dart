@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 class IdAmount {
   const IdAmount({
@@ -12,8 +13,10 @@ class IdAmount {
     return codec.decode(input);
   }
 
+  /// Id
   final dynamic id;
 
+  /// Balance
   final BigInt amount;
 
   static const $IdAmountCodec codec = $IdAmountCodec();
@@ -26,6 +29,20 @@ class IdAmount {
         'id': null,
         'amount': amount,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is IdAmount && other.id == id && other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        amount,
+      );
 }
 
 class $IdAmountCodec with _i1.Codec<IdAmount> {

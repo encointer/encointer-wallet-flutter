@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+
 import '../../encointer_primitives/scheduler/ceremony_phase_type.dart' as _i3;
 
 /// The `Event` enum of this pallet
@@ -31,14 +33,12 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  PhaseChangedTo phaseChangedTo({required _i3.CeremonyPhaseType value0}) {
-    return PhaseChangedTo(
-      value0: value0,
-    );
+  PhaseChangedTo phaseChangedTo(_i3.CeremonyPhaseType value0) {
+    return PhaseChangedTo(value0);
   }
 
   CeremonySchedulePushedByOneDay ceremonySchedulePushedByOneDay() {
-    return const CeremonySchedulePushedByOneDay();
+    return CeremonySchedulePushedByOneDay();
   }
 }
 
@@ -90,14 +90,13 @@ class $EventCodec with _i1.Codec<Event> {
 
 /// Phase changed to `[new phase]`
 class PhaseChangedTo extends Event {
-  const PhaseChangedTo({required this.value0});
+  const PhaseChangedTo(this.value0);
 
   factory PhaseChangedTo._decode(_i1.Input input) {
-    return PhaseChangedTo(
-      value0: _i3.CeremonyPhaseType.codec.decode(input),
-    );
+    return PhaseChangedTo(_i3.CeremonyPhaseType.codec.decode(input));
   }
 
+  /// CeremonyPhaseType
   final _i3.CeremonyPhaseType value0;
 
   @override
@@ -119,6 +118,17 @@ class PhaseChangedTo extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PhaseChangedTo && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
 
 class CeremonySchedulePushedByOneDay extends Event {
@@ -133,4 +143,10 @@ class CeremonySchedulePushedByOneDay extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) => other is CeremonySchedulePushedByOneDay;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

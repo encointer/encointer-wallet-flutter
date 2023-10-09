@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 class ModuleError {
   const ModuleError({
@@ -12,8 +14,10 @@ class ModuleError {
     return codec.decode(input);
   }
 
+  /// u8
   final int index;
 
+  /// [u8; MAX_MODULE_ERROR_ENCODED_SIZE]
   final List<int> error;
 
   static const $ModuleErrorCodec codec = $ModuleErrorCodec();
@@ -26,6 +30,25 @@ class ModuleError {
         'index': index,
         'error': error.toList(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ModuleError &&
+          other.index == index &&
+          _i3.listsEqual(
+            other.error,
+            error,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        error,
+      );
 }
 
 class $ModuleErrorCodec with _i1.Codec<ModuleError> {

@@ -1,6 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
 
 class AssignmentParams {
   const AssignmentParams({
@@ -13,10 +14,13 @@ class AssignmentParams {
     return codec.decode(input);
   }
 
+  /// u64
   final BigInt m;
 
+  /// u64
   final BigInt s1;
 
+  /// u64
   final BigInt s2;
 
   static const $AssignmentParamsCodec codec = $AssignmentParamsCodec();
@@ -30,6 +34,21 @@ class AssignmentParams {
         's1': s1,
         's2': s2,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AssignmentParams && other.m == m && other.s1 == s1 && other.s2 == s2;
+
+  @override
+  int get hashCode => Object.hash(
+        m,
+        s1,
+        s2,
+      );
 }
 
 class $AssignmentParamsCodec with _i1.Codec<AssignmentParams> {

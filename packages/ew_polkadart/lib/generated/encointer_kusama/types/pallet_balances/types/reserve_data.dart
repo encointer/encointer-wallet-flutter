@@ -1,6 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i3;
 
 class ReserveData {
   const ReserveData({
@@ -12,8 +14,10 @@ class ReserveData {
     return codec.decode(input);
   }
 
+  /// ReserveIdentifier
   final List<int> id;
 
+  /// Balance
   final BigInt amount;
 
   static const $ReserveDataCodec codec = $ReserveDataCodec();
@@ -26,6 +30,25 @@ class ReserveData {
         'id': id.toList(),
         'amount': amount,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ReserveData &&
+          _i3.listsEqual(
+            other.id,
+            id,
+          ) &&
+          other.amount == amount;
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        amount,
+      );
 }
 
 class $ReserveDataCodec with _i1.Codec<ReserveData> {

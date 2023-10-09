@@ -1,6 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
 import 'dart:typed_data' as _i2;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
 import '../../sp_core/crypto/account_id32.dart' as _i3;
 
 /// The `Event` enum of this pallet
@@ -32,15 +35,11 @@ class $Event {
   const $Event();
 
   Proposed proposed({required int proposalIndex}) {
-    return Proposed(
-      proposalIndex: proposalIndex,
-    );
+    return Proposed(proposalIndex: proposalIndex);
   }
 
   Spending spending({required BigInt budgetRemaining}) {
-    return Spending(
-      budgetRemaining: budgetRemaining,
-    );
+    return Spending(budgetRemaining: budgetRemaining);
   }
 
   Awarded awarded({
@@ -66,21 +65,15 @@ class $Event {
   }
 
   Burnt burnt({required BigInt burntFunds}) {
-    return Burnt(
-      burntFunds: burntFunds,
-    );
+    return Burnt(burntFunds: burntFunds);
   }
 
   Rollover rollover({required BigInt rolloverBalance}) {
-    return Rollover(
-      rolloverBalance: rolloverBalance,
-    );
+    return Rollover(rolloverBalance: rolloverBalance);
   }
 
   Deposit deposit({required BigInt value}) {
-    return Deposit(
-      value: value,
-    );
+    return Deposit(value: value);
   }
 
   SpendApproved spendApproved({
@@ -206,11 +199,10 @@ class Proposed extends Event {
   const Proposed({required this.proposalIndex});
 
   factory Proposed._decode(_i1.Input input) {
-    return Proposed(
-      proposalIndex: _i1.U32Codec.codec.decode(input),
-    );
+    return Proposed(proposalIndex: _i1.U32Codec.codec.decode(input));
   }
 
+  /// ProposalIndex
   final int proposalIndex;
 
   @override
@@ -234,6 +226,17 @@ class Proposed extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Proposed && other.proposalIndex == proposalIndex;
+
+  @override
+  int get hashCode => proposalIndex.hashCode;
 }
 
 /// We have ended a spend period and will now allocate funds.
@@ -241,11 +244,10 @@ class Spending extends Event {
   const Spending({required this.budgetRemaining});
 
   factory Spending._decode(_i1.Input input) {
-    return Spending(
-      budgetRemaining: _i1.U128Codec.codec.decode(input),
-    );
+    return Spending(budgetRemaining: _i1.U128Codec.codec.decode(input));
   }
 
+  /// BalanceOf<T, I>
   final BigInt budgetRemaining;
 
   @override
@@ -269,6 +271,17 @@ class Spending extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Spending && other.budgetRemaining == budgetRemaining;
+
+  @override
+  int get hashCode => budgetRemaining.hashCode;
 }
 
 /// Some funds have been allocated.
@@ -287,10 +300,13 @@ class Awarded extends Event {
     );
   }
 
+  /// ProposalIndex
   final int proposalIndex;
 
+  /// BalanceOf<T, I>
   final BigInt award;
 
+  /// T::AccountId
   final _i3.AccountId32 account;
 
   @override
@@ -306,7 +322,7 @@ class Awarded extends Event {
     int size = 1;
     size = size + _i1.U32Codec.codec.sizeHint(proposalIndex);
     size = size + _i1.U128Codec.codec.sizeHint(award);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(account);
+    size = size + const _i3.AccountId32Codec().sizeHint(account);
     return size;
   }
 
@@ -328,6 +344,27 @@ class Awarded extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Awarded &&
+          other.proposalIndex == proposalIndex &&
+          other.award == award &&
+          _i4.listsEqual(
+            other.account,
+            account,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        proposalIndex,
+        award,
+        account,
+      );
 }
 
 /// A proposal was rejected; funds were slashed.
@@ -344,8 +381,10 @@ class Rejected extends Event {
     );
   }
 
+  /// ProposalIndex
   final int proposalIndex;
 
+  /// BalanceOf<T, I>
   final BigInt slashed;
 
   @override
@@ -377,6 +416,20 @@ class Rejected extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Rejected && other.proposalIndex == proposalIndex && other.slashed == slashed;
+
+  @override
+  int get hashCode => Object.hash(
+        proposalIndex,
+        slashed,
+      );
 }
 
 /// Some of our funds have been burnt.
@@ -384,11 +437,10 @@ class Burnt extends Event {
   const Burnt({required this.burntFunds});
 
   factory Burnt._decode(_i1.Input input) {
-    return Burnt(
-      burntFunds: _i1.U128Codec.codec.decode(input),
-    );
+    return Burnt(burntFunds: _i1.U128Codec.codec.decode(input));
   }
 
+  /// BalanceOf<T, I>
   final BigInt burntFunds;
 
   @override
@@ -412,6 +464,17 @@ class Burnt extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Burnt && other.burntFunds == burntFunds;
+
+  @override
+  int get hashCode => burntFunds.hashCode;
 }
 
 /// Spending has finished; this is the amount that rolls over until next spend.
@@ -419,11 +482,10 @@ class Rollover extends Event {
   const Rollover({required this.rolloverBalance});
 
   factory Rollover._decode(_i1.Input input) {
-    return Rollover(
-      rolloverBalance: _i1.U128Codec.codec.decode(input),
-    );
+    return Rollover(rolloverBalance: _i1.U128Codec.codec.decode(input));
   }
 
+  /// BalanceOf<T, I>
   final BigInt rolloverBalance;
 
   @override
@@ -447,6 +509,17 @@ class Rollover extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Rollover && other.rolloverBalance == rolloverBalance;
+
+  @override
+  int get hashCode => rolloverBalance.hashCode;
 }
 
 /// Some funds have been deposited.
@@ -454,11 +527,10 @@ class Deposit extends Event {
   const Deposit({required this.value});
 
   factory Deposit._decode(_i1.Input input) {
-    return Deposit(
-      value: _i1.U128Codec.codec.decode(input),
-    );
+    return Deposit(value: _i1.U128Codec.codec.decode(input));
   }
 
+  /// BalanceOf<T, I>
   final BigInt value;
 
   @override
@@ -482,6 +554,17 @@ class Deposit extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Deposit && other.value == value;
+
+  @override
+  int get hashCode => value.hashCode;
 }
 
 /// A new spend proposal has been approved.
@@ -500,10 +583,13 @@ class SpendApproved extends Event {
     );
   }
 
+  /// ProposalIndex
   final int proposalIndex;
 
+  /// BalanceOf<T, I>
   final BigInt amount;
 
+  /// T::AccountId
   final _i3.AccountId32 beneficiary;
 
   @override
@@ -519,7 +605,7 @@ class SpendApproved extends Event {
     int size = 1;
     size = size + _i1.U32Codec.codec.sizeHint(proposalIndex);
     size = size + _i1.U128Codec.codec.sizeHint(amount);
-    size = size + const _i1.U8ArrayCodec(32).sizeHint(beneficiary);
+    size = size + const _i3.AccountId32Codec().sizeHint(beneficiary);
     return size;
   }
 
@@ -541,6 +627,27 @@ class SpendApproved extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SpendApproved &&
+          other.proposalIndex == proposalIndex &&
+          other.amount == amount &&
+          _i4.listsEqual(
+            other.beneficiary,
+            beneficiary,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        proposalIndex,
+        amount,
+        beneficiary,
+      );
 }
 
 /// The inactive funds of the pallet have been updated.
@@ -557,8 +664,10 @@ class UpdatedInactive extends Event {
     );
   }
 
+  /// BalanceOf<T, I>
   final BigInt reactivated;
 
+  /// BalanceOf<T, I>
   final BigInt deactivated;
 
   @override
@@ -590,4 +699,18 @@ class UpdatedInactive extends Event {
       output,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpdatedInactive && other.reactivated == reactivated && other.deactivated == deactivated;
+
+  @override
+  int get hashCode => Object.hash(
+        reactivated,
+        deactivated,
+      );
 }

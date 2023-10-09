@@ -1,7 +1,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i1;
-import 'reasons.dart' as _i2;
 import 'dart:typed_data' as _i3;
+
+import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i4;
+
+import 'reasons.dart' as _i2;
 
 class BalanceLock {
   const BalanceLock({
@@ -14,10 +17,13 @@ class BalanceLock {
     return codec.decode(input);
   }
 
+  /// LockIdentifier
   final List<int> id;
 
+  /// Balance
   final BigInt amount;
 
+  /// Reasons
   final _i2.Reasons reasons;
 
   static const $BalanceLockCodec codec = $BalanceLockCodec();
@@ -31,6 +37,27 @@ class BalanceLock {
         'amount': amount,
         'reasons': reasons.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is BalanceLock &&
+          _i4.listsEqual(
+            other.id,
+            id,
+          ) &&
+          other.amount == amount &&
+          other.reasons == reasons;
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        amount,
+        reasons,
+      );
 }
 
 class $BalanceLockCodec with _i1.Codec<BalanceLock> {
