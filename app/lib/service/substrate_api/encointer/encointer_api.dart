@@ -193,7 +193,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<int?> getCurrentCeremonyIndex() async {
     Log.d('api: getCurrentCeremonyIndex', 'EncointerApi');
-    final cIndex = await jsApi.evalJavascript<String>('encointer.getCurrentCeremonyIndex()').then(int.parse);
+    final cIndex = await _encointerKusama.query.encointerScheduler.currentCeremonyIndex();
     Log.d('api: Current Ceremony index: $cIndex', 'EncointerApi');
     store.encointer.setCurrentCeremonyIndex(cIndex);
     return cIndex;
