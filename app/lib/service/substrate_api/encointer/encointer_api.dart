@@ -434,7 +434,7 @@ class EncointerApi {
     final cidsPolkadart = await _encointerKusama.query.encointerCommunities.communityIdentifiers();
 
     // transform them into our own cid
-    final cids = cidsPolkadart.map((cid) => CommunityIdentifier.fromJson(cid.toJson())).toList();
+    final cids = cidsPolkadart.map((cid) => CommunityIdentifier(cid.geohash, cid.digest)).toList();
 
     Log.d('CID: $cids', 'EncointerApi');
     return cids;
