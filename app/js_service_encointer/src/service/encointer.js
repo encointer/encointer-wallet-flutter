@@ -28,26 +28,6 @@ export async function getCurrentPhase () {
   return api.query.encointerScheduler.currentPhase();
 }
 
-export async function getNextPhaseTimestamp () {
-  return api.query.encointerScheduler.nextPhaseTimestamp();
-}
-
-/**
- * Gets all phase durations to cache them on the dart side to speedup `getNextMeetupTime` request.
- */
-export async function getPhaseDurations () {
-  const [registering, assigning, attesting] = await Promise.all([
-    api.query.encointerScheduler.phaseDurations('Registering'),
-    api.query.encointerScheduler.phaseDurations('Attesting'),
-    api.query.encointerScheduler.phaseDurations('Assigning')
-  ]);
-  return {
-    Registering: registering,
-    Attesting: assigning,
-    Assigning: attesting
-  };
-}
-
 /**
  * Subscribes to the current ceremony phase
  * @param msgChannel channel that the message handler uses on the dart side
@@ -465,8 +445,6 @@ export async function sendNextPhaseTx() {
 
 export default {
   getCurrentPhase,
-  getNextPhaseTimestamp,
-  getPhaseDurations,
   getCommunityIdentifiers,
   getParticipantReputation,
   getBootstrappers,
