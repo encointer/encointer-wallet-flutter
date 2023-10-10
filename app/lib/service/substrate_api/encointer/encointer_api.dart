@@ -528,19 +528,29 @@ class EncointerApi {
   }
 
   Future<int> getNumberOfNewbieTicketsForBootstrapper() async {
-    var remainingTickets = 0;
     final address = store.account.currentAddress;
     final cid = store.encointer.chosenCid;
+    if (cid == null) return 0;
+
     try {
+      // Todo: fix addressStr -> List<int>
+      // final [burned, ticketsPerBootstrapper] = await Future.wait([
+      //   _encointerKusama.query.encointerCeremonies
+      //       .burnedBootstrapperNewbieTickets(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), address),
+      //   _encointerKusama.query.encointerCeremonies.endorsementTicketsPerBootstrapper()
+      // ]);
+      // return ticketsPerBootstrapper - burned;
+
       final numberOfTickets = await jsApi.evalJavascript<int>(
         'encointer.remainingNewbieTicketsBootstrapper(${jsonEncode(cid)},"$address")',
       );
       Log.d('Encointer Api', 'numberOfBootstrapperTickets: $numberOfTickets');
-      remainingTickets += numberOfTickets;
+      return numberOfTickets;
     } catch (e, s) {
       Log.e('Encointer Api', '$e', s);
     }
-    return remainingTickets;
+
+    return 0;
   }
 
   Future<Map<String, Faucet>> getAllFaucetsWithAccount() async {
