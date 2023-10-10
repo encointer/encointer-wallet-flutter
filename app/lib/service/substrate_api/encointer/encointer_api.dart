@@ -27,6 +27,7 @@ import 'package:encointer_wallet/service/substrate_api/encointer/no_tee_api.dart
 import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_polkadart/encointer_types.dart' show CeremonyPhaseType;
 import 'package:ew_polkadart/ew_polkadart.dart';
 
 /// Api to interface with the `js_encointer_service.js`
@@ -138,12 +139,21 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon.
   Future<void> getPhaseDurations() async {
-    final phaseDurations =
-        await jsApi.evalJavascript<Map<String, dynamic>>('encointer.getPhaseDurations()').then((m) => m.map(
-              (key, value) => MapEntry(ceremonyPhaseFromString(key)!, int.parse(value as String)),
-            ));
+    final durations = await Future.wait([
+      _encointerKusama.query.encointerScheduler.phaseDurations(CeremonyPhaseType.registering),
+      _encointerKusama.query.encointerScheduler.phaseDurations(CeremonyPhaseType.assigning),
+      _encointerKusama.query.encointerScheduler.phaseDurations(CeremonyPhaseType.attesting),
+    ]);
 
-    store.encointer.setPhaseDurations(phaseDurations);
+    // Create map and cast to the old type before introducing polkadart
+    // shall be changed later
+    final phaseDurationMap = Map.of({
+      CeremonyPhase.Registering: durations[0].toInt(),
+      CeremonyPhase.Assigning: durations[1].toInt(),
+      CeremonyPhase.Attesting: durations[2].toInt(),
+    });
+
+    store.encointer.setPhaseDurations(phaseDurationMap);
   }
 
   /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.
