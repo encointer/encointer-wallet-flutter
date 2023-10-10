@@ -27,8 +27,11 @@ import 'package:encointer_wallet/service/substrate_api/encointer/no_tee_api.dart
 import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:ew_polkadart/encointer_types.dart' show CeremonyPhaseType;
 import 'package:ew_polkadart/ew_polkadart.dart';
+
+// disambiguate global imports of encointer types. We can remove this
+// once we got rid of our manual type definitions.
+import 'package:ew_polkadart/encointer_types.dart' as et;
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -140,9 +143,9 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<void> getPhaseDurations() async {
     final durations = await Future.wait([
-      _encointerKusama.query.encointerScheduler.phaseDurations(CeremonyPhaseType.registering),
-      _encointerKusama.query.encointerScheduler.phaseDurations(CeremonyPhaseType.assigning),
-      _encointerKusama.query.encointerScheduler.phaseDurations(CeremonyPhaseType.attesting),
+      _encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.registering),
+      _encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.assigning),
+      _encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.attesting),
     ]);
 
     // Create map and cast to the old type before introducing polkadart
