@@ -160,15 +160,6 @@ export async function getParticipantReputation (cid, cIndex, address) {
   return reputation;
 }
 
-// returns a list of prefixed hex strings
-export async function getCommunityIdentifiers () {
-  const pallet = pallets.encointerCommunities;
-  const cids = await api.query[pallet.name][pallet.calls.communityIdentifiers]();
-  return {
-    cids
-  };
-}
-
 export async function getBootstrappers (cid) {
   const cidT = api.createType('CommunityIdentifier', cid);
 
@@ -441,7 +432,6 @@ export async function sendNextPhaseTx() {
 
 export default {
   getCurrentPhase,
-  getCommunityIdentifiers,
   getParticipantReputation,
   getBootstrappers,
   subscribeCurrentPhase,

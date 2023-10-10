@@ -430,11 +430,11 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon.
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
-    final cids = await jsApi.evalJavascript<Map<String, dynamic>>('encointer.getCommunityIdentifiers()').then(
-          (res) => List<dynamic>.from(res['cids'] as Iterable)
-              .map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>))
-              .toList(),
-        );
+    // cids in polkadart type
+    final cidsPolkadart = await _encointerKusama.query.encointerCommunities.communityIdentifiers();
+
+    // transform them into our own cid
+    final cids = cidsPolkadart.map((cid) => CommunityIdentifier.fromJson(cid.toJson())).toList();
 
     Log.d('CID: $cids', 'EncointerApi');
     return cids;
