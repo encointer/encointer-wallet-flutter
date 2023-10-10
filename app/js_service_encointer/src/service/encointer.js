@@ -201,15 +201,6 @@ export async function remainingNewbieTicketsBootstrapper (cid, address) {
   return ticketsPerBootstrapper- burnedTickets;
 }
 
-export async function getCommunityMetadata (cid) {
-  const pallet = pallets.encointerCommunities;
-  const meta = await api.query[pallet.name][pallet.calls.communityMetadata](cid);
-
-  // `toU8a` is necessary. Otherwise, the metadata's fields are represented as hex-strings if the community was
-  // registered via polkadot-js/apps and.
-  return api.createType('CommunityMetadataType', meta.toU8a());
-}
-
 export async function getDemurrage (cid) {
   const cidT = api.createType('CommunityIdentifier', cid);
 
@@ -442,7 +433,6 @@ export default {
   getNextMeetupLocation,
   getNextMeetupTime,
   getDemurrage,
-  getCommunityMetadata,
   getAllMeetupLocations,
   communitiesGetAll,
   getMeetupIndex,

@@ -230,9 +230,9 @@ class EncointerApi {
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
-    final meta = await jsApi
-        .evalJavascript<Map<String, dynamic>>('encointer.getCommunityMetadata(${jsonEncode(cid)})')
-        .then(CommunityMetadata.fromJson);
+    final meta = await _encointerKusama.query.encointerCommunities
+        .communityMetadata(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest))
+        .then(CommunityMetadata.fromPolkadart); // convert to our own type
 
     Log.d('api: community metadata: $meta', 'EncointerApi');
     await store.encointer.community?.setCommunityMetadata(meta);
