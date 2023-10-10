@@ -447,6 +447,12 @@ class EncointerApi {
 
     if (cid == null) return;
 
+    // Todo: Use polkadart base codec for List<int> -> String
+    // final bootstrappersBytes = await _encointerKusama.query.encointerCommunities.bootstrappers(et.CommunityIdentifier(
+    //   geohash: cid.geohash,
+    //   digest: cid.digest,
+    // ));
+
     final bootstrappers = await jsApi
         .evalJavascript<List<dynamic>>('encointer.getBootstrappers($cid)')
         .then((list) => list.cast<String>());
