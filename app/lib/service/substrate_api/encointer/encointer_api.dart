@@ -211,6 +211,7 @@ class EncointerApi {
 
     if (cid == null) return;
 
+    // Todo: use dart api
     final locs = await jsApi
         .evalJavascript<List<dynamic>>('encointer.getAllMeetupLocations(${jsonEncode(cid)})')
         .then((list) => list.map((e) => Location.fromJson(e as Map<String, dynamic>)).toList());
@@ -259,6 +260,7 @@ class EncointerApi {
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
   Future<void> communitiesGetAll() async {
+    // Todo: use dart rpc
     final cns = await jsApi.evalJavascript<List<dynamic>>('encointer.communitiesGetAll()');
 
     Log.d('api: CidNames: ${cns.length} and $cns ', 'EncointerApi');
@@ -466,6 +468,7 @@ class EncointerApi {
   Future<void> getReputations() async {
     final address = store.account.currentAddress;
 
+    // Todo: use dart rpc
     final reputations =
         await jsApi.evalJavascript<List<dynamic>>('encointer.getReputations("$address")').then(reputationsFromList);
 
