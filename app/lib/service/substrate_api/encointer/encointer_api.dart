@@ -506,25 +506,32 @@ class EncointerApi {
   }
 
   Future<int> getNumberOfNewbieTicketsForReputable() async {
-    var remainingTickets = 0;
     final address = store.account.currentAddress;
-    final reputations = store.encointer.account?.reputations;
+    final reputations = store.encointer.account?.reputations ?? {};
     final cid = store.encointer.chosenCid;
     final cIndex = store.encointer.currentCeremonyIndex;
 
-    if ((reputations?.length ?? 0) > 0) {
-      try {
-        remainingTickets = await jsApi.evalJavascript<int>(
-          'encointer.remainingNewbieTicketsReputable(${jsonEncode(cid)}, "$cIndex","$address")',
-        );
+    if (reputations.isEmpty) return 0;
 
-        Log.d('EncointerApi', 'numberOfNewbieTickets: $remainingTickets');
-      } catch (e, s) {
-        Log.e('EncointerApi', '$e', s);
-      }
+    try {
+      // Todo: fix addressStr -> List<int>
+      // final [burned, ticketsPerReputable] = await Future.wait([
+      //   _encointerKusama.query.encointerCeremonies
+      //       .burnedReputableNewbieTickets([et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex], address),
+      //   _encointerKusama.query.encointerCeremonies.endorsementTicketsPerReputable()
+      // ]);
+      // return ticketsPerReputable - burned;
+
+      final remainingTickets = await jsApi.evalJavascript<int>(
+        'encointer.remainingNewbieTicketsReputable(${jsonEncode(cid)}, "$cIndex","$address")',
+      );
+      Log.d('EncointerApi', 'numberOfNewbieTickets: $remainingTickets');
+      return remainingTickets;
+    } catch (e, s) {
+      Log.e('EncointerApi', '$e', s);
     }
 
-    return remainingTickets;
+    return 0;
   }
 
   Future<int> getNumberOfNewbieTicketsForBootstrapper() async {
