@@ -21,7 +21,9 @@ jobs:
         run: ./scripts/install_melos.sh
 
       - name: Melos Bootstrap
-        run: ./flutterw pub global run melos bootstrap
+        run: |
+          cd packages/ew_polkadart && ../../flutterw pub get
+          ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
         run: ./flutterw pub global run melos yarn-build
