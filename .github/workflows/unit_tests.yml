@@ -22,7 +22,6 @@ jobs:
 
       - name: Melos Bootstrap
         run: |
-          cd packages/ew_polkadart && ../../flutterw pub get
           ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
