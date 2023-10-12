@@ -26,13 +26,6 @@ jobs:
       # Setup Environment
       - uses: actions/checkout@v3
 
-        # Some tests in polkadart need that, but it is also
-        # needed simply running pub get for some reason.
-        # We can remove that when we no longer need the
-        # git dependency for polkadart.
-      - name: Check out code (LFS)
-        uses: nschloe/action-cached-lfs-checkout@v1.2.1
-
       - uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
