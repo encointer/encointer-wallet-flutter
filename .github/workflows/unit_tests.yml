@@ -22,7 +22,6 @@ jobs:
 
       - name: Melos Bootstrap
         run: |
-          git lfs uninstall
           ./flutterw pub global run melos bootstrap
 
       - name: "Build JS"
