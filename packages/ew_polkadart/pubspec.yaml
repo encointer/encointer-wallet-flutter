@@ -21,32 +21,32 @@ dev_dependencies:
   lints: ^2.0.0
   polkadart_cli:
     git:
-      url: https://github.com/leonardocustodio/polkadart
+      url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
-      branch: main
+      branch: no-lfs
       path: packages/polkadart_cli
 
 dependency_overrides:
   polkadart:
     git:
-      url: https://github.com/leonardocustodio/polkadart
+      url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
-      branch: main
-      path: packages/polkadart
+      branch: no-lfs
+      path: packages/polkadart_cli
 
   polkadart_scale_codec:
     git:
-      url: https://github.com/leonardocustodio/polkadart
+      url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
-      branch: main
-      path: packages/polkadart_scale_codec
+      branch: no-lfs
+      path: packages/polkadart_cli
 
   substrate_metadata:
     git:
-      url: https://github.com/leonardocustodio/polkadart
-      # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
-      branch: main
-      path: packages/substrate_metadata
+      url: https://github.com/encointer/polkadart
+      # Todo: Remove when v0.1.1 released
+      branch: no-lfs
+      path: packages/polkadart_cli
 
 # This only generates valid files on UNIX machines.
 # The imports statements use `\` otherwise, which is
