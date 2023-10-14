@@ -22,8 +22,13 @@ dev_dependencies:
     git:
       url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
+      # Note: We can't use a branch here (at least not in the CI), see:
+      # https://github.com/leonardocustodio/polkadart/issues/327
       path: packages/polkadart_cli
 
+# We have to use dependency overrides as the polkadart_cli in our fork uses
+# the published package as dependency. We can remove them when we use the
+# published package.
 dependency_overrides:
   polkadart:
     git:
