@@ -141,10 +141,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.6"
+    version: "1.1.0"
   http_parser:
     dependency: transitive
     description:
@@ -169,14 +169,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
-  json_class:
-    dependency: transitive
-    description:
-      name: json_class
-      sha256: fa872148b86bd2b706617e26ed80eeee292c31071b49cc728b368dd9b1fd0959
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.2+1"
   json_schema2:
     dependency: transitive
     description:
@@ -246,19 +238,19 @@ packages:
     description:
       path: "packages/polkadart"
       ref: HEAD
-      resolved-ref: e9b690f1dd4ef1828cbfc51272dc7f32b4261ace
+      resolved-ref: bb36938e11c003927dd9a292fda6b92efacc24ee
       url: "https://github.com/encointer/polkadart.git"
     source: git
-    version: "0.1.0"
+    version: "0.1.1"
   polkadart_cli:
     dependency: "direct dev"
     description:
       path: "packages/polkadart_cli"
       ref: HEAD
-      resolved-ref: e9b690f1dd4ef1828cbfc51272dc7f32b4261ace
-      url: "https://github.com/encointer/polkadart.git"
+      resolved-ref: bb36938e11c003927dd9a292fda6b92efacc24ee
+      url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.1.0"
+    version: "0.1.1"
   polkadart_scale_codec:
     dependency: "direct overridden"
     description:
@@ -296,10 +288,10 @@ packages:
     dependency: transitive
     description:
       name: rest_client
-      sha256: f788d489471b3c18641cc7ae32cde76ca9806075dda8b98e36bc479f118e6585
+      sha256: "1f7cd67c94f188ec7388a8621ce03da5be67c4415c359f74540e354b91377177"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.1+11"
+    version: "2.2.3+4"
   source_span:
     dependency: transitive
     description:
@@ -308,6 +300,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  sprintf:
+    dependency: transitive
+    description:
+      name: sprintf
+      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -385,10 +385,10 @@ packages:
     dependency: transitive
     description:
       name: uuid
-      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
+      sha256: b715b8d3858b6fa9f68f87d20d98830283628014750c2b09b6f516c1da4af2a7
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.7"
+    version: "4.1.0"
   watcher:
     dependency: transitive
     description:
