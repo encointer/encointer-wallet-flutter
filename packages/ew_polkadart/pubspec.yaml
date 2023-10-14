@@ -11,9 +11,9 @@ dependencies:
   quiver: ^3.2.1
   polkadart:
     git:
-      url: https://github.com/leonardocustodio/polkadart
+      url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
-      branch: main
+      ref: no-lfs
       path: packages/polkadart
 
 dev_dependencies:
@@ -23,7 +23,7 @@ dev_dependencies:
     git:
       url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
-      branch: no-lfs
+      ref: no-lfs
       path: packages/polkadart_cli
 
 dependency_overrides:
@@ -31,21 +31,21 @@ dependency_overrides:
     git:
       url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
-      branch: no-lfs
+      ref: no-lfs
       path: packages/polkadart
 
   polkadart_scale_codec:
     git:
       url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
-      branch: no-lfs
+      ref: no-lfs
       path: packages/polkadart_scale_codec
 
   substrate_metadata:
     git:
       url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
-      branch: no-lfs
+      ref: no-lfs
       path: packages/substrate_metadata
 
 # This only generates valid files on UNIX machines.
