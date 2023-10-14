@@ -11,9 +11,9 @@ dependencies:
   quiver: ^3.2.1
   polkadart:
     git:
-      url: https://github.com/encointer/polkadart.git
-      # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
-      branch: cl/bump-http
+      url: https://github.com/leonardocustodio/polkadart
+      # Todo: Remove when v0.1.1 released
+      branch: main
       path: packages/polkadart
 
 dev_dependencies:
@@ -21,31 +21,31 @@ dev_dependencies:
   lints: ^2.0.0
   polkadart_cli:
     git:
-      url: https://github.com/encointer/polkadart.git
-      # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
-      branch: cl/bump-http
+      url: https://github.com/leonardocustodio/polkadart
+      # Todo: Remove when v0.1.1 released
+      branch: main
       path: packages/polkadart_cli
 
 dependency_overrides:
   polkadart:
     git:
-      url: https://github.com/encointer/polkadart.git
-      # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
-      branch: cl/bump-http
+      url: https://github.com/leonardocustodio/polkadart
+      # Todo: Remove when v0.1.1 released
+      branch: main
       path: packages/polkadart
 
   polkadart_scale_codec:
     git:
-      url: https://github.com/encointer/polkadart.git
-      # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
-      branch: cl/bump-http
+      url: https://github.com/leonardocustodio/polkadart
+      # Todo: Remove when v0.1.1 released
+      branch: main
       path: packages/polkadart_scale_codec
 
   substrate_metadata:
     git:
-      url: https://github.com/encointer/polkadart.git
+      url: https://github.com/leonardocustodio/polkadart
       # Todo: Remove when upstream merged: https://github.com/rankanizer/polkadart/pull/326
-      branch: cl/bump-http
+      branch: main
       path: packages/substrate_metadata
 
 # This only generates valid files on UNIX machines.

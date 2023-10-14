@@ -1240,10 +1240,10 @@ packages:
     description:
       path: "packages/polkadart"
       ref: HEAD
-      resolved-ref: "500a3824beca7589b152351192ccc6cb6fbdc1df"
-      url: "https://github.com/encointer/polkadart.git"
+      resolved-ref: bb36938e11c003927dd9a292fda6b92efacc24ee
+      url: "https://github.com/leonardocustodio/polkadart"
     source: git
-    version: "0.1.0"
+    version: "0.1.1"
   polkadart_scale_codec:
     dependency: transitive
     description:
