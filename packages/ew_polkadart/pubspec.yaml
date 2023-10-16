@@ -13,6 +13,8 @@ dependencies:
     git:
       url: https://github.com/encointer/polkadart
       # Todo: Remove when v0.1.1 released
+      # Note: We can't use a branch here (at least not in the CI), see:
+      # https://github.com/leonardocustodio/polkadart/issues/327
       path: packages/polkadart
 
 dev_dependencies:
@@ -52,7 +54,7 @@ dependency_overrides:
 # This only generates valid files on UNIX machines.
 # The imports statements use `\` otherwise, which is
 # invalid.
-# Run the script in in a git bash console afters to fix it:
+# Run the following script in in a git bash console afterwards to fix it:
 # `./scripts/replace_backslash_in_dart_files.sh packages/ew_polkadart`
 polkadart:
   output_dir: lib/generated
