@@ -13,6 +13,7 @@ import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
 
 /// Global api instance
 ///
@@ -47,7 +48,7 @@ class Api {
       AccountApi(store, js),
       AssetsApi(store, js),
       ChainApi(store, js),
-      EncointerApi(store, js, dartApi, ewHttp),
+      EncointerApi(store, js, dartApi, ewHttp, EncointerKusama.url(Uri.parse(store.settings.endpoint.value!))),
       isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
       jsServiceEncointer,
     );

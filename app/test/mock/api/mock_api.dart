@@ -11,6 +11,7 @@ import 'mock_account_api.dart';
 import 'mock_assets_api.dart';
 import 'mock_chain_api.dart';
 import 'mock_encointer_api.dart';
+import 'mock_encointer_kusama_api.dart';
 import 'mock_js_api.dart';
 import 'mock_substrate_dart_api.dart';
 
@@ -33,7 +34,7 @@ class MockApi extends Api {
           MockAccountApi(store, js),
           MockAssetsApi(store, js),
           MockChainApi(store, js),
-          MockEncointerApi(store, js, dartApi, ewHttp),
+          MockEncointerApi(store, js, dartApi, ewHttp, MockEncointerKusamaApi()),
           MockIpfsApi(ewHttp),
           jsServiceEncointer,
         );

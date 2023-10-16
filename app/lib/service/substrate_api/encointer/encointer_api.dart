@@ -44,18 +44,15 @@ import 'package:ew_polkadart/encointer_types.dart' as et;
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class EncointerApi {
-  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp)
+  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp, this.encointerKusama)
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi),
-        _dartApi = EncointerDartApi(dartApi),
-        // Todo: better solution, but we can rethink the initialization anyhow after getting
-        // rid of JS.
-        _encointerKusama = EncointerKusama.url(Uri.parse(store.settings.endpoint.value!));
+        _dartApi = EncointerDartApi(dartApi);
 
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
   final EwHttp ewHttp;
-  final EncointerKusama _encointerKusama;
+  final EncointerKusama encointerKusama;
 
   final AppStore store;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
@@ -128,7 +125,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<int> getNextPhaseTimestamp() async {
     Log.d('api: getNextPhaseTimestamp', 'EncointerApi');
-    final timestampBigInt = await _encointerKusama.query.encointerScheduler.nextPhaseTimestamp();
+    final timestampBigInt = await encointerKusama.query.encointerScheduler.nextPhaseTimestamp();
     final timestamp = timestampBigInt.toInt();
 
     Log.d('api: next phase timestamp: $timestamp', 'EncointerApi');
@@ -143,9 +140,9 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<void> getPhaseDurations() async {
     final durations = await Future.wait([
-      _encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.registering),
-      _encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.assigning),
-      _encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.attesting),
+      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.registering),
+      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.assigning),
+      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.attesting),
     ]);
 
     // Create map and cast to the old type before introducing polkadart
@@ -196,7 +193,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<int?> getCurrentCeremonyIndex() async {
     Log.d('api: getCurrentCeremonyIndex', 'EncointerApi');
-    final cIndex = await _encointerKusama.query.encointerScheduler.currentCeremonyIndex();
+    final cIndex = await encointerKusama.query.encointerScheduler.currentCeremonyIndex();
     Log.d('api: Current Ceremony index: $cIndex', 'EncointerApi');
     store.encointer.setCurrentCeremonyIndex(cIndex);
     return cIndex;
@@ -230,7 +227,7 @@ class EncointerApi {
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
-    final meta = await _encointerKusama.query.encointerCommunities
+    final meta = await encointerKusama.query.encointerCommunities
         .communityMetadata(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest))
         .then(CommunityMetadata.fromPolkadart); // convert to our own type
 
@@ -433,7 +430,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
     // cids in polkadart type
-    final cidsPolkadart = await _encointerKusama.query.encointerCommunities.communityIdentifiers();
+    final cidsPolkadart = await encointerKusama.query.encointerCommunities.communityIdentifiers();
 
     // transform them into our own cid
     final cids = cidsPolkadart.map((cid) => CommunityIdentifier(cid.geohash, cid.digest)).toList();
