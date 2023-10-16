@@ -286,7 +286,7 @@ packages:
     description:
       path: "packages/polkadart"
       ref: HEAD
-      resolved-ref: "00d96d2dc2c489770136ad5bad3fb3eef1cc0989"
+      resolved-ref: "83c112e7d47be778d9907dfb3eb085aa045b7c59"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.1.1"
@@ -295,7 +295,7 @@ packages:
     description:
       path: "packages/polkadart_cli"
       ref: HEAD
-      resolved-ref: "00d96d2dc2c489770136ad5bad3fb3eef1cc0989"
+      resolved-ref: "83c112e7d47be778d9907dfb3eb085aa045b7c59"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.1.1"
@@ -304,7 +304,7 @@ packages:
     description:
       path: "packages/polkadart_scale_codec"
       ref: HEAD
-      resolved-ref: "00d96d2dc2c489770136ad5bad3fb3eef1cc0989"
+      resolved-ref: "83c112e7d47be778d9907dfb3eb085aa045b7c59"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.1"
@@ -441,7 +441,7 @@ packages:
     description:
       path: "packages/substrate_metadata"
       ref: HEAD
-      resolved-ref: "00d96d2dc2c489770136ad5bad3fb3eef1cc0989"
+      resolved-ref: "83c112e7d47be778d9907dfb3eb085aa045b7c59"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.1"
