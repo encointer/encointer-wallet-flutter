@@ -22,7 +22,13 @@ import 'mock_substrate_dart_api.dart';
 /// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
 class MockEncointerApi extends EncointerApi {
-  MockEncointerApi(super.store, MockJSApi super.js, MockSubstrateDartApi super.dartApi, super.ewHttp, super.encointerKusama);
+  MockEncointerApi(
+    super.store,
+    MockJSApi super.js,
+    MockSubstrateDartApi super.dartApi,
+    super.ewHttp,
+    super.encointerKusama,
+  );
 
   @override
   Future<void> startSubscriptions() async {
