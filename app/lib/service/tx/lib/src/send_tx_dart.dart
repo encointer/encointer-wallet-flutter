@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
@@ -42,7 +43,7 @@ class EWAuthorApi<P extends Provider> {
 
   /// Submit a fully formatted extrinsic and return a subscription
   /// which emits txStatus updates.
-  Future<SubscriptionReponse> subscribeFinalizedHeads() async {
+  Future<StreamSubscription<String>> subscribeFinalizedHeads(void Function(String) onData) async {
     // final params = <dynamic>['0x${hex.encode(extrinsic)}'];
 
     final subscription = await _provider.subscribe(
@@ -53,6 +54,6 @@ class EWAuthorApi<P extends Provider> {
       },
     );
 
-    return subscription;
+    return subscription.stream.map((event) => event.toString()).listen(onData);
   }
 }

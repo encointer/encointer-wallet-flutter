@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
@@ -30,11 +31,16 @@ void main() {
       // Note: bad name, chain api is only now used for prototyping
       final author = EWAuthorApi(polkadart);
 
-      final sub = await author.subscribeFinalizedHeads();
+      final completer = Completer<void>();
+      final sub = await author.subscribeFinalizedHeads((event) {
+          print('Event: $event');
+          completer.complete();
+      });
 
-      final events = await sub.stream.first;
+      await completer.future.then((_) => sub.cancel());
+
       // Fixme: first never arrives
-      print('First: $events');
+      print('End');
     });
   });
 }
