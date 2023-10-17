@@ -28,7 +28,7 @@ void main() {
 
     test('subscribing to finalized heads works', () async {
       final polkadart = Provider.fromUri(Uri.parse('ws://localhost:9944'));
-      // Note: bad name, chain api is only now used for prototyping
+      // Note: bad name, chain api is only used for prototyping
       final author = EWAuthorApi(polkadart);
 
       final completer = Completer<void>();

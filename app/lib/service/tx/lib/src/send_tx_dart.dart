@@ -41,10 +41,7 @@ class EWAuthorApi<P extends Provider> {
     return subscription;
   }
 
-  /// Submit a fully formatted extrinsic and return a subscription
-  /// which emits txStatus updates.
   Future<StreamSubscription<String>> subscribeFinalizedHeads(void Function(String) onData) async {
-    // final params = <dynamic>['0x${hex.encode(extrinsic)}'];
 
     final subscription = await _provider.subscribe(
       'chain_subscribeFinalizedHeads',
