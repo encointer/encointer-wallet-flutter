@@ -32,7 +32,7 @@ dependencies:
   mobx: ^2.2.0
   flutter_mobx: ^2.0.6+5
   shared_preferences: ^2.2.0
-  flutter_inappwebview: ^6.0.0-beta.22 # Todo: #1461: bump package version
+  flutter_inappwebview: ^6.0.0-beta.25 # Todo: #1461: bump package version
   flutter_local_notifications: ^15.1.0+1
   flutter:
     sdk: flutter
