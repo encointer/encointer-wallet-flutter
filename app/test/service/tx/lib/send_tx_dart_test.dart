@@ -28,13 +28,22 @@ void main() {
 
     test('subscribing to finalized heads works', () async {
       final polkadart = Provider.fromUri(Uri.parse('ws://localhost:9944'));
-      // Note: bad name, chain api is only used for prototyping
-      final author = EWAuthorApi(polkadart);
 
       final completer = Completer<void>();
-      final sub = await author.subscribeFinalizedHeads((event) {
-          print('Event: $event');
-          completer.complete();
+
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      final subscription = await polkadart.subscribe(
+        'chain_subscribeFinalizedHeads',
+        [],
+        onCancel: (subscription) async {
+          await polkadart.send('chain_unsubscribeFinalizedHeads', [subscription]);
+        },
+      );
+
+      final sub = subscription.stream.map((event) => event.toString()).listen((event) {
+        print('Event: $event');
+        completer.complete();
       });
 
       await completer.future.then((_) => sub.cancel());
