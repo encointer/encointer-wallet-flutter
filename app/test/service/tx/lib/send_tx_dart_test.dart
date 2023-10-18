@@ -16,14 +16,35 @@ void main() {
       // note this contains some nonce and will not work on an arbitrary setup. Instead,
       // it will throw a bad signature error, see https://github.com/leonardocustodio/polkadart/pull/337.
       final tx = hex.decode(
-          '450284008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a4801c497336fab8028b149e31be4a93054a58ec229da66aab2be8af9792de54f446c8846ab0ad45921117b35bf15794cbdf853870ec7bf43b8a15a151ad26c04688f45013c00000a0700d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d070010a5d4e8'
+          '450284008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a4801b8f39740b05cfa7b495b79221bef7984116ad5599b1170f9cea25c7562d98b48dddd95aea8337dc7fce5a41d7f60a84e8fce9e3e61fff477d0f9a65b239f7c8545023800000a0700d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d070010a5d4e8'
       );
 
-      final sub = await author.submitAndWatchExtrinsic(tx as Uint8List);
+      final events = await author.submitAndWatchExtrinsic(tx as Uint8List);
 
-      final events = await sub.stream.first;
+      final completer = Completer<void>();
+
+      final sub = events.stream.listen((event) async {
+        print('First: ${event.result}');
+        if (event.result['finalized'] != null) {
+          final blockHash = hexToUint8(event.result['finalized'].toString());
+
+          final events = await EncointerKusama(polkadart).query.system.events(at: blockHash);
+
+          for (final ev in events) {
+            print('${ev.toJson()}');
+          }
+
+          final block = await ChainApi(polkadart).getBlock(at: blockHash);
+          print('block: $block');
+
+          completer.complete();
+        }
+      });
+
+      await completer.future;
+      await sub.cancel();
+
       // Fixme: first never arrives
-      print('First: $events');
     });
 
     test('subscribing to finalized heads works', () async {
@@ -52,4 +73,8 @@ void main() {
       print('End');
     });
   });
+}
+
+Uint8List hexToUint8(String hexString) {
+  return hex.decode(hexString.replaceFirst('0x', '')) as Uint8List;
 }
