@@ -6,6 +6,7 @@ import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pointycastle/digests/blake2b.dart';
 
 void main() {
   group('submit xt', () {
@@ -15,11 +16,11 @@ void main() {
 
       // note this contains some nonce and will not work on an arbitrary setup. Instead,
       // it will throw a bad signature error, see https://github.com/leonardocustodio/polkadart/pull/337.
-      final tx = hex.decode(
-          '450284008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a4801b8f39740b05cfa7b495b79221bef7984116ad5599b1170f9cea25c7562d98b48dddd95aea8337dc7fce5a41d7f60a84e8fce9e3e61fff477d0f9a65b239f7c8545023800000a0700d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d070010a5d4e8'
-      );
+      const xtHex = '0x450284008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a4801903f3ac2ce57af5c51bdcd4771ce41ea6a1f73e371d5deb9d25a8a37fa06864cc674de8f9cc687ae3b4f902d4e181dd2b6f951f4e82a61d48df740d23edf268c85004000000a0700d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d070010a5d4e8';
+      final tx = hexToUint8(xtHex);
+      final hash = xtHash(xtHex);
 
-      final events = await author.submitAndWatchExtrinsic(tx as Uint8List);
+      final events = await author.submitAndWatchExtrinsic(tx);
 
       final completer = Completer<void>();
 
@@ -36,6 +37,19 @@ void main() {
 
           final block = await ChainApi(polkadart).getBlock(at: blockHash);
           print('block: $block');
+
+          final xts = block['block']['extrinsics'] as List<dynamic>;
+
+          for (final xt in xts) {
+            final h = xtHash(xt as String);
+            print('Hash: $h');
+
+            if (h == hash) {
+              print('found xt in block!!!');
+            }
+          }
+
+          print('our hash: $hash');
 
           completer.complete();
         }
@@ -77,4 +91,8 @@ void main() {
 
 Uint8List hexToUint8(String hexString) {
   return hex.decode(hexString.replaceFirst('0x', '')) as Uint8List;
+}
+
+String xtHash(String hexString) {
+  return hex.encode(Blake2bDigest(digestSize: 32).process(hexToUint8(hexString)));
 }
