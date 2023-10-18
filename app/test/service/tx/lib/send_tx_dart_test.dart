@@ -16,7 +16,7 @@ void main() {
 
       // note this contains some nonce and will not work on an arbitrary setup. Instead,
       // it will throw a bad signature error, see https://github.com/leonardocustodio/polkadart/pull/337.
-      const xtHex = '0x450284008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a4801903f3ac2ce57af5c51bdcd4771ce41ea6a1f73e371d5deb9d25a8a37fa06864cc674de8f9cc687ae3b4f902d4e181dd2b6f951f4e82a61d48df740d23edf268c85004000000a0700d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d070010a5d4e8';
+      const xtHex = '0x450284008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a480178dc41ea448b82b617dad5be16c4f2affb348d4bb55c6618338030e8d2d7d461eaeecdc1e98822d9023fc3541df998353d3b02173639dbb7274a6c2c2847b08a45024c00000a0700d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d070010a5d4e8';
       final tx = hexToUint8(xtHex);
       final hash = xtHash(xtHex);
 
@@ -39,17 +39,11 @@ void main() {
           print('block: $block');
 
           final xts = block['block']['extrinsics'] as List<dynamic>;
+          final xtIndex = xts.indexWhere((xt) => xtHash(xt as String) == hash);
 
-          for (final xt in xts) {
-            final h = xtHash(xt as String);
-            print('Hash: $h');
-
-            if (h == hash) {
-              print('found xt in block!!!');
-            }
+          if (xtIndex != -1) {
+            print('found xt in block at index: $xtIndex');
           }
-
-          print('our hash: $hash');
 
           completer.complete();
         }
@@ -57,8 +51,6 @@ void main() {
 
       await completer.future;
       await sub.cancel();
-
-      // Fixme: first never arrives
     });
 
     test('subscribing to finalized heads works', () async {
