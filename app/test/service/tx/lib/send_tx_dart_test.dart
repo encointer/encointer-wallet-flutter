@@ -5,6 +5,7 @@ import 'package:convert/convert.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/phase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pointycastle/digests/blake2b.dart';
 
@@ -16,7 +17,7 @@ void main() {
 
       // note this contains some nonce and will not work on an arbitrary setup. Instead,
       // it will throw a bad signature error, see https://github.com/leonardocustodio/polkadart/pull/337.
-      const xtHex = '0x450284008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a480178dc41ea448b82b617dad5be16c4f2affb348d4bb55c6618338030e8d2d7d461eaeecdc1e98822d9023fc3541df998353d3b02173639dbb7274a6c2c2847b08a45024c00000a0700d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d070010a5d4e8';
+      const xtHex = '0x450284008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a4801f4762e4c7d2d964a00d8bc44146e17d93a41042ced98c0948db6ab2ac5fc25313aa54abfc0545db7e353f16e11e9e630ede57e146362a2c783af6a22a48b8e86c5025000000a0700d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d070010a5d4e8';
       final tx = hexToUint8(xtHex);
       final hash = xtHash(xtHex);
 
@@ -43,6 +44,15 @@ void main() {
 
           if (xtIndex != -1) {
             print('found xt in block at index: $xtIndex');
+          }
+
+          final xtEvents = events.where((e) =>
+            e.phase is ApplyExtrinsic && (e.phase as ApplyExtrinsic).value0 == xtIndex
+          );
+
+          print("Our Extrinsic Events:");
+          for (final ev in xtEvents) {
+            print('${ev.toJson()}');
           }
 
           completer.complete();
