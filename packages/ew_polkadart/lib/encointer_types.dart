@@ -1,3 +1,9 @@
+
+// basic runtime types
+export 'generated/encointer_kusama/types/encointer_runtime/runtime_event.dart';
+export 'generated/encointer_kusama/types/encointer_runtime/runtime_call.dart' show RuntimeCall;
+export 'generated/encointer_kusama/types/encointer_runtime/runtime.dart' show Runtime;
+
 // export types from balances
 export 'generated/encointer_kusama/types/encointer_primitives/balances/balance_entry.dart' show BalanceEntry;
 
