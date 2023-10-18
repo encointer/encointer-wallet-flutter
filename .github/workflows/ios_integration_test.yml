@@ -23,7 +23,7 @@ jobs:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
   ios_device_test:
-    runs-on: macos-13
+    runs-on: macos-latest
     timeout-minutes: 60
     strategy:
       matrix:
@@ -47,6 +47,10 @@ jobs:
     steps:
       # Setup Environment
       - uses: actions/checkout@v3
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
 
       - name: "Prepare environment for ios"
         working-directory: ./scripts
