@@ -20,7 +20,7 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.3 <4.0.0"
-  flutter: "3.13.7"
+  flutter: "3.13.8"
 
 dependencies:
   # intl - format numbers
