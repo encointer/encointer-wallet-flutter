@@ -77,6 +77,7 @@ class PopupBuilder extends StatelessWidget {
     this.bottom,
     this.maxWidth = 300,
     this.maxHeight = 800,
+    this.onTap,
   });
 
   final String title;
@@ -84,6 +85,7 @@ class PopupBuilder extends StatelessWidget {
   final double maxWidth;
   final double maxHeight;
   final Widget? bottom;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -94,22 +96,25 @@ class PopupBuilder extends StatelessWidget {
         color: context.colorScheme.background,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text(
-            description,
-            style: const TextStyle(fontSize: 12, color: Colors.black54),
-          ),
-          bottom ?? const SizedBox.shrink(),
-        ],
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              description,
+              style: const TextStyle(fontSize: 12, color: Colors.black54),
+            ),
+            bottom ?? const SizedBox.shrink(),
+          ],
+        ),
       ),
     );
   }

@@ -11,8 +11,10 @@ Future<void> accountDetailPage(FlutterDriver driver, String account) async {
 }
 
 Future<void> deleteAccountFromProfilePage(FlutterDriver driver, String account) async {
-  await accountDetailPage(driver, account);
-  await deleteAccountFromAccountManagePage(driver);
+  await driver.runUnsynchronized(() async {
+    await accountDetailPage(driver, account);
+    await deleteAccountFromAccountManagePage(driver);
+  });
 }
 
 Future<void> deleteAccountFromAccountManagePage(FlutterDriver driver) async {
