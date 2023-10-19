@@ -5,9 +5,12 @@ import 'package:convert/convert.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/pallet/event.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/pallet/event.dart' as se;
 import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/phase.dart';
-import 'package:ew_polkadart/encointer_types.dart';
+import 'package:ew_polkadart/runtime_error.dart';
+import 'package:ew_polkadart/runtime_event.dart' as re;
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
+import 'package:ew_polkadart/runtime_event.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pointycastle/digests/blake2b.dart';
 
@@ -19,7 +22,7 @@ void main() {
 
       // note this contains some nonce and will not work on an arbitrary setup. Instead,
       // it will throw a bad signature error, see https://github.com/leonardocustodio/polkadart/pull/337.
-      const xtHex = '0x450284008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a480196dc2bd25c5a0d23f17c9c8aef39183383c0947fb3863e82ef609def14535b4742a579cd4ea49ccc2550ea0e5a4a1a4b529020e323792c64c36d3e7caf5fe08435035800000a0700d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d070010a5d4e8';
+      const xtHex = '0xd1018400d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d011a140fa2a5bf80c614bbdd778e74d3fe09fbe215974263816f385acac8dc4e6ba64e07bb84b1ed5f1d361aff5c2fed9f3d84471d89fc0229c7b4e2a3bfefdf83a5032400003d0073716d3176f08c911c00';
       final tx = hexToUint8(xtHex);
       final hash = xtHash(xtHex);
 
@@ -58,13 +61,15 @@ void main() {
           }
 
           for (final ev in xtEvents) {
-            if (ev.event is System) {
-              final systemEvent = ev.event as System;
+            if (ev.event is re.System) {
+              final systemEvent = ev.event as re.System;
 
-              if (systemEvent.value0 is ExtrinsicSuccess) {
+              if (systemEvent.value0 is se.ExtrinsicSuccess) {
                 print('ExtrinsicSuccess');
-              } else if (systemEvent.value0 is ExtrinsicFailed) {
+              } else if (systemEvent.value0 is se.ExtrinsicFailed) {
+                final dispatchError = (systemEvent.value0 as se.ExtrinsicFailed).dispatchError;
                 print('ExtrinsicFailed');
+                handleDispatchError(dispatchError);
               } else {
                 print('Unidentified extrinsic result');
               }
@@ -113,4 +118,44 @@ Uint8List hexToUint8(String hexString) {
 
 String xtHash(String hexString) {
   return hex.encode(Blake2bDigest(digestSize: 32).process(hexToUint8(hexString)));
+}
+
+void handleExtrinsicEvent(RuntimeEvent event) {
+  switch (event.runtimeType) {
+    case re.System:
+      print('found system event');
+      break;
+    default:
+      print('ignoring event: ${event.toJson()}');
+  }
+}
+
+
+void handleDispatchError(DispatchError value) {
+  switch (value.runtimeType) {
+    case Module:
+      final moduleError = (value as Module).value0;
+      print('Found module error: ${value.toJson()}');
+      final runtimeError = RuntimeError.decodeWithIndex(moduleError.index, moduleError.error);
+      print('Decoded Error: ${runtimeError.toJson()}');
+      break;
+    case BadOrigin:
+      print('bad origin error: ${value.toJson()}');
+      break;
+    case Other:
+    case CannotLookup:
+    case ConsumerRemaining:
+    case NoProviders:
+    case TooManyConsumers:
+    case Token:
+    case Arithmetic:
+    case Transactional:
+    case Exhausted:
+    case Corruption:
+    case Unavailable:
+    case RootNotAllowed:
+      print('unhandled dispatch error');
+    default:
+      throw Exception('DispatchError: Unsupported "$value" of type "${value.runtimeType}"');
+  }
 }
