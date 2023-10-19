@@ -42,6 +42,16 @@ abstract class RuntimeError {
     return codec.decode(input);
   }
 
+  /// Decode with help of the module variant index, and the encoded
+  /// pallet error.
+  ///
+  /// This method was added by Encointer because the dispatch error
+  /// is of the following format:
+  /// `{dispatchError: {Module: {index: 61, error: [7, 0, 0, 0]}}`
+  factory RuntimeError.decodeWithIndex(int index, List<int> input) {
+    return decodeWithIndex(index, _i1.Input.fromBytes(input));
+  }
+
   static const $RuntimeErrorCodec codec = $RuntimeErrorCodec();
 
   static const $RuntimeError values = $RuntimeError();
@@ -145,48 +155,7 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
   @override
   RuntimeError decode(_i1.Input input) {
     final index = _i1.U8Codec.codec.decode(input);
-    switch (index) {
-      case 0:
-        return System._decode(input);
-      case 1:
-        return ParachainSystem._decode(input);
-      case 10:
-        return Balances._decode(input);
-      case 30:
-        return XcmpQueue._decode(input);
-      case 31:
-        return PolkadotXcm._decode(input);
-      case 33:
-        return DmpQueue._decode(input);
-      case 40:
-        return Utility._decode(input);
-      case 43:
-        return Treasury._decode(input);
-      case 44:
-        return Proxy._decode(input);
-      case 48:
-        return Scheduler._decode(input);
-      case 50:
-        return Collective._decode(input);
-      case 51:
-        return Membership._decode(input);
-      case 60:
-        return EncointerScheduler._decode(input);
-      case 61:
-        return EncointerCeremonies._decode(input);
-      case 62:
-        return EncointerCommunities._decode(input);
-      case 63:
-        return EncointerBalances._decode(input);
-      case 64:
-        return EncointerBazaar._decode(input);
-      case 65:
-        return EncointerReputationCommitments._decode(input);
-      case 66:
-        return EncointerFaucet._decode(input);
-      default:
-        throw Exception('RuntimeEvent: Invalid variant index: "$index"');
-    }
+    return decodeWithIndex(index, input);
   }
 
   @override
@@ -301,6 +270,51 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
       default:
         throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
     }
+  }
+}
+
+RuntimeError decodeWithIndex(int index, _i1.Input input) {
+  switch (index) {
+    case 0:
+      return System._decode(input);
+    case 1:
+      return ParachainSystem._decode(input);
+    case 10:
+      return Balances._decode(input);
+    case 30:
+      return XcmpQueue._decode(input);
+    case 31:
+      return PolkadotXcm._decode(input);
+    case 33:
+      return DmpQueue._decode(input);
+    case 40:
+      return Utility._decode(input);
+    case 43:
+      return Treasury._decode(input);
+    case 44:
+      return Proxy._decode(input);
+    case 48:
+      return Scheduler._decode(input);
+    case 50:
+      return Collective._decode(input);
+    case 51:
+      return Membership._decode(input);
+    case 60:
+      return EncointerScheduler._decode(input);
+    case 61:
+      return EncointerCeremonies._decode(input);
+    case 62:
+      return EncointerCommunities._decode(input);
+    case 63:
+      return EncointerBalances._decode(input);
+    case 64:
+      return EncointerBazaar._decode(input);
+    case 65:
+      return EncointerReputationCommitments._decode(input);
+    case 66:
+      return EncointerFaucet._decode(input);
+    default:
+      throw Exception('RuntimeEvent: Invalid variant index: "$index"');
   }
 }
 
