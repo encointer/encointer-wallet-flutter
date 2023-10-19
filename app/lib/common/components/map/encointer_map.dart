@@ -34,17 +34,16 @@ class EncointerMap extends StatelessWidget {
     return FlutterMap(
       mapController: mapController,
       options: MapOptions(
-        center: center ?? const LatLng(47.389712, 8.517076),
-        zoom: initialZoom,
+        initialCenter: center ?? const LatLng(47.389712, 8.517076),
+        initialZoom: initialZoom,
         maxZoom: maxZoom,
+        backgroundColor: Colors.white,
         onPointerDown: onPointerDown,
         onTap: (_, __) => _popupLayerController.hideAllPopups(disableAnimation: true),
       ),
       children: [
         TileLayer(
-          backgroundColor: Colors.white,
           urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          subdomains: const ['a', 'b', 'c'],
         ),
         PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
@@ -55,14 +54,12 @@ class EncointerMap extends StatelessWidget {
               (index) => Marker(
                 key: Key('cid-$index-marker'),
                 point: locations[index],
-                rotateAlignment: Alignment.bottomCenter,
-                builder: (_) => Icon(
+                child: Icon(
                   Icons.location_on,
                   size: 40,
                   color: Colors.blueAccent,
                   key: Key(EWTestKeys.cidMarkerIcon(index)),
                 ),
-                anchorPos: AnchorPos.align(AnchorAlign.top),
               ),
             ),
           ),
