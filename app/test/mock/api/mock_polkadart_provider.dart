@@ -24,7 +24,8 @@ class MockPolkadartProvider extends Provider {
   }
 
   @override
-  Future<SubscriptionResponse> subscribe(String method, List params, {FutureOr<void> Function(String subscription)? onCancel}) {
+  Future<SubscriptionResponse> subscribe(String method, List params,
+      {FutureOr<void> Function(String subscription)? onCancel}) {
     throw UnimplementedError();
   }
 }

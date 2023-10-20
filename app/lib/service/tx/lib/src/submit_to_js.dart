@@ -1,8 +1,10 @@
 import 'dart:core';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_ceremonies/pallet/error.dart' as ceremonies_error;
-import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart' as balances_error;
+import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_ceremonies/pallet/error.dart'
+    as ceremonies_error;
+import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart'
+    as balances_error;
 import 'package:ew_polkadart/runtime_error.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -197,10 +199,10 @@ Map<String, String> getLocalizedTxErrorMessage(AppLocalizations l10n, DispatchEr
     case Unavailable:
     case RootNotAllowed:
       Log.d('unhandled dispatch error');
-      return {'title': l10n.transactionError, 'body': error.toString() };
+      return {'title': l10n.transactionError, 'body': error.toString()};
     default:
       Log.d('unhandled dispatch error');
-      return {'title': l10n.transactionError, 'body': error.toString() };
+      return {'title': l10n.transactionError, 'body': error.toString()};
   }
 }
 
@@ -228,10 +230,10 @@ Map<String, String> getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeErr
     case EncointerReputationCommitments:
     case EncointerFaucet:
       Log.d('unhandled dispatch error');
-      return {'title': l10n.transactionError, 'body': error.toString() };
+      return {'title': l10n.transactionError, 'body': error.toString()};
     default:
       Log.d('unhandled dispatch error');
-      return {'title': l10n.transactionError, 'body': error.toString() };
+      return {'title': l10n.transactionError, 'body': error.toString()};
   }
 }
 
@@ -239,22 +241,22 @@ extension LocalizedCeremoniesError on ceremonies_error.Error {
   Map<String, String> errorMsg(AppLocalizations l10n) {
     return switch (this) {
       ceremonies_error.Error.votesNotDependable => {
-        'title': l10n.votesNotDependableErrorTitle,
-        'body': l10n.votesNotDependableErrorBody
-      },
-    ceremonies_error.Error.alreadyEndorsed => {
-        'title': l10n.alreadyEndorsedErrorTitle,
-        'body': l10n.alreadyEndorsedErrorBody
-      },
+          'title': l10n.votesNotDependableErrorTitle,
+          'body': l10n.votesNotDependableErrorBody
+        },
+      ceremonies_error.Error.alreadyEndorsed => {
+          'title': l10n.alreadyEndorsedErrorTitle,
+          'body': l10n.alreadyEndorsedErrorBody
+        },
       ceremonies_error.Error.noValidAttestations => {
-        'title': l10n.noValidClaimsErrorTitle,
-        'body': l10n.noValidClaimsErrorBody,
-      },
+          'title': l10n.noValidClaimsErrorTitle,
+          'body': l10n.noValidClaimsErrorBody,
+        },
       ceremonies_error.Error.rewardsAlreadyIssued => {
-        'title': l10n.rewardsAlreadyIssuedErrorTitle,
-        'body': l10n.rewardsAlreadyIssuedErrorBody
-      },
-    _ => {'title': l10n.transactionError, 'body': toString() }
+          'title': l10n.rewardsAlreadyIssuedErrorTitle,
+          'body': l10n.rewardsAlreadyIssuedErrorBody
+        },
+      _ => {'title': l10n.transactionError, 'body': toString()}
     };
   }
 }
@@ -263,10 +265,10 @@ extension LocalizedBalancesError on balances_error.Error {
   Map<String, String> errorMsg(AppLocalizations l10n) {
     return switch (this) {
       balances_error.Error.balanceTooLow => {
-        'title': l10n.balanceTooLowTitle,
-        'body': l10n.balanceTooLowBody,
-      },
-      _ => {'title': l10n.transactionError, 'body': toString() }
+          'title': l10n.balanceTooLowTitle,
+          'body': l10n.balanceTooLowBody,
+        },
+      _ => {'title': l10n.transactionError, 'body': toString()}
     };
   }
 }
