@@ -27,7 +27,7 @@ class EWAuthorApi<P extends Provider> {
 
   /// Submit a fully formatted extrinsic and return a subscription
   /// which emits txStatus updates.
-  Future<SubscriptionReponse> submitAndWatchExtrinsic(Uint8List extrinsic) async {
+  Future<SubscriptionResponse> submitAndWatchExtrinsic(Uint8List extrinsic) async {
     final params = <dynamic>['0x${hex.encode(extrinsic)}'];
 
     final subscription = await _provider.subscribe(
