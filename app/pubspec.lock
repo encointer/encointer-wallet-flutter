@@ -1239,8 +1239,8 @@ packages:
     dependency: transitive
     description:
       path: "packages/polkadart"
-      ref: with-lfs
-      resolved-ref: "99ab242fbeb2446bc31fa905db42c6fa614af3bf"
+      ref: main
+      resolved-ref: a91142eea6b3762f04471ff08151ae12db94301e
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.1.1"
