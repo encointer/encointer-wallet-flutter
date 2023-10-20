@@ -9,24 +9,31 @@ environment:
 dependencies:
   # Generated files depend on quiver
   quiver: ^3.2.1
+  # Once polkadart is stable enough and has all our fixes, we can
+  # switch back to the actual published package.
   polkadart:
+    #    path: ../../../polkadart/packages/polkadart
     git:
       url: https://github.com/encointer/polkadart
-      # Todo: Remove when v0.1.1 released
-      # Note: We can't use a branch here (at least not in the CI), see:
-      # https://github.com/leonardocustodio/polkadart/issues/327
+      ref: with-lfs
       path: packages/polkadart
 
 dev_dependencies:
   # The generated files do not satisfy the `very_good_analysis` lints.
   lints: ^2.0.0
   polkadart_cli:
+    #    path: ../../../polkadart/packages/polkadart_cli
     git:
       url: https://github.com/encointer/polkadart
-      # Todo: Remove when v0.1.1 released
-      # Note: We can't use a branch here (at least not in the CI), see:
-      # https://github.com/leonardocustodio/polkadart/issues/327
+      ref: with-lfs
       path: packages/polkadart_cli
+  substrate_metadata:
+    #    path: ../../../polkadart/packages/substrate_metadata
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: with-lfs
+      path: packages/substrate_metadata
+
   test: ^1.24.3
 
 # We have to use dependency overrides as the polkadart_cli in our fork uses
@@ -34,21 +41,24 @@ dev_dependencies:
 # published package.
 dependency_overrides:
   polkadart:
+    #    path: ../../../polkadart/packages/polkadart
     git:
       url: https://github.com/encointer/polkadart
-      # Todo: Remove when v0.1.1 released
+      ref: with-lfs
       path: packages/polkadart
 
   polkadart_scale_codec:
+    #    path: ../../../polkadart/packages/polkadart_scale_codec
     git:
       url: https://github.com/encointer/polkadart
-      # Todo: Remove when v0.1.1 released
+      ref: with-lfs
       path: packages/polkadart_scale_codec
 
   substrate_metadata:
+    #    path: ../../../polkadart/packages/substrate_metadata
     git:
       url: https://github.com/encointer/polkadart
-      # Todo: Remove when v0.1.1 released
+      ref: with-lfs
       path: packages/substrate_metadata
 
 # This only generates valid files on UNIX machines.

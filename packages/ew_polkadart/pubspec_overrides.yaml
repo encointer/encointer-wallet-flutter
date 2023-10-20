@@ -3,12 +3,15 @@ dependency_overrides:
   polkadart:
     git:
       url: https://github.com/encointer/polkadart
+      ref: with-lfs
       path: packages/polkadart
   polkadart_scale_codec:
     git:
       url: https://github.com/encointer/polkadart
+      ref: with-lfs
       path: packages/polkadart_scale_codec
   substrate_metadata:
     git:
       url: https://github.com/encointer/polkadart
+      ref: with-lfs
       path: packages/substrate_metadata
