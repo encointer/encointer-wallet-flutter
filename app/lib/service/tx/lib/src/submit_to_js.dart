@@ -34,7 +34,7 @@ Future<void> submitToJS(
   Api api,
   bool showStatusSnackBar, {
   required Map<String, dynamic> txParams,
-  void Function(dynamic res)? onError,
+  void Function(DispatchError error)? onError,
   required String password,
 }) async {
   final l10n = context.l10n;
@@ -84,7 +84,7 @@ void _onTxError(
   AppStore store,
   DispatchError error,
   bool mounted, {
-  void Function(dynamic res)? onError,
+  void Function(DispatchError error)? onError,
 }) {
   store.assets.setSubmitting(false);
   if (mounted) RootSnackBar.removeCurrent();
