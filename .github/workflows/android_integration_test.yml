@@ -85,17 +85,17 @@ jobs:
             ~/.android/adb*
           key: avd-${{ matrix.api-level }}-${{ matrix.device }}
 
-      - name: Start colima a docker runtime for MacOs
-        run: |
-          brew install docker
-          brew install colima
-          colima start
+      # - name: Start colima a docker runtime for MacOs
+      #   run: |
+      #     brew install docker
+      #     brew install colima
+      #     colima start
 
-      - name: Run encointer-node
-        run: ./scripts/docker_run_encointer_node_notee.sh &
+      # - name: Run encointer-node
+      #   run: ./scripts/docker_run_encointer_node_notee.sh &
 
-      - name: Bootstrap Demo Community
-        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
+      # - name: Bootstrap Demo Community
+      #   run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh
 
       - name: "Create AVD and generate a clean snapshot for caching"
         if: steps.avd-cache.outputs.cache-hit != 'true'

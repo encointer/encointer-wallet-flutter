@@ -48,7 +48,8 @@ jobs:
       # Setup Environment
       - uses: actions/checkout@v3
 
-      - uses: maxim-lobanov/setup-xcode@v1
+      - name: prepare xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
 
@@ -92,17 +93,17 @@ jobs:
       - name: "Build JS"
         run: ./flutterw pub global run melos yarn-build
 
-      - name: Start colima a docker runtime for MacOs
-        run: |
-          brew install docker
-          brew install colima
-          colima start
+      # - name: Start colima a docker runtime for MacOs
+      #   run: |
+      #     brew install docker
+      #     brew install colima
+      #     colima start
 
-      - name: Run encointer-node
-        run: ./scripts/docker_run_encointer_node_notee.sh ${{ matrix.docker_tag }} &
+      # - name: Run encointer-node
+      #   run: ./scripts/docker_run_encointer_node_notee.sh ${{ matrix.docker_tag }} &
 
-      - name: Bootstrap Demo Community
-        run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh ${{ matrix.docker_tag }}
+      # - name: Bootstrap Demo Community
+      #   run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh ${{ matrix.docker_tag }}
 
       - name: "Start Simulator"
         working-directory: ./scripts
