@@ -40,7 +40,7 @@ jobs:
           - device: "iPad Pro (12.9-inch) (6th generation)"
             record_video: false
             docker_tag: "1.5.1"
-          - device: "iPad Pro (12.9-inch) (2nd generation)"
+          - device: "iPad Pro (12.9-inch) (5nd generation)"
             record_video: false
             docker_tag: "1.5.1"
       fail-fast: false
@@ -65,19 +65,10 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
-      - name: "Create Simulator if iPad Pro 2nd gen"
-        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
-        # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
-        run: |
-          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-4" || \
-          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
-
-      - name: "Create Simulator if iPad 8 Plus"
-        if: ${{ matrix.device == 'iPhone 8 Plus' }}
-        # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
-        run: |
-          xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-4" || \
-          xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
+      - uses: futureware-tech/simulator-action@v2
+        with:
+          model: ${{ matrix.device }}
+          os_version: "16.2"
 
       # JS Stuff
       - uses: actions/setup-node@v3
@@ -105,11 +96,11 @@ jobs:
       # - name: Bootstrap Demo Community
       #   run: ./scripts/docker_run_encointer_client_bootstrap_demo_community.sh ${{ matrix.docker_tag }}
 
-      - name: "Start Simulator"
-        working-directory: ./scripts
-        env:
-          DEVICE_ID: ${{ matrix.device }}
-        run: source ./ios_emulator.sh
+      # - name: "Start Simulator"
+      #   working-directory: ./scripts
+      #   env:
+      #     DEVICE_ID: ${{ matrix.device }}
+      #   run: source ./ios_emulator.sh
 
       - name: Run integration tests with printscreens in all languages
         if: startsWith(github.ref, 'refs/tags/')
