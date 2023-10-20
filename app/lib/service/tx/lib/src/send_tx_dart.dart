@@ -21,6 +21,7 @@ class ExtrinsicReport {
   ExtrinsicReport({
     required this.extrinsicHash,
     required this.blockHash,
+    required this.timestamp,
     required this.events,
   });
 
@@ -30,12 +31,16 @@ class ExtrinsicReport {
   /// Hash of the block the extrinsic was included in.
   final Hash blockHash;
 
+  /// Timestamp of the block the extrinsic was included in.
+  final BigInt timestamp;
+
   /// Events associated with the extrinsic.
   final List<EventRecord> events;
 
   Map<String, dynamic> toJson() => {
         'extrinsicHash': extrinsicHash,
         'blockHash': blockHash,
+        'timestamp': timestamp.toString(),
         'events': events.map((value) => value.toJson()).toList(),
       };
 
@@ -128,9 +133,12 @@ class EWAuthorApi<P extends Provider> {
         final blockHashHex = event.result['finalized'].toString();
         final blockHash = hexToUint8(blockHashHex);
 
-        final events = await EncointerKusama(_provider).query.system.events(at: blockHash);
+        final kusama = EncointerKusama(_provider);
 
+        final events = await kusama.query.system.events(at: blockHash);
         final block = await ChainApi(_provider).getBlock(at: blockHash);
+        final timestamp = await kusama.query.timestamp.now(at: blockHash);
+
         // ignore: avoid_dynamic_calls
         final xts = block['block']['extrinsics'] as List<dynamic>;
         final xtIndex = xts.indexWhere((xt) => xtHash(xt as String) == hash);
@@ -142,7 +150,7 @@ class EWAuthorApi<P extends Provider> {
         final xtEvents =
             events.where((e) => e.phase is ApplyExtrinsic && (e.phase as ApplyExtrinsic).value0 == xtIndex).toList();
 
-        report = ExtrinsicReport(extrinsicHash: hash, blockHash: blockHashHex, events: xtEvents);
+        report = ExtrinsicReport(extrinsicHash: hash, blockHash: blockHashHex, timestamp: timestamp, events: xtEvents);
 
         completer.complete();
       }
