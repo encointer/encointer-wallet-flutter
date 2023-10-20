@@ -31,6 +31,17 @@ class ExtrinsicReport {
 
   /// Events associated with the extrinsic.
   final List<EventRecord> events;
+
+  Map<String, dynamic> toJson() => {
+    'extrinsicHash': extrinsicHash,
+    'blockHash': blockHash,
+    'topics': events.map((value) => value.toJson()).toList(),
+  };
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }
 
 /// Substrate state API
@@ -157,6 +168,8 @@ class Extrinsic {
   }
 
   final Uint8List _encoded;
+
+  Uint8List get encoded => _encoded;
 
   String get hash => hex.encode(Blake2bDigest(digestSize: 32).process(_encoded));
 }

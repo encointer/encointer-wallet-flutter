@@ -17,10 +17,11 @@ void main() {
       // note this contains some nonce and will not work on an arbitrary setup. Instead,
       // it will throw a bad signature error, see https://github.com/leonardocustodio/polkadart/pull/337.
       const xtHex =
-          '0x45028400d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d01c21f04bb649e9c9ba04d3d157903de71248aacb88e1115850f0ea55b3da094760f485f35d57c60e900bad966c676df9aaa79b9725f736aebe211ce5a74abd98505023000000a07008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48070010a5d4e8';
-      final tx = hexToUint8(xtHex);
+          '0x45028400d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d01d2473e05092ddd9a032f6eab3a12c3a6983f867ec25180cefd6ce185f1df413b9bf6832c08b24bbd517b693710c1b762328ab7d4b7d7542b1e8bbde87d872984b5005000000a07008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48070010a5d4e8';
+      final xt = Extrinsic.fromHex(xtHex);
 
-      final report = await author.submitAndWatchExtrinsicWithReport(tx);
+      final report = await author.submitAndWatchExtrinsicWithReport(xt.encoded);
+      print('Got extrinsic report: $report');
 
       for (final ev in report.events) {
         if (ev.event is re.System) {
