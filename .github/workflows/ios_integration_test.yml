@@ -51,7 +51,7 @@ jobs:
       - name: prepare xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "15.0"
+          xcode-version: "14.3"
 
       - name: "Prepare environment for ios"
         working-directory: ./scripts
@@ -68,7 +68,7 @@ jobs:
       - uses: futureware-tech/simulator-action@v2
         with:
           model: ${{ matrix.device }}
-          os_version: "17.0"
+          os_version: "16.4"
 
       # JS Stuff
       - uses: actions/setup-node@v3
