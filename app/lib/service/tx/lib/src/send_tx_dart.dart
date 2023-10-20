@@ -199,16 +199,6 @@ String xtHash(String hexString) {
   return hex.encode(Blake2bDigest(digestSize: 32).process(hexToUint8(hexString)));
 }
 
-void handleExtrinsicEvent(RuntimeEvent event) {
-  switch (event.runtimeType) {
-    case re.System:
-      Log.p('found system event');
-      break;
-    default:
-      Log.p('ignoring event: ${event.toJson()}');
-  }
-}
-
 void handleDispatchError(DispatchError value) {
   switch (value.runtimeType) {
     case Module:
@@ -233,6 +223,7 @@ void handleDispatchError(DispatchError value) {
     case Unavailable:
     case RootNotAllowed:
       Log.d('unhandled dispatch error');
+      break;
     default:
       throw Exception('DispatchError: Unsupported "$value" of type "${value.runtimeType}"');
   }
