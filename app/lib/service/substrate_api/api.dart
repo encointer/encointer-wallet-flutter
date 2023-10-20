@@ -41,14 +41,15 @@ class Api {
     String jsServiceEncointer, {
     bool isIntegrationTest = false,
   }) {
+    final provider = Provider.fromUri(Uri.parse(store.settings.endpoint.value!));
     return Api(
       store,
       js,
       dartApi,
-      AccountApi(store, js),
+      AccountApi(store, js, provider),
       AssetsApi(store, js),
       ChainApi(store, js),
-      EncointerApi(store, js, dartApi, ewHttp, EncointerKusama.url(Uri.parse(store.settings.endpoint.value!))),
+      EncointerApi(store, js, dartApi, ewHttp, EncointerKusama(provider)),
       isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
       jsServiceEncointer,
     );

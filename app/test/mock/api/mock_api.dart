@@ -13,6 +13,7 @@ import 'mock_chain_api.dart';
 import 'mock_encointer_api.dart';
 import 'mock_encointer_kusama_api.dart';
 import 'mock_js_api.dart';
+import 'mock_polkadart_provider.dart';
 import 'mock_substrate_dart_api.dart';
 
 MockApi getMockApi(AppStore store, {required bool withUI}) {
@@ -31,7 +32,7 @@ class MockApi extends Api {
           store,
           js,
           dartApi,
-          MockAccountApi(store, js),
+          MockAccountApi(store, js, MockPolkadartProvider()),
           MockAssetsApi(store, js),
           MockChainApi(store, js),
           MockEncointerApi(store, js, dartApi, ewHttp, MockEncointerKusamaApi()),

@@ -18,7 +18,7 @@ void main() {
           '0xd1018400d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d01ae256b85be1cc6f2af4684f44588457f536d332a03689d433df622dc5dca250fa4911531a6e90be32f1838055b6fe5966da4c8caf69af079bf81a5aa8ce8f58535037000003d0073716d3176f08c911c00';
       final xt = Extrinsic.fromHex(xtHex);
 
-      final report = await author.submitAndWatchExtrinsicWithReport(xt.encoded);
+      final report = await author.submitAndWatchExtrinsicWithReport(xt);
       print('Got extrinsic report: $report');
 
       if (report.isExtrinsicSuccess) {

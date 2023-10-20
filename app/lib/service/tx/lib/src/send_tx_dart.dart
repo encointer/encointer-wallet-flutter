@@ -82,8 +82,8 @@ class EWAuthorApi<P extends Provider> {
   final P _provider;
 
   /// Submit a fully formatted extrinsic for block inclusion.
-  Future<Uint8List> submitExtrinsic(Uint8List extrinsic) async {
-    final params = <dynamic>['0x${hex.encode(extrinsic)}'];
+  Future<Uint8List> submitExtrinsic(Extrinsic extrinsic) async {
+    final params = <String>[extrinsic.hexPrefixed];
 
     final response = await _provider.send('author_submitExtrinsic', params);
 
@@ -97,8 +97,8 @@ class EWAuthorApi<P extends Provider> {
 
   /// Submit a fully formatted extrinsic and return a subscription
   /// which emits txStatus updates.
-  Future<SubscriptionResponse> submitAndWatchExtrinsic(Uint8List extrinsic) async {
-    final params = <dynamic>['0x${hex.encode(extrinsic)}'];
+  Future<SubscriptionResponse> submitAndWatchExtrinsic(Extrinsic extrinsic) async {
+    final params = <String>[extrinsic.hexPrefixed];
 
     final subscription = await _provider.subscribe(
       'author_submitAndWatchExtrinsic',
@@ -111,9 +111,8 @@ class EWAuthorApi<P extends Provider> {
     return subscription;
   }
 
-  Future<ExtrinsicReport> submitAndWatchExtrinsicWithReport(Uint8List extrinsic) async {
-    final xt = Extrinsic(extrinsic);
-    final hash = xt.hash;
+  Future<ExtrinsicReport> submitAndWatchExtrinsicWithReport(Extrinsic extrinsic) async {
+    final hash = extrinsic.hash;
 
     final subResponse = await submitAndWatchExtrinsic(extrinsic);
 
@@ -187,6 +186,8 @@ class Extrinsic {
   final Uint8List _encoded;
 
   Uint8List get encoded => _encoded;
+
+  String get hexPrefixed => '0x${hex.encode(_encoded)}';
 
   String get hash => hex.encode(Blake2bDigest(digestSize: 32).process(_encoded));
 }
