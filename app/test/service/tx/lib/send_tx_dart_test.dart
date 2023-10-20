@@ -4,8 +4,6 @@ import 'dart:async';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/pallet/event.dart' as se;
-import 'package:ew_polkadart/runtime_event.dart' as re;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -17,26 +15,19 @@ void main() {
       // note this contains some nonce and will not work on an arbitrary setup. Instead,
       // it will throw a bad signature error, see https://github.com/leonardocustodio/polkadart/pull/337.
       const xtHex =
-          '0x45028400d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d01d2473e05092ddd9a032f6eab3a12c3a6983f867ec25180cefd6ce185f1df413b9bf6832c08b24bbd517b693710c1b762328ab7d4b7d7542b1e8bbde87d872984b5005000000a07008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48070010a5d4e8';
+          '0xd1018400d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d01ae256b85be1cc6f2af4684f44588457f536d332a03689d433df622dc5dca250fa4911531a6e90be32f1838055b6fe5966da4c8caf69af079bf81a5aa8ce8f58535037000003d0073716d3176f08c911c00';
       final xt = Extrinsic.fromHex(xtHex);
 
       final report = await author.submitAndWatchExtrinsicWithReport(xt.encoded);
       print('Got extrinsic report: $report');
 
-      for (final ev in report.events) {
-        if (ev.event is re.System) {
-          final systemEvent = ev.event as re.System;
-
-          if (systemEvent.value0 is se.ExtrinsicSuccess) {
-            print('ExtrinsicSuccess');
-          } else if (systemEvent.value0 is se.ExtrinsicFailed) {
-            final dispatchError = (systemEvent.value0 as se.ExtrinsicFailed).dispatchError;
-            print('ExtrinsicFailed');
-            handleDispatchError(dispatchError);
-          } else {
-            print('Unidentified extrinsic result');
-          }
-        }
+      if (report.isExtrinsicSuccess) {
+        print('ExtrinsicSuccess');
+      } else if (report.isExtrinsicFailed) {
+        print('ExtrinsicFailed');
+        handleDispatchError(report.dispatchError!);
+      } else {
+        throw Exception('Unidentified Extrinsics Result');
       }
     });
 

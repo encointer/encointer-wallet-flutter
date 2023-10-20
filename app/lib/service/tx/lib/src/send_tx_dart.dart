@@ -9,6 +9,7 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/event
 import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/phase.dart';
 import 'package:ew_polkadart/runtime_error.dart';
 import 'package:ew_polkadart/runtime_event.dart' as re;
+import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/pallet/event.dart' as se;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 import 'package:ew_polkadart/runtime_event.dart';
 import 'package:pointycastle/digests/blake2b.dart';
@@ -41,6 +42,36 @@ class ExtrinsicReport {
   @override
   String toString() {
     return toJson().toString();
+  }
+
+  bool get isExtrinsicSuccess {
+    return events.last.event.isExtrinsicSuccess;
+  }
+
+  bool get isExtrinsicFailed {
+    return events.last.event.isExtrinsicFailed;
+  }
+
+  DispatchError? get dispatchError {
+    return events.last.event.dispatchError;
+  }
+}
+
+extension SystemExtension on RuntimeEvent {
+  bool get isExtrinsicSuccess {
+    return this is re.System && (this as re.System).value0 is se.ExtrinsicSuccess;
+  }
+
+  bool get isExtrinsicFailed {
+    return this is re.System && (this as re.System).value0 is se.ExtrinsicFailed;
+  }
+
+  DispatchError? get dispatchError {
+    if (isExtrinsicFailed) {
+      return ((this as re.System).value0 as se.ExtrinsicFailed).dispatchError;
+    } else {
+      return null;
+    }
   }
 }
 
