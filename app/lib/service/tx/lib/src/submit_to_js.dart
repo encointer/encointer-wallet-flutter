@@ -49,7 +49,9 @@ Future<void> submitToJS(
   Log.d('$txInfo', 'submitToJS');
   Log.d('${txParams['params']}', 'submitToJS');
 
-  final onTxFinishFn = txParams['onFinish'] as dynamic Function(BuildContext, ExtrinsicReport)?;
+  final onTxFinishFn = txParams['onFinish'] != null
+      ? txParams['onFinish'] as dynamic Function(BuildContext, ExtrinsicReport)
+      : (_, __) => null;
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
@@ -69,7 +71,7 @@ Future<void> submitToJS(
     if (report.isExtrinsicFailed) {
       _onTxError(context, store, report.dispatchError!, showStatusSnackBar, onError: onError);
     } else {
-      _onTxFinish(context, store, report, onTxFinishFn!, showStatusSnackBar);
+      _onTxFinish(context, store, report, onTxFinishFn, showStatusSnackBar);
     }
   } else {
     _showTxStatusSnackBar(l10n.txQueuedOffline, null);
