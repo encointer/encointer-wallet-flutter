@@ -2,11 +2,11 @@ name: IOS CI
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
     tags:
       - "*"
   pull_request:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
 
 env:
   NODE_VERSION: 18.14.2
@@ -51,7 +51,7 @@ jobs:
       - name: prepare xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '15.0'
+          xcode-version: "15.0"
 
       - name: "Prepare environment for ios"
         working-directory: ./scripts
@@ -68,7 +68,7 @@ jobs:
       - uses: futureware-tech/simulator-action@v2
         with:
           model: ${{ matrix.device }}
-          os_version: "16.2"
+          os_version: "17.0"
 
       # JS Stuff
       - uses: actions/setup-node@v3
