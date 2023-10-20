@@ -81,13 +81,17 @@ class EWAuthorApi<P extends Provider> {
     ExtrinsicReport? report;
     final sub = subResponse.stream.listen((event) async {
       Log.d('XtStatus: ${event.result}');
+
+      // ignore: avoid_dynamic_calls
       if (event.result['finalized'] != null) {
+        // ignore: avoid_dynamic_calls
         final blockHashHex = event.result['finalized'].toString();
         final blockHash = hexToUint8(blockHashHex);
 
         final events = await EncointerKusama(_provider).query.system.events(at: blockHash);
 
         final block = await ChainApi(_provider).getBlock(at: blockHash);
+        // ignore: avoid_dynamic_calls
         final xts = block['block']['extrinsics'] as List<dynamic>;
         final xtIndex = xts.indexWhere((xt) => xtHash(xt as String) == hash);
 
