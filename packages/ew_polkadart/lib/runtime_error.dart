@@ -1,4 +1,3 @@
-
 /// This file has been manually created based on the `runtime_events.dart`.
 ///
 /// Procedure:
@@ -443,7 +442,6 @@ class Balances extends RuntimeError {
   @override
   int get hashCode => value0.hashCode;
 }
-
 
 class XcmpQueue extends RuntimeError {
   const XcmpQueue(this.value0);
