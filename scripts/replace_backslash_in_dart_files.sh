@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This file exists because of: https://github.com/leonardocustodio/polkadart/issues/323
+
 # Check if a directory is provided as an argument
 if [ $# -ne 1 ]; then
   echo "Usage: $0 <directory>"
@@ -8,7 +10,6 @@ fi
 
 directory="$1"
 
-# Check if the provided directory exists
 if [ ! -d "$directory" ]; then
   echo "Error: The specified directory does not exist."
   exit 1
