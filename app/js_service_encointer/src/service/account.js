@@ -288,6 +288,7 @@ export async function getXt (txInfo, paramList){
     });
   }
 
+  // The dart<>JS interface expects a map.
   return { xt: await _getXt(keyPair, txInfo, paramList) };
 }
 
