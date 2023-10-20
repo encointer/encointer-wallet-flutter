@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
+import 'package:encointer_wallet/service/service.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/event_record.dart';
@@ -79,25 +80,19 @@ class EWAuthorApi<P extends Provider> {
 
     ExtrinsicReport? report;
     final sub = subResponse.stream.listen((event) async {
-      print('XtStatus: ${event.result}');
+      Log.d('XtStatus: ${event.result}');
       if (event.result['finalized'] != null) {
         final blockHashHex = event.result['finalized'].toString();
         final blockHash = hexToUint8(blockHashHex);
 
         final events = await EncointerKusama(_provider).query.system.events(at: blockHash);
 
-        for (final ev in events) {
-          print('${ev.toJson()}');
-        }
-
         final block = await ChainApi(_provider).getBlock(at: blockHash);
-        print('block: $block');
-
         final xts = block['block']['extrinsics'] as List<dynamic>;
         final xtIndex = xts.indexWhere((xt) => xtHash(xt as String) == hash);
 
         if (xtIndex != -1) {
-          print('found xt in block at index: $xtIndex');
+          Log.d('found xt in block at index: $xtIndex');
         }
 
         final xtEvents = events.where((e) =>
@@ -173,10 +168,10 @@ String xtHash(String hexString) {
 void handleExtrinsicEvent(RuntimeEvent event) {
   switch (event.runtimeType) {
     case re.System:
-      print('found system event');
+      Log.p('found system event');
       break;
     default:
-      print('ignoring event: ${event.toJson()}');
+      Log.p('ignoring event: ${event.toJson()}');
   }
 }
 
@@ -185,12 +180,12 @@ void handleDispatchError(DispatchError value) {
   switch (value.runtimeType) {
     case Module:
       final moduleError = (value as Module).value0;
-      print('Found module error: ${value.toJson()}');
+      Log.d('Found module error: ${value.toJson()}');
       final runtimeError = RuntimeError.decodeWithIndex(moduleError.index, moduleError.error);
-      print('Decoded Error: ${runtimeError.toJson()}');
+      Log.d('Decoded Error: ${runtimeError.toJson()}');
       break;
     case BadOrigin:
-      print('bad origin error: ${value.toJson()}');
+      Log.d('bad origin error: ${value.toJson()}');
       break;
     case Other:
     case CannotLookup:
@@ -204,7 +199,7 @@ void handleDispatchError(DispatchError value) {
     case Corruption:
     case Unavailable:
     case RootNotAllowed:
-      print('unhandled dispatch error');
+      Log.d('unhandled dispatch error');
     default:
       throw Exception('DispatchError: Unsupported "$value" of type "${value.runtimeType}"');
   }
