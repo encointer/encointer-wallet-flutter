@@ -33,10 +33,10 @@ class ExtrinsicReport {
   final List<EventRecord> events;
 
   Map<String, dynamic> toJson() => {
-    'extrinsicHash': extrinsicHash,
-    'blockHash': blockHash,
-    'topics': events.map((value) => value.toJson()).toList(),
-  };
+        'extrinsicHash': extrinsicHash,
+        'blockHash': blockHash,
+        'topics': events.map((value) => value.toJson()).toList(),
+      };
 
   @override
   String toString() {
@@ -81,7 +81,6 @@ class EWAuthorApi<P extends Provider> {
   }
 
   Future<ExtrinsicReport> submitAndWatchExtrinsicWithReport(Uint8List extrinsic) async {
-
     final xt = Extrinsic(extrinsic);
     final hash = xt.hash;
 
@@ -110,9 +109,8 @@ class EWAuthorApi<P extends Provider> {
           Log.d('found xt in block at index: $xtIndex');
         }
 
-        final xtEvents = events.where((e) =>
-        e.phase is ApplyExtrinsic && (e.phase as ApplyExtrinsic).value0 == xtIndex
-        ).toList();
+        final xtEvents =
+            events.where((e) => e.phase is ApplyExtrinsic && (e.phase as ApplyExtrinsic).value0 == xtIndex).toList();
 
         report = ExtrinsicReport(extrinsicHash: hash, blockHash: blockHashHex, events: xtEvents);
 
@@ -123,18 +121,6 @@ class EWAuthorApi<P extends Provider> {
     await completer.future;
     await sub.cancel();
     return report!;
-}
-
-  Future<StreamSubscription<String>> subscribeFinalizedHeads(void Function(String) onData) async {
-    final subscription = await _provider.subscribe(
-      'chain_subscribeFinalizedHeads',
-      [],
-      onCancel: (subscription) async {
-        await _provider.send('chain_unsubscribeFinalizedHeads', [subscription]);
-      },
-    );
-
-    return subscription.stream.map((event) => event.toString()).listen(onData);
   }
 }
 
@@ -191,7 +177,6 @@ void handleExtrinsicEvent(RuntimeEvent event) {
       Log.p('ignoring event: ${event.toJson()}');
   }
 }
-
 
 void handleDispatchError(DispatchError value) {
   switch (value.runtimeType) {
