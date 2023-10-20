@@ -1,5 +1,6 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
-import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart';
@@ -26,13 +27,13 @@ void main() {
           final systemEvent = ev.event as re.System;
 
           if (systemEvent.value0 is se.ExtrinsicSuccess) {
-            Log.p('ExtrinsicSuccess');
+            print('ExtrinsicSuccess');
           } else if (systemEvent.value0 is se.ExtrinsicFailed) {
             final dispatchError = (systemEvent.value0 as se.ExtrinsicFailed).dispatchError;
-            Log.p('ExtrinsicFailed');
+            print('ExtrinsicFailed');
             handleDispatchError(dispatchError);
           } else {
-            Log.p('Unidentified extrinsic result');
+            print('Unidentified extrinsic result');
           }
         }
       }
@@ -54,13 +55,13 @@ void main() {
       );
 
       final sub = subscription.stream.map((event) => event.toString()).listen((event) {
-        Log.p('Event: $event');
+        print('Event: $event');
         completer.complete();
       });
 
       await completer.future.then((_) => sub.cancel());
 
-      Log.p('End');
+      print('End');
     });
   });
 }
