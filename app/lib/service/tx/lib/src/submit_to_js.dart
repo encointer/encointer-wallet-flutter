@@ -174,6 +174,7 @@ String getTxStatusTranslation(AppLocalizations l10n, TxStatus? status) {
 }
 
 Map<String, String> getLocalizedTxErrorMessage(AppLocalizations l10n, DispatchError error) {
+  // Todo: this needs to be handled, but it is not part of the dispatch error.
   // if (txError.startsWith(lowPriorityTx)) {
   //   return {'title': l10n.txTooLowPriorityErrorTitle, 'body': l10n.txTooLowPriorityErrorBody};
   // } else if (txError.startsWith(insufficientFundsError)) {
@@ -198,10 +199,10 @@ Map<String, String> getLocalizedTxErrorMessage(AppLocalizations l10n, DispatchEr
     case Corruption:
     case Unavailable:
     case RootNotAllowed:
-      Log.d('unhandled dispatch error');
+      Log.d('unhandled dispatch error: $error');
       return {'title': l10n.transactionError, 'body': error.toString()};
     default:
-      Log.d('unhandled dispatch error');
+      Log.d('unidentified dispatch error: $error');
       return {'title': l10n.transactionError, 'body': error.toString()};
   }
 }
@@ -212,6 +213,7 @@ Map<String, String> getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeErr
       return (error as EncointerCeremonies).value0.errorMsg(l10n);
     case EncointerBalances:
       return (error as EncointerBalances).value0.errorMsg(l10n);
+    // List the pallets we have available for an overview
     case System:
     case ParachainSystem:
     case Balances:
@@ -229,10 +231,10 @@ Map<String, String> getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeErr
     case EncointerBazaar:
     case EncointerReputationCommitments:
     case EncointerFaucet:
-      Log.d('unhandled dispatch error');
+      Log.d('unhandled dispatch error: $error');
       return {'title': l10n.transactionError, 'body': error.toString()};
     default:
-      Log.d('unhandled dispatch error');
+      Log.d('unidentified dispatch error $error');
       return {'title': l10n.transactionError, 'body': error.toString()};
   }
 }
