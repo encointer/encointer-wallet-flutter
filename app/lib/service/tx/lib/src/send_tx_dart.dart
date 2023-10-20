@@ -35,7 +35,7 @@ class ExtrinsicReport {
   Map<String, dynamic> toJson() => {
         'extrinsicHash': extrinsicHash,
         'blockHash': blockHash,
-        'topics': events.map((value) => value.toJson()).toList(),
+        'events': events.map((value) => value.toJson()).toList(),
       };
 
   @override
