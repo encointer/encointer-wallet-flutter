@@ -23,8 +23,8 @@ import 'package:encointer_wallet/service/launch/app_launch.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
-const insufficientFundsError = '1010';
-const lowPriorityTx = '1014';
+const insufficientFundsError = 1010;
+const lowPriorityTx = 1014;
 
 /// Inner function to submit a tx via the JS interface.
 ///
@@ -63,17 +63,32 @@ Future<void> submitToJS(
       );
     }
 
-    final report = await api.account.sendTxAndShowNotification(
-      txParams['txInfo'] as Map<String, dynamic>,
-      txParams['params'] as List<dynamic>?,
-      rawParam: txParams['rawParam'] as String?,
-      cid: store.encointer.community?.cid.toFmtString(),
-    );
+    try {
+      final report = await api.account.sendTxAndShowNotification(
+        txParams['txInfo'] as Map<String, dynamic>,
+        txParams['params'] as List<dynamic>?,
+        rawParam: txParams['rawParam'] as String?,
+        cid: store.encointer.community?.cid.toFmtString(),
+      );
 
-    if (report.isExtrinsicFailed) {
-      _onTxError(context, store, report.dispatchError!, showStatusSnackBar, onError: onError);
-    } else {
-      _onTxFinish(context, store, report, onTxFinishFn, showStatusSnackBar);
+      if (report.isExtrinsicFailed) {
+        _onTxError(store, showStatusSnackBar);
+        onError?.call(report.dispatchError!);
+        final message = getLocalizedTxErrorMessage(l10n, report.dispatchError!);
+        _showErrorDialog(context, message);
+      } else {
+        _onTxFinish(context, store, report, onTxFinishFn, showStatusSnackBar);
+      }
+    } catch (e) {
+      _onTxError(store, showStatusSnackBar);
+      final rpcError = RpcError.fromJson(e as Map<String, dynamic>);
+      var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
+      if (rpcError.code == lowPriorityTx) {
+        msg = ErrorNotificationMsg(title: l10n.txTooLowPriorityErrorTitle, body: l10n.txTooLowPriorityErrorBody);
+      } else if (rpcError.code == insufficientFundsError) {
+        msg = ErrorNotificationMsg(title: l10n.insufficientFundsErrorTitle, body: l10n.insufficientFundsErrorBody);
+      }
+      _showErrorDialog(context, msg);
     }
   } else {
     _showTxStatusSnackBar(l10n.txQueuedOffline, null);
@@ -83,25 +98,19 @@ Future<void> submitToJS(
   }
 }
 
-void _onTxError(
-  BuildContext context,
-  AppStore store,
-  DispatchError error,
-  bool mounted, {
-  void Function(DispatchError error)? onError,
-}) {
+void _onTxError(AppStore store, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) RootSnackBar.removeCurrent();
+}
+
+void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
   final l10n = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
-  final message = getLocalizedTxErrorMessage(l10n, error);
-
-  onError?.call(error);
 
   AppAlert.showDialog<void>(
     context,
-    title: Text('${message['title']}'),
-    content: Text('${message['body']}'),
+    title: Text(message.title),
+    content: Text(message.body),
     actions: [
       const SizedBox.shrink(),
       CupertinoButton(
@@ -173,14 +182,7 @@ String getTxStatusTranslation(AppLocalizations l10n, TxStatus? status) {
   };
 }
 
-Map<String, String> getLocalizedTxErrorMessage(AppLocalizations l10n, DispatchError error) {
-  // Todo: this needs to be handled, but it is not part of the dispatch error.
-  // if (txError.startsWith(lowPriorityTx)) {
-  //   return {'title': l10n.txTooLowPriorityErrorTitle, 'body': l10n.txTooLowPriorityErrorBody};
-  // } else if (txError.startsWith(insufficientFundsError)) {
-  //   return {'title': l10n.insufficientFundsErrorTitle, 'body': l10n.insufficientFundsErrorBody};
-  // }
-
+ErrorNotificationMsg getLocalizedTxErrorMessage(AppLocalizations l10n, DispatchError error) {
   switch (error.runtimeType) {
     case Module:
       final moduleError = (error as Module).value0;
@@ -200,14 +202,14 @@ Map<String, String> getLocalizedTxErrorMessage(AppLocalizations l10n, DispatchEr
     case Unavailable:
     case RootNotAllowed:
       Log.d('unhandled dispatch error: $error');
-      return {'title': l10n.transactionError, 'body': error.toString()};
+      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
     default:
       Log.d('unidentified dispatch error: $error');
-      return {'title': l10n.transactionError, 'body': error.toString()};
+      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
   }
 }
 
-Map<String, String> getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeError error) {
+ErrorNotificationMsg getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeError error) {
   switch (error.runtimeType) {
     case EncointerCeremonies:
       return (error as EncointerCeremonies).value0.errorMsg(l10n);
@@ -232,45 +234,64 @@ Map<String, String> getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeErr
     case EncointerReputationCommitments:
     case EncointerFaucet:
       Log.d('unhandled dispatch error: $error');
-      return {'title': l10n.transactionError, 'body': error.toString()};
+      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
     default:
       Log.d('unidentified dispatch error $error');
-      return {'title': l10n.transactionError, 'body': error.toString()};
+      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
   }
 }
 
 extension LocalizedCeremoniesError on ceremonies_error.Error {
-  Map<String, String> errorMsg(AppLocalizations l10n) {
+  ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
     return switch (this) {
-      ceremonies_error.Error.votesNotDependable => {
-          'title': l10n.votesNotDependableErrorTitle,
-          'body': l10n.votesNotDependableErrorBody
-        },
-      ceremonies_error.Error.alreadyEndorsed => {
-          'title': l10n.alreadyEndorsedErrorTitle,
-          'body': l10n.alreadyEndorsedErrorBody
-        },
-      ceremonies_error.Error.noValidAttestations => {
-          'title': l10n.noValidClaimsErrorTitle,
-          'body': l10n.noValidClaimsErrorBody,
-        },
-      ceremonies_error.Error.rewardsAlreadyIssued => {
-          'title': l10n.rewardsAlreadyIssuedErrorTitle,
-          'body': l10n.rewardsAlreadyIssuedErrorBody
-        },
-      _ => {'title': l10n.transactionError, 'body': toString()}
+      ceremonies_error.Error.votesNotDependable => ErrorNotificationMsg(
+          title: l10n.votesNotDependableErrorTitle,
+          body: l10n.votesNotDependableErrorBody,
+        ),
+      ceremonies_error.Error.alreadyEndorsed => ErrorNotificationMsg(
+          title: l10n.alreadyEndorsedErrorTitle,
+          body: l10n.alreadyEndorsedErrorBody,
+        ),
+      ceremonies_error.Error.noValidAttestations => ErrorNotificationMsg(
+          title: l10n.noValidClaimsErrorTitle,
+          body: l10n.noValidClaimsErrorBody,
+        ),
+      ceremonies_error.Error.rewardsAlreadyIssued => ErrorNotificationMsg(
+          title: l10n.rewardsAlreadyIssuedErrorTitle,
+          body: l10n.rewardsAlreadyIssuedErrorBody,
+        ),
+      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toString())
     };
   }
 }
 
 extension LocalizedBalancesError on balances_error.Error {
-  Map<String, String> errorMsg(AppLocalizations l10n) {
+  ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
     return switch (this) {
-      balances_error.Error.balanceTooLow => {
-          'title': l10n.balanceTooLowTitle,
-          'body': l10n.balanceTooLowBody,
-        },
-      _ => {'title': l10n.transactionError, 'body': toString()}
+      balances_error.Error.balanceTooLow => ErrorNotificationMsg(
+          title: l10n.balanceTooLowTitle,
+          body: l10n.balanceTooLowBody,
+        ),
+      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toString())
     };
   }
+}
+
+class ErrorNotificationMsg {
+  ErrorNotificationMsg({required this.title, required this.body});
+
+  final String title;
+  final String body;
+}
+
+class RpcError {
+  RpcError({required this.code, required this.message, required this.data});
+
+  factory RpcError.fromJson(Map<String, dynamic> map) {
+    return RpcError(code: map['code'] as int, message: map['message'] as String, data: map['data'] as String);
+  }
+
+  final int code;
+  final String message;
+  final String data;
 }
