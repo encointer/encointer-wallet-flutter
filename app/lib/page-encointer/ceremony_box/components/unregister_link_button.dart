@@ -46,10 +46,12 @@ class _UnregisteredLinkButtonState extends State<UnregisteredLinkButton> {
           await _onPressed();
         }
       },
-      child: !_submitting ? Text(
-        l10n.unregister,
-        style: context.bodyMedium.copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
-      ) : const CupertinoActivityIndicator(),
+      child: !_submitting
+          ? Text(
+              l10n.unregister,
+              style: context.bodyMedium.copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
+            )
+          : const CupertinoActivityIndicator(),
     );
   }
 }
