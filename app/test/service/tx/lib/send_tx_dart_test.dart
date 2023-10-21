@@ -1,12 +1,12 @@
 // ignore_for_file: avoid_print
 
+@Skip('Skip these tests as they need a specific setup.')
+
 import 'dart:async';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../../../utils/test_tags.dart';
 
 void main() {
   group('submit xt', () {
@@ -31,7 +31,7 @@ void main() {
       } else {
         throw Exception('Unidentified Extrinsics Result');
       }
-    }, tags: neverExecute);
+    });
 
     test('subscribing to finalized heads works', () async {
       final polkadart = Provider.fromUri(Uri.parse('ws://localhost:9944'));
@@ -54,6 +54,6 @@ void main() {
       });
 
       await completer.future.then((_) => sub.cancel());
-    }, tags: encointerNodeE2E);
+    });
   });
 }

@@ -1,5 +1,3 @@
 tags:
   encointer-node-e2e:
     timeout: 2x
-  never-execute:
-    timeout: 2x
