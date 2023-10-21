@@ -23,8 +23,8 @@ import 'package:encointer_wallet/service/launch/app_launch.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
-const insufficientFundsError = 1010;
-const lowPriorityTx = 1014;
+const insufficientFundsError = '1010';
+const lowPriorityTx = '1014';
 
 /// Inner function to submit a tx via the JS interface.
 ///
@@ -81,11 +81,10 @@ Future<void> submitToJS(
       }
     } catch (e) {
       _onTxError(store, showStatusSnackBar);
-      final rpcError = RpcError.fromJson(e as Map<String, dynamic>);
       var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
-      if (rpcError.code == lowPriorityTx) {
+      if (e.toString().contains(lowPriorityTx)) {
         msg = ErrorNotificationMsg(title: l10n.txTooLowPriorityErrorTitle, body: l10n.txTooLowPriorityErrorBody);
-      } else if (rpcError.code == insufficientFundsError) {
+      } else if (e.toString().contains(insufficientFundsError)) {
         msg = ErrorNotificationMsg(title: l10n.insufficientFundsErrorTitle, body: l10n.insufficientFundsErrorBody);
       }
       _showErrorDialog(context, msg);
@@ -282,16 +281,4 @@ class ErrorNotificationMsg {
 
   final String title;
   final String body;
-}
-
-class RpcError {
-  RpcError({required this.code, required this.message, required this.data});
-
-  factory RpcError.fromJson(Map<String, dynamic> map) {
-    return RpcError(code: map['code'] as int, message: map['message'] as String, data: map['data'] as String);
-  }
-
-  final int code;
-  final String message;
-  final String data;
 }
