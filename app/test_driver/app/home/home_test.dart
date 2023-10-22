@@ -10,7 +10,6 @@ Future<void> homeInit(FlutterDriver driver) async {
 }
 
 Future<void> changeCommunity(FlutterDriver driver) async {
-  await driver.runUnsynchronized(() async {
     await driver.tap(find.byValueKey(EWTestKeys.panelController));
     await driver.tap(find.byValueKey(EWTestKeys.addCommunity));
 
@@ -21,7 +20,6 @@ Future<void> changeCommunity(FlutterDriver driver) async {
     await Future<void>.delayed(const Duration(milliseconds: 1000));
     await closePanel(driver);
     await refreshWalletPage(driver);
-  });
 }
 
 Future<void> registerAndWait(FlutterDriver driver, ParticipantTypeTestHelper registrationType) async {
