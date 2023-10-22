@@ -1,4 +1,11 @@
 import 'dart:core';
+import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_ceremonies/pallet/error.dart'
+    as ceremonies_error;
+import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart'
+    as balances_error;
+import 'package:ew_polkadart/runtime_error.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +36,7 @@ Future<void> submitToJS(
   Api api,
   bool showStatusSnackBar, {
   required Map<String, dynamic> txParams,
-  void Function(dynamic res)? onError,
+  void Function(DispatchError error)? onError,
   required String password,
 }) async {
   final l10n = context.l10n;
@@ -44,7 +51,9 @@ Future<void> submitToJS(
   Log.d('$txInfo', 'submitToJS');
   Log.d('${txParams['params']}', 'submitToJS');
 
-  final onTxFinishFn = txParams['onFinish'] as dynamic Function(BuildContext, Map)?;
+  final onTxFinishFn = txParams['onFinish'] != null
+      ? txParams['onFinish'] as dynamic Function(BuildContext, ExtrinsicReport)
+      : (_, __) => null;
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
@@ -54,17 +63,31 @@ Future<void> submitToJS(
       );
     }
 
-    final res = await api.account.sendTxAndShowNotification(
-      txParams['txInfo'] as Map<String, dynamic>,
-      txParams['params'] as List<dynamic>?,
-      rawParam: txParams['rawParam'] as String?,
-      cid: store.encointer.community?.cid.toFmtString(),
-    );
+    try {
+      final report = await api.account.sendTxAndShowNotification(
+        txParams['txInfo'] as Map<String, dynamic>,
+        txParams['params'] as List<dynamic>?,
+        rawParam: txParams['rawParam'] as String?,
+        cid: store.encointer.community?.cid.toFmtString(),
+      );
 
-    if (res['hash'] == null) {
-      _onTxError(context, store, res['error'] as String, showStatusSnackBar, onError: onError);
-    } else {
-      _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
+      if (report.isExtrinsicFailed) {
+        _onTxError(store, showStatusSnackBar);
+        onError?.call(report.dispatchError!);
+        final message = getLocalizedTxErrorMessage(l10n, report.dispatchError!);
+        _showErrorDialog(context, message);
+      } else {
+        _onTxFinish(context, store, report, onTxFinishFn, showStatusSnackBar);
+      }
+    } catch (e) {
+      _onTxError(store, showStatusSnackBar);
+      var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
+      if (e.toString().contains(lowPriorityTx)) {
+        msg = ErrorNotificationMsg(title: l10n.txTooLowPriorityErrorTitle, body: l10n.txTooLowPriorityErrorBody);
+      } else if (e.toString().contains(insufficientFundsError)) {
+        msg = ErrorNotificationMsg(title: l10n.insufficientFundsErrorTitle, body: l10n.insufficientFundsErrorBody);
+      }
+      _showErrorDialog(context, msg);
     }
   } else {
     _showTxStatusSnackBar(l10n.txQueuedOffline, null);
@@ -74,25 +97,19 @@ Future<void> submitToJS(
   }
 }
 
-void _onTxError(
-  BuildContext context,
-  AppStore store,
-  String errorMsg,
-  bool mounted, {
-  void Function(dynamic res)? onError,
-}) {
+void _onTxError(AppStore store, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) RootSnackBar.removeCurrent();
+}
+
+void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
   final l10n = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
-  final message = getLocalizedTxErrorMessage(l10n, errorMsg);
-
-  onError?.call(errorMsg);
 
   AppAlert.showDialog<void>(
     context,
-    title: Text('${message['title']}'),
-    content: Text('${message['body']}'),
+    title: Text(message.title),
+    content: Text(message.body),
     actions: [
       const SizedBox.shrink(),
       CupertinoButton(
@@ -126,14 +143,14 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
 void _onTxFinish(
   BuildContext context,
   AppStore store,
-  Map res,
-  void Function(BuildContext, Map) onTxFinish,
+  ExtrinsicReport report,
+  void Function(BuildContext, ExtrinsicReport) onTxFinish,
   bool mounted,
 ) {
-  Log.d('callback triggered, blockHash: ${res['hash']}', '_onTxFinish');
+  Log.d('callback triggered, blockHash: ${report.blockHash}', '_onTxFinish');
   store.assets.setSubmitting(false);
 
-  onTxFinish(context, res);
+  onTxFinish(context, report);
 
   if (mounted) {
     RootSnackBar.show(
@@ -164,34 +181,104 @@ String getTxStatusTranslation(AppLocalizations l10n, TxStatus? status) {
   };
 }
 
-Map<String, String> getLocalizedTxErrorMessage(AppLocalizations l10n, String txError) {
-  if (txError.startsWith(lowPriorityTx)) {
-    return {'title': l10n.txTooLowPriorityErrorTitle, 'body': l10n.txTooLowPriorityErrorBody};
-  } else if (txError.startsWith(insufficientFundsError)) {
-    return {'title': l10n.insufficientFundsErrorTitle, 'body': l10n.insufficientFundsErrorBody};
+ErrorNotificationMsg getLocalizedTxErrorMessage(AppLocalizations l10n, DispatchError error) {
+  switch (error.runtimeType) {
+    case Module:
+      final moduleError = (error as Module).value0;
+      final runtimeError = RuntimeError.decodeWithIndex(moduleError.index, moduleError.error);
+      return getLocalizedModuleErrorMsg(l10n, runtimeError);
+    case BadOrigin:
+    case Other:
+    case CannotLookup:
+    case ConsumerRemaining:
+    case NoProviders:
+    case TooManyConsumers:
+    case Token:
+    case Arithmetic:
+    case Transactional:
+    case Exhausted:
+    case Corruption:
+    case Unavailable:
+    case RootNotAllowed:
+      Log.d('unhandled dispatch error: $error');
+      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
+    default:
+      Log.d('unidentified dispatch error: $error');
+      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
   }
+}
 
-  return switch (txError) {
-    'encointerCeremonies.VotesNotDependable' => {
-        'title': l10n.votesNotDependableErrorTitle,
-        'body': l10n.votesNotDependableErrorBody
-      },
-    'encointerCeremonies.AlreadyEndorsed' => {
-        'title': l10n.alreadyEndorsedErrorTitle,
-        'body': l10n.alreadyEndorsedErrorBody
-      },
-    'encointerCeremonies.NoValidClaims' => {
-        'title': l10n.noValidClaimsErrorTitle,
-        'body': l10n.noValidClaimsErrorBody,
-      },
-    'encointerCeremonies.RewardsAlreadyIssued' => {
-        'title': l10n.rewardsAlreadyIssuedErrorTitle,
-        'body': l10n.rewardsAlreadyIssuedErrorBody
-      },
-    'encointerBalances.BalanceTooLow' => {
-        'title': l10n.balanceTooLowTitle,
-        'body': l10n.balanceTooLowBody,
-      },
-    _ => {'title': l10n.transactionError, 'body': txError},
-  };
+ErrorNotificationMsg getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeError error) {
+  switch (error.runtimeType) {
+    case EncointerCeremonies:
+      return (error as EncointerCeremonies).value0.errorMsg(l10n);
+    case EncointerBalances:
+      return (error as EncointerBalances).value0.errorMsg(l10n);
+    // List the pallets we have available for an overview
+    case System:
+    case ParachainSystem:
+    case Balances:
+    case XcmpQueue:
+    case PolkadotXcm:
+    case DmpQueue:
+    case Utility:
+    case Treasury:
+    case Proxy:
+    case Scheduler:
+    case Collective:
+    case Membership:
+    case EncointerScheduler:
+    case EncointerCommunities:
+    case EncointerBazaar:
+    case EncointerReputationCommitments:
+    case EncointerFaucet:
+      Log.d('unhandled dispatch error: $error');
+      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
+    default:
+      Log.d('unidentified dispatch error $error');
+      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
+  }
+}
+
+extension LocalizedCeremoniesError on ceremonies_error.Error {
+  ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
+    return switch (this) {
+      ceremonies_error.Error.votesNotDependable => ErrorNotificationMsg(
+          title: l10n.votesNotDependableErrorTitle,
+          body: l10n.votesNotDependableErrorBody,
+        ),
+      ceremonies_error.Error.alreadyEndorsed => ErrorNotificationMsg(
+          title: l10n.alreadyEndorsedErrorTitle,
+          body: l10n.alreadyEndorsedErrorBody,
+        ),
+      ceremonies_error.Error.noValidAttestations => ErrorNotificationMsg(
+          title: l10n.noValidClaimsErrorTitle,
+          body: l10n.noValidClaimsErrorBody,
+        ),
+      ceremonies_error.Error.rewardsAlreadyIssued => ErrorNotificationMsg(
+          title: l10n.rewardsAlreadyIssuedErrorTitle,
+          body: l10n.rewardsAlreadyIssuedErrorBody,
+        ),
+      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toString())
+    };
+  }
+}
+
+extension LocalizedBalancesError on balances_error.Error {
+  ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
+    return switch (this) {
+      balances_error.Error.balanceTooLow => ErrorNotificationMsg(
+          title: l10n.balanceTooLowTitle,
+          body: l10n.balanceTooLowBody,
+        ),
+      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toString())
+    };
+  }
+}
+
+class ErrorNotificationMsg {
+  ErrorNotificationMsg({required this.title, required this.body});
+
+  final String title;
+  final String body;
 }

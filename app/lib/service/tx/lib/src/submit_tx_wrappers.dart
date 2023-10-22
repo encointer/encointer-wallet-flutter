@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -29,8 +31,8 @@ Future<void> submitTx(
   AppStore store,
   Api api,
   Map<String, dynamic> txParams, {
-  dynamic Function(BuildContext txPageContext, Map res)? onFinish,
-  void Function(dynamic res)? onError,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
   if (txPaymentAsset != null) {
@@ -65,11 +67,11 @@ Future<void> submitClaimRewards(
     store,
     api,
     txParams,
-    onFinish: (BuildContext txPageContext, Map res) {
+    onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       // Claiming the rewards creates a new reputation if successful.
       // Hence, we should update the state afterwards.
       store.dataUpdate.setInvalidated();
-      return res;
+      return report;
     },
   );
 }
@@ -87,7 +89,7 @@ Future<void> submitEndorseNewcomer(
     store,
     api,
     txParams,
-    onFinish: (BuildContext txPageContext, Map res) {
+    onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       store.encointer.account!.getNumberOfNewbieTicketsForReputable();
       store.encointer.communityAccount!.getNumberOfNewbieTicketsForBootstrapper();
     },
@@ -120,7 +122,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       store,
       api,
       registerParticipantParams(store.encointer.chosenCid!, context.l10n, proof: proof),
-      onFinish: (BuildContext txPageContext, Map res) async {
+      onFinish: (BuildContext txPageContext, ExtrinsicReport report) async {
         store.encointer.account!.lastProofOfAttendance = proof;
         final data = await webApi.encointer.getAggregatedAccountData(
           store.encointer.chosenCid!,
@@ -161,7 +163,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
     store,
     api,
     params,
-    onFinish: (BuildContext txPageContext, Map res) {
+    onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       store.encointer.communityAccount!.setMeetupCompleted();
       Navigator.popUntil(txPageContext, (route) => route.isFirst);
     },

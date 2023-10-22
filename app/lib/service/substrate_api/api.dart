@@ -13,6 +13,7 @@ import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
 
 /// Global api instance
 ///
@@ -40,11 +41,12 @@ class Api {
     String jsServiceEncointer, {
     bool isIntegrationTest = false,
   }) {
+    final provider = Provider.fromUri(Uri.parse(store.settings.endpoint.value!));
     return Api(
       store,
       js,
       dartApi,
-      AccountApi(store, js),
+      AccountApi(store, js, provider),
       AssetsApi(store, js),
       ChainApi(store, js),
       EncointerApi(store, js, dartApi, ewHttp),

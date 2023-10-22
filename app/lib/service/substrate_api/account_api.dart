@@ -4,14 +4,17 @@ import 'dart:convert';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
+import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
 
 class AccountApi {
-  AccountApi(this.store, this.jsApi);
+  AccountApi(this.store, this.jsApi, this.provider);
 
   final JSApi jsApi;
+  final Provider provider;
   final AppStore store;
   void Function()? fetchAccountData;
 
@@ -51,13 +54,15 @@ class AccountApi {
     if (fetchData) fetchAccountData?.call();
   }
 
-  Future<Map<String, dynamic>> sendTxAndShowNotification(
+  Future<ExtrinsicReport> sendTxAndShowNotification(
     Map<String, dynamic> txInfo,
     List<dynamic>? params, {
     String? rawParam,
     String? cid,
   }) async {
-    final res = await sendTx(txInfo, params, rawParam: rawParam);
+    final res = await getSignedTx(txInfo, params, rawParam: rawParam);
+
+    final report = EWAuthorApi(provider).submitAndWatchExtrinsicWithReport(Extrinsic.fromHex(res['xt'] as String));
 
     if (res['hash'] != null) {
       final hash = res['hash'] as String;
@@ -68,12 +73,12 @@ class AccountApi {
         cid: cid,
       ));
     }
-    return res;
+    return report;
   }
 
-  Future<Map<String, dynamic>> sendTx(Map txInfo, List? params, {String? rawParam}) async {
+  Future<Map<String, dynamic>> getSignedTx(Map txInfo, List? params, {String? rawParam}) async {
     final param = rawParam ?? jsonEncode(params);
-    final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
+    final call = 'account.getXt(${jsonEncode(txInfo)}, $param)';
     Log.d('sendTx call: $call', 'AccountApi');
     return jsApi.evalJavascript<Map<String, dynamic>>(call);
   }

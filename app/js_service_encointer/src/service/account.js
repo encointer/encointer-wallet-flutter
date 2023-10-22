@@ -231,7 +231,7 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
     balanceHuman = paramList[2];
   }
 
-  return getMaybeSignedXt(keyPair, txInfo, paramList)
+  return _getXt(keyPair, txInfo, paramList)
     .then(function (tx) {
       // The promise syntax is necessary because we need fine-grained control over when the overarching
       // future returns based on what happens within the `onStatusChange` callback. I could not find another
@@ -278,10 +278,24 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
     });
 }
 
+export async function getXt (txInfo, paramList){
+  const keyPair = keyring.getPair(hexToU8a(txInfo.pubKey));
+  try {
+    keyPair.decodePkcs8(txInfo.password);
+  } catch (err) {
+    return new Promise((resolve, reject) => {
+      resolve({ error: 'password check failed' });
+    });
+  }
+
+  // The dart<>JS interface expects a map.
+  return { xt: await _getXt(keyPair, txInfo, paramList) };
+}
+
 /**
- *  Creates a extrinsic and signs it if the txInfo says so.
+ *  Creates an extrinsic and signs it if the txInfo says so.
  */
-export async function getMaybeSignedXt (keyPair, txInfo, paramList) {
+export async function _getXt (keyPair, txInfo, paramList) {
   if (txInfo.module === encointerBalances && txInfo.call === transfer) {
     paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
   }
@@ -311,20 +325,6 @@ export async function getMaybeSignedXt (keyPair, txInfo, paramList) {
   console.log(`[js-account/getMaybeSignedXt]: ${JSON.stringify(signerOptions)}`);
 
   return tx.signAsync(keyPair, signerOptions);
-}
-
-/**
- *  Creates a extrinsic, signs it according to txInfo, and returns it as a scale-encoded hex value.
- */
-export function getMaybeSignedXtHex (keyPair, txInfo, paramList) {
-  // unused currently, will be used when #1474 is implemented.
-  try {
-    return getMaybeSignedXt(keyPair, txInfo, paramList).toHex();
-  } catch (e) {
-    console.log(`[js-account/getMaybeSignedXtHex] error while creating xt: ${e.message}`);
-    // this is intended for the Dart<>JS interface, which expects errors like that.
-    return { error: e.message };
-  }
 }
 
 export function _sendTrustedTx (keyPair, txInfo, paramList) {
@@ -440,8 +440,7 @@ export default {
   txFeeEstimate,
   sendTx,
   sendTxWithPair,
-  getMaybeSignedXt,
-  getMaybeSignedXtHex,
+  getXt,
   sendFaucetTx,
   checkPassword,
   changePassword,
