@@ -1,11 +1,4 @@
 import 'dart:core';
-import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_ceremonies/pallet/error.dart'
-    as ceremonies_error;
-import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart'
-    as balances_error;
-import 'package:ew_polkadart/runtime_error.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +9,13 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
@@ -80,6 +76,7 @@ Future<void> submitToJS(
         _onTxFinish(context, store, report, onTxFinishFn, showStatusSnackBar);
       }
     } catch (e) {
+      Log.e('Caught RPC error while sending extrinsics: $e');
       _onTxError(store, showStatusSnackBar);
       var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
       if (e.toString().contains(lowPriorityTx)) {
@@ -179,106 +176,4 @@ String getTxStatusTranslation(AppLocalizations l10n, TxStatus? status) {
     TxStatus.InBlock => l10n.txInBlock,
     TxStatus.Error => l10n.txError,
   };
-}
-
-ErrorNotificationMsg getLocalizedTxErrorMessage(AppLocalizations l10n, DispatchError error) {
-  switch (error.runtimeType) {
-    case Module:
-      final moduleError = (error as Module).value0;
-      final runtimeError = RuntimeError.decodeWithIndex(moduleError.index, moduleError.error);
-      return getLocalizedModuleErrorMsg(l10n, runtimeError);
-    case BadOrigin:
-    case Other:
-    case CannotLookup:
-    case ConsumerRemaining:
-    case NoProviders:
-    case TooManyConsumers:
-    case Token:
-    case Arithmetic:
-    case Transactional:
-    case Exhausted:
-    case Corruption:
-    case Unavailable:
-    case RootNotAllowed:
-      Log.d('unhandled dispatch error: $error');
-      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
-    default:
-      Log.d('unidentified dispatch error: $error');
-      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
-  }
-}
-
-ErrorNotificationMsg getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeError error) {
-  switch (error.runtimeType) {
-    case EncointerCeremonies:
-      return (error as EncointerCeremonies).value0.errorMsg(l10n);
-    case EncointerBalances:
-      return (error as EncointerBalances).value0.errorMsg(l10n);
-    // List the pallets we have available for an overview
-    case System:
-    case ParachainSystem:
-    case Balances:
-    case XcmpQueue:
-    case PolkadotXcm:
-    case DmpQueue:
-    case Utility:
-    case Treasury:
-    case Proxy:
-    case Scheduler:
-    case Collective:
-    case Membership:
-    case EncointerScheduler:
-    case EncointerCommunities:
-    case EncointerBazaar:
-    case EncointerReputationCommitments:
-    case EncointerFaucet:
-      Log.d('unhandled dispatch error: $error');
-      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
-    default:
-      Log.d('unidentified dispatch error $error');
-      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
-  }
-}
-
-extension LocalizedCeremoniesError on ceremonies_error.Error {
-  ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
-    return switch (this) {
-      ceremonies_error.Error.votesNotDependable => ErrorNotificationMsg(
-          title: l10n.votesNotDependableErrorTitle,
-          body: l10n.votesNotDependableErrorBody,
-        ),
-      ceremonies_error.Error.alreadyEndorsed => ErrorNotificationMsg(
-          title: l10n.alreadyEndorsedErrorTitle,
-          body: l10n.alreadyEndorsedErrorBody,
-        ),
-      ceremonies_error.Error.noValidAttestations => ErrorNotificationMsg(
-          title: l10n.noValidClaimsErrorTitle,
-          body: l10n.noValidClaimsErrorBody,
-        ),
-      ceremonies_error.Error.rewardsAlreadyIssued => ErrorNotificationMsg(
-          title: l10n.rewardsAlreadyIssuedErrorTitle,
-          body: l10n.rewardsAlreadyIssuedErrorBody,
-        ),
-      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toString())
-    };
-  }
-}
-
-extension LocalizedBalancesError on balances_error.Error {
-  ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
-    return switch (this) {
-      balances_error.Error.balanceTooLow => ErrorNotificationMsg(
-          title: l10n.balanceTooLowTitle,
-          body: l10n.balanceTooLowBody,
-        ),
-      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toString())
-    };
-  }
-}
-
-class ErrorNotificationMsg {
-  ErrorNotificationMsg({required this.title, required this.body});
-
-  final String title;
-  final String body;
 }
