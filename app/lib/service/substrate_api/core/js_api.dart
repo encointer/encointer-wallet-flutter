@@ -26,6 +26,11 @@ class JSApi {
 
     final initWebViewCompleter = Completer<void>();
 
+    WebView.debugLoggingSettings.excludeFilter.add(
+      // Exclude logs of "EncointerJsService"
+      RegExp('EncointerJsService'),
+    );
+
     _web = HeadlessInAppWebView(
       initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
       onConsoleMessage: (controller, message) => Log.d('JS-Console: ${message.message}', 'JSApi'),
@@ -60,11 +65,6 @@ class JSApi {
         await webViewPostInitCallback();
         initWebViewCompleter.complete();
       },
-    );
-
-    WebView.debugLoggingSettings.excludeFilter.add(
-      // Exclude logs of "EncointerJsService"
-      RegExp('EncointerJsService'),
     );
 
     await _web!.run();
