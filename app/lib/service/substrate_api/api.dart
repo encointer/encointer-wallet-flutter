@@ -240,10 +240,9 @@ class Api {
 }
 
 class ReconnectingWsProvider extends Provider {
-  ReconnectingWsProvider(Uri url, { bool autoConnect = true }): provider = WsProvider(url, autoConnect: autoConnect);
+  ReconnectingWsProvider(Uri url, {bool autoConnect = true}) : provider = WsProvider(url, autoConnect: autoConnect);
 
   WsProvider provider;
-
 
   Future<void> connectToNewEndpoint(Uri url) async {
     await disconnect();
@@ -279,7 +278,11 @@ class ReconnectingWsProvider extends Provider {
   }
 
   @override
-  Future<SubscriptionResponse> subscribe(String method, List<dynamic> params, {FutureOr<void> Function(String subscription)? onCancel}) {
+  Future<SubscriptionResponse> subscribe(
+    String method,
+    List<dynamic> params, {
+    FutureOr<void> Function(String subscription)? onCancel,
+  }) {
     return provider.subscribe(method, params, onCancel: onCancel);
   }
 }
