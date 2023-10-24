@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/service/service.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 
-class MockPolkadartProvider extends Provider {
+class MockPolkadartProvider extends ReconnectingWsProvider {
+  MockPolkadartProvider() : super(Uri.parse('ws://hello.world'));
+
   @override
   Future connect() {
     throw UnimplementedError();
