@@ -140,8 +140,8 @@ class EWAuthorApi<P extends Provider> {
         final timestamp = await kusama.query.timestamp.now(at: blockHash);
 
         // ignore: avoid_dynamic_calls
-        final xts = block['block']['extrinsics'] as List<dynamic>;
-        final xtIndex = xts.indexWhere((xt) => xtHash(xt as String) == hash);
+        final xts = List<String>.from(block['block']['extrinsics'] as List<dynamic>);
+        final xtIndex = xts.indexWhere((xt) => xtHash(xt) == hash);
 
         if (xtIndex != -1) {
           Log.d('found xt in block at index: $xtIndex');
