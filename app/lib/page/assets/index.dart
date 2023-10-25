@@ -265,7 +265,7 @@ class _AssetsViewState extends State<AssetsView> {
                                   widget.store,
                                   webApi,
                                   widget.store.encointer.chosenCid!,
-                                ).then((_) => webApi.encointer.hasPendingIssuance()),
+                                ),
                               );
                             } else {
                               return _appSettingsStore.developerMode
