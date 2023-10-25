@@ -64,11 +64,17 @@ class ExtrinsicReport {
 
 extension SystemExtension on RuntimeEvent {
   bool get isExtrinsicSuccess {
-    return this is re.System && (this as re.System).value0 is se.ExtrinsicSuccess;
+    return switch (this) {
+      re.System(value0: final event) => event is se.ExtrinsicSuccess,
+      _ => false,
+    };
   }
 
   bool get isExtrinsicFailed {
-    return this is re.System && (this as re.System).value0 is se.ExtrinsicFailed;
+    return switch (this) {
+      re.System(value0: final event) => event is se.ExtrinsicFailed,
+      _ => false,
+    };
   }
 
   DispatchError? get dispatchError {
