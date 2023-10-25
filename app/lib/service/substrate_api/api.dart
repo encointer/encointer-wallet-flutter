@@ -97,7 +97,12 @@ class Api {
         await store.encointer.initializeUninitializedStores(store.account.currentAddress);
       }
 
-      return connectFunc();
+      await connectFunc();
+      await Future.wait([
+        webApi.encointer.getPhaseDurations(),
+        webApi.encointer.getCurrentPhase(),
+        webApi.encointer.getNextPhaseTimestamp(),
+      ]);
     }
 
     return js.launchWebView(_jsServiceEncointer, postInitCallback);
