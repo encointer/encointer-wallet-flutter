@@ -131,10 +131,14 @@ class EWAuthorApi<P extends Provider> {
 
     ExtrinsicReport? report;
     final sub = subResponse.stream.listen((event) async {
-      Log.d('XtStatus: ${event.result}');
+      Log.d('ExtrinsicUpdate: ${event.result}');
 
       // ignore: avoid_dynamic_calls
-      if (event.result['finalized'] != null) {
+      if (event.result == 'ready') {
+        Log.p('Xt is ready');
+      } else if (event.result['inBlock'] != null) {
+        Log.p('Xt is in block: ${event.result}');
+      } else if (event.result['finalized'] != null) {
         // ignore: avoid_dynamic_calls
         final blockHashHex = event.result['finalized'].toString();
         final blockHash = hexToUint8(blockHashHex);
@@ -146,11 +150,13 @@ class EWAuthorApi<P extends Provider> {
         final timestamp = await kusama.query.timestamp.now(at: blockHash);
 
         // ignore: avoid_dynamic_calls
-        final xts = (block['block']['extrinsics'] as List<dynamic>).cast<String>();
+        final xts = List<String>.from(block['block']['extrinsics'] as List<dynamic>);
         final xtIndex = xts.indexWhere((xt) => xtHash(xt) == hash);
 
         if (xtIndex != -1) {
           Log.d('found xt in block at index: $xtIndex');
+        } else {
+          throw Exception(["Couldn't find extrinsic hash: $hash in block with hash: $blockHashHex"]);
         }
 
         final xtEvents =
