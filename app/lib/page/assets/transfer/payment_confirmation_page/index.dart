@@ -162,7 +162,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   void onFinish(BuildContext txPageContext, ExtrinsicReport report) {
     Log.d('Transfer result $report', 'PaymentConfirmationPage');
     _transferState = TransferState.finished;
-    _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(report.timestamp as int);
+    _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(report.timestamp.toInt());
   }
 
   void onError(DispatchError error) {
