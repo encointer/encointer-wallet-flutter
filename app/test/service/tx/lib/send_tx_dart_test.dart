@@ -29,7 +29,7 @@ void main() {
         print('ExtrinsicFailed');
         logDispatchError(report.dispatchError!);
       } else {
-        throw Exception('Unidentified Extrinsics Result');
+        throw Exception('Unidentified Extrinsic Result');
       }
     });
 
