@@ -214,7 +214,11 @@ String xtHash(String hexString) {
   return hex.encode(Blake2bDigest(digestSize: 32).process(hexToUint8(hexString)));
 }
 
-void handleDispatchError(DispatchError value) {
+/// Logs the dispatch error and decodes the individual module error. Only
+/// used for debugging in unit tests so far.
+///
+/// Throws an exception if the error is not unknown.
+void logDispatchError(DispatchError value) {
   switch (value.runtimeType) {
     case Module:
       final moduleError = (value as Module).value0;
@@ -223,8 +227,6 @@ void handleDispatchError(DispatchError value) {
       Log.d('Decoded Error: ${runtimeError.toJson()}');
       break;
     case BadOrigin:
-      Log.d('bad origin error: ${value.toJson()}');
-      break;
     case Other:
     case CannotLookup:
     case ConsumerRemaining:
