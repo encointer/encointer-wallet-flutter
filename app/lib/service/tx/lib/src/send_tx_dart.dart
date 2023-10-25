@@ -135,7 +135,7 @@ class EWAuthorApi<P extends Provider> {
 
       if (event.result == 'ready') {
         Log.p('Xt is ready');
-      // ignore: avoid_dynamic_calls
+        // ignore: avoid_dynamic_calls
       } else if (event.result['inBlock'] != null) {
         Log.p('Xt is in block: ${event.result}');
         // ignore: avoid_dynamic_calls
