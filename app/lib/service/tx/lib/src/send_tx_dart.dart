@@ -133,11 +133,12 @@ class EWAuthorApi<P extends Provider> {
     final sub = subResponse.stream.listen((event) async {
       Log.d('ExtrinsicUpdate: ${event.result}');
 
-      // ignore: avoid_dynamic_calls
       if (event.result == 'ready') {
         Log.p('Xt is ready');
+      // ignore: avoid_dynamic_calls
       } else if (event.result['inBlock'] != null) {
         Log.p('Xt is in block: ${event.result}');
+        // ignore: avoid_dynamic_calls
       } else if (event.result['finalized'] != null) {
         // ignore: avoid_dynamic_calls
         final blockHashHex = event.result['finalized'].toString();
