@@ -62,10 +62,10 @@ class AccountApi {
   }) async {
     final res = await getSignedTx(txInfo, params, rawParam: rawParam);
 
-    final report = EWAuthorApi(provider).submitAndWatchExtrinsicWithReport(Extrinsic.fromHex(res['xt'] as String));
+    final report =  await EWAuthorApi(provider).submitAndWatchExtrinsicWithReport(Extrinsic.fromHex(res['xt'] as String));
 
-    if (res['hash'] != null) {
-      final hash = res['hash'] as String;
+    if (report.isExtrinsicSuccess) {
+      final hash = report.blockHash;
       unawaited(NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
         '${txInfo['notificationTitle']}',
