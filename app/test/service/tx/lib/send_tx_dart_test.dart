@@ -27,9 +27,9 @@ void main() {
         print('ExtrinsicSuccess');
       } else if (report.isExtrinsicFailed) {
         print('ExtrinsicFailed');
-        handleDispatchError(report.dispatchError!);
+        logDispatchError(report.dispatchError!);
       } else {
-        throw Exception('Unidentified Extrinsics Result');
+        throw Exception('Unidentified Extrinsic Result');
       }
     });
 

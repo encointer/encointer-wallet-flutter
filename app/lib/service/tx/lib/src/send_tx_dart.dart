@@ -64,11 +64,17 @@ class ExtrinsicReport {
 
 extension SystemExtension on RuntimeEvent {
   bool get isExtrinsicSuccess {
-    return this is re.System && (this as re.System).value0 is se.ExtrinsicSuccess;
+    return switch (this) {
+      re.System(value0: final event) => event is se.ExtrinsicSuccess,
+      _ => false,
+    };
   }
 
   bool get isExtrinsicFailed {
-    return this is re.System && (this as re.System).value0 is se.ExtrinsicFailed;
+    return switch (this) {
+      re.System(value0: final event) => event is se.ExtrinsicFailed,
+      _ => false,
+    };
   }
 
   DispatchError? get dispatchError {
@@ -125,10 +131,15 @@ class EWAuthorApi<P extends Provider> {
 
     ExtrinsicReport? report;
     final sub = subResponse.stream.listen((event) async {
-      Log.d('XtStatus: ${event.result}');
+      Log.d('ExtrinsicUpdate: ${event.result}');
 
-      // ignore: avoid_dynamic_calls
-      if (event.result['finalized'] != null) {
+      if (event.result == 'ready') {
+        Log.p('Xt is ready');
+        // ignore: avoid_dynamic_calls
+      } else if (event.result['inBlock'] != null) {
+        Log.p('Xt is in block: ${event.result}');
+        // ignore: avoid_dynamic_calls
+      } else if (event.result['finalized'] != null) {
         // ignore: avoid_dynamic_calls
         final blockHashHex = event.result['finalized'].toString();
         final blockHash = hexToUint8(blockHashHex);
@@ -140,11 +151,13 @@ class EWAuthorApi<P extends Provider> {
         final timestamp = await kusama.query.timestamp.now(at: blockHash);
 
         // ignore: avoid_dynamic_calls
-        final xts = block['block']['extrinsics'] as List<dynamic>;
-        final xtIndex = xts.indexWhere((xt) => xtHash(xt as String) == hash);
+        final xts = List<String>.from(block['block']['extrinsics'] as List<dynamic>);
+        final xtIndex = xts.indexWhere((xt) => xtHash(xt) == hash);
 
         if (xtIndex != -1) {
           Log.d('found xt in block at index: $xtIndex');
+        } else {
+          throw Exception(["Couldn't find extrinsic hash: $hash in block with hash: $blockHashHex"]);
         }
 
         final xtEvents =
@@ -208,7 +221,11 @@ String xtHash(String hexString) {
   return hex.encode(Blake2bDigest(digestSize: 32).process(hexToUint8(hexString)));
 }
 
-void handleDispatchError(DispatchError value) {
+/// Logs the dispatch error and decodes the individual module error. Only
+/// used for debugging in unit tests so far.
+///
+/// Throws an exception if the error is unknown.
+void logDispatchError(DispatchError value) {
   switch (value.runtimeType) {
     case Module:
       final moduleError = (value as Module).value0;
@@ -217,8 +234,6 @@ void handleDispatchError(DispatchError value) {
       Log.d('Decoded Error: ${runtimeError.toJson()}');
       break;
     case BadOrigin:
-      Log.d('bad origin error: ${value.toJson()}');
-      break;
     case Other:
     case CannotLookup:
     case ConsumerRemaining:

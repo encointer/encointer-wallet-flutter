@@ -14,7 +14,6 @@ import 'package:upgrader/upgrader.dart';
 import 'package:collection/collection.dart';
 
 import 'package:encointer_wallet/l10n/l10.dart';
-import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/page/assets/announcement/view/announcement_view.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
@@ -351,29 +350,11 @@ class _AssetsViewState extends State<AssetsView> {
 
   List<AccountOrCommunityData> _allCommunities() {
     final communityStores = context.read<AppStore>().encointer.communityStores?.values.toList();
-    if (communityStores != null && communityStores.isNotEmpty) {
-      return communityStores
-          .mapIndexed(
-            (i, e) => AccountOrCommunityData(
-              avatar: Container(
-                height: avatarSize,
-                width: avatarSize,
-                decoration: BoxDecoration(
-                  color: context.colorScheme.background,
-                  shape: BoxShape.circle,
-                ),
-                child: e.communityIcon != null
-                    ? SvgPicture.string(e.communityIcon!)
-                    : SvgPicture.asset(fallBackCommunityIcon),
-              ),
-              name: e.name,
-              isSelected: widget.store.encointer.community?.cid == e.cid,
-            ),
-          )
-          .toList();
-    } else {
-      return [
-        AccountOrCommunityData(
+
+    if (communityStores == null) return [];
+    return communityStores
+        .mapIndexed(
+          (i, e) => AccountOrCommunityData(
             avatar: Container(
               height: avatarSize,
               width: avatarSize,
@@ -381,11 +362,15 @@ class _AssetsViewState extends State<AssetsView> {
                 color: context.colorScheme.background,
                 shape: BoxShape.circle,
               ),
-              child: const CenteredActivityIndicator(),
+              child: e.communityIcon != null
+                  ? SvgPicture.string(e.communityIcon!)
+                  : SvgPicture.asset(fallBackCommunityIcon),
             ),
-            name: '...')
-      ];
-    }
+            name: e.name,
+            isSelected: widget.store.encointer.community?.cid == e.cid,
+          ),
+        )
+        .toList();
   }
 
   List<AccountOrCommunityData> initAllAccounts() {

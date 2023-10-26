@@ -31,6 +31,7 @@ class MockApi extends Api {
   }) : super(
           store,
           js,
+          MockPolkadartProvider(),
           dartApi,
           MockAccountApi(store, js, MockPolkadartProvider()),
           MockAssetsApi(store, js),

@@ -39,7 +39,7 @@ Future<void> submitTx(
     (txParams['txInfo'] as Map<String, dynamic>)['txPaymentAsset'] = txPaymentAsset;
   }
 
-  txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
+  txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, ExtrinsicReport report) => report);
 
   final pin = await context.read<LoginStore>().getPin(context);
   if (pin != null) {
