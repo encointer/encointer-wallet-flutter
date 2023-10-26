@@ -224,7 +224,7 @@ String xtHash(String hexString) {
 /// Logs the dispatch error and decodes the individual module error. Only
 /// used for debugging in unit tests so far.
 ///
-/// Throws an exception if the error is not unknown.
+/// Throws an exception if the error is unknown.
 void logDispatchError(DispatchError value) {
   switch (value.runtimeType) {
     case Module:
