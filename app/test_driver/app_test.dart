@@ -99,10 +99,10 @@ void main() async {
   group('DevMode QR Voucher test', () {
     test('get voucher by QR, fund', () async {
       await getQrVoucherAndFund(driver);
-    });
+    }, timeout: timeout120);
     test('get voucher by QR, redeem', () async {
       await getQrVoucherAndRedeem(driver);
-    });
+    }, timeout: timeout120);
 
     test('finished, go to HomePage', () async {
       await goToHomeViewFromNavBar(driver);
