@@ -1,0 +1,6 @@
+include: package:lints/recommended.yaml
+
+linter:
+  rules:
+    # Generated files don't satisfy this.
+    avoid_renaming_method_parameters: false

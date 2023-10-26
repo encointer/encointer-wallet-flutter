@@ -24,18 +24,6 @@ class AppAlert {
     );
   }
 
-  static void showLoadingDialog(BuildContext context, String title) {
-    showCupertinoDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(title),
-          content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
-        );
-      },
-    );
-  }
-
   static Future<T?> showConfirmDialog<T>({
     required BuildContext context,
     required VoidCallback onOK,

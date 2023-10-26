@@ -116,25 +116,25 @@ abstract class _AccountStore with Store {
       if (await webApi.isConnected()) {
         final cid = rootStore.encointer.community?.cid.toFmtString();
         for (final args in queuedTxs) {
-          final res = await webApi.account.sendTxAndShowNotification(
+          final report = await webApi.account.sendTxAndShowNotification(
             args['txInfo'] as Map<String, dynamic>,
             args['params'] as List<dynamic>?,
             rawParam: args['rawParam'] as String?,
             cid: cid,
           );
 
-          Log.d('Queued tx result: $res', 'AccountStore');
-          if (res['hash'] == null) {
+          Log.d('Queued tx result: $report', 'AccountStore');
+          if (report.isExtrinsicFailed) {
             await NotificationPlugin.showNotification(
               0,
-              '${args['txError']}',
+              '${report.dispatchError!}',
               'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
               cid: cid,
             );
           } else {
-            if (rootStore.settings.endpointIsEncointer) {
-              await rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
-            }
+            // if (rootStore.settings.endpointIsEncointer) {
+            //   await rootStore.encointer.account!.setTransferTxs([report], rootStore.account.currentAddress);
+            // }
           }
         }
         rootStore.assets.setSubmitting(false);

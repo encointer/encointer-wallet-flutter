@@ -13,7 +13,7 @@ import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
-import 'package:encointer_wallet/service/substrate_api/types/gen_external_links_params.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
 
 /// Global api instance
 ///
@@ -24,6 +24,7 @@ class Api {
   const Api(
     this.store,
     this.js,
+    this.provider,
     this.dartApi,
     this.account,
     this.assets,
@@ -41,11 +42,13 @@ class Api {
     String jsServiceEncointer, {
     bool isIntegrationTest = false,
   }) {
+    final provider = ReconnectingWsProvider(Uri.parse(store.settings.endpoint.value!), autoConnect: false);
     return Api(
       store,
       js,
+      provider,
       dartApi,
-      AccountApi(store, js),
+      AccountApi(store, js, provider),
       AssetsApi(store, js),
       ChainApi(store, js),
       EncointerApi(store, js, dartApi, ewHttp),
@@ -58,6 +61,7 @@ class Api {
   final String _jsServiceEncointer;
 
   final JSApi js;
+  final ReconnectingWsProvider provider;
   final SubstrateDartApi dartApi;
   final AccountApi account;
   final AssetsApi assets;
@@ -68,6 +72,7 @@ class Api {
   Future<void> init() async {
     await Future.wait([
       dartApi.connect(store.settings.endpoint.value!),
+      provider.connectToNewEndpoint(Uri.parse(store.settings.endpoint.value!)),
 
       // launch the webView and connect to the endpoint
       launchWebview(),
@@ -80,9 +85,14 @@ class Api {
   }
 
   Future<void> close() async {
-    await stopSubscriptions();
-    await closeWebView();
-    await encointer.close();
+    final futures = [
+      stopSubscriptions(),
+      closeWebView(),
+      encointer.close(),
+      provider.disconnect(),
+    ];
+
+    await Future.wait(futures);
   }
 
   Future<void> launchWebview({
@@ -98,7 +108,12 @@ class Api {
         await store.encointer.initializeUninitializedStores(store.account.currentAddress);
       }
 
-      return connectFunc();
+      await connectFunc();
+      await Future.wait([
+        webApi.encointer.getPhaseDurations(),
+        webApi.encointer.getCurrentPhase(),
+        webApi.encointer.getNextPhaseTimestamp(),
+      ]);
     }
 
     return js.launchWebView(_jsServiceEncointer, postInitCallback);
@@ -227,11 +242,52 @@ class Api {
     await stopSubscriptions();
     return js.closeWebView();
   }
+}
 
-  Future<List?> getExternalLinks(GenExternalLinksParams params) async {
-    final res = await evalJavascript(
-      'settings.genLinks(${jsonEncode(GenExternalLinksParams.toJson(params))})',
-    );
-    return res as List?;
+class ReconnectingWsProvider extends Provider {
+  ReconnectingWsProvider(Uri url, {bool autoConnect = true}) : provider = WsProvider(url, autoConnect: autoConnect);
+
+  WsProvider provider;
+
+  Future<void> connectToNewEndpoint(Uri url) async {
+    await disconnect();
+    provider = WsProvider(url);
+  }
+
+  @override
+  Future connect() {
+    if (isConnected()) {
+      return Future.value();
+    } else {
+      return connect();
+    }
+  }
+
+  @override
+  Future disconnect() {
+    if (!isConnected()) {
+      return Future.value();
+    } else {
+      return disconnect();
+    }
+  }
+
+  @override
+  bool isConnected() {
+    return provider.isConnected();
+  }
+
+  @override
+  Future<RpcResponse> send(String method, List<dynamic> params) {
+    return provider.send(method, params);
+  }
+
+  @override
+  Future<SubscriptionResponse> subscribe(
+    String method,
+    List<dynamic> params, {
+    FutureOr<void> Function(String subscription)? onCancel,
+  }) {
+    return provider.subscribe(method, params, onCancel: onCancel);
   }
 }

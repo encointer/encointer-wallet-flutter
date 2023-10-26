@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,8 +27,7 @@ class CommunityIconObserver extends StatelessWidget {
               return SvgPicture.asset(fallBackCommunityIcon);
             }
           } else {
-            ///TODO(Azamat): Add some image saying community not selected
-            return const CupertinoActivityIndicator();
+            return SvgPicture.asset(fallBackCommunityIcon);
           }
         },
       ),

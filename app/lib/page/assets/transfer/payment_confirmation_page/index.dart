@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -157,14 +159,14 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     }
   }
 
-  void onFinish(BuildContext txPageContext, Map res) {
-    Log.d('Transfer result $res', 'PaymentConfirmationPage');
+  void onFinish(BuildContext txPageContext, ExtrinsicReport report) {
+    Log.d('Transfer result $report', 'PaymentConfirmationPage');
+    _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(report.timestamp.toInt());
     _transferState = TransferState.finished;
-    _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
   }
 
-  void onError(dynamic errorMessage) {
-    Log.d('Error sending transfer $errorMessage', 'PaymentConfirmationPage');
+  void onError(DispatchError error) {
+    Log.d('Error sending transfer $error', 'PaymentConfirmationPage');
     _transferState = TransferState.failed;
   }
 

@@ -9,10 +9,13 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
@@ -29,7 +32,7 @@ Future<void> submitToJS(
   Api api,
   bool showStatusSnackBar, {
   required Map<String, dynamic> txParams,
-  void Function(dynamic res)? onError,
+  void Function(DispatchError error)? onError,
   required String password,
 }) async {
   final l10n = context.l10n;
@@ -44,7 +47,9 @@ Future<void> submitToJS(
   Log.d('$txInfo', 'submitToJS');
   Log.d('${txParams['params']}', 'submitToJS');
 
-  final onTxFinishFn = txParams['onFinish'] as dynamic Function(BuildContext, Map)?;
+  final onTxFinishFn = txParams['onFinish'] != null
+      ? txParams['onFinish'] as dynamic Function(BuildContext, ExtrinsicReport)
+      : (_, __) => null;
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
@@ -54,17 +59,32 @@ Future<void> submitToJS(
       );
     }
 
-    final res = await api.account.sendTxAndShowNotification(
-      txParams['txInfo'] as Map<String, dynamic>,
-      txParams['params'] as List<dynamic>?,
-      rawParam: txParams['rawParam'] as String?,
-      cid: store.encointer.community?.cid.toFmtString(),
-    );
+    try {
+      final report = await api.account.sendTxAndShowNotification(
+        txParams['txInfo'] as Map<String, dynamic>,
+        txParams['params'] as List<dynamic>?,
+        rawParam: txParams['rawParam'] as String?,
+        cid: store.encointer.community?.cid.toFmtString(),
+      );
 
-    if (res['hash'] == null) {
-      _onTxError(context, store, res['error'] as String, showStatusSnackBar, onError: onError);
-    } else {
-      _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
+      if (report.isExtrinsicFailed) {
+        _onTxError(store, showStatusSnackBar);
+        onError?.call(report.dispatchError!);
+        final message = getLocalizedTxErrorMessage(l10n, report.dispatchError!);
+        _showErrorDialog(context, message);
+      } else {
+        _onTxFinish(context, store, report, onTxFinishFn, showStatusSnackBar);
+      }
+    } catch (e) {
+      Log.e('Caught RPC error while sending extrinsics: $e');
+      _onTxError(store, showStatusSnackBar);
+      var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
+      if (e.toString().contains(lowPriorityTx)) {
+        msg = ErrorNotificationMsg(title: l10n.txTooLowPriorityErrorTitle, body: l10n.txTooLowPriorityErrorBody);
+      } else if (e.toString().contains(insufficientFundsError)) {
+        msg = ErrorNotificationMsg(title: l10n.insufficientFundsErrorTitle, body: l10n.insufficientFundsErrorBody);
+      }
+      _showErrorDialog(context, msg);
     }
   } else {
     _showTxStatusSnackBar(l10n.txQueuedOffline, null);
@@ -74,25 +94,19 @@ Future<void> submitToJS(
   }
 }
 
-void _onTxError(
-  BuildContext context,
-  AppStore store,
-  String errorMsg,
-  bool mounted, {
-  void Function(dynamic res)? onError,
-}) {
+void _onTxError(AppStore store, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) RootSnackBar.removeCurrent();
+}
+
+void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
   final l10n = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
-  final message = getLocalizedTxErrorMessage(l10n, errorMsg);
-
-  onError?.call(errorMsg);
 
   AppAlert.showDialog<void>(
     context,
-    title: Text('${message['title']}'),
-    content: Text('${message['body']}'),
+    title: Text(message.title),
+    content: Text(message.body),
     actions: [
       const SizedBox.shrink(),
       CupertinoButton(
@@ -126,14 +140,14 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
 void _onTxFinish(
   BuildContext context,
   AppStore store,
-  Map res,
-  void Function(BuildContext, Map) onTxFinish,
+  ExtrinsicReport report,
+  void Function(BuildContext, ExtrinsicReport) onTxFinish,
   bool mounted,
 ) {
-  Log.d('callback triggered, blockHash: ${res['hash']}', '_onTxFinish');
+  Log.d('callback triggered, blockHash: ${report.blockHash}', '_onTxFinish');
   store.assets.setSubmitting(false);
 
-  onTxFinish(context, res);
+  onTxFinish(context, report);
 
   if (mounted) {
     RootSnackBar.show(
@@ -161,37 +175,5 @@ String getTxStatusTranslation(AppLocalizations l10n, TxStatus? status) {
     TxStatus.Broadcast => l10n.txBroadcast,
     TxStatus.InBlock => l10n.txInBlock,
     TxStatus.Error => l10n.txError,
-  };
-}
-
-Map<String, String> getLocalizedTxErrorMessage(AppLocalizations l10n, String txError) {
-  if (txError.startsWith(lowPriorityTx)) {
-    return {'title': l10n.txTooLowPriorityErrorTitle, 'body': l10n.txTooLowPriorityErrorBody};
-  } else if (txError.startsWith(insufficientFundsError)) {
-    return {'title': l10n.insufficientFundsErrorTitle, 'body': l10n.insufficientFundsErrorBody};
-  }
-
-  return switch (txError) {
-    'encointerCeremonies.VotesNotDependable' => {
-        'title': l10n.votesNotDependableErrorTitle,
-        'body': l10n.votesNotDependableErrorBody
-      },
-    'encointerCeremonies.AlreadyEndorsed' => {
-        'title': l10n.alreadyEndorsedErrorTitle,
-        'body': l10n.alreadyEndorsedErrorBody
-      },
-    'encointerCeremonies.NoValidClaims' => {
-        'title': l10n.noValidClaimsErrorTitle,
-        'body': l10n.noValidClaimsErrorBody,
-      },
-    'encointerCeremonies.RewardsAlreadyIssued' => {
-        'title': l10n.rewardsAlreadyIssuedErrorTitle,
-        'body': l10n.rewardsAlreadyIssuedErrorBody
-      },
-    'encointerBalances.BalanceTooLow' => {
-        'title': l10n.balanceTooLowTitle,
-        'body': l10n.balanceTooLowBody,
-      },
-    _ => {'title': l10n.transactionError, 'body': txError},
   };
 }

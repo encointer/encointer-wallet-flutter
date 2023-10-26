@@ -1,4 +1,5 @@
 import 'package:ew_test_keys/ew_test_keys.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,8 +10,25 @@ import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-class UnregisteredLinkButton extends StatelessWidget {
+class UnregisteredLinkButton extends StatefulWidget {
   const UnregisteredLinkButton({super.key});
+
+  @override
+  State<UnregisteredLinkButton> createState() => _UnregisteredLinkButtonState();
+}
+
+class _UnregisteredLinkButtonState extends State<UnregisteredLinkButton> {
+  bool _submitting = false;
+
+  Future<void> _onPressed() async {
+    setState(() {
+      _submitting = true;
+    });
+    await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
+    setState(() {
+      _submitting = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +43,15 @@ class UnregisteredLinkButton extends StatelessWidget {
           onOK: () => Navigator.pop(context, true),
         );
         if (shouldUnregister ?? false) {
-          AppAlert.showLoadingDialog(context, l10n.loading);
-          await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
-          Navigator.pop(context);
+          await _onPressed();
         }
       },
-      child: Text(
-        l10n.unregister,
-        style: context.bodyMedium.copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
-      ),
+      child: !_submitting
+          ? Text(
+              l10n.unregister,
+              style: context.bodyMedium.copyWith(color: AppColors.encointerGrey, decoration: TextDecoration.underline),
+            )
+          : const CupertinoActivityIndicator(),
     );
   }
 }
