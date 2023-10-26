@@ -28,26 +28,6 @@ export async function getCurrentPhase () {
   return api.query.encointerScheduler.currentPhase();
 }
 
-export async function getNextPhaseTimestamp () {
-  return api.query.encointerScheduler.nextPhaseTimestamp();
-}
-
-/**
- * Gets all phase durations to cache them on the dart side to speedup `getNextMeetupTime` request.
- */
-export async function getPhaseDurations () {
-  const [registering, assigning, attesting] = await Promise.all([
-    api.query.encointerScheduler.phaseDurations('Registering'),
-    api.query.encointerScheduler.phaseDurations('Attesting'),
-    api.query.encointerScheduler.phaseDurations('Assigning')
-  ]);
-  return {
-    Registering: registering,
-    Attesting: assigning,
-    Assigning: attesting
-  };
-}
-
 /**
  * Subscribes to the current ceremony phase
  * @param msgChannel channel that the message handler uses on the dart side
@@ -180,15 +160,6 @@ export async function getParticipantReputation (cid, cIndex, address) {
   return reputation;
 }
 
-// returns a list of prefixed hex strings
-export async function getCommunityIdentifiers () {
-  const pallet = pallets.encointerCommunities;
-  const cids = await api.query[pallet.name][pallet.calls.communityIdentifiers]();
-  return {
-    cids
-  };
-}
-
 export async function getBootstrappers (cid) {
   const cidT = api.createType('CommunityIdentifier', cid);
 
@@ -230,15 +201,6 @@ export async function remainingNewbieTicketsBootstrapper (cid, address) {
   return ticketsPerBootstrapper- burnedTickets;
 }
 
-export async function getCommunityMetadata (cid) {
-  const pallet = pallets.encointerCommunities;
-  const meta = await api.query[pallet.name][pallet.calls.communityMetadata](cid);
-
-  // `toU8a` is necessary. Otherwise, the metadata's fields are represented as hex-strings if the community was
-  // registered via polkadot-js/apps and.
-  return api.createType('CommunityMetadataType', meta.toU8a());
-}
-
 export async function getDemurrage (cid) {
   const cidT = api.createType('CommunityIdentifier', cid);
 
@@ -247,10 +209,6 @@ export async function getDemurrage (cid) {
 
 export async function communitiesGetAll () {
   return await api.rpc.encointer.getAllCommunities();
-}
-
-export async function getCurrentCeremonyIndex () {
-  return await api.query.encointerScheduler.currentCeremonyIndex();
 }
 
 export async function getMeetupIndex (cid, cIndex, address) {
@@ -465,9 +423,6 @@ export async function sendNextPhaseTx() {
 
 export default {
   getCurrentPhase,
-  getNextPhaseTimestamp,
-  getPhaseDurations,
-  getCommunityIdentifiers,
   getParticipantReputation,
   getBootstrappers,
   subscribeCurrentPhase,
@@ -475,11 +430,9 @@ export default {
   subscribeCommunityIdentifiers,
   subscribeBusinessRegistry,
   getProofOfAttendance,
-  getCurrentCeremonyIndex,
   getNextMeetupLocation,
   getNextMeetupTime,
   getDemurrage,
-  getCommunityMetadata,
   getAllMeetupLocations,
   communitiesGetAll,
   getMeetupIndex,
