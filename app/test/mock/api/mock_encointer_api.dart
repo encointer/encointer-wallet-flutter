@@ -15,6 +15,7 @@ import 'package:ew_http/ew_http.dart';
 import '../data/mock_encointer_data.dart';
 import 'mock_js_api.dart';
 import 'mock_substrate_dart_api.dart';
+import 'mock_encointer_kusama_api.dart';
 
 /// The key rationale behind this mock is that all the getters do not alter the app state.
 ///
@@ -27,7 +28,7 @@ class MockEncointerApi extends EncointerApi {
     MockJSApi super.js,
     MockSubstrateDartApi super.dartApi,
     super.ewHttp,
-    super.encointerKusama,
+    MockEncointerKusamaApi super.encointerKusama,
   );
 
   @override
