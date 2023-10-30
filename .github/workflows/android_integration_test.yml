@@ -118,6 +118,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           profile: ${{ matrix.device }}
           force-avd-creation: false
+          arch: x86_64
           # as we use the cleanly cached emulator, we need to define `-no-snapshot-save` here.
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
