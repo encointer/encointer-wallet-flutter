@@ -147,9 +147,8 @@ class Api {
     }
 
     if (store.settings.endpointIsTeeProxy) {
-      final worker = store.settings.endpoint.worker;
-      final mrenclave = store.settings.endpoint.mrenclave;
-      await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
+      // The JS-implementation used to be here.
+      Log.p('Should connect to tee proxy here.');
     }
 
     await fetchNetworkProps();
@@ -168,11 +167,9 @@ class Api {
       return;
     }
 
-    // setWorker endpoint on js side
     if (store.settings.endpointIsTeeProxy) {
-      final worker = store.settings.endpoint.worker;
-      final mrenclave = store.settings.endpoint.mrenclave;
-      await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
+      // The JS-implementation used to be here.
+      Log.p('Should connect to tee proxy here.');
     }
 
     final index = store.settings.endpointList.indexWhere((i) => i.value == res);
