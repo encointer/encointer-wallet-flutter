@@ -1,8 +1,9 @@
+import 'package:ew_substrate_fixed/src/exception.dart';
 import 'package:ew_substrate_fixed/src/to_fixed_point.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('double to fixed point', () {
+  group('toFixedPoint', () {
     test('1.0 to I16F16 works', () {
       const one = 1.0;
       final output = toFixedPoint(one, integerBitCount: 16, fractionalBitCount: 16);
@@ -37,6 +38,13 @@ void main() {
       const input = 0.000000000000000000000000000000000000001;
       final output = toFixedPoint(input, integerBitCount: 64, fractionalBitCount: 64);
       expect(output, BigInt.from(0));
+    });
+
+    test('throws exception for negative values', () {
+      expect(
+        () => toFixedPoint(-1, integerBitCount: 64, fractionalBitCount: 64),
+        throwsA(isA<FixedPointException>()),
+      );
     });
   });
 }

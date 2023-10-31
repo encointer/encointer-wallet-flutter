@@ -1,3 +1,5 @@
+import 'package:ew_substrate_fixed/src/exception.dart';
+
 /// Returns a BigInt representing a positive fixed point number with the given
 /// number of integer and fractional bits.
 ///
@@ -8,9 +10,10 @@ BigInt toFixedPoint(
   required int integerBitCount,
   required int fractionalBitCount,
 }) {
+  if (input.isNegative) throw FixedPointException.unsupportedNegativeValues();
+
   final integerBits = input.toInt();
   final bits = integerBits.toRadixString(2) + getFractionalBits(input, fractionalBitCount);
-
   return BigInt.parse(bits, radix: 2);
 }
 
