@@ -1,4 +1,4 @@
-import 'package:ew_substrate_fixed/src/substrate_fixed.dart';
+import 'package:ew_substrate_fixed/src/parse_fixed_point.dart';
 import 'package:test/test.dart';
 
 void main() {
