@@ -27,7 +27,7 @@ void main() {
       expect(output, BigInt.parse('1267fdffffffff0000', radix: 16));
     });
 
-    test('18.1234... to I64F64 works', () {
+    test('18.1234 to I64F64 works', () {
       const input = 18.1234;
       final output = toFixedPoint(input, integerBitCount: 64, fractionalBitCount: 64);
       expect(output, BigInt.parse('00000000000000121F972474538F0000', radix: 16));
