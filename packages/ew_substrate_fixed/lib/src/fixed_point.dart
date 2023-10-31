@@ -1,4 +1,3 @@
-
 import 'package:ew_substrate_fixed/src/fixed_point_util.dart' show u16F16Util, u32F32Util, u64F64Util;
 
 abstract class FixedPoint {

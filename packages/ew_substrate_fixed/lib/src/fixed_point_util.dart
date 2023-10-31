@@ -1,4 +1,3 @@
-
 import 'package:ew_substrate_fixed/src/parse_fixed_point.dart' as pf;
 import 'package:ew_substrate_fixed/src/to_fixed_point.dart' as tf;
 
