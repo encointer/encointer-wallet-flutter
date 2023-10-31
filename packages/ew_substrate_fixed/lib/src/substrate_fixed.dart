@@ -1,13 +1,13 @@
 import 'dart:math' as math;
 
-/// Parses a BigInt representing a fixed point number with
+/// Parses a BigInt representing a fixed point number with the given
+/// number of integer and fractional bits.
 double parseFixedPoint(
   BigInt input, {
   required int integerBitCount,
   required int fractionalBitCount,
 }) {
   final len = integerBitCount + fractionalBitCount;
-
   final signed = input.toSigned(len);
 
   // we have to get rid of the `-` within the string. We prepend it later again
