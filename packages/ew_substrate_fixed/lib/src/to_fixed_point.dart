@@ -1,5 +1,7 @@
 /// Returns a BigInt representing a positive fixed point number with the given
 /// number of integer and fractional bits.
+///
+/// Note: this doesn't work for negative numbers yet.
 BigInt toFixedPoint(
   double input, {
   required int integerBitCount,
