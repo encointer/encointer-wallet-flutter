@@ -3,7 +3,7 @@ import 'package:ew_substrate_fixed/src/exception.dart';
 /// Returns a BigInt representing a positive fixed point number with the given
 /// number of integer and fractional bits.
 ///
-/// Note: This doesn't work for negative numbers yet, but es the runtime uses
+/// Note: This doesn't work for negative numbers yet, but as the runtime uses
 /// unsigned types, we don't really need it anyhow.
 BigInt toFixedPoint(
   double input, {
