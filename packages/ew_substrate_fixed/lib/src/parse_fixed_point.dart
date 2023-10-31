@@ -16,7 +16,7 @@ double parseFixedPoint(
   final fractionalBits = bits.substring(bits.length - fractionalBitCount);
   var integerBits = bits.substring(0, bits.length - fractionalBitCount);
 
-  if (integerBits.isNotEmpty && signed.isNegative) {
+  if (signed.isNegative) {
     integerBits = '-$integerBits';
   }
 
