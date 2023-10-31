@@ -1,10 +1,10 @@
 # melos_managed_dependency_overrides: ew_http,ew_storage,ew_polkadart
 dependency_overrides:
   ew_http:
-    path: ..\\packages\\ew_http
+    path: ../packages/ew_http
   ew_polkadart:
-    path: ..\\packages\\ew_polkadart
+    path: ../packages/ew_polkadart
   ew_storage:
-    path: ..\\packages\\ew_storage
+    path: ../packages/ew_storage
   ew_test_keys:
     path: ../packages/ew_test_keys
