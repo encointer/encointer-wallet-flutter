@@ -22,11 +22,11 @@ class FixedPointUtil<T extends BitCount> {
 }
 
 class BitCount {
-  const BitCount(this._integerBitCount, this._fractionBitCount);
+  const BitCount(this._integerBitCount, this._fractionalBitCount);
 
   final int _integerBitCount;
-  final int _fractionBitCount;
+  final int _fractionalBitCount;
 
   int get integer => _integerBitCount;
-  int get fractional => _fractionBitCount;
+  int get fractional => _fractionalBitCount;
 }
