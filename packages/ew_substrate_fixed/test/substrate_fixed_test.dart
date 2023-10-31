@@ -5,8 +5,8 @@ void main() {
   group('FixedPoint Parser', () {
     test('placeholder test', () {
       final one = BigInt.parse('18446744073709551616');
-      final parser = fixedPointParser(64, 64);
-      expect(parser(one), 1);
+      final output = parseFixedPoint(one, integerBitCount: 64, fractionalBitCount: 64);
+      expect(output, 1);
     });
   });
 }

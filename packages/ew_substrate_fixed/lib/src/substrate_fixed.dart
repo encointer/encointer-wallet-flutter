@@ -1,31 +1,31 @@
 import 'dart:math' as math;
 
-typedef FixedPointParser = double Function(BigInt upper, [int precision]);
+/// Parses a BigInt representing a fixed point number with
+double parseFixedPoint(
+  BigInt input, {
+  required int integerBitCount,
+  required int fractionalBitCount,
+}) {
+  final len = integerBitCount + fractionalBitCount;
 
-FixedPointParser fixedPointParser(int upper, int lower) {
-  final len = upper + lower;
+  final signed = input.toSigned(len);
 
-  return (BigInt raw, [int precision = 0]) {
+  final bits = signed.toRadixString(2).padLeft(len, '0');
+  final fractionalBits = bits.substring(bits.length - fractionalBitCount);
+  final integerBits = bits.substring(0, bits.length - fractionalBitCount);
 
-    raw = raw.toSigned(len);
+  print('bits: $bits');
+  print('fractionalBits: $fractionalBits');
+  print('integerBits: $integerBits');
 
-    final bits = raw.toRadixString(2).padLeft(len, '0');
-    final lowerBits = bits.substring(bits.length - lower);
-    final upperBits = bits.substring(0, bits.length - lower);
+  final fractionalPart = fractionalBits
+      .split('')
+      .asMap()
+      .entries
+      .map((entry) => entry.value == '1' ? 1 / math.pow(2, entry.key + 1) : 0)
+      .reduce((acc, val) => acc + val);
 
-    print('bits: $bits');
+  final integerPart = integerBits.isNotEmpty ? int.parse(integerBits, radix: 2) : 0;
 
-    print('lowerBits: $lowerBits');
-    print('upperBits: $upperBits');
-    final floatPart = lowerBits
-        .split('')
-        .asMap()
-        .entries
-        .map((entry) => entry.value == '1' ? 1 / math.pow(2, entry.key + 1) : 0)
-        .reduce((acc, val) => acc + val);
-
-    final decimalPart = upperBits.isNotEmpty ? int.parse(upperBits, radix: 2) : 0;
-
-    return (decimalPart + (raw.isNegative ? -floatPart : floatPart)).toDouble();
-  };
+  return (integerPart + (signed.isNegative ? -fractionalPart : fractionalPart)).toDouble();
 }
