@@ -10,13 +10,19 @@ double parseFixedPoint(
 
   final signed = input.toSigned(len);
 
-  final bits = signed.toRadixString(2).padLeft(len, '0');
+  // we have to get rid of the `-` within the string. We prepend it later again
+  // if necessary.
+  final bits = signed.toRadixString(2).replaceFirst('-', '').padLeft(len, '0');
   final fractionalBits = bits.substring(bits.length - fractionalBitCount);
-  final integerBits = bits.substring(0, bits.length - fractionalBitCount);
+  var integerBits = bits.substring(0, bits.length - fractionalBitCount);
 
-  print('bits: $bits');
-  print('fractionalBits: $fractionalBits');
-  print('integerBits: $integerBits');
+  if (integerBits.isNotEmpty && signed.isNegative) {
+    integerBits = '-$integerBits';
+  }
+
+  // print('bits: $bits');
+  // print('fractionalBits: $fractionalBits');
+  // print('integerBits: $integerBits');
 
   final fractionalPart = fractionalBits
       .split('')
