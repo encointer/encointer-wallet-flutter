@@ -1,4 +1,3 @@
-
 const unsupportedNegativeValuesMsg = 'Negative values are not supported yet';
 
 class FixedPointException implements Exception {
