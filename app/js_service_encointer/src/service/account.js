@@ -3,27 +3,15 @@ import {
   hexToU8a,
   u8aToHex,
   hexToString,
-  assert,
-  u8aToBuffer,
-  bufferToU8a,
-  compactAddLength
 } from '@polkadot/util';
 import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
-import { createType } from '@polkadot/types';
 import { communityIdentifierFromString } from '@encointer/util';
-import { TrustedCallMap } from '../config/trustedCall.js';
-import { base58Decode } from '@polkadot/util-crypto/base58/bs58';
 import {
-  callWorker,
-  claimRewards,
   encointerBalances,
-  encointerCeremonies, parachainSpecName, solochainSpecName,
-  substrateeRegistry,
   transfer
 } from '../config/consts.js';
 import { unsubscribe } from '../utils/unsubscribe.js';
-import settings from './settings.js';
 import { extractEvents } from '@encointer/node-api';
 import { stringNumberToEncointerBalanceU8a } from '../utils/utils.js';
 
@@ -183,27 +171,9 @@ export async function txFeeEstimate (txInfo, paramList) {
     paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
   }
 
-  let dispatchInfo;
-  if (settings.connectedToTeeProxy() && TrustedCallMap[txInfo.module][txInfo.call] !== null) {
-    if (isTcIsRegisterAttestations(txInfo)) {
-      // todo: in a meetup with more than 3 people this is longer. calculate actual size based on message length.
-      dispatchInfo = dispatchInfo = api.tx[substrateeRegistry][callWorker](new Array(768))
-        .paymentInfo(txInfo.address);
-    } else {
-      dispatchInfo = api.tx[substrateeRegistry][callWorker](new Array(384))
-        .paymentInfo(txInfo.address);
-    }
-  } else {
-    dispatchInfo = await api.tx[txInfo.module][txInfo.call](...paramList)
-      .paymentInfo(txInfo.address);
-  }
-  return dispatchInfo;
+  return api.tx[txInfo.module][txInfo.call](...paramList)
+    .paymentInfo(txInfo.address);
 }
-
-function isTcIsRegisterAttestations (txInfo) {
-  return TrustedCallMap[txInfo.module][txInfo.call] === 'ceremonies_register_attestations';
-}
-
 export function sendTx (txInfo, paramList) {
   const keyPair = keyring.getPair(hexToU8a(txInfo.pubKey));
   try {
@@ -212,10 +182,6 @@ export function sendTx (txInfo, paramList) {
     return new Promise((resolve, reject) => {
       resolve({ error: 'password check failed' });
     });
-  }
-
-  if (settings.connectedToTeeProxy() && TrustedCallMap[txInfo.module][txInfo.call] !== null) {
-    return _sendTrustedTx(keyPair, txInfo, paramList);
   }
 
   return sendTxWithPair(keyPair, txInfo, paramList);
@@ -231,7 +197,7 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
     balanceHuman = paramList[2];
   }
 
-  return getMaybeSignedXt(keyPair, txInfo, paramList)
+  return _getXt(keyPair, txInfo, paramList)
     .then(function (tx) {
       // The promise syntax is necessary because we need fine-grained control over when the overarching
       // future returns based on what happens within the `onStatusChange` callback. I could not find another
@@ -278,10 +244,24 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
     });
 }
 
+export async function getXt (txInfo, paramList){
+  const keyPair = keyring.getPair(hexToU8a(txInfo.pubKey));
+  try {
+    keyPair.decodePkcs8(txInfo.password);
+  } catch (err) {
+    return new Promise((resolve, reject) => {
+      resolve({ error: 'password check failed' });
+    });
+  }
+
+  // The dart<>JS interface expects a map.
+  return { xt: await _getXt(keyPair, txInfo, paramList) };
+}
+
 /**
- *  Creates a extrinsic and signs it if the txInfo says so.
+ *  Creates an extrinsic and signs it if the txInfo says so.
  */
-export async function getMaybeSignedXt (keyPair, txInfo, paramList) {
+export async function _getXt (keyPair, txInfo, paramList) {
   if (txInfo.module === encointerBalances && txInfo.call === transfer) {
     paramList[2] = stringNumberToEncointerBalanceU8a(paramList[2]);
   }
@@ -311,74 +291,6 @@ export async function getMaybeSignedXt (keyPair, txInfo, paramList) {
   console.log(`[js-account/getMaybeSignedXt]: ${JSON.stringify(signerOptions)}`);
 
   return tx.signAsync(keyPair, signerOptions);
-}
-
-/**
- *  Creates a extrinsic, signs it according to txInfo, and returns it as a scale-encoded hex value.
- */
-export function getMaybeSignedXtHex (keyPair, txInfo, paramList) {
-  // unused currently, will be used when #1474 is implemented.
-  try {
-    return getMaybeSignedXt(keyPair, txInfo, paramList).toHex();
-  } catch (e) {
-    console.log(`[js-account/getMaybeSignedXtHex] error while creating xt: ${e.message}`);
-    // this is intended for the Dart<>JS interface, which expects errors like that.
-    return { error: e.message };
-  }
-}
-
-export function _sendTrustedTx (keyPair, txInfo, paramList) {
-  const cid = api.createType('CommunityIdentifier', txInfo.cid);
-  window.send('js-trustedTx', 'sending trusted tx for cid: ' + cid);
-
-  const mrenclave = api.createType('Hash', base58Decode(window.mrenclave));
-
-  const nonce = api.createType('u32', 0);
-  const call = createTrustedCall(
-    keyPair,
-    cid,
-    mrenclave,
-    nonce,
-    TrustedCallMap[txInfo.module][txInfo.call],
-    [keyPair.publicKey, ...paramList]
-  );
-
-  const cypherTextBuffer = window.workerShieldingKey.encrypt(u8aToBuffer(call.toU8a()));
-  const cypherArray = bufferToU8a(cypherTextBuffer);
-  const c = api.createType('Vec<u8>', compactAddLength(cypherArray));
-  console.log('Encrypted trusted call. Length: ' + cypherArray.length);
-
-  const txParams = [api.createType('Request', {
-    shard: api.createType('ShardIdentifier', txInfo.cid),
-    cyphertext: c
-  })];
-
-  console.log('txParams: ' + txParams);
-  const txInfoCallWorker = {
-    module: substrateeRegistry,
-    call: callWorker,
-    tip: 0
-  };
-  return sendTxWithPair(keyPair, txInfoCallWorker, txParams);
-}
-
-export function createTrustedCall (account, cid, mrenclave, nonce, trustedCall, params) {
-  const tCallType = api.registry.knownTypes.types.TrustedCall._enum[trustedCall];
-  assert(tCallType !== undefined, `Unknown trusted call: ${trustedCall}`);
-
-  console.log(`TrustedCall: ${tCallType}`);
-
-  const call = createType(api.registry, 'TrustedCall', {
-    [trustedCall]: createType(api.registry, tCallType, params)
-  });
-
-  const payload = [...call.toU8a(), ...nonce.toU8a(), ...mrenclave.toU8a(), ...cid.toU8a()];
-
-  return createType(api.registry, 'TrustedCallSigned', {
-    call: call,
-    nonce: nonce,
-    signature: account.sign(payload)
-  });
 }
 
 export function sendFaucetTx (address, amount) {
@@ -440,8 +352,7 @@ export default {
   txFeeEstimate,
   sendTx,
   sendTxWithPair,
-  getMaybeSignedXt,
-  getMaybeSignedXtHex,
+  getXt,
   sendFaucetTx,
   checkPassword,
   changePassword,

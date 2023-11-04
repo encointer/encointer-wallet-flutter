@@ -26,6 +26,11 @@ class JSApi {
 
     final initWebViewCompleter = Completer<void>();
 
+    WebView.debugLoggingSettings.excludeFilter.add(
+      // Exclude logs of "EncointerJsService"
+      RegExp('EncointerJsService'),
+    );
+
     _web = HeadlessInAppWebView(
       initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
       onConsoleMessage: (controller, message) => Log.d('JS-Console: ${message.message}', 'JSApi'),
@@ -36,19 +41,23 @@ class JSApi {
             callback: (args) {
               Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
-              final res = args[0] as Map<String, dynamic>;
+              try {
+                final res = args[0] as Map<String, dynamic>;
+                final path = res['path'] as String?;
 
-              final path = res['path'] as String?;
-              if (_msgCompleters[path!] != null) {
-                _msgCompleters[path]!.complete(res['data']);
-                if (path.contains('uid=')) {
-                  _msgCompleters.remove(path);
+                if (_msgCompleters[path!] != null) {
+                  _msgCompleters[path]!.complete(res['data']);
+                  if (path.contains('uid=')) {
+                    _msgCompleters.remove(path);
+                  }
                 }
-              }
-              if (_msgHandlers[path] != null) {
-                final handler = _msgHandlers[path]!;
-                // ignore: avoid_dynamic_calls
-                handler(res['data']);
+                if (_msgHandlers[path] != null) {
+                  final handler = _msgHandlers[path]!;
+                  // ignore: avoid_dynamic_calls
+                  handler(res['data']);
+                }
+              } catch (e) {
+                Log.e('Error in JS callback: $e', 'JsApi');
               }
             });
       },
@@ -56,11 +65,6 @@ class JSApi {
         await webViewPostInitCallback();
         initWebViewCompleter.complete();
       },
-    );
-
-    WebView.debugLoggingSettings.excludeFilter.add(
-      // Exclude logs of "EncointerJsService"
-      RegExp('EncointerJsService'),
     );
 
     await _web!.run();

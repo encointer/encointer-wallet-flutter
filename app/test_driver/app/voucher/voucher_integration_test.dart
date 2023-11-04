@@ -33,12 +33,13 @@ Future<void> fundVoucher(FlutterDriver driver) async {
   await driver.enterText('0.3');
   await driver.takeScreenshot(Screenshots.sendView);
 
-  await driver.runUnsynchronized(() async {
-    await driver.waitFor(find.byValueKey(EWTestKeys.makeTransfer));
-    await driver.tap(find.byValueKey(EWTestKeys.makeTransfer));
+  await driver.waitFor(find.byValueKey(EWTestKeys.makeTransfer));
+  await driver.tap(find.byValueKey(EWTestKeys.makeTransfer));
 
-    await driver.waitFor(find.byValueKey(EWTestKeys.makeTransferSend));
-    await driver.tap(find.byValueKey(EWTestKeys.makeTransferSend));
+  await driver.waitFor(find.byValueKey(EWTestKeys.makeTransferSend));
+  await driver.tap(find.byValueKey(EWTestKeys.makeTransferSend));
+
+  await driver.runUnsynchronized(() async {
     await driver.waitFor(find.byValueKey(EWTestKeys.transferDone));
     await driver.takeScreenshot(Screenshots.txConfirmationView);
     await driver.tap(find.byValueKey(EWTestKeys.transferDone));

@@ -10,18 +10,16 @@ Future<void> homeInit(FlutterDriver driver) async {
 }
 
 Future<void> changeCommunity(FlutterDriver driver) async {
-  await driver.runUnsynchronized(() async {
-    await driver.tap(find.byValueKey(EWTestKeys.panelController));
-    await driver.tap(find.byValueKey(EWTestKeys.addCommunity));
+  await driver.tap(find.byValueKey(EWTestKeys.panelController));
+  await driver.tap(find.byValueKey(EWTestKeys.addCommunity));
 
-    await driver.tap(find.byValueKey(EWTestKeys.cidMarkerIcon(0)));
-    await driver.tap(find.byValueKey(EWTestKeys.cidMarkerDescription(0)));
-    await driver.waitFor(find.byValueKey(EWTestKeys.addCommunity));
+  await driver.tap(find.byValueKey(EWTestKeys.cidMarkerIcon(0)));
+  await driver.tap(find.byValueKey(EWTestKeys.cidMarkerDescription(0)));
+  await driver.waitFor(find.byValueKey(EWTestKeys.addCommunity));
 
-    await Future<void>.delayed(const Duration(milliseconds: 1000));
-    await closePanel(driver);
-    await refreshWalletPage(driver);
-  });
+  await Future<void>.delayed(const Duration(milliseconds: 1000));
+  await closePanel(driver);
+  await refreshWalletPage(driver);
 }
 
 Future<void> registerAndWait(FlutterDriver driver, ParticipantTypeTestHelper registrationType) async {

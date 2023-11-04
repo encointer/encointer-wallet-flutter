@@ -368,6 +368,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0+1"
+  ew_polkadart:
+    dependency: "direct main"
+    description:
+      path: "../packages/ew_polkadart"
+      relative: true
+    source: path
+    version: "0.1.0"
   ew_storage:
     dependency: "direct main"
     description:
@@ -1220,6 +1227,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.7.3"
+  polkadart:
+    dependency: transitive
+    description:
+      path: "packages/polkadart"
+      ref: main
+      resolved-ref: a91142eea6b3762f04471ff08151ae12db94301e
+      url: "https://github.com/encointer/polkadart"
+    source: git
+    version: "0.1.1"
   polylabel:
     dependency: transitive
     description:
