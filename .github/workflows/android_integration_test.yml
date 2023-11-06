@@ -23,7 +23,7 @@ jobs:
   android-device-tests:
     # use macos to have hardware acceleration https://github.com/ReactiveCircus/android-emulator-runner/issues/46
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    timeout-minutes: 70
     strategy:
       matrix:
         # lower api-levels would be supported but the webView that is pre-installed on these images does not.
