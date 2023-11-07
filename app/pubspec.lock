@@ -795,6 +795,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
+  integration_test:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   intl:
     dependency: "direct main"
     description:
@@ -1147,6 +1152,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.7"
+  patrol:
+    dependency: "direct main"
+    description:
+      name: patrol
+      sha256: e0375cbd27890a264996ecf4600182a87f45e19bd643af2cde1a3b2744127ebd
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.2"
+  patrol_finders:
+    dependency: transitive
+    description:
+      name: patrol_finders
+      sha256: "9de6b2c873843db6811c3def4a2d9f023968b1428a9fdc9127d5f089015df569"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   pausable_timer:
     dependency: "direct main"
     description:

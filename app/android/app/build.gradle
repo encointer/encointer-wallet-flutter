@@ -39,6 +39,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    testOptions {
+        execution "ANDROIDX_TEST_ORCHESTRATOR"
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -57,6 +61,8 @@ android {
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        testInstrumentationRunner "pl.leancode.patrol.PatrolJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: "true"
     }
 
     buildTypes {
@@ -84,7 +90,7 @@ android {
         }
         fdroid {
             dimension "deploy"
-//            signingConfig null
+            //signingConfig null
             versionNameSuffix ""
         }
         play {
@@ -107,4 +113,5 @@ dependencies {
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.window:window-java:1.0.0'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    androidTestUtil "androidx.test:orchestrator:1.4.2"
 }

@@ -5,6 +5,7 @@ PODS:
     - Flutter
   - app_links (0.0.1):
     - Flutter
+  - CocoaAsyncSocket (7.6.5)
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
@@ -54,7 +55,10 @@ PODS:
   - GoogleUtilitiesComponents (1.1.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (2.3.0)
+  - HTTPParserC (2.9.4)
   - image_picker_ios (0.0.1):
+    - Flutter
+  - integration_test (0.0.1):
     - Flutter
   - local_auth_ios (0.0.1):
     - Flutter
@@ -90,6 +94,9 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - patrol (0.0.1):
+    - Flutter
+    - Telegraph (~> 0.30.0)
   - permission_handler_apple (9.1.1):
     - Flutter
   - printing (1.0.0):
@@ -103,6 +110,9 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - Telegraph (0.30.0):
+    - CocoaAsyncSocket (~> 7.6)
+    - HTTPParserC (~> 2.9)
   - url_launcher_ios (0.0.1):
     - Flutter
   - wakelock_plus (0.0.1):
@@ -120,10 +130,12 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - patrol (from `.symlinks/plugins/patrol/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - printing (from `.symlinks/plugins/printing/ios`)
   - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
@@ -134,12 +146,14 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - CocoaAsyncSocket
     - GoogleDataTransport
     - GoogleMLKit
     - GoogleToolboxForMac
     - GoogleUtilities
     - GoogleUtilitiesComponents
     - GTMSessionFetcher
+    - HTTPParserC
     - MLImage
     - MLKitBarcodeScanning
     - MLKitCommon
@@ -148,6 +162,7 @@ SPEC REPOS:
     - OrderedSet
     - PromisesObjC
     - ReachabilitySwift
+    - Telegraph
 
 EXTERNAL SOURCES:
   add_2_calendar:
@@ -172,6 +187,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_timezone/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
   local_auth_ios:
     :path: ".symlinks/plugins/local_auth_ios/ios"
   mobile_scanner:
@@ -180,6 +197,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  patrol:
+    :path: ".symlinks/plugins/patrol/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   printing:
@@ -199,6 +218,7 @@ SPEC CHECKSUMS:
   add_2_calendar: e9d68636aed37fb18e12f5a3d74c2e0589487af0
   aes_ecb_pkcs5_flutter: a82e6ecc47654000805ad9d094a8cd29e4bf9667
   app_links: 5ef33d0d295a89d9d16bb81b0e3b0d5f70d6c875
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
@@ -212,7 +232,9 @@ SPEC CHECKSUMS:
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
+  HTTPParserC: aea14c3d2d4ac5beb3988781daa36dfa62e0d9ef
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  integration_test: 13825b8a9334a850581300559b8839134b124670
   local_auth_ios: c6cf091ded637a88f24f86a8875d8b0f526e2605
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
@@ -223,6 +245,7 @@ SPEC CHECKSUMS:
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
+  patrol: 792c0bb6cc4d552fc8b37f49266341c39e659b4d
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   printing: 233e1b73bd1f4a05615548e9b5a324c98588640b
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
@@ -230,9 +253,10 @@ SPEC CHECKSUMS:
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
+  Telegraph: 12576b119324138e4929792af9e5a1085c2ecbc1
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47
 
-PODFILE CHECKSUM: 90aee035b683484f7e14ac9a57b7dc9185377dcb
+PODFILE CHECKSUM: 4ad7a54b8cb90aa638cf5e8de1e99d5f9e8cfb57
 
 COCOAPODS: 1.13.0

@@ -29,6 +29,9 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
+  target 'RunnerUITests' do
+    inherit! :complete
+  end
   use_frameworks!
   use_modular_headers!
 
