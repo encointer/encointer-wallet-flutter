@@ -30,7 +30,7 @@ jobs:
         run: .flutter/bin/dart run melos format-check
 
       - name: "Analyze Code"
-        run: .flutter/bin/dart melos analyze-check
+        run: .flutter/bin/dart run melos analyze-check
 
       - name: "Check translations"
         run: |
