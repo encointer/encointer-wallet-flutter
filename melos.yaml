@@ -14,9 +14,8 @@ command:
 # Notes:
 # 1.  On windows the multiline operator doesn't work in most cases, so we should try to have one liner scripts commands
 #     connected with '&&'.
-# 2.  Using `flutter pub global run melos` will make the scripts find melos even if the `pub-cache` is not on the path.
-#     The `exec:` directive isn't found either if the `pub-cache` is not on the path, which is why we only use the `run:`
-#     directive here. (This is a hack, but devs need less set up then).
+# 2.  make sure that you have installed the projects dependencies with ./flutter/bin/dart pub get. Otherwise, melos
+#     will fallback to the globally installed version and errors might occur.
 #
 # Cross platform linebreaks:
 # * Can only be used with a `melos exec` command, which must be after directly before the command to be executed. So
@@ -36,33 +35,23 @@ scripts:
     description: "Check format all Dart code"
 
   analyze:
-    run: >-
-      flutter pub global run melos exec \
-      flutter analyze
+    exec: dart analyze
     description: "Analyze all Dart code"
 
   analyze-check:
-    run: >-
-      flutter pub global run melos exec \
-      flutter analyze --fatal-warnings
+    exec: dart analyze --fatal-warnings
     description: "Analyze all Dart code and exit if there are any fatal warnings"
 
   flutter-clean:
-    run: >-
-      flutter pub global run melos exec \
-      flutter clean
+    exec: flutter clean
     description: "Clean pub dependencies"
 
   pub-get:
-    run: >-
-      flutter pub global run melos exec \
-      flutter pub get
+    exec: flutter pub get
     description: "Get pub dependencies"
 
   unit-test:
-    run: >-
-      flutter pub global run melos exec \
-      flutter test
+    exec: flutter test
     description: "Run unit tests (all packages)"
 
   doctor:
@@ -71,7 +60,7 @@ scripts:
 
   run-build-runner:
     run: >-
-      flutter pub global run melos exec --depends-on="build_runner" -- \
+      dart run melos exec --depends-on="build_runner" -- \
       flutter pub run build_runner build --delete-conflicting-outputs
     description: "Generate code with build_runner"
 
@@ -89,19 +78,19 @@ scripts:
   # Unit test Encointer Wallet with tag
   unit-test-app-exclude-encointer-node-e2e:
     run: >-
-      flutter pub global run melos exec --scope="encointer_wallet" -- \
+      dart run melos exec --scope="encointer_wallet" -- \
       flutter test --exclude-tags encointer-node-e2e
     description: "Run unit tests excluding the `encointer-node-e2e` tag"
 
   unit-test-app-with-encointer-node-e2e:
     run: >-
-      flutter pub global run melos exec --scope="encointer_wallet" -- \
+      dart run melos exec --scope="encointer_wallet" -- \
       flutter test --tags encointer-node-e2e
     description: "Run unit tests with the `encointer-node-e2e` tag"
 
   unit-test-packages:
     run: >-
-      flutter pub global run melos exec --ignore="encointer_wallet" -- \
+      dart run melos exec --ignore="encointer_wallet" -- \
       flutter test
     description: "Run unit tests with the `encointer-node-e2e` tag"
 
