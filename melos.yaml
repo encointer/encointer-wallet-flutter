@@ -28,15 +28,11 @@ command:
 
 scripts:
   format:
-    run: >-
-      flutter pub global run melos exec \
-      dart format . --line-length 120
+    exec: dart format . --line-length 120
     description: "Format all Dart code"
 
   format-check:
-    run: >-
-      flutter pub global run melos exec \
-      dart format . --line-length 120 --set-exit-if-changed
+    exec: dart format . --line-length 120 --set-exit-if-changed
     description: "Check format all Dart code"
 
   analyze:
