@@ -31,7 +31,7 @@ scripts:
     description: "Format all Dart code"
 
   format-check:
-    exec: dart format . --line-length 120 --set-exit-if-changed
+    run: dart format . --line-length 120 --set-exit-if-changed
     description: "Check format all Dart code"
 
   analyze:
