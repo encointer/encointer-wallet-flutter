@@ -2,7 +2,7 @@ name: Unit Tests & Code Quality
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [master, f-droid, cl/bump-melos-and-simplify-command]
   pull_request:
     branches: [master, f-droid]
 
@@ -21,16 +21,16 @@ jobs:
         run: ./scripts/install_melos.sh
 
       - name: Melos Bootstrap
-        run: ./flutterw pub global run melos bootstrap
+        run: ./flutterw run melos bootstrap
 
       - name: "Build JS"
-        run: ./flutterw pub global run melos yarn-build
+        run: ./flutterw run melos yarn-build
 
       - name: "Check fmt"
-        run: ./flutterw pub global run melos format-check
+        run: ./flutterw run melos format-check
 
       - name: "Analyze Code"
-        run: ./flutterw pub global run melos analyze-check
+        run: ./flutterw run melos analyze-check
 
       - name: "Check translations"
         run: |
@@ -38,15 +38,15 @@ jobs:
           ./scripts/check_translations.sh ./app/.untranslated-messages.txt
 
       - name: "Run unit tests Encointer"
-        run: ./flutterw pub global run melos unit-test-app-exclude-encointer-node-e2e
+        run: ./flutterw run melos unit-test-app-exclude-encointer-node-e2e
 
       - name: "Run unit tests Packages"
-        run: ./flutterw pub global run melos unit-test-packages
+        run: ./flutterw run melos unit-test-packages
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
-          ./flutterw pub global run melos run-build-runner
-          ./flutterw pub global run melos format
+          ./flutterw run melos run-build-runner
+          ./flutterw run melos format
           git diff --exit-code
 
     #  test-js:
