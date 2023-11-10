@@ -14,7 +14,7 @@ command:
 # Notes:
 # 1.  On windows the multiline operator doesn't work in most cases, so we should try to have one liner scripts commands
 #     connected with '&&'.
-# 2.  make sure that you have installed the projects dependencies with ./flutter/bin/dart pub get. Otherwise, melos
+# 2.  make sure that you have installed the project dependencies with ./flutter/bin/dart pub get. Otherwise, melos
 #     will fallback to the globally installed version and errors might occur.
 #
 # Cross platform linebreaks:
