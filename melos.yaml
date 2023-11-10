@@ -27,7 +27,7 @@ command:
 
 scripts:
   format:
-    exec: dart format . --line-length 120
+    run: dart format . --line-length 120
     description: "Format all Dart code"
 
   format-check:
@@ -35,23 +35,23 @@ scripts:
     description: "Check format all Dart code"
 
   analyze:
-    exec: dart analyze
+    run: dart analyze
     description: "Analyze all Dart code"
 
   analyze-check:
-    exec: dart analyze --fatal-warnings
+    run: dart analyze --fatal-warnings
     description: "Analyze all Dart code and exit if there are any fatal warnings"
 
   flutter-clean:
-    exec: flutter clean
+    run: flutter clean
     description: "Clean pub dependencies"
 
   pub-get:
-    exec: flutter pub get
+    run: flutter pub get
     description: "Get pub dependencies"
 
   unit-test:
-    exec: flutter test
+    run: flutter test
     description: "Run unit tests (all packages)"
 
   doctor:
