@@ -49,11 +49,12 @@ then:
 ```
 sudo apt install cmake ninja-build libgtk-3-dev npm build-essentials
 ./scripts/install_flutter_wrapper.sh
-./flutterw pub global activate melos
+# install project deps (i.e., melos)
+.flutter/bin/dart
 # add the following line to `~/.bashrc` as well
 export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/encointer/encointer-wallet-flutter/.flutter/bin"
 
-melos bootstrap
+.flutter/bin/dart melos bootstrap
 
 sudo npm install --global yarn
 # optional:

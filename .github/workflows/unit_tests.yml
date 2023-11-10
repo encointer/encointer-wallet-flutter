@@ -17,20 +17,20 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
-      - name: Get dependencies
+      - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
 
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
       - name: "Build JS"
-        run: ./flutterw run melos yarn-build
+        run: .flutter/bin/dart run melos yarn-build
 
       - name: "Check fmt"
-        run: ./flutterw run melos format-check
+        run: .flutter/bin/dart run melos format-check
 
       - name: "Analyze Code"
-        run: ./flutterw run melos analyze-check
+        run: .flutter/bin/dart melos analyze-check
 
       - name: "Check translations"
         run: |
@@ -38,15 +38,15 @@ jobs:
           ./scripts/check_translations.sh ./app/.untranslated-messages.txt
 
       - name: "Run unit tests Encointer"
-        run: ./flutterw run melos unit-test-app-exclude-encointer-node-e2e
+        run: .flutter/bin/dart run melos unit-test-app-exclude-encointer-node-e2e
 
       - name: "Run unit tests Packages"
-        run: ./flutterw run melos unit-test-packages
+        run: .flutter/bin/dart run melos unit-test-packages
 
       - name: "Run the build_runner and return an error if files are changed"
         run: |
-          ./flutterw run melos run-build-runner
-          ./flutterw run melos format
+          .flutter/bin/dart run melos run-build-runner
+          .flutter/bin/dart run melos format
           git diff --exit-code
 
     #  test-js:
