@@ -45,7 +45,10 @@ class _QrCodeShareOrPrintViewState extends State<QrCodeShareOrPrintView> {
             child: Center(
               child: RepaintBoundary(
                 key: _renderObjectKey,
-                child: PrettyQr(data: widget.qrCode, size: widget.size),
+                child: SizedBox(
+                  width: widget.size,
+                  child: PrettyQrView.data(data: widget.qrCode),
+                ),
               ),
             ),
           ),

@@ -344,10 +344,10 @@ packages:
     dependency: transitive
     description:
       name: rest_client
-      sha256: "1f7cd67c94f188ec7388a8621ce03da5be67c4415c359f74540e354b91377177"
+      sha256: c6bf733725a01f73d1f22ff3066e7688a1785154e886224d5f3de09381948ab6
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.3+4"
+    version: "2.2.3+6"
   shelf:
     dependency: transitive
     description:
@@ -553,9 +553,9 @@ packages:
     dependency: transitive
     description:
       name: yaon
-      sha256: "28273a6501db20e09879f80268ea6e32720f60ff133f49368e3f5e26416fbd4b"
+      sha256: e4553813814a6cd5ed7d240d508d3fb1ba4942bc69ac39df4317f7524d41737c
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.2+4"
+    version: "1.1.2+6"
 sdks:
   dart: ">=3.0.1 <4.0.0"
