@@ -79,14 +79,14 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Melos Install
-        run: ./scripts/install_melos.sh
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
 
       - name: Melos Bootstrap
-        run: ./flutterw pub global run melos bootstrap
+        run: .flutter/bin/dart run melos bootstrap
 
       - name: "Build JS"
-        run: ./flutterw pub global run melos yarn-build
+        run: .flutter/bin/dart run melos yarn-build
 
       - name: Start colima a docker runtime for MacOs
         run: |
