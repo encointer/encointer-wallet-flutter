@@ -1,6 +1,8 @@
 /// Moments day [ms/d]
 ///
 /// https://github.com/encointer/encointer-parachain/blob/b9d21b5caaa640e505264dbad52ef8023ef98f63/polkadot-parachains/encointer-runtime/src/lib.rs#L468
+///
+/// Fixme: is it better to get this value from the chain?
 const momentsPerDay = 86400000;
 
 const momentsPerDegree = momentsPerDay / 360;
