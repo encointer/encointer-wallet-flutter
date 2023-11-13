@@ -47,7 +47,9 @@ scripts:
     description: "Clean pub dependencies"
 
   pub-get:
-    run: flutter pub get
+    run: >-
+      flutter pub global run melos exec -- \
+      flutter pub get
     description: "Get pub dependencies"
 
   unit-test:

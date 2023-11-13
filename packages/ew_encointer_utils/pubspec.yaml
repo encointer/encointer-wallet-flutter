@@ -1,5 +1,5 @@
-name: ew_format
-description: Encointer Fromat Package
+name: ew_encointer_utils
+description: Encointer Utils Package
 version: 0.1.0+1
 publish_to: none
 
@@ -7,6 +7,5 @@ environment:
   sdk: ">=3.0.1 <4.0.0"
 
 dev_dependencies:
-  mocktail: ^1.0.1
   test: 1.24.3
-  very_good_analysis: ^5.1.0
+  very_good_analysis: ^5.0.0+1
