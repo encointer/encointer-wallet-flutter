@@ -121,7 +121,7 @@ class EWAuthorApi<P extends Provider> {
     final completer = Completer<void>();
     ExtrinsicReport? report;
 
-    final subResponse = await submitAndWatchExtrinsic(extrinsic, (xtUpdate) async {
+    final sub = await submitAndWatchExtrinsic(extrinsic, (xtUpdate) async {
       Log.d('ExtrinsicUpdate: $xtUpdate');
 
       if (xtUpdate.type == 'ready') {
@@ -158,7 +158,7 @@ class EWAuthorApi<P extends Provider> {
     });
 
     await completer.future;
-    await subResponse.cancel();
+    await sub.cancel();
     return report!;
   }
 }
