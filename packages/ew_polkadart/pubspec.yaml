@@ -69,4 +69,4 @@ dependency_overrides:
 polkadart:
   output_dir: lib/generated
   chains:
-    encointer_kusama: wss://encointer.api.onfinality.io/public-ws
+    encointer_kusama: wss://kusama.api.encointer.org
