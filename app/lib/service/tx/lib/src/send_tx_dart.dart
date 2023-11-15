@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/service/service.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/ew_polkadart.dart' show Provider, EncointerKusama, BlockHash, SubscriptionResponse;
 import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/event_record.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/phase.dart';
 import 'package:ew_polkadart/runtime_error.dart';
