@@ -4,8 +4,6 @@ import 'package:ew_keyring/src/keyring_data.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 import 'package:substrate_bip39/substrate_bip39.dart';
 
-const Ed25519 ed25519 = Ed25519();
-
 /// The public key (as a list of integers).
 typedef Pubkey = String;
 
@@ -29,10 +27,8 @@ class EncointerKeyring {
   }
 
   Future<void> addAccount(KeyringAccount keyringAccount) async {
-    final pair = switch (keyringAccount.type) {
-      SeedType.mnemonic => await KeyPair.fromMnemonic(keyringAccount.seed),
-      _ => KeyPair.fromSeed(Uint8List.fromList(await ed25519.seedFromUri(keyringAccount.seed))),
-    };
+    final pair = await KeyPair.fromMnemonic(keyringAccount.seed);
+    print('pair: ${pair.address}');
 
     keyring.add(pair);
     // same as what keyring does internally.
