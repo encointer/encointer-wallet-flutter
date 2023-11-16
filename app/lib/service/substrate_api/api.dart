@@ -256,7 +256,7 @@ class ReconnectingWsProvider extends Provider {
     if (isConnected()) {
       return Future.value();
     } else {
-      return connect();
+      return provider.connect();
     }
   }
 
@@ -265,7 +265,7 @@ class ReconnectingWsProvider extends Provider {
     if (!isConnected()) {
       return Future.value();
     } else {
-      return disconnect();
+      return provider.disconnect();
     }
   }
 
@@ -275,7 +275,9 @@ class ReconnectingWsProvider extends Provider {
   }
 
   @override
-  Future<RpcResponse> send(String method, List<dynamic> params) {
+  Future<RpcResponse> send(String method, List<dynamic> params) async {
+    // Connect if disconnected
+    await connect();
     return provider.send(method, params);
   }
 
@@ -284,7 +286,9 @@ class ReconnectingWsProvider extends Provider {
     String method,
     List<dynamic> params, {
     FutureOr<void> Function(String subscription)? onCancel,
-  }) {
+  }) async {
+    // Connect if disconnected
+    await connect();
     return provider.subscribe(method, params, onCancel: onCancel);
   }
 }
