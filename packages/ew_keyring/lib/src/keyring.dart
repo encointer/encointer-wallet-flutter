@@ -51,8 +51,8 @@ class EncointerKeyring {
   }
 
   void remove(List<int> publicKey) {
-      keyring.pairs.removeByPublicKey(publicKey);
-      accounts.remove(publicKey.toString());
+    keyring.pairs.removeByPublicKey(publicKey);
+    accounts.remove(publicKey.toString());
   }
 
   /// Remove all key pairs from the keyring.
