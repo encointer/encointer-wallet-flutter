@@ -34,7 +34,7 @@ dev_dependencies:
       ref: main
       path: packages/substrate_metadata
 
-  test: ^1.24.3
+  test: 1.24.3
 
 # We have to use dependency overrides as the polkadart_cli in our fork uses
 # the published package as dependency. We can remove them when we use the
