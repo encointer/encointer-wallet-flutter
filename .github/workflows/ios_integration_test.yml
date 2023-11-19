@@ -2,7 +2,7 @@ name: IOS CI
 
 on:
   push:
-    branches: [master, f-droid]
+    branches: [master, f-droid, cl/fix-macos-ci]
     tags:
       - "*"
   pull_request:
