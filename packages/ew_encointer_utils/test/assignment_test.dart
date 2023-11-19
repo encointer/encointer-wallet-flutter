@@ -29,7 +29,11 @@ void main() {
       MeetupTimeTestCase(description: 'is correct for non-integer results', longitude: 19.5, offset: 0, expected: 161),
       MeetupTimeTestCase(description: 'is correct for positive offset', longitude: 20, offset: 1, expected: 161),
       MeetupTimeTestCase(
-          description: 'is correct result for negative offset', longitude: 20, offset: -1, expected: 159),
+        description: 'is correct result for negative offset',
+        longitude: 20,
+        offset: -1,
+        expected: 159,
+      ),
     ];
 
     for (final testCase in meetupTimeTestCases) {
