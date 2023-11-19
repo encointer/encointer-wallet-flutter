@@ -95,6 +95,7 @@ jobs:
 
       - name: Start colima a docker runtime for MacOs
         run: |
+          brew update
           brew install docker
           brew install colima
           colima start
