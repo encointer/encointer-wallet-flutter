@@ -94,10 +94,7 @@ jobs:
         run: .flutter/bin/dart run melos yarn-build
 
       - name: Start colima a docker runtime for MacOs
-        # Work around an upstream issue with the runner image:
-        # https://github.com/actions/runner-images/issues/8500
         run: |
-          brew upgrade || brew link --overwrite python@3.11
           brew install docker
           brew install colima
           colima start
