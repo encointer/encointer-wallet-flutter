@@ -10,6 +10,8 @@ import '../types/encointer_primitives/ceremonies/assignment_params.dart' as _i12
 import '../types/encointer_primitives/ceremonies/meetup_result.dart' as _i10;
 import '../types/encointer_primitives/ceremonies/reputation.dart' as _i8;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
+import '../types/encointer_runtime/runtime_call.dart' as _i13;
+import '../types/pallet_encointer_ceremonies/pallet/call.dart' as _i14;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 import '../types/substrate_fixed/fixed_u128.dart' as _i9;
 import '../types/tuples.dart' as _i5;
@@ -998,6 +1000,134 @@ class Queries {
       return _meetupTimeOffset.decodeValue(bytes);
     }
     return 0; /* Default */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::register_participant`].
+  _i13.RuntimeCall registerParticipant({
+    required cid,
+    proof,
+  }) {
+    final _call = _i14.Call.values.registerParticipant(
+      cid: cid,
+      proof: proof,
+    );
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::upgrade_registration`].
+  _i13.RuntimeCall upgradeRegistration({
+    required cid,
+    required proof,
+  }) {
+    final _call = _i14.Call.values.upgradeRegistration(
+      cid: cid,
+      proof: proof,
+    );
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::unregister_participant`].
+  _i13.RuntimeCall unregisterParticipant({
+    required cid,
+    maybeReputationCommunityCeremony,
+  }) {
+    final _call = _i14.Call.values.unregisterParticipant(
+      cid: cid,
+      maybeReputationCommunityCeremony: maybeReputationCommunityCeremony,
+    );
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::attest_attendees`].
+  _i13.RuntimeCall attestAttendees({
+    required cid,
+    required numberOfParticipantsVote,
+    required attestations,
+  }) {
+    final _call = _i14.Call.values.attestAttendees(
+      cid: cid,
+      numberOfParticipantsVote: numberOfParticipantsVote,
+      attestations: attestations,
+    );
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::endorse_newcomer`].
+  _i13.RuntimeCall endorseNewcomer({
+    required cid,
+    required newbie,
+  }) {
+    final _call = _i14.Call.values.endorseNewcomer(
+      cid: cid,
+      newbie: newbie,
+    );
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::claim_rewards`].
+  _i13.RuntimeCall claimRewards({
+    required cid,
+    maybeMeetupIndex,
+  }) {
+    final _call = _i14.Call.values.claimRewards(
+      cid: cid,
+      maybeMeetupIndex: maybeMeetupIndex,
+    );
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::set_inactivity_timeout`].
+  _i13.RuntimeCall setInactivityTimeout({required inactivityTimeout}) {
+    final _call = _i14.Call.values.setInactivityTimeout(inactivityTimeout: inactivityTimeout);
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::set_endorsement_tickets_per_bootstrapper`].
+  _i13.RuntimeCall setEndorsementTicketsPerBootstrapper({required endorsementTicketsPerBootstrapper}) {
+    final _call = _i14.Call.values
+        .setEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::set_endorsement_tickets_per_reputable`].
+  _i13.RuntimeCall setEndorsementTicketsPerReputable({required endorsementTicketsPerReputable}) {
+    final _call = _i14.Call.values
+        .setEndorsementTicketsPerReputable(endorsementTicketsPerReputable: endorsementTicketsPerReputable);
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::set_reputation_lifetime`].
+  _i13.RuntimeCall setReputationLifetime({required reputationLifetime}) {
+    final _call = _i14.Call.values.setReputationLifetime(reputationLifetime: reputationLifetime);
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::set_meetup_time_offset`].
+  _i13.RuntimeCall setMeetupTimeOffset({required meetupTimeOffset}) {
+    final _call = _i14.Call.values.setMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::set_time_tolerance`].
+  _i13.RuntimeCall setTimeTolerance({required timeTolerance}) {
+    final _call = _i14.Call.values.setTimeTolerance(timeTolerance: timeTolerance);
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::set_location_tolerance`].
+  _i13.RuntimeCall setLocationTolerance({required locationTolerance}) {
+    final _call = _i14.Call.values.setLocationTolerance(locationTolerance: locationTolerance);
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  }
+
+  /// See [`Pallet::purge_community_ceremony`].
+  _i13.RuntimeCall purgeCommunityCeremony({required communityCeremony}) {
+    final _call = _i14.Call.values.purgeCommunityCeremony(communityCeremony: communityCeremony);
+    return _i13.RuntimeCall.values.encointerCeremonies(_call);
   }
 }
 

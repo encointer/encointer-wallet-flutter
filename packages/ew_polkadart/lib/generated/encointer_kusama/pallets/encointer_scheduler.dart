@@ -5,6 +5,8 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/encointer_primitives/scheduler/ceremony_phase_type.dart' as _i3;
+import '../types/encointer_runtime/runtime_call.dart' as _i5;
+import '../types/pallet_encointer_scheduler/pallet/call.dart' as _i6;
 
 class Queries {
   const Queries(this.__api);
@@ -104,6 +106,40 @@ class Queries {
       return _phaseDurations.decodeValue(bytes);
     }
     return BigInt.zero; /* Default */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::next_phase`].
+  _i5.RuntimeCall nextPhase() {
+    final _call = _i6.Call.values.nextPhase();
+    return _i5.RuntimeCall.values.encointerScheduler(_call);
+  }
+
+  /// See [`Pallet::push_by_one_day`].
+  _i5.RuntimeCall pushByOneDay() {
+    final _call = _i6.Call.values.pushByOneDay();
+    return _i5.RuntimeCall.values.encointerScheduler(_call);
+  }
+
+  /// See [`Pallet::set_phase_duration`].
+  _i5.RuntimeCall setPhaseDuration({
+    required ceremonyPhase,
+    required duration,
+  }) {
+    final _call = _i6.Call.values.setPhaseDuration(
+      ceremonyPhase: ceremonyPhase,
+      duration: duration,
+    );
+    return _i5.RuntimeCall.values.encointerScheduler(_call);
+  }
+
+  /// See [`Pallet::set_next_phase_timestamp`].
+  _i5.RuntimeCall setNextPhaseTimestamp({required timestamp}) {
+    final _call = _i6.Call.values.setNextPhaseTimestamp(timestamp: timestamp);
+    return _i5.RuntimeCall.values.encointerScheduler(_call);
   }
 }
 

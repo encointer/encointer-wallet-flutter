@@ -8,6 +8,8 @@ import '../types/encointer_primitives/bazaar/business_data.dart' as _i4;
 import '../types/encointer_primitives/bazaar/business_identifier.dart' as _i5;
 import '../types/encointer_primitives/bazaar/offering_data.dart' as _i6;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
+import '../types/encointer_runtime/runtime_call.dart' as _i9;
+import '../types/pallet_encointer_bazaar/pallet/call.dart' as _i10;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 
 class Queries {
@@ -81,5 +83,77 @@ class Queries {
       0,
       growable: true,
     )); /* Default */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::create_business`].
+  _i9.RuntimeCall createBusiness({
+    required cid,
+    required url,
+  }) {
+    final _call = _i10.Call.values.createBusiness(
+      cid: cid,
+      url: url,
+    );
+    return _i9.RuntimeCall.values.encointerBazaar(_call);
+  }
+
+  /// See [`Pallet::update_business`].
+  _i9.RuntimeCall updateBusiness({
+    required cid,
+    required url,
+  }) {
+    final _call = _i10.Call.values.updateBusiness(
+      cid: cid,
+      url: url,
+    );
+    return _i9.RuntimeCall.values.encointerBazaar(_call);
+  }
+
+  /// See [`Pallet::delete_business`].
+  _i9.RuntimeCall deleteBusiness({required cid}) {
+    final _call = _i10.Call.values.deleteBusiness(cid: cid);
+    return _i9.RuntimeCall.values.encointerBazaar(_call);
+  }
+
+  /// See [`Pallet::create_offering`].
+  _i9.RuntimeCall createOffering({
+    required cid,
+    required url,
+  }) {
+    final _call = _i10.Call.values.createOffering(
+      cid: cid,
+      url: url,
+    );
+    return _i9.RuntimeCall.values.encointerBazaar(_call);
+  }
+
+  /// See [`Pallet::update_offering`].
+  _i9.RuntimeCall updateOffering({
+    required cid,
+    required oid,
+    required url,
+  }) {
+    final _call = _i10.Call.values.updateOffering(
+      cid: cid,
+      oid: oid,
+      url: url,
+    );
+    return _i9.RuntimeCall.values.encointerBazaar(_call);
+  }
+
+  /// See [`Pallet::delete_offering`].
+  _i9.RuntimeCall deleteOffering({
+    required cid,
+    required oid,
+  }) {
+    final _call = _i10.Call.values.deleteOffering(
+      cid: cid,
+      oid: oid,
+    );
+    return _i9.RuntimeCall.values.encointerBazaar(_call);
   }
 }

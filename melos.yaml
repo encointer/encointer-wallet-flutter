@@ -70,7 +70,7 @@ scripts:
   # `./scripts/replace_backslash_in_dart_files.sh packages/ew_polkadart`.
   run-polkadart-generate:
     run: >-
-      cd packages/ew_polkadart && flutter pub run polkadart_cli:generate -v
+      cd packages/ew_polkadart && dart run polkadart_cli:generate -v
     description: "Generate encointer typdedefs with polkadart"
 
   yarn-build:

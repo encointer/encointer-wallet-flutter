@@ -5,6 +5,8 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i4;
+import '../types/encointer_runtime/runtime_call.dart' as _i8;
+import '../types/pallet_encointer_reputation_commitments/pallet/call.dart' as _i9;
 import '../types/primitive_types/h256.dart' as _i6;
 import '../types/sp_core/crypto/account_id32.dart' as _i5;
 import '../types/tuples.dart' as _i3;
@@ -91,5 +93,31 @@ class Queries {
       return _commitments.decodeValue(bytes);
     }
     return null; /* Default */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::register_purpose`].
+  _i8.RuntimeCall registerPurpose({required descriptor}) {
+    final _call = _i9.Call.values.registerPurpose(descriptor: descriptor);
+    return _i8.RuntimeCall.values.encointerReputationCommitments(_call);
+  }
+
+  /// See [`Pallet::commit_reputation`].
+  _i8.RuntimeCall commitReputation({
+    required cid,
+    required cindex,
+    required purpose,
+    commitmentHash,
+  }) {
+    final _call = _i9.Call.values.commitReputation(
+      cid: cid,
+      cindex: cindex,
+      purpose: purpose,
+      commitmentHash: commitmentHash,
+    );
+    return _i8.RuntimeCall.values.encointerReputationCommitments(_call);
   }
 }
