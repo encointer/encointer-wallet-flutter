@@ -6,7 +6,9 @@ import 'package:polkadart/scale_codec.dart' as _i3;
 
 import '../types/cumulus_pallet_xcmp_queue/inbound_channel_details.dart' as _i2;
 import '../types/cumulus_pallet_xcmp_queue/outbound_channel_details.dart' as _i5;
+import '../types/cumulus_pallet_xcmp_queue/pallet/call.dart' as _i11;
 import '../types/cumulus_pallet_xcmp_queue/queue_config_data.dart' as _i6;
+import '../types/encointer_runtime/runtime_call.dart' as _i10;
 import '../types/polkadot_parachain/primitives/id.dart' as _i4;
 import '../types/sp_weights/weight_v2/weight.dart' as _i9;
 import '../types/tuples_2.dart' as _i7;
@@ -276,5 +278,69 @@ class Queries {
       return _queueSuspended.decodeValue(bytes);
     }
     return false; /* Default */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::service_overweight`].
+  _i10.RuntimeCall serviceOverweight({
+    required index,
+    required weightLimit,
+  }) {
+    final _call = _i11.Call.values.serviceOverweight(
+      index: index,
+      weightLimit: weightLimit,
+    );
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  }
+
+  /// See [`Pallet::suspend_xcm_execution`].
+  _i10.RuntimeCall suspendXcmExecution() {
+    final _call = _i11.Call.values.suspendXcmExecution();
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  }
+
+  /// See [`Pallet::resume_xcm_execution`].
+  _i10.RuntimeCall resumeXcmExecution() {
+    final _call = _i11.Call.values.resumeXcmExecution();
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  }
+
+  /// See [`Pallet::update_suspend_threshold`].
+  _i10.RuntimeCall updateSuspendThreshold({required new_}) {
+    final _call = _i11.Call.values.updateSuspendThreshold(new_: new_);
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  }
+
+  /// See [`Pallet::update_drop_threshold`].
+  _i10.RuntimeCall updateDropThreshold({required new_}) {
+    final _call = _i11.Call.values.updateDropThreshold(new_: new_);
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  }
+
+  /// See [`Pallet::update_resume_threshold`].
+  _i10.RuntimeCall updateResumeThreshold({required new_}) {
+    final _call = _i11.Call.values.updateResumeThreshold(new_: new_);
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  }
+
+  /// See [`Pallet::update_threshold_weight`].
+  _i10.RuntimeCall updateThresholdWeight({required new_}) {
+    final _call = _i11.Call.values.updateThresholdWeight(new_: new_);
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  }
+
+  /// See [`Pallet::update_weight_restrict_decay`].
+  _i10.RuntimeCall updateWeightRestrictDecay({required new_}) {
+    final _call = _i11.Call.values.updateWeightRestrictDecay(new_: new_);
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  }
+
+  /// See [`Pallet::update_xcmp_max_individual_weight`].
+  _i10.RuntimeCall updateXcmpMaxIndividualWeight({required new_}) {
+    final _call = _i11.Call.values.updateXcmpMaxIndividualWeight(new_: new_);
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
   }
 }

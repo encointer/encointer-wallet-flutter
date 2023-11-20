@@ -4,9 +4,11 @@ import 'dart:async' as _i4;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/frame_support/pallet_id.dart' as _i6;
+import '../types/encointer_runtime/runtime_call.dart' as _i5;
+import '../types/frame_support/pallet_id.dart' as _i8;
+import '../types/pallet_treasury/pallet/call.dart' as _i6;
 import '../types/pallet_treasury/proposal.dart' as _i3;
-import '../types/sp_arithmetic/per_things/permill.dart' as _i5;
+import '../types/sp_arithmetic/per_things/permill.dart' as _i7;
 
 class Queries {
   const Queries(this.__api);
@@ -98,12 +100,58 @@ class Queries {
   }
 }
 
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::propose_spend`].
+  _i5.RuntimeCall proposeSpend({
+    required value,
+    required beneficiary,
+  }) {
+    final _call = _i6.Call.values.proposeSpend(
+      value: value,
+      beneficiary: beneficiary,
+    );
+    return _i5.RuntimeCall.values.treasury(_call);
+  }
+
+  /// See [`Pallet::reject_proposal`].
+  _i5.RuntimeCall rejectProposal({required proposalId}) {
+    final _call = _i6.Call.values.rejectProposal(proposalId: proposalId);
+    return _i5.RuntimeCall.values.treasury(_call);
+  }
+
+  /// See [`Pallet::approve_proposal`].
+  _i5.RuntimeCall approveProposal({required proposalId}) {
+    final _call = _i6.Call.values.approveProposal(proposalId: proposalId);
+    return _i5.RuntimeCall.values.treasury(_call);
+  }
+
+  /// See [`Pallet::spend`].
+  _i5.RuntimeCall spend({
+    required amount,
+    required beneficiary,
+  }) {
+    final _call = _i6.Call.values.spend(
+      amount: amount,
+      beneficiary: beneficiary,
+    );
+    return _i5.RuntimeCall.values.treasury(_call);
+  }
+
+  /// See [`Pallet::remove_approval`].
+  _i5.RuntimeCall removeApproval({required proposalId}) {
+    final _call = _i6.Call.values.removeApproval(proposalId: proposalId);
+    return _i5.RuntimeCall.values.treasury(_call);
+  }
+}
+
 class Constants {
   Constants();
 
   /// Fraction of a proposal's value that should be bonded in order to place the proposal.
   /// An accepted proposal gets these back. A rejected proposal does not.
-  final _i5.Permill proposalBond = 50000;
+  final _i7.Permill proposalBond = 50000;
 
   /// Minimum amount of funds that should be placed in a deposit for making a proposal.
   final BigInt proposalBondMinimum = BigInt.from(33333300);
@@ -115,10 +163,10 @@ class Constants {
   final int spendPeriod = 43200;
 
   /// Percentage of spare funds (if any) that are burnt per spend period.
-  final _i5.Permill burn = 0;
+  final _i7.Permill burn = 0;
 
   /// The treasury's pallet id, used for deriving its sovereign account ID.
-  final _i6.PalletId palletId = const <int>[
+  final _i8.PalletId palletId = const <int>[
     112,
     121,
     47,

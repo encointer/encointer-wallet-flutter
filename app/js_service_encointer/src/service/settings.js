@@ -1,12 +1,7 @@
 import { WsProvider } from '@polkadot/rpc-provider';
 import { ApiPromise } from '@polkadot/api';
-import { EncointerWorker } from '@encointer/worker-api';
 import { options } from '@encointer/node-api';
-import WS from 'websocket';
 import { pallets } from '../config/consts.js';
-import { keyring } from './account.js';
-
-const { w3cwebsocket: WebSocket } = WS;
 
 async function connect (endpoint, configOverride) {
   return new Promise(async (resolve, reject) => {
@@ -63,31 +58,6 @@ async function connectAll (nodes, configs) {
       }
     });
   });
-}
-
-async function setWorkerEndpoint (endpoint, mrenclave) {
-  return new Promise(async (resolve, reject) => {
-    if (!window.workerEndpoint || window.workerEndpoint !== endpoint) {
-      window.workerEndpoint = endpoint;
-      window.worker = new EncointerWorker(endpoint, {
-        keyring: keyring,
-        api: window.api,
-        createWebSocket: (url) => new WebSocket(url)
-      });
-      window.send('log', `set worker endpoint ${endpoint}`);
-      window.workerShieldingKey = await window.worker.getShieldingKey();
-      window.send('log', 'got the workers shielding key');
-      window.mrenclave = mrenclave;
-      window.send('log', `set mrenclave ${mrenclave}`);
-      resolve(endpoint);
-    } else {
-      window.send('log', 'already have a workerEndpoint set, ignoring...');
-    }
-  });
-}
-
-function connectedToTeeProxy () {
-  return window.workerEndpoint != null;
 }
 
 async function getNetworkConst () {
@@ -155,8 +125,6 @@ export default {
   connectAll,
   changeEndpoint,
   getNetworkConst,
-  setWorkerEndpoint,
-  connectedToTeeProxy,
   subscribeMessage,
   isConnected
 };

@@ -4,22 +4,24 @@ import 'dart:async' as _i12;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
+import '../types/encointer_runtime/runtime_call.dart' as _i15;
 import '../types/frame_support/dispatch/per_dispatch_class_1.dart' as _i5;
-import '../types/frame_support/dispatch/per_dispatch_class_2.dart' as _i16;
-import '../types/frame_support/dispatch/per_dispatch_class_3.dart' as _i19;
+import '../types/frame_support/dispatch/per_dispatch_class_2.dart' as _i18;
+import '../types/frame_support/dispatch/per_dispatch_class_3.dart' as _i21;
 import '../types/frame_system/account_info.dart' as _i3;
 import '../types/frame_system/event_record.dart' as _i8;
 import '../types/frame_system/last_runtime_upgrade_info.dart' as _i10;
-import '../types/frame_system/limits/block_length.dart' as _i18;
-import '../types/frame_system/limits/block_weights.dart' as _i15;
-import '../types/frame_system/limits/weights_per_class.dart' as _i17;
+import '../types/frame_system/limits/block_length.dart' as _i20;
+import '../types/frame_system/limits/block_weights.dart' as _i17;
+import '../types/frame_system/limits/weights_per_class.dart' as _i19;
+import '../types/frame_system/pallet/call.dart' as _i16;
 import '../types/frame_system/phase.dart' as _i11;
 import '../types/pallet_balances/types/account_data.dart' as _i13;
 import '../types/primitive_types/h256.dart' as _i6;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
 import '../types/sp_runtime/generic/digest/digest.dart' as _i7;
-import '../types/sp_version/runtime_version.dart' as _i21;
-import '../types/sp_weights/runtime_db_weight.dart' as _i20;
+import '../types/sp_version/runtime_version.dart' as _i23;
+import '../types/sp_weights/runtime_db_weight.dart' as _i22;
 import '../types/sp_weights/weight_v2/weight.dart' as _i14;
 import '../types/tuples.dart' as _i9;
 
@@ -410,11 +412,69 @@ class Queries {
   }
 }
 
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::remark`].
+  _i15.RuntimeCall remark({required remark}) {
+    final _call = _i16.Call.values.remark(remark: remark);
+    return _i15.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::set_heap_pages`].
+  _i15.RuntimeCall setHeapPages({required pages}) {
+    final _call = _i16.Call.values.setHeapPages(pages: pages);
+    return _i15.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::set_code`].
+  _i15.RuntimeCall setCode({required code}) {
+    final _call = _i16.Call.values.setCode(code: code);
+    return _i15.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::set_code_without_checks`].
+  _i15.RuntimeCall setCodeWithoutChecks({required code}) {
+    final _call = _i16.Call.values.setCodeWithoutChecks(code: code);
+    return _i15.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::set_storage`].
+  _i15.RuntimeCall setStorage({required items}) {
+    final _call = _i16.Call.values.setStorage(items: items);
+    return _i15.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::kill_storage`].
+  _i15.RuntimeCall killStorage({required keys}) {
+    final _call = _i16.Call.values.killStorage(keys: keys);
+    return _i15.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::kill_prefix`].
+  _i15.RuntimeCall killPrefix({
+    required prefix,
+    required subkeys,
+  }) {
+    final _call = _i16.Call.values.killPrefix(
+      prefix: prefix,
+      subkeys: subkeys,
+    );
+    return _i15.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::remark_with_event`].
+  _i15.RuntimeCall remarkWithEvent({required remark}) {
+    final _call = _i16.Call.values.remarkWithEvent(remark: remark);
+    return _i15.RuntimeCall.values.system(_call);
+  }
+}
+
 class Constants {
   Constants();
 
   /// Block & extrinsics weights: base values and limits.
-  final _i15.BlockWeights blockWeights = _i15.BlockWeights(
+  final _i17.BlockWeights blockWeights = _i17.BlockWeights(
     baseBlock: _i14.Weight(
       refTime: BigInt.from(5000000000),
       proofSize: BigInt.zero,
@@ -423,8 +483,8 @@ class Constants {
       refTime: BigInt.from(500000000000),
       proofSize: BigInt.from(5242880),
     ),
-    perClass: _i16.PerDispatchClass(
-      normal: _i17.WeightsPerClass(
+    perClass: _i18.PerDispatchClass(
+      normal: _i19.WeightsPerClass(
         baseExtrinsic: _i14.Weight(
           refTime: BigInt.from(125000000),
           proofSize: BigInt.zero,
@@ -442,7 +502,7 @@ class Constants {
           proofSize: BigInt.zero,
         ),
       ),
-      operational: _i17.WeightsPerClass(
+      operational: _i19.WeightsPerClass(
         baseExtrinsic: _i14.Weight(
           refTime: BigInt.from(125000000),
           proofSize: BigInt.zero,
@@ -460,7 +520,7 @@ class Constants {
           proofSize: BigInt.from(1310720),
         ),
       ),
-      mandatory: _i17.WeightsPerClass(
+      mandatory: _i19.WeightsPerClass(
         baseExtrinsic: _i14.Weight(
           refTime: BigInt.from(125000000),
           proofSize: BigInt.zero,
@@ -473,8 +533,8 @@ class Constants {
   );
 
   /// The maximum length of a block (in bytes).
-  final _i18.BlockLength blockLength = const _i18.BlockLength(
-      max: _i19.PerDispatchClass(
+  final _i20.BlockLength blockLength = const _i20.BlockLength(
+      max: _i21.PerDispatchClass(
     normal: 3932160,
     operational: 5242880,
     mandatory: 5242880,
@@ -484,13 +544,13 @@ class Constants {
   final int blockHashCount = 4096;
 
   /// The weight of runtime database operations the runtime can invoke.
-  final _i20.RuntimeDbWeight dbWeight = _i20.RuntimeDbWeight(
+  final _i22.RuntimeDbWeight dbWeight = _i22.RuntimeDbWeight(
     read: BigInt.from(25000000),
     write: BigInt.from(100000000),
   );
 
   /// Get the chain's current version.
-  final _i21.RuntimeVersion version = const _i21.RuntimeVersion(
+  final _i23.RuntimeVersion version = const _i23.RuntimeVersion(
     specName: 'encointer-parachain',
     implName: 'encointer-parachain',
     authoringVersion: 1,

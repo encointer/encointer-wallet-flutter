@@ -34,17 +34,16 @@ class EncointerMap extends StatelessWidget {
     return FlutterMap(
       mapController: mapController,
       options: MapOptions(
-        center: center ?? const LatLng(47.389712, 8.517076),
-        zoom: initialZoom,
+        initialCenter: center ?? const LatLng(47.389712, 8.517076),
+        initialZoom: initialZoom,
         maxZoom: maxZoom,
+        backgroundColor: Colors.white,
         onPointerDown: onPointerDown,
         onTap: (_, __) => _popupLayerController.hideAllPopups(disableAnimation: true),
       ),
       children: [
         TileLayer(
-          backgroundColor: Colors.white,
-          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          subdomains: const ['a', 'b', 'c'],
+          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
         ),
         PopupMarkerLayer(
           options: PopupMarkerLayerOptions(
@@ -55,14 +54,12 @@ class EncointerMap extends StatelessWidget {
               (index) => Marker(
                 key: Key('cid-$index-marker'),
                 point: locations[index],
-                rotateAlignment: Alignment.bottomCenter,
-                builder: (_) => Icon(
+                child: Icon(
                   Icons.location_on,
                   size: 40,
                   color: Colors.blueAccent,
                   key: Key(EWTestKeys.cidMarkerIcon(index)),
                 ),
-                anchorPos: AnchorPos.align(AnchorAlign.top),
               ),
             ),
           ),
@@ -80,6 +77,7 @@ class PopupBuilder extends StatelessWidget {
     this.bottom,
     this.maxWidth = 300,
     this.maxHeight = 800,
+    this.onTap,
   });
 
   final String title;
@@ -87,6 +85,7 @@ class PopupBuilder extends StatelessWidget {
   final double maxWidth;
   final double maxHeight;
   final Widget? bottom;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -97,22 +96,25 @@ class PopupBuilder extends StatelessWidget {
         color: context.colorScheme.background,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text(
-            description,
-            style: const TextStyle(fontSize: 12, color: Colors.black54),
-          ),
-          bottom ?? const SizedBox.shrink(),
-        ],
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              description,
+              style: const TextStyle(fontSize: 12, color: Colors.black54),
+            ),
+            bottom ?? const SizedBox.shrink(),
+          ],
+        ),
       ),
     );
   }

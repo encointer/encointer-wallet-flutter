@@ -4,7 +4,6 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -63,11 +62,9 @@ class _AccountSharePageState extends State<AccountSharePage> {
               const SizedBox(height: 16),
               // Enhance brightness for the QR-code
               const WakeLockAndBrightnessEnhancer(brightness: 1),
-              PrettyQr(
-                image: Assets.images.public.app.image(height: 40, width: 40).image,
-                data: contactQrCode.toQrPayload(),
-                size: MediaQuery.of(context).size.width * 0.85,
-                typeNumber: 7,
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.85,
+                child: PrettyQrView.data(data: contactQrCode.toQrPayload()),
               ),
               const SizedBox(height: 16),
               Text(

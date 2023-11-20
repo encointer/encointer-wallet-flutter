@@ -105,6 +105,50 @@ class Queries {
   final _i25.Queries encointerFaucet;
 }
 
+class Extrinsics {
+  Extrinsics();
+
+  final _i2.Txs system = _i2.Txs();
+
+  final _i3.Txs parachainSystem = _i3.Txs();
+
+  final _i5.Txs timestamp = _i5.Txs();
+
+  final _i7.Txs balances = _i7.Txs();
+
+  final _i11.Txs xcmpQueue = _i11.Txs();
+
+  final _i12.Txs polkadotXcm = _i12.Txs();
+
+  final _i13.Txs dmpQueue = _i13.Txs();
+
+  final _i26.Txs utility = _i26.Txs();
+
+  final _i14.Txs treasury = _i14.Txs();
+
+  final _i15.Txs proxy = _i15.Txs();
+
+  final _i16.Txs scheduler = _i16.Txs();
+
+  final _i17.Txs collective = _i17.Txs();
+
+  final _i18.Txs membership = _i18.Txs();
+
+  final _i19.Txs encointerScheduler = _i19.Txs();
+
+  final _i20.Txs encointerCeremonies = _i20.Txs();
+
+  final _i21.Txs encointerCommunities = _i21.Txs();
+
+  final _i22.Txs encointerBalances = _i22.Txs();
+
+  final _i23.Txs encointerBazaar = _i23.Txs();
+
+  final _i24.Txs encointerReputationCommitments = _i24.Txs();
+
+  final _i25.Txs encointerFaucet = _i25.Txs();
+}
+
 class Constants {
   Constants();
 
@@ -148,12 +192,28 @@ class Rpc {
   final _i1.SystemApi system;
 }
 
+class Registry {
+  Registry();
+
+  final int extrinsicVersion = 4;
+
+  List getSignedExtensionTypes() {
+    return ['CheckMortality', 'CheckNonce', 'ChargeAssetTxPayment'];
+  }
+
+  List getSignedExtensionExtra() {
+    return ['CheckSpecVersion', 'CheckTxVersion', 'CheckGenesis', 'CheckMortality'];
+  }
+}
+
 class EncointerKusama {
   EncointerKusama._(
     this._provider,
     this.rpc,
   )   : query = Queries(rpc.state),
-        constant = Constants();
+        constant = Constants(),
+        tx = Extrinsics(),
+        registry = Registry();
 
   factory EncointerKusama(_i1.Provider provider) {
     final rpc = Rpc(
@@ -178,6 +238,10 @@ class EncointerKusama {
   final Constants constant;
 
   final Rpc rpc;
+
+  final Extrinsics tx;
+
+  final Registry registry;
 
   _i27.Future connect() async {
     return await _provider.connect();

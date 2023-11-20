@@ -5,8 +5,10 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/cumulus_pallet_parachain_system/code_upgrade_authorization.dart' as _i12;
+import '../types/cumulus_pallet_parachain_system/pallet/call.dart' as _i15;
 import '../types/cumulus_pallet_parachain_system/relay_state_snapshot/messaging_state_snapshot.dart' as _i6;
 import '../types/cumulus_primitives_parachain_inherent/message_queue_chain.dart' as _i8;
+import '../types/encointer_runtime/runtime_call.dart' as _i14;
 import '../types/polkadot_core_primitives/outbound_hrmp_message.dart' as _i10;
 import '../types/polkadot_parachain/primitives/id.dart' as _i9;
 import '../types/polkadot_primitives/v5/abridged_host_configuration.dart' as _i7;
@@ -485,5 +487,39 @@ class Queries {
       return _customValidationHeadData.decodeValue(bytes);
     }
     return null; /* Nullable */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::set_validation_data`].
+  _i14.RuntimeCall setValidationData({required data}) {
+    final _call = _i15.Call.values.setValidationData(data: data);
+    return _i14.RuntimeCall.values.parachainSystem(_call);
+  }
+
+  /// See [`Pallet::sudo_send_upward_message`].
+  _i14.RuntimeCall sudoSendUpwardMessage({required message}) {
+    final _call = _i15.Call.values.sudoSendUpwardMessage(message: message);
+    return _i14.RuntimeCall.values.parachainSystem(_call);
+  }
+
+  /// See [`Pallet::authorize_upgrade`].
+  _i14.RuntimeCall authorizeUpgrade({
+    required codeHash,
+    required checkVersion,
+  }) {
+    final _call = _i15.Call.values.authorizeUpgrade(
+      codeHash: codeHash,
+      checkVersion: checkVersion,
+    );
+    return _i14.RuntimeCall.values.parachainSystem(_call);
+  }
+
+  /// See [`Pallet::enact_authorized_upgrade`].
+  _i14.RuntimeCall enactAuthorizedUpgrade({required code}) {
+    final _call = _i15.Call.values.enactAuthorizedUpgrade(code: code);
+    return _i14.RuntimeCall.values.parachainSystem(_call);
   }
 }

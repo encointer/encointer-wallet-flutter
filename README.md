@@ -29,9 +29,9 @@ Encointer wallet and client for mobile phones
 
 ### Requirements
 - Dart sdk: ">=3.0.1 <3.0.0"
-- Flutter: "3.13.0"
+- Flutter: "3.13.8"
 - Android: minSdkVersion 17
-- iOS: --ios-language swift, Xcode version >= 14.0.0
+- iOS: --ios-language swift, Xcode version >= 14.3
 
 # Build Instructions
 
@@ -49,11 +49,9 @@ then:
 ```
 sudo apt install cmake ninja-build libgtk-3-dev npm build-essentials
 ./scripts/install_flutter_wrapper.sh
-./flutterw pub global activate melos
-# add the following line to `~/.bashrc` as well
-export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/encointer/encointer-wallet-flutter/.flutter/bin"
-
-melos bootstrap
+# install project deps (i.e., melos)
+.flutter/bin/dart pub get
+.flutter/bin/dart melos bootstrap
 
 sudo npm install --global yarn
 # optional:

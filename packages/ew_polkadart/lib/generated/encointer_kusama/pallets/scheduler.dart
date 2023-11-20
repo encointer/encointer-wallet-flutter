@@ -4,8 +4,10 @@ import 'dart:async' as _i5;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
+import '../types/encointer_runtime/runtime_call.dart' as _i6;
+import '../types/pallet_scheduler/pallet/call.dart' as _i7;
 import '../types/pallet_scheduler/scheduled.dart' as _i3;
-import '../types/sp_weights/weight_v2/weight.dart' as _i6;
+import '../types/sp_weights/weight_v2/weight.dart' as _i8;
 import '../types/tuples.dart' as _i4;
 
 class Queries {
@@ -84,11 +86,101 @@ class Queries {
   }
 }
 
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::schedule`].
+  _i6.RuntimeCall schedule({
+    required when,
+    maybePeriodic,
+    required priority,
+    required call,
+  }) {
+    final _call = _i7.Call.values.schedule(
+      when: when,
+      maybePeriodic: maybePeriodic,
+      priority: priority,
+      call: call,
+    );
+    return _i6.RuntimeCall.values.scheduler(_call);
+  }
+
+  /// See [`Pallet::cancel`].
+  _i6.RuntimeCall cancel({
+    required when,
+    required index,
+  }) {
+    final _call = _i7.Call.values.cancel(
+      when: when,
+      index: index,
+    );
+    return _i6.RuntimeCall.values.scheduler(_call);
+  }
+
+  /// See [`Pallet::schedule_named`].
+  _i6.RuntimeCall scheduleNamed({
+    required id,
+    required when,
+    maybePeriodic,
+    required priority,
+    required call,
+  }) {
+    final _call = _i7.Call.values.scheduleNamed(
+      id: id,
+      when: when,
+      maybePeriodic: maybePeriodic,
+      priority: priority,
+      call: call,
+    );
+    return _i6.RuntimeCall.values.scheduler(_call);
+  }
+
+  /// See [`Pallet::cancel_named`].
+  _i6.RuntimeCall cancelNamed({required id}) {
+    final _call = _i7.Call.values.cancelNamed(id: id);
+    return _i6.RuntimeCall.values.scheduler(_call);
+  }
+
+  /// See [`Pallet::schedule_after`].
+  _i6.RuntimeCall scheduleAfter({
+    required after,
+    maybePeriodic,
+    required priority,
+    required call,
+  }) {
+    final _call = _i7.Call.values.scheduleAfter(
+      after: after,
+      maybePeriodic: maybePeriodic,
+      priority: priority,
+      call: call,
+    );
+    return _i6.RuntimeCall.values.scheduler(_call);
+  }
+
+  /// See [`Pallet::schedule_named_after`].
+  _i6.RuntimeCall scheduleNamedAfter({
+    required id,
+    required after,
+    maybePeriodic,
+    required priority,
+    required call,
+  }) {
+    final _call = _i7.Call.values.scheduleNamedAfter(
+      id: id,
+      after: after,
+      maybePeriodic: maybePeriodic,
+      priority: priority,
+      call: call,
+    );
+    return _i6.RuntimeCall.values.scheduler(_call);
+  }
+}
+
 class Constants {
   Constants();
 
   /// The maximum weight that may be scheduled per block for any dispatchables.
-  final _i6.Weight maximumWeight = _i6.Weight(
+  final _i8.Weight maximumWeight = _i8.Weight(
     refTime: BigInt.from(400000000000),
     proofSize: BigInt.from(4194304),
   );

@@ -4,3 +4,4 @@ linter:
   rules:
     # Generated files don't satisfy this.
     avoid_renaming_method_parameters: false
+    no_leading_underscores_for_local_identifiers: false

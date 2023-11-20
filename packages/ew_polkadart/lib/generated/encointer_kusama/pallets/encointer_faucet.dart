@@ -5,7 +5,9 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
 import '../types/encointer_primitives/faucet/faucet.dart' as _i3;
-import '../types/frame_support/pallet_id.dart' as _i6;
+import '../types/encointer_runtime/runtime_call.dart' as _i6;
+import '../types/frame_support/pallet_id.dart' as _i8;
+import '../types/pallet_encointer_faucet/pallet/call.dart' as _i7;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
 
 class Queries {
@@ -54,10 +56,68 @@ class Queries {
   }
 }
 
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::create_faucet`].
+  _i6.RuntimeCall createFaucet({
+    required name,
+    required amount,
+    whitelist,
+    required dripAmount,
+  }) {
+    final _call = _i7.Call.values.createFaucet(
+      name: name,
+      amount: amount,
+      whitelist: whitelist,
+      dripAmount: dripAmount,
+    );
+    return _i6.RuntimeCall.values.encointerFaucet(_call);
+  }
+
+  /// See [`Pallet::drip`].
+  _i6.RuntimeCall drip({
+    required faucetAccount,
+    required cid,
+    required cindex,
+  }) {
+    final _call = _i7.Call.values.drip(
+      faucetAccount: faucetAccount,
+      cid: cid,
+      cindex: cindex,
+    );
+    return _i6.RuntimeCall.values.encointerFaucet(_call);
+  }
+
+  /// See [`Pallet::dissolve_faucet`].
+  _i6.RuntimeCall dissolveFaucet({
+    required faucetAccount,
+    required beneficiary,
+  }) {
+    final _call = _i7.Call.values.dissolveFaucet(
+      faucetAccount: faucetAccount,
+      beneficiary: beneficiary,
+    );
+    return _i6.RuntimeCall.values.encointerFaucet(_call);
+  }
+
+  /// See [`Pallet::close_faucet`].
+  _i6.RuntimeCall closeFaucet({required faucetAccount}) {
+    final _call = _i7.Call.values.closeFaucet(faucetAccount: faucetAccount);
+    return _i6.RuntimeCall.values.encointerFaucet(_call);
+  }
+
+  /// See [`Pallet::set_reserve_amount`].
+  _i6.RuntimeCall setReserveAmount({required reserveAmount}) {
+    final _call = _i7.Call.values.setReserveAmount(reserveAmount: reserveAmount);
+    return _i6.RuntimeCall.values.encointerFaucet(_call);
+  }
+}
+
 class Constants {
   Constants();
 
-  final _i6.PalletId palletId = const <int>[
+  final _i8.PalletId palletId = const <int>[
     101,
     99,
     116,

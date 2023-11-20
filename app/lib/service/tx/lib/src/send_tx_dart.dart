@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/service/service.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/ew_polkadart.dart' show AuthorApi, BlockHash, EncointerKusama, ExtrinsicStatus, Provider;
 import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/event_record.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/phase.dart';
 import 'package:ew_polkadart/runtime_error.dart';
@@ -108,40 +108,28 @@ class EWAuthorApi<P extends Provider> {
 
   /// Submit a fully formatted extrinsic and return a subscription
   /// which emits txStatus updates.
-  Future<SubscriptionResponse> submitAndWatchExtrinsic(Extrinsic extrinsic) async {
-    final params = <String>[extrinsic.hexPrefixed];
-
-    final subscription = await _provider.subscribe(
-      'author_submitAndWatchExtrinsic',
-      params,
-      onCancel: (subscription) async {
-        await _provider.send('author_unsubmitAndWatchExtrinsic', [subscription]);
-      },
-    );
-
-    return subscription;
+  Future<StreamSubscription<ExtrinsicStatus>> submitAndWatchExtrinsic(
+    Extrinsic extrinsic,
+    dynamic Function(ExtrinsicStatus) onData,
+  ) {
+    return AuthorApi(_provider).submitAndWatchExtrinsic(extrinsic._encoded, onData);
   }
 
   Future<ExtrinsicReport> submitAndWatchExtrinsicWithReport(Extrinsic extrinsic) async {
     final hash = extrinsic.hash;
 
-    final subResponse = await submitAndWatchExtrinsic(extrinsic);
-
     final completer = Completer<void>();
-
     ExtrinsicReport? report;
-    final sub = subResponse.stream.listen((event) async {
-      Log.d('ExtrinsicUpdate: ${event.result}');
 
-      if (event.result == 'ready') {
+    final sub = await submitAndWatchExtrinsic(extrinsic, (xtUpdate) async {
+      Log.d('ExtrinsicUpdate: $xtUpdate');
+
+      if (xtUpdate.type == 'ready') {
         Log.p('Xt is ready');
-        // ignore: avoid_dynamic_calls
-      } else if (event.result['inBlock'] != null) {
-        Log.p('Xt is in block: ${event.result}');
-        // ignore: avoid_dynamic_calls
-      } else if (event.result['finalized'] != null) {
-        // ignore: avoid_dynamic_calls
-        final blockHashHex = event.result['finalized'].toString();
+      } else if (xtUpdate.type == 'inBlock') {
+        Log.p('Xt is in block: ${xtUpdate.value}');
+      } else if (xtUpdate.type == 'finalized') {
+        final blockHashHex = xtUpdate.value.toString();
         final blockHash = hexToUint8(blockHashHex);
 
         final kusama = EncointerKusama(_provider);

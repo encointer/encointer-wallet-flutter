@@ -8,6 +8,8 @@ import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
@@ -144,6 +146,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
     final appSettingsStore = context.watch<AppSettings>();
+    final appConfig = RepositoryProvider.of<AppConfig>(context);
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
@@ -173,7 +176,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 )
               : Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left)
         else
-          const CupertinoActivityIndicator(),
+          appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator(),
       ];
     }
 

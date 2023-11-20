@@ -64,16 +64,12 @@ const config = {
     ],
     extensions: ['.ts', '.js', '.mjs', '.json', 'cjs'],
     fallback: {
-      crypto: require.resolve('crypto-browserify'),
-      stream: require.resolve('stream-browserify'),
-      constants: require.resolve('constants-browserify')
     }
   },
   plugins: [
     // fix "process/buffer is not defined" error:
     new webpack.ProvidePlugin({
       process: ['process/browser.js'],
-      Buffer: ['buffer', 'Buffer']
     }),
   ]
 };

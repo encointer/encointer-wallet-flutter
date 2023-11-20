@@ -108,7 +108,7 @@ class JSApi {
     }
 
     if (!wrapPromise) {
-      final res = await _web!.webViewController.evaluateJavascript(source: code);
+      final res = await _web!.webViewController?.evaluateJavascript(source: code);
       return res as T;
     }
 
@@ -127,7 +127,7 @@ class JSApi {
             .callHandler("$encointerJsService", { path: "$method:error", data: err.message  });
         })''';
 
-    await _web!.webViewController.evaluateJavascript(source: script);
+    await _web!.webViewController?.evaluateJavascript(source: script);
 
     return c.future;
   }
@@ -143,7 +143,7 @@ class JSApi {
 
   Future<void> unsubscribeMessage(String channel) async {
     if (_msgHandlers[channel] != null) {
-      await _web!.webViewController.evaluateJavascript(source: 'unsub$channel()');
+      await _web!.webViewController?.evaluateJavascript(source: 'unsub$channel()');
     }
   }
 

@@ -4,6 +4,9 @@ import 'dart:async' as _i3;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
+import '../types/encointer_runtime/runtime_call.dart' as _i4;
+import '../types/pallet_timestamp/pallet/call.dart' as _i5;
+
 class Queries {
   const Queries(this.__api);
 
@@ -45,6 +48,16 @@ class Queries {
       return _didUpdate.decodeValue(bytes);
     }
     return false; /* Default */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::set`].
+  _i4.RuntimeCall set({required now}) {
+    final _call = _i5.Call.values.set(now: now);
+    return _i4.RuntimeCall.values.timestamp(_call);
   }
 }
 

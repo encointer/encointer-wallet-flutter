@@ -4,6 +4,8 @@ import 'dart:async' as _i8;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
+import '../types/encointer_runtime/runtime_call.dart' as _i9;
+import '../types/pallet_balances/pallet/call.dart' as _i10;
 import '../types/pallet_balances/types/account_data.dart' as _i4;
 import '../types/pallet_balances/types/balance_lock.dart' as _i5;
 import '../types/pallet_balances/types/id_amount.dart' as _i7;
@@ -203,6 +205,116 @@ class Queries {
       return _freezes.decodeValue(bytes);
     }
     return []; /* Default */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::transfer_allow_death`].
+  _i9.RuntimeCall transferAllowDeath({
+    required dest,
+    required value,
+  }) {
+    final _call = _i10.Call.values.transferAllowDeath(
+      dest: dest,
+      value: value,
+    );
+    return _i9.RuntimeCall.values.balances(_call);
+  }
+
+  /// See [`Pallet::set_balance_deprecated`].
+  _i9.RuntimeCall setBalanceDeprecated({
+    required who,
+    required newFree,
+    required oldReserved,
+  }) {
+    final _call = _i10.Call.values.setBalanceDeprecated(
+      who: who,
+      newFree: newFree,
+      oldReserved: oldReserved,
+    );
+    return _i9.RuntimeCall.values.balances(_call);
+  }
+
+  /// See [`Pallet::force_transfer`].
+  _i9.RuntimeCall forceTransfer({
+    required source,
+    required dest,
+    required value,
+  }) {
+    final _call = _i10.Call.values.forceTransfer(
+      source: source,
+      dest: dest,
+      value: value,
+    );
+    return _i9.RuntimeCall.values.balances(_call);
+  }
+
+  /// See [`Pallet::transfer_keep_alive`].
+  _i9.RuntimeCall transferKeepAlive({
+    required dest,
+    required value,
+  }) {
+    final _call = _i10.Call.values.transferKeepAlive(
+      dest: dest,
+      value: value,
+    );
+    return _i9.RuntimeCall.values.balances(_call);
+  }
+
+  /// See [`Pallet::transfer_all`].
+  _i9.RuntimeCall transferAll({
+    required dest,
+    required keepAlive,
+  }) {
+    final _call = _i10.Call.values.transferAll(
+      dest: dest,
+      keepAlive: keepAlive,
+    );
+    return _i9.RuntimeCall.values.balances(_call);
+  }
+
+  /// See [`Pallet::force_unreserve`].
+  _i9.RuntimeCall forceUnreserve({
+    required who,
+    required amount,
+  }) {
+    final _call = _i10.Call.values.forceUnreserve(
+      who: who,
+      amount: amount,
+    );
+    return _i9.RuntimeCall.values.balances(_call);
+  }
+
+  /// See [`Pallet::upgrade_accounts`].
+  _i9.RuntimeCall upgradeAccounts({required who}) {
+    final _call = _i10.Call.values.upgradeAccounts(who: who);
+    return _i9.RuntimeCall.values.balances(_call);
+  }
+
+  /// See [`Pallet::transfer`].
+  _i9.RuntimeCall transfer({
+    required dest,
+    required value,
+  }) {
+    final _call = _i10.Call.values.transfer(
+      dest: dest,
+      value: value,
+    );
+    return _i9.RuntimeCall.values.balances(_call);
+  }
+
+  /// See [`Pallet::force_set_balance`].
+  _i9.RuntimeCall forceSetBalance({
+    required who,
+    required newFree,
+  }) {
+    final _call = _i10.Call.values.forceSetBalance(
+      who: who,
+      newFree: newFree,
+    );
+    return _i9.RuntimeCall.values.balances(_call);
   }
 }
 
