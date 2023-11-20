@@ -365,7 +365,6 @@ export default {
   subscribeBusinessRegistry,
   getProofOfAttendance,
   getNextMeetupTime,
-  getDemurrage,
   getMeetupIndex,
   hasPendingIssuance,
   getBalance,

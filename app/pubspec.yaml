@@ -84,6 +84,8 @@ dependencies:
     path: ../packages/ew_http/
   ew_polkadart:
     path: ../packages/ew_polkadart/
+  ew_substrate_fixed:
+    path: ../packages/ew_substrate_fixed/
   ew_test_keys:
     path: ../packages/ew_test_keys/
   decimal: ^2.3.3

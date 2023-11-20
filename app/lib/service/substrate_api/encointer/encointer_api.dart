@@ -30,6 +30,7 @@ import 'package:ew_polkadart/ew_polkadart.dart';
 // disambiguate global imports of encointer types. We can remove this
 // once we got rid of our manual type definitions.
 import 'package:ew_polkadart/encointer_types.dart' as et;
+import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -228,7 +229,15 @@ class EncointerApi {
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
-    final dem = await jsApi.evalJavascript<double?>('encointer.getDemurrage(${jsonEncode(cid)})');
+    var dem = await encointerKusama.query.encointerBalances
+        .demurragePerBlock(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest))
+        .then((value) => i64F64Parser.toDouble(value.bits));
+
+    if (dem.toInt() == 0) {
+      Log.p('api: community demurrage is 0, defaulting to global default demurrage.', 'EncointerApi');
+      dem = i64F64Parser.toDouble(encointerKusama.constant.encointerBalances.defaultDemurrage.bits);
+    }
+
     Log.d('api: fetched demurrage: $dem', 'EncointerApi');
     if (store.encointer.community != null) {
       store.encointer.community!.setDemurrage(dem);

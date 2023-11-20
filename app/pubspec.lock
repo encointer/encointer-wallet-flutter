@@ -390,6 +390,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0+1"
+  ew_substrate_fixed:
+    dependency: "direct main"
+    description:
+      path: "../packages/ew_substrate_fixed"
+      relative: true
+    source: path
+    version: "0.0.1"
   ew_test_keys:
     dependency: "direct main"
     description:
