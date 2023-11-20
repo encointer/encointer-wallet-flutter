@@ -107,8 +107,6 @@ class EncointerApi {
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
-  ///
-  /// This is on-chain in Cantillon.
   Future<CeremonyPhase?> getCurrentPhase() async {
     Log.d('api: getCurrentPhase', 'EncointerApi');
     final phase = await encointerKusama.query.encointerScheduler.currentPhase().then(ceremonyPhaseTypeFromPolkadart);
@@ -119,8 +117,6 @@ class EncointerApi {
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.nextPhaseTimestamp().
-  ///
-  /// This is on-chain in Cantillon.
   Future<int> getNextPhaseTimestamp() async {
     Log.d('api: getNextPhaseTimestamp', 'EncointerApi');
     final timestampBigInt = await encointerKusama.query.encointerScheduler.nextPhaseTimestamp();
@@ -134,8 +130,6 @@ class EncointerApi {
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
   ///
   /// This should be done only once at app-startup, as this is practically const.
-  ///
-  /// This is on-chain in Cantillon.
   Future<void> getPhaseDurations() async {
     final durations = await Future.wait([
       encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.registering),
@@ -187,8 +181,6 @@ class EncointerApi {
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
-  ///
-  /// This is on-chain in Cantillon.
   Future<int?> getCurrentCeremonyIndex() async {
     Log.d('api: getCurrentCeremonyIndex', 'EncointerApi');
     final cIndex = await encointerKusama.query.encointerScheduler.currentCeremonyIndex();
@@ -198,8 +190,6 @@ class EncointerApi {
   }
 
   /// Queries the Communities pallet's RPC: api.rpc.communities.getLocations(cid)
-  ///
-  /// This is on-chain in Cantillon
   Future<void> getAllMeetupLocations() async {
     Log.d('api: getAllMeetupLocations', 'EncointerApi');
     final cid = store.encointer.chosenCid;
@@ -215,8 +205,6 @@ class EncointerApi {
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
-  ///
-  /// This is on-chain in Cantillon
   Future<void> getCommunityMetadata() async {
     Log.d('api: getCommunityMetadata', 'EncointerApi');
     final cid = store.encointer.chosenCid;
@@ -237,8 +225,6 @@ class EncointerApi {
   /// Returns the community specific demurrage if defined,
   /// otherwise the default demurrage from the balances pallet
   /// is returned.
-  ///
-  /// This is on-chain in Cantillon
   Future<void> getDemurrage() async {
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
@@ -341,8 +327,6 @@ class EncointerApi {
   }
 
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
-  ///
-  /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::balance(cid, accountId).
   Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid, String pin) async {
     Log.d('Getting encointer balance for $pubKeyOrAddress and ${cid.toFmtString()}', 'EncointerApi');
 
@@ -401,8 +385,6 @@ class EncointerApi {
   }
 
   /// Subscribes to storage changes in the Scheduler pallet: encointerScheduler.currentPhase().
-  ///
-  /// This is on-chain in Cantillon.
   Future<void> subscribeCommunityIdentifiers() async {
     await jsApi.subscribeMessage(
         'encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")', _communityIdentifiersChannel,
@@ -421,8 +403,6 @@ class EncointerApi {
   }
 
   /// Queries the EncointerCurrencies pallet: encointerCurrencies.communityIdentifiers().
-  ///
-  /// This is on-chain in Cantillon.
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
     // cids in polkadart type
     final cidsPolkadart = await encointerKusama.query.encointerCommunities.communityIdentifiers();
@@ -435,7 +415,6 @@ class EncointerApi {
   }
 
   /// Queries the EncointerCommunities pallet: encointerCommunities.bootstrappers(cid).
-  ///
   Future<void> getBootstrappers() async {
     final cid = store.encointer.chosenCid;
 
