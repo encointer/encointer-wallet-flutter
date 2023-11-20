@@ -26,11 +26,11 @@ import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.d
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 // disambiguate global imports of encointer types. We can remove this
 // once we got rid of our manual type definitions.
 import 'package:ew_polkadart/encointer_types.dart' as et;
-import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///
