@@ -273,7 +273,7 @@ class ReconnectingWsProvider extends Provider {
     // We only care if the channel is not equal to null.
     // Because we still want the internal cleanup if
     // the connection was closed from the other end.
-    if (provider.channel != null) {
+    if (provider.channel == null) {
       return Future.value();
     } else {
       return provider.disconnect();
