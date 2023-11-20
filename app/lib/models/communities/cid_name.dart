@@ -12,6 +12,7 @@ class CidName {
 
   factory CidName.fromJson(Map<String, dynamic> json) => CidName(
         CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+        // This is string if deserialized from storage or List<int> if coming from RPC.
         stringOrListIntToName(json['name']),
       );
 
