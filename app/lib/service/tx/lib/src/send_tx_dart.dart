@@ -126,9 +126,9 @@ class EWAuthorApi<P extends Provider> {
 
       if (xtUpdate.type == 'ready') {
         Log.p('Xt is ready');
-      } else if (xtUpdate.type == 'inBlock') {
-        Log.p('Xt is in block: ${xtUpdate.value}');
-      } else if (xtUpdate.type == 'finalized') {
+      } else if (xtUpdate.type == 'inBlock' || xtUpdate.type == 'finalized') {
+        Log.p('Xt is: ${xtUpdate.value}');
+
         final blockHashHex = xtUpdate.value.toString();
         final blockHash = hexToUint8(blockHashHex);
 
