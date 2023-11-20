@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/service/service.dart';
-import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/encointer_kusama.dart';
 
 class MockEncointerKusamaApi implements EncointerKusama {
   MockEncointerKusamaApi();
@@ -26,4 +26,12 @@ class MockEncointerKusamaApi implements EncointerKusama {
   @override
   // TODO: implement rpc
   Rpc get rpc => throw UnimplementedError();
+
+  @override
+  // TODO: implement registry
+  Registry get registry => throw UnimplementedError();
+
+  @override
+  // TODO: implement tx
+  Extrinsics get tx => throw UnimplementedError();
 }
