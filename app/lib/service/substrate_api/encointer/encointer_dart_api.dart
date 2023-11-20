@@ -35,6 +35,15 @@ class EncointerDartApi {
     return locations.map((l) => Location.fromJson(l as Map<String, dynamic>)).toList();
   }
 
+  /// Queries the rpc 'encointer_getReputations'.
+  ///
+  /// Address needs to be SS58 encoded.
+  Future<Map<int, CommunityReputation>> getReputations(String address) async {
+    final reputations = await _dartApi.rpc<List<dynamic>>('encointer_getReputations', [address]);
+    return reputationsFromList(reputations);
+  }
+
+
   Future<List<String>> pendingExtrinsics() {
     return _dartApi.rpc<List<dynamic>>('author_pendingExtrinsics', <dynamic>[]).then(List.from);
   }

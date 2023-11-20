@@ -254,15 +254,6 @@ export async function getNextMeetupLocation (cid, cIndex, mIndex, address) {
 }
 
 /**
- * Get all reputations for an account in all communities.
- */
-export async function getReputations (account) {
-  console.log(`[JS] getting reputations for ${account}`);
-
-  return api.rpc.encointer.getReputations(account);
-}
-
-/**
  * Checks if the ceremony rewards has been issued.
  *
  * @param cid CommunityIdentifier
@@ -426,7 +417,6 @@ export default {
   hasPendingIssuance,
   getBalance,
   getBusinessRegistry,
-  getReputations,
   sendNextPhaseTx,
   reapVoucher,
   remainingNewbieTicketsReputable,

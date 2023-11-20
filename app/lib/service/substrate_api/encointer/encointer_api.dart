@@ -439,9 +439,7 @@ class EncointerApi {
   Future<void> getReputations() async {
     final address = store.account.currentAddress;
 
-    // Todo: use dart rpc
-    final reputations =
-        await jsApi.evalJavascript<List<dynamic>>('encointer.getReputations("$address")').then(reputationsFromList);
+    final reputations = await _dartApi.getReputations(address);
 
     Log.d('api: getReputations: $reputations', 'EncointerApi');
     if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
