@@ -16,7 +16,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -207,14 +206,11 @@ class EncointerApi {
 
     if (cid == null) return;
 
-    // Todo: use dart api
-    final locs = await jsApi
-        .evalJavascript<List<dynamic>>('encointer.getAllMeetupLocations(${jsonEncode(cid)})')
-        .then((list) => list.map((e) => Location.fromJson(e as Map<String, dynamic>)).toList());
+    final locations = await _dartApi.getLocations(cid);
 
-    Log.d('api: getAllMeetupLocations: $locs ' 'EncointerApi');
+    Log.d('api: getAllMeetupLocations: $locations ' 'EncointerApi');
     if (store.encointer.community != null) {
-      store.encointer.community!.setMeetupLocations(locs);
+      store.encointer.community!.setMeetupLocations(locations);
     }
   }
 

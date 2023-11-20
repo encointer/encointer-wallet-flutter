@@ -254,15 +254,6 @@ export async function getNextMeetupLocation (cid, cIndex, mIndex, address) {
 }
 
 /**
- * Get all meetup locations for cid.
- */
-export async function getAllMeetupLocations (cid) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-
-  return api.rpc.encointer.getLocations(cidT);
-}
-
-/**
  * Get all reputations for an account in all communities.
  */
 export async function getReputations (account) {
@@ -428,7 +419,6 @@ export default {
   getNextMeetupLocation,
   getNextMeetupTime,
   getDemurrage,
-  getAllMeetupLocations,
   communitiesGetAll,
   getMeetupIndex,
   getParticipantIndex,
