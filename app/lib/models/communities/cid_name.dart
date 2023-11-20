@@ -12,7 +12,7 @@ class CidName {
 
   factory CidName.fromJson(Map<String, dynamic> json) => CidName(
         CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
-        utf8.decode(List<int>.from(json['name'] as List<dynamic>)),
+        stringOrListIntToName(json['name']),
       );
 
   Map<String, dynamic> toJson() => _$CidNameToJson(this);
@@ -24,4 +24,12 @@ class CidName {
   String toString() {
     return jsonEncode(this);
   }
+}
+
+String stringOrListIntToName(dynamic name) {
+  if (name.runtimeType == String) {
+    return name as String;
+  }
+
+  return utf8.decode(List<int>.from(name as List<dynamic>));
 }
