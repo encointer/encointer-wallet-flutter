@@ -293,17 +293,6 @@ export async function _getXt (keyPair, txInfo, paramList) {
   return tx.signAsync(keyPair, signerOptions);
 }
 
-export function sendFaucetTx (address, amount) {
-  const alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
-  const paramList = [address, amount];
-  const txInfo = {
-    module: 'balances',
-    call: 'transfer',
-    tip: 0
-  };
-  return sendTxWithPair(alice, txInfo, paramList);
-}
-
 function checkPassword (pubKey, pass) {
   return new Promise((resolve) => {
     const keyPair = keyring.getPair(hexToU8a(pubKey));
@@ -353,7 +342,6 @@ export default {
   sendTx,
   sendTxWithPair,
   getXt,
-  sendFaucetTx,
   checkPassword,
   changePassword,
 };

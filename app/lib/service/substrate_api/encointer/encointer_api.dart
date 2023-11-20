@@ -447,13 +447,6 @@ class EncointerApi {
     if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
   }
 
-  Future<dynamic> sendFaucetTx() async {
-    final address = store.account.currentAddress;
-    final amount = Fmt.tokenInt(faucetAmount.toString(), ertDecimals);
-    final res = await jsApi.evalJavascript<dynamic>('account.sendFaucetTx("$address", "$amount")');
-    return res;
-  }
-
   /// Gets a proof of attendance for the oldest attended ceremony, if available.
   ///
   /// returns null, if none available.
