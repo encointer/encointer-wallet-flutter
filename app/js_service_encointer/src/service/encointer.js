@@ -8,7 +8,6 @@ import { unsubscribe } from '../utils/unsubscribe.js';
 import { communityIdentifierToString } from '@encointer/util';
 import {
   getMeetupIndex as _getMeetupIndex,
-  getMeetupLocation,
   getMeetupParticipants,
   getParticipantIndex as _getParticipantIndex,
   getNextMeetupTime as _getNextMeetupTime,
@@ -238,22 +237,6 @@ export async function getNextMeetupTime (location) {
 }
 
 /**
- *
- * @param cid CommunityIdentifier
- * @param cIndex CurrentCeremonyIndex
- * @param mIndex MeetupIndex
- * @param address
- * @returns {Promise<Location>} with number format '35.123412341234'
- */
-export async function getNextMeetupLocation (cid, cIndex, mIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-  const mIndexT = api.createType('MeetupIndexType', mIndex);
-
-  return getMeetupLocation(api, cidT, cIndexT, mIndexT);
-}
-
-/**
  * Checks if the ceremony rewards has been issued.
  *
  * @param cid CommunityIdentifier
@@ -407,7 +390,6 @@ export default {
   subscribeCommunityIdentifiers,
   subscribeBusinessRegistry,
   getProofOfAttendance,
-  getNextMeetupLocation,
   getNextMeetupTime,
   getDemurrage,
   communitiesGetAll,
