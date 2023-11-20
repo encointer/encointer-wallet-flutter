@@ -332,11 +332,6 @@ export async function _getProofOfAttendance (attendee, cid, cindex) {
   return createType(registry, 'Option<ProofOfAttendance>', proof);
 }
 
-
-export async function getBusinessRegistry (cid) {
-  return await api.query.encointerBazaar.businessRegistry(cid);
-}
-
 /**
  * Calls next phase with Alice.
  *
@@ -374,7 +369,6 @@ export default {
   getMeetupIndex,
   hasPendingIssuance,
   getBalance,
-  getBusinessRegistry,
   sendNextPhaseTx,
   reapVoucher,
   remainingNewbieTicketsReputable,
