@@ -9,7 +9,6 @@ import { communityIdentifierToString } from '@encointer/util';
 import {
   getMeetupIndex as _getMeetupIndex,
   getMeetupParticipants,
-  getParticipantIndex as _getParticipantIndex,
   getNextMeetupTime as _getNextMeetupTime,
   getDemurrage as _getDemurrage, submitAndWatchTx,
 } from '@encointer/node-api';
@@ -138,13 +137,6 @@ export async function subscribeBusinessRegistry (msgChannel, cid) {
   return await api.query.encointerBazaar.businessRegistry(cid, (businesses) => {
     send(msgChannel, businesses);
   }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
-export async function getParticipantIndex (cid, cIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-  send('js-getParticipantIndex', `Getting participant index for Cid: ${communityIdentifierToString(cidT)}, cIndex: ${cIndex} and address: ${address}`);
-  return _getParticipantIndex(api, cidT, cIndexT, address);
 }
 
 export async function getParticipantReputation (cid, cIndex, address) {
@@ -394,7 +386,6 @@ export default {
   getDemurrage,
   communitiesGetAll,
   getMeetupIndex,
-  getParticipantIndex,
   getMeetupRegistry,
   hasPendingIssuance,
   getBalance,
