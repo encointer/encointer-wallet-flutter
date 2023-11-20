@@ -233,7 +233,7 @@ class EncointerApi {
         .demurragePerBlock(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest))
         .then((value) => i64F64Parser.toDouble(value.bits));
 
-    if (dem.toInt() == 0) {
+    if (dem == 0) {
       Log.p('api: community demurrage is 0, defaulting to global default demurrage.', 'EncointerApi');
       dem = i64F64Parser.toDouble(encointerKusama.constant.encointerBalances.defaultDemurrage.bits);
     }
