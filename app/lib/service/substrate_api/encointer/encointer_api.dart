@@ -11,7 +11,6 @@ import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
-import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
@@ -238,11 +237,10 @@ class EncointerApi {
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
   Future<void> communitiesGetAll() async {
-    // Todo: use dart rpc
-    final cns = await jsApi.evalJavascript<List<dynamic>>('encointer.communitiesGetAll()');
+    final cidNames = await _dartApi.getAllCommunities();
 
-    Log.d('api: CidNames: ${cns.length} and $cns ', 'EncointerApi');
-    store.encointer.setCommunities(cns.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList());
+    Log.d('api: CidNames: ${cidNames.length} and $cidNames ', 'EncointerApi');
+    store.encointer.setCommunities(cidNames);
   }
 
   /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().

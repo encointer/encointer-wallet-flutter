@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
+import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
@@ -43,6 +44,13 @@ class EncointerDartApi {
     return reputationsFromList(reputations);
   }
 
+  /// Queries the rpc 'encointer_getReputations'.
+  ///
+  /// Address needs to be SS58 encoded.
+  Future<List<CidName>> getAllCommunities() async {
+    final communities = await _dartApi.rpc<List<dynamic>>('encointer_getAllCommunities');
+    return communities.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList();
+  }
 
   Future<List<String>> pendingExtrinsics() {
     return _dartApi.rpc<List<dynamic>>('author_pendingExtrinsics', <dynamic>[]).then(List.from);

@@ -193,10 +193,6 @@ export async function getDemurrage (cid) {
   return _getDemurrage(api, cidT).then((demBits) => parseEncointerBalance(demBits));
 }
 
-export async function communitiesGetAll () {
-  return await api.rpc.encointer.getAllCommunities();
-}
-
 export async function getMeetupIndex (cid, cIndex, address) {
   const cidT = api.createType('CommunityIdentifier', cid);
   const cIndexT = api.createType('CeremonyIndexType', cIndex);
@@ -375,7 +371,6 @@ export default {
   getProofOfAttendance,
   getNextMeetupTime,
   getDemurrage,
-  communitiesGetAll,
   getMeetupIndex,
   hasPendingIssuance,
   getBalance,
