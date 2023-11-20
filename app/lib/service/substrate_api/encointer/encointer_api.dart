@@ -112,9 +112,8 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<CeremonyPhase?> getCurrentPhase() async {
     Log.d('api: getCurrentPhase', 'EncointerApi');
-    final res = await jsApi.evalJavascript<String>('encointer.getCurrentPhase()');
+    final phase = await encointerKusama.query.encointerScheduler.currentPhase().then(ceremonyPhaseTypeFromPolkadart);
 
-    final phase = ceremonyPhaseFromString(res)!;
     Log.d('api: Phase enum: $phase', 'EncointerApi');
     store.encointer.setCurrentPhase(phase);
     return phase;

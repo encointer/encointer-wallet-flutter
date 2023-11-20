@@ -23,14 +23,6 @@ describe('encointer', () => {
     keyring = new Keyring({ type: 'sr25519' });
   }, 90000);
 
-  describe('getCurrentPhase', () => {
-    it('should return promise', async () => {
-      const result = await encointer.getCurrentPhase();
-      console.log(result);
-      expect(result).toBeDefined();
-    });
-  });
-
   describe('getDemurrage', () => {
     it('should return default', async () => {
       const cid = communityIdentifierFromString(api.registry, 'gbsuv7YXq9G');

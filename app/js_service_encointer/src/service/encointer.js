@@ -24,10 +24,6 @@ import {
   hasCommittedFor,
 } from './faucet.js';
 
-export async function getCurrentPhase () {
-  return api.query.encointerScheduler.currentPhase();
-}
-
 /**
  * Subscribes to the current ceremony phase
  * @param msgChannel channel that the message handler uses on the dart side
@@ -422,7 +418,6 @@ export async function sendNextPhaseTx() {
 }
 
 export default {
-  getCurrentPhase,
   getParticipantReputation,
   getBootstrappers,
   subscribeCurrentPhase,
