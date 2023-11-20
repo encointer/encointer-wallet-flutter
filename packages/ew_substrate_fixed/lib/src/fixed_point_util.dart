@@ -30,7 +30,8 @@ class FixedPointUtil<T extends BitCount> {
 
 /// Util class that allows to have consts knowing how to parse fixed point numbers.
 ///
-/// This is because we can't encode negative fixed point numbers, so we introduce
+/// This is because we can't encode negative fixed point numbers, so we introduce a type
+/// that can parse only.
 class FixedPointParser<T extends BitCount> {
   const FixedPointParser(this.bitCount);
 
