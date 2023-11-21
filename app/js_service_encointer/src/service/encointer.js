@@ -1,4 +1,4 @@
-import { assert, bnToU8a, hexToU8a } from '@polkadot/util';
+import { assert, hexToU8a } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { createType } from '@polkadot/types';
 import { parseEncointerBalance, stringToDegree } from '@encointer/types';
