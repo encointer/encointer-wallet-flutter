@@ -109,6 +109,28 @@ dev_dependencies:
   very_good_analysis: ^5.1.0
   rxdart: ^0.27.7
 
+dependency_overrides:
+  polkadart:
+    #    path: ../../../polkadart/packages/polkadart
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: main
+      path: packages/polkadart
+
+  polkadart_scale_codec:
+    #    path: ../../../polkadart/packages/polkadart_scale_codec
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: main
+      path: packages/polkadart_scale_codec
+
+  substrate_metadata:
+    #    path: ../../../polkadart/packages/substrate_metadata
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: main
+      path: packages/substrate_metadata
+
 flutter_icons:
   android: "launcher_icon"
   ios: true

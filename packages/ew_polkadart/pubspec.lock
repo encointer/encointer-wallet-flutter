@@ -82,7 +82,7 @@ packages:
     source: hosted
     version: "1.18.0"
   convert:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: convert
       sha256: "0f08b14755d163f6e2134cb58222dd25ea2a2ee8a195e53983d57c075324d592"
@@ -286,25 +286,25 @@ packages:
     description:
       path: "packages/polkadart"
       ref: main
-      resolved-ref: "8b9122d01d6aab515e2279f68697161c32df1f0f"
+      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.2"
+    version: "0.2.3"
   polkadart_cli:
     dependency: "direct dev"
     description:
       path: "packages/polkadart_cli"
       ref: main
-      resolved-ref: "8b9122d01d6aab515e2279f68697161c32df1f0f"
+      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.2"
   polkadart_scale_codec:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "packages/polkadart_scale_codec"
       ref: main
-      resolved-ref: "8b9122d01d6aab515e2279f68697161c32df1f0f"
+      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -441,7 +441,7 @@ packages:
     description:
       path: "packages/substrate_metadata"
       ref: main
-      resolved-ref: "8b9122d01d6aab515e2279f68697161c32df1f0f"
+      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"

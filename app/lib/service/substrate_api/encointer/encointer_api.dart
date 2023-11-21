@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:math';
+
+import 'package:convert/convert.dart' show hex;
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
@@ -30,6 +33,7 @@ import 'package:ew_substrate_fixed/substrate_fixed.dart';
 // disambiguate global imports of encointer types. We can remove this
 // once we got rid of our manual type definitions.
 import 'package:ew_polkadart/encointer_types.dart' as et;
+import 'package:flutter/foundation.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -426,15 +430,13 @@ class EncointerApi {
 
     if (cid == null) return;
 
-    // Todo: Use polkadart base codec for List<int> -> String
-    // final bootstrappersBytes = await _encointerKusama.query.encointerCommunities.bootstrappers(et.CommunityIdentifier(
-    //   geohash: cid.geohash,
-    //   digest: cid.digest,
-    // ));
+    final bootstrappersBytes = await encointerKusama.query.encointerCommunities.bootstrappers(et.CommunityIdentifier(
+      geohash: cid.geohash,
+      digest: cid.digest,
+    ));
 
-    final bootstrappers = await jsApi
-        .evalJavascript<List<dynamic>>('encointer.getBootstrappers($cid)')
-        .then((list) => list.cast<String>());
+    final bootstrappers =
+        bootstrappersBytes.map((p) => AddressUtils.pubKeyToAddress(p, prefix: store.settings.endpoint.ss58!)).toList();
 
     Log.d('api: bootstrappers $bootstrappers', 'EncointerApi');
     if (store.encointer.community != null) {
@@ -479,22 +481,20 @@ class EncointerApi {
     final cid = store.encointer.chosenCid;
     final cIndex = store.encointer.currentCeremonyIndex;
 
+    if (cid == null) return 0;
+    if (cIndex == null) return 0;
     if (reputations.isEmpty) return 0;
 
     try {
-      // Todo: fix addressStr -> List<int>
-      // final [burned, ticketsPerReputable] = await Future.wait([
-      //   _encointerKusama.query.encointerCeremonies
-      //       .burnedReputableNewbieTickets([et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex], address),
-      //   _encointerKusama.query.encointerCeremonies.endorsementTicketsPerReputable()
-      // ]);
-      // return ticketsPerReputable - burned;
-
-      final remainingTickets = await jsApi.evalJavascript<int>(
-        'encointer.remainingNewbieTicketsReputable(${jsonEncode(cid)}, "$cIndex","$address")',
-      );
-      Log.d('EncointerApi', 'numberOfNewbieTickets: $remainingTickets');
-      return remainingTickets;
+      final [burned, ticketsPerReputable] = await Future.wait([
+        encointerKusama.query.encointerCeremonies.burnedReputableNewbieTickets(
+          Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex),
+          AddressUtils.addressToPubKey(address).toList(),
+        ),
+        encointerKusama.query.encointerCeremonies.endorsementTicketsPerReputable()
+      ]);
+      Log.p('NewbieTickets: ticketPerReputable: $ticketsPerReputable, burned: $burned');
+      return ticketsPerReputable - burned;
     } catch (e, s) {
       Log.e('EncointerApi', '$e', s);
     }
@@ -508,19 +508,22 @@ class EncointerApi {
     if (cid == null) return 0;
 
     try {
-      // Todo: fix addressStr -> List<int>
-      // final [burned, ticketsPerBootstrapper] = await Future.wait([
-      //   _encointerKusama.query.encointerCeremonies
-      //       .burnedBootstrapperNewbieTickets(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), address),
-      //   _encointerKusama.query.encointerCeremonies.endorsementTicketsPerBootstrapper()
-      // ]);
-      // return ticketsPerBootstrapper - burned;
-
-      final numberOfTickets = await jsApi.evalJavascript<int>(
-        'encointer.remainingNewbieTicketsBootstrapper(${jsonEncode(cid)},"$address")',
+      final burned = await encointerKusama.query.encointerCeremonies.burnedBootstrapperNewbieTickets(
+        et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest),
+        AddressUtils.addressToPubKey(address).toList(),
       );
-      Log.d('Encointer Api', 'numberOfBootstrapperTickets: $numberOfTickets');
-      return numberOfTickets;
+
+      // Nasty hack because of https://github.com/leonardocustodio/polkadart/issues/373
+      final ticketsPerBootstrapperKey =
+          Uint8List.fromList(hex.decode('a7d291a8132b2cc65c41da45f4de76795c03954ec993845da1c7ff36c91390da'));
+      final ticketsPerBootstrapperBytes = await encointerKusama.rpc.state.getStorage(ticketsPerBootstrapperKey);
+      final ticketsPerBootstrapper =
+          ticketsPerBootstrapperBytes != null ? U8Codec.codec.decode(ByteInput(ticketsPerBootstrapperBytes)) : 0;
+
+      Log.p('NewbieTickets: ticketsPerBootstrapper: $ticketsPerBootstrapper, burned: $burned');
+
+      // could be negative in case the `ticketsPerBootstrapper` has been decreased over time.
+      return max(ticketsPerBootstrapper - burned, 0);
     } catch (e, s) {
       Log.e('Encointer Api', '$e', s);
     }
