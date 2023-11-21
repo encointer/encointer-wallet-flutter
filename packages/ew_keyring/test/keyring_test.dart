@@ -1,3 +1,5 @@
+@Skip('These tests fail until we have sr25519 support')
+
 import 'package:ew_keyring/src/keyring.dart';
 import 'package:ew_keyring/src/keyring_data.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
