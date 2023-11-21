@@ -10,23 +10,29 @@ void main() {
   });
 
   group('AddressUtils', () {
-    test('decodeToPubKey works', () {
+    test('addressToPubKey works', () {
       final alice = Address.decode('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
-      final pubAlice = AddressUtils.decodeToPubKey('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
+      final pubAlice = AddressUtils.addressToPubKey('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
 
       expect(alice.pubkey, pubAlice);
       expect(alice.toPubHex(), '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d');
     });
 
-    test('decodeToPubKeyHex works', () {
-      final pubAlice = AddressUtils.decodeToPubKeyHex('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
+    test('addressToPubKeyHex works', () {
+      final pubAlice = AddressUtils.addressToPubKeyHex('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
       expect(pubAlice, '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d');
     });
 
-    test('encodeToAddress works', () {
+    test('pubKeyToAddress works', () {
       final alice = Address.decode('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
 
-      final aliceAddress = AddressUtils.encodeToAddress(alice.pubkey);
+      final aliceAddress = AddressUtils.pubKeyToAddress(alice.pubkey);
+      expect(aliceAddress, '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
+    });
+
+    test('pubKeyHexToAddress works', () {
+      final aliceAddress =
+          AddressUtils.pubKeyHexToAddress('0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d');
       expect(aliceAddress, '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
     });
   });
