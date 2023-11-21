@@ -1,7 +1,9 @@
-# melos_managed_dependency_overrides: ew_http,ew_storage,ew_polkadart,ew_substrate_fixed
+# melos_managed_dependency_overrides: ew_http,ew_storage,ew_polkadart,ew_substrate_fixed,ew_keyring
 dependency_overrides:
   ew_http:
     path: ../packages/ew_http
+  ew_keyring:
+    path: ../packages/ew_keyring
   ew_polkadart:
     path: ../packages/ew_polkadart
   ew_storage:

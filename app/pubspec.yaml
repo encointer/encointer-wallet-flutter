@@ -82,6 +82,8 @@ dependencies:
     path: ../packages/ew_storage/
   ew_http:
     path: ../packages/ew_http/
+  ew_keyring:
+    path: ../packages/ew_keyring/
   ew_polkadart:
     path: ../packages/ew_polkadart/
   ew_substrate_fixed:
