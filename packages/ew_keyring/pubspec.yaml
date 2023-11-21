@@ -7,8 +7,10 @@ environment:
   sdk: ">=3.0.1 <4.0.0"
 
 dependencies:
+  convert: ^3.1.1
   json_annotation: ^4.8.1
   polkadart_keyring: 0.2.1
+  ss58: ^1.1.2
   substrate_bip39: ^0.2.0
 
 dev_dependencies:
