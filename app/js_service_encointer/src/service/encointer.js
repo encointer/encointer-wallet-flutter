@@ -146,23 +146,6 @@ export async function getParticipantReputation (cid, cIndex, address) {
   return reputation;
 }
 
-export async function remainingNewbieTicketsBootstrapper (cid, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  window.send('js-remainingNewbieTickets-bootstrapper', `cid: ${communityIdentifierToString(cidT)}`);
-  window.send('js-remainingNewbieTickets-bootstrapper', `address: ${address}`);
-
-  // Wrapping it in a promise all speeds up the process as we can await multiple futures at the same time.
-  const [burnedTickets, ticketsPerBootstrapper] = await Promise.all([
-    api.query.encointerCeremonies.burnedBootstrapperNewbieTickets(cid, address),
-    api.query.encointerCeremonies.endorsementTicketsPerBootstrapper(),
-  ]).catch((e) => console.log(`js-remainingNewbieTickets-bootstrapper error ${e}`));
-
-  window.send('js-remainingNewbieTickets-bootstrapper', `ticketsPerBootstrapper ${ticketsPerBootstrapper}`);
-  window.send('js-remainingNewbieTickets-bootstrapper', `burnedTickets ${burnedTickets}`);
-
-  return ticketsPerBootstrapper- burnedTickets;
-}
-
 export async function getDemurrage (cid) {
   const cidT = api.createType('CommunityIdentifier', cid);
 
@@ -345,7 +328,6 @@ export default {
   getBalance,
   sendNextPhaseTx,
   reapVoucher,
-  remainingNewbieTicketsBootstrapper,
   getAllFaucetAccounts,
   getFaucetFor,
   getAllFaucetsWithAccount,
