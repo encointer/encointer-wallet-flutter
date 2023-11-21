@@ -50,7 +50,6 @@ void main() {
       expect(aliceAddress, 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F');
     });
 
-
     test('pubKeyHexToAddress with default prefix works', () {
       final aliceAddress =
           AddressUtils.pubKeyHexToAddress('0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d');
@@ -58,8 +57,9 @@ void main() {
     });
 
     test('pubKeyHexToAddress with prefix 2 works', () {
-      final aliceAddress =
-      AddressUtils.pubKeyHexToAddress('0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', prefix: 2);
+      final aliceAddress = AddressUtils.pubKeyHexToAddress(
+          '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d',
+          prefix: 2);
       expect(aliceAddress, 'HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F');
     });
   });

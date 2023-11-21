@@ -64,7 +64,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     final cid = params.cid;
     final recipientAccount = params.recipientAccount;
     final amount = params.amount;
-    final recipientAddress = AddressUtils.pubKeyHexToAddress(recipientAccount.pubKey, prefix: store.settings.endpoint.ss58!);
+    final recipientAddress =
+        AddressUtils.pubKeyHexToAddress(recipientAccount.pubKey, prefix: store.settings.endpoint.ss58!);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.payment)),

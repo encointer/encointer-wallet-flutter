@@ -9,7 +9,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 
-
 part 'transfer_history_view_store.g.dart';
 
 class TransferHistoryViewStore = _TransferHistoryViewStoreBase with _$TransferHistoryViewStore;

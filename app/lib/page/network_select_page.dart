@@ -101,7 +101,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     final accounts = <AccountData>[appStore.account.currentAccount, ...appStore.account.optionalAccounts];
 
     res.addAll(accounts.map((accountData) {
-      final address = AddressUtils.pubKeyHexToAddress(accountData.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
+      final address =
+          AddressUtils.pubKeyHexToAddress(accountData.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
 
       return Card(
         shape: RoundedRectangleBorder(

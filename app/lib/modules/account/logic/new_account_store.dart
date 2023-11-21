@@ -68,7 +68,8 @@ abstract class _NewAccountStoreBase with Store {
 
       await context.read<LoginStore>().setPin(pin);
       final appStore = context.read<AppStore>();
-      acc['address'] = AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
+      acc['address'] =
+          AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
       return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
       _loading = false;
@@ -93,7 +94,8 @@ abstract class _NewAccountStoreBase with Store {
       } else {
         await context.read<LoginStore>().setPin(pin);
         final appStore = context.read<AppStore>();
-        acc['address'] = AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
+        acc['address'] =
+            AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
           _loading = false;

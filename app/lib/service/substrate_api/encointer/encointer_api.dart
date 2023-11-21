@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';

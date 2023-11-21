@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -45,7 +44,8 @@ class _ReceivePageState extends State<ReceivePage> {
   void initState() {
     super.initState();
     _appStore = context.read<AppStore>();
-    final address = AddressUtils.pubKeyHexToAddress(_appStore.account.currentAccountPubKey!, prefix: _appStore.settings.endpoint.ss58!);
+    final address = AddressUtils.pubKeyHexToAddress(_appStore.account.currentAccountPubKey!,
+        prefix: _appStore.settings.endpoint.ss58!);
     invoice = InvoiceQrCode(
       account: address,
       cid: _appStore.encointer.chosenCid,
