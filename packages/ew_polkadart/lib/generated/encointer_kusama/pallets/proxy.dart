@@ -4,7 +4,9 @@ import 'dart:async' as _i7;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i5;
 
+import '../types/encointer_runtime/runtime_call.dart' as _i8;
 import '../types/pallet_proxy/announcement.dart' as _i6;
+import '../types/pallet_proxy/pallet/call.dart' as _i9;
 import '../types/pallet_proxy/proxy_definition.dart' as _i4;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
 import '../types/tuples.dart' as _i3;
@@ -73,6 +75,142 @@ class Queries {
       [],
       BigInt.zero,
     ); /* Default */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::proxy`].
+  _i8.RuntimeCall proxy({
+    required real,
+    forceProxyType,
+    required call,
+  }) {
+    final _call = _i9.Call.values.proxy(
+      real: real,
+      forceProxyType: forceProxyType,
+      call: call,
+    );
+    return _i8.RuntimeCall.values.proxy(_call);
+  }
+
+  /// See [`Pallet::add_proxy`].
+  _i8.RuntimeCall addProxy({
+    required delegate,
+    required proxyType,
+    required delay,
+  }) {
+    final _call = _i9.Call.values.addProxy(
+      delegate: delegate,
+      proxyType: proxyType,
+      delay: delay,
+    );
+    return _i8.RuntimeCall.values.proxy(_call);
+  }
+
+  /// See [`Pallet::remove_proxy`].
+  _i8.RuntimeCall removeProxy({
+    required delegate,
+    required proxyType,
+    required delay,
+  }) {
+    final _call = _i9.Call.values.removeProxy(
+      delegate: delegate,
+      proxyType: proxyType,
+      delay: delay,
+    );
+    return _i8.RuntimeCall.values.proxy(_call);
+  }
+
+  /// See [`Pallet::remove_proxies`].
+  _i8.RuntimeCall removeProxies() {
+    final _call = _i9.Call.values.removeProxies();
+    return _i8.RuntimeCall.values.proxy(_call);
+  }
+
+  /// See [`Pallet::create_pure`].
+  _i8.RuntimeCall createPure({
+    required proxyType,
+    required delay,
+    required index,
+  }) {
+    final _call = _i9.Call.values.createPure(
+      proxyType: proxyType,
+      delay: delay,
+      index: index,
+    );
+    return _i8.RuntimeCall.values.proxy(_call);
+  }
+
+  /// See [`Pallet::kill_pure`].
+  _i8.RuntimeCall killPure({
+    required spawner,
+    required proxyType,
+    required index,
+    required height,
+    required extIndex,
+  }) {
+    final _call = _i9.Call.values.killPure(
+      spawner: spawner,
+      proxyType: proxyType,
+      index: index,
+      height: height,
+      extIndex: extIndex,
+    );
+    return _i8.RuntimeCall.values.proxy(_call);
+  }
+
+  /// See [`Pallet::announce`].
+  _i8.RuntimeCall announce({
+    required real,
+    required callHash,
+  }) {
+    final _call = _i9.Call.values.announce(
+      real: real,
+      callHash: callHash,
+    );
+    return _i8.RuntimeCall.values.proxy(_call);
+  }
+
+  /// See [`Pallet::remove_announcement`].
+  _i8.RuntimeCall removeAnnouncement({
+    required real,
+    required callHash,
+  }) {
+    final _call = _i9.Call.values.removeAnnouncement(
+      real: real,
+      callHash: callHash,
+    );
+    return _i8.RuntimeCall.values.proxy(_call);
+  }
+
+  /// See [`Pallet::reject_announcement`].
+  _i8.RuntimeCall rejectAnnouncement({
+    required delegate,
+    required callHash,
+  }) {
+    final _call = _i9.Call.values.rejectAnnouncement(
+      delegate: delegate,
+      callHash: callHash,
+    );
+    return _i8.RuntimeCall.values.proxy(_call);
+  }
+
+  /// See [`Pallet::proxy_announced`].
+  _i8.RuntimeCall proxyAnnounced({
+    required delegate,
+    required real,
+    forceProxyType,
+    required call,
+  }) {
+    final _call = _i9.Call.values.proxyAnnounced(
+      delegate: delegate,
+      real: real,
+      forceProxyType: forceProxyType,
+      call: call,
+    );
+    return _i8.RuntimeCall.values.proxy(_call);
   }
 }
 

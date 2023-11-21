@@ -5,7 +5,7 @@
 import 'dart:async';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/ew_polkadart.dart' show Provider;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

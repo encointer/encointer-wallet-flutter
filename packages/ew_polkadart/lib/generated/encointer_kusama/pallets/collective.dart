@@ -5,10 +5,11 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i3;
 
 import '../types/encointer_runtime/runtime_call.dart' as _i4;
+import '../types/pallet_collective/pallet/call.dart' as _i8;
 import '../types/pallet_collective/votes.dart' as _i5;
 import '../types/primitive_types/h256.dart' as _i2;
 import '../types/sp_core/crypto/account_id32.dart' as _i6;
-import '../types/sp_weights/weight_v2/weight.dart' as _i8;
+import '../types/sp_weights/weight_v2/weight.dart' as _i9;
 
 class Queries {
   const Queries(this.__api);
@@ -138,11 +139,91 @@ class Queries {
   }
 }
 
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::set_members`].
+  _i4.RuntimeCall setMembers({
+    required newMembers,
+    prime,
+    required oldCount,
+  }) {
+    final _call = _i8.Call.values.setMembers(
+      newMembers: newMembers,
+      prime: prime,
+      oldCount: oldCount,
+    );
+    return _i4.RuntimeCall.values.collective(_call);
+  }
+
+  /// See [`Pallet::execute`].
+  _i4.RuntimeCall execute({
+    required proposal,
+    required lengthBound,
+  }) {
+    final _call = _i8.Call.values.execute(
+      proposal: proposal,
+      lengthBound: lengthBound,
+    );
+    return _i4.RuntimeCall.values.collective(_call);
+  }
+
+  /// See [`Pallet::propose`].
+  _i4.RuntimeCall propose({
+    required threshold,
+    required proposal,
+    required lengthBound,
+  }) {
+    final _call = _i8.Call.values.propose(
+      threshold: threshold,
+      proposal: proposal,
+      lengthBound: lengthBound,
+    );
+    return _i4.RuntimeCall.values.collective(_call);
+  }
+
+  /// See [`Pallet::vote`].
+  _i4.RuntimeCall vote({
+    required proposal,
+    required index,
+    required approve,
+  }) {
+    final _call = _i8.Call.values.vote(
+      proposal: proposal,
+      index: index,
+      approve: approve,
+    );
+    return _i4.RuntimeCall.values.collective(_call);
+  }
+
+  /// See [`Pallet::disapprove_proposal`].
+  _i4.RuntimeCall disapproveProposal({required proposalHash}) {
+    final _call = _i8.Call.values.disapproveProposal(proposalHash: proposalHash);
+    return _i4.RuntimeCall.values.collective(_call);
+  }
+
+  /// See [`Pallet::close`].
+  _i4.RuntimeCall close({
+    required proposalHash,
+    required index,
+    required proposalWeightBound,
+    required lengthBound,
+  }) {
+    final _call = _i8.Call.values.close(
+      proposalHash: proposalHash,
+      index: index,
+      proposalWeightBound: proposalWeightBound,
+      lengthBound: lengthBound,
+    );
+    return _i4.RuntimeCall.values.collective(_call);
+  }
+}
+
 class Constants {
   Constants();
 
   /// The maximum weight of a dispatch call that can be proposed and executed.
-  final _i8.Weight maxProposalWeight = _i8.Weight(
+  final _i9.Weight maxProposalWeight = _i9.Weight(
     refTime: BigInt.from(250000000000),
     proofSize: BigInt.from(2621440),
   );

@@ -6,6 +6,8 @@ import 'package:polkadart/scale_codec.dart' as _i5;
 
 import '../types/cumulus_pallet_dmp_queue/config_data.dart' as _i2;
 import '../types/cumulus_pallet_dmp_queue/page_index_data.dart' as _i3;
+import '../types/cumulus_pallet_dmp_queue/pallet/call.dart' as _i9;
+import '../types/encointer_runtime/runtime_call.dart' as _i8;
 import '../types/sp_weights/weight_v2/weight.dart' as _i7;
 import '../types/tuples.dart' as _i4;
 
@@ -131,5 +133,21 @@ class Queries {
       return _counterForOverweight.decodeValue(bytes);
     }
     return 0; /* Default */
+  }
+}
+
+class Txs {
+  const Txs();
+
+  /// See [`Pallet::service_overweight`].
+  _i8.RuntimeCall serviceOverweight({
+    required index,
+    required weightLimit,
+  }) {
+    final _call = _i9.Call.values.serviceOverweight(
+      index: index,
+      weightLimit: weightLimit,
+    );
+    return _i8.RuntimeCall.values.dmpQueue(_call);
   }
 }
