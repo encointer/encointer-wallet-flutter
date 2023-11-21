@@ -138,14 +138,6 @@ export async function subscribeBusinessRegistry (msgChannel, cid) {
   }).then((unsub) => unsubscribe(unsub, msgChannel));
 }
 
-export async function getParticipantReputation (cid, cIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  send('js-getParticipantReputation', `Getting participant reputation for Cid: ${communityIdentifierToString(cidT)}, cIndex: ${cIndex} and address: ${address}`);
-  const reputation = await api.query.encointerCeremonies.participantReputation([cid, cIndex], address);
-  send('js-getParticipantReputation', `Participant reputation: ${reputation}`);
-  return reputation;
-}
-
 export async function getDemurrage (cid) {
   const cidT = api.createType('CommunityIdentifier', cid);
 
@@ -316,7 +308,6 @@ export async function sendNextPhaseTx() {
 }
 
 export default {
-  getParticipantReputation,
   subscribeCurrentPhase,
   subscribeBalance,
   subscribeCommunityIdentifiers,

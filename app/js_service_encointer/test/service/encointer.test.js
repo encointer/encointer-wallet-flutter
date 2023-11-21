@@ -23,26 +23,6 @@ describe('encointer', () => {
     keyring = new Keyring({ type: 'sr25519' });
   }, 90000);
 
-  describe('getParticipantReputation', () => {
-    it('should return promise', async () => {
-      await cryptoWaitReady();
-      const cid = communityIdentifierFromString(api.registry, 'gbsuv7YXq9G');
-      const attendee = keyring.addFromUri('//Bob', { name: 'Bob default' }).address;
-      const result = await encointer.getParticipantReputation(cid, 1, attendee);
-      expect(result.isUnverified).toBeTruthy();
-    });
-  });
-
-  describe('getParticipantReputation2', () => {
-    it('should return promise', async () => {
-      await cryptoWaitReady();
-      const cid = communityIdentifierFromString(api.registry, 'gbsuv7YXq9G');
-      // const attendee = keyring.addFromUri('//Bob', { name: 'Bob default' }).address;
-      const result = await encointer.getParticipantReputation(cid, 3, '0xf4577adda8c5bda374fb86d42aed35eb171a949c7b52202806cd137795d5567a');
-      expect(result.isUnverified).toBeTruthy();
-    });
-  });
-
   describe('getProofOfAttendance', () => {
     it('should be defined', () => {
       expect(encointer.getProofOfAttendance).toBeDefined();
