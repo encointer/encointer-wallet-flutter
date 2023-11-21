@@ -12,8 +12,8 @@ void main() {
       final accounts = [alice, bob, charlie];
       final keyring = await EncointerKeyring.fromAccounts(accounts);
 
-      print("keyring: ${keyring.accounts.toString()}");
-      print("keyring: ${keyring.keyring.toString()}");
+      // print("keyring: ${keyring.accounts.toString()}");
+      // print("keyring: ${keyring.keyring.toString()}");
 
       final alicePair = keyring.keyring.getByAddress('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
       // final alicePair = keyring.getPairByPublicKey('d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d'.codeUnits);
