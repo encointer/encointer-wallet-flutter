@@ -379,12 +379,13 @@ packages:
     source: git
     version: "0.2.1"
   polkadart_scale_codec:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: polkadart_scale_codec
-      sha256: "75289b2f53c6cf997dd68945d959fee596c1e47bba3dedba22a6e95646df893c"
-      url: "https://pub.dev"
-    source: hosted
+      path: "packages/polkadart_scale_codec"
+      ref: main
+      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
+      url: "https://github.com/encointer/polkadart"
+    source: git
     version: "1.1.2"
   pool:
     dependency: transitive
