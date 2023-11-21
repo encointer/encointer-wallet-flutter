@@ -5,7 +5,7 @@
 import '../../src';
 import encointer, {
   getProofOfAttendance,
-  _getProofOfAttendance, reapVoucher, encointerTransfer, getBalance, hasPendingIssuance, remainingNewbieTicketsReputable
+  _getProofOfAttendance, reapVoucher, encointerTransfer, getBalance, hasPendingIssuance
 } from '../../src/service/encointer';
 import { cryptoWaitReady, signatureVerify } from '@polkadot/util-crypto';
 import { localDevNetwork } from '../testUtils/networks';
@@ -124,20 +124,6 @@ describe('encointer', () => {
         await hasPendingIssuance(
           cid, 2, "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d"
         )).toBeFalsy();
-    });
-  });
-
-  // Note: this needs the bootstrapping script, but we have this in the CI now.
-  describe('remainingReputableNewbieTickets', () => {
-    it('returns tickets per reputation after bootstrapping ceremony', async () =>  {
-      const alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
-      const cid = communityIdentifierFromString(api.registry, "sqm1v79dF6b");
-
-      const ticketsPerReputation = await api.query.encointerCeremonies.endorsementTicketsPerReputable();
-
-      expect(
-        await remainingNewbieTicketsReputable(cid, 2, alice.publicKey)
-      ).toBe(ticketsPerReputation.toNumber());
     });
   });
 

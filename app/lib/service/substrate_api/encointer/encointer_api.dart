@@ -477,22 +477,20 @@ class EncointerApi {
     final cid = store.encointer.chosenCid;
     final cIndex = store.encointer.currentCeremonyIndex;
 
+    if (cid == null) return 0;
+    if (cIndex == null) return 0;
     if (reputations.isEmpty) return 0;
 
     try {
-      // Todo: fix addressStr -> List<int>
-      // final [burned, ticketsPerReputable] = await Future.wait([
-      //   _encointerKusama.query.encointerCeremonies
-      //       .burnedReputableNewbieTickets([et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex], address),
-      //   _encointerKusama.query.encointerCeremonies.endorsementTicketsPerReputable()
-      // ]);
-      // return ticketsPerReputable - burned;
-
-      final remainingTickets = await jsApi.evalJavascript<int>(
-        'encointer.remainingNewbieTicketsReputable(${jsonEncode(cid)}, "$cIndex","$address")',
-      );
-      Log.d('EncointerApi', 'numberOfNewbieTickets: $remainingTickets');
-      return remainingTickets;
+      final [burned, ticketsPerReputable] = await Future.wait([
+        encointerKusama.query.encointerCeremonies.burnedReputableNewbieTickets(
+          Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex),
+          AddressUtils.addressToPubKey(address).toList(),
+        ),
+        encointerKusama.query.encointerCeremonies.endorsementTicketsPerReputable()
+      ]);
+      Log.p('NewbieTickets: ticketPerReputable: $ticketsPerReputable, burned: $burned');
+      return ticketsPerReputable - burned;
     } catch (e, s) {
       Log.e('EncointerApi', '$e', s);
     }
