@@ -146,12 +146,6 @@ export async function getParticipantReputation (cid, cIndex, address) {
   return reputation;
 }
 
-export async function getBootstrappers (cid) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-
-  return await api.query.encointerCommunities.bootstrappers(cidT);
-}
-
 export async function remainingNewbieTicketsReputable (cid, ceremonyIndex, address) {
   const cidT = api.createType('CommunityIdentifier', cid);
   window.send('js-remainingNewbieTickets-reputable', `cid: ${communityIdentifierToString(cidT)} ${address}`);
@@ -358,7 +352,6 @@ export async function sendNextPhaseTx() {
 
 export default {
   getParticipantReputation,
-  getBootstrappers,
   subscribeCurrentPhase,
   subscribeBalance,
   subscribeCommunityIdentifiers,
