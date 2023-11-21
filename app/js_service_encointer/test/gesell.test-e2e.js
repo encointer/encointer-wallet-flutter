@@ -58,16 +58,6 @@ describe('encointer', () => {
     });
   });
 
-  describe('sendFaucetTx method', () => {
-    it('should send balance', async () => {
-      const address = '5DPgv6nn4R1Gi1MUiAnzFDPaKF56SYKD9Zq4Q6REUGLhUZk1';
-      const Ert001 = 1000000000;
-      const result = await account.sendFaucetTx(address, Ert001);
-      console.log(result);
-      expect(result).toBeDefined();
-    }, 90000);
-  });
-
   describe('can transform problematic location', () => {
     it('should be defined', async () => {
       const loc_js = {

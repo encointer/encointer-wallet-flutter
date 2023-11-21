@@ -11,12 +11,10 @@ import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
-import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -27,6 +25,12 @@ import 'package:encointer_wallet/service/substrate_api/encointer/no_tee_api.dart
 import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_substrate_fixed/substrate_fixed.dart';
+
+// disambiguate global imports of encointer types. We can remove this
+// once we got rid of our manual type definitions.
+import 'package:ew_polkadart/encointer_types.dart' as et;
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -39,7 +43,7 @@ import 'package:encointer_wallet/utils/format.dart';
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class EncointerApi {
-  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp)
+  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp, this.encointerKusama)
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi),
         _dartApi = EncointerDartApi(dartApi);
@@ -47,6 +51,7 @@ class EncointerApi {
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
   final EwHttp ewHttp;
+  final EncointerKusama encointerKusama;
 
   final AppStore store;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
@@ -102,24 +107,20 @@ class EncointerApi {
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
-  ///
-  /// This is on-chain in Cantillon.
   Future<CeremonyPhase?> getCurrentPhase() async {
     Log.d('api: getCurrentPhase', 'EncointerApi');
-    final res = await jsApi.evalJavascript<String>('encointer.getCurrentPhase()');
+    final phase = await encointerKusama.query.encointerScheduler.currentPhase().then(ceremonyPhaseTypeFromPolkadart);
 
-    final phase = ceremonyPhaseFromString(res)!;
     Log.d('api: Phase enum: $phase', 'EncointerApi');
     store.encointer.setCurrentPhase(phase);
     return phase;
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.nextPhaseTimestamp().
-  ///
-  /// This is on-chain in Cantillon.
   Future<int> getNextPhaseTimestamp() async {
     Log.d('api: getNextPhaseTimestamp', 'EncointerApi');
-    final timestamp = await jsApi.evalJavascript<String>('encointer.getNextPhaseTimestamp()').then(int.parse);
+    final timestampBigInt = await encointerKusama.query.encointerScheduler.nextPhaseTimestamp();
+    final timestamp = timestampBigInt.toInt();
 
     Log.d('api: next phase timestamp: $timestamp', 'EncointerApi');
     store.encointer.setNextPhaseTimestamp(timestamp);
@@ -129,15 +130,22 @@ class EncointerApi {
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
   ///
   /// This should be done only once at app-startup, as this is practically const.
-  ///
-  /// This is on-chain in Cantillon.
   Future<void> getPhaseDurations() async {
-    final phaseDurations =
-        await jsApi.evalJavascript<Map<String, dynamic>>('encointer.getPhaseDurations()').then((m) => m.map(
-              (key, value) => MapEntry(ceremonyPhaseFromString(key)!, int.parse(value as String)),
-            ));
+    final durations = await Future.wait([
+      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.registering),
+      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.assigning),
+      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.attesting),
+    ]);
 
-    store.encointer.setPhaseDurations(phaseDurations);
+    // Create map and cast to the old type before introducing polkadart
+    // shall be changed later
+    final phaseDurationMap = Map.of({
+      CeremonyPhase.Registering: durations[0].toInt(),
+      CeremonyPhase.Assigning: durations[1].toInt(),
+      CeremonyPhase.Attesting: durations[2].toInt(),
+    });
+
+    store.encointer.setPhaseDurations(phaseDurationMap);
   }
 
   /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.
@@ -173,46 +181,38 @@ class EncointerApi {
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
-  ///
-  /// This is on-chain in Cantillon.
   Future<int?> getCurrentCeremonyIndex() async {
     Log.d('api: getCurrentCeremonyIndex', 'EncointerApi');
-    final cIndex = await jsApi.evalJavascript<String>('encointer.getCurrentCeremonyIndex()').then(int.parse);
+    final cIndex = await encointerKusama.query.encointerScheduler.currentCeremonyIndex();
     Log.d('api: Current Ceremony index: $cIndex', 'EncointerApi');
     store.encointer.setCurrentCeremonyIndex(cIndex);
     return cIndex;
   }
 
   /// Queries the Communities pallet's RPC: api.rpc.communities.getLocations(cid)
-  ///
-  /// This is on-chain in Cantillon
   Future<void> getAllMeetupLocations() async {
     Log.d('api: getAllMeetupLocations', 'EncointerApi');
     final cid = store.encointer.chosenCid;
 
     if (cid == null) return;
 
-    final locs = await jsApi
-        .evalJavascript<List<dynamic>>('encointer.getAllMeetupLocations(${jsonEncode(cid)})')
-        .then((list) => list.map((e) => Location.fromJson(e as Map<String, dynamic>)).toList());
+    final locations = await _dartApi.getLocations(cid);
 
-    Log.d('api: getAllMeetupLocations: $locs ' 'EncointerApi');
+    Log.d('api: getAllMeetupLocations: $locations ' 'EncointerApi');
     if (store.encointer.community != null) {
-      store.encointer.community!.setMeetupLocations(locs);
+      store.encointer.community!.setMeetupLocations(locations);
     }
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
-  ///
-  /// This is on-chain in Cantillon
   Future<void> getCommunityMetadata() async {
     Log.d('api: getCommunityMetadata', 'EncointerApi');
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
-    final meta = await jsApi
-        .evalJavascript<Map<String, dynamic>>('encointer.getCommunityMetadata(${jsonEncode(cid)})')
-        .then(CommunityMetadata.fromJson);
+    final meta = await encointerKusama.query.encointerCommunities
+        .communityMetadata(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest))
+        .then(CommunityMetadata.fromPolkadart); // convert to our own type
 
     Log.d('api: community metadata: $meta', 'EncointerApi');
     await store.encointer.community?.setCommunityMetadata(meta);
@@ -225,13 +225,19 @@ class EncointerApi {
   /// Returns the community specific demurrage if defined,
   /// otherwise the default demurrage from the balances pallet
   /// is returned.
-  ///
-  /// This is on-chain in Cantillon
   Future<void> getDemurrage() async {
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
-    final dem = await jsApi.evalJavascript<double?>('encointer.getDemurrage(${jsonEncode(cid)})');
+    var dem = await encointerKusama.query.encointerBalances
+        .demurragePerBlock(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest))
+        .then((value) => i64F64Parser.toDouble(value.bits));
+
+    if (dem == 0) {
+      Log.p('api: community demurrage is 0, defaulting to global default demurrage.', 'EncointerApi');
+      dem = i64F64Parser.toDouble(encointerKusama.constant.encointerBalances.defaultDemurrage.bits);
+    }
+
     Log.d('api: fetched demurrage: $dem', 'EncointerApi');
     if (store.encointer.community != null) {
       store.encointer.community!.setDemurrage(dem);
@@ -240,10 +246,10 @@ class EncointerApi {
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
   Future<void> communitiesGetAll() async {
-    final cns = await jsApi.evalJavascript<List<dynamic>>('encointer.communitiesGetAll()');
+    final cidNames = await _dartApi.getAllCommunities();
 
-    Log.d('api: CidNames: ${cns.length} and $cns ', 'EncointerApi');
-    store.encointer.setCommunities(cns.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList());
+    Log.d('api: CidNames: ${cidNames.length} and $cidNames ', 'EncointerApi');
+    store.encointer.setCommunities(cidNames);
   }
 
   /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().
@@ -328,8 +334,6 @@ class EncointerApi {
   }
 
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
-  ///
-  /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::balance(cid, accountId).
   Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid, String pin) async {
     Log.d('Getting encointer balance for $pubKeyOrAddress and ${cid.toFmtString()}', 'EncointerApi');
 
@@ -388,8 +392,6 @@ class EncointerApi {
   }
 
   /// Subscribes to storage changes in the Scheduler pallet: encointerScheduler.currentPhase().
-  ///
-  /// This is on-chain in Cantillon.
   Future<void> subscribeCommunityIdentifiers() async {
     await jsApi.subscribeMessage(
         'encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")', _communityIdentifiersChannel,
@@ -408,25 +410,28 @@ class EncointerApi {
   }
 
   /// Queries the EncointerCurrencies pallet: encointerCurrencies.communityIdentifiers().
-  ///
-  /// This is on-chain in Cantillon.
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
-    final cids = await jsApi.evalJavascript<Map<String, dynamic>>('encointer.getCommunityIdentifiers()').then(
-          (res) => List<dynamic>.from(res['cids'] as Iterable)
-              .map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>))
-              .toList(),
-        );
+    // cids in polkadart type
+    final cidsPolkadart = await encointerKusama.query.encointerCommunities.communityIdentifiers();
+
+    // transform them into our own cid
+    final cids = cidsPolkadart.map(CommunityIdentifier.fromPolkadart).toList();
 
     Log.d('CID: $cids', 'EncointerApi');
     return cids;
   }
 
   /// Queries the EncointerCommunities pallet: encointerCommunities.bootstrappers(cid).
-  ///
   Future<void> getBootstrappers() async {
     final cid = store.encointer.chosenCid;
 
     if (cid == null) return;
+
+    // Todo: Use polkadart base codec for List<int> -> String
+    // final bootstrappersBytes = await _encointerKusama.query.encointerCommunities.bootstrappers(et.CommunityIdentifier(
+    //   geohash: cid.geohash,
+    //   digest: cid.digest,
+    // ));
 
     final bootstrappers = await jsApi
         .evalJavascript<List<dynamic>>('encointer.getBootstrappers($cid)')
@@ -441,18 +446,10 @@ class EncointerApi {
   Future<void> getReputations() async {
     final address = store.account.currentAddress;
 
-    final reputations =
-        await jsApi.evalJavascript<List<dynamic>>('encointer.getReputations("$address")').then(reputationsFromList);
+    final reputations = await _dartApi.getReputations(address);
 
     Log.d('api: getReputations: $reputations', 'EncointerApi');
     if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
-  }
-
-  Future<dynamic> sendFaucetTx() async {
-    final address = store.account.currentAddress;
-    final amount = Fmt.tokenInt(faucetAmount.toString(), ertDecimals);
-    final res = await jsApi.evalJavascript<dynamic>('account.sendFaucetTx("$address", "$amount")');
-    return res;
   }
 
   /// Gets a proof of attendance for the oldest attended ceremony, if available.
@@ -478,41 +475,58 @@ class EncointerApi {
   }
 
   Future<int> getNumberOfNewbieTicketsForReputable() async {
-    var remainingTickets = 0;
     final address = store.account.currentAddress;
-    final reputations = store.encointer.account?.reputations;
+    final reputations = store.encointer.account?.reputations ?? {};
     final cid = store.encointer.chosenCid;
     final cIndex = store.encointer.currentCeremonyIndex;
 
-    if ((reputations?.length ?? 0) > 0) {
-      try {
-        remainingTickets = await jsApi.evalJavascript<int>(
-          'encointer.remainingNewbieTicketsReputable(${jsonEncode(cid)}, "$cIndex","$address")',
-        );
+    if (reputations.isEmpty) return 0;
 
-        Log.d('EncointerApi', 'numberOfNewbieTickets: $remainingTickets');
-      } catch (e, s) {
-        Log.e('EncointerApi', '$e', s);
-      }
+    try {
+      // Todo: fix addressStr -> List<int>
+      // final [burned, ticketsPerReputable] = await Future.wait([
+      //   _encointerKusama.query.encointerCeremonies
+      //       .burnedReputableNewbieTickets([et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex], address),
+      //   _encointerKusama.query.encointerCeremonies.endorsementTicketsPerReputable()
+      // ]);
+      // return ticketsPerReputable - burned;
+
+      final remainingTickets = await jsApi.evalJavascript<int>(
+        'encointer.remainingNewbieTicketsReputable(${jsonEncode(cid)}, "$cIndex","$address")',
+      );
+      Log.d('EncointerApi', 'numberOfNewbieTickets: $remainingTickets');
+      return remainingTickets;
+    } catch (e, s) {
+      Log.e('EncointerApi', '$e', s);
     }
 
-    return remainingTickets;
+    return 0;
   }
 
   Future<int> getNumberOfNewbieTicketsForBootstrapper() async {
-    var remainingTickets = 0;
     final address = store.account.currentAddress;
     final cid = store.encointer.chosenCid;
+    if (cid == null) return 0;
+
     try {
+      // Todo: fix addressStr -> List<int>
+      // final [burned, ticketsPerBootstrapper] = await Future.wait([
+      //   _encointerKusama.query.encointerCeremonies
+      //       .burnedBootstrapperNewbieTickets(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), address),
+      //   _encointerKusama.query.encointerCeremonies.endorsementTicketsPerBootstrapper()
+      // ]);
+      // return ticketsPerBootstrapper - burned;
+
       final numberOfTickets = await jsApi.evalJavascript<int>(
         'encointer.remainingNewbieTicketsBootstrapper(${jsonEncode(cid)},"$address")',
       );
       Log.d('Encointer Api', 'numberOfBootstrapperTickets: $numberOfTickets');
-      remainingTickets += numberOfTickets;
+      return numberOfTickets;
     } catch (e, s) {
       Log.e('Encointer Api', '$e', s);
     }
-    return remainingTickets;
+
+    return 0;
   }
 
   Future<Map<String, Faucet>> getAllFaucetsWithAccount() async {

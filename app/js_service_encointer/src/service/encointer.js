@@ -8,9 +8,6 @@ import { unsubscribe } from '../utils/unsubscribe.js';
 import { communityIdentifierToString } from '@encointer/util';
 import {
   getMeetupIndex as _getMeetupIndex,
-  getMeetupLocation,
-  getMeetupParticipants,
-  getParticipantIndex as _getParticipantIndex,
   getNextMeetupTime as _getNextMeetupTime,
   getDemurrage as _getDemurrage, submitAndWatchTx,
 } from '@encointer/node-api';
@@ -23,30 +20,6 @@ import {
   getAllFaucetsWithAccount,
   hasCommittedFor,
 } from './faucet.js';
-
-export async function getCurrentPhase () {
-  return api.query.encointerScheduler.currentPhase();
-}
-
-export async function getNextPhaseTimestamp () {
-  return api.query.encointerScheduler.nextPhaseTimestamp();
-}
-
-/**
- * Gets all phase durations to cache them on the dart side to speedup `getNextMeetupTime` request.
- */
-export async function getPhaseDurations () {
-  const [registering, assigning, attesting] = await Promise.all([
-    api.query.encointerScheduler.phaseDurations('Registering'),
-    api.query.encointerScheduler.phaseDurations('Attesting'),
-    api.query.encointerScheduler.phaseDurations('Assigning')
-  ]);
-  return {
-    Registering: registering,
-    Attesting: assigning,
-    Assigning: attesting
-  };
-}
 
 /**
  * Subscribes to the current ceremony phase
@@ -165,28 +138,12 @@ export async function subscribeBusinessRegistry (msgChannel, cid) {
   }).then((unsub) => unsubscribe(unsub, msgChannel));
 }
 
-export async function getParticipantIndex (cid, cIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-  send('js-getParticipantIndex', `Getting participant index for Cid: ${communityIdentifierToString(cidT)}, cIndex: ${cIndex} and address: ${address}`);
-  return _getParticipantIndex(api, cidT, cIndexT, address);
-}
-
 export async function getParticipantReputation (cid, cIndex, address) {
   const cidT = api.createType('CommunityIdentifier', cid);
   send('js-getParticipantReputation', `Getting participant reputation for Cid: ${communityIdentifierToString(cidT)}, cIndex: ${cIndex} and address: ${address}`);
   const reputation = await api.query.encointerCeremonies.participantReputation([cid, cIndex], address);
   send('js-getParticipantReputation', `Participant reputation: ${reputation}`);
   return reputation;
-}
-
-// returns a list of prefixed hex strings
-export async function getCommunityIdentifiers () {
-  const pallet = pallets.encointerCommunities;
-  const cids = await api.query[pallet.name][pallet.calls.communityIdentifiers]();
-  return {
-    cids
-  };
 }
 
 export async function getBootstrappers (cid) {
@@ -230,27 +187,10 @@ export async function remainingNewbieTicketsBootstrapper (cid, address) {
   return ticketsPerBootstrapper- burnedTickets;
 }
 
-export async function getCommunityMetadata (cid) {
-  const pallet = pallets.encointerCommunities;
-  const meta = await api.query[pallet.name][pallet.calls.communityMetadata](cid);
-
-  // `toU8a` is necessary. Otherwise, the metadata's fields are represented as hex-strings if the community was
-  // registered via polkadot-js/apps and.
-  return api.createType('CommunityMetadataType', meta.toU8a());
-}
-
 export async function getDemurrage (cid) {
   const cidT = api.createType('CommunityIdentifier', cid);
 
   return _getDemurrage(api, cidT).then((demBits) => parseEncointerBalance(demBits));
-}
-
-export async function communitiesGetAll () {
-  return await api.rpc.encointer.getAllCommunities();
-}
-
-export async function getCurrentCeremonyIndex () {
-  return await api.query.encointerScheduler.currentCeremonyIndex();
 }
 
 export async function getMeetupIndex (cid, cIndex, address) {
@@ -258,14 +198,6 @@ export async function getMeetupIndex (cid, cIndex, address) {
   const cIndexT = api.createType('CeremonyIndexType', cIndex);
 
   return _getMeetupIndex(api, cidT, cIndexT, address);
-}
-
-export async function getMeetupRegistry (cid, cIndex, mIndex) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-  const mIndexT = api.createType('MeetupIndexType', mIndex);
-
-  return getMeetupParticipants(api, cidT, cIndexT, mIndexT);
 }
 
 /**
@@ -281,40 +213,6 @@ export async function getNextMeetupTime (location) {
   });
 
   return _getNextMeetupTime(api, locT);
-}
-
-/**
- *
- * @param cid CommunityIdentifier
- * @param cIndex CurrentCeremonyIndex
- * @param mIndex MeetupIndex
- * @param address
- * @returns {Promise<Location>} with number format '35.123412341234'
- */
-export async function getNextMeetupLocation (cid, cIndex, mIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-  const mIndexT = api.createType('MeetupIndexType', mIndex);
-
-  return getMeetupLocation(api, cidT, cIndexT, mIndexT);
-}
-
-/**
- * Get all meetup locations for cid.
- */
-export async function getAllMeetupLocations (cid) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-
-  return api.rpc.encointer.getLocations(cidT);
-}
-
-/**
- * Get all reputations for an account in all communities.
- */
-export async function getReputations (account) {
-  console.log(`[JS] getting reputations for ${account}`);
-
-  return api.rpc.encointer.getReputations(account);
 }
 
 /**
@@ -434,11 +332,6 @@ export async function _getProofOfAttendance (attendee, cid, cindex) {
   return createType(registry, 'Option<ProofOfAttendance>', proof);
 }
 
-
-export async function getBusinessRegistry (cid) {
-  return await api.query.encointerBazaar.businessRegistry(cid);
-}
-
 /**
  * Calls next phase with Alice.
  *
@@ -464,10 +357,6 @@ export async function sendNextPhaseTx() {
 }
 
 export default {
-  getCurrentPhase,
-  getNextPhaseTimestamp,
-  getPhaseDurations,
-  getCommunityIdentifiers,
   getParticipantReputation,
   getBootstrappers,
   subscribeCurrentPhase,
@@ -475,20 +364,10 @@ export default {
   subscribeCommunityIdentifiers,
   subscribeBusinessRegistry,
   getProofOfAttendance,
-  getCurrentCeremonyIndex,
-  getNextMeetupLocation,
   getNextMeetupTime,
-  getDemurrage,
-  getCommunityMetadata,
-  getAllMeetupLocations,
-  communitiesGetAll,
   getMeetupIndex,
-  getParticipantIndex,
-  getMeetupRegistry,
   hasPendingIssuance,
   getBalance,
-  getBusinessRegistry,
-  getReputations,
   sendNextPhaseTx,
   reapVoucher,
   remainingNewbieTicketsReputable,
