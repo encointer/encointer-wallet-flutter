@@ -1,13 +1,14 @@
 // ignore_for_file: library_private_types_in_public_api
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:ew_http/ew_http.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_http/ew_http.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+
 
 part 'transfer_history_view_store.g.dart';
 
@@ -43,7 +44,7 @@ abstract class _TransferHistoryViewStoreBase with Store {
     }
 
     try {
-      final address = Fmt.ss58Encode(
+      final address = AddressUtils.pubKeyHexToAddress(
         pubKey,
         prefix: appStore.settings.endpoint.ss58 ?? 42,
       );

@@ -2,6 +2,7 @@ import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_keyring/ew_keyring.dart%20';
 import 'package:flutter/material.dart';
 
 class AccountSelectList extends StatelessWidget {
@@ -14,7 +15,7 @@ class AccountSelectList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: accounts.map((account) {
-        final address = Fmt.ss58Encode(account.pubKey, prefix: store.settings.endpoint.ss58!);
+        final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: store.settings.endpoint.ss58!);
 
         return ListTile(
           leading: AddressIcon(address, account.pubKey),

@@ -2,7 +2,7 @@ import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:mobile_scanner/mobile_scanner.dart' show MobileScanner, MobileScannerController;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +13,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_keyring/ew_keyring.dart' show AddressUtils, Address;
 
 class ScanClaimQrCode extends StatefulWidget {
   const ScanClaimQrCode(this.confirmedParticipantsCount, {super.key});
@@ -30,15 +31,14 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
   @override
   void initState() {
     final store = context.read<AppStore>();
-    currentAddressPrefix42 = Fmt.ss58Encode(store.account.currentAccountPubKey!);
+    currentAddressPrefix42 = AddressUtils.pubKeyHexToAddress(store.account.currentAccountPubKey!);
     allParticipantsPrefix42 = store.encointer.communityAccount?.meetup?.registry ?? [];
     super.initState();
   }
 
   /// Checks that the `attendeeAddress` is not equal to self and part of the meetup registry.
   void validateAndStoreParticipant(AppStore store, String attendeeAddress, AppLocalizations l10n) {
-    final attendeePubKey = Fmt.ss58Decode(attendeeAddress).pubKey;
-    final attendeeAddressPrefix42 = Fmt.ss58Encode(attendeePubKey);
+    final attendeeAddressPrefix42 = Address.decode(attendeeAddress).encode(prefix: 42);
 
     if (attendeeAddressPrefix42 == currentAddressPrefix42) {
       RootSnackBar.showMsg(l10n.meetupClaimantEqualToSelf);

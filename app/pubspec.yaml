@@ -26,8 +26,6 @@ dependencies:
   # intl - format numbers
   intl: ^0.18.1
   json_annotation: ^4.8.1
-  bip39: ^1.0.6 # Todo: #1268: replace with alternative package
-  pointycastle: ^3.7.3
   # state management with mobx
   mobx: ^2.2.1
   flutter_mobx: ^2.1.0+1

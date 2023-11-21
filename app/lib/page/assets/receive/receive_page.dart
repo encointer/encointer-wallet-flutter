@@ -1,4 +1,4 @@
-import 'package:ew_test_keys/ew_test_keys.dart';
+
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -10,7 +10,6 @@ import 'package:encointer_wallet/page/assets/qr_code_printing/pages/qr_code_shar
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
@@ -19,6 +18,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 class ReceivePage extends StatefulWidget {
   const ReceivePage({super.key});
@@ -44,7 +45,7 @@ class _ReceivePageState extends State<ReceivePage> {
   void initState() {
     super.initState();
     _appStore = context.read<AppStore>();
-    final address = Fmt.ss58Encode(_appStore.account.currentAccountPubKey!, prefix: _appStore.settings.endpoint.ss58!);
+    final address = AddressUtils.pubKeyHexToAddress(_appStore.account.currentAccountPubKey!, prefix: _appStore.settings.endpoint.ss58!);
     invoice = InvoiceQrCode(
       account: address,
       cid: _appStore.encointer.chosenCid,

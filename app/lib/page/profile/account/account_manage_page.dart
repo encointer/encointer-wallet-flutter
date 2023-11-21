@@ -25,6 +25,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 
 class AccountManagePage extends StatefulWidget {
@@ -150,7 +151,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
-    final addressSS58 = Fmt.ss58Encode(accountToBeEditedPubKey!, prefix: store.settings.endpoint.ss58!);
+    final addressSS58 = AddressUtils.pubKeyHexToAddress(accountToBeEditedPubKey!, prefix: store.settings.endpoint.ss58!);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));

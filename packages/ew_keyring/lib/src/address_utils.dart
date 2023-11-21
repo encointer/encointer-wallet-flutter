@@ -15,16 +15,16 @@ abstract class AddressUtils {
   /// Encode a public key to an SS58 address.
   ///
   /// The default SS58 address prefix is 42.
-  static String pubKeyToAddress(List<int> pubKey, [int ss58Format = 42]) {
-    return Address(prefix: ss58Format, pubkey: Uint8List.fromList(pubKey)).encode();
+  static String pubKeyToAddress(List<int> pubKey, {int prefix = 42}) {
+    return Address(prefix: prefix, pubkey: Uint8List.fromList(pubKey)).encode();
   }
 
   /// Encode a public key to an SS58 address.
   ///
   /// The default SS58 address prefix is 42.
-  static String pubKeyHexToAddress(String pubKey, [int ss58Format = 42]) {
+  static String pubKeyHexToAddress(String pubKey, {int prefix = 42}) {
     final pub = hex.decode(pubKey.replaceFirst('0x', ''));
-    return Address(prefix: ss58Format, pubkey: Uint8List.fromList(pub)).encode();
+    return Address(prefix: prefix, pubkey: Uint8List.fromList(pub)).encode();
   }
 
   /// Decode an SS58 address to its public key.
