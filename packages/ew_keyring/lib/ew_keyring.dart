@@ -1,5 +1,6 @@
 /// Manages the cryptographic keys on the end device
 library ew_encointer_utils;
 
-export 'src/keyring.dart';
-export 'src/validate_keys.dart';
+// Don't export keyring as it doesn't support sr25519 yet.
+// export 'src/keyring.dart';
+export 'src/validate_keys.dart' show ValidateKeys;

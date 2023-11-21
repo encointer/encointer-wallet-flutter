@@ -1,4 +1,4 @@
-import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_keyring/src/keyring.dart';
 import 'package:ew_keyring/src/keyring_data.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 import 'package:test/test.dart';

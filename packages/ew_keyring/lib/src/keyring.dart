@@ -5,6 +5,10 @@ import 'package:polkadart_keyring/polkadart_keyring.dart';
 typedef Pubkey = String;
 
 /// Keyring that is stored on the devices encrypted storage.
+///
+/// Note: This can't yet be used by encointer. It uses ed25519,
+/// which is unfortunately not compatible with encointer. We have
+/// to wait for sr25519 support from polkadart.
 class EncointerKeyring {
   EncointerKeyring()
       : keyring = Keyring(),
