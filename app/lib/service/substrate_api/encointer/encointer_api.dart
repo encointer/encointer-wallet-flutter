@@ -1,11 +1,5 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/models/bazaar/businesses.dart';
-import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
-import 'package:encointer_wallet/models/bazaar/item_offered.dart';
-import 'package:encointer_wallet/models/faucet/faucet.dart';
-import 'package:ew_http/ew_http.dart';
-
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
@@ -16,6 +10,10 @@ import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
+import 'package:encointer_wallet/models/bazaar/businesses.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
+import 'package:encointer_wallet/models/bazaar/item_offered.dart';
+import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
@@ -24,7 +22,8 @@ import 'package:encointer_wallet/service/substrate_api/encointer/encointer_dart_
 import 'package:encointer_wallet/service/substrate_api/encointer/no_tee_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_http/ew_http.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
@@ -153,7 +152,7 @@ class EncointerApi {
   /// Todo: Be able to handle pubKey and any address and transform it to the
   /// address with prefix 42. Needs #1105.
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String pubKey) async {
-    final address = Fmt.ss58Encode(pubKey);
+    final address = AddressUtils.pubKeyHexToAddress(pubKey);
 
     try {
       final accountData = await _dartApi.getAggregatedAccountData(cid, address);

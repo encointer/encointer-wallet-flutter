@@ -11,6 +11,7 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard(
@@ -137,7 +138,7 @@ String tryGetPubKey(Transaction transaction) {
   String counterPartyPubKey;
 
   try {
-    counterPartyPubKey = Fmt.ss58Decode(transaction.counterParty).pubKey;
+    counterPartyPubKey = AddressUtils.addressToPubKeyHex(transaction.counterParty);
   } catch (e) {
     Log.e('Could not decode address. Error: $e');
 

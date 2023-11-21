@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
 class PaymentOverview extends StatelessWidget {
   const PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount, {super.key});
@@ -20,7 +21,7 @@ class PaymentOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final recipientLabel = recipientAccount!.name;
     final recipientAddress =
-        Fmt.address(Fmt.ss58Encode(recipientAccount!.pubKey, prefix: store.settings.endpoint.ss58!))!;
+        Fmt.address(AddressUtils.pubKeyHexToAddress(recipientAccount!.pubKey, prefix: store.settings.endpoint.ss58!))!;
 
     return IntrinsicHeight(
       child: Row(

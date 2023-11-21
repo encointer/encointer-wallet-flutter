@@ -6,7 +6,7 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:provider/provider.dart';
 
 part 'new_account_store.g.dart';
@@ -68,7 +68,8 @@ abstract class _NewAccountStoreBase with Store {
 
       await context.read<LoginStore>().setPin(pin);
       final appStore = context.read<AppStore>();
-      acc['address'] = Fmt.ss58Encode(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
+      acc['address'] =
+          AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
       return saveAccount(webApi, appStore, acc, pin);
     } catch (e, s) {
       _loading = false;
@@ -93,7 +94,8 @@ abstract class _NewAccountStoreBase with Store {
       } else {
         await context.read<LoginStore>().setPin(pin);
         final appStore = context.read<AppStore>();
-        acc['address'] = Fmt.ss58Encode(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
+        acc['address'] =
+            AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
         if (index > -1) {
           _loading = false;

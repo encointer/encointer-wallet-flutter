@@ -10,6 +10,7 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
 part 'account.g.dart';
 
@@ -95,7 +96,7 @@ abstract class _AccountStore with Store {
   String get currentAddress {
     // Todo #1110: `currentAccountPubkey` should be non-nullable.
     if (currentAccountPubKey == null || currentAccountPubKey!.isEmpty) return '';
-    return Fmt.ss58Encode(currentAccountPubKey ?? '', prefix: rootStore.settings.endpoint.ss58!);
+    return AddressUtils.pubKeyHexToAddress(currentAccountPubKey ?? '', prefix: rootStore.settings.endpoint.ss58!);
   }
 
   @action

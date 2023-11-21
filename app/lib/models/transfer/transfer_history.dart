@@ -1,11 +1,11 @@
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/extensions/double/double_extension.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
-import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
 part 'transfer_history.g.dart';
 
@@ -51,7 +51,7 @@ class Transaction {
       try {
         // Contact address might be with default prefix 42, or with Kusama prefix 2.
         // So better to work with the universal pubKey.
-        if (contact.pubKey == Fmt.ss58Decode(counterParty).pubKey) {
+        if (contact.pubKey == AddressUtils.addressToPubKeyHex(counterParty)) {
           return contact.name;
         }
       } catch (e) {
