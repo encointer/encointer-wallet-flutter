@@ -729,6 +729,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  hashlib_codecs:
+    dependency: transitive
+    description:
+      name: hashlib_codecs
+      sha256: "49e2a471f74b15f1854263e58c2ac11f2b631b5b12c836f9708a35397d36d626"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   html:
     dependency: transitive
     description:
@@ -1294,16 +1302,16 @@ packages:
     description:
       path: "packages/polkadart"
       ref: main
-      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
+      resolved-ref: "7dec311cd4ccd9933219790e32db187a1f1c6ac4"
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.3"
+    version: "0.2.4"
   polkadart_keyring:
     dependency: transitive
     description:
       path: "packages/polkadart_keyring"
       ref: main
-      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
+      resolved-ref: "7dec311cd4ccd9933219790e32db187a1f1c6ac4"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -1312,7 +1320,7 @@ packages:
     description:
       path: "packages/polkadart_scale_codec"
       ref: main
-      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
+      resolved-ref: "7dec311cd4ccd9933219790e32db187a1f1c6ac4"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -1686,7 +1694,7 @@ packages:
     description:
       path: "packages/substrate_metadata"
       ref: main
-      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
+      resolved-ref: "7dec311cd4ccd9933219790e32db187a1f1c6ac4"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -2046,10 +2054,10 @@ packages:
     dependency: transitive
     description:
       name: yaon
-      sha256: e4553813814a6cd5ed7d240d508d3fb1ba4942bc69ac39df4317f7524d41737c
+      sha256: fb0dd1654f203e52ef1631ba81a04c7762ddfd72d7bc58a178462d8b84258fd4
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.2+6"
+    version: "1.1.4"
 sdks:
   dart: ">=3.1.0 <4.0.0"
   flutter: ">=3.13.8"
