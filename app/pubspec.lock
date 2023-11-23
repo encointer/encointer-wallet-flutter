@@ -1308,17 +1308,17 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart"
-      ref: main
-      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
+      ref: "cl/fix-subscribe-storage"
+      resolved-ref: "2e67e32454f43ee71d48b3d85b052d2ab4402a66"
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.5"
+    version: "0.2.4"
   polkadart_keyring:
     dependency: transitive
     description:
       path: "packages/polkadart_keyring"
-      ref: main
-      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
+      ref: "cl/fix-subscribe-storage"
+      resolved-ref: "2e67e32454f43ee71d48b3d85b052d2ab4402a66"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -1326,8 +1326,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: main
-      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
+      ref: "cl/fix-subscribe-storage"
+      resolved-ref: "2e67e32454f43ee71d48b3d85b052d2ab4402a66"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -1700,8 +1700,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/substrate_metadata"
-      ref: main
-      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
+      ref: "cl/fix-subscribe-storage"
+      resolved-ref: "2e67e32454f43ee71d48b3d85b052d2ab4402a66"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -2061,10 +2061,10 @@ packages:
     dependency: transitive
     description:
       name: yaon
-      sha256: fb0dd1654f203e52ef1631ba81a04c7762ddfd72d7bc58a178462d8b84258fd4
+      sha256: e4553813814a6cd5ed7d240d508d3fb1ba4942bc69ac39df4317f7524d41737c
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.4"
+    version: "1.1.2+6"
 sdks:
   dart: ">=3.1.0 <4.0.0"
   flutter: ">=3.13.8"
