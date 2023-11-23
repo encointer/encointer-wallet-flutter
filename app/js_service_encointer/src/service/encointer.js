@@ -89,17 +89,6 @@ export function encointerTransferAll (fromPair, recipientAddress, cid) {
   return sendTxWithPair(fromPair, txInfo, paramList);
 }
 
-/**
- * Subscribes to the business registry of a given cid
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeBusinessRegistry (msgChannel, cid) {
-  return await api.query.encointerBazaar.businessRegistry(cid, (businesses) => {
-    send(msgChannel, businesses);
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
 export async function getDemurrage (cid) {
   const cidT = api.createType('CommunityIdentifier', cid);
 
@@ -255,7 +244,6 @@ export async function sendNextPhaseTx() {
 }
 
 export default {
-  subscribeBusinessRegistry,
   getProofOfAttendance,
   getMeetupIndex,
   hasPendingIssuance,
