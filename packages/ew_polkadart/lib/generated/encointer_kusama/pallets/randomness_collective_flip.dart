@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
+import 'dart:typed_data' as _i5;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i3;
@@ -30,5 +31,11 @@ class Queries {
       return _randomMaterial.decodeValue(bytes);
     }
     return []; /* Default */
+  }
+
+  /// Returns the storage key for `randomMaterial`.
+  _i5.Uint8List randomMaterialKey() {
+    final hashedKey = _randomMaterial.hashedKey();
+    return hashedKey;
   }
 }

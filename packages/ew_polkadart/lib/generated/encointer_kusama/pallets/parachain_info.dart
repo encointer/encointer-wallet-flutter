@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
+import 'dart:typed_data' as _i4;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 
@@ -26,5 +27,11 @@ class Queries {
       return _parachainId.decodeValue(bytes);
     }
     return 100; /* Default */
+  }
+
+  /// Returns the storage key for `parachainId`.
+  _i4.Uint8List parachainIdKey() {
+    final hashedKey = _parachainId.hashedKey();
+    return hashedKey;
   }
 }
