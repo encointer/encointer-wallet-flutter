@@ -76,6 +76,8 @@ dependencies:
   printing: ^5.11.0
   pdf: ^3.10.4
   connectivity_plus: ^5.0.1
+  ew_encointer_utils:
+    path: ../packages/ew_encointer_utils/
   ew_storage:
     path: ../packages/ew_storage/
   ew_http:

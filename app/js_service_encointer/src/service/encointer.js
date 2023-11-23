@@ -8,7 +8,6 @@ import { unsubscribe } from '../utils/unsubscribe.js';
 import { communityIdentifierToString } from '@encointer/util';
 import {
   getMeetupIndex as _getMeetupIndex,
-  getNextMeetupTime as _getNextMeetupTime,
   getDemurrage as _getDemurrage, submitAndWatchTx,
 } from '@encointer/node-api';
 import { getFinalizedHeader } from './chain.js';
@@ -149,21 +148,6 @@ export async function getMeetupIndex (cid, cIndex, address) {
   const cIndexT = api.createType('CeremonyIndexType', cIndex);
 
   return _getMeetupIndex(api, cidT, cIndexT, address);
-}
-
-/**
- * Gets the meetup time for a location.
- *
- * @param location Meetup location with fields as numbers, e.g. 35.153215322
- * @returns {Promise<Moment>}
- */
-export async function getNextMeetupTime (location) {
-  const locT = api.createType('Location', {
-    lat: stringToDegree(location.lat),
-    lon: stringToDegree(location.lon),
-  });
-
-  return _getNextMeetupTime(api, locT);
 }
 
 /**
@@ -313,7 +297,6 @@ export default {
   subscribeCommunityIdentifiers,
   subscribeBusinessRegistry,
   getProofOfAttendance,
-  getNextMeetupTime,
   getMeetupIndex,
   hasPendingIssuance,
   getBalance,

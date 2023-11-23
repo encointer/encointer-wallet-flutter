@@ -16,7 +16,7 @@ class MeetupTimeTestCase {
   final double longitude;
 
   /// Global `MeetupTimeOffset` of the encointer chain.
-  final double offset;
+  final int offset;
 
   /// Expected result in ms units.
   final int expected;
