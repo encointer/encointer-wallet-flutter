@@ -363,7 +363,8 @@ class EncointerApi {
     await _currentPhaseSubscription?.cancel();
     final currentPhaseKey = encointerKusama.query.encointerScheduler.currentPhaseKey();
 
-    _currentPhaseSubscription = await encointerKusama.rpc.state.subscribeStorage([currentPhaseKey], (storageChangeSet) async {
+    _currentPhaseSubscription =
+        await encointerKusama.rpc.state.subscribeStorage([currentPhaseKey], (storageChangeSet) async {
       if (storageChangeSet.changes[0].value != null) {
         final phasePolkadart = et.CeremonyPhaseType.decode(ByteInput(storageChangeSet.changes[0].value!));
         Log.p('[subscribeCurrentPhase] Got new phase: $phasePolkadart');
