@@ -20,17 +20,6 @@ import {
   hasCommittedFor,
 } from './faucet.js';
 
-/**
- * Subscribes to the currencies registry
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeCommunityIdentifiers (msgChannel) {
-  return await api.query[pallets.encointerCommunities.name][pallets.encointerCommunities.calls.communityIdentifiers]((cids) => {
-    send(msgChannel, cids);
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
 export async function getBalance (cid, address) {
   const balanceEntry = await api.query.encointerBalances.balance(cid, address);
   return {
@@ -266,7 +255,6 @@ export async function sendNextPhaseTx() {
 }
 
 export default {
-  subscribeCommunityIdentifiers,
   subscribeBusinessRegistry,
   getProofOfAttendance,
   getMeetupIndex,

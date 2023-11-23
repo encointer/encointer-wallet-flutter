@@ -58,10 +58,10 @@ class EncointerApi {
   final AppStore store;
 
   StreamSubscription<StorageChangeSet>? _currentPhaseSubscription;
-  final String _communityIdentifiersChannel = 'communityIdentifiers';
+  StreamSubscription<StorageChangeSet>? _cidSubscription;
+
   /// Placeholder, we don't subscribe to the business registry yet.
   StreamSubscription<StorageChangeSet>? _businessRegistry;
-
 
   final NoTeeApi _noTee;
   final TeeProxyApi _teeProxy;
@@ -85,12 +85,8 @@ class EncointerApi {
     Log.d('api: stopping encointer subscriptions', 'EncointerApi');
 
     await _currentPhaseSubscription?.cancel();
+    await _cidSubscription?.cancel();
     await _businessRegistry?.cancel();
-
-    final futures = [
-      jsApi.unsubscribeMessage(_communityIdentifiersChannel),
-    ];
-    await Future.wait(futures);
   }
 
   Future<void> close() async {
@@ -411,17 +407,25 @@ class EncointerApi {
     }
   }
 
-  /// Subscribes to storage changes in the Scheduler pallet: encointerScheduler.currentPhase().
+  /// Subscribes to new community identifies.
   Future<void> subscribeCommunityIdentifiers() async {
-    await jsApi.subscribeMessage(
-        'encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")', _communityIdentifiersChannel,
-        (Iterable<dynamic> data) async {
-      final cids =
-          List<dynamic>.from(data).map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>)).toList();
+    await _cidSubscription?.cancel();
+    final cidsPhaseKey = encointerKusama.query.encointerCommunities.communityIdentifiersKey();
 
-      await store.encointer.setCommunityIdentifiers(cids);
+    _currentPhaseSubscription =
+        await encointerKusama.rpc.state.subscribeStorage([cidsPhaseKey], (storageChangeSet) async {
+      if (storageChangeSet.changes[0].value != null) {
+        final cidsPolkadart = const SequenceCodec(et.CommunityIdentifier.codec).decode(
+          ByteInput(storageChangeSet.changes[0].value!),
+        );
+        Log.p('[subscribeCommunityIdentifiers] got cids: $cidsPolkadart');
 
-      await communitiesGetAll();
+        // transform them into our own cid
+        final cids = cidsPolkadart.map(CommunityIdentifier.fromPolkadart).toList();
+
+        await store.encointer.setCommunityIdentifiers(cids);
+        await communitiesGetAll();
+      }
     });
   }
 
