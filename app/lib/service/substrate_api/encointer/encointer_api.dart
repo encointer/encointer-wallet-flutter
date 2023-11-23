@@ -25,6 +25,7 @@ import 'package:encointer_wallet/service/substrate_api/encointer/encointer_dart_
 import 'package:encointer_wallet/service/substrate_api/encointer/no_tee_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:ew_encointer_utils/ew_encointer_utils.dart' as ew_utils;
 import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
@@ -255,32 +256,41 @@ class EncointerApi {
     store.encointer.setCommunities(cidNames);
   }
 
-  /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().
-  ///
-  /// Fixme: Sometimes the PhaseAwareBox takes ages to update. This might be due to multiple network requests on JS side.
-  /// We could fetch the phaseDurations at application startup, cache them and supply them in the call here.
+  /// Queries the Scheduler pallet
   Future<DateTime?> getMeetupTime() async {
     Log.d('api: getMeetupTime', 'EncointerApi');
 
-    // I we are not assigned to a meetup, we just get any location to get an estimate of the chosen community's meetup
-    // times.
+    // I we are not assigned to a meetup, we just get any location to get
+    // an estimate of the chosen community's meetup times.
     final locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
-
     final mLocation = locationIndex != null && store.encointer.community?.meetupLocations != null
         ? store.encointer.community?.meetupLocations![locationIndex]
         : store.encointer.community?.meetupLocations?.first;
 
+    final attestingStart = store.encointer.attestingPhaseStart;
+
     if (mLocation == null) {
-      Log.d("No meetup locations found, can't get meetup time.", 'EncointerApi');
+      Log.p("No meetup locations found, can't get meetup time.", 'EncointerApi');
       return Future.value();
     }
 
-    final time =
-        await jsApi.evalJavascript<String>('encointer.getNextMeetupTime(${jsonEncode(mLocation)})').then(int.parse);
+    if (attestingStart == null) {
+      Log.p("attestingStart == 0, can't get meetup time.", 'EncointerApi');
+      return Future.value();
+    }
 
-    Log.d('api: Next Meetup Time: $time', 'EncointerApi');
-    store.encointer.community!.setMeetupTime(time);
-    return DateTime.fromMillisecondsSinceEpoch(time);
+    final offset = await encointerKusama.query.encointerCeremonies.meetupTimeOffset();
+
+    final meetupTime = ew_utils.meetupTime(
+      double.parse(mLocation.lon),
+      attestingStart,
+      offset,
+      ew_utils.momentsPerDay,
+    );
+
+    Log.d('api: Next Meetup Time: $meetupTime', 'EncointerApi');
+    store.encointer.community!.setMeetupTime(meetupTime);
+    return DateTime.fromMillisecondsSinceEpoch(meetupTime);
   }
 
   Future<void> getMeetupTimeOverride({bool devMode = false}) async {
