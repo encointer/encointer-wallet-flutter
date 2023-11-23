@@ -21,17 +21,6 @@ import {
 } from './faucet.js';
 
 /**
- * Subscribes to the current ceremony phase
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeCurrentPhase (msgChannel) {
-  return await api.query.encointerScheduler.currentPhase((phase) => {
-    send(msgChannel, phase);
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
-/**
  * Subscribes to the currencies registry
  * @param msgChannel channel that the message handler uses on the dart side
  * @returns {Promise<void>}
@@ -292,7 +281,6 @@ export async function sendNextPhaseTx() {
 }
 
 export default {
-  subscribeCurrentPhase,
   subscribeBalance,
   subscribeCommunityIdentifiers,
   subscribeBusinessRegistry,

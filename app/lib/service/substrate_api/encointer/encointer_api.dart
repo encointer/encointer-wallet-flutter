@@ -58,7 +58,6 @@ class EncointerApi {
   final AppStore store;
 
   StreamSubscription<StorageChangeSet>? _currentPhaseSubscription;
-  final String _currentPhaseSubscribeChannel = 'currentPhase';
   final String _communityIdentifiersChannel = 'communityIdentifiers';
   final String _businessRegistryChannel = 'businessRegistry';
 
@@ -86,7 +85,6 @@ class EncointerApi {
     await _currentPhaseSubscription?.cancel();
 
     final futures = [
-      jsApi.unsubscribeMessage(_currentPhaseSubscribeChannel),
       jsApi.unsubscribeMessage(_communityIdentifiersChannel),
       jsApi.unsubscribeMessage(_businessRegistryChannel)
     ];
@@ -368,7 +366,7 @@ class EncointerApi {
     _currentPhaseSubscription = await encointerKusama.rpc.state.subscribeStorage([currentPhaseKey], (storageChangeSet) async {
       if (storageChangeSet.changes[0].value != null) {
         final phasePolkadart = et.CeremonyPhaseType.decode(ByteInput(storageChangeSet.changes[0].value!));
-        Log.p('[subscribeCurrentPhase] Got new phase with: $phasePolkadart');
+        Log.p('[subscribeCurrentPhase] Got new phase: $phasePolkadart');
 
         final cid = store.encointer.chosenCid;
         final pubKey = store.account.currentAccountPubKey;
