@@ -17,11 +17,6 @@ class MockChainApi extends ChainApi {
   }
 
   @override
-  Future<void> subscribeTimestamp() async {
-    Log.d('api: unimplemented subscribeTimestamp', 'MockChainApi');
-  }
-
-  @override
   Future<void> subscribeNewHeads() async {
     Log.d('api: unimplemented subscribeTimestamp', 'MockChainApi');
   }

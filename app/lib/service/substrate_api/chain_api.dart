@@ -9,7 +9,6 @@ class ChainApi {
   final JSApi jsApi;
   final AppStore store;
 
-  final String _timeStampSubscribeChannel = 'timestamp';
   final String _newHeadsSubscribeChannel = 'latestHeader';
 
   Future<void> startSubscriptions() async {
@@ -20,16 +19,6 @@ class ChainApi {
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping encointer subscriptions', 'ChainApi');
     await jsApi.unsubscribeMessage(_newHeadsSubscribeChannel);
-  }
-
-  /// Subscribes to the timestamp of the last block. This is only used as a debug method to see if the dart-js interface
-  /// is still communicating.
-  Future<void> subscribeTimestamp() async {
-    await jsApi.subscribeMessage(
-      'chain.subscribeTimestamp("$_timeStampSubscribeChannel")',
-      _timeStampSubscribeChannel,
-      (dynamic data) => {Log.d('timestamp: $data', 'ChainApi')},
-    );
   }
 
   /// Subscribes to the latest headers
