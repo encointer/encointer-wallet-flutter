@@ -1,10 +1,9 @@
 import { assert, hexToU8a } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { createType } from '@polkadot/types';
-import { parseEncointerBalance, stringToDegree } from '@encointer/types';
+import { parseEncointerBalance } from '@encointer/types';
 import { keyring, sendTxWithPair } from './account.js';
-import { pallets, parachainSpecName, solochainSpecName } from '../config/consts.js';
-import { unsubscribe } from '../utils/unsubscribe.js';
+import { parachainSpecName, solochainSpecName } from '../config/consts.js';
 import { communityIdentifierToString } from '@encointer/util';
 import {
   getMeetupIndex as _getMeetupIndex,
