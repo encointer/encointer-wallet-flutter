@@ -361,22 +361,14 @@ class EncointerApi {
     return balanceEntry;
   }
 
-  // Currently not working because of upstream bug: https://github.com/leonardocustodio/polkadart/issues/373#issuecomment-1823842275
   Future<void> subscribeCurrentPhase() async {
     await _currentPhaseSubscription?.cancel();
     final currentPhaseKey = encointerKusama.query.encointerScheduler.currentPhaseKey();
 
-    Log.p('[subscribeCurrentPhase] Got subscribing to currentPhase with:');
-    Log.p(hex.encode(currentPhaseKey));
-
     _currentPhaseSubscription = await encointerKusama.rpc.state.subscribeStorage([currentPhaseKey], (storageChangeSet) async {
-      Log.p('[subscribeCurrentPhase] subscription: ${storageChangeSet.block}');
-      Log.p('[subscribeCurrentPhase] subscription changes: ${storageChangeSet.changes.length}');
-      Log.p('[subscribeCurrentPhase] subscription: ${storageChangeSet.changes[0].key}');
-      Log.p('[subscribeCurrentPhase] subscription: ${storageChangeSet.changes[0].value}');
-
       if (storageChangeSet.changes[0].value != null) {
         final phasePolkadart = et.CeremonyPhaseType.decode(ByteInput(storageChangeSet.changes[0].value!));
+        Log.p('[subscribeCurrentPhase] Got new phase with: $phasePolkadart');
 
         final cid = store.encointer.chosenCid;
         final pubKey = store.account.currentAccountPubKey;
@@ -384,6 +376,8 @@ class EncointerApi {
 
         if (cid != null && pubKey != null && pubKey.isNotEmpty) {
           final address = store.account.currentAddress;
+          // The `storageChangeSet.block` contains the block hash, we can use this as the `at`
+          // parameter instead of polling, see #1559.
           final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
           store.encointer.setAggregatedAccountData(cid, address, data);
         }
