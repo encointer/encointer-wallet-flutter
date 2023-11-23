@@ -293,8 +293,6 @@ export default {
   addressFromUri,
   gen,
   recover,
-  getBalance,
-  subscribeBalance,
   getBlockTime,
   txFeeEstimate,
   sendTx,

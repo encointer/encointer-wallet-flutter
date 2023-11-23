@@ -101,21 +101,6 @@ export function encointerTransferAll (fromPair, recipientAddress, cid) {
 }
 
 /**
- * Subscribes to the balance of a given cid
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeBalance (msgChannel, cid, address) {
-  return await api.query.encointerBalances.balance(cid, address, (b) => {
-    const balance = parseEncointerBalance(b.principal.bits);
-    send(msgChannel, {
-      principal: balance,
-      lastUpdate: b.lastUpdate.toNumber()
-    });
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
-/**
  * Subscribes to the business registry of a given cid
  * @param msgChannel channel that the message handler uses on the dart side
  * @returns {Promise<void>}
@@ -281,7 +266,6 @@ export async function sendNextPhaseTx() {
 }
 
 export default {
-  subscribeBalance,
   subscribeCommunityIdentifiers,
   subscribeBusinessRegistry,
   getProofOfAttendance,
