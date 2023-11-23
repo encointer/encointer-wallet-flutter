@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -55,6 +56,8 @@ class EncointerApi {
   final EncointerKusama encointerKusama;
 
   final AppStore store;
+
+  StreamSubscription<StorageChangeSet>? _currentPhaseSubscription;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
   final String _communityIdentifiersChannel = 'communityIdentifiers';
   final String _businessRegistryChannel = 'businessRegistry';
@@ -79,6 +82,8 @@ class EncointerApi {
 
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping encointer subscriptions', 'EncointerApi');
+
+    await _currentPhaseSubscription?.cancel();
 
     final futures = [
       jsApi.unsubscribeMessage(_currentPhaseSubscribeChannel),
@@ -356,23 +361,36 @@ class EncointerApi {
     return balanceEntry;
   }
 
+  // Currently not working because of upstream bug: https://github.com/leonardocustodio/polkadart/issues/373#issuecomment-1823842275
   Future<void> subscribeCurrentPhase() async {
-    await jsApi.subscribeMessage(
-        'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
-        (String data) async {
-      final phase = ceremonyPhaseFromString(data.toUpperCase())!;
+    await _currentPhaseSubscription?.cancel();
+    final currentPhaseKey = encointerKusama.query.encointerScheduler.currentPhaseKey();
 
-      final cid = store.encointer.chosenCid;
-      final pubKey = store.account.currentAccountPubKey;
+    Log.p('[subscribeCurrentPhase] Got subscribing to currentPhase with:');
+    Log.p(hex.encode(currentPhaseKey));
 
-      if (cid != null && pubKey != null && pubKey.isNotEmpty) {
-        final address = store.account.currentAddress;
-        final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
-        store.encointer.setAggregatedAccountData(cid, address, data);
+    _currentPhaseSubscription = await encointerKusama.rpc.state.subscribeStorage([currentPhaseKey], (storageChangeSet) async {
+      Log.p('[subscribeCurrentPhase] subscription: ${storageChangeSet.block}');
+      Log.p('[subscribeCurrentPhase] subscription changes: ${storageChangeSet.changes.length}');
+      Log.p('[subscribeCurrentPhase] subscription: ${storageChangeSet.changes[0].key}');
+      Log.p('[subscribeCurrentPhase] subscription: ${storageChangeSet.changes[0].value}');
+
+      if (storageChangeSet.changes[0].value != null) {
+        final phasePolkadart = et.CeremonyPhaseType.decode(ByteInput(storageChangeSet.changes[0].value!));
+
+        final cid = store.encointer.chosenCid;
+        final pubKey = store.account.currentAccountPubKey;
+        final phase = ceremonyPhaseTypeFromPolkadart(phasePolkadart);
+
+        if (cid != null && pubKey != null && pubKey.isNotEmpty) {
+          final address = store.account.currentAddress;
+          final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
+          store.encointer.setAggregatedAccountData(cid, address, data);
+        }
+
+        store.encointer.setCurrentPhase(phase);
+        await getNextPhaseTimestamp();
       }
-
-      store.encointer.setCurrentPhase(phase);
-      await getNextPhaseTimestamp();
     });
   }
 
