@@ -56,8 +56,10 @@ class AssetsApi {
 
     _balanceSubscription = await encointerKusama.rpc.state.subscribeStorage([balanceKey], (storageChangeSet) async {
       Log.p('Got account data subscription: $storageChangeSet');
-      final accountData = AccountData.decode(ByteInput(storageChangeSet.changes[0].value!));
-      await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol!: accountData}));
+      if (storageChangeSet.changes[0].value != null) {
+        final accountData = AccountData.decode(ByteInput(storageChangeSet.changes[0].value!));
+        await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol!: accountData}));
+      }
     });
   }
 }
