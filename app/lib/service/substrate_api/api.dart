@@ -49,7 +49,7 @@ class Api {
       provider,
       dartApi,
       AccountApi(store, js, provider),
-      AssetsApi(store, js),
+      AssetsApi(store, js, EncointerKusama(provider)),
       ChainApi(store, js),
       EncointerApi(store, js, dartApi, ewHttp, EncointerKusama(provider)),
       isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),

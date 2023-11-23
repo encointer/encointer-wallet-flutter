@@ -34,7 +34,7 @@ class MockApi extends Api {
           MockPolkadartProvider(),
           dartApi,
           MockAccountApi(store, js, MockPolkadartProvider()),
-          MockAssetsApi(store, js),
+          MockAssetsApi(store, js, MockEncointerKusamaApi()),
           MockChainApi(store, js),
           MockEncointerApi(store, js, dartApi, ewHttp, MockEncointerKusamaApi()),
           MockIpfsApi(ewHttp),

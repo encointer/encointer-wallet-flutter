@@ -2,7 +2,6 @@ import { cryptoWaitReady, mnemonicGenerate } from '@polkadot/util-crypto';
 import {
   hexToU8a,
   u8aToHex,
-  hexToString,
 } from '@polkadot/util';
 import BN from 'bn.js';
 import { Keyring } from '@polkadot/keyring';
@@ -11,7 +10,6 @@ import {
   encointerBalances,
   transfer
 } from '../config/consts.js';
-import { unsubscribe } from '../utils/unsubscribe.js';
 import { extractEvents } from '@encointer/node-api';
 import { stringNumberToEncointerBalanceU8a } from '../utils/utils.js';
 
@@ -97,46 +95,6 @@ async function addressFromUri(uri) {
   console.log(`[AddressFromUri] ss58: ${ss58}`);
 
   return keyring.encodeAddress(pubKey, ss58);
-}
-
-/**
- * get ERT balance of an address
- * @param {String} address
- * @returns {String} balance
- */
-async function getBalance (address) {
-  const all = await api.derive.balances.all(address);
-  const lockedBreakdown = all.lockedBreakdown.map((i) => {
-    return {
-      ...i,
-      use: hexToString(i.id.toHex())
-    };
-  });
-  return {
-    ...all,
-    lockedBreakdown
-  };
-}
-
-/**
- * subscribes to ERT balance of an address
- * @param msgChannel channel that the message handler uses on the dart side
- * @param {String} address
- * @returns {String} balance
- */
-async function subscribeBalance (msgChannel, address) {
-  return await api.derive.balances.all(address, (all) => {
-    const lockedBreakdown = all.lockedBreakdown.map((i) => {
-      return {
-        ...i,
-        use: hexToString(i.id.toHex())
-      };
-    });
-    send(msgChannel, {
-      ...all,
-      lockedBreakdown
-    });
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
 }
 
 function getBlockTime (blocks) {

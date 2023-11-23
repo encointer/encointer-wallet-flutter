@@ -1,15 +1,20 @@
+import 'dart:async';
+
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/assets/types/balances_info.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_polkadart/ew_polkadart.dart' show ByteInput, EncointerKusama, StorageChangeSet;
+import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_balances/types/account_data.dart';
 
 class AssetsApi {
-  AssetsApi(this.store, this.jsApi);
+  AssetsApi(this.store, this.jsApi, this.encointerKusama);
 
   final JSApi jsApi;
   final AppStore store;
+  final EncointerKusama encointerKusama;
 
-  final String _balanceSubscribeChannel = 'gas token balance';
+  StreamSubscription<StorageChangeSet>? _balanceSubscription;
 
   Future<void> startSubscriptions() async {
     Log.d('api: starting assets subscriptions', 'AssetsApi');
@@ -18,47 +23,41 @@ class AssetsApi {
 
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping assets subscriptions', 'AssetsApi');
-    await jsApi.unsubscribeMessage(_balanceSubscribeChannel);
+    await _balanceSubscription?.cancel();
+    _balanceSubscription = null;
   }
 
   Future<void> fetchBalance() async {
     final pubKey = store.account.currentAccountPubKey;
     final currentAddress = store.account.currentAddress;
-    if (pubKey != null && pubKey.isNotEmpty) {
-      final address = currentAddress;
-      final res = await jsApi.evalJavascript<Map<String, dynamic>>('account.getBalance("$address")');
-      await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res}));
+    if (currentAddress.isNotEmpty) {
+      final accountData = await encointerKusama.query.balances.account(AddressUtils.addressToPubKey(currentAddress));
+      await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol!: accountData}));
     }
-    await _fetchMarketPrice();
   }
 
-  Future<BalancesInfo> getBalance() async {
+  Future<AccountData> getBalance() async {
     return getBalanceOf(store.account.currentAddress);
   }
 
-  Future<BalancesInfo> getBalanceOf(String address) async {
-    final res = await jsApi.evalJavascript<Map<String, dynamic>>('account.getBalance("$address")');
-    return BalancesInfo.fromJson(res);
+  Future<AccountData> getBalanceOf(String address) async {
+    return encointerKusama.query.balances.account(AddressUtils.addressToPubKey(address));
   }
 
   Future<void> subscribeBalance() async {
-    await jsApi.unsubscribeMessage(_balanceSubscribeChannel);
+    await _balanceSubscription?.cancel();
 
     final pubKey = store.account.currentAccountPubKey;
-    if (pubKey != null && pubKey.isNotEmpty) {
-      final address = store.account.currentAddress;
+    final address = store.account.currentAddress;
 
-      await jsApi.subscribeMessage(
-        'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
-        _balanceSubscribeChannel,
-        (Map<String, dynamic> data) async {
-          await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data}));
-        },
-      );
-    }
-  }
+    if (pubKey == null || pubKey.isEmpty || address.isEmpty) return;
 
-  Future<void> _fetchMarketPrice() async {
-    Log.d('Fetch marketprice not implemented for Encointer networks', 'AssetsApi');
+    final balanceKey = encointerKusama.query.balances.accountKey(AddressUtils.addressToPubKey(address));
+
+    _balanceSubscription = await encointerKusama.rpc.state.subscribeStorage([balanceKey], (storageChangeSet) async {
+      Log.p('Got account data subscription: $storageChangeSet');
+      final accountData = AccountData.decode(ByteInput(storageChangeSet.changes[0].value!));
+      await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol!: accountData}));
+    });
   }
 }

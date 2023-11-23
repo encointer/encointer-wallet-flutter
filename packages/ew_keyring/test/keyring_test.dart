@@ -1,3 +1,5 @@
+// comment necessary, otherwise the json build runner misinterprets the @Skip annotation
+
 @Skip('These tests fail until we have sr25519 support')
 
 import 'package:ew_keyring/src/keyring.dart';
