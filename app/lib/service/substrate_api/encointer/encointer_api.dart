@@ -59,7 +59,9 @@ class EncointerApi {
 
   StreamSubscription<StorageChangeSet>? _currentPhaseSubscription;
   final String _communityIdentifiersChannel = 'communityIdentifiers';
-  final String _businessRegistryChannel = 'businessRegistry';
+  /// Placeholder, we don't subscribe to the business registry yet.
+  StreamSubscription<StorageChangeSet>? _businessRegistry;
+
 
   final NoTeeApi _noTee;
   final TeeProxyApi _teeProxy;
@@ -83,14 +85,11 @@ class EncointerApi {
     Log.d('api: stopping encointer subscriptions', 'EncointerApi');
 
     await _currentPhaseSubscription?.cancel();
+    await _businessRegistry?.cancel();
 
     final futures = [
       jsApi.unsubscribeMessage(_communityIdentifiersChannel),
-      jsApi.unsubscribeMessage(_businessRegistryChannel)
     ];
-    if (store.settings.endpointIsNoTee) {
-      futures.add(jsApi.unsubscribeMessage(_businessRegistryChannel));
-    }
     await Future.wait(futures);
   }
 
