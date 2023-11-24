@@ -153,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  hashlib_codecs:
+    dependency: transitive
+    description:
+      name: hashlib_codecs
+      sha256: "49e2a471f74b15f1854263e58c2ac11f2b631b5b12c836f9708a35397d36d626"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   http:
     dependency: transitive
     description:
@@ -286,25 +294,25 @@ packages:
     description:
       path: "packages/polkadart"
       ref: "cl/fix-subscribe-storage"
-      resolved-ref: "35a4a9c9fbaf0f0a8e99fb7904bcd0e2a4507401"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.3"
+    version: "0.2.5"
   polkadart_cli:
     dependency: "direct dev"
     description:
       path: "packages/polkadart_cli"
       ref: "cl/fix-subscribe-storage"
-      resolved-ref: "35a4a9c9fbaf0f0a8e99fb7904bcd0e2a4507401"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.2"
+    version: "0.2.3"
   polkadart_scale_codec:
     dependency: "direct main"
     description:
       path: "packages/polkadart_scale_codec"
       ref: "cl/fix-subscribe-storage"
-      resolved-ref: "35a4a9c9fbaf0f0a8e99fb7904bcd0e2a4507401"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -441,7 +449,7 @@ packages:
     description:
       path: "packages/substrate_metadata"
       ref: "cl/fix-subscribe-storage"
-      resolved-ref: "35a4a9c9fbaf0f0a8e99fb7904bcd0e2a4507401"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"

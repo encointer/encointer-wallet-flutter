@@ -374,7 +374,7 @@ packages:
     description:
       path: "packages/polkadart_keyring"
       ref: "cl/fix-subscribe-storage"
-      resolved-ref: "35a4a9c9fbaf0f0a8e99fb7904bcd0e2a4507401"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -383,7 +383,7 @@ packages:
     description:
       path: "packages/polkadart_scale_codec"
       ref: "cl/fix-subscribe-storage"
-      resolved-ref: "35a4a9c9fbaf0f0a8e99fb7904bcd0e2a4507401"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
