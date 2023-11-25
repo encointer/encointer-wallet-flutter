@@ -52,4 +52,14 @@ void main() {
       expect(assignmentFn(pIndex, params, assignmentCount), 1);
     });
   });
+
+  group('meetupIndex', () {
+    test('meetupIndex works', () {
+      const pIndex = 6;
+      const params = AssignmentParams(m: 4, s1: 5, s2: 3);
+      const assignmentCount = 5;
+
+      expect(meetupIndex(pIndex, params, assignmentCount), 2);
+    });
+  });
 }
