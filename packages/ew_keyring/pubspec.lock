@@ -374,7 +374,7 @@ packages:
     description:
       path: "packages/polkadart_keyring"
       ref: main
-      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
+      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -383,7 +383,7 @@ packages:
     description:
       path: "packages/polkadart_scale_codec"
       ref: main
-      resolved-ref: "0295b130ae5f6542d58f3f8e1945f3042591139f"
+      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
