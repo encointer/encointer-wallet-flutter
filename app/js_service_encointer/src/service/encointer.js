@@ -1,10 +1,9 @@
 import { assert, hexToU8a } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { createType } from '@polkadot/types';
-import { parseEncointerBalance, stringToDegree } from '@encointer/types';
+import { parseEncointerBalance } from '@encointer/types';
 import { keyring, sendTxWithPair } from './account.js';
-import { pallets, parachainSpecName, solochainSpecName } from '../config/consts.js';
-import { unsubscribe } from '../utils/unsubscribe.js';
+import { parachainSpecName, solochainSpecName } from '../config/consts.js';
 import { communityIdentifierToString } from '@encointer/util';
 import {
   getMeetupIndex as _getMeetupIndex,
@@ -19,28 +18,6 @@ import {
   getAllFaucetsWithAccount,
   hasCommittedFor,
 } from './faucet.js';
-
-/**
- * Subscribes to the current ceremony phase
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeCurrentPhase (msgChannel) {
-  return await api.query.encointerScheduler.currentPhase((phase) => {
-    send(msgChannel, phase);
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
-/**
- * Subscribes to the currencies registry
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeCommunityIdentifiers (msgChannel) {
-  return await api.query[pallets.encointerCommunities.name][pallets.encointerCommunities.calls.communityIdentifiers]((cids) => {
-    send(msgChannel, cids);
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
 
 export async function getBalance (cid, address) {
   const balanceEntry = await api.query.encointerBalances.balance(cid, address);
@@ -109,32 +86,6 @@ export function encointerTransferAll (fromPair, recipientAddress, cid) {
   };
 
   return sendTxWithPair(fromPair, txInfo, paramList);
-}
-
-/**
- * Subscribes to the balance of a given cid
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeBalance (msgChannel, cid, address) {
-  return await api.query.encointerBalances.balance(cid, address, (b) => {
-    const balance = parseEncointerBalance(b.principal.bits);
-    send(msgChannel, {
-      principal: balance,
-      lastUpdate: b.lastUpdate.toNumber()
-    });
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
-/**
- * Subscribes to the business registry of a given cid
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeBusinessRegistry (msgChannel, cid) {
-  return await api.query.encointerBazaar.businessRegistry(cid, (businesses) => {
-    send(msgChannel, businesses);
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
 }
 
 export async function getDemurrage (cid) {
@@ -292,10 +243,6 @@ export async function sendNextPhaseTx() {
 }
 
 export default {
-  subscribeCurrentPhase,
-  subscribeBalance,
-  subscribeCommunityIdentifiers,
-  subscribeBusinessRegistry,
   getProofOfAttendance,
   getMeetupIndex,
   hasPendingIssuance,

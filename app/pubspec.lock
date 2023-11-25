@@ -1308,8 +1308,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart"
-      ref: main
-      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
+      ref: "cl/fix-subscribe-storage"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.5"
@@ -1317,8 +1317,8 @@ packages:
     dependency: transitive
     description:
       path: "packages/polkadart_keyring"
-      ref: main
-      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
+      ref: "cl/fix-subscribe-storage"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -1326,8 +1326,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: main
-      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
+      ref: "cl/fix-subscribe-storage"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -1700,8 +1700,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/substrate_metadata"
-      ref: main
-      resolved-ref: "6a0f9223e43d8f89c2a2c29618741492563b21bd"
+      ref: "cl/fix-subscribe-storage"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"

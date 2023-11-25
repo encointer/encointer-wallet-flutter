@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i5;
+import 'dart:typed_data' as _i6;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i3;
@@ -50,5 +51,17 @@ class Queries {
       return _currentSlot.decodeValue(bytes);
     }
     return BigInt.zero; /* Default */
+  }
+
+  /// Returns the storage key for `authorities`.
+  _i6.Uint8List authoritiesKey() {
+    final hashedKey = _authorities.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `currentSlot`.
+  _i6.Uint8List currentSlotKey() {
+    final hashedKey = _currentSlot.hashedKey();
+    return hashedKey;
   }
 }

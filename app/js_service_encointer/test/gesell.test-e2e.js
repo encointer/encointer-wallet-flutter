@@ -49,15 +49,6 @@ describe('encointer', () => {
     });
   });
 
-  describe('accountgetBalances method', () => {
-    it('should return balances', async () => {
-      const address = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY';
-      const balances = await account.getBalance(address);
-      console.log(balances);
-      expect(balances.availableBalance.gtn(1));
-    });
-  });
-
   describe('can transform problematic location', () => {
     it('should be defined', async () => {
       const loc_js = {

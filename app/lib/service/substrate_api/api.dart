@@ -49,8 +49,8 @@ class Api {
       provider,
       dartApi,
       AccountApi(store, js, provider),
-      AssetsApi(store, js),
-      ChainApi(store, js),
+      AssetsApi(store, js, EncointerKusama(provider)),
+      ChainApi(store, provider),
       EncointerApi(store, js, dartApi, ewHttp, EncointerKusama(provider)),
       isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
       jsServiceEncointer,
@@ -269,14 +269,19 @@ class ReconnectingWsProvider extends Provider {
   }
 
   @override
-  Future disconnect() {
+  Future disconnect() async {
     // We only care if the channel is not equal to null.
     // Because we still want the internal cleanup if
     // the connection was closed from the other end.
     if (provider.channel == null) {
       return Future.value();
     } else {
-      return provider.disconnect();
+      try {
+        await provider.disconnect();
+      } catch (e) {
+        Log.e('Error disconnecting websocket: $e', 'ReconnectingWsProvider');
+        return Future.value();
+      }
     }
   }
 

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -55,9 +56,12 @@ class EncointerApi {
   final EncointerKusama encointerKusama;
 
   final AppStore store;
-  final String _currentPhaseSubscribeChannel = 'currentPhase';
-  final String _communityIdentifiersChannel = 'communityIdentifiers';
-  final String _businessRegistryChannel = 'businessRegistry';
+
+  StreamSubscription<StorageChangeSet>? _currentPhaseSubscription;
+  StreamSubscription<StorageChangeSet>? _cidSubscription;
+
+  /// Placeholder, we don't subscribe to the business registry yet.
+  StreamSubscription<StorageChangeSet>? _businessRegistry;
 
   final NoTeeApi _noTee;
   final TeeProxyApi _teeProxy;
@@ -80,15 +84,9 @@ class EncointerApi {
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping encointer subscriptions', 'EncointerApi');
 
-    final futures = [
-      jsApi.unsubscribeMessage(_currentPhaseSubscribeChannel),
-      jsApi.unsubscribeMessage(_communityIdentifiersChannel),
-      jsApi.unsubscribeMessage(_businessRegistryChannel)
-    ];
-    if (store.settings.endpointIsNoTee) {
-      futures.add(jsApi.unsubscribeMessage(_businessRegistryChannel));
-    }
-    await Future.wait(futures);
+    await _currentPhaseSubscription?.cancel();
+    await _cidSubscription?.cancel();
+    await _businessRegistry?.cancel();
   }
 
   Future<void> close() async {
@@ -357,22 +355,31 @@ class EncointerApi {
   }
 
   Future<void> subscribeCurrentPhase() async {
-    await jsApi.subscribeMessage(
-        'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
-        (String data) async {
-      final phase = ceremonyPhaseFromString(data.toUpperCase())!;
+    unawaited(getCurrentPhase());
+    await _currentPhaseSubscription?.cancel();
+    final currentPhaseKey = encointerKusama.query.encointerScheduler.currentPhaseKey();
 
-      final cid = store.encointer.chosenCid;
-      final pubKey = store.account.currentAccountPubKey;
+    _currentPhaseSubscription =
+        await encointerKusama.rpc.state.subscribeStorage([currentPhaseKey], (storageChangeSet) async {
+      if (storageChangeSet.changes[0].value != null) {
+        final phasePolkadart = et.CeremonyPhaseType.decode(ByteInput(storageChangeSet.changes[0].value!));
+        Log.p('[subscribeCurrentPhase] Got new phase: $phasePolkadart');
 
-      if (cid != null && pubKey != null && pubKey.isNotEmpty) {
-        final address = store.account.currentAddress;
-        final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
-        store.encointer.setAggregatedAccountData(cid, address, data);
+        final cid = store.encointer.chosenCid;
+        final pubKey = store.account.currentAccountPubKey;
+        final phase = ceremonyPhaseTypeFromPolkadart(phasePolkadart);
+
+        if (cid != null && pubKey != null && pubKey.isNotEmpty) {
+          final address = store.account.currentAddress;
+          // The `storageChangeSet.block` contains the block hash, we can use this as the `at`
+          // parameter instead of polling, see #1559.
+          final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
+          store.encointer.setAggregatedAccountData(cid, address, data);
+        }
+
+        store.encointer.setCurrentPhase(phase);
+        await getNextPhaseTimestamp();
       }
-
-      store.encointer.setCurrentPhase(phase);
-      await getNextPhaseTimestamp();
     });
   }
 
@@ -401,17 +408,29 @@ class EncointerApi {
     }
   }
 
-  /// Subscribes to storage changes in the Scheduler pallet: encointerScheduler.currentPhase().
+  /// Subscribes to new community identifies.
   Future<void> subscribeCommunityIdentifiers() async {
-    await jsApi.subscribeMessage(
-        'encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")', _communityIdentifiersChannel,
-        (Iterable<dynamic> data) async {
-      final cids =
-          List<dynamic>.from(data).map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>)).toList();
+    // contrary to the JS subscriptions, we don't get the current
+    // value upon subscribing, only when it changes.
+    unawaited(getCommunityIdentifiers().then(store.encointer.setCommunityIdentifiers).then((_) => communitiesGetAll()));
 
-      await store.encointer.setCommunityIdentifiers(cids);
+    await _cidSubscription?.cancel();
+    final cidsPhaseKey = encointerKusama.query.encointerCommunities.communityIdentifiersKey();
 
-      await communitiesGetAll();
+    _currentPhaseSubscription =
+        await encointerKusama.rpc.state.subscribeStorage([cidsPhaseKey], (storageChangeSet) async {
+      if (storageChangeSet.changes[0].value != null) {
+        final cidsPolkadart = const SequenceCodec(et.CommunityIdentifier.codec).decode(
+          ByteInput(storageChangeSet.changes[0].value!),
+        );
+        Log.p('[subscribeCommunityIdentifiers] got cids: $cidsPolkadart');
+
+        // transform them into our own cid
+        final cids = cidsPolkadart.map(CommunityIdentifier.fromPolkadart).toList();
+
+        await store.encointer.setCommunityIdentifiers(cids);
+        await communitiesGetAll();
+      }
     });
   }
 
@@ -453,6 +472,8 @@ class EncointerApi {
 
   Future<void> getReputations() async {
     final address = store.account.currentAddress;
+
+    if (address.isEmpty) return;
 
     final reputations = await _dartApi.getReputations(address);
 
