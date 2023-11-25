@@ -473,6 +473,8 @@ class EncointerApi {
   Future<void> getReputations() async {
     final address = store.account.currentAddress;
 
+    if (address.isEmpty) return;
+
     final reputations = await _dartApi.getReputations(address);
 
     Log.d('api: getReputations: $reputations', 'EncointerApi');
