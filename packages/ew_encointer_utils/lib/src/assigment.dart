@@ -17,3 +17,28 @@ int meetupTime(double longitude, int attestingStart, int meetupTimeOffset, int o
 
   return (attestingStart + lonTime + meetupTimeOffset).round();
 }
+
+int assignmentFn(int participantIndex, AssignmentParams params, int assignmentCount) {
+
+  // invalid params
+  if (params.m == 0 || assignmentCount == 0) return 0;
+
+  final r1 = participantIndex * params.s1;
+  final r2 = r1 + params.s2;
+  final r3 = r2.remainder(params.m);
+  final endResult = r3.remainder(assignmentCount);
+
+  return endResult;
+}
+
+class AssignmentParams {
+  const AssignmentParams({
+    required this.m,
+    required this.s1,
+    required this.s2,
+  });
+
+  final int m;
+  final int s1;
+  final int s2;
+}
