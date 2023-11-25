@@ -355,6 +355,7 @@ class EncointerApi {
   }
 
   Future<void> subscribeCurrentPhase() async {
+    unawaited(getCurrentPhase());
     await _currentPhaseSubscription?.cancel();
     final currentPhaseKey = encointerKusama.query.encointerScheduler.currentPhaseKey();
 
