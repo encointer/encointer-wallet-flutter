@@ -22,7 +22,7 @@ int meetupTime(double longitude, int attestingStart, int meetupTimeOffset, int o
 
 int computeMeetupIndex(
   int participantIndex,
-  ParticipantType type,
+  ParticipantType participantType,
   Assignment assignment,
   AssignmentCount assignmentCount,
   int meetupCount,
@@ -34,7 +34,7 @@ int computeMeetupIndex(
 
   int mIndexFn(int pIndex, AssignmentParams params) => meetupIndex(pIndex, params, meetupCount);
 
-  switch (type) {
+  switch (participantType) {
     case ParticipantType.bootstrapper:
       if (pIndex < assignmentCount.bootstrappers) return mIndexFn(pIndex, assignment.bootstrappersReputables);
     case ParticipantType.reputable:
