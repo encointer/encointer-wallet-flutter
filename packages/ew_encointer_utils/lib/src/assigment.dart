@@ -18,10 +18,18 @@ int meetupTime(double longitude, int attestingStart, int meetupTimeOffset, int o
   return (attestingStart + lonTime + meetupTimeOffset).round();
 }
 
-int assignmentFn(int participantIndex, AssignmentParams params, int assignmentCount) {
+/// Gets the meetup index.
+///
+/// Throws an exception if params.m or assignmentCount is 0.
+int meetupIndex(int participantIndex, AssignmentParams params, int assignmentCount) {
+  return assignmentFn(participantIndex, params, assignmentCount) + 1;
+}
 
+int assignmentFn(int participantIndex, AssignmentParams params, int assignmentCount) {
   // invalid params
-  if (params.m == 0 || assignmentCount == 0) return 0;
+  if (params.m == 0 || assignmentCount == 0) {
+    throw Exception('[assignmentFn] invalid meetup params. params.m or assignmentCount was 0.');
+  }
 
   final r1 = participantIndex * params.s1;
   final r2 = r1 + params.s2;
