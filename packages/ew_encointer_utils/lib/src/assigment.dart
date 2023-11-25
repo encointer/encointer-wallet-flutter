@@ -50,3 +50,31 @@ class AssignmentParams {
   final int s1;
   final int s2;
 }
+
+class Assignment {
+  const Assignment({
+    required this.bootstrappersReputables,
+    required this.endorsees,
+    required this.newbies,
+    required this.locations,
+  });
+
+  final AssignmentParams bootstrappersReputables;
+  final AssignmentParams endorsees;
+  final AssignmentParams newbies;
+  final AssignmentParams locations;
+}
+
+class AssignmentCount {
+  const AssignmentCount({
+    required this.bootstrappers,
+    required this.reputables,
+    required this.endorsees,
+    required this.newbies,
+  });
+
+  final int bootstrappers;
+  final int reputables;
+  final int endorsees;
+  final int newbies;
+}
