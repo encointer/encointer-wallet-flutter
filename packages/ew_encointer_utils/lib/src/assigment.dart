@@ -1,3 +1,5 @@
+import 'package:ew_polkadart/encointer_types.dart';
+
 /// Moments day [ms/d]
 ///
 /// https://github.com/encointer/encointer-parachain/blob/b9d21b5caaa640e505264dbad52ef8023ef98f63/polkadot-parachains/encointer-runtime/src/lib.rs#L468
@@ -16,6 +18,36 @@ int meetupTime(double longitude, int attestingStart, int meetupTimeOffset, int o
   final lonTime = lon * timePerDegree;
 
   return (attestingStart + lonTime + meetupTimeOffset).round();
+}
+
+int computeMeetupIndex(
+  int participantIndex,
+  ParticipantType type,
+  Assignment assignment,
+  AssignmentCount assignmentCount,
+  int meetupCount,
+) {
+  if (meetupCount == 0) return 0;
+  if (participantIndex == 0) return 0;
+
+  final pIndex = participantIndex - 1;
+
+  int mIndexFn(int pIndex, AssignmentParams params) => meetupIndex(pIndex, params, meetupCount);
+
+  switch (type) {
+    case ParticipantType.bootstrapper:
+      if (pIndex < assignmentCount.bootstrappers) return mIndexFn(pIndex, assignment.bootstrappersReputables);
+    case ParticipantType.reputable:
+      if (pIndex < assignmentCount.reputables) {
+        return mIndexFn(pIndex + assignmentCount.bootstrappers, assignment.bootstrappersReputables);
+      }
+    case ParticipantType.endorsee:
+      if (pIndex < assignmentCount.endorsees) return mIndexFn(pIndex, assignment.endorsees);
+    case ParticipantType.newbie:
+      if (pIndex < assignmentCount.newbies) return mIndexFn(pIndex, assignment.newbies);
+  }
+
+  return 0;
 }
 
 /// Gets the meetup index.
