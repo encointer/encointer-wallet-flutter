@@ -1,3 +1,3 @@
-# Ew Models
+# Ew Primitives
 
-Encointer Models Package
+Defines primitives used throughout the encointer code base.
