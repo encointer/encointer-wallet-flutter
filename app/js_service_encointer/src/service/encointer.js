@@ -3,7 +3,6 @@ import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { createType } from '@polkadot/types';
 import { parseEncointerBalance } from '@encointer/types';
 import { keyring, sendTxWithPair } from './account.js';
-import { parachainSpecName, solochainSpecName } from '../config/consts.js';
 import { communityIdentifierToString } from '@encointer/util';
 import {
   getMeetupIndex as _getMeetupIndex,
@@ -102,70 +101,6 @@ export async function getMeetupIndex (cid, cIndex, address) {
 }
 
 /**
- * Checks if the ceremony rewards has been issued.
- *
- * @param cid CommunityIdentifier
- * @param cIndex CeremonyIndexType
- * @param address
- * @returns {Promise<boolean>}
- */
-export async function hasPendingIssuance (cid, cIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-
-  const mIndex = await getMeetupIndex(cidT, cIndexT, address);
-
-  if (mIndex.eq(0)) {
-    return false;
-  }
-
-  if (hasNewIssuedRewardsStorage()) {
-    console.log('js-hasPendingIssuance', `Has IssuedRewards storage v2`);
-
-    try {
-      const alreadyIssued = await api.query.encointerCeremonies.issuedRewards([cidT, cIndexT], mIndex)
-        .then((maybeResult) => api.createType('Option<MeetupResult>', maybeResult));
-      console.log('js-hasPendingIssuance', `MeetupResult: ${alreadyIssued.toJSON()}`);
-
-      // None means that the meetup has not been evaluated.
-      return alreadyIssued.isNone;
-    } catch (e) {
-      console.log('js-hasPendingIssuance', `Error: ${e.toString()}`);
-    }
-  } else {
-    console.log('js-hasPendingIssuance', `Has IssuedRewards storage v1`);
-    return hasPendingIssuanceOld(cidT, cIndexT, mIndex);
-  }
-}
-
-async function hasPendingIssuanceOld(cidT, cIndexT, mIndexT) {
-  // We need to fetch the keys here, as the storage map is (CurrencyCeremony, MeetupIndex) => ().
-  // The default value for type '()' is ''. Hence, we can't identify if the key exists by looking at the value
-  // because polkadot-js returns the default value for a nonexistent key.
-  const alreadyIssued = await api.query.encointerCeremonies.issuedRewards.keys([cidT, cIndexT])
-    .then((keys) => keys.map(({ args: [_currencyCeremony, mIndex] }) => mIndex.toNumber()));
-
-  console.log('js-hasPendingIssuance', `already issued meetups: ${alreadyIssued}`);
-
-  // `toNumber` is necessary; polkadot-js objects to not overwrite object equality.
-  return !alreadyIssued.includes(mIndexT.toNumber());
-}
-
-/**
- * The old version just had `HashMap<MeetupIndex,()`. If the key was present, the meetup has been evaluated.
- *
- * The new one contains a `HashMap<MeetupIndex, MeetupResult>`.
- * @returns {boolean}
- */
-function hasNewIssuedRewardsStorage() {
-  console.log(`Api:Runtime Spec Name: ${api.runtimeVersion.specName}`);
-  console.log(`Api:Runtime Spec version: ${api.runtimeVersion.specVersion}`);
-
-  return (api.runtimeVersion.specName.toString() === parachainSpecName && api.runtimeVersion.specVersion >= 9) ||
-    (api.runtimeVersion.specName.toString() === solochainSpecName && api.runtimeVersion.specVersion >= 20);
-}
-
-/**
  * Produce Proof of Attendance to register a participant.
  * In order to create properly formatted SCALE encoded proof following arguments
  * required: attendee account with address and sign method, community identifier
@@ -245,7 +180,6 @@ export async function sendNextPhaseTx() {
 export default {
   getProofOfAttendance,
   getMeetupIndex,
-  hasPendingIssuance,
   getBalance,
   sendNextPhaseTx,
   reapVoucher,
