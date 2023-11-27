@@ -58,7 +58,6 @@ int meetupIndex(int participantIndex, AssignmentParams params, int assignmentCou
 }
 
 int assignmentFn(int participantIndex, AssignmentParams params, int assignmentCount) {
-
   if (params.m.toInt() == 0 || assignmentCount == 0) {
     throw Exception('[assignmentFn] invalid meetup params. params.m or assignmentCount was 0.');
   }
@@ -70,4 +69,3 @@ int assignmentFn(int participantIndex, AssignmentParams params, int assignmentCo
 
   return endResult;
 }
-

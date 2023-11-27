@@ -81,10 +81,13 @@ class Meetup {
   factory Meetup.fromJson(Map<String, dynamic> json) {
     return Meetup(
       meetupIndex: json['index'] as int,
-      location: LocationFactory.fromDouble(lat: double.parse(json['location']['lat'] as String), lon: double.parse(json['location']['lon'] as String)),
+      location: LocationFactory.fromDouble(
+        lat: double.parse(json['location']['lat'] as String),
+        lon: double.parse(json['location']['lon'] as String),
+      ),
       time: json['time'] as int,
       registrations:
-      (json['registrations'] as List<dynamic>).map((e) => Registration.fromJson(e as List<dynamic>)).toList(),
+          (json['registrations'] as List<dynamic>).map((e) => Registration.fromJson(e as List<dynamic>)).toList(),
     );
   }
 
@@ -121,6 +124,6 @@ ParticipantType? participantTypeFromString(String value) {
 
 T? getEnumFromString<T>(Iterable<T> values, String? value) {
   return values.firstWhereOrNull(
-        (type) => type.toString().split('.').last.toUpperCase() == value.toString().split('.').last.toUpperCase(),
+    (type) => type.toString().split('.').last.toUpperCase() == value.toString().split('.').last.toUpperCase(),
   );
 }

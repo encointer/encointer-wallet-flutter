@@ -1,4 +1,3 @@
-
 part of 'ceremony_test_case.dart';
 
 const _ceremonyTestCases = [ceremonyTestCase1, ceremonyTestCase2];
