@@ -429,6 +429,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  ew_primitives:
+    dependency: "direct overridden"
+    description:
+      path: "../packages/ew_primitives"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   ew_storage:
     dependency: "direct main"
     description:

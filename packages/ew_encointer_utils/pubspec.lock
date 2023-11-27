@@ -151,7 +151,7 @@ packages:
     source: path
     version: "0.1.0+1"
   ew_substrate_fixed:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       path: "../ew_substrate_fixed"
       relative: true
@@ -633,4 +633,4 @@ packages:
     source: hosted
     version: "1.1.0+3"
 sdks:
-  dart: ">=3.0.3 <4.0.0"
+  dart: ">=3.0.1 <4.0.0"
