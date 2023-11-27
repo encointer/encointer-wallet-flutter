@@ -5,7 +5,6 @@ import { parseEncointerBalance } from '@encointer/types';
 import { keyring, sendTxWithPair } from './account.js';
 import { communityIdentifierToString } from '@encointer/util';
 import {
-  getMeetupIndex as _getMeetupIndex,
   getDemurrage as _getDemurrage, submitAndWatchTx,
 } from '@encointer/node-api';
 import { getFinalizedHeader } from './chain.js';
@@ -93,13 +92,6 @@ export async function getDemurrage (cid) {
   return _getDemurrage(api, cidT).then((demBits) => parseEncointerBalance(demBits));
 }
 
-export async function getMeetupIndex (cid, cIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-
-  return _getMeetupIndex(api, cidT, cIndexT, address);
-}
-
 /**
  * Produce Proof of Attendance to register a participant.
  * In order to create properly formatted SCALE encoded proof following arguments
@@ -179,7 +171,6 @@ export async function sendNextPhaseTx() {
 
 export default {
   getProofOfAttendance,
-  getMeetupIndex,
   getBalance,
   sendNextPhaseTx,
   reapVoucher,
