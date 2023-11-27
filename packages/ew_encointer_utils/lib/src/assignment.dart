@@ -58,7 +58,7 @@ int meetupIndex(int participantIndex, AssignmentParams params, int assignmentCou
 }
 
 int assignmentFn(int participantIndex, AssignmentParams params, int assignmentCount) {
-  // invalid params
+
   if (params.m.toInt() == 0 || assignmentCount == 0) {
     throw Exception('[assignmentFn] invalid meetup params. params.m or assignmentCount was 0.');
   }
@@ -71,42 +71,3 @@ int assignmentFn(int participantIndex, AssignmentParams params, int assignmentCo
   return endResult;
 }
 
-// class AssignmentParams {
-//   const AssignmentParams({
-//     required this.m,
-//     required this.s1,
-//     required this.s2,
-//   });
-//
-//   final int m;
-//   final int s1;
-//   final int s2;
-// }
-//
-// class Assignment {
-//   const Assignment({
-//     required this.bootstrappersReputables,
-//     required this.endorsees,
-//     required this.newbies,
-//     required this.locations,
-//   });
-//
-//   final AssignmentParams bootstrappersReputables;
-//   final AssignmentParams endorsees;
-//   final AssignmentParams newbies;
-//   final AssignmentParams locations;
-// }
-//
-// class AssignmentCount {
-//   const AssignmentCount({
-//     required this.bootstrappers,
-//     required this.reputables,
-//     required this.endorsees,
-//     required this.newbies,
-//   });
-//
-//   final int bootstrappers;
-//   final int reputables;
-//   final int endorsees;
-//   final int newbies;
-// }
