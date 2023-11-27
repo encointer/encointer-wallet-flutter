@@ -5,7 +5,7 @@
 import '../../src';
 import encointer, {
   getProofOfAttendance,
-  _getProofOfAttendance, reapVoucher, encointerTransfer, getBalance, hasPendingIssuance
+  _getProofOfAttendance, reapVoucher, encointerTransfer, getBalance
 } from '../../src/service/encointer';
 import { cryptoWaitReady, signatureVerify } from '@polkadot/util-crypto';
 import { localDevNetwork } from '../testUtils/networks';
@@ -94,16 +94,6 @@ describe('encointer', () => {
       expect(
         parseI64F64(loc.lon)
       ).toBe(18.543548583984375);
-    });
-  });
-
-  describe('pendingIssuance', () => {
-    it('correctly returns false', async () =>  {
-      const cid = communityIdentifierFromString(api.registry, "sqm1v79dF6b");
-      expect(
-        await hasPendingIssuance(
-          cid, 2, "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d"
-        )).toBeFalsy();
     });
   });
 
