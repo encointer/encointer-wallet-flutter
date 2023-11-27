@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_dynamic_calls
-
 import 'package:ew_encointer_utils/ew_encointer_utils.dart';
 import 'package:ew_polkadart/encointer_types.dart';
 import 'package:test/test.dart';
