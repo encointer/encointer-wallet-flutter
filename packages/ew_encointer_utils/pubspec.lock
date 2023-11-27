@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "61.0.0"
+  adaptive_number:
+    dependency: transitive
+    description:
+      name: adaptive_number
+      sha256: "3a567544e9b5c9c803006f51140ad544aedc79604fd4f3f2c1380003f97c1d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -33,6 +41,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
+  base_x:
+    dependency: transitive
+    description:
+      name: base_x
+      sha256: "519abcdafd637d4b6bd7e72fabd8f9264935f804b9b9f6c5d8411c7d52cbf8fd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
+  bip39_mnemonic:
+    dependency: transitive
+    description:
+      name: bip39_mnemonic
+      sha256: "24855a62fb9dd930f697063a274e084b0a574e1cc55ec270ca4756f579ab512c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.6"
   boolean_selector:
     dependency: transitive
     description:
@@ -50,13 +74,13 @@ packages:
     source: hosted
     version: "1.1.1"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
-      sha256: "4a07be6cb69c84d677a6c3096fcf960cc3285a8330b4603e0d463d15d9bd934c"
+      sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.1"
+    version: "1.18.0"
   convert:
     dependency: transitive
     description:
@@ -81,6 +105,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  cryptography:
+    dependency: transitive
+    description:
+      name: cryptography
+      sha256: df156c5109286340817d21fa7b62f9140f17915077127dd70f8bd7a2a0997a35
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0"
+  ed25519_edwards:
+    dependency: transitive
+    description:
+      name: ed25519_edwards
+      sha256: "6ce0112d131327ec6d42beede1e5dfd526069b18ad45dcf654f15074ad9276cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   equatable:
     dependency: transitive
     description:
@@ -89,6 +129,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
+  ew_keyring:
+    dependency: "direct main"
+    description:
+      path: "../ew_keyring"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   ew_polkadart:
     dependency: "direct main"
     description:
@@ -96,6 +143,20 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  ew_primitives:
+    dependency: "direct main"
+    description:
+      path: "../ew_primitives"
+      relative: true
+    source: path
+    version: "0.1.0+1"
+  ew_substrate_fixed:
+    dependency: transitive
+    description:
+      path: "../ew_substrate_fixed"
+      relative: true
+    source: path
+    version: "0.0.1"
   file:
     dependency: transitive
     description:
@@ -104,6 +165,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      sha256: "25517a4deb0c03aa0f32fd12db525856438902d9c16536311e76cdc57b31d7d1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
+  flutter_curve25519:
+    dependency: transitive
+    description:
+      name: flutter_curve25519
+      sha256: d2d196e51de878f5f0289d2d7c5e93dc0c62ccda7ca98c7e47b5a58a6851b861
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2"
   frontend_server_client:
     dependency: transitive
     description:
@@ -176,6 +253,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.8.1"
   json_schema2:
     dependency: transitive
     description:
@@ -257,6 +342,15 @@ packages:
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.5"
+  polkadart_keyring:
+    dependency: transitive
+    description:
+      path: "packages/polkadart_keyring"
+      ref: "cl/fix-subscribe-storage"
+      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
+      url: "https://github.com/encointer/polkadart"
+    source: git
+    version: "0.2.1"
   polkadart_scale_codec:
     dependency: "direct overridden"
     description:
@@ -362,6 +456,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  ss58:
+    dependency: transitive
+    description:
+      name: ss58
+      sha256: b24d2713597b83708ef30daea5a565dba8bc9129031b30c025069e168301ae5e
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   stack_trace:
     dependency: transitive
     description:
@@ -386,6 +488,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  substrate_bip39:
+    dependency: transitive
+    description:
+      name: substrate_bip39
+      sha256: "78b45e9959c3394ecc9b56d9bfb07e11f93db70d273eccd93e3e4d84b28f11c0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   substrate_metadata:
     dependency: transitive
     description:
@@ -434,6 +544,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  unorm_dart:
+    dependency: transitive
+    description:
+      name: unorm_dart
+      sha256: "5b35bff83fce4d76467641438f9e867dc9bcfdb8c1694854f230579d68cd8f4b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   uri:
     dependency: transitive
     description:
@@ -515,4 +633,4 @@ packages:
     source: hosted
     version: "1.1.0+3"
 sdks:
-  dart: ">=3.0.1 <4.0.0"
+  dart: ">=3.0.3 <4.0.0"

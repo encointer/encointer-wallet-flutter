@@ -36,15 +36,15 @@ int computeMeetupIndex(
 
   switch (participantType) {
     case ParticipantType.bootstrapper:
-      if (pIndex < assignmentCount.bootstrappers) return mIndexFn(pIndex, assignment.bootstrappersReputables);
+      if (pIndex < assignmentCount.bootstrappers.toInt()) return mIndexFn(pIndex, assignment.bootstrappersReputables);
     case ParticipantType.reputable:
-      if (pIndex < assignmentCount.reputables) {
-        return mIndexFn(pIndex + assignmentCount.bootstrappers, assignment.bootstrappersReputables);
+      if (pIndex < assignmentCount.reputables.toInt()) {
+        return mIndexFn(pIndex + assignmentCount.bootstrappers.toInt(), assignment.bootstrappersReputables);
       }
     case ParticipantType.endorsee:
-      if (pIndex < assignmentCount.endorsees) return mIndexFn(pIndex, assignment.endorsees);
+      if (pIndex < assignmentCount.endorsees.toInt()) return mIndexFn(pIndex, assignment.endorsees);
     case ParticipantType.newbie:
-      if (pIndex < assignmentCount.newbies) return mIndexFn(pIndex, assignment.newbies);
+      if (pIndex < assignmentCount.newbies.toInt()) return mIndexFn(pIndex, assignment.newbies);
   }
 
   return 0;
@@ -59,54 +59,54 @@ int meetupIndex(int participantIndex, AssignmentParams params, int assignmentCou
 
 int assignmentFn(int participantIndex, AssignmentParams params, int assignmentCount) {
   // invalid params
-  if (params.m == 0 || assignmentCount == 0) {
+  if (params.m.toInt() == 0 || assignmentCount == 0) {
     throw Exception('[assignmentFn] invalid meetup params. params.m or assignmentCount was 0.');
   }
 
-  final r1 = participantIndex * params.s1;
-  final r2 = r1 + params.s2;
-  final r3 = r2.remainder(params.m);
+  final r1 = participantIndex * params.s1.toInt();
+  final r2 = r1 + params.s2.toInt();
+  final r3 = r2.remainder(params.m.toInt());
   final endResult = r3.remainder(assignmentCount);
 
   return endResult;
 }
 
-class AssignmentParams {
-  const AssignmentParams({
-    required this.m,
-    required this.s1,
-    required this.s2,
-  });
-
-  final int m;
-  final int s1;
-  final int s2;
-}
-
-class Assignment {
-  const Assignment({
-    required this.bootstrappersReputables,
-    required this.endorsees,
-    required this.newbies,
-    required this.locations,
-  });
-
-  final AssignmentParams bootstrappersReputables;
-  final AssignmentParams endorsees;
-  final AssignmentParams newbies;
-  final AssignmentParams locations;
-}
-
-class AssignmentCount {
-  const AssignmentCount({
-    required this.bootstrappers,
-    required this.reputables,
-    required this.endorsees,
-    required this.newbies,
-  });
-
-  final int bootstrappers;
-  final int reputables;
-  final int endorsees;
-  final int newbies;
-}
+// class AssignmentParams {
+//   const AssignmentParams({
+//     required this.m,
+//     required this.s1,
+//     required this.s2,
+//   });
+//
+//   final int m;
+//   final int s1;
+//   final int s2;
+// }
+//
+// class Assignment {
+//   const Assignment({
+//     required this.bootstrappersReputables,
+//     required this.endorsees,
+//     required this.newbies,
+//     required this.locations,
+//   });
+//
+//   final AssignmentParams bootstrappersReputables;
+//   final AssignmentParams endorsees;
+//   final AssignmentParams newbies;
+//   final AssignmentParams locations;
+// }
+//
+// class AssignmentCount {
+//   const AssignmentCount({
+//     required this.bootstrappers,
+//     required this.reputables,
+//     required this.endorsees,
+//     required this.newbies,
+//   });
+//
+//   final int bootstrappers;
+//   final int reputables;
+//   final int endorsees;
+//   final int newbies;
+// }

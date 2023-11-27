@@ -7,6 +7,11 @@ environment:
   sdk: ">=3.0.1 <4.0.0"
 
 dependencies:
+  collection: 1.18.0
+  ew_keyring:
+    path: ../ew_keyring
+  ew_primitives:
+    path: ../ew_primitives
   ew_polkadart:
     path: ../ew_polkadart
 
