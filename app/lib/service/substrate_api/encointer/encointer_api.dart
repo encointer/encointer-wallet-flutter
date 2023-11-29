@@ -336,20 +336,25 @@ class EncointerApi {
 
     final cc = Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), issuanceCIndex);
 
-    final participantMeetupIndex = await getMeetupIndex(cc, Address.decode(address));
+    try {
+      final participantMeetupIndex = await getMeetupIndex(cc, Address.decode(address));
 
-    if (participantMeetupIndex == 0) {
-      Log.d('[hasPendingIssuance] participant was not assigned to a meetup');
-      return false;
-    }
+      if (participantMeetupIndex == 0) {
+        Log.d('[hasPendingIssuance] participant was not assigned to a meetup');
+        return false;
+      }
 
-    final meetupResult =
-        await encointerKusama.query.encointerCeremonies.issuedRewards(cc, BigInt.from(participantMeetupIndex));
+      final meetupResult =
+          await encointerKusama.query.encointerCeremonies.issuedRewards(cc, BigInt.from(participantMeetupIndex));
 
-    if (meetupResult == null) {
-      return true;
-    } else {
-      Log.d('[hasPendingIssuance] meetupResult: ${jsonEncode(meetupResult)}');
+      if (meetupResult == null) {
+        return true;
+      } else {
+        Log.d('[hasPendingIssuance] meetupResult: ${jsonEncode(meetupResult)}');
+        return false;
+      }
+    } catch (e) {
+      Log.e('[hasPendingIssuance] exception in getting pending rewards: $e');
       return false;
     }
   }
@@ -486,8 +491,7 @@ class EncointerApi {
     await _cidSubscription?.cancel();
     final cidsPhaseKey = encointerKusama.query.encointerCommunities.communityIdentifiersKey();
 
-    _cidSubscription =
-        await encointerKusama.rpc.state.subscribeStorage([cidsPhaseKey], (storageChangeSet) async {
+    _cidSubscription = await encointerKusama.rpc.state.subscribeStorage([cidsPhaseKey], (storageChangeSet) async {
       if (storageChangeSet.changes[0].value != null) {
         final cidsPolkadart = const SequenceCodec(et.CommunityIdentifier.codec).decode(
           ByteInput(storageChangeSet.changes[0].value!),
