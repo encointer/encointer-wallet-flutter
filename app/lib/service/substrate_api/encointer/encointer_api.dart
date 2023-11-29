@@ -515,7 +515,7 @@ class EncointerApi {
     // transform them into our own cid
     final cids = cidsPolkadart.map(CommunityIdentifier.fromPolkadart).toList();
 
-    Log.d('CID: $cids', 'EncointerApi');
+    Log.d('[getCommunityIdentifiers]: $cids', 'EncointerApi');
     return cids;
   }
 
