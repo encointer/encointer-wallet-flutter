@@ -7,5 +7,5 @@ dependency_overrides:
   polkadart_scale_codec:
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/fix-subscribe-storage
+      ref: cl/generate-storage-key-getter-dev
       path: packages/polkadart_scale_codec

@@ -16,13 +16,13 @@ dependencies:
     #    path: ../../../polkadart/packages/polkadart
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/fix-subscribe-storage
+      ref: cl/generate-storage-key-getter-dev
       path: packages/polkadart
   polkadart_scale_codec:
     #    path: ../../../polkadart/packages/polkadart_scale_codec
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/fix-subscribe-storage
+      ref: cl/generate-storage-key-getter-dev
       path: packages/polkadart_scale_codec
 
 dev_dependencies:
@@ -32,13 +32,13 @@ dev_dependencies:
     #    path: ../../../polkadart/packages/polkadart_cli
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/fix-subscribe-storage
+      ref: cl/generate-storage-key-getter-dev
       path: packages/polkadart_cli
   substrate_metadata:
     #    path: ../../../polkadart/packages/substrate_metadata
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/fix-subscribe-storage
+      ref: cl/generate-storage-key-getter-dev
       path: packages/substrate_metadata
 
   test: 1.24.3
@@ -51,21 +51,21 @@ dependency_overrides:
     #    path: ../../../polkadart/packages/polkadart
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/fix-subscribe-storage
+      ref: cl/generate-storage-key-getter-dev
       path: packages/polkadart
 
   polkadart_scale_codec:
     #    path: ../../../polkadart/packages/polkadart_scale_codec
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/fix-subscribe-storage
+      ref: cl/generate-storage-key-getter-dev
       path: packages/polkadart_scale_codec
 
   substrate_metadata:
     #    path: ../../../polkadart/packages/substrate_metadata
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/fix-subscribe-storage
+      ref: cl/generate-storage-key-getter-dev
       path: packages/substrate_metadata
 
 # This only generates valid files on UNIX machines.
