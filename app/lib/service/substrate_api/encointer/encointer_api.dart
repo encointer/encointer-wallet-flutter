@@ -486,7 +486,7 @@ class EncointerApi {
     await _cidSubscription?.cancel();
     final cidsPhaseKey = encointerKusama.query.encointerCommunities.communityIdentifiersKey();
 
-    _currentPhaseSubscription =
+    _cidSubscription =
         await encointerKusama.rpc.state.subscribeStorage([cidsPhaseKey], (storageChangeSet) async {
       if (storageChangeSet.changes[0].value != null) {
         final cidsPolkadart = const SequenceCodec(et.CommunityIdentifier.codec).decode(
