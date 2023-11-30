@@ -1,12 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
+import 'dart:typed_data' as _i5;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/encointer_primitives/scheduler/ceremony_phase_type.dart' as _i3;
-import '../types/encointer_runtime/runtime_call.dart' as _i5;
-import '../types/pallet_encointer_scheduler/pallet/call.dart' as _i6;
+import '../types/encointer_runtime/runtime_call.dart' as _i6;
+import '../types/pallet_encointer_scheduler/pallet/call.dart' as _i7;
 
 class Queries {
   const Queries(this.__api);
@@ -107,39 +108,69 @@ class Queries {
     }
     return BigInt.zero; /* Default */
   }
+
+  /// Returns the storage key for `currentCeremonyIndex`.
+  _i5.Uint8List currentCeremonyIndexKey() {
+    final hashedKey = _currentCeremonyIndex.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `lastCeremonyBlock`.
+  _i5.Uint8List lastCeremonyBlockKey() {
+    final hashedKey = _lastCeremonyBlock.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `currentPhase`.
+  _i5.Uint8List currentPhaseKey() {
+    final hashedKey = _currentPhase.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `nextPhaseTimestamp`.
+  _i5.Uint8List nextPhaseTimestampKey() {
+    final hashedKey = _nextPhaseTimestamp.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `phaseDurations`.
+  _i5.Uint8List phaseDurationsKey(_i3.CeremonyPhaseType key1) {
+    final hashedKey = _phaseDurations.hashedKeyFor(key1);
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// See [`Pallet::next_phase`].
-  _i5.RuntimeCall nextPhase() {
-    final _call = _i6.Call.values.nextPhase();
-    return _i5.RuntimeCall.values.encointerScheduler(_call);
+  _i6.RuntimeCall nextPhase() {
+    final _call = _i7.Call.values.nextPhase();
+    return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 
   /// See [`Pallet::push_by_one_day`].
-  _i5.RuntimeCall pushByOneDay() {
-    final _call = _i6.Call.values.pushByOneDay();
-    return _i5.RuntimeCall.values.encointerScheduler(_call);
+  _i6.RuntimeCall pushByOneDay() {
+    final _call = _i7.Call.values.pushByOneDay();
+    return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 
   /// See [`Pallet::set_phase_duration`].
-  _i5.RuntimeCall setPhaseDuration({
+  _i6.RuntimeCall setPhaseDuration({
     required ceremonyPhase,
     required duration,
   }) {
-    final _call = _i6.Call.values.setPhaseDuration(
+    final _call = _i7.Call.values.setPhaseDuration(
       ceremonyPhase: ceremonyPhase,
       duration: duration,
     );
-    return _i5.RuntimeCall.values.encointerScheduler(_call);
+    return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 
   /// See [`Pallet::set_next_phase_timestamp`].
-  _i5.RuntimeCall setNextPhaseTimestamp({required timestamp}) {
-    final _call = _i6.Call.values.setNextPhaseTimestamp(timestamp: timestamp);
-    return _i5.RuntimeCall.values.encointerScheduler(_call);
+  _i6.RuntimeCall setNextPhaseTimestamp({required timestamp}) {
+    final _call = _i7.Call.values.setNextPhaseTimestamp(timestamp: timestamp);
+    return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 }
 

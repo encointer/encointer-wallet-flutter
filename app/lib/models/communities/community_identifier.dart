@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ew_polkadart/encointer_types.dart' as et;
 
 import 'package:encointer_wallet/utils/format.dart';
 
@@ -14,6 +15,10 @@ class CommunityIdentifier {
     const codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
     return CommunityIdentifier(utf8.encode(cid.substring(0, 5)), codec.decode(cid.substring(5)));
+  }
+
+  factory CommunityIdentifier.fromPolkadart(et.CommunityIdentifier cid) {
+    return CommunityIdentifier(cid.geohash, cid.digest);
   }
 
   // JS-passes these values as hex-strings, but this would be more complicated to handle in dart.

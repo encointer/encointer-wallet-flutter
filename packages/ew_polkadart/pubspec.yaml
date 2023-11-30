@@ -7,6 +7,7 @@ environment:
   sdk: ">=3.0.1 <4.0.0"
 
 dependencies:
+  convert: ^3.1.1
   # Generated files depend on quiver
   quiver: ^3.2.1
   # Once polkadart is stable enough and has all our fixes, we can
@@ -17,6 +18,12 @@ dependencies:
       url: https://github.com/encointer/polkadart
       ref: main
       path: packages/polkadart
+  polkadart_scale_codec:
+    #    path: ../../../polkadart/packages/polkadart_scale_codec
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: main
+      path: packages/polkadart_scale_codec
 
 dev_dependencies:
   # The generated files do not satisfy the `very_good_analysis` lints.

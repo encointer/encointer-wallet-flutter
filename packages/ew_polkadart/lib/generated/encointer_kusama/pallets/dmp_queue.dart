@@ -1,13 +1,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
+import 'dart:typed_data' as _i8;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i5;
 
 import '../types/cumulus_pallet_dmp_queue/config_data.dart' as _i2;
 import '../types/cumulus_pallet_dmp_queue/page_index_data.dart' as _i3;
-import '../types/cumulus_pallet_dmp_queue/pallet/call.dart' as _i9;
-import '../types/encointer_runtime/runtime_call.dart' as _i8;
+import '../types/cumulus_pallet_dmp_queue/pallet/call.dart' as _i10;
+import '../types/encointer_runtime/runtime_call.dart' as _i9;
 import '../types/sp_weights/weight_v2/weight.dart' as _i7;
 import '../types/tuples.dart' as _i4;
 
@@ -134,20 +135,50 @@ class Queries {
     }
     return 0; /* Default */
   }
+
+  /// Returns the storage key for `configuration`.
+  _i8.Uint8List configurationKey() {
+    final hashedKey = _configuration.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `pageIndex`.
+  _i8.Uint8List pageIndexKey() {
+    final hashedKey = _pageIndex.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `pages`.
+  _i8.Uint8List pagesKey(int key1) {
+    final hashedKey = _pages.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `overweight`.
+  _i8.Uint8List overweightKey(BigInt key1) {
+    final hashedKey = _overweight.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `counterForOverweight`.
+  _i8.Uint8List counterForOverweightKey() {
+    final hashedKey = _counterForOverweight.hashedKey();
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// See [`Pallet::service_overweight`].
-  _i8.RuntimeCall serviceOverweight({
+  _i9.RuntimeCall serviceOverweight({
     required index,
     required weightLimit,
   }) {
-    final _call = _i9.Call.values.serviceOverweight(
+    final _call = _i10.Call.values.serviceOverweight(
       index: index,
       weightLimit: weightLimit,
     );
-    return _i8.RuntimeCall.values.dmpQueue(_call);
+    return _i9.RuntimeCall.values.dmpQueue(_call);
   }
 }

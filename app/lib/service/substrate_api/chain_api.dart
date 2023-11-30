@@ -1,16 +1,16 @@
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
+import 'dart:async';
+
+import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
 
 class ChainApi {
-  ChainApi(this.store, this.jsApi);
+  ChainApi(this.store, this.provider);
 
-  final JSApi jsApi;
   final AppStore store;
+  final ReconnectingWsProvider provider;
 
-  final String _timeStampSubscribeChannel = 'timestamp';
-  final String _newHeadsSubscribeChannel = 'latestHeader';
+  StreamSubscription<Header>? _latestHeaderSubscription;
 
   Future<void> startSubscriptions() async {
     Log.d('api: starting encointer subscriptions', 'ChainApi');
@@ -19,24 +19,27 @@ class ChainApi {
 
   Future<void> stopSubscriptions() async {
     Log.d('api: stopping encointer subscriptions', 'ChainApi');
-    await jsApi.unsubscribeMessage(_newHeadsSubscribeChannel);
-  }
-
-  /// Subscribes to the timestamp of the last block. This is only used as a debug method to see if the dart-js interface
-  /// is still communicating.
-  Future<void> subscribeTimestamp() async {
-    await jsApi.subscribeMessage(
-      'chain.subscribeTimestamp("$_timeStampSubscribeChannel")',
-      _timeStampSubscribeChannel,
-      (dynamic data) => {Log.d('timestamp: $data', 'ChainApi')},
-    );
+    await _latestHeaderSubscription?.cancel();
   }
 
   /// Subscribes to the latest headers
   Future<void> subscribeNewHeads() async {
-    await jsApi.subscribeMessage('chain.subscribeNewHeads("$_newHeadsSubscribeChannel")', _newHeadsSubscribeChannel,
-        (Map<String, dynamic> header) {
-      store.chain.setLatestHeader(Header.fromJson(header));
+    await _latestHeaderSubscription?.cancel();
+
+    final subscription = await provider.subscribe(
+      'chain_subscribeNewHeads',
+      [],
+      onCancel: (subscription) async {
+        await provider.send('chain_unsubscribeNewHeads', [subscription]);
+      },
+    );
+
+    _latestHeaderSubscription = subscription.stream.map((res) {
+      Log.p('Header: ${res.result}');
+      return Header.fromJson(res.result as Map<String, dynamic>);
+    }).listen((header) {
+      Log.p('[subscribeNewHeads] Got header: ${header.toJson()}');
+      store.chain.setLatestHeader(header);
     });
   }
 }

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/validate_keys.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
@@ -17,6 +16,7 @@ import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_keyring/ew_keyring.dart' show ValidateKeys;
 
 class ImportAccountView extends StatelessWidget {
   const ImportAccountView({super.key});

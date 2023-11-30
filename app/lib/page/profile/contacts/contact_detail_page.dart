@@ -1,4 +1,3 @@
-import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -18,6 +17,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 class ContactDetailPage extends StatefulWidget {
   const ContactDetailPage(this.accountData, {super.key});
@@ -46,7 +47,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final store = context.watch<AppStore>();
-    final address = Fmt.ss58Encode(account.pubKey, prefix: store.settings.endpoint.ss58!);
+    final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: store.settings.endpoint.ss58!);
     return Scaffold(
       appBar: AppBar(
         title: isEditing
@@ -277,7 +278,7 @@ class EndorseButton extends StatelessWidget {
     final community = store.encointer.community;
     final bootstrappers = community?.bootstrappers;
     final l10n = context.l10n;
-    final address = Fmt.ss58Encode(contact.pubKey, prefix: store.settings.endpoint.ss58!);
+    final address = AddressUtils.pubKeyHexToAddress(contact.pubKey, prefix: store.settings.endpoint.ss58!);
 
     if (bootstrappers != null && bootstrappers.contains(address)) {
       await _popupDialog(context, l10n.cantEndorseBootstrapper);

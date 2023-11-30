@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i8;
+import 'dart:typed_data' as _i9;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i7;
@@ -8,8 +9,8 @@ import '../types/encointer_primitives/bazaar/business_data.dart' as _i4;
 import '../types/encointer_primitives/bazaar/business_identifier.dart' as _i5;
 import '../types/encointer_primitives/bazaar/offering_data.dart' as _i6;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
-import '../types/encointer_runtime/runtime_call.dart' as _i9;
-import '../types/pallet_encointer_bazaar/pallet/call.dart' as _i10;
+import '../types/encointer_runtime/runtime_call.dart' as _i10;
+import '../types/pallet_encointer_bazaar/pallet/call.dart' as _i11;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 
 class Queries {
@@ -84,76 +85,100 @@ class Queries {
       growable: true,
     )); /* Default */
   }
+
+  /// Returns the storage key for `businessRegistry`.
+  _i9.Uint8List businessRegistryKey(
+    _i2.CommunityIdentifier key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _businessRegistry.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `offeringRegistry`.
+  _i9.Uint8List offeringRegistryKey(
+    _i5.BusinessIdentifier key1,
+    int key2,
+  ) {
+    final hashedKey = _offeringRegistry.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// See [`Pallet::create_business`].
-  _i9.RuntimeCall createBusiness({
+  _i10.RuntimeCall createBusiness({
     required cid,
     required url,
   }) {
-    final _call = _i10.Call.values.createBusiness(
+    final _call = _i11.Call.values.createBusiness(
       cid: cid,
       url: url,
     );
-    return _i9.RuntimeCall.values.encointerBazaar(_call);
+    return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
   /// See [`Pallet::update_business`].
-  _i9.RuntimeCall updateBusiness({
+  _i10.RuntimeCall updateBusiness({
     required cid,
     required url,
   }) {
-    final _call = _i10.Call.values.updateBusiness(
+    final _call = _i11.Call.values.updateBusiness(
       cid: cid,
       url: url,
     );
-    return _i9.RuntimeCall.values.encointerBazaar(_call);
+    return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
   /// See [`Pallet::delete_business`].
-  _i9.RuntimeCall deleteBusiness({required cid}) {
-    final _call = _i10.Call.values.deleteBusiness(cid: cid);
-    return _i9.RuntimeCall.values.encointerBazaar(_call);
+  _i10.RuntimeCall deleteBusiness({required cid}) {
+    final _call = _i11.Call.values.deleteBusiness(cid: cid);
+    return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
   /// See [`Pallet::create_offering`].
-  _i9.RuntimeCall createOffering({
+  _i10.RuntimeCall createOffering({
     required cid,
     required url,
   }) {
-    final _call = _i10.Call.values.createOffering(
+    final _call = _i11.Call.values.createOffering(
       cid: cid,
       url: url,
     );
-    return _i9.RuntimeCall.values.encointerBazaar(_call);
+    return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
   /// See [`Pallet::update_offering`].
-  _i9.RuntimeCall updateOffering({
+  _i10.RuntimeCall updateOffering({
     required cid,
     required oid,
     required url,
   }) {
-    final _call = _i10.Call.values.updateOffering(
+    final _call = _i11.Call.values.updateOffering(
       cid: cid,
       oid: oid,
       url: url,
     );
-    return _i9.RuntimeCall.values.encointerBazaar(_call);
+    return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
   /// See [`Pallet::delete_offering`].
-  _i9.RuntimeCall deleteOffering({
+  _i10.RuntimeCall deleteOffering({
     required cid,
     required oid,
   }) {
-    final _call = _i10.Call.values.deleteOffering(
+    final _call = _i11.Call.values.deleteOffering(
       cid: cid,
       oid: oid,
     );
-    return _i9.RuntimeCall.values.encointerBazaar(_call);
+    return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 }

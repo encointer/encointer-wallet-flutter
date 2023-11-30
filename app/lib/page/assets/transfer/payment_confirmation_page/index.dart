@@ -1,8 +1,5 @@
 import 'dart:async';
 
-import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
-import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -21,10 +18,14 @@ import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
+import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 class PaymentConfirmationParams {
   const PaymentConfirmationParams({
@@ -63,7 +64,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     final cid = params.cid;
     final recipientAccount = params.recipientAccount;
     final amount = params.amount;
-    final recipientAddress = Fmt.ss58Encode(recipientAccount.pubKey, prefix: store.settings.endpoint.ss58!);
+    final recipientAddress =
+        AddressUtils.pubKeyHexToAddress(recipientAccount.pubKey, prefix: store.settings.endpoint.ss58!);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.payment)),

@@ -28,7 +28,7 @@ double parseFixedPoint(
       .split('')
       .asMap()
       .entries
-      .map((entry) => entry.value == '1' ? 1 / math.pow(2, entry.key + 1) : 0)
+      .map((entry) => entry.value == '1' ? math.pow(1 / 2, entry.key + 1) : 0)
       .reduce((acc, val) => acc + val);
 
   final integerPart = integerBits.isNotEmpty ? int.parse(integerBits, radix: 2) : 0;

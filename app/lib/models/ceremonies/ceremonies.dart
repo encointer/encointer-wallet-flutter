@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:ew_polkadart/encointer_types.dart' as et;
 import 'package:encointer_wallet/utils/enum.dart';
 
 part 'ceremonies.g.dart';
@@ -12,6 +13,7 @@ class AggregatedAccountData {
   AggregatedAccountData(this.global, this.personal);
 
   factory AggregatedAccountData.fromJson(Map<String, dynamic> json) => _$AggregatedAccountDataFromJson(json);
+
   Map<String, dynamic> toJson() => _$AggregatedAccountDataToJson(this);
 
   AggregatedAccountDataGlobal global;
@@ -30,6 +32,7 @@ class AggregatedAccountDataPersonal {
 
   factory AggregatedAccountDataPersonal.fromJson(Map<String, dynamic> json) =>
       _$AggregatedAccountDataPersonalFromJson(json);
+
   Map<String, dynamic> toJson() => _$AggregatedAccountDataPersonalToJson(this);
 
   ParticipantType participantType;
@@ -53,6 +56,7 @@ class AggregatedAccountDataGlobal {
 
   factory AggregatedAccountDataGlobal.fromJson(Map<String, dynamic> json) =>
       _$AggregatedAccountDataGlobalFromJson(json);
+
   Map<String, dynamic> toJson() => _$AggregatedAccountDataGlobalToJson(this);
 
   CeremonyPhase ceremonyPhase;
@@ -73,6 +77,7 @@ class CommunityReputation {
   CommunityReputation(this.communityIdentifier, this.reputation);
 
   factory CommunityReputation.fromJson(Map<String, dynamic> json) => _$CommunityReputationFromJson(json);
+
   Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 
   CommunityIdentifier? communityIdentifier;
@@ -89,10 +94,12 @@ class Meetup {
   Meetup(this.index, this.locationIndex, this.time, this.registry);
 
   factory Meetup.fromJson(Map<String, dynamic> json) => _$MeetupFromJson(json);
+
   Map<String, dynamic> toJson() => _$MeetupToJson(this);
 
   int index;
   int locationIndex;
+
   // time is null in assigning phase
   int? time;
 
@@ -114,6 +121,17 @@ enum CeremonyPhase { Registering, Assigning, Attesting }
 enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
 
 // -- Helper functions for above types
+
+CeremonyPhase ceremonyPhaseTypeFromPolkadart(et.CeremonyPhaseType phase) {
+  switch (phase) {
+    case et.CeremonyPhaseType.registering:
+      return CeremonyPhase.Registering;
+    case et.CeremonyPhaseType.assigning:
+      return CeremonyPhase.Assigning;
+    case et.CeremonyPhaseType.attesting:
+      return CeremonyPhase.Attesting;
+  }
+}
 
 CeremonyPhase? ceremonyPhaseFromString(String value) {
   return getEnumFromString(CeremonyPhase.values, value);

@@ -64,13 +64,13 @@ mixin _$AssetsStore on _AssetsStore, Store {
   late final _$balancesAtom = Atom(name: '_AssetsStore.balances', context: context);
 
   @override
-  ObservableMap<String?, BalancesInfo> get balances {
+  ObservableMap<String?, AccountData> get balances {
     _$balancesAtom.reportRead();
     return super.balances;
   }
 
   @override
-  set balances(ObservableMap<String?, BalancesInfo> value) {
+  set balances(ObservableMap<String?, AccountData> value) {
     _$balancesAtom.reportWrite(value, super.balances, () {
       super.balances = value;
     });
@@ -184,8 +184,9 @@ mixin _$AssetsStore on _AssetsStore, Store {
   late final _$setAccountBalancesAsyncAction = AsyncAction('_AssetsStore.setAccountBalances', context: context);
 
   @override
-  Future<void> setAccountBalances(String? pubKey, Map<dynamic, dynamic>? amt, {bool needCache = true}) {
-    return _$setAccountBalancesAsyncAction.run(() => super.setAccountBalances(pubKey, amt, needCache: needCache));
+  Future<void> setAccountBalances(String? pubKey, Map<String, AccountData> accountDatas, {bool needCache = true}) {
+    return _$setAccountBalancesAsyncAction
+        .run(() => super.setAccountBalances(pubKey, accountDatas, needCache: needCache));
   }
 
   late final _$setAccountTokenBalancesAsyncAction =

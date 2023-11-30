@@ -6,6 +6,26 @@ publish_to: none
 environment:
   sdk: ">=3.0.1 <4.0.0"
 
+dependencies:
+  collection: 1.17.2
+  ew_keyring:
+    path: ../ew_keyring
+  ew_primitives:
+    path: ../ew_primitives
+  ew_polkadart:
+    path: ../ew_polkadart
+
 dev_dependencies:
   test: 1.24.3
   very_good_analysis: ^5.0.0+1
+
+# We have to use dependency overrides as the polkadart_cli in our fork uses
+# the published package as dependency. We can remove them when we use the
+# published package.
+dependency_overrides:
+  polkadart_scale_codec:
+    #    path: ../../../polkadart/packages/polkadart_scale_codec
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: main
+      path: packages/polkadart_scale_codec

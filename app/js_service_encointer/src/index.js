@@ -4,14 +4,12 @@ import 'regenerator-runtime/runtime.js';
 import account from './service/account.js';
 import encointer from './service/encointer.js';
 import settings from './service/settings.js';
-import chain from './service/chain.js';
 
 window.addEventListener('flutterInAppWebViewPlatformReady', function (event) {
 
   window.send = send;
 
   window.account = account;
-  window.chain = chain;
   window.encointer = encointer;
   window.settings = settings;
 

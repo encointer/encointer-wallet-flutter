@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
+import 'dart:typed_data' as _i5;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 
@@ -48,6 +49,18 @@ class Queries {
       return _storageVersion.decodeValue(bytes);
     }
     return _i3.Releases.v1Ancient; /* Default */
+  }
+
+  /// Returns the storage key for `nextFeeMultiplier`.
+  _i5.Uint8List nextFeeMultiplierKey() {
+    final hashedKey = _nextFeeMultiplier.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `storageVersion`.
+  _i5.Uint8List storageVersionKey() {
+    final hashedKey = _storageVersion.hashedKey();
+    return hashedKey;
   }
 }
 

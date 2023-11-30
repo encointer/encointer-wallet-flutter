@@ -5,12 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
 class AccountSharePage extends StatefulWidget {
   const AccountSharePage({super.key});
@@ -29,7 +29,8 @@ class _AccountSharePageState extends State<AccountSharePage> {
 
     final accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeShared = store.account.getAccountData(accountToBeSharedPubKey);
-    final addressSS58 = Fmt.ss58Encode(accountToBeSharedPubKey!, prefix: store.settings.endpoint.ss58!);
+    final addressSS58 =
+        AddressUtils.pubKeyHexToAddress(accountToBeSharedPubKey!, prefix: store.settings.endpoint.ss58!);
 
     final contactQrCode = ContactQrCode(
       account: addressSS58,

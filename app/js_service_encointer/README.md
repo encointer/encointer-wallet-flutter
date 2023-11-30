@@ -10,32 +10,6 @@ JS in the webView.
 In the [settings.js](src/service/settings.js) we initialize the window fields, e.g. `window.chain`, this will make the chain
 module available as top-level entrypoint from dart. All the module functions exported in the `export default` section of the JS-file can be called from the dart side.
 
-### Example getter
-JS-part
-
-```js
-
-export async function getBootstrappers (cid) {
-  // all the types passed from dart to JS are just a json map. 
-  // It is good practive to first create a type in with the
-  // input value.
-  const cidT = api.createType('CommunityIdentifier', cid);
-
-  // The polkadot-js/api automatically creates getters based on the encointer-node metadata, and make it queryable 
-  // like: api.query.<module-name>.<storage-name>()
-  // This example queries a map because the storage is declared as such, thus the function takes one argument.
-  // See rust declaration: https://github.com/encointer/pallets/blob/3fc6c4fcef549d32e0ed7beb73ac940b43b25af3/communities/src/lib.rs#L395
-  return await api.query.encointerCommunities.bootstrappers(cidT);
-}
-```
-
-Dart part
-```dart
-// parse the dynamic type into a List<String>
-final bootstrappers =
-        await jsApi.evalJavascript('encointer.getBootstrappers($cid)').then((bs) => List<String>.from(bs as Iterable));
-```
-
 ### Caveats
 * Always double check how you are passing the values from dart to JS. As JS does simply parse strings, many things can go wrong.
 * JS does not know types, but polkadot-js/api helps us with `api.createType` for complex types. Trying to transform a function arg into a type will uncover errors early.

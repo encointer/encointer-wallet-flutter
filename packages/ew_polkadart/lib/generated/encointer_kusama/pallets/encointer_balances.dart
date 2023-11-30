@@ -1,13 +1,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i7;
+import 'dart:typed_data' as _i9;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i6;
 
 import '../types/encointer_primitives/balances/balance_entry.dart' as _i3;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
-import '../types/encointer_runtime/runtime_call.dart' as _i9;
-import '../types/pallet_encointer_balances/pallet/call.dart' as _i10;
+import '../types/encointer_runtime/runtime_call.dart' as _i10;
+import '../types/pallet_encointer_balances/pallet/call.dart' as _i11;
 import '../types/sp_core/crypto/account_id32.dart' as _i4;
 import '../types/substrate_fixed/fixed_i128.dart' as _i5;
 import '../types/substrate_fixed/fixed_u128.dart' as _i8;
@@ -114,41 +115,71 @@ class Queries {
     }
     return BigInt.zero; /* Default */
   }
+
+  /// Returns the storage key for `totalIssuance`.
+  _i9.Uint8List totalIssuanceKey(_i2.CommunityIdentifier key1) {
+    final hashedKey = _totalIssuance.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `balance`.
+  _i9.Uint8List balanceKey(
+    _i2.CommunityIdentifier key1,
+    _i4.AccountId32 key2,
+  ) {
+    final hashedKey = _balance.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `demurragePerBlock`.
+  _i9.Uint8List demurragePerBlockKey(_i2.CommunityIdentifier key1) {
+    final hashedKey = _demurragePerBlock.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `feeConversionFactor`.
+  _i9.Uint8List feeConversionFactorKey() {
+    final hashedKey = _feeConversionFactor.hashedKey();
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// See [`Pallet::transfer`].
-  _i9.RuntimeCall transfer({
+  _i10.RuntimeCall transfer({
     required dest,
     required communityId,
     required amount,
   }) {
-    final _call = _i10.Call.values.transfer(
+    final _call = _i11.Call.values.transfer(
       dest: dest,
       communityId: communityId,
       amount: amount,
     );
-    return _i9.RuntimeCall.values.encointerBalances(_call);
+    return _i10.RuntimeCall.values.encointerBalances(_call);
   }
 
   /// See [`Pallet::set_fee_conversion_factor`].
-  _i9.RuntimeCall setFeeConversionFactor({required feeConversionFactor}) {
-    final _call = _i10.Call.values.setFeeConversionFactor(feeConversionFactor: feeConversionFactor);
-    return _i9.RuntimeCall.values.encointerBalances(_call);
+  _i10.RuntimeCall setFeeConversionFactor({required feeConversionFactor}) {
+    final _call = _i11.Call.values.setFeeConversionFactor(feeConversionFactor: feeConversionFactor);
+    return _i10.RuntimeCall.values.encointerBalances(_call);
   }
 
   /// See [`Pallet::transfer_all`].
-  _i9.RuntimeCall transferAll({
+  _i10.RuntimeCall transferAll({
     required dest,
     required cid,
   }) {
-    final _call = _i10.Call.values.transferAll(
+    final _call = _i11.Call.values.transferAll(
       dest: dest,
       cid: cid,
     );
-    return _i9.RuntimeCall.values.encointerBalances(_call);
+    return _i10.RuntimeCall.values.encointerBalances(_call);
   }
 }
 

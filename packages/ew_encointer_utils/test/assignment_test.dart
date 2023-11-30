@@ -1,5 +1,8 @@
 import 'package:ew_encointer_utils/ew_encointer_utils.dart';
+import 'package:ew_polkadart/encointer_types.dart';
 import 'package:test/test.dart';
+
+import 'ceremony_test_case/ceremony_test_case.dart';
 
 class MeetupTimeTestCase {
   MeetupTimeTestCase({
@@ -16,7 +19,7 @@ class MeetupTimeTestCase {
   final double longitude;
 
   /// Global `MeetupTimeOffset` of the encointer chain.
-  final double offset;
+  final int offset;
 
   /// Expected result in ms units.
   final int expected;
@@ -40,6 +43,45 @@ void main() {
       test(testCase.description, () {
         expect(meetupTime(testCase.longitude, 0, testCase.offset, 360), testCase.expected);
       });
+    }
+  });
+
+  group('assignmentFn', () {
+    test('assignmentFn works', () {
+      const pIndex = 6;
+      final params = AssignmentParams(m: BigInt.from(4), s1: BigInt.from(5), s2: BigInt.from(3));
+      const assignmentCount = 5;
+
+      expect(assignmentFn(pIndex, params, assignmentCount), 1);
+    });
+  });
+
+  group('meetupIndex', () {
+    test('meetupIndex works', () {
+      const pIndex = 6;
+      final params = AssignmentParams(m: BigInt.from(4), s1: BigInt.from(5), s2: BigInt.from(3));
+      const assignmentCount = 5;
+
+      expect(meetupIndex(pIndex, params, assignmentCount), 2);
+    });
+  });
+
+  group('computeMeetupIndex', () {
+    for (final (i, testCase) in ceremonyTestCases.indexed) {
+      for (final (j, meetup) in testCase.meetups.indexed) {
+        test('testcase $i, meetup: $j', () {
+          expect(
+            computeMeetupIndex(
+              meetup.registrations[1].participantIndex,
+              meetup.registrations[1].participantType,
+              testCase.assignment,
+              testCase.assignmentCount,
+              testCase.meetupCount,
+            ),
+            meetup.meetupIndex,
+          );
+        });
+      }
     }
   });
 }

@@ -1,4 +1,3 @@
-import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -24,6 +23,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 class TransferPageParams {
   const TransferPageParams({
@@ -104,7 +105,7 @@ class _TransferPageState extends State<TransferPage> {
       _communitySymbol = params.communitySymbol ?? store.encointer.community?.symbol;
       _cid = params.cid ?? store.encointer.chosenCid;
 
-      final pubKey = Fmt.ss58Decode(params.recipientAddress).pubKey;
+      final pubKey = AddressUtils.addressToPubKeyHex(params.recipientAddress);
 
       _accountTo = AccountData()
         ..pubKey = pubKey

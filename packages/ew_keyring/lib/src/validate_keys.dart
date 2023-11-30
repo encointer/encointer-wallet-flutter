@@ -1,4 +1,4 @@
-import 'package:bip39/bip39.dart' as bip39;
+import 'package:substrate_bip39/substrate_bip39.dart';
 
 class ValidateKeys {
   static bool isPrivateKey(String privateKey) {
@@ -34,6 +34,16 @@ class ValidateKeys {
   static bool validateMnemonic(String mnemonic) {
     final input = mnemonic.trim();
     final len = input.split(' ').length;
-    return (len == 12 || len == 24) && bip39.validateMnemonic(input);
+
+    if (!(len == 12 || len == 24)) {
+      return false;
+    }
+
+    try {
+      Mnemonic.fromSentence(input, Language.english);
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 }

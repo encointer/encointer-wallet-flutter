@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -19,6 +18,7 @@ import 'package:encointer_wallet/common/components/logo/participant_avatar.dart'
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step3_finish.dart';
 import 'package:encointer_wallet/page-encointer/meetup/scan_claim_qr_code.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
 class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
@@ -136,7 +136,7 @@ class CeremonyStep2Scan extends StatelessWidget {
 
   int meetupIndexOfAccount(String accountPubKey) {
     final participants = store.encointer.communityAccount!.meetup!.registry;
-    final address = Fmt.ss58Encode(accountPubKey);
+    final address = AddressUtils.pubKeyHexToAddress(accountPubKey);
 
     // the addresses of the meetup are encoded with the default prefix: 42.
     return participants.indexOf(address);

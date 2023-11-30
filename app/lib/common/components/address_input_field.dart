@@ -1,5 +1,4 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
@@ -8,6 +7,8 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 class AddressInputField extends StatefulWidget {
   const AddressInputField(
@@ -35,7 +36,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     final ss58 = widget.store.settings.endpoint.ss58!;
     // we can't just use account.address unfortunately, see #1019.
     return account.name.startsWith(nameOrAddress.trim()) ||
-        Fmt.ss58Encode(account.pubKey, prefix: ss58).startsWith(nameOrAddress.trim());
+        AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: ss58).startsWith(nameOrAddress.trim());
   }
 
   Widget _selectedItemBuilder(BuildContext context, AccountData? account) {
@@ -43,7 +44,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
       return Container();
     }
 
-    final address = Fmt.ss58Encode(account.pubKey, prefix: widget.store.settings.endpoint.ss58!);
+    final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.endpoint.ss58!);
 
     return Container(
       padding: const EdgeInsets.only(top: 8),
@@ -70,7 +71,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
   }
 
   Widget _listItemBuilder(BuildContext context, AccountData account, bool isSelected) {
-    final address = Fmt.ss58Encode(account.pubKey, prefix: widget.store.settings.endpoint.ss58!);
+    final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.endpoint.ss58!);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -115,7 +116,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
           emptyBuilder: (context, searchEntry) {
             if (Fmt.isAddress(searchEntry)) {
               final address = searchEntry.replaceAll(' ', '');
-              final pubKey = Fmt.ss58Decode(address).pubKey;
+              final pubKey = AddressUtils.addressToPubKeyHex(address);
               final newAccount = AccountData()
                 ..address = address
                 ..pubKey = pubKey

@@ -1,4 +1,3 @@
-import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -12,6 +11,8 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -42,7 +43,7 @@ class _Contact extends State<ContactPage> {
       });
       final l10n = context.l10n;
       final addr = _addressCtrl.text.replaceAll(' ', '');
-      final pubKey = Fmt.ss58Decode(addr).pubKey;
+      final pubKey = AddressUtils.addressToPubKeyHex(addr);
 
       final con = {
         'address': addr,

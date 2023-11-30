@@ -136,6 +136,6 @@ class _FaucetListTileState extends State<FaucetListTile> {
 
   Future<BigInt> getNativeFreeBalance(String address) async {
     final balance = await webApi.assets.getBalanceOf(address);
-    return balance.freeBalance;
+    return balance.free;
   }
 }

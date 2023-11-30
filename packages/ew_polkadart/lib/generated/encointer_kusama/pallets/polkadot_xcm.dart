@@ -1,11 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i12;
+import 'dart:typed_data' as _i13;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_runtime/runtime_call.dart' as _i13;
-import '../types/pallet_xcm/pallet/call.dart' as _i14;
+import '../types/encointer_runtime/runtime_call.dart' as _i14;
+import '../types/pallet_xcm/pallet/call.dart' as _i15;
 import '../types/pallet_xcm/pallet/query_status.dart' as _i3;
 import '../types/pallet_xcm/pallet/remote_locked_fungible_record.dart' as _i11;
 import '../types/pallet_xcm/pallet/version_migration_stage.dart' as _i8;
@@ -327,136 +328,234 @@ class Queries {
     }
     return false; /* Default */
   }
+
+  /// Returns the storage key for `queryCounter`.
+  _i13.Uint8List queryCounterKey() {
+    final hashedKey = _queryCounter.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `queries`.
+  _i13.Uint8List queriesKey(BigInt key1) {
+    final hashedKey = _queries.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `assetTraps`.
+  _i13.Uint8List assetTrapsKey(_i4.H256 key1) {
+    final hashedKey = _assetTraps.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `safeXcmVersion`.
+  _i13.Uint8List safeXcmVersionKey() {
+    final hashedKey = _safeXcmVersion.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `supportedVersion`.
+  _i13.Uint8List supportedVersionKey(
+    int key1,
+    _i5.VersionedMultiLocation key2,
+  ) {
+    final hashedKey = _supportedVersion.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `versionNotifiers`.
+  _i13.Uint8List versionNotifiersKey(
+    int key1,
+    _i5.VersionedMultiLocation key2,
+  ) {
+    final hashedKey = _versionNotifiers.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `versionNotifyTargets`.
+  _i13.Uint8List versionNotifyTargetsKey(
+    int key1,
+    _i5.VersionedMultiLocation key2,
+  ) {
+    final hashedKey = _versionNotifyTargets.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `versionDiscoveryQueue`.
+  _i13.Uint8List versionDiscoveryQueueKey() {
+    final hashedKey = _versionDiscoveryQueue.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `currentMigration`.
+  _i13.Uint8List currentMigrationKey() {
+    final hashedKey = _currentMigration.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `remoteLockedFungibles`.
+  _i13.Uint8List remoteLockedFungiblesKey(
+    int key1,
+    _i9.AccountId32 key2,
+    _i10.VersionedAssetId key3,
+  ) {
+    final hashedKey = _remoteLockedFungibles.hashedKeyFor(
+      key1,
+      key2,
+      key3,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `lockedFungibles`.
+  _i13.Uint8List lockedFungiblesKey(_i9.AccountId32 key1) {
+    final hashedKey = _lockedFungibles.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `xcmExecutionSuspended`.
+  _i13.Uint8List xcmExecutionSuspendedKey() {
+    final hashedKey = _xcmExecutionSuspended.hashedKey();
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// See [`Pallet::send`].
-  _i13.RuntimeCall send({
+  _i14.RuntimeCall send({
     required dest,
     required message,
   }) {
-    final _call = _i14.Call.values.send(
+    final _call = _i15.Call.values.send(
       dest: dest,
       message: message,
     );
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::teleport_assets`].
-  _i13.RuntimeCall teleportAssets({
+  _i14.RuntimeCall teleportAssets({
     required dest,
     required beneficiary,
     required assets,
     required feeAssetItem,
   }) {
-    final _call = _i14.Call.values.teleportAssets(
+    final _call = _i15.Call.values.teleportAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
       feeAssetItem: feeAssetItem,
     );
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::reserve_transfer_assets`].
-  _i13.RuntimeCall reserveTransferAssets({
+  _i14.RuntimeCall reserveTransferAssets({
     required dest,
     required beneficiary,
     required assets,
     required feeAssetItem,
   }) {
-    final _call = _i14.Call.values.reserveTransferAssets(
+    final _call = _i15.Call.values.reserveTransferAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
       feeAssetItem: feeAssetItem,
     );
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::execute`].
-  _i13.RuntimeCall execute({
+  _i14.RuntimeCall execute({
     required message,
     required maxWeight,
   }) {
-    final _call = _i14.Call.values.execute(
+    final _call = _i15.Call.values.execute(
       message: message,
       maxWeight: maxWeight,
     );
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_xcm_version`].
-  _i13.RuntimeCall forceXcmVersion({
+  _i14.RuntimeCall forceXcmVersion({
     required location,
     required version,
   }) {
-    final _call = _i14.Call.values.forceXcmVersion(
+    final _call = _i15.Call.values.forceXcmVersion(
       location: location,
       version: version,
     );
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_default_xcm_version`].
-  _i13.RuntimeCall forceDefaultXcmVersion({maybeXcmVersion}) {
-    final _call = _i14.Call.values.forceDefaultXcmVersion(maybeXcmVersion: maybeXcmVersion);
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+  _i14.RuntimeCall forceDefaultXcmVersion({maybeXcmVersion}) {
+    final _call = _i15.Call.values.forceDefaultXcmVersion(maybeXcmVersion: maybeXcmVersion);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_subscribe_version_notify`].
-  _i13.RuntimeCall forceSubscribeVersionNotify({required location}) {
-    final _call = _i14.Call.values.forceSubscribeVersionNotify(location: location);
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+  _i14.RuntimeCall forceSubscribeVersionNotify({required location}) {
+    final _call = _i15.Call.values.forceSubscribeVersionNotify(location: location);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_unsubscribe_version_notify`].
-  _i13.RuntimeCall forceUnsubscribeVersionNotify({required location}) {
-    final _call = _i14.Call.values.forceUnsubscribeVersionNotify(location: location);
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+  _i14.RuntimeCall forceUnsubscribeVersionNotify({required location}) {
+    final _call = _i15.Call.values.forceUnsubscribeVersionNotify(location: location);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::limited_reserve_transfer_assets`].
-  _i13.RuntimeCall limitedReserveTransferAssets({
+  _i14.RuntimeCall limitedReserveTransferAssets({
     required dest,
     required beneficiary,
     required assets,
     required feeAssetItem,
     required weightLimit,
   }) {
-    final _call = _i14.Call.values.limitedReserveTransferAssets(
+    final _call = _i15.Call.values.limitedReserveTransferAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
       feeAssetItem: feeAssetItem,
       weightLimit: weightLimit,
     );
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::limited_teleport_assets`].
-  _i13.RuntimeCall limitedTeleportAssets({
+  _i14.RuntimeCall limitedTeleportAssets({
     required dest,
     required beneficiary,
     required assets,
     required feeAssetItem,
     required weightLimit,
   }) {
-    final _call = _i14.Call.values.limitedTeleportAssets(
+    final _call = _i15.Call.values.limitedTeleportAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
       feeAssetItem: feeAssetItem,
       weightLimit: weightLimit,
     );
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_suspension`].
-  _i13.RuntimeCall forceSuspension({required suspended}) {
-    final _call = _i14.Call.values.forceSuspension(suspended: suspended);
-    return _i13.RuntimeCall.values.polkadotXcm(_call);
+  _i14.RuntimeCall forceSuspension({required suspended}) {
+    final _call = _i15.Call.values.forceSuspension(suspended: suspended);
+    return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 }

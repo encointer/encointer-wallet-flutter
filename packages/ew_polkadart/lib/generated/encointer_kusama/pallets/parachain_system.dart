@@ -1,14 +1,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i13;
+import 'dart:typed_data' as _i14;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/cumulus_pallet_parachain_system/code_upgrade_authorization.dart' as _i12;
-import '../types/cumulus_pallet_parachain_system/pallet/call.dart' as _i15;
+import '../types/cumulus_pallet_parachain_system/pallet/call.dart' as _i16;
 import '../types/cumulus_pallet_parachain_system/relay_state_snapshot/messaging_state_snapshot.dart' as _i6;
 import '../types/cumulus_primitives_parachain_inherent/message_queue_chain.dart' as _i8;
-import '../types/encointer_runtime/runtime_call.dart' as _i14;
+import '../types/encointer_runtime/runtime_call.dart' as _i15;
 import '../types/polkadot_core_primitives/outbound_hrmp_message.dart' as _i10;
 import '../types/polkadot_parachain/primitives/id.dart' as _i9;
 import '../types/polkadot_primitives/v5/abridged_host_configuration.dart' as _i7;
@@ -488,38 +489,164 @@ class Queries {
     }
     return null; /* Nullable */
   }
+
+  /// Returns the storage key for `pendingValidationCode`.
+  _i14.Uint8List pendingValidationCodeKey() {
+    final hashedKey = _pendingValidationCode.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `newValidationCode`.
+  _i14.Uint8List newValidationCodeKey() {
+    final hashedKey = _newValidationCode.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `validationData`.
+  _i14.Uint8List validationDataKey() {
+    final hashedKey = _validationData.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `didSetValidationCode`.
+  _i14.Uint8List didSetValidationCodeKey() {
+    final hashedKey = _didSetValidationCode.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `lastRelayChainBlockNumber`.
+  _i14.Uint8List lastRelayChainBlockNumberKey() {
+    final hashedKey = _lastRelayChainBlockNumber.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `upgradeRestrictionSignal`.
+  _i14.Uint8List upgradeRestrictionSignalKey() {
+    final hashedKey = _upgradeRestrictionSignal.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `relayStateProof`.
+  _i14.Uint8List relayStateProofKey() {
+    final hashedKey = _relayStateProof.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `relevantMessagingState`.
+  _i14.Uint8List relevantMessagingStateKey() {
+    final hashedKey = _relevantMessagingState.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `hostConfiguration`.
+  _i14.Uint8List hostConfigurationKey() {
+    final hashedKey = _hostConfiguration.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `lastDmqMqcHead`.
+  _i14.Uint8List lastDmqMqcHeadKey() {
+    final hashedKey = _lastDmqMqcHead.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `lastHrmpMqcHeads`.
+  _i14.Uint8List lastHrmpMqcHeadsKey() {
+    final hashedKey = _lastHrmpMqcHeads.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `processedDownwardMessages`.
+  _i14.Uint8List processedDownwardMessagesKey() {
+    final hashedKey = _processedDownwardMessages.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `hrmpWatermark`.
+  _i14.Uint8List hrmpWatermarkKey() {
+    final hashedKey = _hrmpWatermark.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `hrmpOutboundMessages`.
+  _i14.Uint8List hrmpOutboundMessagesKey() {
+    final hashedKey = _hrmpOutboundMessages.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `upwardMessages`.
+  _i14.Uint8List upwardMessagesKey() {
+    final hashedKey = _upwardMessages.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `pendingUpwardMessages`.
+  _i14.Uint8List pendingUpwardMessagesKey() {
+    final hashedKey = _pendingUpwardMessages.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `announcedHrmpMessagesPerCandidate`.
+  _i14.Uint8List announcedHrmpMessagesPerCandidateKey() {
+    final hashedKey = _announcedHrmpMessagesPerCandidate.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `reservedXcmpWeightOverride`.
+  _i14.Uint8List reservedXcmpWeightOverrideKey() {
+    final hashedKey = _reservedXcmpWeightOverride.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `reservedDmpWeightOverride`.
+  _i14.Uint8List reservedDmpWeightOverrideKey() {
+    final hashedKey = _reservedDmpWeightOverride.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `authorizedUpgrade`.
+  _i14.Uint8List authorizedUpgradeKey() {
+    final hashedKey = _authorizedUpgrade.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `customValidationHeadData`.
+  _i14.Uint8List customValidationHeadDataKey() {
+    final hashedKey = _customValidationHeadData.hashedKey();
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// See [`Pallet::set_validation_data`].
-  _i14.RuntimeCall setValidationData({required data}) {
-    final _call = _i15.Call.values.setValidationData(data: data);
-    return _i14.RuntimeCall.values.parachainSystem(_call);
+  _i15.RuntimeCall setValidationData({required data}) {
+    final _call = _i16.Call.values.setValidationData(data: data);
+    return _i15.RuntimeCall.values.parachainSystem(_call);
   }
 
   /// See [`Pallet::sudo_send_upward_message`].
-  _i14.RuntimeCall sudoSendUpwardMessage({required message}) {
-    final _call = _i15.Call.values.sudoSendUpwardMessage(message: message);
-    return _i14.RuntimeCall.values.parachainSystem(_call);
+  _i15.RuntimeCall sudoSendUpwardMessage({required message}) {
+    final _call = _i16.Call.values.sudoSendUpwardMessage(message: message);
+    return _i15.RuntimeCall.values.parachainSystem(_call);
   }
 
   /// See [`Pallet::authorize_upgrade`].
-  _i14.RuntimeCall authorizeUpgrade({
+  _i15.RuntimeCall authorizeUpgrade({
     required codeHash,
     required checkVersion,
   }) {
-    final _call = _i15.Call.values.authorizeUpgrade(
+    final _call = _i16.Call.values.authorizeUpgrade(
       codeHash: codeHash,
       checkVersion: checkVersion,
     );
-    return _i14.RuntimeCall.values.parachainSystem(_call);
+    return _i15.RuntimeCall.values.parachainSystem(_call);
   }
 
   /// See [`Pallet::enact_authorized_upgrade`].
-  _i14.RuntimeCall enactAuthorizedUpgrade({required code}) {
-    final _call = _i15.Call.values.enactAuthorizedUpgrade(code: code);
-    return _i14.RuntimeCall.values.parachainSystem(_call);
+  _i15.RuntimeCall enactAuthorizedUpgrade({required code}) {
+    final _call = _i16.Call.values.enactAuthorizedUpgrade(code: code);
+    return _i15.RuntimeCall.values.parachainSystem(_call);
   }
 }

@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/offering_data.dart';
+import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 
@@ -26,6 +28,26 @@ class EncointerDartApi {
     return _dartApi.rpc<Map<String, dynamic>>('encointer_getAggregatedAccountData', [cid.toJson(), account]).then(
       AggregatedAccountData.fromJson,
     );
+  }
+
+  /// Queries the rpc 'encointer_getLocations'.
+  Future<List<Location>> getLocations(CommunityIdentifier cid) async {
+    final locations = await _dartApi.rpc<List<dynamic>>('encointer_getLocations', [cid.toJson()]);
+    return locations.map((l) => Location.fromJson(l as Map<String, dynamic>)).toList();
+  }
+
+  /// Queries the rpc 'encointer_getReputations'.
+  ///
+  /// Address must be SS58 encoded.
+  Future<Map<int, CommunityReputation>> getReputations(String address) async {
+    final reputations = await _dartApi.rpc<List<dynamic>>('encointer_getReputations', [address]);
+    return reputationsFromList(reputations);
+  }
+
+  /// Queries the rpc 'encointer_getAllCommunities'.
+  Future<List<CidName>> getAllCommunities() async {
+    final communities = await _dartApi.rpc<List<dynamic>>('encointer_getAllCommunities');
+    return communities.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList();
   }
 
   Future<List<String>> pendingExtrinsics() {

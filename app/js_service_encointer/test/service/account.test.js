@@ -22,16 +22,6 @@ describe('account', () => {
     keyring = new Keyring({ type: 'sr25519' });
   });
 
-  describe('faucet', () => {
-    it('has enough funds', async () => {
-      await cryptoWaitReady();
-      const alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
-      const balance = await account.getBalance(alice.address);
-      const faucetTransferValue = 0.0001 * Math.pow(10, 12);
-      expect(parseInt(balance.freeBalance)).toBeGreaterThan(faucetTransferValue);
-    });
-  });
-
   describe('community-payment', () => {
     // skipping because it needs to have a community setup
     it.skip('community fee payment works for ferdie without native tokens', async () => {

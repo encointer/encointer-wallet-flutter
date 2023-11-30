@@ -15,6 +15,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
 class NetworkSelectPage extends StatefulWidget {
   const NetworkSelectPage({super.key});
@@ -100,7 +101,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     final accounts = <AccountData>[appStore.account.currentAccount, ...appStore.account.optionalAccounts];
 
     res.addAll(accounts.map((accountData) {
-      final address = Fmt.ss58Encode(accountData.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
+      final address =
+          AddressUtils.pubKeyHexToAddress(accountData.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
 
       return Card(
         shape: RoundedRectangleBorder(
