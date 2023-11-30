@@ -2,8 +2,13 @@
 class Header {
   Header(this.hash, this.number);
 
-  factory Header.fromJson(Map<String, dynamic> json) {
+  /// Parse into header when retrieved from polkadart RPC.
+  factory Header.fromRpc(Map<String, dynamic> json) {
     return Header(json['hash'] as String?, BigInt.parse(json['number'] as String).toInt());
+  }
+
+  factory Header.fromJson(Map<String, dynamic> json) {
+    return Header(json['hash'] as String?, json['number'] as int?);
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{'hash': hash, 'number': number};

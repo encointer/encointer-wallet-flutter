@@ -36,7 +36,7 @@ class ChainApi {
 
     _latestHeaderSubscription = subscription.stream.map((res) {
       Log.p('Header: ${res.result}');
-      return Header.fromJson(res.result as Map<String, dynamic>);
+      return Header.fromRpc(res.result as Map<String, dynamic>);
     }).listen((header) {
       Log.p('[subscribeNewHeads] Got header: ${header.toJson()}');
       store.chain.setLatestHeader(header);
