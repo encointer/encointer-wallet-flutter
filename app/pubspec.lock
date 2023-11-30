@@ -1315,8 +1315,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart"
-      ref: "cl/generate-storage-key-getter-dev"
-      resolved-ref: "83d85009eae3776e35f082c21b3e9fdeed33c703"
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.6"
@@ -1324,8 +1324,8 @@ packages:
     dependency: transitive
     description:
       path: "packages/polkadart_keyring"
-      ref: "cl/generate-storage-key-getter-dev"
-      resolved-ref: "83d85009eae3776e35f082c21b3e9fdeed33c703"
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -1333,8 +1333,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: "cl/generate-storage-key-getter-dev"
-      resolved-ref: "83d85009eae3776e35f082c21b3e9fdeed33c703"
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -1707,8 +1707,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/substrate_metadata"
-      ref: "cl/generate-storage-key-getter-dev"
-      resolved-ref: "83d85009eae3776e35f082c21b3e9fdeed33c703"
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
