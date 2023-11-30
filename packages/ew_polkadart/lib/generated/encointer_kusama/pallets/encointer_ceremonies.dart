@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i11;
+import 'dart:typed_data' as _i13;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
@@ -10,8 +11,8 @@ import '../types/encointer_primitives/ceremonies/assignment_params.dart' as _i12
 import '../types/encointer_primitives/ceremonies/meetup_result.dart' as _i10;
 import '../types/encointer_primitives/ceremonies/reputation.dart' as _i8;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
-import '../types/encointer_runtime/runtime_call.dart' as _i13;
-import '../types/pallet_encointer_ceremonies/pallet/call.dart' as _i14;
+import '../types/encointer_runtime/runtime_call.dart' as _i14;
+import '../types/pallet_encointer_ceremonies/pallet/call.dart' as _i15;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 import '../types/substrate_fixed/fixed_u128.dart' as _i9;
 import '../types/tuples.dart' as _i5;
@@ -1001,133 +1002,445 @@ class Queries {
     }
     return 0; /* Default */
   }
+
+  /// Returns the storage key for `burnedBootstrapperNewbieTickets`.
+  _i13.Uint8List burnedBootstrapperNewbieTicketsKey(
+    _i2.CommunityIdentifier key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _burnedBootstrapperNewbieTickets.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `burnedReputableNewbieTickets`.
+  _i13.Uint8List burnedReputableNewbieTicketsKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _burnedReputableNewbieTickets.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `bootstrapperRegistry`.
+  _i13.Uint8List bootstrapperRegistryKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    BigInt key2,
+  ) {
+    final hashedKey = _bootstrapperRegistry.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `bootstrapperIndex`.
+  _i13.Uint8List bootstrapperIndexKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _bootstrapperIndex.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `bootstrapperCount`.
+  _i13.Uint8List bootstrapperCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _bootstrapperCount.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `reputableRegistry`.
+  _i13.Uint8List reputableRegistryKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    BigInt key2,
+  ) {
+    final hashedKey = _reputableRegistry.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `reputableIndex`.
+  _i13.Uint8List reputableIndexKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _reputableIndex.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `reputableCount`.
+  _i13.Uint8List reputableCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _reputableCount.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `endorseeRegistry`.
+  _i13.Uint8List endorseeRegistryKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    BigInt key2,
+  ) {
+    final hashedKey = _endorseeRegistry.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `endorseeIndex`.
+  _i13.Uint8List endorseeIndexKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _endorseeIndex.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `endorseeCount`.
+  _i13.Uint8List endorseeCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _endorseeCount.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `newbieRegistry`.
+  _i13.Uint8List newbieRegistryKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    BigInt key2,
+  ) {
+    final hashedKey = _newbieRegistry.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `newbieIndex`.
+  _i13.Uint8List newbieIndexKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _newbieIndex.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `newbieCount`.
+  _i13.Uint8List newbieCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _newbieCount.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `assignmentCounts`.
+  _i13.Uint8List assignmentCountsKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _assignmentCounts.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `assignments`.
+  _i13.Uint8List assignmentsKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _assignments.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `participantReputation`.
+  _i13.Uint8List participantReputationKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _participantReputation.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `reputationCount`.
+  _i13.Uint8List reputationCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _reputationCount.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `globalReputationCount`.
+  _i13.Uint8List globalReputationCountKey(int key1) {
+    final hashedKey = _globalReputationCount.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `endorsees`.
+  _i13.Uint8List endorseesKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _endorsees.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `endorseesCount`.
+  _i13.Uint8List endorseesCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _endorseesCount.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `meetupCount`.
+  _i13.Uint8List meetupCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _meetupCount.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `attestationRegistry`.
+  _i13.Uint8List attestationRegistryKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    BigInt key2,
+  ) {
+    final hashedKey = _attestationRegistry.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `attestationIndex`.
+  _i13.Uint8List attestationIndexKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _attestationIndex.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `attestationCount`.
+  _i13.Uint8List attestationCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _attestationCount.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `meetupParticipantCountVote`.
+  _i13.Uint8List meetupParticipantCountVoteKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    _i3.AccountId32 key2,
+  ) {
+    final hashedKey = _meetupParticipantCountVote.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `ceremonyReward`.
+  _i13.Uint8List ceremonyRewardKey() {
+    final hashedKey = _ceremonyReward.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `locationTolerance`.
+  _i13.Uint8List locationToleranceKey() {
+    final hashedKey = _locationTolerance.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `timeTolerance`.
+  _i13.Uint8List timeToleranceKey() {
+    final hashedKey = _timeTolerance.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `issuedRewards`.
+  _i13.Uint8List issuedRewardsKey(
+    _i5.Tuple2<_i2.CommunityIdentifier, int> key1,
+    BigInt key2,
+  ) {
+    final hashedKey = _issuedRewards.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `inactivityCounters`.
+  _i13.Uint8List inactivityCountersKey(_i2.CommunityIdentifier key1) {
+    final hashedKey = _inactivityCounters.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `inactivityTimeout`.
+  _i13.Uint8List inactivityTimeoutKey() {
+    final hashedKey = _inactivityTimeout.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `endorsementTicketsPerBootstrapper`.
+  _i13.Uint8List endorsementTicketsPerBootstrapperKey() {
+    final hashedKey = _endorsementTicketsPerBootstrapper.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `endorsementTicketsPerReputable`.
+  _i13.Uint8List endorsementTicketsPerReputableKey() {
+    final hashedKey = _endorsementTicketsPerReputable.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `reputationLifetime`.
+  _i13.Uint8List reputationLifetimeKey() {
+    final hashedKey = _reputationLifetime.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `meetupTimeOffset`.
+  _i13.Uint8List meetupTimeOffsetKey() {
+    final hashedKey = _meetupTimeOffset.hashedKey();
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// See [`Pallet::register_participant`].
-  _i13.RuntimeCall registerParticipant({
+  _i14.RuntimeCall registerParticipant({
     required cid,
     proof,
   }) {
-    final _call = _i14.Call.values.registerParticipant(
+    final _call = _i15.Call.values.registerParticipant(
       cid: cid,
       proof: proof,
     );
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::upgrade_registration`].
-  _i13.RuntimeCall upgradeRegistration({
+  _i14.RuntimeCall upgradeRegistration({
     required cid,
     required proof,
   }) {
-    final _call = _i14.Call.values.upgradeRegistration(
+    final _call = _i15.Call.values.upgradeRegistration(
       cid: cid,
       proof: proof,
     );
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::unregister_participant`].
-  _i13.RuntimeCall unregisterParticipant({
+  _i14.RuntimeCall unregisterParticipant({
     required cid,
     maybeReputationCommunityCeremony,
   }) {
-    final _call = _i14.Call.values.unregisterParticipant(
+    final _call = _i15.Call.values.unregisterParticipant(
       cid: cid,
       maybeReputationCommunityCeremony: maybeReputationCommunityCeremony,
     );
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::attest_attendees`].
-  _i13.RuntimeCall attestAttendees({
+  _i14.RuntimeCall attestAttendees({
     required cid,
     required numberOfParticipantsVote,
     required attestations,
   }) {
-    final _call = _i14.Call.values.attestAttendees(
+    final _call = _i15.Call.values.attestAttendees(
       cid: cid,
       numberOfParticipantsVote: numberOfParticipantsVote,
       attestations: attestations,
     );
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::endorse_newcomer`].
-  _i13.RuntimeCall endorseNewcomer({
+  _i14.RuntimeCall endorseNewcomer({
     required cid,
     required newbie,
   }) {
-    final _call = _i14.Call.values.endorseNewcomer(
+    final _call = _i15.Call.values.endorseNewcomer(
       cid: cid,
       newbie: newbie,
     );
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::claim_rewards`].
-  _i13.RuntimeCall claimRewards({
+  _i14.RuntimeCall claimRewards({
     required cid,
     maybeMeetupIndex,
   }) {
-    final _call = _i14.Call.values.claimRewards(
+    final _call = _i15.Call.values.claimRewards(
       cid: cid,
       maybeMeetupIndex: maybeMeetupIndex,
     );
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_inactivity_timeout`].
-  _i13.RuntimeCall setInactivityTimeout({required inactivityTimeout}) {
-    final _call = _i14.Call.values.setInactivityTimeout(inactivityTimeout: inactivityTimeout);
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.RuntimeCall setInactivityTimeout({required inactivityTimeout}) {
+    final _call = _i15.Call.values.setInactivityTimeout(inactivityTimeout: inactivityTimeout);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_endorsement_tickets_per_bootstrapper`].
-  _i13.RuntimeCall setEndorsementTicketsPerBootstrapper({required endorsementTicketsPerBootstrapper}) {
-    final _call = _i14.Call.values
+  _i14.RuntimeCall setEndorsementTicketsPerBootstrapper({required endorsementTicketsPerBootstrapper}) {
+    final _call = _i15.Call.values
         .setEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_endorsement_tickets_per_reputable`].
-  _i13.RuntimeCall setEndorsementTicketsPerReputable({required endorsementTicketsPerReputable}) {
-    final _call = _i14.Call.values
+  _i14.RuntimeCall setEndorsementTicketsPerReputable({required endorsementTicketsPerReputable}) {
+    final _call = _i15.Call.values
         .setEndorsementTicketsPerReputable(endorsementTicketsPerReputable: endorsementTicketsPerReputable);
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_reputation_lifetime`].
-  _i13.RuntimeCall setReputationLifetime({required reputationLifetime}) {
-    final _call = _i14.Call.values.setReputationLifetime(reputationLifetime: reputationLifetime);
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.RuntimeCall setReputationLifetime({required reputationLifetime}) {
+    final _call = _i15.Call.values.setReputationLifetime(reputationLifetime: reputationLifetime);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_meetup_time_offset`].
-  _i13.RuntimeCall setMeetupTimeOffset({required meetupTimeOffset}) {
-    final _call = _i14.Call.values.setMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.RuntimeCall setMeetupTimeOffset({required meetupTimeOffset}) {
+    final _call = _i15.Call.values.setMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_time_tolerance`].
-  _i13.RuntimeCall setTimeTolerance({required timeTolerance}) {
-    final _call = _i14.Call.values.setTimeTolerance(timeTolerance: timeTolerance);
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.RuntimeCall setTimeTolerance({required timeTolerance}) {
+    final _call = _i15.Call.values.setTimeTolerance(timeTolerance: timeTolerance);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_location_tolerance`].
-  _i13.RuntimeCall setLocationTolerance({required locationTolerance}) {
-    final _call = _i14.Call.values.setLocationTolerance(locationTolerance: locationTolerance);
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.RuntimeCall setLocationTolerance({required locationTolerance}) {
+    final _call = _i15.Call.values.setLocationTolerance(locationTolerance: locationTolerance);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::purge_community_ceremony`].
-  _i13.RuntimeCall purgeCommunityCeremony({required communityCeremony}) {
-    final _call = _i14.Call.values.purgeCommunityCeremony(communityCeremony: communityCeremony);
-    return _i13.RuntimeCall.values.encointerCeremonies(_call);
+  _i14.RuntimeCall purgeCommunityCeremony({required communityCeremony}) {
+    final _call = _i15.Call.values.purgeCommunityCeremony(communityCeremony: communityCeremony);
+    return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 }
 

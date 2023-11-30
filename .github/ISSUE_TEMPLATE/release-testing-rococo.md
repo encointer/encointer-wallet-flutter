@@ -20,7 +20,7 @@ Tested on commit <enter-commit>
        - [ ] with invoice amount
        - [ ] without invoice amount
 - [ ] Send flow:
-  -  [ ] manual flow works
+  - [ ] manual flow works
   - [ ] scanning invoice flow works:
       - [ ] with invoice amount
       - [ ] without invoice amount
@@ -29,7 +29,7 @@ Tested on commit <enter-commit>
    - [ ] Add contact with contact qr-code works
    - [ ] Add contact with invoice qr-code works
    - [ ] Endorsing newcomer works
-   - [ ] Endorsing newcomer with reputable works
+   - [ ] Endorsing a newcomer with reputable works
 - [ ] Profile Page
   - [ ] Removing single account works
   - [ ] Add account works:
@@ -43,14 +43,16 @@ Tested on commit <enter-commit>
    - [ ] Reaping Works
 
 ## Meetup Flow
-This needs to be tested on rococo, it needs one bootstrapper account and two freshly created accounts, where one will be endorsed and the other will be a newbie.
+This needs to be tested on rococo, it needs one bootstrapper account and two freshly created accounts, where one will be endorsed, and the other will be a newbie.
 
-- [ ] Registering 1 bootstrappers, 1 endorsee and 1 newbie and performing meetup works. (This needs the rococo single councillor account to call next phase.)
+- [ ] Registering 1 bootstrappers, 1 endorsee and 1 newbie and performing meetup works. (This needs the rococo single councillor account to call `nextPhase`.)
 - [ ] Claiming rewards works
-   - [ ] early rewards payout in attesting phase
-   - [ ] regular rewards payout in next registering phase
-- [ ] Registering 1 bootstrapper and two reputables and performing meetup works. (This needs the rococo single councillor account to call next phase.)
-   - [ ] Test that unregistering the reputable refunds the reputation and the reputable can register again.
+   - [ ] early reward payout in attesting phase
+   - [ ] regular reward payout in the next registering phase
+- [ ] Registering 1 bootstrapper and two reputables and performing meetup works. (This needs the rococo single councillor account to call `nextPhase`.)
+   - [ ] Test that unregistering the reputable refunds the reputation, and the reputable can register again.
 
 ## Other
-- [ ] inform slack channel about new release
+- [ ] inform Slack channel about new release
+- [ ] update f-droid branch and create vx.x.x-froid tag
+- [ ] verify f-droid has been released

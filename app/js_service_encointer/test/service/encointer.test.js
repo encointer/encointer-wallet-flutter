@@ -5,7 +5,7 @@
 import '../../src';
 import encointer, {
   getProofOfAttendance,
-  _getProofOfAttendance, reapVoucher, encointerTransfer, getBalance, hasPendingIssuance, remainingNewbieTicketsReputable
+  _getProofOfAttendance, reapVoucher, encointerTransfer, getBalance
 } from '../../src/service/encointer';
 import { cryptoWaitReady, signatureVerify } from '@polkadot/util-crypto';
 import { localDevNetwork } from '../testUtils/networks';
@@ -22,43 +22,6 @@ describe('encointer', () => {
     await testSetup(network);
     keyring = new Keyring({ type: 'sr25519' });
   }, 90000);
-
-  describe('getCurrentPhase', () => {
-    it('should return promise', async () => {
-      const result = await encointer.getCurrentPhase();
-      console.log(result);
-      expect(result).toBeDefined();
-    });
-  });
-
-  describe('getDemurrage', () => {
-    it('should return default', async () => {
-      const cid = communityIdentifierFromString(api.registry, 'gbsuv7YXq9G');
-      const result = await encointer.getDemurrage(cid);
-      console.log(result);
-      expect(result).toBe(1.1267607882072287e-7);
-    });
-  });
-
-  describe('getParticipantReputation', () => {
-    it('should return promise', async () => {
-      await cryptoWaitReady();
-      const cid = communityIdentifierFromString(api.registry, 'gbsuv7YXq9G');
-      const attendee = keyring.addFromUri('//Bob', { name: 'Bob default' }).address;
-      const result = await encointer.getParticipantReputation(cid, 1, attendee);
-      expect(result.isUnverified).toBeTruthy();
-    });
-  });
-
-  describe('getParticipantReputation2', () => {
-    it('should return promise', async () => {
-      await cryptoWaitReady();
-      const cid = communityIdentifierFromString(api.registry, 'gbsuv7YXq9G');
-      // const attendee = keyring.addFromUri('//Bob', { name: 'Bob default' }).address;
-      const result = await encointer.getParticipantReputation(cid, 3, '0xf4577adda8c5bda374fb86d42aed35eb171a949c7b52202806cd137795d5567a');
-      expect(result.isUnverified).toBeTruthy();
-    });
-  });
 
   describe('getProofOfAttendance', () => {
     it('should be defined', () => {
@@ -131,30 +94,6 @@ describe('encointer', () => {
       expect(
         parseI64F64(loc.lon)
       ).toBe(18.543548583984375);
-    });
-  });
-
-  describe('pendingIssuance', () => {
-    it('correctly returns false', async () =>  {
-      const cid = communityIdentifierFromString(api.registry, "sqm1v79dF6b");
-      expect(
-        await hasPendingIssuance(
-          cid, 2, "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d"
-        )).toBeFalsy();
-    });
-  });
-
-  // Note: this needs the bootstrapping script, but we have this in the CI now.
-  describe('remainingReputableNewbieTickets', () => {
-    it('returns tickets per reputation after bootstrapping ceremony', async () =>  {
-      const alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
-      const cid = communityIdentifierFromString(api.registry, "sqm1v79dF6b");
-
-      const ticketsPerReputation = await api.query.encointerCeremonies.endorsementTicketsPerReputable();
-
-      expect(
-        await remainingNewbieTicketsReputable(cid, 2, alice.publicKey)
-      ).toBe(ticketsPerReputation.toNumber());
     });
   });
 

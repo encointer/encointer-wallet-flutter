@@ -1,4 +1,3 @@
-import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +8,8 @@ import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 class ContactsPage extends StatelessWidget {
   const ContactsPage({super.key});
@@ -38,7 +39,7 @@ class ContactsPage extends StatelessWidget {
           itemCount: appStore.settings.contactList.length,
           itemBuilder: (BuildContext context, int index) {
             final contact = appStore.settings.contactList[index];
-            final address = Fmt.ss58Encode(contact.pubKey, prefix: appStore.settings.endpoint.ss58!);
+            final address = AddressUtils.pubKeyHexToAddress(contact.pubKey, prefix: appStore.settings.endpoint.ss58!);
             return ListTile(
               key: Key(contact.name),
               leading: AddressIcon(address, contact.pubKey, size: 45),

@@ -1,11 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
+import 'dart:typed_data' as _i5;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i3;
 
-import '../types/encointer_runtime/runtime_call.dart' as _i5;
-import '../types/pallet_membership/pallet/call.dart' as _i6;
+import '../types/encointer_runtime/runtime_call.dart' as _i6;
+import '../types/pallet_membership/pallet/call.dart' as _i7;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
 
 class Queries {
@@ -50,56 +51,68 @@ class Queries {
     }
     return null; /* Nullable */
   }
+
+  /// Returns the storage key for `members`.
+  _i5.Uint8List membersKey() {
+    final hashedKey = _members.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `prime`.
+  _i5.Uint8List primeKey() {
+    final hashedKey = _prime.hashedKey();
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// See [`Pallet::add_member`].
-  _i5.RuntimeCall addMember({required who}) {
-    final _call = _i6.Call.values.addMember(who: who);
-    return _i5.RuntimeCall.values.membership(_call);
+  _i6.RuntimeCall addMember({required who}) {
+    final _call = _i7.Call.values.addMember(who: who);
+    return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::remove_member`].
-  _i5.RuntimeCall removeMember({required who}) {
-    final _call = _i6.Call.values.removeMember(who: who);
-    return _i5.RuntimeCall.values.membership(_call);
+  _i6.RuntimeCall removeMember({required who}) {
+    final _call = _i7.Call.values.removeMember(who: who);
+    return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::swap_member`].
-  _i5.RuntimeCall swapMember({
+  _i6.RuntimeCall swapMember({
     required remove,
     required add,
   }) {
-    final _call = _i6.Call.values.swapMember(
+    final _call = _i7.Call.values.swapMember(
       remove: remove,
       add: add,
     );
-    return _i5.RuntimeCall.values.membership(_call);
+    return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::reset_members`].
-  _i5.RuntimeCall resetMembers({required members}) {
-    final _call = _i6.Call.values.resetMembers(members: members);
-    return _i5.RuntimeCall.values.membership(_call);
+  _i6.RuntimeCall resetMembers({required members}) {
+    final _call = _i7.Call.values.resetMembers(members: members);
+    return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::change_key`].
-  _i5.RuntimeCall changeKey({required new_}) {
-    final _call = _i6.Call.values.changeKey(new_: new_);
-    return _i5.RuntimeCall.values.membership(_call);
+  _i6.RuntimeCall changeKey({required new_}) {
+    final _call = _i7.Call.values.changeKey(new_: new_);
+    return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::set_prime`].
-  _i5.RuntimeCall setPrime({required who}) {
-    final _call = _i6.Call.values.setPrime(who: who);
-    return _i5.RuntimeCall.values.membership(_call);
+  _i6.RuntimeCall setPrime({required who}) {
+    final _call = _i7.Call.values.setPrime(who: who);
+    return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::clear_prime`].
-  _i5.RuntimeCall clearPrime() {
-    final _call = _i6.Call.values.clearPrime();
-    return _i5.RuntimeCall.values.membership(_call);
+  _i6.RuntimeCall clearPrime() {
+    final _call = _i7.Call.values.clearPrime();
+    return _i6.RuntimeCall.values.membership(_call);
   }
 }

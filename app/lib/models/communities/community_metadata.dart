@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ew_polkadart/encointer_types.dart' as et;
 import 'package:json_annotation/json_annotation.dart';
 
 part 'community_metadata.g.dart';
@@ -11,6 +12,19 @@ class CommunityMetadata {
   CommunityMetadata(this.name, this.symbol, this.assets, this.url, this.theme, this.announcementSigner, this.rules);
 
   factory CommunityMetadata.fromJson(Map<String, dynamic> json) => _$CommunityMetadataFromJson(json);
+
+  factory CommunityMetadata.fromPolkadart(et.CommunityMetadata cm) {
+    return CommunityMetadata(
+      utf8.decode(cm.name),
+      utf8.decode(cm.symbol),
+      utf8.decode(cm.assets),
+      cm.url != null ? utf8.decode(cm.url!) : null,
+      cm.theme != null ? utf8.decode(cm.theme!) : null,
+      // Todo: support announcement signer
+      null,
+      communityRulesFromPolkadart(cm.rules),
+    );
+  }
 
   Map<String, dynamic> toJson() => _$CommunityMetadataToJson(this);
 
@@ -38,6 +52,19 @@ enum CommunityRules { LoCo, LoCoFlex, BeeDance }
 
 extension CommunityRulesExt on CommunityRules {
   bool get isLoCo => this == CommunityRules.LoCo;
+
   bool get isLoCoFlex => this == CommunityRules.LoCoFlex;
+
   bool get isBeeDance => this == CommunityRules.BeeDance;
+}
+
+CommunityRules communityRulesFromPolkadart(et.CommunityRules rules) {
+  switch (rules) {
+    case et.CommunityRules.loCo:
+      return CommunityRules.LoCo;
+    case et.CommunityRules.loCoFlex:
+      return CommunityRules.LoCoFlex;
+    case et.CommunityRules.beeDance:
+      return CommunityRules.BeeDance;
+  }
 }

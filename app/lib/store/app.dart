@@ -4,12 +4,12 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
 import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
 part 'app.g.dart';
 
@@ -223,7 +223,7 @@ abstract class _AppStore with Store {
 
     if (pubKey != null) {
       // Todo: #1072
-      final address = Fmt.ss58Encode(pubKey, prefix: settings.endpoint.ss58!);
+      final address = AddressUtils.pubKeyHexToAddress(pubKey, prefix: settings.endpoint.ss58!);
       Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
       await encointer.initializeUninitializedStores(address);
     }

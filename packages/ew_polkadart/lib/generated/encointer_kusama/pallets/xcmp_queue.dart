@@ -1,14 +1,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i8;
+import 'dart:typed_data' as _i10;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i3;
 
 import '../types/cumulus_pallet_xcmp_queue/inbound_channel_details.dart' as _i2;
 import '../types/cumulus_pallet_xcmp_queue/outbound_channel_details.dart' as _i5;
-import '../types/cumulus_pallet_xcmp_queue/pallet/call.dart' as _i11;
+import '../types/cumulus_pallet_xcmp_queue/pallet/call.dart' as _i12;
 import '../types/cumulus_pallet_xcmp_queue/queue_config_data.dart' as _i6;
-import '../types/encointer_runtime/runtime_call.dart' as _i10;
+import '../types/encointer_runtime/runtime_call.dart' as _i11;
 import '../types/polkadot_parachain/primitives/id.dart' as _i4;
 import '../types/sp_weights/weight_v2/weight.dart' as _i9;
 import '../types/tuples_2.dart' as _i7;
@@ -279,68 +280,140 @@ class Queries {
     }
     return false; /* Default */
   }
+
+  /// Returns the storage key for `inboundXcmpStatus`.
+  _i10.Uint8List inboundXcmpStatusKey() {
+    final hashedKey = _inboundXcmpStatus.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `inboundXcmpMessages`.
+  _i10.Uint8List inboundXcmpMessagesKey(
+    _i4.Id key1,
+    int key2,
+  ) {
+    final hashedKey = _inboundXcmpMessages.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `outboundXcmpStatus`.
+  _i10.Uint8List outboundXcmpStatusKey() {
+    final hashedKey = _outboundXcmpStatus.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `outboundXcmpMessages`.
+  _i10.Uint8List outboundXcmpMessagesKey(
+    _i4.Id key1,
+    int key2,
+  ) {
+    final hashedKey = _outboundXcmpMessages.hashedKeyFor(
+      key1,
+      key2,
+    );
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `signalMessages`.
+  _i10.Uint8List signalMessagesKey(_i4.Id key1) {
+    final hashedKey = _signalMessages.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `queueConfig`.
+  _i10.Uint8List queueConfigKey() {
+    final hashedKey = _queueConfig.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `overweight`.
+  _i10.Uint8List overweightKey(BigInt key1) {
+    final hashedKey = _overweight.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `counterForOverweight`.
+  _i10.Uint8List counterForOverweightKey() {
+    final hashedKey = _counterForOverweight.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `overweightCount`.
+  _i10.Uint8List overweightCountKey() {
+    final hashedKey = _overweightCount.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `queueSuspended`.
+  _i10.Uint8List queueSuspendedKey() {
+    final hashedKey = _queueSuspended.hashedKey();
+    return hashedKey;
+  }
 }
 
 class Txs {
   const Txs();
 
   /// See [`Pallet::service_overweight`].
-  _i10.RuntimeCall serviceOverweight({
+  _i11.RuntimeCall serviceOverweight({
     required index,
     required weightLimit,
   }) {
-    final _call = _i11.Call.values.serviceOverweight(
+    final _call = _i12.Call.values.serviceOverweight(
       index: index,
       weightLimit: weightLimit,
     );
-    return _i10.RuntimeCall.values.xcmpQueue(_call);
+    return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::suspend_xcm_execution`].
-  _i10.RuntimeCall suspendXcmExecution() {
-    final _call = _i11.Call.values.suspendXcmExecution();
-    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  _i11.RuntimeCall suspendXcmExecution() {
+    final _call = _i12.Call.values.suspendXcmExecution();
+    return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::resume_xcm_execution`].
-  _i10.RuntimeCall resumeXcmExecution() {
-    final _call = _i11.Call.values.resumeXcmExecution();
-    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  _i11.RuntimeCall resumeXcmExecution() {
+    final _call = _i12.Call.values.resumeXcmExecution();
+    return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_suspend_threshold`].
-  _i10.RuntimeCall updateSuspendThreshold({required new_}) {
-    final _call = _i11.Call.values.updateSuspendThreshold(new_: new_);
-    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  _i11.RuntimeCall updateSuspendThreshold({required new_}) {
+    final _call = _i12.Call.values.updateSuspendThreshold(new_: new_);
+    return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_drop_threshold`].
-  _i10.RuntimeCall updateDropThreshold({required new_}) {
-    final _call = _i11.Call.values.updateDropThreshold(new_: new_);
-    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  _i11.RuntimeCall updateDropThreshold({required new_}) {
+    final _call = _i12.Call.values.updateDropThreshold(new_: new_);
+    return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_resume_threshold`].
-  _i10.RuntimeCall updateResumeThreshold({required new_}) {
-    final _call = _i11.Call.values.updateResumeThreshold(new_: new_);
-    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  _i11.RuntimeCall updateResumeThreshold({required new_}) {
+    final _call = _i12.Call.values.updateResumeThreshold(new_: new_);
+    return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_threshold_weight`].
-  _i10.RuntimeCall updateThresholdWeight({required new_}) {
-    final _call = _i11.Call.values.updateThresholdWeight(new_: new_);
-    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  _i11.RuntimeCall updateThresholdWeight({required new_}) {
+    final _call = _i12.Call.values.updateThresholdWeight(new_: new_);
+    return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_weight_restrict_decay`].
-  _i10.RuntimeCall updateWeightRestrictDecay({required new_}) {
-    final _call = _i11.Call.values.updateWeightRestrictDecay(new_: new_);
-    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  _i11.RuntimeCall updateWeightRestrictDecay({required new_}) {
+    final _call = _i12.Call.values.updateWeightRestrictDecay(new_: new_);
+    return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_xcmp_max_individual_weight`].
-  _i10.RuntimeCall updateXcmpMaxIndividualWeight({required new_}) {
-    final _call = _i11.Call.values.updateXcmpMaxIndividualWeight(new_: new_);
-    return _i10.RuntimeCall.values.xcmpQueue(_call);
+  _i11.RuntimeCall updateXcmpMaxIndividualWeight({required new_}) {
+    final _call = _i12.Call.values.updateXcmpMaxIndividualWeight(new_: new_);
+    return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 }
