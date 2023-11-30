@@ -429,6 +429,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  ew_primitives:
+    dependency: "direct overridden"
+    description:
+      path: "../packages/ew_primitives"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   ew_storage:
     dependency: "direct main"
     description:
@@ -1308,17 +1315,17 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart"
-      ref: "cl/fix-subscribe-storage"
-      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.5"
+    version: "0.2.6"
   polkadart_keyring:
     dependency: transitive
     description:
       path: "packages/polkadart_keyring"
-      ref: "cl/fix-subscribe-storage"
-      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -1326,8 +1333,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: "cl/fix-subscribe-storage"
-      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -1700,8 +1707,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/substrate_metadata"
-      ref: "cl/fix-subscribe-storage"
-      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"

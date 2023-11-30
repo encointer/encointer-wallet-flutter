@@ -318,10 +318,10 @@ class EncointerApi {
     final cid = store.encointer.chosenCid;
 
     final cIndex = store.encointer.currentCeremonyIndex;
-    final pubKey = store.account.currentAccountPubKey;
-    Log.d('api: Getting pendingIssuance for $pubKey', 'EncointerApi');
+    final address = store.account.currentAddress;
+    Log.d('api: Getting pendingIssuance for $address', 'EncointerApi');
 
-    if (pubKey == null || pubKey.isEmpty || cid == null || cIndex == null || cIndex <= 1) {
+    if (address.isEmpty || cid == null || cIndex == null || cIndex <= 1) {
       return false;
     }
 
@@ -334,11 +334,85 @@ class EncointerApi {
       issuanceCIndex = cIndex;
     }
 
-    final hasPendingIssuance = await jsApi
-        .evalJavascript<bool>('encointer.hasPendingIssuance(${jsonEncode(cid)}, "$issuanceCIndex","$pubKey")');
+    final cc = Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), issuanceCIndex);
 
-    Log.d('api:has pending issuance $hasPendingIssuance', 'EncointerApi');
-    return hasPendingIssuance;
+    try {
+      final participantMeetupIndex = await getMeetupIndex(cc, Address.decode(address));
+
+      if (participantMeetupIndex == 0) {
+        Log.d('[hasPendingIssuance] participant was not assigned to a meetup');
+        return false;
+      }
+
+      final meetupResult =
+          await encointerKusama.query.encointerCeremonies.issuedRewards(cc, BigInt.from(participantMeetupIndex));
+
+      if (meetupResult == null) {
+        return true;
+      } else {
+        Log.d('[hasPendingIssuance] meetupResult: ${jsonEncode(meetupResult)}');
+        return false;
+      }
+    } catch (e) {
+      Log.e('[hasPendingIssuance] exception in getting pending rewards: $e');
+      return false;
+    }
+  }
+
+  Future<int> getMeetupIndex(
+    Tuple2<et.CommunityIdentifier, int> cc,
+    Address address,
+  ) async {
+    final [mCount, assignments, assignmentCount, registration] = await Future.wait([
+      encointerKusama.query.encointerCeremonies.meetupCount(cc),
+      encointerKusama.query.encointerCeremonies.assignments(cc),
+      encointerKusama.query.encointerCeremonies.assignmentCounts(cc),
+      getParticipantRegistration(cc, address),
+    ]);
+
+    if (mCount == 0) {
+      Log.d('[hasPendingIssuance] No meetups in last cycle.');
+      return 0;
+    }
+
+    if (registration == null) {
+      Log.d('[hasPendingIssuance] No participant registration found for last cycle.');
+      return 0;
+    }
+
+    final participantMeetupIndex = ew_utils.computeMeetupIndex(
+      (registration as ParticipantRegistration).pIndex,
+      registration.participantType,
+      assignments! as et.Assignment,
+      assignmentCount! as et.AssignmentCount,
+      (mCount! as BigInt).toInt(),
+    );
+
+    return participantMeetupIndex;
+  }
+
+  Future<ParticipantRegistration?> getParticipantRegistration(
+    Tuple2<et.CommunityIdentifier, int> cc,
+    Address address,
+  ) async {
+    final pIndexes = await Future.wait([
+      encointerKusama.query.encointerCeremonies.bootstrapperIndex(cc, address.pubkey),
+      encointerKusama.query.encointerCeremonies.reputableIndex(cc, address.pubkey),
+      encointerKusama.query.encointerCeremonies.endorseeIndex(cc, address.pubkey),
+      encointerKusama.query.encointerCeremonies.newbieIndex(cc, address.pubkey),
+    ]);
+
+    if (pIndexes[0] != BigInt.zero) {
+      return ParticipantRegistration(pIndexes[0].toInt(), et.ParticipantType.bootstrapper);
+    } else if (pIndexes[1] != BigInt.zero) {
+      return ParticipantRegistration(pIndexes[1].toInt(), et.ParticipantType.reputable);
+    } else if (pIndexes[2] != BigInt.zero) {
+      return ParticipantRegistration(pIndexes[2].toInt(), et.ParticipantType.endorsee);
+    } else if (pIndexes[3] != BigInt.zero) {
+      return ParticipantRegistration(pIndexes[3].toInt(), et.ParticipantType.newbie);
+    }
+
+    return null;
   }
 
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
@@ -417,8 +491,7 @@ class EncointerApi {
     await _cidSubscription?.cancel();
     final cidsPhaseKey = encointerKusama.query.encointerCommunities.communityIdentifiersKey();
 
-    _currentPhaseSubscription =
-        await encointerKusama.rpc.state.subscribeStorage([cidsPhaseKey], (storageChangeSet) async {
+    _cidSubscription = await encointerKusama.rpc.state.subscribeStorage([cidsPhaseKey], (storageChangeSet) async {
       if (storageChangeSet.changes[0].value != null) {
         final cidsPolkadart = const SequenceCodec(et.CommunityIdentifier.codec).decode(
           ByteInput(storageChangeSet.changes[0].value!),
@@ -446,7 +519,7 @@ class EncointerApi {
     // transform them into our own cid
     final cids = cidsPolkadart.map(CommunityIdentifier.fromPolkadart).toList();
 
-    Log.d('CID: $cids', 'EncointerApi');
+    Log.d('[getCommunityIdentifiers]: $cids', 'EncointerApi');
     return cids;
   }
 
@@ -632,4 +705,11 @@ class EncointerApi {
     final url = '$infuraIpfsUrl/$ipfsUrlHash';
     return ewHttp.getType(url, fromJson: IpfsProduct.fromJson);
   }
+}
+
+class ParticipantRegistration {
+  ParticipantRegistration(this.pIndex, this.participantType);
+
+  final int pIndex;
+  final et.ParticipantType participantType;
 }

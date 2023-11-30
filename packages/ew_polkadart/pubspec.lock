@@ -293,26 +293,26 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/polkadart"
-      ref: "cl/fix-subscribe-storage"
-      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.5"
+    version: "0.2.6"
   polkadart_cli:
     dependency: "direct dev"
     description:
       path: "packages/polkadart_cli"
-      ref: "cl/fix-subscribe-storage"
-      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.3"
+    version: "0.2.4"
   polkadart_scale_codec:
     dependency: "direct main"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: "cl/fix-subscribe-storage"
-      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -448,8 +448,8 @@ packages:
     dependency: "direct dev"
     description:
       path: "packages/substrate_metadata"
-      ref: "cl/fix-subscribe-storage"
-      resolved-ref: fb361c99db823d559dcb8e84b08e4a7fb87f39f4
+      ref: main
+      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
