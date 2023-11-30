@@ -385,7 +385,7 @@ class EncointerApi {
       registration.participantType,
       assignments! as et.Assignment,
       assignmentCount! as et.AssignmentCount,
-      mCount! as int,
+      (mCount! as BigInt).toInt(),
     );
 
     return participantMeetupIndex;
