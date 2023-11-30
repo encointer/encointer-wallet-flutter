@@ -1,15 +1,16 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i7;
+import 'dart:typed_data' as _i8;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i3;
 
 import '../types/encointer_runtime/runtime_call.dart' as _i4;
-import '../types/pallet_collective/pallet/call.dart' as _i8;
+import '../types/pallet_collective/pallet/call.dart' as _i9;
 import '../types/pallet_collective/votes.dart' as _i5;
 import '../types/primitive_types/h256.dart' as _i2;
 import '../types/sp_core/crypto/account_id32.dart' as _i6;
-import '../types/sp_weights/weight_v2/weight.dart' as _i9;
+import '../types/sp_weights/weight_v2/weight.dart' as _i10;
 
 class Queries {
   const Queries(this.__api);
@@ -137,6 +138,42 @@ class Queries {
     }
     return null; /* Nullable */
   }
+
+  /// Returns the storage key for `proposals`.
+  _i8.Uint8List proposalsKey() {
+    final hashedKey = _proposals.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `proposalOf`.
+  _i8.Uint8List proposalOfKey(_i2.H256 key1) {
+    final hashedKey = _proposalOf.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `voting`.
+  _i8.Uint8List votingKey(_i2.H256 key1) {
+    final hashedKey = _voting.hashedKeyFor(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `proposalCount`.
+  _i8.Uint8List proposalCountKey() {
+    final hashedKey = _proposalCount.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `members`.
+  _i8.Uint8List membersKey() {
+    final hashedKey = _members.hashedKey();
+    return hashedKey;
+  }
+
+  /// Returns the storage key for `prime`.
+  _i8.Uint8List primeKey() {
+    final hashedKey = _prime.hashedKey();
+    return hashedKey;
+  }
 }
 
 class Txs {
@@ -148,7 +185,7 @@ class Txs {
     prime,
     required oldCount,
   }) {
-    final _call = _i8.Call.values.setMembers(
+    final _call = _i9.Call.values.setMembers(
       newMembers: newMembers,
       prime: prime,
       oldCount: oldCount,
@@ -161,7 +198,7 @@ class Txs {
     required proposal,
     required lengthBound,
   }) {
-    final _call = _i8.Call.values.execute(
+    final _call = _i9.Call.values.execute(
       proposal: proposal,
       lengthBound: lengthBound,
     );
@@ -174,7 +211,7 @@ class Txs {
     required proposal,
     required lengthBound,
   }) {
-    final _call = _i8.Call.values.propose(
+    final _call = _i9.Call.values.propose(
       threshold: threshold,
       proposal: proposal,
       lengthBound: lengthBound,
@@ -188,7 +225,7 @@ class Txs {
     required index,
     required approve,
   }) {
-    final _call = _i8.Call.values.vote(
+    final _call = _i9.Call.values.vote(
       proposal: proposal,
       index: index,
       approve: approve,
@@ -198,7 +235,7 @@ class Txs {
 
   /// See [`Pallet::disapprove_proposal`].
   _i4.RuntimeCall disapproveProposal({required proposalHash}) {
-    final _call = _i8.Call.values.disapproveProposal(proposalHash: proposalHash);
+    final _call = _i9.Call.values.disapproveProposal(proposalHash: proposalHash);
     return _i4.RuntimeCall.values.collective(_call);
   }
 
@@ -209,7 +246,7 @@ class Txs {
     required proposalWeightBound,
     required lengthBound,
   }) {
-    final _call = _i8.Call.values.close(
+    final _call = _i9.Call.values.close(
       proposalHash: proposalHash,
       index: index,
       proposalWeightBound: proposalWeightBound,
@@ -223,7 +260,7 @@ class Constants {
   Constants();
 
   /// The maximum weight of a dispatch call that can be proposed and executed.
-  final _i9.Weight maxProposalWeight = _i9.Weight(
+  final _i10.Weight maxProposalWeight = _i10.Weight(
     refTime: BigInt.from(250000000000),
     proofSize: BigInt.from(2621440),
   );

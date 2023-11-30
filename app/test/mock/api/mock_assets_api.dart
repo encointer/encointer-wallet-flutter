@@ -1,11 +1,14 @@
+import 'dart:async';
+
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
 
-import '../data/mock_account_data.dart';
+import 'mock_encointer_kusama_api.dart';
 import 'mock_js_api.dart';
 
 class MockAssetsApi extends AssetsApi {
-  MockAssetsApi(super.store, MockJSApi super.js);
+  MockAssetsApi(super.store, MockJSApi super.js, MockEncointerKusamaApi super.encointerKusama);
 
   @override
   Future<void> startSubscriptions() async {
@@ -18,17 +21,13 @@ class MockAssetsApi extends AssetsApi {
   }
 
   @override
-  Future<void> subscribeBalance() async {
+  Future<StreamSubscription<StorageChangeSet>?> subscribeBalance() async {
     Log.d('api: unimplemented subscribeBalance stub', 'MockAssetsApi');
+    return null;
   }
 
   @override
   Future<void> fetchBalance() async {
-    Log.d('api: fetching mock balance', 'MockAssetsApi');
-    await store.assets.setAccountBalances(
-      store.account.currentAccountPubKey,
-      Map.of({store.settings.networkState!.tokenSymbol: balancesInfo}),
-      needCache: false,
-    );
+    Log.d('api: unimplemented fetchBalance', 'MockAssetsApi');
   }
 }

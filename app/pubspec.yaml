@@ -14,7 +14,7 @@ description: EncointerWallet made with Flutter.
 
 # bump version already while working on new release, bumping build number at the same time
 # bump build number even more, if needed to clarify what's deployed
-version: 1.11.2+873
+version: 1.11.3+874
 
 publish_to: none
 
@@ -26,8 +26,6 @@ dependencies:
   # intl - format numbers
   intl: ^0.18.1
   json_annotation: ^4.8.1
-  bip39: ^1.0.6 # Todo: #1268: replace with alternative package
-  pointycastle: ^3.7.3
   # state management with mobx
   mobx: ^2.2.1
   flutter_mobx: ^2.1.0+1
@@ -82,12 +80,18 @@ dependencies:
   printing: ^5.11.0
   pdf: ^3.10.4
   connectivity_plus: ^5.0.1
+  ew_encointer_utils:
+    path: ../packages/ew_encointer_utils/
   ew_storage:
     path: ../packages/ew_storage/
   ew_http:
     path: ../packages/ew_http/
+  ew_keyring:
+    path: ../packages/ew_keyring/
   ew_polkadart:
     path: ../packages/ew_polkadart/
+  ew_substrate_fixed:
+    path: ../packages/ew_substrate_fixed/
   ew_test_keys:
     path: ../packages/ew_test_keys/
   decimal: ^2.3.3
@@ -110,6 +114,28 @@ dev_dependencies:
   mocktail: ^1.0.1
   very_good_analysis: ^5.1.0
   rxdart: ^0.27.7
+
+dependency_overrides:
+  polkadart:
+    #    path: ../../../polkadart/packages/polkadart
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: main
+      path: packages/polkadart
+
+  polkadart_scale_codec:
+    #    path: ../../../polkadart/packages/polkadart_scale_codec
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: main
+      path: packages/polkadart_scale_codec
+
+  substrate_metadata:
+    #    path: ../../../polkadart/packages/substrate_metadata
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: main
+      path: packages/substrate_metadata
 
 flutter_icons:
   android: "launcher_icon"

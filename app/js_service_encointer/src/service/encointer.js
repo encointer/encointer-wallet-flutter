@@ -1,17 +1,10 @@
 import { assert, hexToU8a } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { createType } from '@polkadot/types';
-import { parseEncointerBalance, stringToDegree } from '@encointer/types';
+import { parseEncointerBalance } from '@encointer/types';
 import { keyring, sendTxWithPair } from './account.js';
-import { pallets, parachainSpecName, solochainSpecName } from '../config/consts.js';
-import { unsubscribe } from '../utils/unsubscribe.js';
 import { communityIdentifierToString } from '@encointer/util';
 import {
-  getMeetupIndex as _getMeetupIndex,
-  getMeetupLocation,
-  getMeetupParticipants,
-  getParticipantIndex as _getParticipantIndex,
-  getNextMeetupTime as _getNextMeetupTime,
   getDemurrage as _getDemurrage, submitAndWatchTx,
 } from '@encointer/node-api';
 import { getFinalizedHeader } from './chain.js';
@@ -23,52 +16,6 @@ import {
   getAllFaucetsWithAccount,
   hasCommittedFor,
 } from './faucet.js';
-
-export async function getCurrentPhase () {
-  return api.query.encointerScheduler.currentPhase();
-}
-
-export async function getNextPhaseTimestamp () {
-  return api.query.encointerScheduler.nextPhaseTimestamp();
-}
-
-/**
- * Gets all phase durations to cache them on the dart side to speedup `getNextMeetupTime` request.
- */
-export async function getPhaseDurations () {
-  const [registering, assigning, attesting] = await Promise.all([
-    api.query.encointerScheduler.phaseDurations('Registering'),
-    api.query.encointerScheduler.phaseDurations('Attesting'),
-    api.query.encointerScheduler.phaseDurations('Assigning')
-  ]);
-  return {
-    Registering: registering,
-    Attesting: assigning,
-    Assigning: attesting
-  };
-}
-
-/**
- * Subscribes to the current ceremony phase
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeCurrentPhase (msgChannel) {
-  return await api.query.encointerScheduler.currentPhase((phase) => {
-    send(msgChannel, phase);
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
-/**
- * Subscribes to the currencies registry
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeCommunityIdentifiers (msgChannel) {
-  return await api.query[pallets.encointerCommunities.name][pallets.encointerCommunities.calls.communityIdentifiers]((cids) => {
-    send(msgChannel, cids);
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
 
 export async function getBalance (cid, address) {
   const balanceEntry = await api.query.encointerBalances.balance(cid, address);
@@ -139,246 +86,10 @@ export function encointerTransferAll (fromPair, recipientAddress, cid) {
   return sendTxWithPair(fromPair, txInfo, paramList);
 }
 
-/**
- * Subscribes to the balance of a given cid
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeBalance (msgChannel, cid, address) {
-  return await api.query.encointerBalances.balance(cid, address, (b) => {
-    const balance = parseEncointerBalance(b.principal.bits);
-    send(msgChannel, {
-      principal: balance,
-      lastUpdate: b.lastUpdate.toNumber()
-    });
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
-/**
- * Subscribes to the business registry of a given cid
- * @param msgChannel channel that the message handler uses on the dart side
- * @returns {Promise<void>}
- */
-export async function subscribeBusinessRegistry (msgChannel, cid) {
-  return await api.query.encointerBazaar.businessRegistry(cid, (businesses) => {
-    send(msgChannel, businesses);
-  }).then((unsub) => unsubscribe(unsub, msgChannel));
-}
-
-export async function getParticipantIndex (cid, cIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-  send('js-getParticipantIndex', `Getting participant index for Cid: ${communityIdentifierToString(cidT)}, cIndex: ${cIndex} and address: ${address}`);
-  return _getParticipantIndex(api, cidT, cIndexT, address);
-}
-
-export async function getParticipantReputation (cid, cIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  send('js-getParticipantReputation', `Getting participant reputation for Cid: ${communityIdentifierToString(cidT)}, cIndex: ${cIndex} and address: ${address}`);
-  const reputation = await api.query.encointerCeremonies.participantReputation([cid, cIndex], address);
-  send('js-getParticipantReputation', `Participant reputation: ${reputation}`);
-  return reputation;
-}
-
-// returns a list of prefixed hex strings
-export async function getCommunityIdentifiers () {
-  const pallet = pallets.encointerCommunities;
-  const cids = await api.query[pallet.name][pallet.calls.communityIdentifiers]();
-  return {
-    cids
-  };
-}
-
-export async function getBootstrappers (cid) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-
-  return await api.query.encointerCommunities.bootstrappers(cidT);
-}
-
-export async function remainingNewbieTicketsReputable (cid, ceremonyIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  window.send('js-remainingNewbieTickets-reputable', `cid: ${communityIdentifierToString(cidT)} ${address}`);
-  window.send('js-remainingNewbieTickets-reputable', `cIndex: ${ceremonyIndex}`);
-  window.send('js-remainingNewbieTickets-reputable', `address: ${address}`);
-
-  // Wrapping it in a promise all speeds up the process as we can await multiple futures at the same time.
-  const [burnedTickets, ticketsPerReputation] = await Promise.all([
-    api.query.encointerCeremonies.burnedReputableNewbieTickets([cid, ceremonyIndex], address),
-    api.query.encointerCeremonies.endorsementTicketsPerReputable(),
-  ]).catch((e) => console.log(`js-remainingNewbieTickets-reputable error ${e}`));
-
-  window.send('js-remainingNewbieTickets-reputable', `ticketsPerReputation ${ticketsPerReputation}`);
-  window.send('js-remainingNewbieTickets-reputable', `burnedTickets ${burnedTickets}`);
-
-  return ticketsPerReputation - burnedTickets;
-}
-
-export async function remainingNewbieTicketsBootstrapper (cid, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  window.send('js-remainingNewbieTickets-bootstrapper', `cid: ${communityIdentifierToString(cidT)}`);
-  window.send('js-remainingNewbieTickets-bootstrapper', `address: ${address}`);
-
-  // Wrapping it in a promise all speeds up the process as we can await multiple futures at the same time.
-  const [burnedTickets, ticketsPerBootstrapper] = await Promise.all([
-    api.query.encointerCeremonies.burnedBootstrapperNewbieTickets(cid, address),
-    api.query.encointerCeremonies.endorsementTicketsPerBootstrapper(),
-  ]).catch((e) => console.log(`js-remainingNewbieTickets-bootstrapper error ${e}`));
-
-  window.send('js-remainingNewbieTickets-bootstrapper', `ticketsPerBootstrapper ${ticketsPerBootstrapper}`);
-  window.send('js-remainingNewbieTickets-bootstrapper', `burnedTickets ${burnedTickets}`);
-
-  return ticketsPerBootstrapper- burnedTickets;
-}
-
-export async function getCommunityMetadata (cid) {
-  const pallet = pallets.encointerCommunities;
-  const meta = await api.query[pallet.name][pallet.calls.communityMetadata](cid);
-
-  // `toU8a` is necessary. Otherwise, the metadata's fields are represented as hex-strings if the community was
-  // registered via polkadot-js/apps and.
-  return api.createType('CommunityMetadataType', meta.toU8a());
-}
-
 export async function getDemurrage (cid) {
   const cidT = api.createType('CommunityIdentifier', cid);
 
   return _getDemurrage(api, cidT).then((demBits) => parseEncointerBalance(demBits));
-}
-
-export async function communitiesGetAll () {
-  return await api.rpc.encointer.getAllCommunities();
-}
-
-export async function getCurrentCeremonyIndex () {
-  return await api.query.encointerScheduler.currentCeremonyIndex();
-}
-
-export async function getMeetupIndex (cid, cIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-
-  return _getMeetupIndex(api, cidT, cIndexT, address);
-}
-
-export async function getMeetupRegistry (cid, cIndex, mIndex) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-  const mIndexT = api.createType('MeetupIndexType', mIndex);
-
-  return getMeetupParticipants(api, cidT, cIndexT, mIndexT);
-}
-
-/**
- * Gets the meetup time for a location.
- *
- * @param location Meetup location with fields as numbers, e.g. 35.153215322
- * @returns {Promise<Moment>}
- */
-export async function getNextMeetupTime (location) {
-  const locT = api.createType('Location', {
-    lat: stringToDegree(location.lat),
-    lon: stringToDegree(location.lon),
-  });
-
-  return _getNextMeetupTime(api, locT);
-}
-
-/**
- *
- * @param cid CommunityIdentifier
- * @param cIndex CurrentCeremonyIndex
- * @param mIndex MeetupIndex
- * @param address
- * @returns {Promise<Location>} with number format '35.123412341234'
- */
-export async function getNextMeetupLocation (cid, cIndex, mIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-  const mIndexT = api.createType('MeetupIndexType', mIndex);
-
-  return getMeetupLocation(api, cidT, cIndexT, mIndexT);
-}
-
-/**
- * Get all meetup locations for cid.
- */
-export async function getAllMeetupLocations (cid) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-
-  return api.rpc.encointer.getLocations(cidT);
-}
-
-/**
- * Get all reputations for an account in all communities.
- */
-export async function getReputations (account) {
-  console.log(`[JS] getting reputations for ${account}`);
-
-  return api.rpc.encointer.getReputations(account);
-}
-
-/**
- * Checks if the ceremony rewards has been issued.
- *
- * @param cid CommunityIdentifier
- * @param cIndex CeremonyIndexType
- * @param address
- * @returns {Promise<boolean>}
- */
-export async function hasPendingIssuance (cid, cIndex, address) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-  const cIndexT = api.createType('CeremonyIndexType', cIndex);
-
-  const mIndex = await getMeetupIndex(cidT, cIndexT, address);
-
-  if (mIndex.eq(0)) {
-    return false;
-  }
-
-  if (hasNewIssuedRewardsStorage()) {
-    console.log('js-hasPendingIssuance', `Has IssuedRewards storage v2`);
-
-    try {
-      const alreadyIssued = await api.query.encointerCeremonies.issuedRewards([cidT, cIndexT], mIndex)
-        .then((maybeResult) => api.createType('Option<MeetupResult>', maybeResult));
-      console.log('js-hasPendingIssuance', `MeetupResult: ${alreadyIssued.toJSON()}`);
-
-      // None means that the meetup has not been evaluated.
-      return alreadyIssued.isNone;
-    } catch (e) {
-      console.log('js-hasPendingIssuance', `Error: ${e.toString()}`);
-    }
-  } else {
-    console.log('js-hasPendingIssuance', `Has IssuedRewards storage v1`);
-    return hasPendingIssuanceOld(cidT, cIndexT, mIndex);
-  }
-}
-
-async function hasPendingIssuanceOld(cidT, cIndexT, mIndexT) {
-  // We need to fetch the keys here, as the storage map is (CurrencyCeremony, MeetupIndex) => ().
-  // The default value for type '()' is ''. Hence, we can't identify if the key exists by looking at the value
-  // because polkadot-js returns the default value for a nonexistent key.
-  const alreadyIssued = await api.query.encointerCeremonies.issuedRewards.keys([cidT, cIndexT])
-    .then((keys) => keys.map(({ args: [_currencyCeremony, mIndex] }) => mIndex.toNumber()));
-
-  console.log('js-hasPendingIssuance', `already issued meetups: ${alreadyIssued}`);
-
-  // `toNumber` is necessary; polkadot-js objects to not overwrite object equality.
-  return !alreadyIssued.includes(mIndexT.toNumber());
-}
-
-/**
- * The old version just had `HashMap<MeetupIndex,()`. If the key was present, the meetup has been evaluated.
- *
- * The new one contains a `HashMap<MeetupIndex, MeetupResult>`.
- * @returns {boolean}
- */
-function hasNewIssuedRewardsStorage() {
-  console.log(`Api:Runtime Spec Name: ${api.runtimeVersion.specName}`);
-  console.log(`Api:Runtime Spec version: ${api.runtimeVersion.specVersion}`);
-
-  return (api.runtimeVersion.specName.toString() === parachainSpecName && api.runtimeVersion.specVersion >= 9) ||
-    (api.runtimeVersion.specName.toString() === solochainSpecName && api.runtimeVersion.specVersion >= 20);
 }
 
 /**
@@ -434,11 +145,6 @@ export async function _getProofOfAttendance (attendee, cid, cindex) {
   return createType(registry, 'Option<ProofOfAttendance>', proof);
 }
 
-
-export async function getBusinessRegistry (cid) {
-  return await api.query.encointerBazaar.businessRegistry(cid);
-}
-
 /**
  * Calls next phase with Alice.
  *
@@ -464,35 +170,10 @@ export async function sendNextPhaseTx() {
 }
 
 export default {
-  getCurrentPhase,
-  getNextPhaseTimestamp,
-  getPhaseDurations,
-  getCommunityIdentifiers,
-  getParticipantReputation,
-  getBootstrappers,
-  subscribeCurrentPhase,
-  subscribeBalance,
-  subscribeCommunityIdentifiers,
-  subscribeBusinessRegistry,
   getProofOfAttendance,
-  getCurrentCeremonyIndex,
-  getNextMeetupLocation,
-  getNextMeetupTime,
-  getDemurrage,
-  getCommunityMetadata,
-  getAllMeetupLocations,
-  communitiesGetAll,
-  getMeetupIndex,
-  getParticipantIndex,
-  getMeetupRegistry,
-  hasPendingIssuance,
   getBalance,
-  getBusinessRegistry,
-  getReputations,
   sendNextPhaseTx,
   reapVoucher,
-  remainingNewbieTicketsReputable,
-  remainingNewbieTicketsBootstrapper,
   getAllFaucetAccounts,
   getFaucetFor,
   getAllFaucetsWithAccount,
