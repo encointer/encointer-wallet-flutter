@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:convert/convert.dart' show hex;
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
@@ -28,6 +29,7 @@ import 'package:ew_encointer_utils/ew_encointer_utils.dart' as ew_utils;
 import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 // disambiguate global imports of encointer types. We can remove this
@@ -630,21 +632,32 @@ class EncointerApi {
 
   Future<Map<String, Faucet>> getAllFaucetsWithAccount() async {
     try {
-      // faucets: Map<String, Faucet>
-      final faucets = await jsApi.evalJavascript<Map<String, dynamic>>(
-        'encointer.getAllFaucetsWithAccount()',
-      );
-      final f = faucets.map((address, faucet) => MapEntry(address, Faucet.fromJson(faucet as Map<String, dynamic>)));
-      Log.d('Encointer Api', 'all faucets2: $f');
+      final prefix = encointerKusama.query.encointerFaucet.faucetsMapPrefix();
+      final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50);
+
+      // Keys including storage prefix.
+      Log.d("[getAllFaucets] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
+
+      final faucetPubKeys = keys
+          .map((key) => const AccountId32Codec().decode(ByteInput(key.sublist(32))));
+
+      final faucets = await Future.wait(faucetPubKeys.map(
+        (key) => encointerKusama.query.encointerFaucet.faucets(key).then((faucet) => Faucet.fromPolkadart(faucet!)),
+      ));
+
+      final pubKeyHex = faucetPubKeys.map((accountId) => '0x${hex.encode(accountId)}');
+      Log.d("[getAllFaucets] accounts: $pubKeyHex'");
+
+      final f = Map.fromIterables(pubKeyHex, faucets);
+      Log.d('[getAllFaucets]', 'all faucets2: $f');
       return f;
     } catch (e, s) {
-      Log.e('Encointer Api', '$e', s);
+      Log.e('[getAllFaucets]', '$e', s);
       return Map.of({});
     }
   }
 
   Future<bool> hasCommittedFor(CommunityIdentifier cid, int cIndex, int purposeId, String address) async {
-
     final cc = Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex);
     final purposeAccountTuple = Tuple2(BigInt.from(purposeId), Address.decode(address).pubkey);
 
