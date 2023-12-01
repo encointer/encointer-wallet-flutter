@@ -670,10 +670,6 @@ class EncointerApi {
 
       final hasCommitted = keys.contains(fullKey);
 
-      // final hasCommitted = await jsApi.evalJavascript<bool>(
-      //   'encointer.hasCommittedFor(${jsonEncode(cid)}, "$cIndex", "$purposeId","$address")',
-      // );
-
       Log.p('[hasCommittedFor] hasCommitted = $hasCommitted');
       return hasCommitted;
     } catch (e, s) {
