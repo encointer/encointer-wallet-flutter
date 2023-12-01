@@ -644,14 +644,27 @@ class EncointerApi {
   }
 
   Future<bool> hasCommittedFor(CommunityIdentifier cid, int cIndex, int purposeId, String address) async {
+
+    final cc = Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex);
+    final purposeAccountTuple = Tuple2(BigInt.from(purposeId), Address.decode(address).pubkey);
+
     try {
-      final hasCommitted = await jsApi.evalJavascript<bool>(
-        'encointer.hasCommittedFor(${jsonEncode(cid)}, "$cIndex", "$purposeId","$address")',
-      );
-      Log.d('Encointer Api', 'hasCommitted : $hasCommitted');
+      // Commitment is an Option<H256>, so we need to see if the key exists, as None maps to null.
+      final prefix = encointerKusama.query.encointerReputationCommitments.commitmentsMapPrefix(cc);
+      final fullKey = encointerKusama.query.encointerReputationCommitments.commitmentsKey(cc, purposeAccountTuple);
+
+      final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50);
+
+      final hasCommitted = keys.contains(fullKey);
+
+      // final hasCommitted = await jsApi.evalJavascript<bool>(
+      //   'encointer.hasCommittedFor(${jsonEncode(cid)}, "$cIndex", "$purposeId","$address")',
+      // );
+
+      Log.p('[hasCommittedFor] hasCommitted = $hasCommitted');
       return hasCommitted;
     } catch (e, s) {
-      Log.e('Encointer Api', '$e', s);
+      Log.e('[hasCommittedFor] exception', '$e', s);
       return false;
     }
   }
