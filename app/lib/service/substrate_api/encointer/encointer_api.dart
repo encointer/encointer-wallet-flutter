@@ -638,8 +638,7 @@ class EncointerApi {
       // Keys including storage prefix.
       Log.d("[getAllFaucets] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
 
-      final faucetPubKeys = keys
-          .map((key) => const AccountId32Codec().decode(ByteInput(key.sublist(32))));
+      final faucetPubKeys = keys.map((key) => const AccountId32Codec().decode(ByteInput(key.sublist(32))));
 
       final faucets = await Future.wait(faucetPubKeys.map(
         (key) => encointerKusama.query.encointerFaucet.faucets(key).then((faucet) => Faucet.fromPolkadart(faucet!)),
