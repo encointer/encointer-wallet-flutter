@@ -649,7 +649,7 @@ class EncointerApi {
       Log.d("[getAllFaucets] accounts: $pubKeyHex'");
 
       final f = Map.fromIterables(pubKeyHex, faucets);
-      Log.d('[getAllFaucets]', 'all faucets2: $f');
+      Log.d('[getAllFaucets] faucets: $f');
       return f;
     } catch (e, s) {
       Log.e('[getAllFaucets]', '$e', s);
