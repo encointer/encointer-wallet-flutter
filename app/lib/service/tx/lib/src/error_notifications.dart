@@ -10,7 +10,7 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_c
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart'
     as balances_error;
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_reputation_commitments/pallet/error.dart'
-as reputation_commitments_error;
+    as reputation_commitments_error;
 
 /// Message content of the notifications shown when a tx error occurs.
 class ErrorNotificationMsg {
@@ -124,9 +124,9 @@ extension LocalizedReputationCommitmentsError on reputation_commitments_error.Er
   ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
     return switch (this) {
       reputation_commitments_error.Error.alreadyCommited => ErrorNotificationMsg(
-        title: l10n.reputationAlreadyCommittedTitle,
-        body: l10n.reputationAlreadyCommittedContent,
-      ),
+          title: l10n.reputationAlreadyCommittedTitle,
+          body: l10n.reputationAlreadyCommittedContent,
+        ),
       _ => ErrorNotificationMsg(title: l10n.transactionError, body: toJson())
     };
   }
