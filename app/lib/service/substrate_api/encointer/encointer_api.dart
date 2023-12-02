@@ -664,12 +664,17 @@ class EncointerApi {
       // Commitment is an Option<H256>, so we need to see if the key exists, as None maps to null.
       final prefix = encointerKusama.query.encointerReputationCommitments.commitmentsMapPrefix(cc);
       final fullKey = encointerKusama.query.encointerReputationCommitments.commitmentsKey(cc, purposeAccountTuple);
+      final fullKeyHex = '0x${hex.encode(fullKey)}';
 
       final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50);
+      final keysHex = keys.map((key) => '0x${hex.encode(key)}');
 
-      final hasCommitted = keys.contains(fullKey);
+      // Need to use hexKeys here, to check for equality.
+      final hasCommitted = keysHex.contains(fullKeyHex);
 
-      Log.p('[hasCommittedFor] hasCommitted = $hasCommitted');
+      Log.d('[hasCommittedFor] keys     = $keysHex');
+      Log.d('[hasCommittedFor] fullKey  = $fullKeyHex');
+      Log.d('[hasCommittedFor] hasCommitted = $hasCommitted');
       return hasCommitted;
     } catch (e, s) {
       Log.e('[hasCommittedFor] exception', '$e', s);
