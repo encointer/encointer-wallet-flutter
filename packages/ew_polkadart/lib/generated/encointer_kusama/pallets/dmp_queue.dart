@@ -165,6 +165,18 @@ class Queries {
     final hashedKey = _counterForOverweight.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `pages`.
+  _i8.Uint8List pagesMapPrefix() {
+    final hashedKey = _pages.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `overweight`.
+  _i8.Uint8List overweightMapPrefix() {
+    final hashedKey = _overweight.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

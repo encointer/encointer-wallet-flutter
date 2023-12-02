@@ -1314,6 +1314,174 @@ class Queries {
     final hashedKey = _meetupTimeOffset.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `burnedBootstrapperNewbieTickets`.
+  _i13.Uint8List burnedBootstrapperNewbieTicketsMapPrefix(_i2.CommunityIdentifier key1) {
+    final hashedKey = _burnedBootstrapperNewbieTickets.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `burnedReputableNewbieTickets`.
+  _i13.Uint8List burnedReputableNewbieTicketsMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _burnedReputableNewbieTickets.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `bootstrapperRegistry`.
+  _i13.Uint8List bootstrapperRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _bootstrapperRegistry.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `bootstrapperIndex`.
+  _i13.Uint8List bootstrapperIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _bootstrapperIndex.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `bootstrapperCount`.
+  _i13.Uint8List bootstrapperCountMapPrefix() {
+    final hashedKey = _bootstrapperCount.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `reputableRegistry`.
+  _i13.Uint8List reputableRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _reputableRegistry.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `reputableIndex`.
+  _i13.Uint8List reputableIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _reputableIndex.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `reputableCount`.
+  _i13.Uint8List reputableCountMapPrefix() {
+    final hashedKey = _reputableCount.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `endorseeRegistry`.
+  _i13.Uint8List endorseeRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _endorseeRegistry.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `endorseeIndex`.
+  _i13.Uint8List endorseeIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _endorseeIndex.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `endorseeCount`.
+  _i13.Uint8List endorseeCountMapPrefix() {
+    final hashedKey = _endorseeCount.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `newbieRegistry`.
+  _i13.Uint8List newbieRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _newbieRegistry.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `newbieIndex`.
+  _i13.Uint8List newbieIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _newbieIndex.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `newbieCount`.
+  _i13.Uint8List newbieCountMapPrefix() {
+    final hashedKey = _newbieCount.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `assignmentCounts`.
+  _i13.Uint8List assignmentCountsMapPrefix() {
+    final hashedKey = _assignmentCounts.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `assignments`.
+  _i13.Uint8List assignmentsMapPrefix() {
+    final hashedKey = _assignments.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `participantReputation`.
+  _i13.Uint8List participantReputationMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _participantReputation.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `reputationCount`.
+  _i13.Uint8List reputationCountMapPrefix() {
+    final hashedKey = _reputationCount.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `globalReputationCount`.
+  _i13.Uint8List globalReputationCountMapPrefix() {
+    final hashedKey = _globalReputationCount.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `endorsees`.
+  _i13.Uint8List endorseesMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _endorsees.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `endorseesCount`.
+  _i13.Uint8List endorseesCountMapPrefix() {
+    final hashedKey = _endorseesCount.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `meetupCount`.
+  _i13.Uint8List meetupCountMapPrefix() {
+    final hashedKey = _meetupCount.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `attestationRegistry`.
+  _i13.Uint8List attestationRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _attestationRegistry.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `attestationIndex`.
+  _i13.Uint8List attestationIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _attestationIndex.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `attestationCount`.
+  _i13.Uint8List attestationCountMapPrefix() {
+    final hashedKey = _attestationCount.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `meetupParticipantCountVote`.
+  _i13.Uint8List meetupParticipantCountVoteMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _meetupParticipantCountVote.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `issuedRewards`.
+  _i13.Uint8List issuedRewardsMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+    final hashedKey = _issuedRewards.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `inactivityCounters`.
+  _i13.Uint8List inactivityCountersMapPrefix() {
+    final hashedKey = _inactivityCounters.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

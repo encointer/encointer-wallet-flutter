@@ -327,6 +327,36 @@ class Queries {
     final hashedKey = _maxSpeedMps.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `communityIdentifiersByGeohash`.
+  _i11.Uint8List communityIdentifiersByGeohashMapPrefix() {
+    final hashedKey = _communityIdentifiersByGeohash.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `locations`.
+  _i11.Uint8List locationsMapPrefix(_i3.CommunityIdentifier key1) {
+    final hashedKey = _locations.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `bootstrappers`.
+  _i11.Uint8List bootstrappersMapPrefix() {
+    final hashedKey = _bootstrappers.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `communityMetadata`.
+  _i11.Uint8List communityMetadataMapPrefix() {
+    final hashedKey = _communityMetadata.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `nominalIncome`.
+  _i11.Uint8List nominalIncomeMapPrefix() {
+    final hashedKey = _nominalIncome.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

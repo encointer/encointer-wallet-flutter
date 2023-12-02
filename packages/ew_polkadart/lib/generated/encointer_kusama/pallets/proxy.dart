@@ -89,6 +89,18 @@ class Queries {
     final hashedKey = _announcements.hashedKeyFor(key1);
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `proxies`.
+  _i8.Uint8List proxiesMapPrefix() {
+    final hashedKey = _proxies.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `announcements`.
+  _i8.Uint8List announcementsMapPrefix() {
+    final hashedKey = _announcements.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

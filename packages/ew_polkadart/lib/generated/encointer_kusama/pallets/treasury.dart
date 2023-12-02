@@ -123,6 +123,12 @@ class Queries {
     final hashedKey = _approvals.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `proposals`.
+  _i5.Uint8List proposalsMapPrefix() {
+    final hashedKey = _proposals.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {
