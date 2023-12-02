@@ -9,6 +9,8 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_c
     as ceremonies_error;
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart'
     as balances_error;
+import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_encointer_reputation_commitments/pallet/error.dart'
+as reputation_commitments_error;
 
 /// Message content of the notifications shown when a tx error occurs.
 class ErrorNotificationMsg {
@@ -72,12 +74,13 @@ ErrorNotificationMsg getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeEr
     case EncointerCommunities:
     case EncointerBazaar:
     case EncointerReputationCommitments:
+      return (error as EncointerReputationCommitments).value0.errorMsg(l10n);
     case EncointerFaucet:
       Log.d('unhandled dispatch error: $error');
-      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
+      return ErrorNotificationMsg(title: l10n.transactionError, body: '${error.toJson()}');
     default:
       Log.d('unidentified dispatch error $error');
-      return ErrorNotificationMsg(title: l10n.transactionError, body: error.toString());
+      return ErrorNotificationMsg(title: l10n.transactionError, body: '${error.toJson()}');
   }
 }
 
@@ -100,7 +103,7 @@ extension LocalizedCeremoniesError on ceremonies_error.Error {
           title: l10n.rewardsAlreadyIssuedErrorTitle,
           body: l10n.rewardsAlreadyIssuedErrorBody,
         ),
-      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toString())
+      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toJson())
     };
   }
 }
@@ -112,7 +115,19 @@ extension LocalizedBalancesError on balances_error.Error {
           title: l10n.balanceTooLowTitle,
           body: l10n.balanceTooLowBody,
         ),
-      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toString())
+      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toJson())
+    };
+  }
+}
+
+extension LocalizedReputationCommitmentsError on reputation_commitments_error.Error {
+  ErrorNotificationMsg errorMsg(AppLocalizations l10n) {
+    return switch (this) {
+      reputation_commitments_error.Error.alreadyCommited => ErrorNotificationMsg(
+        title: l10n.reputationAlreadyCommittedTitle,
+        body: l10n.reputationAlreadyCommittedContent,
+      ),
+      _ => ErrorNotificationMsg(title: l10n.transactionError, body: toJson())
     };
   }
 }
