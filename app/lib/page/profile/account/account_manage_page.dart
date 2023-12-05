@@ -256,33 +256,20 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   ],
                 ),
                 Text(l10n.communities, style: h3Grey, textAlign: TextAlign.left),
-                if (appSettingsStore.developerMode)
-                  ListView.builder(
-                      shrinkWrap: true,
-                      // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                      itemCount: store.encointer.accountStores!.containsKey(addressSS58)
-                          ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
-                          : 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        final community =
-                            store.encointer.accountStores![addressSS58]!.balanceEntries.keys.elementAt(index);
-                        return _getBalanceEntryListTile(
-                          community,
-                          store.encointer.accountStores![addressSS58]!.balanceEntries[community],
-                          addressSS58,
-                        );
-                      })
-                else
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: store.encointer.chosenCid != null ? 1 : 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        return _getBalanceEntryListTile(
-                          _appStore.encointer.chosenCid!.toFmtString(),
-                          _appStore.encointer.communityBalanceEntry,
-                          addressSS58,
-                        );
-                      }),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: store.encointer.accountStores!.containsKey(addressSS58)
+                        ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
+                        : 0,
+                    itemBuilder: (BuildContext context, int index) {
+                      final community =
+                          store.encointer.accountStores![addressSS58]!.balanceEntries.keys.elementAt(index);
+                      return _getBalanceEntryListTile(
+                        community,
+                        store.encointer.accountStores![addressSS58]!.balanceEntries[community],
+                        addressSS58,
+                      );
+                    }),
                 // spread the List<Widget> so that it does not create a nested list.
                 if (appSettingsStore.developerMode) ...benefits(),
                 const Spacer(),
