@@ -86,7 +86,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   Widget _getBalanceEntryListTile(int index, String address) {
     final h3 = context.titleLarge.copyWith(color: context.colorScheme.primary);
 
-    // Checked in list view generator that `balanceEntries` are not null.
+    // Checked in `ListView` generator that `balanceEntries` are not null.
     final cidFmt = _appStore.encointer.accountStores![address]!.balanceEntries.keys.elementAt(index);
     final entry = _appStore.encointer.accountStores![address]!.balanceEntries[cidFmt]!;
 
