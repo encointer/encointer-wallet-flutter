@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
+import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
 
 class ChainApi {
   ChainApi(this.store, this.provider);
