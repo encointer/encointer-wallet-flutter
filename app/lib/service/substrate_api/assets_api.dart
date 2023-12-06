@@ -37,10 +37,6 @@ class AssetsApi {
     }
   }
 
-  Future<AccountData> getBalance({BlockHash? at}) async {
-    return getBalanceOf(store.account.currentAddress, at: at);
-  }
-
   Future<AccountData> getBalanceOf(String address, {BlockHash? at}) async {
     return encointerKusama.query.system
         .account(AddressUtils.addressToPubKey(address), at: at ?? store.chain.latestHash)
