@@ -347,15 +347,22 @@ class EncointerApi {
     final cc = Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), issuanceCIndex);
 
     try {
-      final participantMeetupIndex = await getMeetupIndex(cc, Address.decode(address));
+      final participantMeetupIndex = await getMeetupIndex(
+        cc,
+        Address.decode(address),
+        at: at ?? store.chain.latestHash,
+      );
 
       if (participantMeetupIndex == 0) {
         Log.d('[hasPendingIssuance] participant was not assigned to a meetup');
         return false;
       }
 
-      final meetupResult =
-          await encointerKusama.query.encointerCeremonies.issuedRewards(cc, BigInt.from(participantMeetupIndex));
+      final meetupResult = await encointerKusama.query.encointerCeremonies.issuedRewards(
+        cc,
+        BigInt.from(participantMeetupIndex),
+        at: at ?? store.chain.latestHash,
+      );
 
       if (meetupResult == null) {
         return true;
@@ -686,8 +693,13 @@ class EncointerApi {
     }
   }
 
-  Future<bool> hasCommittedFor(CommunityIdentifier cid, int cIndex, int purposeId, String address,
-      {BlockHash? at}) async {
+  Future<bool> hasCommittedFor(
+    CommunityIdentifier cid,
+    int cIndex,
+    int purposeId,
+    String address, {
+    BlockHash? at,
+  }) async {
     final cc = Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex);
     final purposeAccountTuple = Tuple2(BigInt.from(purposeId), Address.decode(address).pubkey);
 
@@ -715,17 +727,17 @@ class EncointerApi {
   }
 
   /// Get all the registered businesses for the current `chosenCid`
-  Future<List<AccountBusinessTuple>> getBusinesses() async {
+  Future<List<AccountBusinessTuple>> getBusinesses({BlockHash? at}) async {
     // set the store because the current bazaar data model reads the values from the store.
     store.encointer.bazaar?.setBusinessRegistry(allMockBusinesses);
     return allMockBusinesses;
   }
 
-  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid) async {
-    return _dartApi.bazaarGetBusinesses(cid);
+  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
+    return _dartApi.bazaarGetBusinesses(cid, at: at ?? store.chain.latestHash);
   }
 
-  Future<Either<Businesses, EwHttpException>> getBusinesseses(String ipfsUrlHash) async {
+  Future<Either<Businesses, EwHttpException>> getBusinessesIpfs(String ipfsUrlHash) async {
     final url = '$infuraIpfsUrl/$ipfsUrlHash';
     return ewHttp.getType(url, fromJson: Businesses.fromJson);
   }
@@ -739,19 +751,20 @@ class EncointerApi {
   }
 
   /// Get all the registered offerings for the current `chosenCid`
-  Future<List<OfferingData>> getOfferings() async {
+  Future<List<OfferingData>> getOfferings({BlockHash? at}) async {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.
     return allMockOfferings;
   }
 
   /// Get all the registered offerings for the business with [bid]
-  Future<List<OfferingData>> getOfferingsForBusiness(BusinessIdentifier bid) async {
+  Future<List<OfferingData>> getOfferingsForBusiness(BusinessIdentifier bid, {BlockHash? at}) async {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.
     return business1MockOfferings;
   }
 
-  Future<List<OfferingData>> bazaarGetOfferingsForBusines(CommunityIdentifier cid, String? controller) async {
-    return _dartApi.bazaarGetOfferingsForBusines(cid, controller);
+  Future<List<OfferingData>> bazaarGetOfferingsForBusiness(CommunityIdentifier cid, String? controller,
+      {BlockHash? at}) async {
+    return _dartApi.bazaarGetOfferingsForBusiness(cid, controller, at: at ?? store.chain.latestHash);
   }
 
   Future<Either<ItemOffered, EwHttpException>> getItemOffered(String ipfsUrlHash) async {

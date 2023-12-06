@@ -71,8 +71,12 @@ class EncointerDartApi {
     return _dartApi.rpc<List<dynamic>>('author_pendingExtrinsics', <dynamic>[]).then(List.from);
   }
 
-  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid) async {
-    final response = await _dartApi.rpc<List<dynamic>>('encointer_bazaarGetBusinesses', [cid.toJson()]);
+  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
+    final params = <Object>[cid.toJson()];
+
+    if (at != null) params.add('0x${hex.encode(at)}');
+
+    final response = await _dartApi.rpc<List<dynamic>>('encointer_bazaarGetBusinesses', params);
 
     if (response.isEmpty) {
       return <AccountBusinessTuple>[];
@@ -95,16 +99,21 @@ class EncointerDartApi {
     });
   }
 
-  Future<List<OfferingData>> bazaarGetOfferingsForBusines(CommunityIdentifier cid, String? controller) async {
-    Log.d('bazaarGetOfferingsForBusines: cid = $cid, controller = $controller', _targetLogger);
-    final response = await _dartApi.rpc<List<dynamic>>('encointer_bazaarGetOfferingsForBusiness', [
+  Future<List<OfferingData>> bazaarGetOfferingsForBusiness(CommunityIdentifier cid, String? controller,
+      {BlockHash? at}) async {
+    final params = <Object>[
       {
         'communityIdentifier': cid.toJson(),
         'controller': controller,
       }
-    ]);
+    ];
 
-    log('$_targetLogger.bazaarGetOfferingsForBusines ${response.runtimeType} and $response');
+    if (at != null) params.add('0x${hex.encode(at)}');
+
+    Log.d('bazaarGetOfferingsForBusiness: cid = $cid, controller = $controller', _targetLogger);
+    final response = await _dartApi.rpc<List<dynamic>>('encointer_bazaarGetOfferingsForBusiness', params);
+
+    log('$_targetLogger.bazaarGetOfferingsForBusiness ${response.runtimeType} and $response');
 
     if (response.isEmpty) {
       return <OfferingData>[];

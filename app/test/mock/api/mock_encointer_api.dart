@@ -101,7 +101,7 @@ class MockEncointerApi extends EncointerApi {
   Future<void> getDemurrage({BlockHash? at}) async {}
 
   @override
-  Future<List<AccountBusinessTuple>> getBusinesses() async {
+  Future<List<AccountBusinessTuple>> getBusinesses({BlockHash? at}) async {
     Log.d('warn: getBusinessRegistry mock is unimplemented', 'MockEncointerApi');
     return Future.value([]);
   }
@@ -150,18 +150,19 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid) async {
+  Future<List<AccountBusinessTuple>> bazaarGetBusinesses(CommunityIdentifier cid, {BlockHash? at}) async {
     return Future.value(allMockBusinesses);
   }
 
   @override
-  Future<Either<Businesses, EwHttpException>> getBusinesseses(String ipfsUrlHash) async {
+  Future<Either<Businesses, EwHttpException>> getBusinessesIpfs(String ipfsUrlHash) async {
     Either<Businesses, EwHttpException> getRight() => Right(Businesses.fromJson(mockBusinessData));
     return Future.value(getRight());
   }
 
   @override
-  Future<List<OfferingData>> bazaarGetOfferingsForBusines(CommunityIdentifier cid, String? controller) async {
+  Future<List<OfferingData>> bazaarGetOfferingsForBusiness(CommunityIdentifier cid, String? controller,
+      {BlockHash? at}) async {
     return Future.value(offeringDataMockList);
   }
 
