@@ -11,6 +11,7 @@ import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dar
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:ew_http/ew_http.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
 
 import '../data/mock_encointer_data.dart';
 import 'mock_js_api.dart';
@@ -47,7 +48,7 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<CeremonyPhase?> getCurrentPhase() async {
+  Future<CeremonyPhase?> getCurrentPhase({BlockHash? at}) async {
     // ignore: unnecessary_null_comparison
     if (store.encointer.currentPhase == null) {
       store.encointer.setCurrentPhase(initialPhase);
@@ -57,7 +58,7 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<int?> getCurrentCeremonyIndex() async {
+  Future<int?> getCurrentCeremonyIndex({BlockHash? at}) async {
     if (store.encointer.currentCeremonyIndex == null) {
       store.encointer.setCurrentCeremonyIndex(1);
     }
@@ -65,7 +66,7 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String pubKey) {
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String pubKey, {BlockHash? at}) {
     // ignore: null_argument_to_non_null_type
     return Future.value();
   }
@@ -79,7 +80,7 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<void> getAllMeetupLocations() async {}
+  Future<void> getAllMeetupLocations({BlockHash? at}) async {}
 
   @override
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
@@ -121,7 +122,7 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
+  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account,{BlockHash? at}) async {
     return Future.value(Map<CommunityIdentifier, BalanceEntry>.of({
       store.encointer.chosenCid!: BalanceEntry.fromJson(testBalanceEntry),
     }));

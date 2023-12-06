@@ -108,9 +108,11 @@ class EncointerApi {
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
-  Future<CeremonyPhase?> getCurrentPhase() async {
+  Future<CeremonyPhase?> getCurrentPhase({BlockHash? at}) async {
     Log.d('api: getCurrentPhase', 'EncointerApi');
-    final phase = await encointerKusama.query.encointerScheduler.currentPhase().then(ceremonyPhaseTypeFromPolkadart);
+    final phase = await encointerKusama.query.encointerScheduler
+        .currentPhase(at: at ?? store.chain.latestHash)
+        .then(ceremonyPhaseTypeFromPolkadart);
 
     Log.d('api: Phase enum: $phase', 'EncointerApi');
     store.encointer.setCurrentPhase(phase);
@@ -118,9 +120,10 @@ class EncointerApi {
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.nextPhaseTimestamp().
-  Future<int> getNextPhaseTimestamp() async {
+  Future<int> getNextPhaseTimestamp({BlockHash? at}) async {
     Log.d('api: getNextPhaseTimestamp', 'EncointerApi');
-    final timestampBigInt = await encointerKusama.query.encointerScheduler.nextPhaseTimestamp();
+    final timestampBigInt =
+        await encointerKusama.query.encointerScheduler.nextPhaseTimestamp(at: at ?? store.chain.latestHash);
     final timestamp = timestampBigInt.toInt();
 
     Log.d('api: next phase timestamp: $timestamp', 'EncointerApi');
@@ -131,11 +134,12 @@ class EncointerApi {
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
   ///
   /// This should be done only once at app-startup, as this is practically const.
-  Future<void> getPhaseDurations() async {
+  Future<void> getPhaseDurations({BlockHash? at}) async {
+    final blockHash = at ?? store.chain.latestHash;
     final durations = await Future.wait([
-      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.registering),
-      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.assigning),
-      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.attesting),
+      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.registering, at: blockHash),
+      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.assigning, at: blockHash),
+      encointerKusama.query.encointerScheduler.phaseDurations(et.CeremonyPhaseType.attesting, at: blockHash),
     ]);
 
     // Create map and cast to the old type before introducing polkadart
@@ -153,11 +157,15 @@ class EncointerApi {
   ///
   /// Todo: Be able to handle pubKey and any address and transform it to the
   /// address with prefix 42. Needs #1105.
-  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String pubKey) async {
+  Future<AggregatedAccountData> getAggregatedAccountData(
+    CommunityIdentifier cid,
+    String pubKey, {
+    BlockHash? at,
+  }) async {
     final address = AddressUtils.pubKeyHexToAddress(pubKey);
 
     try {
-      final accountData = await _dartApi.getAggregatedAccountData(cid, address);
+      final accountData = await _dartApi.getAggregatedAccountData(cid, address, at: at ?? store.chain.latestHash);
       Log.d(
         '[EncointerApi]: AggregatedAccountData for ${cid.toFmtString()} and ${address.substring(0, 7)}...: $accountData'
         'EncointerApi',
@@ -177,27 +185,28 @@ class EncointerApi {
     }
   }
 
-  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
-    return _dartApi.getAllBalances(account);
+  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account, {BlockHash? at}) async {
+    return _dartApi.getAllBalances(account, at: at ?? store.chain.latestHash);
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
-  Future<int?> getCurrentCeremonyIndex() async {
+  Future<int?> getCurrentCeremonyIndex({BlockHash? at}) async {
     Log.d('api: getCurrentCeremonyIndex', 'EncointerApi');
-    final cIndex = await encointerKusama.query.encointerScheduler.currentCeremonyIndex();
+    final cIndex =
+        await encointerKusama.query.encointerScheduler.currentCeremonyIndex(at: at ?? store.chain.latestHash);
     Log.d('api: Current Ceremony index: $cIndex', 'EncointerApi');
     store.encointer.setCurrentCeremonyIndex(cIndex);
     return cIndex;
   }
 
   /// Queries the Communities pallet's RPC: api.rpc.communities.getLocations(cid)
-  Future<void> getAllMeetupLocations() async {
+  Future<void> getAllMeetupLocations({BlockHash? at}) async {
     Log.d('api: getAllMeetupLocations', 'EncointerApi');
     final cid = store.encointer.chosenCid;
 
     if (cid == null) return;
 
-    final locations = await _dartApi.getLocations(cid);
+    final locations = await _dartApi.getLocations(cid, at: at ?? store.chain.latestHash);
 
     Log.d('api: getAllMeetupLocations: $locations ' 'EncointerApi');
     if (store.encointer.community != null) {
