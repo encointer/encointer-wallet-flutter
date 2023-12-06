@@ -22,8 +22,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_dart_api.dart';
-import 'package:encointer_wallet/service/substrate_api/encointer/no_tee_api.dart';
-import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_encointer_utils/ew_encointer_utils.dart' as ew_utils;
 import 'package:ew_http/ew_http.dart';
@@ -48,9 +46,7 @@ import 'package:ew_polkadart/encointer_types.dart' as et;
 
 class EncointerApi {
   EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp, this.encointerKusama)
-      : _noTee = NoTeeApi(jsApi),
-        _teeProxy = TeeProxyApi(jsApi),
-        _dartApi = EncointerDartApi(dartApi);
+      : _dartApi = EncointerDartApi(dartApi);
 
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
@@ -64,9 +60,6 @@ class EncointerApi {
 
   /// Placeholder, we don't subscribe to the business registry yet.
   StreamSubscription<StorageChangeSet>? _businessRegistry;
-
-  final NoTeeApi _noTee;
-  final TeeProxyApi _teeProxy;
 
   Future<void> startSubscriptions() async {
     Log.d('api: starting encointer subscriptions', 'EncointerApi');
@@ -427,16 +420,23 @@ class EncointerApi {
   }
 
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
-  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid, String pin) async {
-    Log.d('Getting encointer balance for $pubKeyOrAddress and ${cid.toFmtString()}', 'EncointerApi');
+  Future<BalanceEntry> getEncointerBalance(
+    String address,
+    CommunityIdentifier cid,
+  ) async {
+    Log.d('Getting encointer balance for $address and ${cid.toFmtString()}', 'EncointerApi');
 
-    final balanceEntry = store.settings.endpointIsNoTee
-        ? await _noTee.balance(cid, pubKeyOrAddress)
-        : await _teeProxy.balance(cid, pubKeyOrAddress, pin);
+    final balanceEntry = await encointerKusama.query.encointerBalances.balance(
+      et.CommunityIdentifier(
+        geohash: cid.geohash,
+        digest: cid.digest,
+      ),
+      AddressUtils.addressToPubKey(address).toList(),
+    );
 
     Log.d('balanceEntryJson: $balanceEntry', 'EncointerApi');
 
-    return balanceEntry;
+    return BalanceEntry.fromPolkadart(balanceEntry);
   }
 
   Future<void> subscribeCurrentPhase() async {

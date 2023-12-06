@@ -75,7 +75,7 @@ class MockEncointerApi extends EncointerApi {
   Future<void> getReputations() async {}
 
   @override
-  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid, String pin) async {
+  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid) async {
     return BalanceEntry.fromJson(testBalanceEntry);
   }
 

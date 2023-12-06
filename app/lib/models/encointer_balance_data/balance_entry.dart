@@ -1,14 +1,23 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:ew_substrate_fixed/substrate_fixed.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
+import 'package:ew_polkadart/encointer_types.dart' as et;
 
 part 'balance_entry.g.dart';
 
 @JsonSerializable()
 class BalanceEntry {
   BalanceEntry(this.principal, this.lastUpdate);
+
+  factory BalanceEntry.fromPolkadart(et.BalanceEntry entry) {
+    return BalanceEntry(
+        u64F64Util.toDouble(entry.principal.bits),
+        entry.lastUpdate
+    );
+  }
 
   factory BalanceEntry.fromJson(Map<String, dynamic> json) => _$BalanceEntryFromJson(json);
   Map<String, dynamic> toJson() => _$BalanceEntryToJson(this);
