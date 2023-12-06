@@ -18,6 +18,17 @@ abstract class _ChainStore with Store {
   @observable
   Header? latestHeader;
 
+  @observable
+  String? latestHashHex;
+
+  @computed
+  List<int>? get latestHash => latestHashHex?.replaceFirst('0x', '').codeUnits;
+
+  @action
+  void setLatestHeaderHash(String latestHash) {
+    latestHashHex = latestHash;
+  }
+
   @action
   void setLatestHeader(Header latest) {
     latestHeader = latest;

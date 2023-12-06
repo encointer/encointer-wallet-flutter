@@ -22,6 +22,22 @@ class ChainApi {
     await _latestHeaderSubscription?.cancel();
   }
 
+  Future<String> getBlockHash(int? number) async {
+    final params = number != null ? [number] : const <String>[];
+    Log.p('[getBlockHash] params: $params');
+
+    final response = await provider.send('chain_getBlockHash', params);
+
+    if (response.error != null) {
+      throw Exception(response.error.toString());
+    }
+
+    final data = response.result;
+    Log.p('[getBlockHash] hash: $data');
+
+    return data as String;
+  }
+
   /// Subscribes to the latest headers
   Future<void> subscribeNewHeads() async {
     await _latestHeaderSubscription?.cancel();
@@ -37,9 +53,12 @@ class ChainApi {
     _latestHeaderSubscription = subscription.stream.map((res) {
       Log.p('Header: ${res.result}');
       return Header.fromRpc(res.result as Map<String, dynamic>);
-    }).listen((header) {
+    }).listen((header) async {
       Log.p('[subscribeNewHeads] Got header: ${header.toJson()}');
       store.chain.setLatestHeader(header);
+
+      final hash = await getBlockHash(header.number);
+      store.chain.setLatestHeaderHash(hash);
     });
   }
 }
