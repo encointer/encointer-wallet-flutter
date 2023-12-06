@@ -72,10 +72,10 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<void> getReputations() async {}
+  Future<void> getReputations({BlockHash? at}) async {}
 
   @override
-  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid) async {
+  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid, {BlockHash? at}) async {
     return BalanceEntry.fromJson(testBalanceEntry);
   }
 
@@ -83,22 +83,22 @@ class MockEncointerApi extends EncointerApi {
   Future<void> getAllMeetupLocations({BlockHash? at}) async {}
 
   @override
-  Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
+  Future<List<CommunityIdentifier>> getCommunityIdentifiers({BlockHash? at}) async {
     return testCommunityIdentifiers;
   }
 
   @override
-  Future<List<CidName>?> communitiesGetAll() async {
+  Future<List<CidName>?> communitiesGetAll({BlockHash? at}) async {
     return store.encointer.communities;
   }
 
   @override
-  Future<bool> hasPendingIssuance() async {
+  Future<bool> hasPendingIssuance({BlockHash? at}) async {
     return true;
   }
 
   @override
-  Future<void> getDemurrage() async {}
+  Future<void> getDemurrage({BlockHash? at}) async {}
 
   @override
   Future<List<AccountBusinessTuple>> getBusinesses() async {
@@ -107,7 +107,7 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<void> getCommunityMetadata() {
+  Future<void> getCommunityMetadata({BlockHash? at}) {
     return Future.value();
   }
 
@@ -117,19 +117,19 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<DateTime?> getMeetupTime() async {
+  Future<DateTime?> getMeetupTime({BlockHash? at}) async {
     return DateTime.fromMillisecondsSinceEpoch(testTimeStamp);
   }
 
   @override
-  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account,{BlockHash? at}) async {
+  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account, {BlockHash? at}) async {
     return Future.value(Map<CommunityIdentifier, BalanceEntry>.of({
       store.encointer.chosenCid!: BalanceEntry.fromJson(testBalanceEntry),
     }));
   }
 
   @override
-  Future<void> getBootstrappers() {
+  Future<void> getBootstrappers({BlockHash? at}) {
     return Future.value();
   }
 
@@ -140,12 +140,12 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<int> getNumberOfNewbieTicketsForBootstrapper() {
+  Future<int> getNumberOfNewbieTicketsForBootstrapper({BlockHash? at}) {
     return Future.value(0);
   }
 
   @override
-  Future<int> getNumberOfNewbieTicketsForReputable() {
+  Future<int> getNumberOfNewbieTicketsForReputable({BlockHash? at}) {
     return Future.value(0);
   }
 

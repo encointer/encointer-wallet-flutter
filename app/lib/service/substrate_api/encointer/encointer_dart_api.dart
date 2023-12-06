@@ -33,8 +33,8 @@ class EncointerDartApi {
     if (at != null) params.add('0x${hex.encode(at)}');
 
     return _dartApi.rpc<Map<String, dynamic>>('encointer_getAggregatedAccountData', params).then(
-      AggregatedAccountData.fromJson,
-    );
+          AggregatedAccountData.fromJson,
+        );
   }
 
   /// Queries the rpc 'encointer_getLocations'.
@@ -60,8 +60,10 @@ class EncointerDartApi {
   }
 
   /// Queries the rpc 'encointer_getAllCommunities'.
-  Future<List<CidName>> getAllCommunities() async {
-    final communities = await _dartApi.rpc<List<dynamic>>('encointer_getAllCommunities', []);
+  Future<List<CidName>> getAllCommunities({BlockHash? at}) async {
+    final params = at != null ? ['0x${hex.encode(at)}'] : <String>[];
+
+    final communities = await _dartApi.rpc<List<dynamic>>('encointer_getAllCommunities', params);
     return communities.map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList();
   }
 

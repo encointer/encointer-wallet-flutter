@@ -1,7 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:convert/convert.dart' show hex;
 
-
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';

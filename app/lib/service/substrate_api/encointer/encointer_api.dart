@@ -208,13 +208,16 @@ class EncointerApi {
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
-  Future<void> getCommunityMetadata() async {
+  Future<void> getCommunityMetadata({BlockHash? at}) async {
     Log.d('api: getCommunityMetadata', 'EncointerApi');
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
     final meta = await encointerKusama.query.encointerCommunities
-        .communityMetadata(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest))
+        .communityMetadata(
+          et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest),
+          at: at ?? store.chain.latestHash,
+        )
         .then(CommunityMetadata.fromPolkadart); // convert to our own type
 
     Log.d('api: community metadata: $meta', 'EncointerApi');
@@ -228,12 +231,15 @@ class EncointerApi {
   /// Returns the community specific demurrage if defined,
   /// otherwise the default demurrage from the balances pallet
   /// is returned.
-  Future<void> getDemurrage() async {
+  Future<void> getDemurrage({BlockHash? at}) async {
     final cid = store.encointer.chosenCid;
     if (cid == null) return;
 
     var dem = await encointerKusama.query.encointerBalances
-        .demurragePerBlock(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest))
+        .demurragePerBlock(
+          et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest),
+          at: at ?? store.chain.latestHash,
+        )
         .then((value) => i64F64Parser.toDouble(value.bits));
 
     if (dem == 0) {
@@ -248,15 +254,15 @@ class EncointerApi {
   }
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
-  Future<void> communitiesGetAll() async {
-    final cidNames = await _dartApi.getAllCommunities();
+  Future<void> communitiesGetAll({BlockHash? at}) async {
+    final cidNames = await _dartApi.getAllCommunities(at: at ?? store.chain.latestHash);
 
     Log.d('api: CidNames: ${cidNames.length} and $cidNames ', 'EncointerApi');
     store.encointer.setCommunities(cidNames);
   }
 
   /// Queries the Scheduler pallet
-  Future<DateTime?> getMeetupTime() async {
+  Future<DateTime?> getMeetupTime({BlockHash? at}) async {
     Log.d('api: getMeetupTime', 'EncointerApi');
 
     // I we are not assigned to a meetup, we just get any location to get
@@ -278,7 +284,7 @@ class EncointerApi {
       return Future.value();
     }
 
-    final offset = await encointerKusama.query.encointerCeremonies.meetupTimeOffset();
+    final offset = await encointerKusama.query.encointerCeremonies.meetupTimeOffset(at: at ?? store.chain.latestHash);
 
     final meetupTime = ew_utils.meetupTime(
       double.parse(mLocation.lon),
@@ -318,7 +324,7 @@ class EncointerApi {
     }
   }
 
-  Future<bool?> hasPendingIssuance() async {
+  Future<bool?> hasPendingIssuance({BlockHash? at}) async {
     final cid = store.encointer.chosenCid;
 
     final cIndex = store.encointer.currentCeremonyIndex;
@@ -365,13 +371,15 @@ class EncointerApi {
 
   Future<int> getMeetupIndex(
     Tuple2<et.CommunityIdentifier, int> cc,
-    Address address,
-  ) async {
+    Address address, {
+    BlockHash? at,
+  }) async {
+    final blockHash = at ?? store.chain.latestHash;
     final [mCount, assignments, assignmentCount, registration] = await Future.wait([
-      encointerKusama.query.encointerCeremonies.meetupCount(cc),
-      encointerKusama.query.encointerCeremonies.assignments(cc),
-      encointerKusama.query.encointerCeremonies.assignmentCounts(cc),
-      getParticipantRegistration(cc, address),
+      encointerKusama.query.encointerCeremonies.meetupCount(cc, at: blockHash),
+      encointerKusama.query.encointerCeremonies.assignments(cc, at: blockHash),
+      encointerKusama.query.encointerCeremonies.assignmentCounts(cc, at: blockHash),
+      getParticipantRegistration(cc, address, at: blockHash),
     ]);
 
     if (mCount == 0) {
@@ -397,13 +405,16 @@ class EncointerApi {
 
   Future<ParticipantRegistration?> getParticipantRegistration(
     Tuple2<et.CommunityIdentifier, int> cc,
-    Address address,
-  ) async {
+    Address address, {
+    BlockHash? at,
+  }) async {
+    final blockHash = at ?? store.chain.latestHash;
+
     final pIndexes = await Future.wait([
-      encointerKusama.query.encointerCeremonies.bootstrapperIndex(cc, address.pubkey),
-      encointerKusama.query.encointerCeremonies.reputableIndex(cc, address.pubkey),
-      encointerKusama.query.encointerCeremonies.endorseeIndex(cc, address.pubkey),
-      encointerKusama.query.encointerCeremonies.newbieIndex(cc, address.pubkey),
+      encointerKusama.query.encointerCeremonies.bootstrapperIndex(cc, address.pubkey, at: blockHash),
+      encointerKusama.query.encointerCeremonies.reputableIndex(cc, address.pubkey, at: blockHash),
+      encointerKusama.query.encointerCeremonies.endorseeIndex(cc, address.pubkey, at: blockHash),
+      encointerKusama.query.encointerCeremonies.newbieIndex(cc, address.pubkey, at: blockHash),
     ]);
 
     if (pIndexes[0] != BigInt.zero) {
@@ -422,8 +433,9 @@ class EncointerApi {
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
   Future<BalanceEntry> getEncointerBalance(
     String address,
-    CommunityIdentifier cid,
-  ) async {
+    CommunityIdentifier cid, {
+    BlockHash? at,
+  }) async {
     Log.d('Getting encointer balance for $address and ${cid.toFmtString()}', 'EncointerApi');
 
     final balanceEntry = await encointerKusama.query.encointerBalances.balance(
@@ -432,6 +444,7 @@ class EncointerApi {
         digest: cid.digest,
       ),
       AddressUtils.addressToPubKey(address).toList(),
+      at: at ?? store.chain.latestHash,
     );
 
     Log.d('balanceEntryJson: $balanceEntry', 'EncointerApi');
@@ -523,9 +536,10 @@ class EncointerApi {
   }
 
   /// Queries the EncointerCurrencies pallet: encointerCurrencies.communityIdentifiers().
-  Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
+  Future<List<CommunityIdentifier>> getCommunityIdentifiers({BlockHash? at}) async {
     // cids in polkadart type
-    final cidsPolkadart = await encointerKusama.query.encointerCommunities.communityIdentifiers();
+    final cidsPolkadart =
+        await encointerKusama.query.encointerCommunities.communityIdentifiers(at: at ?? store.chain.latestHash);
 
     // transform them into our own cid
     final cids = cidsPolkadart.map(CommunityIdentifier.fromPolkadart).toList();
@@ -535,15 +549,18 @@ class EncointerApi {
   }
 
   /// Queries the EncointerCommunities pallet: encointerCommunities.bootstrappers(cid).
-  Future<void> getBootstrappers() async {
+  Future<void> getBootstrappers({BlockHash? at}) async {
     final cid = store.encointer.chosenCid;
 
     if (cid == null) return;
 
-    final bootstrappersBytes = await encointerKusama.query.encointerCommunities.bootstrappers(et.CommunityIdentifier(
-      geohash: cid.geohash,
-      digest: cid.digest,
-    ));
+    final bootstrappersBytes = await encointerKusama.query.encointerCommunities.bootstrappers(
+      et.CommunityIdentifier(
+        geohash: cid.geohash,
+        digest: cid.digest,
+      ),
+      at: at ?? store.chain.latestHash,
+    );
 
     final bootstrappers =
         bootstrappersBytes.map((p) => AddressUtils.pubKeyToAddress(p, prefix: store.settings.endpoint.ss58!)).toList();
@@ -554,12 +571,12 @@ class EncointerApi {
     }
   }
 
-  Future<void> getReputations() async {
+  Future<void> getReputations({BlockHash? at}) async {
     final address = store.account.currentAddress;
 
     if (address.isEmpty) return;
 
-    final reputations = await _dartApi.getReputations(address);
+    final reputations = await _dartApi.getReputations(address, at: at ?? store.chain.latestHash);
 
     Log.d('api: getReputations: $reputations', 'EncointerApi');
     if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
@@ -587,7 +604,7 @@ class EncointerApi {
     return proof;
   }
 
-  Future<int> getNumberOfNewbieTicketsForReputable() async {
+  Future<int> getNumberOfNewbieTicketsForReputable({BlockHash? at}) async {
     final address = store.account.currentAddress;
     final reputations = store.encointer.account?.reputations ?? {};
     final cid = store.encointer.chosenCid;
@@ -602,8 +619,9 @@ class EncointerApi {
         encointerKusama.query.encointerCeremonies.burnedReputableNewbieTickets(
           Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex),
           AddressUtils.addressToPubKey(address).toList(),
+          at: at ?? store.chain.latestHash,
         ),
-        encointerKusama.query.encointerCeremonies.endorsementTicketsPerReputable()
+        encointerKusama.query.encointerCeremonies.endorsementTicketsPerReputable(at: at ?? store.chain.latestHash)
       ]);
       Log.p('NewbieTickets: ticketPerReputable: $ticketsPerReputable, burned: $burned');
       return ticketsPerReputable - burned;
@@ -614,7 +632,7 @@ class EncointerApi {
     return 0;
   }
 
-  Future<int> getNumberOfNewbieTicketsForBootstrapper() async {
+  Future<int> getNumberOfNewbieTicketsForBootstrapper({BlockHash? at}) async {
     final address = store.account.currentAddress;
     final cid = store.encointer.chosenCid;
     if (cid == null) return 0;
@@ -624,8 +642,9 @@ class EncointerApi {
         encointerKusama.query.encointerCeremonies.burnedBootstrapperNewbieTickets(
           et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest),
           AddressUtils.addressToPubKey(address).toList(),
+          at: at ?? store.chain.latestHash,
         ),
-        encointerKusama.query.encointerCeremonies.endorsementTicketsPerBootstrapper(),
+        encointerKusama.query.encointerCeremonies.endorsementTicketsPerBootstrapper(at: at ?? store.chain.latestHash),
       ]);
 
       Log.p('NewbieTickets: ticketsPerBootstrapper: $ticketsPerBootstrapper, burned: $burned');
@@ -639,7 +658,7 @@ class EncointerApi {
     return 0;
   }
 
-  Future<Map<String, Faucet>> getAllFaucetsWithAccount() async {
+  Future<Map<String, Faucet>> getAllFaucetsWithAccount({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerFaucet.faucetsMapPrefix();
       final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50);
@@ -650,7 +669,9 @@ class EncointerApi {
       final faucetPubKeys = keys.map((key) => const AccountId32Codec().decode(ByteInput(key.sublist(32))));
 
       final faucets = await Future.wait(faucetPubKeys.map(
-        (key) => encointerKusama.query.encointerFaucet.faucets(key).then((faucet) => Faucet.fromPolkadart(faucet!)),
+        (key) => encointerKusama.query.encointerFaucet
+            .faucets(key, at: at ?? store.chain.latestHash)
+            .then((faucet) => Faucet.fromPolkadart(faucet!)),
       ));
 
       final pubKeyHex = faucetPubKeys.map((accountId) => '0x${hex.encode(accountId)}');
@@ -665,7 +686,8 @@ class EncointerApi {
     }
   }
 
-  Future<bool> hasCommittedFor(CommunityIdentifier cid, int cIndex, int purposeId, String address) async {
+  Future<bool> hasCommittedFor(CommunityIdentifier cid, int cIndex, int purposeId, String address,
+      {BlockHash? at}) async {
     final cc = Tuple2(et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest), cIndex);
     final purposeAccountTuple = Tuple2(BigInt.from(purposeId), Address.decode(address).pubkey);
 
@@ -675,7 +697,8 @@ class EncointerApi {
       final fullKey = encointerKusama.query.encointerReputationCommitments.commitmentsKey(cc, purposeAccountTuple);
       final fullKeyHex = '0x${hex.encode(fullKey)}';
 
-      final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50);
+      final keys =
+          await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 50, at: at ?? store.chain.latestHash);
       final keysHex = keys.map((key) => '0x${hex.encode(key)}');
 
       // Need to use hexKeys here, to check for equality.
