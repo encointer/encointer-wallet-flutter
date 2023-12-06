@@ -1,6 +1,10 @@
+import 'package:mobx/mobx.dart';
+import 'package:convert/convert.dart' show hex;
+
+
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
-import 'package:mobx/mobx.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
 
 part 'chain.g.dart';
 
@@ -22,7 +26,11 @@ abstract class _ChainStore with Store {
   String? latestHashHex;
 
   @computed
-  List<int>? get latestHash => latestHashHex?.replaceFirst('0x', '').codeUnits;
+  BlockHash? get latestHash {
+    if (latestHashHex != null) return BlockHash.fromList(hex.decode(latestHashHex!.replaceFirst('0x', '')));
+
+    return null;
+  }
 
   @action
   void setLatestHeaderHash(String latestHash) {
