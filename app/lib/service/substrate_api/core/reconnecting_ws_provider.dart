@@ -6,9 +6,9 @@ import 'package:ew_polkadart/ew_polkadart.dart';
 class ReconnectingWsProvider extends Provider {
   ReconnectingWsProvider(this.url, {bool autoConnect = true})
       : provider = WsProvider(
-    url,
-    autoConnect: autoConnect,
-  );
+          url,
+          autoConnect: autoConnect,
+        );
 
   final Uri url;
   WsProvider provider;
@@ -64,10 +64,10 @@ class ReconnectingWsProvider extends Provider {
 
   @override
   Future<SubscriptionResponse> subscribe(
-      String method,
-      List<dynamic> params, {
-        FutureOr<void> Function(String subscription)? onCancel,
-      }) async {
+    String method,
+    List<dynamic> params, {
+    FutureOr<void> Function(String subscription)? onCancel,
+  }) async {
     // Connect if disconnected
     await connect();
     return provider.subscribe(method, params, onCancel: onCancel);
