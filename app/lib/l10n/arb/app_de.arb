@@ -210,6 +210,8 @@
     "remainingNewbieTicketsAsReputable": "Verbleibende Newbie Tickets als Reputable:",
     "reputableContent": "Du hast deine Reputation genutzt um einen garantierten Platz zu erhalten. Achtung: Solltest Du dich anmelden, aber nicht zur Versammlung erscheinen, wirst du wieder ein Newbie.",
     "reputableTitle": "Als Reputable registriert. Dein Platz ist garantiert",
+    "reputationAlreadyCommittedTitle": "Reputation bereits benutzt",
+    "reputationAlreadyCommittedContent": "Du hast deine Reputation für dieses Faucet bereits benutzt.",
     "reputationOverall": "Allgemeine Reputation",
     "restartGathering": "Versammlung erneut starten",
     "submittedFaucetDripTitle": "Faucet Belohnung",

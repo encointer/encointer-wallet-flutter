@@ -37,7 +37,7 @@ abstract class _BusinessesStoreBase with Store {
 
   Future<Either<Businesses, EwHttpException>> _getBusinesses(String ipfsUrlHash) {
     Log.d('_getBusinesses: ipfsUrlHash = $ipfsUrlHash', _targetLogger);
-    return webApi.encointer.getBusinesseses(ipfsUrlHash);
+    return webApi.encointer.getBusinessesIpfs(ipfsUrlHash);
   }
 
   @action

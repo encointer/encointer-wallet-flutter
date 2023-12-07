@@ -145,6 +145,24 @@ class Queries {
     final hashedKey = _feeConversionFactor.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `totalIssuance`.
+  _i9.Uint8List totalIssuanceMapPrefix() {
+    final hashedKey = _totalIssuance.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `balance`.
+  _i9.Uint8List balanceMapPrefix(_i2.CommunityIdentifier key1) {
+    final hashedKey = _balance.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `demurragePerBlock`.
+  _i9.Uint8List demurragePerBlockMapPrefix() {
+    final hashedKey = _demurragePerBlock.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

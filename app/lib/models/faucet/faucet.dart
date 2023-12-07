@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:ew_polkadart/encointer_types.dart' as et;
 
 part 'faucet.g.dart';
 
@@ -17,7 +18,18 @@ class Faucet {
     this.creator,
   );
 
+  factory Faucet.fromPolkadart(et.Faucet faucet) {
+    return Faucet(
+      utf8.decode(faucet.name),
+      faucet.purposeId.toInt(),
+      faucet.whitelist?.map(CommunityIdentifier.fromPolkadart).toList(),
+      faucet.dripAmount.toInt(),
+      faucet.creator,
+    );
+  }
+
   factory Faucet.fromJson(Map<String, dynamic> json) => _$FaucetFromJson(json);
+
   Map<String, dynamic> toJson() => _$FaucetToJson(this);
 
   /// Name of the faucet.
@@ -35,7 +47,7 @@ class Faucet {
   int dripAmount;
 
   /// The creator AccountId/PublicKey of the faucet.
-  String creator;
+  List<int> creator;
 
   @override
   String toString() {
@@ -45,6 +57,7 @@ class Faucet {
 
 class HexToUtf8Converter implements JsonConverter<String, String> {
   const HexToUtf8Converter();
+
   @override
   String fromJson(String hexString) {
     return utf8.decode(Fmt.hexToBytes(hexString));

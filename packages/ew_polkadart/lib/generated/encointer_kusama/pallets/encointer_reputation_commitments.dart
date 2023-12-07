@@ -119,6 +119,18 @@ class Queries {
     );
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `purposes`.
+  _i8.Uint8List purposesMapPrefix() {
+    final hashedKey = _purposes.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `commitments`.
+  _i8.Uint8List commitmentsMapPrefix(_i3.Tuple2<_i4.CommunityIdentifier, int> key1) {
+    final hashedKey = _commitments.mapPrefix(key1);
+    return hashedKey;
+  }
 }
 
 class Txs {

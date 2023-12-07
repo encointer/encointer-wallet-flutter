@@ -10,12 +10,6 @@ import {
 import { getFinalizedHeader } from './chain.js';
 import { applyDemurrage } from '../utils/utils.js';
 import { Keyring } from '@polkadot/keyring';
-import {
-  getAllFaucetAccounts,
-  getFaucetFor,
-  getAllFaucetsWithAccount,
-  hasCommittedFor,
-} from './faucet.js';
 
 export async function getBalance (cid, address) {
   const balanceEntry = await api.query.encointerBalances.balance(cid, address);
@@ -174,8 +168,4 @@ export default {
   getBalance,
   sendNextPhaseTx,
   reapVoucher,
-  getAllFaucetAccounts,
-  getFaucetFor,
-  getAllFaucetsWithAccount,
-  hasCommittedFor
 };

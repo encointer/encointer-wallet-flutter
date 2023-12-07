@@ -107,7 +107,19 @@ Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, A
     store,
     webApi,
     unregisterParticipantParams(store.encointer.chosenCid!, lastProofOfAttendance, context.l10n),
-    onFinish: (txPageContext, res) => store.dataUpdate.setInvalidated(),
+    onFinish: (BuildContext txPageContext, ExtrinsicReport report) async {
+      await Future.wait([
+        webApi.encointer.getReputations(),
+        webApi.encointer
+            .getAggregatedAccountData(
+              store.encointer.chosenCid!, store.account.currentAccountPubKey!,
+              // Get data at included block to prevent race conditions with `store.chain.latestHead`.
+              at: report.blockHashBytes,
+            )
+            .then((data) => store.encointer
+                .setAggregatedAccountData(store.encointer.chosenCid!, store.account.currentAddress, data)),
+      ]);
+    },
   );
 }
 
@@ -124,10 +136,12 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       registerParticipantParams(store.encointer.chosenCid!, context.l10n, proof: proof),
       onFinish: (BuildContext txPageContext, ExtrinsicReport report) async {
         store.encointer.account!.lastProofOfAttendance = proof;
-        final data = await webApi.encointer.getAggregatedAccountData(
-          store.encointer.chosenCid!,
-          store.account.currentAccountPubKey!,
-        );
+        final data = await webApi.encointer
+            .getAggregatedAccountData(store.encointer.chosenCid!, store.account.currentAccountPubKey!,
+                // Get data at included block to prevent race conditions with `store.chain.latestHead`.
+                at: report.blockHashBytes);
+        store.encointer.setAggregatedAccountData(store.encointer.chosenCid!, store.account.currentAddress, data);
+
         Log.d('$data', 'AggregatedAccountData from register participant');
         final registrationType = data.personal?.participantType;
 
@@ -142,9 +156,8 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
             );
           }
         }
-        // Registering the participant burns the reputation.
-        // Hence, we should fetch the new state afterwards.
-        store.dataUpdate.setInvalidated();
+
+        await webApi.encointer.getReputations();
       },
     );
   }

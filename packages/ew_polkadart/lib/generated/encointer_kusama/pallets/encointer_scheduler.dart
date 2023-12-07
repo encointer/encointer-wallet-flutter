@@ -138,6 +138,12 @@ class Queries {
     final hashedKey = _phaseDurations.hashedKeyFor(key1);
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `phaseDurations`.
+  _i5.Uint8List phaseDurationsMapPrefix() {
+    final hashedKey = _phaseDurations.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

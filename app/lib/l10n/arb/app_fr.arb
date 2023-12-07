@@ -210,6 +210,8 @@
     "remainingNewbieTicketsAsReputable": "Comme Reputable les billets pour Novice restants:",
     "reputableContent": "\"Tu as utilisé ta réputation pour obtenir une place garantie. Attention : si tu t'enregistres, mais que tu ne te présentes pas à la réunion, tu redeviens un Novice\".",
     "reputableTitle": "Enregistré en tant que Reputable. Ta place est garantie",
+    "reputationAlreadyCommittedTitle": "Réputation déjà utilisée",
+    "reputationAlreadyCommittedContent": "Vous avez déjà utilisé votre réputation pour faire couler le Faucet.",
     "reputationOverall": "Réputation générale",
     "restartGathering": "Redémarrer la rencontre",
     "retry": "Réessayer",

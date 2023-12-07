@@ -426,6 +426,42 @@ class Queries {
     final hashedKey = _xcmExecutionSuspended.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `queries`.
+  _i13.Uint8List queriesMapPrefix() {
+    final hashedKey = _queries.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `assetTraps`.
+  _i13.Uint8List assetTrapsMapPrefix() {
+    final hashedKey = _assetTraps.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `supportedVersion`.
+  _i13.Uint8List supportedVersionMapPrefix(int key1) {
+    final hashedKey = _supportedVersion.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `versionNotifiers`.
+  _i13.Uint8List versionNotifiersMapPrefix(int key1) {
+    final hashedKey = _versionNotifiers.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `versionNotifyTargets`.
+  _i13.Uint8List versionNotifyTargetsMapPrefix(int key1) {
+    final hashedKey = _versionNotifyTargets.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `lockedFungibles`.
+  _i13.Uint8List lockedFungiblesMapPrefix() {
+    final hashedKey = _lockedFungibles.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

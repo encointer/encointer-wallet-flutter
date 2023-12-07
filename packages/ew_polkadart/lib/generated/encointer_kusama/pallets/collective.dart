@@ -174,6 +174,18 @@ class Queries {
     final hashedKey = _prime.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `proposalOf`.
+  _i8.Uint8List proposalOfMapPrefix() {
+    final hashedKey = _proposalOf.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `voting`.
+  _i8.Uint8List votingMapPrefix() {
+    final hashedKey = _voting.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

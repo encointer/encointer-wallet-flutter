@@ -109,6 +109,18 @@ class Queries {
     );
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `businessRegistry`.
+  _i9.Uint8List businessRegistryMapPrefix(_i2.CommunityIdentifier key1) {
+    final hashedKey = _businessRegistry.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `offeringRegistry`.
+  _i9.Uint8List offeringRegistryMapPrefix(_i5.BusinessIdentifier key1) {
+    final hashedKey = _offeringRegistry.mapPrefix(key1);
+    return hashedKey;
+  }
 }
 
 class Txs {

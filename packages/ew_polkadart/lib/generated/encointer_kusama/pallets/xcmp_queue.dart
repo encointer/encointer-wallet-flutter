@@ -352,6 +352,30 @@ class Queries {
     final hashedKey = _queueSuspended.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `inboundXcmpMessages`.
+  _i10.Uint8List inboundXcmpMessagesMapPrefix(_i4.Id key1) {
+    final hashedKey = _inboundXcmpMessages.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `outboundXcmpMessages`.
+  _i10.Uint8List outboundXcmpMessagesMapPrefix(_i4.Id key1) {
+    final hashedKey = _outboundXcmpMessages.mapPrefix(key1);
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `signalMessages`.
+  _i10.Uint8List signalMessagesMapPrefix() {
+    final hashedKey = _signalMessages.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `overweight`.
+  _i10.Uint8List overweightMapPrefix() {
+    final hashedKey = _overweight.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

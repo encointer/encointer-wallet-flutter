@@ -60,7 +60,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     final pin = await context.read<LoginStore>().getPin(context);
     if (pin != null) {
-      final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid, pin);
+      final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
       if (context.read<AppStore>().chain.latestHeaderNumber != null) {
         _voucherBalance = voucherBalanceEntry.applyDemurrage(
           context.read<AppStore>().chain.latestHeaderNumber!,

@@ -49,6 +49,10 @@ class ExtrinsicReport {
     return toJson().toString();
   }
 
+  Uint8List get blockHashBytes {
+    return hexToUint8(blockHash);
+  }
+
   bool get isExtrinsicSuccess {
     return events.last.event.isExtrinsicSuccess;
   }
@@ -122,13 +126,11 @@ class EWAuthorApi<P extends Provider> {
     ExtrinsicReport? report;
 
     final sub = await submitAndWatchExtrinsic(extrinsic, (xtUpdate) async {
-      Log.d('ExtrinsicUpdate: $xtUpdate');
+      Log.d('ExtrinsicUpdate: ${xtUpdate.type}');
 
       if (xtUpdate.type == 'ready') {
         Log.p('Xt is ready');
-      } else if (xtUpdate.type == 'inBlock') {
-        Log.p('Xt is in block: ${xtUpdate.value}');
-      } else if (xtUpdate.type == 'finalized') {
+      } else if (xtUpdate.type == 'inBlock' || xtUpdate.type == 'finalized') {
         final blockHashHex = xtUpdate.value.toString();
         final blockHash = hexToUint8(blockHashHex);
 

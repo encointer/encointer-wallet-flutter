@@ -210,6 +210,8 @@
     "remainingNewbieTicketsAsReputable": "Remaining newbie tickets as reputable:",
     "reputableContent": "You used your reputation to get a guaranteed seat. Caution: Should you register, but not show up at the cycle, you become a newbie again.",
     "reputableTitle": "Registered as reputable - your seat is guaranteed",
+    "reputationAlreadyCommittedTitle": "Reputation already used",
+    "reputationAlreadyCommittedContent": "You have already used your reputation to drip the faucet.",
     "reputationOverall": "Overall reputation",
     "restartGathering": "Restart gathering",
     "retry": "Retry",

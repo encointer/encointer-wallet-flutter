@@ -67,6 +67,12 @@ class Queries {
     final hashedKey = _reserveAmount.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `faucets`.
+  _i6.Uint8List faucetsMapPrefix() {
+    final hashedKey = _faucets.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

@@ -249,6 +249,36 @@ class Queries {
     final hashedKey = _freezes.hashedKeyFor(key1);
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `account`.
+  _i9.Uint8List accountMapPrefix() {
+    final hashedKey = _account.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `locks`.
+  _i9.Uint8List locksMapPrefix() {
+    final hashedKey = _locks.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `reserves`.
+  _i9.Uint8List reservesMapPrefix() {
+    final hashedKey = _reserves.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `holds`.
+  _i9.Uint8List holdsMapPrefix() {
+    final hashedKey = _holds.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `freezes`.
+  _i9.Uint8List freezesMapPrefix() {
+    final hashedKey = _freezes.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {
