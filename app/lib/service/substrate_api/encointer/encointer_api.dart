@@ -476,9 +476,7 @@ class EncointerApi {
 
         if (cid != null && pubKey != null && pubKey.isNotEmpty) {
           final address = store.account.currentAddress;
-          // The `storageChangeSet.block` contains the block hash, we can use this as the `at`
-          // parameter instead of polling, see #1559.
-          final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
+          final data = await getAggregatedAccountData(cid, pubKey);
           store.encointer.setAggregatedAccountData(cid, address, data);
         }
 
@@ -486,31 +484,6 @@ class EncointerApi {
         await getNextPhaseTimestamp();
       }
     });
-  }
-
-  /// Polls the aggregated account data until its ceremony phase field equals [nextPhase].
-  ///
-  /// This is needed because the aggregated account data lags behind, when then the ceremony phase is updated:
-  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/632
-  Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
-    CeremonyPhase nextPhase,
-    CommunityIdentifier cid,
-    String pubKey,
-  ) async {
-    while (true) {
-      final data = await getAggregatedAccountData(cid, pubKey);
-      final phase = data.global.ceremonyPhase;
-
-      if (nextPhase == phase) {
-        Log.d('[EncointerApi] received account data valid for the new ceremony phase', 'EncointerApi');
-        return data;
-      } else {
-        await Future.delayed(
-          const Duration(seconds: 3),
-          () => Log.d('[EncointerApi] polling account data until next phase is reached...', 'EncointerApi'),
-        );
-      }
-    }
   }
 
   /// Subscribes to new community identifies.
