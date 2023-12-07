@@ -60,7 +60,7 @@ dependencies:
   flutter_map: ^6.1.0
   dart_geohash: ^2.0.2 # Todo: #1270: replace with alternative package
   iconsax: ^0.0.8 # Todo: #1271: replace with alternative package
-  add_2_calendar: ^2.2.4
+  add_2_calendar: ^3.0.1
   sliding_up_panel: ^2.0.0+1 # Todo: #1272: replace with alternative package
   pausable_timer: ^3.1.0+3
   focus_detector: ^2.0.1 # Todo: #1273: replace with alternative package
