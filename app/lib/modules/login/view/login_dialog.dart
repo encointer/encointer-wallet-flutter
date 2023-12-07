@@ -125,8 +125,8 @@ final class LoginDialog {
             onPressed: () => Navigator.pop(context),
             child: Text(l10n.cancel),
           ),
-        WillPopScope(
-          onWillPop: () async => canPop,
+        PopScope(
+          onPopInvoked: (bool didPop) async => canPop,
           child: CupertinoButton(
             key: const Key(EWTestKeys.passwordOk),
             onPressed: () async {

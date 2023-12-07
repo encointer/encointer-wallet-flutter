@@ -39,7 +39,7 @@ class _Settings extends State<SettingsPage> {
         context: context,
         builder: (_) => SizedBox(
           height: MediaQuery.of(context).copyWith().size.height / 3,
-          child: WillPopScope(
+          child: PopScope(
             child: CupertinoPicker(
               backgroundColor: Colors.white,
               itemExtent: 58,
@@ -55,13 +55,12 @@ class _Settings extends State<SettingsPage> {
                 });
               },
             ),
-            onWillPop: () async {
+            onPopInvoked: (bool didPop) async {
               final code = _langOptions[_selected];
               if (code != context.read<AppStore>().settings.localeCode) {
                 await context.read<AppStore>().settings.setLocalCode(code);
                 context.read<AppStore>().settings.changeLang(context, code);
               }
-              return true;
             },
           ),
         ),
