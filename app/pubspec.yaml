@@ -38,7 +38,7 @@ dependencies:
   flutter:
     sdk: flutter
   base58check: ^2.0.0
-  package_info_plus: ^4.2.0
+  package_info_plus: ^5.0.1
   quiver: ^3.2.1
   share_plus: ^7.2.1
   flutter_timezone: ^1.0.8
