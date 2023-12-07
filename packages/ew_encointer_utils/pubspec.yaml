@@ -4,10 +4,10 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.0.1 <4.0.0"
+  sdk: ">=3.2.0 <4.0.0"
 
 dependencies:
-  collection: 1.17.2
+  collection: ^1.18.0
   ew_keyring:
     path: ../ew_keyring
   ew_primitives:
@@ -16,7 +16,7 @@ dependencies:
     path: ../ew_polkadart
 
 dev_dependencies:
-  test: 1.24.3
+  test: ^1.24.9
   very_good_analysis: ^5.0.0+1
 
 # We have to use dependency overrides as the polkadart_cli in our fork uses

@@ -19,8 +19,8 @@ version: 1.11.6+877
 publish_to: none
 
 environment:
-  sdk: ">=3.0.3 <4.0.0"
-  flutter: "3.13.8"
+  sdk: ">=3.2.0 <4.0.0"
+  flutter: "3.16.3"
 
 dependencies:
   # intl - format numbers
@@ -103,7 +103,7 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  test: 1.24.3
+  test: ^1.24.9
   mocktail: ^1.0.1
   very_good_analysis: ^5.1.0
   rxdart: ^0.27.7
