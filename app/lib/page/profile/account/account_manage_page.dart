@@ -13,7 +13,6 @@ import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
-import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/page/profile/account/faucet_list_tile.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -84,10 +83,20 @@ class _AccountManagePageState extends State<AccountManagePage> {
     );
   }
 
-  Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
+  Widget _getBalanceEntryListTile(int index, String address) {
     final h3 = context.titleLarge.copyWith(color: context.colorScheme.primary);
 
-    final community = _appStore.encointer.communityStores![cidFmt]!;
+    // Checked in `ListView` generator that `balanceEntries` are not null.
+    final cidFmt = _appStore.encointer.accountStores![address]!.balanceEntries.keys.elementAt(index);
+    final entry = _appStore.encointer.accountStores![address]!.balanceEntries[cidFmt]!;
+
+    final community = _appStore.encointer.communityStores?[cidFmt];
+
+    if (community == null) {
+      // Never happened, but we want to be defensive here to prevent a red screen.
+      Log.e('[AccountManagePage] Communities is null, even though we have a balance entry for it. Fatal app error.');
+      return Container();
+    }
 
     final isBootstrapper = _appStore.encointer.community!.bootstrappers != null &&
         _appStore.encointer.community!.bootstrappers!.contains(address);
@@ -104,7 +113,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
       title: Text(community.name!, style: h3),
       subtitle: Text(community.symbol!, style: h3),
       trailing: Text(
-        '${entry != null && community.applyDemurrage != null ? Fmt.doubleFormat(community.applyDemurrage!(entry)) : 0} ⵐ',
+        // Should never be null, but we still want to be defensive here.
+        '${community.applyDemurrage != null ? Fmt.doubleFormat(community.applyDemurrage!(entry)) : 0} ⵐ',
         style: h3.copyWith(color: AppColors.encointerGrey),
       ),
     );
@@ -256,33 +266,16 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   ],
                 ),
                 Text(l10n.communities, style: h3Grey, textAlign: TextAlign.left),
-                if (appSettingsStore.developerMode)
-                  ListView.builder(
-                      shrinkWrap: true,
-                      // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                      itemCount: store.encointer.accountStores!.containsKey(addressSS58)
-                          ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
-                          : 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        final community =
-                            store.encointer.accountStores![addressSS58]!.balanceEntries.keys.elementAt(index);
-                        return _getBalanceEntryListTile(
-                          community,
-                          store.encointer.accountStores![addressSS58]!.balanceEntries[community],
-                          addressSS58,
-                        );
-                      })
-                else
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: store.encointer.chosenCid != null ? 1 : 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        return _getBalanceEntryListTile(
-                          _appStore.encointer.chosenCid!.toFmtString(),
-                          _appStore.encointer.communityBalanceEntry,
-                          addressSS58,
-                        );
-                      }),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: store.encointer.accountStores!.containsKey(addressSS58)
+                      ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
+                      : 0,
+                  itemBuilder: (BuildContext context, int index) => _getBalanceEntryListTile(
+                    index,
+                    addressSS58,
+                  ),
+                ),
                 // spread the List<Widget> so that it does not create a nested list.
                 if (appSettingsStore.developerMode) ...benefits(),
                 const Spacer(),

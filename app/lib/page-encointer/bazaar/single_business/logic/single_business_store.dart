@@ -118,7 +118,7 @@ abstract class _SingleBusinessStoreBase with Store {
 
   Future<List<OfferingData>> _bazaarGetOfferingsForBusines() {
     Log.d('_bazaarGetOfferingsForBusines: _cid = $_cid', _targetLogger);
-    return webApi.encointer.bazaarGetOfferingsForBusines(_cid, _businesses.controller);
+    return webApi.encointer.bazaarGetOfferingsForBusiness(_cid, _businesses.controller);
   }
 
   Future<Either<ItemOffered, EwHttpException>> _getItemOffered(String ipfsUrlHash) {

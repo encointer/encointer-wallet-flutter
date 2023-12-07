@@ -103,6 +103,18 @@ class Queries {
     final hashedKey = _lookup.hashedKeyFor(key1);
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `agenda`.
+  _i6.Uint8List agendaMapPrefix() {
+    final hashedKey = _agenda.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `lookup`.
+  _i6.Uint8List lookupMapPrefix() {
+    final hashedKey = _lookup.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

@@ -337,8 +337,8 @@ packages:
     dependency: transitive
     description:
       path: "packages/polkadart"
-      ref: main
-      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
+      ref: "cl/storage-key-prefix-dev"
+      resolved-ref: "15f3d19e8cd676e82441389165bb83faa6d9d608"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.6"
@@ -346,8 +346,8 @@ packages:
     dependency: transitive
     description:
       path: "packages/polkadart_keyring"
-      ref: main
-      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
+      ref: "cl/storage-key-prefix-dev"
+      resolved-ref: "15f3d19e8cd676e82441389165bb83faa6d9d608"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -355,8 +355,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: main
-      resolved-ref: e72833fa3c10daa5528bec9b54f8d5e32598e9f0
+      ref: "cl/storage-key-prefix-dev"
+      resolved-ref: "15f3d19e8cd676e82441389165bb83faa6d9d608"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
