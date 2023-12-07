@@ -507,6 +507,30 @@ class Queries {
     final hashedKey = _executionPhase.hashedKey();
     return hashedKey;
   }
+
+  /// Returns the storage map key prefix for `account`.
+  _i15.Uint8List accountMapPrefix() {
+    final hashedKey = _account.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `blockHash`.
+  _i15.Uint8List blockHashMapPrefix() {
+    final hashedKey = _blockHash.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `extrinsicData`.
+  _i15.Uint8List extrinsicDataMapPrefix() {
+    final hashedKey = _extrinsicData.mapPrefix();
+    return hashedKey;
+  }
+
+  /// Returns the storage map key prefix for `eventTopics`.
+  _i15.Uint8List eventTopicsMapPrefix() {
+    final hashedKey = _eventTopics.mapPrefix();
+    return hashedKey;
+  }
 }
 
 class Txs {

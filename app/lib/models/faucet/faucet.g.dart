@@ -13,7 +13,7 @@ Faucet _$FaucetFromJson(Map<String, dynamic> json) => Faucet(
           ?.map((e) => CommunityIdentifier.fromJson(e as Map<String, dynamic>))
           .toList(),
       json['dripAmount'] as int,
-      json['creator'] as String,
+      (json['creator'] as List<dynamic>).map((e) => e as int).toList(),
     );
 
 Map<String, dynamic> _$FaucetToJson(Faucet instance) => <String, dynamic>{
