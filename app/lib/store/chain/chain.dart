@@ -1,9 +1,10 @@
-import 'package:mobx/mobx.dart';
+import 'dart:typed_data';
+
 import 'package:convert/convert.dart' show hex;
+import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
-import 'package:ew_polkadart/ew_polkadart.dart';
 
 part 'chain.g.dart';
 
@@ -24,11 +25,17 @@ abstract class _ChainStore with Store {
   @observable
   String? latestHashHex;
 
+  /// Computed value ready to be served into polkadart's methods.
+  ///
+  /// Note we can't use the type alias `BlockHash` here due to a mobx bug:
+  /// https://github.com/mobxjs/mobx.dart/issues/968
   @computed
-  BlockHash? get latestHash {
-    if (latestHashHex != null) return BlockHash.fromList(hex.decode(latestHashHex!.replaceFirst('0x', '')));
-
-    return null;
+  Uint8List? get latestHash {
+    if (latestHashHex != null) {
+      return Uint8List.fromList(hex.decode(latestHashHex!.replaceFirst('0x', '')));
+    } else {
+      return null;
+    }
   }
 
   @action
