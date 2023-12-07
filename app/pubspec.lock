@@ -1102,10 +1102,10 @@ packages:
     dependency: "direct main"
     description:
       name: pausable_timer
-      sha256: "35b1f77eb2fb0f42e823360321fbed9b9a8b1c7043a07a58aeda17d01f84659a"
+      sha256: "6ef1a95441ec3439de6fb63f39a011b67e693198e7dae14e20675c3c00e86074"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0+1"
+    version: "3.1.0+3"
   pdf:
     dependency: "direct main"
     description:

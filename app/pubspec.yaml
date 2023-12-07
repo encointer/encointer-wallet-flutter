@@ -62,7 +62,7 @@ dependencies:
   iconsax: ^0.0.8 # Todo: #1271: replace with alternative package
   add_2_calendar: ^2.2.4
   sliding_up_panel: ^2.0.0+1 # Todo: #1272: replace with alternative package
-  pausable_timer: ^2.0.0+1
+  pausable_timer: ^3.1.0+3
   focus_detector: ^2.0.1 # Todo: #1273: replace with alternative package
   jdenticon_dart: ^2.0.0 # Todo: #1274: replace with alternative package
   photo_view: ^0.14.0
