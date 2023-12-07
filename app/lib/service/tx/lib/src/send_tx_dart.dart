@@ -49,6 +49,10 @@ class ExtrinsicReport {
     return toJson().toString();
   }
 
+  Uint8List get blockHashBytes {
+    return hexToUint8(blockHash);
+  }
+
   bool get isExtrinsicSuccess {
     return events.last.event.isExtrinsicSuccess;
   }
