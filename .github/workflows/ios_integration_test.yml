@@ -94,6 +94,9 @@ jobs:
         run: .flutter/bin/dart run melos yarn-build
 
       - name: Start colima a docker runtime for MacOs
+        # The brew install returns exit code 1 for a non-fatal error.
+        # We don't care, the subsequent steps will work still.
+        continue-on-error: true
         run: |
           brew install docker
           brew install colima
