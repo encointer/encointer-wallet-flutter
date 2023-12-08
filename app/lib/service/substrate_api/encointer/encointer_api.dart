@@ -492,10 +492,10 @@ class EncointerApi {
   /// This is needed because because the latestHash slightly lags behind, as it involves a
   /// network request based on the `bestHead` subscription.
   Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
-      CeremonyPhase nextPhase,
-      CommunityIdentifier cid,
-      String pubKey,
-      ) async {
+    CeremonyPhase nextPhase,
+    CommunityIdentifier cid,
+    String pubKey,
+  ) async {
     while (true) {
       final data = await getAggregatedAccountData(cid, pubKey, at: store.chain.latestHash);
       final phase = data.global.ceremonyPhase;
@@ -506,12 +506,11 @@ class EncointerApi {
       } else {
         await Future.delayed(
           const Duration(seconds: 3),
-              () => Log.d('[EncointerApi] polling account data until next phase is reached...', 'EncointerApi'),
+          () => Log.d('[EncointerApi] polling account data until next phase is reached...', 'EncointerApi'),
         );
       }
     }
   }
-
 
   /// Subscribes to new community identifies.
   Future<void> subscribeCommunityIdentifiers() async {
