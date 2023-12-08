@@ -477,7 +477,7 @@ class EncointerApi {
 
         if (cid != null && pubKey != null && pubKey.isNotEmpty) {
           final address = store.account.currentAddress;
-          final data = await getAggregatedAccountData(cid, pubKey);
+          final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, pubKey);
           store.encointer.setAggregatedAccountData(cid, address, data);
         }
 
@@ -485,6 +485,31 @@ class EncointerApi {
         await getNextPhaseTimestamp();
       }
     });
+  }
+
+  /// Polls the aggregated account data until its ceremony phase field equals [nextPhase].
+  ///
+  /// This is needed because because the latestHash slightly lags behind, as it involves a
+  /// network request based on the `bestHead` subscription.
+  Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
+    CeremonyPhase nextPhase,
+    CommunityIdentifier cid,
+    String pubKey,
+  ) async {
+    while (true) {
+      final data = await getAggregatedAccountData(cid, pubKey, at: store.chain.latestHash);
+      final phase = data.global.ceremonyPhase;
+
+      if (nextPhase == phase) {
+        Log.d('[EncointerApi] received account data valid for the new ceremony phase', 'EncointerApi');
+        return data;
+      } else {
+        await Future.delayed(
+          const Duration(seconds: 3),
+          () => Log.d('[EncointerApi] polling account data until next phase is reached...', 'EncointerApi'),
+        );
+      }
+    }
   }
 
   /// Subscribes to new community identifies.
