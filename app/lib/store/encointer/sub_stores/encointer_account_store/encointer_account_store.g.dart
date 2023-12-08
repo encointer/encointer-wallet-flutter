@@ -143,8 +143,9 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
       AsyncAction('_EncointerAccountStore.getNumberOfNewbieTicketsForReputable', context: context);
 
   @override
-  Future<void> getNumberOfNewbieTicketsForReputable() {
-    return _$getNumberOfNewbieTicketsForReputableAsyncAction.run(() => super.getNumberOfNewbieTicketsForReputable());
+  Future<void> getNumberOfNewbieTicketsForReputable({Uint8List? at}) {
+    return _$getNumberOfNewbieTicketsForReputableAsyncAction
+        .run(() => super.getNumberOfNewbieTicketsForReputable(at: at));
   }
 
   late final _$_EncointerAccountStoreActionController =

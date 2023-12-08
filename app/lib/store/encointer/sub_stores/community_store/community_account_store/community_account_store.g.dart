@@ -160,9 +160,9 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
       AsyncAction('_CommunityAccountStore.getNumberOfNewbieTicketsForBootstrapper', context: context);
 
   @override
-  Future<void> getNumberOfNewbieTicketsForBootstrapper() {
+  Future<void> getNumberOfNewbieTicketsForBootstrapper({Uint8List? at}) {
     return _$getNumberOfNewbieTicketsForBootstrapperAsyncAction
-        .run(() => super.getNumberOfNewbieTicketsForBootstrapper());
+        .run(() => super.getNumberOfNewbieTicketsForBootstrapper(at: at));
   }
 
   late final _$_CommunityAccountStoreActionController =
