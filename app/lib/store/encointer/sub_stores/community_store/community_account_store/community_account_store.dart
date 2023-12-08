@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -171,10 +172,10 @@ abstract class _CommunityAccountStore with Store {
   }
 
   @action
-  Future<void> getNumberOfNewbieTicketsForBootstrapper() async {
-    // Todo: #923 This returns 5 for non-bootstrappers as it naively calculates the amount of tickes based on
+  Future<void> getNumberOfNewbieTicketsForBootstrapper({Uint8List? at}) async {
+    // Todo: #923 This returns 5 for non-bootstrappers as it naively calculates the amount of tickets based on
     // the amount of burned tickets. This is essentially wrong and leads to workarounds that we need to do on dart side.
-    numberOfNewbieTicketsForBootstrapper = await webApi.encointer.getNumberOfNewbieTicketsForBootstrapper();
+    numberOfNewbieTicketsForBootstrapper = await webApi.encointer.getNumberOfNewbieTicketsForBootstrapper(at: at);
   }
 
   void initStore(Function? cacheFn) {

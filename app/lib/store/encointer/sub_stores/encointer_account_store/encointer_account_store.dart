@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
@@ -143,8 +144,8 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
-  Future<void> getNumberOfNewbieTicketsForReputable() async {
-    numberOfNewbieTicketsForReputable = await webApi.encointer.getNumberOfNewbieTicketsForReputable();
+  Future<void> getNumberOfNewbieTicketsForReputable({Uint8List? at}) async {
+    numberOfNewbieTicketsForReputable = await webApi.encointer.getNumberOfNewbieTicketsForReputable(at: at);
   }
 
   void initStore(Function? cacheFn) {

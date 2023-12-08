@@ -90,8 +90,8 @@ Future<void> submitEndorseNewcomer(
     api,
     txParams,
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
-      store.encointer.account!.getNumberOfNewbieTicketsForReputable();
-      store.encointer.communityAccount!.getNumberOfNewbieTicketsForBootstrapper();
+      store.encointer.account!.getNumberOfNewbieTicketsForReputable(at: report.blockHashBytes);
+      store.encointer.communityAccount!.getNumberOfNewbieTicketsForBootstrapper(at: report.blockHashBytes);
     },
   );
 }
