@@ -63,7 +63,7 @@ abstract class _ChainStore with Store {
   Future<void> loadCache() async {
     // These values loose there significance, so they should not be cached in the
     // first place.
-    latestHeader =  null;
+    latestHeader = null;
     latestHashHex = null;
   }
 }
