@@ -265,6 +265,10 @@ abstract class _SettingsStore with Store {
     await setNetworkConst({}, needCache: false);
     setEndpoint(network);
 
+    // Todo: remove global reference when cyclic dependency
+    // between the stores and the apis are resolved
+    await webApi.close();
+
     await Future.wait(<Future<void>>[
       rootStore.loadAccountCache(),
       loadNetworkStateCache(),
@@ -273,9 +277,6 @@ abstract class _SettingsStore with Store {
       rootStore.loadOrInitEncointerCache(network.info!),
     ]);
 
-    // Todo: remove global reference when cyclic dependency
-    // between the stores and the apis are resolved
-    await webApi.close();
     return webApi.init();
   }
 }
