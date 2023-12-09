@@ -269,6 +269,7 @@ abstract class _SettingsStore with Store {
       rootStore.loadAccountCache(),
       loadNetworkStateCache(),
       rootStore.assets.loadCache(),
+      rootStore.chain.loadCache(),
       rootStore.loadOrInitEncointerCache(network.info!),
     ]);
 

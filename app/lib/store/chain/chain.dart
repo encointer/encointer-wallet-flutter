@@ -17,8 +17,6 @@ abstract class _ChainStore with Store {
 
   final AppStore rootStore;
 
-  final String latestHeaderKey = 'chain_latest_header';
-
   @observable
   Header? latestHeader;
 
@@ -57,16 +55,15 @@ abstract class _ChainStore with Store {
   @action
   void setLatestHeader(Header latest) {
     latestHeader = latest;
-    rootStore.cacheObject(latestHeaderKey, latest);
   }
 
   @computed
   int? get latestHeaderNumber => latestHeader?.number;
 
   Future<void> loadCache() async {
-    final h = await rootStore.loadObject(latestHeaderKey);
-    if (h != null) {
-      latestHeader = Header.fromJson(h as Map<String, dynamic>);
-    }
+    // These values loose there significance, so they should not be cached in the
+    // first place.
+    latestHeader =  null;
+    latestHashHex = null;
   }
 }
