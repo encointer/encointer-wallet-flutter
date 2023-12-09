@@ -61,8 +61,8 @@ abstract class _ChainStore with Store {
   int? get latestHeaderNumber => latestHeader?.number.toInt();
 
   Future<void> loadCache() async {
-    // These values loose there significance, so they should not be cached in the
-    // first place.
+    // These values lose their significance with time,
+    // so they should not be cached in the first place.
     latestHeader = null;
     latestHashHex = null;
   }
