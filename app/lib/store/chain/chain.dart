@@ -58,7 +58,7 @@ abstract class _ChainStore with Store {
   }
 
   @computed
-  int? get latestHeaderNumber => latestHeader?.number;
+  int? get latestHeaderNumber => latestHeader?.number.toInt();
 
   Future<void> loadCache() async {
     // These values loose there significance, so they should not be cached in the
