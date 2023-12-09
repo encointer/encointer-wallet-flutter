@@ -263,12 +263,13 @@ abstract class _SettingsStore with Store {
   Future<void> reloadNetwork(EndpointData network) async {
     setNetworkLoading(true);
     await setNetworkConst({}, needCache: false);
-    setEndpoint(network);
 
-    // Todo: remove global reference when cyclic dependency
-    // between the stores and the apis are resolved
+    // Stop networking before loading cache
     await webApi.close();
 
+    setEndpoint(network);
+
+    // load cache before starting networking again
     await Future.wait(<Future<void>>[
       rootStore.loadAccountCache(),
       loadNetworkStateCache(),
