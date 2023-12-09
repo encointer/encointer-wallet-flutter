@@ -266,6 +266,9 @@ class EndorseButton extends StatelessWidget {
       return true;
     }
 
+    // we have not chosen a community yet. May happen after changing the network.
+    if (store.encointer.community == null) return false;
+
     if (store.encointer.community!.bootstrappers!.contains(store.account.currentAddress) &&
         store.encointer.communityAccount!.numberOfNewbieTicketsForBootstrapper > 0) {
       return true;
