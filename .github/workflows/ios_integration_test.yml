@@ -94,12 +94,11 @@ jobs:
         run: .flutter/bin/dart run melos yarn-build
 
       - name: Start colima a docker runtime for MacOs
-        # Work around an upstream issue with the runner image:
-        # https://github.com/actions/runner-images/issues/8500
+        # The brew install returns exit code 1 for a non-fatal dependency linker error.
+        # We don't care, the subsequent steps will work still.
         run: |
-          brew upgrade || brew link --overwrite python@3.11
-          brew install docker
-          brew install colima
+          brew install docker || true
+          brew install colima || true
           colima start
 
       - name: Run encointer-node
