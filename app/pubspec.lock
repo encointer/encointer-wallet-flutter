@@ -499,14 +499,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_gen:
-    dependency: "direct dev"
-    description:
-      name: flutter_gen
-      sha256: "0815a61633ac5f0365dd07cb501982718dbac8905dd7a7c34e50a1f3516155bb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.3.2"
   flutter_gen_core:
     dependency: transitive
     description:
