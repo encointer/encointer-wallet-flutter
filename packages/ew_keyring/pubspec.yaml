@@ -21,7 +21,7 @@ dependencies:
 dev_dependencies:
   test: ^1.24.9
   very_good_analysis: ^5.1.0
-  build_runner: ^2.4.6
+  build_runner: ^2.4.7
   json_serializable: ^6.7.1
 
 # We have to use dependency overrides as the polkadart_cli in our fork uses
