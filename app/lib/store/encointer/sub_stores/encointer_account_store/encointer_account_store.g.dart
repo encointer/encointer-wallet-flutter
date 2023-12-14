@@ -40,11 +40,18 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
-  Computed<int>? _$reputationCountComputed;
+  Computed<Map<int, CommunityReputation>>? _$verifiedReputationsComputed;
 
   @override
-  int get reputationCount => (_$reputationCountComputed ??=
-          Computed<int>(() => super.reputationCount, name: '_EncointerAccountStore.reputationCount'))
+  Map<int, CommunityReputation> get verifiedReputations =>
+      (_$verifiedReputationsComputed ??= Computed<Map<int, CommunityReputation>>(() => super.verifiedReputations,
+              name: '_EncointerAccountStore.verifiedReputations'))
+          .value;
+  Computed<int>? _$verifiedReputationCountComputed;
+
+  @override
+  int get verifiedReputationCount => (_$verifiedReputationCountComputed ??=
+          Computed<int>(() => super.verifiedReputationCount, name: '_EncointerAccountStore.verifiedReputationCount'))
       .value;
   Computed<int?>? _$ceremonyIndexForNextProofOfAttendanceComputed;
 
@@ -198,7 +205,8 @@ reputations: ${reputations},
 txsTransfer: ${txsTransfer},
 numberOfNewbieTicketsForReputable: ${numberOfNewbieTicketsForReputable},
 lastProofOfAttendance: ${lastProofOfAttendance},
-reputationCount: ${reputationCount},
+verifiedReputations: ${verifiedReputations},
+verifiedReputationCount: ${verifiedReputationCount},
 ceremonyIndexForNextProofOfAttendance: ${ceremonyIndexForNextProofOfAttendance}
     ''';
   }

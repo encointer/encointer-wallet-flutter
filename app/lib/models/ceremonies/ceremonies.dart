@@ -145,6 +145,10 @@ extension ReputationExtension on Reputation {
   String toValue() {
     return toEnumValue(this);
   }
+
+  bool isVerified() {
+    return this == Reputation.VerifiedUnlinked || this == Reputation.VerifiedLinked;
+  }
 }
 
 extension ParticipantTypeExtension on ParticipantType {

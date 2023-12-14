@@ -52,17 +52,23 @@ abstract class _EncointerAccountStore with Store {
 
   /// `CommunityReputations` across all communities keyed by the respective ceremony index.
   ///
+  /// Normally, we are more interested in the computed [verifiedReputations], as this map may
+  /// contain all potential reputation values: UnverifiedReputable, VerifiedUnlinked and VerifiedLinked.
+  ///
   /// Map: ceremony index -> CommunityReputation
   @observable
   Map<int, CommunityReputation> reputations = {};
 
+  /// Returns all reputations associated with a meetup.
+  @computed
+  Map<int, CommunityReputation> get verifiedReputations {
+    final entries = reputations.entries.where((e) => e.value.reputation.isVerified());
+    return Map.fromEntries(entries);
+  }
+
   /// Number of successfully attended meetups in the range of reputation lifetime.
   @computed
-  int get reputationCount {
-    return reputations.values
-        .where((r) => r.reputation == Reputation.VerifiedLinked || r.reputation == Reputation.VerifiedUnlinked)
-        .length;
-  }
+  int get verifiedReputationCount => verifiedReputations.length;
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
@@ -72,9 +78,9 @@ abstract class _EncointerAccountStore with Store {
 
   @computed
   int? get ceremonyIndexForNextProofOfAttendance {
-    if (reputations.isNotEmpty) {
+    if (verifiedReputations.isNotEmpty) {
       try {
-        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+        return verifiedReputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (e, s) {
         Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;
