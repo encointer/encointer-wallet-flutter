@@ -106,7 +106,7 @@ class _FaucetListTileState extends State<FaucetListTile> {
     // Create a set of futures to await in parallel.
     final futures = reputations.entries.map(
       (e) async {
-        final cid = e.value.communityIdentifier!;
+        final cid = e.value.communityIdentifier;
         // Only check if the reputations community id is allowed to drip the faucet.
         if (widget.faucet.whitelist == null || widget.faucet.whitelist!.contains(cid)) {
           final hasCommitted = await webApi.encointer.hasCommittedFor(
@@ -116,7 +116,7 @@ class _FaucetListTileState extends State<FaucetListTile> {
             address,
           );
 
-          if (!hasCommitted) ids[e.key] = e.value.communityIdentifier!;
+          if (!hasCommitted) ids[e.key] = e.value.communityIdentifier;
         }
       },
     );

@@ -80,8 +80,8 @@ class CommunityReputation {
 
   Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 
-  CommunityIdentifier? communityIdentifier;
-  Reputation? reputation;
+  CommunityIdentifier communityIdentifier;
+  Reputation reputation;
 
   @override
   String toString() {
