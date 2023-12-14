@@ -52,17 +52,22 @@ abstract class _EncointerAccountStore with Store {
 
   /// `CommunityReputations` across all communities keyed by the respective ceremony index.
   ///
+  /// Normally, we are more interested in the computed [verifiedReputations], as this map may
+  /// contain all potential reputation values: UnverifiedReputable, VerifiedUnlinked and VerifiedLinked.
+  ///
   /// Map: ceremony index -> CommunityReputation
   @observable
   Map<int, CommunityReputation> reputations = {};
 
+  @computed
+  Map<int, CommunityReputation> get verifiedReputations {
+    final entries = reputations.entries.where((e) => e.value.reputation.isVerified());
+    return Map.fromEntries(entries);
+  }
+
   /// Number of successfully attended meetups in the range of reputation lifetime.
   @computed
-  int get reputationCount {
-    return reputations.values
-        .where((r) => r.reputation == Reputation.VerifiedLinked || r.reputation == Reputation.VerifiedUnlinked)
-        .length;
-  }
+  int get verifiedReputationCount => verifiedReputations.length;
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
