@@ -59,6 +59,7 @@ abstract class _EncointerAccountStore with Store {
   @observable
   Map<int, CommunityReputation> reputations = {};
 
+  /// Returns all reputations associated with a meetup.
   @computed
   Map<int, CommunityReputation> get verifiedReputations {
     final entries = reputations.entries.where((e) => e.value.reputation.isVerified());
@@ -77,9 +78,9 @@ abstract class _EncointerAccountStore with Store {
 
   @computed
   int? get ceremonyIndexForNextProofOfAttendance {
-    if (reputations.isNotEmpty) {
+    if (verifiedReputations.isNotEmpty) {
       try {
-        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+        return verifiedReputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (e, s) {
         Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;

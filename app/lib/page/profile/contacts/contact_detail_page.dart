@@ -225,7 +225,7 @@ class EndorseButton extends StatelessWidget {
               : const SizedBox();
         }),
         Observer(builder: (_) {
-          return store.encointer.account != null && store.encointer.account!.reputations.isNotEmpty
+          return store.encointer.account != null && store.encointer.account!.verifiedReputations.isNotEmpty
               ? FittedBox(
                   child: Row(children: [
                     Text(l10n.remainingNewbieTicketsAsReputable),
@@ -261,7 +261,7 @@ class EndorseButton extends StatelessWidget {
   }
 
   bool hasNewbieTickets() {
-    if (store.encointer.account!.reputations.isNotEmpty &&
+    if (store.encointer.account!.verifiedReputations.isNotEmpty &&
         store.encointer.account!.numberOfNewbieTicketsForReputable > 0) {
       return true;
     }

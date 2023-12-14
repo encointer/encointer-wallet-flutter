@@ -599,7 +599,7 @@ class EncointerApi {
       return Future.value();
     }
 
-    final cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
+    final cid = store.encointer.account?.verifiedReputations[cIndex]?.communityIdentifier;
     Log.d('getProofOfAttendance: cachedPin: $pin', 'EncointerApi');
     final proof = await jsApi
         .evalJavascript<Map<String, dynamic>>(
@@ -612,7 +612,7 @@ class EncointerApi {
 
   Future<int> getNumberOfNewbieTicketsForReputable({BlockHash? at}) async {
     final address = store.account.currentAddress;
-    final reputations = store.encointer.account?.reputations ?? {};
+    final reputations = store.encointer.account?.verifiedReputations ?? {};
     final cid = store.encointer.chosenCid;
     final cIndex = store.encointer.currentCeremonyIndex;
 
