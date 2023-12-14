@@ -56,6 +56,14 @@ abstract class _EncointerAccountStore with Store {
   @observable
   Map<int, CommunityReputation> reputations = {};
 
+  /// Number of successfully attended meetups in the range of reputation lifetime.
+  @computed
+  int get reputationCount {
+    return reputations.values
+        .where((r) => r.reputation == Reputation.VerifiedLinked || r.reputation == Reputation.VerifiedUnlinked)
+        .length;
+  }
+
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
