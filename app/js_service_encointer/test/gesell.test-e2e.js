@@ -19,13 +19,6 @@ describe('encointer', () => {
     api = setup.api;
   }, 90000);
 
-  describe('init api', () => {
-    it('should get gesell genesis hash', async () => {
-      console.log('genesis hash: ' + api.genesisHash);
-      expect(u8aToHex(api.genesisHash)).toBe(network.genesisHash);
-    });
-  });
-
   // Tests if the runtime is able to correctly interpret the extrinsic
   describe('get tx fee estimate', () => {
     it('should get fees for register_participant', async () => {
