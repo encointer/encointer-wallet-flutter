@@ -59,7 +59,7 @@ final class LoginDialog {
     String? titleText,
   }) async {
     final loginStore = context.read<LoginStore>();
-    if (loginStore.getBiometricAuthState == BiometricAuthState.enabled) {
+    if (loginStore.getBiometricAuthState?.isEnabled ?? false) {
       try {
         await showLocalAuth(
           context,

@@ -183,7 +183,7 @@ class _ProfileState extends State<Profile> {
                   _ => SwitchListTile(
                       title: Text(l10n.biometricAuth, style: h3Grey),
                       onChanged: (value) => LoginDialog.switchBiometricAuth(context, isEnable: value),
-                      value: loginStore.biometricAuthState == BiometricAuthState.enabled,
+                      value: loginStore.biometricAuthState?.isEnabled ?? false,
                     ),
                 };
               }),
