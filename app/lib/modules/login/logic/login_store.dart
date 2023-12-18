@@ -58,7 +58,12 @@ abstract class _LoginStoreBase with Store {
     return loginService.isDeviceSupported();
   }
 
+  /// Might throw a `PlatformException` if there were technical problems.
   Future<bool> localAuthenticate(String localizedReason, [bool stickyAuth = false]) {
-    return loginService.localAuthenticate(localizedReason, stickyAuth);
+    try {
+      return loginService.localAuthenticate(localizedReason, stickyAuth);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

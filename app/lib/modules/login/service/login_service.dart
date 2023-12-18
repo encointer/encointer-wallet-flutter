@@ -71,7 +71,10 @@ final class LoginService {
 
   /// Authenticates the user with biometrics or device authentication options available on the device.
   /// Returns a `Future<bool>` which is `true` if successful, `false` otherwise.
+  ///
   /// [localizedReason] is the message displayed to the user during the authentication prompt.
+  ///
+  /// Might throw a `PlatformException` if there were technical problems.
   Future<bool> localAuthenticate(String localizedReason, [bool stickyAuth = false]) {
     try {
       return localAuthentication.authenticate(
@@ -79,8 +82,8 @@ final class LoginService {
         options: AuthenticationOptions(useErrorDialogs: false, stickyAuth: stickyAuth),
       );
     } catch (e, s) {
-      Log.e('$e', 'LoginStore', s);
-      return Future.value(false);
+      Log.e('$e', 'LoginService', s);
+      rethrow;
     }
   }
 }
