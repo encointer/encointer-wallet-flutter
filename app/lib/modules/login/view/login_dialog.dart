@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/config/biometric_auth_state.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -59,13 +59,26 @@ final class LoginDialog {
     String? titleText,
   }) async {
     final loginStore = context.read<LoginStore>();
-    if (loginStore.getBiometricAuthState == BiometricAuthState.enabled) {
-      await showLocalAuth(
-        context,
-        onSuccess: onSuccess,
-        stickyAuth: stickyAuth,
-        titleText: titleText,
-      );
+    if (loginStore.getBiometricAuthState?.isEnabled ?? false) {
+      try {
+        await showLocalAuth(
+          context,
+          onSuccess: onSuccess,
+          stickyAuth: stickyAuth,
+          titleText: titleText,
+        );
+      } catch (e, s) {
+        Log.e('$e', 'LoginDialog: error with biometrics, fallback to PIN dialog', s);
+        await showPasswordInputDialog(
+          context,
+          onSuccess: onSuccess,
+          barrierDismissible: barrierDismissible,
+          autoCloseOnSuccess: autoCloseOnSuccess,
+          showCancelButton: showCancelButton,
+          canPop: canPop,
+          titleText: titleText,
+        );
+      }
     } else {
       await showPasswordInputDialog(
         context,
@@ -86,8 +99,12 @@ final class LoginDialog {
     bool stickyAuth = false,
   }) async {
     final loginStore = context.read<LoginStore>();
-    final value = await loginStore.localAuthenticate(titleText ?? context.l10n.verifyAuthTitle('true'), stickyAuth);
-    if (value) await onSuccess(loginStore.cachedPin ?? await loginStore.loginService.getPin() ?? '');
+    try {
+      final value = await loginStore.localAuthenticate(titleText ?? context.l10n.verifyAuthTitle('true'), stickyAuth);
+      if (value) await onSuccess(loginStore.cachedPin ?? await loginStore.loginService.getPin() ?? '');
+    } catch (e) {
+      rethrow;
+    }
   }
 
   static Future<void> showPasswordInputDialog(

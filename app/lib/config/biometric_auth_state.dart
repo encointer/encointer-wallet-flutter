@@ -19,4 +19,6 @@ enum BiometricAuthState {
       BiometricAuthState.disabled => 'disabled',
     };
   }
+
+  bool get isEnabled => this == BiometricAuthState.enabled;
 }

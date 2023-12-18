@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:local_auth/local_auth.dart';
 
 import 'package:encointer_wallet/service/service.dart';
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/config/biometric_auth_state.dart';
 
 @immutable
 final class LoginService {
@@ -13,7 +13,6 @@ final class LoginService {
   final SharedPreferences preferences;
   final SecureStorage secureStorage;
 
-  static const isDeviceSupportKey = 'is-device-support-key';
   static const biometricAuthStateKey = 'biometric-auth-state';
   static const oldBiometricAuthStateKey = 'biometric-auth-enabled';
   static const pinStorageKey = 'pin-key';
@@ -50,7 +49,13 @@ final class LoginService {
     await secureStorage.write(key: pinStorageKey, value: pin);
   }
 
-  Future<void> clearPin() => secureStorage.clear();
+  Future<void> deleteAuthenticationData() {
+    return Future.wait([
+      secureStorage.delete(key: pinStorageKey),
+      preferences.remove(oldBiometricAuthStateKey),
+      preferences.remove(biometricAuthStateKey),
+    ]);
+  }
 
   /// Check if local authentication is supported on the device.
   /// Returns a `future` with `true` if supported, `false` otherwise.
@@ -66,7 +71,10 @@ final class LoginService {
 
   /// Authenticates the user with biometrics or device authentication options available on the device.
   /// Returns a `Future<bool>` which is `true` if successful, `false` otherwise.
+  ///
   /// [localizedReason] is the message displayed to the user during the authentication prompt.
+  ///
+  /// Might throw a `PlatformException` if there were technical problems.
   Future<bool> localAuthenticate(String localizedReason, [bool stickyAuth = false]) {
     try {
       return localAuthentication.authenticate(
@@ -74,8 +82,8 @@ final class LoginService {
         options: AuthenticationOptions(useErrorDialogs: false, stickyAuth: stickyAuth),
       );
     } catch (e, s) {
-      Log.e('$e', 'LoginStore', s);
-      return Future.value(false);
+      Log.e('$e', 'LoginService', s);
+      rethrow;
     }
   }
 }
