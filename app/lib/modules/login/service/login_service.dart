@@ -13,7 +13,6 @@ final class LoginService {
   final SharedPreferences preferences;
   final SecureStorage secureStorage;
 
-  static const isDeviceSupportKey = 'is-device-support-key';
   static const biometricAuthStateKey = 'biometric-auth-state';
   static const oldBiometricAuthStateKey = 'biometric-auth-enabled';
   static const pinStorageKey = 'pin-key';
@@ -50,7 +49,13 @@ final class LoginService {
     await secureStorage.write(key: pinStorageKey, value: pin);
   }
 
-  Future<void> clearPin() => secureStorage.clear();
+  Future<void> deleteAuthenticationData() {
+    return Future.wait([
+      secureStorage.delete(key: pinStorageKey),
+      preferences.remove(oldBiometricAuthStateKey),
+      preferences.remove(biometricAuthStateKey),
+    ]);
+  }
 
   /// Check if local authentication is supported on the device.
   /// Returns a `future` with `true` if supported, `false` otherwise.

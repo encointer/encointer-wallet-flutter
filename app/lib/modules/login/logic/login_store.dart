@@ -40,7 +40,7 @@ abstract class _LoginStoreBase with Store {
 
   Future<void> clearPin() async {
     cachedPin = null;
-    await loginService.clearPin();
+    await loginService.deleteAuthenticationData();
   }
 
   @computed
