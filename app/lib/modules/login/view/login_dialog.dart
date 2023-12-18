@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/config/biometric_auth_state.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';

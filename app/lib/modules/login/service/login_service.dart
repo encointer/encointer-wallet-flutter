@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:local_auth/local_auth.dart';
 
 import 'package:encointer_wallet/service/service.dart';
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/config/biometric_auth_state.dart';
 
 @immutable
 final class LoginService {

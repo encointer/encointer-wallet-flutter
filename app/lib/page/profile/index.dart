@@ -9,7 +9,7 @@ import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/config/biometric_auth_state.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
