@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_driver/flutter_driver.dart';
@@ -51,7 +52,7 @@ extension ScreenshotExtension on FlutterDriver {
     print('Screenshot $name created at ${file.path}');
   }
 
-  Future<bool> canDriverTakeScreenshot() {
+  Future<bool> canDriverTakeScreenshot() async {
     final operationSystem = await requestData(TestCommand.getPlatform);
     log('operationSystem ==================> $operationSystem');
     return operationSystem == 'android';
