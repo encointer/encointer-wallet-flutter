@@ -293,8 +293,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/polkadart"
-      ref: "cl/storage-key-prefix-dev"
-      resolved-ref: b1eb9e659f4d2e5e92a3e7a714f1ff1c7d6f5e10
+      ref: "cl/sr25519"
+      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.6"
@@ -302,8 +302,8 @@ packages:
     dependency: "direct dev"
     description:
       path: "packages/polkadart_cli"
-      ref: "cl/storage-key-prefix-dev"
-      resolved-ref: b1eb9e659f4d2e5e92a3e7a714f1ff1c7d6f5e10
+      ref: "cl/sr25519"
+      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.4"
@@ -311,8 +311,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: "cl/storage-key-prefix-dev"
-      resolved-ref: b1eb9e659f4d2e5e92a3e7a714f1ff1c7d6f5e10
+      ref: "cl/sr25519"
+      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -448,8 +448,8 @@ packages:
     dependency: "direct dev"
     description:
       path: "packages/substrate_metadata"
-      ref: "cl/storage-key-prefix-dev"
-      resolved-ref: b1eb9e659f4d2e5e92a3e7a714f1ff1c7d6f5e10
+      ref: "cl/sr25519"
+      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"

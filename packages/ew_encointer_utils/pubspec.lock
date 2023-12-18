@@ -121,6 +121,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
+  edwards25519:
+    dependency: transitive
+    description:
+      name: edwards25519
+      sha256: "48e4678136e362bed9790dfb716ebe8e2f34f026bdb900b058214620672c6273"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   equatable:
     dependency: transitive
     description:
@@ -285,6 +293,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.12.16"
+  merlin:
+    dependency: transitive
+    description:
+      name: merlin
+      sha256: c6b5d5bc70880aa7639686db66480d0be4b89da843b5cab20550610507da2540
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   meta:
     dependency: transitive
     description:
@@ -337,8 +353,8 @@ packages:
     dependency: transitive
     description:
       path: "packages/polkadart"
-      ref: "cl/storage-key-prefix-dev"
-      resolved-ref: b1eb9e659f4d2e5e92a3e7a714f1ff1c7d6f5e10
+      ref: "cl/sr25519"
+      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.6"
@@ -346,8 +362,8 @@ packages:
     dependency: transitive
     description:
       path: "packages/polkadart_keyring"
-      ref: "cl/storage-key-prefix-dev"
-      resolved-ref: b1eb9e659f4d2e5e92a3e7a714f1ff1c7d6f5e10
+      ref: "cl/sr25519"
+      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -355,8 +371,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: "cl/storage-key-prefix-dev"
-      resolved-ref: b1eb9e659f4d2e5e92a3e7a714f1ff1c7d6f5e10
+      ref: "cl/sr25519"
+      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -392,6 +408,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.0"
+  ristretto255:
+    dependency: transitive
+    description:
+      name: ristretto255
+      sha256: "3824d6786146dfb3b0783f305b714d36fa213c0d08e0ba864267baa0ede51cdd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   shelf:
     dependency: transitive
     description:
@@ -456,6 +480,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  sr25519:
+    dependency: transitive
+    description:
+      path: "../../../../Users/clang/AppData/Local/Pub/Cache/git/polkadart-7bcac1dab6bf214bb90019c3958f673261d281c9/packages/sr25519"
+      relative: true
+    source: path
+    version: "0.1.0"
   ss58:
     dependency: transitive
     description:
@@ -488,6 +519,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  strobe:
+    dependency: transitive
+    description:
+      name: strobe
+      sha256: a23adf7d305e45c6f210270aa925d8b404819144e29f7c5257a67281b63e0887
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   substrate_bip39:
     dependency: transitive
     description:

@@ -12,7 +12,7 @@ dependencies:
     #    path: ../../../polkadart/packages/polkadart_scale_codec
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/storage-key-prefix-dev
+      ref: cl/sr25519
       path: packages/polkadart_keyring
   ss58: ^1.1.2
   substrate_bip39: ^0.2.0
@@ -29,5 +29,5 @@ dependency_overrides:
     #    path: ../../../polkadart/packages/polkadart_scale_codec
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/storage-key-prefix-dev
+      ref: cl/sr25519
       path: packages/polkadart_scale_codec
