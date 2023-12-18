@@ -1,11 +1,19 @@
 import 'package:ew_keyring/src/validate_keys.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'keyring_data.g.dart';
+
+@JsonSerializable()
 class KeyringAccount {
-  KeyringAccount(this.name, this.seed) : type = getSeedTypeFromString(seed);
+  KeyringAccount(this.name, this.seed);
 
   final String name;
-  final SeedType type;
   final String seed;
+
+  static KeyringAccount fromJson(Map<String, dynamic> json) => _$KeyringAccountFromJson(json);
+  static Map<String, dynamic> toJson(KeyringAccount acc) => _$KeyringAccountToJson(acc);
+
+  SeedType get seedType => getSeedTypeFromString(seed);
 }
 
 SeedType getSeedTypeFromString(String seed) {
