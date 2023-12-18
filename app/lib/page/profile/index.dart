@@ -162,10 +162,10 @@ class _ProfileState extends State<Profile> {
                 },
               ),
               ListTile(
-                  title: Text(l10n.reputationOverall, style: h3Grey),
-                  trailing: store.encointer.account?.reputations != null
-                      ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
-                      : Text(l10n.fetchingReputations)),
+                title: Text(l10n.reputationOverall, style: h3Grey),
+                // Account can be null after switching networks.
+                trailing: Text('${store.encointer.account?.verifiedReputationCount.toString() ?? 0}'),
+              ),
               ListTile(
                 title: Text(l10n.about,
                     style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19)),

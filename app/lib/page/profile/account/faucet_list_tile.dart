@@ -100,13 +100,13 @@ class _FaucetListTileState extends State<FaucetListTile> {
   /// Returns all reputation ids, which haven't been committed for this faucet's
   /// purpose id yet, i.e., can be used to drip the faucet currently.
   Future<Map<int, CommunityIdentifier>> _getUncommittedReputationIds(String address) async {
-    final reputations = widget.store.encointer.accountStores![address]!.reputations;
+    final reputations = widget.store.encointer.accountStores![address]!.verifiedReputations;
     final ids = Map<int, CommunityIdentifier>.of({});
 
     // Create a set of futures to await in parallel.
     final futures = reputations.entries.map(
       (e) async {
-        final cid = e.value.communityIdentifier!;
+        final cid = e.value.communityIdentifier;
         // Only check if the reputations community id is allowed to drip the faucet.
         if (widget.faucet.whitelist == null || widget.faucet.whitelist!.contains(cid)) {
           final hasCommitted = await webApi.encointer.hasCommittedFor(
@@ -116,7 +116,7 @@ class _FaucetListTileState extends State<FaucetListTile> {
             address,
           );
 
-          if (!hasCommitted) ids[e.key] = e.value.communityIdentifier!;
+          if (!hasCommitted) ids[e.key] = e.value.communityIdentifier;
         }
       },
     );

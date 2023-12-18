@@ -60,15 +60,13 @@ const _$CeremonyPhaseEnumMap = {
 };
 
 CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) => CommunityReputation(
-      json['communityIdentifier'] == null
-          ? null
-          : CommunityIdentifier.fromJson(json['communityIdentifier'] as Map<String, dynamic>),
-      $enumDecodeNullable(_$ReputationEnumMap, json['reputation']),
+      CommunityIdentifier.fromJson(json['communityIdentifier'] as Map<String, dynamic>),
+      $enumDecode(_$ReputationEnumMap, json['reputation']),
     );
 
 Map<String, dynamic> _$CommunityReputationToJson(CommunityReputation instance) => <String, dynamic>{
-      'communityIdentifier': instance.communityIdentifier?.toJson(),
-      'reputation': _$ReputationEnumMap[instance.reputation],
+      'communityIdentifier': instance.communityIdentifier.toJson(),
+      'reputation': _$ReputationEnumMap[instance.reputation]!,
     };
 
 const _$ReputationEnumMap = {
