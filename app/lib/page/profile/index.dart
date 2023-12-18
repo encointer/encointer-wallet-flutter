@@ -155,7 +155,7 @@ class _ProfileState extends State<Profile> {
                       for (final acc in context.read<AppStore>().account.accountListAll) {
                         await store.account.removeAccount(acc);
                       }
-                      await context.read<LoginStore>().clearPin();
+                      await context.read<LoginStore>().deleteAuthenticationData();
                       await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
                     },
                   );

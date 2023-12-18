@@ -38,7 +38,7 @@ abstract class _LoginStoreBase with Store {
     await loginService.setPin(pin);
   }
 
-  Future<void> clearPin() async {
+  Future<void> deleteAuthenticationData() async {
     cachedPin = null;
     await loginService.deleteAuthenticationData();
   }
