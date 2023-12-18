@@ -74,7 +74,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
             .then((_) => _appStore.loadAccountCache())
             .then((_) => webApi.fetchAccountData());
         if (_appStore.account.accountListAll.isEmpty) {
-          await context.read<LoginStore>().clearPin();
+          await context.read<LoginStore>().deleteAuthenticationData();
           await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
         } else {
           Navigator.pop(context);
