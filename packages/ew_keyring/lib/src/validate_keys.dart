@@ -47,3 +47,30 @@ class ValidateKeys {
     }
   }
 }
+
+bool isValidSeed(String seed) {
+  try {
+    final _ = getSeedTypeFromString(seed);
+    return true;
+  } catch (_) {
+     return false;
+  }
+}
+
+SeedType getSeedTypeFromString(String seed) {
+  if (ValidateKeys.isRawSeed(seed)) {
+    return SeedType.raw;
+  } else if (ValidateKeys.isPrivateKey(seed)) {
+    return SeedType.privateKey;
+  } else if (ValidateKeys.validateMnemonic(seed)) {
+    return SeedType.mnemonic;
+  } else {
+    throw Exception('invalid seed: $seed');
+  }
+}
+
+enum SeedType {
+  raw,
+  privateKey,
+  mnemonic,
+}

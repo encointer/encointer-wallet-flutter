@@ -7,6 +7,15 @@ part 'keyring_data.g.dart';
 class KeyringAccount {
   KeyringAccount(this.name, this.seed);
 
+  factory KeyringAccount.newValidated(String name, String seed) {
+     try {
+       final _ = getSeedTypeFromString(seed);
+       return KeyringAccount(name, seed);
+    } catch (e) {
+       rethrow;
+  }
+}
+
   final String name;
   final String seed;
 
@@ -14,22 +23,4 @@ class KeyringAccount {
   static Map<String, dynamic> toJson(KeyringAccount acc) => _$KeyringAccountToJson(acc);
 
   SeedType get seedType => getSeedTypeFromString(seed);
-}
-
-SeedType getSeedTypeFromString(String seed) {
-  if (ValidateKeys.isRawSeed(seed)) {
-    return SeedType.raw;
-  } else if (ValidateKeys.isPrivateKey(seed)) {
-    return SeedType.privateKey;
-  } else if (ValidateKeys.validateMnemonic(seed)) {
-    return SeedType.mnemonic;
-  } else {
-    throw Exception('invalid seed: $seed');
-  }
-}
-
-enum SeedType {
-  raw,
-  privateKey,
-  mnemonic,
 }

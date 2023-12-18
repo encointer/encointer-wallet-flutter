@@ -1,4 +1,4 @@
-import 'package:ew_keyring/src/keyring_data.dart';
+import 'package:ew_keyring/src/validate_keys.dart';
 import 'package:test/test.dart';
 
 void main() {
