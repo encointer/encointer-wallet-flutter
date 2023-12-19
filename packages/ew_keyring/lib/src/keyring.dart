@@ -38,6 +38,10 @@ class EncointerKeyring {
     return keyring.getByPublicKey(publicKey);
   }
 
+  KeyPair getPairByAddress(String address) {
+    return keyring.pairs.getByAddress(address);
+  }
+
   KeyringAccount getAccountByPublicKey(List<int> publicKey) {
     if (accounts[publicKey.toString()] == null) {
       throw ArgumentError('KeyPair with provided key, not found.');
