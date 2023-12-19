@@ -28,7 +28,7 @@ class EncointerKeyring {
   }
 
   Future<void> addAccount(KeyringAccount keyringAccount) async {
-    final pair = await KeyPair.fromMnemonic(keyringAccount.seed);
+    final pair = await KeyPair.sr25519.fromMnemonic(keyringAccount.seed);
     keyring.add(pair);
     // same as what keyring does internally.
     accounts[_publicKey(pair).toString()] = keyringAccount;
