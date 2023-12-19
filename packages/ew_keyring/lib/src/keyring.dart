@@ -4,11 +4,7 @@ import 'package:polkadart_keyring/polkadart_keyring.dart';
 /// The public key (as a list of integers).
 typedef Pubkey = String;
 
-/// Keyring that is stored on the devices encrypted storage.
-///
-/// Note: This can't yet be used by encointer. It uses ed25519,
-/// which is unfortunately not compatible with encointer. We have
-/// to wait for sr25519 support from polkadart.
+/// Keyring to handle the accounts and their metadata.
 class EncointerKeyring {
   EncointerKeyring()
       : keyring = Keyring(),
@@ -68,8 +64,7 @@ class EncointerKeyring {
     accounts.clear();
   }
 
-  /// Get a List<int> as string, this is the same as the keyring internally uses
-  /// to add a pair.
+  /// Get a public key as a List<int> of [pair],
   List<int> _publicKey(KeyPair pair) {
     return keyring.decodeAddress(pair.address);
   }
