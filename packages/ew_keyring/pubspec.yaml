@@ -19,8 +19,11 @@ dependencies:
   substrate_bip39: ^0.2.0
 
 dev_dependencies:
+  build_runner: ^2.4.7
+  json_serializable: ^6.7.1
   test: ^1.24.9
   very_good_analysis: ^5.1.0
+
 
 # We have to use dependency overrides as the polkadart_cli in our fork uses
 # the published package as dependency. We can remove them when we use the
