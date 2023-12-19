@@ -9,7 +9,7 @@ class ValidateKeys {
     try {
       final _ = hex.decode(privateKeyTrimmed);
       return true;
-    } catch(_) {
+    } catch (_) {
       return false;
     }
   }
