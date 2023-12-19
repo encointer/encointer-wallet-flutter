@@ -31,7 +31,7 @@ Future<void> fundVoucher(FlutterDriver driver) async {
   await driver.tap(find.byValueKey(EWTestKeys.transferAmountInput));
 
   await driver.enterText('0.3');
-  await driver.takeScreenshot(Screenshots.sendView);
+  await driver.takeLocalScreenshot(Screenshots.sendView);
 
   await driver.waitFor(find.byValueKey(EWTestKeys.makeTransfer));
   await driver.tap(find.byValueKey(EWTestKeys.makeTransfer));
@@ -41,7 +41,7 @@ Future<void> fundVoucher(FlutterDriver driver) async {
 
   await driver.runUnsynchronized(() async {
     await driver.waitFor(find.byValueKey(EWTestKeys.transferDone));
-    await driver.takeScreenshot(Screenshots.txConfirmationView);
+    await driver.takeLocalScreenshot(Screenshots.txConfirmationView);
     await driver.tap(find.byValueKey(EWTestKeys.transferDone));
     await Future<void>.delayed(const Duration(milliseconds: 1000));
   });
