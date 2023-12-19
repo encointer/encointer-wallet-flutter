@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'keyring_data.dart';
+part of 'keyring_account.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

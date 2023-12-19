@@ -1,7 +1,7 @@
 import 'package:ew_keyring/src/validate_keys.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'keyring_data.g.dart';
+part 'keyring_account.g.dart';
 
 @JsonSerializable()
 class KeyringAccount {

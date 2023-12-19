@@ -1,4 +1,4 @@
-import 'package:ew_keyring/src/keyring_data.dart';
+import 'package:ew_keyring/src/keyring_account.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 
 /// The public key (as a list of integers).

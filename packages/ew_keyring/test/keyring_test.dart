@@ -1,6 +1,6 @@
 import 'package:convert/convert.dart';
 import 'package:ew_keyring/src/keyring.dart';
-import 'package:ew_keyring/src/keyring_data.dart';
+import 'package:ew_keyring/src/keyring_account.dart';
 import 'package:ew_keyring/src/validate_keys.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 import 'package:test/test.dart';
