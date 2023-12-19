@@ -24,10 +24,10 @@ extension ScreenshotExtension on FlutterDriver {
         !File('../screenshots/en/$name.png').existsSync()) {
       await requestData(TestCommand.devModeOff);
       for (final locale in locales) {
-        final currenLocale = await requestData('local-$locale');
+        final currentLocale = await requestData('local-$locale');
         await takeScreenshot(
           name,
-          directory: '$directory/$currenLocale',
+          directory: '$directory/$currentLocale',
           timeout: timeout,
           waitUntilNoTransientCallbacks: waitUntilNoTransientCallbacks,
         );
