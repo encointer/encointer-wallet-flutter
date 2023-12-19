@@ -23,4 +23,9 @@ class KeyringAccount {
   static Map<String, dynamic> toJson(KeyringAccount acc) => _$KeyringAccountToJson(acc);
 
   SeedType get seedType => getSeedTypeFromString(seed);
+
+  @override
+  String toString() {
+    return KeyringAccount.toJson(this).toString();
+  }
 }
