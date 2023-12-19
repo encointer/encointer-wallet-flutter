@@ -1,5 +1,6 @@
 import 'package:ew_keyring/src/keyring.dart';
 import 'package:ew_keyring/src/keyring_data.dart';
+import 'package:ew_keyring/src/validate_keys.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 import 'package:test/test.dart';
 
@@ -26,11 +27,20 @@ void main() {
       expect(alicePair.keyPairType, KeyPairType.sr25519);
     });
 
+    test('Keyring.getAccountByAddress works', () async {
+      final keyring = await testKeyring();
+      final aliceAccount = keyring.getAccountByAddress('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
+      expect(aliceAccount.name, 'Alice');
+      expect(aliceAccount.seedType, SeedType.raw);
+    });
+
     test('Keyring.getByPublicKey works', () async {
       final keyring = await testKeyring();
 
+      // ignore: avoid_print
+      print('publicKey: ${'0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d'.codeUnits}');
+      print('publicKey: ${'0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d'.codeUnits}');
 
-      // final alicePair = keyring.getPairByPublicKey('d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d'.codeUnits);
       final aliceAccount =
       keyring.getAccountByPublicKey('d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d'.codeUnits);
 

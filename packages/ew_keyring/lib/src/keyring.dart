@@ -49,6 +49,14 @@ class EncointerKeyring {
     return accounts[publicKey.toString()]!;
   }
 
+  KeyringAccount getAccountByAddress(String address) {
+    final publicKey = keyring.decodeAddress(address).toList().toString();
+    if (accounts[publicKey] == null) {
+      throw ArgumentError('KeyPair with provided key, not found.');
+    }
+    return accounts[publicKey]!;
+  }
+
   void remove(List<int> publicKey) {
     keyring.pairs.removeByPublicKey(publicKey);
     accounts.remove(publicKey.toString());
