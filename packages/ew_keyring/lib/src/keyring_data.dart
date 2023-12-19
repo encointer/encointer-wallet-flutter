@@ -8,13 +8,13 @@ class KeyringAccount {
   KeyringAccount(this.name, this.seed);
 
   factory KeyringAccount.newValidated(String name, String seed) {
-     try {
-       final _ = getSeedTypeFromString(seed);
-       return KeyringAccount(name, seed);
+    try {
+      final _ = getSeedTypeFromString(seed);
+      return KeyringAccount(name, seed);
     } catch (e) {
-       rethrow;
+      rethrow;
+    }
   }
-}
 
   final String name;
   final String seed;

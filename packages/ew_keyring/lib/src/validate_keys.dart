@@ -53,7 +53,7 @@ bool isValidSeed(String seed) {
     final _ = getSeedTypeFromString(seed);
     return true;
   } catch (_) {
-     return false;
+    return false;
   }
 }
 
