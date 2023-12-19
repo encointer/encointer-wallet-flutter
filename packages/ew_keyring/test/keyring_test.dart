@@ -6,19 +6,19 @@ import 'package:polkadart_keyring/polkadart_keyring.dart';
 import 'package:test/test.dart';
 
 void main() {
+  Future<EncointerKeyring> testKeyring() async {
+    final alice = KeyringAccount.newValidated('Alice', '//Alice');
+    final bob = KeyringAccount.newValidated('Bob', '//Bob');
+    final charlie = KeyringAccount.newValidated('Charlie', '//Charlie');
+    final accounts = [alice, bob, charlie];
+    final keyring = await EncointerKeyring.fromAccounts(accounts);
+
+    // ignore: avoid_print
+    print('keyring: ${keyring.accounts}');
+    return keyring;
+  }
+
   group('Keyring', () {
-    Future<EncointerKeyring> testKeyring() async {
-      final alice = KeyringAccount.newValidated('Alice', '//Alice');
-      final bob = KeyringAccount.newValidated('Bob', '//Bob');
-      final charlie = KeyringAccount.newValidated('Charlie', '//Charlie');
-      final accounts = [alice, bob, charlie];
-      final keyring = await EncointerKeyring.fromAccounts(accounts);
-
-      // ignore: avoid_print
-      print('keyring: ${keyring.accounts}');
-      return keyring;
-    }
-
     test('Keyring.getPairByAddress works', () async {
       final keyring = await testKeyring();
 
@@ -60,6 +60,17 @@ void main() {
         pair.address,
         '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
       );
+    });
+  });
+
+  group('De-/Serialization', () {
+    test('round trip works', () async {
+      final keyring = await testKeyring();
+
+      final serialized = keyring.serializeAccounts();
+      final newKeyring = await EncointerKeyring.fromDeserialized(serialized);
+
+      expect(serialized, newKeyring.serializeAccounts());
     });
   });
 }

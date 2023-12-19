@@ -1,4 +1,4 @@
-import 'package:ew_keyring/src/keyring_account.dart';
+import 'package:ew_keyring/ew_keyring.dart' show KeyringUtils, KeyringAccount;
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 
 /// The public key (as a list of integers).
@@ -18,6 +18,14 @@ class EncointerKeyring {
 
   final Keyring keyring;
   final Map<Pubkey, KeyringAccount> accounts;
+
+  String serializeAccounts() {
+    return KeyringUtils.serializeAccounts(accounts.values.toList(growable: false));
+  }
+
+  static Future<EncointerKeyring> fromDeserialized(String accounts) {
+    return EncointerKeyring.fromAccounts(KeyringUtils.deserializeAccounts(accounts));
+  }
 
   Future<void> addAccounts(List<KeyringAccount> keyringAccounts) async {
     await Future.wait(keyringAccounts.map(addAccount));
