@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
+import 'package:encointer_wallet/store/account/services/legacy_encryption_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 
 part 'account.g.dart';
@@ -23,15 +23,18 @@ part 'account.g.dart';
 class AccountStore extends _AccountStore with _$AccountStore {
   AccountStore(super.appStore);
 
-  static const String seedTypeMnemonic = 'mnemonic';
-  static const String seedTypeRawSeed = 'rawSeed';
-  static const String seedTypeKeystore = 'keystore';
+  // Re-export these here for backwards compatibility.
+  static const String seedTypeMnemonic = LegacyEncryptionService.seedTypeMnemonic;
+  static const String seedTypeRawSeed = LegacyEncryptionService.seedTypeRawSeed;
+  static const String seedTypeKeystore = LegacyEncryptionService.seedTypeKeystore;
 }
 
 abstract class _AccountStore with Store {
-  _AccountStore(this.rootStore);
+  _AccountStore(this.rootStore) : legacyEncryptionService = LegacyEncryptionService(rootStore.localStorage);
 
   final AppStore rootStore;
+
+  final LegacyEncryptionService legacyEncryptionService;
 
   Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
     acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
@@ -245,57 +248,27 @@ abstract class _AccountStore with Store {
   }
 
   @action
+  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
+    return legacyEncryptionService.updateSeed(pubKey, passwordOld, passwordNew);
+  }
+
+  @action
   Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
-    final key = Fmt.passwordToEncryptKey(password);
-    final encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
-    final Map stored = await rootStore.localStorage.getSeeds(seedType);
-    stored[pubKey] = encrypted;
-    await rootStore.localStorage.setSeeds(seedType, stored);
+    return legacyEncryptionService.encryptSeed(pubKey, seed, seedType, password);
   }
 
   @action
   Future<String?> decryptSeed(String pubKey, String seedType, String password) async {
-    final Map stored = await rootStore.localStorage.getSeeds(seedType);
-    final encrypted = stored[pubKey] as String?;
-    if (encrypted == null) {
-      return Future.value();
-    }
-    return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
+    return legacyEncryptionService.decryptSeed(pubKey, seedType, password);
   }
 
   @action
   Future<bool> checkSeedExist(String seedType, String? pubKey) async {
-    final Map stored = await rootStore.localStorage.getSeeds(seedType);
-    final encrypted = stored[pubKey] as String?;
-    return encrypted != null;
-  }
-
-  @action
-  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
-    final Map storedMnemonics = await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
-    final Map storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
-    String? encryptedSeed = '';
-    var seedType = '';
-    if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedMnemonics[pubKey] as String?;
-      seedType = AccountStore.seedTypeMnemonic;
-    } else if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedRawSeeds[pubKey] as String?;
-      seedType = AccountStore.seedTypeRawSeed;
-    } else {
-      return;
-    }
-
-    final seed = await FlutterAesEcbPkcs5.decryptString(encryptedSeed!, Fmt.passwordToEncryptKey(passwordOld));
-    await encryptSeed(pubKey, seed, seedType, passwordNew);
+    return legacyEncryptionService.checkSeedExist(seedType, pubKey);
   }
 
   @action
   Future<void> deleteSeed(String seedType, String? pubKey) async {
-    final stored = await rootStore.localStorage.getSeeds(seedType);
-    if (stored[pubKey] != null) {
-      stored.remove(pubKey);
-      await rootStore.localStorage.setSeeds(seedType, stored);
-    }
+    return legacyEncryptionService.deleteSeed(seedType, pubKey);
   }
 }
