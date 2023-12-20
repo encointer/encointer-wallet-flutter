@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: ew_http,ew_storage,ew_polkadart,ew_substrate_fixed,ew_keyring,polkadart,polkadart_scale_codec,substrate_metadata,ew_encointer_utils,ew_primitives
+# melos_managed_dependency_overrides: ew_encointer_utils,ew_http,ew_keyring,ew_polkadart,ew_primitives,ew_storage,ew_substrate_fixed,polkadart,polkadart_scale_codec,substrate_metadata
 dependency_overrides:
   ew_encointer_utils:
     path: ../packages/ew_encointer_utils
