@@ -22,8 +22,9 @@ void main() {
     test('newValidated throws exception for invalid seeds', () {
       expect(() => KeyringAccount.newValidated('Alice', 'Alice'), throwsA(isException));
       expect(
-          () => KeyringAccount.newValidated('Alice', 'trust gown toast route merge awful sight ghost all degree exit'),
-          throwsA(isException));
+        () => KeyringAccount.newValidated('Alice', 'trust gown toast route merge awful sight ghost all degree exit'),
+        throwsA(isException),
+      );
     });
   });
 }
