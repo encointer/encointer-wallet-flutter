@@ -13,7 +13,7 @@ void main() {
     final keyring = EncointerKeyring.fromAccounts(accounts);
 
     // ignore: avoid_print
-    print('keyring: ${keyring.accounts}');
+    // print('keyring: ${keyring.accounts}');
     return keyring;
   }
 

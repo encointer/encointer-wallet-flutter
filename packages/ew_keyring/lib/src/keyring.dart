@@ -7,13 +7,13 @@ typedef Pubkey = String;
 
 /// Keyring to handle the accounts and their metadata.
 class EncointerKeyring {
-  EncointerKeyring() : accounts = {};
+  EncointerKeyring() : _accounts = {};
 
   factory EncointerKeyring.fromAccounts(List<KeyringAccount> accounts) {
     return EncointerKeyring()..addAccounts(accounts);
   }
 
-  final Map<Pubkey, KeyringAccount> accounts;
+  final Map<Pubkey, KeyringAccount> _accounts;
 
   static Future<EncointerKeyring> fromAccountData(List<KeyringAccountData> accounts) async {
     final keyringAccounts = await Future.wait([
@@ -23,7 +23,7 @@ class EncointerKeyring {
   }
 
   String serializeAccounts() {
-    return KeyringUtils.serializeAccountData(accounts.values.map((a) => a.toAccountData()).toList(growable: false));
+    return KeyringUtils.serializeAccountData(_accounts.values.map((a) => a.toAccountData()).toList(growable: false));
   }
 
   static Future<EncointerKeyring> fromSerialized(String accounts) async {
@@ -37,8 +37,10 @@ class EncointerKeyring {
   }
 
   void addAccount(KeyringAccount keyringAccount) {
-    accounts[keyringAccount.pubKey.toString()] = keyringAccount;
+    _accounts[keyringAccount.pubKey.toString()] = keyringAccount;
   }
+
+  List<KeyringAccount> get accounts => _accounts.values.toList();
 
   KeyPair getPairByPublicKey(List<int> publicKey) {
     return getAccountByPublicKey(publicKey).pair;
@@ -49,26 +51,26 @@ class EncointerKeyring {
   }
 
   KeyringAccount getAccountByPublicKey(List<int> publicKey) {
-    if (accounts[publicKey.toString()] == null) {
+    if (_accounts[publicKey.toString()] == null) {
       throw ArgumentError('KeyPair with provided key, not found.');
     }
-    return accounts[publicKey.toString()]!;
+    return _accounts[publicKey.toString()]!;
   }
 
   KeyringAccount getAccountByAddress(String address) {
     final publicKey = AddressUtils.addressToPubKey(address).toString();
-    if (accounts[publicKey] == null) {
+    if (_accounts[publicKey] == null) {
       throw ArgumentError('KeyPair with provided key, not found.');
     }
-    return accounts[publicKey]!;
+    return _accounts[publicKey]!;
   }
 
   void remove(List<int> publicKey) {
-    accounts.remove(publicKey.toString());
+    _accounts.remove(publicKey.toString());
   }
 
   /// Remove all key pairs from the keyring.
   void clear() {
-    accounts.clear();
+    _accounts.clear();
   }
 }
