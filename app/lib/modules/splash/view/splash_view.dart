@@ -36,7 +36,6 @@ class SplashView extends StatelessWidget {
       AccountStorageService(),
     );
 
-    // Using the login service directly prevents the PIN-dialog from popping up.
      final needsMigration = accountMigrationService.needsMigration();
 
      try {
@@ -51,10 +50,11 @@ class SplashView extends StatelessWidget {
          if (accounts.isEmpty) {
            Log.p('[SplashView] no migration needed as no accounts in store yet');
          } else {
+           // Using the login service directly prevents the PIN-dialog from popping up.
            final pin = await loginStore.loginService.getPin();
            Log.p('[SplashView] pin $pin');
 
-           await accountMigrationService.migrate(store.account.accountList, pin!);
+           await accountMigrationService.migrate(accounts, pin!);
            Log.p('[SplashView] successfully migrated ${accounts.length} accounts');
          }
        }
