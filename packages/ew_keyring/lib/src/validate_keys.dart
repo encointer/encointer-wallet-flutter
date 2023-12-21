@@ -62,7 +62,7 @@ bool isValidSeed(String seed) {
 
 SeedType getSeedTypeFromString(String seed) {
   if (ValidateKeys.isRawSeed(seed)) {
-    return SeedType.raw;
+    return SeedType.rawSeed;
   } else if (ValidateKeys.isPrivateKey(seed)) {
     return SeedType.privateKey;
   } else if (ValidateKeys.validateMnemonic(seed)) {
@@ -73,7 +73,17 @@ SeedType getSeedTypeFromString(String seed) {
 }
 
 enum SeedType {
-  raw,
+  rawSeed,
   privateKey,
   mnemonic,
+}
+
+extension ToValueExt on SeedType {
+  String toValue() {
+    return switch (this) {
+      SeedType.rawSeed => 'rawSeed',
+      SeedType.privateKey => 'privateKey',
+      SeedType.mnemonic => 'mnemonic',
+    };
+  }
 }
