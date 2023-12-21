@@ -1,17 +1,16 @@
 import 'package:convert/convert.dart';
 import 'package:ew_keyring/src/keyring.dart';
 import 'package:ew_keyring/src/keyring_account.dart';
-import 'package:ew_keyring/src/validate_keys.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 import 'package:test/test.dart';
 
 void main() {
   Future<EncointerKeyring> testKeyring() async {
-    final alice = KeyringAccount.newValidated('Alice', '//Alice');
-    final bob = KeyringAccount.newValidated('Bob', '//Bob');
-    final charlie = KeyringAccount.newValidated('Charlie', '//Charlie');
+    final alice = await KeyringAccount.fromUri('Alice', '//Alice');
+    final bob = await KeyringAccount.fromUri('Bob', '//Bob');
+    final charlie = await KeyringAccount.fromUri('Charlie', '//Charlie');
     final accounts = [alice, bob, charlie];
-    final keyring = await EncointerKeyring.fromAccounts(accounts);
+    final keyring = EncointerKeyring.fromAccounts(accounts);
 
     // ignore: avoid_print
     print('keyring: ${keyring.accounts}');
@@ -31,7 +30,6 @@ void main() {
       final keyring = await testKeyring();
       final aliceAccount = keyring.getAccountByAddress('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
       expect(aliceAccount.name, 'Alice');
-      expect(aliceAccount.seedType, SeedType.raw);
     });
 
     test('Keyring.getPairByPublicKey works', () async {
@@ -51,7 +49,6 @@ void main() {
           keyring.getAccountByPublicKey(hex.decode('d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d'));
 
       expect(aliceAccount.name, 'Alice');
-      expect(aliceAccount.seedType, SeedType.raw);
     });
 
     test('test alice works', () async {

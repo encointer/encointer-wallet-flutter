@@ -10,9 +10,8 @@ class EncointerKeyring {
   EncointerKeyring() : accounts = {};
 
   factory EncointerKeyring.fromAccounts(List<KeyringAccount> accounts) {
-    final k = EncointerKeyring();
-    k.addAccounts(accounts);
-    return k;
+    return EncointerKeyring()
+      ..addAccounts(accounts);
   }
 
   final Map<Pubkey, KeyringAccount> accounts;
@@ -29,7 +28,8 @@ class EncointerKeyring {
   }
 
   void addAccounts(List<KeyringAccount> keyringAccounts) {
-    keyringAccounts.map(addAccount);
+    // Need to call to list here to evaluate the iterator.
+    keyringAccounts.map(addAccount).toList();
   }
 
   void addAccount(KeyringAccount keyringAccount) {
