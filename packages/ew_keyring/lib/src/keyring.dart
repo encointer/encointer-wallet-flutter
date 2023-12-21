@@ -1,4 +1,4 @@
-import 'package:ew_keyring/ew_keyring.dart' show KeyringUtils, KeyringAccount;
+import 'package:ew_keyring/ew_keyring.dart' show KeyringUtils, KeyringAccount, KeyringAccountData;
 import 'package:ew_keyring/src/address_utils.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 
@@ -15,15 +15,20 @@ class EncointerKeyring {
 
   final Map<Pubkey, KeyringAccount> accounts;
 
+  static Future<EncointerKeyring> fromAccountData(List<KeyringAccountData> accounts) async {
+    final keyringAccounts = await Future.wait([
+      ...accounts.map((acc) => KeyringAccount.fromUri(acc.name, acc.uri)),
+    ]);
+    return EncointerKeyring.fromAccounts(keyringAccounts);
+  }
+
   String serializeAccounts() {
     return KeyringUtils.serializeAccountData(accounts.values.map((a) => a.toAccountData()).toList(growable: false));
   }
 
   static Future<EncointerKeyring> fromSerialized(String accounts) async {
-    final keyringAccounts = await Future.wait([
-      ...KeyringUtils.deserializeAccountData(accounts).map((acc) => KeyringAccount.fromUri(acc.name, acc.uri)),
-    ]);
-    return EncointerKeyring.fromAccounts(keyringAccounts);
+    final data = KeyringUtils.deserializeAccountData(accounts);
+    return EncointerKeyring.fromAccountData(data);
   }
 
   void addAccounts(List<KeyringAccount> keyringAccounts) {
