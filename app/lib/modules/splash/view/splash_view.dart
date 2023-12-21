@@ -43,12 +43,13 @@ class SplashView extends StatelessWidget {
          Log.p('[SplashView] potentially need account migration, old storage version detected.');
 
          // need to load metadata of previous accounts
-         await store.account.loadAccount();
-         final accounts = store.account.accountList;
+         final accounts = await accountMigrationService.legacyEncryptionService.loadLegacyAccounts();
          Log.p('[SplashView] Old Accounts: $accounts');
 
          if (accounts.isEmpty) {
            Log.p('[SplashView] no migration needed as no accounts in store yet');
+
+           // Todo: Set migrated to true after finalizing implementation.
          } else {
            // Using the login service directly prevents the PIN-dialog from popping up.
            final pin = await loginStore.loginService.getPin();
@@ -59,8 +60,6 @@ class SplashView extends StatelessWidget {
          }
        }
      } catch (e) {
-       // Fixme PIN is sometimes null for some reason. I guess the app has not
-       // finished initializing yet.
        Log.e('[SplashView] caught exception in account storage migration: $e');
      }
 

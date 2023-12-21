@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:convert/convert.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
 
 /// Legacy account encryption service.
@@ -18,6 +19,11 @@ class LegacyEncryptionService {
   static const String seedTypeMnemonic = 'mnemonic';
   static const String seedTypeRawSeed = 'rawSeed';
   static const String seedTypeKeystore = 'keystore';
+
+  Future<List<AccountData>> loadLegacyAccounts() async {
+    final accList = await localStorage.getAccountList();
+    return List.of(accList.map(AccountData.fromJson));
+  }
 
   Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
     final key = _passwordToEncryptKey(password);
