@@ -71,7 +71,7 @@ abstract class _AccountStore with Store {
       if (accountListAll.isNotEmpty) {
         return accountListAll[0];
       } else {
-        return AccountData();
+        return AccountData.empty();
       }
     }
     return accountListAll[i];
