@@ -69,6 +69,26 @@ class LegacyEncryptionService {
     await encryptSeed(pubKey, seed, seedType, passwordNew);
   }
 
+  /// Returns a Map<Pubkey, SeedOrMnemonic>
+  Future<Map<String, String>> getAllSeedsDecrypted(String password) async {
+    final storedSeeds = await localStorage.getSeeds(LegacyEncryptionService.seedTypeRawSeed);
+    final storedMnemonics = await localStorage.getSeeds(LegacyEncryptionService.seedTypeMnemonic);
+
+    return Future.wait([
+      ...storedSeeds.entries.map((entry) => _decryptEntry(entry, password)),
+      ...storedMnemonics.entries.map((entry) => _decryptEntry(entry, password)),
+    ]).then(Map.fromEntries);
+  }
+
+  Future<MapEntry<String, String>> _decryptEntry(MapEntry<String, dynamic> entry, String password) async {
+    final decrypted = await _decrypt(entry.value as String, password);
+    return MapEntry(entry.key, decrypted);
+  }
+
+  Future<String> _decrypt(String encryptedSeed, String password) {
+    return FlutterAesEcbPkcs5.decryptString(encryptedSeed, _passwordToEncryptKey(password));
+  }
+
   String _passwordToEncryptKey(String password) {
     final passHex = hex.encode(utf8.encode(password));
     if (passHex.length > 32) {
