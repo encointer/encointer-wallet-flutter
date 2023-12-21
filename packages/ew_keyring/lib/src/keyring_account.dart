@@ -33,7 +33,7 @@ class KeyringAccount {
   KeyringAccount._({
     required this.name,
     required this.uri,
-    required this.pair
+    required this.pair,
   });
 
   static Future<KeyringAccount> fromUri(String name, String uri) async {
@@ -42,7 +42,6 @@ class KeyringAccount {
   }
 
   final String name;
-
 
   /// Uri only available if it was provided during construction.
   final String uri;
