@@ -19,7 +19,7 @@ class EncointerKeyring {
     return KeyringUtils.serializeAccountData(accounts.values.map((a) => a.toAccountData()).toList(growable: false));
   }
 
-  static Future<EncointerKeyring> fromDeserialized(String accounts) async {
+  static Future<EncointerKeyring> fromSerialized(String accounts) async {
     final keyringAccounts = await Future.wait([
       ...KeyringUtils.deserializeAccountData(accounts).map((acc) => KeyringAccount.fromUri(acc.name, acc.uri)),
     ]);

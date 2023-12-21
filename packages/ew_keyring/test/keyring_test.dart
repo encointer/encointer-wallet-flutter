@@ -65,7 +65,7 @@ void main() {
       final keyring = await testKeyring();
 
       final serialized = keyring.serializeAccounts();
-      final newKeyring = await EncointerKeyring.fromDeserialized(serialized);
+      final newKeyring = await EncointerKeyring.fromSerialized(serialized);
 
       expect(serialized, newKeyring.serializeAccounts());
     });
