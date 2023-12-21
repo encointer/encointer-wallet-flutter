@@ -11,8 +11,6 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
-import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/page/profile/account/faucet_list_tile.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
