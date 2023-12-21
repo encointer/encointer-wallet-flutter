@@ -41,28 +41,12 @@ async function recover (keyType, cryptoType, key, password) {
           keyPair = keyring.addFromUri(key, {}, cryptoType);
           rawSeed = key;
           break;
-        case 'keystore':
-          const keystore = JSON.parse(key);
-          keyPair = keyring.addFromJson(keystore);
-          try {
-            keyPair.decodePkcs8(password);
-          } catch (err) {
-            resolve(null);
-          }
-          resolve({
-            pubKey: u8aToHex(keyPair.publicKey),
-            ...keyPair.toJson(password)
-          });
-          break;
       }
     } catch (err) {
       resolve({ error: err.message });
     }
     if (keyPair.address) {
-      const json = keyPair.toJson(password);
-      keyPair.lock();
-      // try add to keyring again to avoid no encrypted data bug
-      keyring.addFromJson(json);
+      const json = keyPair.toJson();
       resolve({
         pubKey: u8aToHex(keyPair.publicKey),
         mnemonic,
@@ -134,14 +118,6 @@ export async function txFeeEstimate (txInfo, paramList) {
 }
 export function sendTx (txInfo, paramList) {
   const keyPair = keyring.getPair(hexToU8a(txInfo.pubKey));
-  try {
-    keyPair.decodePkcs8(txInfo.password);
-  } catch (err) {
-    return new Promise((resolve, reject) => {
-      resolve({ error: 'password check failed' });
-    });
-  }
-
   return sendTxWithPair(keyPair, txInfo, paramList);
 }
 
@@ -204,14 +180,6 @@ export function sendTxWithPair (keyPair, txInfo, paramList) {
 
 export async function getXt (txInfo, paramList){
   const keyPair = keyring.getPair(hexToU8a(txInfo.pubKey));
-  try {
-    keyPair.decodePkcs8(txInfo.password);
-  } catch (err) {
-    return new Promise((resolve, reject) => {
-      resolve({ error: 'password check failed' });
-    });
-  }
-
   // The dart<>JS interface expects a map.
   return { xt: await _getXt(keyPair, txInfo, paramList) };
 }
@@ -251,43 +219,6 @@ export async function _getXt (keyPair, txInfo, paramList) {
   return tx.signAsync(keyPair, signerOptions);
 }
 
-function checkPassword (pubKey, pass) {
-  return new Promise((resolve) => {
-    const keyPair = keyring.getPair(hexToU8a(pubKey));
-    try {
-      if (!keyPair.isLocked) {
-        keyPair.lock();
-      }
-      keyPair.decodePkcs8(pass);
-    } catch (err) {
-      resolve(null);
-    }
-    resolve({ success: true });
-  });
-}
-
-function changePassword (pubKey, passOld, passNew) {
-  const u8aKey = hexToU8a(pubKey);
-  return new Promise((resolve) => {
-    const keyPair = keyring.getPair(u8aKey);
-    try {
-      if (!keyPair.isLocked) {
-        keyPair.lock();
-      }
-      keyPair.decodePkcs8(passOld);
-    } catch (err) {
-      resolve(null);
-    }
-    const json = keyPair.toJson(passNew);
-    keyring.removePair(u8aKey);
-    keyring.addFromJson(json);
-    resolve({
-      pubKey: u8aToHex(keyPair.publicKey),
-      ...json
-    });
-  });
-}
-
 export default {
   initKeys,
   addressFromUri,
@@ -298,6 +229,4 @@ export default {
   sendTx,
   sendTxWithPair,
   getXt,
-  checkPassword,
-  changePassword,
 };

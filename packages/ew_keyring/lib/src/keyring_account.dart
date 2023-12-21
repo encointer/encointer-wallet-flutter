@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:ew_keyring/src/address_utils.dart';
+import 'package:ew_keyring/src/validate_keys.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 
@@ -53,6 +54,8 @@ class KeyringAccount {
 
   /// Get a public key as a List<int> of [pair],
   String get pubKeyHex => '0x${hex.encode(pair.publicKey.bytes)}';
+
+  SeedType get seedType => getSeedTypeFromString(uri);
 
   Address address({int prefix = 42}) => Address(prefix: prefix, pubkey: Uint8List.fromList(pubKey));
 

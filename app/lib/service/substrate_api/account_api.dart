@@ -3,11 +3,12 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show Provider;
 
 class AccountApi {
@@ -19,9 +20,12 @@ class AccountApi {
   void Function()? fetchAccountData;
 
   Future<void> initAccounts() async {
-    if (store.account.accountList.isNotEmpty) {
-      final accounts = jsonEncode(store.account.accountList.map(AccountData.toJson).toList());
-      await jsApi.evalJavascript<void>('account.initKeys($accounts)');
+    for (final account in store.account.keyring.accountsIter) {
+      await webApi.account.importAccount(
+        key: account.uri,
+        password: '',
+        keyType: account.seedType.toValue(),
+      );
     }
   }
 
