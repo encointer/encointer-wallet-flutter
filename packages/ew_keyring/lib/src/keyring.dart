@@ -10,8 +10,7 @@ class EncointerKeyring {
   EncointerKeyring() : accounts = {};
 
   factory EncointerKeyring.fromAccounts(List<KeyringAccount> accounts) {
-    return EncointerKeyring()
-      ..addAccounts(accounts);
+    return EncointerKeyring()..addAccounts(accounts);
   }
 
   final Map<Pubkey, KeyringAccount> accounts;
