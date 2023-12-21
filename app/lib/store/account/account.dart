@@ -77,6 +77,10 @@ abstract class _AccountStore with Store {
     return accountListAll[i];
   }
 
+  KeyringAccount getKeyringAccount(String pubKeyHex) {
+    return _keyring.getAccountByPubKeyHex(pubKeyHex);
+  }
+
   @computed
   List<AccountData> get optionalAccounts {
     return accountListAll.where((i) => i.pubKey != currentAccountPubKey).toList();

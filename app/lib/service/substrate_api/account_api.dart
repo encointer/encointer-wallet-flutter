@@ -100,10 +100,4 @@ class AccountApi {
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
     return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }
-
-  Future<Map<String, dynamic>?> checkAccountPassword(AccountData account, String pass) async {
-    final pubKey = account.pubKey;
-    Log.d('checkpass: $pubKey, $pass', 'AccountApi');
-    return jsApi.evalJavascript<Map<String, dynamic>?>('account.checkPassword("$pubKey", "$pass")');
-  }
 }

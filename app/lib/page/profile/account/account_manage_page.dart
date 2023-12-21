@@ -126,26 +126,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
       titleText: context.l10n.confirmPin,
       autoCloseOnSuccess: false,
       onSuccess: (password) async {
-        final isMnemonic =
-            await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
-        Navigator.pop(context);
-        if (isMnemonic) {
-          final seed =
-              await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
-
-          await Navigator.pushNamed(context, ExportResultPage.route, arguments: {
-            'key': seed,
-            'type': AccountStore.seedTypeMnemonic,
-          });
-        } else {
-          final l10n = context.l10n;
-          AppAlert.showErrorDialog(
-            context,
-            title: Text(l10n.noMnemonicFound),
-            errorText: l10n.importedWithRawSeedHenceNoMnemonic,
-            buttontext: l10n.ok,
-          );
-        }
+        Navigator.of(context).pop();
+        final account = _appStore.account.getKeyringAccount(accountToBeEdited.pubKey);
+        await Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+          'key': account.uri,
+          'type': '',
+        });
       },
     );
   }

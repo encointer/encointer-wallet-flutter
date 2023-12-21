@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/config/biometric_auth_state.dart';
 import 'package:encointer_wallet/service/service.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -173,10 +172,8 @@ final class LoginDialog {
   }
 
   static Future<bool> _onOk(BuildContext context, String password) async {
-    final appStore = context.read<AppStore>();
-    final res = await webApi.account.checkAccountPassword(appStore.account.currentAccount, password);
-    if (res == null) return false;
-    return true;
+    final loginStore = context.read<LoginStore>();
+    return loginStore.isValid(password);
   }
 
   static String? validatePasswordInputField(String? value, AppLocalizations l10n) {

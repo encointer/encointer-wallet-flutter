@@ -32,7 +32,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   bool _submitting = false;
 
-  Future<void> _onSave(AppStore store) async {
+  Future<void> _onSave(AppStore store, LoginStore loginStore) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
@@ -42,11 +42,26 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final passOld = _passOldCtrl.text.trim();
       final passNew = _passCtrl.text.trim();
       // check password
-      final passChecked = await webApi.account.checkAccountPassword(
-        store.account.currentAccount,
-        passOld,
-      );
-      if (passChecked == null) {
+      if (await loginStore.isValid(passOld)) {
+        await context.read<LoginStore>().setPin(passNew);
+        await showCupertinoDialog<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(l10n.passSuccess),
+              content: Text(l10n.passSuccessTxt),
+              actions: <Widget>[
+                CupertinoButton(
+                    child: Text(context.l10n.ok),
+                    onPressed: () {
+                      // moving back to profile page after changing password
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                    }),
+              ],
+            );
+          },
+        );
+      } else {
         await showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {
@@ -64,26 +79,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     Navigator.of(context).pop();
                   },
                 ),
-              ],
-            );
-          },
-        );
-      } else {
-        // we need to iterate over all active accounts and update there password
-        await context.read<LoginStore>().setPin(passNew);
-        await showCupertinoDialog<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Text(l10n.passSuccess),
-              content: Text(l10n.passSuccessTxt),
-              actions: <Widget>[
-                CupertinoButton(
-                    child: Text(context.l10n.ok),
-                    onPressed: () {
-                      // moving back to profile page after changing password
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                    }),
               ],
             );
           },
@@ -171,7 +166,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 ),
               ),
               PrimaryButton(
-                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>()),
+                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>(), context.read<LoginStore>()),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
