@@ -36,32 +36,32 @@ class SplashView extends StatelessWidget {
       AccountStorageService(),
     );
 
-     final needsMigration = accountMigrationService.needsMigration();
+    final needsMigration = accountMigrationService.needsMigration();
 
-     try {
-       if (needsMigration) {
-         Log.p('[SplashView] potentially need account migration, old storage version detected.');
+    try {
+      if (needsMigration) {
+        Log.p('[SplashView] potentially need account migration, old storage version detected.');
 
-         // need to load metadata of previous accounts
-         final accounts = await accountMigrationService.legacyEncryptionService.loadLegacyAccounts();
-         Log.p('[SplashView] Old Accounts: $accounts');
+        // need to load metadata of previous accounts
+        final accounts = await accountMigrationService.legacyEncryptionService.loadLegacyAccounts();
+        Log.p('[SplashView] Old Accounts: $accounts');
 
-         if (accounts.isEmpty) {
-           Log.p('[SplashView] no migration needed as no accounts in store yet');
+        if (accounts.isEmpty) {
+          Log.p('[SplashView] no migration needed as no accounts in store yet');
 
-           // Todo: Set migrated to true after finalizing implementation.
-         } else {
-           // Using the login service directly prevents the PIN-dialog from popping up.
-           final pin = await loginStore.loginService.getPin();
-           Log.p('[SplashView] pin $pin');
+          // Todo: Set migrated to true after finalizing implementation.
+        } else {
+          // Using the login service directly prevents the PIN-dialog from popping up.
+          final pin = await loginStore.loginService.getPin();
+          Log.p('[SplashView] pin $pin');
 
-           await accountMigrationService.migrate(accounts, pin!);
-           Log.p('[SplashView] successfully migrated ${accounts.length} accounts');
-         }
-       }
-     } catch (e) {
-       Log.e('[SplashView] caught exception in account storage migration: $e');
-     }
+          await accountMigrationService.migrate(accounts, pin!);
+          Log.p('[SplashView] successfully migrated ${accounts.length} accounts');
+        }
+      }
+    } catch (e) {
+      Log.e('[SplashView] caught exception in account storage migration: $e');
+    }
 
     await store.init(Localizations.localeOf(context).toString());
 
