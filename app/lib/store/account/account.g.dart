@@ -40,6 +40,21 @@ mixin _$AccountStore on _AccountStore, Store {
       (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress, name: '_AccountStore.currentAddress'))
           .value;
 
+  late final _$_keyringAtom = Atom(name: '_AccountStore._keyring', context: context);
+
+  @override
+  EncointerKeyring get _keyring {
+    _$_keyringAtom.reportRead();
+    return super._keyring;
+  }
+
+  @override
+  set _keyring(EncointerKeyring value) {
+    _$_keyringAtom.reportWrite(value, super._keyring, () {
+      super._keyring = value;
+    });
+  }
+
   late final _$loadingAtom = Atom(name: '_AccountStore.loading', context: context);
 
   @override
@@ -157,6 +172,13 @@ mixin _$AccountStore on _AccountStore, Store {
     return _$loadAccountAsyncAction.run(() => super.loadAccount());
   }
 
+  late final _$updateSeedAsyncAction = AsyncAction('_AccountStore.updateSeed', context: context);
+
+  @override
+  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) {
+    return _$updateSeedAsyncAction.run(() => super.updateSeed(pubKey, passwordOld, passwordNew));
+  }
+
   late final _$encryptSeedAsyncAction = AsyncAction('_AccountStore.encryptSeed', context: context);
 
   @override
@@ -176,13 +198,6 @@ mixin _$AccountStore on _AccountStore, Store {
   @override
   Future<bool> checkSeedExist(String seedType, String? pubKey) {
     return _$checkSeedExistAsyncAction.run(() => super.checkSeedExist(seedType, pubKey));
-  }
-
-  late final _$updateSeedAsyncAction = AsyncAction('_AccountStore.updateSeed', context: context);
-
-  @override
-  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) {
-    return _$updateSeedAsyncAction.run(() => super.updateSeed(pubKey, passwordOld, passwordNew));
   }
 
   late final _$deleteSeedAsyncAction = AsyncAction('_AccountStore.deleteSeed', context: context);

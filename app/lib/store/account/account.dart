@@ -30,11 +30,16 @@ class AccountStore extends _AccountStore with _$AccountStore {
 }
 
 abstract class _AccountStore with Store {
-  _AccountStore(this.rootStore) : legacyEncryptionService = LegacyEncryptionService(rootStore.localStorage);
+  _AccountStore(this.rootStore)
+      : legacyEncryptionService = LegacyEncryptionService(rootStore.localStorage),
+        accountStorageService = AccountStorageService(),
+        _keyring = EncointerKeyring();
 
   final AppStore rootStore;
 
   final LegacyEncryptionService legacyEncryptionService;
+
+  final AccountStorageService accountStorageService;
 
   Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
     acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
@@ -44,6 +49,9 @@ abstract class _AccountStore with Store {
     (acc['meta'] as Map<String, dynamic>)['whenEdited'] = DateTime.now().millisecondsSinceEpoch;
     return acc;
   }
+
+  @observable
+  EncointerKeyring _keyring;
 
   @observable
   bool loading = true;
@@ -240,6 +248,22 @@ abstract class _AccountStore with Store {
   /// Tackle this in #574.
   @action
   Future<void> loadAccount() async {
+    // await _loadAccountLegacy();
+
+    final keyringAccounts = await accountStorageService.readAccountData();
+    _keyring = await EncointerKeyring.fromAccountData(keyringAccounts);
+
+    accountList = ObservableList.of(
+      _keyring.accountsIter.map(
+        (acc) => AccountData(name: acc.name, pubKey: acc.pubKeyHex, address: acc.address().encode()),
+      ),
+    );
+
+    currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
+    loading = false;
+  }
+
+  Future<void> _loadAccountLegacy() async {
     final accList = await rootStore.localStorage.getAccountList();
     accountList = ObservableList.of(accList.map(AccountData.fromJson));
 

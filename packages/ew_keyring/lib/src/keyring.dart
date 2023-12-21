@@ -42,6 +42,8 @@ class EncointerKeyring {
 
   List<KeyringAccount> get accounts => _accounts.values.toList();
 
+  Iterable<KeyringAccount> get accountsIter => _accounts.values;
+
   KeyPair getPairByPublicKey(List<int> publicKey) {
     return getAccountByPublicKey(publicKey).pair;
   }

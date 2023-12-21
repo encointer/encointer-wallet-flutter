@@ -49,6 +49,8 @@ final class AccountMigrationService {
       Log.p('[AccountMigrationService] NewAccount:  $newAccount');
     }
 
+    await accountStorageService.storeAccountData(keyringAccounts.map((acc) => acc.toAccountData()).toList());
+
     Log.p('[AccountMigrationService] Finished Migration');
     Log.p('[AccountMigrationService] Accounts: $accounts');
     Log.p('[AccountMigrationService] KeyringAccounts: $keyringAccounts');

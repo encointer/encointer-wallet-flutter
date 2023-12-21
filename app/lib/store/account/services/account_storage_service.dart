@@ -8,11 +8,11 @@ final class AccountStorageService {
 
   static const accountsCacheKey = 'accounts-cache-key';
 
-  Future<void> storeAccounts(List<KeyringAccountData> accounts) async {
+  Future<void> storeAccountData(List<KeyringAccountData> accounts) async {
     await secureStorage.write(key: accountsCacheKey, value: KeyringUtils.serializeAccountData(accounts));
   }
 
-  Future<List<KeyringAccountData>> readAccounts() async {
+  Future<List<KeyringAccountData>> readAccountData() async {
     final maybeAccounts = await secureStorage.read(key: accountsCacheKey);
 
     if (maybeAccounts == null) return [];
