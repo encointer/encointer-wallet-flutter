@@ -34,7 +34,7 @@ abstract class _AccountStore with Store {
   _AccountStore(this.rootStore)
       : legacyEncryptionService = LegacyEncryptionService(rootStore.localStorage),
         accountStorageService = AccountStorageService(),
-        _keyring = EncointerKeyring();
+        keyring = EncointerKeyring();
 
   final AppStore rootStore;
 
@@ -43,7 +43,7 @@ abstract class _AccountStore with Store {
   final AccountStorageService accountStorageService;
 
   @observable
-  EncointerKeyring _keyring;
+  EncointerKeyring keyring;
 
   @observable
   bool loading = true;
@@ -78,7 +78,7 @@ abstract class _AccountStore with Store {
   }
 
   KeyringAccount getKeyringAccount(String pubKeyHex) {
-    return _keyring.getAccountByPubKeyHex(pubKeyHex);
+    return keyring.getAccountByPubKeyHex(pubKeyHex);
   }
 
   @computed
@@ -168,9 +168,9 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> updateAccountName(AccountData account, String newName) async {
-    final acc = _keyring.getAccountByPubKeyHex(account.pubKey)..name = newName;
+    final acc = keyring.getAccountByPubKeyHex(account.pubKey)..name = newName;
     // not-sure if this is necessary double check.
-    _keyring.addAccount(acc);
+    keyring.addAccount(acc);
 
     await storeAccountData();
     await loadAccount();
@@ -182,7 +182,7 @@ abstract class _AccountStore with Store {
     final uri = getUriFromMeta(acc);
     final account = await KeyringAccount.fromUri(name, uri);
 
-    _keyring.addAccount(account);
+    keyring.addAccount(account);
     await storeAccountData();
 
     // update account list
@@ -203,12 +203,12 @@ abstract class _AccountStore with Store {
   @action
   Future<void> removeAccount(AccountData acc) async {
     Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
-    _keyring.remove(hex.decode(acc.pubKey.replaceFirst('0x', '')));
+    keyring.remove(hex.decode(acc.pubKey.replaceFirst('0x', '')));
     await storeAccountData();
 
     if (acc.pubKey == currentAccountPubKey) {
-      if (_keyring.accounts.isNotEmpty) {
-        await rootStore.setCurrentAccount(_keyring.accountsIter.first.pubKeyHex);
+      if (keyring.accounts.isNotEmpty) {
+        await rootStore.setCurrentAccount(keyring.accountsIter.first.pubKeyHex);
       } else {
         await rootStore.setCurrentAccount('');
       }
@@ -220,7 +220,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> storeAccountData() async {
-    await accountStorageService.storeAccountData(_keyring.accountDatas);
+    await accountStorageService.storeAccountData(keyring.accountDatas);
   }
 
   /// This needs to always be called after the account list has been updated.
@@ -231,10 +231,10 @@ abstract class _AccountStore with Store {
   @action
   Future<void> loadAccount() async {
     final keyringAccounts = await accountStorageService.readAccountData();
-    _keyring = await EncointerKeyring.fromAccountData(keyringAccounts);
+    keyring = await EncointerKeyring.fromAccountData(keyringAccounts);
 
     accountList = ObservableList.of(
-      _keyring.accountsIter.map(
+      keyring.accountsIter.map(
         (acc) => AccountData(name: acc.name, pubKey: acc.pubKeyHex, address: acc.address().encode()),
       ),
     );

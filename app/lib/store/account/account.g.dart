@@ -40,18 +40,18 @@ mixin _$AccountStore on _AccountStore, Store {
       (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress, name: '_AccountStore.currentAddress'))
           .value;
 
-  late final _$_keyringAtom = Atom(name: '_AccountStore._keyring', context: context);
+  late final _$keyringAtom = Atom(name: '_AccountStore.keyring', context: context);
 
   @override
-  EncointerKeyring get _keyring {
-    _$_keyringAtom.reportRead();
-    return super._keyring;
+  EncointerKeyring get keyring {
+    _$keyringAtom.reportRead();
+    return super.keyring;
   }
 
   @override
-  set _keyring(EncointerKeyring value) {
-    _$_keyringAtom.reportWrite(value, super._keyring, () {
-      super._keyring = value;
+  set keyring(EncointerKeyring value) {
+    _$keyringAtom.reportWrite(value, super.keyring, () {
+      super.keyring = value;
     });
   }
 
@@ -242,6 +242,7 @@ mixin _$AccountStore on _AccountStore, Store {
   @override
   String toString() {
     return '''
+keyring: ${keyring},
 loading: ${loading},
 txStatus: ${txStatus},
 currentAccountPubKey: ${currentAccountPubKey},
