@@ -8,12 +8,12 @@ part of 'keyring_account.dart';
 
 KeyringAccountData _$KeyringAccountDataFromJson(Map<String, dynamic> json) => KeyringAccountData(
       json['name'] as String,
-      json['seed'] as String,
+      json['uri'] as String,
       json['pubKey'] as String,
     );
 
 Map<String, dynamic> _$KeyringAccountDataToJson(KeyringAccountData instance) => <String, dynamic>{
       'name': instance.name,
-      'seed': instance.uri,
+      'uri': instance.uri,
       'pubKey': instance.pubKey,
     };
