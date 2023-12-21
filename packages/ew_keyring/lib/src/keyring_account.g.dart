@@ -6,12 +6,14 @@ part of 'keyring_account.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-KeyringAccount _$KeyringAccountFromJson(Map<String, dynamic> json) => KeyringAccount(
+KeyringAccountData _$KeyringAccountDataFromJson(Map<String, dynamic> json) => KeyringAccountData(
       json['name'] as String,
       json['seed'] as String,
+      json['pubKey'] as String,
     );
 
-Map<String, dynamic> _$KeyringAccountToJson(KeyringAccount instance) => <String, dynamic>{
+Map<String, dynamic> _$KeyringAccountDataToJson(KeyringAccountData instance) => <String, dynamic>{
       'name': instance.name,
-      'seed': instance.seed,
+      'seed': instance.uri,
+      'pubKey': instance.pubKey,
     };
