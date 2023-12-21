@@ -1,3 +1,4 @@
+import 'package:convert/convert.dart';
 import 'package:ew_keyring/ew_keyring.dart' show KeyringUtils, KeyringAccount, KeyringAccountData;
 import 'package:ew_keyring/src/address_utils.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
@@ -44,6 +45,8 @@ class EncointerKeyring {
 
   Iterable<KeyringAccount> get accountsIter => _accounts.values;
 
+  List<KeyringAccountData> get accountDatas => accountsIter.map((a) => a.toAccountData()).toList();
+
   KeyPair getPairByPublicKey(List<int> publicKey) {
     return getAccountByPublicKey(publicKey).pair;
   }
@@ -53,6 +56,14 @@ class EncointerKeyring {
   }
 
   KeyringAccount getAccountByPublicKey(List<int> publicKey) {
+    if (_accounts[publicKey.toString()] == null) {
+      throw ArgumentError('KeyPair with provided key, not found.');
+    }
+    return _accounts[publicKey.toString()]!;
+  }
+
+  KeyringAccount getAccountByPubKeyHex(String pubKeyHex) {
+    final publicKey = hex.decode(pubKeyHex.replaceFirst('0x', ''));
     if (_accounts[publicKey.toString()] == null) {
       throw ArgumentError('KeyPair with provided key, not found.');
     }

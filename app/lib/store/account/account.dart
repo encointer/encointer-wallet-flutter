@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:convert/convert.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -40,15 +41,6 @@ abstract class _AccountStore with Store {
   final LegacyEncryptionService legacyEncryptionService;
 
   final AccountStorageService accountStorageService;
-
-  Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
-    acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
-    if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
-      (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
-    }
-    (acc['meta'] as Map<String, dynamic>)['whenEdited'] = DateTime.now().millisecondsSinceEpoch;
-    return acc;
-  }
 
   @observable
   EncointerKeyring _keyring;
@@ -172,73 +164,59 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> updateAccountName(AccountData account, String newName) async {
-    final acc = AccountData.toJson(account);
-    (acc['meta'] as Map<String, dynamic>)['name'] = newName;
+    final acc = _keyring.getAccountByPubKeyHex(account.pubKey)..name = newName;
+    // not-sure if this is necessary double check.
+    _keyring.addAccount(acc);
 
-    await updateAccount(acc);
-  }
-
-  @action
-  Future<void> updateAccount(Map<String, dynamic> acc) async {
-    final formattedAcc = _formatMetaData(acc);
-
-    final accNew = AccountData.fromJson(formattedAcc);
-    await rootStore.localStorage.removeAccount(accNew.pubKey);
-    await rootStore.localStorage.addAccount(formattedAcc);
-
+    await storeAccountData();
     await loadAccount();
   }
 
+  /// Adds a new account, will overwrite the account data if they same seed already exists.
   @action
-  Future<void> addAccount(Map<String, dynamic> acc, String password, {String? name}) async {
-    final pubKey = acc['pubKey'] as String;
-    // save seed and remove it before add account
-    void saveSeed(String seedType) {
-      final seed = acc[seedType] as String?;
-      if (seed != null && seed.isNotEmpty) {
-        encryptSeed(pubKey, acc[seedType] as String, seedType, password);
-        acc.remove(seedType);
-      }
-    }
+  Future<void> addAccount(Map<String, dynamic> acc, String password, {required String name}) async {
+    final uri = getUriFromMeta(acc);
+    final account = await KeyringAccount.fromUri(name, uri);
 
-    saveSeed(AccountStore.seedTypeMnemonic);
-    saveSeed(AccountStore.seedTypeRawSeed);
-
-    // format meta data of acc
-    final formattedAcc = _formatMetaData(acc, name: name);
-
-    final index = accountList.indexWhere((i) => i.pubKey == pubKey);
-    if (index > -1) {
-      await rootStore.localStorage.removeAccount(pubKey);
-      Log.d('removed acc: $pubKey', 'AccountStore');
-    }
-    await rootStore.localStorage.addAccount(formattedAcc);
+    _keyring.addAccount(account);
+    await storeAccountData();
 
     // update account list
     await loadAccount();
   }
 
+  String getUriFromMeta(Map<String, dynamic> acc) {
+    final maybeMnemonic = acc[AccountStore.seedTypeMnemonic] as String?;
+    if (maybeMnemonic != null) return maybeMnemonic;
+
+    final maybeRawSeed = acc[AccountStore.seedTypeRawSeed] as String?;
+    if (maybeRawSeed != null) return maybeRawSeed;
+
+    // this was never thrown in the old case and it will be obsolete soon.
+    throw Exception(['Invalid seed generated in JS']);
+  }
+
   @action
   Future<void> removeAccount(AccountData acc) async {
     Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
-    await rootStore.localStorage.removeAccount(acc.pubKey);
-    // remove encrypted seed after removing account
-    await Future.wait([
-      rootStore.localStorage.removeAccount(acc.pubKey),
-      deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey),
-      deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey),
-    ]);
+    _keyring.remove(hex.decode(acc.pubKey.replaceFirst('0x', '')));
+    await storeAccountData();
 
     if (acc.pubKey == currentAccountPubKey) {
-      // set new currentAccount after currentAccount was removed
-      final accounts = await rootStore.localStorage.getAccountList();
-      final newCurrentAccountPubKey = accounts.isNotEmpty ? accounts[0]['pubKey'] as String? : '';
-      Log.d('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey', 'AccountStore');
-      await rootStore.setCurrentAccount(newCurrentAccountPubKey);
+      if (_keyring.accounts.isNotEmpty) {
+        await rootStore.setCurrentAccount(_keyring.accountsIter.first.pubKeyHex);
+      } else {
+        await rootStore.setCurrentAccount('');
+      }
     } else {
       // update account list
       await loadAccount();
     }
+  }
+
+  @action
+  Future<void> storeAccountData() async {
+    await accountStorageService.storeAccountData(_keyring.accountDatas);
   }
 
   /// This needs to always be called after the account list has been updated.
@@ -248,8 +226,6 @@ abstract class _AccountStore with Store {
   /// Tackle this in #574.
   @action
   Future<void> loadAccount() async {
-    // await _loadAccountLegacy();
-
     final keyringAccounts = await accountStorageService.readAccountData();
     _keyring = await EncointerKeyring.fromAccountData(keyringAccounts);
 
@@ -258,14 +234,6 @@ abstract class _AccountStore with Store {
         (acc) => AccountData(name: acc.name, pubKey: acc.pubKeyHex, address: acc.address().encode()),
       ),
     );
-
-    currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
-    loading = false;
-  }
-
-  Future<void> _loadAccountLegacy() async {
-    final accList = await rootStore.localStorage.getAccountList();
-    accountList = ObservableList.of(accList.map(AccountData.fromJson));
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
     loading = false;

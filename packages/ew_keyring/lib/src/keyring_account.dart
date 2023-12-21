@@ -41,7 +41,7 @@ class KeyringAccount {
     return KeyringAccount._(name: name, uri: uri, pair: pair);
   }
 
-  final String name;
+  String name;
 
   /// Uri only available if it was provided during construction.
   final String uri;

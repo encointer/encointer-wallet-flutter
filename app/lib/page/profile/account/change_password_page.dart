@@ -10,7 +10,6 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -72,21 +71,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
       } else {
         // we need to iterate over all active accounts and update there password
         await context.read<LoginStore>().setPin(passNew);
-        for (final account in store.account.accountListAll) {
-          final acc = await api.evalJavascript(
-            'account.changePassword("${account.pubKey}", "$passOld", "$passNew")',
-          ) as Map<String, dynamic>;
-
-          // update encrypted seed after password updated
-          store.account.accountListAll.map((accountData) {
-            // use local name, not webApi returned name
-            final localAcc = AccountData.toJson(accountData);
-            // make metadata the same as the polkadot-js/api's
-            (acc['meta'] as Map<String, dynamic>)['name'] = localAcc['name'];
-            store.account.updateAccount(acc);
-            store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
-          });
-        }
         await showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {

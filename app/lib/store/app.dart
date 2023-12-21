@@ -201,7 +201,7 @@ abstract class _AppStore with Store {
     }
   }
 
-  Future<void> addAccount(Map<String, dynamic> acc, String password, String? address, String? name) {
+  Future<void> addAccount(Map<String, dynamic> acc, String password, String? address, String name) {
     return account.addAccount(acc, password, name: name);
   }
 

@@ -112,7 +112,7 @@ abstract class _NewAccountStoreBase with Store {
 
   @action
   Future<NewAccountResult> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) async {
-    await appStore.addAccount(acc, pin, acc['address'] as String, name);
+    await appStore.addAccount(acc, pin, acc['address'] as String, name!);
     await appStore.setCurrentAccount(acc['pubKey'] as String?);
     await appStore.loadAccountCache();
     webApi.fetchAccountData();

@@ -26,7 +26,7 @@ void main() {
 
       /// add account
       const testPass = 'a111111';
-      await store.addAccount(endoEncointer, testPass);
+      await store.addAccount(endoEncointer, testPass, name: 'endoEncointer');
       expect(store.accountList.length, 2);
       await store.setCurrentAccount(endoEncointer['pubKey'] as String);
       expect(store.currentAccountPubKey, endoEncointer['pubKey']);

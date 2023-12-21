@@ -144,17 +144,10 @@ mixin _$AccountStore on _AccountStore, Store {
     return _$updateAccountNameAsyncAction.run(() => super.updateAccountName(account, newName));
   }
 
-  late final _$updateAccountAsyncAction = AsyncAction('_AccountStore.updateAccount', context: context);
-
-  @override
-  Future<void> updateAccount(Map<String, dynamic> acc) {
-    return _$updateAccountAsyncAction.run(() => super.updateAccount(acc));
-  }
-
   late final _$addAccountAsyncAction = AsyncAction('_AccountStore.addAccount', context: context);
 
   @override
-  Future<void> addAccount(Map<String, dynamic> acc, String password, {String? name}) {
+  Future<void> addAccount(Map<String, dynamic> acc, String password, {required String name}) {
     return _$addAccountAsyncAction.run(() => super.addAccount(acc, password, name: name));
   }
 
@@ -163,6 +156,13 @@ mixin _$AccountStore on _AccountStore, Store {
   @override
   Future<void> removeAccount(AccountData acc) {
     return _$removeAccountAsyncAction.run(() => super.removeAccount(acc));
+  }
+
+  late final _$storeAccountDataAsyncAction = AsyncAction('_AccountStore.storeAccountData', context: context);
+
+  @override
+  Future<void> storeAccountData() {
+    return _$storeAccountDataAsyncAction.run(() => super.storeAccountData());
   }
 
   late final _$loadAccountAsyncAction = AsyncAction('_AccountStore.loadAccount', context: context);
