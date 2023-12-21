@@ -117,10 +117,11 @@ class _AddressInputFieldState extends State<AddressInputField> {
             if (Fmt.isAddress(searchEntry)) {
               final address = searchEntry.replaceAll(' ', '');
               final pubKey = AddressUtils.addressToPubKeyHex(address);
-              final newAccount = AccountData()
-                ..address = address
-                ..pubKey = pubKey
-                ..name = l10n.unknownAccount;
+              final newAccount = AccountData(
+                name: l10n.unknownAccount,
+                address: address,
+                pubKey: pubKey,
+              );
               return _listItemBuilder(context, newAccount, false);
             } else {
               return Align(
