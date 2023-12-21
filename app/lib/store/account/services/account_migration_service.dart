@@ -42,7 +42,7 @@ final class AccountMigrationService {
 
     for (final acc in accounts) {
       final seedOrMnemonic = seedsOrMnemonics[acc.pubKey]!;
-      final newAccount = KeyringAccount(acc.name, seedOrMnemonic);
+      final newAccount = await KeyringAccount.fromUri(acc.name, seedOrMnemonic);
       keyringAccounts.add(newAccount);
 
       Log.p('[AccountMigrationService] Migrated:    $acc');
