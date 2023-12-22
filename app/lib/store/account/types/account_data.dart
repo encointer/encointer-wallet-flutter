@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'account_data.g.dart';
@@ -12,13 +14,12 @@ class AccountData extends _AccountData {
 
   factory AccountData.empty() => AccountData(name: '', pubKey: '', address: '');
 
-  // Fixme: these declarations are wrong. Check `KeyringAccount` for correct json methods.
   factory AccountData.fromJson(Map<String, dynamic> json) => _$AccountDataFromJson(json);
-  static Map<String, dynamic> toJson(AccountData acc) => _$AccountDataToJson(acc);
+  Map<String, dynamic> toJson() => _$AccountDataToJson(this);
 
   @override
   String toString() {
-    return AccountData.toJson(this).toString();
+    return jsonEncode(this);
   }
 }
 
