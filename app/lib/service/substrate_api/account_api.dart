@@ -20,7 +20,7 @@ class AccountApi {
 
   Future<void> initAccounts() async {
     if (store.account.accountList.isNotEmpty) {
-      final accounts = jsonEncode(store.account.accountList.map(AccountData.toJson).toList());
+      final accounts = store.account.accountList.map(jsonEncode).toList();
       await jsApi.evalJavascript<void>('account.initKeys($accounts)');
     }
   }
