@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -112,7 +111,7 @@ class ExportAccountPage extends StatelessWidget {
             title: Text(l10n.keystore),
             trailing: const Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
-              final json = AccountData.toJson(context.read<AppStore>().account.currentAccount)..remove('name');
+              final json = context.read<AppStore>().account.currentAccount.toJson()..remove('name');
               (json['meta'] as Map<String, dynamic>)['name'] = context.read<AppStore>().account.currentAccount.name;
               Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
                 'key': jsonEncode(json),

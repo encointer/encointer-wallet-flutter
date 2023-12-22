@@ -68,7 +68,7 @@ abstract class _AccountStore with Store {
       if (accountListAll.isNotEmpty) {
         return accountListAll[0];
       } else {
-        return AccountData();
+        return AccountData.empty();
       }
     }
     return accountListAll[i];
@@ -161,7 +161,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> updateAccountName(AccountData account, String newName) async {
-    final acc = AccountData.toJson(account);
+    final acc = account.toJson();
     (acc['meta'] as Map<String, dynamic>)['name'] = newName;
 
     await updateAccount(acc);
