@@ -44,7 +44,6 @@ class KeyringAccount {
 
   String name;
 
-  /// Uri only available if it was provided during construction.
   final String uri;
 
   final Sr25519KeyPair pair;
