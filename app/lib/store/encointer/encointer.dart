@@ -195,7 +195,10 @@ abstract class _EncointerStore with Store {
     assert(demurrage != null, '[TxPaymentAsset]: demurrage was null');
 
     return EncointerStoreService.getTxPaymentAsset(
-        preferredCid, balanceEntries.nonObservableInner, latestHeader!, demurrage!,
+      preferredCid,
+      balanceEntries.nonObservableInner,
+      latestHeader!,
+      demurrage!,
     );
   }
 
