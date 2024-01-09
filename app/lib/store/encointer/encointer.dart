@@ -193,14 +193,18 @@ abstract class _EncointerStore with Store {
     assert(latestHeader == null, '[TxPaymentAsset]: latestHeader was null');
     assert(demurrage == null, '[TxPaymentAsset]: demurrage was null');
 
+    return _getTxPaymentAsset(preferredCid, balanceEntries, latestHeader!, demurrage!);
+  }
+
+  CommunityIdentifier? _getTxPaymentAsset(CommunityIdentifier? preferredCid, ObservableMap<String, BalanceEntry> balanceEntries, int latestHeader, double demurrage) {
     if (preferredCid != null &&
-        balanceEntries[preferredCid.toFmtString()]!.applyDemurrage(latestHeader!, demurrage!) > 0.013) {
+        balanceEntries[preferredCid.toFmtString()]!.applyDemurrage(latestHeader, demurrage) > 0.013) {
       Log.d('[TxPaymentAsset]: Enough funds in preferred cid ${preferredCid.toFmtString()} to pay tx fee.');
       return preferredCid;
     }
 
     final maybeFallbackEntry =
-        balanceEntries.entries.firstWhereOrNull((e) => e.value.applyDemurrage(latestHeader!, demurrage!) > 0.013);
+        balanceEntries.entries.firstWhereOrNull((e) => e.value.applyDemurrage(latestHeader, demurrage) > 0.013);
 
     if (maybeFallbackEntry != null) {
       Log.d('[TxPaymentAsset]: Using fallback cid to pay tx: $maybeFallbackEntry');
