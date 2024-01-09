@@ -14,6 +14,7 @@ import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/encointer_account_store/encointer_account_store.dart';
+import 'package:encointer_wallet/utils/extensions/extensions.dart';
 
 part 'encointer.g.dart';
 
@@ -185,20 +186,23 @@ abstract class _EncointerStore with Store {
   }
 
   CommunityIdentifier? getTxPaymentAsset(CommunityIdentifier? preferredCid) {
-    if (preferredCid != null && communityBalance != null && communityBalance! > 0.013) {
+    final balanceEntries = account!.balanceEntries;
+
+    if (preferredCid != null && applyDemurrage(balanceEntries[preferredCid.toFmtString()])! > 0.013) {
+      Log.d('[TxPaymentAsset]: Enough funds in preferred cid ${preferredCid.toFmtString()} to pay tx fee.');
       return preferredCid;
     }
 
-    try {
-      final fallbackCidFmt = account!.balanceEntries.entries.firstWhere((e) => applyDemurrage(e.value)! > 0.013).key;
-      return CommunityIdentifier.fromFmtString(fallbackCidFmt);
-    } catch (e, s) {
-      Log.e(
-        '${account!.address} does not have sufficient funds in any community. Returning null to pay tx in native token',
-        'EncointerStore',
-        s,
-      );
+    final maybeFallbackEntry = balanceEntries.entries.firstWhereOrNull((e) => applyDemurrage(e.value)! > 0.013);
 
+    if (maybeFallbackEntry != null) {
+      Log.d('[TxPaymentAsset]: Using fallback cid to pay tx: $maybeFallbackEntry');
+      return CommunityIdentifier.fromFmtString(maybeFallbackEntry.key);
+    } else {
+      Log.e(
+        '[TxPaymentAsset]: ${account!.address} does not have sufficient funds in any community. Returning null to pay tx in native token',
+        'EncointerStore',
+      );
       return null;
     }
   }
