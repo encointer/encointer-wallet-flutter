@@ -219,10 +219,7 @@ abstract class _EncointerStore with Store {
       Log.d('[TxPaymentAsset]: Using fallback cid to pay tx: $maybeFallbackEntry');
       return CommunityIdentifier.fromFmtString(maybeFallbackEntry.key);
     } else {
-      Log.e(
-        '[TxPaymentAsset]: ${account!.address} does not have sufficient funds in any community. Returning null to pay tx in native token',
-        'EncointerStore',
-      );
+      Log.e('[TxPaymentAsset]: Not enough funds in any community. Returning null to pay tx in native token');
       return null;
     }
   }
