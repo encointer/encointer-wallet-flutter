@@ -47,6 +47,7 @@ class EncointerStore extends _EncointerStore with _$EncointerStore {
   EncointerStore(super.network);
 
   factory EncointerStore.fromJson(Map<String, dynamic> json) => _$EncointerStoreFromJson(json);
+
   Map<String, dynamic> toJson() => _$EncointerStoreToJson(this);
 }
 
@@ -196,15 +197,20 @@ abstract class _EncointerStore with Store {
     return _getTxPaymentAsset(preferredCid, balanceEntries, latestHeader!, demurrage!);
   }
 
-  CommunityIdentifier? _getTxPaymentAsset(CommunityIdentifier? preferredCid, ObservableMap<String, BalanceEntry> balanceEntries, int latestHeader, double demurrage) {
-    if (preferredCid != null &&
-        balanceEntries[preferredCid.toFmtString()]!.applyDemurrage(latestHeader, demurrage) > 0.013) {
+  CommunityIdentifier? _getTxPaymentAsset(
+    CommunityIdentifier? preferredCid,
+    ObservableMap<String, BalanceEntry> balanceEntries,
+    int latestHeaderNumber,
+    double demurrage,
+  ) {
+    if (preferredCid != null && canPayTx(balanceEntries[preferredCid.toFmtString()]!, latestHeaderNumber, demurrage)) {
       Log.d('[TxPaymentAsset]: Enough funds in preferred cid ${preferredCid.toFmtString()} to pay tx fee.');
       return preferredCid;
     }
 
-    final maybeFallbackEntry =
-        balanceEntries.entries.firstWhereOrNull((e) => e.value.applyDemurrage(latestHeader, demurrage) > 0.013);
+    final maybeFallbackEntry = balanceEntries.entries.firstWhereOrNull(
+      (e) => canPayTx(e.value, latestHeaderNumber, demurrage),
+    );
 
     if (maybeFallbackEntry != null) {
       Log.d('[TxPaymentAsset]: Using fallback cid to pay tx: $maybeFallbackEntry');
@@ -216,6 +222,10 @@ abstract class _EncointerStore with Store {
       );
       return null;
     }
+  }
+
+  bool canPayTx(BalanceEntry entry, int latestHeaderNumber, double demurrage) {
+    return entry.applyDemurrage(latestHeaderNumber, demurrage) > 0.013;
   }
 
   // -- Setters for this store
