@@ -1,9 +1,14 @@
-# melos_managed_dependency_overrides: ew_polkadart,ew_substrate_fixed,polkadart_scale_codec
+# melos_managed_dependency_overrides: ew_polkadart,ew_substrate_fixed,polkadart_scale_codec,polkadart_keyring
 dependency_overrides:
   ew_polkadart:
-    path: ../ew_polkadart
+    path: ..\\ew_polkadart
   ew_substrate_fixed:
-    path: ../ew_substrate_fixed
+    path: ..\\ew_substrate_fixed
+  polkadart_keyring:
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: cl/sr25519
+      path: packages/polkadart_keyring
   polkadart_scale_codec:
     git:
       url: https://github.com/encointer/polkadart

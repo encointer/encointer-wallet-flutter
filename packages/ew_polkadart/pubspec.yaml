@@ -68,6 +68,13 @@ dependency_overrides:
       ref: cl/sr25519
       path: packages/substrate_metadata
 
+  polkadart_keyring:
+    #    path: ../../../polkadart/packages/polkadart_keyring
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: cl/sr25519
+      path: packages/polkadart_keyring
+
 # This only generates valid files on UNIX machines.
 # The imports statements use `\` otherwise, which is
 # invalid.

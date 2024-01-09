@@ -133,6 +133,13 @@ dependency_overrides:
       ref: cl/sr25519
       path: packages/substrate_metadata
 
+  polkadart_keyring:
+    #    path: ../../../polkadart/packages/polkadart_keyring
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: cl/sr25519
+      path: packages/polkadart_keyring
+
 flutter_icons:
   android: "launcher_icon"
   ios: true

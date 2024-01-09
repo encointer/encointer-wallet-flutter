@@ -1,10 +1,15 @@
-# melos_managed_dependency_overrides: polkadart,polkadart_scale_codec,substrate_metadata
+# melos_managed_dependency_overrides: polkadart,polkadart_scale_codec,substrate_metadata,polkadart_keyring
 dependency_overrides:
   polkadart:
     git:
       url: https://github.com/encointer/polkadart
       ref: cl/sr25519
       path: packages/polkadart
+  polkadart_keyring:
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: cl/sr25519
+      path: packages/polkadart_keyring
   polkadart_scale_codec:
     git:
       url: https://github.com/encointer/polkadart

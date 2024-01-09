@@ -358,20 +358,20 @@ packages:
     source: hosted
     version: "3.7.3"
   polkadart:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       path: "packages/polkadart"
       ref: "cl/sr25519"
-      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
+      resolved-ref: b952766f331258ddb1e8535feaecd417bc3b856e
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.6"
+    version: "0.3.0"
   polkadart_keyring:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       path: "packages/polkadart_keyring"
       ref: "cl/sr25519"
-      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
+      resolved-ref: b952766f331258ddb1e8535feaecd417bc3b856e
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -380,7 +380,7 @@ packages:
     description:
       path: "packages/polkadart_scale_codec"
       ref: "cl/sr25519"
-      resolved-ref: "7bcac1dab6bf214bb90019c3958f673261d281c9"
+      resolved-ref: b952766f331258ddb1e8535feaecd417bc3b856e
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -491,9 +491,10 @@ packages:
   sr25519:
     dependency: transitive
     description:
-      path: "../../../../Users/clang/AppData/Local/Pub/Cache/git/polkadart-7bcac1dab6bf214bb90019c3958f673261d281c9/packages/sr25519"
-      relative: true
-    source: path
+      name: sr25519
+      sha256: bf604b6d6603f0498addda71ed27f0a755b32fd0f3805749facf3b270f0bbf69
+      url: "https://pub.dev"
+    source: hosted
     version: "0.1.0"
   ss58:
     dependency: transitive

@@ -26,3 +26,9 @@ dependency_overrides:
       url: https://github.com/encointer/polkadart
       ref: cl/sr25519
       path: packages/polkadart_scale_codec
+  polkadart_keyring:
+    #    path: ../../../polkadart/packages/polkadart_keyring
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: cl/sr25519
+      path: packages/polkadart_keyring
