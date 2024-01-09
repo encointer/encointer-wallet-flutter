@@ -8,8 +8,8 @@ import 'package:encointer_wallet/utils/local_storage.dart';
 
 /// Legacy account encryption service.
 ///
-/// It is still here because old app versions that update might have store the
-/// encrypted seeds like this, then we need this service to decrypt the seeds
+/// It is still here because old app versions that update might have stored the
+/// encrypted seeds like this. Then we need this service to decrypt the seeds
 /// for storing it in the new way.
 class LegacyEncryptionService {
   LegacyEncryptionService(this.localStorage);
