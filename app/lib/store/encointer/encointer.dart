@@ -10,11 +10,11 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/encointer_store_service.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/encointer_account_store/encointer_account_store.dart';
-import 'package:encointer_wallet/utils/extensions/extensions.dart';
 
 part 'encointer.g.dart';
 
@@ -194,38 +194,7 @@ abstract class _EncointerStore with Store {
     assert(latestHeader != null, '[TxPaymentAsset]: latestHeader was null');
     assert(demurrage != null, '[TxPaymentAsset]: demurrage was null');
 
-    return _getTxPaymentAsset(preferredCid, balanceEntries, latestHeader!, demurrage!);
-  }
-
-  CommunityIdentifier? _getTxPaymentAsset(
-    CommunityIdentifier? preferredCid,
-    ObservableMap<String, BalanceEntry> balanceEntries,
-    int latestHeaderNumber,
-    double demurrage,
-  ) {
-    // Allow more concise code by avoiding redundant argument passing.
-    bool canPayTxFn(BalanceEntry entry) => canPayTx(entry, latestHeaderNumber, demurrage);
-
-    final preferredEntry = balanceEntries[preferredCid?.toFmtString()];
-
-    if (preferredEntry != null && canPayTxFn(preferredEntry)) {
-      Log.d('[TxPaymentAsset]: Enough funds in preferred cid $preferredEntry to pay tx fee.');
-      return preferredCid;
-    }
-
-    final maybeFallbackEntry = balanceEntries.entries.firstWhereOrNull((e) => canPayTxFn(e.value));
-
-    if (maybeFallbackEntry != null) {
-      Log.d('[TxPaymentAsset]: Using fallback cid to pay tx: $maybeFallbackEntry');
-      return CommunityIdentifier.fromFmtString(maybeFallbackEntry.key);
-    } else {
-      Log.e('[TxPaymentAsset]: Not enough funds in any community. Returning null to pay tx in native token');
-      return null;
-    }
-  }
-
-  bool canPayTx(BalanceEntry entry, int latestHeaderNumber, double demurrage) {
-    return entry.applyDemurrage(latestHeaderNumber, demurrage) > 0.013;
+    return EncointerStoreService.getTxPaymentAsset(preferredCid, balanceEntries.nonObservableInner, latestHeader!, demurrage!);
   }
 
   // -- Setters for this store
