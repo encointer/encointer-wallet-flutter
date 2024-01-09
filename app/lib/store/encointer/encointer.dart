@@ -191,8 +191,8 @@ abstract class _EncointerStore with Store {
     final latestHeader = _rootStore.chain.latestHeaderNumber;
     final demurrage = community?.demurrage;
 
-    assert(latestHeader == null, '[TxPaymentAsset]: latestHeader was null');
-    assert(demurrage == null, '[TxPaymentAsset]: demurrage was null');
+    assert(latestHeader != null, '[TxPaymentAsset]: latestHeader was null');
+    assert(demurrage != null, '[TxPaymentAsset]: demurrage was null');
 
     return _getTxPaymentAsset(preferredCid, balanceEntries, latestHeader!, demurrage!);
   }
@@ -203,14 +203,17 @@ abstract class _EncointerStore with Store {
     int latestHeaderNumber,
     double demurrage,
   ) {
-    if (preferredCid != null && canPayTx(balanceEntries[preferredCid.toFmtString()]!, latestHeaderNumber, demurrage)) {
-      Log.d('[TxPaymentAsset]: Enough funds in preferred cid ${preferredCid.toFmtString()} to pay tx fee.');
+    // Allow more concise code by avoiding redundant argument passing.
+    bool canPayTxFn(BalanceEntry entry) => canPayTx(entry, latestHeaderNumber, demurrage);
+
+    final preferredEntry = balanceEntries[preferredCid?.toFmtString()];
+
+    if (preferredEntry != null && canPayTxFn(preferredEntry)) {
+      Log.d('[TxPaymentAsset]: Enough funds in preferred cid $preferredEntry to pay tx fee.');
       return preferredCid;
     }
 
-    final maybeFallbackEntry = balanceEntries.entries.firstWhereOrNull(
-      (e) => canPayTx(e.value, latestHeaderNumber, demurrage),
-    );
+    final maybeFallbackEntry = balanceEntries.entries.firstWhereOrNull((e) => canPayTxFn(e.value));
 
     if (maybeFallbackEntry != null) {
       Log.d('[TxPaymentAsset]: Using fallback cid to pay tx: $maybeFallbackEntry');
