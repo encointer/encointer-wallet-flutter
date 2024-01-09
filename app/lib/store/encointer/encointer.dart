@@ -187,13 +187,20 @@ abstract class _EncointerStore with Store {
 
   CommunityIdentifier? getTxPaymentAsset(CommunityIdentifier? preferredCid) {
     final balanceEntries = account!.balanceEntries;
+    final latestHeader = _rootStore.chain.latestHeaderNumber;
+    final demurrage = community?.demurrage;
 
-    if (preferredCid != null && applyDemurrage(balanceEntries[preferredCid.toFmtString()])! > 0.013) {
+    assert(latestHeader == null, '[TxPaymentAsset]: latestHeader was null');
+    assert(demurrage == null, '[TxPaymentAsset]: demurrage was null');
+
+    if (preferredCid != null &&
+        balanceEntries[preferredCid.toFmtString()]!.applyDemurrage(latestHeader!, demurrage!) > 0.013) {
       Log.d('[TxPaymentAsset]: Enough funds in preferred cid ${preferredCid.toFmtString()} to pay tx fee.');
       return preferredCid;
     }
 
-    final maybeFallbackEntry = balanceEntries.entries.firstWhereOrNull((e) => applyDemurrage(e.value)! > 0.013);
+    final maybeFallbackEntry =
+        balanceEntries.entries.firstWhereOrNull((e) => e.value.applyDemurrage(latestHeader!, demurrage!) > 0.013);
 
     if (maybeFallbackEntry != null) {
       Log.d('[TxPaymentAsset]: Using fallback cid to pay tx: $maybeFallbackEntry');
