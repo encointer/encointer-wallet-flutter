@@ -1,4 +1,3 @@
-
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -9,16 +8,15 @@ import 'package:encointer_wallet/utils/extensions/extensions.dart';
 const _minimalPaymentBalance = 0.013;
 
 abstract class EncointerStoreService {
-
   /// Returns either the preferred or another cid that as enough balance to pay a transaction.
   ///
   /// Returns null if none is available.
   static CommunityIdentifier? getTxPaymentAsset(
-      CommunityIdentifier? preferredCid,
-      Map<String, BalanceEntry> balanceEntries,
-      int latestHeaderNumber,
-      double demurrage,
-      ) {
+    CommunityIdentifier? preferredCid,
+    Map<String, BalanceEntry> balanceEntries,
+    int latestHeaderNumber,
+    double demurrage,
+  ) {
     // Allow more concise code by avoiding redundant argument passing.
     bool canPayTxFn(BalanceEntry entry) => canPayTx(entry, latestHeaderNumber, demurrage);
 

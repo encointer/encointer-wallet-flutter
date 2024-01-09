@@ -194,7 +194,9 @@ abstract class _EncointerStore with Store {
     assert(latestHeader != null, '[TxPaymentAsset]: latestHeader was null');
     assert(demurrage != null, '[TxPaymentAsset]: demurrage was null');
 
-    return EncointerStoreService.getTxPaymentAsset(preferredCid, balanceEntries.nonObservableInner, latestHeader!, demurrage!);
+    return EncointerStoreService.getTxPaymentAsset(
+        preferredCid, balanceEntries.nonObservableInner, latestHeader!, demurrage!,
+    );
   }
 
   // -- Setters for this store
