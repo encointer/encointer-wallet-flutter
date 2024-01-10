@@ -365,8 +365,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/polkadart"
-      ref: "cl/sr25519"
-      resolved-ref: b952766f331258ddb1e8535feaecd417bc3b856e
+      ref: main
+      resolved-ref: "900ecf83ca1fc9388580d421286ce9938dc58981"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.0"
@@ -374,8 +374,8 @@ packages:
     dependency: "direct dev"
     description:
       path: "packages/polkadart_cli"
-      ref: "cl/sr25519"
-      resolved-ref: b952766f331258ddb1e8535feaecd417bc3b856e
+      ref: main
+      resolved-ref: "900ecf83ca1fc9388580d421286ce9938dc58981"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.0"
@@ -383,8 +383,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_keyring"
-      ref: "cl/sr25519"
-      resolved-ref: b952766f331258ddb1e8535feaecd417bc3b856e
+      ref: main
+      resolved-ref: "900ecf83ca1fc9388580d421286ce9938dc58981"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.2.1"
@@ -392,8 +392,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: "cl/sr25519"
-      resolved-ref: b952766f331258ddb1e8535feaecd417bc3b856e
+      ref: main
+      resolved-ref: "900ecf83ca1fc9388580d421286ce9938dc58981"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -569,8 +569,8 @@ packages:
     dependency: "direct dev"
     description:
       path: "packages/substrate_metadata"
-      ref: "cl/sr25519"
-      resolved-ref: b952766f331258ddb1e8535feaecd417bc3b856e
+      ref: main
+      resolved-ref: "900ecf83ca1fc9388580d421286ce9938dc58981"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
