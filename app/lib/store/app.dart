@@ -1,3 +1,4 @@
+import 'package:ew_storage/ew_storage.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -29,12 +30,12 @@ const encointerCacheVersion = 'v1.0';
 /// Global aggregated storage for the app.
 ///
 /// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
-class AppStore extends _AppStore with _$AppStore {
-  AppStore(super.localStorage);
+class AppStore<S extends SecureStorageInterface> extends _AppStore with _$AppStore {
+  AppStore(super.localStorage, super.secureStorage);
 }
 
-abstract class _AppStore with Store {
-  _AppStore(this.localStorage);
+abstract class _AppStore<S extends SecureStorageInterface> with Store {
+  _AppStore(this.localStorage, this.secureStorage);
 
   // Note, following pattern of a nullable field with a non-nullable getter
   // is here because mobx can't handle `late` initialization:
@@ -88,6 +89,8 @@ abstract class _AppStore with Store {
   bool get appIsReady => storeIsReady && webApiIsReady;
 
   LocalStorage localStorage;
+
+  final S secureStorage;
 
   @action
   Future<void> init(String sysLocaleCode) async {

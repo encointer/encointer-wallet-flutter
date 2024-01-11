@@ -1,12 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/store/app.dart';
+import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
 import '../mock/mock.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final store = AppStore(MockLocalStorage());
+  final store = AppStore(MockLocalStorage(), SecureStorageMock());
 
   accList = [testAcc];
   currentAccountPubKey = accList[0]['pubKey'] as String;

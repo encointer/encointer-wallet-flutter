@@ -7,6 +7,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
+import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
 import '../../mock/mock.dart';
 
@@ -15,7 +16,7 @@ import '../../mock/mock.dart';
 /// The `endpoint` should be different for every test if it involves serialization, so that the caching
 /// does not interfere with other tests.
 Future<AppStore> setupAppStore(String networkInfo) async {
-  final store = AppStore(MockLocalStorage());
+  final store = AppStore(MockLocalStorage(), SecureStorageMock());
   await store.init('_en');
 
   final endpoint = EndpointData()..info = networkInfo;

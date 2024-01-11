@@ -1,9 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
-
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
+
 
 import '../mock/mock.dart';
 
@@ -11,7 +12,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('SettingsStore test', () {
-    final root = AppStore(MockLocalStorage());
+    final root = AppStore(MockLocalStorage(), SecureStorageMock());
     final store = SettingsStore(root);
 
     test('settings store created', () {

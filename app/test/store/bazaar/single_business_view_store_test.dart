@@ -5,6 +5,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/single_business/logic/sin
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
+import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
 import '../../mock/api/mock_api.dart';
 import '../../mock/storage/mock_local_storage.dart';
@@ -13,7 +14,7 @@ void main() {
   late SingleBusinessStore businessesStore;
 
   setUp(() async {
-    webApi = getMockApi(AppStore(MockLocalStorage()), withUI: false);
+    webApi = getMockApi(AppStore(MockLocalStorage(), SecureStorageMock()), withUI: false);
     await webApi.init();
 
     businessesStore = SingleBusinessStore(businessesMockForSingleBusiness, cidEdisonPaula);

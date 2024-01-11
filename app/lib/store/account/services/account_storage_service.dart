@@ -1,10 +1,10 @@
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_storage/ew_storage.dart';
 
-final class AccountStorageService {
-  AccountStorageService() : secureStorage = const SecureStorage();
+final class AccountStorageService<S extends SecureStorageInterface> {
+  AccountStorageService(this.secureStorage);
 
-  final SecureStorage secureStorage;
+  final S secureStorage;
 
   static const accountsCacheKey = 'accounts-cache-key';
 

@@ -62,3 +62,32 @@ class SecureStorage implements SecureStorageInterface {
     }
   }
 }
+
+class SecureStorageMock implements SecureStorageInterface {
+  SecureStorageMock();
+
+  final Map<String, String> _storage = {};
+
+  @override
+  Future<String?> read({required String key}) {
+    return Future.value(_storage[key]);
+  }
+
+  @override
+  Future<void> write({required String key, required String value}) {
+    _storage[key] = value;
+    return Future.value();
+  }
+
+  @override
+  Future<void> delete({required String key}) {
+      _storage.remove(key);
+      return Future.value();
+  }
+
+  @override
+  Future<void> clear() {
+    _storage.clear();
+    return Future.value();
+  }
+}

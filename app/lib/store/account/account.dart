@@ -33,7 +33,7 @@ class AccountStore extends _AccountStore with _$AccountStore {
 abstract class _AccountStore with Store {
   _AccountStore(this.rootStore)
       : legacyEncryptionService = LegacyEncryptionService(rootStore.localStorage),
-        accountStorageService = AccountStorageService(),
+        accountStorageService = AccountStorageService(rootStore.secureStorage),
         keyring = EncointerKeyring();
 
   final AppStore rootStore;

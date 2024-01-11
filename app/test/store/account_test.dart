@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/store/app.dart';
+import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
 import '../mock/mock.dart';
 
@@ -8,7 +9,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('AccountStore test', () {
-    final root = AppStore(MockLocalStorage());
+    final root = AppStore(MockLocalStorage(), SecureStorageMock());
 
     test('account store test', () async {
       accList = [testAcc];
