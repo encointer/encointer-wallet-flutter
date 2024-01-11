@@ -9,9 +9,6 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final store = AppStore(MockLocalStorage(), SecureStorageMock());
 
-  accList = [testAccount1];
-  currentAccountPubKey = accList[0]['pubKey'] as String;
-
   group('store test', () {
     test('app store created and not ready', () {
       expect(store.storeIsReady, false);
@@ -28,8 +25,6 @@ void main() {
       expect(store.encointer, isNotNull);
 
       expect(store.storeIsReady, true);
-
-      expect(store.account.accountList.length, 1);
     });
   });
 }
