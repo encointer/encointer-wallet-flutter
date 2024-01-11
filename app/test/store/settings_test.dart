@@ -5,7 +5,6 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
-
 import '../mock/mock.dart';
 
 void main() {

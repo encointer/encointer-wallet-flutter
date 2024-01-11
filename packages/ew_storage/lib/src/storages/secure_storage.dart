@@ -81,8 +81,8 @@ class SecureStorageMock implements SecureStorageInterface {
 
   @override
   Future<void> delete({required String key}) {
-      _storage.remove(key);
-      return Future.value();
+    _storage.remove(key);
+    return Future.value();
   }
 
   @override
