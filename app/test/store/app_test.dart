@@ -9,7 +9,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final store = AppStore(MockLocalStorage(), SecureStorageMock());
 
-  accList = [testAcc];
+  accList = [testAccount1];
   currentAccountPubKey = accList[0]['pubKey'] as String;
 
   group('store test', () {
