@@ -28,7 +28,7 @@ final class AccountMigrationService<P extends GetPin> {
 
   static const v1 = 1;
 
-  bool needsMigration() {
+  bool storageVersionOutdated() {
     final version = getStorageVersion() ?? 0;
 
     if (version < v1) {
@@ -48,8 +48,8 @@ final class AccountMigrationService<P extends GetPin> {
     return preferences.setInt(accountStorageVersionKey, v1);
   }
 
-  Future<void> migrate() async {
-    if (needsMigration()) {
+  Future<void> migrateIfOutdated() async {
+    if (storageVersionOutdated()) {
       try {
         // need to load metadata of previous accounts
         final accounts = await legacyEncryptionService.loadLegacyAccounts();

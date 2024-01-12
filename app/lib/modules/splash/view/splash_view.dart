@@ -33,7 +33,7 @@ class SplashView extends StatelessWidget {
       LegacyEncryptionService(store.localStorage),
       AccountStorageService(store.secureStorage),
       loginStore.loginService,
-    ).migrate();
+    ).migrateIfOutdated();
 
     await store.init(Localizations.localeOf(context).toString());
 
