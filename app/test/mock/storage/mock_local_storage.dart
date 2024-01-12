@@ -5,20 +5,6 @@ import 'package:encointer_wallet/utils/local_storage.dart';
 import '../data/mock_account_data.dart';
 
 class MockLocalStorage extends LocalStorage {
-  @override
-  Future<List<Map<String, dynamic>>> getAccountList() {
-    return Future.value(accList);
-  }
-
-  @override
-  Future<void> addAccount(Map<String, dynamic> acc) async {
-    accList.add(acc);
-  }
-
-  @override
-  Future<void> removeAccount(String pubKey) async {
-    accList.removeWhere((i) => i['pubKey'] == pubKey);
-  }
 
   @override
   Future<bool> setCurrentAccount(String pubKey) async {
@@ -29,11 +15,6 @@ class MockLocalStorage extends LocalStorage {
   @override
   Future<String?> getCurrentAccount() async {
     return Future.value(currentAccountPubKey);
-  }
-
-  @override
-  Future<Map<String, dynamic>> getSeeds(String seedType) async {
-    return Future.value({});
   }
 
   @override
