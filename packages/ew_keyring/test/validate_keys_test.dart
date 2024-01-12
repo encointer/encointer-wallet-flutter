@@ -65,7 +65,10 @@ void main() {
 
   group('getSeedTypeFromString', () {
     test('inferring key type works', () {
-      expect(getSeedTypeFromString('0x1111111122222222333333334444444411111111222222223333333344444444'), SeedType.privateKey);
+      expect(
+        getSeedTypeFromString('0x1111111122222222333333334444444411111111222222223333333344444444'),
+        SeedType.privateKey,
+      );
       expect(getSeedTypeFromString('//Alice'), SeedType.rawSeed);
       expect(
         getSeedTypeFromString('spray trust gown toast route merge awful sight ghost all degree exit'),
