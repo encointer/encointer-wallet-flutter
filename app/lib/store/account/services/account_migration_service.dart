@@ -32,7 +32,7 @@ final class AccountMigrationService {
     return preferences.getInt(accountStorageVersionKey);
   }
 
-  Future<void> setNewStorageVersion() {
+  Future<void> setCurrentStorageVersion() {
     return preferences.setInt(accountStorageVersionKey, v2);
   }
 
