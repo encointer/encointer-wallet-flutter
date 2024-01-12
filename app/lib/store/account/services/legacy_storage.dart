@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 ///! LegacyLocalStorage interface to recover the accounts that have been created
-/// with JS. It has been decided to extract this part of the code of the regular
-/// local storage such that it is not accidentally changed.
+/// with JS. It has been decided to extract this from the regular `LocalStorage`
+/// such that it is not accidentally changed.
 ///
-/// It must always be compatible with the cache of app version < v1.11.6.
+/// It must always be compatible with the cache of app version <= v1.11.6.
 
 abstract class LegacyStorageInterface {
   Future<List<Map<String, dynamic>>> getAccountList();
@@ -75,9 +75,6 @@ class _LegacyLocalStorage {
 }
 
 class LegacyLocalStorageMock extends LegacyStorageInterface {
-  final accountsKey = 'wallet_account_list';
-  final seedKey = 'wallet_seed';
-  final customKVKey = 'wallet_kv';
 
   final Map<String, String> _seeds = {};
   final List<Map<String, String>> accounts = [];
