@@ -62,8 +62,7 @@ final class AccountMigrationService<P extends GetPin> {
           Log.p('[AccountMigrationService] successfully migrated ${accounts.length} accounts');
         }
 
-        // Todo: enable this when testing finished.
-        // await setCurrentStorageVersion();
+        await setCurrentStorageVersion();
       } catch (e) {
         Log.e('[AccountMigrationService] caught exception in account storage migration: $e');
       }
