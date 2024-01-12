@@ -58,11 +58,7 @@ final class AccountMigrationService<P extends GetPin> {
         if (accounts.isEmpty) {
           Log.p('[AccountMigrationService] no migration needed as no accounts in store yet');
         } else {
-          // Using the login service directly prevents the PIN-dialog from popping up.
-          final pin = await pinService.getPin();
-          Log.p('[AccountMigrationService] pin $pin');
-
-          await _migrateAccounts(accounts, pin!);
+          await _migrateAccounts(accounts);
           Log.p('[AccountMigrationService] successfully migrated ${accounts.length} accounts');
         }
 
@@ -74,18 +70,13 @@ final class AccountMigrationService<P extends GetPin> {
     }
   }
 
-  Future<void> _migrateAccounts(List<AccountData> accounts, String password) async {
-    final seedsOrMnemonics = await legacyEncryptionService.getAllSeedsDecrypted(password);
-    final keyringAccounts = <KeyringAccount>[];
+  Future<void> _migrateAccounts(List<AccountData> accounts) async {
+    // Using the login service directly prevents the PIN-dialog from popping up.
+    final pin = await pinService.getPin();
+    Log.p('[AccountMigrationService] pin: $pin');
 
-    for (final acc in accounts) {
-      final seedOrMnemonic = seedsOrMnemonics[acc.pubKey]!;
-      final newAccount = await KeyringAccount.fromUri(acc.name, seedOrMnemonic);
-      keyringAccounts.add(newAccount);
-
-      Log.p('[AccountMigrationService] Migrated:    $acc');
-      Log.p('[AccountMigrationService] NewAccount:  $newAccount');
-    }
+    final seedsOrMnemonics = await legacyEncryptionService.getAllSeedsDecrypted(pin!);
+    final keyringAccounts = await migrateAccounts(accounts, seedsOrMnemonics);
 
     await accountStorageService.storeAccountData(keyringAccounts.map((acc) => acc.toAccountData()).toList());
 
@@ -93,4 +84,19 @@ final class AccountMigrationService<P extends GetPin> {
     Log.p('[AccountMigrationService] Accounts: $accounts');
     Log.p('[AccountMigrationService] KeyringAccounts: $keyringAccounts');
   }
+}
+
+Future<List<KeyringAccount>> migrateAccounts(List<AccountData> accounts, Map<String, String> seedsOrMnemonics) async {
+  final keyringAccounts = <KeyringAccount>[];
+
+  for (final acc in accounts) {
+    final seedOrMnemonic = seedsOrMnemonics[acc.pubKey]!;
+    final newAccount = await KeyringAccount.fromUri(acc.name, seedOrMnemonic);
+    keyringAccounts.add(newAccount);
+
+    Log.p('[AccountMigrationService] Migrated:    $acc');
+    Log.p('[AccountMigrationService] NewAccount:  $newAccount');
+  }
+
+  return keyringAccounts;
 }
