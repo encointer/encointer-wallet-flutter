@@ -8,7 +8,6 @@ import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show Provider;
 
 class AccountApi {
