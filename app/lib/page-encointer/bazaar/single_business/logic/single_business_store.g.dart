@@ -17,13 +17,10 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
     return super.isLiked;
   }
 
-  bool _isLikedIsInitialized = false;
-
   @override
   set isLiked(bool value) {
-    _$isLikedAtom.reportWrite(value, _isLikedIsInitialized ? super.isLiked : null, () {
+    _$isLikedAtom.reportWrite(value, super.isLiked, () {
       super.isLiked = value;
-      _isLikedIsInitialized = true;
     });
   }
 
@@ -35,13 +32,10 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
     return super.isLikedPersonally;
   }
 
-  bool _isLikedPersonallyIsInitialized = false;
-
   @override
   set isLikedPersonally(bool value) {
-    _$isLikedPersonallyAtom.reportWrite(value, _isLikedPersonallyIsInitialized ? super.isLikedPersonally : null, () {
+    _$isLikedPersonallyAtom.reportWrite(value, super.isLikedPersonally, () {
       super.isLikedPersonally = value;
-      _isLikedPersonallyIsInitialized = true;
     });
   }
 
@@ -53,13 +47,10 @@ mixin _$SingleBusinessStore on _SingleBusinessStoreBase, Store {
     return super.countLikes;
   }
 
-  bool _countLikesIsInitialized = false;
-
   @override
   set countLikes(int value) {
-    _$countLikesAtom.reportWrite(value, _countLikesIsInitialized ? super.countLikes : null, () {
+    _$countLikesAtom.reportWrite(value, super.countLikes, () {
       super.countLikes = value;
-      _countLikesIsInitialized = true;
     });
   }
 

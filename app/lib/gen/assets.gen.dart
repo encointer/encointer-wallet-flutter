@@ -289,7 +289,7 @@ class Assets {
   static const $JsServiceEncointerGen jsServiceEncointer = $JsServiceEncointerGen();
 
   /// List of all assets
-  static List<SvgGenImage> get values => [kusama, nctrLogo, nctrLogoFacesOnlyThick];
+  List<SvgGenImage> get values => [kusama, nctrLogo, nctrLogoFacesOnlyThick];
 }
 
 class AssetGenImage {

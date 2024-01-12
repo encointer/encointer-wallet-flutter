@@ -17,13 +17,10 @@ mixin _$HomePageStore on _HomePageStoreBase, Store {
     return super.appStore;
   }
 
-  bool _appStoreIsInitialized = false;
-
   @override
   set appStore(AppStore value) {
-    _$appStoreAtom.reportWrite(value, _appStoreIsInitialized ? super.appStore : null, () {
+    _$appStoreAtom.reportWrite(value, super.appStore, () {
       super.appStore = value;
-      _appStoreIsInitialized = true;
     });
   }
 
@@ -35,13 +32,10 @@ mixin _$HomePageStore on _HomePageStoreBase, Store {
     return super.buildContext;
   }
 
-  bool _buildContextIsInitialized = false;
-
   @override
   set buildContext(BuildContext value) {
-    _$buildContextAtom.reportWrite(value, _buildContextIsInitialized ? super.buildContext : null, () {
+    _$buildContextAtom.reportWrite(value, super.buildContext, () {
       super.buildContext = value;
-      _buildContextIsInitialized = true;
     });
   }
 

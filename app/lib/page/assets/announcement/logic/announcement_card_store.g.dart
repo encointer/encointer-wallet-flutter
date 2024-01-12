@@ -17,13 +17,10 @@ mixin _$AnnouncementCardStore on _AnnouncementCardStoreBase, Store {
     return super.isFavorite;
   }
 
-  bool _isFavoriteIsInitialized = false;
-
   @override
   set isFavorite(bool value) {
-    _$isFavoriteAtom.reportWrite(value, _isFavoriteIsInitialized ? super.isFavorite : null, () {
+    _$isFavoriteAtom.reportWrite(value, super.isFavorite, () {
       super.isFavorite = value;
-      _isFavoriteIsInitialized = true;
     });
   }
 
@@ -35,13 +32,10 @@ mixin _$AnnouncementCardStore on _AnnouncementCardStoreBase, Store {
     return super.countFavorite;
   }
 
-  bool _countFavoriteIsInitialized = false;
-
   @override
   set countFavorite(int value) {
-    _$countFavoriteAtom.reportWrite(value, _countFavoriteIsInitialized ? super.countFavorite : null, () {
+    _$countFavoriteAtom.reportWrite(value, super.countFavorite, () {
       super.countFavorite = value;
-      _countFavoriteIsInitialized = true;
     });
   }
 
