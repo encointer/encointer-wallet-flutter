@@ -21,6 +21,7 @@ class AccountApi {
 
   Future<void> initAccounts() async {
     for (final account in store.account.keyring.accountsIter) {
+      Log.d('[initAccounts]: ${account.toAccountData()}');
       await webApi.account.importAccount(
         key: account.uri,
         password: '',

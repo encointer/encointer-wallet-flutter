@@ -181,6 +181,7 @@ abstract class _AccountStore with Store {
   Future<void> addAccount(Map<String, dynamic> acc, String password, {required String name}) async {
     final uri = getUriFromMeta(acc);
     final account = await KeyringAccount.fromUri(name, uri);
+    Log.d('[AddAccount]: added account ${account.toAccountData()}');
 
     keyring.addAccount(account);
     await storeAccountData();
@@ -191,10 +192,10 @@ abstract class _AccountStore with Store {
 
   String getUriFromMeta(Map<String, dynamic> acc) {
     final maybeMnemonic = acc[AccountStore.seedTypeMnemonic] as String?;
-    if (maybeMnemonic != null) return maybeMnemonic;
+    if (maybeMnemonic != null && maybeMnemonic.isNotEmpty) return maybeMnemonic;
 
     final maybeRawSeed = acc[AccountStore.seedTypeRawSeed] as String?;
-    if (maybeRawSeed != null) return maybeRawSeed;
+    if (maybeRawSeed != null && maybeRawSeed.isNotEmpty) return maybeRawSeed;
 
     // this was never thrown in the old case and it will be obsolete soon.
     throw Exception(['Invalid seed generated in JS']);
