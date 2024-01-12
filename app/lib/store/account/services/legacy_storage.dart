@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// It must always be compatible with the cache of app version < v1.11.6.
 
 abstract class LegacyStorageInterface {
-
   Future<List<Map<String, dynamic>>> getAccountList();
 
   Future<bool> setSeeds(String seedType, Map value);

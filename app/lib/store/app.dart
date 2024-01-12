@@ -31,7 +31,7 @@ const encointerCacheVersion = 'v1.0';
 /// Global aggregated storage for the app.
 ///
 /// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
-class AppStore<S extends SecureStorageInterface,  L extends LegacyStorageInterface> extends _AppStore with _$AppStore {
+class AppStore<S extends SecureStorageInterface, L extends LegacyStorageInterface> extends _AppStore with _$AppStore {
   AppStore(super.localStorage, super.secureStorage, super.legacyStorage);
 }
 

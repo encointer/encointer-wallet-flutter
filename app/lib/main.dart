@@ -47,7 +47,8 @@ Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
         providers: [
           Provider<AppSettings>(create: (context) => appSettings..init()),
           Provider<ConnectivityStore>(create: (context) => ConnectivityStore(Connectivity())..listen()),
-          Provider<AppStore>(create: (context) => AppStore(util.LocalStorage(), const SecureStorage(), LegacyLocalStorage())),
+          Provider<AppStore>(
+              create: (context) => AppStore(util.LocalStorage(), const SecureStorage(), LegacyLocalStorage())),
           Provider<LoginStore>(
             create: (context) => LoginStore(LoginService(LocalAuthentication(), pref, const SecureStorage())),
           )
