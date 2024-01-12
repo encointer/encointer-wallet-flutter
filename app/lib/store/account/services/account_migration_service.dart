@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/modules/login/service/login_service.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
 import 'package:encointer_wallet/store/account/services/legacy_encryption_service.dart';
@@ -7,18 +8,19 @@ import 'package:ew_storage/ew_storage.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
-final class AccountMigrationService {
-  const AccountMigrationService(
-    this.preferences,
-    this.legacyEncryptionService,
-    this.accountStorageService,
-  );
+final class AccountMigrationService<P extends GetPin> {
+  const AccountMigrationService(this.preferences,
+      this.legacyEncryptionService,
+      this.accountStorageService,
+      this.pinService,);
 
   final SharedPreferences preferences;
 
   final LegacyEncryptionService legacyEncryptionService;
 
   final AccountStorageService accountStorageService;
+
+  final P pinService;
 
   static const accountStorageVersionKey = 'accounts-storage-version-key';
 
@@ -36,7 +38,32 @@ final class AccountMigrationService {
     return preferences.setInt(accountStorageVersionKey, v2);
   }
 
-  Future<void> migrate(List<AccountData> accounts, String password) async {
+  Future<void> migrate() async {
+    if (needsMigration()) {
+      try {
+        // need to load metadata of previous accounts
+        final accounts = await legacyEncryptionService.loadLegacyAccounts();
+        Log.p('[AccountMigrationService] Old Accounts: $accounts');
+
+        if (accounts.isEmpty) {
+          Log.p('[AccountMigrationService] no migration needed as no accounts in store yet');
+
+          // Todo: Set migrated to true after finalizing implementation.
+        } else {
+          // Using the login service directly prevents the PIN-dialog from popping up.
+          final pin = await pinService.getPin();
+          Log.p('[AccountMigrationService] pin $pin');
+
+          await _migrateAccounts(accounts, pin!);
+          Log.p('[AccountMigrationService] successfully migrated ${accounts.length} accounts');
+        }
+      } catch (e) {
+        Log.e('[AccountMigrationService] caught exception in account storage migration: $e');
+      }
+    }
+  }
+
+  Future<void> _migrateAccounts(List<AccountData> accounts, String password) async {
     final seedsOrMnemonics = await legacyEncryptionService.getAllSeedsDecrypted(password);
     final keyringAccounts = <KeyringAccount>[];
 

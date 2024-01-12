@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
 import 'package:encointer_wallet/store/account/services/legacy_encryption_service.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
@@ -29,39 +28,12 @@ class SplashView extends StatelessWidget {
       if (!isDeviceSupported) await loginStore.setBiometricAuthState(BiometricAuthState.deviceNotSupported);
     }
 
-    // migrate store if necessary
-    final accountMigrationService = AccountMigrationService(
+    await AccountMigrationService(
       await SharedPreferences.getInstance(),
       LegacyEncryptionService(store.localStorage),
       AccountStorageService(store.secureStorage),
-    );
-
-    final needsMigration = accountMigrationService.needsMigration();
-
-    try {
-      if (needsMigration) {
-        Log.p('[SplashView] potentially need account migration, old storage version detected.');
-
-        // need to load metadata of previous accounts
-        final accounts = await accountMigrationService.legacyEncryptionService.loadLegacyAccounts();
-        Log.p('[SplashView] Old Accounts: $accounts');
-
-        if (accounts.isEmpty) {
-          Log.p('[SplashView] no migration needed as no accounts in store yet');
-
-          // Todo: Set migrated to true after finalizing implementation.
-        } else {
-          // Using the login service directly prevents the PIN-dialog from popping up.
-          final pin = await loginStore.loginService.getPin();
-          Log.p('[SplashView] pin $pin');
-
-          await accountMigrationService.migrate(accounts, pin!);
-          Log.p('[SplashView] successfully migrated ${accounts.length} accounts');
-        }
-      }
-    } catch (e) {
-      Log.e('[SplashView] caught exception in account storage migration: $e');
-    }
+      loginStore.loginService,
+    ).migrate();
 
     await store.init(Localizations.localeOf(context).toString());
 
