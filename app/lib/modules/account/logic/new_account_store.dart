@@ -1,8 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/modules/account/logic/key_type.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -11,9 +11,13 @@ import 'package:provider/provider.dart';
 
 part 'new_account_store.g.dart';
 
-class NewAccountStore = _NewAccountStoreBase with _$NewAccountStore;
+class NewAccountStore extends _NewAccountStoreBase with _$NewAccountStore {
+  NewAccountStore();
+}
 
 abstract class _NewAccountStoreBase with Store {
+  _NewAccountStoreBase();
+
   @observable
   String? name;
 
@@ -119,14 +123,4 @@ abstract class _NewAccountStoreBase with Store {
     _loading = false;
     return NewAccountResult(NewAccountResultType.ok, newAccountData: acc);
   }
-}
-
-enum KeyType {
-  mnemonic('mnemonic'),
-  rawSeed('rawSeed'),
-  keystore('keystore');
-
-  const KeyType(this.key);
-
-  final String key;
 }
