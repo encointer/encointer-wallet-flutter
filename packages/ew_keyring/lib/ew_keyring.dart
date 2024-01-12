@@ -6,4 +6,4 @@ export 'src/address_utils.dart' show Address, AddressUtils;
 export 'src/keyring.dart' show EncointerKeyring;
 export 'src/keyring_account.dart' show KeyringAccount, KeyringAccountData;
 export 'src/keyring_utils.dart' show KeyringUtils;
-export 'src/validate_keys.dart' show ValidateKeys, getSeedTypeFromString, isValidSeed, ToValueExt;
+export 'src/validate_keys.dart' show ValidateKeys, getSeedTypeFromString, isValidSeed;

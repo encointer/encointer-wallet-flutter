@@ -77,13 +77,3 @@ enum SeedType {
   privateKey,
   mnemonic,
 }
-
-extension ToValueExt on SeedType {
-  String toValue() {
-    return switch (this) {
-      SeedType.rawSeed => 'rawSeed',
-      SeedType.privateKey => 'privateKey',
-      SeedType.mnemonic => 'mnemonic',
-    };
-  }
-}

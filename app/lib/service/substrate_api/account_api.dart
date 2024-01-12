@@ -25,7 +25,7 @@ class AccountApi {
       await webApi.account.importAccount(
         key: account.uri,
         password: '',
-        keyType: account.seedType.toValue(),
+        keyType: account.seedType.name,
       );
     }
   }
