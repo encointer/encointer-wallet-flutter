@@ -75,7 +75,6 @@ class _LegacyLocalStorage {
 }
 
 class LegacyLocalStorageMock extends LegacyStorageInterface {
-
   final Map<String, String> _seeds = {};
   final List<Map<String, String>> accounts = [];
 
