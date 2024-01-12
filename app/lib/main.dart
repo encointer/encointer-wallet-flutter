@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
 import 'package:ew_storage/ew_storage.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,7 +47,7 @@ Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
         providers: [
           Provider<AppSettings>(create: (context) => appSettings..init()),
           Provider<ConnectivityStore>(create: (context) => ConnectivityStore(Connectivity())..listen()),
-          Provider<AppStore>(create: (context) => AppStore(util.LocalStorage(), const SecureStorage())),
+          Provider<AppStore>(create: (context) => AppStore(util.LocalStorage(), const SecureStorage(), LegacyLocalStorage())),
           Provider<LoginStore>(
             create: (context) => LoginStore(LoginService(LocalAuthentication(), pref, const SecureStorage())),
           )

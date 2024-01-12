@@ -30,7 +30,7 @@ class SplashView extends StatelessWidget {
 
     await AccountMigrationService(
       await SharedPreferences.getInstance(),
-      LegacyEncryptionService(store.localStorage),
+      LegacyEncryptionService(store.legacyStorage),
       AccountStorageService(store.secureStorage),
       loginStore.loginService,
     ).migrateIfOutdated();

@@ -32,7 +32,7 @@ class AccountStore extends _AccountStore with _$AccountStore {
 
 abstract class _AccountStore with Store {
   _AccountStore(this.rootStore)
-      : legacyEncryptionService = LegacyEncryptionService(rootStore.localStorage),
+      : legacyEncryptionService = LegacyEncryptionService(rootStore.legacyStorage),
         accountStorageService = AccountStorageService(rootStore.secureStorage),
         keyring = EncointerKeyring();
 

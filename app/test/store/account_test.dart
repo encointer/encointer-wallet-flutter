@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/store/app.dart';
@@ -9,7 +10,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('AccountStore test', () {
-    final root = AppStore(MockLocalStorage(), SecureStorageMock());
+    final root = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock());
 
     test('account store test', () async {
       await root.init('_en');

@@ -3,18 +3,19 @@ import 'dart:async';
 
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:convert/convert.dart';
+
 import 'package:encointer_wallet/store/account/types/account_data.dart';
-import 'package:encointer_wallet/utils/local_storage.dart';
+import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
 
 /// Legacy account encryption service.
 ///
 /// It is still here because old app versions that update might have stored the
 /// encrypted seeds like this. Then we need this service to decrypt the seeds
 /// for storing it in the new way.
-class LegacyEncryptionService {
+class LegacyEncryptionService<L extends LegacyStorageInterface> {
   LegacyEncryptionService(this.localStorage);
 
-  final LocalStorage localStorage;
+  final L localStorage;
 
   static const String seedTypeMnemonic = 'mnemonic';
   static const String seedTypeRawSeed = 'rawSeed';

@@ -1,13 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
 import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
 import '../mock/mock.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final store = AppStore(MockLocalStorage(), SecureStorageMock());
+  final store = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorage());
 
   group('store test', () {
     test('app store created and not ready', () {
