@@ -9,10 +9,12 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 final class AccountMigrationService<P extends GetPin> {
-  const AccountMigrationService(this.preferences,
-      this.legacyEncryptionService,
-      this.accountStorageService,
-      this.pinService,);
+  const AccountMigrationService(
+    this.preferences,
+    this.legacyEncryptionService,
+    this.accountStorageService,
+    this.pinService,
+  );
 
   final SharedPreferences preferences;
 
@@ -24,10 +26,18 @@ final class AccountMigrationService<P extends GetPin> {
 
   static const accountStorageVersionKey = 'accounts-storage-version-key';
 
-  static const v2 = 2;
+  static const v1 = 1;
 
   bool needsMigration() {
-    return (getStorageVersion() ?? 0) < v2;
+    final version = getStorageVersion() ?? 0;
+
+    if (version < v1) {
+      Log.p('[AccountMigrationService] Account Storage at an old version, need to do migration');
+      return true;
+    } else {
+      Log.p('[AccountMigrationService] Account Storage is at current version, no migration needed');
+      return false;
+    }
   }
 
   int? getStorageVersion() {
@@ -35,7 +45,7 @@ final class AccountMigrationService<P extends GetPin> {
   }
 
   Future<void> setCurrentStorageVersion() {
-    return preferences.setInt(accountStorageVersionKey, v2);
+    return preferences.setInt(accountStorageVersionKey, v1);
   }
 
   Future<void> migrate() async {
@@ -47,8 +57,6 @@ final class AccountMigrationService<P extends GetPin> {
 
         if (accounts.isEmpty) {
           Log.p('[AccountMigrationService] no migration needed as no accounts in store yet');
-
-          // Todo: Set migrated to true after finalizing implementation.
         } else {
           // Using the login service directly prevents the PIN-dialog from popping up.
           final pin = await pinService.getPin();
@@ -57,6 +65,9 @@ final class AccountMigrationService<P extends GetPin> {
           await _migrateAccounts(accounts, pin!);
           Log.p('[AccountMigrationService] successfully migrated ${accounts.length} accounts');
         }
+
+        // Todo: enable this when testing finished.
+        // await setCurrentStorageVersion();
       } catch (e) {
         Log.e('[AccountMigrationService] caught exception in account storage migration: $e');
       }
