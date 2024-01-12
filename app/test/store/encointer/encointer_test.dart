@@ -17,7 +17,7 @@ import '../../mock/mock.dart';
 /// The `endpoint` should be different for every test if it involves serialization, so that the caching
 /// does not interfere with other tests.
 Future<AppStore> setupAppStore(String networkInfo) async {
-  final store = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorage());
+  final store = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock());
   await store.init('_en');
 
   final endpoint = EndpointData()..info = networkInfo;

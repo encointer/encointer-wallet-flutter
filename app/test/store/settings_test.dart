@@ -12,7 +12,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('SettingsStore test', () {
-    final root = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorage());
+    final root = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock());
     final store = SettingsStore(root);
 
     test('settings store created', () {

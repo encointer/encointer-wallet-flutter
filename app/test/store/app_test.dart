@@ -8,7 +8,7 @@ import '../mock/mock.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final store = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorage());
+  final store = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock());
 
   group('store test', () {
     test('app store created and not ready', () {
