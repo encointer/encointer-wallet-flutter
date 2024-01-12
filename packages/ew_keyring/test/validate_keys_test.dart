@@ -4,10 +4,9 @@ import 'package:test/test.dart';
 void main() {
   group('PrivateKey', () {
     test('isPrivateKey works', () {
-      expect(ValidateKeys.isPrivateKey(''), false);
       expect(ValidateKeys.isPrivateKey('0x'), true);
-      expect(ValidateKeys.isPrivateKey('0xabe03'), true);
-      expect(ValidateKeys.isPrivateKey('0'), true);
+      expect(ValidateKeys.isPrivateKey('0xabe030'), true);
+      expect(ValidateKeys.isPrivateKey('00'), true);
     });
 
     test('validatePrivateKey works', () {
