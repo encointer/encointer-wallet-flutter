@@ -1,7 +1,8 @@
 /// Manages the cryptographic keys on the end device
 library ew_keyring;
 
-export 'src/address_utils.dart' show Address, AddressUtils, AddressExtension;
+export 'src/address_extension.dart' show AddressExtension;
+export 'src/address_utils.dart' show Address, AddressUtils;
 export 'src/keyring.dart' show EncointerKeyring;
 export 'src/keyring_account.dart' show KeyringAccount, KeyringAccountData;
 export 'src/keyring_utils.dart' show KeyringUtils;
