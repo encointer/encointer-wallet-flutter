@@ -89,36 +89,36 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   late final _$generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase.generateAccount', context: context);
 
   @override
-  Future<NewAccountResult> generateAccount(BuildContext context, Api webApi) {
-    return _$generateAccountAsyncAction.run(() => super.generateAccount(context, webApi));
+  Future<NewAccountResult> generateAccount(BuildContext context) {
+    return _$generateAccountAsyncAction.run(() => super.generateAccount(context));
   }
 
   late final _$importAccountAsyncAction = AsyncAction('_NewAccountStoreBase.importAccount', context: context);
 
   @override
-  Future<NewAccountResult> importAccount(BuildContext context, Api webApi) {
-    return _$importAccountAsyncAction.run(() => super.importAccount(context, webApi));
+  Future<NewAccountResult> importAccount(BuildContext context) {
+    return _$importAccountAsyncAction.run(() => super.importAccount(context));
   }
 
   late final _$_generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase._generateAccount', context: context);
 
   @override
-  Future<NewAccountResult> _generateAccount(BuildContext context, Api webApi, String pin) {
-    return _$_generateAccountAsyncAction.run(() => super._generateAccount(context, webApi, pin));
+  Future<NewAccountResult> _generateAccount(BuildContext context, String pin) {
+    return _$_generateAccountAsyncAction.run(() => super._generateAccount(context, pin));
   }
 
   late final _$_importAccountAsyncAction = AsyncAction('_NewAccountStoreBase._importAccount', context: context);
 
   @override
-  Future<NewAccountResult> _importAccount(BuildContext context, Api webApi, String pin) {
-    return _$_importAccountAsyncAction.run(() => super._importAccount(context, webApi, pin));
+  Future<NewAccountResult> _importAccount(BuildContext context, String pin) {
+    return _$_importAccountAsyncAction.run(() => super._importAccount(context, pin));
   }
 
   late final _$saveAccountAsyncAction = AsyncAction('_NewAccountStoreBase.saveAccount', context: context);
 
   @override
-  Future<NewAccountResult> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) {
-    return _$saveAccountAsyncAction.run(() => super.saveAccount(webApi, appStore, acc, pin));
+  Future<NewAccountResult> saveAccount(Map<String, dynamic> acc, String pin) {
+    return _$saveAccountAsyncAction.run(() => super.saveAccount(acc, pin));
   }
 
   late final _$_NewAccountStoreBaseActionController = ActionController(name: '_NewAccountStoreBase', context: context);

@@ -28,7 +28,7 @@ class CreateAccountView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Provider(
-          create: (context) => NewAccountStore(),
+          create: (context) => NewAccountStore(context.read<AppStore>()),
           child: CreateAcccountForm(),
         ),
       ),
