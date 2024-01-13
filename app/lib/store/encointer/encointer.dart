@@ -10,6 +10,7 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/encointer_store_service.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
@@ -46,6 +47,7 @@ class EncointerStore extends _EncointerStore with _$EncointerStore {
   EncointerStore(super.network);
 
   factory EncointerStore.fromJson(Map<String, dynamic> json) => _$EncointerStoreFromJson(json);
+
   Map<String, dynamic> toJson() => _$EncointerStoreToJson(this);
 }
 
@@ -185,22 +187,19 @@ abstract class _EncointerStore with Store {
   }
 
   CommunityIdentifier? getTxPaymentAsset(CommunityIdentifier? preferredCid) {
-    if (preferredCid != null && communityBalance != null && communityBalance! > 0.013) {
-      return preferredCid;
-    }
+    final balanceEntries = account!.balanceEntries;
+    final latestHeader = _rootStore.chain.latestHeaderNumber;
+    final demurrage = community?.demurrage;
 
-    try {
-      final fallbackCidFmt = account!.balanceEntries.entries.firstWhere((e) => applyDemurrage(e.value)! > 0.013).key;
-      return CommunityIdentifier.fromFmtString(fallbackCidFmt);
-    } catch (e, s) {
-      Log.e(
-        '${account!.address} does not have sufficient funds in any community. Returning null to pay tx in native token',
-        'EncointerStore',
-        s,
-      );
+    assert(latestHeader != null, '[TxPaymentAsset]: latestHeader was null');
+    assert(demurrage != null, '[TxPaymentAsset]: demurrage was null');
 
-      return null;
-    }
+    return EncointerStoreService.getTxPaymentAsset(
+      preferredCid,
+      balanceEntries.nonObservableInner,
+      latestHeader!,
+      demurrage!,
+    );
   }
 
   // -- Setters for this store
