@@ -19,7 +19,6 @@ import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
-import 'package:encointer_wallet/page/profile/account/export_account_page.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
@@ -144,11 +143,6 @@ class AppRoute {
           builder: (_) => const SettingsPage(),
           settings: settings,
         );
-      case ExportAccountPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => ExportAccountPage(),
-          settings: settings,
-        );
       case ExportResultPage.route:
         return CupertinoPageRoute(
           builder: (_) => const ExportResultPage(),
@@ -196,8 +190,9 @@ class AppRoute {
         return CupertinoPageRoute(
           builder: (_) => Provider(
             create: (context) => TransferHistoryViewStore(
+              context.read<AppStore>(),
               RepositoryProvider.of<EwHttp>(context),
-            )..getTransfers(context.read<AppStore>()),
+            )..getTransfers(),
             child: const TransferHistoryView(),
           ),
         );

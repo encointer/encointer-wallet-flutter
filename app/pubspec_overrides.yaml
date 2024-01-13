@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: ew_http,ew_storage,ew_polkadart,ew_substrate_fixed,ew_keyring,polkadart,polkadart_scale_codec,substrate_metadata,ew_encointer_utils,ew_primitives
+# melos_managed_dependency_overrides: ew_encointer_utils,ew_http,ew_keyring,ew_polkadart,ew_primitives,ew_storage,ew_substrate_fixed,polkadart,polkadart_scale_codec,substrate_metadata,polkadart_keyring
 dependency_overrides:
   ew_encointer_utils:
     path: ../packages/ew_encointer_utils
@@ -19,15 +19,20 @@ dependency_overrides:
   polkadart:
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/storage-key-prefix-dev
+      ref: main
       path: packages/polkadart
+  polkadart_keyring:
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: main
+      path: packages/polkadart_keyring
   polkadart_scale_codec:
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/storage-key-prefix-dev
+      ref: main
       path: packages/polkadart_scale_codec
   substrate_metadata:
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/storage-key-prefix-dev
+      ref: main
       path: packages/substrate_metadata

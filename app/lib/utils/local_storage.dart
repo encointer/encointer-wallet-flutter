@@ -10,23 +10,10 @@ class LocalStorage {
   final currentAccountKey = 'wallet_current_account';
   final encointerCommunityKey = 'wallet_encointer_community';
   final contactsKey = 'wallet_contact_list';
-  final seedKey = 'wallet_seed';
   final customKVKey = 'wallet_kv';
   final meetUpNotificationKey = 'meet_up_notification';
 
   final storage = _LocalStorage();
-
-  Future<void> addAccount(Map<String, dynamic> acc) async {
-    return storage.addItemToList(accountsKey, acc);
-  }
-
-  Future<void> removeAccount(String pubKey) async {
-    return storage.removeItemFromList(accountsKey, 'pubKey', pubKey);
-  }
-
-  Future<List<Map<String, dynamic>>> getAccountList() async {
-    return storage.getList(accountsKey);
-  }
 
   Future<bool> setCurrentAccount(String pubKey) async {
     return storage.setKV(currentAccountKey, pubKey);
@@ -70,18 +57,6 @@ class LocalStorage {
 
   Future<List<Map<String, dynamic>>> getList(String cacheKey) async {
     return storage.getList(cacheKey);
-  }
-
-  Future<bool> setSeeds(String seedType, Map value) async {
-    return storage.setKV('${seedKey}_$seedType', jsonEncode(value));
-  }
-
-  Future<Map<String, dynamic>> getSeeds(String seedType) async {
-    final value = await storage.getKV('${seedKey}_$seedType');
-    if (value != null) {
-      return jsonDecode(value) as Map<String, dynamic>;
-    }
-    return {};
   }
 
   Future<bool> setObject(String key, Object value) async {

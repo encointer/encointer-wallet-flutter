@@ -11,22 +11,26 @@ import 'package:ew_keyring/ew_keyring.dart';
 
 part 'transfer_history_view_store.g.dart';
 
-class TransferHistoryViewStore = _TransferHistoryViewStoreBase with _$TransferHistoryViewStore;
+class TransferHistoryViewStore extends _TransferHistoryViewStoreBase with _$TransferHistoryViewStore {
+  TransferHistoryViewStore(super.appStore, super.ewHttp);
+}
 
 const _target = 'transfer_history_view_store';
 
 abstract class _TransferHistoryViewStoreBase with Store {
-  _TransferHistoryViewStoreBase(this.ewHttp);
+  _TransferHistoryViewStoreBase(this.appStore, this.ewHttp);
 
   final EwHttp ewHttp;
 
-  List<Transaction>? transactions;
+  final AppStore appStore;
+
+  List<Transaction> transactions = [];
 
   @observable
   FetchStatus fetchStatus = FetchStatus.loading;
 
   @action
-  Future<void> getTransfers(AppStore appStore) async {
+  Future<void> getTransfers() async {
     fetchStatus = FetchStatus.loading;
 
     final pubKey = appStore.account.currentAccountPubKey;

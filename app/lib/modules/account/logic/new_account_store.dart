@@ -1,8 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/modules/account/logic/key_type.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -11,9 +11,15 @@ import 'package:provider/provider.dart';
 
 part 'new_account_store.g.dart';
 
-class NewAccountStore = _NewAccountStoreBase with _$NewAccountStore;
+class NewAccountStore extends _NewAccountStoreBase with _$NewAccountStore {
+  NewAccountStore(super.appStore);
+}
 
 abstract class _NewAccountStoreBase with Store {
+  _NewAccountStoreBase(this.appStore);
+
+  final AppStore appStore;
+
   @observable
   String? name;
 
@@ -42,21 +48,21 @@ abstract class _NewAccountStoreBase with Store {
   void setKeyType(KeyType value) => keyType = value;
 
   @action
-  Future<NewAccountResult> generateAccount(BuildContext context, Api webApi) async {
+  Future<NewAccountResult> generateAccount(BuildContext context) async {
     final pin = password ?? context.read<LoginStore>().cachedPin;
     if (pin == null) return const NewAccountResult(NewAccountResultType.emptyPassword);
-    return _generateAccount(context, webApi, pin);
+    return _generateAccount(context, pin);
   }
 
   @action
-  Future<NewAccountResult> importAccount(BuildContext context, Api webApi) async {
+  Future<NewAccountResult> importAccount(BuildContext context) async {
     final pin = password ?? context.read<LoginStore>().cachedPin;
     if (pin == null) return const NewAccountResult(NewAccountResultType.emptyPassword);
-    return _importAccount(context, webApi, pin);
+    return _importAccount(context, pin);
   }
 
   @action
-  Future<NewAccountResult> _generateAccount(BuildContext context, Api webApi, String pin) async {
+  Future<NewAccountResult> _generateAccount(BuildContext context, String pin) async {
     try {
       _loading = true;
       final key = await webApi.account.generateAccount();
@@ -67,10 +73,9 @@ abstract class _NewAccountStoreBase with Store {
       }
 
       await context.read<LoginStore>().setPin(pin);
-      final appStore = context.read<AppStore>();
       acc['address'] =
           AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
-      return saveAccount(webApi, appStore, acc, pin);
+      return saveAccount(acc, pin);
     } catch (e, s) {
       _loading = false;
       Log.e('generate account', '$e', s);
@@ -79,7 +84,7 @@ abstract class _NewAccountStoreBase with Store {
   }
 
   @action
-  Future<NewAccountResult> _importAccount(BuildContext context, Api webApi, String pin) async {
+  Future<NewAccountResult> _importAccount(BuildContext context, String pin) async {
     try {
       _loading = true;
       assert(accountKey != null && accountKey!.isNotEmpty, 'accountKey can not be null or empty');
@@ -93,7 +98,6 @@ abstract class _NewAccountStoreBase with Store {
         return const NewAccountResult(NewAccountResultType.error);
       } else {
         await context.read<LoginStore>().setPin(pin);
-        final appStore = context.read<AppStore>();
         acc['address'] =
             AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
         final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
@@ -101,7 +105,7 @@ abstract class _NewAccountStoreBase with Store {
           _loading = false;
           return NewAccountResult(NewAccountResultType.duplicateAccount, newAccountData: acc);
         }
-        return saveAccount(webApi, appStore, acc, pin);
+        return saveAccount(acc, pin);
       }
     } catch (e, s) {
       _loading = false;
@@ -111,22 +115,12 @@ abstract class _NewAccountStoreBase with Store {
   }
 
   @action
-  Future<NewAccountResult> saveAccount(Api webApi, AppStore appStore, Map<String, dynamic> acc, String pin) async {
-    await appStore.addAccount(acc, pin, acc['address'] as String, name);
+  Future<NewAccountResult> saveAccount(Map<String, dynamic> acc, String pin) async {
+    await appStore.addAccount(acc, pin, acc['address'] as String, name!);
     await appStore.setCurrentAccount(acc['pubKey'] as String?);
     await appStore.loadAccountCache();
     webApi.fetchAccountData();
     _loading = false;
     return NewAccountResult(NewAccountResultType.ok, newAccountData: acc);
   }
-}
-
-enum KeyType {
-  mnemonic('mnemonic'),
-  rawSeed('rawSeed'),
-  keystore('keystore');
-
-  const KeyType(this.key);
-
-  final String key;
 }

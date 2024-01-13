@@ -6,7 +6,7 @@ import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/config/biometric_auth_state.dart';
 
 @immutable
-final class LoginService {
+final class LoginService with GetPin {
   const LoginService(this.localAuthentication, this.preferences, this.secureStorage);
 
   final LocalAuthentication localAuthentication;
@@ -43,6 +43,7 @@ final class LoginService {
     await preferences.setString(biometricAuthStateKey, biometricAuthState.name);
   }
 
+  @override
   Future<String?> getPin() => secureStorage.read(key: pinStorageKey);
 
   Future<void> setPin(String pin) async {
@@ -86,4 +87,8 @@ final class LoginService {
       rethrow;
     }
   }
+}
+
+mixin GetPin {
+  Future<String?> getPin();
 }

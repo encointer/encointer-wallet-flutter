@@ -3,10 +3,10 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show Provider;
 
@@ -19,9 +19,13 @@ class AccountApi {
   void Function()? fetchAccountData;
 
   Future<void> initAccounts() async {
-    if (store.account.accountList.isNotEmpty) {
-      final accounts = store.account.accountList.map(jsonEncode).toList();
-      await jsApi.evalJavascript<void>('account.initKeys($accounts)');
+    for (final account in store.account.keyring.accountsIter) {
+      Log.d('[initAccounts]: ${account.toAccountData()}');
+      await webApi.account.importAccount(
+        key: account.uri,
+        password: '',
+        keyType: account.seedType.name,
+      );
     }
   }
 
@@ -99,11 +103,5 @@ class AccountApi {
     var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$password")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
     return jsApi.evalJavascript<Map<String, dynamic>>(code);
-  }
-
-  Future<Map<String, dynamic>?> checkAccountPassword(AccountData account, String pass) async {
-    final pubKey = account.pubKey;
-    Log.d('checkpass: $pubKey, $pass', 'AccountApi');
-    return jsApi.evalJavascript<Map<String, dynamic>?>('account.checkPassword("$pubKey", "$pass")');
   }
 }
