@@ -13,7 +13,6 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -109,9 +108,8 @@ class CreatePinForm extends StatelessWidget with HandleNewAccountResultMixin {
             final newAccount = context.read<NewAccountStore>();
             if (_formKey.currentState!.validate() && !newAccount.loading) {
               newAccount.setPassword(_passCtrl.text.trim());
-              final res = fromImportPage
-                  ? await newAccount.importAccount(context, webApi)
-                  : await newAccount.generateAccount(context, webApi);
+              final res =
+                  fromImportPage ? await newAccount.importAccount(context) : await newAccount.generateAccount(context);
               await navigate(
                 context: context,
                 type: res.operationResult,

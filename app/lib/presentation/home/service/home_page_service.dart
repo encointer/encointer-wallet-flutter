@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:ew_http/ew_http.dart';
-import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -11,31 +10,23 @@ import 'package:encointer_wallet/modules/settings/logic/app_settings_store.dart'
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/utils.dart';
 
-part 'home_page_store.g.dart';
-
 const _logTarget = 'HomePageStore';
-// ignore: library_private_types_in_public_api
-class HomePageStore = _HomePageStoreBase with _$HomePageStore;
 
-abstract class _HomePageStoreBase with Store, WidgetsBindingObserver {
-  _HomePageStoreBase(this.appStore, this.buildContext) {
+class HomePageService with WidgetsBindingObserver {
+  HomePageService(this.appStore, this.buildContext) {
     _init();
   }
 
-  @observable
-  late AppStore appStore;
+  final AppStore appStore;
 
-  @observable
-  late BuildContext buildContext;
+  final BuildContext buildContext;
 
-  @action
   void _init() {
     Log.d(_logTarget, '_init');
     WidgetsBinding.instance.addObserver(this);
     if (!RepositoryProvider.of<AppConfig>(buildContext).isIntegrationTest) NotificationPlugin.init(buildContext);
   }
 
-  @action
   Future<void> postFrameCallbacks() async {
     Log.d(_logTarget, 'postFrameCallbacks');
     final encointer = buildContext.read<AppStore>().encointer;
@@ -75,7 +66,6 @@ abstract class _HomePageStoreBase with Store, WidgetsBindingObserver {
     }
   }
 
-  @action
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     Log.d(_logTarget, 'Change lifecycle to $state');
@@ -92,7 +82,6 @@ abstract class _HomePageStoreBase with Store, WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
   }
 
-  @action
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
   }

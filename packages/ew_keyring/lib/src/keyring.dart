@@ -1,64 +1,89 @@
-import 'package:ew_keyring/src/keyring_data.dart';
+import 'package:convert/convert.dart';
+import 'package:ew_keyring/ew_keyring.dart' show KeyringUtils, KeyringAccount, KeyringAccountData;
+import 'package:ew_keyring/src/address_utils.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 
 /// The public key (as a list of integers).
 typedef Pubkey = String;
 
-/// Keyring that is stored on the devices encrypted storage.
-///
-/// Note: This can't yet be used by encointer. It uses ed25519,
-/// which is unfortunately not compatible with encointer. We have
-/// to wait for sr25519 support from polkadart.
+/// Keyring to handle the accounts and their metadata.
 class EncointerKeyring {
-  EncointerKeyring()
-      : keyring = Keyring(),
-        accounts = {};
+  EncointerKeyring() : _accounts = {};
 
-  static Future<EncointerKeyring> fromAccounts(List<KeyringAccount> accounts) async {
-    final k = EncointerKeyring();
-    await k.addAccounts(accounts);
-    return k;
+  factory EncointerKeyring.fromAccounts(List<KeyringAccount> accounts) {
+    return EncointerKeyring()..addAccounts(accounts);
   }
 
-  final Keyring keyring;
-  final Map<Pubkey, KeyringAccount> accounts;
+  final Map<Pubkey, KeyringAccount> _accounts;
 
-  Future<void> addAccounts(List<KeyringAccount> keyringAccounts) async {
-    await Future.wait(keyringAccounts.map(addAccount));
+  static Future<EncointerKeyring> fromAccountData(List<KeyringAccountData> accounts) async {
+    final keyringAccounts = await Future.wait([
+      ...accounts.map((acc) => KeyringAccount.fromUri(acc.name, acc.uri)),
+    ]);
+    return EncointerKeyring.fromAccounts(keyringAccounts);
   }
 
-  Future<void> addAccount(KeyringAccount keyringAccount) async {
-    final pair = await KeyPair.fromMnemonic(keyringAccount.seed);
-    keyring.add(pair);
-    // same as what keyring does internally.
-    accounts[_publicKey(pair).toString()] = keyringAccount;
+  String serializeAccounts() {
+    return KeyringUtils.serializeAccountData(_accounts.values.map((a) => a.toAccountData()).toList(growable: false));
   }
+
+  static Future<EncointerKeyring> fromSerialized(String accounts) async {
+    final data = KeyringUtils.deserializeAccountData(accounts);
+    return EncointerKeyring.fromAccountData(data);
+  }
+
+  void addAccounts(List<KeyringAccount> keyringAccounts) {
+    // Need to call to list here to evaluate the iterator.
+    keyringAccounts.map(addAccount).toList();
+  }
+
+  void addAccount(KeyringAccount keyringAccount) {
+    _accounts[keyringAccount.pubKey.toString()] = keyringAccount;
+  }
+
+  List<KeyringAccount> get accounts => _accounts.values.toList();
+
+  Iterable<KeyringAccount> get accountsIter => _accounts.values;
+
+  List<KeyringAccountData> get accountDatas => accountsIter.map((a) => a.toAccountData()).toList();
 
   KeyPair getPairByPublicKey(List<int> publicKey) {
-    return keyring.getByPublicKey(publicKey);
+    return getAccountByPublicKey(publicKey).pair;
+  }
+
+  KeyPair getPairByAddress(String address) {
+    return getAccountByAddress(address).pair;
   }
 
   KeyringAccount getAccountByPublicKey(List<int> publicKey) {
-    if (accounts[publicKey.toString()] == null) {
+    if (_accounts[publicKey.toString()] == null) {
       throw ArgumentError('KeyPair with provided key, not found.');
     }
-    return accounts[publicKey.toString()]!;
+    return _accounts[publicKey.toString()]!;
+  }
+
+  KeyringAccount getAccountByPubKeyHex(String pubKeyHex) {
+    final publicKey = hex.decode(pubKeyHex.replaceFirst('0x', ''));
+    if (_accounts[publicKey.toString()] == null) {
+      throw ArgumentError('KeyPair with provided key, not found.');
+    }
+    return _accounts[publicKey.toString()]!;
+  }
+
+  KeyringAccount getAccountByAddress(String address) {
+    final publicKey = AddressUtils.addressToPubKey(address).toString();
+    if (_accounts[publicKey] == null) {
+      throw ArgumentError('KeyPair with provided key, not found.');
+    }
+    return _accounts[publicKey]!;
   }
 
   void remove(List<int> publicKey) {
-    keyring.pairs.removeByPublicKey(publicKey);
-    accounts.remove(publicKey.toString());
+    _accounts.remove(publicKey.toString());
   }
 
   /// Remove all key pairs from the keyring.
   void clear() {
-    keyring.clear();
-    accounts.clear();
-  }
-
-  /// Get a List<int> as string, this is the same as the keyring internally uses
-  /// to add a pair.
-  List<int> _publicKey(KeyPair pair) {
-    return keyring.decodeAddress(pair.address);
+    _accounts.clear();
   }
 }

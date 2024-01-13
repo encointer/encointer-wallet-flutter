@@ -11,8 +11,6 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
-import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/page/profile/account/faucet_list_tile.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -126,26 +124,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
       titleText: context.l10n.confirmPin,
       autoCloseOnSuccess: false,
       onSuccess: (password) async {
-        final isMnemonic =
-            await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
-        Navigator.pop(context);
-        if (isMnemonic) {
-          final seed =
-              await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
-
-          await Navigator.pushNamed(context, ExportResultPage.route, arguments: {
-            'key': seed,
-            'type': AccountStore.seedTypeMnemonic,
-          });
-        } else {
-          final l10n = context.l10n;
-          AppAlert.showErrorDialog(
-            context,
-            title: Text(l10n.noMnemonicFound),
-            errorText: l10n.importedWithRawSeedHenceNoMnemonic,
-            buttontext: l10n.ok,
-          );
-        }
+        Navigator.of(context).pop();
+        final account = _appStore.account.getKeyringAccount(accountToBeEdited.pubKey);
+        await Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+          'key': account.uri,
+          'type': '',
+        });
       },
     );
   }

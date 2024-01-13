@@ -106,13 +106,6 @@ export async function getProofOfAttendance (attendeePubKey, cid, cIndex, passwor
   const cidT = api.createType('CommunityIdentifier', cid);
   window.send('js-getProofOfAttendance', `getting PoA for  Cid: ${communityIdentifierToString(cidT)}, cIndex: ${cIndex} and address: ${attendeePubKey}`);
   const attendee = keyring.getPair(hexToU8a(attendeePubKey));
-  try {
-    attendee.decodePkcs8(password);
-  } catch (err) {
-    return new Promise((resolve, reject) => {
-      resolve({ error: 'password check failed' });
-    });
-  }
   return _getProofOfAttendance(attendee, cid, cIndex);
 }
 
