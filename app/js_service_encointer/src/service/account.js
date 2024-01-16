@@ -15,16 +15,6 @@ import { stringNumberToEncointerBalanceU8a } from '../utils/utils.js';
 
 export const keyring = new Keyring({ ss58Format: 0, type: 'sr25519' });
 
-async function gen () {
-  await cryptoWaitReady();
-  return new Promise((resolve) => {
-    const key = mnemonicGenerate();
-    resolve({
-      mnemonic: key
-    });
-  });
-}
-
 async function recover (keyType, cryptoType, key, password) {
   await cryptoWaitReady();
   return new Promise((resolve, reject) => {
@@ -222,7 +212,6 @@ export async function _getXt (keyPair, txInfo, paramList) {
 export default {
   initKeys,
   addressFromUri,
-  gen,
   recover,
   getBlockTime,
   txFeeEstimate,

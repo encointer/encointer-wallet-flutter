@@ -65,8 +65,8 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> _generateAccount(BuildContext context, String pin) async {
     try {
       _loading = true;
-      final key = await webApi.account.generateAccount();
-      final acc = await webApi.account.importAccount(key: key, password: pin);
+      final mnemonic = KeyringUtils.generateMnemonic();
+      final acc = await webApi.account.importAccount(key: mnemonic.sentence, password: pin);
       if (acc['error'] != null) {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);

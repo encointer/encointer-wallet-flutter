@@ -88,11 +88,6 @@ class AccountApi {
     return jsApi.evalJavascript<Map<String, dynamic>>(call);
   }
 
-  Future<String> generateAccount() async {
-    final acc = await jsApi.evalJavascript<Map<String, dynamic>>('account.gen()');
-    return acc['mnemonic'] as String;
-  }
-
   Future<Map<String, dynamic>> importAccount({
     required String key,
     required String password,
