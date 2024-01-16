@@ -117,8 +117,8 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   late final _$saveAccountAsyncAction = AsyncAction('_NewAccountStoreBase.saveAccount', context: context);
 
   @override
-  Future<NewAccountResult> saveAccount(Map<String, dynamic> acc, String pin) {
-    return _$saveAccountAsyncAction.run(() => super.saveAccount(acc, pin));
+  Future<NewAccountResult> saveAccount(KeyringAccount account, String pin) {
+    return _$saveAccountAsyncAction.run(() => super.saveAccount(account, pin));
   }
 
   late final _$_NewAccountStoreBaseActionController = ActionController(name: '_NewAccountStoreBase', context: context);

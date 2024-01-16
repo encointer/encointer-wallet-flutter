@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
-import 'package:ew_keyring/src/address_utils.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_keyring/src/validate_keys.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
@@ -40,6 +40,10 @@ class KeyringAccount {
   static Future<KeyringAccount> fromUri(String name, String uri) async {
     final pair = await Sr25519KeyPair().fromUri(uri) as Sr25519KeyPair;
     return KeyringAccount._(name: name, uri: uri, pair: pair);
+  }
+
+  static Future<KeyringAccount> generate(String name) {
+    return KeyringAccount.fromUri(name, KeyringUtils.generateMnemonic().sentence);
   }
 
   String name;

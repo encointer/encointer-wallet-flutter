@@ -178,10 +178,8 @@ abstract class _AccountStore with Store {
 
   /// Adds a new account, will overwrite the account data if they same seed already exists.
   @action
-  Future<void> addAccount(Map<String, dynamic> acc, String password, {required String name}) async {
-    final uri = getUriFromMeta(acc);
-    final account = await KeyringAccount.fromUri(name, uri);
-    Log.d('[AddAccount]: added account ${account.toAccountData()}');
+  Future<void> addAccount(KeyringAccount account) async {
+    Log.d('[AddAccount]: adding account ${account.toAccountData()}');
 
     keyring.addAccount(account);
     await storeAccountData();

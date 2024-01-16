@@ -207,8 +207,8 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
     }
   }
 
-  Future<void> addAccount(Map<String, dynamic> acc, String password, String? address, String name) {
-    return account.addAccount(acc, password, name: name);
+  Future<void> addAccount(KeyringAccount acc) {
+    return account.addAccount(acc);
   }
 
   Future<void> setCurrentAccount(String? pubKey) async {

@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/store/app.dart';
@@ -17,8 +18,9 @@ void main() {
       final store = root.account;
 
       /// add account
-      const testPass = 'a111111';
-      await store.addAccount(testAccount1, testPass, name: testAccount1['name'] as String);
+      final keyringAccount1 =
+          await KeyringAccount.fromUri(testAccount1['name'] as String, testAccount1['mnemonic'] as String);
+      await store.addAccount(keyringAccount1);
       expect(store.accountList.length, 1);
       await store.setCurrentAccount(testAccount1['pubKey'] as String);
       expect(store.currentAccountPubKey, testAccount1['pubKey']);
@@ -26,7 +28,9 @@ void main() {
       expect(store.currentAccount.pubKey, testAccount1['pubKey']);
       expect(store.currentAccount.address, testAccount1['address']);
 
-      await store.addAccount(testAccount2, testPass, name: testAccount2['name'] as String);
+      final keyringAccount2 =
+          await KeyringAccount.fromUri(testAccount2['name'] as String, testAccount2['mnemonic'] as String);
+      await store.addAccount(keyringAccount2);
       expect(store.accountList.length, 2);
       await store.setCurrentAccount(testAccount2['pubKey'] as String);
       expect(store.currentAccountPubKey, testAccount2['pubKey']);

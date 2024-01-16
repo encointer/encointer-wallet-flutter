@@ -16,7 +16,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/modules/account/logic/key_type.dart';
-import 'package:ew_keyring/ew_keyring.dart' show ValidateKeys;
+import 'package:ew_keyring/ew_keyring.dart' show KeyringAccount, ValidateKeys;
 
 class ImportAccountView extends StatelessWidget {
   const ImportAccountView({super.key});
@@ -144,11 +144,13 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
     );
   }
 
-  Future<void> _onDuplicateAccount(BuildContext context, Map<String, dynamic> acc) async {
+  Future<void> _onDuplicateAccount(BuildContext context, KeyringAccount acc) async {
     final l10n = context.l10n;
+    final store = context.read<AppStore>();
+
     await AppAlert.showDialog<void>(
       context,
-      title: Text(Fmt.address(acc['address'] as String)!),
+      title: Text(Fmt.address(acc.address(prefix: store.settings.endpoint.ss58 ?? 42).encode())!),
       content: Text(l10n.importDuplicate),
       actions: [
         CupertinoButton(
