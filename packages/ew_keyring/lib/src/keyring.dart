@@ -1,6 +1,5 @@
 import 'package:convert/convert.dart';
-import 'package:ew_keyring/ew_keyring.dart' show KeyringUtils, KeyringAccount, KeyringAccountData;
-import 'package:ew_keyring/src/address_utils.dart';
+import 'package:ew_keyring/ew_keyring.dart' show AddressUtils, KeyringAccount, KeyringAccountData, KeyringUtils;
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 
 /// The public key (as a list of integers).

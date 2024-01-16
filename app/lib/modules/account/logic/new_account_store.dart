@@ -65,17 +65,16 @@ abstract class _NewAccountStoreBase with Store {
   Future<NewAccountResult> _generateAccount(BuildContext context, String pin) async {
     try {
       _loading = true;
-      final key = await webApi.account.generateAccount();
-      final acc = await webApi.account.importAccount(key: key, password: pin);
-      if (acc['error'] != null) {
+      final keyringAccount = await KeyringAccount.generate(name!);
+      final result = await webApi.account.importAccount(key: keyringAccount.uri, password: pin);
+      if (result['error'] != null) {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       }
 
       await context.read<LoginStore>().setPin(pin);
-      acc['address'] =
-          AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
-      return saveAccount(acc, pin);
+
+      return saveAccount(keyringAccount, pin);
     } catch (e, s) {
       _loading = false;
       Log.e('generate account', '$e', s);
@@ -88,24 +87,24 @@ abstract class _NewAccountStoreBase with Store {
     try {
       _loading = true;
       assert(accountKey != null && accountKey!.isNotEmpty, 'accountKey can not be null or empty');
-      final acc = await webApi.account.importAccount(
+      final keyringAccount = await KeyringAccount.fromUri(name!, accountKey!);
+      final result = await webApi.account.importAccount(
         key: accountKey!,
         password: pin,
         keyType: keyType.name,
       );
-      if (acc['error'] != null) {
+      if (result['error'] != null) {
         _loading = false;
         return const NewAccountResult(NewAccountResultType.error);
       } else {
         await context.read<LoginStore>().setPin(pin);
-        acc['address'] =
-            AddressUtils.pubKeyHexToAddress(acc['pubKey'] as String, prefix: appStore.settings.endpoint.ss58!);
-        final index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
+
+        final index = appStore.account.accountList.indexWhere((i) => i.pubKey == keyringAccount.pubKeyHex);
         if (index > -1) {
           _loading = false;
-          return NewAccountResult(NewAccountResultType.duplicateAccount, newAccountData: acc);
+          return NewAccountResult(NewAccountResultType.duplicateAccount, newAccount: keyringAccount);
         }
-        return saveAccount(acc, pin);
+        return saveAccount(keyringAccount, pin);
       }
     } catch (e, s) {
       _loading = false;
@@ -115,12 +114,12 @@ abstract class _NewAccountStoreBase with Store {
   }
 
   @action
-  Future<NewAccountResult> saveAccount(Map<String, dynamic> acc, String pin) async {
-    await appStore.addAccount(acc, pin, acc['address'] as String, name!);
-    await appStore.setCurrentAccount(acc['pubKey'] as String?);
+  Future<NewAccountResult> saveAccount(KeyringAccount account, String pin) async {
+    await appStore.addAccount(account);
+    await appStore.setCurrentAccount(account.pubKeyHex);
     await appStore.loadAccountCache();
     webApi.fetchAccountData();
     _loading = false;
-    return NewAccountResult(NewAccountResultType.ok, newAccountData: acc);
+    return NewAccountResult(NewAccountResultType.ok, newAccount: account);
   }
 }
