@@ -34,10 +34,13 @@ class ReapVoucherParams {
 }
 
 class ReapVoucherPage extends StatefulWidget {
-  const ReapVoucherPage(this.api, {super.key});
+  const ReapVoucherPage(this.api, this.voucher, this.showFundVoucher, {super.key});
 
   static const String route = '/qrcode/voucher';
   final Api api;
+
+  final VoucherData voucher;
+  final bool showFundVoucher;
 
   @override
   State<ReapVoucherPage> createState() => _ReapVoucherPageState();
@@ -83,24 +86,23 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final store = context.watch<AppStore>();
     final h2Grey = context.titleLarge.copyWith(color: AppColors.encointerGrey);
     final h4Grey = context.bodyLarge.copyWith(color: AppColors.encointerGrey);
-    final params = ModalRoute.of(context)?.settings.arguments as ReapVoucherParams?;
 
-    final voucher = params?.voucher;
-    final voucherUri = voucher?.voucherUri;
-    final cid = voucher?.cid;
-    final networkInfo = voucher?.network;
-    final issuer = voucher?.issuer;
+    final voucher = widget.voucher;
+    final voucherUri = voucher.voucherUri;
+    final cid = voucher.cid;
+    final networkInfo = voucher.network;
+    final issuer = voucher.issuer;
     final recipient = store.account.currentAddress;
-    final showFundVoucher = params?.showFundVoucher;
+    final showFundVoucher = widget.showFundVoucher;
 
     if (!_postFrameCallbackCalled) {
       _postFrameCallbackCalled = true;
       WidgetsBinding.instance.addPostFrameCallback(
         (_) async {
-          final result = cid != null ? await _changeNetworkAndCommunityIfNeeded(context, networkInfo!, cid) : null;
+          final result = await _changeNetworkAndCommunityIfNeeded(context, networkInfo, cid);
 
-          if (result == ChangeResult.ok && cid != null) {
-            await fetchVoucherData(widget.api, voucherUri!, cid);
+          if (result == ChangeResult.ok) {
+            await fetchVoucherData(widget.api, voucherUri, cid);
           } else if (result == ChangeResult.invalidNetwork) {
             await showErrorDialog(context, l10n.invalidNetwork);
           } else if (result == ChangeResult.invalidCommunity) {
@@ -123,7 +125,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   : const CupertinoActivityIndicator(),
             ),
             const SizedBox(height: 8),
-            Text(issuer ?? '', style: h2Grey),
+            Text(issuer, style: h2Grey),
             SizedBox(
               height: 80,
               child: _voucherBalance != null
@@ -144,12 +146,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                 ),
               ),
             ),
-            if (showFundVoucher ?? false)
+            if (showFundVoucher)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SecondaryButtonWide(
                   key: const Key(EWTestKeys.voucherToTransferPage),
-                  onPressed: _isReady ? () => _pushTransferPage(context, voucher!, _voucherAddress!) : null,
+                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress!) : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -162,7 +164,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               ),
             SubmitButton(
               key: const Key(EWTestKeys.submitVoucher),
-              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri!, cid!, recipient) : null,
+              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri, cid, recipient) : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
