@@ -1,21 +1,10 @@
 import { assert, hexToU8a } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { createType } from '@polkadot/types';
-import { parseEncointerBalance } from '@encointer/types';
 import { keyring, sendTxWithPair } from './account.js';
 import { communityIdentifierToString } from '@encointer/util';
-import {
-  getDemurrage as _getDemurrage, submitAndWatchTx,
-} from '@encointer/node-api';
+import { submitAndWatchTx } from '@encointer/node-api';
 import { Keyring } from '@polkadot/keyring';
-
-export async function getBalance (cid, address) {
-  const balanceEntry = await api.query.encointerBalances.balance(cid, address);
-  return {
-    principal: parseEncointerBalance(balanceEntry.principal.bits),
-    lastUpdate: balanceEntry.lastUpdate.toNumber()
-  };
-}
 
 /***
  * Reaps the voucher and transfers all funds to `recipientAddress`
@@ -54,12 +43,6 @@ export function encointerTransferAll (fromPair, recipientAddress, cid) {
   };
 
   return sendTxWithPair(fromPair, txInfo, paramList);
-}
-
-export async function getDemurrage (cid) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-
-  return _getDemurrage(api, cidT).then((demBits) => parseEncointerBalance(demBits));
 }
 
 /**
@@ -134,7 +117,6 @@ export async function sendNextPhaseTx() {
 
 export default {
   getProofOfAttendance,
-  getBalance,
   sendNextPhaseTx,
   reapVoucher,
 };
