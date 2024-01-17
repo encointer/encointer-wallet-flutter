@@ -108,11 +108,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final h4Grey = context.bodyLarge.copyWith(color: AppColors.encointerGrey);
 
     final voucher = widget.voucher;
-    final voucherUri = voucher.voucherUri;
-    final cid = voucher.cid;
-    final issuer = voucher.issuer;
     final recipient = store.account.currentAddress;
-    final showFundVoucher = widget.showFundVoucher;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.voucher)),
@@ -127,7 +123,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   : const CupertinoActivityIndicator(),
             ),
             const SizedBox(height: 8),
-            Text(issuer, style: h2Grey),
+            Text(voucher.issuer, style: h2Grey),
             SizedBox(
               height: 80,
               child: _voucherBalance != null
@@ -148,7 +144,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                 ),
               ),
             ),
-            if (showFundVoucher)
+            if (widget.showFundVoucher)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SecondaryButtonWide(
@@ -166,7 +162,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               ),
             SubmitButton(
               key: const Key(EWTestKeys.submitVoucher),
-              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri, cid, recipient) : null,
+              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucher.voucherUri, voucher.cid, recipient) : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
