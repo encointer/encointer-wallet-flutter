@@ -50,8 +50,6 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   String? _voucherAddress;
   double? _voucherBalance;
 
-  bool _postFrameCallbackCalled = false;
-
   /// Is true when all the data has been fetched.
   bool _isReady = false;
 
@@ -81,6 +79,28 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        final l10n = context.l10n;
+        final voucher = widget.voucher;
+
+        final result = await _changeNetworkAndCommunityIfNeeded(context, voucher.network, voucher.cid);
+
+        if (result == ChangeResult.ok) {
+          await fetchVoucherData(widget.api,voucher.voucherUri, voucher.cid);
+        } else if (result == ChangeResult.invalidNetwork) {
+          await showErrorDialog(context, l10n.invalidNetwork);
+        } else if (result == ChangeResult.invalidCommunity) {
+          await showErrorDialog(context, l10n.invalidCommunity);
+        }
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final store = context.watch<AppStore>();
@@ -90,27 +110,9 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final voucher = widget.voucher;
     final voucherUri = voucher.voucherUri;
     final cid = voucher.cid;
-    final networkInfo = voucher.network;
     final issuer = voucher.issuer;
     final recipient = store.account.currentAddress;
     final showFundVoucher = widget.showFundVoucher;
-
-    if (!_postFrameCallbackCalled) {
-      _postFrameCallbackCalled = true;
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) async {
-          final result = await _changeNetworkAndCommunityIfNeeded(context, networkInfo, cid);
-
-          if (result == ChangeResult.ok) {
-            await fetchVoucherData(widget.api, voucherUri, cid);
-          } else if (result == ChangeResult.invalidNetwork) {
-            await showErrorDialog(context, l10n.invalidNetwork);
-          } else if (result == ChangeResult.invalidCommunity) {
-            await showErrorDialog(context, l10n.invalidCommunity);
-          }
-        },
-      );
-    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.voucher)),
