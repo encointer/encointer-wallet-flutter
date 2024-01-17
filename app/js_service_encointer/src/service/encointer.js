@@ -5,6 +5,15 @@ import { keyring, sendTxWithPair } from './account.js';
 import { communityIdentifierToString } from '@encointer/util';
 import { submitAndWatchTx } from '@encointer/node-api';
 import { Keyring } from '@polkadot/keyring';
+import { parseEncointerBalance } from '@encointer/types';
+
+export async function getBalance (cid, address) {
+  const balanceEntry = await api.query.encointerBalances.balance(cid, address);
+  return {
+    principal: parseEncointerBalance(balanceEntry.principal.bits),
+    lastUpdate: balanceEntry.lastUpdate.toNumber()
+  };
+}
 
 /***
  * Reaps the voucher and transfers all funds to `recipientAddress`
@@ -117,6 +126,7 @@ export async function sendNextPhaseTx() {
 
 export default {
   getProofOfAttendance,
+  getBalance,
   sendNextPhaseTx,
   reapVoucher,
 };
