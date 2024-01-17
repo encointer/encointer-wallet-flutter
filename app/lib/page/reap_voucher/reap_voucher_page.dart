@@ -202,25 +202,20 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     String networkInfo,
     CommunityIdentifier cid,
   ) async {
-    ChangeResult? result = ChangeResult.ok;
     final store = context.read<AppStore>();
 
     if (store.settings.endpoint.info != networkInfo) {
-      result = await showChangeNetworkAndCommunityDialog(
+      return showChangeNetworkAndCommunityDialog(
         context,
         store,
         widget.api,
         networkInfo,
         cid,
       );
-    }
-
-    if (result != ChangeResult.ok) {
-      return result;
     }
 
     if (store.encointer.chosenCid != cid) {
-      result = await showChangeCommunityDialog(
+      return showChangeCommunityDialog(
         context,
         store,
         widget.api,
@@ -229,7 +224,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       );
     }
 
-    return result;
+    // We are already at the correct network and cid
+    return ChangeResult.ok;
   }
 }
 
