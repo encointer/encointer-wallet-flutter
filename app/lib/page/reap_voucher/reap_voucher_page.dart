@@ -1,3 +1,4 @@
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,18 +54,20 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
     Log.d('Fetching voucher data...', 'ReapVoucherPage');
+    final store = context.read<AppStore>();
 
-    _voucherAddress = await api.account.addressFromUri(voucherUri);
+    final voucherPair = await KeyringAccount.fromUri('Voucher', voucherUri);
+    _voucherAddress = voucherPair.address(prefix: store.settings.endpoint.ss58 ?? 42).encode();
 
     setState(() {});
 
     final pin = await context.read<LoginStore>().getPin(context);
     if (pin != null) {
       final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-      if (context.read<AppStore>().chain.latestHeaderNumber != null) {
+      if (store.chain.latestHeaderNumber != null) {
         _voucherBalance = voucherBalanceEntry.applyDemurrage(
-          context.read<AppStore>().chain.latestHeaderNumber!,
-          context.read<AppStore>().encointer.community!.demurrage!,
+          store.chain.latestHeaderNumber!,
+          store.encointer.community!.demurrage!,
         );
       }
 

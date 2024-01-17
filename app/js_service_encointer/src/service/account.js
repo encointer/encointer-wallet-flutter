@@ -60,17 +60,6 @@ async function initKeys (accounts) {
   accounts.forEach((i) => keyring.addFromJson(i));
 }
 
-async function addressFromUri(uri) {
-  const voucherPair = keyring.createFromUri(uri);
-  const pubKey = voucherPair.publicKey;
-  const ss58 = api.registry.getChainProperties().ss58Format
-
-  console.log(`[AddressFromUri] uri: ${uri}`);
-  console.log(`[AddressFromUri] ss58: ${ss58}`);
-
-  return keyring.encodeAddress(pubKey, ss58);
-}
-
 function getBlockTime (blocks) {
   return new Promise((resolve) => {
     const res = [];
@@ -211,7 +200,6 @@ export async function _getXt (keyPair, txInfo, paramList) {
 
 export default {
   initKeys,
-  addressFromUri,
   recover,
   getBlockTime,
   txFeeEstimate,

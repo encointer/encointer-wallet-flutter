@@ -33,13 +33,6 @@ class AccountApi {
     this.fetchAccountData = fetchAccountData;
   }
 
-  Future<String> addressFromUri(String uri) async {
-    final address = await jsApi.evalJavascript<String>('account.addressFromUri("$uri")');
-
-    Log.d('addressFromUri: $address', 'AccountApi');
-    return address;
-  }
-
   Future<void> changeCurrentAccount({
     String? pubKey,
     bool fetchData = false,
