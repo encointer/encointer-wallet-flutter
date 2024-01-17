@@ -272,6 +272,7 @@
     "votesNotDependableErrorTitle": "Голоса недостоверны",
     "voucher": "Ваучер",
     "voucherBalance": "Баланс ваучера",
+    "voucherBalanceTooLow": "На ваучере слишком мало денег, чтобы его можно было выкупить.",
     "weHopeToSeeYouAtTheNextGathering": "Мы надеемся увидеть Вас на следующей встрече.",
     "wrongPin": "Неправильный PIN-код",
     "wrongPinHint": "Не удалось разблокировать аккаунт, пожалуйста, проверьте PIN-код",

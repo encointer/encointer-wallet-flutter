@@ -272,6 +272,7 @@
     "votesNotDependableErrorTitle": "Unzureichende Bestätigungen",
     "voucher": "Gutschein",
     "voucherBalance": "Gutscheinwert",
+    "voucherBalanceTooLow": "Der Gutschein hat zu wenig Geld um eingelöst zu werden.",
     "weHopeToSeeYouAtTheNextGathering": "Wir hoffen dich an der nächsten Versammlung wiederzusehen.",
     "wrongPin": "Falscher PIN",
     "wrongPinHint": "Konto konnte nicht entsperrt werden. Bitte überprüfe die eingegebene PIN.",

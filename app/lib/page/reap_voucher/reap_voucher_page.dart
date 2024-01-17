@@ -61,17 +61,14 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     setState(() {});
 
-      final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-      if (store.chain.latestHeaderNumber != null) {
-        _voucherBalance = voucherBalanceEntry.applyDemurrage(
-          store.chain.latestHeaderNumber!,
-          store.encointer.community!.demurrage!,
-        );
+    final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
+    _voucherBalance = voucherBalanceEntry.applyDemurrage(
+      store.chain.latestHeaderNumber!,
+      store.encointer.community!.demurrage!,
+    );
 
-      _isReady = true;
-
-      setState(() {});
-    }
+    _isReady = true;
+    setState(() {});
   }
 
   @override
@@ -86,7 +83,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
         final result = await _changeNetworkAndCommunityIfNeeded(context, voucher.network, voucher.cid);
 
         if (result == ChangeResult.ok) {
-          await fetchVoucherData(widget.api,voucher.voucherUri, voucher.cid);
+          await fetchVoucherData(widget.api, voucher.voucherUri, voucher.cid);
         } else if (result == ChangeResult.invalidNetwork) {
           await showErrorDialog(context, l10n.invalidNetwork);
         } else if (result == ChangeResult.invalidCommunity) {
@@ -158,7 +155,9 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               ),
             SubmitButton(
               key: const Key(EWTestKeys.submitVoucher),
-              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucher.voucherUri, voucher.cid, recipient) : null,
+              onPressed: _isReady
+                  ? (context) => _submitReapVoucher(context, voucher.voucherUri, voucher.cid, recipient)
+                  : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -180,6 +179,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
     String recipientAddress,
   ) async {
+    if (_voucherBalance! < 0.04) return showRedeemFailedDialog(context, context.l10n.voucherBalanceTooLow);
+
     final res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
 
     if (res['hash'] == null) {

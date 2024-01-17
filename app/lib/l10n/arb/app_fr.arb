@@ -272,6 +272,7 @@
     "votesNotDependableErrorTitle": "Confirmations insuffisantes",
     "voucher": "Bon d'achat",
     "voucherBalance": "Valeur du bon",
+    "voucherBalanceTooLow": "Le bon a trop peu d'argent pour être utilisé.",
     "weHopeToSeeYouAtTheNextGathering": "Nous espérons te revoir à la prochaine rencontre",
     "wrongPin": "Code NIP erroné",
     "wrongPinHint": "Le compte n'a pas pu être débloqué. Veuillez vérifier le code NIP saisi.",

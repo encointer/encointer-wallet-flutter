@@ -206,7 +206,6 @@ Future<void> submitFaucetDrip(
   );
 }
 
-// todo: replace this with `encointerBalances.transfer_all`, when we have it in the runtime.
 Future<Map<String, dynamic>> submitReapVoucher(
   Api api,
   String voucherUri,
