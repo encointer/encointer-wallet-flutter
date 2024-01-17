@@ -272,7 +272,7 @@
     "votesNotDependableErrorTitle": "Votes not dependable",
     "voucher": "Voucher",
     "voucherBalance": "Voucher Balance",
-    "vocherBalanceTooLow": "The voucher has insufficient funds to be redeemed.",
+    "voucherBalanceTooLow": "The voucher has insufficient funds to be redeemed.",
     "weHopeToSeeYouAtTheNextGathering": "We hope to see you at the next gathering.",
     "wrongPin": "Wrong PIN",
     "wrongPinHint": "Failed to unlock account, please check PIN.",
