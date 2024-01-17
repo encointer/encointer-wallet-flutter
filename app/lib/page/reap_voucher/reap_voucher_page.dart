@@ -179,6 +179,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
     String recipientAddress,
   ) async {
+    // Fixme, use proper threshold here: #589
     if (_voucherBalance! < 0.04) return showRedeemFailedDialog(context, context.l10n.voucherBalanceTooLow);
 
     final res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
