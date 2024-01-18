@@ -3,11 +3,9 @@
  */
 
 import '../../src';
-import encointer, {
-  getProofOfAttendance,
-  _getProofOfAttendance, reapVoucher, encointerTransfer, getBalance
+import  {
+  reapVoucher, encointerTransfer, getBalance
 } from '../../src/service/encointer';
-import { cryptoWaitReady, signatureVerify } from '@polkadot/util-crypto';
 import { localDevNetwork } from '../testUtils/networks';
 import { beforeAll, describe, expect, it, jest } from '@jest/globals';
 import { parseI64F64, communityIdentifierFromString } from '@encointer/util';
@@ -22,65 +20,6 @@ describe('encointer', () => {
     await testSetup(network);
     keyring = new Keyring({ type: 'sr25519' });
   }, 90000);
-
-  describe('getProofOfAttendance', () => {
-    it('should be defined', () => {
-      expect(encointer.getProofOfAttendance).toBeDefined();
-      expect(getProofOfAttendance).toBeDefined();
-    });
-
-    it('should return Promise rejected without arguments', async () => {
-      const promise = _getProofOfAttendance();
-      await expect(promise).rejects.toThrow('Invalid attendee');
-    });
-
-    it('should return Promise rejected with incorrect arguments', async () => {
-      await expect(_getProofOfAttendance({ address: '//Bob' })).rejects.toThrow('Attendee should have sign method');
-      await expect(_getProofOfAttendance({
-        address: '//Bob',
-        sign: jest.fn()
-      })).rejects.toThrow('Invalid Community Identifier');
-      await expect(_getProofOfAttendance({
-        address: '//Bob',
-        sign: jest.fn()
-      }, 'test')).rejects.toThrow('Invalid Ceremony index');
-      await expect(_getProofOfAttendance({
-        address: '//Bob',
-        sign: jest.fn()
-      }, 'test', 0)).rejects.toThrow('Invalid Ceremony index');
-    });
-
-    it('should return proof object', async () => {
-      await cryptoWaitReady();
-      const attendee = keyring.addFromUri('//Alice', { name: 'Alice default' });
-      const cid = communityIdentifierFromString(api.registry, 'gbsuv7YXq9G');
-      const proof = await _getProofOfAttendance(attendee, cid, 2).then((p) => p.unwrap());
-
-      expect(proof).toBeDefined();
-      expect(proof.ceremonyIndex.toNumber()).toBe(2);
-      expect(proof.communityIdentifier).toStrictEqual(cid);
-      expect(proof.attendeePublic.toString()).toBe(attendee.address.toString());
-      expect(proof.proverPublic.toString()).toBe(attendee.address.toString());
-    });
-
-    it('proof should be valid', async () => {
-      await cryptoWaitReady();
-      const attendee = keyring.addFromUri('//Bob', { name: 'Bob default' });
-      const cid = communityIdentifierFromString(api.registry, 'gbsuv7YXq9G');
-      const cindex = 1;
-      const optionProof = await _getProofOfAttendance(attendee, cid, cindex);
-      const proof = optionProof.unwrap();
-      // Check message constructed from proof
-      const msg = api.createType('(AccountId,CeremonyIndexType)', [proof.attendeePublic, proof.ceremonyIndex]);
-      expect(
-        signatureVerify(
-          msg.toU8a(),
-          proof.attendeeSignature.toU8a(),
-          proof.attendeePublic
-        )
-      ).toBeTruthy();
-    });
-  });
 
   describe('parse fixed point string', () => {
     it('matches runtime value', () => {
