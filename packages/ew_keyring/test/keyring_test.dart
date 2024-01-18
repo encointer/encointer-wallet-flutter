@@ -1,22 +1,9 @@
 import 'package:convert/convert.dart';
 import 'package:ew_keyring/src/keyring.dart';
-import 'package:ew_keyring/src/keyring_account.dart';
 import 'package:polkadart_keyring/polkadart_keyring.dart';
 import 'package:test/test.dart';
 
 void main() {
-  Future<EncointerKeyring> testKeyring() async {
-    final alice = await KeyringAccount.fromUri('Alice', '//Alice');
-    final bob = await KeyringAccount.fromUri('Bob', '//Bob');
-    final charlie = await KeyringAccount.fromUri('Charlie', '//Charlie');
-    final accounts = [alice, bob, charlie];
-    final keyring = EncointerKeyring.fromAccounts(accounts);
-
-    // ignore: avoid_print
-    // print('keyring: ${keyring.accounts}');
-    return keyring;
-  }
-
   group('Keyring', () {
     test('Keyring.getPairByAddress works', () async {
       final keyring = await testKeyring();
