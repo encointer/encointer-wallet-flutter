@@ -94,7 +94,5 @@ Future<EncointerKeyring> testKeyring() async {
   final accounts = [alice, bob, charlie];
   final keyring = EncointerKeyring.fromAccounts(accounts);
 
-  // ignore: avoid_print
-  // print('keyring: ${keyring.accounts}');
   return keyring;
 }
