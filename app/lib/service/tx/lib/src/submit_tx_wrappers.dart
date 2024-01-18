@@ -124,40 +124,39 @@ Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, A
 }
 
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
+  final proof = api.encointer.getProofOfAttendance();
 
-    final proof = api.encointer.getProofOfAttendance();
+  return submitTx(
+    context,
+    store,
+    api,
+    registerParticipantParams(store.encointer.chosenCid!, context.l10n, proof: proof),
+    onFinish: (BuildContext txPageContext, ExtrinsicReport report) async {
+      store.encointer.account!.lastProofOfAttendance = proof;
+      final data = await webApi.encointer
+          .getAggregatedAccountData(store.encointer.chosenCid!, store.account.currentAccountPubKey!,
+              // Get data at included block to prevent race conditions with `store.chain.latestHead`.
+              at: report.blockHashBytes);
+      store.encointer.setAggregatedAccountData(store.encointer.chosenCid!, store.account.currentAddress, data);
 
-    return submitTx(
-      context,
-      store,
-      api,
-      registerParticipantParams(store.encointer.chosenCid!, context.l10n, proof: proof),
-      onFinish: (BuildContext txPageContext, ExtrinsicReport report) async {
-        store.encointer.account!.lastProofOfAttendance = proof;
-        final data = await webApi.encointer
-            .getAggregatedAccountData(store.encointer.chosenCid!, store.account.currentAccountPubKey!,
-                // Get data at included block to prevent race conditions with `store.chain.latestHead`.
-                at: report.blockHashBytes);
-        store.encointer.setAggregatedAccountData(store.encointer.chosenCid!, store.account.currentAddress, data);
+      Log.d('$data', 'AggregatedAccountData from register participant');
+      final registrationType = data.personal?.participantType;
 
-        Log.d('$data', 'AggregatedAccountData from register participant');
-        final registrationType = data.personal?.participantType;
-
-        if (registrationType != null) {
-          _showEducationalDialog(registrationType, context);
-          if (store.settings.endpoint == networkEndpointEncointerMainnet) {
-            await CeremonyNotifications.scheduleMeetupReminders(
-              ceremonyIndex: data.global.ceremonyIndex,
-              meetupTime: store.encointer.community!.meetupTime!,
-              l10n: context.l10n,
-              cid: store.encointer.community?.cid.toFmtString(),
-            );
-          }
+      if (registrationType != null) {
+        _showEducationalDialog(registrationType, context);
+        if (store.settings.endpoint == networkEndpointEncointerMainnet) {
+          await CeremonyNotifications.scheduleMeetupReminders(
+            ceremonyIndex: data.global.ceremonyIndex,
+            meetupTime: store.encointer.community!.meetupTime!,
+            l10n: context.l10n,
+            cid: store.encointer.community?.cid.toFmtString(),
+          );
         }
+      }
 
-        await webApi.encointer.getReputations();
-      },
-    );
+      await webApi.encointer.getReputations();
+    },
+  );
 }
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
