@@ -600,11 +600,12 @@ class EncointerApi {
     }
 
     final cid = store.encointer.account?.verifiedReputations[cIndex]?.communityIdentifier;
+    if (cid == null) return null;
 
     final proof = ProofOfAttendanceFactory.signed(
       proverPublic: hex.decode(pubKey!),
       ceremonyIndex: cIndex,
-      communityIdentifier: et.CommunityIdentifier(geohash: cid!.geohash, digest: cid.digest),
+      communityIdentifier: et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest),
       attendee: store.account.getKeyringAccount(pubKey).pair,
     );
 
