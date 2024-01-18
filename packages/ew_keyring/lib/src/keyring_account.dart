@@ -5,7 +5,6 @@ import 'package:convert/convert.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_keyring/src/validate_keys.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:polkadart_keyring/polkadart_keyring.dart';
 
 part 'keyring_account.g.dart';
 

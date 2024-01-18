@@ -38,6 +38,7 @@ void main() {
         attendee: alice.pair,
       );
 
+      // ignore: avoid_print
       print('${proof.encode()}');
     });
   });

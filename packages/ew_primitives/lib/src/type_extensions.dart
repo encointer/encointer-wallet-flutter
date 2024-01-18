@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:ew_keyring/ew_keyring.dart' show Sr25519KeyPair;
 import 'package:ew_polkadart/encointer_types.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
