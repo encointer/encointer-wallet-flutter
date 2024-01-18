@@ -8,11 +8,14 @@ import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
+
+// disambiguate global imports of encointer types. We can remove this
+// once we got rid of our manual type definitions.
+import 'package:ew_polkadart/encointer_types.dart' as et;
 
 part 'encointer_account_store.g.dart';
 
@@ -95,7 +98,7 @@ abstract class _EncointerAccountStore with Store {
   /// We need to supply parts of it when unregistering to
   /// reclaim the reputation.
   @observable
-  ProofOfAttendance? lastProofOfAttendance;
+  et.ProofOfAttendance? lastProofOfAttendance;
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {

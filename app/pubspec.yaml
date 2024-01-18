@@ -86,6 +86,8 @@ dependencies:
     path: ../packages/ew_keyring/
   ew_polkadart:
     path: ../packages/ew_polkadart/
+  ew_primitives:
+    path: ../packages/ew_primitives/
   ew_substrate_fixed:
     path: ../packages/ew_substrate_fixed/
   ew_test_keys:

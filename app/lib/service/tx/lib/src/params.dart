@@ -1,6 +1,9 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
-import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+
+// disambiguate global imports of encointer types. We can remove this
+// once we got rid of our manual type definitions.
+import 'package:ew_polkadart/encointer_types.dart' as et;
 
 /// Params for known extrinsics.
 
@@ -18,8 +21,11 @@ Map<String, dynamic> endorseNewcomerParams(CommunityIdentifier chosenCid, String
   };
 }
 
-Map<String, dynamic> registerParticipantParams(CommunityIdentifier chosenCid, AppLocalizations l10n,
-    {ProofOfAttendance? proof}) {
+Map<String, dynamic> registerParticipantParams(
+  CommunityIdentifier chosenCid,
+  AppLocalizations l10n, {
+  et.ProofOfAttendance? proof,
+}) {
   return {
     'title': 'register_participant',
     'txInfo': {
@@ -94,7 +100,10 @@ Map<String, dynamic> encointerBalanceTransferParams(
 }
 
 Map<String, dynamic> unregisterParticipantParams(
-    CommunityIdentifier cid, ProofOfAttendance? proof, AppLocalizations l10n) {
+  CommunityIdentifier cid,
+  et.ProofOfAttendance? proof,
+  AppLocalizations l10n,
+) {
   final communityCeremony = [proof?.communityIdentifier, proof?.ceremonyIndex];
 
   return {

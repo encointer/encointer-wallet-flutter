@@ -124,10 +124,8 @@ Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, A
 }
 
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
-  // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
-  final pin = await context.read<LoginStore>().getPin(context);
-  if (pin != null) {
-    final proof = await api.encointer.getProofOfAttendance(pin);
+
+    final proof = api.encointer.getProofOfAttendance();
 
     return submitTx(
       context,
@@ -160,7 +158,6 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
         await webApi.encointer.getReputations();
       },
     );
-  }
 }
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
