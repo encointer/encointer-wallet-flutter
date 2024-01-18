@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:ew_keyring/ew_keyring.dart' show Sr25519KeyPair;
 import 'package:ew_polkadart/encointer_types.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
@@ -26,7 +28,7 @@ abstract class ProofOfAttendanceFactory {
     required CommunityIdentifier communityIdentifier,
     required Sr25519KeyPair attendee,
   }) {
-    final msg = Tuple2(proverPublic, ceremonyIndex);
+    final msg = ProverCeremonyIndexTuple(proverPublic, ceremonyIndex);
 
     return ProofOfAttendance(
       proverPublic: proverPublic,
