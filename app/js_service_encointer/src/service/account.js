@@ -60,43 +60,6 @@ async function initKeys (accounts) {
   accounts.forEach((i) => keyring.addFromJson(i));
 }
 
-async function addressFromUri(uri) {
-  const voucherPair = keyring.createFromUri(uri);
-  const pubKey = voucherPair.publicKey;
-  const ss58 = api.registry.getChainProperties().ss58Format
-
-  console.log(`[AddressFromUri] uri: ${uri}`);
-  console.log(`[AddressFromUri] ss58: ${ss58}`);
-
-  return keyring.encodeAddress(pubKey, ss58);
-}
-
-function getBlockTime (blocks) {
-  return new Promise((resolve) => {
-    const res = [];
-    Promise.all(
-      blocks.map((i) => {
-        res[res.length] = { id: i };
-        return api.rpc.chain.getBlockHash(i);
-      })
-    )
-      .then((hashs) =>
-        Promise.all(
-          hashs.map((i, index) => {
-            res[index].hash = i.toHex();
-            return api.query.timestamp.now.at(i.toHex());
-          })
-        )
-      )
-      .then((times) => {
-        times.forEach((i, index) => {
-          res[index].timestamp = i.toNumber();
-        });
-        resolve(JSON.stringify(res));
-      });
-  });
-}
-
 export async function txFeeEstimate (txInfo, paramList) {
   if (txInfo.module === 'encointerBalances' && txInfo.call === 'transfer') {
     paramList[1] = communityIdentifierFromString(api.registry, paramList[1]);
@@ -211,9 +174,7 @@ export async function _getXt (keyPair, txInfo, paramList) {
 
 export default {
   initKeys,
-  addressFromUri,
   recover,
-  getBlockTime,
   txFeeEstimate,
   sendTx,
   sendTxWithPair,

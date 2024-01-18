@@ -1,15 +1,11 @@
 import { assert, hexToU8a } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { createType } from '@polkadot/types';
-import { parseEncointerBalance } from '@encointer/types';
 import { keyring, sendTxWithPair } from './account.js';
 import { communityIdentifierToString } from '@encointer/util';
-import {
-  getDemurrage as _getDemurrage, submitAndWatchTx,
-} from '@encointer/node-api';
-import { getFinalizedHeader } from './chain.js';
-import { applyDemurrage } from '../utils/utils.js';
+import { submitAndWatchTx } from '@encointer/node-api';
 import { Keyring } from '@polkadot/keyring';
+import { parseEncointerBalance } from '@encointer/types';
 
 export async function getBalance (cid, address) {
   const balanceEntry = await api.query.encointerBalances.balance(cid, address);
@@ -21,8 +17,6 @@ export async function getBalance (cid, address) {
 
 /***
  * Reaps the voucher and transfers all funds to `recipientAddress`
- *
- * Todo: Use `transferAll` once it is in the runtime.
  */
 export async function reapVoucher (voucherUri, recipientAddress, cid) {
 
@@ -30,26 +24,6 @@ export async function reapVoucher (voucherUri, recipientAddress, cid) {
 
   console.log(`[reapVoucher] voucherUri: ${voucherUri}`);
   console.log(`[reapVoucher] generated voucher address: ${voucherPair.address}`);
-
-  // This will be replaced after `transferAll` is implemented.
-  const [balanceEntry, finalizedHeader, demurrage] = await Promise.all([
-    getBalance(cid, voucherPair.address),
-    getFinalizedHeader(),
-    getDemurrage(cid),
-  ]);
-
-  console.log(`[reapVoucher] voucher balanceEntry: ${JSON.stringify(balanceEntry)}`);
-
-  const balance = applyDemurrage(balanceEntry, finalizedHeader.number, demurrage);
-  console.log(`[encointer/reapVoucher] transfer from voucher ${balance} to ${recipientAddress}`);
-
-  // 0.04: less doesn't make any sense. The voucher of the recipient won't even
-  // be able to pay a transaction with it.
-  if (balance < 0.04) {
-    return new Promise((resolve, _reject) => {
-      resolve({ error: 'the voucher does not have enough balance left.' });
-    });
-  }
 
   return encointerTransferAll(voucherPair, recipientAddress, cid);
 }
@@ -78,12 +52,6 @@ export function encointerTransferAll (fromPair, recipientAddress, cid) {
   };
 
   return sendTxWithPair(fromPair, txInfo, paramList);
-}
-
-export async function getDemurrage (cid) {
-  const cidT = api.createType('CommunityIdentifier', cid);
-
-  return _getDemurrage(api, cidT).then((demBits) => parseEncointerBalance(demBits));
 }
 
 /**

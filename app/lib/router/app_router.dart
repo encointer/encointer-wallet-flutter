@@ -97,8 +97,9 @@ class AppRoute {
           settings: settings,
         );
       case ReapVoucherPage.route:
+        final params = settings.arguments! as ReapVoucherParams;
         return CupertinoPageRoute(
-          builder: (_) => ReapVoucherPage(webApi),
+          builder: (_) => ReapVoucherPage(webApi, params.voucher, params.showFundVoucher),
           settings: settings,
           fullscreenDialog: true,
         );
