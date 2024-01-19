@@ -611,7 +611,7 @@ class EncointerApi {
     );
 
     Log.d('Proof: $proof', 'EncointerApi');
-    return proof;
+    return ProofOfAttendance.fromPolkadart(proof);
   }
 
   Future<int> getNumberOfNewbieTicketsForReputable({BlockHash? at}) async {
