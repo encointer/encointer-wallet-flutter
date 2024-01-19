@@ -12,4 +12,4 @@ class NewAccountResult {
   }
 }
 
-enum NewAccountResultType { ok, error, duplicateAccount, emptyPassword }
+enum NewAccountResultType { ok, error, duplicateAccount }

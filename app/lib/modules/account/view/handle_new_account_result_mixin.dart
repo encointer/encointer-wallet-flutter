@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
@@ -18,10 +17,6 @@ mixin HandleNewAccountResultMixin on Widget {
           context,
           errorText: context.l10n.createError,
           buttontext: context.l10n.ok,
-        ),
-      NewAccountResultType.emptyPassword => await LoginDialog.verifyPinOrBioAuth(
-          context,
-          onSuccess: (v) async => context.read<LoginStore>().setPin(v),
         ),
       NewAccountResultType.duplicateAccount => onDuplicateAccount != null ? onDuplicateAccount() : null,
     };
