@@ -108,12 +108,15 @@ class AddAccountForm extends StatelessWidget with HandleNewAccountResultMixin {
           final newAccount = context.read<NewAccountStore>();
           if (_formKey.currentState!.validate() && !newAccount.loading) {
             newAccount.setName(_nameCtrl.text.trim());
-            final res = await newAccount.generateAccount();
-            await navigate(
-              context: context,
-              type: res.operationResult,
-              onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
-            );
+            final pin = await context.read<LoginStore>().getPin(context);
+            if (pin != null) {
+              final res = await newAccount.generateAccount();
+              await navigate(
+                context: context,
+                type: res.operationResult,
+                onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              );
+            }
           }
         },
         child: Row(

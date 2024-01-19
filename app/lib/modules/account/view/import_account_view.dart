@@ -121,13 +121,16 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                   ),
                 );
               } else {
-                final res = await newAccount.importAccount();
-                await navigate(
-                  context: context,
-                  type: res.operationResult,
-                  onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                  onDuplicateAccount: () => _onDuplicateAccount(context, res.duplicateAccountData),
-                );
+                final pin = await context.read<LoginStore>().getPin(context);
+                if (pin != null) {
+                  final res = await newAccount.importAccount();
+                  await navigate(
+                    context: context,
+                    type: res.operationResult,
+                    onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                    onDuplicateAccount: () => _onDuplicateAccount(context, res.duplicateAccountData),
+                  );
+                }
               }
             }
           },
@@ -160,11 +163,8 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         CupertinoButton(
           child: Text(l10n.ok),
           onPressed: () async {
-            final pin = await context.read<LoginStore>().getPin(context);
-            if (pin != null) {
-              await context.read<NewAccountStore>().saveAccount(acc);
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            }
+            await context.read<NewAccountStore>().saveAccount(acc);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           },
         ),
       ],
