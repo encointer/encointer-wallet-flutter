@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:convert/convert.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:ew_polkadart/encointer_types.dart' as et;
 import 'package:json_annotation/json_annotation.dart';
@@ -19,7 +20,14 @@ class ProofOfAttendance {
   );
 
   factory ProofOfAttendance.fromPolkadart(et.ProofOfAttendance proof) {
-    return ProofOfAttendance.fromJson(proof.toJson());
+    final sig = proof.attendeeSignature.toJson().map((key, value) => MapEntry(key, '0x${hex.encode(value)}'));
+    return ProofOfAttendance(
+      '0x${hex.encode(proof.proverPublic)}',
+      proof.ceremonyIndex,
+      CommunityIdentifier.fromPolkadart(proof.communityIdentifier),
+      '0x${hex.encode(proof.attendeePublic)}',
+      sig,
+    );
   }
 
   factory ProofOfAttendance.fromJson(Map<String, dynamic> json) => _$ProofOfAttendanceFromJson(json);

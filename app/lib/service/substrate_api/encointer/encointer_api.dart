@@ -604,13 +604,13 @@ class EncointerApi {
     if (cid == null) return null;
 
     final proof = ProofOfAttendanceFactory.signed(
-      proverPublic: hex.decode(pubKey!),
+      proverPublic: hex.decode(pubKey!.replaceFirst('0x', '')),
       ceremonyIndex: cIndex,
       communityIdentifier: et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest),
       attendee: store.account.getKeyringAccount(pubKey).pair,
     );
 
-    Log.d('Proof: $proof', 'EncointerApi');
+    Log.d('Proof: ${proof.toJson()}', 'EncointerApi');
     return ProofOfAttendance.fromPolkadart(proof);
   }
 
