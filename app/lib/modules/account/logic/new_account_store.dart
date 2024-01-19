@@ -1,7 +1,6 @@
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/modules/account/logic/key_type.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -24,9 +23,6 @@ abstract class _NewAccountStoreBase with Store {
   @observable
   String? accountKey;
 
-  @observable
-  KeyType keyType = KeyType.mnemonic;
-
   @readonly
   bool _loading = false;
 
@@ -35,9 +31,6 @@ abstract class _NewAccountStoreBase with Store {
 
   @action
   void setKey(String? value) => accountKey = value;
-
-  @action
-  void setKeyType(KeyType value) => keyType = value;
 
   @action
   Future<NewAccountResult> generateAccount() async {
@@ -78,7 +71,7 @@ abstract class _NewAccountStoreBase with Store {
       final result = await webApi.account.importAccount(
         key: accountKey!,
         password: '', // this is ignored on JS-side
-        keyType: keyType.name,
+        keyType: keyringAccount.seedType.name,
       );
       if (result['error'] != null) {
         _loading = false;

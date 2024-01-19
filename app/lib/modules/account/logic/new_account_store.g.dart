@@ -39,21 +39,6 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     });
   }
 
-  late final _$keyTypeAtom = Atom(name: '_NewAccountStoreBase.keyType', context: context);
-
-  @override
-  KeyType get keyType {
-    _$keyTypeAtom.reportRead();
-    return super.keyType;
-  }
-
-  @override
-  set keyType(KeyType value) {
-    _$keyTypeAtom.reportWrite(value, super.keyType, () {
-      super.keyType = value;
-    });
-  }
-
   late final _$_loadingAtom = Atom(name: '_NewAccountStoreBase._loading', context: context);
 
   bool get loading {
@@ -129,21 +114,10 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   }
 
   @override
-  void setKeyType(KeyType value) {
-    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setKeyType');
-    try {
-      return super.setKeyType(value);
-    } finally {
-      _$_NewAccountStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 name: ${name},
-accountKey: ${accountKey},
-keyType: ${keyType}
+accountKey: ${accountKey}
     ''';
   }
 }
