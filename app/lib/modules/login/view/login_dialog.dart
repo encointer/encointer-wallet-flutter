@@ -149,7 +149,6 @@ final class LoginDialog {
               loginStore.loading = true;
               final value = await _onOk(context, passCtrl.text.trim());
               if (value) {
-                if (loginStore.cachedPin == null) await loginStore.setPin(passCtrl.text.trim());
                 await onSuccess(passCtrl.text.trim());
                 if (autoCloseOnSuccess) Navigator.of(context).pop();
               } else {

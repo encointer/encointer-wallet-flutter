@@ -46,7 +46,12 @@ final class LoginService with GetPin {
   @override
   Future<String?> getPin() => secureStorage.read(key: pinStorageKey);
 
-  Future<void> setPin(String pin) async {
+  /// Persists the new PIN in the secure storage.
+  ///
+  /// Attention: This function must be called *exclusively* upon:
+  /// * Setting the PIN initially
+  /// * Changing the PIN
+  Future<void> persistPin(String pin) async {
     await secureStorage.write(key: pinStorageKey, value: pin);
   }
 
