@@ -28,6 +28,7 @@ import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
+import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 // disambiguate global imports of encointer types. We can remove this
@@ -591,23 +592,26 @@ class EncointerApi {
   /// Gets a proof of attendance for the oldest attended ceremony, if available.
   ///
   /// returns null, if none available.
-  Future<ProofOfAttendance?> getProofOfAttendance(String pin) async {
+  ProofOfAttendance? getProofOfAttendance() {
     final pubKey = store.account.currentAccountPubKey;
     final cIndex = store.encointer.account?.ceremonyIndexForNextProofOfAttendance;
 
     if (cIndex == null || cIndex == 0) {
-      return Future.value();
+      return null;
     }
 
     final cid = store.encointer.account?.verifiedReputations[cIndex]?.communityIdentifier;
-    Log.d('getProofOfAttendance: cachedPin: $pin', 'EncointerApi');
-    final proof = await jsApi
-        .evalJavascript<Map<String, dynamic>>(
-            'encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "$cIndex", "$pin")')
-        .then(ProofOfAttendance.fromJson);
+    if (cid == null) return null;
 
-    Log.d('Proof: $proof', 'EncointerApi');
-    return proof;
+    final proof = ProofOfAttendanceFactory.signed(
+      proverPublic: hex.decode(pubKey!.replaceFirst('0x', '')),
+      ceremonyIndex: cIndex,
+      communityIdentifier: et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest),
+      attendee: store.account.getKeyringAccount(pubKey).pair,
+    );
+
+    Log.d('Proof: ${proof.toJson()}', 'EncointerApi');
+    return ProofOfAttendance.fromPolkadart(proof);
   }
 
   Future<int> getNumberOfNewbieTicketsForReputable({BlockHash? at}) async {

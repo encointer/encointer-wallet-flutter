@@ -18,8 +18,11 @@ Map<String, dynamic> endorseNewcomerParams(CommunityIdentifier chosenCid, String
   };
 }
 
-Map<String, dynamic> registerParticipantParams(CommunityIdentifier chosenCid, AppLocalizations l10n,
-    {ProofOfAttendance? proof}) {
+Map<String, dynamic> registerParticipantParams(
+  CommunityIdentifier chosenCid,
+  AppLocalizations l10n, {
+  ProofOfAttendance? proof,
+}) {
   return {
     'title': 'register_participant',
     'txInfo': {
@@ -94,7 +97,10 @@ Map<String, dynamic> encointerBalanceTransferParams(
 }
 
 Map<String, dynamic> unregisterParticipantParams(
-    CommunityIdentifier cid, ProofOfAttendance? proof, AppLocalizations l10n) {
+  CommunityIdentifier cid,
+  ProofOfAttendance? proof,
+  AppLocalizations l10n,
+) {
   final communityCeremony = [proof?.communityIdentifier, proof?.ceremonyIndex];
 
   return {

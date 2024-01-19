@@ -86,3 +86,13 @@ class EncointerKeyring {
     _accounts.clear();
   }
 }
+
+Future<EncointerKeyring> testKeyring() async {
+  final alice = await KeyringAccount.fromUri('Alice', '//Alice');
+  final bob = await KeyringAccount.fromUri('Bob', '//Bob');
+  final charlie = await KeyringAccount.fromUri('Charlie', '//Charlie');
+  final accounts = [alice, bob, charlie];
+  final keyring = EncointerKeyring.fromAccounts(accounts);
+
+  return keyring;
+}
