@@ -1,7 +1,7 @@
 # melos_managed_dependency_overrides: ew_polkadart,ew_substrate_fixed,polkadart_scale_codec,polkadart_keyring,ew_keyring
 dependency_overrides:
   ew_keyring:
-    path: ..\\ew_keyring
+    path: ../ew_keyring
   ew_polkadart:
     path: ../ew_polkadart
   ew_substrate_fixed:
