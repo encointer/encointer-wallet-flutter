@@ -12,6 +12,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
 import 'package:encointer_wallet/models/bazaar/item_offered.dart';
@@ -591,7 +592,7 @@ class EncointerApi {
   /// Gets a proof of attendance for the oldest attended ceremony, if available.
   ///
   /// returns null, if none available.
-  et.ProofOfAttendance? getProofOfAttendance() {
+  ProofOfAttendance? getProofOfAttendance() {
     final pubKey = store.account.currentAccountPubKey;
     final cIndex = store.encointer.account?.ceremonyIndexForNextProofOfAttendance;
 
