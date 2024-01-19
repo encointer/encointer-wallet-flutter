@@ -24,21 +24,6 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     });
   }
 
-  late final _$passwordAtom = Atom(name: '_NewAccountStoreBase.password', context: context);
-
-  @override
-  String? get password {
-    _$passwordAtom.reportRead();
-    return super.password;
-  }
-
-  @override
-  set password(String? value) {
-    _$passwordAtom.reportWrite(value, super.password, () {
-      super.password = value;
-    });
-  }
-
   late final _$accountKeyAtom = Atom(name: '_NewAccountStoreBase.accountKey', context: context);
 
   @override
@@ -89,36 +74,36 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   late final _$generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase.generateAccount', context: context);
 
   @override
-  Future<NewAccountResult> generateAccount(BuildContext context) {
-    return _$generateAccountAsyncAction.run(() => super.generateAccount(context));
+  Future<NewAccountResult> generateAccount() {
+    return _$generateAccountAsyncAction.run(() => super.generateAccount());
   }
 
   late final _$importAccountAsyncAction = AsyncAction('_NewAccountStoreBase.importAccount', context: context);
 
   @override
-  Future<NewAccountResult> importAccount(BuildContext context) {
-    return _$importAccountAsyncAction.run(() => super.importAccount(context));
+  Future<NewAccountResult> importAccount() {
+    return _$importAccountAsyncAction.run(() => super.importAccount());
   }
 
   late final _$_generateAccountAsyncAction = AsyncAction('_NewAccountStoreBase._generateAccount', context: context);
 
   @override
-  Future<NewAccountResult> _generateAccount(BuildContext context, String pin) {
-    return _$_generateAccountAsyncAction.run(() => super._generateAccount(context, pin));
+  Future<NewAccountResult> _generateAccount() {
+    return _$_generateAccountAsyncAction.run(() => super._generateAccount());
   }
 
   late final _$_importAccountAsyncAction = AsyncAction('_NewAccountStoreBase._importAccount', context: context);
 
   @override
-  Future<NewAccountResult> _importAccount(BuildContext context, String pin) {
-    return _$_importAccountAsyncAction.run(() => super._importAccount(context, pin));
+  Future<NewAccountResult> _importAccount() {
+    return _$_importAccountAsyncAction.run(() => super._importAccount());
   }
 
   late final _$saveAccountAsyncAction = AsyncAction('_NewAccountStoreBase.saveAccount', context: context);
 
   @override
-  Future<NewAccountResult> saveAccount(KeyringAccount account, String pin) {
-    return _$saveAccountAsyncAction.run(() => super.saveAccount(account, pin));
+  Future<NewAccountResult> saveAccount(KeyringAccount account) {
+    return _$saveAccountAsyncAction.run(() => super.saveAccount(account));
   }
 
   late final _$_NewAccountStoreBaseActionController = ActionController(name: '_NewAccountStoreBase', context: context);
@@ -128,16 +113,6 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
     final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setName');
     try {
       return super.setName(value);
-    } finally {
-      _$_NewAccountStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setPassword(String? value) {
-    final _$actionInfo = _$_NewAccountStoreBaseActionController.startAction(name: '_NewAccountStoreBase.setPassword');
-    try {
-      return super.setPassword(value);
     } finally {
       _$_NewAccountStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -167,7 +142,6 @@ mixin _$NewAccountStore on _NewAccountStoreBase, Store {
   String toString() {
     return '''
 name: ${name},
-password: ${password},
 accountKey: ${accountKey},
 keyType: ${keyType}
     ''';

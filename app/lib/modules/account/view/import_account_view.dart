@@ -121,7 +121,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                   ),
                 );
               } else {
-                final res = await newAccount.importAccount(context);
+                final res = await newAccount.importAccount();
                 await navigate(
                   context: context,
                   type: res.operationResult,
@@ -162,7 +162,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
           onPressed: () async {
             final pin = await context.read<LoginStore>().getPin(context);
             if (pin != null) {
-              await context.read<NewAccountStore>().saveAccount(acc, pin);
+              await context.read<NewAccountStore>().saveAccount(acc);
               Navigator.of(context).popUntil((route) => route.isFirst);
             }
           },
