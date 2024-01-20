@@ -32,15 +32,15 @@ class AddAccountView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Provider(
           create: (context) => NewAccountStore(context.read<AppStore>()),
-          child: AddAcccountForm(),
+          child: AddAccountForm(),
         ),
       ),
     );
   }
 }
 
-class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
-  AddAcccountForm({super.key});
+class AddAccountForm extends StatelessWidget with HandleNewAccountResultMixin {
+  AddAccountForm({super.key});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -108,12 +108,15 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
           final newAccount = context.read<NewAccountStore>();
           if (_formKey.currentState!.validate() && !newAccount.loading) {
             newAccount.setName(_nameCtrl.text.trim());
-            final res = await newAccount.generateAccount(context);
-            await navigate(
-              context: context,
-              type: res.operationResult,
-              onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
-            );
+            final pin = await context.read<LoginStore>().getPin(context);
+            if (pin != null) {
+              final res = await newAccount.generateAccount();
+              await navigate(
+                context: context,
+                type: res.operationResult,
+                onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              );
+            }
           }
         },
         child: Row(

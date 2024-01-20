@@ -43,7 +43,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final passNew = _passCtrl.text.trim();
       // check password
       if (await loginStore.isValid(passOld)) {
-        await context.read<LoginStore>().setPin(passNew);
+        await context.read<LoginStore>().persistNewPin(passNew);
         await showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {

@@ -29,15 +29,15 @@ class CreateAccountView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Provider(
           create: (context) => NewAccountStore(context.read<AppStore>()),
-          child: CreateAcccountForm(),
+          child: CreateAccountForm(),
         ),
       ),
     );
   }
 }
 
-class CreateAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
-  CreateAcccountForm({super.key});
+class CreateAccountForm extends StatelessWidget with HandleNewAccountResultMixin {
+  CreateAccountForm({super.key});
 
   final _formKey = GlobalKey<FormState>();
 

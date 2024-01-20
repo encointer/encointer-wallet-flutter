@@ -33,9 +33,14 @@ abstract class _LoginStoreBase with Store {
     return cachedPin;
   }
 
-  Future<void> setPin(String pin) async {
+  /// Persists the new PIN in the secure storage.
+  ///
+  /// Attention: This function must be called *exclusively* upon:
+  /// * Setting the PIN initially
+  /// * Changing the PIN
+  Future<void> persistNewPin(String pin) async {
     cachedPin = pin;
-    await loginService.setPin(pin);
+    await loginService.persistPin(pin);
   }
 
   Future<bool> isValid(String input) async {

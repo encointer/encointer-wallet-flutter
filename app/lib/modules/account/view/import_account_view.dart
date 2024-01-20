@@ -15,7 +15,6 @@ import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
-import 'package:encointer_wallet/modules/account/logic/key_type.dart';
 import 'package:ew_keyring/ew_keyring.dart' show KeyringAccount, ValidateKeys;
 
 class ImportAccountView extends StatelessWidget {
@@ -88,12 +87,10 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
           validator: (String? value) {
             if (value == null || value.isEmpty) return l10n.importMustNotBeEmpty;
             if (ValidateKeys.isRawSeed(value)) {
-              context.read<NewAccountStore>().setKeyType(KeyType.rawSeed);
               return ValidateKeys.validateRawSeed(value) ? null : l10n.importInvalidRawSeed;
             } else if (ValidateKeys.isPrivateKey(value)) {
               return l10n.importPrivateKeyUnsupported;
             } else {
-              context.read<NewAccountStore>().setKeyType(KeyType.mnemonic);
               return ValidateKeys.validateMnemonic(value) ? null : l10n.importInvalidMnemonic;
             }
           },
@@ -121,13 +118,16 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                   ),
                 );
               } else {
-                final res = await newAccount.importAccount(context);
-                await navigate(
-                  context: context,
-                  type: res.operationResult,
-                  onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                  onDuplicateAccount: () => _onDuplicateAccount(context, res.duplicateAccountData),
-                );
+                final pin = await context.read<LoginStore>().getPin(context);
+                if (pin != null) {
+                  final res = await newAccount.importAccount();
+                  await navigate(
+                    context: context,
+                    type: res.operationResult,
+                    onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                    onDuplicateAccount: () => _onDuplicateAccount(context, res.duplicateAccountData),
+                  );
+                }
               }
             }
           },
@@ -160,11 +160,8 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         CupertinoButton(
           child: Text(l10n.ok),
           onPressed: () async {
-            final pin = await context.read<LoginStore>().getPin(context);
-            if (pin != null) {
-              await context.read<NewAccountStore>().saveAccount(acc, pin);
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            }
+            await context.read<NewAccountStore>().saveAccount(acc);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           },
         ),
       ],
