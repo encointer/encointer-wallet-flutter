@@ -26,7 +26,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_encointer_utils/ew_encointer_utils.dart' as ew_utils;
 import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
-import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/ew_polkadart.dart' show BlockHash, Tuple2, StorageChangeSet, SequenceCodec, EncointerKusama, ByteInput;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';

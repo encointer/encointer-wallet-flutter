@@ -11,7 +11,7 @@ import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dar
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:ew_http/ew_http.dart';
-import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/ew_polkadart.dart' show BlockHash;
 
 import '../data/mock_encointer_data.dart';
 import 'mock_js_api.dart';
