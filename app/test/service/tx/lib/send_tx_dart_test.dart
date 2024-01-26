@@ -1,26 +1,37 @@
 // ignore_for_file: avoid_print
 
-@Skip('Skip these tests as they need a specific setup.')
+// @Skip('Skip these tests as they need a specific setup.')
 
 import 'dart:async';
+import 'package:convert/convert.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
+import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart' show Provider;
+import 'package:ew_polkadart/ew_polkadart.dart' show EncointerKusama, Provider;
+import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('submit xt', () {
     test('send alice to bob works', () async {
-      final polkadart = Provider.fromUri(Uri.parse('ws://localhost:9944'));
-      final author = EWAuthorApi(polkadart);
+      final provider = Provider.fromUri(Uri.parse('ws://localhost:9944'));
+      final author = EWAuthorApi(provider);
+      final encointerKusama = EncointerKusama(provider);
 
-      // note this contains some nonce and will not work on an arbitrary setup. Instead,
-      // it will throw a bad signature error, see https://github.com/leonardocustodio/polkadart/pull/337.
-      const xtHex =
-          '0xd1018400d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d01ae256b85be1cc6f2af4684f44588457f536d332a03689d433df622dc5dca250fa4911531a6e90be32f1838055b6fe5966da4c8caf69af079bf81a5aa8ce8f58535037000003d0073716d3176f08c911c00';
-      final xt = Extrinsic.fromHex(xtHex);
+      final keyring = await testKeyring();
+      final accounts = keyring.accountsIter;
+      final alice = accounts.first;
+      final bob = accounts.first;
 
-      final report = await author.submitAndWatchExtrinsicWithReport(xt);
+      final transfer = encointerKusama.tx.balances.transfer(dest: bob.multiAddress(), value: BigInt.from(1000000000000));
+
+      final txBuilder = TxBuilder(provider);
+      final xt = await txBuilder.createSignedExtrinsic(alice.pair, transfer);
+
+      print('Sending XT: ${hex.encode(xt)}');
+
+      final report = await author.submitAndWatchExtrinsicWithReport(Extrinsic(xt));
       print('Got extrinsic report: $report');
 
       if (report.isExtrinsicSuccess) {
