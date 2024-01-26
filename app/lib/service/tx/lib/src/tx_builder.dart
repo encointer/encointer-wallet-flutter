@@ -10,7 +10,11 @@ class TxBuilder {
 
   final Provider provider;
 
-  Future<Uint8List> createSignedExtrinsic(Sr25519KeyPair pair, RuntimeCall call) async {
+  Future<Uint8List> createSignedExtrinsic(
+    Sr25519KeyPair pair,
+    RuntimeCall call, {
+    CommunityIdentifier? paymentAsset,
+  }) async {
     final encointerKusama = EncointerKusama(provider);
 
     // fetch recent relevant data from chain
@@ -20,16 +24,14 @@ class TxBuilder {
     final genesisHash = await _getBlockHash(blockNumber: 0);
     final accountInfo = await encointerKusama.query.system.account(pair.publicKey.bytes);
 
-    print('RuntimeVersion: $runtimeVersion');
-    print('blockNumber: $blockNumber');
-    print('blockHash: $blockHash');
-    print('genesisHash: $genesisHash');
-    print('accountInfo: $accountInfo');
-
+    // print('RuntimeVersion: $runtimeVersion');
+    // print('blockNumber: $blockNumber');
+    // print('blockHash: $blockHash');
+    // print('genesisHash: $genesisHash');
+    // print('accountInfo: $accountInfo');
 
     final encodedCall = hex.encode(call.encode());
-
-    print('encodedCall: $encodedCall');
+    // print('encodedCall: $encodedCall');
 
     final payloadToSign = SigningPayload(
       method: encodedCall,
@@ -41,6 +43,7 @@ class TxBuilder {
       eraPeriod: 64,
       nonce: accountInfo.nonce,
       tip: 0,
+      assetId: paymentAsset,
     );
 
     final payload = payloadToSign.encode(encointerKusama.registry);
@@ -49,11 +52,7 @@ class TxBuilder {
 
     final publicKey = hex.encode(pair.publicKey.bytes);
     final extrinsic = Extrinsic.withSigningPayload(
-      signer: publicKey,
-      method: encodedCall,
-      signature: hexSignature,
-      payload: payloadToSign
-    );
+        signer: publicKey, method: encodedCall, signature: hexSignature, payload: payloadToSign);
 
     return extrinsic.encode(encointerKusama.registry, SignatureType.sr25519);
   }

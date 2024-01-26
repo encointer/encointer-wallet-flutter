@@ -3,10 +3,13 @@
 // @Skip('Skip these tests as they need a specific setup.')
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart' as ew;
 import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_polkadart/encointer_types.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart' show EncointerKusama, Provider;
 import 'package:ew_primitives/ew_primitives.dart';
@@ -29,8 +32,14 @@ void main() {
       final transfer = encointerKusama.tx.balances.transfer(dest: bob.multiAddress(), value: BigInt.from(oneERT));
 
       final txBuilder = TxBuilder(provider);
-      final xt = await txBuilder.createSignedExtrinsic(alice.pair, transfer);
 
+      // mediterranean test community
+      final paymentAsset =  CommunityIdentifier(geohash: utf8.encode('sqm1v'),digest: hex.decode('f08c911c'));
+      print('payment asset: ${paymentAsset.toJson()}');
+      final testCid = ew.CommunityIdentifier.fromPolkadart(paymentAsset);
+      print('payment asset fmt: ${testCid.toFmtString()}');
+
+      final xt = await txBuilder.createSignedExtrinsic(alice.pair, transfer, paymentAsset: paymentAsset);
       print('Sending XT: ${hex.encode(xt)}');
 
       final report = await author.submitAndWatchExtrinsicWithReport(OpaqueExtrinsic(xt));
