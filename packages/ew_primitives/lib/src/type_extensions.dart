@@ -1,4 +1,4 @@
-import 'package:ew_keyring/ew_keyring.dart' show Sr25519KeyPair;
+import 'package:ew_keyring/ew_keyring.dart' show KeyringAccount, Sr25519KeyPair;
 import 'package:ew_polkadart/encointer_types.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
@@ -6,6 +6,18 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/multi_s
 import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_i128.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/tuples.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
+
+extension KeyringAccountMultiAddressExt on KeyringAccount {
+  MultiAddress multiAddress() {
+     return MultiAddress.values.id(pubKey);
+  }
+}
+
+extension KeyringAccountDataMultiAddressExt on Sr25519KeyPair {
+  MultiAddress multiAddress() {
+    return MultiAddress.values.id(publicKey.bytes);
+  }
+}
 
 abstract class LocationFactory {
   static Location fromDouble({
