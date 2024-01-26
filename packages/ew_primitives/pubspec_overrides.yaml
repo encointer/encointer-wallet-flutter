@@ -9,10 +9,10 @@ dependency_overrides:
   polkadart_keyring:
     git:
       url: https://github.com/encointer/polkadart
-      ref: main
+      ref: cl/encointer-signed-extensions
       path: packages/polkadart_keyring
   polkadart_scale_codec:
     git:
       url: https://github.com/encointer/polkadart
-      ref: main
+      ref: cl/encointer-signed-extensions
       path: packages/polkadart_scale_codec
