@@ -4,10 +4,6 @@ import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_polkadart/runtime_call.dart';
 
-/// Contains all things about sending extrinsics.
-export 'src/params.dart';
-export 'src/submit_tx_wrappers.dart';
-
 class TxApi {
   TxApi(this.provider);
 
