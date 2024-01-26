@@ -33,7 +33,7 @@ void main() {
 
       print('Sending XT: ${hex.encode(xt)}');
 
-      final report = await author.submitAndWatchExtrinsicWithReport(Extrinsic(xt));
+      final report = await author.submitAndWatchExtrinsicWithReport(OpaqueExtrinsic(xt));
       print('Got extrinsic report: $report');
 
       if (report.isExtrinsicSuccess) {

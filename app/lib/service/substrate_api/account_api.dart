@@ -60,7 +60,7 @@ class AccountApi {
     final res = await getSignedTx(txInfo, params, rawParam: rawParam);
 
     final report =
-        await EWAuthorApi(provider).submitAndWatchExtrinsicWithReport(Extrinsic.fromHex(res['xt'] as String));
+        await EWAuthorApi(provider).submitAndWatchExtrinsicWithReport(OpaqueExtrinsic.fromHex(res['xt'] as String));
 
     if (report.isExtrinsicSuccess) {
       final hash = report.blockHash;
