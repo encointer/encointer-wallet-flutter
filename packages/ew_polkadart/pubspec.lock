@@ -366,7 +366,7 @@ packages:
     description:
       path: "packages/polkadart"
       ref: "cl/encointer-signed-extensions"
-      resolved-ref: "a06af92b20b258364b49a746d73cb16b5bcafb59"
+      resolved-ref: a06af92b20b258364b49a746d73cb16b5bcafb59
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.1"
@@ -375,7 +375,7 @@ packages:
     description:
       path: "packages/polkadart_cli"
       ref: "cl/encointer-signed-extensions"
-      resolved-ref: "a06af92b20b258364b49a746d73cb16b5bcafb59"
+      resolved-ref: a06af92b20b258364b49a746d73cb16b5bcafb59
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.1"
@@ -384,7 +384,7 @@ packages:
     description:
       path: "packages/polkadart_keyring"
       ref: "cl/encointer-signed-extensions"
-      resolved-ref: "a06af92b20b258364b49a746d73cb16b5bcafb59"
+      resolved-ref: a06af92b20b258364b49a746d73cb16b5bcafb59
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.0"
@@ -393,7 +393,7 @@ packages:
     description:
       path: "packages/polkadart_scale_codec"
       ref: "cl/encointer-signed-extensions"
-      resolved-ref: "a06af92b20b258364b49a746d73cb16b5bcafb59"
+      resolved-ref: a06af92b20b258364b49a746d73cb16b5bcafb59
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -570,7 +570,7 @@ packages:
     description:
       path: "packages/substrate_metadata"
       ref: "cl/encointer-signed-extensions"
-      resolved-ref: "a06af92b20b258364b49a746d73cb16b5bcafb59"
+      resolved-ref: a06af92b20b258364b49a746d73cb16b5bcafb59
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
