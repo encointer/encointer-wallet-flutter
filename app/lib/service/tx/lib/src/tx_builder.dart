@@ -1,15 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:convert/convert.dart';
-import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_polkadart/runtime_call.dart';
 
-class TxApi {
-  TxApi(this.provider);
+class TxBuilder {
+  TxBuilder(this.provider);
 
-  final ReconnectingWsProvider provider;
+  final Provider provider;
 
-  Future<Extrinsic> createSignedExtrinsic(Sr25519KeyPair pair, RuntimeCall call) async {
+  Future<Uint8List> createSignedExtrinsic(Sr25519KeyPair pair, RuntimeCall call) async {
     final encointerKusama = EncointerKusama(provider);
 
     // fetch recent relevant data from chain
@@ -18,6 +19,13 @@ class TxApi {
     final blockHash = await _getBlockHash();
     final genesisHash = await _getBlockHash(blockNumber: 0);
     final accountInfo = await encointerKusama.query.system.account(pair.publicKey.bytes);
+
+    print('RuntimeVersion: $runtimeVersion');
+    print('blockNumber: $blockNumber');
+    print('blockHash: $blockHash');
+    print('genesisHash: $genesisHash');
+    print('accountInfo: $accountInfo');
+
 
     final encodedCall = hex.encode(call.encode());
 
@@ -49,7 +57,7 @@ class TxApi {
       tip: 0,
     );
 
-    return extrinsic;
+    return extrinsic.encode(encointerKusama.registry, SignatureType.sr25519);
   }
 
   Future<RuntimeVersion> _getRuntimeVersion() async {
