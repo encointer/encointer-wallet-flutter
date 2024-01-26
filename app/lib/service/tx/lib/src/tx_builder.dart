@@ -44,19 +44,15 @@ class TxBuilder {
     );
 
     final payload = payloadToSign.encode(encointerKusama.registry);
-
     final signature = pair.sign(payload);
     final hexSignature = hex.encode(signature);
 
     final publicKey = hex.encode(pair.publicKey.bytes);
-    final extrinsic = Extrinsic(
+    final extrinsic = Extrinsic.withSigningPayload(
       signer: publicKey,
       method: encodedCall,
       signature: hexSignature,
-      eraPeriod: 64,
-      blockNumber: blockNumber,
-      nonce: 0,
-      tip: 0,
+      payload: payloadToSign
     );
 
     return extrinsic.encode(encointerKusama.registry, SignatureType.sr25519);
