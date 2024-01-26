@@ -29,6 +29,8 @@ class TxBuilder {
 
     final encodedCall = hex.encode(call.encode());
 
+    print('encodedCall: $encodedCall');
+
     final payloadToSign = SigningPayload(
       method: encodedCall,
       specVersion: runtimeVersion.specVersion,

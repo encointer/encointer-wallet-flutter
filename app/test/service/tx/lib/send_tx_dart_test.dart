@@ -20,11 +20,13 @@ void main() {
       final encointerKusama = EncointerKusama(provider);
 
       final keyring = await testKeyring();
-      final accounts = keyring.accountsIter;
-      final alice = accounts.first;
-      final bob = accounts.first;
+      final accounts = keyring.accounts;
+      final alice = accounts[0];
+      final bob = accounts[1];
 
-      final transfer = encointerKusama.tx.balances.transfer(dest: bob.multiAddress(), value: BigInt.from(1000000000000));
+      // Checked that the encoded call matches the one from polkadot-js.
+      const _1ERT = 1000000000000;
+      final transfer = encointerKusama.tx.balances.transfer(dest: bob.multiAddress(), value: BigInt.from(_1ERT));
 
       final txBuilder = TxBuilder(provider);
       final xt = await txBuilder.createSignedExtrinsic(alice.pair, transfer);
