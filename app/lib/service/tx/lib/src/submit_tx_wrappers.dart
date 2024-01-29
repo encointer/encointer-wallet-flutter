@@ -47,7 +47,6 @@ Future<void> submitTx(
       api,
       xt,
       notification,
-      false,
       onError: onError,
       onFinish: onFinish,
     );

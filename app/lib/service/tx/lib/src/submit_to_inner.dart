@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
@@ -29,8 +28,7 @@ Future<void> submitTxInner(
   AppStore store,
   Api api,
   OpaqueExtrinsic extrinsic,
-  TxNotification? notification,
-  bool showStatusSnackBar, {
+  TxNotification? notification, {
   void Function(DispatchError error)? onError,
   dynamic Function(BuildContext, ExtrinsicReport)? onFinish,
 }) async {
@@ -42,13 +40,6 @@ Future<void> submitTxInner(
   final onTxFinishFn = onFinish ?? (_, __) => null;
 
   if (await api.isConnected()) {
-    if (showStatusSnackBar) {
-      _showTxStatusSnackBar(
-        getTxStatusTranslation(l10n, store.account.txStatus),
-        const CupertinoActivityIndicator(),
-      );
-    }
-
     try {
       final report = await api.account.sendTxAndShowNotification(
         extrinsic,
@@ -57,16 +48,16 @@ Future<void> submitTxInner(
       );
 
       if (report.isExtrinsicFailed) {
-        _onTxError(store, showStatusSnackBar);
+        _onTxError(store);
         onError?.call(report.dispatchError!);
         final message = getLocalizedTxErrorMessage(l10n, report.dispatchError!);
         _showErrorDialog(context, message);
       } else {
-        _onTxFinish(context, store, report, onTxFinishFn, showStatusSnackBar);
+        _onTxFinish(context, store, report, onTxFinishFn);
       }
     } catch (e) {
       Log.e('Caught RPC error while sending extrinsics: $e');
-      _onTxError(store, showStatusSnackBar);
+      _onTxError(store);
       var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
       if (e.toString().contains(lowPriorityTx)) {
         msg = ErrorNotificationMsg(title: l10n.txTooLowPriorityErrorTitle, body: l10n.txTooLowPriorityErrorBody);
@@ -87,9 +78,8 @@ Future<void> submitTxInner(
   }
 }
 
-void _onTxError(AppStore store, bool mounted) {
+void _onTxError(AppStore store) {
   store.assets.setSubmitting(false);
-  if (mounted) RootSnackBar.removeCurrent();
 }
 
 void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
@@ -135,28 +125,11 @@ void _onTxFinish(
   AppStore store,
   ExtrinsicReport report,
   void Function(BuildContext, ExtrinsicReport) onTxFinish,
-  bool mounted,
 ) {
   Log.d('callback triggered, blockHash: ${report.blockHash}', '_onTxFinish');
   store.assets.setSubmitting(false);
 
   onTxFinish(context, report);
-
-  if (mounted) {
-    RootSnackBar.show(
-      ListTile(
-        leading: SizedBox(
-          width: 24,
-          child: Assets.images.assets.success.image(),
-        ),
-        title: Text(
-          context.l10n.success,
-          style: const TextStyle(color: Colors.black54),
-        ),
-      ),
-      durationMillis: 2000,
-    );
-  }
 }
 
 String getTxStatusTranslation(AppLocalizations l10n, TxStatus? status) {
