@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +35,7 @@ Future<void> submitTx(
   AppStore store,
   Api api,
   OpaqueExtrinsic xt,
-  TxNotification notification, {
+  TxNotification? notification, {
   dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
@@ -356,13 +354,37 @@ Future<dynamic> submitNextPhaseWithAlice(BuildContext context, AppStore store, A
   }
 }
 
-Future<Map<String, dynamic>> submitReapVoucher(
+Future<void> submitEncointerTransferAll(
+  BuildContext context,
+  AppStore store,
   Api api,
-  String voucherUri,
-  String recipientAddress,
-  CommunityIdentifier cid,
-) async {
-  return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
+  KeyringAccount signer,
+  Address recipientAddress,
+  CommunityIdentifier cid, {
+  required CommunityIdentifier? txPaymentAsset,
+  TxNotification? notification,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerBalances.transferAll(
+    dest: recipientAddress.pubkey,
+    cid: cid.toPolkadart(),
+  );
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    context.read<AppStore>(),
+    api,
+    OpaqueExtrinsic(xt),
+    notification,
+    onFinish: onFinish,
+    onError: onError,
+  );
 }
 
 void _showEducationalDialog(ParticipantType registrationType, BuildContext context) {

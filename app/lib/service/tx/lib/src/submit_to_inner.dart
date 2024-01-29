@@ -29,7 +29,7 @@ Future<void> submitTxInner(
   AppStore store,
   Api api,
   OpaqueExtrinsic extrinsic,
-  TxNotification notification,
+  TxNotification? notification,
   bool showStatusSnackBar, {
   void Function(DispatchError error)? onError,
   dynamic Function(BuildContext, ExtrinsicReport)? onFinish,

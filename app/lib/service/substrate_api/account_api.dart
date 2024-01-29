@@ -54,12 +54,12 @@ class AccountApi {
 
   Future<ExtrinsicReport> sendTxAndShowNotification(
     OpaqueExtrinsic xt,
-    TxNotification notification, {
+    TxNotification? notification, {
     String? cid,
   }) async {
     final report = await EWAuthorApi(provider).submitAndWatchExtrinsicWithReport(xt);
 
-    if (report.isExtrinsicSuccess) {
+    if (report.isExtrinsicSuccess && notification != null) {
       final hash = report.blockHash;
       unawaited(NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
