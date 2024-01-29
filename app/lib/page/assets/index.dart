@@ -256,15 +256,19 @@ class _AssetsViewState extends State<AssetsView> {
                           if (snapshot.hasData) {
                             final hasPendingIssuance = snapshot.data!;
 
+                            final store = widget.store;
+
                             if (hasPendingIssuance) {
                               return SubmitButton(
                                 key: const Key(EWTestKeys.claimPendingDev),
                                 child: Text(l10n.issuancePending, textAlign: TextAlign.center),
                                 onPressed: (context) => submitClaimRewards(
                                   context,
-                                  widget.store,
+                                  store,
                                   webApi,
+                                  store.account.getKeyringAccount(store.account.currentAccountPubKey!),
                                   widget.store.encointer.chosenCid!,
+                                  txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
                                 ),
                               );
                             } else {

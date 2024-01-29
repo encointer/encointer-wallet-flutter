@@ -1,10 +1,5 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
-import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
-import 'package:ew_keyring/ew_keyring.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
-import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +15,13 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/modules/login/logic/login_store.dart';
+import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
+import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
+import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
+import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/tuples_1.dart';
+import 'package:ew_test_keys/ew_test_keys.dart';
 
 /// Helpers to submit transactions.
 
@@ -56,14 +58,24 @@ Future<void> submitClaimRewards(
   BuildContext context,
   AppStore store,
   Api api,
-  CommunityIdentifier chosenCid,
-) async {
-  final txParams = claimRewardsParams(chosenCid, context.l10n);
+  KeyringAccount signer,
+  CommunityIdentifier chosenCid, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
+  // meetupIndex = null; the chain will figure out the meetup index.
+  final call = api.encointer.encointerKusama.tx.encointerCeremonies.claimRewards(cid: chosenCid.toPolkadart());
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
   return submitTx(
     context,
     store,
     api,
-    txParams,
+    OpaqueExtrinsic(xt),
+    TxNotification.claimRewards(context.l10n),
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       // Claiming the rewards creates a new reputation if successful.
       // Hence, we should update the state afterwards.
@@ -105,17 +117,35 @@ Future<void> submitEndorseNewcomer(
   );
 }
 
-Future<void> submitUnRegisterParticipant(BuildContext context, AppStore store, Api api) {
-  final lastProofOfAttendance = store.encointer.communityAccount?.participantType?.isReputable ?? false
-      ? store.encointer.account
-          ?.lastProofOfAttendance // can still be null if the participant did not register on the same phone.
-      : null;
+Future<void> submitUnRegisterParticipant(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  CommunityIdentifier chosenCid, {
+  required ProofOfAttendance? lastProofOfAttendance,
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerCeremonies.unregisterParticipant(
+    cid: chosenCid.toPolkadart(),
+    maybeReputationCommunityCeremony: Tuple2(
+      lastProofOfAttendance?.communityIdentifier.toPolkadart(),
+      lastProofOfAttendance?.ceremonyIndex,
+    ),
+  );
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
 
   return submitTx(
     context,
     store,
     webApi,
-    unregisterParticipantParams(store.encointer.chosenCid!, lastProofOfAttendance, context.l10n),
+    OpaqueExtrinsic(xt),
+    TxNotification.unregisterParticipant(context.l10n),
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) async {
       await Future.wait([
         webApi.encointer.getReputations(),
