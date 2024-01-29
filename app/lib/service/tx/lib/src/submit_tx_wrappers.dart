@@ -217,19 +217,35 @@ Future<void> submitRegisterParticipant(
   );
 }
 
-Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
-  final params = attestAttendeesParams(
-    store.encointer.chosenCid!,
-    store.encointer.communityAccount!.participantCountVote!,
-    store.encointer.communityAccount!.attendees!.toList(),
-    context.l10n,
+Future<void> submitAttestAttendees(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  CommunityIdentifier chosenCid, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
+  final attestations =
+      store.encointer.communityAccount!.attendees!.map((address) => Address.decode(address).pubkey).toList();
+
+  final call = api.encointer.encointerKusama.tx.encointerCeremonies.attestAttendees(
+    cid: chosenCid.toPolkadart(),
+    numberOfParticipantsVote: store.encointer.communityAccount!.participantCountVote,
+    attestations: attestations,
+  );
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
   );
 
   return submitTx(
     context,
     store,
     api,
-    params,
+    OpaqueExtrinsic(xt),
+    TxNotification.attestAttendees(context.l10n),
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       store.encointer.communityAccount!.setMeetupCompleted();
       Navigator.popUntil(txPageContext, (route) => route.isFirst);
