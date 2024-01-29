@@ -337,19 +337,14 @@ Future<dynamic> submitNextPhaseWithAlice(BuildContext context, AppStore store, A
   );
 
   try {
-    return submitTx(
-      context,
-      store,
-      api,
-      OpaqueExtrinsic(xt),
-      const TxNotification(title: 'Submitting DEV xt', body: 'sudo.nextPhase() This will fail on a non-dev node'),
-    );
+    await EWAuthorApi(api.provider).submitAndWatchExtrinsicWithReport(OpaqueExtrinsic(xt));
+    // this is actually unexpected, see exception case below.
+    return 'successfully called next phase';
   } catch (e) {
     // this will always throw an exception with the current implementation
-    // because we use the live systems metadata, which does not know the sudo
+    // because we use the kusama metadata, which does not know the sudo
     // pallet.
-    Log.p("sudo.nextPhase() threw an exception because we can't"
-        ' decode the the sudo event. This is expected.');
+    Log.p('sudo.nextPhase() threw an exception, decoding error is expected though: $e');
   }
 }
 

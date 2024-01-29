@@ -136,7 +136,14 @@ class EWAuthorApi<P extends Provider> {
 
         final kusama = EncointerKusama(_provider);
 
-        final events = await kusama.query.system.events(at: blockHash);
+        var events = <EventRecord>[];
+        try {
+          events = await kusama.query.system.events(at: blockHash);
+        } catch (err) {
+          Log.e("Couldn't decode events: $err");
+          rethrow;
+        }
+
         final block = await ChainApi(_provider).getBlock(at: blockHash);
         final timestamp = await kusama.query.timestamp.now(at: blockHash);
 
