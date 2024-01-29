@@ -64,8 +64,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     final cid = params.cid;
     final recipientAccount = params.recipientAccount;
     final amount = params.amount;
-    final recipientAddress =
-        AddressUtils.pubKeyHexToAddress(recipientAccount.pubKey, prefix: store.settings.endpoint.ss58!);
+    final recipientAddress = Address(
+      pubkey: AddressUtils.pubKeyHexToPubKey(recipientAccount.pubKey),
+      prefix: store.settings.endpoint.ss58!,
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.payment)),
@@ -133,20 +135,28 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     );
   }
 
-  Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double? amount) async {
-    final params = encointerBalanceTransferParams(cid, recipientAddress, amount, context.l10n);
-
-    setState(() {
-      _transferState = TransferState.submitting;
-    });
-
+  Future<void> _submit(
+    BuildContext context,
+    CommunityIdentifier cid,
+    Address recipientAddress,
+    double amount,
+  ) async {
     final pin = await context.read<LoginStore>().getPin(context);
     if (pin != null) {
-      await submitTx(
+      setState(() {
+        _transferState = TransferState.submitting;
+      });
+
+      final store = context.read<AppStore>();
+      await submitEncointerTransfer(
         context,
-        context.read<AppStore>(),
+        store,
         widget.api,
-        params,
+        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+        cid,
+        recipientAddress,
+        amount,
+        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
         onFinish: onFinish,
         onError: onError,
       );
@@ -154,10 +164,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       Log.d('TransferState after callback: $_transferState', 'PaymentConfirmationPage');
       // trigger rebuild after state update in callback
       setState(() {});
-    } else {
-      setState(() {
-        _transferState = TransferState.notStarted;
-      });
     }
   }
 

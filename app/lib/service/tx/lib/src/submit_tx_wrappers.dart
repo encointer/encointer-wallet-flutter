@@ -22,6 +22,8 @@ import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/tuples_1.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_u128.dart';
+import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 /// Helpers to submit transactions.
 
@@ -281,6 +283,40 @@ Future<void> submitFaucetDrip(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.faucetDrip(context.l10n),
+  );
+}
+
+Future<void> submitEncointerTransfer(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  CommunityIdentifier cid,
+  Address recipientAddress,
+  double amount, {
+  required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerBalances.transfer(
+    dest: recipientAddress.pubkey,
+    communityId: cid.toPolkadart(),
+    amount: FixedU128(bits: u64F64Util.toFixed(amount)),
+  );
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  await submitTx(
+    context,
+    context.read<AppStore>(),
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.encointerBalanceTransfer(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
   );
 }
 
