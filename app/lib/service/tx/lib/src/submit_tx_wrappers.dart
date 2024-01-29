@@ -93,12 +93,12 @@ Future<void> submitEndorseNewcomer(
   Api api,
   KeyringAccount signer,
   CommunityIdentifier chosenCid,
-  String newbie, {
+  Address newbie, {
   required CommunityIdentifier? txPaymentAsset,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerCeremonies.endorseNewcomer(
     cid: chosenCid.toPolkadart(),
-    newbie: newbie,
+    newbie: newbie.pubkey.toList(),
   );
   final xt = await TxBuilder(api.provider).createSignedExtrinsic(
     signer.pair,
@@ -128,12 +128,16 @@ Future<void> submitUnRegisterParticipant(
   required ProofOfAttendance? lastProofOfAttendance,
   required CommunityIdentifier? txPaymentAsset,
 }) async {
+  final maybeReputationCommunityCeremony = (lastProofOfAttendance != null)
+      ? Tuple2(
+          lastProofOfAttendance.communityIdentifier.toPolkadart(),
+          lastProofOfAttendance.ceremonyIndex,
+        )
+      : null;
+
   final call = api.encointer.encointerKusama.tx.encointerCeremonies.unregisterParticipant(
     cid: chosenCid.toPolkadart(),
-    maybeReputationCommunityCeremony: Tuple2(
-      lastProofOfAttendance?.communityIdentifier.toPolkadart(),
-      lastProofOfAttendance?.ceremonyIndex,
-    ),
+    maybeReputationCommunityCeremony: maybeReputationCommunityCeremony,
   );
 
   final xt = await TxBuilder(api.provider).createSignedExtrinsic(

@@ -296,7 +296,7 @@ class EndorseButton extends StatelessWidget {
         api,
         store.account.getKeyringAccount(store.account.currentAccountPubKey!),
         store.encointer.chosenCid!,
-        address,
+        Address.decode(address),
         txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       );
     }
