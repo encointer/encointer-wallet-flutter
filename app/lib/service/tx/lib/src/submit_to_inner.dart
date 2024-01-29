@@ -22,11 +22,8 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatc
 const insufficientFundsError = '1010';
 const lowPriorityTx = '1014';
 
-/// Inner function to submit a tx via the JS interface.
-///
-/// Should be private but dart lacks intelligent support to manage privacy. `submitTxWrappers/submitTx` should be
-/// called from the outside instead of this one.
-Future<void> submitToJS(
+/// Inner function to submit a tx handling all the notifications.
+Future<void> submitTxInner(
   BuildContext context,
   AppStore store,
   Api api,

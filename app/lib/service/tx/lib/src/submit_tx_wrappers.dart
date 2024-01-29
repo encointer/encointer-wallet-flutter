@@ -13,7 +13,7 @@ import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
-import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
@@ -43,7 +43,7 @@ Future<void> submitTx(
 
   final pin = await context.read<LoginStore>().getPin(context);
   if (pin != null) {
-    return submitToJS(
+    return submitTxInner(
       context,
       store,
       api,
