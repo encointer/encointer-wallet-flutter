@@ -14,7 +14,7 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/tx/lib/src/params.dart';
+import 'package:encointer_wallet/service/tx/lib/src/tx_notification.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -33,7 +33,7 @@ Future<void> submitTx(
   AppStore store,
   Api api,
   OpaqueExtrinsic xt,
-  TxNotificationData notification, {
+  TxNotification notification, {
   dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
@@ -97,7 +97,7 @@ Future<void> submitEndorseNewcomer(
     store,
     api,
     OpaqueExtrinsic(xt),
-    TxNotificationData.endorseNewcomer(context.l10n),
+    TxNotification.endorseNewcomer(context.l10n),
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       store.encointer.account!.getNumberOfNewbieTicketsForReputable(at: report.blockHashBytes);
       store.encointer.communityAccount!.getNumberOfNewbieTicketsForBootstrapper(at: report.blockHashBytes);
