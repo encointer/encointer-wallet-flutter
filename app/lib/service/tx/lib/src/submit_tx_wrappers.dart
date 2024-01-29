@@ -324,6 +324,38 @@ Future<void> submitEncointerTransfer(
   );
 }
 
+/// Calls `encointerScheduler.nextPhase()` with Alice.
+///
+/// This will only work on the local dev-setup.
+Future<dynamic> submitNextPhaseWithAlice(BuildContext context, AppStore store, Api api) async {
+  // This is valid for the encointer-node dev chain config.
+  // We currently don't have access to the dev nodes metadata
+  // so we hardcode the call.
+  const sudoNextPhaseCall = '0x05003c00';
+  final alice = await KeyringAccount.fromUri('Alice', '//Alice');
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(
+    alice.pair,
+    sudoNextPhaseCall,
+  );
+
+  try {
+    return submitTx(
+      context,
+      store,
+      api,
+      OpaqueExtrinsic(xt),
+      const TxNotification(title: 'Submitting DEV xt', body: 'sudo.nextPhase() This will fail on a non-dev node'),
+    );
+  } catch (e) {
+    // this will always throw an exception with the current implementation
+    // because we use the live systems metadata, which does not know the sudo
+    // pallet.
+    Log.p("sudo.nextPhase() threw an exception because we can't"
+        ' decode the the sudo event. This is expected.');
+  }
+}
+
 Future<Map<String, dynamic>> submitReapVoucher(
   Api api,
   String voucherUri,
@@ -378,11 +410,4 @@ Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContex
     ParticipantType.Reputable => {'title': l10n.reputableTitle, 'content': l10n.reputableContent},
     ParticipantType.Bootstrapper => {'title': l10n.bootstrapperTitle, 'content': l10n.bootstrapperContent},
   };
-}
-
-/// Calls `encointerScheduler.nextPhase()` with Alice.
-///
-/// This will only work on the local dev-setup.
-Future<dynamic> submitNextPhase(Api api) async {
-  return api.js.evalJavascript('encointer.sendNextPhaseTx()');
 }
