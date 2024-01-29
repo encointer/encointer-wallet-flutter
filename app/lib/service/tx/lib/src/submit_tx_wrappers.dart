@@ -162,16 +162,35 @@ Future<void> submitUnRegisterParticipant(
   );
 }
 
-Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
+Future<void> submitRegisterParticipant(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  CommunityIdentifier chosenCid, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
   final proof = api.encointer.getProofOfAttendance();
+
+  final call = api.encointer.encointerKusama.tx.encointerCeremonies.registerParticipant(
+    cid: chosenCid.toPolkadart(),
+    proof: proof,
+  );
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
 
   return submitTx(
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid!, context.l10n, proof: proof),
+    OpaqueExtrinsic(xt),
+    TxNotification.registerParticipant(context.l10n),
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) async {
-      store.encointer.account!.lastProofOfAttendance = proof;
+      store.encointer.account!.lastProofOfAttendance = (proof != null) ? ProofOfAttendance.fromPolkadart(proof) : null;
       final data = await webApi.encointer
           .getAggregatedAccountData(store.encointer.chosenCid!, store.account.currentAccountPubKey!,
               // Get data at included block to prevent race conditions with `store.chain.latestHead`.
