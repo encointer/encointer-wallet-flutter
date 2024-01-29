@@ -18,7 +18,7 @@ import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
 import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/tuples_1.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/tuples.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_u128.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
