@@ -15,6 +15,7 @@ import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
@@ -27,26 +28,18 @@ Future<void> submitTxInner(
   BuildContext context,
   AppStore store,
   Api api,
+  OpaqueExtrinsic extrinsic,
+  TxNotificationData notification,
   bool showStatusSnackBar, {
-  required Map<String, dynamic> txParams,
   void Function(DispatchError error)? onError,
-  required String password,
+  dynamic Function(BuildContext, ExtrinsicReport)? onFinish,
 }) async {
   final l10n = context.l10n;
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
 
-  final txInfo = txParams['txInfo'] as Map<String, dynamic>;
-  txInfo['pubKey'] = store.account.currentAccount.pubKey;
-  txInfo['address'] = store.account.currentAddress;
-  txInfo['password'] = password;
-  Log.d('$txInfo', 'submitToJS');
-  Log.d('${txParams['params']}', 'submitToJS');
-
-  final onTxFinishFn = txParams['onFinish'] != null
-      ? txParams['onFinish'] as dynamic Function(BuildContext, ExtrinsicReport)
-      : (_, __) => null;
+  final onTxFinishFn = onFinish ?? (_, __) => null;
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
@@ -58,9 +51,8 @@ Future<void> submitTxInner(
 
     try {
       final report = await api.account.sendTxAndShowNotification(
-        txParams['txInfo'] as Map<String, dynamic>,
-        txParams['params'] as List<dynamic>?,
-        rawParam: txParams['rawParam'] as String?,
+        extrinsic,
+        notification,
         cid: store.encointer.community?.cid.toFmtString(),
       );
 
@@ -85,9 +77,13 @@ Future<void> submitTxInner(
     }
   } else {
     _showTxStatusSnackBar(l10n.txQueuedOffline, null);
-    txInfo['notificationTitle'] = l10n.notifySubmittedQueued;
-    txInfo['txError'] = l10n.txError;
-    store.account.queueTx(txParams);
+    // This was unused
+    // txInfo['notificationTitle'] = l10n.notifySubmittedQueued;
+    // txInfo['txError'] = l10n.txError;
+
+    // Todo: check when rest of the implementation is finished,
+    //  or maybe remove as it might not be working anyhow.
+    // store.account.queueTx(txParams);
   }
 }
 

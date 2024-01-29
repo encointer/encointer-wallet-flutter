@@ -1,21 +1,18 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:flutter/cupertino.dart';
 
 /// Params for known extrinsics.
 
-Map<String, dynamic> endorseNewcomerParams(CommunityIdentifier chosenCid, String newbie, AppLocalizations l10n) {
-  return {
-    'title': 'endorse_newcomer',
-    'txInfo': {
-      'module': 'encointerCeremonies',
-      'call': 'endorseNewcomer',
-      'cid': chosenCid,
-      'notificationTitle': l10n.endorseNewcomerNotificationTitle,
-      'notificationBody': l10n.endorseNewcomerNotificationBody,
-    },
-    'params': [chosenCid, newbie],
-  };
+@immutable
+class TxNotificationData {
+  const TxNotificationData({required this.title, required this.body});
+
+  factory TxNotificationData.endorseNewcomer(AppLocalizations l10n) => TxNotificationData(title: l10n.endorseNewcomerNotificationTitle, body: l10n.endorseNewcomerNotificationBody);
+
+  final String title;
+  final String body;
 }
 
 Map<String, dynamic> registerParticipantParams(

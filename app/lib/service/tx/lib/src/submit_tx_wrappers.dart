@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
+import 'package:encointer_wallet/service/tx/lib/src/tx_builder.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,27 +32,22 @@ Future<void> submitTx(
   BuildContext context,
   AppStore store,
   Api api,
-  Map<String, dynamic> txParams, {
+  OpaqueExtrinsic xt,
+  TxNotificationData notification, {
   dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
-  final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
-  if (txPaymentAsset != null) {
-    (txParams['txInfo'] as Map<String, dynamic>)['txPaymentAsset'] = txPaymentAsset;
-  }
-
-  txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, ExtrinsicReport report) => report);
-
   final pin = await context.read<LoginStore>().getPin(context);
   if (pin != null) {
     return submitTxInner(
       context,
       store,
       api,
+      xt,
+      notification,
       false,
-      txParams: txParams,
-      password: pin,
       onError: onError,
+      onFinish: onFinish,
     );
   }
 }
@@ -80,15 +77,27 @@ Future<void> submitEndorseNewcomer(
   BuildContext context,
   AppStore store,
   Api api,
-  CommunityIdentifier? chosenCid,
-  String? newbie,
-) async {
-  final txParams = endorseNewcomerParams(chosenCid!, newbie!, context.l10n);
+  KeyringAccount signer,
+  CommunityIdentifier chosenCid,
+  String newbie, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerCeremonies.endorseNewcomer(
+    cid: chosenCid,
+    newbie: newbie,
+  );
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
   return submitTx(
     context,
     store,
     api,
-    txParams,
+    OpaqueExtrinsic(xt),
+    TxNotificationData.endorseNewcomer(context.l10n),
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       store.encointer.account!.getNumberOfNewbieTicketsForReputable(at: report.blockHashBytes);
       store.encointer.communityAccount!.getNumberOfNewbieTicketsForBootstrapper(at: report.blockHashBytes);

@@ -4,8 +4,6 @@ import 'package:convert/convert.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
 import 'package:encointer_wallet/store/account/services/legacy_encryption_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -120,39 +118,39 @@ abstract class _AccountStore with Store {
   void queueTx(Map<String, dynamic> tx) {
     queuedTxs.add(tx);
 
-    Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
-      if (await webApi.isConnected()) {
-        final cid = rootStore.encointer.community?.cid.toFmtString();
-        for (final args in queuedTxs) {
-          final report = await webApi.account.sendTxAndShowNotification(
-            args['txInfo'] as Map<String, dynamic>,
-            args['params'] as List<dynamic>?,
-            rawParam: args['rawParam'] as String?,
-            cid: cid,
-          );
-
-          Log.d('Queued tx result: $report', 'AccountStore');
-          if (report.isExtrinsicFailed) {
-            await NotificationPlugin.showNotification(
-              0,
-              '${report.dispatchError!}',
-              'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
-              cid: cid,
-            );
-          } else {
-            // if (rootStore.settings.endpointIsEncointer) {
-            //   await rootStore.encointer.account!.setTransferTxs([report], rootStore.account.currentAddress);
-            // }
-          }
-        }
-        rootStore.assets.setSubmitting(false);
-        rootStore.account.clearTxStatus();
-        timer.cancel();
-        queuedTxs = [];
-      } else {
-        Log.d('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)', 'AccountStore');
-      }
-    });
+    // Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
+    //   if (await webApi.isConnected()) {
+    //     final cid = rootStore.encointer.community?.cid.toFmtString();
+    //     for (final args in queuedTxs) {
+    //       final report = await webApi.account.sendTxAndShowNotification(
+    //         args['txInfo'] as Map<String, dynamic>,
+    //         args['params'] as List<dynamic>?,
+    //         rawParam: args['rawParam'] as String?,
+    //         cid: cid,
+    //       );
+    //
+    //       Log.d('Queued tx result: $report', 'AccountStore');
+    //       if (report.isExtrinsicFailed) {
+    //         await NotificationPlugin.showNotification(
+    //           0,
+    //           '${report.dispatchError!}',
+    //           'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
+    //           cid: cid,
+    //         );
+    //       } else {
+    //         // if (rootStore.settings.endpointIsEncointer) {
+    //         //   await rootStore.encointer.account!.setTransferTxs([report], rootStore.account.currentAddress);
+    //         // }
+    //       }
+    //     }
+    //     rootStore.assets.setSubmitting(false);
+    //     rootStore.account.clearTxStatus();
+    //     timer.cancel();
+    //     queuedTxs = [];
+    //   } else {
+    //     Log.d('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)', 'AccountStore');
+    //   }
+    // });
   }
 
   @action
