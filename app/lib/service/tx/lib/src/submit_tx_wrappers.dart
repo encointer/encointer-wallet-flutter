@@ -257,22 +257,30 @@ Future<void> submitFaucetDrip(
   BuildContext context,
   AppStore store,
   Api api,
-  String faucetAccount,
+  KeyringAccount signer,
+  String faucetPubKey,
   CommunityIdentifier cid,
-  int cIndex,
-) async {
-  final params = faucetDripParams(
-    faucetAccount,
-    cid,
-    cIndex,
-    context.l10n,
+  int cIndex, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerFaucet.drip(
+    faucetAccount: AddressUtils.pubKeyHexToPubKey(faucetPubKey).toList(),
+    cid: cid.toPolkadart(),
+    cindex: cIndex,
+  );
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
   );
 
   return submitTx(
     context,
     store,
     api,
-    params,
+    OpaqueExtrinsic(xt),
+    TxNotification.faucetDrip(context.l10n),
   );
 }
 

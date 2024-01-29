@@ -161,12 +161,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   shrinkWrap: true,
                   itemCount: faucets!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final faucetAccount = faucets!.keys.elementAt(index);
+                    final faucetPubKeyHex = faucets!.keys.elementAt(index);
                     return FaucetListTile(
                       store,
                       userAddress: addressSS58,
-                      faucet: faucets![faucetAccount]!,
-                      faucetAccount: faucetAccount,
+                      faucet: faucets![faucetPubKeyHex]!,
+                      faucetPubKey: faucetPubKeyHex,
                     );
                   },
                 )
