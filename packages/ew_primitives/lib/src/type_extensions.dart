@@ -9,7 +9,7 @@ import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 extension KeyringAccountMultiAddressExt on KeyringAccount {
   MultiAddress multiAddress() {
-     return MultiAddress.values.id(pubKey);
+    return MultiAddress.values.id(pubKey);
   }
 }
 

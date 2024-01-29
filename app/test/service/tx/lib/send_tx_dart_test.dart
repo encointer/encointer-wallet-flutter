@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-// @Skip('Skip these tests as they need a specific setup.')
+@Skip('Skip these tests as they need a specific setup.')
 
 import 'dart:async';
 import 'dart:convert';
@@ -34,7 +34,7 @@ void main() {
       final txBuilder = TxBuilder(provider);
 
       // mediterranean test community
-      final paymentAsset =  CommunityIdentifier(geohash: utf8.encode('sqm1v'),digest: hex.decode('f08c911c'));
+      final paymentAsset = CommunityIdentifier(geohash: utf8.encode('sqm1v'), digest: hex.decode('f08c911c'));
       print('payment asset: ${paymentAsset.toJson()}');
       final testCid = ew.CommunityIdentifier.fromPolkadart(paymentAsset);
       print('payment asset fmt: ${testCid.toFmtString()}');

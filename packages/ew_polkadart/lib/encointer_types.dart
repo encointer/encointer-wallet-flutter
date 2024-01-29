@@ -1,7 +1,8 @@
 /// Re-export well defined-types.
 
 // export primitive types
-export 'generated/encointer_kusama/types/sp_runtime/multiaddress/multi_address.dart' show MultiAddress, Index, Id, Raw, Address32;
+export 'generated/encointer_kusama/types/sp_runtime/multiaddress/multi_address.dart'
+    show MultiAddress, Index, Id, Raw, Address32;
 export 'generated/encointer_kusama/types/sp_runtime/multi_signature.dart' show MultiSignature, Sr25519;
 
 // export types from balances

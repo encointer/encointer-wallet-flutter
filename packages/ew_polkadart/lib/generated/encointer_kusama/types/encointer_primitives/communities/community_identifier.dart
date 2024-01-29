@@ -1,4 +1,3 @@
-
 // Todo: polkadart is not generic yet over the asset id. So we hardcoded our community identifier there.
 // Here we have to re-export that one for now.
 export 'package:polkadart/primitives/primitives.dart' show CommunityIdentifier;
