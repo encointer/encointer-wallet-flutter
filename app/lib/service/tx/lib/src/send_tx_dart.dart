@@ -114,7 +114,7 @@ class EWAuthorApi<P extends Provider> {
   /// which emits txStatus updates.
   ///
   /// Note: be careful with exceptions in `onData` catching fails sometimes
-  /// for an unidentified reason.
+  /// for an unidentified reason #1628.
   Future<StreamSubscription<ExtrinsicStatus>> submitAndWatchExtrinsic(
     OpaqueExtrinsic extrinsic,
     dynamic Function(ExtrinsicStatus) onData,
