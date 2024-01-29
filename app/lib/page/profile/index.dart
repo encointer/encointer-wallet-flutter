@@ -240,8 +240,8 @@ class _ProfileState extends State<Profile> {
                             Text('Next-Phase (only works for local dev-network)'),
                           ],
                         ),
-                        onPressed: (_) async {
-                          final res = await submitNextPhase(webApi);
+                        onPressed: (BuildContext context) async {
+                          final res = await submitNextPhaseWithAlice(context, store, webApi);
                           RootSnackBar.showMsg(res.toString());
                         },
                       ),

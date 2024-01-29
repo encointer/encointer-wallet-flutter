@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
@@ -15,6 +14,7 @@ import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatch_error.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
@@ -22,62 +22,42 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/dispatc
 const insufficientFundsError = '1010';
 const lowPriorityTx = '1014';
 
-/// Inner function to submit a tx via the JS interface.
-///
-/// Should be private but dart lacks intelligent support to manage privacy. `submitTxWrappers/submitTx` should be
-/// called from the outside instead of this one.
-Future<void> submitToJS(
+/// Inner function to submit a tx handling all the notifications.
+Future<void> submitTxInner(
   BuildContext context,
   AppStore store,
   Api api,
-  bool showStatusSnackBar, {
-  required Map<String, dynamic> txParams,
+  OpaqueExtrinsic extrinsic,
+  TxNotification? notification, {
   void Function(DispatchError error)? onError,
-  required String password,
+  dynamic Function(BuildContext, ExtrinsicReport)? onFinish,
 }) async {
   final l10n = context.l10n;
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
 
-  final txInfo = txParams['txInfo'] as Map<String, dynamic>;
-  txInfo['pubKey'] = store.account.currentAccount.pubKey;
-  txInfo['address'] = store.account.currentAddress;
-  txInfo['password'] = password;
-  Log.d('$txInfo', 'submitToJS');
-  Log.d('${txParams['params']}', 'submitToJS');
-
-  final onTxFinishFn = txParams['onFinish'] != null
-      ? txParams['onFinish'] as dynamic Function(BuildContext, ExtrinsicReport)
-      : (_, __) => null;
+  final onTxFinishFn = onFinish ?? (_, __) => null;
 
   if (await api.isConnected()) {
-    if (showStatusSnackBar) {
-      _showTxStatusSnackBar(
-        getTxStatusTranslation(l10n, store.account.txStatus),
-        const CupertinoActivityIndicator(),
-      );
-    }
-
     try {
       final report = await api.account.sendTxAndShowNotification(
-        txParams['txInfo'] as Map<String, dynamic>,
-        txParams['params'] as List<dynamic>?,
-        rawParam: txParams['rawParam'] as String?,
+        extrinsic,
+        notification,
         cid: store.encointer.community?.cid.toFmtString(),
       );
 
       if (report.isExtrinsicFailed) {
-        _onTxError(store, showStatusSnackBar);
+        _onTxError(store);
         onError?.call(report.dispatchError!);
         final message = getLocalizedTxErrorMessage(l10n, report.dispatchError!);
         _showErrorDialog(context, message);
       } else {
-        _onTxFinish(context, store, report, onTxFinishFn, showStatusSnackBar);
+        _onTxFinish(context, store, report, onTxFinishFn);
       }
     } catch (e) {
       Log.e('Caught RPC error while sending extrinsics: $e');
-      _onTxError(store, showStatusSnackBar);
+      _onTxError(store);
       var msg = ErrorNotificationMsg(title: l10n.transactionError, body: e.toString());
       if (e.toString().contains(lowPriorityTx)) {
         msg = ErrorNotificationMsg(title: l10n.txTooLowPriorityErrorTitle, body: l10n.txTooLowPriorityErrorBody);
@@ -88,15 +68,18 @@ Future<void> submitToJS(
     }
   } else {
     _showTxStatusSnackBar(l10n.txQueuedOffline, null);
-    txInfo['notificationTitle'] = l10n.notifySubmittedQueued;
-    txInfo['txError'] = l10n.txError;
-    store.account.queueTx(txParams);
+    // This was unused
+    // txInfo['notificationTitle'] = l10n.notifySubmittedQueued;
+    // txInfo['txError'] = l10n.txError;
+
+    // Todo: check when rest of the implementation is finished,
+    //  or maybe remove as it might not be working anyhow.
+    // store.account.queueTx(txParams);
   }
 }
 
-void _onTxError(AppStore store, bool mounted) {
+void _onTxError(AppStore store) {
   store.assets.setSubmitting(false);
-  if (mounted) RootSnackBar.removeCurrent();
 }
 
 void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
@@ -142,28 +125,11 @@ void _onTxFinish(
   AppStore store,
   ExtrinsicReport report,
   void Function(BuildContext, ExtrinsicReport) onTxFinish,
-  bool mounted,
 ) {
   Log.d('callback triggered, blockHash: ${report.blockHash}', '_onTxFinish');
   store.assets.setSubmitting(false);
 
   onTxFinish(context, report);
-
-  if (mounted) {
-    RootSnackBar.show(
-      ListTile(
-        leading: SizedBox(
-          width: 24,
-          child: Assets.images.assets.success.image(),
-        ),
-        title: Text(
-          context.l10n.success,
-          style: const TextStyle(color: Colors.black54),
-        ),
-      ),
-      durationMillis: 2000,
-    );
-  }
 }
 
 String getTxStatusTranslation(AppLocalizations l10n, TxStatus? status) {

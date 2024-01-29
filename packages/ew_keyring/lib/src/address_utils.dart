@@ -18,8 +18,13 @@ abstract class AddressUtils {
   ///
   /// The default SS58 address prefix is 42.
   static String pubKeyHexToAddress(String pubKey, {int prefix = 42}) {
-    final pub = hex.decode(pubKey.replaceFirst('0x', ''));
-    return Address(prefix: prefix, pubkey: Uint8List.fromList(pub)).encode();
+    final pub = pubKeyHexToPubKey(pubKey);
+    return Address(prefix: prefix, pubkey: pub).encode();
+  }
+
+  /// Transform a hex pubKey to its byte representation.
+  static Uint8List pubKeyHexToPubKey(String pubKey) {
+    return Uint8List.fromList(hex.decode(pubKey.replaceFirst('0x', '')));
   }
 
   /// Decode an SS58 address to its public key.
