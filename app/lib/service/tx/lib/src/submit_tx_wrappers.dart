@@ -83,7 +83,7 @@ Future<void> submitEndorseNewcomer(
   required CommunityIdentifier? txPaymentAsset,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerCeremonies.endorseNewcomer(
-    cid: chosenCid,
+    cid: chosenCid.toPolkadart(),
     newbie: newbie,
   );
   final xt = await TxBuilder(api.provider).createSignedExtrinsic(
