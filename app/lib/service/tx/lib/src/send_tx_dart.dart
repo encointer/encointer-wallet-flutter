@@ -112,6 +112,9 @@ class EWAuthorApi<P extends Provider> {
 
   /// Submit a fully formatted extrinsic and return a subscription
   /// which emits txStatus updates.
+  ///
+  /// Note: be careful with exceptions in `onData` catching fails sometimes
+  /// for an unidentified reason.
   Future<StreamSubscription<ExtrinsicStatus>> submitAndWatchExtrinsic(
     OpaqueExtrinsic extrinsic,
     dynamic Function(ExtrinsicStatus) onData,
@@ -120,10 +123,8 @@ class EWAuthorApi<P extends Provider> {
   }
 
   Future<ExtrinsicReport> submitAndWatchExtrinsicWithReport(OpaqueExtrinsic extrinsic) async {
-    final hash = extrinsic.hash;
-
     final completer = Completer<void>();
-    ExtrinsicReport? report;
+    String? blockHashHex;
 
     final sub = await submitAndWatchExtrinsic(extrinsic, (xtUpdate) async {
       Log.d('ExtrinsicUpdate: ${xtUpdate.type}');
@@ -131,44 +132,51 @@ class EWAuthorApi<P extends Provider> {
       if (xtUpdate.type == 'ready') {
         Log.p('Xt is ready');
       } else if (xtUpdate.type == 'inBlock' || xtUpdate.type == 'finalized') {
-        final blockHashHex = xtUpdate.value.toString();
-        final blockHash = hexToUint8(blockHashHex);
-
-        final kusama = EncointerKusama(_provider);
-
-        var events = <EventRecord>[];
-        try {
-          events = await kusama.query.system.events(at: blockHash);
-        } catch (err) {
-          Log.e("Couldn't decode events: $err");
-          rethrow;
-        }
-
-        final block = await ChainApi(_provider).getBlock(at: blockHash);
-        final timestamp = await kusama.query.timestamp.now(at: blockHash);
-
-        // ignore: avoid_dynamic_calls
-        final xts = List<String>.from(block['block']['extrinsics'] as List<dynamic>);
-        final xtIndex = xts.indexWhere((xt) => xtHash(xt) == hash);
-
-        if (xtIndex != -1) {
-          Log.d('found xt in block at index: $xtIndex');
-        } else {
-          throw Exception(["Couldn't find extrinsic hash: $hash in block with hash: $blockHashHex"]);
-        }
-
-        final xtEvents =
-            events.where((e) => e.phase is ApplyExtrinsic && (e.phase as ApplyExtrinsic).value0 == xtIndex).toList();
-
-        report = ExtrinsicReport(extrinsicHash: hash, blockHash: blockHashHex, timestamp: timestamp, events: xtEvents);
-
+        blockHashHex = xtUpdate.value.toString();
         completer.complete();
       }
     });
 
     await completer.future;
     await sub.cancel();
-    return report!;
+    return getExtrinsicReportData(extrinsic, blockHashHex!);
+  }
+
+  Future<ExtrinsicReport> getExtrinsicReportData(OpaqueExtrinsic extrinsic, String blockHashHex) async {
+    final hash = extrinsic.hash;
+    final blockHash = hexToUint8(blockHashHex);
+
+    final kusama = EncointerKusama(_provider);
+
+    var events = <EventRecord>[];
+    try {
+      events = await kusama.query.system.events(at: blockHash);
+    } catch (err) {
+      throw Exception(["Couldn't decode events: $err"]);
+    }
+
+    final block = await ChainApi(_provider).getBlock(at: blockHash);
+    final timestamp = await kusama.query.timestamp.now(at: blockHash);
+
+    // ignore: avoid_dynamic_calls
+    final xts = List<String>.from(block['block']['extrinsics'] as List<dynamic>);
+    final xtIndex = xts.indexWhere((xt) => xtHash(xt) == hash);
+
+    if (xtIndex != -1) {
+      Log.d('found xt in block at index: $xtIndex');
+    } else {
+      throw Exception(["Couldn't find extrinsic hash: $hash in block with hash: $blockHashHex"]);
+    }
+
+    final xtEvents =
+        events.where((e) => e.phase is ApplyExtrinsic && (e.phase as ApplyExtrinsic).value0 == xtIndex).toList();
+
+    return ExtrinsicReport(
+      extrinsicHash: hash,
+      blockHash: blockHashHex,
+      timestamp: timestamp,
+      events: xtEvents,
+    );
   }
 }
 

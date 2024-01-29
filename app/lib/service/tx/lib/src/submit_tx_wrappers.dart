@@ -345,6 +345,7 @@ Future<dynamic> submitNextPhaseWithAlice(BuildContext context, AppStore store, A
     // because we use the kusama metadata, which does not know the sudo
     // pallet.
     Log.p('sudo.nextPhase() threw an exception, decoding error is expected though: $e');
+    return "called next phase, but can't evaluate result";
   }
 }
 
