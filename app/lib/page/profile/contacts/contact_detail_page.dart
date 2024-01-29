@@ -283,8 +283,6 @@ class EndorseButton extends StatelessWidget {
     final l10n = context.l10n;
     final address = AddressUtils.pubKeyHexToAddress(contact.pubKey, prefix: store.settings.endpoint.ss58!);
 
-    // Todo: enforce chosen cid
-
     if (bootstrappers != null && bootstrappers.contains(address)) {
       await _popupDialog(context, l10n.cantEndorseBootstrapper);
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
