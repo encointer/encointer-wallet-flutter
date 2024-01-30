@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
 
@@ -11,14 +10,6 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
 class Fmt {
-  static String passwordToEncryptKey(String password) {
-    final passHex = hex.encode(utf8.encode(password));
-    if (passHex.length > 32) {
-      return passHex.substring(0, 32);
-    }
-    return passHex.padRight(32, '0');
-  }
-
   static String? address(String? addr, {int pad = 6}) {
     if (addr == null || addr.length < pad) {
       return addr;

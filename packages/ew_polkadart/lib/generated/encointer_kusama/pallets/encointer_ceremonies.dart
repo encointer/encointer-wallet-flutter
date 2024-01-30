@@ -9,10 +9,11 @@ import '../types/encointer_primitives/ceremonies/assignment.dart' as _i7;
 import '../types/encointer_primitives/ceremonies/assignment_count.dart' as _i6;
 import '../types/encointer_primitives/ceremonies/assignment_params.dart' as _i12;
 import '../types/encointer_primitives/ceremonies/meetup_result.dart' as _i10;
+import '../types/encointer_primitives/ceremonies/proof_of_attendance.dart' as _i15;
 import '../types/encointer_primitives/ceremonies/reputation.dart' as _i8;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
 import '../types/encointer_runtime/runtime_call.dart' as _i14;
-import '../types/pallet_encointer_ceremonies/pallet/call.dart' as _i15;
+import '../types/pallet_encointer_ceremonies/pallet/call.dart' as _i16;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 import '../types/substrate_fixed/fixed_u128.dart' as _i9;
 import '../types/tuples.dart' as _i5;
@@ -1489,10 +1490,10 @@ class Txs {
 
   /// See [`Pallet::register_participant`].
   _i14.RuntimeCall registerParticipant({
-    required cid,
-    proof,
+    required _i2.CommunityIdentifier cid,
+    _i15.ProofOfAttendance? proof,
   }) {
-    final _call = _i15.Call.values.registerParticipant(
+    final _call = _i16.Call.values.registerParticipant(
       cid: cid,
       proof: proof,
     );
@@ -1501,10 +1502,10 @@ class Txs {
 
   /// See [`Pallet::upgrade_registration`].
   _i14.RuntimeCall upgradeRegistration({
-    required cid,
-    required proof,
+    required _i2.CommunityIdentifier cid,
+    required _i15.ProofOfAttendance proof,
   }) {
-    final _call = _i15.Call.values.upgradeRegistration(
+    final _call = _i16.Call.values.upgradeRegistration(
       cid: cid,
       proof: proof,
     );
@@ -1513,10 +1514,10 @@ class Txs {
 
   /// See [`Pallet::unregister_participant`].
   _i14.RuntimeCall unregisterParticipant({
-    required cid,
-    maybeReputationCommunityCeremony,
+    required _i2.CommunityIdentifier cid,
+    _i5.Tuple2<_i2.CommunityIdentifier, int>? maybeReputationCommunityCeremony,
   }) {
-    final _call = _i15.Call.values.unregisterParticipant(
+    final _call = _i16.Call.values.unregisterParticipant(
       cid: cid,
       maybeReputationCommunityCeremony: maybeReputationCommunityCeremony,
     );
@@ -1525,11 +1526,11 @@ class Txs {
 
   /// See [`Pallet::attest_attendees`].
   _i14.RuntimeCall attestAttendees({
-    required cid,
-    required numberOfParticipantsVote,
-    required attestations,
+    required _i2.CommunityIdentifier cid,
+    required int numberOfParticipantsVote,
+    required List<_i3.AccountId32> attestations,
   }) {
-    final _call = _i15.Call.values.attestAttendees(
+    final _call = _i16.Call.values.attestAttendees(
       cid: cid,
       numberOfParticipantsVote: numberOfParticipantsVote,
       attestations: attestations,
@@ -1539,10 +1540,10 @@ class Txs {
 
   /// See [`Pallet::endorse_newcomer`].
   _i14.RuntimeCall endorseNewcomer({
-    required cid,
-    required newbie,
+    required _i2.CommunityIdentifier cid,
+    required _i3.AccountId32 newbie,
   }) {
-    final _call = _i15.Call.values.endorseNewcomer(
+    final _call = _i16.Call.values.endorseNewcomer(
       cid: cid,
       newbie: newbie,
     );
@@ -1551,10 +1552,10 @@ class Txs {
 
   /// See [`Pallet::claim_rewards`].
   _i14.RuntimeCall claimRewards({
-    required cid,
-    maybeMeetupIndex,
+    required _i2.CommunityIdentifier cid,
+    BigInt? maybeMeetupIndex,
   }) {
-    final _call = _i15.Call.values.claimRewards(
+    final _call = _i16.Call.values.claimRewards(
       cid: cid,
       maybeMeetupIndex: maybeMeetupIndex,
     );
@@ -1562,52 +1563,52 @@ class Txs {
   }
 
   /// See [`Pallet::set_inactivity_timeout`].
-  _i14.RuntimeCall setInactivityTimeout({required inactivityTimeout}) {
-    final _call = _i15.Call.values.setInactivityTimeout(inactivityTimeout: inactivityTimeout);
+  _i14.RuntimeCall setInactivityTimeout({required int inactivityTimeout}) {
+    final _call = _i16.Call.values.setInactivityTimeout(inactivityTimeout: inactivityTimeout);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_endorsement_tickets_per_bootstrapper`].
-  _i14.RuntimeCall setEndorsementTicketsPerBootstrapper({required endorsementTicketsPerBootstrapper}) {
-    final _call = _i15.Call.values
+  _i14.RuntimeCall setEndorsementTicketsPerBootstrapper({required int endorsementTicketsPerBootstrapper}) {
+    final _call = _i16.Call.values
         .setEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_endorsement_tickets_per_reputable`].
-  _i14.RuntimeCall setEndorsementTicketsPerReputable({required endorsementTicketsPerReputable}) {
-    final _call = _i15.Call.values
+  _i14.RuntimeCall setEndorsementTicketsPerReputable({required int endorsementTicketsPerReputable}) {
+    final _call = _i16.Call.values
         .setEndorsementTicketsPerReputable(endorsementTicketsPerReputable: endorsementTicketsPerReputable);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_reputation_lifetime`].
-  _i14.RuntimeCall setReputationLifetime({required reputationLifetime}) {
-    final _call = _i15.Call.values.setReputationLifetime(reputationLifetime: reputationLifetime);
+  _i14.RuntimeCall setReputationLifetime({required int reputationLifetime}) {
+    final _call = _i16.Call.values.setReputationLifetime(reputationLifetime: reputationLifetime);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_meetup_time_offset`].
-  _i14.RuntimeCall setMeetupTimeOffset({required meetupTimeOffset}) {
-    final _call = _i15.Call.values.setMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
+  _i14.RuntimeCall setMeetupTimeOffset({required int meetupTimeOffset}) {
+    final _call = _i16.Call.values.setMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_time_tolerance`].
-  _i14.RuntimeCall setTimeTolerance({required timeTolerance}) {
-    final _call = _i15.Call.values.setTimeTolerance(timeTolerance: timeTolerance);
+  _i14.RuntimeCall setTimeTolerance({required BigInt timeTolerance}) {
+    final _call = _i16.Call.values.setTimeTolerance(timeTolerance: timeTolerance);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_location_tolerance`].
-  _i14.RuntimeCall setLocationTolerance({required locationTolerance}) {
-    final _call = _i15.Call.values.setLocationTolerance(locationTolerance: locationTolerance);
+  _i14.RuntimeCall setLocationTolerance({required int locationTolerance}) {
+    final _call = _i16.Call.values.setLocationTolerance(locationTolerance: locationTolerance);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::purge_community_ceremony`].
-  _i14.RuntimeCall purgeCommunityCeremony({required communityCeremony}) {
-    final _call = _i15.Call.values.purgeCommunityCeremony(communityCeremony: communityCeremony);
+  _i14.RuntimeCall purgeCommunityCeremony({required _i5.Tuple2<_i2.CommunityIdentifier, int> communityCeremony}) {
+    final _call = _i16.Call.values.purgeCommunityCeremony(communityCeremony: communityCeremony);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 }

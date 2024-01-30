@@ -80,8 +80,8 @@ class CommunityReputation {
 
   Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 
-  CommunityIdentifier? communityIdentifier;
-  Reputation? reputation;
+  CommunityIdentifier communityIdentifier;
+  Reputation reputation;
 
   @override
   String toString() {
@@ -144,6 +144,10 @@ Reputation? reputationFromString(String value) {
 extension ReputationExtension on Reputation {
   String toValue() {
     return toEnumValue(this);
+  }
+
+  bool isVerified() {
+    return this == Reputation.VerifiedUnlinked || this == Reputation.VerifiedLinked;
   }
 }
 

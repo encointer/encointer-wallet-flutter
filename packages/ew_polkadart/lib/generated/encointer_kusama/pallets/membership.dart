@@ -6,8 +6,9 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i3;
 
 import '../types/encointer_runtime/runtime_call.dart' as _i6;
-import '../types/pallet_membership/pallet/call.dart' as _i7;
+import '../types/pallet_membership/pallet/call.dart' as _i8;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
+import '../types/sp_runtime/multiaddress/multi_address.dart' as _i7;
 
 class Queries {
   const Queries(this.__api);
@@ -69,23 +70,23 @@ class Txs {
   const Txs();
 
   /// See [`Pallet::add_member`].
-  _i6.RuntimeCall addMember({required who}) {
-    final _call = _i7.Call.values.addMember(who: who);
+  _i6.RuntimeCall addMember({required _i7.MultiAddress who}) {
+    final _call = _i8.Call.values.addMember(who: who);
     return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::remove_member`].
-  _i6.RuntimeCall removeMember({required who}) {
-    final _call = _i7.Call.values.removeMember(who: who);
+  _i6.RuntimeCall removeMember({required _i7.MultiAddress who}) {
+    final _call = _i8.Call.values.removeMember(who: who);
     return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::swap_member`].
   _i6.RuntimeCall swapMember({
-    required remove,
-    required add,
+    required _i7.MultiAddress remove,
+    required _i7.MultiAddress add,
   }) {
-    final _call = _i7.Call.values.swapMember(
+    final _call = _i8.Call.values.swapMember(
       remove: remove,
       add: add,
     );
@@ -93,26 +94,26 @@ class Txs {
   }
 
   /// See [`Pallet::reset_members`].
-  _i6.RuntimeCall resetMembers({required members}) {
-    final _call = _i7.Call.values.resetMembers(members: members);
+  _i6.RuntimeCall resetMembers({required List<_i2.AccountId32> members}) {
+    final _call = _i8.Call.values.resetMembers(members: members);
     return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::change_key`].
-  _i6.RuntimeCall changeKey({required new_}) {
-    final _call = _i7.Call.values.changeKey(new_: new_);
+  _i6.RuntimeCall changeKey({required _i7.MultiAddress new_}) {
+    final _call = _i8.Call.values.changeKey(new_: new_);
     return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::set_prime`].
-  _i6.RuntimeCall setPrime({required who}) {
-    final _call = _i7.Call.values.setPrime(who: who);
+  _i6.RuntimeCall setPrime({required _i7.MultiAddress who}) {
+    final _call = _i8.Call.values.setPrime(who: who);
     return _i6.RuntimeCall.values.membership(_call);
   }
 
   /// See [`Pallet::clear_prime`].
   _i6.RuntimeCall clearPrime() {
-    final _call = _i7.Call.values.clearPrime();
+    final _call = _i8.Call.values.clearPrime();
     return _i6.RuntimeCall.values.membership(_call);
   }
 }

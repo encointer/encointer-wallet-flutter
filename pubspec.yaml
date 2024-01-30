@@ -2,8 +2,8 @@ name: encointer_workspace
 description: EncointerWallet made with Flutter.
 
 environment:
-  sdk: ">=3.0.1 <4.0.0"
-  flutter: "3.13.8"
+  sdk: ">=3.2.0 <4.0.0"
+  flutter: "3.16.3"
 
 dev_dependencies:
-  melos: 3.2.0
+  melos: 3.4.0

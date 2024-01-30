@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/config/prod_community.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
@@ -12,7 +11,6 @@ EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
   'ss58': 42,
   'text': 'Encointer Gesell (Hosted by Encointer Association)',
   'value': 'wss://gesell.encointer.org',
-  'overrideConfig': gesellConfig.toJson(),
   'ipfsGateway': ipfsGatewayEncointer
 });
 
@@ -21,7 +19,6 @@ EndpointData networkEndpointEncointerLietaer = EndpointData.fromJson({
   'ss58': 42,
   'text': 'Encointer Lietaer on Rococo (Hosted by Encointer Association)',
   'value': 'wss://rococo.api.encointer.org',
-  'overrideConfig': gesellConfig.toJson(),
   'ipfsGateway': ipfsGatewayEncointer
 });
 
@@ -30,7 +27,6 @@ EndpointData networkEndpointEncointerMainnet = EndpointData.fromJson({
   'ss58': 2,
   'text': 'Encointer Network on Kusama (Hosted by Encointer Association)',
   'value': 'wss://kusama.api.encointer.org',
-  'overrideConfig': gesellConfig.toJson(),
   'ipfsGateway': ipfsGatewayEncointer
 });
 
@@ -40,7 +36,6 @@ EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson({
   'text': 'Encointer Gesell Local Devnet',
   'value':
       'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944', // do not use the docker's address, use the host's
-  'overrideConfig': masterBranchConfig.toJson(),
   'ipfsGateway': ipfs_gateway_local
 });
 
@@ -51,7 +46,6 @@ EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson({
   'value': 'wss://cantillon.encointer.org',
   'worker': 'wss://substratee03.scs.ch',
   'mrenclave': 'CbE3fPWjeYVo9LSNKgPPiCXThFBjfhP1GK6Y9S7t5WVe',
-  'overrideConfig': cantillonConfig.toJson(),
   'ipfsGateway': ipfsGatewayEncointer
 });
 
@@ -62,7 +56,6 @@ EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
   'value': 'ws://10.0.0.134:9979', // do not use the docker's address, use the host's
   'worker': 'ws:/10.0.0.134:2079',
   'mrenclave': '4SkU25tusVChcrUprW8X22QoEgamCgj3HKQeje7j8Z4E',
-  'overrideConfig': sgxBranchConfig.toJson(),
   'ipfsGateway': ipfsGatewayEncointer
 });
 

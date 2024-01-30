@@ -1,15 +1,14 @@
 import 'dart:async';
 
-import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
+import 'package:convert/convert.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
+import 'package:encointer_wallet/store/account/services/legacy_encryption_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 
 part 'account.g.dart';
@@ -23,24 +22,26 @@ part 'account.g.dart';
 class AccountStore extends _AccountStore with _$AccountStore {
   AccountStore(super.appStore);
 
-  static const String seedTypeMnemonic = 'mnemonic';
-  static const String seedTypeRawSeed = 'rawSeed';
-  static const String seedTypeKeystore = 'keystore';
+  // Re-export these here for backwards compatibility.
+  static const String seedTypeMnemonic = LegacyEncryptionService.seedTypeMnemonic;
+  static const String seedTypeRawSeed = LegacyEncryptionService.seedTypeRawSeed;
+  static const String seedTypeKeystore = LegacyEncryptionService.seedTypeKeystore;
 }
 
 abstract class _AccountStore with Store {
-  _AccountStore(this.rootStore);
+  _AccountStore(this.rootStore)
+      : legacyEncryptionService = LegacyEncryptionService(rootStore.legacyStorage),
+        accountStorageService = AccountStorageService(rootStore.secureStorage),
+        keyring = EncointerKeyring();
 
   final AppStore rootStore;
 
-  Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc, {String? name}) {
-    acc['name'] = name ?? (acc['meta'] as Map<String, dynamic>)['name'];
-    if ((acc['meta'] as Map<String, dynamic>)['whenCreated'] == null) {
-      (acc['meta'] as Map<String, dynamic>)['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
-    }
-    (acc['meta'] as Map<String, dynamic>)['whenEdited'] = DateTime.now().millisecondsSinceEpoch;
-    return acc;
-  }
+  final LegacyEncryptionService legacyEncryptionService;
+
+  final AccountStorageService accountStorageService;
+
+  @observable
+  EncointerKeyring keyring;
 
   @observable
   bool loading = true;
@@ -68,10 +69,14 @@ abstract class _AccountStore with Store {
       if (accountListAll.isNotEmpty) {
         return accountListAll[0];
       } else {
-        return AccountData();
+        return AccountData.empty();
       }
     }
     return accountListAll[i];
+  }
+
+  KeyringAccount getKeyringAccount(String pubKeyHex) {
+    return keyring.getAccountByPubKeyHex(pubKeyHex);
   }
 
   @computed
@@ -113,39 +118,39 @@ abstract class _AccountStore with Store {
   void queueTx(Map<String, dynamic> tx) {
     queuedTxs.add(tx);
 
-    Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
-      if (await webApi.isConnected()) {
-        final cid = rootStore.encointer.community?.cid.toFmtString();
-        for (final args in queuedTxs) {
-          final report = await webApi.account.sendTxAndShowNotification(
-            args['txInfo'] as Map<String, dynamic>,
-            args['params'] as List<dynamic>?,
-            rawParam: args['rawParam'] as String?,
-            cid: cid,
-          );
-
-          Log.d('Queued tx result: $report', 'AccountStore');
-          if (report.isExtrinsicFailed) {
-            await NotificationPlugin.showNotification(
-              0,
-              '${report.dispatchError!}',
-              'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
-              cid: cid,
-            );
-          } else {
-            // if (rootStore.settings.endpointIsEncointer) {
-            //   await rootStore.encointer.account!.setTransferTxs([report], rootStore.account.currentAddress);
-            // }
-          }
-        }
-        rootStore.assets.setSubmitting(false);
-        rootStore.account.clearTxStatus();
-        timer.cancel();
-        queuedTxs = [];
-      } else {
-        Log.d('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)', 'AccountStore');
-      }
-    });
+    // Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
+    //   if (await webApi.isConnected()) {
+    //     final cid = rootStore.encointer.community?.cid.toFmtString();
+    //     for (final args in queuedTxs) {
+    //       final report = await webApi.account.sendTxAndShowNotification(
+    //         args['txInfo'] as Map<String, dynamic>,
+    //         args['params'] as List<dynamic>?,
+    //         rawParam: args['rawParam'] as String?,
+    //         cid: cid,
+    //       );
+    //
+    //       Log.d('Queued tx result: $report', 'AccountStore');
+    //       if (report.isExtrinsicFailed) {
+    //         await NotificationPlugin.showNotification(
+    //           0,
+    //           '${report.dispatchError!}',
+    //           'Failed to sendTx: ${args['title']} - ${(args['txInfo'] as Map<String, dynamic>)['module']}.${(args['txInfo'] as Map<String, dynamic>)['call']}',
+    //           cid: cid,
+    //         );
+    //       } else {
+    //         // if (rootStore.settings.endpointIsEncointer) {
+    //         //   await rootStore.encointer.account!.setTransferTxs([report], rootStore.account.currentAddress);
+    //         // }
+    //       }
+    //     }
+    //     rootStore.assets.setSubmitting(false);
+    //     rootStore.account.clearTxStatus();
+    //     timer.cancel();
+    //     queuedTxs = [];
+    //   } else {
+    //     Log.d('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)', 'AccountStore');
+    //   }
+    // });
   }
 
   @action
@@ -161,73 +166,58 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> updateAccountName(AccountData account, String newName) async {
-    final acc = AccountData.toJson(account);
-    (acc['meta'] as Map<String, dynamic>)['name'] = newName;
+    final acc = keyring.getAccountByPubKeyHex(account.pubKey)..name = newName;
+    // not-sure if this is necessary double check.
+    keyring.addAccount(acc);
 
-    await updateAccount(acc);
-  }
-
-  @action
-  Future<void> updateAccount(Map<String, dynamic> acc) async {
-    final formattedAcc = _formatMetaData(acc);
-
-    final accNew = AccountData.fromJson(formattedAcc);
-    await rootStore.localStorage.removeAccount(accNew.pubKey);
-    await rootStore.localStorage.addAccount(formattedAcc);
-
+    await storeAccountData();
     await loadAccount();
   }
 
+  /// Adds a new account, will overwrite the account data if they same seed already exists.
   @action
-  Future<void> addAccount(Map<String, dynamic> acc, String password, {String? name}) async {
-    final pubKey = acc['pubKey'] as String;
-    // save seed and remove it before add account
-    void saveSeed(String seedType) {
-      final seed = acc[seedType] as String?;
-      if (seed != null && seed.isNotEmpty) {
-        encryptSeed(pubKey, acc[seedType] as String, seedType, password);
-        acc.remove(seedType);
-      }
-    }
+  Future<void> addAccount(KeyringAccount account) async {
+    Log.d('[AddAccount]: adding account ${account.toAccountData()}');
 
-    saveSeed(AccountStore.seedTypeMnemonic);
-    saveSeed(AccountStore.seedTypeRawSeed);
-
-    // format meta data of acc
-    final formattedAcc = _formatMetaData(acc, name: name);
-
-    final index = accountList.indexWhere((i) => i.pubKey == pubKey);
-    if (index > -1) {
-      await rootStore.localStorage.removeAccount(pubKey);
-      Log.d('removed acc: $pubKey', 'AccountStore');
-    }
-    await rootStore.localStorage.addAccount(formattedAcc);
+    keyring.addAccount(account);
+    await storeAccountData();
 
     // update account list
     await loadAccount();
   }
 
+  String getUriFromMeta(Map<String, dynamic> acc) {
+    final maybeMnemonic = acc[AccountStore.seedTypeMnemonic] as String?;
+    if (maybeMnemonic != null && maybeMnemonic.isNotEmpty) return maybeMnemonic;
+
+    final maybeRawSeed = acc[AccountStore.seedTypeRawSeed] as String?;
+    if (maybeRawSeed != null && maybeRawSeed.isNotEmpty) return maybeRawSeed;
+
+    // this was never thrown in the old case and it will be obsolete soon.
+    throw Exception(['Invalid seed generated in JS']);
+  }
+
   @action
   Future<void> removeAccount(AccountData acc) async {
     Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
-    await rootStore.localStorage.removeAccount(acc.pubKey);
-    // remove encrypted seed after removing account
-    await Future.wait([
-      rootStore.localStorage.removeAccount(acc.pubKey),
-      deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey),
-      deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey),
-    ]);
+    keyring.remove(hex.decode(acc.pubKey.replaceFirst('0x', '')));
+    await storeAccountData();
 
     if (acc.pubKey == currentAccountPubKey) {
-      // set new currentAccount after currentAccount was removed
-      final accounts = await rootStore.localStorage.getAccountList();
-      final newCurrentAccountPubKey = accounts.isNotEmpty ? accounts[0]['pubKey'] as String? : '';
-      Log.d('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey', 'AccountStore');
-      await rootStore.setCurrentAccount(newCurrentAccountPubKey);
+      if (keyring.accounts.isNotEmpty) {
+        await rootStore.setCurrentAccount(keyring.accountsIter.first.pubKeyHex);
+      } else {
+        await rootStore.setCurrentAccount('');
+      }
     } else {
       // update account list
       await loadAccount();
     }
+  }
+
+  @action
+  Future<void> storeAccountData() async {
+    await accountStorageService.storeAccountData(keyring.accountDatas);
   }
 
   /// This needs to always be called after the account list has been updated.
@@ -237,65 +227,41 @@ abstract class _AccountStore with Store {
   /// Tackle this in #574.
   @action
   Future<void> loadAccount() async {
-    final accList = await rootStore.localStorage.getAccountList();
-    accountList = ObservableList.of(accList.map(AccountData.fromJson));
+    final keyringAccounts = await accountStorageService.readAccountData();
+    keyring = await EncointerKeyring.fromAccountData(keyringAccounts);
+
+    accountList = ObservableList.of(
+      keyring.accountsIter.map(
+        (acc) => AccountData(name: acc.name, pubKey: acc.pubKeyHex, address: acc.address().encode()),
+      ),
+    );
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
     loading = false;
   }
 
   @action
+  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
+    return legacyEncryptionService.updateSeed(pubKey, passwordOld, passwordNew);
+  }
+
+  @action
   Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
-    final key = Fmt.passwordToEncryptKey(password);
-    final encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
-    final Map stored = await rootStore.localStorage.getSeeds(seedType);
-    stored[pubKey] = encrypted;
-    await rootStore.localStorage.setSeeds(seedType, stored);
+    return legacyEncryptionService.encryptSeed(pubKey, seed, seedType, password);
   }
 
   @action
   Future<String?> decryptSeed(String pubKey, String seedType, String password) async {
-    final Map stored = await rootStore.localStorage.getSeeds(seedType);
-    final encrypted = stored[pubKey] as String?;
-    if (encrypted == null) {
-      return Future.value();
-    }
-    return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
+    return legacyEncryptionService.decryptSeed(pubKey, seedType, password);
   }
 
   @action
   Future<bool> checkSeedExist(String seedType, String? pubKey) async {
-    final Map stored = await rootStore.localStorage.getSeeds(seedType);
-    final encrypted = stored[pubKey] as String?;
-    return encrypted != null;
-  }
-
-  @action
-  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
-    final Map storedMnemonics = await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
-    final Map storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
-    String? encryptedSeed = '';
-    var seedType = '';
-    if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedMnemonics[pubKey] as String?;
-      seedType = AccountStore.seedTypeMnemonic;
-    } else if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedRawSeeds[pubKey] as String?;
-      seedType = AccountStore.seedTypeRawSeed;
-    } else {
-      return;
-    }
-
-    final seed = await FlutterAesEcbPkcs5.decryptString(encryptedSeed!, Fmt.passwordToEncryptKey(passwordOld));
-    await encryptSeed(pubKey, seed, seedType, passwordNew);
+    return legacyEncryptionService.checkSeedExist(seedType, pubKey);
   }
 
   @action
   Future<void> deleteSeed(String seedType, String? pubKey) async {
-    final stored = await rootStore.localStorage.getSeeds(seedType);
-    if (stored[pubKey] != null) {
-      stored.remove(pubKey);
-      await rootStore.localStorage.setSeeds(seedType, stored);
-    }
+    return legacyEncryptionService.deleteSeed(seedType, pubKey);
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/fetch_status.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/common/components/error/error_view.dart';
@@ -23,16 +22,15 @@ class TransferHistoryView extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await context.read<TransferHistoryViewStore>().getTransfers(context.read<AppStore>());
+          await context.read<TransferHistoryViewStore>().getTransfers();
         },
         child: Observer(builder: (_) {
           return switch (transferHistoryStore.fetchStatus) {
             FetchStatus.loading => const CenteredActivityIndicator(),
-            FetchStatus.success => TransactionsList(transactions: transferHistoryStore.transactions ?? []),
+            FetchStatus.success => TransactionsList(transactions: transferHistoryStore.transactions),
             FetchStatus.error => ErrorView(
                 onRetryPressed: () {
-                  final appStore = context.read<AppStore>();
-                  context.read<TransferHistoryViewStore>().getTransfers(appStore);
+                  context.read<TransferHistoryViewStore>().getTransfers();
                 },
               ),
             FetchStatus.noData => const SizedBox.shrink(),

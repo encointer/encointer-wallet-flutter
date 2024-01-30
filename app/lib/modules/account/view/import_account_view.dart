@@ -10,13 +10,12 @@ import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/loading/centered_activity_indicator.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
-import 'package:ew_keyring/ew_keyring.dart' show ValidateKeys;
+import 'package:ew_keyring/ew_keyring.dart' show KeyringAccount, ValidateKeys;
 
 class ImportAccountView extends StatelessWidget {
   const ImportAccountView({super.key});
@@ -88,12 +87,10 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
           validator: (String? value) {
             if (value == null || value.isEmpty) return l10n.importMustNotBeEmpty;
             if (ValidateKeys.isRawSeed(value)) {
-              context.read<NewAccountStore>().setKeyType(KeyType.rawSeed);
               return ValidateKeys.validateRawSeed(value) ? null : l10n.importInvalidRawSeed;
             } else if (ValidateKeys.isPrivateKey(value)) {
               return l10n.importPrivateKeyUnsupported;
             } else {
-              context.read<NewAccountStore>().setKeyType(KeyType.mnemonic);
               return ValidateKeys.validateMnemonic(value) ? null : l10n.importInvalidMnemonic;
             }
           },
@@ -121,13 +118,16 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                   ),
                 );
               } else {
-                final res = await newAccount.importAccount(context, webApi);
-                await navigate(
-                  context: context,
-                  type: res.operationResult,
-                  onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                  onDuplicateAccount: () => _onDuplicateAccount(context, res.duplicateAccountData),
-                );
+                final pin = await context.read<LoginStore>().getPin(context);
+                if (pin != null) {
+                  final res = await newAccount.importAccount();
+                  await navigate(
+                    context: context,
+                    type: res.operationResult,
+                    onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                    onDuplicateAccount: () => _onDuplicateAccount(context, res.duplicateAccountData),
+                  );
+                }
               }
             }
           },
@@ -144,11 +144,13 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
     );
   }
 
-  Future<void> _onDuplicateAccount(BuildContext context, Map<String, dynamic> acc) async {
+  Future<void> _onDuplicateAccount(BuildContext context, KeyringAccount acc) async {
     final l10n = context.l10n;
+    final store = context.read<AppStore>();
+
     await AppAlert.showDialog<void>(
       context,
-      title: Text(Fmt.address(acc['address'] as String)!),
+      title: Text(Fmt.address(acc.address(prefix: store.settings.endpoint.ss58 ?? 42).encode())!),
       content: Text(l10n.importDuplicate),
       actions: [
         CupertinoButton(
@@ -158,12 +160,8 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
         CupertinoButton(
           child: Text(l10n.ok),
           onPressed: () async {
-            final appStore = context.read<AppStore>();
-            final pin = await context.read<LoginStore>().getPin(context);
-            if (pin != null) {
-              await context.read<NewAccountStore>().saveAccount(webApi, appStore, acc, pin);
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            }
+            await context.read<NewAccountStore>().saveAccount(acc);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           },
         ),
       ],
