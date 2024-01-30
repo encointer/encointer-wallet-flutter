@@ -150,7 +150,7 @@ class Api {
       Log.p('Should connect to tee proxy here.');
     }
 
-    await fetchNetworkProps();
+    startSubscriptions();
   }
 
   Future<void> connectNodeAll() async {
@@ -171,7 +171,7 @@ class Api {
     final index = store.settings.endpointList.indexWhere((i) => i.value == res);
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
-    await fetchNetworkProps();
+    startSubscriptions();
     Log.d('get community data', 'Api');
 
     encointer.getCommunityData();
@@ -180,10 +180,6 @@ class Api {
   void fetchAccountData() {
     assets.fetchBalance();
     encointer.getCommunityData();
-  }
-
-  Future<void> fetchNetworkProps() async {
-    startSubscriptions();
   }
 
   void startSubscriptions() {
