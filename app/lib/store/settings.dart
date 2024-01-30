@@ -3,7 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -21,7 +20,6 @@ abstract class _SettingsStore with Store {
 
   final String localStorageLocaleKey = 'locale';
   final String localStorageEndpointKey = 'endpoint';
-  final String localStorageSS58Key = 'custom_ss58';
 
   /// The bazaar is not active currently. This variable can only be set under profile -> developer options.
   @observable
@@ -35,9 +33,6 @@ abstract class _SettingsStore with Store {
 
   @observable
   EndpointData endpoint = networkEndpointEncointerMainnet;
-
-  @observable
-  Map<String, dynamic> customSS58Format = <String, dynamic>{};
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
@@ -96,7 +91,6 @@ abstract class _SettingsStore with Store {
     await loadLocalCode();
     await loadEndpoint(sysLocaleCode);
     await Future.wait([
-      loadCustomSS58Format(),
       loadContacts(),
     ]);
   }
@@ -173,19 +167,6 @@ abstract class _SettingsStore with Store {
     } else {
       endpoint = EndpointData.fromJson(value);
     }
-  }
-
-  @action
-  void setCustomSS58Format(Map<String, dynamic> value) {
-    customSS58Format = value;
-    rootStore.localStorage.setObject(localStorageSS58Key, value);
-  }
-
-  @action
-  Future<void> loadCustomSS58Format() async {
-    final ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
-
-    customSS58Format = ss58 ?? defaultSs58Prefix;
   }
 
   String getCacheKey(String key) {

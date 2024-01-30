@@ -142,21 +142,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$customSS58FormatAtom = Atom(name: '_SettingsStore.customSS58Format', context: context);
-
-  @override
-  Map<String, dynamic> get customSS58Format {
-    _$customSS58FormatAtom.reportRead();
-    return super.customSS58Format;
-  }
-
-  @override
-  set customSS58Format(Map<String, dynamic> value) {
-    _$customSS58FormatAtom.reportWrite(value, super.customSS58Format, () {
-      super.customSS58Format = value;
-    });
-  }
-
   late final _$contactListAtom = Atom(name: '_SettingsStore.contactList', context: context);
 
   @override
@@ -243,13 +228,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     return _$loadEndpointAsyncAction.run(() => super.loadEndpoint(sysLocaleCode));
   }
 
-  late final _$loadCustomSS58FormatAsyncAction = AsyncAction('_SettingsStore.loadCustomSS58Format', context: context);
-
-  @override
-  Future<void> loadCustomSS58Format() {
-    return _$loadCustomSS58FormatAsyncAction.run(() => super.loadCustomSS58Format());
-  }
-
   late final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore', context: context);
 
   @override
@@ -303,23 +281,12 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void setCustomSS58Format(Map<String, dynamic> value) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setCustomSS58Format');
-    try {
-      return super.setCustomSS58Format(value);
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 enableBazaar: ${enableBazaar},
 loading: ${loading},
 localeCode: ${localeCode},
 endpoint: ${endpoint},
-customSS58Format: ${customSS58Format},
 contactList: ${contactList},
 locale: ${locale},
 endpointIsEncointer: ${endpointIsEncointer},

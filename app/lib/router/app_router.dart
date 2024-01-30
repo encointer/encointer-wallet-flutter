@@ -23,9 +23,6 @@ import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
-import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
-import 'package:encointer_wallet/page/profile/settings/settings_page.dart';
-import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -132,24 +129,9 @@ class AppRoute {
       case ContactDetailPage.route:
         final arg = settings.arguments!;
         return CupertinoPageRoute(builder: (_) => ContactDetailPage(arg as AccountData));
-      case SettingsPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const SettingsPage(),
-          settings: settings,
-        );
       case ExportResultPage.route:
         return CupertinoPageRoute(
           builder: (_) => const ExportResultPage(),
-          settings: settings,
-        );
-      case RemoteNodeListPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => RemoteNodeListPage(),
-          settings: settings,
-        );
-      case SS58PrefixListPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => SS58PrefixListPage(),
           settings: settings,
         );
       case AboutPage.route:
