@@ -5,10 +5,9 @@ import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 
 import 'mock_encointer_kusama_api.dart';
-import 'mock_js_api.dart';
 
 class MockAssetsApi extends AssetsApi {
-  MockAssetsApi(super.store, MockJSApi super.js, MockEncointerKusamaApi super.encointerKusama);
+  MockAssetsApi(super.store, MockEncointerKusamaApi super.encointerKusama);
 
   @override
   Future<void> startSubscriptions() async {

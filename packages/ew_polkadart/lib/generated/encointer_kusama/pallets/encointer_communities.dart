@@ -11,8 +11,9 @@ import '../types/encointer_primitives/communities/community_rules.dart' as _i10;
 import '../types/encointer_primitives/communities/location.dart' as _i5;
 import '../types/encointer_runtime/runtime_call.dart' as _i12;
 import '../types/geohash/geo_hash.dart' as _i2;
-import '../types/pallet_encointer_communities/pallet/call.dart' as _i13;
+import '../types/pallet_encointer_communities/pallet/call.dart' as _i14;
 import '../types/sp_core/crypto/account_id32.dart' as _i6;
+import '../types/substrate_fixed/fixed_i128.dart' as _i13;
 import '../types/substrate_fixed/fixed_u128.dart' as _i8;
 
 class Queries {
@@ -364,13 +365,13 @@ class Txs {
 
   /// See [`Pallet::new_community`].
   _i12.RuntimeCall newCommunity({
-    required location,
-    required bootstrappers,
-    required communityMetadata,
-    demurrage,
-    nominalIncome,
+    required _i5.Location location,
+    required List<_i6.AccountId32> bootstrappers,
+    required _i7.CommunityMetadata communityMetadata,
+    _i13.FixedI128? demurrage,
+    _i8.FixedU128? nominalIncome,
   }) {
-    final _call = _i13.Call.values.newCommunity(
+    final _call = _i14.Call.values.newCommunity(
       location: location,
       bootstrappers: bootstrappers,
       communityMetadata: communityMetadata,
@@ -382,10 +383,10 @@ class Txs {
 
   /// See [`Pallet::add_location`].
   _i12.RuntimeCall addLocation({
-    required cid,
-    required location,
+    required _i3.CommunityIdentifier cid,
+    required _i5.Location location,
   }) {
-    final _call = _i13.Call.values.addLocation(
+    final _call = _i14.Call.values.addLocation(
       cid: cid,
       location: location,
     );
@@ -394,10 +395,10 @@ class Txs {
 
   /// See [`Pallet::remove_location`].
   _i12.RuntimeCall removeLocation({
-    required cid,
-    required location,
+    required _i3.CommunityIdentifier cid,
+    required _i5.Location location,
   }) {
-    final _call = _i13.Call.values.removeLocation(
+    final _call = _i14.Call.values.removeLocation(
       cid: cid,
       location: location,
     );
@@ -406,10 +407,10 @@ class Txs {
 
   /// See [`Pallet::update_community_metadata`].
   _i12.RuntimeCall updateCommunityMetadata({
-    required cid,
-    required communityMetadata,
+    required _i3.CommunityIdentifier cid,
+    required _i7.CommunityMetadata communityMetadata,
   }) {
-    final _call = _i13.Call.values.updateCommunityMetadata(
+    final _call = _i14.Call.values.updateCommunityMetadata(
       cid: cid,
       communityMetadata: communityMetadata,
     );
@@ -418,10 +419,10 @@ class Txs {
 
   /// See [`Pallet::update_demurrage`].
   _i12.RuntimeCall updateDemurrage({
-    required cid,
-    required demurrage,
+    required _i3.CommunityIdentifier cid,
+    required _i13.FixedI128 demurrage,
   }) {
-    final _call = _i13.Call.values.updateDemurrage(
+    final _call = _i14.Call.values.updateDemurrage(
       cid: cid,
       demurrage: demurrage,
     );
@@ -430,10 +431,10 @@ class Txs {
 
   /// See [`Pallet::update_nominal_income`].
   _i12.RuntimeCall updateNominalIncome({
-    required cid,
-    required nominalIncome,
+    required _i3.CommunityIdentifier cid,
+    required _i8.FixedU128 nominalIncome,
   }) {
-    final _call = _i13.Call.values.updateNominalIncome(
+    final _call = _i14.Call.values.updateNominalIncome(
       cid: cid,
       nominalIncome: nominalIncome,
     );
@@ -441,20 +442,20 @@ class Txs {
   }
 
   /// See [`Pallet::set_min_solar_trip_time_s`].
-  _i12.RuntimeCall setMinSolarTripTimeS({required minSolarTripTimeS}) {
-    final _call = _i13.Call.values.setMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS);
+  _i12.RuntimeCall setMinSolarTripTimeS({required int minSolarTripTimeS}) {
+    final _call = _i14.Call.values.setMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS);
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
   /// See [`Pallet::set_max_speed_mps`].
-  _i12.RuntimeCall setMaxSpeedMps({required maxSpeedMps}) {
-    final _call = _i13.Call.values.setMaxSpeedMps(maxSpeedMps: maxSpeedMps);
+  _i12.RuntimeCall setMaxSpeedMps({required int maxSpeedMps}) {
+    final _call = _i14.Call.values.setMaxSpeedMps(maxSpeedMps: maxSpeedMps);
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
   /// See [`Pallet::purge_community`].
-  _i12.RuntimeCall purgeCommunity({required cid}) {
-    final _call = _i13.Call.values.purgeCommunity(cid: cid);
+  _i12.RuntimeCall purgeCommunity({required _i3.CommunityIdentifier cid}) {
+    final _call = _i14.Call.values.purgeCommunity(cid: cid);
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 }

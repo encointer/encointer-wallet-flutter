@@ -21,8 +21,6 @@ EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) => EndpointData()
   ..value = json['value'] as String?
   ..worker = json['worker'] as String?
   ..mrenclave = json['mrenclave'] as String?
-  ..overrideConfig =
-      json['overrideConfig'] == null ? null : NodeConfig.fromJson(json['overrideConfig'] as Map<String, dynamic>)
   ..ipfsGateway = json['ipfsGateway'] as String?;
 
 Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dynamic>{
@@ -33,7 +31,6 @@ Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dyn
       'value': instance.value,
       'worker': instance.worker,
       'mrenclave': instance.mrenclave,
-      'overrideConfig': instance.overrideConfig?.toJson(),
       'ipfsGateway': instance.ipfsGateway,
     };
 
@@ -145,66 +142,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$customSS58FormatAtom = Atom(name: '_SettingsStore.customSS58Format', context: context);
-
-  @override
-  Map<String, dynamic> get customSS58Format {
-    _$customSS58FormatAtom.reportRead();
-    return super.customSS58Format;
-  }
-
-  @override
-  set customSS58Format(Map<String, dynamic> value) {
-    _$customSS58FormatAtom.reportWrite(value, super.customSS58Format, () {
-      super.customSS58Format = value;
-    });
-  }
-
-  late final _$networkNameAtom = Atom(name: '_SettingsStore.networkName', context: context);
-
-  @override
-  String? get networkName {
-    _$networkNameAtom.reportRead();
-    return super.networkName;
-  }
-
-  @override
-  set networkName(String? value) {
-    _$networkNameAtom.reportWrite(value, super.networkName, () {
-      super.networkName = value;
-    });
-  }
-
-  late final _$networkStateAtom = Atom(name: '_SettingsStore.networkState', context: context);
-
-  @override
-  NetworkState? get networkState {
-    _$networkStateAtom.reportRead();
-    return super.networkState;
-  }
-
-  @override
-  set networkState(NetworkState? value) {
-    _$networkStateAtom.reportWrite(value, super.networkState, () {
-      super.networkState = value;
-    });
-  }
-
-  late final _$networkConstAtom = Atom(name: '_SettingsStore.networkConst', context: context);
-
-  @override
-  Map<dynamic, dynamic>? get networkConst {
-    _$networkConstAtom.reportRead();
-    return super.networkConst;
-  }
-
-  @override
-  set networkConst(Map<dynamic, dynamic>? value) {
-    _$networkConstAtom.reportWrite(value, super.networkConst, () {
-      super.networkConst = value;
-    });
-  }
-
   late final _$contactListAtom = Atom(name: '_SettingsStore.contactList', context: context);
 
   @override
@@ -256,27 +193,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     return _$loadLocalCodeAsyncAction.run(() => super.loadLocalCode());
   }
 
-  late final _$setNetworkStateAsyncAction = AsyncAction('_SettingsStore.setNetworkState', context: context);
-
-  @override
-  Future<void> setNetworkState(Map<String, dynamic> data, {bool needCache = true}) {
-    return _$setNetworkStateAsyncAction.run(() => super.setNetworkState(data, needCache: needCache));
-  }
-
-  late final _$loadNetworkStateCacheAsyncAction = AsyncAction('_SettingsStore.loadNetworkStateCache', context: context);
-
-  @override
-  Future<void> loadNetworkStateCache() {
-    return _$loadNetworkStateCacheAsyncAction.run(() => super.loadNetworkStateCache());
-  }
-
-  late final _$setNetworkConstAsyncAction = AsyncAction('_SettingsStore.setNetworkConst', context: context);
-
-  @override
-  Future<void> setNetworkConst(Map<String, dynamic> data, {bool needCache = true}) {
-    return _$setNetworkConstAsyncAction.run(() => super.setNetworkConst(data, needCache: needCache));
-  }
-
   late final _$loadContactsAsyncAction = AsyncAction('_SettingsStore.loadContacts', context: context);
 
   @override
@@ -312,13 +228,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     return _$loadEndpointAsyncAction.run(() => super.loadEndpoint(sysLocaleCode));
   }
 
-  late final _$loadCustomSS58FormatAsyncAction = AsyncAction('_SettingsStore.loadCustomSS58Format', context: context);
-
-  @override
-  Future<void> loadCustomSS58Format() {
-    return _$loadCustomSS58FormatAsyncAction.run(() => super.loadCustomSS58Format());
-  }
-
   late final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore', context: context);
 
   @override
@@ -352,30 +261,10 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void setNetworkName(String? name) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkName');
-    try {
-      return super.setNetworkName(name);
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setEndpoint(EndpointData value) {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setEndpoint');
     try {
       return super.setEndpoint(value);
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setCustomSS58Format(Map<String, dynamic> value) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setCustomSS58Format');
-    try {
-      return super.setCustomSS58Format(value);
     } finally {
       _$_SettingsStoreActionController.endAction(_$actionInfo);
     }
@@ -388,10 +277,6 @@ enableBazaar: ${enableBazaar},
 loading: ${loading},
 localeCode: ${localeCode},
 endpoint: ${endpoint},
-customSS58Format: ${customSS58Format},
-networkName: ${networkName},
-networkState: ${networkState},
-networkConst: ${networkConst},
 contactList: ${contactList},
 locale: ${locale},
 endpointIsEncointer: ${endpointIsEncointer},

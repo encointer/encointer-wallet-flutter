@@ -90,7 +90,14 @@ class CeremonyStep3Finish extends StatelessWidget {
                           Text(l10n.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount)),
                         ],
                       ),
-                      onPressed: (context) => submitAttestClaims(context, store, api),
+                      onPressed: (context) => submitAttestAttendees(
+                        context,
+                        store,
+                        api,
+                        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                        store.encointer.chosenCid!,
+                        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                      ),
                     );
                   } else {
                     return Column(

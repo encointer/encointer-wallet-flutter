@@ -77,7 +77,14 @@ class CeremonyBox extends StatelessWidget {
                           if (store.dataUpdate.expired) {
                             await awaitDataUpdateWithDialog(context, store);
                           }
-                          await submitRegisterParticipant(context, store, api);
+                          await submitRegisterParticipant(
+                            context,
+                            store,
+                            api,
+                            store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                            store.encointer.chosenCid!,
+                            txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                          );
                         }),
                   ),
                 if (store.encointer.showRestartCeremonyButton)
@@ -117,7 +124,14 @@ class CeremonyBox extends StatelessWidget {
                           Text(context.l10n.claimsSubmitN(store.encointer.communityAccount!.scannedAttendeesCount)),
                         ],
                       ),
-                      onPressed: () => submitAttestClaims(context, store, api),
+                      onPressed: () => submitAttestAttendees(
+                        context,
+                        store,
+                        api,
+                        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                        store.encointer.chosenCid!,
+                        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                      ),
                     ),
                   )
               ],

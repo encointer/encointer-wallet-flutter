@@ -27,8 +27,8 @@ mixin _$TransferHistoryViewStore on _TransferHistoryViewStoreBase, Store {
   late final _$getTransfersAsyncAction = AsyncAction('_TransferHistoryViewStoreBase.getTransfers', context: context);
 
   @override
-  Future<void> getTransfers(AppStore appStore) {
-    return _$getTransfersAsyncAction.run(() => super.getTransfers(appStore));
+  Future<void> getTransfers() {
+    return _$getTransfersAsyncAction.run(() => super.getTransfers());
   }
 
   @override

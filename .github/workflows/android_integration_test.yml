@@ -7,7 +7,6 @@ on:
     branches: [master, f-droid]
 
 env:
-  NODE_VERSION: 18.14.2
   JAVA_VERSION: 12.x
   ARTIFACT_PATH: ./screenshots
 
@@ -54,19 +53,11 @@ jobs:
       - name: List android images
         run: sdkmanager --list | grep system-images
 
-      # JS Stuff
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
 
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
-
-      - name: "Build JS"
-        run: .flutter/bin/dart run melos yarn-build
 
       - name: Gradle cache
         uses: actions/cache@v3

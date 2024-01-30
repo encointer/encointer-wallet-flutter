@@ -23,9 +23,6 @@ jobs:
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
-      - name: "Build JS"
-        run: .flutter/bin/dart run melos yarn-build
-
       - name: "Check fmt"
         run: .flutter/bin/dart run melos format-check
 

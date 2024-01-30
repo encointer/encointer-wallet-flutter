@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
@@ -42,7 +43,7 @@ class CreateAccountEntryView extends StatelessWidget {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext _) => Provider(
-                      create: (_) => NewAccountStore(),
+                      create: (_) => NewAccountStore(context.read<AppStore>()),
                       child: const ImportAccountView(),
                     ),
                   ),

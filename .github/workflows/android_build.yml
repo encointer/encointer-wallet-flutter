@@ -7,7 +7,6 @@ on:
     branches: [master, f-droid]
 
 env:
-  NODE_VERSION: 18.14.2
   JAVA_VERSION: 12.x
 
 jobs:
@@ -34,18 +33,11 @@ jobs:
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
 
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
-
-      - name: "Build JS"
-        run: .flutter/bin/dart run melos yarn-build
 
       - name: "Build apk"
         run: .flutter/bin/dart run melos build-apk-fdroid

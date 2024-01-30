@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_driver/flutter_driver.dart';
@@ -18,13 +19,15 @@ extension ScreenshotExtension on FlutterDriver {
     Duration timeout = const Duration(seconds: 30),
     bool waitUntilNoTransientCallbacks = true,
   }) async {
-    if (locales.contains('en') && !File('../screenshots/en/$name.png').existsSync()) {
+    if (await canDriverTakeScreenshot() &&
+        locales.contains('en') &&
+        !File('../screenshots/en/$name.png').existsSync()) {
       await requestData(TestCommand.devModeOff);
       for (final locale in locales) {
-        final currenLocale = await requestData('local-$locale');
+        final currentLocale = await requestData('local-$locale');
         await takeScreenshot(
           name,
-          directory: '$directory/$currenLocale',
+          directory: '$directory/$currentLocale',
           timeout: timeout,
           waitUntilNoTransientCallbacks: waitUntilNoTransientCallbacks,
         );
@@ -47,5 +50,11 @@ extension ScreenshotExtension on FlutterDriver {
     await file.writeAsBytes(pixels);
     // ignore: avoid_print
     print('Screenshot $name created at ${file.path}');
+  }
+
+  Future<bool> canDriverTakeScreenshot() async {
+    final operationSystem = await requestData(TestCommand.getPlatform);
+    log('operationSystem ==================> $operationSystem');
+    return operationSystem == 'android';
   }
 }

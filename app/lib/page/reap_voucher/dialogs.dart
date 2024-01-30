@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/reap_voucher/utils.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -114,7 +116,7 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
             child: Text(l10n.ok),
             onPressed: () async {
               final result =
-                  await changeWithLoadingDialog(context, () => changeNetworkAndCommunity(store, api, network, cid));
+                  await changeWithLoadingDialog(context, changeNetworkAndCommunity(store, api, network, cid));
               Navigator.of(context).pop(result);
             },
           ),
@@ -126,19 +128,21 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
 
 Future<ChangeResult> changeWithLoadingDialog(
   BuildContext context,
-  Future<ChangeResult> Function() changeFn,
+  Future<ChangeResult> changeFnFuture,
 ) async {
-  await showCupertinoDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return CupertinoAlertDialog(
-        title: Text(context.l10n.loading),
-        content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
-      );
-    },
+  unawaited(
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(context.l10n.loading),
+          content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
+        );
+      },
+    ),
   );
 
-  final result = await changeFn();
+  final result = await changeFnFuture;
 
   // pop loading dialog
   Navigator.of(context).pop();
@@ -171,7 +175,7 @@ Future<ChangeResult?> showChangeCommunityDialog(
           CupertinoButton(
             child: Text(l10n.ok),
             onPressed: () async {
-              final result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
+              final result = await changeWithLoadingDialog(context, changeCommunity(store, api, network, cid));
               Navigator.of(context).pop(result);
             },
           ),

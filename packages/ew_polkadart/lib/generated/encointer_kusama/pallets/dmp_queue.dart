@@ -184,8 +184,8 @@ class Txs {
 
   /// See [`Pallet::service_overweight`].
   _i9.RuntimeCall serviceOverweight({
-    required index,
-    required weightLimit,
+    required BigInt index,
+    required _i7.Weight weightLimit,
   }) {
     final _call = _i10.Call.values.serviceOverweight(
       index: index,

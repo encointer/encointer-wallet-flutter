@@ -1,18 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'header.g.dart';
+
 /// Header retrieved via chain.subscribeNewHeads, but some fields are omitted.
+@JsonSerializable(explicitToJson: true)
 class Header {
-  Header(this.hash, this.number);
+  Header(this.number);
 
   /// Parse into header when retrieved from polkadart RPC.
-  factory Header.fromRpc(Map<String, dynamic> json) {
-    return Header(json['hash'] as String?, BigInt.parse(json['number'] as String).toInt());
-  }
+  factory Header.fromJson(Map<String, dynamic> json) => _$HeaderFromJson(json);
+  Map<String, dynamic> toJson() => _$HeaderToJson(this);
 
-  factory Header.fromJson(Map<String, dynamic> json) {
-    return Header(json['hash'] as String?, json['number'] as int?);
-  }
-
-  Map<String, dynamic> toJson() => <String, dynamic>{'hash': hash, 'number': number};
-
-  String? hash;
-  int? number;
+  BigInt number;
 }

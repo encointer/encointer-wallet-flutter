@@ -5,9 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/config/biometric_auth_state.dart';
 import 'package:encointer_wallet/service/service.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -59,13 +58,26 @@ final class LoginDialog {
     String? titleText,
   }) async {
     final loginStore = context.read<LoginStore>();
-    if (loginStore.getBiometricAuthState == BiometricAuthState.enabled) {
-      await showLocalAuth(
-        context,
-        onSuccess: onSuccess,
-        stickyAuth: stickyAuth,
-        titleText: titleText,
-      );
+    if (loginStore.getBiometricAuthState?.isEnabled ?? false) {
+      try {
+        await showLocalAuth(
+          context,
+          onSuccess: onSuccess,
+          stickyAuth: stickyAuth,
+          titleText: titleText,
+        );
+      } catch (e, s) {
+        Log.e('$e', 'LoginDialog: error with biometrics, fallback to PIN dialog', s);
+        await showPasswordInputDialog(
+          context,
+          onSuccess: onSuccess,
+          barrierDismissible: barrierDismissible,
+          autoCloseOnSuccess: autoCloseOnSuccess,
+          showCancelButton: showCancelButton,
+          canPop: canPop,
+          titleText: titleText,
+        );
+      }
     } else {
       await showPasswordInputDialog(
         context,
@@ -86,8 +98,12 @@ final class LoginDialog {
     bool stickyAuth = false,
   }) async {
     final loginStore = context.read<LoginStore>();
-    final value = await loginStore.localAuthenticate(titleText ?? context.l10n.verifyAuthTitle('true'), stickyAuth);
-    if (value) await onSuccess(loginStore.cachedPin ?? await loginStore.loginService.getPin() ?? '');
+    try {
+      final value = await loginStore.localAuthenticate(titleText ?? context.l10n.verifyAuthTitle('true'), stickyAuth);
+      if (value) await onSuccess(loginStore.cachedPin ?? await loginStore.loginService.getPin() ?? '');
+    } catch (e) {
+      rethrow;
+    }
   }
 
   static Future<void> showPasswordInputDialog(
@@ -125,15 +141,14 @@ final class LoginDialog {
             onPressed: () => Navigator.pop(context),
             child: Text(l10n.cancel),
           ),
-        WillPopScope(
-          onWillPop: () async => canPop,
+        PopScope(
+          onPopInvoked: (bool didPop) async => canPop,
           child: CupertinoButton(
             key: const Key(EWTestKeys.passwordOk),
             onPressed: () async {
               loginStore.loading = true;
               final value = await _onOk(context, passCtrl.text.trim());
               if (value) {
-                if (loginStore.cachedPin == null) await loginStore.setPin(passCtrl.text.trim());
                 await onSuccess(passCtrl.text.trim());
                 if (autoCloseOnSuccess) Navigator.of(context).pop();
               } else {
@@ -156,10 +171,8 @@ final class LoginDialog {
   }
 
   static Future<bool> _onOk(BuildContext context, String password) async {
-    final appStore = context.read<AppStore>();
-    final res = await webApi.account.checkAccountPassword(appStore.account.currentAccount, password);
-    if (res == null) return false;
-    return true;
+    final loginStore = context.read<LoginStore>();
+    return loginStore.isValid(password);
   }
 
   static String? validatePasswordInputField(String? value, AppLocalizations l10n) {

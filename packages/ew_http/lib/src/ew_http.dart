@@ -45,7 +45,7 @@ class EwHttp {
   }
 
   Future<Map<String, String>> _getRequestHeaders() async {
-    final token = _tokenProvider != null ? await _tokenProvider!() : null;
+    final token = await _tokenProvider?.call();
     return <String, String>{
       HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
       HttpHeaders.acceptHeader: ContentType.json.value,

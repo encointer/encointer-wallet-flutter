@@ -193,9 +193,9 @@ class Txs {
 
   /// See [`Pallet::set_members`].
   _i4.RuntimeCall setMembers({
-    required newMembers,
-    prime,
-    required oldCount,
+    required List<_i6.AccountId32> newMembers,
+    _i6.AccountId32? prime,
+    required int oldCount,
   }) {
     final _call = _i9.Call.values.setMembers(
       newMembers: newMembers,
@@ -207,8 +207,8 @@ class Txs {
 
   /// See [`Pallet::execute`].
   _i4.RuntimeCall execute({
-    required proposal,
-    required lengthBound,
+    required _i4.RuntimeCall proposal,
+    required BigInt lengthBound,
   }) {
     final _call = _i9.Call.values.execute(
       proposal: proposal,
@@ -219,9 +219,9 @@ class Txs {
 
   /// See [`Pallet::propose`].
   _i4.RuntimeCall propose({
-    required threshold,
-    required proposal,
-    required lengthBound,
+    required BigInt threshold,
+    required _i4.RuntimeCall proposal,
+    required BigInt lengthBound,
   }) {
     final _call = _i9.Call.values.propose(
       threshold: threshold,
@@ -233,9 +233,9 @@ class Txs {
 
   /// See [`Pallet::vote`].
   _i4.RuntimeCall vote({
-    required proposal,
-    required index,
-    required approve,
+    required _i2.H256 proposal,
+    required BigInt index,
+    required bool approve,
   }) {
     final _call = _i9.Call.values.vote(
       proposal: proposal,
@@ -246,17 +246,17 @@ class Txs {
   }
 
   /// See [`Pallet::disapprove_proposal`].
-  _i4.RuntimeCall disapproveProposal({required proposalHash}) {
+  _i4.RuntimeCall disapproveProposal({required _i2.H256 proposalHash}) {
     final _call = _i9.Call.values.disapproveProposal(proposalHash: proposalHash);
     return _i4.RuntimeCall.values.collective(_call);
   }
 
   /// See [`Pallet::close`].
   _i4.RuntimeCall close({
-    required proposalHash,
-    required index,
-    required proposalWeightBound,
-    required lengthBound,
+    required _i2.H256 proposalHash,
+    required BigInt index,
+    required _i10.Weight proposalWeightBound,
+    required BigInt lengthBound,
   }) {
     final _call = _i9.Call.values.close(
       proposalHash: proposalHash,

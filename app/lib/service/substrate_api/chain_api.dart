@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:convert/convert.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
+import 'package:ew_polkadart/ew_polkadart.dart';
 
 class ChainApi {
   ChainApi(this.store, this.provider);
@@ -43,6 +45,11 @@ class ChainApi {
   Future<void> subscribeNewHeads() async {
     await _latestHeaderSubscription?.cancel();
 
+    // The subscription doesn't return the current value, we have to wait
+    // until the next header is produced, hence we fetch the current one apriori.
+    final header = await getHeader();
+    store.chain.setLatestHeader(header);
+
     final subscription = await provider.subscribe(
       'chain_subscribeNewHeads',
       [],
@@ -53,13 +60,22 @@ class ChainApi {
 
     _latestHeaderSubscription = subscription.stream.map((res) {
       Log.p('Header: ${res.result}');
-      return Header.fromRpc(res.result as Map<String, dynamic>);
+      return Header.fromJson(res.result as Map<String, dynamic>);
     }).listen((header) async {
       Log.p('[subscribeNewHeads] Got header: ${header.toJson()}');
       store.chain.setLatestHeader(header);
 
-      final hash = await getBlockHash(header.number);
+      final hash = await getBlockHash(header.number.toInt());
       store.chain.setLatestHeaderHash(hash);
     });
+  }
+
+  Future<Header> getHeader({BlockHash? at}) async {
+    final params = at != null ? ['0x${hex.encode(at)}'] : const <String>[];
+
+    final response = await provider.send('chain_getHeader', params);
+
+    Log.p('Header: ${response.result}');
+    return Header.fromJson(response.result as Map<String, dynamic>);
   }
 }

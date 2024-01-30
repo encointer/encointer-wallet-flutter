@@ -4,7 +4,7 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.0.1 <4.0.0"
+  sdk: ">=3.2.0 <4.0.0"
 
 dependencies:
   convert: ^3.1.1
@@ -13,16 +13,17 @@ dependencies:
     #    path: ../../../polkadart/packages/polkadart_scale_codec
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/storage-key-prefix-dev
+      ref: cl/encointer-signed-extensions
       path: packages/polkadart_keyring
   ss58: ^1.1.2
   substrate_bip39: ^0.2.0
 
 dev_dependencies:
-  test: 1.24.3
-  very_good_analysis: ^5.0.0+1
-  build_runner: ^2.4.6
+  build_runner: ^2.4.7
   json_serializable: ^6.7.1
+  test: ^1.24.9
+  very_good_analysis: ^5.1.0
+
 
 # We have to use dependency overrides as the polkadart_cli in our fork uses
 # the published package as dependency. We can remove them when we use the
@@ -32,5 +33,5 @@ dependency_overrides:
     #    path: ../../../polkadart/packages/polkadart_scale_codec
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/storage-key-prefix-dev
+      ref: cl/encointer-signed-extensions
       path: packages/polkadart_scale_codec

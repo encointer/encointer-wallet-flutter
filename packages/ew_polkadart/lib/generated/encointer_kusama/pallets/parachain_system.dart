@@ -6,15 +6,17 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/cumulus_pallet_parachain_system/code_upgrade_authorization.dart' as _i12;
-import '../types/cumulus_pallet_parachain_system/pallet/call.dart' as _i16;
+import '../types/cumulus_pallet_parachain_system/pallet/call.dart' as _i17;
 import '../types/cumulus_pallet_parachain_system/relay_state_snapshot/messaging_state_snapshot.dart' as _i6;
 import '../types/cumulus_primitives_parachain_inherent/message_queue_chain.dart' as _i8;
+import '../types/cumulus_primitives_parachain_inherent/parachain_inherent_data.dart' as _i16;
 import '../types/encointer_runtime/runtime_call.dart' as _i15;
 import '../types/polkadot_core_primitives/outbound_hrmp_message.dart' as _i10;
 import '../types/polkadot_parachain/primitives/id.dart' as _i9;
 import '../types/polkadot_primitives/v5/abridged_host_configuration.dart' as _i7;
 import '../types/polkadot_primitives/v5/persisted_validation_data.dart' as _i3;
 import '../types/polkadot_primitives/v5/upgrade_restriction.dart' as _i4;
+import '../types/primitive_types/h256.dart' as _i18;
 import '../types/sp_trie/storage_proof/storage_proof.dart' as _i5;
 import '../types/sp_weights/weight_v2/weight.dart' as _i11;
 
@@ -621,23 +623,23 @@ class Txs {
   const Txs();
 
   /// See [`Pallet::set_validation_data`].
-  _i15.RuntimeCall setValidationData({required data}) {
-    final _call = _i16.Call.values.setValidationData(data: data);
+  _i15.RuntimeCall setValidationData({required _i16.ParachainInherentData data}) {
+    final _call = _i17.Call.values.setValidationData(data: data);
     return _i15.RuntimeCall.values.parachainSystem(_call);
   }
 
   /// See [`Pallet::sudo_send_upward_message`].
-  _i15.RuntimeCall sudoSendUpwardMessage({required message}) {
-    final _call = _i16.Call.values.sudoSendUpwardMessage(message: message);
+  _i15.RuntimeCall sudoSendUpwardMessage({required List<int> message}) {
+    final _call = _i17.Call.values.sudoSendUpwardMessage(message: message);
     return _i15.RuntimeCall.values.parachainSystem(_call);
   }
 
   /// See [`Pallet::authorize_upgrade`].
   _i15.RuntimeCall authorizeUpgrade({
-    required codeHash,
-    required checkVersion,
+    required _i18.H256 codeHash,
+    required bool checkVersion,
   }) {
-    final _call = _i16.Call.values.authorizeUpgrade(
+    final _call = _i17.Call.values.authorizeUpgrade(
       codeHash: codeHash,
       checkVersion: checkVersion,
     );
@@ -645,8 +647,8 @@ class Txs {
   }
 
   /// See [`Pallet::enact_authorized_upgrade`].
-  _i15.RuntimeCall enactAuthorizedUpgrade({required code}) {
-    final _call = _i16.Call.values.enactAuthorizedUpgrade(code: code);
+  _i15.RuntimeCall enactAuthorizedUpgrade({required List<int> code}) {
+    final _call = _i17.Call.values.enactAuthorizedUpgrade(code: code);
     return _i15.RuntimeCall.values.parachainSystem(_call);
   }
 }

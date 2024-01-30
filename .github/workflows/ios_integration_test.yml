@@ -9,7 +9,6 @@ on:
     branches: [master, f-droid]
 
 env:
-  NODE_VERSION: 18.14.2
   JAVA_VERSION: 12.x
   ARTIFACT_PATH: ./screenshots
 
@@ -79,27 +78,18 @@ jobs:
           xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-4" || \
           xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
 
-      # JS Stuff
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
 
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
-      - name: "Build JS"
-        run: .flutter/bin/dart run melos yarn-build
-
       - name: Start colima a docker runtime for MacOs
-        # Work around an upstream issue with the runner image:
-        # https://github.com/actions/runner-images/issues/8500
+        # The brew install returns exit code 1 for a non-fatal dependency linker error.
+        # We don't care, the subsequent steps will work still.
         run: |
-          brew upgrade || brew link --overwrite python@3.11
-          brew install docker
-          brew install colima
+          brew install docker || true
+          brew install colima || true
           colima start
 
       - name: Run encointer-node

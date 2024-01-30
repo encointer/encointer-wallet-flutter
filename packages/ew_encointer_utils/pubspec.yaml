@@ -4,10 +4,10 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.0.1 <4.0.0"
+  sdk: ">=3.2.0 <4.0.0"
 
 dependencies:
-  collection: 1.17.2
+  collection: ^1.18.0
   ew_keyring:
     path: ../ew_keyring
   ew_primitives:
@@ -16,16 +16,28 @@ dependencies:
     path: ../ew_polkadart
 
 dev_dependencies:
-  test: 1.24.3
-  very_good_analysis: ^5.0.0+1
+  test: ^1.24.9
+  very_good_analysis: ^5.1.0
 
 # We have to use dependency overrides as the polkadart_cli in our fork uses
 # the published package as dependency. We can remove them when we use the
 # published package.
 dependency_overrides:
+  polkadart:
+    #    path: ../../../polkadart/packages/polkadart
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: cl/encointer-signed-extensions
+      path: packages/polkadart
   polkadart_scale_codec:
     #    path: ../../../polkadart/packages/polkadart_scale_codec
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/storage-key-prefix-dev
+      ref: cl/encointer-signed-extensions
       path: packages/polkadart_scale_codec
+  polkadart_keyring:
+    #    path: ../../../polkadart/packages/polkadart_keyring
+    git:
+      url: https://github.com/encointer/polkadart
+      ref: cl/encointer-signed-extensions
+      path: packages/polkadart_keyring

@@ -12,22 +12,17 @@ import 'package:encointer_wallet/page-encointer/bazaar/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
-import 'package:encointer_wallet/page/assets/transfer/detail_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
-import 'package:encointer_wallet/page/profile/account/export_account_page.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
-import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
-import 'package:encointer_wallet/page/profile/settings/settings_page.dart';
-import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -98,20 +93,15 @@ class AppRoute {
           settings: settings,
         );
       case ReapVoucherPage.route:
+        final params = settings.arguments! as ReapVoucherParams;
         return CupertinoPageRoute(
-          builder: (_) => ReapVoucherPage(webApi),
+          builder: (_) => ReapVoucherPage(webApi, params.voucher, params.showFundVoucher),
           settings: settings,
           fullscreenDialog: true,
         );
       case ReceivePage.route:
         return CupertinoPageRoute(
           builder: (_) => const ReceivePage(),
-          settings: settings,
-          fullscreenDialog: true,
-        );
-      case TransferDetailPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const TransferDetailPage(),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -139,29 +129,9 @@ class AppRoute {
       case ContactDetailPage.route:
         final arg = settings.arguments!;
         return CupertinoPageRoute(builder: (_) => ContactDetailPage(arg as AccountData));
-      case SettingsPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const SettingsPage(),
-          settings: settings,
-        );
-      case ExportAccountPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => ExportAccountPage(),
-          settings: settings,
-        );
       case ExportResultPage.route:
         return CupertinoPageRoute(
           builder: (_) => const ExportResultPage(),
-          settings: settings,
-        );
-      case RemoteNodeListPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => RemoteNodeListPage(),
-          settings: settings,
-        );
-      case SS58PrefixListPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => SS58PrefixListPage(),
           settings: settings,
         );
       case AboutPage.route:
@@ -196,8 +166,9 @@ class AppRoute {
         return CupertinoPageRoute(
           builder: (_) => Provider(
             create: (context) => TransferHistoryViewStore(
+              context.read<AppStore>(),
               RepositoryProvider.of<EwHttp>(context),
-            )..getTransfers(context.read<AppStore>()),
+            )..getTransfers(),
             child: const TransferHistoryView(),
           ),
         );

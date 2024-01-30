@@ -11,7 +11,6 @@ import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/form/scrollable_form.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -32,16 +31,16 @@ class AddAccountView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Provider(
-          create: (context) => NewAccountStore(),
-          child: AddAcccountForm(),
+          create: (context) => NewAccountStore(context.read<AppStore>()),
+          child: AddAccountForm(),
         ),
       ),
     );
   }
 }
 
-class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
-  AddAcccountForm({super.key});
+class AddAccountForm extends StatelessWidget with HandleNewAccountResultMixin {
+  AddAccountForm({super.key});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -109,12 +108,15 @@ class AddAcccountForm extends StatelessWidget with HandleNewAccountResultMixin {
           final newAccount = context.read<NewAccountStore>();
           if (_formKey.currentState!.validate() && !newAccount.loading) {
             newAccount.setName(_nameCtrl.text.trim());
-            final res = await newAccount.generateAccount(context, webApi);
-            await navigate(
-              context: context,
-              type: res.operationResult,
-              onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
-            );
+            final pin = await context.read<LoginStore>().getPin(context);
+            if (pin != null) {
+              final res = await newAccount.generateAccount();
+              await navigate(
+                context: context,
+                type: res.operationResult,
+                onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              );
+            }
           }
         },
         child: Row(

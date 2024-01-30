@@ -107,9 +107,7 @@ class _TransferPageState extends State<TransferPage> {
 
       final pubKey = AddressUtils.addressToPubKeyHex(params.recipientAddress);
 
-      _accountTo = AccountData()
-        ..pubKey = pubKey
-        ..name = params.label;
+      _accountTo = AccountData(name: params.label, pubKey: pubKey, address: params.recipientAddress);
       if (params.amount != null) _amountCtrl.text = '${params.amount}';
     }
   }

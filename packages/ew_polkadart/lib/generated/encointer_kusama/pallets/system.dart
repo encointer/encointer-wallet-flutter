@@ -537,45 +537,45 @@ class Txs {
   const Txs();
 
   /// See [`Pallet::remark`].
-  _i16.RuntimeCall remark({required remark}) {
+  _i16.RuntimeCall remark({required List<int> remark}) {
     final _call = _i17.Call.values.remark(remark: remark);
     return _i16.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::set_heap_pages`].
-  _i16.RuntimeCall setHeapPages({required pages}) {
+  _i16.RuntimeCall setHeapPages({required BigInt pages}) {
     final _call = _i17.Call.values.setHeapPages(pages: pages);
     return _i16.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::set_code`].
-  _i16.RuntimeCall setCode({required code}) {
+  _i16.RuntimeCall setCode({required List<int> code}) {
     final _call = _i17.Call.values.setCode(code: code);
     return _i16.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::set_code_without_checks`].
-  _i16.RuntimeCall setCodeWithoutChecks({required code}) {
+  _i16.RuntimeCall setCodeWithoutChecks({required List<int> code}) {
     final _call = _i17.Call.values.setCodeWithoutChecks(code: code);
     return _i16.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::set_storage`].
-  _i16.RuntimeCall setStorage({required items}) {
+  _i16.RuntimeCall setStorage({required List<_i9.Tuple2<List<int>, List<int>>> items}) {
     final _call = _i17.Call.values.setStorage(items: items);
     return _i16.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::kill_storage`].
-  _i16.RuntimeCall killStorage({required keys}) {
+  _i16.RuntimeCall killStorage({required List<List<int>> keys}) {
     final _call = _i17.Call.values.killStorage(keys: keys);
     return _i16.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::kill_prefix`].
   _i16.RuntimeCall killPrefix({
-    required prefix,
-    required subkeys,
+    required List<int> prefix,
+    required int subkeys,
   }) {
     final _call = _i17.Call.values.killPrefix(
       prefix: prefix,
@@ -585,7 +585,7 @@ class Txs {
   }
 
   /// See [`Pallet::remark_with_event`].
-  _i16.RuntimeCall remarkWithEvent({required remark}) {
+  _i16.RuntimeCall remarkWithEvent({required List<int> remark}) {
     final _call = _i17.Call.values.remarkWithEvent(remark: remark);
     return _i16.RuntimeCall.values.system(_call);
   }

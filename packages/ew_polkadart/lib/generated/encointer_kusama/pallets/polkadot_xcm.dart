@@ -6,7 +6,7 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/encointer_runtime/runtime_call.dart' as _i14;
-import '../types/pallet_xcm/pallet/call.dart' as _i15;
+import '../types/pallet_xcm/pallet/call.dart' as _i16;
 import '../types/pallet_xcm/pallet/query_status.dart' as _i3;
 import '../types/pallet_xcm/pallet/remote_locked_fungible_record.dart' as _i11;
 import '../types/pallet_xcm/pallet/version_migration_stage.dart' as _i8;
@@ -14,8 +14,13 @@ import '../types/primitive_types/h256.dart' as _i4;
 import '../types/sp_core/crypto/account_id32.dart' as _i9;
 import '../types/sp_weights/weight_v2/weight.dart' as _i7;
 import '../types/tuples.dart' as _i6;
+import '../types/xcm/v3/multilocation/multi_location.dart' as _i19;
+import '../types/xcm/v3/weight_limit.dart' as _i20;
 import '../types/xcm/versioned_asset_id.dart' as _i10;
+import '../types/xcm/versioned_multi_assets.dart' as _i17;
 import '../types/xcm/versioned_multi_location.dart' as _i5;
+import '../types/xcm/versioned_xcm_1.dart' as _i15;
+import '../types/xcm/versioned_xcm_2.dart' as _i18;
 
 class Queries {
   const Queries(this.__api);
@@ -469,10 +474,10 @@ class Txs {
 
   /// See [`Pallet::send`].
   _i14.RuntimeCall send({
-    required dest,
-    required message,
+    required _i5.VersionedMultiLocation dest,
+    required _i15.VersionedXcm message,
   }) {
-    final _call = _i15.Call.values.send(
+    final _call = _i16.Call.values.send(
       dest: dest,
       message: message,
     );
@@ -481,12 +486,12 @@ class Txs {
 
   /// See [`Pallet::teleport_assets`].
   _i14.RuntimeCall teleportAssets({
-    required dest,
-    required beneficiary,
-    required assets,
-    required feeAssetItem,
+    required _i5.VersionedMultiLocation dest,
+    required _i5.VersionedMultiLocation beneficiary,
+    required _i17.VersionedMultiAssets assets,
+    required int feeAssetItem,
   }) {
-    final _call = _i15.Call.values.teleportAssets(
+    final _call = _i16.Call.values.teleportAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
@@ -497,12 +502,12 @@ class Txs {
 
   /// See [`Pallet::reserve_transfer_assets`].
   _i14.RuntimeCall reserveTransferAssets({
-    required dest,
-    required beneficiary,
-    required assets,
-    required feeAssetItem,
+    required _i5.VersionedMultiLocation dest,
+    required _i5.VersionedMultiLocation beneficiary,
+    required _i17.VersionedMultiAssets assets,
+    required int feeAssetItem,
   }) {
-    final _call = _i15.Call.values.reserveTransferAssets(
+    final _call = _i16.Call.values.reserveTransferAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
@@ -513,10 +518,10 @@ class Txs {
 
   /// See [`Pallet::execute`].
   _i14.RuntimeCall execute({
-    required message,
-    required maxWeight,
+    required _i18.VersionedXcm message,
+    required _i7.Weight maxWeight,
   }) {
-    final _call = _i15.Call.values.execute(
+    final _call = _i16.Call.values.execute(
       message: message,
       maxWeight: maxWeight,
     );
@@ -525,10 +530,10 @@ class Txs {
 
   /// See [`Pallet::force_xcm_version`].
   _i14.RuntimeCall forceXcmVersion({
-    required location,
-    required version,
+    required _i19.MultiLocation location,
+    required int version,
   }) {
-    final _call = _i15.Call.values.forceXcmVersion(
+    final _call = _i16.Call.values.forceXcmVersion(
       location: location,
       version: version,
     );
@@ -536,32 +541,32 @@ class Txs {
   }
 
   /// See [`Pallet::force_default_xcm_version`].
-  _i14.RuntimeCall forceDefaultXcmVersion({maybeXcmVersion}) {
-    final _call = _i15.Call.values.forceDefaultXcmVersion(maybeXcmVersion: maybeXcmVersion);
+  _i14.RuntimeCall forceDefaultXcmVersion({int? maybeXcmVersion}) {
+    final _call = _i16.Call.values.forceDefaultXcmVersion(maybeXcmVersion: maybeXcmVersion);
     return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_subscribe_version_notify`].
-  _i14.RuntimeCall forceSubscribeVersionNotify({required location}) {
-    final _call = _i15.Call.values.forceSubscribeVersionNotify(location: location);
+  _i14.RuntimeCall forceSubscribeVersionNotify({required _i5.VersionedMultiLocation location}) {
+    final _call = _i16.Call.values.forceSubscribeVersionNotify(location: location);
     return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_unsubscribe_version_notify`].
-  _i14.RuntimeCall forceUnsubscribeVersionNotify({required location}) {
-    final _call = _i15.Call.values.forceUnsubscribeVersionNotify(location: location);
+  _i14.RuntimeCall forceUnsubscribeVersionNotify({required _i5.VersionedMultiLocation location}) {
+    final _call = _i16.Call.values.forceUnsubscribeVersionNotify(location: location);
     return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::limited_reserve_transfer_assets`].
   _i14.RuntimeCall limitedReserveTransferAssets({
-    required dest,
-    required beneficiary,
-    required assets,
-    required feeAssetItem,
-    required weightLimit,
+    required _i5.VersionedMultiLocation dest,
+    required _i5.VersionedMultiLocation beneficiary,
+    required _i17.VersionedMultiAssets assets,
+    required int feeAssetItem,
+    required _i20.WeightLimit weightLimit,
   }) {
-    final _call = _i15.Call.values.limitedReserveTransferAssets(
+    final _call = _i16.Call.values.limitedReserveTransferAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
@@ -573,13 +578,13 @@ class Txs {
 
   /// See [`Pallet::limited_teleport_assets`].
   _i14.RuntimeCall limitedTeleportAssets({
-    required dest,
-    required beneficiary,
-    required assets,
-    required feeAssetItem,
-    required weightLimit,
+    required _i5.VersionedMultiLocation dest,
+    required _i5.VersionedMultiLocation beneficiary,
+    required _i17.VersionedMultiAssets assets,
+    required int feeAssetItem,
+    required _i20.WeightLimit weightLimit,
   }) {
-    final _call = _i15.Call.values.limitedTeleportAssets(
+    final _call = _i16.Call.values.limitedTeleportAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
@@ -590,8 +595,8 @@ class Txs {
   }
 
   /// See [`Pallet::force_suspension`].
-  _i14.RuntimeCall forceSuspension({required suspended}) {
-    final _call = _i15.Call.values.forceSuspension(suspended: suspended);
+  _i14.RuntimeCall forceSuspension({required bool suspended}) {
+    final _call = _i16.Call.values.forceSuspension(suspended: suspended);
     return _i14.RuntimeCall.values.polkadotXcm(_call);
   }
 }

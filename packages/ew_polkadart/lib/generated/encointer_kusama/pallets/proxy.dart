@@ -5,11 +5,14 @@ import 'dart:typed_data' as _i8;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i5;
 
+import '../types/encointer_runtime/proxy_type.dart' as _i11;
 import '../types/encointer_runtime/runtime_call.dart' as _i9;
 import '../types/pallet_proxy/announcement.dart' as _i6;
-import '../types/pallet_proxy/pallet/call.dart' as _i10;
+import '../types/pallet_proxy/pallet/call.dart' as _i12;
 import '../types/pallet_proxy/proxy_definition.dart' as _i4;
+import '../types/primitive_types/h256.dart' as _i13;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
+import '../types/sp_runtime/multiaddress/multi_address.dart' as _i10;
 import '../types/tuples.dart' as _i3;
 
 class Queries {
@@ -108,11 +111,11 @@ class Txs {
 
   /// See [`Pallet::proxy`].
   _i9.RuntimeCall proxy({
-    required real,
-    forceProxyType,
-    required call,
+    required _i10.MultiAddress real,
+    _i11.ProxyType? forceProxyType,
+    required _i9.RuntimeCall call,
   }) {
-    final _call = _i10.Call.values.proxy(
+    final _call = _i12.Call.values.proxy(
       real: real,
       forceProxyType: forceProxyType,
       call: call,
@@ -122,11 +125,11 @@ class Txs {
 
   /// See [`Pallet::add_proxy`].
   _i9.RuntimeCall addProxy({
-    required delegate,
-    required proxyType,
-    required delay,
+    required _i10.MultiAddress delegate,
+    required _i11.ProxyType proxyType,
+    required int delay,
   }) {
-    final _call = _i10.Call.values.addProxy(
+    final _call = _i12.Call.values.addProxy(
       delegate: delegate,
       proxyType: proxyType,
       delay: delay,
@@ -136,11 +139,11 @@ class Txs {
 
   /// See [`Pallet::remove_proxy`].
   _i9.RuntimeCall removeProxy({
-    required delegate,
-    required proxyType,
-    required delay,
+    required _i10.MultiAddress delegate,
+    required _i11.ProxyType proxyType,
+    required int delay,
   }) {
-    final _call = _i10.Call.values.removeProxy(
+    final _call = _i12.Call.values.removeProxy(
       delegate: delegate,
       proxyType: proxyType,
       delay: delay,
@@ -150,17 +153,17 @@ class Txs {
 
   /// See [`Pallet::remove_proxies`].
   _i9.RuntimeCall removeProxies() {
-    final _call = _i10.Call.values.removeProxies();
+    final _call = _i12.Call.values.removeProxies();
     return _i9.RuntimeCall.values.proxy(_call);
   }
 
   /// See [`Pallet::create_pure`].
   _i9.RuntimeCall createPure({
-    required proxyType,
-    required delay,
-    required index,
+    required _i11.ProxyType proxyType,
+    required int delay,
+    required int index,
   }) {
-    final _call = _i10.Call.values.createPure(
+    final _call = _i12.Call.values.createPure(
       proxyType: proxyType,
       delay: delay,
       index: index,
@@ -170,13 +173,13 @@ class Txs {
 
   /// See [`Pallet::kill_pure`].
   _i9.RuntimeCall killPure({
-    required spawner,
-    required proxyType,
-    required index,
-    required height,
-    required extIndex,
+    required _i10.MultiAddress spawner,
+    required _i11.ProxyType proxyType,
+    required int index,
+    required BigInt height,
+    required BigInt extIndex,
   }) {
-    final _call = _i10.Call.values.killPure(
+    final _call = _i12.Call.values.killPure(
       spawner: spawner,
       proxyType: proxyType,
       index: index,
@@ -188,10 +191,10 @@ class Txs {
 
   /// See [`Pallet::announce`].
   _i9.RuntimeCall announce({
-    required real,
-    required callHash,
+    required _i10.MultiAddress real,
+    required _i13.H256 callHash,
   }) {
-    final _call = _i10.Call.values.announce(
+    final _call = _i12.Call.values.announce(
       real: real,
       callHash: callHash,
     );
@@ -200,10 +203,10 @@ class Txs {
 
   /// See [`Pallet::remove_announcement`].
   _i9.RuntimeCall removeAnnouncement({
-    required real,
-    required callHash,
+    required _i10.MultiAddress real,
+    required _i13.H256 callHash,
   }) {
-    final _call = _i10.Call.values.removeAnnouncement(
+    final _call = _i12.Call.values.removeAnnouncement(
       real: real,
       callHash: callHash,
     );
@@ -212,10 +215,10 @@ class Txs {
 
   /// See [`Pallet::reject_announcement`].
   _i9.RuntimeCall rejectAnnouncement({
-    required delegate,
-    required callHash,
+    required _i10.MultiAddress delegate,
+    required _i13.H256 callHash,
   }) {
-    final _call = _i10.Call.values.rejectAnnouncement(
+    final _call = _i12.Call.values.rejectAnnouncement(
       delegate: delegate,
       callHash: callHash,
     );
@@ -224,12 +227,12 @@ class Txs {
 
   /// See [`Pallet::proxy_announced`].
   _i9.RuntimeCall proxyAnnounced({
-    required delegate,
-    required real,
-    forceProxyType,
-    required call,
+    required _i10.MultiAddress delegate,
+    required _i10.MultiAddress real,
+    _i11.ProxyType? forceProxyType,
+    required _i9.RuntimeCall call,
   }) {
-    final _call = _i10.Call.values.proxyAnnounced(
+    final _call = _i12.Call.values.proxyAnnounced(
       delegate: delegate,
       real: real,
       forceProxyType: forceProxyType,

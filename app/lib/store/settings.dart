@@ -3,8 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/config/node.dart';
-import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -22,14 +20,6 @@ abstract class _SettingsStore with Store {
 
   final String localStorageLocaleKey = 'locale';
   final String localStorageEndpointKey = 'endpoint';
-  final String localStorageSS58Key = 'custom_ss58';
-
-  final String cacheNetworkStateKey = 'network';
-  final String cacheNetworkConstKey = 'network_const';
-
-  String _getCacheKeyOfNetwork(String key) {
-    return '${endpoint.info}_$key';
-  }
 
   /// The bazaar is not active currently. This variable can only be set under profile -> developer options.
   @observable
@@ -42,19 +32,7 @@ abstract class _SettingsStore with Store {
   String localeCode = '';
 
   @observable
-  EndpointData endpoint = EndpointData();
-
-  @observable
-  Map<String, dynamic> customSS58Format = <String, dynamic>{};
-
-  @observable
-  String? networkName = '';
-
-  @observable
-  NetworkState? networkState;
-
-  @observable
-  Map? networkConst = {};
+  EndpointData endpoint = networkEndpointEncointerMainnet;
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
@@ -113,8 +91,6 @@ abstract class _SettingsStore with Store {
     await loadLocalCode();
     await loadEndpoint(sysLocaleCode);
     await Future.wait([
-      loadCustomSS58Format(),
-      loadNetworkStateCache(),
       loadContacts(),
     ]);
   }
@@ -143,64 +119,9 @@ abstract class _SettingsStore with Store {
     loading = isLoading;
   }
 
-  @action
-  void setNetworkName(String? name) {
-    networkName = name;
-    loading = false;
-  }
-
   @computed
   bool get isConnected {
-    return !loading && networkName!.isNotEmpty;
-  }
-
-  @action
-  Future<void> setNetworkState(
-    Map<String, dynamic> data, {
-    bool needCache = true,
-  }) async {
-    networkState = NetworkState.fromJson(data);
-
-    if (needCache) {
-      await rootStore.localStorage.setObject(
-        _getCacheKeyOfNetwork(cacheNetworkStateKey),
-        data,
-      );
-    }
-  }
-
-  @action
-  Future<void> loadNetworkStateCache() async {
-    final data = await Future.wait([
-      rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkStateKey)),
-      rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
-    ]);
-    if (data[0] != null) {
-      await setNetworkState(Map<String, dynamic>.of(data[0]! as Map<String, dynamic>), needCache: false);
-    } else {
-      await setNetworkState({}, needCache: false);
-    }
-
-    if (data[1] != null) {
-      await setNetworkConst(Map<String, dynamic>.of(data[1]! as Map<String, dynamic>), needCache: false);
-    } else {
-      await setNetworkConst({}, needCache: false);
-    }
-  }
-
-  @action
-  Future<void> setNetworkConst(
-    Map<String, dynamic> data, {
-    bool needCache = true,
-  }) async {
-    networkConst = data;
-
-    if (needCache) {
-      await rootStore.localStorage.setObject(
-        _getCacheKeyOfNetwork(cacheNetworkConstKey),
-        data,
-      );
-    }
+    return !loading;
   }
 
   @action
@@ -243,38 +164,26 @@ abstract class _SettingsStore with Store {
     }
   }
 
-  @action
-  void setCustomSS58Format(Map<String, dynamic> value) {
-    customSS58Format = value;
-    rootStore.localStorage.setObject(localStorageSS58Key, value);
-  }
-
-  @action
-  Future<void> loadCustomSS58Format() async {
-    final ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
-
-    customSS58Format = ss58 ?? defaultSs58Prefix;
-  }
-
   String getCacheKey(String key) {
     return '${endpoint.info}_$key';
   }
 
   Future<void> reloadNetwork(EndpointData network) async {
     setNetworkLoading(true);
-    await setNetworkConst({}, needCache: false);
+
+    // Stop networking before loading cache
+    await webApi.close();
+
     setEndpoint(network);
 
+    // load cache before starting networking again
     await Future.wait(<Future<void>>[
       rootStore.loadAccountCache(),
-      loadNetworkStateCache(),
       rootStore.assets.loadCache(),
+      rootStore.chain.loadCache(),
       rootStore.loadOrInitEncointerCache(network.info!),
     ]);
 
-    // Todo: remove global reference when cyclic dependency
-    // between the stores and the apis are resolved
-    await webApi.close();
     return webApi.init();
   }
 }
@@ -330,6 +239,5 @@ abstract class _EndpointData {
   String? value = '';
   String? worker = ''; // only relevant for cantillon
   String? mrenclave = ''; // relevant until we fetch mrenclave from substrateeRegistry
-  NodeConfig? overrideConfig;
   String? ipfsGateway = '';
 }

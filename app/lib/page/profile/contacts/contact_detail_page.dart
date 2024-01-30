@@ -225,7 +225,7 @@ class EndorseButton extends StatelessWidget {
               : const SizedBox();
         }),
         Observer(builder: (_) {
-          return store.encointer.account != null && store.encointer.account!.reputations.isNotEmpty
+          return store.encointer.account != null && store.encointer.account!.verifiedReputations.isNotEmpty
               ? FittedBox(
                   child: Row(children: [
                     Text(l10n.remainingNewbieTicketsAsReputable),
@@ -261,10 +261,13 @@ class EndorseButton extends StatelessWidget {
   }
 
   bool hasNewbieTickets() {
-    if (store.encointer.account!.reputations.isNotEmpty &&
+    if (store.encointer.account!.verifiedReputations.isNotEmpty &&
         store.encointer.account!.numberOfNewbieTicketsForReputable > 0) {
       return true;
     }
+
+    // we have not chosen a community yet. May happen after changing the network.
+    if (store.encointer.community == null) return false;
 
     if (store.encointer.community!.bootstrappers!.contains(store.account.currentAddress) &&
         store.encointer.communityAccount!.numberOfNewbieTicketsForBootstrapper > 0) {
@@ -285,7 +288,15 @@ class EndorseButton extends StatelessWidget {
     } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
       await _popupDialog(context, l10n.canEndorseInRegisteringPhaseOnly);
     } else {
-      await submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, address);
+      await submitEndorseNewcomer(
+        context,
+        store,
+        api,
+        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+        store.encointer.chosenCid!,
+        Address.decode(address),
+        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+      );
     }
   }
 }

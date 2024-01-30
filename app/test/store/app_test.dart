@@ -1,15 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
+import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
 import '../mock/mock.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final store = AppStore(MockLocalStorage());
-
-  accList = [testAcc];
-  currentAccountPubKey = accList[0]['pubKey'] as String;
+  final store = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock());
 
   group('store test', () {
     test('app store created and not ready', () {
@@ -27,8 +26,6 @@ void main() {
       expect(store.encointer, isNotNull);
 
       expect(store.storeIsReady, true);
-
-      expect(store.account.accountList.length, 1);
     });
   });
 }

@@ -1,6 +1,9 @@
+import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/store/app.dart';
+import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
 import '../mock/mock.dart';
 
@@ -8,73 +11,75 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('AccountStore test', () {
-    final root = AppStore(MockLocalStorage());
+    final root = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock());
 
     test('account store test', () async {
-      accList = [testAcc];
-      currentAccountPubKey = accList[0]['pubKey'] as String;
-
       await root.init('_en');
       final store = root.account;
 
-      /// accounts load
-      expect(store.accountList.length, 1);
-      expect(store.currentAccountPubKey, accList[0]['pubKey']);
-      expect(store.currentAccount.name, accList[0]['name']);
-      expect(store.currentAccount.pubKey, accList[0]['pubKey']);
-      expect(store.currentAccount.address, accList[0]['address']);
-
       /// add account
-      const testPass = 'a111111';
-      await store.addAccount(endoEncointer, testPass);
+      final keyringAccount1 =
+          await KeyringAccount.fromUri(testAccount1['name'] as String, testAccount1['mnemonic'] as String);
+      await store.addAccount(keyringAccount1);
+      expect(store.accountList.length, 1);
+      await store.setCurrentAccount(testAccount1['pubKey'] as String);
+      expect(store.currentAccountPubKey, testAccount1['pubKey']);
+      expect(store.currentAccount.name, testAccount1['name'] as String);
+      expect(store.currentAccount.pubKey, testAccount1['pubKey']);
+      expect(store.currentAccount.address, testAccount1['address']);
+
+      final keyringAccount2 =
+          await KeyringAccount.fromUri(testAccount2['name'] as String, testAccount2['mnemonic'] as String);
+      await store.addAccount(keyringAccount2);
       expect(store.accountList.length, 2);
-      await store.setCurrentAccount(endoEncointer['pubKey'] as String);
-      expect(store.currentAccountPubKey, endoEncointer['pubKey']);
-      expect(store.currentAccount.name, 'Endo Encointer');
-      expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
-      expect(store.currentAccount.address, endoEncointer['address']);
+      await store.setCurrentAccount(testAccount2['pubKey'] as String);
+      expect(store.currentAccountPubKey, testAccount2['pubKey']);
+      expect(store.currentAccount.name, testAccount2['name'] as String);
+      expect(store.currentAccount.pubKey, testAccount2['pubKey']);
+      expect(store.currentAccount.address, testAccount2['address']);
+
       expect(store.optionalAccounts.length, 1);
-      expect(store.optionalAccounts[0].pubKey, accList[0]['pubKey']);
-      expect(store.optionalAccounts[0].name, accList[0]['name']);
-      expect(store.optionalAccounts[0].pubKey, accList[0]['pubKey']);
-      expect(store.optionalAccounts[0].address, accList[0]['address']);
+      expect(store.optionalAccounts[0].pubKey, testAccount1['pubKey']);
+      expect(store.optionalAccounts[0].name, testAccount1['name']);
+      expect(store.optionalAccounts[0].pubKey, testAccount1['pubKey']);
+      expect(store.optionalAccounts[0].address, testAccount1['address']);
 
       /// update account
       await store.updateAccountName(store.currentAccount, 'test-change');
       expect(store.currentAccount.name, 'test-change');
-      expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
-      expect(store.currentAccount.address, endoEncointer['address']);
+      expect(store.currentAccount.pubKey, testAccount2['pubKey']);
+      expect(store.currentAccount.address, testAccount2['address']);
 
       /// update works after reload
       await store.loadAccount();
       expect(store.currentAccount.name, 'test-change');
-      expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
-      expect(store.currentAccount.address, endoEncointer['address']);
+      expect(store.currentAccount.pubKey, testAccount2['pubKey']);
+      expect(store.currentAccount.address, testAccount2['address']);
 
       /// change account
-      await store.setCurrentAccount(accList[0]['pubKey'] as String);
-      expect(store.currentAccountPubKey, accList[0]['pubKey']);
-      expect(store.currentAccount.name, accList[0]['name']);
-      expect(store.currentAccount.pubKey, accList[0]['pubKey']);
-      expect(store.currentAccount.address, accList[0]['address']);
-      expect(store.optionalAccounts[0].pubKey, endoEncointer['pubKey']);
+      await store.setCurrentAccount(testAccount1['pubKey'] as String);
+      expect(store.currentAccountPubKey, testAccount1['pubKey']);
+      expect(store.currentAccount.name, testAccount1['name']);
+      expect(store.currentAccount.pubKey, testAccount1['pubKey']);
+      expect(store.currentAccount.address, testAccount1['address']);
+      expect(store.optionalAccounts[0].pubKey, testAccount2['pubKey']);
       expect(store.optionalAccounts[0].name, 'test-change');
-      expect(store.optionalAccounts[0].pubKey, endoEncointer['pubKey']);
-      expect(store.optionalAccounts[0].address, endoEncointer['address']);
+      expect(store.optionalAccounts[0].pubKey, testAccount2['pubKey']);
+      expect(store.optionalAccounts[0].address, testAccount2['address']);
 
-      await store.setCurrentAccount(endoEncointer['pubKey'] as String);
-      expect(store.currentAccountPubKey, endoEncointer['pubKey']);
+      await store.setCurrentAccount(testAccount2['pubKey'] as String);
+      expect(store.currentAccountPubKey, testAccount2['pubKey']);
       expect(store.currentAccount.name, 'test-change');
-      expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
-      expect(store.currentAccount.address, endoEncointer['address']);
+      expect(store.currentAccount.pubKey, testAccount2['pubKey']);
+      expect(store.currentAccount.address, testAccount2['address']);
 
       /// remove account
       await store.removeAccount(store.currentAccount);
       expect(store.accountList.length, 1);
-      expect(store.currentAccountPubKey, accList[0]['pubKey']);
-      expect(store.currentAccount.name, accList[0]['name']);
-      expect(store.currentAccount.pubKey, accList[0]['pubKey']);
-      expect(store.currentAccount.address, accList[0]['address']);
+      expect(store.currentAccountPubKey, testAccount1['pubKey']);
+      expect(store.currentAccount.name, testAccount1['name']);
+      expect(store.currentAccount.pubKey, testAccount1['pubKey']);
+      expect(store.currentAccount.address, testAccount1['address']);
       expect(store.optionalAccounts.length, 0);
 
       /// add observation account
@@ -94,10 +99,10 @@ void main() {
       expect(store.currentAccount.name, contact['name']);
       expect(store.currentAccount.pubKey, contact['pubKey']);
       expect(store.currentAccount.address, contact['address']);
-      expect(store.optionalAccounts[0].pubKey, accList[0]['pubKey']);
-      expect(store.optionalAccounts[0].name, accList[0]['name']);
-      expect(store.optionalAccounts[0].pubKey, accList[0]['pubKey']);
-      expect(store.optionalAccounts[0].address, accList[0]['address']);
+      expect(store.optionalAccounts[0].pubKey, testAccount1['pubKey']);
+      expect(store.optionalAccounts[0].name, testAccount1['name']);
+      expect(store.optionalAccounts[0].pubKey, testAccount1['pubKey']);
+      expect(store.optionalAccounts[0].address, testAccount1['address']);
 
       /// update observation account
       final contactNew = Map<String, dynamic>.of(contact);

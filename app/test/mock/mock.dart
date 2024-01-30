@@ -1,5 +1,4 @@
 export 'api/mock_api.dart';
-export 'api/mock_js_api.dart';
 export 'api/mock_chain_api.dart';
 export 'api/mock_assets_api.dart';
 export 'api/mock_account_api.dart';
@@ -10,4 +9,3 @@ export 'data/mock_encointer_data.dart';
 export 'data/mock_single_business_data.dart';
 export 'fixtures/fixture_reader.dart';
 export 'storage/mock_local_storage.dart';
-export 'storage/flutter_secure_storage.dart';

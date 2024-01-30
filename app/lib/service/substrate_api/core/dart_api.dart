@@ -74,6 +74,10 @@ class SubstrateDartApi {
     return data;
   }
 
+  bool isConnected() {
+    return _provider!.isConnected();
+  }
+
   /// Reconnect to the same endpoint if the connection was closed.
   void reconnect() {
     if (endpoint != null) _connectAndListen(endpoint!);

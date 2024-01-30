@@ -8,6 +8,3 @@ set -exuo pipefail
 source ./scripts/init_env.sh
 
 source ./scripts/install_flutter_wrapper.sh
-
-# update node.js version and build main.js before flutter build
-./scripts/install_node.sh && ./scripts/build_js.sh

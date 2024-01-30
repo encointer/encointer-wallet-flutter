@@ -9,7 +9,7 @@ import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/config/biometric_auth_state.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
@@ -155,17 +155,17 @@ class _ProfileState extends State<Profile> {
                       for (final acc in context.read<AppStore>().account.accountListAll) {
                         await store.account.removeAccount(acc);
                       }
-                      await context.read<LoginStore>().clearPin();
+                      await context.read<LoginStore>().deleteAuthenticationData();
                       await Navigator.pushNamedAndRemoveUntil(context, CreateAccountEntryView.route, (route) => false);
                     },
                   );
                 },
               ),
               ListTile(
-                  title: Text(l10n.reputationOverall, style: h3Grey),
-                  trailing: store.encointer.account?.reputations != null
-                      ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
-                      : Text(l10n.fetchingReputations)),
+                title: Text(l10n.reputationOverall, style: h3Grey),
+                // Account can be null after switching networks.
+                trailing: Text('${store.encointer.account?.verifiedReputationCount.toString() ?? 0}'),
+              ),
               ListTile(
                 title: Text(l10n.about,
                     style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19)),
@@ -183,7 +183,7 @@ class _ProfileState extends State<Profile> {
                   _ => SwitchListTile(
                       title: Text(l10n.biometricAuth, style: h3Grey),
                       onChanged: (value) => LoginDialog.switchBiometricAuth(context, isEnable: value),
-                      value: loginStore.biometricAuthState == BiometricAuthState.enabled,
+                      value: loginStore.biometricAuthState?.isEnabled ?? false,
                     ),
                 };
               }),
@@ -240,8 +240,8 @@ class _ProfileState extends State<Profile> {
                             Text('Next-Phase (only works for local dev-network)'),
                           ],
                         ),
-                        onPressed: (_) async {
-                          final res = await submitNextPhase(webApi);
+                        onPressed: (BuildContext context) async {
+                          final res = await submitNextPhaseWithAlice(context, store, webApi);
                           RootSnackBar.showMsg(res.toString());
                         },
                       ),

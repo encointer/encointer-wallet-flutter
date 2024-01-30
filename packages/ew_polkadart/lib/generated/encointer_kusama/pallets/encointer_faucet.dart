@@ -5,10 +5,11 @@ import 'dart:typed_data' as _i6;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i8;
 import '../types/encointer_primitives/faucet/faucet.dart' as _i3;
 import '../types/encointer_runtime/runtime_call.dart' as _i7;
-import '../types/frame_support/pallet_id.dart' as _i9;
-import '../types/pallet_encointer_faucet/pallet/call.dart' as _i8;
+import '../types/frame_support/pallet_id.dart' as _i10;
+import '../types/pallet_encointer_faucet/pallet/call.dart' as _i9;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
 
 class Queries {
@@ -80,12 +81,12 @@ class Txs {
 
   /// See [`Pallet::create_faucet`].
   _i7.RuntimeCall createFaucet({
-    required name,
-    required amount,
-    whitelist,
-    required dripAmount,
+    required List<int> name,
+    required BigInt amount,
+    List<_i8.CommunityIdentifier>? whitelist,
+    required BigInt dripAmount,
   }) {
-    final _call = _i8.Call.values.createFaucet(
+    final _call = _i9.Call.values.createFaucet(
       name: name,
       amount: amount,
       whitelist: whitelist,
@@ -96,11 +97,11 @@ class Txs {
 
   /// See [`Pallet::drip`].
   _i7.RuntimeCall drip({
-    required faucetAccount,
-    required cid,
-    required cindex,
+    required _i2.AccountId32 faucetAccount,
+    required _i8.CommunityIdentifier cid,
+    required int cindex,
   }) {
-    final _call = _i8.Call.values.drip(
+    final _call = _i9.Call.values.drip(
       faucetAccount: faucetAccount,
       cid: cid,
       cindex: cindex,
@@ -110,10 +111,10 @@ class Txs {
 
   /// See [`Pallet::dissolve_faucet`].
   _i7.RuntimeCall dissolveFaucet({
-    required faucetAccount,
-    required beneficiary,
+    required _i2.AccountId32 faucetAccount,
+    required _i2.AccountId32 beneficiary,
   }) {
-    final _call = _i8.Call.values.dissolveFaucet(
+    final _call = _i9.Call.values.dissolveFaucet(
       faucetAccount: faucetAccount,
       beneficiary: beneficiary,
     );
@@ -121,14 +122,14 @@ class Txs {
   }
 
   /// See [`Pallet::close_faucet`].
-  _i7.RuntimeCall closeFaucet({required faucetAccount}) {
-    final _call = _i8.Call.values.closeFaucet(faucetAccount: faucetAccount);
+  _i7.RuntimeCall closeFaucet({required _i2.AccountId32 faucetAccount}) {
+    final _call = _i9.Call.values.closeFaucet(faucetAccount: faucetAccount);
     return _i7.RuntimeCall.values.encointerFaucet(_call);
   }
 
   /// See [`Pallet::set_reserve_amount`].
-  _i7.RuntimeCall setReserveAmount({required reserveAmount}) {
-    final _call = _i8.Call.values.setReserveAmount(reserveAmount: reserveAmount);
+  _i7.RuntimeCall setReserveAmount({required BigInt reserveAmount}) {
+    final _call = _i9.Call.values.setReserveAmount(reserveAmount: reserveAmount);
     return _i7.RuntimeCall.values.encointerFaucet(_call);
   }
 }
@@ -136,7 +137,7 @@ class Txs {
 class Constants {
   Constants();
 
-  final _i9.PalletId palletId = const <int>[
+  final _i10.PalletId palletId = const <int>[
     101,
     99,
     116,

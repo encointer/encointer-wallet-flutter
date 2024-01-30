@@ -6,15 +6,16 @@ part of 'account_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AccountData _$AccountDataFromJson(Map<String, dynamic> json) => AccountData()
-  ..name = json['name'] as String
-  ..address = json['address'] as String
-  ..encoded = json['encoded'] as String?
-  ..pubKey = json['pubKey'] as String
-  ..encoding = json['encoding'] as Map<String, dynamic>?
-  ..meta = json['meta'] as Map<String, dynamic>?
-  ..memo = json['memo'] as String?
-  ..observation = json['observation'] as bool?;
+AccountData _$AccountDataFromJson(Map<String, dynamic> json) => AccountData(
+      name: json['name'] as String,
+      pubKey: json['pubKey'] as String,
+      address: json['address'] as String,
+    )
+      ..encoded = json['encoded'] as String?
+      ..encoding = json['encoding'] as Map<String, dynamic>?
+      ..meta = json['meta'] as Map<String, dynamic>?
+      ..memo = json['memo'] as String?
+      ..observation = json['observation'] as bool?;
 
 Map<String, dynamic> _$AccountDataToJson(AccountData instance) => <String, dynamic>{
       'name': instance.name,

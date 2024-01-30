@@ -170,9 +170,9 @@ class Txs {
 
   /// See [`Pallet::transfer`].
   _i10.RuntimeCall transfer({
-    required dest,
-    required communityId,
-    required amount,
+    required _i4.AccountId32 dest,
+    required _i2.CommunityIdentifier communityId,
+    required _i8.FixedU128 amount,
   }) {
     final _call = _i11.Call.values.transfer(
       dest: dest,
@@ -183,15 +183,15 @@ class Txs {
   }
 
   /// See [`Pallet::set_fee_conversion_factor`].
-  _i10.RuntimeCall setFeeConversionFactor({required feeConversionFactor}) {
+  _i10.RuntimeCall setFeeConversionFactor({required BigInt feeConversionFactor}) {
     final _call = _i11.Call.values.setFeeConversionFactor(feeConversionFactor: feeConversionFactor);
     return _i10.RuntimeCall.values.encointerBalances(_call);
   }
 
   /// See [`Pallet::transfer_all`].
   _i10.RuntimeCall transferAll({
-    required dest,
-    required cid,
+    required _i4.AccountId32 dest,
+    required _i2.CommunityIdentifier cid,
   }) {
     final _call = _i11.Call.values.transferAll(
       dest: dest,

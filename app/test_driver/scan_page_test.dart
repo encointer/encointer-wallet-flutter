@@ -22,7 +22,7 @@ void main() {
 
     // set the background in the MockScanPage
     await driver.requestData(base64);
-    await driver.takeScreenshot('mock-scan-receive');
+    await driver.takeLocalScreenshot('mock-scan-receive');
   });
 
   tearDownAll(() async => driver.close());
