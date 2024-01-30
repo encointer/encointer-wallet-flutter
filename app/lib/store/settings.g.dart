@@ -190,21 +190,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$networkConstAtom = Atom(name: '_SettingsStore.networkConst', context: context);
-
-  @override
-  Map<dynamic, dynamic>? get networkConst {
-    _$networkConstAtom.reportRead();
-    return super.networkConst;
-  }
-
-  @override
-  set networkConst(Map<dynamic, dynamic>? value) {
-    _$networkConstAtom.reportWrite(value, super.networkConst, () {
-      super.networkConst = value;
-    });
-  }
-
   late final _$contactListAtom = Atom(name: '_SettingsStore.contactList', context: context);
 
   @override
@@ -268,13 +253,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   @override
   Future<void> loadNetworkStateCache() {
     return _$loadNetworkStateCacheAsyncAction.run(() => super.loadNetworkStateCache());
-  }
-
-  late final _$setNetworkConstAsyncAction = AsyncAction('_SettingsStore.setNetworkConst', context: context);
-
-  @override
-  Future<void> setNetworkConst(Map<String, dynamic> data, {bool needCache = true}) {
-    return _$setNetworkConstAsyncAction.run(() => super.setNetworkConst(data, needCache: needCache));
   }
 
   late final _$loadContactsAsyncAction = AsyncAction('_SettingsStore.loadContacts', context: context);
@@ -391,7 +369,6 @@ endpoint: ${endpoint},
 customSS58Format: ${customSS58Format},
 networkName: ${networkName},
 networkState: ${networkState},
-networkConst: ${networkConst},
 contactList: ${contactList},
 locale: ${locale},
 endpointIsEncointer: ${endpointIsEncointer},

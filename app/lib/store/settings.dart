@@ -25,7 +25,6 @@ abstract class _SettingsStore with Store {
   final String localStorageSS58Key = 'custom_ss58';
 
   final String cacheNetworkStateKey = 'network';
-  final String cacheNetworkConstKey = 'network_const';
 
   String _getCacheKeyOfNetwork(String key) {
     return '${endpoint.info}_$key';
@@ -52,9 +51,6 @@ abstract class _SettingsStore with Store {
 
   @observable
   NetworkState? networkState;
-
-  @observable
-  Map? networkConst = {};
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
@@ -173,33 +169,11 @@ abstract class _SettingsStore with Store {
   Future<void> loadNetworkStateCache() async {
     final data = await Future.wait([
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkStateKey)),
-      rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
     ]);
     if (data[0] != null) {
       await setNetworkState(Map<String, dynamic>.of(data[0]! as Map<String, dynamic>), needCache: false);
     } else {
       await setNetworkState({}, needCache: false);
-    }
-
-    if (data[1] != null) {
-      await setNetworkConst(Map<String, dynamic>.of(data[1]! as Map<String, dynamic>), needCache: false);
-    } else {
-      await setNetworkConst({}, needCache: false);
-    }
-  }
-
-  @action
-  Future<void> setNetworkConst(
-    Map<String, dynamic> data, {
-    bool needCache = true,
-  }) async {
-    networkConst = data;
-
-    if (needCache) {
-      await rootStore.localStorage.setObject(
-        _getCacheKeyOfNetwork(cacheNetworkConstKey),
-        data,
-      );
     }
   }
 
@@ -262,7 +236,6 @@ abstract class _SettingsStore with Store {
 
   Future<void> reloadNetwork(EndpointData network) async {
     setNetworkLoading(true);
-    await setNetworkConst({}, needCache: false);
 
     // Stop networking before loading cache
     await webApi.close();
