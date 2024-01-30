@@ -71,6 +71,11 @@ class Api {
       await store.encointer.initializeUninitializedStores(store.account.currentAddress);
     }
 
+    // await subscriptions here because we want
+    // to fetch the bestHead before making
+    // other requests.
+    await startSubscriptions();
+
     await Future.wait([
       webApi.encointer.getPhaseDurations(),
       webApi.encointer.getCurrentPhase(),
@@ -81,7 +86,6 @@ class Api {
 
     Log.d('Obtained basic network data: ${store.settings.endpoint.value!}', 'Api');
 
-    startSubscriptions();
     encointer.getCommunityData();
 
     // need to do this from here as we can't access instance fields in constructor.
@@ -103,16 +107,20 @@ class Api {
     encointer.getCommunityData();
   }
 
-  void startSubscriptions() {
-    encointer.startSubscriptions();
-    chain.startSubscriptions();
-    assets.startSubscriptions();
+  Future<void> startSubscriptions() {
+    return Future.wait([
+      encointer.startSubscriptions(),
+      chain.startSubscriptions(),
+      assets.startSubscriptions(),
+    ]);
   }
 
-  Future<void> stopSubscriptions() async {
-    await encointer.stopSubscriptions();
-    await chain.stopSubscriptions();
-    await assets.stopSubscriptions();
+  Future<void> stopSubscriptions() {
+    return Future.wait([
+      encointer.stopSubscriptions(),
+      chain.stopSubscriptions(),
+      assets.stopSubscriptions(),
+    ]);
   }
 
   Future<bool> isConnected() async {
