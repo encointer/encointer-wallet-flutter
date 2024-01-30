@@ -21,8 +21,6 @@ EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) => EndpointData()
   ..value = json['value'] as String?
   ..worker = json['worker'] as String?
   ..mrenclave = json['mrenclave'] as String?
-  ..overrideConfig =
-      json['overrideConfig'] == null ? null : NodeConfig.fromJson(json['overrideConfig'] as Map<String, dynamic>)
   ..ipfsGateway = json['ipfsGateway'] as String?;
 
 Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dynamic>{
@@ -33,7 +31,6 @@ Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dyn
       'value': instance.value,
       'worker': instance.worker,
       'mrenclave': instance.mrenclave,
-      'overrideConfig': instance.overrideConfig?.toJson(),
       'ipfsGateway': instance.ipfsGateway,
     };
 

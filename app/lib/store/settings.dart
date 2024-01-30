@@ -136,7 +136,7 @@ abstract class _SettingsStore with Store {
 
   @computed
   bool get isConnected {
-    return !loading && networkName!.isNotEmpty;
+    return !loading;
   }
 
   @action

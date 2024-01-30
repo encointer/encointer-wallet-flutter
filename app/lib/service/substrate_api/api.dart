@@ -142,7 +142,6 @@ class Api {
     final res = await evalJavascript('settings.connect("$node", "{}")');
     if (res == null) {
       Log.d('connecting to node failed', 'Api');
-      store.settings.setNetworkName(null);
       return;
     }
 
@@ -161,7 +160,6 @@ class Api {
     final res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, "[{}]")');
     if (res == null) {
       Log.d('connect failed', 'Api');
-      store.settings.setNetworkName(null);
       return;
     }
 
@@ -185,13 +183,6 @@ class Api {
   }
 
   Future<void> fetchNetworkProps() async {
-    // fetch network info
-    final info = await Future.wait([
-      evalJavascript('api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever
-    ]);
-
-    store.settings.setNetworkName(info[0] as String?);
-
     startSubscriptions();
   }
 
