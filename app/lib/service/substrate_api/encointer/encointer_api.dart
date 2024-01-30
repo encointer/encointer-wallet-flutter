@@ -12,7 +12,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/models/bazaar/businesses.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_product.dart';
 import 'package:encointer_wallet/models/bazaar/item_offered.dart';
@@ -20,13 +19,14 @@ import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
-import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_dart_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_encointer_utils/ew_encointer_utils.dart' as ew_utils;
 import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
-import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/encointer_types.dart' show ProofOfAttendance;
+import 'package:ew_polkadart/ew_polkadart.dart'
+    show BlockHash, Tuple2, StorageChangeSet, SequenceCodec, EncointerKusama, ByteInput;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
@@ -46,10 +46,9 @@ import 'package:ew_polkadart/encointer_types.dart' as et;
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class EncointerApi {
-  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp, this.encointerKusama)
+  EncointerApi(this.store, SubstrateDartApi dartApi, this.ewHttp, this.encointerKusama)
       : _dartApi = EncointerDartApi(dartApi);
 
-  final JSApi jsApi;
   final EncointerDartApi _dartApi;
   final EwHttp ewHttp;
   final EncointerKusama encointerKusama;
@@ -592,6 +591,8 @@ class EncointerApi {
   /// Gets a proof of attendance for the oldest attended ceremony, if available.
   ///
   /// returns null, if none available.
+  ///
+  /// Note: this returns the polkadart generated type.
   ProofOfAttendance? getProofOfAttendance() {
     final pubKey = store.account.currentAccountPubKey;
     final cIndex = store.encointer.account?.ceremonyIndexForNextProofOfAttendance;
@@ -611,7 +612,7 @@ class EncointerApi {
     );
 
     Log.d('Proof: ${proof.toJson()}', 'EncointerApi');
-    return ProofOfAttendance.fromPolkadart(proof);
+    return proof;
   }
 
   Future<int> getNumberOfNewbieTicketsForReputable({BlockHash? at}) async {

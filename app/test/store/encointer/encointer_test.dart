@@ -24,7 +24,7 @@ Future<AppStore> setupAppStore(String networkInfo) async {
   store.settings.setEndpoint(endpoint);
   await store.init('_en');
 
-  webApi = getMockApi(store, withUI: false);
+  webApi = getMockApi(store);
   await webApi.init();
 
   return store;

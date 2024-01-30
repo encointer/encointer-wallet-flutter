@@ -17,14 +17,14 @@ class FaucetListTile extends StatefulWidget {
     this.store, {
     super.key,
     required this.userAddress,
-    required this.faucetAccount,
+    required this.faucetPubKey,
     required this.faucet,
   });
 
   final AppStore store;
 
   final String userAddress;
-  final String faucetAccount;
+  final String faucetPubKey;
   final Faucet faucet;
 
   @override
@@ -79,7 +79,11 @@ class _FaucetListTileState extends State<FaucetListTile> {
             if (snapshot.data!.isNotEmpty) {
               return SubmitButtonSmall(
                 onPressed: (context) async {
-                  await _submitFaucetDripTxs(context, snapshot.data!, widget.faucetAccount);
+                  await _submitFaucetDripTxs(
+                    context,
+                    snapshot.data!,
+                    widget.faucetPubKey,
+                  );
                   future = _getUncommittedReputationIds(widget.userAddress);
                   nativeBalance = getNativeFreeBalance(widget.userAddress);
                   setState(() {});
@@ -130,8 +134,18 @@ class _FaucetListTileState extends State<FaucetListTile> {
     Map<int, CommunityIdentifier> ids,
     String faucetAccount,
   ) async {
+    final store = widget.store;
     final e = ids.entries.first;
-    return submitFaucetDrip(context, widget.store, webApi, faucetAccount, e.value, e.key);
+    return submitFaucetDrip(
+      context,
+      store,
+      webApi,
+      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+      faucetAccount,
+      e.value,
+      e.key,
+      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+    );
   }
 
   Future<BigInt> getNativeFreeBalance(String address) async {

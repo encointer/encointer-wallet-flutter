@@ -11,10 +11,9 @@ import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dar
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:ew_http/ew_http.dart';
-import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_polkadart/ew_polkadart.dart' show BlockHash;
 
 import '../data/mock_encointer_data.dart';
-import 'mock_js_api.dart';
 import 'mock_substrate_dart_api.dart';
 import 'mock_encointer_kusama_api.dart';
 
@@ -26,7 +25,6 @@ import 'mock_encointer_kusama_api.dart';
 class MockEncointerApi extends EncointerApi {
   MockEncointerApi(
     super.store,
-    MockJSApi super.js,
     MockSubstrateDartApi super.dartApi,
     super.ewHttp,
     MockEncointerKusamaApi super.encointerKusama,

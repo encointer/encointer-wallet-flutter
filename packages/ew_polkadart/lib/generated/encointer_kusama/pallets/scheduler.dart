@@ -122,10 +122,10 @@ class Txs {
 
   /// See [`Pallet::schedule`].
   _i7.RuntimeCall schedule({
-    required when,
-    maybePeriodic,
-    required priority,
-    required call,
+    required int when,
+    _i4.Tuple2<int, int>? maybePeriodic,
+    required int priority,
+    required _i7.RuntimeCall call,
   }) {
     final _call = _i8.Call.values.schedule(
       when: when,
@@ -138,8 +138,8 @@ class Txs {
 
   /// See [`Pallet::cancel`].
   _i7.RuntimeCall cancel({
-    required when,
-    required index,
+    required int when,
+    required int index,
   }) {
     final _call = _i8.Call.values.cancel(
       when: when,
@@ -150,11 +150,11 @@ class Txs {
 
   /// See [`Pallet::schedule_named`].
   _i7.RuntimeCall scheduleNamed({
-    required id,
-    required when,
-    maybePeriodic,
-    required priority,
-    required call,
+    required List<int> id,
+    required int when,
+    _i4.Tuple2<int, int>? maybePeriodic,
+    required int priority,
+    required _i7.RuntimeCall call,
   }) {
     final _call = _i8.Call.values.scheduleNamed(
       id: id,
@@ -167,17 +167,17 @@ class Txs {
   }
 
   /// See [`Pallet::cancel_named`].
-  _i7.RuntimeCall cancelNamed({required id}) {
+  _i7.RuntimeCall cancelNamed({required List<int> id}) {
     final _call = _i8.Call.values.cancelNamed(id: id);
     return _i7.RuntimeCall.values.scheduler(_call);
   }
 
   /// See [`Pallet::schedule_after`].
   _i7.RuntimeCall scheduleAfter({
-    required after,
-    maybePeriodic,
-    required priority,
-    required call,
+    required int after,
+    _i4.Tuple2<int, int>? maybePeriodic,
+    required int priority,
+    required _i7.RuntimeCall call,
   }) {
     final _call = _i8.Call.values.scheduleAfter(
       after: after,
@@ -190,11 +190,11 @@ class Txs {
 
   /// See [`Pallet::schedule_named_after`].
   _i7.RuntimeCall scheduleNamedAfter({
-    required id,
-    required after,
-    maybePeriodic,
-    required priority,
-    required call,
+    required List<int> id,
+    required int after,
+    _i4.Tuple2<int, int>? maybePeriodic,
+    required int priority,
+    required _i7.RuntimeCall call,
   }) {
     final _call = _i8.Call.values.scheduleNamedAfter(
       id: id,

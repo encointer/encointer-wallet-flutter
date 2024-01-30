@@ -9,7 +9,6 @@ on:
     branches: [master, f-droid]
 
 env:
-  NODE_VERSION: 18.14.2
   JAVA_VERSION: 12.x
   ARTIFACT_PATH: ./screenshots
 
@@ -79,19 +78,11 @@ jobs:
           xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-4" || \
           xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-16-2"
 
-      # JS Stuff
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
 
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
-
-      - name: "Build JS"
-        run: .flutter/bin/dart run melos yarn-build
 
       - name: Start colima a docker runtime for MacOs
         # The brew install returns exit code 1 for a non-fatal dependency linker error.

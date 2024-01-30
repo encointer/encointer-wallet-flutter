@@ -47,6 +47,10 @@ class CommunityIdentifier {
     return utf8.decode(geohash) + codec.encode(digest);
   }
 
+  et.CommunityIdentifier toPolkadart() {
+    return et.CommunityIdentifier(geohash: geohash, digest: digest);
+  }
+
   // By default, the dart `==` operator returns only true iff both variables point to the same instance. We want to
   // override this behaviour, such that it is also true if the instances contain the same values.
   @override

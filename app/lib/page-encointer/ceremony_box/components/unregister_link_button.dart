@@ -9,6 +9,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/models/index.dart';
 
 class UnregisteredLinkButton extends StatefulWidget {
   const UnregisteredLinkButton({super.key});
@@ -24,7 +25,24 @@ class _UnregisteredLinkButtonState extends State<UnregisteredLinkButton> {
     setState(() {
       _submitting = true;
     });
-    await submitUnRegisterParticipant(context, context.read<AppStore>(), webApi);
+
+    final store = context.read<AppStore>();
+
+    final lastProofOfAttendance = store.encointer.communityAccount?.participantType?.isReputable ?? false
+        ? store.encointer.account
+            ?.lastProofOfAttendance // can still be null if the participant did not register on the same phone.
+        : null;
+
+    await submitUnRegisterParticipant(
+      context,
+      store,
+      webApi,
+      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+      store.encointer.chosenCid!,
+      lastProofOfAttendance: lastProofOfAttendance,
+      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+    );
+
     setState(() {
       _submitting = false;
     });

@@ -523,22 +523,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.0"
-  flutter_inappwebview:
-    dependency: "direct main"
-    description:
-      name: flutter_inappwebview
-      sha256: "786b124c944f4914670868c9775c90600a4d4674497f617190c0d676019e337b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.0-beta.25"
-  flutter_inappwebview_internal_annotations:
-    dependency: transitive
-    description:
-      name: flutter_inappwebview_internal_annotations
-      sha256: "5f80fd30e208ddded7dbbcd0d569e7995f9f63d45ea3f548d8dd4c0b473fb4c8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -1227,26 +1211,26 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart"
-      ref: main
-      resolved-ref: "900ecf83ca1fc9388580d421286ce9938dc58981"
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "553ad7f8c2281182a62707c8b2af46aee4f8f32a"
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.3.0"
+    version: "0.3.2"
   polkadart_keyring:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_keyring"
-      ref: main
-      resolved-ref: "900ecf83ca1fc9388580d421286ce9938dc58981"
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "553ad7f8c2281182a62707c8b2af46aee4f8f32a"
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.2.1"
+    version: "0.3.0"
   polkadart_scale_codec:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: main
-      resolved-ref: "900ecf83ca1fc9388580d421286ce9938dc58981"
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "553ad7f8c2281182a62707c8b2af46aee4f8f32a"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -1651,8 +1635,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/substrate_metadata"
-      ref: main
-      resolved-ref: "900ecf83ca1fc9388580d421286ce9938dc58981"
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "553ad7f8c2281182a62707c8b2af46aee4f8f32a"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -2012,10 +1996,10 @@ packages:
     dependency: transitive
     description:
       name: yaon
-      sha256: fb0dd1654f203e52ef1631ba81a04c7762ddfd72d7bc58a178462d8b84258fd4
+      sha256: db080cb998ac25ed993b5c715abb1825b00453b9b62bc7ad2699f5f9c1fec6ce
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.4"
+    version: "1.1.4+3"
 sdks:
   dart: ">=3.2.0 <4.0.0"
   flutter: ">=3.16.3"

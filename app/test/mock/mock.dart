@@ -1,5 +1,4 @@
 export 'api/mock_api.dart';
-export 'api/mock_js_api.dart';
 export 'api/mock_chain_api.dart';
 export 'api/mock_assets_api.dart';
 export 'api/mock_account_api.dart';
