@@ -261,16 +261,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void setNetworkName(String? name) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkName');
-    try {
-      return super.setNetworkName(name);
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setEndpoint(EndpointData value) {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setEndpoint');
     try {

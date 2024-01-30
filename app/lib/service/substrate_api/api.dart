@@ -77,6 +77,8 @@ class Api {
       webApi.encointer.getNextPhaseTimestamp(),
     ]);
 
+    store.settings.setNetworkLoading(false);
+
     Log.d('Obtained basic network data: ${store.settings.endpoint.value!}', 'Api');
 
     startSubscriptions();

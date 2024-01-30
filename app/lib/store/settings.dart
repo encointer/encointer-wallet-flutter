@@ -119,11 +119,6 @@ abstract class _SettingsStore with Store {
     loading = isLoading;
   }
 
-  @action
-  void setNetworkName(String? name) {
-    loading = false;
-  }
-
   @computed
   bool get isConnected {
     return !loading;
