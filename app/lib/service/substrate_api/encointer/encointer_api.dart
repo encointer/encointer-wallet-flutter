@@ -19,7 +19,6 @@ import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
-import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_dart_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_encointer_utils/ew_encointer_utils.dart' as ew_utils;
@@ -47,10 +46,9 @@ import 'package:ew_polkadart/encointer_types.dart' as et;
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class EncointerApi {
-  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi, this.ewHttp, this.encointerKusama)
+  EncointerApi(this.store, SubstrateDartApi dartApi, this.ewHttp, this.encointerKusama)
       : _dartApi = EncointerDartApi(dartApi);
 
-  final JSApi jsApi;
   final EncointerDartApi _dartApi;
   final EwHttp ewHttp;
   final EncointerKusama encointerKusama;

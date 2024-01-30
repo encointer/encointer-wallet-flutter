@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show BlockHash, ByteInput, EncointerKusama, StorageChangeSet;
@@ -9,9 +8,8 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/frame_system/accou
 import 'package:ew_polkadart/generated/encointer_kusama/types/pallet_balances/types/account_data.dart';
 
 class AssetsApi {
-  AssetsApi(this.store, this.jsApi, this.encointerKusama);
+  AssetsApi(this.store, this.encointerKusama);
 
-  final JSApi jsApi;
   final AppStore store;
   final EncointerKusama encointerKusama;
 

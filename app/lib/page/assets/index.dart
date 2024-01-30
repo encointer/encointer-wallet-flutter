@@ -409,7 +409,7 @@ class _AssetsViewState extends State<AssetsView> {
     // if network connected failed, reconnect
     if (!widget.store.settings.loading) {
       widget.store.settings.setNetworkLoading(true);
-      webApi.connectNodeAll();
+      webApi.init();
     }
   }
 

@@ -47,13 +47,6 @@ abstract class _NewAccountStoreBase with Store {
     try {
       _loading = true;
       final keyringAccount = await KeyringAccount.generate(name!);
-      // pin is ignored on JS-side
-      final result = await webApi.account.importAccount(key: keyringAccount.uri, password: '');
-      if (result['error'] != null) {
-        _loading = false;
-        return const NewAccountResult(NewAccountResultType.error);
-      }
-
       return saveAccount(keyringAccount);
     } catch (e, s) {
       _loading = false;
@@ -68,22 +61,13 @@ abstract class _NewAccountStoreBase with Store {
       _loading = true;
       assert(accountKey != null && accountKey!.isNotEmpty, 'accountKey can not be null or empty');
       final keyringAccount = await KeyringAccount.fromUri(name!, accountKey!);
-      final result = await webApi.account.importAccount(
-        key: accountKey!,
-        password: '', // this is ignored on JS-side
-        keyType: keyringAccount.seedType.name,
-      );
-      if (result['error'] != null) {
+
+      final index = appStore.account.accountList.indexWhere((i) => i.pubKey == keyringAccount.pubKeyHex);
+      if (index > -1) {
         _loading = false;
-        return const NewAccountResult(NewAccountResultType.error);
-      } else {
-        final index = appStore.account.accountList.indexWhere((i) => i.pubKey == keyringAccount.pubKeyHex);
-        if (index > -1) {
-          _loading = false;
-          return NewAccountResult(NewAccountResultType.duplicateAccount, newAccount: keyringAccount);
-        }
-        return saveAccount(keyringAccount);
+        return NewAccountResult(NewAccountResultType.duplicateAccount, newAccount: keyringAccount);
       }
+      return saveAccount(keyringAccount);
     } catch (e, s) {
       _loading = false;
       Log.e('import account', '$e', s);

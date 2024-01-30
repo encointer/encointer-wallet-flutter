@@ -14,7 +14,6 @@ import 'package:ew_http/ew_http.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show BlockHash;
 
 import '../data/mock_encointer_data.dart';
-import 'mock_js_api.dart';
 import 'mock_substrate_dart_api.dart';
 import 'mock_encointer_kusama_api.dart';
 
@@ -26,7 +25,6 @@ import 'mock_encointer_kusama_api.dart';
 class MockEncointerApi extends EncointerApi {
   MockEncointerApi(
     super.store,
-    MockJSApi super.js,
     MockSubstrateDartApi super.dartApi,
     super.ewHttp,
     MockEncointerKusamaApi super.encointerKusama,
