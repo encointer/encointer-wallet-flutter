@@ -12,7 +12,6 @@ import 'package:encointer_wallet/page-encointer/bazaar/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
-import 'package:encointer_wallet/page/assets/transfer/detail_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
@@ -106,12 +105,6 @@ class AppRoute {
       case ReceivePage.route:
         return CupertinoPageRoute(
           builder: (_) => const ReceivePage(),
-          settings: settings,
-          fullscreenDialog: true,
-        );
-      case TransferDetailPage.route:
-        return CupertinoPageRoute(
-          builder: (_) => const TransferDetailPage(),
           settings: settings,
           fullscreenDialog: true,
         );
