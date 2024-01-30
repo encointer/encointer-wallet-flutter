@@ -6,12 +6,13 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/encointer_runtime/runtime_call.dart' as _i10;
-import '../types/pallet_balances/pallet/call.dart' as _i11;
+import '../types/pallet_balances/pallet/call.dart' as _i12;
 import '../types/pallet_balances/types/account_data.dart' as _i4;
 import '../types/pallet_balances/types/balance_lock.dart' as _i5;
 import '../types/pallet_balances/types/id_amount.dart' as _i7;
 import '../types/pallet_balances/types/reserve_data.dart' as _i6;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
+import '../types/sp_runtime/multiaddress/multi_address.dart' as _i11;
 
 class Queries {
   const Queries(this.__api);
@@ -286,10 +287,10 @@ class Txs {
 
   /// See [`Pallet::transfer_allow_death`].
   _i10.RuntimeCall transferAllowDeath({
-    required dest,
-    required value,
+    required _i11.MultiAddress dest,
+    required BigInt value,
   }) {
-    final _call = _i11.Call.values.transferAllowDeath(
+    final _call = _i12.Call.values.transferAllowDeath(
       dest: dest,
       value: value,
     );
@@ -298,11 +299,11 @@ class Txs {
 
   /// See [`Pallet::set_balance_deprecated`].
   _i10.RuntimeCall setBalanceDeprecated({
-    required who,
-    required newFree,
-    required oldReserved,
+    required _i11.MultiAddress who,
+    required BigInt newFree,
+    required BigInt oldReserved,
   }) {
-    final _call = _i11.Call.values.setBalanceDeprecated(
+    final _call = _i12.Call.values.setBalanceDeprecated(
       who: who,
       newFree: newFree,
       oldReserved: oldReserved,
@@ -312,11 +313,11 @@ class Txs {
 
   /// See [`Pallet::force_transfer`].
   _i10.RuntimeCall forceTransfer({
-    required source,
-    required dest,
-    required value,
+    required _i11.MultiAddress source,
+    required _i11.MultiAddress dest,
+    required BigInt value,
   }) {
-    final _call = _i11.Call.values.forceTransfer(
+    final _call = _i12.Call.values.forceTransfer(
       source: source,
       dest: dest,
       value: value,
@@ -326,10 +327,10 @@ class Txs {
 
   /// See [`Pallet::transfer_keep_alive`].
   _i10.RuntimeCall transferKeepAlive({
-    required dest,
-    required value,
+    required _i11.MultiAddress dest,
+    required BigInt value,
   }) {
-    final _call = _i11.Call.values.transferKeepAlive(
+    final _call = _i12.Call.values.transferKeepAlive(
       dest: dest,
       value: value,
     );
@@ -338,10 +339,10 @@ class Txs {
 
   /// See [`Pallet::transfer_all`].
   _i10.RuntimeCall transferAll({
-    required dest,
-    required keepAlive,
+    required _i11.MultiAddress dest,
+    required bool keepAlive,
   }) {
-    final _call = _i11.Call.values.transferAll(
+    final _call = _i12.Call.values.transferAll(
       dest: dest,
       keepAlive: keepAlive,
     );
@@ -350,10 +351,10 @@ class Txs {
 
   /// See [`Pallet::force_unreserve`].
   _i10.RuntimeCall forceUnreserve({
-    required who,
-    required amount,
+    required _i11.MultiAddress who,
+    required BigInt amount,
   }) {
-    final _call = _i11.Call.values.forceUnreserve(
+    final _call = _i12.Call.values.forceUnreserve(
       who: who,
       amount: amount,
     );
@@ -361,17 +362,17 @@ class Txs {
   }
 
   /// See [`Pallet::upgrade_accounts`].
-  _i10.RuntimeCall upgradeAccounts({required who}) {
-    final _call = _i11.Call.values.upgradeAccounts(who: who);
+  _i10.RuntimeCall upgradeAccounts({required List<_i3.AccountId32> who}) {
+    final _call = _i12.Call.values.upgradeAccounts(who: who);
     return _i10.RuntimeCall.values.balances(_call);
   }
 
   /// See [`Pallet::transfer`].
   _i10.RuntimeCall transfer({
-    required dest,
-    required value,
+    required _i11.MultiAddress dest,
+    required BigInt value,
   }) {
-    final _call = _i11.Call.values.transfer(
+    final _call = _i12.Call.values.transfer(
       dest: dest,
       value: value,
     );
@@ -380,10 +381,10 @@ class Txs {
 
   /// See [`Pallet::force_set_balance`].
   _i10.RuntimeCall forceSetBalance({
-    required who,
-    required newFree,
+    required _i11.MultiAddress who,
+    required BigInt newFree,
   }) {
-    final _call = _i11.Call.values.forceSetBalance(
+    final _call = _i12.Call.values.forceSetBalance(
       who: who,
       newFree: newFree,
     );

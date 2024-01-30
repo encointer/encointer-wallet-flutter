@@ -233,7 +233,7 @@ Future<void> submitAttestAttendees(
 
   final call = api.encointer.encointerKusama.tx.encointerCeremonies.attestAttendees(
     cid: chosenCid.toPolkadart(),
-    numberOfParticipantsVote: store.encointer.communityAccount!.participantCountVote,
+    numberOfParticipantsVote: store.encointer.communityAccount!.participantCountVote!,
     attestations: attestations,
   );
 

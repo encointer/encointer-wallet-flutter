@@ -137,17 +137,17 @@ class Txs {
   const Txs();
 
   /// See [`Pallet::register_purpose`].
-  _i9.RuntimeCall registerPurpose({required descriptor}) {
+  _i9.RuntimeCall registerPurpose({required List<int> descriptor}) {
     final _call = _i10.Call.values.registerPurpose(descriptor: descriptor);
     return _i9.RuntimeCall.values.encointerReputationCommitments(_call);
   }
 
   /// See [`Pallet::commit_reputation`].
   _i9.RuntimeCall commitReputation({
-    required cid,
-    required cindex,
-    required purpose,
-    commitmentHash,
+    required _i4.CommunityIdentifier cid,
+    required int cindex,
+    required BigInt purpose,
+    _i6.H256? commitmentHash,
   }) {
     final _call = _i10.Call.values.commitReputation(
       cid: cid,

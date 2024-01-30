@@ -163,8 +163,8 @@ class Txs {
 
   /// See [`Pallet::set_phase_duration`].
   _i6.RuntimeCall setPhaseDuration({
-    required ceremonyPhase,
-    required duration,
+    required _i3.CeremonyPhaseType ceremonyPhase,
+    required BigInt duration,
   }) {
     final _call = _i7.Call.values.setPhaseDuration(
       ceremonyPhase: ceremonyPhase,
@@ -174,7 +174,7 @@ class Txs {
   }
 
   /// See [`Pallet::set_next_phase_timestamp`].
-  _i6.RuntimeCall setNextPhaseTimestamp({required timestamp}) {
+  _i6.RuntimeCall setNextPhaseTimestamp({required BigInt timestamp}) {
     final _call = _i7.Call.values.setNextPhaseTimestamp(timestamp: timestamp);
     return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
