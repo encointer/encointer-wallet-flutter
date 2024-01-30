@@ -33,7 +33,7 @@ class AssetsApi {
     final currentAddress = store.account.currentAddress;
     if (currentAddress.isNotEmpty) {
       final accountData = await getBalanceOf(currentAddress);
-      await store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol!: accountData}));
+      await store.assets.setAccountData(pubKey!, accountData);
     }
   }
 
@@ -57,11 +57,7 @@ class AssetsApi {
       Log.p('Got account data subscription: $storageChangeSet');
       if (storageChangeSet.changes[0].value != null) {
         final accountData = AccountInfo.decode(ByteInput(storageChangeSet.changes[0].value!));
-        await store.assets.setAccountBalances(
-            pubKey,
-            Map.of({
-              store.settings.networkState!.tokenSymbol!: accountData.data,
-            }));
+        await store.assets.setAccountData(pubKey, accountData.data);
       }
     });
   }
