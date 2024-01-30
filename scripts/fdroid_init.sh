@@ -11,34 +11,3 @@ set -exuo pipefail
 
 # init env vars needed for scripts
 source ./scripts/init_env.sh
-
-######################### Setup phase
-
-DISTRO="linux-x64"
-NODE_VERSION="18.14.2" # should match the value from the CI.
-SHA_SUM="95bdaaf92265eefd40d2055fb9b5cd6cbc3cb2c4495e3ebd4b1b501822d69731"
-NODE="node-v${NODE_VERSION}-${DISTRO}"
-
-curl -Lo node.tar.gz "https://nodejs.org/dist/v${NODE_VERSION}/${NODE}.tar.gz"
-echo "${SHA_SUM} node.tar.gz" | sha256sum -c -
-
-tar -vxf node.tar.gz && rm node.tar.gz
-
-export PATH=$PATH:$PWD/${NODE}/bin
-
-echo "Path: $PATH"
-
-node -v
-
-# enable binary proxies, which automatically install yarn, if needed.
-corepack enable
-
-# Build JS
-./scripts/build_js.sh
-
-######################### Cleanup phase
-
-echo "Remove all binary files as f-droid does not allow them the repository"
-rm -r ${NODE}
-rm -r "${ENCOINTER_JS_DIR}/node_modules"
-rm -r "${ENCOINTER_JS_DIR}/.yarn"

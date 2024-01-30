@@ -61,18 +61,18 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$balancesAtom = Atom(name: '_AssetsStore.balances', context: context);
+  late final _$accountDataAtom = Atom(name: '_AssetsStore.accountData', context: context);
 
   @override
-  ObservableMap<String?, AccountData> get balances {
-    _$balancesAtom.reportRead();
-    return super.balances;
+  AccountData get accountData {
+    _$accountDataAtom.reportRead();
+    return super.accountData;
   }
 
   @override
-  set balances(ObservableMap<String?, AccountData> value) {
-    _$balancesAtom.reportWrite(value, super.balances, () {
-      super.balances = value;
+  set accountData(AccountData value) {
+    _$accountDataAtom.reportWrite(value, super.accountData, () {
+      super.accountData = value;
     });
   }
 
@@ -181,12 +181,11 @@ mixin _$AssetsStore on _AssetsStore, Store {
     });
   }
 
-  late final _$setAccountBalancesAsyncAction = AsyncAction('_AssetsStore.setAccountBalances', context: context);
+  late final _$setAccountDataAsyncAction = AsyncAction('_AssetsStore.setAccountData', context: context);
 
   @override
-  Future<void> setAccountBalances(String? pubKey, Map<String, AccountData> accountDatas, {bool needCache = true}) {
-    return _$setAccountBalancesAsyncAction
-        .run(() => super.setAccountBalances(pubKey, accountDatas, needCache: needCache));
+  Future<void> setAccountData(String pubKey, AccountData data) {
+    return _$setAccountDataAsyncAction.run(() => super.setAccountData(pubKey, data));
   }
 
   late final _$setAccountTokenBalancesAsyncAction =
@@ -277,7 +276,7 @@ mixin _$AssetsStore on _AssetsStore, Store {
 cacheTxsTimestamp: ${cacheTxsTimestamp},
 isTxsLoading: ${isTxsLoading},
 submitting: ${submitting},
-balances: ${balances},
+accountData: ${accountData},
 tokenBalances: ${tokenBalances},
 txsCount: ${txsCount},
 txs: ${txs},

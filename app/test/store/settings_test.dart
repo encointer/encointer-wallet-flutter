@@ -15,10 +15,6 @@ void main() {
     final root = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock());
     final store = SettingsStore(root);
 
-    test('settings store created', () {
-      expect(store.cacheNetworkStateKey, 'network');
-      expect(store.localeCode, '');
-    });
     test('set locale code properly', () async {
       await store.setLocalCode('_en');
       expect(store.localeCode, '_en');
@@ -32,28 +28,11 @@ void main() {
       store.setNetworkLoading(true);
       expect(store.loading, true);
     });
-    test('set network name properly', () async {
-      expect(store.networkName, '');
-      store.setNetworkName('Encointer');
-      expect(store.networkName, 'Encointer');
-      expect(store.loading, false);
-    });
 
     test('network endpoint test', () async {
       await store.init('_en');
       expect(store.endpoint.info, networkEndpointEncointerMainnet.info);
       expect(store.endpointList.length, 1);
-    });
-
-    test('set network state properly', () async {
-      await store.setNetworkState(Map<String, dynamic>.of({
-        'ss58Format': 2,
-        'tokenDecimals': 12,
-        'tokenSymbol': 'KSM',
-      }));
-      expect(store.networkState!.ss58Format, 2);
-      expect(store.networkState!.tokenDecimals, 12);
-      expect(store.networkState!.tokenSymbol, 'KSM');
     });
   });
 }

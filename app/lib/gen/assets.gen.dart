@@ -11,12 +11,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 
-class $JsServiceEncointerGen {
-  const $JsServiceEncointerGen();
-
-  $JsServiceEncointerDistGen get dist => const $JsServiceEncointerDistGen();
-}
-
 class $AssetsAvatarsGen {
   const $AssetsAvatarsGen();
 
@@ -110,16 +104,6 @@ class $AssetsImagesGen {
 
   $AssetsImagesAssetsGen get assets => const $AssetsImagesAssetsGen();
   $AssetsImagesPublicGen get public => const $AssetsImagesPublicGen();
-}
-
-class $JsServiceEncointerDistGen {
-  const $JsServiceEncointerDistGen();
-
-  /// File path: js_service_encointer/dist/main.js
-  String get main => 'js_service_encointer/dist/main.js';
-
-  /// List of all assets
-  List<String> get values => [main];
 }
 
 class $AssetsImagesAssetsGen {
@@ -286,7 +270,6 @@ class Assets {
   static const SvgGenImage kusama = SvgGenImage('assets/kusama.svg');
   static const SvgGenImage nctrLogo = SvgGenImage('assets/nctr_logo.svg');
   static const SvgGenImage nctrLogoFacesOnlyThick = SvgGenImage('assets/nctr_logo_faces_only_thick.svg');
-  static const $JsServiceEncointerGen jsServiceEncointer = $JsServiceEncointerGen();
 
   /// List of all assets
   static List<SvgGenImage> get values => [kusama, nctrLogo, nctrLogoFacesOnlyThick];

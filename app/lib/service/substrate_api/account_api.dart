@@ -1,34 +1,17 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/tx_notification.dart';
 import 'package:encointer_wallet/service/tx/lib/src/send_tx_dart.dart';
-import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_polkadart/ew_polkadart.dart' show Provider;
 
 class AccountApi {
-  AccountApi(this.store, this.jsApi, this.provider);
+  AccountApi(this.store, this.provider);
 
-  final JSApi jsApi;
   final Provider provider;
   final AppStore store;
   void Function()? fetchAccountData;
-
-  Future<void> initAccounts() async {
-    for (final account in store.account.keyring.accountsIter) {
-      Log.d('[initAccounts]: ${account.toAccountData()}');
-      await webApi.account.importAccount(
-        key: account.uri,
-        password: '',
-        keyType: account.seedType.name,
-      );
-    }
-  }
 
   void setFetchAccountData(void Function()? fetchAccountData) {
     this.fetchAccountData = fetchAccountData;
@@ -69,24 +52,5 @@ class AccountApi {
       ));
     }
     return report;
-  }
-
-  Future<Map<String, dynamic>> getSignedTx(Map txInfo, List? params, {String? rawParam}) async {
-    final param = rawParam ?? jsonEncode(params);
-    final call = 'account.getXt(${jsonEncode(txInfo)}, $param)';
-    Log.d('sendTx call: $call', 'AccountApi');
-    return jsApi.evalJavascript<Map<String, dynamic>>(call);
-  }
-
-  Future<Map<String, dynamic>> importAccount({
-    required String key,
-    required String password,
-    String? keyType = AccountStore.seedTypeMnemonic,
-    String? cryptoType = 'sr25519',
-    String? derivePath = '',
-  }) async {
-    var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$password")';
-    code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
-    return jsApi.evalJavascript<Map<String, dynamic>>(code);
   }
 }

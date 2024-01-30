@@ -6,7 +6,6 @@ import 'package:ew_storage/ew_storage.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -26,10 +25,6 @@ Future<void> main({AppConfig? appConfig, AppSettings? settings}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await NotificationPlugin.setup();
-  if (Platform.isAndroid) {
-    // this is enabled by default in IOS dev-builds.
-    await InAppWebViewController.setWebContentsDebuggingEnabled(true);
-  }
 
   HttpOverrides.global = MyHttpOverrides();
   final pref = await SharedPreferences.getInstance();

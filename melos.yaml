@@ -73,10 +73,6 @@ scripts:
       cd packages/ew_polkadart && dart run polkadart_cli:generate -v
     description: "Generate encointer typdedefs with polkadart"
 
-  yarn-build:
-    run: cd app/js_service_encointer && yarn install && yarn run build
-    description: "Install yarn dependencies and build"
-
   # Unit test Encointer Wallet with tag
   unit-test-app-exclude-encointer-node-e2e:
     run: >-
