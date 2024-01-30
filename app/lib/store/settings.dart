@@ -24,12 +24,6 @@ abstract class _SettingsStore with Store {
   final String localStorageEndpointKey = 'endpoint';
   final String localStorageSS58Key = 'custom_ss58';
 
-  final String cacheNetworkStateKey = 'network';
-
-  String _getCacheKeyOfNetwork(String key) {
-    return '${endpoint.info}_$key';
-  }
-
   /// The bazaar is not active currently. This variable can only be set under profile -> developer options.
   @observable
   bool enableBazaar = false;
@@ -48,9 +42,6 @@ abstract class _SettingsStore with Store {
 
   @observable
   String? networkName = '';
-
-  @observable
-  NetworkState? networkState;
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
@@ -110,7 +101,6 @@ abstract class _SettingsStore with Store {
     await loadEndpoint(sysLocaleCode);
     await Future.wait([
       loadCustomSS58Format(),
-      loadNetworkStateCache(),
       loadContacts(),
     ]);
   }
@@ -148,33 +138,6 @@ abstract class _SettingsStore with Store {
   @computed
   bool get isConnected {
     return !loading && networkName!.isNotEmpty;
-  }
-
-  @action
-  Future<void> setNetworkState(
-    Map<String, dynamic> data, {
-    bool needCache = true,
-  }) async {
-    networkState = NetworkState.fromJson(data);
-
-    if (needCache) {
-      await rootStore.localStorage.setObject(
-        _getCacheKeyOfNetwork(cacheNetworkStateKey),
-        data,
-      );
-    }
-  }
-
-  @action
-  Future<void> loadNetworkStateCache() async {
-    final data = await Future.wait([
-      rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkStateKey)),
-    ]);
-    if (data[0] != null) {
-      await setNetworkState(Map<String, dynamic>.of(data[0]! as Map<String, dynamic>), needCache: false);
-    } else {
-      await setNetworkState({}, needCache: false);
-    }
   }
 
   @action
@@ -245,7 +208,6 @@ abstract class _SettingsStore with Store {
     // load cache before starting networking again
     await Future.wait(<Future<void>>[
       rootStore.loadAccountCache(),
-      loadNetworkStateCache(),
       rootStore.assets.loadCache(),
       rootStore.chain.loadCache(),
       rootStore.loadOrInitEncointerCache(network.info!),

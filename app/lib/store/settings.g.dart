@@ -175,21 +175,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$networkStateAtom = Atom(name: '_SettingsStore.networkState', context: context);
-
-  @override
-  NetworkState? get networkState {
-    _$networkStateAtom.reportRead();
-    return super.networkState;
-  }
-
-  @override
-  set networkState(NetworkState? value) {
-    _$networkStateAtom.reportWrite(value, super.networkState, () {
-      super.networkState = value;
-    });
-  }
-
   late final _$contactListAtom = Atom(name: '_SettingsStore.contactList', context: context);
 
   @override
@@ -239,20 +224,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   @override
   Future<void> loadLocalCode() {
     return _$loadLocalCodeAsyncAction.run(() => super.loadLocalCode());
-  }
-
-  late final _$setNetworkStateAsyncAction = AsyncAction('_SettingsStore.setNetworkState', context: context);
-
-  @override
-  Future<void> setNetworkState(Map<String, dynamic> data, {bool needCache = true}) {
-    return _$setNetworkStateAsyncAction.run(() => super.setNetworkState(data, needCache: needCache));
-  }
-
-  late final _$loadNetworkStateCacheAsyncAction = AsyncAction('_SettingsStore.loadNetworkStateCache', context: context);
-
-  @override
-  Future<void> loadNetworkStateCache() {
-    return _$loadNetworkStateCacheAsyncAction.run(() => super.loadNetworkStateCache());
   }
 
   late final _$loadContactsAsyncAction = AsyncAction('_SettingsStore.loadContacts', context: context);
@@ -368,7 +339,6 @@ localeCode: ${localeCode},
 endpoint: ${endpoint},
 customSS58Format: ${customSS58Format},
 networkName: ${networkName},
-networkState: ${networkState},
 contactList: ${contactList},
 locale: ${locale},
 endpointIsEncointer: ${endpointIsEncointer},

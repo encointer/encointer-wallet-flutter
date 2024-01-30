@@ -190,13 +190,10 @@ class Api {
   Future<void> fetchNetworkProps() async {
     // fetch network info
     final info = await Future.wait([
-      evalJavascript('api.rpc.system.properties()'),
       evalJavascript('api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever
     ]);
 
-    await Future.wait([store.settings.setNetworkState(info[1] as Map<String, dynamic>)]);
-
-    store.settings.setNetworkName(info[2] as String?);
+    store.settings.setNetworkName(info[0] as String?);
 
     startSubscriptions();
   }
