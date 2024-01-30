@@ -383,8 +383,8 @@ class Txs {
 
   /// See [`Pallet::service_overweight`].
   _i11.RuntimeCall serviceOverweight({
-    required index,
-    required weightLimit,
+    required BigInt index,
+    required _i9.Weight weightLimit,
   }) {
     final _call = _i12.Call.values.serviceOverweight(
       index: index,
@@ -406,37 +406,37 @@ class Txs {
   }
 
   /// See [`Pallet::update_suspend_threshold`].
-  _i11.RuntimeCall updateSuspendThreshold({required new_}) {
+  _i11.RuntimeCall updateSuspendThreshold({required int new_}) {
     final _call = _i12.Call.values.updateSuspendThreshold(new_: new_);
     return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_drop_threshold`].
-  _i11.RuntimeCall updateDropThreshold({required new_}) {
+  _i11.RuntimeCall updateDropThreshold({required int new_}) {
     final _call = _i12.Call.values.updateDropThreshold(new_: new_);
     return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_resume_threshold`].
-  _i11.RuntimeCall updateResumeThreshold({required new_}) {
+  _i11.RuntimeCall updateResumeThreshold({required int new_}) {
     final _call = _i12.Call.values.updateResumeThreshold(new_: new_);
     return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_threshold_weight`].
-  _i11.RuntimeCall updateThresholdWeight({required new_}) {
+  _i11.RuntimeCall updateThresholdWeight({required _i9.Weight new_}) {
     final _call = _i12.Call.values.updateThresholdWeight(new_: new_);
     return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_weight_restrict_decay`].
-  _i11.RuntimeCall updateWeightRestrictDecay({required new_}) {
+  _i11.RuntimeCall updateWeightRestrictDecay({required _i9.Weight new_}) {
     final _call = _i12.Call.values.updateWeightRestrictDecay(new_: new_);
     return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_xcmp_max_individual_weight`].
-  _i11.RuntimeCall updateXcmpMaxIndividualWeight({required new_}) {
+  _i11.RuntimeCall updateXcmpMaxIndividualWeight({required _i9.Weight new_}) {
     final _call = _i12.Call.values.updateXcmpMaxIndividualWeight(new_: new_);
     return _i11.RuntimeCall.values.xcmpQueue(_call);
   }
