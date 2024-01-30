@@ -138,9 +138,8 @@ class Api {
 
   Future<void> connectNode() async {
     final node = store.settings.endpoint.value;
-    final config = store.settings.endpoint.overrideConfig;
     // do connect
-    final res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
+    final res = await evalJavascript('settings.connect("$node", "{}")');
     if (res == null) {
       Log.d('connecting to node failed', 'Api');
       store.settings.setNetworkName(null);
@@ -157,11 +156,9 @@ class Api {
 
   Future<void> connectNodeAll() async {
     final nodes = store.settings.endpointList.map((e) => e.value).toList();
-    final configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
-    Log.d('connectNodeAll: configs = $configs', 'Api');
 
     // do connect
-    final res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
+    final res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, "[{}]")');
     if (res == null) {
       Log.d('connect failed', 'Api');
       store.settings.setNetworkName(null);

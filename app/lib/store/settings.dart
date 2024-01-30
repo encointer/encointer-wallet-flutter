@@ -3,7 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -268,6 +267,5 @@ abstract class _EndpointData {
   String? value = '';
   String? worker = ''; // only relevant for cantillon
   String? mrenclave = ''; // relevant until we fetch mrenclave from substrateeRegistry
-  NodeConfig? overrideConfig;
   String? ipfsGateway = '';
 }
