@@ -18,17 +18,15 @@ extension ScreenshotExtension on FlutterDriver {
     Duration timeout = const Duration(seconds: 30),
     bool waitUntilNoTransientCallbacks = true,
   }) async {
-    if (locales.contains('en') && !File('../screenshots/en/$name.png').existsSync()) {
-      await requestData(TestCommand.devModeOff);
-      for (final locale in locales) {
-        final currentLocale = await requestData('local-$locale');
-        await takeScreenshot(
-          name,
-          directory: '$directory/$currentLocale',
-          timeout: timeout,
-          waitUntilNoTransientCallbacks: waitUntilNoTransientCallbacks,
-        );
-      }
+    await requestData(TestCommand.devModeOff);
+    for (final locale in locales) {
+      final currentLocale = await requestData('local-$locale');
+      await takeScreenshot(
+        name,
+        directory: '$directory/$currentLocale',
+        timeout: timeout,
+        waitUntilNoTransientCallbacks: waitUntilNoTransientCallbacks,
+      );
     }
   }
 
