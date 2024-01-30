@@ -1,7 +1,7 @@
 import 'dart:core';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:ew_http/ew_http.dart';
-
 import 'package:encointer_wallet/mocks/ipfs_api.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -19,10 +19,8 @@ MockApi getMockApi(AppStore store) {
 }
 
 class MockApi extends Api {
-  MockApi(
-    AppStore store,
-    MockSubstrateDartApi dartApi,
-    EwHttp ewHttp) : super(
+  MockApi(AppStore store, MockSubstrateDartApi dartApi, EwHttp ewHttp)
+      : super(
           store,
           MockPolkadartProvider(),
           dartApi,
@@ -33,4 +31,8 @@ class MockApi extends Api {
           MockIpfsApi(ewHttp),
         );
 
+  @override
+  Future<void> init() async {
+    Log.d('[MockApi] launch of webView', 'MockApi');
+  }
 }
