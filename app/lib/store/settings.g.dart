@@ -157,21 +157,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$networkNameAtom = Atom(name: '_SettingsStore.networkName', context: context);
-
-  @override
-  String? get networkName {
-    _$networkNameAtom.reportRead();
-    return super.networkName;
-  }
-
-  @override
-  set networkName(String? value) {
-    _$networkNameAtom.reportWrite(value, super.networkName, () {
-      super.networkName = value;
-    });
-  }
-
   late final _$contactListAtom = Atom(name: '_SettingsStore.contactList', context: context);
 
   @override
@@ -335,7 +320,6 @@ loading: ${loading},
 localeCode: ${localeCode},
 endpoint: ${endpoint},
 customSS58Format: ${customSS58Format},
-networkName: ${networkName},
 contactList: ${contactList},
 locale: ${locale},
 endpointIsEncointer: ${endpointIsEncointer},

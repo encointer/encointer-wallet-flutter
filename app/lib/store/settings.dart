@@ -40,9 +40,6 @@ abstract class _SettingsStore with Store {
   Map<String, dynamic> customSS58Format = <String, dynamic>{};
 
   @observable
-  String? networkName = '';
-
-  @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
 
   @observable
@@ -130,7 +127,6 @@ abstract class _SettingsStore with Store {
 
   @action
   void setNetworkName(String? name) {
-    networkName = name;
     loading = false;
   }
 

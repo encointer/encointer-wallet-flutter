@@ -28,12 +28,6 @@ void main() {
       store.setNetworkLoading(true);
       expect(store.loading, true);
     });
-    test('set network name properly', () async {
-      expect(store.networkName, '');
-      store.setNetworkName('Encointer');
-      expect(store.networkName, 'Encointer');
-      expect(store.loading, false);
-    });
 
     test('network endpoint test', () async {
       await store.init('_en');
