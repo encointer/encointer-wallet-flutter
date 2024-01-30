@@ -34,7 +34,7 @@ abstract class _SettingsStore with Store {
   String localeCode = '';
 
   @observable
-  EndpointData endpoint = EndpointData();
+  EndpointData endpoint = networkEndpointEncointerMainnet;
 
   @observable
   Map<String, dynamic> customSS58Format = <String, dynamic>{};
