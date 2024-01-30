@@ -218,24 +218,28 @@ class _AssetsViewState extends State<AssetsView> {
                           onPressed: () => Navigator.pushNamed(context, ReceivePage.route),
                         ),
                         const SizedBox(width: 3),
-                        ActionButton(
-                          key: const Key(EWTestKeys.goTransferHistory),
-                          icon: Assets.images.assets.receiveSquare2.svg(
-                            colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
+                        Observer(
+                          builder: (_) => ActionButton(
+                            key: const Key(EWTestKeys.goTransferHistory),
+                            icon: Assets.images.assets.receiveSquare2.svg(
+                              colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
+                            ),
+                            label: l10n.transferHistory,
+                            onPressed: widget.store.encointer.communityBalance != null
+                                ? () => Navigator.pushNamed(context, TransferHistoryView.route)
+                                : null,
                           ),
-                          label: l10n.transferHistory,
-                          onPressed: widget.store.encointer.communityBalance != null
-                              ? () => Navigator.pushNamed(context, TransferHistoryView.route)
-                              : null,
                         ),
                         const SizedBox(width: 3),
-                        ActionButton(
-                          key: const Key(EWTestKeys.transfer),
-                          icon: const Icon(Iconsax.send_sqaure_2),
-                          label: l10n.transfer,
-                          onPressed: widget.store.encointer.communityBalance != null
-                              ? () => Navigator.pushNamed(context, TransferPage.route)
-                              : null,
+                        Observer(
+                          builder: (_) => ActionButton(
+                            key: const Key(EWTestKeys.transfer),
+                            icon: const Icon(Iconsax.send_sqaure_2),
+                            label: l10n.transfer,
+                            onPressed: widget.store.encointer.communityBalance != null
+                                ? () => Navigator.pushNamed(context, TransferPage.route)
+                                : null,
+                          ),
                         ),
                       ],
                     ),
