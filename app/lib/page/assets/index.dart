@@ -219,27 +219,37 @@ class _AssetsViewState extends State<AssetsView> {
                         ),
                         const SizedBox(width: 3),
                         Observer(
-                          builder: (_) => ActionButton(
-                            key: const Key(EWTestKeys.goTransferHistory),
-                            icon: Assets.images.assets.receiveSquare2.svg(
-                              colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
-                            ),
-                            label: l10n.transferHistory,
-                            onPressed: widget.store.encointer.communityBalance != null
-                                ? () => Navigator.pushNamed(context, TransferHistoryView.route)
-                                : null,
-                          ),
-                        ),
+                            builder: (_) => widget.store.encointer.communityBalance != null
+                                ? ActionButton(
+                                    key: const Key(EWTestKeys.goTransferHistory),
+                                    icon: Assets.images.assets.receiveSquare2.svg(
+                                      colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
+                                    ),
+                                    label: l10n.transferHistory,
+                                    onPressed: () => Navigator.pushNamed(context, TransferHistoryView.route))
+                                : ActionButton(
+                                    // ActionButton without key. The integration tests break if the key is tapped
+                                    // before the button is enabled.
+                                    icon: Assets.images.assets.receiveSquare2.svg(
+                                      colorFilter: ColorFilter.mode(context.colorScheme.primary, BlendMode.srcIn),
+                                    ),
+                                    label: l10n.transferHistory,
+                                  )),
                         const SizedBox(width: 3),
                         Observer(
-                          builder: (_) => ActionButton(
-                            key: const Key(EWTestKeys.transfer),
-                            icon: const Icon(Iconsax.send_sqaure_2),
-                            label: l10n.transfer,
-                            onPressed: widget.store.encointer.communityBalance != null
-                                ? () => Navigator.pushNamed(context, TransferPage.route)
-                                : null,
-                          ),
+                          builder: (_) => widget.store.encointer.communityBalance != null
+                              ? ActionButton(
+                                  key: const Key(EWTestKeys.transfer),
+                                  icon: const Icon(Iconsax.send_sqaure_2),
+                                  label: l10n.transfer,
+                                  onPressed: () => Navigator.pushNamed(context, TransferPage.route),
+                                )
+                              : ActionButton(
+                                  // ActionButton without key. The integration tests break if the key is tapped
+                                  // before the button is enabled.
+                                  icon: const Icon(Iconsax.send_sqaure_2),
+                                  label: l10n.transfer,
+                                ),
                         ),
                       ],
                     ),
