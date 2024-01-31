@@ -1,13 +1,12 @@
-import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_keyring/src/validate_keys.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('PrivateKey', () {
     test('isPrivateKey works', () {
-      expect(ValidateKeys.isPrivateKey(''), false);
       expect(ValidateKeys.isPrivateKey('0x'), true);
-      expect(ValidateKeys.isPrivateKey('0xabe03'), true);
-      expect(ValidateKeys.isPrivateKey('0'), true);
+      expect(ValidateKeys.isPrivateKey('0xabe030'), true);
+      expect(ValidateKeys.isPrivateKey('00'), true);
     });
 
     test('validatePrivateKey works', () {
@@ -59,6 +58,20 @@ void main() {
       expect(
         ValidateKeys.validateMnemonic('spray trust gown toast route merge awful sight ghost all degree exit'),
         true,
+      );
+    });
+  });
+
+  group('getSeedTypeFromString', () {
+    test('inferring key type works', () {
+      expect(
+        getSeedTypeFromString('0x1111111122222222333333334444444411111111222222223333333344444444'),
+        SeedType.privateKey,
+      );
+      expect(getSeedTypeFromString('//Alice'), SeedType.rawSeed);
+      expect(
+        getSeedTypeFromString('spray trust gown toast route merge awful sight ghost all degree exit'),
+        SeedType.mnemonic,
       );
     });
   });

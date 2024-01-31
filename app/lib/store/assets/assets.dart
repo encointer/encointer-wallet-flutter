@@ -35,7 +35,8 @@ abstract class _AssetsStore with Store {
   bool submitting = false;
 
   @observable
-  ObservableMap<String?, AccountData> balances = ObservableMap<String?, AccountData>();
+  AccountData accountData =
+      AccountData(free: BigInt.zero, reserved: BigInt.zero, frozen: BigInt.zero, flags: BigInt.zero);
 
   @observable
   Map<String, String> tokenBalances = <String, String>{};
@@ -94,13 +95,9 @@ abstract class _AssetsStore with Store {
 //  }
 
   @action
-  Future<void> setAccountBalances(String? pubKey, Map<String, AccountData> accountDatas,
-      {bool needCache = true}) async {
+  Future<void> setAccountData(String pubKey, AccountData data) async {
     if (rootStore.account.currentAccount.pubKey != pubKey) return;
-
-    accountDatas.forEach((k, v) {
-      balances[k] = v;
-    });
+    accountData = data;
   }
 
   @action

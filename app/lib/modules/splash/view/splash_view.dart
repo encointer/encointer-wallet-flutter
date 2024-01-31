@@ -1,14 +1,18 @@
+import 'package:encointer_wallet/store/account/services/account_storage_service.dart';
+import 'package:encointer_wallet/store/account/services/legacy_encryption_service.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/service/init_web_api/init_web_api.dart';
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/config/biometric_auth_state.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/presentation/home/views/home_page.dart';
 import 'package:encointer_wallet/common/components/logo/encointer_logo.dart';
+import 'package:encointer_wallet/store/account/services/account_migration_service.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
@@ -17,6 +21,20 @@ class SplashView extends StatelessWidget {
 
   Future<void> _initPage(BuildContext context) async {
     final store = context.read<AppStore>();
+
+    final loginStore = context.read<LoginStore>();
+    if (loginStore.getBiometricAuthState == null) {
+      final isDeviceSupported = await loginStore.isDeviceSupported();
+      if (!isDeviceSupported) await loginStore.setBiometricAuthState(BiometricAuthState.deviceNotSupported);
+    }
+
+    await AccountMigrationService(
+      await SharedPreferences.getInstance(),
+      LegacyEncryptionService(store.legacyStorage),
+      AccountStorageService(store.secureStorage),
+      loginStore.loginService,
+    ).migrateIfOutdated();
+
     await store.init(Localizations.localeOf(context).toString());
 
     // initialize it **after** the store was initialized.
@@ -29,11 +47,6 @@ class SplashView extends StatelessWidget {
 
     store.setApiReady(true);
 
-    final loginStore = context.read<LoginStore>();
-    if (loginStore.getBiometricAuthState == null) {
-      final isDeviceSupported = await loginStore.isDeviceSupported();
-      if (!isDeviceSupported) await loginStore.setBiometricAuthState(BiometricAuthState.deviceNotSupported);
-    }
     if (store.account.accountList.isNotEmpty) {
       await Navigator.pushNamedAndRemoveUntil(context, EncointerHomePage.route, (route) => false);
     } else {

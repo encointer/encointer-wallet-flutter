@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/presentation/home/store/home_page_store.dart';
+import 'package:encointer_wallet/presentation/home/service/home_page_service.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/page.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -23,17 +23,17 @@ class EncointerHomePage extends StatefulWidget {
 class _EncointerHomePageState extends State<EncointerHomePage> {
   final PageController _pageController = PageController();
 
-  late final HomePageStore _store;
+  late final HomePageService _service;
 
   late List<TabData> _tabList;
   int _tabIndex = 0;
 
   @override
   void initState() {
-    _store = HomePageStore(context.read<AppStore>(), context);
+    _service = HomePageService(context.read<AppStore>(), context);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await _store.postFrameCallbacks();
+      await _service.postFrameCallbacks();
       final loginStore = context.read<LoginStore>();
       if (loginStore.getBiometricAuthState == null) {
         await LoginDialog.showToggleBiometricAuthAlert(context);
@@ -44,7 +44,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void dispose() {
-    _store.dispose();
+    _service.dispose();
     super.dispose();
   }
 
@@ -57,8 +57,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          AssetsView(_store.appStore),
-          if (context.select<AppStore, bool>((store) => _store.appStore.settings.enableBazaar))
+          AssetsView(_service.appStore),
+          if (context.select<AppStore, bool>((store) => _service.appStore.settings.enableBazaar))
             Provider(
               create: (context) => BusinessesStore(),
               child: const BazaarPage(),
@@ -102,7 +102,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         TabKey.wallet,
         Iconsax.home_2,
       ),
-      if (context.select<AppStore, bool>((store) => _store.appStore.settings.enableBazaar))
+      if (context.select<AppStore, bool>((store) => _service.appStore.settings.enableBazaar))
         TabData(
           TabKey.bazaar,
           Iconsax.shop,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/config/biometiric_auth_state.dart';
+import 'package:encointer_wallet/config/biometric_auth_state.dart';
 
 part 'login_store.g.dart';
 
@@ -33,14 +33,24 @@ abstract class _LoginStoreBase with Store {
     return cachedPin;
   }
 
-  Future<void> setPin(String pin) async {
+  /// Persists the new PIN in the secure storage.
+  ///
+  /// Attention: This function must be called *exclusively* upon:
+  /// * Setting the PIN initially
+  /// * Changing the PIN
+  Future<void> persistNewPin(String pin) async {
     cachedPin = pin;
-    await loginService.setPin(pin);
+    await loginService.persistPin(pin);
   }
 
-  Future<void> clearPin() async {
+  Future<bool> isValid(String input) async {
+    final storedPin = cachedPin ?? await loginService.getPin();
+    return storedPin == input.trim();
+  }
+
+  Future<void> deleteAuthenticationData() async {
     cachedPin = null;
-    await loginService.clearPin();
+    await loginService.deleteAuthenticationData();
   }
 
   @computed
@@ -58,7 +68,12 @@ abstract class _LoginStoreBase with Store {
     return loginService.isDeviceSupported();
   }
 
+  /// Might throw a `PlatformException` if there were technical problems.
   Future<bool> localAuthenticate(String localizedReason, [bool stickyAuth = false]) {
-    return loginService.localAuthenticate(localizedReason, stickyAuth);
+    try {
+      return loginService.localAuthenticate(localizedReason, stickyAuth);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

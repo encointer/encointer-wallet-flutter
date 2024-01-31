@@ -1,3 +1,4 @@
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/modules/login/logic/login_store.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -33,79 +33,76 @@ class ReapVoucherParams {
 }
 
 class ReapVoucherPage extends StatefulWidget {
-  const ReapVoucherPage(this.api, {super.key});
+  const ReapVoucherPage(this.api, this.voucher, this.showFundVoucher, {super.key});
 
   static const String route = '/qrcode/voucher';
   final Api api;
+
+  final VoucherData voucher;
+  final bool showFundVoucher;
 
   @override
   State<ReapVoucherPage> createState() => _ReapVoucherPageState();
 }
 
 class _ReapVoucherPageState extends State<ReapVoucherPage> {
+  late KeyringAccount _voucherKeyringAccount;
   String? _voucherAddress;
   double? _voucherBalance;
-
-  bool _postFrameCallbackCalled = false;
 
   /// Is true when all the data has been fetched.
   bool _isReady = false;
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
     Log.d('Fetching voucher data...', 'ReapVoucherPage');
+    final store = context.read<AppStore>();
 
-    _voucherAddress = await api.account.addressFromUri(voucherUri);
+    _voucherKeyringAccount = await KeyringAccount.fromUri('Voucher', voucherUri);
+    _voucherAddress = _voucherKeyringAccount.address(prefix: store.settings.endpoint.ss58 ?? 42).encode();
 
     setState(() {});
 
-    final pin = await context.read<LoginStore>().getPin(context);
-    if (pin != null) {
-      final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-      if (context.read<AppStore>().chain.latestHeaderNumber != null) {
-        _voucherBalance = voucherBalanceEntry.applyDemurrage(
-          context.read<AppStore>().chain.latestHeaderNumber!,
-          context.read<AppStore>().encointer.community!.demurrage!,
-        );
-      }
+    final voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
+    _voucherBalance = voucherBalanceEntry.applyDemurrage(
+      store.chain.latestHeaderNumber!,
+      store.encointer.community!.demurrage!,
+    );
 
-      _isReady = true;
+    _isReady = true;
+    setState(() {});
+  }
 
-      setState(() {});
-    }
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        final l10n = context.l10n;
+        final voucher = widget.voucher;
+
+        final result = await _changeNetworkAndCommunityIfNeeded(context, voucher.network, voucher.cid);
+
+        if (result == ChangeResult.ok) {
+          await fetchVoucherData(widget.api, voucher.voucherUri, voucher.cid);
+        } else if (result == ChangeResult.invalidNetwork) {
+          await showErrorDialog(context, l10n.invalidNetwork);
+        } else if (result == ChangeResult.invalidCommunity) {
+          await showErrorDialog(context, l10n.invalidCommunity);
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final store = context.watch<AppStore>();
+    final store = context.read<AppStore>();
     final h2Grey = context.titleLarge.copyWith(color: AppColors.encointerGrey);
     final h4Grey = context.bodyLarge.copyWith(color: AppColors.encointerGrey);
-    final params = ModalRoute.of(context)?.settings.arguments as ReapVoucherParams?;
 
-    final voucher = params?.voucher;
-    final voucherUri = voucher?.voucherUri;
-    final cid = voucher?.cid;
-    final networkInfo = voucher?.network;
-    final issuer = voucher?.issuer;
-    final recipient = store.account.currentAddress;
-    final showFundVoucher = params?.showFundVoucher;
-
-    if (!_postFrameCallbackCalled) {
-      _postFrameCallbackCalled = true;
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) async {
-          final result = cid != null ? await _changeNetworkAndCommunityIfNeeded(context, networkInfo!, cid) : null;
-
-          if (result == ChangeResult.ok && cid != null) {
-            await fetchVoucherData(widget.api, voucherUri!, cid);
-          } else if (result == ChangeResult.invalidNetwork) {
-            await showErrorDialog(context, l10n.invalidNetwork);
-          } else if (result == ChangeResult.invalidCommunity) {
-            await showErrorDialog(context, l10n.invalidCommunity);
-          }
-        },
-      );
-    }
+    final voucher = widget.voucher;
+    final recipient = Address.decode(store.account.currentAddress);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.voucher)),
@@ -120,7 +117,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   : const CupertinoActivityIndicator(),
             ),
             const SizedBox(height: 8),
-            Text(issuer ?? '', style: h2Grey),
+            Text(voucher.issuer, style: h2Grey),
             SizedBox(
               height: 80,
               child: _voucherBalance != null
@@ -141,12 +138,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                 ),
               ),
             ),
-            if (showFundVoucher ?? false)
+            if (widget.showFundVoucher)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SecondaryButtonWide(
                   key: const Key(EWTestKeys.voucherToTransferPage),
-                  onPressed: _isReady ? () => _pushTransferPage(context, voucher!, _voucherAddress!) : null,
+                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress!) : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -159,7 +156,9 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               ),
             SubmitButton(
               key: const Key(EWTestKeys.submitVoucher),
-              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri!, cid!, recipient) : null,
+              onPressed: _isReady
+                  ? (context) => _submitReapVoucher(context, _voucherKeyringAccount, voucher.cid, recipient)
+                  : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -177,21 +176,28 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   Future<void> _submitReapVoucher(
     BuildContext context,
-    String voucherUri,
+    KeyringAccount voucherKeyringAccount,
     CommunityIdentifier cid,
-    String recipientAddress,
+    Address recipientAddress,
   ) async {
-    final res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
+    // Fixme, use proper threshold here: #589
+    if (_voucherBalance! < 0.04) return showRedeemFailedDialog(context, context.l10n.voucherBalanceTooLow);
 
-    if (res['hash'] == null) {
-      Log.d('Error redeeming voucher: ${res['error']}', 'ReapVoucherPage');
-      await showRedeemFailedDialog(context, res['error'] as String?);
-    } else {
-      await VoucherDialogs.showRedeemSuccessDialog(
-        context: context,
-        onOK: () => Navigator.of(context).popUntil((route) => route.isFirst),
-      );
-    }
+    await submitEncointerTransferAll(
+      context, context.read<AppStore>(), widget.api, voucherKeyringAccount, recipientAddress, cid,
+      // the voucher obviously has tokens in cid.
+      txPaymentAsset: cid,
+      onError: (report) async {
+        Log.d('Error redeeming voucher: ${report.toJson()}', 'ReapVoucherPage');
+        await showRedeemFailedDialog(context, report.toJson().toString());
+      },
+      onFinish: (context, report) async {
+        await VoucherDialogs.showRedeemSuccessDialog(
+          context: context,
+          onOK: () => Navigator.of(context).popUntil((route) => route.isFirst),
+        );
+      },
+    );
   }
 
   Future<ChangeResult?> _changeNetworkAndCommunityIfNeeded(
@@ -199,25 +205,20 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     String networkInfo,
     CommunityIdentifier cid,
   ) async {
-    ChangeResult? result = ChangeResult.ok;
     final store = context.read<AppStore>();
 
     if (store.settings.endpoint.info != networkInfo) {
-      result = await showChangeNetworkAndCommunityDialog(
+      return showChangeNetworkAndCommunityDialog(
         context,
         store,
         widget.api,
         networkInfo,
         cid,
       );
-    }
-
-    if (result != ChangeResult.ok) {
-      return result;
     }
 
     if (store.encointer.chosenCid != cid) {
-      result = await showChangeCommunityDialog(
+      return showChangeCommunityDialog(
         context,
         store,
         widget.api,
@@ -226,7 +227,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       );
     }
 
-    return result;
+    // We are already at the correct network and cid
+    return ChangeResult.ok;
   }
 }
 
