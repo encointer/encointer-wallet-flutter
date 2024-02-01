@@ -9,15 +9,13 @@ on:
 env:
   JAVA_VERSION: 12.x
 
-jobs:
-  cancel_previous_runs:
-    name: Cancel Previous Runs
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
+# Cancel a currently running workflow from the same PR, branch or tag when a new workflow is
+# triggered (ref https://stackoverflow.com/a/72408109)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
+jobs:
   build-android:
     runs-on: ubuntu-latest
     timeout-minutes: 60
