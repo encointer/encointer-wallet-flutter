@@ -54,7 +54,7 @@ jobs:
         working-directory: ./scripts
         run: ./ios_init_env.sh
 
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: "zulu"
@@ -118,7 +118,7 @@ jobs:
 
       - name: "Upload screenshots and recording"
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.device }}
           path: ${{ env.ARTIFACT_PATH }}
