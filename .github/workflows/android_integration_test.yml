@@ -7,7 +7,6 @@ on:
     branches: [master, f-droid]
 
 env:
-  JAVA_VERSION: 12.x
   ARTIFACT_PATH: ./screenshots
 
 # Cancel a currently running workflow from the same PR, branch or tag when a new workflow is
@@ -35,18 +34,18 @@ jobs:
       fail-fast: false
     steps:
       # Setup Environment
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: "zulu"
+          java-version: "17"
+          distribution: "temurin"
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
 
       - name: Setup Android SDK and accept licences
-        uses: android-actions/setup-android@v2
+        uses: android-actions/setup-android@v3
 
       - name: List android images
         run: sdkmanager --list | grep system-images
@@ -58,7 +57,7 @@ jobs:
         run: .flutter/bin/dart run melos bootstrap
 
       - name: Gradle cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -66,7 +65,7 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
       - name: AVD cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: avd-cache
         with:
           path: |
@@ -115,7 +114,7 @@ jobs:
 
       - name: "Upload screenshots"
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.device }}
           path: ${{ env.ARTIFACT_PATH }}

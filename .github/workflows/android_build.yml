@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [master, f-droid]
 
-env:
-  JAVA_VERSION: 12.x
-
 # Cancel a currently running workflow from the same PR, branch or tag when a new workflow is
 # triggered (ref https://stackoverflow.com/a/72408109)
 concurrency:
@@ -21,12 +18,12 @@ jobs:
     timeout-minutes: 60
     steps:
       # Setup Environment
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: "zulu"
+          java-version: "17"
+          distribution: "temurin"
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
