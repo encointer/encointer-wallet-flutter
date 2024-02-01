@@ -63,7 +63,6 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
-          safe-always: true
 
       - name: AVD cache
         uses: actions/cache@v4
@@ -73,7 +72,6 @@ jobs:
             ~/.android/avd/*
             ~/.android/adb*
           key: avd-${{ matrix.api-level }}-${{ matrix.device }}
-          safe-always: true
 
       - name: Start colima a docker runtime for MacOs
         run: |
