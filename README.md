@@ -22,9 +22,9 @@ Encointer wallet and client for mobile phones
 ## Overview
 
 <p align="left">
-<img src="./app/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="32%">
-<img src="./app/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="32%">
-<img src="./app/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="32%">
+<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="32%">
+<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="32%">
+<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="32%">
 </p>
 
 ### Requirements
@@ -64,6 +64,8 @@ Now: run!
 
 ### Additional Info
 
+#### Flutter wrapper and the .flutter git submodule
+
 This project uses [flutter_wrapper](https://github.com/passsy/flutter_wrapper). Flutter wrapper is a tool that enables
 having the same flutter version across multiple developers. It installs automatically the flutter version form the
 pubspec.yml into the `.flutter` submodule.
@@ -71,49 +73,30 @@ pubspec.yml into the `.flutter` submodule.
 Vscode automatically uses the `.flutter` as we have checked in the `.vscode` folder. For setting up the Android Studio,
 please refer to the [documentation](https://github.com/passsy/flutter_wrapper#ide-setup).
 
-Further info can be found in the [Medium Article](https://passsy.medium.com/flutter-wrapper-bind-your-project-to-an-explicit-flutter-release-4062cfe6dcaf).
+#### Linux and MacOs
+Linux and MacOs users can simply replace all `flutter` CLI commands with `./flutterw` and it will just work.
+
+#### Windows
+In windows, this does unfortunately not work, but `.flutter` you can refer to the executables directly with: 
+`./flutter/bin/flutter` and `./flutter/bin/dart`.
 
 **Note:** On windows, Git fails to update the flutter submodule when it has been changed on remote. This can be fixed with:
 ```shell
 git submodule update --init
 ```
-#### Linux and MacOs
-Linux and MacOs users can simply replace all `flutter` CLI commands with `./flutterw` and it will just work.
 
-#### Windows
-In windows, this does unfortunately not work, but you can still set up your IDE to use the flutter version in from the `.flutter` git submodule. And you can do the following workaround:
-
-[Melos](https://melos.invertase.dev/) splitting up large code bases into separate independently versioned packages is extremely useful for code sharing. However, making changes across many repositories is messy and difficult to track, and testing across repositories gets complicated really fast.
-To solve these (and many other) problems, some projects will organize their code bases into multi-package repositories (sometimes called [monorepos](https://en.wikipedia.org/wiki/Monorepo)).
-
-## Build js dependencies
-
-Encointer wallet connects to the chains with [polkadot-js/api](https://polkadot.js.org/api/), running in a hidden webview.
-You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
-
-See the js_service_encointer [Readme](app/js_service_encointer/README.md) for more documentation.
-
-```shell
-melos yarn-build
-# windows
-pub global run melos yarn-build
-```
 ### Run App
 Run Android platform
 ```shell
-melos run-android
-# windows
-pub global run melos run-android
+./.flutter\bin\dart melos run run-android
 ```
 Run IOS platform
 ```shell
-melos run-ios
-# windows
-pub global run melos run-ios
+./.flutter\bin\dart run melos run-ios
 ```
 If you have an AVD or real device attached, you can do
 ```shell
-./flutterw run --flavor dev
+./.flutter\bin\flutter run --flavor dev
 ```
 ### Build APK
 
@@ -121,17 +104,13 @@ You may build the App with Flutter's [Deployment Documentation](https://flutter.
 
 In order to build a fat APK, you can do 
 ```shell
-melos build-apk-fdroid
-# windows
-pub global run melos build-apk-fdroid
+.\.flutter\bin\dart run melos build-apk-fdroid
 ```
 and find the output in `build/app/outputs/apk/fdroid/release/app-fdroid-release.apk`
 
 For the play store, an appbundle is preferred:
 ```shell
-melos build-appbundle
-# windows
-pub global run melos build-appbundle
+.\.flutter\bin\dart run melos build-appbundle
 ```
 and find the output in `build/app/outputs/bundle/release/app-release.aab`
 
@@ -147,28 +126,22 @@ The following file contains the supported flutter version:
 * run all tests from the command line:`./flutterw test`
 * exclude e2e-tests that need a running encointer node:
 ```shell
-melos unit-test-app-exclude-encointer-node-e2e
+.\.flutter\bin\dart run melos unit-test-app-exclude-encointer-node-e2e
 ```
 * run e2e-tests that need a running encointer node:
 ```shell
-melos unit-test-app-with-encointer-node-e2e
-# windows
-pub global run melos unit-test-app-with-encointer-node-e2e
+.\.flutter\bin\dart run melos unit-test-app-with-encointer-node-e2e
 ```
 
 ### Integration tests
 * run all integration tests in `test_driver` directory:
 Integration test app.dart for Android system
 ```shell
-melos integration-app-test-android
-# windows
-pub global run melos integration-app-test-android
+.\.flutter\bin\dart run melos integration-app-test-android
 ```
 Integration test app.dart for IOS system
 ```shell
-melos integration-app-test-ios
-# windows
-pub global run melos integration-app-test-ios
+.\.flutter\bin\dart run melos integration-app-test-ios
 ```
 
 ### Automated screenshots
@@ -177,44 +150,7 @@ pub global run melos integration-app-test-ios
 #### Android Studio
 To run the in Android Studio a build flavor must be specified. Go to Run/Debug configurations and add the build flavor `dev` in the appropriate field. Other available values are in the in the android/app/src/build.gradle file.
 
->Note that this project can be compiled both in Android and IOS,
->But there is an Issue running it on an IOS simulator, that the
->substrate `sr25519` keyPair is generated within an `WASM` virtual
->machine which is **not supported** by IOS simulators.
-
 ## Developer Remarks
-
-### Windows Local Dev-setup
-Setup to talk from emulators and/or cellphones with an encointer-node in the same local network. In windows 10/11 some
-OS fixes are needed to get this working. I don't know if all of these steps are required.
-
-1. Make PC discoverable in local network.
-2. Enable inbound connections in windows firewall:
-    * Search: `Windows Defender Firewall with Advanced Security`.
-    * Inbound Rules > New Rule > Rule Type: Port > Tick TCP and specify the node's port, e.g. 9944.
-    * Click next until finished and give the rule a distinct name, e.g. `Substrate Node`.
-    * Double check if the rule is activated.
-3. Find your local IP in the network and enter it in the encointer-wallet's [config](https://github.com/encointer/encointer-wallet-flutter/blob/1abb8a1f54ef551f19598fb809dfd6378cf1ac43/lib/config/consts.dart#L16-L23).
-4. Restart the computer to be sure that the new configs are active.
-5. Run the node with the flags:
-```shell
-./target/release/encointer-node-notee --dev --enable-offchain-indexing true --rpc-methods unsafe -lencointer=debug --ws-external --rpc-external
-```
-
-If the node is run in WSL2 (WSL1 should be fine), some extra steps are needed:
-
-6. WSL2 does only expose ports on the local interface, which means they only listen to `127.0.0.1`, hence WSL2 can't be
-   accessed on `hostname/-ip` on other devices in the LAN. This can be fixed with a simple tool [WSLHostPatcher](https://github.com/CzBiX/WSLHostPatcher).
-    * Download the release.zip
-    * Run `WSLHostPatcher.exe`
-    * (Re-)start the service in WSL2. A firewall warning will pop-up the first time and access must be granted.
-
-7. Now you should be able to access the node with both, the emulator and a cellphone in the local network.
-
-**Note**: The `WSLHostPatcher.exe` must be run after every OS restart. You can automatically run it with the following steps:
-* Download the release.zip, unzip it and put it into the ProgramFiles folder, giving it a more suitable name.
-* Press `windows key + r` and type `shell:startup`.
-* Add a shortcut to the `WSLHostPatcher.exe` in the windows startup folder.
 
 ### Fmt
 `dartfmt` lacks config file support, which implies that customizations need to be done by users individually. The default
@@ -227,9 +163,7 @@ length of the code to 120.
 * Format the whole codebase with: 
 format all Dart code
 ```shell
-melos format
-# windows
-pub global run melos format
+.\.flutter\bin\dart run melos format
 ```
 
 #### Other fmt hints:
@@ -244,9 +178,7 @@ e.g. `@JsonSerializable` or the mobx annotations. Whenever annotations are added
 command must be run to update the `*.g` files.
 
 ```shell
-melos run-build-runner
-# windows
-pub global run melos run-build-runner
+.\.flutter\bin\dart run melos run-build-runner
 ```
 
 ## GitHub Actions Hints

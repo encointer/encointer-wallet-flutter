@@ -1212,7 +1212,7 @@ packages:
     description:
       path: "packages/polkadart"
       ref: "cl/encointer-signed-extensions"
-      resolved-ref: "553ad7f8c2281182a62707c8b2af46aee4f8f32a"
+      resolved-ref: "3f60d3498ce4d5b4bb353a0203f8559c8cd6733a"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.2"
@@ -1221,7 +1221,7 @@ packages:
     description:
       path: "packages/polkadart_keyring"
       ref: "cl/encointer-signed-extensions"
-      resolved-ref: "553ad7f8c2281182a62707c8b2af46aee4f8f32a"
+      resolved-ref: "3f60d3498ce4d5b4bb353a0203f8559c8cd6733a"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.0"
@@ -1230,7 +1230,7 @@ packages:
     description:
       path: "packages/polkadart_scale_codec"
       ref: "cl/encointer-signed-extensions"
-      resolved-ref: "553ad7f8c2281182a62707c8b2af46aee4f8f32a"
+      resolved-ref: "3f60d3498ce4d5b4bb353a0203f8559c8cd6733a"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -1636,7 +1636,7 @@ packages:
     description:
       path: "packages/substrate_metadata"
       ref: "cl/encointer-signed-extensions"
-      resolved-ref: "553ad7f8c2281182a62707c8b2af46aee4f8f32a"
+      resolved-ref: "3f60d3498ce4d5b4bb353a0203f8559c8cd6733a"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
@@ -1996,10 +1996,10 @@ packages:
     dependency: transitive
     description:
       name: yaon
-      sha256: db080cb998ac25ed993b5c715abb1825b00453b9b62bc7ad2699f5f9c1fec6ce
+      sha256: "9baabf121604d7530fc8bcd4f2aeb6c300a055d9a6f9b45b5071f893756ca867"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.4+3"
+    version: "1.1.4+4"
 sdks:
   dart: ">=3.2.0 <4.0.0"
   flutter: ">=3.16.3"
