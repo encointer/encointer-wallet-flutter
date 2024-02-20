@@ -86,10 +86,10 @@ class Api {
 
     Log.d('Obtained basic network data: ${store.settings.endpoint.value!}', 'Api');
 
-    encointer.getCommunityData();
-
     // need to do this from here as we can't access instance fields in constructor.
     account.setFetchAccountData(fetchAccountData);
+
+    fetchAccountData();
   }
 
   Future<void> close() async {
