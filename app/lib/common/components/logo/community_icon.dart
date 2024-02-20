@@ -20,11 +20,11 @@ class CommunityIconObserver extends StatelessWidget {
       radius: radius,
       child: Observer(
         builder: (_) {
-            if (communityStore.communityIcon != null) {
-              return SvgPicture.string(communityStore.communityIcon!);
-            } else {
-              return SvgPicture.asset(fallBackCommunityIcon);
-            }
+          if (communityStore.communityIcon != null) {
+            return SvgPicture.string(communityStore.communityIcon!);
+          } else {
+            return SvgPicture.asset(fallBackCommunityIcon);
+          }
         },
       ),
     );
