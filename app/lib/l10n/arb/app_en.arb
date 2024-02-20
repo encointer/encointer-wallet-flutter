@@ -26,6 +26,7 @@
     "appSettings": "App settings",
     "attestNotificationBody": "If all participants have sent the attestations, you can try to claim the income.",
     "attestNotificationTitle": "Attested attendees",
+    "available": "Available",
     "balance": "Balance",
     "balanceTooLowBody": "You don't have sufficient funds in your account. You can't send all your money because you need some for the fees.",
     "balanceTooLowTitle": "Balance too low",

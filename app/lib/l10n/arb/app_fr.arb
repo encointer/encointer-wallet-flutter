@@ -26,6 +26,7 @@
     "appSettings": "Paramètres de l'app",
     "attestNotificationBody": "Une fois que tous les participants ont envoyé les attestations, tu peux essayer d'obtenir le revenu.",
     "attestNotificationTitle": "Participants attestés",
+    "available": "Disponible",
     "balance": "Solde du compte",
     "balanceTooLowBody": "Tu n'as pas assez d'argent sur ton compte. Tu ne peux pas envoyer tout ton argent, car il t'en faut encore un peu pour payer les frais.",
     "balanceTooLowTitle": "Solde trop bas",
