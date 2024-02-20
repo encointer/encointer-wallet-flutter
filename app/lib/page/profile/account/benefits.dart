@@ -32,12 +32,18 @@ class Benefits extends StatelessWidget {
 
     return Column(
       children: [
-        Text(l10n.benefits, style: titleLarge, textAlign: TextAlign.left),
+        Text('KSM ${l10n.benefits}', style: titleLarge, textAlign: TextAlign.left),
         Observer(
           builder: (_) => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'KSM: ${Fmt.token(store.assets.totalBalance, ertDecimals)}',
+                l10n.balance,
+                style: titleMedium,
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                '${Fmt.token(store.assets.totalBalance, ertDecimals)} KSM',
                 style: titleMedium,
                 textAlign: TextAlign.left,
               ),
