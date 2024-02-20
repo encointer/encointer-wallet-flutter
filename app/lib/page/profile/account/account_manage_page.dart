@@ -140,7 +140,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
-    final appSettingsStore = context.watch<AppSettings>();
     final appConfig = RepositoryProvider.of<AppConfig>(context);
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
@@ -258,7 +257,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     addressSS58,
                   ),
                 ),
-                if (appSettingsStore.developerMode) benefits(),
+                benefits(),
                 const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
