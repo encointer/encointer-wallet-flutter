@@ -104,9 +104,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     final community = _appStore.encointer.communityStores?[cidFmt];
 
-    if (community == null) {
+    if (community == null || community.applyDemurrage == null) {
       // Never happened, but we want to be defensive here to prevent a red screen.
       Log.e('[AccountManagePage] Communities is null, even though we have a balance entry for it. Fatal app error.');
+      return Container();
+    }
+
+    if ((community.applyDemurrage!(entry) ?? 0) <= 0.0001) {
+      Log.p("[AccountManagePage] Don't display community with 0 balance");
       return Container();
     }
 
