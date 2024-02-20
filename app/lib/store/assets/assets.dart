@@ -38,6 +38,14 @@ abstract class _AssetsStore with Store {
   AccountData accountData =
       AccountData(free: BigInt.zero, reserved: BigInt.zero, frozen: BigInt.zero, flags: BigInt.zero);
 
+  /// Total balance of an account.
+  ///
+  /// Only the `free` part is transferrable. `reserved` and `frozen` needs to be freed with some
+  /// onchain actions. However, it is very unlikely that any app user will have reserved/frozen
+  /// assets, as this happens outside the app's scope.
+  @computed
+  BigInt get totalBalance => accountData.free + accountData.reserved + accountData.frozen;
+
   @observable
   Map<String, String> tokenBalances = <String, String>{};
 
