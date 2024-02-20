@@ -110,7 +110,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       return Container();
     }
 
-    if ((community.applyDemurrage!(entry) ?? 0) <= 0.0001) {
+    if ((community.applyDemurrage!(entry) ?? 0) <= 0.0001 && cidFmt != _appStore.encointer.chosenCid!.toFmtString()) {
       Log.p("[AccountManagePage] Don't display community with 0 balance");
       return Container();
     }
