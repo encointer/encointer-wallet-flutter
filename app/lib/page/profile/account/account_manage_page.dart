@@ -54,7 +54,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   Future<void> _init() async {
     final allFaucets = await webApi.encointer.getAllFaucetsWithAccount();
 
-    // show faucets we have reputation for and faucets of the currently selected cid.
+    // show faucets we have reputation for and faucets for `chosenCid`.
     final relevantCids = _appStore.encointer.account!.reputations.values.map((e) => e.communityIdentifier).toSet()
       ..add(_appStore.encointer.chosenCid!);
 
