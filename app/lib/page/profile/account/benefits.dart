@@ -1,12 +1,15 @@
-import 'package:encointer_wallet/l10n/l10.dart';
-import 'package:encointer_wallet/page/profile/account/faucet_list_tile.dart';
-import 'package:encointer_wallet/theme/theme.dart';
-import 'package:ew_keyring/ew_keyring.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/page/profile/account/faucet_list_tile.dart';
+import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 
 class Benefits extends StatelessWidget {
   const Benefits(
@@ -24,11 +27,23 @@ class Benefits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
+    final titleLarge = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
+    final titleMedium = context.titleMedium.copyWith(color: AppColors.encointerGrey);
 
     return Column(
       children: [
-        Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
+        Text(l10n.benefits, style: titleLarge, textAlign: TextAlign.left),
+        Observer(
+          builder: (_) => Row(
+            children: [
+              Text(
+                'KSM: ${Fmt.token(store.assets.totalBalance, ertDecimals)}',
+                style: titleMedium,
+                textAlign: TextAlign.left,
+              ),
+            ],
+          ),
+        ),
         ListView.builder(
           shrinkWrap: true,
           itemCount: faucets.length,

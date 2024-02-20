@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/submit_button.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_tx_wrappers.dart';
@@ -10,8 +9,6 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class FaucetListTile extends StatefulWidget {
   const FaucetListTile(
@@ -56,12 +53,6 @@ class _FaucetListTileState extends State<FaucetListTile> {
       title: Text(
         widget.faucet.name,
         style: context.titleMedium.copyWith(color: context.colorScheme.primary),
-      ),
-      subtitle: Row(
-        children: [
-          const Text('KSM: '),
-          Observer(builder: (_) => Text(Fmt.token(widget.store.assets.totalBalance, ertDecimals))),
-        ],
       ),
       trailing: FutureBuilder(
         future: future,
