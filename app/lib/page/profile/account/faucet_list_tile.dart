@@ -32,6 +32,8 @@ class FaucetListTile extends StatefulWidget {
 class _FaucetListTileState extends State<FaucetListTile> {
   late Future<Map<int, CommunityIdentifier>> future;
 
+  int? remainingClaims;
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +55,12 @@ class _FaucetListTileState extends State<FaucetListTile> {
       title: Text(
         widget.faucet.name,
         style: context.titleMedium.copyWith(color: context.colorScheme.primary),
+      ),
+      subtitle: Row(
+        children: [
+          const Text('Remaining Claims: '),
+          if (remainingClaims != null) Text('$remainingClaims') else const CupertinoActivityIndicator()
+        ],
       ),
       trailing: FutureBuilder(
         future: future,
@@ -107,6 +115,10 @@ class _FaucetListTileState extends State<FaucetListTile> {
     );
 
     await Future.wait(futures);
+
+    remainingClaims = ids.length;
+    // update the text widgets with the remaining claims.
+    setState(() {});
     return ids;
   }
 
