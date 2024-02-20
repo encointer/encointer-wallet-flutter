@@ -9,6 +9,7 @@ import 'package:encointer_wallet/page/assets/announcement/logic/announcement_car
 import 'package:encointer_wallet/models/announcement/announcement.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 
@@ -19,6 +20,8 @@ class AnnouncementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = context.read<AppStore>();
+
     final local = Localizations.localeOf(context);
     final cardStore = context.watch<AnnouncementCardStore>();
     return Padding(
@@ -39,7 +42,10 @@ class AnnouncementCard extends StatelessWidget {
                         radius: 8,
                         backgroundImage: Assets.images.public.app.provider(),
                       )
-                    : const CommunityIconObserver(radius: 8),
+                    : CommunityIconObserver(
+                        store.encointer.community!,
+                        radius: 8,
+                      ),
               ),
               title: Align(
                 alignment: Alignment.centerRight,

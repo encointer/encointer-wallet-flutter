@@ -120,7 +120,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       leading: CommunityIcon(
         store: _appStore,
         isBootstrapper: isBootstrapper,
-        icon: const CommunityIconObserver(),
+        icon: CommunityIconObserver(community),
       ),
       title: Text(community.name!, style: h3),
       subtitle: Text(community.symbol!, style: h3),
