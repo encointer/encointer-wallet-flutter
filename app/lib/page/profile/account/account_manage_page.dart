@@ -10,9 +10,9 @@ import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/page/profile/account/benefits.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
-import 'package:encointer_wallet/page/profile/account/faucet_list_tile.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -152,28 +152,26 @@ class _AccountManagePageState extends State<AccountManagePage> {
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
 
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
-    List<Widget> benefits() {
-      return [
-        Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
-        if (faucets != null)
-          store.account.currentAccountPubKey! == accountToBeEditedPubKey
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: faucets!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final faucetPubKeyHex = faucets!.keys.elementAt(index);
-                    return FaucetListTile(
-                      store,
-                      userAddress: addressSS58,
-                      faucet: faucets![faucetPubKeyHex]!,
-                      faucetPubKey: faucetPubKeyHex,
-                    );
-                  },
-                )
-              : Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left)
-        else
-          appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator(),
-      ];
+    Widget benefits() {
+      if (faucets == null) {
+        return appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator();
+      }
+
+      if (store.account.currentAccountPubKey! != accountToBeEditedPubKey) {
+        return Column(children: [
+          Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
+          Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left),
+        ]);
+      }
+
+      return Benefits(
+        store,
+        faucets: faucets!,
+        userAddress: Address(
+          pubkey: AddressUtils.pubKeyHexToPubKey(accountToBeEditedPubKey),
+          prefix: store.settings.endpoint.ss58!,
+        ),
+      );
     }
 
     return Observer(
@@ -260,8 +258,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     addressSS58,
                   ),
                 ),
-                // spread the List<Widget> so that it does not create a nested list.
-                if (appSettingsStore.developerMode) ...benefits(),
+                if (appSettingsStore.developerMode) benefits(),
                 const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
