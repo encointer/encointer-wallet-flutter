@@ -11,6 +11,7 @@ import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class FaucetListTile extends StatefulWidget {
   const FaucetListTile(
@@ -33,13 +34,11 @@ class FaucetListTile extends StatefulWidget {
 
 class _FaucetListTileState extends State<FaucetListTile> {
   late Future<Map<int, CommunityIdentifier>> future;
-  late Future<BigInt> nativeBalance;
 
   @override
   void initState() {
     super.initState();
     future = _getUncommittedReputationIds(widget.userAddress);
-    nativeBalance = getNativeFreeBalance(widget.userAddress);
   }
 
   @override
@@ -61,15 +60,7 @@ class _FaucetListTileState extends State<FaucetListTile> {
       subtitle: Row(
         children: [
           const Text('KSM: '),
-          FutureBuilder(
-              future: nativeBalance,
-              builder: (BuildContext context, AsyncSnapshot<BigInt> snapshot) {
-                if (snapshot.hasData) {
-                  return Text(Fmt.token(snapshot.data!, ertDecimals));
-                } else {
-                  return const CupertinoActivityIndicator();
-                }
-              })
+          Observer(builder: (_) => Text(Fmt.token(widget.store.assets.totalBalance, ertDecimals))),
         ],
       ),
       trailing: FutureBuilder(
@@ -85,7 +76,6 @@ class _FaucetListTileState extends State<FaucetListTile> {
                     widget.faucetPubKey,
                   );
                   future = _getUncommittedReputationIds(widget.userAddress);
-                  nativeBalance = getNativeFreeBalance(widget.userAddress);
                   setState(() {});
                 },
                 child: const Text('Claim'),
@@ -146,10 +136,5 @@ class _FaucetListTileState extends State<FaucetListTile> {
       e.key,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
     );
-  }
-
-  Future<BigInt> getNativeFreeBalance(String address) async {
-    final balance = await webApi.assets.getBalanceOf(address);
-    return balance.free;
   }
 }
