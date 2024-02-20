@@ -83,10 +83,10 @@ class _FaucetListTileState extends State<FaucetListTile> {
                   future = _getUncommittedReputationIds(widget.userAddress);
                   setState(() {});
                 },
-                child: const Text('Claim'),
+                child: Text(l10n.claim),
               );
             } else {
-              return const SubmitButtonSmall(child: Text('No Claim'));
+              return SubmitButtonSmall(child: Text(l10n.claim));
             }
           } else {
             return const CupertinoActivityIndicator();
