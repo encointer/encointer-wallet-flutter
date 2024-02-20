@@ -52,7 +52,21 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Future<void> _init() async {
-    faucets = await webApi.encointer.getAllFaucetsWithAccount();
+    final allFaucets = await webApi.encointer.getAllFaucetsWithAccount();
+
+    // show faucets we have reputation for and faucets of the currently selected cid.
+    final reputationsCids = _appStore.encointer.account!.reputations.values.map((e) => e.communityIdentifier).toSet()
+      ..add(_appStore.encointer.chosenCid!);
+
+    faucets = Map.fromEntries(allFaucets.entries.where((e) {
+      final whitelist = e.value.whitelist;
+      if (whitelist == null) {
+        // if the whitelist is null, all communities may access it.
+        return true;
+      } else {
+        return containsAny(whitelist, reputationsCids.toList());
+      }
+    }));
     setState(() {});
   }
 
@@ -390,4 +404,14 @@ class CommunityIcon extends StatelessWidget {
       ],
     );
   }
+}
+
+/// Checks if any entry in list one is contained in another list.
+bool containsAny(List<dynamic> list1, List<dynamic> list2) {
+  for (final entry in list1) {
+    if (list2.contains(entry)) {
+      return true;
+    }
+  }
+  return false;
 }
