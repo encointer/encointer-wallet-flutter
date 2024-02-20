@@ -55,7 +55,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final allFaucets = await webApi.encointer.getAllFaucetsWithAccount();
 
     // show faucets we have reputation for and faucets of the currently selected cid.
-    final reputationsCids = _appStore.encointer.account!.reputations.values.map((e) => e.communityIdentifier).toSet()
+    final relevantCids = _appStore.encointer.account!.reputations.values.map((e) => e.communityIdentifier).toSet()
       ..add(_appStore.encointer.chosenCid!);
 
     faucets = Map.fromEntries(allFaucets.entries.where((e) {
@@ -64,7 +64,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
         // if the whitelist is null, all communities may access it.
         return true;
       } else {
-        return containsAny(whitelist, reputationsCids.toList());
+        return containsAny(whitelist, relevantCids.toList());
       }
     }));
     setState(() {});
