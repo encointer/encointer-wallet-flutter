@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -79,13 +81,24 @@ abstract class _CommunityStore with Store {
   @observable
   String? communityIcon;
 
+  @computed
+  SvgPicture get icon {
+    if (communityIcon != null) {
+      return SvgPicture.string(communityIcon!);
+    } else {
+      return SvgPicture.asset(fallBackCommunityIcon);
+    }
+  }
+
   double? Function(BalanceEntry)? get applyDemurrage => _applyDemurrage;
 
   @action
   Future<String?> getCommunityIcon() async {
     try {
       if (assetsCid != null) {
+        Log.e('[getCommunityIcon] get icon with cid: $assetsCid');
         final maybeIcon = await webApi.ipfsApi.getCommunityIcon(assetsCid!);
+        Log.e('[getCommunityIcon]: got icon: $maybeIcon');
         if (maybeIcon != null) communityIcon = maybeIcon;
       }
     } catch (e) {
