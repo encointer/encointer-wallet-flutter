@@ -2,15 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/submit_button.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/faucet/faucet.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_tx_wrappers.dart';
 import 'package:encointer_wallet/theme/theme.dart';
+import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 
 class FaucetListTile extends StatefulWidget {
   const FaucetListTile(
@@ -33,17 +34,19 @@ class FaucetListTile extends StatefulWidget {
 
 class _FaucetListTileState extends State<FaucetListTile> {
   late Future<Map<int, CommunityIdentifier>> future;
-  late Future<BigInt> nativeBalance;
+
+  int? remainingClaims;
 
   @override
   void initState() {
     super.initState();
     future = _getUncommittedReputationIds(widget.userAddress);
-    nativeBalance = getNativeFreeBalance(widget.userAddress);
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(),
       leading: SizedBox(
@@ -60,16 +63,9 @@ class _FaucetListTileState extends State<FaucetListTile> {
       ),
       subtitle: Row(
         children: [
-          const Text('KSM: '),
-          FutureBuilder(
-              future: nativeBalance,
-              builder: (BuildContext context, AsyncSnapshot<BigInt> snapshot) {
-                if (snapshot.hasData) {
-                  return Text(Fmt.token(snapshot.data!, ertDecimals));
-                } else {
-                  return const CupertinoActivityIndicator();
-                }
-              })
+          Text('${l10n.available}: '),
+          if (remainingClaims != null) Text('$remainingClaims') else const CupertinoActivityIndicator(),
+          Text(' x ${Fmt.token(BigInt.from(widget.faucet.dripAmount), ertDecimals - 3)} mKSM')
         ],
       ),
       trailing: FutureBuilder(
@@ -85,13 +81,12 @@ class _FaucetListTileState extends State<FaucetListTile> {
                     widget.faucetPubKey,
                   );
                   future = _getUncommittedReputationIds(widget.userAddress);
-                  nativeBalance = getNativeFreeBalance(widget.userAddress);
                   setState(() {});
                 },
-                child: const Text('Claim'),
+                child: Text(l10n.claim),
               );
             } else {
-              return const SubmitButtonSmall(child: Text('No Claim'));
+              return SubmitButtonSmall(child: Text(l10n.claim));
             }
           } else {
             return const CupertinoActivityIndicator();
@@ -126,6 +121,10 @@ class _FaucetListTileState extends State<FaucetListTile> {
     );
 
     await Future.wait(futures);
+
+    remainingClaims = ids.length;
+    // update the text widgets with the remaining claims.
+    setState(() {});
     return ids;
   }
 
@@ -146,10 +145,5 @@ class _FaucetListTileState extends State<FaucetListTile> {
       e.key,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
     );
-  }
-
-  Future<BigInt> getNativeFreeBalance(String address) async {
-    final balance = await webApi.assets.getBalanceOf(address);
-    return balance.free;
   }
 }

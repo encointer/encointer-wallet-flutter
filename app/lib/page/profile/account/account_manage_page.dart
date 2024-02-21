@@ -10,9 +10,9 @@ import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
+import 'package:encointer_wallet/page/profile/account/benefits.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
-import 'package:encointer_wallet/page/profile/account/faucet_list_tile.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/modules/modules.dart';
@@ -52,7 +52,21 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Future<void> _init() async {
-    faucets = await webApi.encointer.getAllFaucetsWithAccount();
+    final allFaucets = await webApi.encointer.getAllFaucetsWithAccount();
+
+    // show faucets we have reputation for and faucets for `chosenCid`.
+    final relevantCids = _appStore.encointer.account!.reputations.values.map((e) => e.communityIdentifier).toSet()
+      ..add(_appStore.encointer.chosenCid!);
+
+    faucets = Map.fromEntries(allFaucets.entries.where((e) {
+      final whitelist = e.value.whitelist;
+      if (whitelist == null) {
+        // if the whitelist is null, all communities may access it.
+        return true;
+      } else {
+        return containsAny(whitelist, relevantCids.toList());
+      }
+    }));
     setState(() {});
   }
 
@@ -140,7 +154,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final store = context.watch<AppStore>();
-    final appSettingsStore = context.watch<AppSettings>();
     final appConfig = RepositoryProvider.of<AppConfig>(context);
 
     final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
@@ -152,28 +165,26 @@ class _AccountManagePageState extends State<AccountManagePage> {
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
 
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
-    List<Widget> benefits() {
-      return [
-        Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
-        if (faucets != null)
-          store.account.currentAccountPubKey! == accountToBeEditedPubKey
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: faucets!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final faucetPubKeyHex = faucets!.keys.elementAt(index);
-                    return FaucetListTile(
-                      store,
-                      userAddress: addressSS58,
-                      faucet: faucets![faucetPubKeyHex]!,
-                      faucetPubKey: faucetPubKeyHex,
-                    );
-                  },
-                )
-              : Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left)
-        else
-          appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator(),
-      ];
+    Widget benefits() {
+      if (faucets == null) {
+        return appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator();
+      }
+
+      if (store.account.currentAccountPubKey! != accountToBeEditedPubKey) {
+        return Column(children: [
+          Text(l10n.benefits, style: h3Grey, textAlign: TextAlign.left),
+          Text(l10n.canUseFaucetOnlyWithCurrentAccount, style: h3Grey, textAlign: TextAlign.left),
+        ]);
+      }
+
+      return Benefits(
+        store,
+        faucets: faucets!,
+        userAddress: Address(
+          pubkey: AddressUtils.pubKeyHexToPubKey(accountToBeEditedPubKey),
+          prefix: store.settings.endpoint.ss58!,
+        ),
+      );
     }
 
     return Observer(
@@ -260,8 +271,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     addressSS58,
                   ),
                 ),
-                // spread the List<Widget> so that it does not create a nested list.
-                if (appSettingsStore.developerMode) ...benefits(),
+                benefits(),
                 const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
@@ -394,4 +404,14 @@ class CommunityIcon extends StatelessWidget {
       ],
     );
   }
+}
+
+/// Checks if any entry in list one is contained in another list.
+bool containsAny(List<dynamic> list1, List<dynamic> list2) {
+  for (final entry in list1) {
+    if (list2.contains(entry)) {
+      return true;
+    }
+  }
+  return false;
 }
