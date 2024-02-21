@@ -42,8 +42,8 @@ class AnnouncementCard extends StatelessWidget {
                         radius: 8,
                         backgroundImage: Assets.images.public.app.provider(),
                       )
-                    : CommunityIconObserver(
-                        store.encointer.community!,
+                    : CommunityCircleAvatar(
+                        store.encointer.communityIconOrDefault,
                         radius: 8,
                       ),
               ),

@@ -4,9 +4,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
-import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter_svg/svg.dart';
 
 /// the CombinedCommunityAndAccountAvatar should be wrapped in an InkWell to provide the callback on a click
 class CombinedCommunityAndAccountAvatar extends StatefulWidget {
@@ -44,7 +44,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                       borderRadius: BorderRadius.circular(widget.communityAvatarSize),
                     ),
                     child: CommunityAvatar(
-                      widget.store.encointer.community!,
+                      widget.store.encointer.communityIconOrDefault,
                       avatarSize: widget.communityAvatarSize,
                     ),
                   ),
@@ -77,12 +77,12 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
 
 class CommunityAvatar extends StatelessWidget {
   const CommunityAvatar(
-    this.store, {
+    this.icon, {
     super.key,
     this.avatarSize = 120,
   });
 
-  final CommunityStore store;
+  final SvgPicture icon;
 
   final double avatarSize;
 
@@ -91,7 +91,7 @@ class CommunityAvatar extends StatelessWidget {
     return SizedBox(
       width: avatarSize,
       height: avatarSize,
-      child: CommunityIconObserver(store),
+      child: CommunityCircleAvatar(icon),
     );
   }
 }
