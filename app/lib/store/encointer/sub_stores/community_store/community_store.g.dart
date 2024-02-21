@@ -62,6 +62,11 @@ mixin _$CommunityStore on _CommunityStore, Store {
   @override
   String? get assetsCid =>
       (_$assetsCidComputed ??= Computed<String?>(() => super.assetsCid, name: '_CommunityStore.assetsCid')).value;
+  Computed<SvgPicture>? _$iconComputed;
+
+  @override
+  SvgPicture get icon =>
+      (_$iconComputed ??= Computed<SvgPicture>(() => super.icon, name: '_CommunityStore.icon')).value;
 
   late final _$metadataAtom = Atom(name: '_CommunityStore.metadata', context: context);
 
@@ -281,7 +286,8 @@ communityAccountStores: ${communityAccountStores},
 communityIcon: ${communityIcon},
 name: ${name},
 symbol: ${symbol},
-assetsCid: ${assetsCid}
+assetsCid: ${assetsCid},
+icon: ${icon}
     ''';
   }
 }

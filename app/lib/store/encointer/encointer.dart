@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_svg/svg.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,6 +16,7 @@ import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/encointer_account_store/encointer_account_store.dart';
+import 'package:encointer_wallet/config/consts.dart';
 
 part 'encointer.g.dart';
 
@@ -174,6 +176,15 @@ abstract class _EncointerStore with Store {
   @computed
   double? get communityBalance {
     return applyDemurrage(communityBalanceEntry);
+  }
+
+  @computed
+  SvgPicture get communityIconOrDefault {
+    if (community != null) {
+      return community!.icon;
+    } else {
+      return SvgPicture.asset(fallBackCommunityIcon);
+    }
   }
 
   double? applyDemurrage(BalanceEntry? entry) {
