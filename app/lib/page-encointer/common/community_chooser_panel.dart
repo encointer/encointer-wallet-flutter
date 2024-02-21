@@ -6,6 +6,7 @@ import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter_svg/svg.dart';
 
 /// the CombinedCommunityAndAccountAvatar should be wrapped in an InkWell to provide the callback on a click
 class CombinedCommunityAndAccountAvatar extends StatefulWidget {
@@ -42,7 +43,10 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(widget.communityAvatarSize),
                     ),
-                    child: CommunityAvatar(avatarSize: widget.communityAvatarSize),
+                    child: CommunityAvatar(
+                      widget.store.encointer.communityIconOrDefault,
+                      avatarSize: widget.communityAvatarSize,
+                    ),
                   ),
                   Positioned(
                     bottom: 0,
@@ -72,7 +76,13 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
 }
 
 class CommunityAvatar extends StatelessWidget {
-  const CommunityAvatar({super.key, this.avatarSize = 120});
+  const CommunityAvatar(
+    this.icon, {
+    super.key,
+    this.avatarSize = 120,
+  });
+
+  final SvgPicture icon;
 
   final double avatarSize;
 
@@ -81,7 +91,7 @@ class CommunityAvatar extends StatelessWidget {
     return SizedBox(
       width: avatarSize,
       height: avatarSize,
-      child: const CommunityIconObserver(),
+      child: CommunityCircleAvatar(icon),
     );
   }
 }

@@ -41,7 +41,10 @@ class CeremonyStep3Finish extends StatelessWidget {
                   children: [
                     const CeremonyProgressBar(progress: 3),
                     const SizedBox(height: 48),
-                    const CommunityAvatar(avatarSize: 96),
+                    CommunityAvatar(
+                      store.encointer.communityIconOrDefault,
+                      avatarSize: 96,
+                    ),
                     Center(
                       child: Text(
                         l10n.thankYou,
