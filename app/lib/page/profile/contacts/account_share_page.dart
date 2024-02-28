@@ -74,11 +74,6 @@ class _AccountSharePageState extends State<AccountSharePage> {
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
-              Text(
-                l10n.shareLinkHint,
-                textAlign: TextAlign.center,
-                style: context.bodyMedium.copyWith(color: AppColors.encointerGrey),
-              ),
               const SizedBox(height: 8),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
