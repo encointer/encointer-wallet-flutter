@@ -134,7 +134,7 @@ class $AssetsImagesAssetsGen {
   SvgGenImage get iconLeu => const SvgGenImage('assets/images/assets/icon_leu.svg');
 
   /// File path: assets/images/assets/leu_steller_bg.png
-  AssetGenImage get leuStellerBg => const AssetGenImage('assets/images/assets/leu_steller_bg.png');
+  AssetGenImage get leuStellerBg => const AssetGenImage('assets/images/assets/nyt_steller_bg.png');
 
   /// File path: assets/images/assets/lion_icon_colored.png
   AssetGenImage get lionIconColored => const AssetGenImage('assets/images/assets/lion_icon_colored.png');
