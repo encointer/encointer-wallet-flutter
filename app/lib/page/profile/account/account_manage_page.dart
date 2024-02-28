@@ -276,9 +276,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     addressSS58,
                   ),
                 ),
-                benefits(),
+                if (!isKeyboard)
+                  benefits(),
                 const Spacer(),
-                DecoratedBox(
+                  DecoratedBox(
                   // width: double.infinity,
                   decoration: BoxDecoration(
                     gradient: AppColors.primaryGradient(context),
