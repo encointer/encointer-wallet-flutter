@@ -26,7 +26,6 @@ import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
@@ -436,52 +435,40 @@ class _AssetsViewState extends State<AssetsView> {
   }
 
   void _refreshBalanceAndNotify() {
-    webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
-      Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
-      if (widget.store.encointer.chosenCid == null) {
-        Log.d('[home:refreshBalanceAndNotify] no community selected', 'Assets');
-        return;
-      }
-      var activeAccountHasBalance = false;
-      balances.forEach((cid, balanceEntry) {
-        final cidStr = cid.toFmtString();
-        if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
-          final community = widget.store.encointer.communityStores![cidStr]!;
-          final oldBalanceEntry =
-              widget.store.encointer.accountStores?[widget.store.account.currentAddress]?.balanceEntries[cidStr];
-          final demurrageRate = community.demurrage!;
-          final newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
-          final oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
-              ? community.applyDemurrage!(oldBalanceEntry) ?? 0
-              : 0;
+    final currentAddress = widget.store.account.currentAddress;
+    final chosenCid = widget.store.encointer.chosenCid;
 
-          final delta = newBalance - oldBalance;
-          Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
-          if (delta.abs() > demurrageRate) {
-            widget.store.encointer.accountStores![widget.store.account.currentAddress]
-                ?.addBalanceEntry(cid, balances[cid]!);
-            if (delta > demurrageRate) {
-              final msg = l10n.incomingConfirmed(
-                delta,
-                community.metadata!.symbol,
-                widget.store.account.currentAccount.name,
-              );
-              Log.d('[home:balanceWatchdog] $msg', 'Assets');
-              NotificationPlugin.showNotification(45, l10n.fundsReceived, msg, cid: cidStr);
-            }
-          }
-          if (cid == widget.store.encointer.chosenCid) {
-            activeAccountHasBalance = true;
-          }
+    if (currentAddress.isEmpty || chosenCid == null) {
+      Log.d('[home:refreshBalanceAndNotify] address empty or chosenCid == null', 'Assets');
+    }
+
+    webApi.encointer.getEncointerBalance(currentAddress, chosenCid!).then((balanceEntry) {
+      final cidStr = chosenCid.toFmtString();
+      Log.d('[home:refreshBalanceAndNotify] getEncointerBalance', 'Assets');
+
+      final community = widget.store.encointer.community!;
+      final oldBalanceEntry =
+          widget.store.encointer.accountStores?[widget.store.account.currentAddress]?.balanceEntries[cidStr];
+      final demurrageRate = community.demurrage!;
+      final newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
+      final oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
+          ? community.applyDemurrage!(oldBalanceEntry) ?? 0
+          : 0;
+
+      final delta = newBalance - oldBalance;
+      widget.store.encointer.account?.addBalanceEntry(chosenCid, balanceEntry);
+
+      Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
+      if (delta.abs() > demurrageRate) {
+        if (delta > demurrageRate) {
+          final msg = l10n.incomingConfirmed(
+            delta,
+            community.metadata!.symbol,
+            widget.store.account.currentAccount.name,
+          );
+          Log.d('[home:balanceWatchdog] $msg', 'Assets');
+          NotificationPlugin.showNotification(45, l10n.fundsReceived, msg, cid: cidStr);
         }
-      });
-      if (!activeAccountHasBalance) {
-        Log.d(
-          "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero",
-          'Assets',
-        );
-        widget.store.encointer.accountStores![widget.store.account.currentAddress]
-            ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
     }).catchError((Object? e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
