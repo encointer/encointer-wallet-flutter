@@ -447,18 +447,11 @@ class _AssetsViewState extends State<AssetsView> {
       Log.d('[home:refreshBalanceAndNotify] getEncointerBalance', 'Assets');
 
       final community = widget.store.encointer.community!;
-      final oldBalanceEntry =
-          widget.store.encointer.accountStores?[widget.store.account.currentAddress]?.balanceEntries[cidStr];
-      final demurrageRate = community.demurrage!;
-      final newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
-      final oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
-          ? community.applyDemurrage!(oldBalanceEntry) ?? 0
-          : 0;
+      final demurrageRate = widget.store.encointer.community!.demurrage!;
 
-      final delta = newBalance - oldBalance;
-      widget.store.encointer.account?.addBalanceEntry(chosenCid, balanceEntry);
+      final delta = widget.store.encointer.account!
+          .addBalanceEntryAndReturnDelta(chosenCid, balanceEntry, community.applyDemurrage!);
 
-      Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
       if (delta.abs() > demurrageRate) {
         if (delta > demurrageRate) {
           final msg = l10n.incomingConfirmed(
