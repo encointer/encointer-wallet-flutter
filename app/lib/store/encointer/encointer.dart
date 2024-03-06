@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_svg/svg.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,6 +16,7 @@ import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/encointer_account_store/encointer_account_store.dart';
+import 'package:encointer_wallet/config/consts.dart';
 
 part 'encointer.g.dart';
 
@@ -174,6 +176,15 @@ abstract class _EncointerStore with Store {
   @computed
   double? get communityBalance {
     return applyDemurrage(communityBalanceEntry);
+  }
+
+  @computed
+  SvgPicture get communityIconOrDefault {
+    if (community != null) {
+      return community!.icon;
+    } else {
+      return SvgPicture.asset(fallBackCommunityIcon);
+    }
   }
 
   double? applyDemurrage(BalanceEntry? entry) {
@@ -337,6 +348,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getReputations(),
       webApi.encointer.getMeetupTime(),
       webApi.encointer.getMeetupTimeOverride(),
+      getEncointerBalance(),
       updateAggregatedAccountData(),
     ]).timeout(const Duration(seconds: 15)).catchError((Object? e, s) {
       Log.e('Error executing update state: $e', 'EncointerStore');
@@ -347,6 +359,17 @@ abstract class _EncointerStore with Store {
     });
 
     await _updateStateFuture!;
+  }
+
+  Future<void> getEncointerBalance() async {
+    final currentAddress = _rootStore.account.currentAddress;
+
+    if (currentAddress.isEmpty || chosenCid == null) {
+      Log.d('[getEncointerBalance] address empty or chosenCid == null', 'EncointerStore');
+    }
+
+    final balanceEntry = await webApi.encointer.getEncointerBalance(currentAddress, chosenCid!);
+    _rootStore.encointer.account?.addBalanceEntry(chosenCid!, balanceEntry);
   }
 
   Future<void> updateAggregatedAccountData() async {
