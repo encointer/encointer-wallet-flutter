@@ -176,6 +176,18 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   }
 
   @override
+  double addBalanceEntryAndReturnDelta(
+      CommunityIdentifier cid, BalanceEntry balanceEntry, double? Function(BalanceEntry) demurrageFn) {
+    final _$actionInfo = _$_EncointerAccountStoreActionController.startAction(
+        name: '_EncointerAccountStore.addBalanceEntryAndReturnDelta');
+    try {
+      return super.addBalanceEntryAndReturnDelta(cid, balanceEntry, demurrageFn);
+    } finally {
+      _$_EncointerAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void purgeReputations() {
     final _$actionInfo =
         _$_EncointerAccountStoreActionController.startAction(name: '_EncointerAccountStore.purgeReputations');

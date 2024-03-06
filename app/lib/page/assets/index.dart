@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:ew_test_keys/ew_test_keys.dart';
@@ -5,9 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
@@ -26,7 +25,6 @@ import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
@@ -34,8 +32,6 @@ import 'package:encointer_wallet/page/assets/account_or_community/account_or_com
 import 'package:encointer_wallet/page/assets/account_or_community/switch_account_or_community.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -58,7 +54,6 @@ class _AssetsViewState extends State<AssetsView> {
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
   late PanelController _panelController;
-  late PausableTimer _balanceWatchdog;
   late AppSettings _appSettingsStore;
   late double _panelHeightOpen;
   final double _panelHeightClosed = 0;
@@ -76,7 +71,6 @@ class _AssetsViewState extends State<AssetsView> {
   @override
   void didChangeDependencies() {
     _appSettingsStore = context.read<AppSettings>();
-    _startBalanceWatchdog();
     l10n = context.l10n;
     // Should typically not be higher than panelHeight, but on really small devices
     // it should not exceed fractionOfScreenHeight x the screen height.
@@ -89,32 +83,16 @@ class _AssetsViewState extends State<AssetsView> {
 
   @override
   void dispose() {
-    _balanceWatchdog.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FocusDetector(
-      onFocusLost: () {
-        Log.d('[home:FocusDetector] Focus Lost.');
-        _balanceWatchdog.pause();
-      },
-      onFocusGained: () {
-        Log.d('[home:FocusDetector] Focus Gained.');
-        if (!widget.store.settings.loading) {
-          _refreshBalanceAndNotify();
-        }
-        _balanceWatchdog
-          ..reset()
-          ..start();
-      },
-      child: Scaffold(
-        appBar: _appBar(),
-        body: RepositoryProvider.of<AppConfig>(context).isIntegrationTest
-            ? _slidingUpPanel(_appBar())
-            : _upgradeAlert(_appBar()),
-      ),
+    return Scaffold(
+      appBar: _appBar(),
+      body: RepositoryProvider.of<AppConfig>(context).isIntegrationTest
+          ? _slidingUpPanel(_appBar())
+          : _upgradeAlert(_appBar()),
     );
   }
 
@@ -338,7 +316,7 @@ class _AssetsViewState extends State<AssetsView> {
                   },
                   onAddIconPressed: () {
                     Navigator.pushNamed(context, CommunityChooserOnMap.route).then((_) {
-                      _refreshBalanceAndNotify();
+                      _refreshEncointerState();
                     });
                   },
                   addIconButtonKey: const Key(EWTestKeys.addCommunity),
@@ -350,7 +328,7 @@ class _AssetsViewState extends State<AssetsView> {
                   accountOrCommunityData: initAllAccounts(),
                   onTap: (int index) async {
                     await switchAccount(widget.store.account.accountListAll[index]);
-                    _refreshBalanceAndNotify();
+                    unawaited(_refreshEncointerState());
                   },
                   onAddIconPressed: () {
                     Navigator.of(context).pushNamed(AddAccountView.route);
@@ -435,76 +413,10 @@ class _AssetsViewState extends State<AssetsView> {
     });
   }
 
-  void _refreshBalanceAndNotify() {
-    webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
-      Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
-      if (widget.store.encointer.chosenCid == null) {
-        Log.d('[home:refreshBalanceAndNotify] no community selected', 'Assets');
-        return;
-      }
-      var activeAccountHasBalance = false;
-      balances.forEach((cid, balanceEntry) {
-        final cidStr = cid.toFmtString();
-        if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
-          final community = widget.store.encointer.communityStores![cidStr]!;
-          final oldBalanceEntry =
-              widget.store.encointer.accountStores?[widget.store.account.currentAddress]?.balanceEntries[cidStr];
-          final demurrageRate = community.demurrage!;
-          final newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
-          final oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
-              ? community.applyDemurrage!(oldBalanceEntry) ?? 0
-              : 0;
-
-          final delta = newBalance - oldBalance;
-          Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
-          if (delta.abs() > demurrageRate) {
-            widget.store.encointer.accountStores![widget.store.account.currentAddress]
-                ?.addBalanceEntry(cid, balances[cid]!);
-            if (delta > demurrageRate) {
-              final msg = l10n.incomingConfirmed(
-                delta,
-                community.metadata!.symbol,
-                widget.store.account.currentAccount.name,
-              );
-              Log.d('[home:balanceWatchdog] $msg', 'Assets');
-              NotificationPlugin.showNotification(45, l10n.fundsReceived, msg, cid: cidStr);
-            }
-          }
-          if (cid == widget.store.encointer.chosenCid) {
-            activeAccountHasBalance = true;
-          }
-        }
-      });
-      if (!activeAccountHasBalance) {
-        Log.d(
-          "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero",
-          'Assets',
-        );
-        widget.store.encointer.accountStores![widget.store.account.currentAddress]
-            ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
-      }
-    }).catchError((Object? e, StackTrace? s) {
-      Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
-    });
-  }
-
-  void _startBalanceWatchdog() {
-    _balanceWatchdog = PausableTimer(
-      const Duration(seconds: 12),
-      () {
-        Log.d('[balanceWatchdog] triggered', 'Assets');
-
-        _refreshBalanceAndNotify();
-        _balanceWatchdog
-          ..reset()
-          ..start();
-      },
-    )..start();
-  }
-
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
     await webApi.encointer.getCurrentPhase();
+    await widget.store.encointer.getEncointerBalance();
   }
 }
 
