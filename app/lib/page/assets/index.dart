@@ -452,6 +452,8 @@ class _AssetsViewState extends State<AssetsView> {
       final delta = widget.store.encointer.account!
           .addBalanceEntryAndReturnDelta(chosenCid, balanceEntry, community.applyDemurrage!);
 
+      Log.d('[home:refreshBalanceAndNotify] getEncointerBalance balance delta: $delta', 'Assets');
+
       if (delta.abs() > demurrageRate) {
         if (delta > demurrageRate) {
           final msg = l10n.incomingConfirmed(
