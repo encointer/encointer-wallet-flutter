@@ -348,6 +348,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getReputations(),
       webApi.encointer.getMeetupTime(),
       webApi.encointer.getMeetupTimeOverride(),
+      getEncointerBalance(),
       updateAggregatedAccountData(),
     ]).timeout(const Duration(seconds: 15)).catchError((Object? e, s) {
       Log.e('Error executing update state: $e', 'EncointerStore');
@@ -358,6 +359,17 @@ abstract class _EncointerStore with Store {
     });
 
     await _updateStateFuture!;
+  }
+
+  Future<void> getEncointerBalance() async {
+    final currentAddress = _rootStore.account.currentAddress;
+
+    if (currentAddress.isEmpty || chosenCid == null) {
+      Log.d('[getEncointerBalance] address empty or chosenCid == null', 'EncointerStore');
+    }
+
+    final balanceEntry = await webApi.encointer.getEncointerBalance(currentAddress, chosenCid!);
+    _rootStore.encointer.account?.addBalanceEntry(chosenCid!, balanceEntry);
   }
 
   Future<void> updateAggregatedAccountData() async {
