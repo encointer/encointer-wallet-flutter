@@ -105,6 +105,25 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
+  double addBalanceEntryAndReturnDelta(
+    CommunityIdentifier cid,
+    BalanceEntry balanceEntry,
+    double? Function(BalanceEntry) demurrageFn,
+  ) {
+    final cidStr = cid.toFmtString();
+    Log.d('balanceEntry $balanceEntry added to cid $cidStr added', 'EncointerAccountStore');
+
+    final oldBalanceEntry = balanceEntries[cidStr];
+    final oldBalance = oldBalanceEntry != null ? demurrageFn(oldBalanceEntry) ?? 0 : 0;
+    final newBalance = demurrageFn(balanceEntry) ?? 0;
+
+    balanceEntries[cid.toFmtString()] = balanceEntry;
+    writeToCache();
+
+    return newBalance - oldBalance;
+  }
+
+  @action
   Future<void> setReputations(Map<int, CommunityReputation> reps) async {
     reputations = reps;
     unawaited(writeToCache());
