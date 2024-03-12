@@ -316,7 +316,11 @@ Future<void> submitEncointerTransfer(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.encointerBalanceTransfer(context.l10n),
-    onFinish: onFinish,
+    onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
+      if (onFinish != null) onFinish(txPageContext, report);
+      store.encointer.getEncointerBalance();
+      return report;
+    },
     onError: onError,
   );
 }
