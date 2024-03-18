@@ -50,13 +50,13 @@ class EncointerDartApi {
   /// Queries the rpc 'encointer_getReputations'.
   ///
   /// Address must be SS58 encoded.
-  Future<Map<int, CommunityReputation>> getReputations(String address, {BlockHash? at}) async {
+  Future<Map<int, CommunityReputationV1>> getReputationsV1(String address, {BlockHash? at}) async {
     final params = [address];
 
     if (at != null) params.add('0x${hex.encode(at)}');
 
     final reputations = await _dartApi.rpc<List<dynamic>>('encointer_getReputations', params);
-    return reputationsFromList(reputations);
+    return reputationsV1FromList(reputations);
   }
 
   /// Queries the rpc 'encointer_getAllCommunities'.

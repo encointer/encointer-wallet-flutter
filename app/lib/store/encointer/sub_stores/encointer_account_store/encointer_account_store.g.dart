@@ -14,7 +14,7 @@ EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json)
         (k, e) => MapEntry(k, BalanceEntry.fromJson(e as Map<String, dynamic>)),
       ))
       ..reputations = (json['reputations'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(int.parse(k), CommunityReputation.fromJson(e as Map<String, dynamic>)),
+        (k, e) => MapEntry(int.parse(k), CommunityReputationV1.fromJson(e as Map<String, dynamic>)),
       )
       ..txsTransfer = ObservableList<TransferData>.of(
           (json['txsTransfer'] as List).map((e) => TransferData.fromJson(e as Map<String, dynamic>)))
@@ -40,11 +40,11 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
-  Computed<Map<int, CommunityReputation>>? _$verifiedReputationsComputed;
+  Computed<Map<int, CommunityReputationV1>>? _$verifiedReputationsComputed;
 
   @override
-  Map<int, CommunityReputation> get verifiedReputations =>
-      (_$verifiedReputationsComputed ??= Computed<Map<int, CommunityReputation>>(() => super.verifiedReputations,
+  Map<int, CommunityReputationV1> get verifiedReputations =>
+      (_$verifiedReputationsComputed ??= Computed<Map<int, CommunityReputationV1>>(() => super.verifiedReputations,
               name: '_EncointerAccountStore.verifiedReputations'))
           .value;
   Computed<int>? _$verifiedReputationCountComputed;
@@ -79,13 +79,13 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   late final _$reputationsAtom = Atom(name: '_EncointerAccountStore.reputations', context: context);
 
   @override
-  Map<int, CommunityReputation> get reputations {
+  Map<int, CommunityReputationV1> get reputations {
     _$reputationsAtom.reportRead();
     return super.reputations;
   }
 
   @override
-  set reputations(Map<int, CommunityReputation> value) {
+  set reputations(Map<int, CommunityReputationV1> value) {
     _$reputationsAtom.reportWrite(value, super.reputations, () {
       super.reputations = value;
     });
@@ -140,7 +140,7 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   late final _$setReputationsAsyncAction = AsyncAction('_EncointerAccountStore.setReputations', context: context);
 
   @override
-  Future<void> setReputations(Map<int, CommunityReputation> reps) {
+  Future<void> setReputations(Map<int, CommunityReputationV1> reps) {
     return _$setReputationsAsyncAction.run(() => super.setReputations(reps));
   }
 

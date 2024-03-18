@@ -7,12 +7,12 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 part 'v1.g.dart';
 
 @JsonSerializable()
-class CommunityReputation {
-  CommunityReputation(this.communityIdentifier, this.reputation);
+class CommunityReputationV1 {
+  CommunityReputationV1(this.communityIdentifier, this.reputation);
 
-  factory CommunityReputation.fromJson(Map<String, dynamic> json) => _$CommunityReputationFromJson(json);
+  factory CommunityReputationV1.fromJson(Map<String, dynamic> json) => _$CommunityReputationV1FromJson(json);
 
-  Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
+  Map<String, dynamic> toJson() => _$CommunityReputationV1ToJson(this);
 
   CommunityIdentifier communityIdentifier;
   Reputation reputation;
@@ -27,11 +27,11 @@ class CommunityReputation {
 // ignore: constant_identifier_names
 enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
 
-Reputation? reputationFromString(String value) {
+Reputation? reputationV1FromString(String value) {
   return getEnumFromString(Reputation.values, value);
 }
 
-extension ReputationExtension on Reputation {
+extension ReputationV1Extension on Reputation {
   String toValue() {
     return toEnumValue(this);
   }
@@ -43,10 +43,10 @@ extension ReputationExtension on Reputation {
 
 /// Takes a `List<dynamic>` which contains a `List<List<[int, Map<String, dynamic>]>` and
 /// transforms it into a `Map<int, CommunityReputation>`.
-Map<int, CommunityReputation> reputationsFromList(List<dynamic> reputationsList) {
+Map<int, CommunityReputationV1> reputationsV1FromList(List<dynamic> reputationsList) {
   final reputations = reputationsList.cast<List<dynamic>>();
 
   return {
-    for (final cr in reputations) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>),
+    for (final cr in reputations) cr[0] as int: CommunityReputationV1.fromJson(cr[1] as Map<String, dynamic>),
   };
 }

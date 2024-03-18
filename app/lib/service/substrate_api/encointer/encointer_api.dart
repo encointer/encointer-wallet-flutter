@@ -26,7 +26,7 @@ import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/encointer_types.dart' show ProofOfAttendance;
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show BlockHash, Tuple2, StorageChangeSet, SequenceCodec, EncointerKusama, ByteInput;
+    show BlockHash, ByteInput, EncointerKusama, RuntimeVersion, SequenceCodec, StorageChangeSet, Tuple2;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
@@ -582,10 +582,28 @@ class EncointerApi {
 
     if (address.isEmpty) return;
 
-    final reputations = await _dartApi.getReputations(address, at: at ?? store.chain.latestHash);
+    final runtimeVersion = await encointerKusama.rpc.state.getRuntimeVersion(at: at ?? store.chain.latestHash);
 
-    Log.d('api: getReputations: $reputations', 'EncointerApi');
-    if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
+    if (hasNewReputationType(runtimeVersion)) {
+      final reputations = await _dartApi.getReputationsV1(address, at: at ?? store.chain.latestHash);
+      Log.d('api: getReputations: $reputations', 'EncointerApi');
+      if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
+    } else {
+      final reputations = await _dartApi.getReputationsV1(address, at: at ?? store.chain.latestHash);
+      Log.d('api: getReputations: $reputations', 'EncointerApi');
+      if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
+    }
+  }
+
+  bool hasNewReputationType(RuntimeVersion version) {
+    if (version.specName == 'encointer-parachain') {
+      return version.specVersion >= 1002000;
+    } else if (version.specName == 'encointer') {
+      return version.specVersion >= 31;
+    } else {
+      Log.p('unknown spec name found: ${version.specName}. Assuming that the runtime has new reputation type');
+      return true;
+    }
   }
 
   /// Gets a proof of attendance for the oldest attended ceremony, if available.

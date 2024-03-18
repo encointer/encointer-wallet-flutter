@@ -57,11 +57,11 @@ abstract class _EncointerAccountStore with Store {
   ///
   /// Map: ceremony index -> CommunityReputation
   @observable
-  Map<int, CommunityReputation> reputations = {};
+  Map<int, CommunityReputationV1> reputations = {};
 
   /// Returns all reputations associated with a meetup.
   @computed
-  Map<int, CommunityReputation> get verifiedReputations {
+  Map<int, CommunityReputationV1> get verifiedReputations {
     final entries = reputations.entries.where((e) => e.value.reputation.isVerified());
     return Map.fromEntries(entries);
   }
@@ -124,7 +124,7 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
-  Future<void> setReputations(Map<int, CommunityReputation> reps) async {
+  Future<void> setReputations(Map<int, CommunityReputationV1> reps) async {
     reputations = reps;
     unawaited(writeToCache());
     await getNumberOfNewbieTicketsForReputable();
