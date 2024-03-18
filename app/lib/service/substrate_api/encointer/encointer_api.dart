@@ -592,7 +592,7 @@ class EncointerApi {
       final reputationsV1 = await _dartApi.getReputationsV1(address, at: at ?? store.chain.latestHash);
       Log.d('api: getReputations: $reputationsV1', 'EncointerApi');
       final cIndex = store.encointer.currentCeremonyIndex ?? 0;
-      final reputations = Map<int, CommunityReputation>.fromIterable(
+      final reputations = Map.fromEntries(
           reputationsV1.entries.map((e) => MapEntry(e.key, e.value.toV2(cIndex))));
       Log.d('api: getReputations (migrated to V2): $reputations', 'EncointerApi');
 
@@ -619,7 +619,11 @@ class EncointerApi {
   /// Note: this returns the polkadart generated type.
   ProofOfAttendance? getProofOfAttendance() {
     final pubKey = store.account.currentAccountPubKey;
-    final cIndex = store.encointer.account?.ceremonyIndexForNextProofOfAttendance;
+    final currentCeremonyIndex = store.encointer.currentCeremonyIndex;
+
+    if (currentCeremonyIndex == null) return null;
+
+    final cIndex = store.encointer.account?.ceremonyIndexForNextProofOfAttendance(currentCeremonyIndex);
 
     if (cIndex == null || cIndex == 0) {
       return null;

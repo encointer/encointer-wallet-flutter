@@ -49,13 +49,6 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   int get verifiedReputationCount => (_$verifiedReputationCountComputed ??=
           Computed<int>(() => super.verifiedReputationCount, name: '_EncointerAccountStore.verifiedReputationCount'))
       .value;
-  Computed<int?>? _$ceremonyIndexForNextProofOfAttendanceComputed;
-
-  @override
-  int? get ceremonyIndexForNextProofOfAttendance => (_$ceremonyIndexForNextProofOfAttendanceComputed ??= Computed<int?>(
-          () => super.ceremonyIndexForNextProofOfAttendance,
-          name: '_EncointerAccountStore.ceremonyIndexForNextProofOfAttendance'))
-      .value;
 
   late final _$balanceEntriesAtom = Atom(name: '_EncointerAccountStore.balanceEntries', context: context);
 
@@ -213,8 +206,7 @@ txsTransfer: ${txsTransfer},
 numberOfNewbieTicketsForReputable: ${numberOfNewbieTicketsForReputable},
 lastProofOfAttendance: ${lastProofOfAttendance},
 verifiedReputations: ${verifiedReputations},
-verifiedReputationCount: ${verifiedReputationCount},
-ceremonyIndexForNextProofOfAttendance: ${ceremonyIndexForNextProofOfAttendance}
+verifiedReputationCount: ${verifiedReputationCount}
     ''';
   }
 }

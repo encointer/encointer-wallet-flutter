@@ -80,13 +80,17 @@ abstract class _EncointerAccountStore with Store {
   @observable
   int numberOfNewbieTicketsForReputable = 0;
 
-  @computed
-  int? get ceremonyIndexForNextProofOfAttendance {
+  int? ceremonyIndexForNextProofOfAttendance(int currentCeremonyIndex) {
     if (verifiedReputations.isNotEmpty) {
       try {
-        return verifiedReputations.entries.firstWhere((e) => e.value.reputation.runtimeType == VerifiedUnlinked).key;
+        return verifiedReputations.entries.firstWhere((e) {
+          return e.value.reputation.runtimeType == VerifiedUnlinked ||
+              (e.value.reputation.runtimeType == VerifiedLinked &&
+                  (e.value.reputation as VerifiedLinked).value0 != currentCeremonyIndex);
+        }).key;
       } catch (e, s) {
-        Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
+        Log.e('$address has reputation, but none that has not been linked with the current cIndex',
+            'EncointerAccountStore', s);
         return 0;
       }
     } else {
