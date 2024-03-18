@@ -598,7 +598,7 @@ class EncointerApi {
   bool hasNewReputationType(RuntimeVersion version) {
     if (version.specName == 'encointer-parachain') {
       return version.specVersion >= 1002000;
-    } else if (version.specName == 'encointer') {
+    } else if (version.specName == 'encointer-node-notee') {
       return version.specVersion >= 31;
     } else {
       Log.p('unknown spec name found: ${version.specName}. Assuming that the runtime has new reputation type');
