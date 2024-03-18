@@ -26,7 +26,7 @@ List<CidName> testCommunities = [
 ];
 
 Map<int, CommunityReputationV1> testReputations = {
-  1: CommunityReputationV1(cid, Reputation.VerifiedUnlinked),
+  1: CommunityReputationV1(cid, ReputationV1.VerifiedUnlinked),
 };
 
 const Map<String, dynamic> communityMetadata = {

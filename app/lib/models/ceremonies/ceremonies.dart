@@ -6,6 +6,7 @@ import 'package:ew_polkadart/encointer_types.dart' as et;
 import 'package:encointer_wallet/utils/enum.dart';
 
 export 'reputation/v1.dart';
+export 'reputation/v2.dart';
 
 part 'ceremonies.g.dart';
 

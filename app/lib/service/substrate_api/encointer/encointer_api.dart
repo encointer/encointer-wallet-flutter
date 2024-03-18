@@ -585,9 +585,9 @@ class EncointerApi {
     final runtimeVersion = await encointerKusama.rpc.state.getRuntimeVersion(at: at ?? store.chain.latestHash);
 
     if (hasNewReputationType(runtimeVersion)) {
-      final reputations = await _dartApi.getReputationsV1(address, at: at ?? store.chain.latestHash);
+      final reputations = await _dartApi.getReputations(address, at: at ?? store.chain.latestHash);
       Log.d('api: getReputations: $reputations', 'EncointerApi');
-      if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
+      // if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
     } else {
       final reputations = await _dartApi.getReputationsV1(address, at: at ?? store.chain.latestHash);
       Log.d('api: getReputations: $reputations', 'EncointerApi');
@@ -596,6 +596,7 @@ class EncointerApi {
   }
 
   bool hasNewReputationType(RuntimeVersion version) {
+    Log.p('Runtime version ${version.toJson()}');
     if (version.specName == 'encointer-parachain') {
       return version.specVersion >= 1002000;
     } else if (version.specName == 'encointer-node-notee') {

@@ -15,7 +15,7 @@ class CommunityReputationV1 {
   Map<String, dynamic> toJson() => _$CommunityReputationV1ToJson(this);
 
   CommunityIdentifier communityIdentifier;
-  Reputation reputation;
+  ReputationV1 reputation;
 
   @override
   String toString() {
@@ -25,19 +25,15 @@ class CommunityReputationV1 {
 
 // For compatibility with substrate's naming convention.
 // ignore: constant_identifier_names
-enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
+enum ReputationV1 { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
 
-Reputation? reputationV1FromString(String value) {
-  return getEnumFromString(Reputation.values, value);
-}
-
-extension ReputationV1Extension on Reputation {
+extension ReputationV1Extension on ReputationV1 {
   String toValue() {
     return toEnumValue(this);
   }
 
   bool isVerified() {
-    return this == Reputation.VerifiedUnlinked || this == Reputation.VerifiedLinked;
+    return this == ReputationV1.VerifiedUnlinked || this == ReputationV1.VerifiedLinked;
   }
 }
 
