@@ -3,6 +3,8 @@ import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
+import '../staging_xcm/v4/asset/asset_id.dart' as _i4;
+import '../staging_xcm/v4/location/location.dart' as _i5;
 import 'v3/multiasset/asset_id.dart' as _i3;
 
 abstract class VersionedAssetId {
@@ -35,6 +37,10 @@ class $VersionedAssetId {
   V3 v3(_i3.AssetId value0) {
     return V3(value0);
   }
+
+  V4 v4(_i4.AssetId value0) {
+    return V4(value0);
+  }
 }
 
 class $VersionedAssetIdCodec with _i1.Codec<VersionedAssetId> {
@@ -46,6 +52,8 @@ class $VersionedAssetIdCodec with _i1.Codec<VersionedAssetId> {
     switch (index) {
       case 3:
         return V3._decode(input);
+      case 4:
+        return V4._decode(input);
       default:
         throw Exception('VersionedAssetId: Invalid variant index: "$index"');
     }
@@ -60,6 +68,9 @@ class $VersionedAssetIdCodec with _i1.Codec<VersionedAssetId> {
       case V3:
         (value as V3).encodeTo(output);
         break;
+      case V4:
+        (value as V4).encodeTo(output);
+        break;
       default:
         throw Exception('VersionedAssetId: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -70,6 +81,8 @@ class $VersionedAssetIdCodec with _i1.Codec<VersionedAssetId> {
     switch (value.runtimeType) {
       case V3:
         return (value as V3)._sizeHint();
+      case V4:
+        return (value as V4)._sizeHint();
       default:
         throw Exception('VersionedAssetId: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -113,6 +126,48 @@ class V3 extends VersionedAssetId {
         other,
       ) ||
       other is V3 && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class V4 extends VersionedAssetId {
+  const V4(this.value0);
+
+  factory V4._decode(_i1.Input input) {
+    return V4(_i5.Location.codec.decode(input));
+  }
+
+  /// v4::AssetId
+  final _i4.AssetId value0;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {'V4': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i4.AssetIdCodec().sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      4,
+      output,
+    );
+    _i5.Location.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is V4 && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;

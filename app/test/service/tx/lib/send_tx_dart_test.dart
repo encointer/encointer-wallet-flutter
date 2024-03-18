@@ -29,7 +29,7 @@ void main() {
 
       // Checked that the encoded call matches the one from polkadot-js.
       const oneERT = 1000000000000;
-      final transfer = encointerKusama.tx.balances.transfer(dest: bob.multiAddress(), value: BigInt.from(oneERT));
+      final transfer = encointerKusama.tx.balances.transferAllowDeath(dest: bob.multiAddress(), value: BigInt.from(oneERT));
 
       final txBuilder = TxBuilder(provider);
 

@@ -1,26 +1,27 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i12;
-import 'dart:typed_data' as _i13;
+import 'dart:async' as _i13;
+import 'dart:typed_data' as _i14;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_runtime/runtime_call.dart' as _i14;
-import '../types/pallet_xcm/pallet/call.dart' as _i16;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i15;
+import '../types/pallet_xcm/pallet/call.dart' as _i17;
 import '../types/pallet_xcm/pallet/query_status.dart' as _i3;
-import '../types/pallet_xcm/pallet/remote_locked_fungible_record.dart' as _i11;
-import '../types/pallet_xcm/pallet/version_migration_stage.dart' as _i8;
+import '../types/pallet_xcm/pallet/remote_locked_fungible_record.dart' as _i12;
+import '../types/pallet_xcm/pallet/version_migration_stage.dart' as _i9;
 import '../types/primitive_types/h256.dart' as _i4;
-import '../types/sp_core/crypto/account_id32.dart' as _i9;
+import '../types/sp_core/crypto/account_id32.dart' as _i10;
 import '../types/sp_weights/weight_v2/weight.dart' as _i7;
-import '../types/tuples.dart' as _i6;
-import '../types/xcm/v3/multilocation/multi_location.dart' as _i19;
-import '../types/xcm/v3/weight_limit.dart' as _i20;
-import '../types/xcm/versioned_asset_id.dart' as _i10;
-import '../types/xcm/versioned_multi_assets.dart' as _i17;
-import '../types/xcm/versioned_multi_location.dart' as _i5;
-import '../types/xcm/versioned_xcm_1.dart' as _i15;
-import '../types/xcm/versioned_xcm_2.dart' as _i18;
+import '../types/staging_xcm/v4/location/location.dart' as _i20;
+import '../types/tuples.dart' as _i8;
+import '../types/tuples_2.dart' as _i6;
+import '../types/xcm/v3/weight_limit.dart' as _i21;
+import '../types/xcm/versioned_asset_id.dart' as _i11;
+import '../types/xcm/versioned_assets.dart' as _i18;
+import '../types/xcm/versioned_location.dart' as _i5;
+import '../types/xcm/versioned_xcm_1.dart' as _i16;
+import '../types/xcm/versioned_xcm_2.dart' as _i19;
 
 class Queries {
   const Queries(this.__api);
@@ -53,27 +54,26 @@ class Queries {
     valueCodec: _i2.U32Codec.codec,
   );
 
-  final _i1.StorageDoubleMap<int, _i5.VersionedMultiLocation, int> _supportedVersion =
-      const _i1.StorageDoubleMap<int, _i5.VersionedMultiLocation, int>(
+  final _i1.StorageDoubleMap<int, _i5.VersionedLocation, int> _supportedVersion =
+      const _i1.StorageDoubleMap<int, _i5.VersionedLocation, int>(
     prefix: 'PolkadotXcm',
     storage: 'SupportedVersion',
     valueCodec: _i2.U32Codec.codec,
     hasher1: _i1.StorageHasher.twoxx64Concat(_i2.U32Codec.codec),
-    hasher2: _i1.StorageHasher.blake2b128Concat(_i5.VersionedMultiLocation.codec),
+    hasher2: _i1.StorageHasher.blake2b128Concat(_i5.VersionedLocation.codec),
   );
 
-  final _i1.StorageDoubleMap<int, _i5.VersionedMultiLocation, BigInt> _versionNotifiers =
-      const _i1.StorageDoubleMap<int, _i5.VersionedMultiLocation, BigInt>(
+  final _i1.StorageDoubleMap<int, _i5.VersionedLocation, BigInt> _versionNotifiers =
+      const _i1.StorageDoubleMap<int, _i5.VersionedLocation, BigInt>(
     prefix: 'PolkadotXcm',
     storage: 'VersionNotifiers',
     valueCodec: _i2.U64Codec.codec,
     hasher1: _i1.StorageHasher.twoxx64Concat(_i2.U32Codec.codec),
-    hasher2: _i1.StorageHasher.blake2b128Concat(_i5.VersionedMultiLocation.codec),
+    hasher2: _i1.StorageHasher.blake2b128Concat(_i5.VersionedLocation.codec),
   );
 
-  final _i1.StorageDoubleMap<int, _i5.VersionedMultiLocation, _i6.Tuple3<BigInt, _i7.Weight, int>>
-      _versionNotifyTargets =
-      const _i1.StorageDoubleMap<int, _i5.VersionedMultiLocation, _i6.Tuple3<BigInt, _i7.Weight, int>>(
+  final _i1.StorageDoubleMap<int, _i5.VersionedLocation, _i6.Tuple3<BigInt, _i7.Weight, int>> _versionNotifyTargets =
+      const _i1.StorageDoubleMap<int, _i5.VersionedLocation, _i6.Tuple3<BigInt, _i7.Weight, int>>(
     prefix: 'PolkadotXcm',
     storage: 'VersionNotifyTargets',
     valueCodec: _i6.Tuple3Codec<BigInt, _i7.Weight, int>(
@@ -82,48 +82,47 @@ class Queries {
       _i2.U32Codec.codec,
     ),
     hasher1: _i1.StorageHasher.twoxx64Concat(_i2.U32Codec.codec),
-    hasher2: _i1.StorageHasher.blake2b128Concat(_i5.VersionedMultiLocation.codec),
+    hasher2: _i1.StorageHasher.blake2b128Concat(_i5.VersionedLocation.codec),
   );
 
-  final _i1.StorageValue<List<_i6.Tuple2<_i5.VersionedMultiLocation, int>>> _versionDiscoveryQueue =
-      const _i1.StorageValue<List<_i6.Tuple2<_i5.VersionedMultiLocation, int>>>(
+  final _i1.StorageValue<List<_i8.Tuple2<_i5.VersionedLocation, int>>> _versionDiscoveryQueue =
+      const _i1.StorageValue<List<_i8.Tuple2<_i5.VersionedLocation, int>>>(
     prefix: 'PolkadotXcm',
     storage: 'VersionDiscoveryQueue',
-    valueCodec:
-        _i2.SequenceCodec<_i6.Tuple2<_i5.VersionedMultiLocation, int>>(_i6.Tuple2Codec<_i5.VersionedMultiLocation, int>(
-      _i5.VersionedMultiLocation.codec,
+    valueCodec: _i2.SequenceCodec<_i8.Tuple2<_i5.VersionedLocation, int>>(_i8.Tuple2Codec<_i5.VersionedLocation, int>(
+      _i5.VersionedLocation.codec,
       _i2.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageValue<_i8.VersionMigrationStage> _currentMigration =
-      const _i1.StorageValue<_i8.VersionMigrationStage>(
+  final _i1.StorageValue<_i9.VersionMigrationStage> _currentMigration =
+      const _i1.StorageValue<_i9.VersionMigrationStage>(
     prefix: 'PolkadotXcm',
     storage: 'CurrentMigration',
-    valueCodec: _i8.VersionMigrationStage.codec,
+    valueCodec: _i9.VersionMigrationStage.codec,
   );
 
-  final _i1.StorageTripleMap<int, _i9.AccountId32, _i10.VersionedAssetId, _i11.RemoteLockedFungibleRecord>
+  final _i1.StorageTripleMap<int, _i10.AccountId32, _i11.VersionedAssetId, _i12.RemoteLockedFungibleRecord>
       _remoteLockedFungibles =
-      const _i1.StorageTripleMap<int, _i9.AccountId32, _i10.VersionedAssetId, _i11.RemoteLockedFungibleRecord>(
+      const _i1.StorageTripleMap<int, _i10.AccountId32, _i11.VersionedAssetId, _i12.RemoteLockedFungibleRecord>(
     prefix: 'PolkadotXcm',
     storage: 'RemoteLockedFungibles',
-    valueCodec: _i11.RemoteLockedFungibleRecord.codec,
+    valueCodec: _i12.RemoteLockedFungibleRecord.codec,
     hasher1: _i1.StorageHasher.twoxx64Concat(_i2.U32Codec.codec),
-    hasher2: _i1.StorageHasher.blake2b128Concat(_i9.AccountId32Codec()),
-    hasher3: _i1.StorageHasher.blake2b128Concat(_i10.VersionedAssetId.codec),
+    hasher2: _i1.StorageHasher.blake2b128Concat(_i10.AccountId32Codec()),
+    hasher3: _i1.StorageHasher.blake2b128Concat(_i11.VersionedAssetId.codec),
   );
 
-  final _i1.StorageMap<_i9.AccountId32, List<_i6.Tuple2<BigInt, _i5.VersionedMultiLocation>>> _lockedFungibles =
-      const _i1.StorageMap<_i9.AccountId32, List<_i6.Tuple2<BigInt, _i5.VersionedMultiLocation>>>(
+  final _i1.StorageMap<_i10.AccountId32, List<_i8.Tuple2<BigInt, _i5.VersionedLocation>>> _lockedFungibles =
+      const _i1.StorageMap<_i10.AccountId32, List<_i8.Tuple2<BigInt, _i5.VersionedLocation>>>(
     prefix: 'PolkadotXcm',
     storage: 'LockedFungibles',
-    valueCodec: _i2.SequenceCodec<_i6.Tuple2<BigInt, _i5.VersionedMultiLocation>>(
-        _i6.Tuple2Codec<BigInt, _i5.VersionedMultiLocation>(
+    valueCodec:
+        _i2.SequenceCodec<_i8.Tuple2<BigInt, _i5.VersionedLocation>>(_i8.Tuple2Codec<BigInt, _i5.VersionedLocation>(
       _i2.U128Codec.codec,
-      _i5.VersionedMultiLocation.codec,
+      _i5.VersionedLocation.codec,
     )),
-    hasher: _i1.StorageHasher.blake2b128Concat(_i9.AccountId32Codec()),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i10.AccountId32Codec()),
   );
 
   final _i1.StorageValue<bool> _xcmExecutionSuspended = const _i1.StorageValue<bool>(
@@ -133,7 +132,7 @@ class Queries {
   );
 
   /// The latest available query index.
-  _i12.Future<BigInt> queryCounter({_i1.BlockHash? at}) async {
+  _i13.Future<BigInt> queryCounter({_i1.BlockHash? at}) async {
     final hashedKey = _queryCounter.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -146,7 +145,7 @@ class Queries {
   }
 
   /// The ongoing queries.
-  _i12.Future<_i3.QueryStatus?> queries(
+  _i13.Future<_i3.QueryStatus?> queries(
     BigInt key1, {
     _i1.BlockHash? at,
   }) async {
@@ -163,9 +162,9 @@ class Queries {
 
   /// The existing asset traps.
   ///
-  /// Key is the blake2 256 hash of (origin, versioned `MultiAssets`) pair. Value is the number of
+  /// Key is the blake2 256 hash of (origin, versioned `Assets`) pair. Value is the number of
   /// times this pair has been trapped (usually just 1 if it exists at all).
-  _i12.Future<int> assetTraps(
+  _i13.Future<int> assetTraps(
     _i4.H256 key1, {
     _i1.BlockHash? at,
   }) async {
@@ -182,7 +181,7 @@ class Queries {
 
   /// Default version to encode XCM when latest version of destination is unknown. If `None`,
   /// then the destinations whose XCM version is unknown are considered unreachable.
-  _i12.Future<int?> safeXcmVersion({_i1.BlockHash? at}) async {
+  _i13.Future<int?> safeXcmVersion({_i1.BlockHash? at}) async {
     final hashedKey = _safeXcmVersion.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -195,9 +194,9 @@ class Queries {
   }
 
   /// The Latest versions that we know various locations support.
-  _i12.Future<int?> supportedVersion(
+  _i13.Future<int?> supportedVersion(
     int key1,
-    _i5.VersionedMultiLocation key2, {
+    _i5.VersionedLocation key2, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _supportedVersion.hashedKeyFor(
@@ -215,9 +214,9 @@ class Queries {
   }
 
   /// All locations that we have requested version notifications from.
-  _i12.Future<BigInt?> versionNotifiers(
+  _i13.Future<BigInt?> versionNotifiers(
     int key1,
-    _i5.VersionedMultiLocation key2, {
+    _i5.VersionedLocation key2, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _versionNotifiers.hashedKeyFor(
@@ -236,9 +235,9 @@ class Queries {
 
   /// The target locations that are subscribed to our version changes, as well as the most recent
   /// of our versions we informed them of.
-  _i12.Future<_i6.Tuple3<BigInt, _i7.Weight, int>?> versionNotifyTargets(
+  _i13.Future<_i6.Tuple3<BigInt, _i7.Weight, int>?> versionNotifyTargets(
     int key1,
-    _i5.VersionedMultiLocation key2, {
+    _i5.VersionedLocation key2, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _versionNotifyTargets.hashedKeyFor(
@@ -258,7 +257,7 @@ class Queries {
   /// Destinations whose latest XCM version we would like to know. Duplicates not allowed, and
   /// the `u32` counter is the number of times that a send to the destination has been attempted,
   /// which is used as a prioritization.
-  _i12.Future<List<_i6.Tuple2<_i5.VersionedMultiLocation, int>>> versionDiscoveryQueue({_i1.BlockHash? at}) async {
+  _i13.Future<List<_i8.Tuple2<_i5.VersionedLocation, int>>> versionDiscoveryQueue({_i1.BlockHash? at}) async {
     final hashedKey = _versionDiscoveryQueue.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -271,7 +270,7 @@ class Queries {
   }
 
   /// The current migration's stage, if any.
-  _i12.Future<_i8.VersionMigrationStage?> currentMigration({_i1.BlockHash? at}) async {
+  _i13.Future<_i9.VersionMigrationStage?> currentMigration({_i1.BlockHash? at}) async {
     final hashedKey = _currentMigration.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -284,10 +283,10 @@ class Queries {
   }
 
   /// Fungible assets which we know are locked on a remote chain.
-  _i12.Future<_i11.RemoteLockedFungibleRecord?> remoteLockedFungibles(
+  _i13.Future<_i12.RemoteLockedFungibleRecord?> remoteLockedFungibles(
     int key1,
-    _i9.AccountId32 key2,
-    _i10.VersionedAssetId key3, {
+    _i10.AccountId32 key2,
+    _i11.VersionedAssetId key3, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _remoteLockedFungibles.hashedKeyFor(
@@ -306,8 +305,8 @@ class Queries {
   }
 
   /// Fungible assets which we know are locked on this chain.
-  _i12.Future<List<_i6.Tuple2<BigInt, _i5.VersionedMultiLocation>>?> lockedFungibles(
-    _i9.AccountId32 key1, {
+  _i13.Future<List<_i8.Tuple2<BigInt, _i5.VersionedLocation>>?> lockedFungibles(
+    _i10.AccountId32 key1, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _lockedFungibles.hashedKeyFor(key1);
@@ -322,7 +321,7 @@ class Queries {
   }
 
   /// Global suspension state of the XCM executor.
-  _i12.Future<bool> xcmExecutionSuspended({_i1.BlockHash? at}) async {
+  _i13.Future<bool> xcmExecutionSuspended({_i1.BlockHash? at}) async {
     final hashedKey = _xcmExecutionSuspended.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -335,33 +334,33 @@ class Queries {
   }
 
   /// Returns the storage key for `queryCounter`.
-  _i13.Uint8List queryCounterKey() {
+  _i14.Uint8List queryCounterKey() {
     final hashedKey = _queryCounter.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `queries`.
-  _i13.Uint8List queriesKey(BigInt key1) {
+  _i14.Uint8List queriesKey(BigInt key1) {
     final hashedKey = _queries.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `assetTraps`.
-  _i13.Uint8List assetTrapsKey(_i4.H256 key1) {
+  _i14.Uint8List assetTrapsKey(_i4.H256 key1) {
     final hashedKey = _assetTraps.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `safeXcmVersion`.
-  _i13.Uint8List safeXcmVersionKey() {
+  _i14.Uint8List safeXcmVersionKey() {
     final hashedKey = _safeXcmVersion.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `supportedVersion`.
-  _i13.Uint8List supportedVersionKey(
+  _i14.Uint8List supportedVersionKey(
     int key1,
-    _i5.VersionedMultiLocation key2,
+    _i5.VersionedLocation key2,
   ) {
     final hashedKey = _supportedVersion.hashedKeyFor(
       key1,
@@ -371,9 +370,9 @@ class Queries {
   }
 
   /// Returns the storage key for `versionNotifiers`.
-  _i13.Uint8List versionNotifiersKey(
+  _i14.Uint8List versionNotifiersKey(
     int key1,
-    _i5.VersionedMultiLocation key2,
+    _i5.VersionedLocation key2,
   ) {
     final hashedKey = _versionNotifiers.hashedKeyFor(
       key1,
@@ -383,9 +382,9 @@ class Queries {
   }
 
   /// Returns the storage key for `versionNotifyTargets`.
-  _i13.Uint8List versionNotifyTargetsKey(
+  _i14.Uint8List versionNotifyTargetsKey(
     int key1,
-    _i5.VersionedMultiLocation key2,
+    _i5.VersionedLocation key2,
   ) {
     final hashedKey = _versionNotifyTargets.hashedKeyFor(
       key1,
@@ -395,22 +394,22 @@ class Queries {
   }
 
   /// Returns the storage key for `versionDiscoveryQueue`.
-  _i13.Uint8List versionDiscoveryQueueKey() {
+  _i14.Uint8List versionDiscoveryQueueKey() {
     final hashedKey = _versionDiscoveryQueue.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `currentMigration`.
-  _i13.Uint8List currentMigrationKey() {
+  _i14.Uint8List currentMigrationKey() {
     final hashedKey = _currentMigration.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `remoteLockedFungibles`.
-  _i13.Uint8List remoteLockedFungiblesKey(
+  _i14.Uint8List remoteLockedFungiblesKey(
     int key1,
-    _i9.AccountId32 key2,
-    _i10.VersionedAssetId key3,
+    _i10.AccountId32 key2,
+    _i11.VersionedAssetId key3,
   ) {
     final hashedKey = _remoteLockedFungibles.hashedKeyFor(
       key1,
@@ -421,49 +420,49 @@ class Queries {
   }
 
   /// Returns the storage key for `lockedFungibles`.
-  _i13.Uint8List lockedFungiblesKey(_i9.AccountId32 key1) {
+  _i14.Uint8List lockedFungiblesKey(_i10.AccountId32 key1) {
     final hashedKey = _lockedFungibles.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `xcmExecutionSuspended`.
-  _i13.Uint8List xcmExecutionSuspendedKey() {
+  _i14.Uint8List xcmExecutionSuspendedKey() {
     final hashedKey = _xcmExecutionSuspended.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `queries`.
-  _i13.Uint8List queriesMapPrefix() {
+  _i14.Uint8List queriesMapPrefix() {
     final hashedKey = _queries.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `assetTraps`.
-  _i13.Uint8List assetTrapsMapPrefix() {
+  _i14.Uint8List assetTrapsMapPrefix() {
     final hashedKey = _assetTraps.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `supportedVersion`.
-  _i13.Uint8List supportedVersionMapPrefix(int key1) {
+  _i14.Uint8List supportedVersionMapPrefix(int key1) {
     final hashedKey = _supportedVersion.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `versionNotifiers`.
-  _i13.Uint8List versionNotifiersMapPrefix(int key1) {
+  _i14.Uint8List versionNotifiersMapPrefix(int key1) {
     final hashedKey = _versionNotifiers.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `versionNotifyTargets`.
-  _i13.Uint8List versionNotifyTargetsMapPrefix(int key1) {
+  _i14.Uint8List versionNotifyTargetsMapPrefix(int key1) {
     final hashedKey = _versionNotifyTargets.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `lockedFungibles`.
-  _i13.Uint8List lockedFungiblesMapPrefix() {
+  _i14.Uint8List lockedFungiblesMapPrefix() {
     final hashedKey = _lockedFungibles.mapPrefix();
     return hashedKey;
   }
@@ -473,130 +472,160 @@ class Txs {
   const Txs();
 
   /// See [`Pallet::send`].
-  _i14.RuntimeCall send({
-    required _i5.VersionedMultiLocation dest,
-    required _i15.VersionedXcm message,
+  _i15.RuntimeCall send({
+    required _i5.VersionedLocation dest,
+    required _i16.VersionedXcm message,
   }) {
-    final _call = _i16.Call.values.send(
+    final _call = _i17.Call.values.send(
       dest: dest,
       message: message,
     );
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::teleport_assets`].
-  _i14.RuntimeCall teleportAssets({
-    required _i5.VersionedMultiLocation dest,
-    required _i5.VersionedMultiLocation beneficiary,
-    required _i17.VersionedMultiAssets assets,
+  _i15.RuntimeCall teleportAssets({
+    required _i5.VersionedLocation dest,
+    required _i5.VersionedLocation beneficiary,
+    required _i18.VersionedAssets assets,
     required int feeAssetItem,
   }) {
-    final _call = _i16.Call.values.teleportAssets(
+    final _call = _i17.Call.values.teleportAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
       feeAssetItem: feeAssetItem,
     );
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::reserve_transfer_assets`].
-  _i14.RuntimeCall reserveTransferAssets({
-    required _i5.VersionedMultiLocation dest,
-    required _i5.VersionedMultiLocation beneficiary,
-    required _i17.VersionedMultiAssets assets,
+  _i15.RuntimeCall reserveTransferAssets({
+    required _i5.VersionedLocation dest,
+    required _i5.VersionedLocation beneficiary,
+    required _i18.VersionedAssets assets,
     required int feeAssetItem,
   }) {
-    final _call = _i16.Call.values.reserveTransferAssets(
+    final _call = _i17.Call.values.reserveTransferAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
       feeAssetItem: feeAssetItem,
     );
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::execute`].
-  _i14.RuntimeCall execute({
-    required _i18.VersionedXcm message,
+  _i15.RuntimeCall execute({
+    required _i19.VersionedXcm message,
     required _i7.Weight maxWeight,
   }) {
-    final _call = _i16.Call.values.execute(
+    final _call = _i17.Call.values.execute(
       message: message,
       maxWeight: maxWeight,
     );
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_xcm_version`].
-  _i14.RuntimeCall forceXcmVersion({
-    required _i19.MultiLocation location,
+  _i15.RuntimeCall forceXcmVersion({
+    required _i20.Location location,
     required int version,
   }) {
-    final _call = _i16.Call.values.forceXcmVersion(
+    final _call = _i17.Call.values.forceXcmVersion(
       location: location,
       version: version,
     );
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_default_xcm_version`].
-  _i14.RuntimeCall forceDefaultXcmVersion({int? maybeXcmVersion}) {
-    final _call = _i16.Call.values.forceDefaultXcmVersion(maybeXcmVersion: maybeXcmVersion);
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+  _i15.RuntimeCall forceDefaultXcmVersion({int? maybeXcmVersion}) {
+    final _call = _i17.Call.values.forceDefaultXcmVersion(maybeXcmVersion: maybeXcmVersion);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_subscribe_version_notify`].
-  _i14.RuntimeCall forceSubscribeVersionNotify({required _i5.VersionedMultiLocation location}) {
-    final _call = _i16.Call.values.forceSubscribeVersionNotify(location: location);
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+  _i15.RuntimeCall forceSubscribeVersionNotify({required _i5.VersionedLocation location}) {
+    final _call = _i17.Call.values.forceSubscribeVersionNotify(location: location);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_unsubscribe_version_notify`].
-  _i14.RuntimeCall forceUnsubscribeVersionNotify({required _i5.VersionedMultiLocation location}) {
-    final _call = _i16.Call.values.forceUnsubscribeVersionNotify(location: location);
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+  _i15.RuntimeCall forceUnsubscribeVersionNotify({required _i5.VersionedLocation location}) {
+    final _call = _i17.Call.values.forceUnsubscribeVersionNotify(location: location);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::limited_reserve_transfer_assets`].
-  _i14.RuntimeCall limitedReserveTransferAssets({
-    required _i5.VersionedMultiLocation dest,
-    required _i5.VersionedMultiLocation beneficiary,
-    required _i17.VersionedMultiAssets assets,
+  _i15.RuntimeCall limitedReserveTransferAssets({
+    required _i5.VersionedLocation dest,
+    required _i5.VersionedLocation beneficiary,
+    required _i18.VersionedAssets assets,
     required int feeAssetItem,
-    required _i20.WeightLimit weightLimit,
+    required _i21.WeightLimit weightLimit,
   }) {
-    final _call = _i16.Call.values.limitedReserveTransferAssets(
+    final _call = _i17.Call.values.limitedReserveTransferAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
       feeAssetItem: feeAssetItem,
       weightLimit: weightLimit,
     );
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::limited_teleport_assets`].
-  _i14.RuntimeCall limitedTeleportAssets({
-    required _i5.VersionedMultiLocation dest,
-    required _i5.VersionedMultiLocation beneficiary,
-    required _i17.VersionedMultiAssets assets,
+  _i15.RuntimeCall limitedTeleportAssets({
+    required _i5.VersionedLocation dest,
+    required _i5.VersionedLocation beneficiary,
+    required _i18.VersionedAssets assets,
     required int feeAssetItem,
-    required _i20.WeightLimit weightLimit,
+    required _i21.WeightLimit weightLimit,
   }) {
-    final _call = _i16.Call.values.limitedTeleportAssets(
+    final _call = _i17.Call.values.limitedTeleportAssets(
       dest: dest,
       beneficiary: beneficiary,
       assets: assets,
       feeAssetItem: feeAssetItem,
       weightLimit: weightLimit,
     );
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 
   /// See [`Pallet::force_suspension`].
-  _i14.RuntimeCall forceSuspension({required bool suspended}) {
-    final _call = _i16.Call.values.forceSuspension(suspended: suspended);
-    return _i14.RuntimeCall.values.polkadotXcm(_call);
+  _i15.RuntimeCall forceSuspension({required bool suspended}) {
+    final _call = _i17.Call.values.forceSuspension(suspended: suspended);
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
+  }
+
+  /// See [`Pallet::transfer_assets`].
+  _i15.RuntimeCall transferAssets({
+    required _i5.VersionedLocation dest,
+    required _i5.VersionedLocation beneficiary,
+    required _i18.VersionedAssets assets,
+    required int feeAssetItem,
+    required _i21.WeightLimit weightLimit,
+  }) {
+    final _call = _i17.Call.values.transferAssets(
+      dest: dest,
+      beneficiary: beneficiary,
+      assets: assets,
+      feeAssetItem: feeAssetItem,
+      weightLimit: weightLimit,
+    );
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
+  }
+
+  /// See [`Pallet::claim_assets`].
+  _i15.RuntimeCall claimAssets({
+    required _i18.VersionedAssets assets,
+    required _i5.VersionedLocation beneficiary,
+  }) {
+    final _call = _i17.Call.values.claimAssets(
+      assets: assets,
+      beneficiary: beneficiary,
+    );
+    return _i15.RuntimeCall.values.polkadotXcm(_call);
   }
 }

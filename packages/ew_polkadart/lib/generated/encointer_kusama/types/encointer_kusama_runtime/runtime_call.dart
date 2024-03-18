@@ -3,39 +3,40 @@ import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
-import '../cumulus_pallet_dmp_queue/pallet/event.dart' as _i11;
-import '../cumulus_pallet_parachain_system/pallet/event.dart' as _i4;
-import '../cumulus_pallet_xcm/pallet/event.dart' as _i10;
-import '../cumulus_pallet_xcmp_queue/pallet/event.dart' as _i8;
-import '../frame_system/pallet/event.dart' as _i3;
-import '../pallet_asset_tx_payment/pallet/event.dart' as _i7;
-import '../pallet_balances/pallet/event.dart' as _i5;
-import '../pallet_collective/pallet/event.dart' as _i16;
-import '../pallet_encointer_balances/pallet/event.dart' as _i21;
-import '../pallet_encointer_bazaar/pallet/event.dart' as _i22;
-import '../pallet_encointer_ceremonies/pallet/event.dart' as _i19;
-import '../pallet_encointer_communities/pallet/event.dart' as _i20;
-import '../pallet_encointer_faucet/pallet/event.dart' as _i24;
-import '../pallet_encointer_reputation_commitments/pallet/event.dart' as _i23;
-import '../pallet_encointer_scheduler/pallet/event.dart' as _i18;
-import '../pallet_membership/pallet/event.dart' as _i17;
-import '../pallet_proxy/pallet/event.dart' as _i14;
-import '../pallet_scheduler/pallet/event.dart' as _i15;
-import '../pallet_transaction_payment/pallet/event.dart' as _i6;
-import '../pallet_treasury/pallet/event.dart' as _i13;
-import '../pallet_utility/pallet/event.dart' as _i12;
-import '../pallet_xcm/pallet/event.dart' as _i9;
+import '../cumulus_pallet_dmp_queue/pallet/call.dart' as _i11;
+import '../cumulus_pallet_parachain_system/pallet/call.dart' as _i4;
+import '../cumulus_pallet_xcm/pallet/call.dart' as _i10;
+import '../cumulus_pallet_xcmp_queue/pallet/call.dart' as _i8;
+import '../frame_system/pallet/call.dart' as _i3;
+import '../pallet_balances/pallet/call.dart' as _i7;
+import '../pallet_collective/pallet/call.dart' as _i17;
+import '../pallet_encointer_balances/pallet/call.dart' as _i22;
+import '../pallet_encointer_bazaar/pallet/call.dart' as _i23;
+import '../pallet_encointer_ceremonies/pallet/call.dart' as _i20;
+import '../pallet_encointer_communities/pallet/call.dart' as _i21;
+import '../pallet_encointer_faucet/pallet/call.dart' as _i25;
+import '../pallet_encointer_reputation_commitments/pallet/call.dart' as _i24;
+import '../pallet_encointer_scheduler/pallet/call.dart' as _i19;
+import '../pallet_membership/pallet/call.dart' as _i18;
+import '../pallet_message_queue/pallet/call.dart' as _i12;
+import '../pallet_proxy/pallet/call.dart' as _i15;
+import '../pallet_scheduler/pallet/call.dart' as _i16;
+import '../pallet_timestamp/pallet/call.dart' as _i5;
+import '../pallet_treasury/pallet/call.dart' as _i14;
+import '../pallet_utility/pallet/call.dart' as _i13;
+import '../pallet_xcm/pallet/call.dart' as _i9;
+import '../staging_parachain_info/pallet/call.dart' as _i6;
 
-abstract class RuntimeEvent {
-  const RuntimeEvent();
+abstract class RuntimeCall {
+  const RuntimeCall();
 
-  factory RuntimeEvent.decode(_i1.Input input) {
+  factory RuntimeCall.decode(_i1.Input input) {
     return codec.decode(input);
   }
 
-  static const $RuntimeEventCodec codec = $RuntimeEventCodec();
+  static const $RuntimeCallCodec codec = $RuntimeCallCodec();
 
-  static const $RuntimeEvent values = $RuntimeEvent();
+  static const $RuntimeCall values = $RuntimeCall();
 
   _i2.Uint8List encode() {
     final output = _i1.ByteOutput(codec.sizeHint(this));
@@ -50,115 +51,119 @@ abstract class RuntimeEvent {
   Map<String, dynamic> toJson();
 }
 
-class $RuntimeEvent {
-  const $RuntimeEvent();
+class $RuntimeCall {
+  const $RuntimeCall();
 
-  System system(_i3.Event value0) {
+  System system(_i3.Call value0) {
     return System(value0);
   }
 
-  ParachainSystem parachainSystem(_i4.Event value0) {
+  ParachainSystem parachainSystem(_i4.Call value0) {
     return ParachainSystem(value0);
   }
 
-  Balances balances(_i5.Event value0) {
+  Timestamp timestamp(_i5.Call value0) {
+    return Timestamp(value0);
+  }
+
+  ParachainInfo parachainInfo(_i6.Call value0) {
+    return ParachainInfo(value0);
+  }
+
+  Balances balances(_i7.Call value0) {
     return Balances(value0);
   }
 
-  TransactionPayment transactionPayment(_i6.Event value0) {
-    return TransactionPayment(value0);
-  }
-
-  AssetTxPayment assetTxPayment(_i7.Event value0) {
-    return AssetTxPayment(value0);
-  }
-
-  XcmpQueue xcmpQueue(_i8.Event value0) {
+  XcmpQueue xcmpQueue(_i8.Call value0) {
     return XcmpQueue(value0);
   }
 
-  PolkadotXcm polkadotXcm(_i9.Event value0) {
+  PolkadotXcm polkadotXcm(_i9.Call value0) {
     return PolkadotXcm(value0);
   }
 
-  CumulusXcm cumulusXcm(_i10.Event value0) {
+  CumulusXcm cumulusXcm(_i10.Call value0) {
     return CumulusXcm(value0);
   }
 
-  DmpQueue dmpQueue(_i11.Event value0) {
+  DmpQueue dmpQueue(_i11.Call value0) {
     return DmpQueue(value0);
   }
 
-  Utility utility(_i12.Event value0) {
+  MessageQueue messageQueue(_i12.Call value0) {
+    return MessageQueue(value0);
+  }
+
+  Utility utility(_i13.Call value0) {
     return Utility(value0);
   }
 
-  Treasury treasury(_i13.Event value0) {
+  Treasury treasury(_i14.Call value0) {
     return Treasury(value0);
   }
 
-  Proxy proxy(_i14.Event value0) {
+  Proxy proxy(_i15.Call value0) {
     return Proxy(value0);
   }
 
-  Scheduler scheduler(_i15.Event value0) {
+  Scheduler scheduler(_i16.Call value0) {
     return Scheduler(value0);
   }
 
-  Collective collective(_i16.Event value0) {
+  Collective collective(_i17.Call value0) {
     return Collective(value0);
   }
 
-  Membership membership(_i17.Event value0) {
+  Membership membership(_i18.Call value0) {
     return Membership(value0);
   }
 
-  EncointerScheduler encointerScheduler(_i18.Event value0) {
+  EncointerScheduler encointerScheduler(_i19.Call value0) {
     return EncointerScheduler(value0);
   }
 
-  EncointerCeremonies encointerCeremonies(_i19.Event value0) {
+  EncointerCeremonies encointerCeremonies(_i20.Call value0) {
     return EncointerCeremonies(value0);
   }
 
-  EncointerCommunities encointerCommunities(_i20.Event value0) {
+  EncointerCommunities encointerCommunities(_i21.Call value0) {
     return EncointerCommunities(value0);
   }
 
-  EncointerBalances encointerBalances(_i21.Event value0) {
+  EncointerBalances encointerBalances(_i22.Call value0) {
     return EncointerBalances(value0);
   }
 
-  EncointerBazaar encointerBazaar(_i22.Event value0) {
+  EncointerBazaar encointerBazaar(_i23.Call value0) {
     return EncointerBazaar(value0);
   }
 
-  EncointerReputationCommitments encointerReputationCommitments(_i23.Event value0) {
+  EncointerReputationCommitments encointerReputationCommitments(_i24.Call value0) {
     return EncointerReputationCommitments(value0);
   }
 
-  EncointerFaucet encointerFaucet(_i24.Event value0) {
+  EncointerFaucet encointerFaucet(_i25.Call value0) {
     return EncointerFaucet(value0);
   }
 }
 
-class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
-  const $RuntimeEventCodec();
+class $RuntimeCallCodec with _i1.Codec<RuntimeCall> {
+  const $RuntimeCallCodec();
 
   @override
-  RuntimeEvent decode(_i1.Input input) {
+  RuntimeCall decode(_i1.Input input) {
     final index = _i1.U8Codec.codec.decode(input);
     switch (index) {
       case 0:
         return System._decode(input);
       case 1:
         return ParachainSystem._decode(input);
+      case 3:
+        return Timestamp._decode(input);
+      case 4:
+        return ParachainInfo._decode(input);
       case 10:
         return Balances._decode(input);
-      case 11:
-        return TransactionPayment._decode(input);
-      case 12:
-        return AssetTxPayment._decode(input);
       case 30:
         return XcmpQueue._decode(input);
       case 31:
@@ -167,6 +172,8 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         return CumulusXcm._decode(input);
       case 33:
         return DmpQueue._decode(input);
+      case 35:
+        return MessageQueue._decode(input);
       case 40:
         return Utility._decode(input);
       case 43:
@@ -194,13 +201,13 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
       case 66:
         return EncointerFaucet._decode(input);
       default:
-        throw Exception('RuntimeEvent: Invalid variant index: "$index"');
+        throw Exception('RuntimeCall: Invalid variant index: "$index"');
     }
   }
 
   @override
   void encodeTo(
-    RuntimeEvent value,
+    RuntimeCall value,
     _i1.Output output,
   ) {
     switch (value.runtimeType) {
@@ -210,14 +217,14 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
       case ParachainSystem:
         (value as ParachainSystem).encodeTo(output);
         break;
+      case Timestamp:
+        (value as Timestamp).encodeTo(output);
+        break;
+      case ParachainInfo:
+        (value as ParachainInfo).encodeTo(output);
+        break;
       case Balances:
         (value as Balances).encodeTo(output);
-        break;
-      case TransactionPayment:
-        (value as TransactionPayment).encodeTo(output);
-        break;
-      case AssetTxPayment:
-        (value as AssetTxPayment).encodeTo(output);
         break;
       case XcmpQueue:
         (value as XcmpQueue).encodeTo(output);
@@ -230,6 +237,9 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         break;
       case DmpQueue:
         (value as DmpQueue).encodeTo(output);
+        break;
+      case MessageQueue:
+        (value as MessageQueue).encodeTo(output);
         break;
       case Utility:
         (value as Utility).encodeTo(output);
@@ -271,23 +281,23 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         (value as EncointerFaucet).encodeTo(output);
         break;
       default:
-        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeCall: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
   @override
-  int sizeHint(RuntimeEvent value) {
+  int sizeHint(RuntimeCall value) {
     switch (value.runtimeType) {
       case System:
         return (value as System)._sizeHint();
       case ParachainSystem:
         return (value as ParachainSystem)._sizeHint();
+      case Timestamp:
+        return (value as Timestamp)._sizeHint();
+      case ParachainInfo:
+        return (value as ParachainInfo)._sizeHint();
       case Balances:
         return (value as Balances)._sizeHint();
-      case TransactionPayment:
-        return (value as TransactionPayment)._sizeHint();
-      case AssetTxPayment:
-        return (value as AssetTxPayment)._sizeHint();
       case XcmpQueue:
         return (value as XcmpQueue)._sizeHint();
       case PolkadotXcm:
@@ -296,6 +306,8 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         return (value as CumulusXcm)._sizeHint();
       case DmpQueue:
         return (value as DmpQueue)._sizeHint();
+      case MessageQueue:
+        return (value as MessageQueue)._sizeHint();
       case Utility:
         return (value as Utility)._sizeHint();
       case Treasury:
@@ -323,27 +335,28 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
       case EncointerFaucet:
         return (value as EncointerFaucet)._sizeHint();
       default:
-        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeCall: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
 
-class System extends RuntimeEvent {
+class System extends RuntimeCall {
   const System(this.value0);
 
   factory System._decode(_i1.Input input) {
-    return System(_i3.Event.codec.decode(input));
+    return System(_i3.Call.codec.decode(input));
   }
 
-  /// frame_system::Event<Runtime>
-  final _i3.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<System, Runtime>
+  final _i3.Call value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'System': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'System': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.Event.codec.sizeHint(value0);
+    size = size + _i3.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -352,7 +365,7 @@ class System extends RuntimeEvent {
       0,
       output,
     );
-    _i3.Event.codec.encodeTo(
+    _i3.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -370,22 +383,23 @@ class System extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class ParachainSystem extends RuntimeEvent {
+class ParachainSystem extends RuntimeCall {
   const ParachainSystem(this.value0);
 
   factory ParachainSystem._decode(_i1.Input input) {
-    return ParachainSystem(_i4.Event.codec.decode(input));
+    return ParachainSystem(_i4.Call.codec.decode(input));
   }
 
-  /// cumulus_pallet_parachain_system::Event<Runtime>
-  final _i4.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<ParachainSystem, Runtime>
+  final _i4.Call value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'ParachainSystem': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'ParachainSystem': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.Event.codec.sizeHint(value0);
+    size = size + _i4.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -394,7 +408,7 @@ class ParachainSystem extends RuntimeEvent {
       1,
       output,
     );
-    _i4.Event.codec.encodeTo(
+    _i4.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -412,22 +426,109 @@ class ParachainSystem extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class Balances extends RuntimeEvent {
+class Timestamp extends RuntimeCall {
+  const Timestamp(this.value0);
+
+  factory Timestamp._decode(_i1.Input input) {
+    return Timestamp(_i5.Call.codec.decode(input));
+  }
+
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<Timestamp, Runtime>
+  final _i5.Call value0;
+
+  @override
+  Map<String, Map<String, Map<String, BigInt>>> toJson() => {'Timestamp': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i5.Call.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      3,
+      output,
+    );
+    _i5.Call.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Timestamp && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class ParachainInfo extends RuntimeCall {
+  const ParachainInfo(this.value0);
+
+  factory ParachainInfo._decode(_i1.Input input) {
+    return ParachainInfo(_i1.NullCodec.codec.decode(input));
+  }
+
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<ParachainInfo, Runtime>
+  final _i6.Call value0;
+
+  @override
+  Map<String, dynamic> toJson() => {'ParachainInfo': null};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i6.CallCodec().sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      4,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ParachainInfo && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class Balances extends RuntimeCall {
   const Balances(this.value0);
 
   factory Balances._decode(_i1.Input input) {
-    return Balances(_i5.Event.codec.decode(input));
+    return Balances(_i7.Call.codec.decode(input));
   }
 
-  /// pallet_balances::Event<Runtime>
-  final _i5.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<Balances, Runtime>
+  final _i7.Call value0;
 
   @override
   Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Balances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i5.Event.codec.sizeHint(value0);
+    size = size + _i7.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -436,7 +537,7 @@ class Balances extends RuntimeEvent {
       10,
       output,
     );
-    _i5.Event.codec.encodeTo(
+    _i7.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -454,106 +555,23 @@ class Balances extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class TransactionPayment extends RuntimeEvent {
-  const TransactionPayment(this.value0);
-
-  factory TransactionPayment._decode(_i1.Input input) {
-    return TransactionPayment(_i6.Event.codec.decode(input));
-  }
-
-  /// pallet_transaction_payment::Event<Runtime>
-  final _i6.Event value0;
-
-  @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'TransactionPayment': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i6.Event.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      11,
-      output,
-    );
-    _i6.Event.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is TransactionPayment && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
-
-class AssetTxPayment extends RuntimeEvent {
-  const AssetTxPayment(this.value0);
-
-  factory AssetTxPayment._decode(_i1.Input input) {
-    return AssetTxPayment(_i7.Event.codec.decode(input));
-  }
-
-  /// pallet_asset_tx_payment::Event<Runtime>
-  final _i7.Event value0;
-
-  @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'AssetTxPayment': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i7.Event.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      12,
-      output,
-    );
-    _i7.Event.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is AssetTxPayment && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
-
-class XcmpQueue extends RuntimeEvent {
+class XcmpQueue extends RuntimeCall {
   const XcmpQueue(this.value0);
 
   factory XcmpQueue._decode(_i1.Input input) {
-    return XcmpQueue(_i8.Event.codec.decode(input));
+    return XcmpQueue(_i8.Call.codec.decode(input));
   }
 
-  /// cumulus_pallet_xcmp_queue::Event<Runtime>
-  final _i8.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<XcmpQueue, Runtime>
+  final _i8.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'XcmpQueue': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'XcmpQueue': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i8.Event.codec.sizeHint(value0);
+    size = size + _i8.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -562,7 +580,7 @@ class XcmpQueue extends RuntimeEvent {
       30,
       output,
     );
-    _i8.Event.codec.encodeTo(
+    _i8.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -580,22 +598,23 @@ class XcmpQueue extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class PolkadotXcm extends RuntimeEvent {
+class PolkadotXcm extends RuntimeCall {
   const PolkadotXcm(this.value0);
 
   factory PolkadotXcm._decode(_i1.Input input) {
-    return PolkadotXcm(_i9.Event.codec.decode(input));
+    return PolkadotXcm(_i9.Call.codec.decode(input));
   }
 
-  /// pallet_xcm::Event<Runtime>
-  final _i9.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<PolkadotXcm, Runtime>
+  final _i9.Call value0;
 
   @override
   Map<String, Map<String, Map<String, dynamic>>> toJson() => {'PolkadotXcm': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i9.Event.codec.sizeHint(value0);
+    size = size + _i9.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -604,7 +623,7 @@ class PolkadotXcm extends RuntimeEvent {
       31,
       output,
     );
-    _i9.Event.codec.encodeTo(
+    _i9.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -622,22 +641,23 @@ class PolkadotXcm extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class CumulusXcm extends RuntimeEvent {
+class CumulusXcm extends RuntimeCall {
   const CumulusXcm(this.value0);
 
   factory CumulusXcm._decode(_i1.Input input) {
-    return CumulusXcm(_i10.Event.codec.decode(input));
+    return CumulusXcm(_i1.NullCodec.codec.decode(input));
   }
 
-  /// cumulus_pallet_xcm::Event<Runtime>
-  final _i10.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<CumulusXcm, Runtime>
+  final _i10.Call value0;
 
   @override
-  Map<String, Map<String, List<dynamic>>> toJson() => {'CumulusXcm': value0.toJson()};
+  Map<String, dynamic> toJson() => {'CumulusXcm': null};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i10.Event.codec.sizeHint(value0);
+    size = size + const _i10.CallCodec().sizeHint(value0);
     return size;
   }
 
@@ -646,7 +666,7 @@ class CumulusXcm extends RuntimeEvent {
       32,
       output,
     );
-    _i10.Event.codec.encodeTo(
+    _i1.NullCodec.codec.encodeTo(
       value0,
       output,
     );
@@ -664,22 +684,23 @@ class CumulusXcm extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class DmpQueue extends RuntimeEvent {
+class DmpQueue extends RuntimeCall {
   const DmpQueue(this.value0);
 
   factory DmpQueue._decode(_i1.Input input) {
-    return DmpQueue(_i11.Event.codec.decode(input));
+    return DmpQueue(_i1.NullCodec.codec.decode(input));
   }
 
-  /// cumulus_pallet_dmp_queue::Event<Runtime>
-  final _i11.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<DmpQueue, Runtime>
+  final _i11.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'DmpQueue': value0.toJson()};
+  Map<String, dynamic> toJson() => {'DmpQueue': null};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i11.Event.codec.sizeHint(value0);
+    size = size + const _i11.CallCodec().sizeHint(value0);
     return size;
   }
 
@@ -688,7 +709,7 @@ class DmpQueue extends RuntimeEvent {
       33,
       output,
     );
-    _i11.Event.codec.encodeTo(
+    _i1.NullCodec.codec.encodeTo(
       value0,
       output,
     );
@@ -706,22 +727,66 @@ class DmpQueue extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class Utility extends RuntimeEvent {
-  const Utility(this.value0);
+class MessageQueue extends RuntimeCall {
+  const MessageQueue(this.value0);
 
-  factory Utility._decode(_i1.Input input) {
-    return Utility(_i12.Event.codec.decode(input));
+  factory MessageQueue._decode(_i1.Input input) {
+    return MessageQueue(_i12.Call.codec.decode(input));
   }
 
-  /// pallet_utility::Event
-  final _i12.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<MessageQueue, Runtime>
+  final _i12.Call value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'Utility': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'MessageQueue': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i12.Event.codec.sizeHint(value0);
+    size = size + _i12.Call.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      35,
+      output,
+    );
+    _i12.Call.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is MessageQueue && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class Utility extends RuntimeCall {
+  const Utility(this.value0);
+
+  factory Utility._decode(_i1.Input input) {
+    return Utility(_i13.Call.codec.decode(input));
+  }
+
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<Utility, Runtime>
+  final _i13.Call value0;
+
+  @override
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Utility': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i13.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -730,7 +795,7 @@ class Utility extends RuntimeEvent {
       40,
       output,
     );
-    _i12.Event.codec.encodeTo(
+    _i13.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -748,22 +813,23 @@ class Utility extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class Treasury extends RuntimeEvent {
+class Treasury extends RuntimeCall {
   const Treasury(this.value0);
 
   factory Treasury._decode(_i1.Input input) {
-    return Treasury(_i13.Event.codec.decode(input));
+    return Treasury(_i14.Call.codec.decode(input));
   }
 
-  /// pallet_treasury::Event<Runtime>
-  final _i13.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<Treasury, Runtime>
+  final _i14.Call value0;
 
   @override
   Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Treasury': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i13.Event.codec.sizeHint(value0);
+    size = size + _i14.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -772,7 +838,7 @@ class Treasury extends RuntimeEvent {
       43,
       output,
     );
-    _i13.Event.codec.encodeTo(
+    _i14.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -790,22 +856,23 @@ class Treasury extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class Proxy extends RuntimeEvent {
+class Proxy extends RuntimeCall {
   const Proxy(this.value0);
 
   factory Proxy._decode(_i1.Input input) {
-    return Proxy(_i14.Event.codec.decode(input));
+    return Proxy(_i15.Call.codec.decode(input));
   }
 
-  /// pallet_proxy::Event<Runtime>
-  final _i14.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<Proxy, Runtime>
+  final _i15.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Proxy': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'Proxy': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i14.Event.codec.sizeHint(value0);
+    size = size + _i15.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -814,7 +881,7 @@ class Proxy extends RuntimeEvent {
       44,
       output,
     );
-    _i14.Event.codec.encodeTo(
+    _i15.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -832,22 +899,23 @@ class Proxy extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class Scheduler extends RuntimeEvent {
+class Scheduler extends RuntimeCall {
   const Scheduler(this.value0);
 
   factory Scheduler._decode(_i1.Input input) {
-    return Scheduler(_i15.Event.codec.decode(input));
+    return Scheduler(_i16.Call.codec.decode(input));
   }
 
-  /// pallet_scheduler::Event<Runtime>
-  final _i15.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<Scheduler, Runtime>
+  final _i16.Call value0;
 
   @override
   Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Scheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i15.Event.codec.sizeHint(value0);
+    size = size + _i16.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -856,7 +924,7 @@ class Scheduler extends RuntimeEvent {
       48,
       output,
     );
-    _i15.Event.codec.encodeTo(
+    _i16.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -874,22 +942,23 @@ class Scheduler extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class Collective extends RuntimeEvent {
+class Collective extends RuntimeCall {
   const Collective(this.value0);
 
   factory Collective._decode(_i1.Input input) {
-    return Collective(_i16.Event.codec.decode(input));
+    return Collective(_i17.Call.codec.decode(input));
   }
 
-  /// pallet_collective::Event<Runtime, pallet_collective::Instance1>
-  final _i16.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<Collective, Runtime>
+  final _i17.Call value0;
 
   @override
   Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Collective': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i16.Event.codec.sizeHint(value0);
+    size = size + _i17.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -898,7 +967,7 @@ class Collective extends RuntimeEvent {
       50,
       output,
     );
-    _i16.Event.codec.encodeTo(
+    _i17.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -916,22 +985,23 @@ class Collective extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class Membership extends RuntimeEvent {
+class Membership extends RuntimeCall {
   const Membership(this.value0);
 
   factory Membership._decode(_i1.Input input) {
-    return Membership(_i17.Event.codec.decode(input));
+    return Membership(_i18.Call.codec.decode(input));
   }
 
-  /// pallet_membership::Event<Runtime, pallet_membership::Instance1>
-  final _i17.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<Membership, Runtime>
+  final _i18.Call value0;
 
   @override
-  Map<String, String> toJson() => {'Membership': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'Membership': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i17.Event.codec.sizeHint(value0);
+    size = size + _i18.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -940,7 +1010,7 @@ class Membership extends RuntimeEvent {
       51,
       output,
     );
-    _i17.Event.codec.encodeTo(
+    _i18.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -958,22 +1028,23 @@ class Membership extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class EncointerScheduler extends RuntimeEvent {
+class EncointerScheduler extends RuntimeCall {
   const EncointerScheduler(this.value0);
 
   factory EncointerScheduler._decode(_i1.Input input) {
-    return EncointerScheduler(_i18.Event.codec.decode(input));
+    return EncointerScheduler(_i19.Call.codec.decode(input));
   }
 
-  /// pallet_encointer_scheduler::Event
-  final _i18.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<EncointerScheduler, Runtime>
+  final _i19.Call value0;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {'EncointerScheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i18.Event.codec.sizeHint(value0);
+    size = size + _i19.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -982,7 +1053,7 @@ class EncointerScheduler extends RuntimeEvent {
       60,
       output,
     );
-    _i18.Event.codec.encodeTo(
+    _i19.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -1000,22 +1071,23 @@ class EncointerScheduler extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class EncointerCeremonies extends RuntimeEvent {
+class EncointerCeremonies extends RuntimeCall {
   const EncointerCeremonies(this.value0);
 
   factory EncointerCeremonies._decode(_i1.Input input) {
-    return EncointerCeremonies(_i19.Event.codec.decode(input));
+    return EncointerCeremonies(_i20.Call.codec.decode(input));
   }
 
-  /// pallet_encointer_ceremonies::Event<Runtime>
-  final _i19.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<EncointerCeremonies, Runtime>
+  final _i20.Call value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerCeremonies': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerCeremonies': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i19.Event.codec.sizeHint(value0);
+    size = size + _i20.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -1024,7 +1096,7 @@ class EncointerCeremonies extends RuntimeEvent {
       61,
       output,
     );
-    _i19.Event.codec.encodeTo(
+    _i20.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -1042,22 +1114,23 @@ class EncointerCeremonies extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class EncointerCommunities extends RuntimeEvent {
+class EncointerCommunities extends RuntimeCall {
   const EncointerCommunities(this.value0);
 
   factory EncointerCommunities._decode(_i1.Input input) {
-    return EncointerCommunities(_i20.Event.codec.decode(input));
+    return EncointerCommunities(_i21.Call.codec.decode(input));
   }
 
-  /// pallet_encointer_communities::Event<Runtime>
-  final _i20.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<EncointerCommunities, Runtime>
+  final _i21.Call value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerCommunities': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerCommunities': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i20.Event.codec.sizeHint(value0);
+    size = size + _i21.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -1066,7 +1139,7 @@ class EncointerCommunities extends RuntimeEvent {
       62,
       output,
     );
-    _i20.Event.codec.encodeTo(
+    _i21.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -1084,22 +1157,23 @@ class EncointerCommunities extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class EncointerBalances extends RuntimeEvent {
+class EncointerBalances extends RuntimeCall {
   const EncointerBalances(this.value0);
 
   factory EncointerBalances._decode(_i1.Input input) {
-    return EncointerBalances(_i21.Event.codec.decode(input));
+    return EncointerBalances(_i22.Call.codec.decode(input));
   }
 
-  /// pallet_encointer_balances::Event<Runtime>
-  final _i21.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<EncointerBalances, Runtime>
+  final _i22.Call value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerBalances': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerBalances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i21.Event.codec.sizeHint(value0);
+    size = size + _i22.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -1108,7 +1182,7 @@ class EncointerBalances extends RuntimeEvent {
       63,
       output,
     );
-    _i21.Event.codec.encodeTo(
+    _i22.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -1126,22 +1200,23 @@ class EncointerBalances extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class EncointerBazaar extends RuntimeEvent {
+class EncointerBazaar extends RuntimeCall {
   const EncointerBazaar(this.value0);
 
   factory EncointerBazaar._decode(_i1.Input input) {
-    return EncointerBazaar(_i22.Event.codec.decode(input));
+    return EncointerBazaar(_i23.Call.codec.decode(input));
   }
 
-  /// pallet_encointer_bazaar::Event<Runtime>
-  final _i22.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<EncointerBazaar, Runtime>
+  final _i23.Call value0;
 
   @override
-  Map<String, Map<String, List<dynamic>>> toJson() => {'EncointerBazaar': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerBazaar': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i22.Event.codec.sizeHint(value0);
+    size = size + _i23.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -1150,7 +1225,7 @@ class EncointerBazaar extends RuntimeEvent {
       64,
       output,
     );
-    _i22.Event.codec.encodeTo(
+    _i23.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -1168,22 +1243,23 @@ class EncointerBazaar extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class EncointerReputationCommitments extends RuntimeEvent {
+class EncointerReputationCommitments extends RuntimeCall {
   const EncointerReputationCommitments(this.value0);
 
   factory EncointerReputationCommitments._decode(_i1.Input input) {
-    return EncointerReputationCommitments(_i23.Event.codec.decode(input));
+    return EncointerReputationCommitments(_i24.Call.codec.decode(input));
   }
 
-  /// pallet_encointer_reputation_commitments::Event<Runtime>
-  final _i23.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<EncointerReputationCommitments, Runtime>
+  final _i24.Call value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerReputationCommitments': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerReputationCommitments': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i23.Event.codec.sizeHint(value0);
+    size = size + _i24.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -1192,7 +1268,7 @@ class EncointerReputationCommitments extends RuntimeEvent {
       65,
       output,
     );
-    _i23.Event.codec.encodeTo(
+    _i24.Call.codec.encodeTo(
       value0,
       output,
     );
@@ -1210,22 +1286,23 @@ class EncointerReputationCommitments extends RuntimeEvent {
   int get hashCode => value0.hashCode;
 }
 
-class EncointerFaucet extends RuntimeEvent {
+class EncointerFaucet extends RuntimeCall {
   const EncointerFaucet(this.value0);
 
   factory EncointerFaucet._decode(_i1.Input input) {
-    return EncointerFaucet(_i24.Event.codec.decode(input));
+    return EncointerFaucet(_i25.Call.codec.decode(input));
   }
 
-  /// pallet_encointer_faucet::Event<Runtime>
-  final _i24.Event value0;
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<EncointerFaucet, Runtime>
+  final _i25.Call value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerFaucet': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerFaucet': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i24.Event.codec.sizeHint(value0);
+    size = size + _i25.Call.codec.sizeHint(value0);
     return size;
   }
 
@@ -1234,7 +1311,7 @@ class EncointerFaucet extends RuntimeEvent {
       66,
       output,
     );
-    _i24.Event.codec.encodeTo(
+    _i25.Call.codec.encodeTo(
       value0,
       output,
     );
