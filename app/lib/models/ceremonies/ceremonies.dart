@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:ew_polkadart/encointer_types.dart' as et;
 import 'package:encointer_wallet/utils/enum.dart';
+
+export 'reputation/v1.dart';
 
 part 'ceremonies.g.dart';
 
@@ -73,23 +74,6 @@ class AggregatedAccountDataGlobal {
 enum ParticipantType { Bootstrapper, Reputable, Endorsee, Newbie }
 
 @JsonSerializable()
-class CommunityReputation {
-  CommunityReputation(this.communityIdentifier, this.reputation);
-
-  factory CommunityReputation.fromJson(Map<String, dynamic> json) => _$CommunityReputationFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
-
-  CommunityIdentifier communityIdentifier;
-  Reputation reputation;
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}
-
-@JsonSerializable()
 class Meetup {
   Meetup(this.index, this.locationIndex, this.time, this.registry);
 
@@ -116,10 +100,6 @@ class Meetup {
 // ignore: constant_identifier_names
 enum CeremonyPhase { Registering, Assigning, Attesting }
 
-// For compatibility with substrate's naming convention.
-// ignore: constant_identifier_names
-enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
-
 // -- Helper functions for above types
 
 CeremonyPhase ceremonyPhaseTypeFromPolkadart(et.CeremonyPhaseType phase) {
@@ -137,20 +117,6 @@ CeremonyPhase? ceremonyPhaseFromString(String value) {
   return getEnumFromString(CeremonyPhase.values, value);
 }
 
-Reputation? reputationFromString(String value) {
-  return getEnumFromString(Reputation.values, value);
-}
-
-extension ReputationExtension on Reputation {
-  String toValue() {
-    return toEnumValue(this);
-  }
-
-  bool isVerified() {
-    return this == Reputation.VerifiedUnlinked || this == Reputation.VerifiedLinked;
-  }
-}
-
 extension ParticipantTypeExtension on ParticipantType {
   String toValue() {
     return toEnumValue(this);
@@ -163,14 +129,4 @@ extension CeremonyPhaseExtension on CeremonyPhase {
   String toValue() {
     return toEnumValue(this);
   }
-}
-
-/// Takes a `List<dynamic>` which contains a `List<List<[int, Map<String, dynamic>]>` and
-/// transforms it into a `Map<int, CommunityReputation>`.
-Map<int, CommunityReputation> reputationsFromList(List<dynamic> reputationsList) {
-  final reputations = reputationsList.cast<List<dynamic>>();
-
-  return {
-    for (final cr in reputations) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>),
-  };
 }
