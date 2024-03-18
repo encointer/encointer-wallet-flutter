@@ -40,7 +40,7 @@ abstract class Reputation {
           throw Exception('Reputation: Invalid variant: "$variant"');
       }
     } else if (json.runtimeType is Map<String, dynamic>) {
-      final variant = (json as Map<String, dynamic>).values.first;
+      final variant = (json as Map<String, dynamic>).keys.first;
       switch (variant) {
         case 'VerifiedLinked':
           return VerifiedLinked(json.values.first as int);
