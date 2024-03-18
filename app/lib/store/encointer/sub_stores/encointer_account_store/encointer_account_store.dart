@@ -83,6 +83,7 @@ abstract class _EncointerAccountStore with Store {
   int? ceremonyIndexForNextProofOfAttendance(int currentCeremonyIndex) {
     if (verifiedReputations.isNotEmpty) {
       try {
+        // returns the first reputation that hasn't been linked, or has been linked to a non-current cIndex.
         return verifiedReputations.entries.firstWhere((e) {
           return e.value.reputation.runtimeType == VerifiedUnlinked ||
               (e.value.reputation.runtimeType == VerifiedLinked &&
