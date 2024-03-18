@@ -68,7 +68,6 @@ class EncointerDartApi {
     if (at != null) params.add('0x${hex.encode(at)}');
 
     final reputations = await _dartApi.rpc<List<dynamic>>('encointer_getReputations', params);
-    print('reputations: $reputations');
     return reputationsFromList(reputations);
   }
 

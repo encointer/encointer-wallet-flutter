@@ -27,7 +27,7 @@ abstract class Reputation {
   const Reputation();
 
   factory Reputation.fromJson(dynamic json) {
-    if (json.runtimeType is String) {
+    if (json.runtimeType == String) {
       final variant = json as String;
       switch (variant) {
         case 'Unverified':
@@ -39,7 +39,7 @@ abstract class Reputation {
         default:
           throw Exception('Reputation: Invalid variant: "$variant"');
       }
-    } else if (json.runtimeType is Map<String, dynamic>) {
+    } else {
       final variant = (json as Map<String, dynamic>).keys.first;
       switch (variant) {
         case 'VerifiedLinked':
@@ -47,8 +47,6 @@ abstract class Reputation {
         default:
           throw Exception('Reputation: Invalid variant: "$variant"');
       }
-    } else {
-      throw Exception('Reputation: Invalid json type: "$json"');
     }
   }
 

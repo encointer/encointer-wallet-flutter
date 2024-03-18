@@ -56,12 +56,16 @@ abstract class _EncointerAccountStore with Store {
   /// contain all potential reputation values: UnverifiedReputable, VerifiedUnlinked and VerifiedLinked.
   ///
   /// Map: ceremony index -> CommunityReputation
+  ///
+  /// Note: must be nullable for json-deserialization of old stores.
   @observable
-  Map<int, CommunityReputationV1> reputations = {};
+  Map<int, CommunityReputation>? _reputationsV2;
+
+  Map<int, CommunityReputation> get reputations => _reputationsV2 ?? {};
 
   /// Returns all reputations associated with a meetup.
   @computed
-  Map<int, CommunityReputationV1> get verifiedReputations {
+  Map<int, CommunityReputation> get verifiedReputations {
     final entries = reputations.entries.where((e) => e.value.reputation.isVerified());
     return Map.fromEntries(entries);
   }
@@ -80,7 +84,7 @@ abstract class _EncointerAccountStore with Store {
   int? get ceremonyIndexForNextProofOfAttendance {
     if (verifiedReputations.isNotEmpty) {
       try {
-        return verifiedReputations.entries.firstWhere((e) => e.value.reputation == ReputationV1.VerifiedUnlinked).key;
+        return verifiedReputations.entries.firstWhere((e) => e.value.reputation.runtimeType == VerifiedUnlinked).key;
       } catch (e, s) {
         Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;
@@ -124,8 +128,8 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
-  Future<void> setReputations(Map<int, CommunityReputationV1> reps) async {
-    reputations = reps;
+  Future<void> setReputations(Map<int, CommunityReputation> reps) async {
+    _reputationsV2 = reps;
     unawaited(writeToCache());
     await getNumberOfNewbieTicketsForReputable();
   }

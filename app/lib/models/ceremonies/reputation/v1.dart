@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/models/ceremonies/reputation/v2.dart';
 import 'package:encointer_wallet/utils/enum.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
@@ -16,6 +17,10 @@ class CommunityReputationV1 {
 
   CommunityIdentifier communityIdentifier;
   ReputationV1 reputation;
+
+  CommunityReputation toV2(int currentCeremonyIndex) {
+    return CommunityReputation(communityIdentifier, reputation.toV2(currentCeremonyIndex));
+  }
 
   @override
   String toString() {
@@ -34,6 +39,15 @@ extension ReputationV1Extension on ReputationV1 {
 
   bool isVerified() {
     return this == ReputationV1.VerifiedUnlinked || this == ReputationV1.VerifiedLinked;
+  }
+
+  Reputation toV2(int currentCeremonyIndex) {
+    return switch (this) {
+      ReputationV1.Unverified => Reputation.values.unverified(),
+      ReputationV1.UnverifiedReputable => Reputation.values.unverifiedReputable(),
+      ReputationV1.VerifiedUnlinked => Reputation.values.verifiedUnlinked(),
+      ReputationV1.VerifiedLinked => Reputation.values.verifiedLinked(currentCeremonyIndex),
+    };
   }
 }
 

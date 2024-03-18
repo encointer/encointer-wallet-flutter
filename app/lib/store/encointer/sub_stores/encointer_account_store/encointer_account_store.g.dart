@@ -13,9 +13,6 @@ EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json)
       ..balanceEntries = ObservableMap<String, BalanceEntry>.of((json['balanceEntries'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, BalanceEntry.fromJson(e as Map<String, dynamic>)),
       ))
-      ..reputations = (json['reputations'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(int.parse(k), CommunityReputationV1.fromJson(e as Map<String, dynamic>)),
-      )
       ..txsTransfer = ObservableList<TransferData>.of(
           (json['txsTransfer'] as List).map((e) => TransferData.fromJson(e as Map<String, dynamic>)))
       ..numberOfNewbieTicketsForReputable = json['numberOfNewbieTicketsForReputable'] as int
@@ -27,7 +24,6 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
       'network': instance.network,
       'address': instance.address,
       'balanceEntries': instance.balanceEntries.map((k, e) => MapEntry(k, e.toJson())),
-      'reputations': instance.reputations.map((k, e) => MapEntry(k.toString(), e.toJson())),
       'txsTransfer': instance.txsTransfer.map((e) => e.toJson()).toList(),
       'numberOfNewbieTicketsForReputable': instance.numberOfNewbieTicketsForReputable,
       'lastProofOfAttendance': instance.lastProofOfAttendance?.toJson(),
@@ -40,11 +36,11 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
-  Computed<Map<int, CommunityReputationV1>>? _$verifiedReputationsComputed;
+  Computed<Map<int, CommunityReputation>>? _$verifiedReputationsComputed;
 
   @override
-  Map<int, CommunityReputationV1> get verifiedReputations =>
-      (_$verifiedReputationsComputed ??= Computed<Map<int, CommunityReputationV1>>(() => super.verifiedReputations,
+  Map<int, CommunityReputation> get verifiedReputations =>
+      (_$verifiedReputationsComputed ??= Computed<Map<int, CommunityReputation>>(() => super.verifiedReputations,
               name: '_EncointerAccountStore.verifiedReputations'))
           .value;
   Computed<int>? _$verifiedReputationCountComputed;
@@ -76,18 +72,18 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
     });
   }
 
-  late final _$reputationsAtom = Atom(name: '_EncointerAccountStore.reputations', context: context);
+  late final _$_reputationsV2Atom = Atom(name: '_EncointerAccountStore._reputationsV2', context: context);
 
   @override
-  Map<int, CommunityReputationV1> get reputations {
-    _$reputationsAtom.reportRead();
-    return super.reputations;
+  Map<int, CommunityReputation>? get _reputationsV2 {
+    _$_reputationsV2Atom.reportRead();
+    return super._reputationsV2;
   }
 
   @override
-  set reputations(Map<int, CommunityReputationV1> value) {
-    _$reputationsAtom.reportWrite(value, super.reputations, () {
-      super.reputations = value;
+  set _reputationsV2(Map<int, CommunityReputation>? value) {
+    _$_reputationsV2Atom.reportWrite(value, super._reputationsV2, () {
+      super._reputationsV2 = value;
     });
   }
 
@@ -140,7 +136,7 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   late final _$setReputationsAsyncAction = AsyncAction('_EncointerAccountStore.setReputations', context: context);
 
   @override
-  Future<void> setReputations(Map<int, CommunityReputationV1> reps) {
+  Future<void> setReputations(Map<int, CommunityReputation> reps) {
     return _$setReputationsAsyncAction.run(() => super.setReputations(reps));
   }
 
@@ -213,7 +209,6 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   String toString() {
     return '''
 balanceEntries: ${balanceEntries},
-reputations: ${reputations},
 txsTransfer: ${txsTransfer},
 numberOfNewbieTicketsForReputable: ${numberOfNewbieTicketsForReputable},
 lastProofOfAttendance: ${lastProofOfAttendance},

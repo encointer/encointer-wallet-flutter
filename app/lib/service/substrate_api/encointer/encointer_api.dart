@@ -586,11 +586,16 @@ class EncointerApi {
 
     if (hasNewReputationType(runtimeVersion)) {
       final reputations = await _dartApi.getReputations(address, at: at ?? store.chain.latestHash);
-      Log.d('api: getReputations: $reputations', 'EncointerApi');
-      // if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
+      Log.d('api: getReputationsV2: $reputations', 'EncointerApi');
+      if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
     } else {
-      final reputations = await _dartApi.getReputationsV1(address, at: at ?? store.chain.latestHash);
-      Log.d('api: getReputations: $reputations', 'EncointerApi');
+      final reputationsV1 = await _dartApi.getReputationsV1(address, at: at ?? store.chain.latestHash);
+      Log.d('api: getReputations: $reputationsV1', 'EncointerApi');
+      final cIndex = store.encointer.currentCeremonyIndex ?? 0;
+      final reputations = Map<int, CommunityReputation>.fromIterable(
+          reputationsV1.entries.map((e) => MapEntry(e.key, e.value.toV2(cIndex))));
+      Log.d('api: getReputations (migrated to V2): $reputations', 'EncointerApi');
+
       if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
     }
   }
