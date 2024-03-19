@@ -127,7 +127,7 @@ class EWAuthorApi<P extends Provider> {
     String? blockHashHex;
 
     final sub = await submitAndWatchExtrinsic(extrinsic, (xtUpdate) async {
-      Log.d('ExtrinsicUpdate: ${xtUpdate.type}');
+      Log.d('ExtrinsicUpdate: type: ${xtUpdate.type}, value: ${xtUpdate.value}');
 
       if (xtUpdate.type == 'ready') {
         Log.p('Xt is ready');
