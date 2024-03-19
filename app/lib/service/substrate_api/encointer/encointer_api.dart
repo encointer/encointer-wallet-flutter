@@ -602,7 +602,7 @@ class EncointerApi {
   bool hasNewReputationType(RuntimeVersion version) {
     Log.p('Runtime version ${version.toJson()}');
     if (version.specName == 'encointer-parachain') {
-      return version.specVersion >= 1002000;
+      return version.specVersion >= 1003000;
     } else if (version.specName == 'encointer-node-notee') {
       return version.specVersion >= 31;
     } else {
