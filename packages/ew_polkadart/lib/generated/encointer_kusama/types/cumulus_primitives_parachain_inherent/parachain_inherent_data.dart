@@ -6,8 +6,8 @@ import 'package:quiver/collection.dart' as _i8;
 
 import '../polkadot_core_primitives/inbound_downward_message.dart' as _i4;
 import '../polkadot_core_primitives/inbound_hrmp_message.dart' as _i6;
-import '../polkadot_parachain/primitives/id.dart' as _i5;
-import '../polkadot_primitives/v5/persisted_validation_data.dart' as _i2;
+import '../polkadot_parachain_primitives/primitives/id.dart' as _i5;
+import '../polkadot_primitives/v6/persisted_validation_data.dart' as _i2;
 import '../sp_trie/storage_proof/storage_proof.dart' as _i3;
 
 class ParachainInherentData {

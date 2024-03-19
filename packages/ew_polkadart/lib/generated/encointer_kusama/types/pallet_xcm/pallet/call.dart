@@ -4,10 +4,10 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 
 import '../../sp_weights/weight_v2/weight.dart' as _i7;
-import '../../xcm/v3/multilocation/multi_location.dart' as _i8;
+import '../../staging_xcm/v4/location/location.dart' as _i8;
 import '../../xcm/v3/weight_limit.dart' as _i9;
-import '../../xcm/versioned_multi_assets.dart' as _i5;
-import '../../xcm/versioned_multi_location.dart' as _i3;
+import '../../xcm/versioned_assets.dart' as _i5;
+import '../../xcm/versioned_location.dart' as _i3;
 import '../../xcm/versioned_xcm_1.dart' as _i4;
 import '../../xcm/versioned_xcm_2.dart' as _i6;
 
@@ -40,7 +40,7 @@ class $Call {
   const $Call();
 
   Send send({
-    required _i3.VersionedMultiLocation dest,
+    required _i3.VersionedLocation dest,
     required _i4.VersionedXcm message,
   }) {
     return Send(
@@ -50,9 +50,9 @@ class $Call {
   }
 
   TeleportAssets teleportAssets({
-    required _i3.VersionedMultiLocation dest,
-    required _i3.VersionedMultiLocation beneficiary,
-    required _i5.VersionedMultiAssets assets,
+    required _i3.VersionedLocation dest,
+    required _i3.VersionedLocation beneficiary,
+    required _i5.VersionedAssets assets,
     required int feeAssetItem,
   }) {
     return TeleportAssets(
@@ -64,9 +64,9 @@ class $Call {
   }
 
   ReserveTransferAssets reserveTransferAssets({
-    required _i3.VersionedMultiLocation dest,
-    required _i3.VersionedMultiLocation beneficiary,
-    required _i5.VersionedMultiAssets assets,
+    required _i3.VersionedLocation dest,
+    required _i3.VersionedLocation beneficiary,
+    required _i5.VersionedAssets assets,
     required int feeAssetItem,
   }) {
     return ReserveTransferAssets(
@@ -88,7 +88,7 @@ class $Call {
   }
 
   ForceXcmVersion forceXcmVersion({
-    required _i8.MultiLocation location,
+    required _i8.Location location,
     required int version,
   }) {
     return ForceXcmVersion(
@@ -101,18 +101,18 @@ class $Call {
     return ForceDefaultXcmVersion(maybeXcmVersion: maybeXcmVersion);
   }
 
-  ForceSubscribeVersionNotify forceSubscribeVersionNotify({required _i3.VersionedMultiLocation location}) {
+  ForceSubscribeVersionNotify forceSubscribeVersionNotify({required _i3.VersionedLocation location}) {
     return ForceSubscribeVersionNotify(location: location);
   }
 
-  ForceUnsubscribeVersionNotify forceUnsubscribeVersionNotify({required _i3.VersionedMultiLocation location}) {
+  ForceUnsubscribeVersionNotify forceUnsubscribeVersionNotify({required _i3.VersionedLocation location}) {
     return ForceUnsubscribeVersionNotify(location: location);
   }
 
   LimitedReserveTransferAssets limitedReserveTransferAssets({
-    required _i3.VersionedMultiLocation dest,
-    required _i3.VersionedMultiLocation beneficiary,
-    required _i5.VersionedMultiAssets assets,
+    required _i3.VersionedLocation dest,
+    required _i3.VersionedLocation beneficiary,
+    required _i5.VersionedAssets assets,
     required int feeAssetItem,
     required _i9.WeightLimit weightLimit,
   }) {
@@ -126,9 +126,9 @@ class $Call {
   }
 
   LimitedTeleportAssets limitedTeleportAssets({
-    required _i3.VersionedMultiLocation dest,
-    required _i3.VersionedMultiLocation beneficiary,
-    required _i5.VersionedMultiAssets assets,
+    required _i3.VersionedLocation dest,
+    required _i3.VersionedLocation beneficiary,
+    required _i5.VersionedAssets assets,
     required int feeAssetItem,
     required _i9.WeightLimit weightLimit,
   }) {
@@ -143,6 +143,32 @@ class $Call {
 
   ForceSuspension forceSuspension({required bool suspended}) {
     return ForceSuspension(suspended: suspended);
+  }
+
+  TransferAssets transferAssets({
+    required _i3.VersionedLocation dest,
+    required _i3.VersionedLocation beneficiary,
+    required _i5.VersionedAssets assets,
+    required int feeAssetItem,
+    required _i9.WeightLimit weightLimit,
+  }) {
+    return TransferAssets(
+      dest: dest,
+      beneficiary: beneficiary,
+      assets: assets,
+      feeAssetItem: feeAssetItem,
+      weightLimit: weightLimit,
+    );
+  }
+
+  ClaimAssets claimAssets({
+    required _i5.VersionedAssets assets,
+    required _i3.VersionedLocation beneficiary,
+  }) {
+    return ClaimAssets(
+      assets: assets,
+      beneficiary: beneficiary,
+    );
   }
 }
 
@@ -175,6 +201,10 @@ class $CallCodec with _i1.Codec<Call> {
         return LimitedTeleportAssets._decode(input);
       case 10:
         return ForceSuspension._decode(input);
+      case 11:
+        return TransferAssets._decode(input);
+      case 12:
+        return ClaimAssets._decode(input);
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -219,6 +249,12 @@ class $CallCodec with _i1.Codec<Call> {
       case ForceSuspension:
         (value as ForceSuspension).encodeTo(output);
         break;
+      case TransferAssets:
+        (value as TransferAssets).encodeTo(output);
+        break;
+      case ClaimAssets:
+        (value as ClaimAssets).encodeTo(output);
+        break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -249,6 +285,10 @@ class $CallCodec with _i1.Codec<Call> {
         return (value as LimitedTeleportAssets)._sizeHint();
       case ForceSuspension:
         return (value as ForceSuspension)._sizeHint();
+      case TransferAssets:
+        return (value as TransferAssets)._sizeHint();
+      case ClaimAssets:
+        return (value as ClaimAssets)._sizeHint();
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -264,13 +304,13 @@ class Send extends Call {
 
   factory Send._decode(_i1.Input input) {
     return Send(
-      dest: _i3.VersionedMultiLocation.codec.decode(input),
+      dest: _i3.VersionedLocation.codec.decode(input),
       message: _i4.VersionedXcm.codec.decode(input),
     );
   }
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation dest;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation dest;
 
   /// Box<VersionedXcm<()>>
   final _i4.VersionedXcm message;
@@ -285,7 +325,7 @@ class Send extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(dest);
+    size = size + _i3.VersionedLocation.codec.sizeHint(dest);
     size = size + _i4.VersionedXcm.codec.sizeHint(message);
     return size;
   }
@@ -295,7 +335,7 @@ class Send extends Call {
       0,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       dest,
       output,
     );
@@ -331,21 +371,21 @@ class TeleportAssets extends Call {
 
   factory TeleportAssets._decode(_i1.Input input) {
     return TeleportAssets(
-      dest: _i3.VersionedMultiLocation.codec.decode(input),
-      beneficiary: _i3.VersionedMultiLocation.codec.decode(input),
-      assets: _i5.VersionedMultiAssets.codec.decode(input),
+      dest: _i3.VersionedLocation.codec.decode(input),
+      beneficiary: _i3.VersionedLocation.codec.decode(input),
+      assets: _i5.VersionedAssets.codec.decode(input),
       feeAssetItem: _i1.U32Codec.codec.decode(input),
     );
   }
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation dest;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation dest;
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation beneficiary;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation beneficiary;
 
-  /// Box<VersionedMultiAssets>
-  final _i5.VersionedMultiAssets assets;
+  /// Box<VersionedAssets>
+  final _i5.VersionedAssets assets;
 
   /// u32
   final int feeAssetItem;
@@ -362,9 +402,9 @@ class TeleportAssets extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(dest);
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(beneficiary);
-    size = size + _i5.VersionedMultiAssets.codec.sizeHint(assets);
+    size = size + _i3.VersionedLocation.codec.sizeHint(dest);
+    size = size + _i3.VersionedLocation.codec.sizeHint(beneficiary);
+    size = size + _i5.VersionedAssets.codec.sizeHint(assets);
     size = size + _i1.U32Codec.codec.sizeHint(feeAssetItem);
     return size;
   }
@@ -374,15 +414,15 @@ class TeleportAssets extends Call {
       1,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       dest,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       beneficiary,
       output,
     );
-    _i5.VersionedMultiAssets.codec.encodeTo(
+    _i5.VersionedAssets.codec.encodeTo(
       assets,
       output,
     );
@@ -424,21 +464,21 @@ class ReserveTransferAssets extends Call {
 
   factory ReserveTransferAssets._decode(_i1.Input input) {
     return ReserveTransferAssets(
-      dest: _i3.VersionedMultiLocation.codec.decode(input),
-      beneficiary: _i3.VersionedMultiLocation.codec.decode(input),
-      assets: _i5.VersionedMultiAssets.codec.decode(input),
+      dest: _i3.VersionedLocation.codec.decode(input),
+      beneficiary: _i3.VersionedLocation.codec.decode(input),
+      assets: _i5.VersionedAssets.codec.decode(input),
       feeAssetItem: _i1.U32Codec.codec.decode(input),
     );
   }
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation dest;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation dest;
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation beneficiary;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation beneficiary;
 
-  /// Box<VersionedMultiAssets>
-  final _i5.VersionedMultiAssets assets;
+  /// Box<VersionedAssets>
+  final _i5.VersionedAssets assets;
 
   /// u32
   final int feeAssetItem;
@@ -455,9 +495,9 @@ class ReserveTransferAssets extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(dest);
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(beneficiary);
-    size = size + _i5.VersionedMultiAssets.codec.sizeHint(assets);
+    size = size + _i3.VersionedLocation.codec.sizeHint(dest);
+    size = size + _i3.VersionedLocation.codec.sizeHint(beneficiary);
+    size = size + _i5.VersionedAssets.codec.sizeHint(assets);
     size = size + _i1.U32Codec.codec.sizeHint(feeAssetItem);
     return size;
   }
@@ -467,15 +507,15 @@ class ReserveTransferAssets extends Call {
       2,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       dest,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       beneficiary,
       output,
     );
-    _i5.VersionedMultiAssets.codec.encodeTo(
+    _i5.VersionedAssets.codec.encodeTo(
       assets,
       output,
     );
@@ -520,7 +560,7 @@ class Execute extends Call {
     );
   }
 
-  /// Box<VersionedXcm<<T as SysConfig>::RuntimeCall>>
+  /// Box<VersionedXcm<<T as Config>::RuntimeCall>>
   final _i6.VersionedXcm message;
 
   /// Weight
@@ -580,13 +620,13 @@ class ForceXcmVersion extends Call {
 
   factory ForceXcmVersion._decode(_i1.Input input) {
     return ForceXcmVersion(
-      location: _i8.MultiLocation.codec.decode(input),
+      location: _i8.Location.codec.decode(input),
       version: _i1.U32Codec.codec.decode(input),
     );
   }
 
-  /// Box<MultiLocation>
-  final _i8.MultiLocation location;
+  /// Box<Location>
+  final _i8.Location location;
 
   /// XcmVersion
   final int version;
@@ -601,7 +641,7 @@ class ForceXcmVersion extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i8.MultiLocation.codec.sizeHint(location);
+    size = size + _i8.Location.codec.sizeHint(location);
     size = size + _i1.U32Codec.codec.sizeHint(version);
     return size;
   }
@@ -611,7 +651,7 @@ class ForceXcmVersion extends Call {
       4,
       output,
     );
-    _i8.MultiLocation.codec.encodeTo(
+    _i8.Location.codec.encodeTo(
       location,
       output,
     );
@@ -686,11 +726,11 @@ class ForceSubscribeVersionNotify extends Call {
   const ForceSubscribeVersionNotify({required this.location});
 
   factory ForceSubscribeVersionNotify._decode(_i1.Input input) {
-    return ForceSubscribeVersionNotify(location: _i3.VersionedMultiLocation.codec.decode(input));
+    return ForceSubscribeVersionNotify(location: _i3.VersionedLocation.codec.decode(input));
   }
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation location;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation location;
 
   @override
   Map<String, Map<String, Map<String, Map<String, dynamic>>>> toJson() => {
@@ -699,7 +739,7 @@ class ForceSubscribeVersionNotify extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(location);
+    size = size + _i3.VersionedLocation.codec.sizeHint(location);
     return size;
   }
 
@@ -708,7 +748,7 @@ class ForceSubscribeVersionNotify extends Call {
       6,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       location,
       output,
     );
@@ -731,11 +771,11 @@ class ForceUnsubscribeVersionNotify extends Call {
   const ForceUnsubscribeVersionNotify({required this.location});
 
   factory ForceUnsubscribeVersionNotify._decode(_i1.Input input) {
-    return ForceUnsubscribeVersionNotify(location: _i3.VersionedMultiLocation.codec.decode(input));
+    return ForceUnsubscribeVersionNotify(location: _i3.VersionedLocation.codec.decode(input));
   }
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation location;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation location;
 
   @override
   Map<String, Map<String, Map<String, Map<String, dynamic>>>> toJson() => {
@@ -744,7 +784,7 @@ class ForceUnsubscribeVersionNotify extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(location);
+    size = size + _i3.VersionedLocation.codec.sizeHint(location);
     return size;
   }
 
@@ -753,7 +793,7 @@ class ForceUnsubscribeVersionNotify extends Call {
       7,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       location,
       output,
     );
@@ -783,22 +823,22 @@ class LimitedReserveTransferAssets extends Call {
 
   factory LimitedReserveTransferAssets._decode(_i1.Input input) {
     return LimitedReserveTransferAssets(
-      dest: _i3.VersionedMultiLocation.codec.decode(input),
-      beneficiary: _i3.VersionedMultiLocation.codec.decode(input),
-      assets: _i5.VersionedMultiAssets.codec.decode(input),
+      dest: _i3.VersionedLocation.codec.decode(input),
+      beneficiary: _i3.VersionedLocation.codec.decode(input),
+      assets: _i5.VersionedAssets.codec.decode(input),
       feeAssetItem: _i1.U32Codec.codec.decode(input),
       weightLimit: _i9.WeightLimit.codec.decode(input),
     );
   }
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation dest;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation dest;
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation beneficiary;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation beneficiary;
 
-  /// Box<VersionedMultiAssets>
-  final _i5.VersionedMultiAssets assets;
+  /// Box<VersionedAssets>
+  final _i5.VersionedAssets assets;
 
   /// u32
   final int feeAssetItem;
@@ -819,9 +859,9 @@ class LimitedReserveTransferAssets extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(dest);
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(beneficiary);
-    size = size + _i5.VersionedMultiAssets.codec.sizeHint(assets);
+    size = size + _i3.VersionedLocation.codec.sizeHint(dest);
+    size = size + _i3.VersionedLocation.codec.sizeHint(beneficiary);
+    size = size + _i5.VersionedAssets.codec.sizeHint(assets);
     size = size + _i1.U32Codec.codec.sizeHint(feeAssetItem);
     size = size + _i9.WeightLimit.codec.sizeHint(weightLimit);
     return size;
@@ -832,15 +872,15 @@ class LimitedReserveTransferAssets extends Call {
       8,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       dest,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       beneficiary,
       output,
     );
-    _i5.VersionedMultiAssets.codec.encodeTo(
+    _i5.VersionedAssets.codec.encodeTo(
       assets,
       output,
     );
@@ -889,22 +929,22 @@ class LimitedTeleportAssets extends Call {
 
   factory LimitedTeleportAssets._decode(_i1.Input input) {
     return LimitedTeleportAssets(
-      dest: _i3.VersionedMultiLocation.codec.decode(input),
-      beneficiary: _i3.VersionedMultiLocation.codec.decode(input),
-      assets: _i5.VersionedMultiAssets.codec.decode(input),
+      dest: _i3.VersionedLocation.codec.decode(input),
+      beneficiary: _i3.VersionedLocation.codec.decode(input),
+      assets: _i5.VersionedAssets.codec.decode(input),
       feeAssetItem: _i1.U32Codec.codec.decode(input),
       weightLimit: _i9.WeightLimit.codec.decode(input),
     );
   }
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation dest;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation dest;
 
-  /// Box<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation beneficiary;
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation beneficiary;
 
-  /// Box<VersionedMultiAssets>
-  final _i5.VersionedMultiAssets assets;
+  /// Box<VersionedAssets>
+  final _i5.VersionedAssets assets;
 
   /// u32
   final int feeAssetItem;
@@ -925,9 +965,9 @@ class LimitedTeleportAssets extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(dest);
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(beneficiary);
-    size = size + _i5.VersionedMultiAssets.codec.sizeHint(assets);
+    size = size + _i3.VersionedLocation.codec.sizeHint(dest);
+    size = size + _i3.VersionedLocation.codec.sizeHint(beneficiary);
+    size = size + _i5.VersionedAssets.codec.sizeHint(assets);
     size = size + _i1.U32Codec.codec.sizeHint(feeAssetItem);
     size = size + _i9.WeightLimit.codec.sizeHint(weightLimit);
     return size;
@@ -938,15 +978,15 @@ class LimitedTeleportAssets extends Call {
       9,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       dest,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       beneficiary,
       output,
     );
-    _i5.VersionedMultiAssets.codec.encodeTo(
+    _i5.VersionedAssets.codec.encodeTo(
       assets,
       output,
     );
@@ -1026,4 +1066,175 @@ class ForceSuspension extends Call {
 
   @override
   int get hashCode => suspended.hashCode;
+}
+
+/// See [`Pallet::transfer_assets`].
+class TransferAssets extends Call {
+  const TransferAssets({
+    required this.dest,
+    required this.beneficiary,
+    required this.assets,
+    required this.feeAssetItem,
+    required this.weightLimit,
+  });
+
+  factory TransferAssets._decode(_i1.Input input) {
+    return TransferAssets(
+      dest: _i3.VersionedLocation.codec.decode(input),
+      beneficiary: _i3.VersionedLocation.codec.decode(input),
+      assets: _i5.VersionedAssets.codec.decode(input),
+      feeAssetItem: _i1.U32Codec.codec.decode(input),
+      weightLimit: _i9.WeightLimit.codec.decode(input),
+    );
+  }
+
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation dest;
+
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation beneficiary;
+
+  /// Box<VersionedAssets>
+  final _i5.VersionedAssets assets;
+
+  /// u32
+  final int feeAssetItem;
+
+  /// WeightLimit
+  final _i9.WeightLimit weightLimit;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'transfer_assets': {
+          'dest': dest.toJson(),
+          'beneficiary': beneficiary.toJson(),
+          'assets': assets.toJson(),
+          'feeAssetItem': feeAssetItem,
+          'weightLimit': weightLimit.toJson(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i3.VersionedLocation.codec.sizeHint(dest);
+    size = size + _i3.VersionedLocation.codec.sizeHint(beneficiary);
+    size = size + _i5.VersionedAssets.codec.sizeHint(assets);
+    size = size + _i1.U32Codec.codec.sizeHint(feeAssetItem);
+    size = size + _i9.WeightLimit.codec.sizeHint(weightLimit);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      11,
+      output,
+    );
+    _i3.VersionedLocation.codec.encodeTo(
+      dest,
+      output,
+    );
+    _i3.VersionedLocation.codec.encodeTo(
+      beneficiary,
+      output,
+    );
+    _i5.VersionedAssets.codec.encodeTo(
+      assets,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      feeAssetItem,
+      output,
+    );
+    _i9.WeightLimit.codec.encodeTo(
+      weightLimit,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TransferAssets &&
+          other.dest == dest &&
+          other.beneficiary == beneficiary &&
+          other.assets == assets &&
+          other.feeAssetItem == feeAssetItem &&
+          other.weightLimit == weightLimit;
+
+  @override
+  int get hashCode => Object.hash(
+        dest,
+        beneficiary,
+        assets,
+        feeAssetItem,
+        weightLimit,
+      );
+}
+
+/// See [`Pallet::claim_assets`].
+class ClaimAssets extends Call {
+  const ClaimAssets({
+    required this.assets,
+    required this.beneficiary,
+  });
+
+  factory ClaimAssets._decode(_i1.Input input) {
+    return ClaimAssets(
+      assets: _i5.VersionedAssets.codec.decode(input),
+      beneficiary: _i3.VersionedLocation.codec.decode(input),
+    );
+  }
+
+  /// Box<VersionedAssets>
+  final _i5.VersionedAssets assets;
+
+  /// Box<VersionedLocation>
+  final _i3.VersionedLocation beneficiary;
+
+  @override
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {
+        'claim_assets': {
+          'assets': assets.toJson(),
+          'beneficiary': beneficiary.toJson(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i5.VersionedAssets.codec.sizeHint(assets);
+    size = size + _i3.VersionedLocation.codec.sizeHint(beneficiary);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      12,
+      output,
+    );
+    _i5.VersionedAssets.codec.encodeTo(
+      assets,
+      output,
+    );
+    _i3.VersionedLocation.codec.encodeTo(
+      beneficiary,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ClaimAssets && other.assets == assets && other.beneficiary == beneficiary;
+
+  @override
+  int get hashCode => Object.hash(
+        assets,
+        beneficiary,
+      );
 }

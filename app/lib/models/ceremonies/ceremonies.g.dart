@@ -59,23 +59,6 @@ const _$CeremonyPhaseEnumMap = {
   CeremonyPhase.Attesting: 'Attesting',
 };
 
-CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) => CommunityReputation(
-      CommunityIdentifier.fromJson(json['communityIdentifier'] as Map<String, dynamic>),
-      $enumDecode(_$ReputationEnumMap, json['reputation']),
-    );
-
-Map<String, dynamic> _$CommunityReputationToJson(CommunityReputation instance) => <String, dynamic>{
-      'communityIdentifier': instance.communityIdentifier.toJson(),
-      'reputation': _$ReputationEnumMap[instance.reputation]!,
-    };
-
-const _$ReputationEnumMap = {
-  Reputation.Unverified: 'Unverified',
-  Reputation.UnverifiedReputable: 'UnverifiedReputable',
-  Reputation.VerifiedUnlinked: 'VerifiedUnlinked',
-  Reputation.VerifiedLinked: 'VerifiedLinked',
-};
-
 Meetup _$MeetupFromJson(Map<String, dynamic> json) => Meetup(
       json['index'] as int,
       json['locationIndex'] as int,

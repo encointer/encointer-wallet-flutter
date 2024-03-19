@@ -5,8 +5,8 @@ import 'dart:typed_data' as _i5;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i6;
 import '../types/encointer_primitives/scheduler/ceremony_phase_type.dart' as _i3;
-import '../types/encointer_runtime/runtime_call.dart' as _i6;
 import '../types/pallet_encointer_scheduler/pallet/call.dart' as _i7;
 
 class Queries {

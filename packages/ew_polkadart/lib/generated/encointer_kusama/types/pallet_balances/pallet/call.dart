@@ -2,10 +2,11 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
-import 'package:quiver/collection.dart' as _i5;
+import 'package:quiver/collection.dart' as _i6;
 
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
+import '../types/adjustment_direction.dart' as _i5;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -42,18 +43,6 @@ class $Call {
     return TransferAllowDeath(
       dest: dest,
       value: value,
-    );
-  }
-
-  SetBalanceDeprecated setBalanceDeprecated({
-    required _i3.MultiAddress who,
-    required BigInt newFree,
-    required BigInt oldReserved,
-  }) {
-    return SetBalanceDeprecated(
-      who: who,
-      newFree: newFree,
-      oldReserved: oldReserved,
     );
   }
 
@@ -103,16 +92,6 @@ class $Call {
     return UpgradeAccounts(who: who);
   }
 
-  Transfer transfer({
-    required _i3.MultiAddress dest,
-    required BigInt value,
-  }) {
-    return Transfer(
-      dest: dest,
-      value: value,
-    );
-  }
-
   ForceSetBalance forceSetBalance({
     required _i3.MultiAddress who,
     required BigInt newFree,
@@ -120,6 +99,16 @@ class $Call {
     return ForceSetBalance(
       who: who,
       newFree: newFree,
+    );
+  }
+
+  ForceAdjustTotalIssuance forceAdjustTotalIssuance({
+    required _i5.AdjustmentDirection direction,
+    required BigInt delta,
+  }) {
+    return ForceAdjustTotalIssuance(
+      direction: direction,
+      delta: delta,
     );
   }
 }
@@ -133,8 +122,6 @@ class $CallCodec with _i1.Codec<Call> {
     switch (index) {
       case 0:
         return TransferAllowDeath._decode(input);
-      case 1:
-        return SetBalanceDeprecated._decode(input);
       case 2:
         return ForceTransfer._decode(input);
       case 3:
@@ -145,10 +132,10 @@ class $CallCodec with _i1.Codec<Call> {
         return ForceUnreserve._decode(input);
       case 6:
         return UpgradeAccounts._decode(input);
-      case 7:
-        return Transfer._decode(input);
       case 8:
         return ForceSetBalance._decode(input);
+      case 9:
+        return ForceAdjustTotalIssuance._decode(input);
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -162,9 +149,6 @@ class $CallCodec with _i1.Codec<Call> {
     switch (value.runtimeType) {
       case TransferAllowDeath:
         (value as TransferAllowDeath).encodeTo(output);
-        break;
-      case SetBalanceDeprecated:
-        (value as SetBalanceDeprecated).encodeTo(output);
         break;
       case ForceTransfer:
         (value as ForceTransfer).encodeTo(output);
@@ -181,11 +165,11 @@ class $CallCodec with _i1.Codec<Call> {
       case UpgradeAccounts:
         (value as UpgradeAccounts).encodeTo(output);
         break;
-      case Transfer:
-        (value as Transfer).encodeTo(output);
-        break;
       case ForceSetBalance:
         (value as ForceSetBalance).encodeTo(output);
+        break;
+      case ForceAdjustTotalIssuance:
+        (value as ForceAdjustTotalIssuance).encodeTo(output);
         break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
@@ -197,8 +181,6 @@ class $CallCodec with _i1.Codec<Call> {
     switch (value.runtimeType) {
       case TransferAllowDeath:
         return (value as TransferAllowDeath)._sizeHint();
-      case SetBalanceDeprecated:
-        return (value as SetBalanceDeprecated)._sizeHint();
       case ForceTransfer:
         return (value as ForceTransfer)._sizeHint();
       case TransferKeepAlive:
@@ -209,10 +191,10 @@ class $CallCodec with _i1.Codec<Call> {
         return (value as ForceUnreserve)._sizeHint();
       case UpgradeAccounts:
         return (value as UpgradeAccounts)._sizeHint();
-      case Transfer:
-        return (value as Transfer)._sizeHint();
       case ForceSetBalance:
         return (value as ForceSetBalance)._sizeHint();
+      case ForceAdjustTotalIssuance:
+        return (value as ForceAdjustTotalIssuance)._sizeHint();
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -281,83 +263,6 @@ class TransferAllowDeath extends Call {
   int get hashCode => Object.hash(
         dest,
         value,
-      );
-}
-
-/// See [`Pallet::set_balance_deprecated`].
-class SetBalanceDeprecated extends Call {
-  const SetBalanceDeprecated({
-    required this.who,
-    required this.newFree,
-    required this.oldReserved,
-  });
-
-  factory SetBalanceDeprecated._decode(_i1.Input input) {
-    return SetBalanceDeprecated(
-      who: _i3.MultiAddress.codec.decode(input),
-      newFree: _i1.CompactBigIntCodec.codec.decode(input),
-      oldReserved: _i1.CompactBigIntCodec.codec.decode(input),
-    );
-  }
-
-  /// AccountIdLookupOf<T>
-  final _i3.MultiAddress who;
-
-  /// T::Balance
-  final BigInt newFree;
-
-  /// T::Balance
-  final BigInt oldReserved;
-
-  @override
-  Map<String, Map<String, dynamic>> toJson() => {
-        'set_balance_deprecated': {
-          'who': who.toJson(),
-          'newFree': newFree,
-          'oldReserved': oldReserved,
-        }
-      };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i3.MultiAddress.codec.sizeHint(who);
-    size = size + _i1.CompactBigIntCodec.codec.sizeHint(newFree);
-    size = size + _i1.CompactBigIntCodec.codec.sizeHint(oldReserved);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      1,
-      output,
-    );
-    _i3.MultiAddress.codec.encodeTo(
-      who,
-      output,
-    );
-    _i1.CompactBigIntCodec.codec.encodeTo(
-      newFree,
-      output,
-    );
-    _i1.CompactBigIntCodec.codec.encodeTo(
-      oldReserved,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is SetBalanceDeprecated && other.who == who && other.newFree == newFree && other.oldReserved == oldReserved;
-
-  @override
-  int get hashCode => Object.hash(
-        who,
-        newFree,
-        oldReserved,
       );
 }
 
@@ -673,78 +578,13 @@ class UpgradeAccounts extends Call {
         other,
       ) ||
       other is UpgradeAccounts &&
-          _i5.listsEqual(
+          _i6.listsEqual(
             other.who,
             who,
           );
 
   @override
   int get hashCode => who.hashCode;
-}
-
-/// See [`Pallet::transfer`].
-class Transfer extends Call {
-  const Transfer({
-    required this.dest,
-    required this.value,
-  });
-
-  factory Transfer._decode(_i1.Input input) {
-    return Transfer(
-      dest: _i3.MultiAddress.codec.decode(input),
-      value: _i1.CompactBigIntCodec.codec.decode(input),
-    );
-  }
-
-  /// AccountIdLookupOf<T>
-  final _i3.MultiAddress dest;
-
-  /// T::Balance
-  final BigInt value;
-
-  @override
-  Map<String, Map<String, dynamic>> toJson() => {
-        'transfer': {
-          'dest': dest.toJson(),
-          'value': value,
-        }
-      };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i3.MultiAddress.codec.sizeHint(dest);
-    size = size + _i1.CompactBigIntCodec.codec.sizeHint(value);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      7,
-      output,
-    );
-    _i3.MultiAddress.codec.encodeTo(
-      dest,
-      output,
-    );
-    _i1.CompactBigIntCodec.codec.encodeTo(
-      value,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is Transfer && other.dest == dest && other.value == value;
-
-  @override
-  int get hashCode => Object.hash(
-        dest,
-        value,
-      );
 }
 
 /// See [`Pallet::force_set_balance`].
@@ -809,5 +649,70 @@ class ForceSetBalance extends Call {
   int get hashCode => Object.hash(
         who,
         newFree,
+      );
+}
+
+/// See [`Pallet::force_adjust_total_issuance`].
+class ForceAdjustTotalIssuance extends Call {
+  const ForceAdjustTotalIssuance({
+    required this.direction,
+    required this.delta,
+  });
+
+  factory ForceAdjustTotalIssuance._decode(_i1.Input input) {
+    return ForceAdjustTotalIssuance(
+      direction: _i5.AdjustmentDirection.codec.decode(input),
+      delta: _i1.CompactBigIntCodec.codec.decode(input),
+    );
+  }
+
+  /// AdjustmentDirection
+  final _i5.AdjustmentDirection direction;
+
+  /// T::Balance
+  final BigInt delta;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'force_adjust_total_issuance': {
+          'direction': direction.toJson(),
+          'delta': delta,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i5.AdjustmentDirection.codec.sizeHint(direction);
+    size = size + _i1.CompactBigIntCodec.codec.sizeHint(delta);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      9,
+      output,
+    );
+    _i5.AdjustmentDirection.codec.encodeTo(
+      direction,
+      output,
+    );
+    _i1.CompactBigIntCodec.codec.encodeTo(
+      delta,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ForceAdjustTotalIssuance && other.direction == direction && other.delta == delta;
+
+  @override
+  int get hashCode => Object.hash(
+        direction,
+        delta,
       );
 }

@@ -29,11 +29,17 @@ enum Error {
   /// Number of named reserves exceed `MaxReserves`.
   tooManyReserves('TooManyReserves', 7),
 
-  /// Number of holds exceed `MaxHolds`.
+  /// Number of holds exceed `VariantCountOf<T::RuntimeHoldReason>`.
   tooManyHolds('TooManyHolds', 8),
 
   /// Number of freezes exceed `MaxFreezes`.
-  tooManyFreezes('TooManyFreezes', 9);
+  tooManyFreezes('TooManyFreezes', 9),
+
+  /// The issuance cannot be modified since it is already deactivated.
+  issuanceDeactivated('IssuanceDeactivated', 10),
+
+  /// The delta cannot be zero.
+  deltaZero('DeltaZero', 11);
 
   const Error(
     this.variantName,
@@ -83,6 +89,10 @@ class $ErrorCodec with _i1.Codec<Error> {
         return Error.tooManyHolds;
       case 9:
         return Error.tooManyFreezes;
+      case 10:
+        return Error.issuanceDeactivated;
+      case 11:
+        return Error.deltaZero;
       default:
         throw Exception('Error: Invalid variant index: "$index"');
     }
