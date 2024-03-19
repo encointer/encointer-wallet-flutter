@@ -112,7 +112,7 @@ class Legacy extends Bounded {
     return Legacy(hash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
-  /// Hash
+  /// H::Output
   final _i3.H256 hash;
 
   @override
@@ -212,7 +212,7 @@ class Lookup extends Bounded {
     );
   }
 
-  /// Hash
+  /// H::Output
   final _i3.H256 hash;
 
   /// u32

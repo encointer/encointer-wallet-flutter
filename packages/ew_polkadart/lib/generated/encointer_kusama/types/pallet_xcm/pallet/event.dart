@@ -6,16 +6,16 @@ import 'package:quiver/collection.dart' as _i14;
 
 import '../../primitive_types/h256.dart' as _i8;
 import '../../sp_weights/weight_v2/weight.dart' as _i7;
-import '../../xcm/v3/instruction_1.dart' as _i13;
-import '../../xcm/v3/multiasset/multi_asset.dart' as _i15;
-import '../../xcm/v3/multiasset/multi_assets.dart' as _i10;
-import '../../xcm/v3/multilocation/multi_location.dart' as _i4;
-import '../../xcm/v3/response.dart' as _i6;
+import '../../staging_xcm/v4/asset/asset.dart' as _i15;
+import '../../staging_xcm/v4/asset/assets.dart' as _i10;
+import '../../staging_xcm/v4/instruction_1.dart' as _i13;
+import '../../staging_xcm/v4/location/location.dart' as _i4;
+import '../../staging_xcm/v4/response.dart' as _i6;
+import '../../staging_xcm/v4/traits/outcome.dart' as _i3;
+import '../../staging_xcm/v4/xcm_1.dart' as _i5;
 import '../../xcm/v3/traits/error.dart' as _i11;
-import '../../xcm/v3/traits/outcome.dart' as _i3;
-import '../../xcm/v3/xcm_1.dart' as _i5;
-import '../../xcm/versioned_multi_assets.dart' as _i9;
-import '../../xcm/versioned_multi_location.dart' as _i12;
+import '../../xcm/versioned_assets.dart' as _i9;
+import '../../xcm/versioned_location.dart' as _i12;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -50,8 +50,8 @@ class $Event {
   }
 
   Sent sent({
-    required _i4.MultiLocation origin,
-    required _i4.MultiLocation destination,
+    required _i4.Location origin,
+    required _i4.Location destination,
     required _i5.Xcm message,
     required List<int> messageId,
   }) {
@@ -64,7 +64,7 @@ class $Event {
   }
 
   UnexpectedResponse unexpectedResponse({
-    required _i4.MultiLocation origin,
+    required _i4.Location origin,
     required BigInt queryId,
   }) {
     return UnexpectedResponse(
@@ -136,9 +136,9 @@ class $Event {
   }
 
   InvalidResponder invalidResponder({
-    required _i4.MultiLocation origin,
+    required _i4.Location origin,
     required BigInt queryId,
-    _i4.MultiLocation? expectedLocation,
+    _i4.Location? expectedLocation,
   }) {
     return InvalidResponder(
       origin: origin,
@@ -148,7 +148,7 @@ class $Event {
   }
 
   InvalidResponderVersion invalidResponderVersion({
-    required _i4.MultiLocation origin,
+    required _i4.Location origin,
     required BigInt queryId,
   }) {
     return InvalidResponderVersion(
@@ -163,8 +163,8 @@ class $Event {
 
   AssetsTrapped assetsTrapped({
     required _i8.H256 hash,
-    required _i4.MultiLocation origin,
-    required _i9.VersionedMultiAssets assets,
+    required _i4.Location origin,
+    required _i9.VersionedAssets assets,
   }) {
     return AssetsTrapped(
       hash: hash,
@@ -174,9 +174,9 @@ class $Event {
   }
 
   VersionChangeNotified versionChangeNotified({
-    required _i4.MultiLocation destination,
+    required _i4.Location destination,
     required int result,
-    required _i10.MultiAssets cost,
+    required _i10.Assets cost,
     required List<int> messageId,
   }) {
     return VersionChangeNotified(
@@ -188,7 +188,7 @@ class $Event {
   }
 
   SupportedVersionChanged supportedVersionChanged({
-    required _i4.MultiLocation location,
+    required _i4.Location location,
     required int version,
   }) {
     return SupportedVersionChanged(
@@ -198,7 +198,7 @@ class $Event {
   }
 
   NotifyTargetSendFail notifyTargetSendFail({
-    required _i4.MultiLocation location,
+    required _i4.Location location,
     required BigInt queryId,
     required _i11.Error error,
   }) {
@@ -210,7 +210,7 @@ class $Event {
   }
 
   NotifyTargetMigrationFail notifyTargetMigrationFail({
-    required _i12.VersionedMultiLocation location,
+    required _i12.VersionedLocation location,
     required BigInt queryId,
   }) {
     return NotifyTargetMigrationFail(
@@ -220,7 +220,7 @@ class $Event {
   }
 
   InvalidQuerierVersion invalidQuerierVersion({
-    required _i4.MultiLocation origin,
+    required _i4.Location origin,
     required BigInt queryId,
   }) {
     return InvalidQuerierVersion(
@@ -230,10 +230,10 @@ class $Event {
   }
 
   InvalidQuerier invalidQuerier({
-    required _i4.MultiLocation origin,
+    required _i4.Location origin,
     required BigInt queryId,
-    required _i4.MultiLocation expectedQuerier,
-    _i4.MultiLocation? maybeActualQuerier,
+    required _i4.Location expectedQuerier,
+    _i4.Location? maybeActualQuerier,
   }) {
     return InvalidQuerier(
       origin: origin,
@@ -244,8 +244,8 @@ class $Event {
   }
 
   VersionNotifyStarted versionNotifyStarted({
-    required _i4.MultiLocation destination,
-    required _i10.MultiAssets cost,
+    required _i4.Location destination,
+    required _i10.Assets cost,
     required List<int> messageId,
   }) {
     return VersionNotifyStarted(
@@ -256,8 +256,8 @@ class $Event {
   }
 
   VersionNotifyRequested versionNotifyRequested({
-    required _i4.MultiLocation destination,
-    required _i10.MultiAssets cost,
+    required _i4.Location destination,
+    required _i10.Assets cost,
     required List<int> messageId,
   }) {
     return VersionNotifyRequested(
@@ -268,8 +268,8 @@ class $Event {
   }
 
   VersionNotifyUnrequested versionNotifyUnrequested({
-    required _i4.MultiLocation destination,
-    required _i10.MultiAssets cost,
+    required _i4.Location destination,
+    required _i10.Assets cost,
     required List<int> messageId,
   }) {
     return VersionNotifyUnrequested(
@@ -280,8 +280,8 @@ class $Event {
   }
 
   FeesPaid feesPaid({
-    required _i4.MultiLocation paying,
-    required _i10.MultiAssets fees,
+    required _i4.Location paying,
+    required _i10.Assets fees,
   }) {
     return FeesPaid(
       paying: paying,
@@ -291,14 +291,18 @@ class $Event {
 
   AssetsClaimed assetsClaimed({
     required _i8.H256 hash,
-    required _i4.MultiLocation origin,
-    required _i9.VersionedMultiAssets assets,
+    required _i4.Location origin,
+    required _i9.VersionedAssets assets,
   }) {
     return AssetsClaimed(
       hash: hash,
       origin: origin,
       assets: assets,
     );
+  }
+
+  VersionMigrationFinished versionMigrationFinished({required int version}) {
+    return VersionMigrationFinished(version: version);
   }
 }
 
@@ -355,6 +359,8 @@ class $EventCodec with _i1.Codec<Event> {
         return FeesPaid._decode(input);
       case 22:
         return AssetsClaimed._decode(input);
+      case 23:
+        return VersionMigrationFinished._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -435,6 +441,9 @@ class $EventCodec with _i1.Codec<Event> {
       case AssetsClaimed:
         (value as AssetsClaimed).encodeTo(output);
         break;
+      case VersionMigrationFinished:
+        (value as VersionMigrationFinished).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -489,6 +498,8 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as FeesPaid)._sizeHint();
       case AssetsClaimed:
         return (value as AssetsClaimed)._sizeHint();
+      case VersionMigrationFinished:
+        return (value as VersionMigrationFinished)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -507,7 +518,7 @@ class Attempted extends Event {
   final _i3.Outcome outcome;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {
+  Map<String, Map<String, Map<String, Map<String, Map<String, dynamic>>>>> toJson() => {
         'Attempted': {'outcome': outcome.toJson()}
       };
 
@@ -551,18 +562,18 @@ class Sent extends Event {
 
   factory Sent._decode(_i1.Input input) {
     return Sent(
-      origin: _i4.MultiLocation.codec.decode(input),
-      destination: _i4.MultiLocation.codec.decode(input),
+      origin: _i4.Location.codec.decode(input),
+      destination: _i4.Location.codec.decode(input),
       message: const _i1.SequenceCodec<_i13.Instruction>(_i13.Instruction.codec).decode(input),
       messageId: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation origin;
+  /// Location
+  final _i4.Location origin;
 
-  /// MultiLocation
-  final _i4.MultiLocation destination;
+  /// Location
+  final _i4.Location destination;
 
   /// Xcm<()>
   final _i5.Xcm message;
@@ -582,8 +593,8 @@ class Sent extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(origin);
-    size = size + _i4.MultiLocation.codec.sizeHint(destination);
+    size = size + _i4.Location.codec.sizeHint(origin);
+    size = size + _i4.Location.codec.sizeHint(destination);
     size = size + const _i5.XcmCodec().sizeHint(message);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
@@ -594,11 +605,11 @@ class Sent extends Event {
       1,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       origin,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       destination,
       output,
     );
@@ -650,13 +661,13 @@ class UnexpectedResponse extends Event {
 
   factory UnexpectedResponse._decode(_i1.Input input) {
     return UnexpectedResponse(
-      origin: _i4.MultiLocation.codec.decode(input),
+      origin: _i4.Location.codec.decode(input),
       queryId: _i1.U64Codec.codec.decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation origin;
+  /// Location
+  final _i4.Location origin;
 
   /// QueryId
   final BigInt queryId;
@@ -671,7 +682,7 @@ class UnexpectedResponse extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(origin);
+    size = size + _i4.Location.codec.sizeHint(origin);
     size = size + _i1.U64Codec.codec.sizeHint(queryId);
     return size;
   }
@@ -681,7 +692,7 @@ class UnexpectedResponse extends Event {
       2,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       origin,
       output,
     );
@@ -850,8 +861,8 @@ class Notified extends Event {
       );
 }
 
-/// Query response has been received and query is removed. The registered notification could
-/// not be dispatched because the dispatch weight is greater than the maximum weight
+/// Query response has been received and query is removed. The registered notification
+/// could not be dispatched because the dispatch weight is greater than the maximum weight
 /// originally budgeted by this runtime for the query result.
 class NotifyOverweight extends Event {
   const NotifyOverweight({
@@ -1133,20 +1144,20 @@ class InvalidResponder extends Event {
 
   factory InvalidResponder._decode(_i1.Input input) {
     return InvalidResponder(
-      origin: _i4.MultiLocation.codec.decode(input),
+      origin: _i4.Location.codec.decode(input),
       queryId: _i1.U64Codec.codec.decode(input),
-      expectedLocation: const _i1.OptionCodec<_i4.MultiLocation>(_i4.MultiLocation.codec).decode(input),
+      expectedLocation: const _i1.OptionCodec<_i4.Location>(_i4.Location.codec).decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation origin;
+  /// Location
+  final _i4.Location origin;
 
   /// QueryId
   final BigInt queryId;
 
-  /// Option<MultiLocation>
-  final _i4.MultiLocation? expectedLocation;
+  /// Option<Location>
+  final _i4.Location? expectedLocation;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
@@ -1159,9 +1170,9 @@ class InvalidResponder extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(origin);
+    size = size + _i4.Location.codec.sizeHint(origin);
     size = size + _i1.U64Codec.codec.sizeHint(queryId);
-    size = size + const _i1.OptionCodec<_i4.MultiLocation>(_i4.MultiLocation.codec).sizeHint(expectedLocation);
+    size = size + const _i1.OptionCodec<_i4.Location>(_i4.Location.codec).sizeHint(expectedLocation);
     return size;
   }
 
@@ -1170,7 +1181,7 @@ class InvalidResponder extends Event {
       8,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       origin,
       output,
     );
@@ -1178,7 +1189,7 @@ class InvalidResponder extends Event {
       queryId,
       output,
     );
-    const _i1.OptionCodec<_i4.MultiLocation>(_i4.MultiLocation.codec).encodeTo(
+    const _i1.OptionCodec<_i4.Location>(_i4.Location.codec).encodeTo(
       expectedLocation,
       output,
     );
@@ -1218,13 +1229,13 @@ class InvalidResponderVersion extends Event {
 
   factory InvalidResponderVersion._decode(_i1.Input input) {
     return InvalidResponderVersion(
-      origin: _i4.MultiLocation.codec.decode(input),
+      origin: _i4.Location.codec.decode(input),
       queryId: _i1.U64Codec.codec.decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation origin;
+  /// Location
+  final _i4.Location origin;
 
   /// QueryId
   final BigInt queryId;
@@ -1239,7 +1250,7 @@ class InvalidResponderVersion extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(origin);
+    size = size + _i4.Location.codec.sizeHint(origin);
     size = size + _i1.U64Codec.codec.sizeHint(queryId);
     return size;
   }
@@ -1249,7 +1260,7 @@ class InvalidResponderVersion extends Event {
       9,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       origin,
       output,
     );
@@ -1330,19 +1341,19 @@ class AssetsTrapped extends Event {
   factory AssetsTrapped._decode(_i1.Input input) {
     return AssetsTrapped(
       hash: const _i1.U8ArrayCodec(32).decode(input),
-      origin: _i4.MultiLocation.codec.decode(input),
-      assets: _i9.VersionedMultiAssets.codec.decode(input),
+      origin: _i4.Location.codec.decode(input),
+      assets: _i9.VersionedAssets.codec.decode(input),
     );
   }
 
   /// H256
   final _i8.H256 hash;
 
-  /// MultiLocation
-  final _i4.MultiLocation origin;
+  /// Location
+  final _i4.Location origin;
 
-  /// VersionedMultiAssets
-  final _i9.VersionedMultiAssets assets;
+  /// VersionedAssets
+  final _i9.VersionedAssets assets;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
@@ -1356,8 +1367,8 @@ class AssetsTrapped extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + const _i8.H256Codec().sizeHint(hash);
-    size = size + _i4.MultiLocation.codec.sizeHint(origin);
-    size = size + _i9.VersionedMultiAssets.codec.sizeHint(assets);
+    size = size + _i4.Location.codec.sizeHint(origin);
+    size = size + _i9.VersionedAssets.codec.sizeHint(assets);
     return size;
   }
 
@@ -1370,11 +1381,11 @@ class AssetsTrapped extends Event {
       hash,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       origin,
       output,
     );
-    _i9.VersionedMultiAssets.codec.encodeTo(
+    _i9.VersionedAssets.codec.encodeTo(
       assets,
       output,
     );
@@ -1415,21 +1426,21 @@ class VersionChangeNotified extends Event {
 
   factory VersionChangeNotified._decode(_i1.Input input) {
     return VersionChangeNotified(
-      destination: _i4.MultiLocation.codec.decode(input),
+      destination: _i4.Location.codec.decode(input),
       result: _i1.U32Codec.codec.decode(input),
-      cost: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
+      cost: const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).decode(input),
       messageId: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation destination;
+  /// Location
+  final _i4.Location destination;
 
   /// XcmVersion
   final int result;
 
-  /// MultiAssets
-  final _i10.MultiAssets cost;
+  /// Assets
+  final _i10.Assets cost;
 
   /// XcmHash
   final List<int> messageId;
@@ -1446,9 +1457,9 @@ class VersionChangeNotified extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(destination);
+    size = size + _i4.Location.codec.sizeHint(destination);
     size = size + _i1.U32Codec.codec.sizeHint(result);
-    size = size + const _i10.MultiAssetsCodec().sizeHint(cost);
+    size = size + const _i10.AssetsCodec().sizeHint(cost);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
   }
@@ -1458,7 +1469,7 @@ class VersionChangeNotified extends Event {
       12,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       destination,
       output,
     );
@@ -1466,7 +1477,7 @@ class VersionChangeNotified extends Event {
       result,
       output,
     );
-    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).encodeTo(
       cost,
       output,
     );
@@ -1513,13 +1524,13 @@ class SupportedVersionChanged extends Event {
 
   factory SupportedVersionChanged._decode(_i1.Input input) {
     return SupportedVersionChanged(
-      location: _i4.MultiLocation.codec.decode(input),
+      location: _i4.Location.codec.decode(input),
       version: _i1.U32Codec.codec.decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation location;
+  /// Location
+  final _i4.Location location;
 
   /// XcmVersion
   final int version;
@@ -1534,7 +1545,7 @@ class SupportedVersionChanged extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(location);
+    size = size + _i4.Location.codec.sizeHint(location);
     size = size + _i1.U32Codec.codec.sizeHint(version);
     return size;
   }
@@ -1544,7 +1555,7 @@ class SupportedVersionChanged extends Event {
       13,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       location,
       output,
     );
@@ -1580,14 +1591,14 @@ class NotifyTargetSendFail extends Event {
 
   factory NotifyTargetSendFail._decode(_i1.Input input) {
     return NotifyTargetSendFail(
-      location: _i4.MultiLocation.codec.decode(input),
+      location: _i4.Location.codec.decode(input),
       queryId: _i1.U64Codec.codec.decode(input),
       error: _i11.Error.codec.decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation location;
+  /// Location
+  final _i4.Location location;
 
   /// QueryId
   final BigInt queryId;
@@ -1606,7 +1617,7 @@ class NotifyTargetSendFail extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(location);
+    size = size + _i4.Location.codec.sizeHint(location);
     size = size + _i1.U64Codec.codec.sizeHint(queryId);
     size = size + _i11.Error.codec.sizeHint(error);
     return size;
@@ -1617,7 +1628,7 @@ class NotifyTargetSendFail extends Event {
       14,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       location,
       output,
     );
@@ -1657,13 +1668,13 @@ class NotifyTargetMigrationFail extends Event {
 
   factory NotifyTargetMigrationFail._decode(_i1.Input input) {
     return NotifyTargetMigrationFail(
-      location: _i12.VersionedMultiLocation.codec.decode(input),
+      location: _i12.VersionedLocation.codec.decode(input),
       queryId: _i1.U64Codec.codec.decode(input),
     );
   }
 
-  /// VersionedMultiLocation
-  final _i12.VersionedMultiLocation location;
+  /// VersionedLocation
+  final _i12.VersionedLocation location;
 
   /// QueryId
   final BigInt queryId;
@@ -1678,7 +1689,7 @@ class NotifyTargetMigrationFail extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i12.VersionedMultiLocation.codec.sizeHint(location);
+    size = size + _i12.VersionedLocation.codec.sizeHint(location);
     size = size + _i1.U64Codec.codec.sizeHint(queryId);
     return size;
   }
@@ -1688,7 +1699,7 @@ class NotifyTargetMigrationFail extends Event {
       15,
       output,
     );
-    _i12.VersionedMultiLocation.codec.encodeTo(
+    _i12.VersionedLocation.codec.encodeTo(
       location,
       output,
     );
@@ -1728,13 +1739,13 @@ class InvalidQuerierVersion extends Event {
 
   factory InvalidQuerierVersion._decode(_i1.Input input) {
     return InvalidQuerierVersion(
-      origin: _i4.MultiLocation.codec.decode(input),
+      origin: _i4.Location.codec.decode(input),
       queryId: _i1.U64Codec.codec.decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation origin;
+  /// Location
+  final _i4.Location origin;
 
   /// QueryId
   final BigInt queryId;
@@ -1749,7 +1760,7 @@ class InvalidQuerierVersion extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(origin);
+    size = size + _i4.Location.codec.sizeHint(origin);
     size = size + _i1.U64Codec.codec.sizeHint(queryId);
     return size;
   }
@@ -1759,7 +1770,7 @@ class InvalidQuerierVersion extends Event {
       16,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       origin,
       output,
     );
@@ -1797,24 +1808,24 @@ class InvalidQuerier extends Event {
 
   factory InvalidQuerier._decode(_i1.Input input) {
     return InvalidQuerier(
-      origin: _i4.MultiLocation.codec.decode(input),
+      origin: _i4.Location.codec.decode(input),
       queryId: _i1.U64Codec.codec.decode(input),
-      expectedQuerier: _i4.MultiLocation.codec.decode(input),
-      maybeActualQuerier: const _i1.OptionCodec<_i4.MultiLocation>(_i4.MultiLocation.codec).decode(input),
+      expectedQuerier: _i4.Location.codec.decode(input),
+      maybeActualQuerier: const _i1.OptionCodec<_i4.Location>(_i4.Location.codec).decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation origin;
+  /// Location
+  final _i4.Location origin;
 
   /// QueryId
   final BigInt queryId;
 
-  /// MultiLocation
-  final _i4.MultiLocation expectedQuerier;
+  /// Location
+  final _i4.Location expectedQuerier;
 
-  /// Option<MultiLocation>
-  final _i4.MultiLocation? maybeActualQuerier;
+  /// Option<Location>
+  final _i4.Location? maybeActualQuerier;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
@@ -1828,10 +1839,10 @@ class InvalidQuerier extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(origin);
+    size = size + _i4.Location.codec.sizeHint(origin);
     size = size + _i1.U64Codec.codec.sizeHint(queryId);
-    size = size + _i4.MultiLocation.codec.sizeHint(expectedQuerier);
-    size = size + const _i1.OptionCodec<_i4.MultiLocation>(_i4.MultiLocation.codec).sizeHint(maybeActualQuerier);
+    size = size + _i4.Location.codec.sizeHint(expectedQuerier);
+    size = size + const _i1.OptionCodec<_i4.Location>(_i4.Location.codec).sizeHint(maybeActualQuerier);
     return size;
   }
 
@@ -1840,7 +1851,7 @@ class InvalidQuerier extends Event {
       17,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       origin,
       output,
     );
@@ -1848,11 +1859,11 @@ class InvalidQuerier extends Event {
       queryId,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       expectedQuerier,
       output,
     );
-    const _i1.OptionCodec<_i4.MultiLocation>(_i4.MultiLocation.codec).encodeTo(
+    const _i1.OptionCodec<_i4.Location>(_i4.Location.codec).encodeTo(
       maybeActualQuerier,
       output,
     );
@@ -1890,17 +1901,17 @@ class VersionNotifyStarted extends Event {
 
   factory VersionNotifyStarted._decode(_i1.Input input) {
     return VersionNotifyStarted(
-      destination: _i4.MultiLocation.codec.decode(input),
-      cost: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
+      destination: _i4.Location.codec.decode(input),
+      cost: const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).decode(input),
       messageId: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation destination;
+  /// Location
+  final _i4.Location destination;
 
-  /// MultiAssets
-  final _i10.MultiAssets cost;
+  /// Assets
+  final _i10.Assets cost;
 
   /// XcmHash
   final List<int> messageId;
@@ -1916,8 +1927,8 @@ class VersionNotifyStarted extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(destination);
-    size = size + const _i10.MultiAssetsCodec().sizeHint(cost);
+    size = size + _i4.Location.codec.sizeHint(destination);
+    size = size + const _i10.AssetsCodec().sizeHint(cost);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
   }
@@ -1927,11 +1938,11 @@ class VersionNotifyStarted extends Event {
       18,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       destination,
       output,
     );
-    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).encodeTo(
       cost,
       output,
     );
@@ -1976,17 +1987,17 @@ class VersionNotifyRequested extends Event {
 
   factory VersionNotifyRequested._decode(_i1.Input input) {
     return VersionNotifyRequested(
-      destination: _i4.MultiLocation.codec.decode(input),
-      cost: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
+      destination: _i4.Location.codec.decode(input),
+      cost: const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).decode(input),
       messageId: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation destination;
+  /// Location
+  final _i4.Location destination;
 
-  /// MultiAssets
-  final _i10.MultiAssets cost;
+  /// Assets
+  final _i10.Assets cost;
 
   /// XcmHash
   final List<int> messageId;
@@ -2002,8 +2013,8 @@ class VersionNotifyRequested extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(destination);
-    size = size + const _i10.MultiAssetsCodec().sizeHint(cost);
+    size = size + _i4.Location.codec.sizeHint(destination);
+    size = size + const _i10.AssetsCodec().sizeHint(cost);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
   }
@@ -2013,11 +2024,11 @@ class VersionNotifyRequested extends Event {
       19,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       destination,
       output,
     );
-    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).encodeTo(
       cost,
       output,
     );
@@ -2052,7 +2063,8 @@ class VersionNotifyRequested extends Event {
       );
 }
 
-/// We have requested that a remote chain stops sending us XCM version change notifications.
+/// We have requested that a remote chain stops sending us XCM version change
+/// notifications.
 class VersionNotifyUnrequested extends Event {
   const VersionNotifyUnrequested({
     required this.destination,
@@ -2062,17 +2074,17 @@ class VersionNotifyUnrequested extends Event {
 
   factory VersionNotifyUnrequested._decode(_i1.Input input) {
     return VersionNotifyUnrequested(
-      destination: _i4.MultiLocation.codec.decode(input),
-      cost: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
+      destination: _i4.Location.codec.decode(input),
+      cost: const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).decode(input),
       messageId: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation destination;
+  /// Location
+  final _i4.Location destination;
 
-  /// MultiAssets
-  final _i10.MultiAssets cost;
+  /// Assets
+  final _i10.Assets cost;
 
   /// XcmHash
   final List<int> messageId;
@@ -2088,8 +2100,8 @@ class VersionNotifyUnrequested extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(destination);
-    size = size + const _i10.MultiAssetsCodec().sizeHint(cost);
+    size = size + _i4.Location.codec.sizeHint(destination);
+    size = size + const _i10.AssetsCodec().sizeHint(cost);
     size = size + const _i1.U8ArrayCodec(32).sizeHint(messageId);
     return size;
   }
@@ -2099,11 +2111,11 @@ class VersionNotifyUnrequested extends Event {
       20,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       destination,
       output,
     );
-    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).encodeTo(
       cost,
       output,
     );
@@ -2147,16 +2159,16 @@ class FeesPaid extends Event {
 
   factory FeesPaid._decode(_i1.Input input) {
     return FeesPaid(
-      paying: _i4.MultiLocation.codec.decode(input),
-      fees: const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).decode(input),
+      paying: _i4.Location.codec.decode(input),
+      fees: const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).decode(input),
     );
   }
 
-  /// MultiLocation
-  final _i4.MultiLocation paying;
+  /// Location
+  final _i4.Location paying;
 
-  /// MultiAssets
-  final _i10.MultiAssets fees;
+  /// Assets
+  final _i10.Assets fees;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
@@ -2168,8 +2180,8 @@ class FeesPaid extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.MultiLocation.codec.sizeHint(paying);
-    size = size + const _i10.MultiAssetsCodec().sizeHint(fees);
+    size = size + _i4.Location.codec.sizeHint(paying);
+    size = size + const _i10.AssetsCodec().sizeHint(fees);
     return size;
   }
 
@@ -2178,11 +2190,11 @@ class FeesPaid extends Event {
       21,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       paying,
       output,
     );
-    const _i1.SequenceCodec<_i15.MultiAsset>(_i15.MultiAsset.codec).encodeTo(
+    const _i1.SequenceCodec<_i15.Asset>(_i15.Asset.codec).encodeTo(
       fees,
       output,
     );
@@ -2219,19 +2231,19 @@ class AssetsClaimed extends Event {
   factory AssetsClaimed._decode(_i1.Input input) {
     return AssetsClaimed(
       hash: const _i1.U8ArrayCodec(32).decode(input),
-      origin: _i4.MultiLocation.codec.decode(input),
-      assets: _i9.VersionedMultiAssets.codec.decode(input),
+      origin: _i4.Location.codec.decode(input),
+      assets: _i9.VersionedAssets.codec.decode(input),
     );
   }
 
   /// H256
   final _i8.H256 hash;
 
-  /// MultiLocation
-  final _i4.MultiLocation origin;
+  /// Location
+  final _i4.Location origin;
 
-  /// VersionedMultiAssets
-  final _i9.VersionedMultiAssets assets;
+  /// VersionedAssets
+  final _i9.VersionedAssets assets;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
@@ -2245,8 +2257,8 @@ class AssetsClaimed extends Event {
   int _sizeHint() {
     int size = 1;
     size = size + const _i8.H256Codec().sizeHint(hash);
-    size = size + _i4.MultiLocation.codec.sizeHint(origin);
-    size = size + _i9.VersionedMultiAssets.codec.sizeHint(assets);
+    size = size + _i4.Location.codec.sizeHint(origin);
+    size = size + _i9.VersionedAssets.codec.sizeHint(assets);
     return size;
   }
 
@@ -2259,11 +2271,11 @@ class AssetsClaimed extends Event {
       hash,
       output,
     );
-    _i4.MultiLocation.codec.encodeTo(
+    _i4.Location.codec.encodeTo(
       origin,
       output,
     );
-    _i9.VersionedMultiAssets.codec.encodeTo(
+    _i9.VersionedAssets.codec.encodeTo(
       assets,
       output,
     );
@@ -2289,4 +2301,49 @@ class AssetsClaimed extends Event {
         origin,
         assets,
       );
+}
+
+/// A XCM version migration finished.
+class VersionMigrationFinished extends Event {
+  const VersionMigrationFinished({required this.version});
+
+  factory VersionMigrationFinished._decode(_i1.Input input) {
+    return VersionMigrationFinished(version: _i1.U32Codec.codec.decode(input));
+  }
+
+  /// XcmVersion
+  final int version;
+
+  @override
+  Map<String, Map<String, int>> toJson() => {
+        'VersionMigrationFinished': {'version': version}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(version);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      23,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      version,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is VersionMigrationFinished && other.version == version;
+
+  @override
+  int get hashCode => version.hashCode;
 }

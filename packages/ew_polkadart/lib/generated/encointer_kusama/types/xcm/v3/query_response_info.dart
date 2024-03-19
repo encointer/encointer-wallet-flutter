@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i4;
 import 'package:polkadart/scale_codec.dart' as _i1;
 
 import '../../sp_weights/weight_v2/weight.dart' as _i3;
-import 'multilocation/multi_location.dart' as _i2;
+import '../../staging_xcm/v3/multilocation/multi_location.dart' as _i2;
 
 class QueryResponseInfo {
   const QueryResponseInfo({

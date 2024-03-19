@@ -1,29 +1,30 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i12;
-import 'dart:typed_data' as _i15;
+import 'dart:async' as _i13;
+import 'dart:typed_data' as _i16;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/encointer_runtime/runtime_call.dart' as _i16;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i17;
 import '../types/frame_support/dispatch/per_dispatch_class_1.dart' as _i5;
-import '../types/frame_support/dispatch/per_dispatch_class_2.dart' as _i19;
-import '../types/frame_support/dispatch/per_dispatch_class_3.dart' as _i22;
+import '../types/frame_support/dispatch/per_dispatch_class_2.dart' as _i20;
+import '../types/frame_support/dispatch/per_dispatch_class_3.dart' as _i23;
 import '../types/frame_system/account_info.dart' as _i3;
+import '../types/frame_system/code_upgrade_authorization.dart' as _i12;
 import '../types/frame_system/event_record.dart' as _i8;
 import '../types/frame_system/last_runtime_upgrade_info.dart' as _i10;
-import '../types/frame_system/limits/block_length.dart' as _i21;
-import '../types/frame_system/limits/block_weights.dart' as _i18;
-import '../types/frame_system/limits/weights_per_class.dart' as _i20;
-import '../types/frame_system/pallet/call.dart' as _i17;
+import '../types/frame_system/limits/block_length.dart' as _i22;
+import '../types/frame_system/limits/block_weights.dart' as _i19;
+import '../types/frame_system/limits/weights_per_class.dart' as _i21;
+import '../types/frame_system/pallet/call.dart' as _i18;
 import '../types/frame_system/phase.dart' as _i11;
-import '../types/pallet_balances/types/account_data.dart' as _i13;
+import '../types/pallet_balances/types/account_data.dart' as _i14;
 import '../types/primitive_types/h256.dart' as _i6;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
 import '../types/sp_runtime/generic/digest/digest.dart' as _i7;
-import '../types/sp_version/runtime_version.dart' as _i24;
-import '../types/sp_weights/runtime_db_weight.dart' as _i23;
-import '../types/sp_weights/weight_v2/weight.dart' as _i14;
+import '../types/sp_version/runtime_version.dart' as _i25;
+import '../types/sp_weights/runtime_db_weight.dart' as _i24;
+import '../types/sp_weights/weight_v2/weight.dart' as _i15;
 import '../types/tuples.dart' as _i9;
 
 class Queries {
@@ -137,8 +138,15 @@ class Queries {
     valueCodec: _i11.Phase.codec,
   );
 
+  final _i1.StorageValue<_i12.CodeUpgradeAuthorization> _authorizedUpgrade =
+      const _i1.StorageValue<_i12.CodeUpgradeAuthorization>(
+    prefix: 'System',
+    storage: 'AuthorizedUpgrade',
+    valueCodec: _i12.CodeUpgradeAuthorization.codec,
+  );
+
   /// The full account information for a particular account ID.
-  _i12.Future<_i3.AccountInfo> account(
+  _i13.Future<_i3.AccountInfo> account(
     _i2.AccountId32 key1, {
     _i1.BlockHash? at,
   }) async {
@@ -155,7 +163,7 @@ class Queries {
       consumers: 0,
       providers: 0,
       sufficients: 0,
-      data: _i13.AccountData(
+      data: _i14.AccountData(
         free: BigInt.zero,
         reserved: BigInt.zero,
         frozen: BigInt.zero,
@@ -168,7 +176,7 @@ class Queries {
   }
 
   /// Total extrinsics count for the current block.
-  _i12.Future<int?> extrinsicCount({_i1.BlockHash? at}) async {
+  _i13.Future<int?> extrinsicCount({_i1.BlockHash? at}) async {
     final hashedKey = _extrinsicCount.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -181,7 +189,7 @@ class Queries {
   }
 
   /// The current weight for the block.
-  _i12.Future<_i5.PerDispatchClass> blockWeight({_i1.BlockHash? at}) async {
+  _i13.Future<_i5.PerDispatchClass> blockWeight({_i1.BlockHash? at}) async {
     final hashedKey = _blockWeight.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -191,15 +199,15 @@ class Queries {
       return _blockWeight.decodeValue(bytes);
     }
     return _i5.PerDispatchClass(
-      normal: _i14.Weight(
+      normal: _i15.Weight(
         refTime: BigInt.zero,
         proofSize: BigInt.zero,
       ),
-      operational: _i14.Weight(
+      operational: _i15.Weight(
         refTime: BigInt.zero,
         proofSize: BigInt.zero,
       ),
-      mandatory: _i14.Weight(
+      mandatory: _i15.Weight(
         refTime: BigInt.zero,
         proofSize: BigInt.zero,
       ),
@@ -207,7 +215,7 @@ class Queries {
   }
 
   /// Total length (in bytes) for all extrinsics put together, for the current block.
-  _i12.Future<int?> allExtrinsicsLen({_i1.BlockHash? at}) async {
+  _i13.Future<int?> allExtrinsicsLen({_i1.BlockHash? at}) async {
     final hashedKey = _allExtrinsicsLen.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -220,7 +228,7 @@ class Queries {
   }
 
   /// Map of block numbers to block hashes.
-  _i12.Future<_i6.H256> blockHash(
+  _i13.Future<_i6.H256> blockHash(
     int key1, {
     _i1.BlockHash? at,
   }) async {
@@ -240,7 +248,7 @@ class Queries {
   }
 
   /// Extrinsics data for the current block (maps an extrinsic's index to its data).
-  _i12.Future<List<int>> extrinsicData(
+  _i13.Future<List<int>> extrinsicData(
     int key1, {
     _i1.BlockHash? at,
   }) async {
@@ -260,7 +268,7 @@ class Queries {
   }
 
   /// The current block number being processed. Set by `execute_block`.
-  _i12.Future<int> number({_i1.BlockHash? at}) async {
+  _i13.Future<int> number({_i1.BlockHash? at}) async {
     final hashedKey = _number.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -273,7 +281,7 @@ class Queries {
   }
 
   /// Hash of the previous block.
-  _i12.Future<_i6.H256> parentHash({_i1.BlockHash? at}) async {
+  _i13.Future<_i6.H256> parentHash({_i1.BlockHash? at}) async {
     final hashedKey = _parentHash.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -290,7 +298,7 @@ class Queries {
   }
 
   /// Digest of the current block, also part of the block header.
-  _i12.Future<_i7.Digest> digest({_i1.BlockHash? at}) async {
+  _i13.Future<_i7.Digest> digest({_i1.BlockHash? at}) async {
     final hashedKey = _digest.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -309,7 +317,7 @@ class Queries {
   ///
   /// Events have a large in-memory size. Box the events to not go out-of-memory
   /// just in case someone still reads them from within the runtime.
-  _i12.Future<List<_i8.EventRecord>> events({_i1.BlockHash? at}) async {
+  _i13.Future<List<_i8.EventRecord>> events({_i1.BlockHash? at}) async {
     final hashedKey = _events.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -322,7 +330,7 @@ class Queries {
   }
 
   /// The number of events in the `Events<T>` list.
-  _i12.Future<int> eventCount({_i1.BlockHash? at}) async {
+  _i13.Future<int> eventCount({_i1.BlockHash? at}) async {
     final hashedKey = _eventCount.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -344,7 +352,7 @@ class Queries {
   /// The value has the type `(BlockNumberFor<T>, EventIndex)` because if we used only just
   /// the `EventIndex` then in case if the topic has the same contents on the next block
   /// no notification will be triggered thus the event might be lost.
-  _i12.Future<List<_i9.Tuple2<int, int>>> eventTopics(
+  _i13.Future<List<_i9.Tuple2<int, int>>> eventTopics(
     _i6.H256 key1, {
     _i1.BlockHash? at,
   }) async {
@@ -360,7 +368,7 @@ class Queries {
   }
 
   /// Stores the `spec_version` and `spec_name` of when the last runtime upgrade happened.
-  _i12.Future<_i10.LastRuntimeUpgradeInfo?> lastRuntimeUpgrade({_i1.BlockHash? at}) async {
+  _i13.Future<_i10.LastRuntimeUpgradeInfo?> lastRuntimeUpgrade({_i1.BlockHash? at}) async {
     final hashedKey = _lastRuntimeUpgrade.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -373,7 +381,7 @@ class Queries {
   }
 
   /// True if we have upgraded so that `type RefCount` is `u32`. False (default) if not.
-  _i12.Future<bool> upgradedToU32RefCount({_i1.BlockHash? at}) async {
+  _i13.Future<bool> upgradedToU32RefCount({_i1.BlockHash? at}) async {
     final hashedKey = _upgradedToU32RefCount.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -387,7 +395,7 @@ class Queries {
 
   /// True if we have upgraded so that AccountInfo contains three types of `RefCount`. False
   /// (default) if not.
-  _i12.Future<bool> upgradedToTripleRefCount({_i1.BlockHash? at}) async {
+  _i13.Future<bool> upgradedToTripleRefCount({_i1.BlockHash? at}) async {
     final hashedKey = _upgradedToTripleRefCount.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -400,7 +408,7 @@ class Queries {
   }
 
   /// The execution phase of the block.
-  _i12.Future<_i11.Phase?> executionPhase({_i1.BlockHash? at}) async {
+  _i13.Future<_i11.Phase?> executionPhase({_i1.BlockHash? at}) async {
     final hashedKey = _executionPhase.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -412,122 +420,141 @@ class Queries {
     return null; /* Nullable */
   }
 
+  /// `Some` if a code upgrade has been authorized.
+  _i13.Future<_i12.CodeUpgradeAuthorization?> authorizedUpgrade({_i1.BlockHash? at}) async {
+    final hashedKey = _authorizedUpgrade.hashedKey();
+    final bytes = await __api.getStorage(
+      hashedKey,
+      at: at,
+    );
+    if (bytes != null) {
+      return _authorizedUpgrade.decodeValue(bytes);
+    }
+    return null; /* Nullable */
+  }
+
   /// Returns the storage key for `account`.
-  _i15.Uint8List accountKey(_i2.AccountId32 key1) {
+  _i16.Uint8List accountKey(_i2.AccountId32 key1) {
     final hashedKey = _account.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `extrinsicCount`.
-  _i15.Uint8List extrinsicCountKey() {
+  _i16.Uint8List extrinsicCountKey() {
     final hashedKey = _extrinsicCount.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `blockWeight`.
-  _i15.Uint8List blockWeightKey() {
+  _i16.Uint8List blockWeightKey() {
     final hashedKey = _blockWeight.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `allExtrinsicsLen`.
-  _i15.Uint8List allExtrinsicsLenKey() {
+  _i16.Uint8List allExtrinsicsLenKey() {
     final hashedKey = _allExtrinsicsLen.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `blockHash`.
-  _i15.Uint8List blockHashKey(int key1) {
+  _i16.Uint8List blockHashKey(int key1) {
     final hashedKey = _blockHash.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `extrinsicData`.
-  _i15.Uint8List extrinsicDataKey(int key1) {
+  _i16.Uint8List extrinsicDataKey(int key1) {
     final hashedKey = _extrinsicData.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `number`.
-  _i15.Uint8List numberKey() {
+  _i16.Uint8List numberKey() {
     final hashedKey = _number.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `parentHash`.
-  _i15.Uint8List parentHashKey() {
+  _i16.Uint8List parentHashKey() {
     final hashedKey = _parentHash.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `digest`.
-  _i15.Uint8List digestKey() {
+  _i16.Uint8List digestKey() {
     final hashedKey = _digest.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `events`.
-  _i15.Uint8List eventsKey() {
+  _i16.Uint8List eventsKey() {
     final hashedKey = _events.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `eventCount`.
-  _i15.Uint8List eventCountKey() {
+  _i16.Uint8List eventCountKey() {
     final hashedKey = _eventCount.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `eventTopics`.
-  _i15.Uint8List eventTopicsKey(_i6.H256 key1) {
+  _i16.Uint8List eventTopicsKey(_i6.H256 key1) {
     final hashedKey = _eventTopics.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `lastRuntimeUpgrade`.
-  _i15.Uint8List lastRuntimeUpgradeKey() {
+  _i16.Uint8List lastRuntimeUpgradeKey() {
     final hashedKey = _lastRuntimeUpgrade.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `upgradedToU32RefCount`.
-  _i15.Uint8List upgradedToU32RefCountKey() {
+  _i16.Uint8List upgradedToU32RefCountKey() {
     final hashedKey = _upgradedToU32RefCount.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `upgradedToTripleRefCount`.
-  _i15.Uint8List upgradedToTripleRefCountKey() {
+  _i16.Uint8List upgradedToTripleRefCountKey() {
     final hashedKey = _upgradedToTripleRefCount.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `executionPhase`.
-  _i15.Uint8List executionPhaseKey() {
+  _i16.Uint8List executionPhaseKey() {
     final hashedKey = _executionPhase.hashedKey();
     return hashedKey;
   }
 
+  /// Returns the storage key for `authorizedUpgrade`.
+  _i16.Uint8List authorizedUpgradeKey() {
+    final hashedKey = _authorizedUpgrade.hashedKey();
+    return hashedKey;
+  }
+
   /// Returns the storage map key prefix for `account`.
-  _i15.Uint8List accountMapPrefix() {
+  _i16.Uint8List accountMapPrefix() {
     final hashedKey = _account.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `blockHash`.
-  _i15.Uint8List blockHashMapPrefix() {
+  _i16.Uint8List blockHashMapPrefix() {
     final hashedKey = _blockHash.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `extrinsicData`.
-  _i15.Uint8List extrinsicDataMapPrefix() {
+  _i16.Uint8List extrinsicDataMapPrefix() {
     final hashedKey = _extrinsicData.mapPrefix();
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `eventTopics`.
-  _i15.Uint8List eventTopicsMapPrefix() {
+  _i16.Uint8List eventTopicsMapPrefix() {
     final hashedKey = _eventTopics.mapPrefix();
     return hashedKey;
   }
@@ -537,57 +564,75 @@ class Txs {
   const Txs();
 
   /// See [`Pallet::remark`].
-  _i16.RuntimeCall remark({required List<int> remark}) {
-    final _call = _i17.Call.values.remark(remark: remark);
-    return _i16.RuntimeCall.values.system(_call);
+  _i17.RuntimeCall remark({required List<int> remark}) {
+    final _call = _i18.Call.values.remark(remark: remark);
+    return _i17.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::set_heap_pages`].
-  _i16.RuntimeCall setHeapPages({required BigInt pages}) {
-    final _call = _i17.Call.values.setHeapPages(pages: pages);
-    return _i16.RuntimeCall.values.system(_call);
+  _i17.RuntimeCall setHeapPages({required BigInt pages}) {
+    final _call = _i18.Call.values.setHeapPages(pages: pages);
+    return _i17.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::set_code`].
-  _i16.RuntimeCall setCode({required List<int> code}) {
-    final _call = _i17.Call.values.setCode(code: code);
-    return _i16.RuntimeCall.values.system(_call);
+  _i17.RuntimeCall setCode({required List<int> code}) {
+    final _call = _i18.Call.values.setCode(code: code);
+    return _i17.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::set_code_without_checks`].
-  _i16.RuntimeCall setCodeWithoutChecks({required List<int> code}) {
-    final _call = _i17.Call.values.setCodeWithoutChecks(code: code);
-    return _i16.RuntimeCall.values.system(_call);
+  _i17.RuntimeCall setCodeWithoutChecks({required List<int> code}) {
+    final _call = _i18.Call.values.setCodeWithoutChecks(code: code);
+    return _i17.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::set_storage`].
-  _i16.RuntimeCall setStorage({required List<_i9.Tuple2<List<int>, List<int>>> items}) {
-    final _call = _i17.Call.values.setStorage(items: items);
-    return _i16.RuntimeCall.values.system(_call);
+  _i17.RuntimeCall setStorage({required List<_i9.Tuple2<List<int>, List<int>>> items}) {
+    final _call = _i18.Call.values.setStorage(items: items);
+    return _i17.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::kill_storage`].
-  _i16.RuntimeCall killStorage({required List<List<int>> keys}) {
-    final _call = _i17.Call.values.killStorage(keys: keys);
-    return _i16.RuntimeCall.values.system(_call);
+  _i17.RuntimeCall killStorage({required List<List<int>> keys}) {
+    final _call = _i18.Call.values.killStorage(keys: keys);
+    return _i17.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::kill_prefix`].
-  _i16.RuntimeCall killPrefix({
+  _i17.RuntimeCall killPrefix({
     required List<int> prefix,
     required int subkeys,
   }) {
-    final _call = _i17.Call.values.killPrefix(
+    final _call = _i18.Call.values.killPrefix(
       prefix: prefix,
       subkeys: subkeys,
     );
-    return _i16.RuntimeCall.values.system(_call);
+    return _i17.RuntimeCall.values.system(_call);
   }
 
   /// See [`Pallet::remark_with_event`].
-  _i16.RuntimeCall remarkWithEvent({required List<int> remark}) {
-    final _call = _i17.Call.values.remarkWithEvent(remark: remark);
-    return _i16.RuntimeCall.values.system(_call);
+  _i17.RuntimeCall remarkWithEvent({required List<int> remark}) {
+    final _call = _i18.Call.values.remarkWithEvent(remark: remark);
+    return _i17.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::authorize_upgrade`].
+  _i17.RuntimeCall authorizeUpgrade({required _i6.H256 codeHash}) {
+    final _call = _i18.Call.values.authorizeUpgrade(codeHash: codeHash);
+    return _i17.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::authorize_upgrade_without_checks`].
+  _i17.RuntimeCall authorizeUpgradeWithoutChecks({required _i6.H256 codeHash}) {
+    final _call = _i18.Call.values.authorizeUpgradeWithoutChecks(codeHash: codeHash);
+    return _i17.RuntimeCall.values.system(_call);
+  }
+
+  /// See [`Pallet::apply_authorized_upgrade`].
+  _i17.RuntimeCall applyAuthorizedUpgrade({required List<int> code}) {
+    final _call = _i18.Call.values.applyAuthorizedUpgrade(code: code);
+    return _i17.RuntimeCall.values.system(_call);
   }
 }
 
@@ -595,54 +640,54 @@ class Constants {
   Constants();
 
   /// Block & extrinsics weights: base values and limits.
-  final _i18.BlockWeights blockWeights = _i18.BlockWeights(
-    baseBlock: _i14.Weight(
+  final _i19.BlockWeights blockWeights = _i19.BlockWeights(
+    baseBlock: _i15.Weight(
       refTime: BigInt.from(5000000000),
       proofSize: BigInt.zero,
     ),
-    maxBlock: _i14.Weight(
+    maxBlock: _i15.Weight(
       refTime: BigInt.from(500000000000),
       proofSize: BigInt.from(5242880),
     ),
-    perClass: _i19.PerDispatchClass(
-      normal: _i20.WeightsPerClass(
-        baseExtrinsic: _i14.Weight(
+    perClass: _i20.PerDispatchClass(
+      normal: _i21.WeightsPerClass(
+        baseExtrinsic: _i15.Weight(
           refTime: BigInt.from(125000000),
           proofSize: BigInt.zero,
         ),
-        maxExtrinsic: _i14.Weight(
+        maxExtrinsic: _i15.Weight(
           refTime: BigInt.from(349875000000),
           proofSize: BigInt.from(3670016),
         ),
-        maxTotal: _i14.Weight(
+        maxTotal: _i15.Weight(
           refTime: BigInt.from(375000000000),
           proofSize: BigInt.from(3932160),
         ),
-        reserved: _i14.Weight(
+        reserved: _i15.Weight(
           refTime: BigInt.zero,
           proofSize: BigInt.zero,
         ),
       ),
-      operational: _i20.WeightsPerClass(
-        baseExtrinsic: _i14.Weight(
+      operational: _i21.WeightsPerClass(
+        baseExtrinsic: _i15.Weight(
           refTime: BigInt.from(125000000),
           proofSize: BigInt.zero,
         ),
-        maxExtrinsic: _i14.Weight(
+        maxExtrinsic: _i15.Weight(
           refTime: BigInt.from(474875000000),
           proofSize: BigInt.from(4980736),
         ),
-        maxTotal: _i14.Weight(
+        maxTotal: _i15.Weight(
           refTime: BigInt.from(500000000000),
           proofSize: BigInt.from(5242880),
         ),
-        reserved: _i14.Weight(
+        reserved: _i15.Weight(
           refTime: BigInt.from(125000000000),
           proofSize: BigInt.from(1310720),
         ),
       ),
-      mandatory: _i20.WeightsPerClass(
-        baseExtrinsic: _i14.Weight(
+      mandatory: _i21.WeightsPerClass(
+        baseExtrinsic: _i15.Weight(
           refTime: BigInt.from(125000000),
           proofSize: BigInt.zero,
         ),
@@ -654,8 +699,8 @@ class Constants {
   );
 
   /// The maximum length of a block (in bytes).
-  final _i21.BlockLength blockLength = const _i21.BlockLength(
-      max: _i22.PerDispatchClass(
+  final _i22.BlockLength blockLength = const _i22.BlockLength(
+      max: _i23.PerDispatchClass(
     normal: 3932160,
     operational: 5242880,
     mandatory: 5242880,
@@ -665,17 +710,17 @@ class Constants {
   final int blockHashCount = 4096;
 
   /// The weight of runtime database operations the runtime can invoke.
-  final _i23.RuntimeDbWeight dbWeight = _i23.RuntimeDbWeight(
+  final _i24.RuntimeDbWeight dbWeight = _i24.RuntimeDbWeight(
     read: BigInt.from(25000000),
     write: BigInt.from(100000000),
   );
 
   /// Get the chain's current version.
-  final _i24.RuntimeVersion version = const _i24.RuntimeVersion(
+  final _i25.RuntimeVersion version = const _i25.RuntimeVersion(
     specName: 'encointer-parachain',
     implName: 'encointer-parachain',
     authoringVersion: 1,
-    specVersion: 16,
+    specVersion: 1002000,
     implVersion: 1,
     apis: [
       _i9.Tuple2<List<int>, int>(
@@ -857,6 +902,19 @@ class Constants {
           164,
           58,
           212,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          251,
+          197,
+          119,
+          185,
+          215,
+          71,
+          239,
+          214,
         ],
         1,
       ),
