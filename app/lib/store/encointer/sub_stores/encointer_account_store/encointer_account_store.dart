@@ -85,9 +85,18 @@ abstract class _EncointerAccountStore with Store {
       try {
         // returns the first reputation that hasn't been linked, or has been linked to a non-current cIndex.
         return verifiedReputations.entries.firstWhere((e) {
-          return e.value.reputation.runtimeType == VerifiedUnlinked ||
-              (e.value.reputation.runtimeType == VerifiedLinked &&
-                  (e.value.reputation as VerifiedLinked).value0 != currentCeremonyIndex);
+          if (e.value.reputation.runtimeType == VerifiedUnlinked) {
+            Log.d('Found unlinked reputation with cIndex ${e.key}');
+            return true;
+          }
+
+          if (e.value.reputation.runtimeType == VerifiedLinked &&
+              (e.value.reputation as VerifiedLinked).value0 != currentCeremonyIndex) {
+            Log.d('Found linked reputation that has been linked to previous cycle with cIndex ${e.key}');
+            return true;
+          }
+
+          return false;
         }).key;
       } catch (e, s) {
         Log.e('$address has reputation, but none that has not been linked with the current cIndex',
