@@ -78,7 +78,8 @@ Future<void> submitClaimRewards(
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       // Claiming the rewards creates a new reputation if successful.
       // Hence, we should update the state afterwards.
-      store.dataUpdate.setInvalidated();
+      store.encointer.getEncointerBalance();
+      webApi.encointer.getReputations();
       return report;
     },
   );
@@ -316,7 +317,11 @@ Future<void> submitEncointerTransfer(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.encointerBalanceTransfer(context.l10n),
-    onFinish: onFinish,
+    onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
+      if (onFinish != null) onFinish(txPageContext, report);
+      store.encointer.getEncointerBalance();
+      return report;
+    },
     onError: onError,
   );
 }

@@ -5,7 +5,7 @@ import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i5;
 
 import '../../tuples.dart' as _i3;
-import '../../xcm/versioned_multi_location.dart' as _i2;
+import '../../xcm/versioned_location.dart' as _i2;
 
 class RemoteLockedFungibleRecord {
   const RemoteLockedFungibleRecord({
@@ -22,11 +22,11 @@ class RemoteLockedFungibleRecord {
   /// u128
   final BigInt amount;
 
-  /// VersionedMultiLocation
-  final _i2.VersionedMultiLocation owner;
+  /// VersionedLocation
+  final _i2.VersionedLocation owner;
 
-  /// VersionedMultiLocation
-  final _i2.VersionedMultiLocation locker;
+  /// VersionedLocation
+  final _i2.VersionedLocation locker;
 
   /// BoundedVec<(ConsumerIdentifier, u128), MaxConsumers>
   final List<_i3.Tuple2<dynamic, BigInt>> consumers;
@@ -85,11 +85,11 @@ class $RemoteLockedFungibleRecordCodec with _i1.Codec<RemoteLockedFungibleRecord
       obj.amount,
       output,
     );
-    _i2.VersionedMultiLocation.codec.encodeTo(
+    _i2.VersionedLocation.codec.encodeTo(
       obj.owner,
       output,
     );
-    _i2.VersionedMultiLocation.codec.encodeTo(
+    _i2.VersionedLocation.codec.encodeTo(
       obj.locker,
       output,
     );
@@ -106,8 +106,8 @@ class $RemoteLockedFungibleRecordCodec with _i1.Codec<RemoteLockedFungibleRecord
   RemoteLockedFungibleRecord decode(_i1.Input input) {
     return RemoteLockedFungibleRecord(
       amount: _i1.U128Codec.codec.decode(input),
-      owner: _i2.VersionedMultiLocation.codec.decode(input),
-      locker: _i2.VersionedMultiLocation.codec.decode(input),
+      owner: _i2.VersionedLocation.codec.decode(input),
+      locker: _i2.VersionedLocation.codec.decode(input),
       consumers: const _i1.SequenceCodec<_i3.Tuple2<dynamic, BigInt>>(_i3.Tuple2Codec<dynamic, BigInt>(
         _i1.NullCodec.codec,
         _i1.U128Codec.codec,
@@ -119,8 +119,8 @@ class $RemoteLockedFungibleRecordCodec with _i1.Codec<RemoteLockedFungibleRecord
   int sizeHint(RemoteLockedFungibleRecord obj) {
     int size = 0;
     size = size + _i1.U128Codec.codec.sizeHint(obj.amount);
-    size = size + _i2.VersionedMultiLocation.codec.sizeHint(obj.owner);
-    size = size + _i2.VersionedMultiLocation.codec.sizeHint(obj.locker);
+    size = size + _i2.VersionedLocation.codec.sizeHint(obj.owner);
+    size = size + _i2.VersionedLocation.codec.sizeHint(obj.locker);
     size = size +
         const _i1.SequenceCodec<_i3.Tuple2<dynamic, BigInt>>(_i3.Tuple2Codec<dynamic, BigInt>(
           _i1.NullCodec.codec,

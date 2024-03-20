@@ -9,8 +9,8 @@ enum Error {
   /// to it.
   unreachable('Unreachable', 0),
 
-  /// There was some other issue (i.e. not to do with routing) in sending the message. Perhaps
-  /// a lack of space for buffering the message.
+  /// There was some other issue (i.e. not to do with routing) in sending the message.
+  /// Perhaps a lack of space for buffering the message.
   sendFailure('SendFailure', 1),
 
   /// The message execution fails the filter.
@@ -19,7 +19,7 @@ enum Error {
   /// The message's weight could not be determined.
   unweighableMessage('UnweighableMessage', 3),
 
-  /// The destination `MultiLocation` provided cannot be inverted.
+  /// The destination `Location` provided cannot be inverted.
   destinationNotInvertible('DestinationNotInvertible', 4),
 
   /// The assets to be sent are empty.
@@ -47,8 +47,8 @@ enum Error {
   /// The location is invalid since it already has a subscription from us.
   alreadySubscribed('AlreadySubscribed', 12),
 
-  /// Invalid asset for the operation.
-  invalidAsset('InvalidAsset', 13),
+  /// Could not check-out the assets for teleportation to the destination chain.
+  cannotCheckOutTeleport('CannotCheckOutTeleport', 13),
 
   /// The owner does not own (all) of the asset that they wish to do the operation on.
   lowBalance('LowBalance', 14),
@@ -66,7 +66,22 @@ enum Error {
   lockNotFound('LockNotFound', 18),
 
   /// The unlock operation cannot succeed because there are still consumers of the lock.
-  inUse('InUse', 19);
+  inUse('InUse', 19),
+
+  /// Invalid non-concrete asset.
+  invalidAssetNotConcrete('InvalidAssetNotConcrete', 20),
+
+  /// Invalid asset, reserve chain could not be determined for it.
+  invalidAssetUnknownReserve('InvalidAssetUnknownReserve', 21),
+
+  /// Invalid asset, do not support remote asset reserves with different fees reserves.
+  invalidAssetUnsupportedReserve('InvalidAssetUnsupportedReserve', 22),
+
+  /// Too many assets with different reserve locations have been attempted for transfer.
+  tooManyReserves('TooManyReserves', 23),
+
+  /// Local XCM execution incomplete.
+  localExecutionIncomplete('LocalExecutionIncomplete', 24);
 
   const Error(
     this.variantName,
@@ -123,7 +138,7 @@ class $ErrorCodec with _i1.Codec<Error> {
       case 12:
         return Error.alreadySubscribed;
       case 13:
-        return Error.invalidAsset;
+        return Error.cannotCheckOutTeleport;
       case 14:
         return Error.lowBalance;
       case 15:
@@ -136,6 +151,16 @@ class $ErrorCodec with _i1.Codec<Error> {
         return Error.lockNotFound;
       case 19:
         return Error.inUse;
+      case 20:
+        return Error.invalidAssetNotConcrete;
+      case 21:
+        return Error.invalidAssetUnknownReserve;
+      case 22:
+        return Error.invalidAssetUnsupportedReserve;
+      case 23:
+        return Error.tooManyReserves;
+      case 24:
+        return Error.localExecutionIncomplete;
       default:
         throw Exception('Error: Invalid variant index: "$index"');
     }

@@ -14,7 +14,7 @@ description: EncointerWallet made with Flutter.
 
 # bump version already while working on new release, bumping build number at the same time
 # bump build number even more, if needed to clarify what's deployed
-version: 1.13.2+882
+version: 1.13.4+884
 
 publish_to: none
 
@@ -63,6 +63,7 @@ dependencies:
   provider: ^6.1.1
   flutter_map_marker_popup: ^6.1.2
   flutter_map: ^6.1.0
+  flutter_linkify: ^6.0.0 # Automatically transform http(s) links to inline links.
   dart_geohash: ^2.0.2 # Todo: #1270: replace with alternative package
   iconsax: ^0.0.8 # Todo: #1271: replace with alternative package
   add_2_calendar: ^3.0.1

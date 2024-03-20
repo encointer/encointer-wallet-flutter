@@ -232,6 +232,16 @@ class $Event {
       amount: amount,
     );
   }
+
+  TotalIssuanceForced totalIssuanceForced({
+    required BigInt old,
+    required BigInt new_,
+  }) {
+    return TotalIssuanceForced(
+      old: old,
+      new_: new_,
+    );
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -283,6 +293,8 @@ class $EventCodec with _i1.Codec<Event> {
         return Frozen._decode(input);
       case 20:
         return Thawed._decode(input);
+      case 21:
+        return TotalIssuanceForced._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -357,6 +369,9 @@ class $EventCodec with _i1.Codec<Event> {
       case Thawed:
         (value as Thawed).encodeTo(output);
         break;
+      case TotalIssuanceForced:
+        (value as TotalIssuanceForced).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -407,6 +422,8 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as Frozen)._sizeHint();
       case Thawed:
         return (value as Thawed)._sizeHint();
+      case TotalIssuanceForced:
+        return (value as TotalIssuanceForced)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -1856,5 +1873,70 @@ class Thawed extends Event {
   int get hashCode => Object.hash(
         who,
         amount,
+      );
+}
+
+/// The `TotalIssuance` was forcefully changed.
+class TotalIssuanceForced extends Event {
+  const TotalIssuanceForced({
+    required this.old,
+    required this.new_,
+  });
+
+  factory TotalIssuanceForced._decode(_i1.Input input) {
+    return TotalIssuanceForced(
+      old: _i1.U128Codec.codec.decode(input),
+      new_: _i1.U128Codec.codec.decode(input),
+    );
+  }
+
+  /// T::Balance
+  final BigInt old;
+
+  /// T::Balance
+  final BigInt new_;
+
+  @override
+  Map<String, Map<String, BigInt>> toJson() => {
+        'TotalIssuanceForced': {
+          'old': old,
+          'new': new_,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U128Codec.codec.sizeHint(old);
+    size = size + _i1.U128Codec.codec.sizeHint(new_);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      21,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      old,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      new_,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is TotalIssuanceForced && other.old == old && other.new_ == new_;
+
+  @override
+  int get hashCode => Object.hash(
+        old,
+        new_,
       );
 }

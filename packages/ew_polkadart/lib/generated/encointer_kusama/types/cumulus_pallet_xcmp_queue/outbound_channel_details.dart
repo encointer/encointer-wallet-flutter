@@ -3,7 +3,7 @@ import 'dart:typed_data' as _i4;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
-import '../polkadot_parachain/primitives/id.dart' as _i2;
+import '../polkadot_parachain_primitives/primitives/id.dart' as _i2;
 import 'outbound_state.dart' as _i3;
 
 class OutboundChannelDetails {

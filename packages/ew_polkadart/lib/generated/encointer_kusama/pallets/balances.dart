@@ -5,9 +5,10 @@ import 'dart:typed_data' as _i9;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_runtime/runtime_call.dart' as _i10;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i10;
 import '../types/pallet_balances/pallet/call.dart' as _i12;
 import '../types/pallet_balances/types/account_data.dart' as _i4;
+import '../types/pallet_balances/types/adjustment_direction.dart' as _i13;
 import '../types/pallet_balances/types/balance_lock.dart' as _i5;
 import '../types/pallet_balances/types/id_amount.dart' as _i7;
 import '../types/pallet_balances/types/reserve_data.dart' as _i6;
@@ -297,20 +298,6 @@ class Txs {
     return _i10.RuntimeCall.values.balances(_call);
   }
 
-  /// See [`Pallet::set_balance_deprecated`].
-  _i10.RuntimeCall setBalanceDeprecated({
-    required _i11.MultiAddress who,
-    required BigInt newFree,
-    required BigInt oldReserved,
-  }) {
-    final _call = _i12.Call.values.setBalanceDeprecated(
-      who: who,
-      newFree: newFree,
-      oldReserved: oldReserved,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
-  }
-
   /// See [`Pallet::force_transfer`].
   _i10.RuntimeCall forceTransfer({
     required _i11.MultiAddress source,
@@ -367,18 +354,6 @@ class Txs {
     return _i10.RuntimeCall.values.balances(_call);
   }
 
-  /// See [`Pallet::transfer`].
-  _i10.RuntimeCall transfer({
-    required _i11.MultiAddress dest,
-    required BigInt value,
-  }) {
-    final _call = _i12.Call.values.transfer(
-      dest: dest,
-      value: value,
-    );
-    return _i10.RuntimeCall.values.balances(_call);
-  }
-
   /// See [`Pallet::force_set_balance`].
   _i10.RuntimeCall forceSetBalance({
     required _i11.MultiAddress who,
@@ -387,6 +362,18 @@ class Txs {
     final _call = _i12.Call.values.forceSetBalance(
       who: who,
       newFree: newFree,
+    );
+    return _i10.RuntimeCall.values.balances(_call);
+  }
+
+  /// See [`Pallet::force_adjust_total_issuance`].
+  _i10.RuntimeCall forceAdjustTotalIssuance({
+    required _i13.AdjustmentDirection direction,
+    required BigInt delta,
+  }) {
+    final _call = _i12.Call.values.forceAdjustTotalIssuance(
+      direction: direction,
+      delta: delta,
     );
     return _i10.RuntimeCall.values.balances(_call);
   }
@@ -411,9 +398,6 @@ class Constants {
 
   /// The maximum number of named reserves that can exist on an account.
   final int maxReserves = 50;
-
-  /// The maximum number of holds that can exist on an account at any time.
-  final int maxHolds = 0;
 
   /// The maximum number of individual freeze locks that can exist on an account at any time.
   final int maxFreezes = 0;

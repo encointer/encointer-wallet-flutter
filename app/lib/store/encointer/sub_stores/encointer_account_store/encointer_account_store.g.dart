@@ -13,9 +13,6 @@ EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json)
       ..balanceEntries = ObservableMap<String, BalanceEntry>.of((json['balanceEntries'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, BalanceEntry.fromJson(e as Map<String, dynamic>)),
       ))
-      ..reputations = (json['reputations'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(int.parse(k), CommunityReputation.fromJson(e as Map<String, dynamic>)),
-      )
       ..txsTransfer = ObservableList<TransferData>.of(
           (json['txsTransfer'] as List).map((e) => TransferData.fromJson(e as Map<String, dynamic>)))
       ..numberOfNewbieTicketsForReputable = json['numberOfNewbieTicketsForReputable'] as int
@@ -27,7 +24,6 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
       'network': instance.network,
       'address': instance.address,
       'balanceEntries': instance.balanceEntries.map((k, e) => MapEntry(k, e.toJson())),
-      'reputations': instance.reputations.map((k, e) => MapEntry(k.toString(), e.toJson())),
       'txsTransfer': instance.txsTransfer.map((e) => e.toJson()).toList(),
       'numberOfNewbieTicketsForReputable': instance.numberOfNewbieTicketsForReputable,
       'lastProofOfAttendance': instance.lastProofOfAttendance?.toJson(),
@@ -53,13 +49,6 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   int get verifiedReputationCount => (_$verifiedReputationCountComputed ??=
           Computed<int>(() => super.verifiedReputationCount, name: '_EncointerAccountStore.verifiedReputationCount'))
       .value;
-  Computed<int?>? _$ceremonyIndexForNextProofOfAttendanceComputed;
-
-  @override
-  int? get ceremonyIndexForNextProofOfAttendance => (_$ceremonyIndexForNextProofOfAttendanceComputed ??= Computed<int?>(
-          () => super.ceremonyIndexForNextProofOfAttendance,
-          name: '_EncointerAccountStore.ceremonyIndexForNextProofOfAttendance'))
-      .value;
 
   late final _$balanceEntriesAtom = Atom(name: '_EncointerAccountStore.balanceEntries', context: context);
 
@@ -76,18 +65,18 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
     });
   }
 
-  late final _$reputationsAtom = Atom(name: '_EncointerAccountStore.reputations', context: context);
+  late final _$_reputationsV2Atom = Atom(name: '_EncointerAccountStore._reputationsV2', context: context);
 
   @override
-  Map<int, CommunityReputation> get reputations {
-    _$reputationsAtom.reportRead();
-    return super.reputations;
+  Map<int, CommunityReputation>? get _reputationsV2 {
+    _$_reputationsV2Atom.reportRead();
+    return super._reputationsV2;
   }
 
   @override
-  set reputations(Map<int, CommunityReputation> value) {
-    _$reputationsAtom.reportWrite(value, super.reputations, () {
-      super.reputations = value;
+  set _reputationsV2(Map<int, CommunityReputation>? value) {
+    _$_reputationsV2Atom.reportWrite(value, super._reputationsV2, () {
+      super._reputationsV2 = value;
     });
   }
 
@@ -213,13 +202,11 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   String toString() {
     return '''
 balanceEntries: ${balanceEntries},
-reputations: ${reputations},
 txsTransfer: ${txsTransfer},
 numberOfNewbieTicketsForReputable: ${numberOfNewbieTicketsForReputable},
 lastProofOfAttendance: ${lastProofOfAttendance},
 verifiedReputations: ${verifiedReputations},
-verifiedReputationCount: ${verifiedReputationCount},
-ceremonyIndexForNextProofOfAttendance: ${ceremonyIndexForNextProofOfAttendance}
+verifiedReputationCount: ${verifiedReputationCount}
     ''';
   }
 }

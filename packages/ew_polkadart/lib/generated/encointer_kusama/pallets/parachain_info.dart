@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i4;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 
-import '../types/polkadot_parachain/primitives/id.dart' as _i2;
+import '../types/polkadot_parachain_primitives/primitives/id.dart' as _i2;
 
 class Queries {
   const Queries(this.__api);
