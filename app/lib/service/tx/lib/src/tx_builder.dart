@@ -32,7 +32,7 @@ class TxBuilder {
     // fetch recent relevant data from chain
     final runtimeVersion = await _getRuntimeVersion();
     final blockNumber = await _getBlockNumber();
-    final blockHash = await _getBlockHash();
+    final blockHash = await _getBlockHash(blockNumber: blockNumber);
     final genesisHash = await _getBlockHash(blockNumber: 0);
     final accountInfo = await encointerKusama.query.system.account(pair.publicKey.bytes);
 
