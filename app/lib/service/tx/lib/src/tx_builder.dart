@@ -31,8 +31,8 @@ class TxBuilder {
 
     // fetch recent relevant data from chain
     final runtimeVersion = await _getRuntimeVersion();
-    final blockNumber = await _getBlockNumber();
-    final blockHash = await _getBlockHash(blockNumber: blockNumber);
+    final finalizedHash = await _getLatestFinalizedHash();
+    final blockNumber = await _getBlockNumber(hash: finalizedHash);
     final genesisHash = await _getBlockHash(blockNumber: 0);
     final accountInfo = await encointerKusama.query.system.account(pair.publicKey.bytes);
 
@@ -49,7 +49,7 @@ class TxBuilder {
       specVersion: runtimeVersion.specVersion,
       transactionVersion: runtimeVersion.transactionVersion,
       genesisHash: genesisHash,
-      blockHash: blockHash,
+      blockHash: finalizedHash,
       blockNumber: blockNumber,
       eraPeriod: 64,
       nonce: accountInfo.nonce,
@@ -85,8 +85,15 @@ class TxBuilder {
     return hash.replaceFirst('0x', '');
   }
 
-  Future<int> _getBlockNumber() async {
-    final block = await provider.send('chain_getBlock', []);
+  Future<String> _getLatestFinalizedHash() async {
+    final hash = (await provider.send('chain_getFinalizedHead', [])).result as String;
+    return hash.replaceFirst('0x', '');
+  }
+
+  Future<int> _getBlockNumber({String? hash}) async {
+    final params = hash != null ? [hash.replaceFirst('0x', '')] : <String>[];
+
+    final block = await provider.send('chain_getBlock', params);
 
     // ignore: avoid_dynamic_calls
     final blockNumber = int.parse(block.result['block']['header']['number'] as String);
