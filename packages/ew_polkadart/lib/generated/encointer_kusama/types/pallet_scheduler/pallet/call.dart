@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i5;
 
-import '../../encointer_runtime/runtime_call.dart' as _i4;
+import '../../encointer_kusama_runtime/runtime_call.dart' as _i4;
 import '../../tuples.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.

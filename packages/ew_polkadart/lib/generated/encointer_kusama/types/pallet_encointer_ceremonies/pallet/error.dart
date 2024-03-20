@@ -14,104 +14,107 @@ enum Error {
   /// verification of signature of attendee failed
   badAttendeeSignature('BadAttendeeSignature', 2),
 
+  /// Bootstrapper reputation is non-transferrable to other accounts for security reasons
+  bootstrapperReputationIsUntransferrable('BootstrapperReputationIsUntransferrable', 3),
+
   /// meetup location was not found
-  meetupLocationNotFound('MeetupLocationNotFound', 3),
+  meetupLocationNotFound('MeetupLocationNotFound', 4),
 
   /// meetup time calculation failed
-  meetupTimeCalculationError('MeetupTimeCalculationError', 4),
+  meetupTimeCalculationError('MeetupTimeCalculationError', 5),
 
   /// no valid claims were supplied
-  noValidAttestations('NoValidAttestations', 5),
+  noValidAttestations('NoValidAttestations', 6),
 
   /// the action can only be performed during ATTESTING phase
-  attestationPhaseRequired('AttestationPhaseRequired', 6),
+  attestationPhaseRequired('AttestationPhaseRequired', 7),
 
   /// the action can only be performed during REGISTERING or ATTESTING phase
-  registeringOrAttestationPhaseRequired('RegisteringOrAttestationPhaseRequired', 7),
+  registeringOrAttestationPhaseRequired('RegisteringOrAttestationPhaseRequired', 8),
 
   /// CommunityIdentifier not found
-  inexistentCommunity('InexistentCommunity', 8),
+  inexistentCommunity('InexistentCommunity', 9),
 
   /// proof is outdated
-  proofOutdated('ProofOutdated', 9),
+  proofOutdated('ProofOutdated', 10),
 
   /// proof is acausal
-  proofAcausal('ProofAcausal', 10),
+  proofAcausal('ProofAcausal', 11),
 
   /// supplied proof is not proving sender
-  wrongProofSubject('WrongProofSubject', 11),
+  wrongProofSubject('WrongProofSubject', 12),
 
   /// former attendance has not been verified or has already been linked to other account
-  attendanceUnverifiedOrAlreadyUsed('AttendanceUnverifiedOrAlreadyUsed', 12),
+  attendanceUnverifiedOrAlreadyUsed('AttendanceUnverifiedOrAlreadyUsed', 13),
 
   /// can't have more attestations than other meetup participants
-  tooManyAttestations('TooManyAttestations', 13),
+  tooManyAttestations('TooManyAttestations', 14),
 
   /// sender has run out of newbie tickets
-  noMoreNewbieTickets('NoMoreNewbieTickets', 14),
+  noMoreNewbieTickets('NoMoreNewbieTickets', 15),
 
   /// newbie is already endorsed
-  alreadyEndorsed('AlreadyEndorsed', 15),
+  alreadyEndorsed('AlreadyEndorsed', 16),
 
   /// Participant is not registered
-  participantIsNotRegistered('ParticipantIsNotRegistered', 16),
+  participantIsNotRegistered('ParticipantIsNotRegistered', 17),
 
   /// No locations are available for assigning participants
-  noLocationsAvailable('NoLocationsAvailable', 17),
+  noLocationsAvailable('NoLocationsAvailable', 18),
 
   /// Trying to issue rewards in a phase that is not REGISTERING
-  wrongPhaseForClaimingRewards('WrongPhaseForClaimingRewards', 18),
+  wrongPhaseForClaimingRewards('WrongPhaseForClaimingRewards', 19),
 
   /// Trying to issue rewards for a meetup for which UBI was already issued
-  rewardsAlreadyIssued('RewardsAlreadyIssued', 19),
+  rewardsAlreadyIssued('RewardsAlreadyIssued', 20),
 
   /// Trying to claim UBI for a meetup where votes are not dependable
-  votesNotDependable('VotesNotDependable', 20),
+  votesNotDependable('VotesNotDependable', 21),
 
   /// Overflow adding user to registry
-  registryOverflow('RegistryOverflow', 21),
+  registryOverflow('RegistryOverflow', 22),
 
   /// CheckedMath operation error
-  checkedMath('CheckedMath', 22),
+  checkedMath('CheckedMath', 23),
 
   /// Only Bootstrappers are allowed to be registered at this time
-  onlyBootstrappers('OnlyBootstrappers', 23),
+  onlyBootstrappers('OnlyBootstrappers', 24),
 
   /// MeetupTimeOffset can only be changed during registering
-  wrongPhaseForChangingMeetupTimeOffset('WrongPhaseForChangingMeetupTimeOffset', 24),
+  wrongPhaseForChangingMeetupTimeOffset('WrongPhaseForChangingMeetupTimeOffset', 25),
 
   /// MeetupTimeOffset needs to be in [-8h, 8h]
-  invalidMeetupTimeOffset('InvalidMeetupTimeOffset', 25),
+  invalidMeetupTimeOffset('InvalidMeetupTimeOffset', 26),
 
   /// the history for given ceremony index and community has been purged
-  communityCeremonyHistoryPurged('CommunityCeremonyHistoryPurged', 26),
+  communityCeremonyHistoryPurged('CommunityCeremonyHistoryPurged', 27),
 
   /// Unregistering can only be performed during the registering phase
-  wrongPhaseForUnregistering('WrongPhaseForUnregistering', 27),
+  wrongPhaseForUnregistering('WrongPhaseForUnregistering', 28),
 
   /// Error while finding meetup participants
-  getMeetupParticipantsError('GetMeetupParticipantsError', 28),
+  getMeetupParticipantsError('GetMeetupParticipantsError', 29),
 
   /// index out of bounds while validating the meetup
-  meetupValidationIndexOutOfBounds('MeetupValidationIndexOutOfBounds', 29),
+  meetupValidationIndexOutOfBounds('MeetupValidationIndexOutOfBounds', 30),
 
   /// Not possible to pay rewards in attestations phase
-  earlyRewardsNotPossible('EarlyRewardsNotPossible', 30),
+  earlyRewardsNotPossible('EarlyRewardsNotPossible', 31),
 
   /// Only newbies can upgrade their registration
-  mustBeNewbieToUpgradeRegistration('MustBeNewbieToUpgradeRegistration', 31),
+  mustBeNewbieToUpgradeRegistration('MustBeNewbieToUpgradeRegistration', 32),
 
   /// To unregister as a reputable you need to provide a provide a community ceremony where you have a linked reputation
-  reputationCommunityCeremonyRequired('ReputationCommunityCeremonyRequired', 32),
+  reputationCommunityCeremonyRequired('ReputationCommunityCeremonyRequired', 33),
 
   /// In order to unregister a reputable, the provided reputation must be linked
-  reputationMustBeLinked('ReputationMustBeLinked', 33),
+  reputationMustBeLinked('ReputationMustBeLinked', 34),
 
   /// Meetup Index > Meetup Count or < 1
-  invalidMeetupIndex('InvalidMeetupIndex', 34),
+  invalidMeetupIndex('InvalidMeetupIndex', 35),
 
   /// BoundedVec bound reached
-  tooManyAttestationsInBoundedVec('TooManyAttestationsInBoundedVec', 35);
+  tooManyAttestationsInBoundedVec('TooManyAttestationsInBoundedVec', 36);
 
   const Error(
     this.variantName,
@@ -148,70 +151,72 @@ class $ErrorCodec with _i1.Codec<Error> {
       case 2:
         return Error.badAttendeeSignature;
       case 3:
-        return Error.meetupLocationNotFound;
+        return Error.bootstrapperReputationIsUntransferrable;
       case 4:
-        return Error.meetupTimeCalculationError;
+        return Error.meetupLocationNotFound;
       case 5:
-        return Error.noValidAttestations;
+        return Error.meetupTimeCalculationError;
       case 6:
-        return Error.attestationPhaseRequired;
+        return Error.noValidAttestations;
       case 7:
-        return Error.registeringOrAttestationPhaseRequired;
+        return Error.attestationPhaseRequired;
       case 8:
-        return Error.inexistentCommunity;
+        return Error.registeringOrAttestationPhaseRequired;
       case 9:
-        return Error.proofOutdated;
+        return Error.inexistentCommunity;
       case 10:
-        return Error.proofAcausal;
+        return Error.proofOutdated;
       case 11:
-        return Error.wrongProofSubject;
+        return Error.proofAcausal;
       case 12:
-        return Error.attendanceUnverifiedOrAlreadyUsed;
+        return Error.wrongProofSubject;
       case 13:
-        return Error.tooManyAttestations;
+        return Error.attendanceUnverifiedOrAlreadyUsed;
       case 14:
-        return Error.noMoreNewbieTickets;
+        return Error.tooManyAttestations;
       case 15:
-        return Error.alreadyEndorsed;
+        return Error.noMoreNewbieTickets;
       case 16:
-        return Error.participantIsNotRegistered;
+        return Error.alreadyEndorsed;
       case 17:
-        return Error.noLocationsAvailable;
+        return Error.participantIsNotRegistered;
       case 18:
-        return Error.wrongPhaseForClaimingRewards;
+        return Error.noLocationsAvailable;
       case 19:
-        return Error.rewardsAlreadyIssued;
+        return Error.wrongPhaseForClaimingRewards;
       case 20:
-        return Error.votesNotDependable;
+        return Error.rewardsAlreadyIssued;
       case 21:
-        return Error.registryOverflow;
+        return Error.votesNotDependable;
       case 22:
-        return Error.checkedMath;
+        return Error.registryOverflow;
       case 23:
-        return Error.onlyBootstrappers;
+        return Error.checkedMath;
       case 24:
-        return Error.wrongPhaseForChangingMeetupTimeOffset;
+        return Error.onlyBootstrappers;
       case 25:
-        return Error.invalidMeetupTimeOffset;
+        return Error.wrongPhaseForChangingMeetupTimeOffset;
       case 26:
-        return Error.communityCeremonyHistoryPurged;
+        return Error.invalidMeetupTimeOffset;
       case 27:
-        return Error.wrongPhaseForUnregistering;
+        return Error.communityCeremonyHistoryPurged;
       case 28:
-        return Error.getMeetupParticipantsError;
+        return Error.wrongPhaseForUnregistering;
       case 29:
-        return Error.meetupValidationIndexOutOfBounds;
+        return Error.getMeetupParticipantsError;
       case 30:
-        return Error.earlyRewardsNotPossible;
+        return Error.meetupValidationIndexOutOfBounds;
       case 31:
-        return Error.mustBeNewbieToUpgradeRegistration;
+        return Error.earlyRewardsNotPossible;
       case 32:
-        return Error.reputationCommunityCeremonyRequired;
+        return Error.mustBeNewbieToUpgradeRegistration;
       case 33:
-        return Error.reputationMustBeLinked;
+        return Error.reputationCommunityCeremonyRequired;
       case 34:
-        return Error.invalidMeetupIndex;
+        return Error.reputationMustBeLinked;
       case 35:
+        return Error.invalidMeetupIndex;
+      case 36:
         return Error.tooManyAttestationsInBoundedVec;
       default:
         throw Exception('Error: Invalid variant index: "$index"');

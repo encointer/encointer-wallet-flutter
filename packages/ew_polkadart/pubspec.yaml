@@ -83,4 +83,4 @@ dependency_overrides:
 polkadart:
   output_dir: lib/generated
   chains:
-    encointer_kusama: wss://kusama.api.encointer.org
+    encointer_kusama: ws://127.0.0.1:9945

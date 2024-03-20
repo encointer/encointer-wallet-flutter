@@ -1,61 +1,50 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i8;
-import 'dart:typed_data' as _i10;
+import 'dart:typed_data' as _i9;
 
 import 'package:polkadart/polkadart.dart' as _i1;
-import 'package:polkadart/scale_codec.dart' as _i3;
+import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/cumulus_pallet_xcmp_queue/inbound_channel_details.dart' as _i2;
-import '../types/cumulus_pallet_xcmp_queue/outbound_channel_details.dart' as _i5;
-import '../types/cumulus_pallet_xcmp_queue/pallet/call.dart' as _i12;
+import '../types/bounded_collections/bounded_btree_set/bounded_b_tree_set.dart' as _i2;
+import '../types/cumulus_pallet_xcmp_queue/outbound_channel_details.dart' as _i3;
+import '../types/cumulus_pallet_xcmp_queue/pallet/call.dart' as _i11;
 import '../types/cumulus_pallet_xcmp_queue/queue_config_data.dart' as _i6;
-import '../types/encointer_runtime/runtime_call.dart' as _i11;
-import '../types/polkadot_parachain/primitives/id.dart' as _i4;
-import '../types/sp_weights/weight_v2/weight.dart' as _i9;
-import '../types/tuples_2.dart' as _i7;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i10;
+import '../types/polkadot_parachain_primitives/primitives/id.dart' as _i5;
+import '../types/sp_arithmetic/fixed_point/fixed_u128.dart' as _i7;
 
 class Queries {
   const Queries(this.__api);
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<List<_i2.InboundChannelDetails>> _inboundXcmpStatus =
-      const _i1.StorageValue<List<_i2.InboundChannelDetails>>(
+  final _i1.StorageValue<_i2.BoundedBTreeSet> _inboundXcmpSuspended = const _i1.StorageValue<_i2.BoundedBTreeSet>(
     prefix: 'XcmpQueue',
-    storage: 'InboundXcmpStatus',
-    valueCodec: _i3.SequenceCodec<_i2.InboundChannelDetails>(_i2.InboundChannelDetails.codec),
+    storage: 'InboundXcmpSuspended',
+    valueCodec: _i2.BoundedBTreeSetCodec(),
   );
 
-  final _i1.StorageDoubleMap<_i4.Id, int, List<int>> _inboundXcmpMessages =
-      const _i1.StorageDoubleMap<_i4.Id, int, List<int>>(
-    prefix: 'XcmpQueue',
-    storage: 'InboundXcmpMessages',
-    valueCodec: _i3.U8SequenceCodec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(_i4.IdCodec()),
-    hasher2: _i1.StorageHasher.twoxx64Concat(_i3.U32Codec.codec),
-  );
-
-  final _i1.StorageValue<List<_i5.OutboundChannelDetails>> _outboundXcmpStatus =
-      const _i1.StorageValue<List<_i5.OutboundChannelDetails>>(
+  final _i1.StorageValue<List<_i3.OutboundChannelDetails>> _outboundXcmpStatus =
+      const _i1.StorageValue<List<_i3.OutboundChannelDetails>>(
     prefix: 'XcmpQueue',
     storage: 'OutboundXcmpStatus',
-    valueCodec: _i3.SequenceCodec<_i5.OutboundChannelDetails>(_i5.OutboundChannelDetails.codec),
+    valueCodec: _i4.SequenceCodec<_i3.OutboundChannelDetails>(_i3.OutboundChannelDetails.codec),
   );
 
-  final _i1.StorageDoubleMap<_i4.Id, int, List<int>> _outboundXcmpMessages =
-      const _i1.StorageDoubleMap<_i4.Id, int, List<int>>(
+  final _i1.StorageDoubleMap<_i5.Id, int, List<int>> _outboundXcmpMessages =
+      const _i1.StorageDoubleMap<_i5.Id, int, List<int>>(
     prefix: 'XcmpQueue',
     storage: 'OutboundXcmpMessages',
-    valueCodec: _i3.U8SequenceCodec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(_i4.IdCodec()),
-    hasher2: _i1.StorageHasher.twoxx64Concat(_i3.U16Codec.codec),
+    valueCodec: _i4.U8SequenceCodec.codec,
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.IdCodec()),
+    hasher2: _i1.StorageHasher.twoxx64Concat(_i4.U16Codec.codec),
   );
 
-  final _i1.StorageMap<_i4.Id, List<int>> _signalMessages = const _i1.StorageMap<_i4.Id, List<int>>(
+  final _i1.StorageMap<_i5.Id, List<int>> _signalMessages = const _i1.StorageMap<_i5.Id, List<int>>(
     prefix: 'XcmpQueue',
     storage: 'SignalMessages',
-    valueCodec: _i3.U8SequenceCodec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(_i4.IdCodec()),
+    valueCodec: _i4.U8SequenceCodec.codec,
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.IdCodec()),
   );
 
   final _i1.StorageValue<_i6.QueueConfigData> _queueConfig = const _i1.StorageValue<_i6.QueueConfigData>(
@@ -64,71 +53,37 @@ class Queries {
     valueCodec: _i6.QueueConfigData.codec,
   );
 
-  final _i1.StorageMap<BigInt, _i7.Tuple3<_i4.Id, int, List<int>>> _overweight =
-      const _i1.StorageMap<BigInt, _i7.Tuple3<_i4.Id, int, List<int>>>(
-    prefix: 'XcmpQueue',
-    storage: 'Overweight',
-    valueCodec: _i7.Tuple3Codec<_i4.Id, int, List<int>>(
-      _i4.IdCodec(),
-      _i3.U32Codec.codec,
-      _i3.U8SequenceCodec.codec,
-    ),
-    hasher: _i1.StorageHasher.twoxx64Concat(_i3.U64Codec.codec),
-  );
-
-  final _i1.StorageValue<int> _counterForOverweight = const _i1.StorageValue<int>(
-    prefix: 'XcmpQueue',
-    storage: 'CounterForOverweight',
-    valueCodec: _i3.U32Codec.codec,
-  );
-
-  final _i1.StorageValue<BigInt> _overweightCount = const _i1.StorageValue<BigInt>(
-    prefix: 'XcmpQueue',
-    storage: 'OverweightCount',
-    valueCodec: _i3.U64Codec.codec,
-  );
-
   final _i1.StorageValue<bool> _queueSuspended = const _i1.StorageValue<bool>(
     prefix: 'XcmpQueue',
     storage: 'QueueSuspended',
-    valueCodec: _i3.BoolCodec.codec,
+    valueCodec: _i4.BoolCodec.codec,
   );
 
-  /// Status of the inbound XCMP channels.
-  _i8.Future<List<_i2.InboundChannelDetails>> inboundXcmpStatus({_i1.BlockHash? at}) async {
-    final hashedKey = _inboundXcmpStatus.hashedKey();
+  final _i1.StorageMap<_i5.Id, _i7.FixedU128> _deliveryFeeFactor = const _i1.StorageMap<_i5.Id, _i7.FixedU128>(
+    prefix: 'XcmpQueue',
+    storage: 'DeliveryFeeFactor',
+    valueCodec: _i7.FixedU128Codec(),
+    hasher: _i1.StorageHasher.twoxx64Concat(_i5.IdCodec()),
+  );
+
+  /// The suspended inbound XCMP channels. All others are not suspended.
+  ///
+  /// This is a `StorageValue` instead of a `StorageMap` since we expect multiple reads per block
+  /// to different keys with a one byte payload. The access to `BoundedBTreeSet` will be cached
+  /// within the block and therefore only included once in the proof size.
+  ///
+  /// NOTE: The PoV benchmarking cannot know this and will over-estimate, but the actual proof
+  /// will be smaller.
+  _i8.Future<_i2.BoundedBTreeSet> inboundXcmpSuspended({_i1.BlockHash? at}) async {
+    final hashedKey = _inboundXcmpSuspended.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
       at: at,
     );
     if (bytes != null) {
-      return _inboundXcmpStatus.decodeValue(bytes);
+      return _inboundXcmpSuspended.decodeValue(bytes);
     }
     return []; /* Default */
-  }
-
-  /// Inbound aggregate XCMP messages. It can only be one per ParaId/block.
-  _i8.Future<List<int>> inboundXcmpMessages(
-    _i4.Id key1,
-    int key2, {
-    _i1.BlockHash? at,
-  }) async {
-    final hashedKey = _inboundXcmpMessages.hashedKeyFor(
-      key1,
-      key2,
-    );
-    final bytes = await __api.getStorage(
-      hashedKey,
-      at: at,
-    );
-    if (bytes != null) {
-      return _inboundXcmpMessages.decodeValue(bytes);
-    }
-    return List<int>.filled(
-      0,
-      0,
-      growable: true,
-    ); /* Default */
   }
 
   /// The non-empty XCMP channels in order of becoming non-empty, and the index of the first
@@ -137,7 +92,7 @@ class Queries {
   /// than 65535 items. Queue indices for normal messages begin at one; zero is reserved in
   /// case of the need to send a high-priority signal message this block.
   /// The bool is true if there is a signal message waiting to be sent.
-  _i8.Future<List<_i5.OutboundChannelDetails>> outboundXcmpStatus({_i1.BlockHash? at}) async {
+  _i8.Future<List<_i3.OutboundChannelDetails>> outboundXcmpStatus({_i1.BlockHash? at}) async {
     final hashedKey = _outboundXcmpStatus.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -151,7 +106,7 @@ class Queries {
 
   /// The messages outbound in a given XCMP channel.
   _i8.Future<List<int>> outboundXcmpMessages(
-    _i4.Id key1,
+    _i5.Id key1,
     int key2, {
     _i1.BlockHash? at,
   }) async {
@@ -175,7 +130,7 @@ class Queries {
 
   /// Any signal messages waiting to be sent.
   _i8.Future<List<int>> signalMessages(
-    _i4.Id key1, {
+    _i5.Id key1, {
     _i1.BlockHash? at,
   }) async {
     final hashedKey = _signalMessages.hashedKeyFor(key1);
@@ -204,68 +159,10 @@ class Queries {
       return _queueConfig.decodeValue(bytes);
     }
     return _i6.QueueConfigData(
-      suspendThreshold: 2,
-      dropThreshold: 5,
-      resumeThreshold: 1,
-      thresholdWeight: _i9.Weight(
-        refTime: BigInt.from(100000),
-        proofSize: BigInt.zero,
-      ),
-      weightRestrictDecay: _i9.Weight(
-        refTime: BigInt.two,
-        proofSize: BigInt.zero,
-      ),
-      xcmpMaxIndividualWeight: _i9.Weight(
-        refTime: BigInt.from(20000000000),
-        proofSize: BigInt.from(65536),
-      ),
+      suspendThreshold: 32,
+      dropThreshold: 48,
+      resumeThreshold: 8,
     ); /* Default */
-  }
-
-  /// The messages that exceeded max individual message weight budget.
-  ///
-  /// These message stay in this storage map until they are manually dispatched via
-  /// `service_overweight`.
-  _i8.Future<_i7.Tuple3<_i4.Id, int, List<int>>?> overweight(
-    BigInt key1, {
-    _i1.BlockHash? at,
-  }) async {
-    final hashedKey = _overweight.hashedKeyFor(key1);
-    final bytes = await __api.getStorage(
-      hashedKey,
-      at: at,
-    );
-    if (bytes != null) {
-      return _overweight.decodeValue(bytes);
-    }
-    return null; /* Nullable */
-  }
-
-  /// Counter for the related counted storage map
-  _i8.Future<int> counterForOverweight({_i1.BlockHash? at}) async {
-    final hashedKey = _counterForOverweight.hashedKey();
-    final bytes = await __api.getStorage(
-      hashedKey,
-      at: at,
-    );
-    if (bytes != null) {
-      return _counterForOverweight.decodeValue(bytes);
-    }
-    return 0; /* Default */
-  }
-
-  /// The number of overweight messages ever recorded in `Overweight`. Also doubles as the next
-  /// available free overweight index.
-  _i8.Future<BigInt> overweightCount({_i1.BlockHash? at}) async {
-    final hashedKey = _overweightCount.hashedKey();
-    final bytes = await __api.getStorage(
-      hashedKey,
-      at: at,
-    );
-    if (bytes != null) {
-      return _overweightCount.decodeValue(bytes);
-    }
-    return BigInt.zero; /* Default */
   }
 
   /// Whether or not the XCMP queue is suspended from executing incoming XCMs or not.
@@ -281,33 +178,40 @@ class Queries {
     return false; /* Default */
   }
 
-  /// Returns the storage key for `inboundXcmpStatus`.
-  _i10.Uint8List inboundXcmpStatusKey() {
-    final hashedKey = _inboundXcmpStatus.hashedKey();
-    return hashedKey;
+  /// The factor to multiply the base delivery fee by.
+  _i8.Future<_i7.FixedU128> deliveryFeeFactor(
+    _i5.Id key1, {
+    _i1.BlockHash? at,
+  }) async {
+    final hashedKey = _deliveryFeeFactor.hashedKeyFor(key1);
+    final bytes = await __api.getStorage(
+      hashedKey,
+      at: at,
+    );
+    if (bytes != null) {
+      return _deliveryFeeFactor.decodeValue(bytes);
+    }
+    return BigInt.parse(
+      '1000000000000000000',
+      radix: 10,
+    ); /* Default */
   }
 
-  /// Returns the storage key for `inboundXcmpMessages`.
-  _i10.Uint8List inboundXcmpMessagesKey(
-    _i4.Id key1,
-    int key2,
-  ) {
-    final hashedKey = _inboundXcmpMessages.hashedKeyFor(
-      key1,
-      key2,
-    );
+  /// Returns the storage key for `inboundXcmpSuspended`.
+  _i9.Uint8List inboundXcmpSuspendedKey() {
+    final hashedKey = _inboundXcmpSuspended.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `outboundXcmpStatus`.
-  _i10.Uint8List outboundXcmpStatusKey() {
+  _i9.Uint8List outboundXcmpStatusKey() {
     final hashedKey = _outboundXcmpStatus.hashedKey();
     return hashedKey;
   }
 
   /// Returns the storage key for `outboundXcmpMessages`.
-  _i10.Uint8List outboundXcmpMessagesKey(
-    _i4.Id key1,
+  _i9.Uint8List outboundXcmpMessagesKey(
+    _i5.Id key1,
     int key2,
   ) {
     final hashedKey = _outboundXcmpMessages.hashedKeyFor(
@@ -318,62 +222,44 @@ class Queries {
   }
 
   /// Returns the storage key for `signalMessages`.
-  _i10.Uint8List signalMessagesKey(_i4.Id key1) {
+  _i9.Uint8List signalMessagesKey(_i5.Id key1) {
     final hashedKey = _signalMessages.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage key for `queueConfig`.
-  _i10.Uint8List queueConfigKey() {
+  _i9.Uint8List queueConfigKey() {
     final hashedKey = _queueConfig.hashedKey();
     return hashedKey;
   }
 
-  /// Returns the storage key for `overweight`.
-  _i10.Uint8List overweightKey(BigInt key1) {
-    final hashedKey = _overweight.hashedKeyFor(key1);
-    return hashedKey;
-  }
-
-  /// Returns the storage key for `counterForOverweight`.
-  _i10.Uint8List counterForOverweightKey() {
-    final hashedKey = _counterForOverweight.hashedKey();
-    return hashedKey;
-  }
-
-  /// Returns the storage key for `overweightCount`.
-  _i10.Uint8List overweightCountKey() {
-    final hashedKey = _overweightCount.hashedKey();
-    return hashedKey;
-  }
-
   /// Returns the storage key for `queueSuspended`.
-  _i10.Uint8List queueSuspendedKey() {
+  _i9.Uint8List queueSuspendedKey() {
     final hashedKey = _queueSuspended.hashedKey();
     return hashedKey;
   }
 
-  /// Returns the storage map key prefix for `inboundXcmpMessages`.
-  _i10.Uint8List inboundXcmpMessagesMapPrefix(_i4.Id key1) {
-    final hashedKey = _inboundXcmpMessages.mapPrefix(key1);
+  /// Returns the storage key for `deliveryFeeFactor`.
+  _i9.Uint8List deliveryFeeFactorKey(_i5.Id key1) {
+    final hashedKey = _deliveryFeeFactor.hashedKeyFor(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `outboundXcmpMessages`.
-  _i10.Uint8List outboundXcmpMessagesMapPrefix(_i4.Id key1) {
+  _i9.Uint8List outboundXcmpMessagesMapPrefix(_i5.Id key1) {
     final hashedKey = _outboundXcmpMessages.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `signalMessages`.
-  _i10.Uint8List signalMessagesMapPrefix() {
+  _i9.Uint8List signalMessagesMapPrefix() {
     final hashedKey = _signalMessages.mapPrefix();
     return hashedKey;
   }
 
-  /// Returns the storage map key prefix for `overweight`.
-  _i10.Uint8List overweightMapPrefix() {
-    final hashedKey = _overweight.mapPrefix();
+  /// Returns the storage map key prefix for `deliveryFeeFactor`.
+  _i9.Uint8List deliveryFeeFactorMapPrefix() {
+    final hashedKey = _deliveryFeeFactor.mapPrefix();
     return hashedKey;
   }
 }
@@ -381,63 +267,44 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::service_overweight`].
-  _i11.RuntimeCall serviceOverweight({
-    required BigInt index,
-    required _i9.Weight weightLimit,
-  }) {
-    final _call = _i12.Call.values.serviceOverweight(
-      index: index,
-      weightLimit: weightLimit,
-    );
-    return _i11.RuntimeCall.values.xcmpQueue(_call);
-  }
-
   /// See [`Pallet::suspend_xcm_execution`].
-  _i11.RuntimeCall suspendXcmExecution() {
-    final _call = _i12.Call.values.suspendXcmExecution();
-    return _i11.RuntimeCall.values.xcmpQueue(_call);
+  _i10.RuntimeCall suspendXcmExecution() {
+    final _call = _i11.Call.values.suspendXcmExecution();
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::resume_xcm_execution`].
-  _i11.RuntimeCall resumeXcmExecution() {
-    final _call = _i12.Call.values.resumeXcmExecution();
-    return _i11.RuntimeCall.values.xcmpQueue(_call);
+  _i10.RuntimeCall resumeXcmExecution() {
+    final _call = _i11.Call.values.resumeXcmExecution();
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_suspend_threshold`].
-  _i11.RuntimeCall updateSuspendThreshold({required int new_}) {
-    final _call = _i12.Call.values.updateSuspendThreshold(new_: new_);
-    return _i11.RuntimeCall.values.xcmpQueue(_call);
+  _i10.RuntimeCall updateSuspendThreshold({required int new_}) {
+    final _call = _i11.Call.values.updateSuspendThreshold(new_: new_);
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_drop_threshold`].
-  _i11.RuntimeCall updateDropThreshold({required int new_}) {
-    final _call = _i12.Call.values.updateDropThreshold(new_: new_);
-    return _i11.RuntimeCall.values.xcmpQueue(_call);
+  _i10.RuntimeCall updateDropThreshold({required int new_}) {
+    final _call = _i11.Call.values.updateDropThreshold(new_: new_);
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
   }
 
   /// See [`Pallet::update_resume_threshold`].
-  _i11.RuntimeCall updateResumeThreshold({required int new_}) {
-    final _call = _i12.Call.values.updateResumeThreshold(new_: new_);
-    return _i11.RuntimeCall.values.xcmpQueue(_call);
+  _i10.RuntimeCall updateResumeThreshold({required int new_}) {
+    final _call = _i11.Call.values.updateResumeThreshold(new_: new_);
+    return _i10.RuntimeCall.values.xcmpQueue(_call);
   }
+}
 
-  /// See [`Pallet::update_threshold_weight`].
-  _i11.RuntimeCall updateThresholdWeight({required _i9.Weight new_}) {
-    final _call = _i12.Call.values.updateThresholdWeight(new_: new_);
-    return _i11.RuntimeCall.values.xcmpQueue(_call);
-  }
+class Constants {
+  Constants();
 
-  /// See [`Pallet::update_weight_restrict_decay`].
-  _i11.RuntimeCall updateWeightRestrictDecay({required _i9.Weight new_}) {
-    final _call = _i12.Call.values.updateWeightRestrictDecay(new_: new_);
-    return _i11.RuntimeCall.values.xcmpQueue(_call);
-  }
-
-  /// See [`Pallet::update_xcmp_max_individual_weight`].
-  _i11.RuntimeCall updateXcmpMaxIndividualWeight({required _i9.Weight new_}) {
-    final _call = _i12.Call.values.updateXcmpMaxIndividualWeight(new_: new_);
-    return _i11.RuntimeCall.values.xcmpQueue(_call);
-  }
+  /// The maximum number of inbound XCMP channels that can be suspended simultaneously.
+  ///
+  /// Any further channel suspensions will fail and messages may get dropped without further
+  /// notice. Choosing a high value (1000) is okay; the trade-off that is described in
+  /// [`InboundXcmpSuspended`] still applies at that scale.
+  final int maxInboundSuspended = 1000;
 }

@@ -1,8 +1,10 @@
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 import 'package:encointer_wallet/page/assets/announcement/widgets/publisher_and_community_icon.dart';
 import 'package:encointer_wallet/page/assets/announcement/logic/announcement_card_store.dart';
@@ -58,8 +60,9 @@ class AnnouncementCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
-              child: Text(
-                announcement.content,
+              child: Linkify(
+                onOpen: (link) => AppLaunch.launchURL(link.url),
+                text: announcement.content,
                 style: context.bodyMedium.copyWith(height: 1.5),
               ),
             ),

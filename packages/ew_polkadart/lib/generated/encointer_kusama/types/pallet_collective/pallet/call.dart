@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
-import '../../encointer_runtime/runtime_call.dart' as _i4;
+import '../../encointer_kusama_runtime/runtime_call.dart' as _i4;
 import '../../primitive_types/h256.dart' as _i5;
 import '../../sp_core/crypto/account_id32.dart' as _i3;
 import '../../sp_weights/weight_v2/weight.dart' as _i6;

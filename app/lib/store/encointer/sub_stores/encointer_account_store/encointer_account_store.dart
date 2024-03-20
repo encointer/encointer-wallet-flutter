@@ -56,8 +56,12 @@ abstract class _EncointerAccountStore with Store {
   /// contain all potential reputation values: UnverifiedReputable, VerifiedUnlinked and VerifiedLinked.
   ///
   /// Map: ceremony index -> CommunityReputation
+  ///
+  /// Note: must be nullable for json-deserialization of old stores.
   @observable
-  Map<int, CommunityReputation> reputations = {};
+  Map<int, CommunityReputation>? _reputationsV2;
+
+  Map<int, CommunityReputation> get reputations => _reputationsV2 ?? {};
 
   /// Returns all reputations associated with a meetup.
   @computed
@@ -76,13 +80,27 @@ abstract class _EncointerAccountStore with Store {
   @observable
   int numberOfNewbieTicketsForReputable = 0;
 
-  @computed
-  int? get ceremonyIndexForNextProofOfAttendance {
+  int? ceremonyIndexForNextProofOfAttendance(int currentCeremonyIndex) {
     if (verifiedReputations.isNotEmpty) {
       try {
-        return verifiedReputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+        // returns the first reputation that hasn't been linked, or has been linked to a non-current cIndex.
+        return verifiedReputations.entries.firstWhere((e) {
+          if (e.value.reputation.runtimeType == VerifiedUnlinked) {
+            Log.d('Found unlinked reputation with cIndex ${e.key}');
+            return true;
+          }
+
+          if (e.value.reputation.runtimeType == VerifiedLinked &&
+              (e.value.reputation as VerifiedLinked).value0 != currentCeremonyIndex) {
+            Log.d('Found linked reputation that has been linked to previous cycle with cIndex ${e.key}');
+            return true;
+          }
+
+          return false;
+        }).key;
       } catch (e, s) {
-        Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
+        Log.e('$address has reputation, but none that has not been linked with the current cIndex',
+            'EncointerAccountStore', s);
         return 0;
       }
     } else {
@@ -125,7 +143,7 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   Future<void> setReputations(Map<int, CommunityReputation> reps) async {
-    reputations = reps;
+    _reputationsV2 = reps;
     unawaited(writeToCache());
     await getNumberOfNewbieTicketsForReputable();
   }

@@ -8,7 +8,7 @@ enum Error {
   /// Proposer's balance is too low.
   insufficientProposersBalance('InsufficientProposersBalance', 0),
 
-  /// No proposal or bounty at that index.
+  /// No proposal, bounty or spend at that index.
   invalidIndex('InvalidIndex', 1),
 
   /// Too many approvals in the queue.
@@ -19,7 +19,28 @@ enum Error {
   insufficientPermission('InsufficientPermission', 3),
 
   /// Proposal has not been approved.
-  proposalNotApproved('ProposalNotApproved', 4);
+  proposalNotApproved('ProposalNotApproved', 4),
+
+  /// The balance of the asset kind is not convertible to the balance of the native asset.
+  failedToConvertBalance('FailedToConvertBalance', 5),
+
+  /// The spend has expired and cannot be claimed.
+  spendExpired('SpendExpired', 6),
+
+  /// The spend is not yet eligible for payout.
+  earlyPayout('EarlyPayout', 7),
+
+  /// The payment has already been attempted.
+  alreadyAttempted('AlreadyAttempted', 8),
+
+  /// There was some issue with the mechanism of payment.
+  payoutError('PayoutError', 9),
+
+  /// The payout was not yet attempted/claimed.
+  notAttempted('NotAttempted', 10),
+
+  /// The payment has neither failed nor succeeded yet.
+  inconclusive('Inconclusive', 11);
 
   const Error(
     this.variantName,
@@ -59,6 +80,20 @@ class $ErrorCodec with _i1.Codec<Error> {
         return Error.insufficientPermission;
       case 4:
         return Error.proposalNotApproved;
+      case 5:
+        return Error.failedToConvertBalance;
+      case 6:
+        return Error.spendExpired;
+      case 7:
+        return Error.earlyPayout;
+      case 8:
+        return Error.alreadyAttempted;
+      case 9:
+        return Error.payoutError;
+      case 10:
+        return Error.notAttempted;
+      case 11:
+        return Error.inconclusive;
       default:
         throw Exception('Error: Invalid variant index: "$index"');
     }

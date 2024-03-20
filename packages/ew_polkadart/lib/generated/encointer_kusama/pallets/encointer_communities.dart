@@ -5,16 +5,16 @@ import 'dart:typed_data' as _i11;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i12;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../types/encointer_primitives/communities/community_metadata.dart' as _i7;
 import '../types/encointer_primitives/communities/community_rules.dart' as _i10;
 import '../types/encointer_primitives/communities/location.dart' as _i5;
-import '../types/encointer_runtime/runtime_call.dart' as _i12;
-import '../types/geohash/geo_hash.dart' as _i2;
 import '../types/pallet_encointer_communities/pallet/call.dart' as _i14;
 import '../types/sp_core/crypto/account_id32.dart' as _i6;
 import '../types/substrate_fixed/fixed_i128.dart' as _i13;
 import '../types/substrate_fixed/fixed_u128.dart' as _i8;
+import '../types/substrate_geohash/geo_hash.dart' as _i2;
 
 class Queries {
   const Queries(this.__api);

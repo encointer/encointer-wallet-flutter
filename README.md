@@ -37,8 +37,7 @@ Encointer wallet and client for mobile phones
 
 ## Setup
 
-The following works for ubuntu 22.04:
-
+### Ubuntu 22.04
 Install Android Studio from snap and set it up as follows:
 1. Tools > SDK manager > Install SDK Android 8.0 Oreo (not sure if version matters much)
 2. ... Tools > Install SDK commandline tools
@@ -52,15 +51,16 @@ sudo apt install cmake ninja-build libgtk-3-dev npm build-essentials
 # install project deps (i.e., melos)
 .flutter/bin/dart pub get
 .flutter/bin/dart melos bootstrap
-
-sudo npm install --global yarn
-# optional:
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 ```
 
 In studio: under run configurations, add build flavor `dev`
 
 Now: run!
+
+### Windows
+Essentially only a project wide flutter installation is needed. A simple trick to install flutter wrapper like above is
+to open a Git Bash shell on windows to run the `./scripts/install_flutter_wrapper.sh`. All `./.flutter\bin\dart` 
+commands work from a windows terminal, so the rest of the installation steps are the same.
 
 ### Additional Info
 

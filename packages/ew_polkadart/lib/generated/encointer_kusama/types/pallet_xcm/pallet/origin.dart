@@ -3,7 +3,7 @@ import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
-import '../../xcm/v3/multilocation/multi_location.dart' as _i3;
+import '../../staging_xcm/v4/location/location.dart' as _i3;
 
 abstract class Origin {
   const Origin();
@@ -32,11 +32,11 @@ abstract class Origin {
 class $Origin {
   const $Origin();
 
-  Xcm xcm(_i3.MultiLocation value0) {
+  Xcm xcm(_i3.Location value0) {
     return Xcm(value0);
   }
 
-  Response response(_i3.MultiLocation value0) {
+  Response response(_i3.Location value0) {
     return Response(value0);
   }
 }
@@ -91,18 +91,18 @@ class Xcm extends Origin {
   const Xcm(this.value0);
 
   factory Xcm._decode(_i1.Input input) {
-    return Xcm(_i3.MultiLocation.codec.decode(input));
+    return Xcm(_i3.Location.codec.decode(input));
   }
 
-  /// MultiLocation
-  final _i3.MultiLocation value0;
+  /// Location
+  final _i3.Location value0;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {'Xcm': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.MultiLocation.codec.sizeHint(value0);
+    size = size + _i3.Location.codec.sizeHint(value0);
     return size;
   }
 
@@ -111,7 +111,7 @@ class Xcm extends Origin {
       0,
       output,
     );
-    _i3.MultiLocation.codec.encodeTo(
+    _i3.Location.codec.encodeTo(
       value0,
       output,
     );
@@ -133,18 +133,18 @@ class Response extends Origin {
   const Response(this.value0);
 
   factory Response._decode(_i1.Input input) {
-    return Response(_i3.MultiLocation.codec.decode(input));
+    return Response(_i3.Location.codec.decode(input));
   }
 
-  /// MultiLocation
-  final _i3.MultiLocation value0;
+  /// Location
+  final _i3.Location value0;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {'Response': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.MultiLocation.codec.sizeHint(value0);
+    size = size + _i3.Location.codec.sizeHint(value0);
     return size;
   }
 
@@ -153,7 +153,7 @@ class Response extends Origin {
       1,
       output,
     );
-    _i3.MultiLocation.codec.encodeTo(
+    _i3.Location.codec.encodeTo(
       value0,
       output,
     );

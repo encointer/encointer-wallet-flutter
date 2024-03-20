@@ -97,6 +97,52 @@ class $Event {
       deactivated: deactivated,
     );
   }
+
+  AssetSpendApproved assetSpendApproved({
+    required int index,
+    required dynamic assetKind,
+    required BigInt amount,
+    required _i3.AccountId32 beneficiary,
+    required int validFrom,
+    required int expireAt,
+  }) {
+    return AssetSpendApproved(
+      index: index,
+      assetKind: assetKind,
+      amount: amount,
+      beneficiary: beneficiary,
+      validFrom: validFrom,
+      expireAt: expireAt,
+    );
+  }
+
+  AssetSpendVoided assetSpendVoided({required int index}) {
+    return AssetSpendVoided(index: index);
+  }
+
+  Paid paid({
+    required int index,
+    required dynamic paymentId,
+  }) {
+    return Paid(
+      index: index,
+      paymentId: paymentId,
+    );
+  }
+
+  PaymentFailed paymentFailed({
+    required int index,
+    required dynamic paymentId,
+  }) {
+    return PaymentFailed(
+      index: index,
+      paymentId: paymentId,
+    );
+  }
+
+  SpendProcessed spendProcessed({required int index}) {
+    return SpendProcessed(index: index);
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -124,6 +170,16 @@ class $EventCodec with _i1.Codec<Event> {
         return SpendApproved._decode(input);
       case 8:
         return UpdatedInactive._decode(input);
+      case 9:
+        return AssetSpendApproved._decode(input);
+      case 10:
+        return AssetSpendVoided._decode(input);
+      case 11:
+        return Paid._decode(input);
+      case 12:
+        return PaymentFailed._decode(input);
+      case 13:
+        return SpendProcessed._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -162,6 +218,21 @@ class $EventCodec with _i1.Codec<Event> {
       case UpdatedInactive:
         (value as UpdatedInactive).encodeTo(output);
         break;
+      case AssetSpendApproved:
+        (value as AssetSpendApproved).encodeTo(output);
+        break;
+      case AssetSpendVoided:
+        (value as AssetSpendVoided).encodeTo(output);
+        break;
+      case Paid:
+        (value as Paid).encodeTo(output);
+        break;
+      case PaymentFailed:
+        (value as PaymentFailed).encodeTo(output);
+        break;
+      case SpendProcessed:
+        (value as SpendProcessed).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -188,6 +259,16 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as SpendApproved)._sizeHint();
       case UpdatedInactive:
         return (value as UpdatedInactive)._sizeHint();
+      case AssetSpendApproved:
+        return (value as AssetSpendApproved)._sizeHint();
+      case AssetSpendVoided:
+        return (value as AssetSpendVoided)._sizeHint();
+      case Paid:
+        return (value as Paid)._sizeHint();
+      case PaymentFailed:
+        return (value as PaymentFailed)._sizeHint();
+      case SpendProcessed:
+        return (value as SpendProcessed)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -713,4 +794,347 @@ class UpdatedInactive extends Event {
         reactivated,
         deactivated,
       );
+}
+
+/// A new asset spend proposal has been approved.
+class AssetSpendApproved extends Event {
+  const AssetSpendApproved({
+    required this.index,
+    required this.assetKind,
+    required this.amount,
+    required this.beneficiary,
+    required this.validFrom,
+    required this.expireAt,
+  });
+
+  factory AssetSpendApproved._decode(_i1.Input input) {
+    return AssetSpendApproved(
+      index: _i1.U32Codec.codec.decode(input),
+      assetKind: _i1.NullCodec.codec.decode(input),
+      amount: _i1.U128Codec.codec.decode(input),
+      beneficiary: const _i1.U8ArrayCodec(32).decode(input),
+      validFrom: _i1.U32Codec.codec.decode(input),
+      expireAt: _i1.U32Codec.codec.decode(input),
+    );
+  }
+
+  /// SpendIndex
+  final int index;
+
+  /// T::AssetKind
+  final dynamic assetKind;
+
+  /// AssetBalanceOf<T, I>
+  final BigInt amount;
+
+  /// T::Beneficiary
+  final _i3.AccountId32 beneficiary;
+
+  /// BlockNumberFor<T>
+  final int validFrom;
+
+  /// BlockNumberFor<T>
+  final int expireAt;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'AssetSpendApproved': {
+          'index': index,
+          'assetKind': null,
+          'amount': amount,
+          'beneficiary': beneficiary.toList(),
+          'validFrom': validFrom,
+          'expireAt': expireAt,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(index);
+    size = size + _i1.NullCodec.codec.sizeHint(assetKind);
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
+    size = size + const _i3.AccountId32Codec().sizeHint(beneficiary);
+    size = size + _i1.U32Codec.codec.sizeHint(validFrom);
+    size = size + _i1.U32Codec.codec.sizeHint(expireAt);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      9,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      index,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      assetKind,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      amount,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      beneficiary,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      validFrom,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      expireAt,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AssetSpendApproved &&
+          other.index == index &&
+          other.assetKind == assetKind &&
+          other.amount == amount &&
+          _i4.listsEqual(
+            other.beneficiary,
+            beneficiary,
+          ) &&
+          other.validFrom == validFrom &&
+          other.expireAt == expireAt;
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        assetKind,
+        amount,
+        beneficiary,
+        validFrom,
+        expireAt,
+      );
+}
+
+/// An approved spend was voided.
+class AssetSpendVoided extends Event {
+  const AssetSpendVoided({required this.index});
+
+  factory AssetSpendVoided._decode(_i1.Input input) {
+    return AssetSpendVoided(index: _i1.U32Codec.codec.decode(input));
+  }
+
+  /// SpendIndex
+  final int index;
+
+  @override
+  Map<String, Map<String, int>> toJson() => {
+        'AssetSpendVoided': {'index': index}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(index);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      10,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      index,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AssetSpendVoided && other.index == index;
+
+  @override
+  int get hashCode => index.hashCode;
+}
+
+/// A payment happened.
+class Paid extends Event {
+  const Paid({
+    required this.index,
+    required this.paymentId,
+  });
+
+  factory Paid._decode(_i1.Input input) {
+    return Paid(
+      index: _i1.U32Codec.codec.decode(input),
+      paymentId: _i1.NullCodec.codec.decode(input),
+    );
+  }
+
+  /// SpendIndex
+  final int index;
+
+  /// <T::Paymaster as Pay>::Id
+  final dynamic paymentId;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'Paid': {
+          'index': index,
+          'paymentId': null,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(index);
+    size = size + _i1.NullCodec.codec.sizeHint(paymentId);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      11,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      index,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      paymentId,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Paid && other.index == index && other.paymentId == paymentId;
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        paymentId,
+      );
+}
+
+/// A payment failed and can be retried.
+class PaymentFailed extends Event {
+  const PaymentFailed({
+    required this.index,
+    required this.paymentId,
+  });
+
+  factory PaymentFailed._decode(_i1.Input input) {
+    return PaymentFailed(
+      index: _i1.U32Codec.codec.decode(input),
+      paymentId: _i1.NullCodec.codec.decode(input),
+    );
+  }
+
+  /// SpendIndex
+  final int index;
+
+  /// <T::Paymaster as Pay>::Id
+  final dynamic paymentId;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'PaymentFailed': {
+          'index': index,
+          'paymentId': null,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(index);
+    size = size + _i1.NullCodec.codec.sizeHint(paymentId);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      12,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      index,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      paymentId,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PaymentFailed && other.index == index && other.paymentId == paymentId;
+
+  @override
+  int get hashCode => Object.hash(
+        index,
+        paymentId,
+      );
+}
+
+/// A spend was processed and removed from the storage. It might have been successfully
+/// paid or it may have expired.
+class SpendProcessed extends Event {
+  const SpendProcessed({required this.index});
+
+  factory SpendProcessed._decode(_i1.Input input) {
+    return SpendProcessed(index: _i1.U32Codec.codec.decode(input));
+  }
+
+  /// SpendIndex
+  final int index;
+
+  @override
+  Map<String, Map<String, int>> toJson() => {
+        'SpendProcessed': {'index': index}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(index);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      13,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      index,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SpendProcessed && other.index == index;
+
+  @override
+  int get hashCode => index.hashCode;
 }

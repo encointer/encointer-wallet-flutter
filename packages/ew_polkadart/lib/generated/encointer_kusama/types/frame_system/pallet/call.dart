@@ -2,8 +2,9 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
-import 'package:quiver/collection.dart' as _i4;
+import 'package:quiver/collection.dart' as _i5;
 
+import '../../primitive_types/h256.dart' as _i4;
 import '../../tuples.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -71,6 +72,18 @@ class $Call {
   RemarkWithEvent remarkWithEvent({required List<int> remark}) {
     return RemarkWithEvent(remark: remark);
   }
+
+  AuthorizeUpgrade authorizeUpgrade({required _i4.H256 codeHash}) {
+    return AuthorizeUpgrade(codeHash: codeHash);
+  }
+
+  AuthorizeUpgradeWithoutChecks authorizeUpgradeWithoutChecks({required _i4.H256 codeHash}) {
+    return AuthorizeUpgradeWithoutChecks(codeHash: codeHash);
+  }
+
+  ApplyAuthorizedUpgrade applyAuthorizedUpgrade({required List<int> code}) {
+    return ApplyAuthorizedUpgrade(code: code);
+  }
 }
 
 class $CallCodec with _i1.Codec<Call> {
@@ -96,6 +109,12 @@ class $CallCodec with _i1.Codec<Call> {
         return KillPrefix._decode(input);
       case 7:
         return RemarkWithEvent._decode(input);
+      case 9:
+        return AuthorizeUpgrade._decode(input);
+      case 10:
+        return AuthorizeUpgradeWithoutChecks._decode(input);
+      case 11:
+        return ApplyAuthorizedUpgrade._decode(input);
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -131,6 +150,15 @@ class $CallCodec with _i1.Codec<Call> {
       case RemarkWithEvent:
         (value as RemarkWithEvent).encodeTo(output);
         break;
+      case AuthorizeUpgrade:
+        (value as AuthorizeUpgrade).encodeTo(output);
+        break;
+      case AuthorizeUpgradeWithoutChecks:
+        (value as AuthorizeUpgradeWithoutChecks).encodeTo(output);
+        break;
+      case ApplyAuthorizedUpgrade:
+        (value as ApplyAuthorizedUpgrade).encodeTo(output);
+        break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -155,6 +183,12 @@ class $CallCodec with _i1.Codec<Call> {
         return (value as KillPrefix)._sizeHint();
       case RemarkWithEvent:
         return (value as RemarkWithEvent)._sizeHint();
+      case AuthorizeUpgrade:
+        return (value as AuthorizeUpgrade)._sizeHint();
+      case AuthorizeUpgradeWithoutChecks:
+        return (value as AuthorizeUpgradeWithoutChecks)._sizeHint();
+      case ApplyAuthorizedUpgrade:
+        return (value as ApplyAuthorizedUpgrade)._sizeHint();
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -201,7 +235,7 @@ class Remark extends Call {
         other,
       ) ||
       other is Remark &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.remark,
             remark,
           );
@@ -295,7 +329,7 @@ class SetCode extends Call {
         other,
       ) ||
       other is SetCode &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.code,
             code,
           );
@@ -344,7 +378,7 @@ class SetCodeWithoutChecks extends Call {
         other,
       ) ||
       other is SetCodeWithoutChecks &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.code,
             code,
           );
@@ -411,7 +445,7 @@ class SetStorage extends Call {
         other,
       ) ||
       other is SetStorage &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.items,
             items,
           );
@@ -460,7 +494,7 @@ class KillStorage extends Call {
         other,
       ) ||
       other is KillStorage &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.keys,
             keys,
           );
@@ -526,7 +560,7 @@ class KillPrefix extends Call {
         other,
       ) ||
       other is KillPrefix &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.prefix,
             prefix,
           ) &&
@@ -579,11 +613,158 @@ class RemarkWithEvent extends Call {
         other,
       ) ||
       other is RemarkWithEvent &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.remark,
             remark,
           );
 
   @override
   int get hashCode => remark.hashCode;
+}
+
+/// See [`Pallet::authorize_upgrade`].
+class AuthorizeUpgrade extends Call {
+  const AuthorizeUpgrade({required this.codeHash});
+
+  factory AuthorizeUpgrade._decode(_i1.Input input) {
+    return AuthorizeUpgrade(codeHash: const _i1.U8ArrayCodec(32).decode(input));
+  }
+
+  /// T::Hash
+  final _i4.H256 codeHash;
+
+  @override
+  Map<String, Map<String, List<int>>> toJson() => {
+        'authorize_upgrade': {'codeHash': codeHash.toList()}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i4.H256Codec().sizeHint(codeHash);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      9,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      codeHash,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AuthorizeUpgrade &&
+          _i5.listsEqual(
+            other.codeHash,
+            codeHash,
+          );
+
+  @override
+  int get hashCode => codeHash.hashCode;
+}
+
+/// See [`Pallet::authorize_upgrade_without_checks`].
+class AuthorizeUpgradeWithoutChecks extends Call {
+  const AuthorizeUpgradeWithoutChecks({required this.codeHash});
+
+  factory AuthorizeUpgradeWithoutChecks._decode(_i1.Input input) {
+    return AuthorizeUpgradeWithoutChecks(codeHash: const _i1.U8ArrayCodec(32).decode(input));
+  }
+
+  /// T::Hash
+  final _i4.H256 codeHash;
+
+  @override
+  Map<String, Map<String, List<int>>> toJson() => {
+        'authorize_upgrade_without_checks': {'codeHash': codeHash.toList()}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i4.H256Codec().sizeHint(codeHash);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      10,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      codeHash,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is AuthorizeUpgradeWithoutChecks &&
+          _i5.listsEqual(
+            other.codeHash,
+            codeHash,
+          );
+
+  @override
+  int get hashCode => codeHash.hashCode;
+}
+
+/// See [`Pallet::apply_authorized_upgrade`].
+class ApplyAuthorizedUpgrade extends Call {
+  const ApplyAuthorizedUpgrade({required this.code});
+
+  factory ApplyAuthorizedUpgrade._decode(_i1.Input input) {
+    return ApplyAuthorizedUpgrade(code: _i1.U8SequenceCodec.codec.decode(input));
+  }
+
+  /// Vec<u8>
+  final List<int> code;
+
+  @override
+  Map<String, Map<String, List<int>>> toJson() => {
+        'apply_authorized_upgrade': {'code': code}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U8SequenceCodec.codec.sizeHint(code);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      11,
+      output,
+    );
+    _i1.U8SequenceCodec.codec.encodeTo(
+      code,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is ApplyAuthorizedUpgrade &&
+          _i5.listsEqual(
+            other.code,
+            code,
+          );
+
+  @override
+  int get hashCode => code.hashCode;
 }

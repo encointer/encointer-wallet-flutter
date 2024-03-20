@@ -74,6 +74,36 @@ class $AssetsAvatarsGen {
   /// File path: assets/avatars/participant19.svg
   SvgGenImage get participant19 => const SvgGenImage('assets/avatars/participant19.svg');
 
+  /// File path: assets/avatars/participant20.svg
+  SvgGenImage get participant20 => const SvgGenImage('assets/avatars/participant20.svg');
+
+  /// File path: assets/avatars/participant21.svg
+  SvgGenImage get participant21 => const SvgGenImage('assets/avatars/participant21.svg');
+
+  /// File path: assets/avatars/participant22.svg
+  SvgGenImage get participant22 => const SvgGenImage('assets/avatars/participant22.svg');
+
+  /// File path: assets/avatars/participant23.svg
+  SvgGenImage get participant23 => const SvgGenImage('assets/avatars/participant23.svg');
+
+  /// File path: assets/avatars/participant24.svg
+  SvgGenImage get participant24 => const SvgGenImage('assets/avatars/participant24.svg');
+
+  /// File path: assets/avatars/participant25.svg
+  SvgGenImage get participant25 => const SvgGenImage('assets/avatars/participant25.svg');
+
+  /// File path: assets/avatars/participant26.svg
+  SvgGenImage get participant26 => const SvgGenImage('assets/avatars/participant26.svg');
+
+  /// File path: assets/avatars/participant27.svg
+  SvgGenImage get participant27 => const SvgGenImage('assets/avatars/participant27.svg');
+
+  /// File path: assets/avatars/participant28.svg
+  SvgGenImage get participant28 => const SvgGenImage('assets/avatars/participant28.svg');
+
+  /// File path: assets/avatars/participant29.svg
+  SvgGenImage get participant29 => const SvgGenImage('assets/avatars/participant29.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
         participant00,
@@ -95,7 +125,17 @@ class $AssetsAvatarsGen {
         participant16,
         participant17,
         participant18,
-        participant19
+        participant19,
+        participant20,
+        participant21,
+        participant22,
+        participant23,
+        participant24,
+        participant25,
+        participant26,
+        participant27,
+        participant28,
+        participant29
       ];
 }
 

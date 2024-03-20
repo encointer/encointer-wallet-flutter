@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i4;
 
-import '../multilocation/multi_location.dart' as _i3;
+import '../../../staging_xcm/v3/multilocation/multi_location.dart' as _i3;
 
 abstract class AssetId {
   const AssetId();

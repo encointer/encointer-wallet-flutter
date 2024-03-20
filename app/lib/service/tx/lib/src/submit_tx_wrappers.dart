@@ -78,7 +78,8 @@ Future<void> submitClaimRewards(
     onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
       // Claiming the rewards creates a new reputation if successful.
       // Hence, we should update the state afterwards.
-      store.dataUpdate.setInvalidated();
+      store.encointer.getEncointerBalance();
+      webApi.encointer.getReputations();
       return report;
     },
   );

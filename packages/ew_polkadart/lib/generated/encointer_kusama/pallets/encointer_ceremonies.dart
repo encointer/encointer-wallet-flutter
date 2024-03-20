@@ -5,6 +5,7 @@ import 'dart:typed_data' as _i13;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i14;
 import '../types/encointer_primitives/ceremonies/assignment.dart' as _i7;
 import '../types/encointer_primitives/ceremonies/assignment_count.dart' as _i6;
 import '../types/encointer_primitives/ceremonies/assignment_params.dart' as _i12;
@@ -12,7 +13,6 @@ import '../types/encointer_primitives/ceremonies/meetup_result.dart' as _i10;
 import '../types/encointer_primitives/ceremonies/proof_of_attendance.dart' as _i15;
 import '../types/encointer_primitives/ceremonies/reputation.dart' as _i8;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
-import '../types/encointer_runtime/runtime_call.dart' as _i14;
 import '../types/pallet_encointer_ceremonies/pallet/call.dart' as _i16;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 import '../types/substrate_fixed/fixed_u128.dart' as _i9;
@@ -711,7 +711,7 @@ class Queries {
     if (bytes != null) {
       return _participantReputation.decodeValue(bytes);
     }
-    return _i8.Reputation.unverified; /* Default */
+    return _i8.Unverified(); /* Default */
   }
 
   _i11.Future<BigInt> reputationCount(

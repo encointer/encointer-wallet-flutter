@@ -72,6 +72,16 @@ class $Event {
       hash: hash,
     );
   }
+
+  UpgradeAuthorized upgradeAuthorized({
+    required _i6.H256 codeHash,
+    required bool checkVersion,
+  }) {
+    return UpgradeAuthorized(
+      codeHash: codeHash,
+      checkVersion: checkVersion,
+    );
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -93,6 +103,8 @@ class $EventCodec with _i1.Codec<Event> {
         return KilledAccount._decode(input);
       case 5:
         return Remarked._decode(input);
+      case 6:
+        return UpgradeAuthorized._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -122,6 +134,9 @@ class $EventCodec with _i1.Codec<Event> {
       case Remarked:
         (value as Remarked).encodeTo(output);
         break;
+      case UpgradeAuthorized:
+        (value as UpgradeAuthorized).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -142,6 +157,8 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as KilledAccount)._sizeHint();
       case Remarked:
         return (value as Remarked)._sizeHint();
+      case UpgradeAuthorized:
+        return (value as UpgradeAuthorized)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -447,5 +464,75 @@ class Remarked extends Event {
   int get hashCode => Object.hash(
         sender,
         hash,
+      );
+}
+
+/// An upgrade was authorized.
+class UpgradeAuthorized extends Event {
+  const UpgradeAuthorized({
+    required this.codeHash,
+    required this.checkVersion,
+  });
+
+  factory UpgradeAuthorized._decode(_i1.Input input) {
+    return UpgradeAuthorized(
+      codeHash: const _i1.U8ArrayCodec(32).decode(input),
+      checkVersion: _i1.BoolCodec.codec.decode(input),
+    );
+  }
+
+  /// T::Hash
+  final _i6.H256 codeHash;
+
+  /// bool
+  final bool checkVersion;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'UpgradeAuthorized': {
+          'codeHash': codeHash.toList(),
+          'checkVersion': checkVersion,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i6.H256Codec().sizeHint(codeHash);
+    size = size + _i1.BoolCodec.codec.sizeHint(checkVersion);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      6,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      codeHash,
+      output,
+    );
+    _i1.BoolCodec.codec.encodeTo(
+      checkVersion,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is UpgradeAuthorized &&
+          _i7.listsEqual(
+            other.codeHash,
+            codeHash,
+          ) &&
+          other.checkVersion == checkVersion;
+
+  @override
+  int get hashCode => Object.hash(
+        codeHash,
+        checkVersion,
       );
 }

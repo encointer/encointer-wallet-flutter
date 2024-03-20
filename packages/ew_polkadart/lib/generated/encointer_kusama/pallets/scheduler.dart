@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i6;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_runtime/runtime_call.dart' as _i7;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i7;
 import '../types/pallet_scheduler/pallet/call.dart' as _i8;
 import '../types/pallet_scheduler/scheduled.dart' as _i3;
 import '../types/sp_weights/weight_v2/weight.dart' as _i9;

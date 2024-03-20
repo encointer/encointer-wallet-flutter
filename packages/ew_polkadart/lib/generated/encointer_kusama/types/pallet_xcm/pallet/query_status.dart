@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 
 import '../../tuples.dart' as _i4;
-import '../../xcm/versioned_multi_location.dart' as _i3;
+import '../../xcm/versioned_location.dart' as _i3;
 import '../../xcm/versioned_response.dart' as _i5;
 
 abstract class QueryStatus {
@@ -35,8 +35,8 @@ class $QueryStatus {
   const $QueryStatus();
 
   Pending pending({
-    required _i3.VersionedMultiLocation responder,
-    _i3.VersionedMultiLocation? maybeMatchQuerier,
+    required _i3.VersionedLocation responder,
+    _i3.VersionedLocation? maybeMatchQuerier,
     _i4.Tuple2<int, int>? maybeNotify,
     required int timeout,
   }) {
@@ -49,7 +49,7 @@ class $QueryStatus {
   }
 
   VersionNotifier versionNotifier({
-    required _i3.VersionedMultiLocation origin,
+    required _i3.VersionedLocation origin,
     required bool isActive,
   }) {
     return VersionNotifier(
@@ -132,9 +132,8 @@ class Pending extends QueryStatus {
 
   factory Pending._decode(_i1.Input input) {
     return Pending(
-      responder: _i3.VersionedMultiLocation.codec.decode(input),
-      maybeMatchQuerier:
-          const _i1.OptionCodec<_i3.VersionedMultiLocation>(_i3.VersionedMultiLocation.codec).decode(input),
+      responder: _i3.VersionedLocation.codec.decode(input),
+      maybeMatchQuerier: const _i1.OptionCodec<_i3.VersionedLocation>(_i3.VersionedLocation.codec).decode(input),
       maybeNotify: const _i1.OptionCodec<_i4.Tuple2<int, int>>(_i4.Tuple2Codec<int, int>(
         _i1.U8Codec.codec,
         _i1.U8Codec.codec,
@@ -143,11 +142,11 @@ class Pending extends QueryStatus {
     );
   }
 
-  /// VersionedMultiLocation
-  final _i3.VersionedMultiLocation responder;
+  /// VersionedLocation
+  final _i3.VersionedLocation responder;
 
-  /// Option<VersionedMultiLocation>
-  final _i3.VersionedMultiLocation? maybeMatchQuerier;
+  /// Option<VersionedLocation>
+  final _i3.VersionedLocation? maybeMatchQuerier;
 
   /// Option<(u8, u8)>
   final _i4.Tuple2<int, int>? maybeNotify;
@@ -170,9 +169,8 @@ class Pending extends QueryStatus {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(responder);
-    size = size +
-        const _i1.OptionCodec<_i3.VersionedMultiLocation>(_i3.VersionedMultiLocation.codec).sizeHint(maybeMatchQuerier);
+    size = size + _i3.VersionedLocation.codec.sizeHint(responder);
+    size = size + const _i1.OptionCodec<_i3.VersionedLocation>(_i3.VersionedLocation.codec).sizeHint(maybeMatchQuerier);
     size = size +
         const _i1.OptionCodec<_i4.Tuple2<int, int>>(_i4.Tuple2Codec<int, int>(
           _i1.U8Codec.codec,
@@ -187,11 +185,11 @@ class Pending extends QueryStatus {
       0,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       responder,
       output,
     );
-    const _i1.OptionCodec<_i3.VersionedMultiLocation>(_i3.VersionedMultiLocation.codec).encodeTo(
+    const _i1.OptionCodec<_i3.VersionedLocation>(_i3.VersionedLocation.codec).encodeTo(
       maybeMatchQuerier,
       output,
     );
@@ -237,13 +235,13 @@ class VersionNotifier extends QueryStatus {
 
   factory VersionNotifier._decode(_i1.Input input) {
     return VersionNotifier(
-      origin: _i3.VersionedMultiLocation.codec.decode(input),
+      origin: _i3.VersionedLocation.codec.decode(input),
       isActive: _i1.BoolCodec.codec.decode(input),
     );
   }
 
-  /// VersionedMultiLocation
-  final _i3.VersionedMultiLocation origin;
+  /// VersionedLocation
+  final _i3.VersionedLocation origin;
 
   /// bool
   final bool isActive;
@@ -258,7 +256,7 @@ class VersionNotifier extends QueryStatus {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i3.VersionedMultiLocation.codec.sizeHint(origin);
+    size = size + _i3.VersionedLocation.codec.sizeHint(origin);
     size = size + _i1.BoolCodec.codec.sizeHint(isActive);
     return size;
   }
@@ -268,7 +266,7 @@ class VersionNotifier extends QueryStatus {
       1,
       output,
     );
-    _i3.VersionedMultiLocation.codec.encodeTo(
+    _i3.VersionedLocation.codec.encodeTo(
       origin,
       output,
     );

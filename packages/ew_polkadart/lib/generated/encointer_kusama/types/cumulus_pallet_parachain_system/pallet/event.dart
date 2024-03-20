@@ -4,8 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i5;
 
-import '../../primitive_types/h256.dart' as _i3;
-import '../../sp_weights/weight_v2/weight.dart' as _i4;
+import '../../primitive_types/h256.dart' as _i4;
+import '../../sp_weights/weight_v2/weight.dart' as _i3;
 
 /// The `Event` enum of this pallet
 abstract class Event {
@@ -47,17 +47,13 @@ class $Event {
     return ValidationFunctionDiscarded();
   }
 
-  UpgradeAuthorized upgradeAuthorized({required _i3.H256 codeHash}) {
-    return UpgradeAuthorized(codeHash: codeHash);
-  }
-
   DownwardMessagesReceived downwardMessagesReceived({required int count}) {
     return DownwardMessagesReceived(count: count);
   }
 
   DownwardMessagesProcessed downwardMessagesProcessed({
-    required _i4.Weight weightUsed,
-    required _i3.H256 dmqHead,
+    required _i3.Weight weightUsed,
+    required _i4.H256 dmqHead,
   }) {
     return DownwardMessagesProcessed(
       weightUsed: weightUsed,
@@ -84,12 +80,10 @@ class $EventCodec with _i1.Codec<Event> {
       case 2:
         return const ValidationFunctionDiscarded();
       case 3:
-        return UpgradeAuthorized._decode(input);
-      case 4:
         return DownwardMessagesReceived._decode(input);
-      case 5:
+      case 4:
         return DownwardMessagesProcessed._decode(input);
-      case 6:
+      case 5:
         return UpwardMessageSent._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
@@ -110,9 +104,6 @@ class $EventCodec with _i1.Codec<Event> {
         break;
       case ValidationFunctionDiscarded:
         (value as ValidationFunctionDiscarded).encodeTo(output);
-        break;
-      case UpgradeAuthorized:
-        (value as UpgradeAuthorized).encodeTo(output);
         break;
       case DownwardMessagesReceived:
         (value as DownwardMessagesReceived).encodeTo(output);
@@ -137,8 +128,6 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as ValidationFunctionApplied)._sizeHint();
       case ValidationFunctionDiscarded:
         return 1;
-      case UpgradeAuthorized:
-        return (value as UpgradeAuthorized)._sizeHint();
       case DownwardMessagesReceived:
         return (value as DownwardMessagesReceived)._sizeHint();
       case DownwardMessagesProcessed:
@@ -238,55 +227,6 @@ class ValidationFunctionDiscarded extends Event {
   int get hashCode => runtimeType.hashCode;
 }
 
-/// An upgrade has been authorized.
-class UpgradeAuthorized extends Event {
-  const UpgradeAuthorized({required this.codeHash});
-
-  factory UpgradeAuthorized._decode(_i1.Input input) {
-    return UpgradeAuthorized(codeHash: const _i1.U8ArrayCodec(32).decode(input));
-  }
-
-  /// T::Hash
-  final _i3.H256 codeHash;
-
-  @override
-  Map<String, Map<String, List<int>>> toJson() => {
-        'UpgradeAuthorized': {'codeHash': codeHash.toList()}
-      };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + const _i3.H256Codec().sizeHint(codeHash);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      3,
-      output,
-    );
-    const _i1.U8ArrayCodec(32).encodeTo(
-      codeHash,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is UpgradeAuthorized &&
-          _i5.listsEqual(
-            other.codeHash,
-            codeHash,
-          );
-
-  @override
-  int get hashCode => codeHash.hashCode;
-}
-
 /// Some downward messages have been received and will be processed.
 class DownwardMessagesReceived extends Event {
   const DownwardMessagesReceived({required this.count});
@@ -311,7 +251,7 @@ class DownwardMessagesReceived extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      4,
+      3,
       output,
     );
     _i1.U32Codec.codec.encodeTo(
@@ -341,16 +281,16 @@ class DownwardMessagesProcessed extends Event {
 
   factory DownwardMessagesProcessed._decode(_i1.Input input) {
     return DownwardMessagesProcessed(
-      weightUsed: _i4.Weight.codec.decode(input),
+      weightUsed: _i3.Weight.codec.decode(input),
       dmqHead: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
 
   /// Weight
-  final _i4.Weight weightUsed;
+  final _i3.Weight weightUsed;
 
   /// relay_chain::Hash
-  final _i3.H256 dmqHead;
+  final _i4.H256 dmqHead;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
@@ -362,17 +302,17 @@ class DownwardMessagesProcessed extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i4.Weight.codec.sizeHint(weightUsed);
-    size = size + const _i3.H256Codec().sizeHint(dmqHead);
+    size = size + _i3.Weight.codec.sizeHint(weightUsed);
+    size = size + const _i4.H256Codec().sizeHint(dmqHead);
     return size;
   }
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      5,
+      4,
       output,
     );
-    _i4.Weight.codec.encodeTo(
+    _i3.Weight.codec.encodeTo(
       weightUsed,
       output,
     );
@@ -426,7 +366,7 @@ class UpwardMessageSent extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      6,
+      5,
       output,
     );
     const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).encodeTo(

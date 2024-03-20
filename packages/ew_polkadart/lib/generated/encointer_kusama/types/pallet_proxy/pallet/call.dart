@@ -4,8 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
-import '../../encointer_runtime/proxy_type.dart' as _i4;
-import '../../encointer_runtime/runtime_call.dart' as _i5;
+import '../../encointer_kusama_runtime/proxy_type.dart' as _i4;
+import '../../encointer_kusama_runtime/runtime_call.dart' as _i5;
 import '../../primitive_types/h256.dart' as _i6;
 import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
 

@@ -5,6 +5,7 @@ import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i21;
 
 import '../../sp_weights/weight_v2/weight.dart' as _i5;
+import '../../staging_xcm/v3/multilocation/multi_location.dart' as _i6;
 import '../../tuples_1.dart' as _i16;
 import '../double_encoded/double_encoded_2.dart' as _i9;
 import '../v2/origin_kind.dart' as _i8;
@@ -17,7 +18,6 @@ import 'maybe_error_code.dart' as _i18;
 import 'multiasset/multi_asset.dart' as _i13;
 import 'multiasset/multi_asset_filter.dart' as _i12;
 import 'multiasset/multi_assets.dart' as _i3;
-import 'multilocation/multi_location.dart' as _i6;
 import 'query_response_info.dart' as _i11;
 import 'response.dart' as _i4;
 import 'traits/error.dart' as _i17;

@@ -2,7 +2,9 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i5;
 
+import '../../sp_core/crypto/account_id32.dart' as _i4;
 import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -51,11 +53,11 @@ class $Call {
     return ApproveProposal(proposalId: proposalId);
   }
 
-  Spend spend({
+  SpendLocal spendLocal({
     required BigInt amount,
     required _i3.MultiAddress beneficiary,
   }) {
-    return Spend(
+    return SpendLocal(
       amount: amount,
       beneficiary: beneficiary,
     );
@@ -63,6 +65,32 @@ class $Call {
 
   RemoveApproval removeApproval({required BigInt proposalId}) {
     return RemoveApproval(proposalId: proposalId);
+  }
+
+  Spend spend({
+    required dynamic assetKind,
+    required BigInt amount,
+    required _i4.AccountId32 beneficiary,
+    int? validFrom,
+  }) {
+    return Spend(
+      assetKind: assetKind,
+      amount: amount,
+      beneficiary: beneficiary,
+      validFrom: validFrom,
+    );
+  }
+
+  Payout payout({required int index}) {
+    return Payout(index: index);
+  }
+
+  CheckStatus checkStatus({required int index}) {
+    return CheckStatus(index: index);
+  }
+
+  VoidSpend voidSpend({required int index}) {
+    return VoidSpend(index: index);
   }
 }
 
@@ -80,9 +108,17 @@ class $CallCodec with _i1.Codec<Call> {
       case 2:
         return ApproveProposal._decode(input);
       case 3:
-        return Spend._decode(input);
+        return SpendLocal._decode(input);
       case 4:
         return RemoveApproval._decode(input);
+      case 5:
+        return Spend._decode(input);
+      case 6:
+        return Payout._decode(input);
+      case 7:
+        return CheckStatus._decode(input);
+      case 8:
+        return VoidSpend._decode(input);
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -103,11 +139,23 @@ class $CallCodec with _i1.Codec<Call> {
       case ApproveProposal:
         (value as ApproveProposal).encodeTo(output);
         break;
-      case Spend:
-        (value as Spend).encodeTo(output);
+      case SpendLocal:
+        (value as SpendLocal).encodeTo(output);
         break;
       case RemoveApproval:
         (value as RemoveApproval).encodeTo(output);
+        break;
+      case Spend:
+        (value as Spend).encodeTo(output);
+        break;
+      case Payout:
+        (value as Payout).encodeTo(output);
+        break;
+      case CheckStatus:
+        (value as CheckStatus).encodeTo(output);
+        break;
+      case VoidSpend:
+        (value as VoidSpend).encodeTo(output);
         break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
@@ -123,10 +171,18 @@ class $CallCodec with _i1.Codec<Call> {
         return (value as RejectProposal)._sizeHint();
       case ApproveProposal:
         return (value as ApproveProposal)._sizeHint();
-      case Spend:
-        return (value as Spend)._sizeHint();
+      case SpendLocal:
+        return (value as SpendLocal)._sizeHint();
       case RemoveApproval:
         return (value as RemoveApproval)._sizeHint();
+      case Spend:
+        return (value as Spend)._sizeHint();
+      case Payout:
+        return (value as Payout)._sizeHint();
+      case CheckStatus:
+        return (value as CheckStatus)._sizeHint();
+      case VoidSpend:
+        return (value as VoidSpend)._sizeHint();
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -288,15 +344,15 @@ class ApproveProposal extends Call {
   int get hashCode => proposalId.hashCode;
 }
 
-/// See [`Pallet::spend`].
-class Spend extends Call {
-  const Spend({
+/// See [`Pallet::spend_local`].
+class SpendLocal extends Call {
+  const SpendLocal({
     required this.amount,
     required this.beneficiary,
   });
 
-  factory Spend._decode(_i1.Input input) {
-    return Spend(
+  factory SpendLocal._decode(_i1.Input input) {
+    return SpendLocal(
       amount: _i1.CompactBigIntCodec.codec.decode(input),
       beneficiary: _i3.MultiAddress.codec.decode(input),
     );
@@ -310,7 +366,7 @@ class Spend extends Call {
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
-        'spend': {
+        'spend_local': {
           'amount': amount,
           'beneficiary': beneficiary.toJson(),
         }
@@ -344,7 +400,7 @@ class Spend extends Call {
         this,
         other,
       ) ||
-      other is Spend && other.amount == amount && other.beneficiary == beneficiary;
+      other is SpendLocal && other.amount == amount && other.beneficiary == beneficiary;
 
   @override
   int get hashCode => Object.hash(
@@ -396,4 +452,235 @@ class RemoveApproval extends Call {
 
   @override
   int get hashCode => proposalId.hashCode;
+}
+
+/// See [`Pallet::spend`].
+class Spend extends Call {
+  const Spend({
+    required this.assetKind,
+    required this.amount,
+    required this.beneficiary,
+    this.validFrom,
+  });
+
+  factory Spend._decode(_i1.Input input) {
+    return Spend(
+      assetKind: _i1.NullCodec.codec.decode(input),
+      amount: _i1.CompactBigIntCodec.codec.decode(input),
+      beneficiary: const _i1.U8ArrayCodec(32).decode(input),
+      validFrom: const _i1.OptionCodec<int>(_i1.U32Codec.codec).decode(input),
+    );
+  }
+
+  /// Box<T::AssetKind>
+  final dynamic assetKind;
+
+  /// AssetBalanceOf<T, I>
+  final BigInt amount;
+
+  /// Box<BeneficiaryLookupOf<T, I>>
+  final _i4.AccountId32 beneficiary;
+
+  /// Option<BlockNumberFor<T>>
+  final int? validFrom;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'spend': {
+          'assetKind': null,
+          'amount': amount,
+          'beneficiary': beneficiary.toList(),
+          'validFrom': validFrom,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.NullCodec.codec.sizeHint(assetKind);
+    size = size + _i1.CompactBigIntCodec.codec.sizeHint(amount);
+    size = size + const _i4.AccountId32Codec().sizeHint(beneficiary);
+    size = size + const _i1.OptionCodec<int>(_i1.U32Codec.codec).sizeHint(validFrom);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      5,
+      output,
+    );
+    _i1.NullCodec.codec.encodeTo(
+      assetKind,
+      output,
+    );
+    _i1.CompactBigIntCodec.codec.encodeTo(
+      amount,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      beneficiary,
+      output,
+    );
+    const _i1.OptionCodec<int>(_i1.U32Codec.codec).encodeTo(
+      validFrom,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Spend &&
+          other.assetKind == assetKind &&
+          other.amount == amount &&
+          _i5.listsEqual(
+            other.beneficiary,
+            beneficiary,
+          ) &&
+          other.validFrom == validFrom;
+
+  @override
+  int get hashCode => Object.hash(
+        assetKind,
+        amount,
+        beneficiary,
+        validFrom,
+      );
+}
+
+/// See [`Pallet::payout`].
+class Payout extends Call {
+  const Payout({required this.index});
+
+  factory Payout._decode(_i1.Input input) {
+    return Payout(index: _i1.U32Codec.codec.decode(input));
+  }
+
+  /// SpendIndex
+  final int index;
+
+  @override
+  Map<String, Map<String, int>> toJson() => {
+        'payout': {'index': index}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(index);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      6,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      index,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Payout && other.index == index;
+
+  @override
+  int get hashCode => index.hashCode;
+}
+
+/// See [`Pallet::check_status`].
+class CheckStatus extends Call {
+  const CheckStatus({required this.index});
+
+  factory CheckStatus._decode(_i1.Input input) {
+    return CheckStatus(index: _i1.U32Codec.codec.decode(input));
+  }
+
+  /// SpendIndex
+  final int index;
+
+  @override
+  Map<String, Map<String, int>> toJson() => {
+        'check_status': {'index': index}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(index);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      7,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      index,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CheckStatus && other.index == index;
+
+  @override
+  int get hashCode => index.hashCode;
+}
+
+/// See [`Pallet::void_spend`].
+class VoidSpend extends Call {
+  const VoidSpend({required this.index});
+
+  factory VoidSpend._decode(_i1.Input input) {
+    return VoidSpend(index: _i1.U32Codec.codec.decode(input));
+  }
+
+  /// SpendIndex
+  final int index;
+
+  @override
+  Map<String, Map<String, int>> toJson() => {
+        'void_spend': {'index': index}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U32Codec.codec.sizeHint(index);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      8,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      index,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is VoidSpend && other.index == index;
+
+  @override
+  int get hashCode => index.hashCode;
 }

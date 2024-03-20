@@ -5,20 +5,14 @@ import 'package:polkadart/scale_codec.dart' as _i1;
 
 /// The `Error` enum of this pallet.
 enum Error {
-  /// Failed to send XCM message.
-  failedToSend('FailedToSend', 0),
+  /// Setting the queue config failed since one of its values was invalid.
+  badQueueConfig('BadQueueConfig', 0),
 
-  /// Bad XCM origin.
-  badXcmOrigin('BadXcmOrigin', 1),
+  /// The execution is already suspended.
+  alreadySuspended('AlreadySuspended', 1),
 
-  /// Bad XCM data.
-  badXcm('BadXcm', 2),
-
-  /// Bad overweight index.
-  badOverweightIndex('BadOverweightIndex', 3),
-
-  /// Provided weight is possibly not enough to execute the message.
-  weightOverLimit('WeightOverLimit', 4);
+  /// The execution is already resumed.
+  alreadyResumed('AlreadyResumed', 2);
 
   const Error(
     this.variantName,
@@ -49,15 +43,11 @@ class $ErrorCodec with _i1.Codec<Error> {
     final index = _i1.U8Codec.codec.decode(input);
     switch (index) {
       case 0:
-        return Error.failedToSend;
+        return Error.badQueueConfig;
       case 1:
-        return Error.badXcmOrigin;
+        return Error.alreadySuspended;
       case 2:
-        return Error.badXcm;
-      case 3:
-        return Error.badOverweightIndex;
-      case 4:
-        return Error.weightOverLimit;
+        return Error.alreadyResumed;
       default:
         throw Exception('Error: Invalid variant index: "$index"');
     }

@@ -25,7 +25,13 @@ enum Error {
   nonZeroRefCount('NonZeroRefCount', 4),
 
   /// The origin filter prevent the call to be dispatched.
-  callFiltered('CallFiltered', 5);
+  callFiltered('CallFiltered', 5),
+
+  /// No upgrade authorized.
+  nothingAuthorized('NothingAuthorized', 6),
+
+  /// The submitted code is not authorized.
+  unauthorized('Unauthorized', 7);
 
   const Error(
     this.variantName,
@@ -67,6 +73,10 @@ class $ErrorCodec with _i1.Codec<Error> {
         return Error.nonZeroRefCount;
       case 5:
         return Error.callFiltered;
+      case 6:
+        return Error.nothingAuthorized;
+      case 7:
+        return Error.unauthorized;
       default:
         throw Exception('Error: Invalid variant index: "$index"');
     }

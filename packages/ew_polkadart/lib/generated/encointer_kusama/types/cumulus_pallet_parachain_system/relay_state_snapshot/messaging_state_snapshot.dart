@@ -4,16 +4,16 @@ import 'dart:typed_data' as _i7;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i8;
 
-import '../../polkadot_parachain/primitives/id.dart' as _i5;
-import '../../polkadot_primitives/v5/abridged_hrmp_channel.dart' as _i6;
+import '../../polkadot_parachain_primitives/primitives/id.dart' as _i5;
+import '../../polkadot_primitives/v6/abridged_hrmp_channel.dart' as _i6;
 import '../../primitive_types/h256.dart' as _i2;
 import '../../tuples.dart' as _i4;
-import 'relay_dispach_queue_size.dart' as _i3;
+import 'relay_dispatch_queue_remaining_capacity.dart' as _i3;
 
 class MessagingStateSnapshot {
   const MessagingStateSnapshot({
     required this.dmqMqcHead,
-    required this.relayDispatchQueueSize,
+    required this.relayDispatchQueueRemainingCapacity,
     required this.ingressChannels,
     required this.egressChannels,
   });
@@ -25,8 +25,8 @@ class MessagingStateSnapshot {
   /// relay_chain::Hash
   final _i2.H256 dmqMqcHead;
 
-  /// RelayDispachQueueSize
-  final _i3.RelayDispachQueueSize relayDispatchQueueSize;
+  /// RelayDispatchQueueRemainingCapacity
+  final _i3.RelayDispatchQueueRemainingCapacity relayDispatchQueueRemainingCapacity;
 
   /// Vec<(ParaId, AbridgedHrmpChannel)>
   final List<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>> ingressChannels;
@@ -42,7 +42,7 @@ class MessagingStateSnapshot {
 
   Map<String, dynamic> toJson() => {
         'dmqMqcHead': dmqMqcHead.toList(),
-        'relayDispatchQueueSize': relayDispatchQueueSize.toJson(),
+        'relayDispatchQueueRemainingCapacity': relayDispatchQueueRemainingCapacity.toJson(),
         'ingressChannels': ingressChannels
             .map((value) => [
                   value.value0,
@@ -68,7 +68,7 @@ class MessagingStateSnapshot {
             other.dmqMqcHead,
             dmqMqcHead,
           ) &&
-          other.relayDispatchQueueSize == relayDispatchQueueSize &&
+          other.relayDispatchQueueRemainingCapacity == relayDispatchQueueRemainingCapacity &&
           _i8.listsEqual(
             other.ingressChannels,
             ingressChannels,
@@ -81,7 +81,7 @@ class MessagingStateSnapshot {
   @override
   int get hashCode => Object.hash(
         dmqMqcHead,
-        relayDispatchQueueSize,
+        relayDispatchQueueRemainingCapacity,
         ingressChannels,
         egressChannels,
       );
@@ -99,8 +99,8 @@ class $MessagingStateSnapshotCodec with _i1.Codec<MessagingStateSnapshot> {
       obj.dmqMqcHead,
       output,
     );
-    _i3.RelayDispachQueueSize.codec.encodeTo(
-      obj.relayDispatchQueueSize,
+    _i3.RelayDispatchQueueRemainingCapacity.codec.encodeTo(
+      obj.relayDispatchQueueRemainingCapacity,
       output,
     );
     const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
@@ -125,7 +125,7 @@ class $MessagingStateSnapshotCodec with _i1.Codec<MessagingStateSnapshot> {
   MessagingStateSnapshot decode(_i1.Input input) {
     return MessagingStateSnapshot(
       dmqMqcHead: const _i1.U8ArrayCodec(32).decode(input),
-      relayDispatchQueueSize: _i3.RelayDispachQueueSize.codec.decode(input),
+      relayDispatchQueueRemainingCapacity: _i3.RelayDispatchQueueRemainingCapacity.codec.decode(input),
       ingressChannels: const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
           _i4.Tuple2Codec<_i5.Id, _i6.AbridgedHrmpChannel>(
         _i5.IdCodec(),
@@ -143,7 +143,7 @@ class $MessagingStateSnapshotCodec with _i1.Codec<MessagingStateSnapshot> {
   int sizeHint(MessagingStateSnapshot obj) {
     int size = 0;
     size = size + const _i2.H256Codec().sizeHint(obj.dmqMqcHead);
-    size = size + _i3.RelayDispachQueueSize.codec.sizeHint(obj.relayDispatchQueueSize);
+    size = size + _i3.RelayDispatchQueueRemainingCapacity.codec.sizeHint(obj.relayDispatchQueueRemainingCapacity);
     size = size +
         const _i1.SequenceCodec<_i4.Tuple2<_i5.Id, _i6.AbridgedHrmpChannel>>(
             _i4.Tuple2Codec<_i5.Id, _i6.AbridgedHrmpChannel>(
