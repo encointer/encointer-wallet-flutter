@@ -22,7 +22,6 @@ class EncointerDartApi {
 
   Future<void> close() async {
     Log.d('[EncointerDartApi: closing', 'EncointerDartApi');
-    return _dartApi.close();
   }
 
   /// Queries the rpc 'encointer_getAggregatedAccountData'.

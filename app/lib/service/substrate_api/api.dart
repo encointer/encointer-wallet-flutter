@@ -22,7 +22,6 @@ class Api {
   const Api(
     this.store,
     this.provider,
-    this.dartApi,
     this.account,
     this.assets,
     this.chain,
@@ -32,7 +31,6 @@ class Api {
 
   factory Api.create(
     AppStore store,
-    SubstrateDartApi dartApi,
     EwHttp ewHttp, {
     bool isIntegrationTest = false,
   }) {
@@ -40,11 +38,10 @@ class Api {
     return Api(
       store,
       provider,
-      dartApi,
       AccountApi(store, provider),
       AssetsApi(store, EncointerKusama(provider)),
       ChainApi(store, provider),
-      EncointerApi(store, dartApi, ewHttp, EncointerKusama(provider)),
+      EncointerApi(store, SubstrateDartApi(provider), ewHttp, EncointerKusama(provider)),
       isIntegrationTest ? MockIpfsApi(ewHttp) : IpfsApi(ewHttp, gateway: store.settings.ipfsGateway),
     );
   }
@@ -52,7 +49,6 @@ class Api {
   final AppStore store;
 
   final ReconnectingWsProvider provider;
-  final SubstrateDartApi dartApi;
   final AccountApi account;
   final AssetsApi assets;
   final ChainApi chain;
@@ -61,7 +57,6 @@ class Api {
 
   Future<void> init() async {
     await Future.wait([
-      dartApi.connect(store.settings.endpoint.value!),
       provider.connectToNewEndpoint(Uri.parse(store.settings.endpoint.value!)),
     ]);
 
@@ -126,12 +121,10 @@ class Api {
   }
 
   Future<bool> isConnected() async {
-    final dartConnected = dartApi.isConnected();
     final providerConnected = provider.isConnected();
 
-    Log.d('Dart Rpc Api is connected: $dartConnected', 'Api');
     Log.d('Provider is connected: $providerConnected', 'Api');
 
-    return dartConnected && providerConnected;
+    return providerConnected;
   }
 }
