@@ -62,6 +62,10 @@ class Api {
 
     Log.d('Connected to endpoint: ${store.settings.endpoint.value!}', 'Api');
 
+    await _onConnected();
+  }
+
+  Future<void> _onConnected() async {
     if (store.account.currentAddress.isNotEmpty) {
       await store.encointer.initializeUninitializedStores(store.account.currentAddress);
     }
