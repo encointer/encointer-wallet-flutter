@@ -94,12 +94,14 @@ class Api {
 
   Future<void> close() async {
     final futures = [
-      stopSubscriptions(),
-      encointer.close(),
-      provider.disconnect(),
+      stopSubscriptions().timeout(const Duration(seconds: 5), onTimeout: () => Log.e('stopping subscriptions timeout')),
+      encointer.close().timeout(const Duration(seconds: 5), onTimeout: () => Log.e('closing encointer api timeout')),
+      provider.disconnect().timeout(const Duration(seconds: 5), onTimeout: () => Log.e('provider disconnect timeout')),
     ];
 
     await Future.wait(futures);
+
+    Log.d('Closed webApi connections');
   }
 
   void fetchAccountData() {
@@ -115,8 +117,8 @@ class Api {
     ]);
   }
 
-  Future<void> stopSubscriptions() {
-    return Future.wait([
+  Future<void> stopSubscriptions() async {
+    await Future.wait([
       encointer.stopSubscriptions(),
       chain.stopSubscriptions(),
       assets.stopSubscriptions(),
