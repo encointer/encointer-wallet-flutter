@@ -84,6 +84,9 @@ class Api {
       } else {
         Log.p('[webApi] connection failed will try again...');
       }
+    }).onError((error, stackTrace) {
+      // mostly timeouts if the endpoint is not available
+      Log.e('[webApi] error during connection', '', stackTrace);
     }).whenComplete(() => _connecting == null);
   }
 
