@@ -28,7 +28,6 @@ class SubstrateDartApi {
   String? get endpoint => _endpoint;
 
   Future<void> connect(String endpoint) async {
-
     try {
       _rpc = await rpc<Map<String, dynamic>>('rpc_methods', []).then(RpcMethods.fromJson);
 
