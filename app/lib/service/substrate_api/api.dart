@@ -63,7 +63,7 @@ class Api {
 
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) async {
       if (!provider.isConnected()) {
-        if (_connecting == null)  {
+        if (_connecting == null) {
           Log.p('[webApi] provider is disconnected. Trying to connect again...');
           await close();
           _connecting = _connect();
