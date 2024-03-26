@@ -30,9 +30,10 @@ jobs:
             record_video: true
             # With this flag we can run the CI against different node versions to check compatibility.
             docker_tag: "1.5.4"
-          - device: "iPhone 8 Plus"
-            record_video: false
-            docker_tag: "1.5.4"
+            # IPhone 8 is broken currently.
+#          - device: "iPhone 8 Plus"
+#            record_video: false
+#            docker_tag: "1.5.4"
           - device: "iPad Pro (12.9-inch) (6th generation)"
             record_video: false
             docker_tag: "1.5.4"

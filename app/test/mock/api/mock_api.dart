@@ -15,19 +15,18 @@ import 'mock_polkadart_provider.dart';
 import 'mock_substrate_dart_api.dart';
 
 MockApi getMockApi(AppStore store) {
-  return MockApi(store, MockSubstrateDartApi(), EwHttp());
+  return MockApi(store, EwHttp());
 }
 
 class MockApi extends Api {
-  MockApi(AppStore store, MockSubstrateDartApi dartApi, EwHttp ewHttp)
+  MockApi(AppStore store, EwHttp ewHttp)
       : super(
           store,
           MockPolkadartProvider(),
-          dartApi,
           MockAccountApi(store, MockPolkadartProvider()),
           MockAssetsApi(store, MockEncointerKusamaApi()),
           MockChainApi(store, MockPolkadartProvider()),
-          MockEncointerApi(store, dartApi, ewHttp, MockEncointerKusamaApi()),
+          MockEncointerApi(store, MockSubstrateDartApi(MockPolkadartProvider()), ewHttp, MockEncointerKusamaApi()),
           MockIpfsApi(ewHttp),
         );
 
