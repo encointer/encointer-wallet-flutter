@@ -19,7 +19,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 late Api webApi;
 
 class Api {
-  const Api(
+  Api(
     this.store,
     this.provider,
     this.account,
@@ -55,17 +55,41 @@ class Api {
   final EncointerApi encointer;
   final IpfsApi ipfsApi;
 
+  Future<void>? _connecting;
+  Timer? _timer;
+
   Future<void> init() async {
-    await Future.wait([
-      provider.connectToNewEndpoint(Uri.parse(store.settings.endpoint.value!)),
-    ]);
+    _connecting = _connect();
 
-    Log.d('Connected to endpoint: ${store.settings.endpoint.value!}', 'Api');
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      if (!provider.isConnected()) {
+        if (_connecting == null) {
+          Log.p('[webApi] provider is disconnected. Trying to connect again...');
+          _connecting = _connect();
+        } else {
+          Log.p('[webApi] still trying to connect..');
+        }
+      }
+    });
+  }
 
-    await _onConnected();
+  Future<void> _connect() {
+    Log.d('[webApi] Connecting to endpoint: ${store.settings.endpoint.value!}', 'Api');
+
+    final endpoint = store.settings.endpoint.value!;
+    return provider.connectToNewEndpoint(Uri.parse(endpoint)).then((voidValue) async {
+      Log.p('[webApi] channel is ready...');
+      if (await isConnected()) {
+        return _onConnected();
+      } else {
+        Log.p('[webApi] connection failed will try again...');
+      }
+    }).whenComplete(() => _connecting == null);
   }
 
   Future<void> _onConnected() async {
+    Log.d('[webApi] Connected to endpoint: ${store.settings.endpoint.value!}', 'Api');
+
     if (store.account.currentAddress.isNotEmpty) {
       await store.encointer.initializeUninitializedStores(store.account.currentAddress);
     }
@@ -83,7 +107,7 @@ class Api {
 
     store.settings.setNetworkLoading(false);
 
-    Log.d('Obtained basic network data: ${store.settings.endpoint.value!}', 'Api');
+    Log.d('[webApi] Obtained basic network data: ${store.settings.endpoint.value!}', 'Api');
 
     // need to do this from here as we can't access instance fields in constructor.
     account.setFetchAccountData(fetchAccountData);
@@ -92,15 +116,24 @@ class Api {
   }
 
   Future<void> close() async {
+    _timer?.cancel();
+    _timer = null;
+    _connecting = null;
+
     final futures = [
-      stopSubscriptions().timeout(const Duration(seconds: 5), onTimeout: () => Log.e('stopping subscriptions timeout')),
-      encointer.close().timeout(const Duration(seconds: 5), onTimeout: () => Log.e('closing encointer api timeout')),
-      provider.disconnect().timeout(const Duration(seconds: 5), onTimeout: () => Log.e('provider disconnect timeout')),
+      stopSubscriptions()
+          .timeout(const Duration(seconds: 5), onTimeout: () => Log.e('[webApi] stopping subscriptions timeout')),
+      encointer
+          .close()
+          .timeout(const Duration(seconds: 5), onTimeout: () => Log.e('[webApi] closing encointer api timeout')),
+      provider
+          .disconnect()
+          .timeout(const Duration(seconds: 5), onTimeout: () => Log.e('[webApi] provider disconnect timeout')),
     ];
 
     await Future.wait(futures);
 
-    Log.d('Closed webApi connections');
+    Log.d('[webApi] Closed webApi connections');
   }
 
   void fetchAccountData() {
@@ -127,7 +160,7 @@ class Api {
   Future<bool> isConnected() async {
     final providerConnected = provider.isConnected();
 
-    Log.d('Provider is connected: $providerConnected', 'Api');
+    Log.d('[webApi] Provider is connected: $providerConnected');
 
     return providerConnected;
   }
