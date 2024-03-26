@@ -84,9 +84,6 @@ class EncointerApi {
     await _businessRegistry?.cancel();
   }
 
-  Future<void> close() async {
-  }
-
   void getCommunityData() {
     getBusinesses();
     getCommunityMetadata();
