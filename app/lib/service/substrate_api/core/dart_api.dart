@@ -56,8 +56,4 @@ class SubstrateDartApi {
     final data = response.result! as T;
     return data;
   }
-
-  bool isConnected() {
-    return _provider.isConnected();
-  }
 }
