@@ -92,9 +92,9 @@ class Api {
       } else {
         Log.p('[webApi] connection failed will try again...');
       }
-    }).onError((error, stackTrace) {
+    }).catchError((dynamic error) {
       // mostly timeouts if the endpoint is not available
-      Log.e('[webApi] error during connection: $error}', '', stackTrace);
+      Log.e('[webApi] error during connection: $error}');
     }).whenComplete(() => _connecting == null);
   }
 
