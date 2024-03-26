@@ -63,6 +63,7 @@ class Api {
   Timer? _timer;
 
   Future<void> init() async {
+    await close();
     _connecting = _connect();
 
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) async {
@@ -80,6 +81,8 @@ class Api {
 
   Future<void> _connect() {
     Log.d('[webApi] Connecting to endpoint: ${store.settings.endpoint.value!}', 'Api');
+
+    store.settings.setNetworkLoading(true);
 
     final endpoint = store.settings.endpoint.value!;
     return provider.connectToNewEndpoint(Uri.parse(endpoint)).then((voidValue) async {
