@@ -56,6 +56,10 @@ class Api {
   final IpfsApi ipfsApi;
 
   Future<void>? _connecting;
+
+  /// Timer to regularly check for network connections. This periodic timer will be
+  /// paused when the app goes into background, and resumes when the app comes into
+  /// the foreground again.
   Timer? _timer;
 
   Future<void> init() async {
@@ -87,7 +91,7 @@ class Api {
       }
     }).onError((error, stackTrace) {
       // mostly timeouts if the endpoint is not available
-      Log.e('[webApi] error during connection', '', stackTrace);
+      Log.e('[webApi] error during connection: $error}', '', stackTrace);
     }).whenComplete(() => _connecting == null);
   }
 
@@ -111,7 +115,7 @@ class Api {
 
     store.settings.setNetworkLoading(false);
 
-    Log.d('[webApi] Obtained basic network data: ${store.settings.endpoint.value!}', 'Api');
+    Log.d('[webApi] Obtained basic network data: ${store.settings.endpoint.value!}');
 
     // need to do this from here as we can't access instance fields in constructor.
     account.setFetchAccountData(fetchAccountData);
