@@ -84,11 +84,6 @@ class EncointerApi {
     await _businessRegistry?.cancel();
   }
 
-  Future<void> close() async {
-    Log.d('[EncointerApi: closing', 'EncointerApi');
-    return _dartApi.close();
-  }
-
   void getCommunityData() {
     getBusinesses();
     getCommunityMetadata();
