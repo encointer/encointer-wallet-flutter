@@ -61,10 +61,11 @@ class Api {
   Future<void> init() async {
     _connecting = _connect();
 
-    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) async {
       if (!provider.isConnected()) {
-        if (_connecting == null) {
+        if (_connecting == null)  {
           Log.p('[webApi] provider is disconnected. Trying to connect again...');
+          await close();
           _connecting = _connect();
         } else {
           Log.p('[webApi] still trying to connect..');
