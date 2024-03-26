@@ -16,6 +16,7 @@ class ReconnectingWsProvider extends Provider {
   Future<void> connectToNewEndpoint(Uri url) async {
     await disconnect();
     provider = WsProvider(url);
+    await provider.ready();
   }
 
   @override
@@ -39,7 +40,9 @@ class ReconnectingWsProvider extends Provider {
       return Future.value();
     } else {
       try {
-        await provider.disconnect();
+        // Disconnect runs into a timeout if our endpoint doesn't exist for some reason.
+        await provider.disconnect().timeout(const Duration(seconds: 3),
+            onTimeout: () => Log.e('Timeout in disconnecting', 'ReconnectingWsProvider'));
       } catch (e) {
         Log.e('Error disconnecting websocket: $e', 'ReconnectingWsProvider');
         return Future.value();

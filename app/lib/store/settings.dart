@@ -169,8 +169,6 @@ abstract class _SettingsStore with Store {
   }
 
   Future<void> reloadNetwork(EndpointData network) async {
-    setNetworkLoading(true);
-
     // Stop networking before loading cache
     await webApi.close();
 
