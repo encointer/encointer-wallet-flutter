@@ -20,10 +20,6 @@ class EncointerDartApi {
 
   final SubstrateDartApi _dartApi;
 
-  Future<void> close() async {
-    Log.d('[EncointerDartApi: closing', 'EncointerDartApi');
-  }
-
   /// Queries the rpc 'encointer_getAggregatedAccountData'.
   ///
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account, {BlockHash? at}) {

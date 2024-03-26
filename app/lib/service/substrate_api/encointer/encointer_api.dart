@@ -85,8 +85,6 @@ class EncointerApi {
   }
 
   Future<void> close() async {
-    Log.d('[EncointerApi: closing', 'EncointerApi');
-    return _dartApi.close();
   }
 
   void getCommunityData() {

@@ -134,9 +134,6 @@ class Api {
     final futures = [
       stopSubscriptions()
           .timeout(const Duration(seconds: 5), onTimeout: () => Log.e('[webApi] stopping subscriptions timeout')),
-      encointer
-          .close()
-          .timeout(const Duration(seconds: 5), onTimeout: () => Log.e('[webApi] closing encointer api timeout')),
       provider
           .disconnect()
           .timeout(const Duration(seconds: 5), onTimeout: () => Log.e('[webApi] provider disconnect timeout')),
