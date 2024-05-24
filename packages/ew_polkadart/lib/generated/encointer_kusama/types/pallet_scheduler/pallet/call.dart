@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i5;
 
-import '../../encointer_kusama_runtime/runtime_call.dart' as _i4;
+import '../../encointer_node_notee_runtime/runtime_call.dart' as _i4;
 import '../../tuples.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -108,6 +108,38 @@ class $Call {
       call: call,
     );
   }
+
+  SetRetry setRetry({
+    required _i3.Tuple2<int, int> task,
+    required int retries,
+    required int period,
+  }) {
+    return SetRetry(
+      task: task,
+      retries: retries,
+      period: period,
+    );
+  }
+
+  SetRetryNamed setRetryNamed({
+    required List<int> id,
+    required int retries,
+    required int period,
+  }) {
+    return SetRetryNamed(
+      id: id,
+      retries: retries,
+      period: period,
+    );
+  }
+
+  CancelRetry cancelRetry({required _i3.Tuple2<int, int> task}) {
+    return CancelRetry(task: task);
+  }
+
+  CancelRetryNamed cancelRetryNamed({required List<int> id}) {
+    return CancelRetryNamed(id: id);
+  }
 }
 
 class $CallCodec with _i1.Codec<Call> {
@@ -129,6 +161,14 @@ class $CallCodec with _i1.Codec<Call> {
         return ScheduleAfter._decode(input);
       case 5:
         return ScheduleNamedAfter._decode(input);
+      case 6:
+        return SetRetry._decode(input);
+      case 7:
+        return SetRetryNamed._decode(input);
+      case 8:
+        return CancelRetry._decode(input);
+      case 9:
+        return CancelRetryNamed._decode(input);
       default:
         throw Exception('Call: Invalid variant index: "$index"');
     }
@@ -158,6 +198,18 @@ class $CallCodec with _i1.Codec<Call> {
       case ScheduleNamedAfter:
         (value as ScheduleNamedAfter).encodeTo(output);
         break;
+      case SetRetry:
+        (value as SetRetry).encodeTo(output);
+        break;
+      case SetRetryNamed:
+        (value as SetRetryNamed).encodeTo(output);
+        break;
+      case CancelRetry:
+        (value as CancelRetry).encodeTo(output);
+        break;
+      case CancelRetryNamed:
+        (value as CancelRetryNamed).encodeTo(output);
+        break;
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -178,6 +230,14 @@ class $CallCodec with _i1.Codec<Call> {
         return (value as ScheduleAfter)._sizeHint();
       case ScheduleNamedAfter:
         return (value as ScheduleNamedAfter)._sizeHint();
+      case SetRetry:
+        return (value as SetRetry)._sizeHint();
+      case SetRetryNamed:
+        return (value as SetRetryNamed)._sizeHint();
+      case CancelRetry:
+        return (value as CancelRetry)._sizeHint();
+      case CancelRetryNamed:
+        return (value as CancelRetryNamed)._sizeHint();
       default:
         throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -752,4 +812,287 @@ class ScheduleNamedAfter extends Call {
         priority,
         call,
       );
+}
+
+/// See [`Pallet::set_retry`].
+class SetRetry extends Call {
+  const SetRetry({
+    required this.task,
+    required this.retries,
+    required this.period,
+  });
+
+  factory SetRetry._decode(_i1.Input input) {
+    return SetRetry(
+      task: const _i3.Tuple2Codec<int, int>(
+        _i1.U32Codec.codec,
+        _i1.U32Codec.codec,
+      ).decode(input),
+      retries: _i1.U8Codec.codec.decode(input),
+      period: _i1.U32Codec.codec.decode(input),
+    );
+  }
+
+  /// TaskAddress<BlockNumberFor<T>>
+  final _i3.Tuple2<int, int> task;
+
+  /// u8
+  final int retries;
+
+  /// BlockNumberFor<T>
+  final int period;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'set_retry': {
+          'task': [
+            task.value0,
+            task.value1,
+          ],
+          'retries': retries,
+          'period': period,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size +
+        const _i3.Tuple2Codec<int, int>(
+          _i1.U32Codec.codec,
+          _i1.U32Codec.codec,
+        ).sizeHint(task);
+    size = size + _i1.U8Codec.codec.sizeHint(retries);
+    size = size + _i1.U32Codec.codec.sizeHint(period);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      6,
+      output,
+    );
+    const _i3.Tuple2Codec<int, int>(
+      _i1.U32Codec.codec,
+      _i1.U32Codec.codec,
+    ).encodeTo(
+      task,
+      output,
+    );
+    _i1.U8Codec.codec.encodeTo(
+      retries,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      period,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetRetry && other.task == task && other.retries == retries && other.period == period;
+
+  @override
+  int get hashCode => Object.hash(
+        task,
+        retries,
+        period,
+      );
+}
+
+/// See [`Pallet::set_retry_named`].
+class SetRetryNamed extends Call {
+  const SetRetryNamed({
+    required this.id,
+    required this.retries,
+    required this.period,
+  });
+
+  factory SetRetryNamed._decode(_i1.Input input) {
+    return SetRetryNamed(
+      id: const _i1.U8ArrayCodec(32).decode(input),
+      retries: _i1.U8Codec.codec.decode(input),
+      period: _i1.U32Codec.codec.decode(input),
+    );
+  }
+
+  /// TaskName
+  final List<int> id;
+
+  /// u8
+  final int retries;
+
+  /// BlockNumberFor<T>
+  final int period;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'set_retry_named': {
+          'id': id.toList(),
+          'retries': retries,
+          'period': period,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i1.U8ArrayCodec(32).sizeHint(id);
+    size = size + _i1.U8Codec.codec.sizeHint(retries);
+    size = size + _i1.U32Codec.codec.sizeHint(period);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      7,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      id,
+      output,
+    );
+    _i1.U8Codec.codec.encodeTo(
+      retries,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      period,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SetRetryNamed &&
+          _i5.listsEqual(
+            other.id,
+            id,
+          ) &&
+          other.retries == retries &&
+          other.period == period;
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        retries,
+        period,
+      );
+}
+
+/// See [`Pallet::cancel_retry`].
+class CancelRetry extends Call {
+  const CancelRetry({required this.task});
+
+  factory CancelRetry._decode(_i1.Input input) {
+    return CancelRetry(
+        task: const _i3.Tuple2Codec<int, int>(
+      _i1.U32Codec.codec,
+      _i1.U32Codec.codec,
+    ).decode(input));
+  }
+
+  /// TaskAddress<BlockNumberFor<T>>
+  final _i3.Tuple2<int, int> task;
+
+  @override
+  Map<String, Map<String, List<int>>> toJson() => {
+        'cancel_retry': {
+          'task': [
+            task.value0,
+            task.value1,
+          ]
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size +
+        const _i3.Tuple2Codec<int, int>(
+          _i1.U32Codec.codec,
+          _i1.U32Codec.codec,
+        ).sizeHint(task);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      8,
+      output,
+    );
+    const _i3.Tuple2Codec<int, int>(
+      _i1.U32Codec.codec,
+      _i1.U32Codec.codec,
+    ).encodeTo(
+      task,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CancelRetry && other.task == task;
+
+  @override
+  int get hashCode => task.hashCode;
+}
+
+/// See [`Pallet::cancel_retry_named`].
+class CancelRetryNamed extends Call {
+  const CancelRetryNamed({required this.id});
+
+  factory CancelRetryNamed._decode(_i1.Input input) {
+    return CancelRetryNamed(id: const _i1.U8ArrayCodec(32).decode(input));
+  }
+
+  /// TaskName
+  final List<int> id;
+
+  @override
+  Map<String, Map<String, List<int>>> toJson() => {
+        'cancel_retry_named': {'id': id.toList()}
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i1.U8ArrayCodec(32).sizeHint(id);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      9,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      id,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is CancelRetryNamed &&
+          _i5.listsEqual(
+            other.id,
+            id,
+          );
+
+  @override
+  int get hashCode => id.hashCode;
 }

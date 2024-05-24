@@ -66,6 +66,30 @@ class $Event {
     );
   }
 
+  RetrySet retrySet({
+    required _i3.Tuple2<int, int> task,
+    List<int>? id,
+    required int period,
+    required int retries,
+  }) {
+    return RetrySet(
+      task: task,
+      id: id,
+      period: period,
+      retries: retries,
+    );
+  }
+
+  RetryCancelled retryCancelled({
+    required _i3.Tuple2<int, int> task,
+    List<int>? id,
+  }) {
+    return RetryCancelled(
+      task: task,
+      id: id,
+    );
+  }
+
   CallUnavailable callUnavailable({
     required _i3.Tuple2<int, int> task,
     List<int>? id,
@@ -81,6 +105,16 @@ class $Event {
     List<int>? id,
   }) {
     return PeriodicFailed(
+      task: task,
+      id: id,
+    );
+  }
+
+  RetryFailed retryFailed({
+    required _i3.Tuple2<int, int> task,
+    List<int>? id,
+  }) {
+    return RetryFailed(
       task: task,
       id: id,
     );
@@ -111,10 +145,16 @@ class $EventCodec with _i1.Codec<Event> {
       case 2:
         return Dispatched._decode(input);
       case 3:
-        return CallUnavailable._decode(input);
+        return RetrySet._decode(input);
       case 4:
-        return PeriodicFailed._decode(input);
+        return RetryCancelled._decode(input);
       case 5:
+        return CallUnavailable._decode(input);
+      case 6:
+        return PeriodicFailed._decode(input);
+      case 7:
+        return RetryFailed._decode(input);
+      case 8:
         return PermanentlyOverweight._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
@@ -136,11 +176,20 @@ class $EventCodec with _i1.Codec<Event> {
       case Dispatched:
         (value as Dispatched).encodeTo(output);
         break;
+      case RetrySet:
+        (value as RetrySet).encodeTo(output);
+        break;
+      case RetryCancelled:
+        (value as RetryCancelled).encodeTo(output);
+        break;
       case CallUnavailable:
         (value as CallUnavailable).encodeTo(output);
         break;
       case PeriodicFailed:
         (value as PeriodicFailed).encodeTo(output);
+        break;
+      case RetryFailed:
+        (value as RetryFailed).encodeTo(output);
         break;
       case PermanentlyOverweight:
         (value as PermanentlyOverweight).encodeTo(output);
@@ -159,10 +208,16 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as Canceled)._sizeHint();
       case Dispatched:
         return (value as Dispatched)._sizeHint();
+      case RetrySet:
+        return (value as RetrySet)._sizeHint();
+      case RetryCancelled:
+        return (value as RetryCancelled)._sizeHint();
       case CallUnavailable:
         return (value as CallUnavailable)._sizeHint();
       case PeriodicFailed:
         return (value as PeriodicFailed)._sizeHint();
+      case RetryFailed:
+        return (value as RetryFailed)._sizeHint();
       case PermanentlyOverweight:
         return (value as PermanentlyOverweight)._sizeHint();
       default:
@@ -401,6 +456,186 @@ class Dispatched extends Event {
       );
 }
 
+/// Set a retry configuration for some task.
+class RetrySet extends Event {
+  const RetrySet({
+    required this.task,
+    this.id,
+    required this.period,
+    required this.retries,
+  });
+
+  factory RetrySet._decode(_i1.Input input) {
+    return RetrySet(
+      task: const _i3.Tuple2Codec<int, int>(
+        _i1.U32Codec.codec,
+        _i1.U32Codec.codec,
+      ).decode(input),
+      id: const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).decode(input),
+      period: _i1.U32Codec.codec.decode(input),
+      retries: _i1.U8Codec.codec.decode(input),
+    );
+  }
+
+  /// TaskAddress<BlockNumberFor<T>>
+  final _i3.Tuple2<int, int> task;
+
+  /// Option<TaskName>
+  final List<int>? id;
+
+  /// BlockNumberFor<T>
+  final int period;
+
+  /// u8
+  final int retries;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'RetrySet': {
+          'task': [
+            task.value0,
+            task.value1,
+          ],
+          'id': id?.toList(),
+          'period': period,
+          'retries': retries,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size +
+        const _i3.Tuple2Codec<int, int>(
+          _i1.U32Codec.codec,
+          _i1.U32Codec.codec,
+        ).sizeHint(task);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + _i1.U32Codec.codec.sizeHint(period);
+    size = size + _i1.U8Codec.codec.sizeHint(retries);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      3,
+      output,
+    );
+    const _i3.Tuple2Codec<int, int>(
+      _i1.U32Codec.codec,
+      _i1.U32Codec.codec,
+    ).encodeTo(
+      task,
+      output,
+    );
+    const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).encodeTo(
+      id,
+      output,
+    );
+    _i1.U32Codec.codec.encodeTo(
+      period,
+      output,
+    );
+    _i1.U8Codec.codec.encodeTo(
+      retries,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RetrySet && other.task == task && other.id == id && other.period == period && other.retries == retries;
+
+  @override
+  int get hashCode => Object.hash(
+        task,
+        id,
+        period,
+        retries,
+      );
+}
+
+/// Cancel a retry configuration for some task.
+class RetryCancelled extends Event {
+  const RetryCancelled({
+    required this.task,
+    this.id,
+  });
+
+  factory RetryCancelled._decode(_i1.Input input) {
+    return RetryCancelled(
+      task: const _i3.Tuple2Codec<int, int>(
+        _i1.U32Codec.codec,
+        _i1.U32Codec.codec,
+      ).decode(input),
+      id: const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).decode(input),
+    );
+  }
+
+  /// TaskAddress<BlockNumberFor<T>>
+  final _i3.Tuple2<int, int> task;
+
+  /// Option<TaskName>
+  final List<int>? id;
+
+  @override
+  Map<String, Map<String, List<int>?>> toJson() => {
+        'RetryCancelled': {
+          'task': [
+            task.value0,
+            task.value1,
+          ],
+          'id': id?.toList(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size +
+        const _i3.Tuple2Codec<int, int>(
+          _i1.U32Codec.codec,
+          _i1.U32Codec.codec,
+        ).sizeHint(task);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      4,
+      output,
+    );
+    const _i3.Tuple2Codec<int, int>(
+      _i1.U32Codec.codec,
+      _i1.U32Codec.codec,
+    ).encodeTo(
+      task,
+      output,
+    );
+    const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).encodeTo(
+      id,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RetryCancelled && other.task == task && other.id == id;
+
+  @override
+  int get hashCode => Object.hash(
+        task,
+        id,
+      );
+}
+
 /// The call for the provided hash was not found so the task has been aborted.
 class CallUnavailable extends Event {
   const CallUnavailable({
@@ -448,7 +683,7 @@ class CallUnavailable extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      3,
+      5,
       output,
     );
     const _i3.Tuple2Codec<int, int>(
@@ -526,7 +761,7 @@ class PeriodicFailed extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      4,
+      6,
       output,
     );
     const _i3.Tuple2Codec<int, int>(
@@ -549,6 +784,85 @@ class PeriodicFailed extends Event {
         other,
       ) ||
       other is PeriodicFailed && other.task == task && other.id == id;
+
+  @override
+  int get hashCode => Object.hash(
+        task,
+        id,
+      );
+}
+
+/// The given task was unable to be retried since the agenda is full at that block or there
+/// was not enough weight to reschedule it.
+class RetryFailed extends Event {
+  const RetryFailed({
+    required this.task,
+    this.id,
+  });
+
+  factory RetryFailed._decode(_i1.Input input) {
+    return RetryFailed(
+      task: const _i3.Tuple2Codec<int, int>(
+        _i1.U32Codec.codec,
+        _i1.U32Codec.codec,
+      ).decode(input),
+      id: const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).decode(input),
+    );
+  }
+
+  /// TaskAddress<BlockNumberFor<T>>
+  final _i3.Tuple2<int, int> task;
+
+  /// Option<TaskName>
+  final List<int>? id;
+
+  @override
+  Map<String, Map<String, List<int>?>> toJson() => {
+        'RetryFailed': {
+          'task': [
+            task.value0,
+            task.value1,
+          ],
+          'id': id?.toList(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size +
+        const _i3.Tuple2Codec<int, int>(
+          _i1.U32Codec.codec,
+          _i1.U32Codec.codec,
+        ).sizeHint(task);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      7,
+      output,
+    );
+    const _i3.Tuple2Codec<int, int>(
+      _i1.U32Codec.codec,
+      _i1.U32Codec.codec,
+    ).encodeTo(
+      task,
+      output,
+    );
+    const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).encodeTo(
+      id,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is RetryFailed && other.task == task && other.id == id;
 
   @override
   int get hashCode => Object.hash(
@@ -604,7 +918,7 @@ class PermanentlyOverweight extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      5,
+      8,
       output,
     );
     const _i3.Tuple2Codec<int, int>(
