@@ -27,6 +27,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
 
   Map<BigInt, Proposal>? proposals;
   Map<BigInt, Tally>? tallies;
+  Map<BigInt, BigInt>? purposeIds;
   DemocracyParams? democracyParams;
 
   @override
@@ -38,13 +39,16 @@ class _DemocracyPageState extends State<DemocracyPage> {
 
   Future<void> _init() async {
     final proposalIds = await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
+
     final allProposals = await webApi.encointer.getProposals(proposalIds);
     final allTallies = await webApi.encointer.getTallies(proposalIds);
+    final allPurposeIds = await webApi.encointer.getProposalPurposeIds(proposalIds);
 
     democracyParams = webApi.encointer.democracyParams();
 
     proposals = allProposals;
     tallies = allTallies;
+    purposeIds = allPurposeIds;
 
     setState(() {});
   }
@@ -65,7 +69,9 @@ class _DemocracyPageState extends State<DemocracyPage> {
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
     Widget activeProposalList() {
       if (proposals == null || tallies == null) {
-        return appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator();
+        return appConfig.isIntegrationTest
+            ? const SizedBox.shrink()
+            : const Center(child: CupertinoActivityIndicator());
       }
 
       final activeProposals = proposals!.entries
@@ -97,7 +103,9 @@ class _DemocracyPageState extends State<DemocracyPage> {
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
     Widget pastProposalList() {
       if (proposals == null || tallies == null) {
-        return appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator();
+        return appConfig.isIntegrationTest
+            ? const SizedBox.shrink()
+            : const Center(child: CupertinoActivityIndicator());
       }
 
       final pastProposals = proposals!.entries

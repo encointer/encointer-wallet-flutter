@@ -737,7 +737,6 @@ class EncointerApi {
       final proposals = await Future.wait(proposalIds.map(
         (key) => encointerKusama.query.encointerDemocracy
             .proposals(key, at: at ?? store.chain.latestHash)
-            // We know that the proposal exists because we fetched the keys before.
             .then((maybeProposal) => maybeProposal!),
       ));
 
@@ -753,12 +752,11 @@ class EncointerApi {
   Future<Map<BigInt, Tally>> getTallies(List<BigInt> proposalIds, {BlockHash? at}) async {
     try {
       // Keys including storage prefix.
-      Log.d('[getProposals] ProposalIds: $proposalIds)}');
+      Log.d('[getTallies] ProposalIds: $proposalIds)}');
 
       final tallies = await Future.wait(proposalIds.map(
         (key) => encointerKusama.query.encointerDemocracy
             .tallies(key, at: at ?? store.chain.latestHash)
-            // We know that the tally exists because we fetched the keys before.
             .then((maybeTally) => maybeTally!),
       ));
 
@@ -767,6 +765,27 @@ class EncointerApi {
       return tallyMap;
     } catch (e, s) {
       Log.e('[getTallies]', '$e', s);
+      return Map.of({});
+    }
+  }
+
+  Future<Map<BigInt, BigInt>> getProposalPurposeIds(List<BigInt> proposalIds, {BlockHash? at}) async {
+    try {
+      // Keys including storage prefix.
+      Log.d('[getProposalPurposeIds] ProposalIds: $proposalIds)}');
+
+      final purposeIds = await Future.wait(proposalIds.map(
+            (key) => encointerKusama.query.encointerDemocracy
+            .purposeIds(key, at: at ?? store.chain.latestHash)
+            // We know that the tally exists because we fetched the keys before.
+            .then((maybePurposeId) => maybePurposeId!),
+      ));
+
+      final purposeIdMap = Map.fromIterables(proposalIds, purposeIds);
+      Log.d('[getProposalPurposeIds] tallies: $purposeIdMap');
+      return purposeIdMap;
+    } catch (e, s) {
+      Log.e('[getProposalPurposeIds]', '$e', s);
       return Map.of({});
     }
   }
