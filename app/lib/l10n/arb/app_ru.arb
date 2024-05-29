@@ -308,5 +308,41 @@
                 "example": "LEU"
             }
         }
+    },
+    "proposalPassed": "Отклонено, взято с {percentage}% Aye",
+    "@proposalPassed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalFailed": "Отклонено с {percentage}% Aye",
+    "@proposalFailed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsPassing": "Только что приняли с {percentage}% Aye",
+    "@proposalIsPassing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsFailing": "В настоящее время отвергается с {percentage}% Aye",
+    "@proposalIsFailing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
     }
 }

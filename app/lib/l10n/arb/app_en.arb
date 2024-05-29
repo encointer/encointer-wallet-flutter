@@ -460,5 +460,41 @@
                 "example": "LEU"
             }
         }
+    },
+    "proposalPassed": "Passed with {percentage}% Aye",
+    "@proposalPassed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalFailed": "Failed with {percentage}% Aye",
+    "@proposalFailed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsPassing": "Currently passing with {percentage}% Aye",
+    "@proposalIsPassing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsFailing": "Currently failing with {percentage}% Aye",
+    "@proposalIsFailing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
     }
 }

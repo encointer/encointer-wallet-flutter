@@ -45,7 +45,7 @@ class ProposalTile extends StatelessWidget {
         children: [
           Text('Turnout: $turnout/$electorateSize'),
           Text('Approval Threshold: ${threshold.toStringAsFixed(2)}%'),
-          passingOrFailingText()
+          passingOrFailingText(context)
         ],
       ),
       trailing: voteButtonOrProposalStatus(),
@@ -63,7 +63,9 @@ class ProposalTile extends StatelessWidget {
     };
   }
 
-  Widget passingOrFailingText() {
+  Widget passingOrFailingText(BuildContext context) {
+    final l10n = context.l10n;
+
     var ayeRatio = 0.0;
     if (proposal.electorateSize != BigInt.zero) {
       ayeRatio = tally.ayes / proposal.electorateSize;
@@ -72,18 +74,18 @@ class ProposalTile extends StatelessWidget {
 
     // This is for past proposals
     if (proposal.state.runtimeType == Approved || proposal.state.runtimeType == Enacted) {
-      return Text('Passed with $percentage% Aye', style: const TextStyle(color: Colors.green));
+      return Text(l10n.proposalPassed(percentage), style: const TextStyle(color: Colors.green));
     }
 
     if (proposal.state.runtimeType == Cancelled) {
-      return Text('Failed with $percentage% Aye', style: const TextStyle(color: Colors.red));
+      return Text(l10n.proposalFailed(percentage), style: const TextStyle(color: Colors.red));
     }
 
     // This is for current proposals
     if (isPassing()) {
-      return Text('Currently passing: $percentage% Aye', style: const TextStyle(color: Colors.green));
+      return Text(l10n.proposalIsPassing(percentage), style: const TextStyle(color: Colors.green));
     } else {
-      return Text('Currently failing: $percentage% Aye', style: const TextStyle(color: Colors.red));
+      return Text(l10n.proposalIsFailing(percentage), style: const TextStyle(color: Colors.red));
     }
   }
 
