@@ -89,8 +89,7 @@ class $StoredPendingChangeCodec with _i1.Codec<StoredPendingChange> {
       obj.delay,
       output,
     );
-    const _i1.SequenceCodec<_i2.Tuple2<_i3.Public, BigInt>>(
-        _i2.Tuple2Codec<_i3.Public, BigInt>(
+    const _i1.SequenceCodec<_i2.Tuple2<_i3.Public, BigInt>>(_i2.Tuple2Codec<_i3.Public, BigInt>(
       _i3.PublicCodec(),
       _i1.U64Codec.codec,
     )).encodeTo(
@@ -108,8 +107,7 @@ class $StoredPendingChangeCodec with _i1.Codec<StoredPendingChange> {
     return StoredPendingChange(
       scheduledAt: _i1.U32Codec.codec.decode(input),
       delay: _i1.U32Codec.codec.decode(input),
-      nextAuthorities: const _i1.SequenceCodec<_i2.Tuple2<_i3.Public, BigInt>>(
-          _i2.Tuple2Codec<_i3.Public, BigInt>(
+      nextAuthorities: const _i1.SequenceCodec<_i2.Tuple2<_i3.Public, BigInt>>(_i2.Tuple2Codec<_i3.Public, BigInt>(
         _i3.PublicCodec(),
         _i1.U64Codec.codec,
       )).decode(input),
@@ -123,13 +121,11 @@ class $StoredPendingChangeCodec with _i1.Codec<StoredPendingChange> {
     size = size + _i1.U32Codec.codec.sizeHint(obj.scheduledAt);
     size = size + _i1.U32Codec.codec.sizeHint(obj.delay);
     size = size +
-        const _i1.SequenceCodec<_i2.Tuple2<_i3.Public, BigInt>>(
-            _i2.Tuple2Codec<_i3.Public, BigInt>(
+        const _i1.SequenceCodec<_i2.Tuple2<_i3.Public, BigInt>>(_i2.Tuple2Codec<_i3.Public, BigInt>(
           _i3.PublicCodec(),
           _i1.U64Codec.codec,
         )).sizeHint(obj.nextAuthorities);
-    size = size +
-        const _i1.OptionCodec<int>(_i1.U32Codec.codec).sizeHint(obj.forced);
+    size = size + const _i1.OptionCodec<int>(_i1.U32Codec.codec).sizeHint(obj.forced);
     return size;
   }
 }

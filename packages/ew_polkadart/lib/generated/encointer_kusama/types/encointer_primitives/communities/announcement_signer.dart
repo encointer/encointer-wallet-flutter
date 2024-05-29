@@ -62,8 +62,7 @@ class $AnnouncementSignerCodec with _i1.Codec<AnnouncementSigner> {
         (value as Bip340).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'AnnouncementSigner: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('AnnouncementSigner: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -73,8 +72,7 @@ class $AnnouncementSignerCodec with _i1.Codec<AnnouncementSigner> {
       case Bip340:
         return (value as Bip340)._sizeHint();
       default:
-        throw Exception(
-            'AnnouncementSigner: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('AnnouncementSigner: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

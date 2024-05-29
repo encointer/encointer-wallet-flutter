@@ -7,8 +7,7 @@ import 'package:quiver/collection.dart' as _i8;
 import '../../encointer_meetup_validation/exclusion_reason.dart' as _i6;
 import '../../encointer_primitives/ceremonies/meetup_result.dart' as _i7;
 import '../../encointer_primitives/ceremonies/participant_type.dart' as _i4;
-import '../../encointer_primitives/communities/community_identifier.dart'
-    as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i5;
 
 /// The `Event` enum of this pallet
@@ -93,13 +92,11 @@ class $Event {
     return InactivityTimeoutUpdated(value0);
   }
 
-  EndorsementTicketsPerBootstrapperUpdated
-      endorsementTicketsPerBootstrapperUpdated(int value0) {
+  EndorsementTicketsPerBootstrapperUpdated endorsementTicketsPerBootstrapperUpdated(int value0) {
     return EndorsementTicketsPerBootstrapperUpdated(value0);
   }
 
-  EndorsementTicketsPerReputableUpdated endorsementTicketsPerReputableUpdated(
-      int value0) {
+  EndorsementTicketsPerReputableUpdated endorsementTicketsPerReputableUpdated(int value0) {
     return EndorsementTicketsPerReputableUpdated(value0);
   }
 
@@ -262,8 +259,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as MeetupEvaluated).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -301,8 +297,7 @@ class $EventCodec with _i1.Codec<Event> {
       case MeetupEvaluated:
         return (value as MeetupEvaluated)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -639,10 +634,7 @@ class RewardsIssued extends Event {
         this,
         other,
       ) ||
-      other is RewardsIssued &&
-          other.value0 == value0 &&
-          other.value1 == value1 &&
-          other.value2 == value2;
+      other is RewardsIssued && other.value0 == value0 && other.value1 == value1 && other.value2 == value2;
 
   @override
   int get hashCode => Object.hash(
@@ -700,16 +692,14 @@ class EndorsementTicketsPerBootstrapperUpdated extends Event {
   const EndorsementTicketsPerBootstrapperUpdated(this.value0);
 
   factory EndorsementTicketsPerBootstrapperUpdated._decode(_i1.Input input) {
-    return EndorsementTicketsPerBootstrapperUpdated(
-        _i1.U8Codec.codec.decode(input));
+    return EndorsementTicketsPerBootstrapperUpdated(_i1.U8Codec.codec.decode(input));
   }
 
   /// EndorsementTicketsType
   final int value0;
 
   @override
-  Map<String, int> toJson() =>
-      {'EndorsementTicketsPerBootstrapperUpdated': value0};
+  Map<String, int> toJson() => {'EndorsementTicketsPerBootstrapperUpdated': value0};
 
   int _sizeHint() {
     int size = 1;
@@ -734,8 +724,7 @@ class EndorsementTicketsPerBootstrapperUpdated extends Event {
         this,
         other,
       ) ||
-      other is EndorsementTicketsPerBootstrapperUpdated &&
-          other.value0 == value0;
+      other is EndorsementTicketsPerBootstrapperUpdated && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;
@@ -746,16 +735,14 @@ class EndorsementTicketsPerReputableUpdated extends Event {
   const EndorsementTicketsPerReputableUpdated(this.value0);
 
   factory EndorsementTicketsPerReputableUpdated._decode(_i1.Input input) {
-    return EndorsementTicketsPerReputableUpdated(
-        _i1.U8Codec.codec.decode(input));
+    return EndorsementTicketsPerReputableUpdated(_i1.U8Codec.codec.decode(input));
   }
 
   /// EndorsementTicketsType
   final int value0;
 
   @override
-  Map<String, int> toJson() =>
-      {'EndorsementTicketsPerReputableUpdated': value0};
+  Map<String, int> toJson() => {'EndorsementTicketsPerReputableUpdated': value0};
 
   int _sizeHint() {
     int size = 1;
@@ -1014,9 +1001,7 @@ class CommunityCeremonyHistoryPurged extends Event {
         this,
         other,
       ) ||
-      other is CommunityCeremonyHistoryPurged &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is CommunityCeremonyHistoryPurged && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -1189,9 +1174,7 @@ class InactivityCounterUpdated extends Event {
         this,
         other,
       ) ||
-      other is InactivityCounterUpdated &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is InactivityCounterUpdated && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -1267,10 +1250,7 @@ class MeetupEvaluated extends Event {
         this,
         other,
       ) ||
-      other is MeetupEvaluated &&
-          other.value0 == value0 &&
-          other.value1 == value1 &&
-          other.value2 == value2;
+      other is MeetupEvaluated && other.value0 == value0 && other.value1 == value1 && other.value2 == value2;
 
   @override
   int get hashCode => Object.hash(

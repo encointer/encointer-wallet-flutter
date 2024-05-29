@@ -158,8 +158,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as VoidSpend).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -185,8 +184,7 @@ class $CallCodec with _i1.Codec<Call> {
       case VoidSpend:
         return (value as VoidSpend)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -247,9 +245,7 @@ class ProposeSpend extends Call {
         this,
         other,
       ) ||
-      other is ProposeSpend &&
-          other.value == value &&
-          other.beneficiary == beneficiary;
+      other is ProposeSpend && other.value == value && other.beneficiary == beneficiary;
 
   @override
   int get hashCode => Object.hash(
@@ -263,8 +259,7 @@ class RejectProposal extends Call {
   const RejectProposal({required this.proposalId});
 
   factory RejectProposal._decode(_i1.Input input) {
-    return RejectProposal(
-        proposalId: _i1.CompactBigIntCodec.codec.decode(input));
+    return RejectProposal(proposalId: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
   /// ProposalIndex
@@ -309,8 +304,7 @@ class ApproveProposal extends Call {
   const ApproveProposal({required this.proposalId});
 
   factory ApproveProposal._decode(_i1.Input input) {
-    return ApproveProposal(
-        proposalId: _i1.CompactBigIntCodec.codec.decode(input));
+    return ApproveProposal(proposalId: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
   /// ProposalIndex
@@ -406,9 +400,7 @@ class SpendLocal extends Call {
         this,
         other,
       ) ||
-      other is SpendLocal &&
-          other.amount == amount &&
-          other.beneficiary == beneficiary;
+      other is SpendLocal && other.amount == amount && other.beneficiary == beneficiary;
 
   @override
   int get hashCode => Object.hash(
@@ -422,8 +414,7 @@ class RemoveApproval extends Call {
   const RemoveApproval({required this.proposalId});
 
   factory RemoveApproval._decode(_i1.Input input) {
-    return RemoveApproval(
-        proposalId: _i1.CompactBigIntCodec.codec.decode(input));
+    return RemoveApproval(proposalId: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
   /// ProposalIndex
@@ -508,8 +499,7 @@ class Spend extends Call {
     size = size + _i1.NullCodec.codec.sizeHint(assetKind);
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(amount);
     size = size + const _i4.AccountId32Codec().sizeHint(beneficiary);
-    size = size +
-        const _i1.OptionCodec<int>(_i1.U32Codec.codec).sizeHint(validFrom);
+    size = size + const _i1.OptionCodec<int>(_i1.U32Codec.codec).sizeHint(validFrom);
     return size;
   }
 

@@ -20,10 +20,8 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<_i2.AccountId32,
-          _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>> _proxies =
-      const _i1.StorageMap<_i2.AccountId32,
-          _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>>(
+  final _i1.StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>> _proxies =
+      const _i1.StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>>(
     prefix: 'Proxy',
     storage: 'Proxies',
     valueCodec: _i3.Tuple2Codec<List<_i4.ProxyDefinition>, BigInt>(
@@ -33,10 +31,8 @@ class Queries {
     hasher: _i1.StorageHasher.twoxx64Concat(_i2.AccountId32Codec()),
   );
 
-  final _i1
-      .StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i6.Announcement>, BigInt>>
-      _announcements = const _i1.StorageMap<_i2.AccountId32,
-          _i3.Tuple2<List<_i6.Announcement>, BigInt>>(
+  final _i1.StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i6.Announcement>, BigInt>> _announcements =
+      const _i1.StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i6.Announcement>, BigInt>>(
     prefix: 'Proxy',
     storage: 'Announcements',
     valueCodec: _i3.Tuple2Codec<List<_i6.Announcement>, BigInt>(

@@ -86,8 +86,7 @@ class $BoundedCodec with _i1.Codec<Bounded> {
         (value as Lookup).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Bounded: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Bounded: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -101,8 +100,7 @@ class $BoundedCodec with _i1.Codec<Bounded> {
       case Lookup:
         return (value as Lookup)._sizeHint();
       default:
-        throw Exception(
-            'Bounded: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Bounded: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

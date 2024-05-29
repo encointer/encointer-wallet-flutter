@@ -95,8 +95,7 @@ class $FaucetCodec with _i1.Codec<Faucet> {
       output,
     );
     const _i1.OptionCodec<List<_i2.CommunityIdentifier>>(
-            _i1.SequenceCodec<_i2.CommunityIdentifier>(
-                _i2.CommunityIdentifier.codec))
+            _i1.SequenceCodec<_i2.CommunityIdentifier>(_i2.CommunityIdentifier.codec))
         .encodeTo(
       obj.whitelist,
       output,
@@ -117,8 +116,7 @@ class $FaucetCodec with _i1.Codec<Faucet> {
       name: _i1.U8SequenceCodec.codec.decode(input),
       purposeId: _i1.U64Codec.codec.decode(input),
       whitelist: const _i1.OptionCodec<List<_i2.CommunityIdentifier>>(
-              _i1.SequenceCodec<_i2.CommunityIdentifier>(
-                  _i2.CommunityIdentifier.codec))
+              _i1.SequenceCodec<_i2.CommunityIdentifier>(_i2.CommunityIdentifier.codec))
           .decode(input),
       dripAmount: _i1.U128Codec.codec.decode(input),
       creator: const _i1.U8ArrayCodec(32).decode(input),
@@ -132,8 +130,7 @@ class $FaucetCodec with _i1.Codec<Faucet> {
     size = size + _i1.U64Codec.codec.sizeHint(obj.purposeId);
     size = size +
         const _i1.OptionCodec<List<_i2.CommunityIdentifier>>(
-                _i1.SequenceCodec<_i2.CommunityIdentifier>(
-                    _i2.CommunityIdentifier.codec))
+                _i1.SequenceCodec<_i2.CommunityIdentifier>(_i2.CommunityIdentifier.codec))
             .sizeHint(obj.whitelist);
     size = size + _i1.U128Codec.codec.sizeHint(obj.dripAmount);
     size = size + const _i3.AccountId32Codec().sizeHint(obj.creator);

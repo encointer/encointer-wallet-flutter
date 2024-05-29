@@ -12,8 +12,7 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<List<_i2.H256>> _randomMaterial =
-      const _i1.StorageValue<List<_i2.H256>>(
+  final _i1.StorageValue<List<_i2.H256>> _randomMaterial = const _i1.StorageValue<List<_i2.H256>>(
     prefix: 'RandomnessCollectiveFlip',
     storage: 'RandomMaterial',
     valueCodec: _i3.SequenceCodec<_i2.H256>(_i2.H256Codec()),

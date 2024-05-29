@@ -12,8 +12,7 @@ abstract class ProposalActionIdentifier {
     return codec.decode(input);
   }
 
-  static const $ProposalActionIdentifierCodec codec =
-      $ProposalActionIdentifierCodec();
+  static const $ProposalActionIdentifierCodec codec = $ProposalActionIdentifierCodec();
 
   static const $ProposalActionIdentifier values = $ProposalActionIdentifier();
 
@@ -41,8 +40,7 @@ class $ProposalActionIdentifier {
     return RemoveLocation(value0);
   }
 
-  UpdateCommunityMetadata updateCommunityMetadata(
-      _i3.CommunityIdentifier value0) {
+  UpdateCommunityMetadata updateCommunityMetadata(_i3.CommunityIdentifier value0) {
     return UpdateCommunityMetadata(value0);
   }
 
@@ -79,8 +77,7 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
       case 5:
         return const SetInactivityTimeout();
       default:
-        throw Exception(
-            'ProposalActionIdentifier: Invalid variant index: "$index"');
+        throw Exception('ProposalActionIdentifier: Invalid variant index: "$index"');
     }
   }
 
@@ -109,8 +106,7 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
         (value as SetInactivityTimeout).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -130,8 +126,7 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
       case SetInactivityTimeout:
         return 1;
       default:
-        throw Exception(
-            'ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -147,8 +142,7 @@ class AddLocation extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'AddLocation': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'AddLocation': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -190,8 +184,7 @@ class RemoveLocation extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'RemoveLocation': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'RemoveLocation': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -233,8 +226,7 @@ class UpdateCommunityMetadata extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'UpdateCommunityMetadata': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'UpdateCommunityMetadata': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -276,8 +268,7 @@ class UpdateDemurrage extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'UpdateDemurrage': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'UpdateDemurrage': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -319,8 +310,7 @@ class UpdateNominalIncome extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'UpdateNominalIncome': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'UpdateNominalIncome': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

@@ -15,8 +15,7 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.AccountId32> _key =
-      const _i1.StorageValue<_i2.AccountId32>(
+  final _i1.StorageValue<_i2.AccountId32> _key = const _i1.StorageValue<_i2.AccountId32>(
     prefix: 'Sudo',
     storage: 'Key',
     valueCodec: _i2.AccountId32Codec(),

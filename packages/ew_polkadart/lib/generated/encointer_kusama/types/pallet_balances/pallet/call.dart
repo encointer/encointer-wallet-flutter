@@ -172,8 +172,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as ForceAdjustTotalIssuance).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -197,8 +196,7 @@ class $CallCodec with _i1.Codec<Call> {
       case ForceAdjustTotalIssuance:
         return (value as ForceAdjustTotalIssuance)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -335,10 +333,7 @@ class ForceTransfer extends Call {
         this,
         other,
       ) ||
-      other is ForceTransfer &&
-          other.source == source &&
-          other.dest == dest &&
-          other.value == value;
+      other is ForceTransfer && other.source == source && other.dest == dest && other.value == value;
 
   @override
   int get hashCode => Object.hash(
@@ -469,9 +464,7 @@ class TransferAll extends Call {
         this,
         other,
       ) ||
-      other is TransferAll &&
-          other.dest == dest &&
-          other.keepAlive == keepAlive;
+      other is TransferAll && other.dest == dest && other.keepAlive == keepAlive;
 
   @override
   int get hashCode => Object.hash(
@@ -550,9 +543,7 @@ class UpgradeAccounts extends Call {
   const UpgradeAccounts({required this.who});
 
   factory UpgradeAccounts._decode(_i1.Input input) {
-    return UpgradeAccounts(
-        who: const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec())
-            .decode(input));
+    return UpgradeAccounts(who: const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).decode(input));
   }
 
   /// Vec<T::AccountId>
@@ -565,9 +556,7 @@ class UpgradeAccounts extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec())
-            .sizeHint(who);
+    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).sizeHint(who);
     return size;
   }
 
@@ -719,9 +708,7 @@ class ForceAdjustTotalIssuance extends Call {
         this,
         other,
       ) ||
-      other is ForceAdjustTotalIssuance &&
-          other.direction == direction &&
-          other.delta == delta;
+      other is ForceAdjustTotalIssuance && other.direction == direction && other.delta == delta;
 
   @override
   int get hashCode => Object.hash(

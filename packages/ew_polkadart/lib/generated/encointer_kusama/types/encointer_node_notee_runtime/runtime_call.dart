@@ -104,8 +104,7 @@ class $RuntimeCall {
     return EncointerBazaar(value0);
   }
 
-  EncointerReputationCommitments encointerReputationCommitments(
-      _i17.Call value0) {
+  EncointerReputationCommitments encointerReputationCommitments(_i17.Call value0) {
     return EncointerReputationCommitments(value0);
   }
 
@@ -222,8 +221,7 @@ class $RuntimeCallCodec with _i1.Codec<RuntimeCall> {
         (value as EncointerDemocracy).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'RuntimeCall: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeCall: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -265,8 +263,7 @@ class $RuntimeCallCodec with _i1.Codec<RuntimeCall> {
       case EncointerDemocracy:
         return (value as EncointerDemocracy)._sizeHint();
       default:
-        throw Exception(
-            'RuntimeCall: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeCall: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -283,8 +280,7 @@ class System extends RuntimeCall {
   final _i3.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'System': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'System': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -327,8 +323,7 @@ class Timestamp extends RuntimeCall {
   final _i4.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, BigInt>>> toJson() =>
-      {'Timestamp': value0.toJson()};
+  Map<String, Map<String, Map<String, BigInt>>> toJson() => {'Timestamp': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -414,8 +409,7 @@ class Balances extends RuntimeCall {
   final _i6.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Balances': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Balances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -458,8 +452,7 @@ class Grandpa extends RuntimeCall {
   final _i7.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Grandpa': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Grandpa': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -502,8 +495,7 @@ class Utility extends RuntimeCall {
   final _i8.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Utility': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Utility': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -589,8 +581,7 @@ class Scheduler extends RuntimeCall {
   final _i10.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Scheduler': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Scheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -633,8 +624,7 @@ class Treasury extends RuntimeCall {
   final _i11.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Treasury': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Treasury': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -677,8 +667,7 @@ class EncointerScheduler extends RuntimeCall {
   final _i12.Call value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerScheduler': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerScheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -721,8 +710,7 @@ class EncointerCeremonies extends RuntimeCall {
   final _i13.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'EncointerCeremonies': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerCeremonies': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -765,8 +753,7 @@ class EncointerCommunities extends RuntimeCall {
   final _i14.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'EncointerCommunities': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerCommunities': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -809,8 +796,7 @@ class EncointerBalances extends RuntimeCall {
   final _i15.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'EncointerBalances': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerBalances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -853,8 +839,7 @@ class EncointerBazaar extends RuntimeCall {
   final _i16.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'EncointerBazaar': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerBazaar': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -897,8 +882,7 @@ class EncointerReputationCommitments extends RuntimeCall {
   final _i17.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'EncointerReputationCommitments': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerReputationCommitments': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -941,8 +925,7 @@ class EncointerFaucet extends RuntimeCall {
   final _i18.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'EncointerFaucet': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerFaucet': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -985,8 +968,7 @@ class EncointerDemocracy extends RuntimeCall {
   final _i19.Call value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'EncointerDemocracy': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerDemocracy': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

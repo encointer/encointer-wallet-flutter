@@ -80,8 +80,7 @@ class $RawOriginCodec with _i1.Codec<RawOrigin> {
         (value as None).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'RawOrigin: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RawOrigin: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -95,8 +94,7 @@ class $RawOriginCodec with _i1.Codec<RawOrigin> {
       case None:
         return 1;
       default:
-        throw Exception(
-            'RawOrigin: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RawOrigin: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

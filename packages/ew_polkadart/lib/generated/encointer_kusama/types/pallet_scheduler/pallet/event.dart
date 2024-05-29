@@ -195,8 +195,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as PermanentlyOverweight).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -222,8 +221,7 @@ class $EventCodec with _i1.Codec<Event> {
       case PermanentlyOverweight:
         return (value as PermanentlyOverweight)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -408,8 +406,7 @@ class Dispatched extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     size = size +
         const _i1.ResultCodec<dynamic, _i4.DispatchError>(
           _i1.NullCodec.codec,
@@ -449,10 +446,7 @@ class Dispatched extends Event {
         this,
         other,
       ) ||
-      other is Dispatched &&
-          other.task == task &&
-          other.id == id &&
-          other.result == result;
+      other is Dispatched && other.task == task && other.id == id && other.result == result;
 
   @override
   int get hashCode => Object.hash(
@@ -515,8 +509,7 @@ class RetrySet extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     size = size + _i1.U32Codec.codec.sizeHint(period);
     size = size + _i1.U8Codec.codec.sizeHint(retries);
     return size;
@@ -554,11 +547,7 @@ class RetrySet extends Event {
         this,
         other,
       ) ||
-      other is RetrySet &&
-          other.task == task &&
-          other.id == id &&
-          other.period == period &&
-          other.retries == retries;
+      other is RetrySet && other.task == task && other.id == id && other.period == period && other.retries == retries;
 
   @override
   int get hashCode => Object.hash(
@@ -610,8 +599,7 @@ class RetryCancelled extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     return size;
   }
 
@@ -689,8 +677,7 @@ class CallUnavailable extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     return size;
   }
 
@@ -768,8 +755,7 @@ class PeriodicFailed extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     return size;
   }
 
@@ -848,8 +834,7 @@ class RetryFailed extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     return size;
   }
 
@@ -927,8 +912,7 @@ class PermanentlyOverweight extends Event {
           _i1.U32Codec.codec,
           _i1.U32Codec.codec,
         ).sizeHint(task);
-    size = size +
-        const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
+    size = size + const _i1.OptionCodec<List<int>>(_i1.U8ArrayCodec(32)).sizeHint(id);
     return size;
   }
 

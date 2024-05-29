@@ -15,8 +15,7 @@ enum Error {
   badAttendeeSignature('BadAttendeeSignature', 2),
 
   /// Bootstrapper reputation is non-transferrable to other accounts for security reasons
-  bootstrapperReputationIsUntransferrable(
-      'BootstrapperReputationIsUntransferrable', 3),
+  bootstrapperReputationIsUntransferrable('BootstrapperReputationIsUntransferrable', 3),
 
   /// meetup location was not found
   meetupLocationNotFound('MeetupLocationNotFound', 4),
@@ -31,8 +30,7 @@ enum Error {
   attestationPhaseRequired('AttestationPhaseRequired', 7),
 
   /// the action can only be performed during REGISTERING or ATTESTING phase
-  registeringOrAttestationPhaseRequired(
-      'RegisteringOrAttestationPhaseRequired', 8),
+  registeringOrAttestationPhaseRequired('RegisteringOrAttestationPhaseRequired', 8),
 
   /// CommunityIdentifier not found
   inexistentCommunity('InexistentCommunity', 9),
@@ -83,8 +81,7 @@ enum Error {
   onlyBootstrappers('OnlyBootstrappers', 24),
 
   /// MeetupTimeOffset can only be changed during registering
-  wrongPhaseForChangingMeetupTimeOffset(
-      'WrongPhaseForChangingMeetupTimeOffset', 25),
+  wrongPhaseForChangingMeetupTimeOffset('WrongPhaseForChangingMeetupTimeOffset', 25),
 
   /// MeetupTimeOffset needs to be in [-8h, 8h]
   invalidMeetupTimeOffset('InvalidMeetupTimeOffset', 26),
@@ -108,8 +105,7 @@ enum Error {
   mustBeNewbieToUpgradeRegistration('MustBeNewbieToUpgradeRegistration', 32),
 
   /// To unregister as a reputable you need to provide a provide a community ceremony where you have a linked reputation
-  reputationCommunityCeremonyRequired(
-      'ReputationCommunityCeremonyRequired', 33),
+  reputationCommunityCeremonyRequired('ReputationCommunityCeremonyRequired', 33),
 
   /// In order to unregister a reputable, the provided reputation must be linked
   reputationMustBeLinked('ReputationMustBeLinked', 34),

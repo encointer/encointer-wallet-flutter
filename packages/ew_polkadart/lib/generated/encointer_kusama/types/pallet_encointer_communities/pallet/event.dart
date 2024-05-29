@@ -3,8 +3,7 @@ import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
-import '../../encointer_primitives/communities/community_identifier.dart'
-    as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../encointer_primitives/communities/location.dart' as _i6;
 import '../../substrate_fixed/fixed_i128.dart' as _i5;
 import '../../substrate_fixed/fixed_u128.dart' as _i4;
@@ -162,8 +161,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as CommunityPurged).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -189,8 +187,7 @@ class $EventCodec with _i1.Codec<Event> {
       case CommunityPurged:
         return (value as CommunityPurged)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -207,8 +204,7 @@ class CommunityRegistered extends Event {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'CommunityRegistered': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'CommunityRegistered': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -251,8 +247,7 @@ class MetadataUpdated extends Event {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'MetadataUpdated': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'MetadataUpdated': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -339,9 +334,7 @@ class NominalIncomeUpdated extends Event {
         this,
         other,
       ) ||
-      other is NominalIncomeUpdated &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is NominalIncomeUpdated && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -406,9 +399,7 @@ class DemurrageUpdated extends Event {
         this,
         other,
       ) ||
-      other is DemurrageUpdated &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is DemurrageUpdated && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -473,9 +464,7 @@ class LocationAdded extends Event {
         this,
         other,
       ) ||
-      other is LocationAdded &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is LocationAdded && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -540,9 +529,7 @@ class LocationRemoved extends Event {
         this,
         other,
       ) ||
-      other is LocationRemoved &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is LocationRemoved && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -649,8 +636,7 @@ class CommunityPurged extends Event {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'CommunityPurged': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'CommunityPurged': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

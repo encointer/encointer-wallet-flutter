@@ -38,9 +38,7 @@ class EquivocationProof {
         this,
         other,
       ) ||
-      other is EquivocationProof &&
-          other.setId == setId &&
-          other.equivocation == equivocation;
+      other is EquivocationProof && other.setId == setId && other.equivocation == equivocation;
 
   @override
   int get hashCode => Object.hash(

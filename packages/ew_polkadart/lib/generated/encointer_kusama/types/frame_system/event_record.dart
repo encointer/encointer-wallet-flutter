@@ -98,8 +98,7 @@ class $EventRecordCodec with _i1.Codec<EventRecord> {
     int size = 0;
     size = size + _i2.Phase.codec.sizeHint(obj.phase);
     size = size + _i3.RuntimeEvent.codec.sizeHint(obj.event);
-    size = size +
-        const _i1.SequenceCodec<_i4.H256>(_i4.H256Codec()).sizeHint(obj.topics);
+    size = size + const _i1.SequenceCodec<_i4.H256>(_i4.H256Codec()).sizeHint(obj.topics);
     return size;
   }
 }

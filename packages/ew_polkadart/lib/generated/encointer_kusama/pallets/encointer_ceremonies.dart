@@ -8,14 +8,11 @@ import 'package:polkadart/scale_codec.dart' as _i4;
 import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i14;
 import '../types/encointer_primitives/ceremonies/assignment.dart' as _i7;
 import '../types/encointer_primitives/ceremonies/assignment_count.dart' as _i6;
-import '../types/encointer_primitives/ceremonies/assignment_params.dart'
-    as _i12;
+import '../types/encointer_primitives/ceremonies/assignment_params.dart' as _i12;
 import '../types/encointer_primitives/ceremonies/meetup_result.dart' as _i10;
-import '../types/encointer_primitives/ceremonies/proof_of_attendance.dart'
-    as _i15;
+import '../types/encointer_primitives/ceremonies/proof_of_attendance.dart' as _i15;
 import '../types/encointer_primitives/ceremonies/reputation.dart' as _i8;
-import '../types/encointer_primitives/communities/community_identifier.dart'
-    as _i2;
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
 import '../types/pallet_encointer_ceremonies/pallet/call.dart' as _i16;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 import '../types/substrate_fixed/fixed_u128.dart' as _i9;
@@ -26,8 +23,7 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32, int>
-      _burnedBootstrapperNewbieTickets =
+  final _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32, int> _burnedBootstrapperNewbieTickets =
       const _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32, int>(
     prefix: 'EncointerCeremonies',
     storage: 'BurnedBootstrapperNewbieTickets',
@@ -36,357 +32,296 @@ class Queries {
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, int> _burnedReputableNewbieTickets =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, int>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, int>
+      _burnedReputableNewbieTickets =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, int>(
     prefix: 'EncointerCeremonies',
     storage: 'BurnedReputableNewbieTickets',
     valueCodec: _i4.U8Codec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt,
-          _i3.AccountId32> _bootstrapperRegistry =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          BigInt, _i3.AccountId32>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i3.AccountId32> _bootstrapperRegistry =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i3.AccountId32>(
     prefix: 'EncointerCeremonies',
     storage: 'BootstrapperRegistry',
     valueCodec: _i3.AccountId32Codec(),
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i4.U64Codec.codec),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt> _bootstrapperIndex =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt> _bootstrapperIndex =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'BootstrapperIndex',
     valueCodec: _i4.U64Codec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>
-      _bootstrapperCount =
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt> _bootstrapperCount =
       const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'BootstrapperCount',
     valueCodec: _i4.U64Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt,
-          _i3.AccountId32> _reputableRegistry =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          BigInt, _i3.AccountId32>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i3.AccountId32> _reputableRegistry =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i3.AccountId32>(
     prefix: 'EncointerCeremonies',
     storage: 'ReputableRegistry',
     valueCodec: _i3.AccountId32Codec(),
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i4.U64Codec.codec),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt> _reputableIndex =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt> _reputableIndex =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'ReputableIndex',
     valueCodec: _i4.U64Codec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>
-      _reputableCount =
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt> _reputableCount =
       const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'ReputableCount',
     valueCodec: _i4.U64Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt,
-          _i3.AccountId32> _endorseeRegistry =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          BigInt, _i3.AccountId32>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i3.AccountId32> _endorseeRegistry =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i3.AccountId32>(
     prefix: 'EncointerCeremonies',
     storage: 'EndorseeRegistry',
     valueCodec: _i3.AccountId32Codec(),
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i4.U64Codec.codec),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt> _endorseeIndex =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt> _endorseeIndex =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'EndorseeIndex',
     valueCodec: _i4.U64Codec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>
-      _endorseeCount =
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt> _endorseeCount =
       const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'EndorseeCount',
     valueCodec: _i4.U64Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt,
-          _i3.AccountId32> _newbieRegistry =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          BigInt, _i3.AccountId32>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i3.AccountId32> _newbieRegistry =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i3.AccountId32>(
     prefix: 'EncointerCeremonies',
     storage: 'NewbieRegistry',
     valueCodec: _i3.AccountId32Codec(),
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i4.U64Codec.codec),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt> _newbieIndex =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt> _newbieIndex =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'NewbieIndex',
     valueCodec: _i4.U64Codec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>
-      _newbieCount =
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt> _newbieCount =
       const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'NewbieCount',
     valueCodec: _i4.U64Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1
-      .StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i6.AssignmentCount>
-      _assignmentCounts = const _i1.StorageMap<
-          _i5.Tuple2<_i2.CommunityIdentifier, int>, _i6.AssignmentCount>(
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i6.AssignmentCount> _assignmentCounts =
+      const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i6.AssignmentCount>(
     prefix: 'EncointerCeremonies',
     storage: 'AssignmentCounts',
     valueCodec: _i6.AssignmentCount.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i7.Assignment>
-      _assignments = const _i1
-          .StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i7.Assignment>(
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i7.Assignment> _assignments =
+      const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i7.Assignment>(
     prefix: 'EncointerCeremonies',
     storage: 'Assignments',
     valueCodec: _i7.Assignment.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, _i8.Reputation> _participantReputation =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, _i8.Reputation>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, _i8.Reputation>
+      _participantReputation =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, _i8.Reputation>(
     prefix: 'EncointerCeremonies',
     storage: 'ParticipantReputation',
     valueCodec: _i8.Reputation.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>
-      _reputationCount =
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt> _reputationCount =
       const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'ReputationCount',
     valueCodec: _i4.U128Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageMap<int, BigInt> _globalReputationCount =
-      const _i1.StorageMap<int, BigInt>(
+  final _i1.StorageMap<int, BigInt> _globalReputationCount = const _i1.StorageMap<int, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'GlobalReputationCount',
     valueCodec: _i4.U128Codec.codec,
     hasher: _i1.StorageHasher.blake2b128Concat(_i4.U32Codec.codec),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, dynamic> _endorsees =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, dynamic>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, dynamic> _endorsees =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, dynamic>(
     prefix: 'EncointerCeremonies',
     storage: 'Endorsees',
     valueCodec: _i4.NullCodec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>
-      _endorseesCount =
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt> _endorseesCount =
       const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'EndorseesCount',
     valueCodec: _i4.U64Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>
-      _meetupCount =
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt> _meetupCount =
       const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'MeetupCount',
     valueCodec: _i4.U64Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt,
-          List<_i3.AccountId32>> _attestationRegistry =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          BigInt, List<_i3.AccountId32>>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, List<_i3.AccountId32>>
+      _attestationRegistry =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, List<_i3.AccountId32>>(
     prefix: 'EncointerCeremonies',
     storage: 'AttestationRegistry',
     valueCodec: _i4.SequenceCodec<_i3.AccountId32>(_i3.AccountId32Codec()),
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i4.U64Codec.codec),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt> _attestationIndex =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, BigInt>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt> _attestationIndex =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'AttestationIndex',
     valueCodec: _i4.U64Codec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>
-      _attestationCount =
+  final _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt> _attestationCount =
       const _i1.StorageMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'AttestationCount',
     valueCodec: _i4.U64Codec.codec,
-    hasher: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, int> _meetupParticipantCountVote =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          _i3.AccountId32, int>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, int>
+      _meetupParticipantCountVote =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, _i3.AccountId32, int>(
     prefix: 'EncointerCeremonies',
     storage: 'MeetupParticipantCountVote',
     valueCodec: _i4.U32Codec.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageValue<_i9.FixedU128> _ceremonyReward =
-      const _i1.StorageValue<_i9.FixedU128>(
+  final _i1.StorageValue<_i9.FixedU128> _ceremonyReward = const _i1.StorageValue<_i9.FixedU128>(
     prefix: 'EncointerCeremonies',
     storage: 'CeremonyReward',
     valueCodec: _i9.FixedU128.codec,
@@ -398,22 +333,18 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageValue<BigInt> _timeTolerance =
-      const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _timeTolerance = const _i1.StorageValue<BigInt>(
     prefix: 'EncointerCeremonies',
     storage: 'TimeTolerance',
     valueCodec: _i4.U64Codec.codec,
   );
 
-  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt,
-          _i10.MeetupResult> _issuedRewards =
-      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>,
-          BigInt, _i10.MeetupResult>(
+  final _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i10.MeetupResult> _issuedRewards =
+      const _i1.StorageDoubleMap<_i5.Tuple2<_i2.CommunityIdentifier, int>, BigInt, _i10.MeetupResult>(
     prefix: 'EncointerCeremonies',
     storage: 'IssuedRewards',
     valueCodec: _i10.MeetupResult.codec,
-    hasher1: _i1.StorageHasher.blake2b128Concat(
-        _i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
+    hasher1: _i1.StorageHasher.blake2b128Concat(_i5.Tuple2Codec<_i2.CommunityIdentifier, int>(
       _i2.CommunityIdentifier.codec,
       _i4.U32Codec.codec,
     )),
@@ -434,15 +365,13 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageValue<int> _endorsementTicketsPerBootstrapper =
-      const _i1.StorageValue<int>(
+  final _i1.StorageValue<int> _endorsementTicketsPerBootstrapper = const _i1.StorageValue<int>(
     prefix: 'EncointerCeremonies',
     storage: 'EndorsementTicketsPerBootstrapper',
     valueCodec: _i4.U8Codec.codec,
   );
 
-  final _i1.StorageValue<int> _endorsementTicketsPerReputable =
-      const _i1.StorageValue<int>(
+  final _i1.StorageValue<int> _endorsementTicketsPerReputable = const _i1.StorageValue<int>(
     prefix: 'EncointerCeremonies',
     storage: 'EndorsementTicketsPerReputable',
     valueCodec: _i4.U8Codec.codec,
@@ -1025,8 +954,7 @@ class Queries {
   }
 
   /// The number of newbies a bootstrapper can endorse to accelerate community growth
-  _i11.Future<int> endorsementTicketsPerBootstrapper(
-      {_i1.BlockHash? at}) async {
+  _i11.Future<int> endorsementTicketsPerBootstrapper({_i1.BlockHash? at}) async {
     final hashedKey = _endorsementTicketsPerBootstrapper.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -1125,8 +1053,7 @@ class Queries {
   }
 
   /// Returns the storage key for `bootstrapperCount`.
-  _i13.Uint8List bootstrapperCountKey(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List bootstrapperCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _bootstrapperCount.hashedKeyFor(key1);
     return hashedKey;
   }
@@ -1156,8 +1083,7 @@ class Queries {
   }
 
   /// Returns the storage key for `reputableCount`.
-  _i13.Uint8List reputableCountKey(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List reputableCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _reputableCount.hashedKeyFor(key1);
     return hashedKey;
   }
@@ -1187,8 +1113,7 @@ class Queries {
   }
 
   /// Returns the storage key for `endorseeCount`.
-  _i13.Uint8List endorseeCountKey(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List endorseeCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _endorseeCount.hashedKeyFor(key1);
     return hashedKey;
   }
@@ -1224,8 +1149,7 @@ class Queries {
   }
 
   /// Returns the storage key for `assignmentCounts`.
-  _i13.Uint8List assignmentCountsKey(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List assignmentCountsKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _assignmentCounts.hashedKeyFor(key1);
     return hashedKey;
   }
@@ -1249,8 +1173,7 @@ class Queries {
   }
 
   /// Returns the storage key for `reputationCount`.
-  _i13.Uint8List reputationCountKey(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List reputationCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _reputationCount.hashedKeyFor(key1);
     return hashedKey;
   }
@@ -1274,8 +1197,7 @@ class Queries {
   }
 
   /// Returns the storage key for `endorseesCount`.
-  _i13.Uint8List endorseesCountKey(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List endorseesCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _endorseesCount.hashedKeyFor(key1);
     return hashedKey;
   }
@@ -1311,8 +1233,7 @@ class Queries {
   }
 
   /// Returns the storage key for `attestationCount`.
-  _i13.Uint8List attestationCountKey(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List attestationCountKey(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _attestationCount.hashedKeyFor(key1);
     return hashedKey;
   }
@@ -1396,29 +1317,25 @@ class Queries {
   }
 
   /// Returns the storage map key prefix for `burnedBootstrapperNewbieTickets`.
-  _i13.Uint8List burnedBootstrapperNewbieTicketsMapPrefix(
-      _i2.CommunityIdentifier key1) {
+  _i13.Uint8List burnedBootstrapperNewbieTicketsMapPrefix(_i2.CommunityIdentifier key1) {
     final hashedKey = _burnedBootstrapperNewbieTickets.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `burnedReputableNewbieTickets`.
-  _i13.Uint8List burnedReputableNewbieTicketsMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List burnedReputableNewbieTicketsMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _burnedReputableNewbieTickets.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `bootstrapperRegistry`.
-  _i13.Uint8List bootstrapperRegistryMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List bootstrapperRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _bootstrapperRegistry.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `bootstrapperIndex`.
-  _i13.Uint8List bootstrapperIndexMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List bootstrapperIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _bootstrapperIndex.mapPrefix(key1);
     return hashedKey;
   }
@@ -1430,15 +1347,13 @@ class Queries {
   }
 
   /// Returns the storage map key prefix for `reputableRegistry`.
-  _i13.Uint8List reputableRegistryMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List reputableRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _reputableRegistry.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `reputableIndex`.
-  _i13.Uint8List reputableIndexMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List reputableIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _reputableIndex.mapPrefix(key1);
     return hashedKey;
   }
@@ -1450,15 +1365,13 @@ class Queries {
   }
 
   /// Returns the storage map key prefix for `endorseeRegistry`.
-  _i13.Uint8List endorseeRegistryMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List endorseeRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _endorseeRegistry.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `endorseeIndex`.
-  _i13.Uint8List endorseeIndexMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List endorseeIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _endorseeIndex.mapPrefix(key1);
     return hashedKey;
   }
@@ -1470,15 +1383,13 @@ class Queries {
   }
 
   /// Returns the storage map key prefix for `newbieRegistry`.
-  _i13.Uint8List newbieRegistryMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List newbieRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _newbieRegistry.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `newbieIndex`.
-  _i13.Uint8List newbieIndexMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List newbieIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _newbieIndex.mapPrefix(key1);
     return hashedKey;
   }
@@ -1502,8 +1413,7 @@ class Queries {
   }
 
   /// Returns the storage map key prefix for `participantReputation`.
-  _i13.Uint8List participantReputationMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List participantReputationMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _participantReputation.mapPrefix(key1);
     return hashedKey;
   }
@@ -1521,8 +1431,7 @@ class Queries {
   }
 
   /// Returns the storage map key prefix for `endorsees`.
-  _i13.Uint8List endorseesMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List endorseesMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _endorsees.mapPrefix(key1);
     return hashedKey;
   }
@@ -1540,15 +1449,13 @@ class Queries {
   }
 
   /// Returns the storage map key prefix for `attestationRegistry`.
-  _i13.Uint8List attestationRegistryMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List attestationRegistryMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _attestationRegistry.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `attestationIndex`.
-  _i13.Uint8List attestationIndexMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List attestationIndexMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _attestationIndex.mapPrefix(key1);
     return hashedKey;
   }
@@ -1560,15 +1467,13 @@ class Queries {
   }
 
   /// Returns the storage map key prefix for `meetupParticipantCountVote`.
-  _i13.Uint8List meetupParticipantCountVoteMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List meetupParticipantCountVoteMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _meetupParticipantCountVote.mapPrefix(key1);
     return hashedKey;
   }
 
   /// Returns the storage map key prefix for `issuedRewards`.
-  _i13.Uint8List issuedRewardsMapPrefix(
-      _i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
+  _i13.Uint8List issuedRewardsMapPrefix(_i5.Tuple2<_i2.CommunityIdentifier, int> key1) {
     final hashedKey = _issuedRewards.mapPrefix(key1);
     return hashedKey;
   }
@@ -1659,60 +1564,51 @@ class Txs {
 
   /// See [`Pallet::set_inactivity_timeout`].
   _i14.RuntimeCall setInactivityTimeout({required int inactivityTimeout}) {
-    final _call = _i16.Call.values
-        .setInactivityTimeout(inactivityTimeout: inactivityTimeout);
+    final _call = _i16.Call.values.setInactivityTimeout(inactivityTimeout: inactivityTimeout);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_endorsement_tickets_per_bootstrapper`].
-  _i14.RuntimeCall setEndorsementTicketsPerBootstrapper(
-      {required int endorsementTicketsPerBootstrapper}) {
-    final _call = _i16.Call.values.setEndorsementTicketsPerBootstrapper(
-        endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
+  _i14.RuntimeCall setEndorsementTicketsPerBootstrapper({required int endorsementTicketsPerBootstrapper}) {
+    final _call = _i16.Call.values
+        .setEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_endorsement_tickets_per_reputable`].
-  _i14.RuntimeCall setEndorsementTicketsPerReputable(
-      {required int endorsementTicketsPerReputable}) {
-    final _call = _i16.Call.values.setEndorsementTicketsPerReputable(
-        endorsementTicketsPerReputable: endorsementTicketsPerReputable);
+  _i14.RuntimeCall setEndorsementTicketsPerReputable({required int endorsementTicketsPerReputable}) {
+    final _call = _i16.Call.values
+        .setEndorsementTicketsPerReputable(endorsementTicketsPerReputable: endorsementTicketsPerReputable);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_reputation_lifetime`].
   _i14.RuntimeCall setReputationLifetime({required int reputationLifetime}) {
-    final _call = _i16.Call.values
-        .setReputationLifetime(reputationLifetime: reputationLifetime);
+    final _call = _i16.Call.values.setReputationLifetime(reputationLifetime: reputationLifetime);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_meetup_time_offset`].
   _i14.RuntimeCall setMeetupTimeOffset({required int meetupTimeOffset}) {
-    final _call = _i16.Call.values
-        .setMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
+    final _call = _i16.Call.values.setMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_time_tolerance`].
   _i14.RuntimeCall setTimeTolerance({required BigInt timeTolerance}) {
-    final _call =
-        _i16.Call.values.setTimeTolerance(timeTolerance: timeTolerance);
+    final _call = _i16.Call.values.setTimeTolerance(timeTolerance: timeTolerance);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::set_location_tolerance`].
   _i14.RuntimeCall setLocationTolerance({required int locationTolerance}) {
-    final _call = _i16.Call.values
-        .setLocationTolerance(locationTolerance: locationTolerance);
+    final _call = _i16.Call.values.setLocationTolerance(locationTolerance: locationTolerance);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
   /// See [`Pallet::purge_community_ceremony`].
-  _i14.RuntimeCall purgeCommunityCeremony(
-      {required _i5.Tuple2<_i2.CommunityIdentifier, int> communityCeremony}) {
-    final _call = _i16.Call.values
-        .purgeCommunityCeremony(communityCeremony: communityCeremony);
+  _i14.RuntimeCall purgeCommunityCeremony({required _i5.Tuple2<_i2.CommunityIdentifier, int> communityCeremony}) {
+    final _call = _i16.Call.values.purgeCommunityCeremony(communityCeremony: communityCeremony);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 }

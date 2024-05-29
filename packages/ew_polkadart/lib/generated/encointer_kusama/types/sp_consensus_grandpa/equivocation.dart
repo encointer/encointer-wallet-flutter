@@ -71,8 +71,7 @@ class $EquivocationCodec with _i1.Codec<Equivocation> {
         (value as Precommit).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Equivocation: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Equivocation: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -84,8 +83,7 @@ class $EquivocationCodec with _i1.Codec<Equivocation> {
       case Precommit:
         return (value as Precommit)._sizeHint();
       default:
-        throw Exception(
-            'Equivocation: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Equivocation: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

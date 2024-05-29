@@ -22,8 +22,7 @@ class Digest {
     return codec.encode(this);
   }
 
-  Map<String, List<Map<String, dynamic>>> toJson() =>
-      {'logs': logs.map((value) => value.toJson()).toList()};
+  Map<String, List<Map<String, dynamic>>> toJson() => {'logs': logs.map((value) => value.toJson()).toList()};
 
   @override
   bool operator ==(Object other) =>
@@ -57,17 +56,13 @@ class $DigestCodec with _i1.Codec<Digest> {
 
   @override
   Digest decode(_i1.Input input) {
-    return Digest(
-        logs: const _i1.SequenceCodec<_i2.DigestItem>(_i2.DigestItem.codec)
-            .decode(input));
+    return Digest(logs: const _i1.SequenceCodec<_i2.DigestItem>(_i2.DigestItem.codec).decode(input));
   }
 
   @override
   int sizeHint(Digest obj) {
     int size = 0;
-    size = size +
-        const _i1.SequenceCodec<_i2.DigestItem>(_i2.DigestItem.codec)
-            .sizeHint(obj.logs);
+    size = size + const _i1.SequenceCodec<_i2.DigestItem>(_i2.DigestItem.codec).sizeHint(obj.logs);
     return size;
   }
 }

@@ -51,8 +51,7 @@ class $Call {
     return SetCodeWithoutChecks(code: code);
   }
 
-  SetStorage setStorage(
-      {required List<_i3.Tuple2<List<int>, List<int>>> items}) {
+  SetStorage setStorage({required List<_i3.Tuple2<List<int>, List<int>>> items}) {
     return SetStorage(items: items);
   }
 
@@ -78,8 +77,7 @@ class $Call {
     return AuthorizeUpgrade(codeHash: codeHash);
   }
 
-  AuthorizeUpgradeWithoutChecks authorizeUpgradeWithoutChecks(
-      {required _i4.H256 codeHash}) {
+  AuthorizeUpgradeWithoutChecks authorizeUpgradeWithoutChecks({required _i4.H256 codeHash}) {
     return AuthorizeUpgradeWithoutChecks(codeHash: codeHash);
   }
 
@@ -162,8 +160,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as ApplyAuthorizedUpgrade).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -193,8 +190,7 @@ class $CallCodec with _i1.Codec<Call> {
       case ApplyAuthorizedUpgrade:
         return (value as ApplyAuthorizedUpgrade)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -397,8 +393,7 @@ class SetStorage extends Call {
 
   factory SetStorage._decode(_i1.Input input) {
     return SetStorage(
-        items: const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(
-            _i3.Tuple2Codec<List<int>, List<int>>(
+        items: const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(_i3.Tuple2Codec<List<int>, List<int>>(
       _i1.U8SequenceCodec.codec,
       _i1.U8SequenceCodec.codec,
     )).decode(input));
@@ -422,8 +417,7 @@ class SetStorage extends Call {
   int _sizeHint() {
     int size = 1;
     size = size +
-        const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(
-            _i3.Tuple2Codec<List<int>, List<int>>(
+        const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(_i3.Tuple2Codec<List<int>, List<int>>(
           _i1.U8SequenceCodec.codec,
           _i1.U8SequenceCodec.codec,
         )).sizeHint(items);
@@ -435,8 +429,7 @@ class SetStorage extends Call {
       4,
       output,
     );
-    const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(
-        _i3.Tuple2Codec<List<int>, List<int>>(
+    const _i1.SequenceCodec<_i3.Tuple2<List<int>, List<int>>>(_i3.Tuple2Codec<List<int>, List<int>>(
       _i1.U8SequenceCodec.codec,
       _i1.U8SequenceCodec.codec,
     )).encodeTo(
@@ -466,9 +459,7 @@ class KillStorage extends Call {
   const KillStorage({required this.keys});
 
   factory KillStorage._decode(_i1.Input input) {
-    return KillStorage(
-        keys: const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec)
-            .decode(input));
+    return KillStorage(keys: const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input));
   }
 
   /// Vec<Key>
@@ -481,9 +472,7 @@ class KillStorage extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec)
-            .sizeHint(keys);
+    size = size + const _i1.SequenceCodec<List<int>>(_i1.U8SequenceCodec.codec).sizeHint(keys);
     return size;
   }
 
@@ -687,8 +676,7 @@ class AuthorizeUpgradeWithoutChecks extends Call {
   const AuthorizeUpgradeWithoutChecks({required this.codeHash});
 
   factory AuthorizeUpgradeWithoutChecks._decode(_i1.Input input) {
-    return AuthorizeUpgradeWithoutChecks(
-        codeHash: const _i1.U8ArrayCodec(32).decode(input));
+    return AuthorizeUpgradeWithoutChecks(codeHash: const _i1.U8ArrayCodec(32).decode(input));
   }
 
   /// T::Hash
@@ -737,8 +725,7 @@ class ApplyAuthorizedUpgrade extends Call {
   const ApplyAuthorizedUpgrade({required this.code});
 
   factory ApplyAuthorizedUpgrade._decode(_i1.Input input) {
-    return ApplyAuthorizedUpgrade(
-        code: _i1.U8SequenceCodec.codec.decode(input));
+    return ApplyAuthorizedUpgrade(code: _i1.U8SequenceCodec.codec.decode(input));
   }
 
   /// Vec<u8>
