@@ -781,7 +781,7 @@ class EncointerApi {
     final lowerBound = max(1, (from - c).toInt());
 
     final proposalIds = [for(var i=lowerBound; i< from.toInt(); i+=1) BigInt.from(i)];
-    return proposalIds;
+    return proposalIds.reversed.toList();
   }
 
   DemocracyParams democracyParams() {
