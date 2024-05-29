@@ -44,6 +44,7 @@ import 'package:ew_substrate_fixed/substrate_fixed.dart';
 // disambiguate global imports of encointer types. We can remove this
 // once we got rid of our manual type definitions.
 import 'package:ew_polkadart/encointer_types.dart' as et;
+import 'package:flutter/cupertino.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -774,7 +775,7 @@ class EncointerApi {
       Log.d("[getProposals] ProposalIds: $proposalIds')}");
 
       final tallies = await Future.wait(proposalIds.map(
-            (key) => encointerKusama.query.encointerDemocracy
+        (key) => encointerKusama.query.encointerDemocracy
             .tallies(key, at: at ?? store.chain.latestHash)
             // We know that the proposal exists because we fetched the keys before.
             .then((maybeProposal) => maybeProposal!),
@@ -787,6 +788,18 @@ class EncointerApi {
       Log.e('[getTallies]', '$e', s);
       return Map.of({});
     }
+  }
+
+  DemocracyParams democracyParams() {
+    final minTurnout = encointerKusama.constant.encointerDemocracy.minTurnout;
+    final confirmationPeriod = encointerKusama.constant.encointerDemocracy.confirmationPeriod;
+    final proposalLifetime = encointerKusama.constant.encointerDemocracy.proposalLifetime;
+
+    return DemocracyParams(
+      minTurnout: minTurnout,
+      confirmationPeriod: confirmationPeriod,
+      proposalLifetime: proposalLifetime,
+    );
   }
 
   Future<bool> hasCommittedFor(
@@ -879,4 +892,17 @@ class ParticipantRegistration {
 
   final int pIndex;
   final et.ParticipantType participantType;
+}
+
+@immutable
+class DemocracyParams {
+  const DemocracyParams({
+    required this.minTurnout,
+    required this.confirmationPeriod,
+    required this.proposalLifetime,
+  });
+
+  final BigInt minTurnout;
+  final BigInt confirmationPeriod;
+  final BigInt proposalLifetime;
 }
