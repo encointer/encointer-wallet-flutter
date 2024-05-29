@@ -775,7 +775,7 @@ class EncointerApi {
       Log.d('[getProposalPurposeIds] ProposalIds: $proposalIds)}');
 
       final purposeIds = await Future.wait(proposalIds.map(
-            (key) => encointerKusama.query.encointerDemocracy
+        (key) => encointerKusama.query.encointerDemocracy
             .purposeIds(key, at: at ?? store.chain.latestHash)
             // We know that the tally exists because we fetched the keys before.
             .then((maybePurposeId) => maybePurposeId!),
@@ -795,7 +795,7 @@ class EncointerApi {
     final c = count ?? BigInt.one;
     final lowerBound = max(0, (from - c).toInt());
 
-    final proposalIds = [for(var i=from.toInt(); i > lowerBound; i-=1) BigInt.from(i)];
+    final proposalIds = [for (var i = from.toInt(); i > lowerBound; i -= 1) BigInt.from(i)];
     return proposalIds;
   }
 
