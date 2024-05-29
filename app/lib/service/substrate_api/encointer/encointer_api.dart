@@ -730,16 +730,9 @@ class EncointerApi {
     }
   }
 
-  Future<Map<BigInt, Proposal>> getProposals({BlockHash? at}) async {
+  Future<Map<BigInt, Proposal>> getProposalHistory({BigInt? mostRecent, BigInt? count, BlockHash? at}) async {
     try {
-      final prefix = encointerKusama.query.encointerDemocracy.proposalsMapPrefix();
-      // Todo: Handle case if we have more than 100 proposals
-      final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 100);
-
-      // Keys including storage prefix.
-      Log.d("[getProposals] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
-
-      final proposalIds = keys.map((key) => U128Codec.codec.decode(ByteInput(key.sublist(32))));
+      final proposalIds = await getProposalIds(mostRecent: mostRecent, count: count, at: at);
 
       // Keys including storage prefix.
       Log.d("[getProposals] ProposalIds: $proposalIds')}");
@@ -760,16 +753,9 @@ class EncointerApi {
     }
   }
 
-  Future<Map<BigInt, Tally>> getTallies({BlockHash? at}) async {
+  Future<Map<BigInt, Tally>> getTallies({BigInt? mostRecent, BigInt? count, BlockHash? at}) async {
     try {
-      final prefix = encointerKusama.query.encointerDemocracy.talliesMapPrefix();
-      // Todo: Handle case if we have more than 100 tallies
-      final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 100);
-
-      // Keys including storage prefix.
-      Log.d("[getTallies] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
-
-      final proposalIds = keys.map((key) => U128Codec.codec.decode(ByteInput(key.sublist(32))));
+      final proposalIds = await getProposalIds(mostRecent: mostRecent, count: count, at: at);
 
       // Keys including storage prefix.
       Log.d('[getProposals] ProposalIds: $proposalIds)}');
@@ -788,6 +774,15 @@ class EncointerApi {
       Log.e('[getTallies]', '$e', s);
       return Map.of({});
     }
+  }
+
+  Future<List<BigInt>> getProposalIds({BigInt? mostRecent, BigInt? count, BlockHash? at}) async {
+    final from = mostRecent ?? await encointerKusama.query.encointerDemocracy.proposalCount(at: at);
+    final c = count ?? BigInt.one;
+    final lowerBound = max(1, (from - c).toInt());
+
+    final proposalIds = [for(var i=lowerBound; i< from.toInt(); i+=1) BigInt.from(i)];
+    return proposalIds;
   }
 
   DemocracyParams democracyParams() {

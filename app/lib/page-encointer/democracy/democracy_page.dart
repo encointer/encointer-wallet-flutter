@@ -39,8 +39,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
   }
 
   Future<void> _init() async {
-    final allProposals = await webApi.encointer.getProposals();
-    final allTallies = await webApi.encointer.getTallies();
+    final allProposals = await webApi.encointer.getProposalHistory(count: BigInt.from(50));
+    final allTallies = await webApi.encointer.getTallies(count: BigInt.from(50));
 
     democracyParams = webApi.encointer.democracyParams();
 
