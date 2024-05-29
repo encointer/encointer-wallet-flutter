@@ -24,6 +24,7 @@ class ProposalTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final titleSmall = context.titleMedium;
 
     final turnout = tally.turnout;
     final electorateSize = proposal.electorateSize;
@@ -32,9 +33,9 @@ class ProposalTile extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(),
       leading: SizedBox(
-        width: 50,
-        height: 50,
-        child: Text(proposalId.toString()),
+        width: 20,
+        height: 20,
+        child: Text(proposalId.toString(), style: titleSmall),
       ),
       title: Text(
         'Update community income to 22 Leu',
