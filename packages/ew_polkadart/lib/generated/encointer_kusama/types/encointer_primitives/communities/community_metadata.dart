@@ -123,7 +123,8 @@ class $CommunityMetadataCodec with _i1.Codec<CommunityMetadata> {
       obj.url,
       output,
     );
-    const _i1.OptionCodec<_i2.AnnouncementSigner>(_i2.AnnouncementSigner.codec).encodeTo(
+    const _i1.OptionCodec<_i2.AnnouncementSigner>(_i2.AnnouncementSigner.codec)
+        .encodeTo(
       obj.announcementSigner,
       output,
     );
@@ -139,9 +140,13 @@ class $CommunityMetadataCodec with _i1.Codec<CommunityMetadata> {
       name: _i1.U8SequenceCodec.codec.decode(input),
       symbol: _i1.U8SequenceCodec.codec.decode(input),
       assets: _i1.U8SequenceCodec.codec.decode(input),
-      theme: const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input),
-      url: const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).decode(input),
-      announcementSigner: const _i1.OptionCodec<_i2.AnnouncementSigner>(_i2.AnnouncementSigner.codec).decode(input),
+      theme: const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec)
+          .decode(input),
+      url: const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec)
+          .decode(input),
+      announcementSigner: const _i1.OptionCodec<_i2.AnnouncementSigner>(
+              _i2.AnnouncementSigner.codec)
+          .decode(input),
       rules: _i3.CommunityRules.codec.decode(input),
     );
   }
@@ -152,10 +157,16 @@ class $CommunityMetadataCodec with _i1.Codec<CommunityMetadata> {
     size = size + _i1.U8SequenceCodec.codec.sizeHint(obj.name);
     size = size + _i1.U8SequenceCodec.codec.sizeHint(obj.symbol);
     size = size + _i1.U8SequenceCodec.codec.sizeHint(obj.assets);
-    size = size + const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).sizeHint(obj.theme);
-    size = size + const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec).sizeHint(obj.url);
     size = size +
-        const _i1.OptionCodec<_i2.AnnouncementSigner>(_i2.AnnouncementSigner.codec).sizeHint(obj.announcementSigner);
+        const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec)
+            .sizeHint(obj.theme);
+    size = size +
+        const _i1.OptionCodec<List<int>>(_i1.U8SequenceCodec.codec)
+            .sizeHint(obj.url);
+    size = size +
+        const _i1.OptionCodec<_i2.AnnouncementSigner>(
+                _i2.AnnouncementSigner.codec)
+            .sizeHint(obj.announcementSigner);
     size = size + _i3.CommunityRules.codec.sizeHint(obj.rules);
     return size;
   }

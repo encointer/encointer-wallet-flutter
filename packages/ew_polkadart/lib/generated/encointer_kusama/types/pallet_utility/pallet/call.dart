@@ -4,8 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
-import '../../encointer_kusama_runtime/origin_caller.dart' as _i4;
-import '../../encointer_kusama_runtime/runtime_call.dart' as _i3;
+import '../../encointer_node_notee_runtime/origin_caller.dart' as _i4;
+import '../../encointer_node_notee_runtime/runtime_call.dart' as _i3;
 import '../../sp_weights/weight_v2/weight.dart' as _i5;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -128,7 +128,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as WithWeight).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -148,7 +149,8 @@ class $CallCodec with _i1.Codec<Call> {
       case WithWeight:
         return (value as WithWeight)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -158,20 +160,25 @@ class Batch extends Call {
   const Batch({required this.calls});
 
   factory Batch._decode(_i1.Input input) {
-    return Batch(calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).decode(input));
+    return Batch(
+        calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec)
+            .decode(input));
   }
 
   /// Vec<<T as Config>::RuntimeCall>
   final List<_i3.RuntimeCall> calls;
 
   @override
-  Map<String, Map<String, List<Map<String, Map<String, dynamic>>>>> toJson() => {
+  Map<String, Map<String, List<Map<String, Map<String, dynamic>>>>> toJson() =>
+      {
         'batch': {'calls': calls.map((value) => value.toJson()).toList()}
       };
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).sizeHint(calls);
+    size = size +
+        const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec)
+            .sizeHint(calls);
     return size;
   }
 
@@ -272,7 +279,9 @@ class BatchAll extends Call {
   const BatchAll({required this.calls});
 
   factory BatchAll._decode(_i1.Input input) {
-    return BatchAll(calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).decode(input));
+    return BatchAll(
+        calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec)
+            .decode(input));
   }
 
   /// Vec<<T as Config>::RuntimeCall>
@@ -285,7 +294,9 @@ class BatchAll extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).sizeHint(calls);
+    size = size +
+        const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec)
+            .sizeHint(calls);
     return size;
   }
 
@@ -386,7 +397,9 @@ class ForceBatch extends Call {
   const ForceBatch({required this.calls});
 
   factory ForceBatch._decode(_i1.Input input) {
-    return ForceBatch(calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).decode(input));
+    return ForceBatch(
+        calls: const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec)
+            .decode(input));
   }
 
   /// Vec<<T as Config>::RuntimeCall>
@@ -399,7 +412,9 @@ class ForceBatch extends Call {
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec).sizeHint(calls);
+    size = size +
+        const _i1.SequenceCodec<_i3.RuntimeCall>(_i3.RuntimeCall.codec)
+            .sizeHint(calls);
     return size;
   }
 

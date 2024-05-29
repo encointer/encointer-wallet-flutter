@@ -95,7 +95,8 @@ class $ProposalStateCodec with _i1.Codec<ProposalState> {
         (value as Enacted).encodeTo(output);
         break;
       default:
-        throw Exception('ProposalState: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'ProposalState: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -113,7 +114,8 @@ class $ProposalStateCodec with _i1.Codec<ProposalState> {
       case Enacted:
         return 1;
       default:
-        throw Exception('ProposalState: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'ProposalState: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

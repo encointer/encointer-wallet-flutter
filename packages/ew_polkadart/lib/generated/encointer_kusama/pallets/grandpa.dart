@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i9;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i10;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i10;
 import '../types/pallet_grandpa/pallet/call.dart' as _i13;
 import '../types/pallet_grandpa/stored_pending_change.dart' as _i3;
 import '../types/pallet_grandpa/stored_state.dart' as _i2;
@@ -20,13 +20,15 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.StoredState> _state = const _i1.StorageValue<_i2.StoredState>(
+  final _i1.StorageValue<_i2.StoredState> _state =
+      const _i1.StorageValue<_i2.StoredState>(
     prefix: 'Grandpa',
     storage: 'State',
     valueCodec: _i2.StoredState.codec,
   );
 
-  final _i1.StorageValue<_i3.StoredPendingChange> _pendingChange = const _i1.StorageValue<_i3.StoredPendingChange>(
+  final _i1.StorageValue<_i3.StoredPendingChange> _pendingChange =
+      const _i1.StorageValue<_i3.StoredPendingChange>(
     prefix: 'Grandpa',
     storage: 'PendingChange',
     valueCodec: _i3.StoredPendingChange.codec,
@@ -38,7 +40,8 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageValue<_i5.Tuple2<int, int>> _stalled = const _i1.StorageValue<_i5.Tuple2<int, int>>(
+  final _i1.StorageValue<_i5.Tuple2<int, int>> _stalled =
+      const _i1.StorageValue<_i5.Tuple2<int, int>>(
     prefix: 'Grandpa',
     storage: 'Stalled',
     valueCodec: _i5.Tuple2Codec<int, int>(
@@ -53,7 +56,8 @@ class Queries {
     valueCodec: _i4.U64Codec.codec,
   );
 
-  final _i1.StorageMap<BigInt, int> _setIdSession = const _i1.StorageMap<BigInt, int>(
+  final _i1.StorageMap<BigInt, int> _setIdSession =
+      const _i1.StorageMap<BigInt, int>(
     prefix: 'Grandpa',
     storage: 'SetIdSession',
     valueCodec: _i4.U32Codec.codec,
@@ -64,7 +68,8 @@ class Queries {
       const _i1.StorageValue<List<_i6.Tuple2<_i7.Public, BigInt>>>(
     prefix: 'Grandpa',
     storage: 'Authorities',
-    valueCodec: _i4.SequenceCodec<_i6.Tuple2<_i7.Public, BigInt>>(_i6.Tuple2Codec<_i7.Public, BigInt>(
+    valueCodec: _i4.SequenceCodec<_i6.Tuple2<_i7.Public, BigInt>>(
+        _i6.Tuple2Codec<_i7.Public, BigInt>(
       _i7.PublicCodec(),
       _i4.U64Codec.codec,
     )),
@@ -84,7 +89,8 @@ class Queries {
   }
 
   /// Pending change: (signaled at, scheduled change).
-  _i8.Future<_i3.StoredPendingChange?> pendingChange({_i1.BlockHash? at}) async {
+  _i8.Future<_i3.StoredPendingChange?> pendingChange(
+      {_i1.BlockHash? at}) async {
     final hashedKey = _pendingChange.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -162,7 +168,8 @@ class Queries {
   }
 
   /// The current list of authorities.
-  _i8.Future<List<_i6.Tuple2<_i7.Public, BigInt>>> authorities({_i1.BlockHash? at}) async {
+  _i8.Future<List<_i6.Tuple2<_i7.Public, BigInt>>> authorities(
+      {_i1.BlockHash? at}) async {
     final hashedKey = _authorities.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,

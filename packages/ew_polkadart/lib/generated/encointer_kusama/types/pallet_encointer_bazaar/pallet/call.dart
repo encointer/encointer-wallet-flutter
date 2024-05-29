@@ -4,7 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i4;
 
-import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart'
+    as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -140,7 +141,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as DeleteOffering).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -160,7 +162,8 @@ class $CallCodec with _i1.Codec<Call> {
       case DeleteOffering:
         return (value as DeleteOffering)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

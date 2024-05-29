@@ -27,7 +27,8 @@ class Tuple7<T0, T1, T2, T3, T4, T5, T6> {
   final T6 value6;
 }
 
-class Tuple7Codec<T0, T1, T2, T3, T4, T5, T6> with _i1.Codec<Tuple7<T0, T1, T2, T3, T4, T5, T6>> {
+class Tuple7Codec<T0, T1, T2, T3, T4, T5, T6>
+    with _i1.Codec<Tuple7<T0, T1, T2, T3, T4, T5, T6>> {
   const Tuple7Codec(
     this.codec0,
     this.codec1,

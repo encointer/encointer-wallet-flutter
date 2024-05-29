@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i6;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i7;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i7;
 import '../types/frame_support/pallet_id.dart' as _i12;
 import '../types/pallet_treasury/pallet/call.dart' as _i9;
 import '../types/pallet_treasury/proposal.dart' as _i3;
@@ -25,7 +25,8 @@ class Queries {
     valueCodec: _i2.U32Codec.codec,
   );
 
-  final _i1.StorageMap<int, _i3.Proposal> _proposals = const _i1.StorageMap<int, _i3.Proposal>(
+  final _i1.StorageMap<int, _i3.Proposal> _proposals =
+      const _i1.StorageMap<int, _i3.Proposal>(
     prefix: 'Treasury',
     storage: 'Proposals',
     valueCodec: _i3.Proposal.codec,
@@ -38,7 +39,8 @@ class Queries {
     valueCodec: _i2.U128Codec.codec,
   );
 
-  final _i1.StorageValue<List<int>> _approvals = const _i1.StorageValue<List<int>>(
+  final _i1.StorageValue<List<int>> _approvals =
+      const _i1.StorageValue<List<int>>(
     prefix: 'Treasury',
     storage: 'Approvals',
     valueCodec: _i2.U32SequenceCodec.codec,
@@ -50,7 +52,8 @@ class Queries {
     valueCodec: _i2.U32Codec.codec,
   );
 
-  final _i1.StorageMap<int, _i4.SpendStatus> _spends = const _i1.StorageMap<int, _i4.SpendStatus>(
+  final _i1.StorageMap<int, _i4.SpendStatus> _spends =
+      const _i1.StorageMap<int, _i4.SpendStatus>(
     prefix: 'Treasury',
     storage: 'Spends',
     valueCodec: _i4.SpendStatus.codec,

@@ -4,8 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
-import '../../encointer_kusama_runtime/proxy_type.dart' as _i4;
-import '../../encointer_kusama_runtime/runtime_call.dart' as _i5;
+import '../../encointer_node_notee_runtime/proxy_type.dart' as _i4;
+import '../../encointer_node_notee_runtime/runtime_call.dart' as _i5;
 import '../../primitive_types/h256.dart' as _i6;
 import '../../sp_runtime/multiaddress/multi_address.dart' as _i3;
 
@@ -219,7 +219,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as ProxyAnnounced).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -247,7 +248,8 @@ class $CallCodec with _i1.Codec<Call> {
       case ProxyAnnounced:
         return (value as ProxyAnnounced)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -263,7 +265,8 @@ class Proxy extends Call {
   factory Proxy._decode(_i1.Input input) {
     return Proxy(
       real: _i3.MultiAddress.codec.decode(input),
-      forceProxyType: const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec).decode(input),
+      forceProxyType: const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec)
+          .decode(input),
       call: _i5.RuntimeCall.codec.decode(input),
     );
   }
@@ -289,7 +292,9 @@ class Proxy extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.MultiAddress.codec.sizeHint(real);
-    size = size + const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec).sizeHint(forceProxyType);
+    size = size +
+        const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec)
+            .sizeHint(forceProxyType);
     size = size + _i5.RuntimeCall.codec.sizeHint(call);
     return size;
   }
@@ -319,7 +324,10 @@ class Proxy extends Call {
         this,
         other,
       ) ||
-      other is Proxy && other.real == real && other.forceProxyType == forceProxyType && other.call == call;
+      other is Proxy &&
+          other.real == real &&
+          other.forceProxyType == forceProxyType &&
+          other.call == call;
 
   @override
   int get hashCode => Object.hash(
@@ -396,7 +404,10 @@ class AddProxy extends Call {
         this,
         other,
       ) ||
-      other is AddProxy && other.delegate == delegate && other.proxyType == proxyType && other.delay == delay;
+      other is AddProxy &&
+          other.delegate == delegate &&
+          other.proxyType == proxyType &&
+          other.delay == delay;
 
   @override
   int get hashCode => Object.hash(
@@ -473,7 +484,10 @@ class RemoveProxy extends Call {
         this,
         other,
       ) ||
-      other is RemoveProxy && other.delegate == delegate && other.proxyType == proxyType && other.delay == delay;
+      other is RemoveProxy &&
+          other.delegate == delegate &&
+          other.proxyType == proxyType &&
+          other.delay == delay;
 
   @override
   int get hashCode => Object.hash(
@@ -571,7 +585,10 @@ class CreatePure extends Call {
         this,
         other,
       ) ||
-      other is CreatePure && other.proxyType == proxyType && other.delay == delay && other.index == index;
+      other is CreatePure &&
+          other.proxyType == proxyType &&
+          other.delay == delay &&
+          other.index == index;
 
   @override
   int get hashCode => Object.hash(
@@ -910,7 +927,8 @@ class ProxyAnnounced extends Call {
     return ProxyAnnounced(
       delegate: _i3.MultiAddress.codec.decode(input),
       real: _i3.MultiAddress.codec.decode(input),
-      forceProxyType: const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec).decode(input),
+      forceProxyType: const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec)
+          .decode(input),
       call: _i5.RuntimeCall.codec.decode(input),
     );
   }
@@ -941,7 +959,9 @@ class ProxyAnnounced extends Call {
     int size = 1;
     size = size + _i3.MultiAddress.codec.sizeHint(delegate);
     size = size + _i3.MultiAddress.codec.sizeHint(real);
-    size = size + const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec).sizeHint(forceProxyType);
+    size = size +
+        const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec)
+            .sizeHint(forceProxyType);
     size = size + _i5.RuntimeCall.codec.sizeHint(call);
     return size;
   }

@@ -142,7 +142,8 @@ class $EventCodec with _i1.Codec<Event> {
         (value as EnactmentFailed).encodeTo(output);
         break;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -162,7 +163,8 @@ class $EventCodec with _i1.Codec<Event> {
       case EnactmentFailed:
         return (value as EnactmentFailed)._sizeHint();
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -267,7 +269,9 @@ class ProposalSubmitted extends Event {
         this,
         other,
       ) ||
-      other is ProposalSubmitted && other.proposalId == proposalId && other.proposalAction == proposalAction;
+      other is ProposalSubmitted &&
+          other.proposalId == proposalId &&
+          other.proposalAction == proposalAction;
 
   @override
   int get hashCode => Object.hash(
@@ -342,7 +346,10 @@ class VotePlaced extends Event {
         this,
         other,
       ) ||
-      other is VotePlaced && other.proposalId == proposalId && other.vote == vote && other.numVotes == numVotes;
+      other is VotePlaced &&
+          other.proposalId == proposalId &&
+          other.vote == vote &&
+          other.numVotes == numVotes;
 
   @override
   int get hashCode => Object.hash(
@@ -407,7 +414,9 @@ class VoteFailed extends Event {
         this,
         other,
       ) ||
-      other is VoteFailed && other.proposalId == proposalId && other.vote == vote;
+      other is VoteFailed &&
+          other.proposalId == proposalId &&
+          other.vote == vote;
 
   @override
   int get hashCode => Object.hash(
@@ -471,7 +480,9 @@ class ProposalStateUpdated extends Event {
         this,
         other,
       ) ||
-      other is ProposalStateUpdated && other.proposalId == proposalId && other.proposalState == proposalState;
+      other is ProposalStateUpdated &&
+          other.proposalId == proposalId &&
+          other.proposalState == proposalState;
 
   @override
   int get hashCode => Object.hash(
@@ -535,7 +546,9 @@ class EnactmentFailed extends Event {
         this,
         other,
       ) ||
-      other is EnactmentFailed && other.proposalId == proposalId && other.reason == reason;
+      other is EnactmentFailed &&
+          other.proposalId == proposalId &&
+          other.reason == reason;
 
   @override
   int get hashCode => Object.hash(

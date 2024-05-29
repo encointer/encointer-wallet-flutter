@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i5;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
-import '../encointer_kusama_runtime/runtime_event.dart' as _i3;
+import '../encointer_node_notee_runtime/runtime_event.dart' as _i3;
 import '../primitive_types/h256.dart' as _i4;
 import 'phase.dart' as _i2;
 
@@ -98,7 +98,8 @@ class $EventRecordCodec with _i1.Codec<EventRecord> {
     int size = 0;
     size = size + _i2.Phase.codec.sizeHint(obj.phase);
     size = size + _i3.RuntimeEvent.codec.sizeHint(obj.event);
-    size = size + const _i1.SequenceCodec<_i4.H256>(_i4.H256Codec()).sizeHint(obj.topics);
+    size = size +
+        const _i1.SequenceCodec<_i4.H256>(_i4.H256Codec()).sizeHint(obj.topics);
     return size;
   }
 }

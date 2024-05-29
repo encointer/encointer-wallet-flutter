@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i16;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i17;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i17;
 import '../types/frame_support/dispatch/per_dispatch_class_1.dart' as _i5;
 import '../types/frame_support/dispatch/per_dispatch_class_2.dart' as _i20;
 import '../types/frame_support/dispatch/per_dispatch_class_3.dart' as _i23;
@@ -46,7 +46,8 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageValue<_i5.PerDispatchClass> _blockWeight = const _i1.StorageValue<_i5.PerDispatchClass>(
+  final _i1.StorageValue<_i5.PerDispatchClass> _blockWeight =
+      const _i1.StorageValue<_i5.PerDispatchClass>(
     prefix: 'System',
     storage: 'BlockWeight',
     valueCodec: _i5.PerDispatchClass.codec,
@@ -58,14 +59,16 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageMap<int, _i6.H256> _blockHash = const _i1.StorageMap<int, _i6.H256>(
+  final _i1.StorageMap<int, _i6.H256> _blockHash =
+      const _i1.StorageMap<int, _i6.H256>(
     prefix: 'System',
     storage: 'BlockHash',
     valueCodec: _i6.H256Codec(),
     hasher: _i1.StorageHasher.twoxx64Concat(_i4.U32Codec.codec),
   );
 
-  final _i1.StorageMap<int, List<int>> _extrinsicData = const _i1.StorageMap<int, List<int>>(
+  final _i1.StorageMap<int, List<int>> _extrinsicData =
+      const _i1.StorageMap<int, List<int>>(
     prefix: 'System',
     storage: 'ExtrinsicData',
     valueCodec: _i4.U8SequenceCodec.codec,
@@ -78,19 +81,22 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageValue<_i6.H256> _parentHash = const _i1.StorageValue<_i6.H256>(
+  final _i1.StorageValue<_i6.H256> _parentHash =
+      const _i1.StorageValue<_i6.H256>(
     prefix: 'System',
     storage: 'ParentHash',
     valueCodec: _i6.H256Codec(),
   );
 
-  final _i1.StorageValue<_i7.Digest> _digest = const _i1.StorageValue<_i7.Digest>(
+  final _i1.StorageValue<_i7.Digest> _digest =
+      const _i1.StorageValue<_i7.Digest>(
     prefix: 'System',
     storage: 'Digest',
     valueCodec: _i7.Digest.codec,
   );
 
-  final _i1.StorageValue<List<_i8.EventRecord>> _events = const _i1.StorageValue<List<_i8.EventRecord>>(
+  final _i1.StorageValue<List<_i8.EventRecord>> _events =
+      const _i1.StorageValue<List<_i8.EventRecord>>(
     prefix: 'System',
     storage: 'Events',
     valueCodec: _i4.SequenceCodec<_i8.EventRecord>(_i8.EventRecord.codec),
@@ -106,7 +112,8 @@ class Queries {
       const _i1.StorageMap<_i6.H256, List<_i9.Tuple2<int, int>>>(
     prefix: 'System',
     storage: 'EventTopics',
-    valueCodec: _i4.SequenceCodec<_i9.Tuple2<int, int>>(_i9.Tuple2Codec<int, int>(
+    valueCodec:
+        _i4.SequenceCodec<_i9.Tuple2<int, int>>(_i9.Tuple2Codec<int, int>(
       _i4.U32Codec.codec,
       _i4.U32Codec.codec,
     )),
@@ -120,19 +127,22 @@ class Queries {
     valueCodec: _i10.LastRuntimeUpgradeInfo.codec,
   );
 
-  final _i1.StorageValue<bool> _upgradedToU32RefCount = const _i1.StorageValue<bool>(
+  final _i1.StorageValue<bool> _upgradedToU32RefCount =
+      const _i1.StorageValue<bool>(
     prefix: 'System',
     storage: 'UpgradedToU32RefCount',
     valueCodec: _i4.BoolCodec.codec,
   );
 
-  final _i1.StorageValue<bool> _upgradedToTripleRefCount = const _i1.StorageValue<bool>(
+  final _i1.StorageValue<bool> _upgradedToTripleRefCount =
+      const _i1.StorageValue<bool>(
     prefix: 'System',
     storage: 'UpgradedToTripleRefCount',
     valueCodec: _i4.BoolCodec.codec,
   );
 
-  final _i1.StorageValue<_i11.Phase> _executionPhase = const _i1.StorageValue<_i11.Phase>(
+  final _i1.StorageValue<_i11.Phase> _executionPhase =
+      const _i1.StorageValue<_i11.Phase>(
     prefix: 'System',
     storage: 'ExecutionPhase',
     valueCodec: _i11.Phase.codec,
@@ -368,7 +378,8 @@ class Queries {
   }
 
   /// Stores the `spec_version` and `spec_name` of when the last runtime upgrade happened.
-  _i13.Future<_i10.LastRuntimeUpgradeInfo?> lastRuntimeUpgrade({_i1.BlockHash? at}) async {
+  _i13.Future<_i10.LastRuntimeUpgradeInfo?> lastRuntimeUpgrade(
+      {_i1.BlockHash? at}) async {
     final hashedKey = _lastRuntimeUpgrade.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -421,7 +432,8 @@ class Queries {
   }
 
   /// `Some` if a code upgrade has been authorized.
-  _i13.Future<_i12.CodeUpgradeAuthorization?> authorizedUpgrade({_i1.BlockHash? at}) async {
+  _i13.Future<_i12.CodeUpgradeAuthorization?> authorizedUpgrade(
+      {_i1.BlockHash? at}) async {
     final hashedKey = _authorizedUpgrade.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -588,7 +600,8 @@ class Txs {
   }
 
   /// See [`Pallet::set_storage`].
-  _i17.RuntimeCall setStorage({required List<_i9.Tuple2<List<int>, List<int>>> items}) {
+  _i17.RuntimeCall setStorage(
+      {required List<_i9.Tuple2<List<int>, List<int>>> items}) {
     final _call = _i18.Call.values.setStorage(items: items);
     return _i17.RuntimeCall.values.system(_call);
   }
@@ -625,7 +638,8 @@ class Txs {
 
   /// See [`Pallet::authorize_upgrade_without_checks`].
   _i17.RuntimeCall authorizeUpgradeWithoutChecks({required _i6.H256 codeHash}) {
-    final _call = _i18.Call.values.authorizeUpgradeWithoutChecks(codeHash: codeHash);
+    final _call =
+        _i18.Call.values.authorizeUpgradeWithoutChecks(codeHash: codeHash);
     return _i17.RuntimeCall.values.system(_call);
   }
 

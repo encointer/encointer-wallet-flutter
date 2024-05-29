@@ -4,7 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
-import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart'
+    as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 import '../../substrate_fixed/fixed_u128.dart' as _i5;
 
@@ -118,7 +119,8 @@ class $EventCodec with _i1.Codec<Event> {
         (value as FeeConversionFactorUpdated).encodeTo(output);
         break;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -134,7 +136,8 @@ class $EventCodec with _i1.Codec<Event> {
       case FeeConversionFactorUpdated:
         return (value as FeeConversionFactorUpdated)._sizeHint();
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

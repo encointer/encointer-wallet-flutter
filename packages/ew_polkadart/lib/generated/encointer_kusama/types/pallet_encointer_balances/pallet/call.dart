@@ -4,7 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
-import '../../encointer_primitives/communities/community_identifier.dart' as _i4;
+import '../../encointer_primitives/communities/community_identifier.dart'
+    as _i4;
 import '../../sp_core/crypto/account_id32.dart' as _i3;
 import '../../substrate_fixed/fixed_u128.dart' as _i5;
 
@@ -48,7 +49,8 @@ class $Call {
     );
   }
 
-  SetFeeConversionFactor setFeeConversionFactor({required BigInt feeConversionFactor}) {
+  SetFeeConversionFactor setFeeConversionFactor(
+      {required BigInt feeConversionFactor}) {
     return SetFeeConversionFactor(feeConversionFactor: feeConversionFactor);
   }
 
@@ -97,7 +99,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as TransferAll).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -111,7 +114,8 @@ class $CallCodec with _i1.Codec<Call> {
       case TransferAll:
         return (value as TransferAll)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -204,7 +208,8 @@ class SetFeeConversionFactor extends Call {
   const SetFeeConversionFactor({required this.feeConversionFactor});
 
   factory SetFeeConversionFactor._decode(_i1.Input input) {
-    return SetFeeConversionFactor(feeConversionFactor: _i1.U128Codec.codec.decode(input));
+    return SetFeeConversionFactor(
+        feeConversionFactor: _i1.U128Codec.codec.decode(input));
   }
 
   /// FeeConversionFactorType
@@ -212,7 +217,9 @@ class SetFeeConversionFactor extends Call {
 
   @override
   Map<String, Map<String, BigInt>> toJson() => {
-        'set_fee_conversion_factor': {'feeConversionFactor': feeConversionFactor}
+        'set_fee_conversion_factor': {
+          'feeConversionFactor': feeConversionFactor
+        }
       };
 
   int _sizeHint() {
@@ -238,7 +245,8 @@ class SetFeeConversionFactor extends Call {
         this,
         other,
       ) ||
-      other is SetFeeConversionFactor && other.feeConversionFactor == feeConversionFactor;
+      other is SetFeeConversionFactor &&
+          other.feeConversionFactor == feeConversionFactor;
 
   @override
   int get hashCode => feeConversionFactor.hashCode;

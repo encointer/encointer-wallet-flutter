@@ -60,7 +60,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as Set).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -70,7 +71,8 @@ class $CallCodec with _i1.Codec<Call> {
       case Set:
         return (value as Set)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

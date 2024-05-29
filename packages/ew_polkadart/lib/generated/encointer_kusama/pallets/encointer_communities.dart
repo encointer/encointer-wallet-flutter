@@ -5,9 +5,11 @@ import 'dart:typed_data' as _i11;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i12;
-import '../types/encointer_primitives/communities/community_identifier.dart' as _i3;
-import '../types/encointer_primitives/communities/community_metadata.dart' as _i7;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i12;
+import '../types/encointer_primitives/communities/community_identifier.dart'
+    as _i3;
+import '../types/encointer_primitives/communities/community_metadata.dart'
+    as _i7;
 import '../types/encointer_primitives/communities/community_rules.dart' as _i10;
 import '../types/encointer_primitives/communities/location.dart' as _i5;
 import '../types/pallet_encointer_communities/pallet/call.dart' as _i14;
@@ -21,16 +23,20 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<_i2.GeoHash, List<_i3.CommunityIdentifier>> _communityIdentifiersByGeohash =
+  final _i1.StorageMap<_i2.GeoHash, List<_i3.CommunityIdentifier>>
+      _communityIdentifiersByGeohash =
       const _i1.StorageMap<_i2.GeoHash, List<_i3.CommunityIdentifier>>(
     prefix: 'EncointerCommunities',
     storage: 'CommunityIdentifiersByGeohash',
-    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec),
+    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(
+        _i3.CommunityIdentifier.codec),
     hasher: _i1.StorageHasher.identity(_i2.GeoHashCodec()),
   );
 
-  final _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash, List<_i5.Location>> _locations =
-      const _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash, List<_i5.Location>>(
+  final _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash,
+          List<_i5.Location>> _locations =
+      const _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash,
+          List<_i5.Location>>(
     prefix: 'EncointerCommunities',
     storage: 'Locations',
     valueCodec: _i4.SequenceCodec<_i5.Location>(_i5.Location.codec),
@@ -38,7 +44,8 @@ class Queries {
     hasher2: _i1.StorageHasher.identity(_i2.GeoHashCodec()),
   );
 
-  final _i1.StorageMap<_i3.CommunityIdentifier, List<_i6.AccountId32>> _bootstrappers =
+  final _i1.StorageMap<_i3.CommunityIdentifier, List<_i6.AccountId32>>
+      _bootstrappers =
       const _i1.StorageMap<_i3.CommunityIdentifier, List<_i6.AccountId32>>(
     prefix: 'EncointerCommunities',
     storage: 'Bootstrappers',
@@ -50,10 +57,12 @@ class Queries {
       const _i1.StorageValue<List<_i3.CommunityIdentifier>>(
     prefix: 'EncointerCommunities',
     storage: 'CommunityIdentifiers',
-    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec),
+    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(
+        _i3.CommunityIdentifier.codec),
   );
 
-  final _i1.StorageMap<_i3.CommunityIdentifier, _i7.CommunityMetadata> _communityMetadata =
+  final _i1.StorageMap<_i3.CommunityIdentifier, _i7.CommunityMetadata>
+      _communityMetadata =
       const _i1.StorageMap<_i3.CommunityIdentifier, _i7.CommunityMetadata>(
     prefix: 'EncointerCommunities',
     storage: 'CommunityMetadata',
@@ -130,7 +139,8 @@ class Queries {
     return []; /* Default */
   }
 
-  _i9.Future<List<_i3.CommunityIdentifier>> communityIdentifiers({_i1.BlockHash? at}) async {
+  _i9.Future<List<_i3.CommunityIdentifier>> communityIdentifiers(
+      {_i1.BlockHash? at}) async {
     final hashedKey = _communityIdentifiers.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -443,7 +453,8 @@ class Txs {
 
   /// See [`Pallet::set_min_solar_trip_time_s`].
   _i12.RuntimeCall setMinSolarTripTimeS({required int minSolarTripTimeS}) {
-    final _call = _i14.Call.values.setMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS);
+    final _call = _i14.Call.values
+        .setMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS);
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 

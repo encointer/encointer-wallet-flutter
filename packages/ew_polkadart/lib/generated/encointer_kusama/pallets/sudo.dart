@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i4;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i5;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i5;
 import '../types/pallet_sudo/pallet/call.dart' as _i6;
 import '../types/sp_core/crypto/account_id32.dart' as _i2;
 import '../types/sp_runtime/multiaddress/multi_address.dart' as _i8;
@@ -15,7 +15,8 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.AccountId32> _key = const _i1.StorageValue<_i2.AccountId32>(
+  final _i1.StorageValue<_i2.AccountId32> _key =
+      const _i1.StorageValue<_i2.AccountId32>(
     prefix: 'Sudo',
     storage: 'Key',
     valueCodec: _i2.AccountId32Codec(),

@@ -35,7 +35,8 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  NewAuthorities newAuthorities({required List<_i3.Tuple2<_i4.Public, BigInt>> authoritySet}) {
+  NewAuthorities newAuthorities(
+      {required List<_i3.Tuple2<_i4.Public, BigInt>> authoritySet}) {
     return NewAuthorities(authoritySet: authoritySet);
   }
 
@@ -82,7 +83,8 @@ class $EventCodec with _i1.Codec<Event> {
         (value as Resumed).encodeTo(output);
         break;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -96,7 +98,8 @@ class $EventCodec with _i1.Codec<Event> {
       case Resumed:
         return 1;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -107,7 +110,8 @@ class NewAuthorities extends Event {
 
   factory NewAuthorities._decode(_i1.Input input) {
     return NewAuthorities(
-        authoritySet: const _i1.SequenceCodec<_i3.Tuple2<_i4.Public, BigInt>>(_i3.Tuple2Codec<_i4.Public, BigInt>(
+        authoritySet: const _i1.SequenceCodec<_i3.Tuple2<_i4.Public, BigInt>>(
+            _i3.Tuple2Codec<_i4.Public, BigInt>(
       _i4.PublicCodec(),
       _i1.U64Codec.codec,
     )).decode(input));
@@ -131,7 +135,8 @@ class NewAuthorities extends Event {
   int _sizeHint() {
     int size = 1;
     size = size +
-        const _i1.SequenceCodec<_i3.Tuple2<_i4.Public, BigInt>>(_i3.Tuple2Codec<_i4.Public, BigInt>(
+        const _i1.SequenceCodec<_i3.Tuple2<_i4.Public, BigInt>>(
+            _i3.Tuple2Codec<_i4.Public, BigInt>(
           _i4.PublicCodec(),
           _i1.U64Codec.codec,
         )).sizeHint(authoritySet);
@@ -143,7 +148,8 @@ class NewAuthorities extends Event {
       0,
       output,
     );
-    const _i1.SequenceCodec<_i3.Tuple2<_i4.Public, BigInt>>(_i3.Tuple2Codec<_i4.Public, BigInt>(
+    const _i1.SequenceCodec<_i3.Tuple2<_i4.Public, BigInt>>(
+        _i3.Tuple2Codec<_i4.Public, BigInt>(
       _i4.PublicCodec(),
       _i1.U64Codec.codec,
     )).encodeTo(

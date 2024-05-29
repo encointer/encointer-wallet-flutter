@@ -99,7 +99,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as NoteStalled).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -113,7 +114,8 @@ class $CallCodec with _i1.Codec<Call> {
       case NoteStalled:
         return (value as NoteStalled)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -308,7 +310,9 @@ class NoteStalled extends Call {
         this,
         other,
       ) ||
-      other is NoteStalled && other.delay == delay && other.bestFinalizedBlockNumber == bestFinalizedBlockNumber;
+      other is NoteStalled &&
+          other.delay == delay &&
+          other.bestFinalizedBlockNumber == bestFinalizedBlockNumber;
 
   @override
   int get hashCode => Object.hash(

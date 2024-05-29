@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i5;
 
-import '../../encointer_kusama_runtime/runtime_call.dart' as _i4;
+import '../../encointer_node_notee_runtime/runtime_call.dart' as _i4;
 import '../../tuples.dart' as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
@@ -211,7 +211,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as CancelRetryNamed).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -239,7 +240,8 @@ class $CallCodec with _i1.Codec<Call> {
       case CancelRetryNamed:
         return (value as CancelRetryNamed)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -256,7 +258,8 @@ class Schedule extends Call {
   factory Schedule._decode(_i1.Input input) {
     return Schedule(
       when: _i1.U32Codec.codec.decode(input),
-      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic:
+          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -429,7 +432,8 @@ class ScheduleNamed extends Call {
     return ScheduleNamed(
       id: const _i1.U8ArrayCodec(32).decode(input),
       when: _i1.U32Codec.codec.decode(input),
-      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic:
+          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -598,7 +602,8 @@ class ScheduleAfter extends Call {
   factory ScheduleAfter._decode(_i1.Input input) {
     return ScheduleAfter(
       after: _i1.U32Codec.codec.decode(input),
-      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic:
+          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -706,7 +711,8 @@ class ScheduleNamedAfter extends Call {
     return ScheduleNamedAfter(
       id: const _i1.U8ArrayCodec(32).decode(input),
       after: _i1.U32Codec.codec.decode(input),
-      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic:
+          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -894,7 +900,10 @@ class SetRetry extends Call {
         this,
         other,
       ) ||
-      other is SetRetry && other.task == task && other.retries == retries && other.period == period;
+      other is SetRetry &&
+          other.task == task &&
+          other.retries == retries &&
+          other.period == period;
 
   @override
   int get hashCode => Object.hash(

@@ -140,7 +140,8 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
         (value as SetInactivityTimeout).encodeTo(output);
         break;
       default:
-        throw Exception('ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -160,7 +161,8 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
       case SetInactivityTimeout:
         return (value as SetInactivityTimeout)._sizeHint();
       default:
-        throw Exception('ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -284,7 +286,9 @@ class RemoveLocation extends ProposalAction {
         this,
         other,
       ) ||
-      other is RemoveLocation && other.value0 == value0 && other.value1 == value1;
+      other is RemoveLocation &&
+          other.value0 == value0 &&
+          other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -348,7 +352,9 @@ class UpdateCommunityMetadata extends ProposalAction {
         this,
         other,
       ) ||
-      other is UpdateCommunityMetadata && other.value0 == value0 && other.value1 == value1;
+      other is UpdateCommunityMetadata &&
+          other.value0 == value0 &&
+          other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -412,7 +418,9 @@ class UpdateDemurrage extends ProposalAction {
         this,
         other,
       ) ||
-      other is UpdateDemurrage && other.value0 == value0 && other.value1 == value1;
+      other is UpdateDemurrage &&
+          other.value0 == value0 &&
+          other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -476,7 +484,9 @@ class UpdateNominalIncome extends ProposalAction {
         this,
         other,
       ) ||
-      other is UpdateNominalIncome && other.value0 == value0 && other.value1 == value1;
+      other is UpdateNominalIncome &&
+          other.value0 == value0 &&
+          other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(

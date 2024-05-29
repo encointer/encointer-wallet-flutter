@@ -234,7 +234,8 @@ class $EventCodec with _i1.Codec<Event> {
         (value as SpendProcessed).encodeTo(output);
         break;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -270,7 +271,8 @@ class $EventCodec with _i1.Codec<Event> {
       case SpendProcessed:
         return (value as SpendProcessed)._sizeHint();
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -504,7 +506,9 @@ class Rejected extends Event {
         this,
         other,
       ) ||
-      other is Rejected && other.proposalIndex == proposalIndex && other.slashed == slashed;
+      other is Rejected &&
+          other.proposalIndex == proposalIndex &&
+          other.slashed == slashed;
 
   @override
   int get hashCode => Object.hash(
@@ -787,7 +791,9 @@ class UpdatedInactive extends Event {
         this,
         other,
       ) ||
-      other is UpdatedInactive && other.reactivated == reactivated && other.deactivated == deactivated;
+      other is UpdatedInactive &&
+          other.reactivated == reactivated &&
+          other.deactivated == deactivated;
 
   @override
   int get hashCode => Object.hash(
@@ -1084,7 +1090,9 @@ class PaymentFailed extends Event {
         this,
         other,
       ) ||
-      other is PaymentFailed && other.index == index && other.paymentId == paymentId;
+      other is PaymentFailed &&
+          other.index == index &&
+          other.paymentId == paymentId;
 
   @override
   int get hashCode => Object.hash(

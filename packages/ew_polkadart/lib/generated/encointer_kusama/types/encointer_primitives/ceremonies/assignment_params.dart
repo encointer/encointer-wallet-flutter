@@ -41,7 +41,10 @@ class AssignmentParams {
         this,
         other,
       ) ||
-      other is AssignmentParams && other.m == m && other.s1 == s1 && other.s2 == s2;
+      other is AssignmentParams &&
+          other.m == m &&
+          other.s1 == s1 &&
+          other.s2 == s2;
 
   @override
   int get hashCode => Object.hash(

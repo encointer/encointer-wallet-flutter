@@ -5,8 +5,8 @@ import 'dart:typed_data' as _i8;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i5;
 
-import '../types/encointer_kusama_runtime/proxy_type.dart' as _i11;
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i9;
+import '../types/encointer_node_notee_runtime/proxy_type.dart' as _i11;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i9;
 import '../types/pallet_proxy/announcement.dart' as _i6;
 import '../types/pallet_proxy/pallet/call.dart' as _i12;
 import '../types/pallet_proxy/proxy_definition.dart' as _i4;
@@ -20,8 +20,10 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>> _proxies =
-      const _i1.StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>>(
+  final _i1.StorageMap<_i2.AccountId32,
+          _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>> _proxies =
+      const _i1.StorageMap<_i2.AccountId32,
+          _i3.Tuple2<List<_i4.ProxyDefinition>, BigInt>>(
     prefix: 'Proxy',
     storage: 'Proxies',
     valueCodec: _i3.Tuple2Codec<List<_i4.ProxyDefinition>, BigInt>(
@@ -31,8 +33,10 @@ class Queries {
     hasher: _i1.StorageHasher.twoxx64Concat(_i2.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i6.Announcement>, BigInt>> _announcements =
-      const _i1.StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i6.Announcement>, BigInt>>(
+  final _i1
+      .StorageMap<_i2.AccountId32, _i3.Tuple2<List<_i6.Announcement>, BigInt>>
+      _announcements = const _i1.StorageMap<_i2.AccountId32,
+          _i3.Tuple2<List<_i6.Announcement>, BigInt>>(
     prefix: 'Proxy',
     storage: 'Announcements',
     valueCodec: _i3.Tuple2Codec<List<_i6.Announcement>, BigInt>(

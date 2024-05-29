@@ -5,8 +5,9 @@ import 'dart:typed_data' as _i5;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i6;
-import '../types/encointer_primitives/scheduler/ceremony_phase_type.dart' as _i3;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i6;
+import '../types/encointer_primitives/scheduler/ceremony_phase_type.dart'
+    as _i3;
 import '../types/pallet_encointer_scheduler/pallet/call.dart' as _i7;
 
 class Queries {
@@ -14,7 +15,8 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<int> _currentCeremonyIndex = const _i1.StorageValue<int>(
+  final _i1.StorageValue<int> _currentCeremonyIndex =
+      const _i1.StorageValue<int>(
     prefix: 'EncointerScheduler',
     storage: 'CurrentCeremonyIndex',
     valueCodec: _i2.U32Codec.codec,
@@ -26,13 +28,15 @@ class Queries {
     valueCodec: _i2.U32Codec.codec,
   );
 
-  final _i1.StorageValue<_i3.CeremonyPhaseType> _currentPhase = const _i1.StorageValue<_i3.CeremonyPhaseType>(
+  final _i1.StorageValue<_i3.CeremonyPhaseType> _currentPhase =
+      const _i1.StorageValue<_i3.CeremonyPhaseType>(
     prefix: 'EncointerScheduler',
     storage: 'CurrentPhase',
     valueCodec: _i3.CeremonyPhaseType.codec,
   );
 
-  final _i1.StorageValue<BigInt> _nextPhaseTimestamp = const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _nextPhaseTimestamp =
+      const _i1.StorageValue<BigInt>(
     prefix: 'EncointerScheduler',
     storage: 'NextPhaseTimestamp',
     valueCodec: _i2.U64Codec.codec,

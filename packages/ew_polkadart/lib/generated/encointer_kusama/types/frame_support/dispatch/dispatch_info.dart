@@ -45,7 +45,10 @@ class DispatchInfo {
         this,
         other,
       ) ||
-      other is DispatchInfo && other.weight == weight && other.class_ == class_ && other.paysFee == paysFee;
+      other is DispatchInfo &&
+          other.weight == weight &&
+          other.class_ == class_ &&
+          other.paysFee == paysFee;
 
   @override
   int get hashCode => Object.hash(

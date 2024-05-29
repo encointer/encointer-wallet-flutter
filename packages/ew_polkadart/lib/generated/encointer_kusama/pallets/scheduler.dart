@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i7;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i8;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i8;
 import '../types/pallet_scheduler/pallet/call.dart' as _i9;
 import '../types/pallet_scheduler/retry_config.dart' as _i5;
 import '../types/pallet_scheduler/scheduled.dart' as _i3;
@@ -23,10 +23,12 @@ class Queries {
     valueCodec: _i2.U32Codec.codec,
   );
 
-  final _i1.StorageMap<int, List<_i3.Scheduled?>> _agenda = const _i1.StorageMap<int, List<_i3.Scheduled?>>(
+  final _i1.StorageMap<int, List<_i3.Scheduled?>> _agenda =
+      const _i1.StorageMap<int, List<_i3.Scheduled?>>(
     prefix: 'Scheduler',
     storage: 'Agenda',
-    valueCodec: _i2.SequenceCodec<_i3.Scheduled?>(_i2.OptionCodec<_i3.Scheduled>(_i3.Scheduled.codec)),
+    valueCodec: _i2.SequenceCodec<_i3.Scheduled?>(
+        _i2.OptionCodec<_i3.Scheduled>(_i3.Scheduled.codec)),
     hasher: _i1.StorageHasher.twoxx64Concat(_i2.U32Codec.codec),
   );
 
@@ -41,7 +43,8 @@ class Queries {
     )),
   );
 
-  final _i1.StorageMap<List<int>, _i4.Tuple2<int, int>> _lookup = const _i1.StorageMap<List<int>, _i4.Tuple2<int, int>>(
+  final _i1.StorageMap<List<int>, _i4.Tuple2<int, int>> _lookup =
+      const _i1.StorageMap<List<int>, _i4.Tuple2<int, int>>(
     prefix: 'Scheduler',
     storage: 'Lookup',
     valueCodec: _i4.Tuple2Codec<int, int>(

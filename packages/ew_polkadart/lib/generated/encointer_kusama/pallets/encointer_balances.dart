@@ -5,9 +5,10 @@ import 'dart:typed_data' as _i9;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i6;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i10;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i10;
 import '../types/encointer_primitives/balances/balance_entry.dart' as _i3;
-import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
+import '../types/encointer_primitives/communities/community_identifier.dart'
+    as _i2;
 import '../types/pallet_encointer_balances/pallet/call.dart' as _i11;
 import '../types/sp_core/crypto/account_id32.dart' as _i4;
 import '../types/substrate_fixed/fixed_i128.dart' as _i5;
@@ -18,7 +19,8 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<_i2.CommunityIdentifier, _i3.BalanceEntry> _totalIssuance =
+  final _i1.StorageMap<_i2.CommunityIdentifier, _i3.BalanceEntry>
+      _totalIssuance =
       const _i1.StorageMap<_i2.CommunityIdentifier, _i3.BalanceEntry>(
     prefix: 'EncointerBalances',
     storage: 'TotalIssuance',
@@ -26,8 +28,10 @@ class Queries {
     hasher: _i1.StorageHasher.blake2b128Concat(_i2.CommunityIdentifier.codec),
   );
 
-  final _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i4.AccountId32, _i3.BalanceEntry> _balance =
-      const _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i4.AccountId32, _i3.BalanceEntry>(
+  final _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i4.AccountId32,
+          _i3.BalanceEntry> _balance =
+      const _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i4.AccountId32,
+          _i3.BalanceEntry>(
     prefix: 'EncointerBalances',
     storage: 'Balance',
     valueCodec: _i3.BalanceEntry.codec,
@@ -35,7 +39,8 @@ class Queries {
     hasher2: _i1.StorageHasher.blake2b128Concat(_i4.AccountId32Codec()),
   );
 
-  final _i1.StorageMap<_i2.CommunityIdentifier, _i5.FixedI128> _demurragePerBlock =
+  final _i1.StorageMap<_i2.CommunityIdentifier, _i5.FixedI128>
+      _demurragePerBlock =
       const _i1.StorageMap<_i2.CommunityIdentifier, _i5.FixedI128>(
     prefix: 'EncointerBalances',
     storage: 'DemurragePerBlock',
@@ -43,7 +48,8 @@ class Queries {
     hasher: _i1.StorageHasher.blake2b128Concat(_i2.CommunityIdentifier.codec),
   );
 
-  final _i1.StorageValue<BigInt> _feeConversionFactor = const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _feeConversionFactor =
+      const _i1.StorageValue<BigInt>(
     prefix: 'EncointerBalances',
     storage: 'FeeConversionFactor',
     valueCodec: _i6.U128Codec.codec,
@@ -183,8 +189,10 @@ class Txs {
   }
 
   /// See [`Pallet::set_fee_conversion_factor`].
-  _i10.RuntimeCall setFeeConversionFactor({required BigInt feeConversionFactor}) {
-    final _call = _i11.Call.values.setFeeConversionFactor(feeConversionFactor: feeConversionFactor);
+  _i10.RuntimeCall setFeeConversionFactor(
+      {required BigInt feeConversionFactor}) {
+    final _call = _i11.Call.values
+        .setFeeConversionFactor(feeConversionFactor: feeConversionFactor);
     return _i10.RuntimeCall.values.encointerBalances(_call);
   }
 
@@ -205,11 +213,13 @@ class Constants {
   Constants();
 
   /// the default demurrage rate applied to community balances
-  final _i5.FixedI128 defaultDemurrage = _i5.FixedI128(bits: BigInt.from(2078506789235));
+  final _i5.FixedI128 defaultDemurrage =
+      _i5.FixedI128(bits: BigInt.from(2078506789235));
 
   /// Existential deposit needed to have an account in the respective community currency
   ///
   /// This does currently not prevent dust-accounts, but it prevents account creation
   /// by transferring tiny amounts of funds.
-  final _i8.FixedU128 existentialDeposit = _i8.FixedU128(bits: BigInt.from(92233720368548));
+  final _i8.FixedU128 existentialDeposit =
+      _i8.FixedU128(bits: BigInt.from(92233720368548));
 }

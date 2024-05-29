@@ -4,7 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
-import '../../encointer_kusama_runtime/proxy_type.dart' as _i5;
+import '../../encointer_node_notee_runtime/proxy_type.dart' as _i5;
 import '../../primitive_types/h256.dart' as _i6;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 import '../../sp_runtime/dispatch_error.dart' as _i3;
@@ -37,7 +37,8 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  ProxyExecuted proxyExecuted({required _i1.Result<dynamic, _i3.DispatchError> result}) {
+  ProxyExecuted proxyExecuted(
+      {required _i1.Result<dynamic, _i3.DispatchError> result}) {
     return ProxyExecuted(result: result);
   }
 
@@ -140,7 +141,8 @@ class $EventCodec with _i1.Codec<Event> {
         (value as ProxyRemoved).encodeTo(output);
         break;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -158,7 +160,8 @@ class $EventCodec with _i1.Codec<Event> {
       case ProxyRemoved:
         return (value as ProxyRemoved)._sizeHint();
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

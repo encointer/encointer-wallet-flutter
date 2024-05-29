@@ -38,7 +38,9 @@ class ChargeAssetTxPayment {
         this,
         other,
       ) ||
-      other is ChargeAssetTxPayment && other.tip == tip && other.assetId == assetId;
+      other is ChargeAssetTxPayment &&
+          other.tip == tip &&
+          other.assetId == assetId;
 
   @override
   int get hashCode => Object.hash(
@@ -59,7 +61,9 @@ class $ChargeAssetTxPaymentCodec with _i1.Codec<ChargeAssetTxPayment> {
       obj.tip,
       output,
     );
-    const _i1.OptionCodec<_i2.CommunityIdentifier>(_i2.CommunityIdentifier.codec).encodeTo(
+    const _i1.OptionCodec<_i2.CommunityIdentifier>(
+            _i2.CommunityIdentifier.codec)
+        .encodeTo(
       obj.assetId,
       output,
     );
@@ -69,7 +73,9 @@ class $ChargeAssetTxPaymentCodec with _i1.Codec<ChargeAssetTxPayment> {
   ChargeAssetTxPayment decode(_i1.Input input) {
     return ChargeAssetTxPayment(
       tip: _i1.CompactBigIntCodec.codec.decode(input),
-      assetId: const _i1.OptionCodec<_i2.CommunityIdentifier>(_i2.CommunityIdentifier.codec).decode(input),
+      assetId: const _i1.OptionCodec<_i2.CommunityIdentifier>(
+              _i2.CommunityIdentifier.codec)
+          .decode(input),
     );
   }
 
@@ -77,7 +83,10 @@ class $ChargeAssetTxPaymentCodec with _i1.Codec<ChargeAssetTxPayment> {
   int sizeHint(ChargeAssetTxPayment obj) {
     int size = 0;
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(obj.tip);
-    size = size + const _i1.OptionCodec<_i2.CommunityIdentifier>(_i2.CommunityIdentifier.codec).sizeHint(obj.assetId);
+    size = size +
+        const _i1.OptionCodec<_i2.CommunityIdentifier>(
+                _i2.CommunityIdentifier.codec)
+            .sizeHint(obj.assetId);
     return size;
   }
 }

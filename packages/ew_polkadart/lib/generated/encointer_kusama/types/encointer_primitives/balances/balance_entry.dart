@@ -38,7 +38,9 @@ class BalanceEntry {
         this,
         other,
       ) ||
-      other is BalanceEntry && other.principal == principal && other.lastUpdate == lastUpdate;
+      other is BalanceEntry &&
+          other.principal == principal &&
+          other.lastUpdate == lastUpdate;
 
   @override
   int get hashCode => Object.hash(

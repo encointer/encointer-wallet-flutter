@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i9;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i10;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i10;
 import '../types/pallet_balances/pallet/call.dart' as _i12;
 import '../types/pallet_balances/types/account_data.dart' as _i4;
 import '../types/pallet_balances/types/adjustment_direction.dart' as _i13;
@@ -20,13 +20,15 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<BigInt> _totalIssuance = const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _totalIssuance =
+      const _i1.StorageValue<BigInt>(
     prefix: 'Balances',
     storage: 'TotalIssuance',
     valueCodec: _i2.U128Codec.codec,
   );
 
-  final _i1.StorageValue<BigInt> _inactiveIssuance = const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _inactiveIssuance =
+      const _i1.StorageValue<BigInt>(
     prefix: 'Balances',
     storage: 'InactiveIssuance',
     valueCodec: _i2.U128Codec.codec,

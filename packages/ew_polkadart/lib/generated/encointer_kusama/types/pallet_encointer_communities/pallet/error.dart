@@ -12,7 +12,8 @@ enum Error {
   invalidAmountBootstrappers('InvalidAmountBootstrappers', 1),
 
   /// minimum distance violation to other location
-  minimumDistanceViolationToOtherLocation('MinimumDistanceViolationToOtherLocation', 2),
+  minimumDistanceViolationToOtherLocation(
+      'MinimumDistanceViolationToOtherLocation', 2),
 
   /// minimum distance violated towards dateline
   minimumDistanceViolationToDateLine('MinimumDistanceViolationToDateLine', 3),
@@ -48,7 +49,8 @@ enum Error {
   tooManyCommunityIdentifiers('TooManyCommunityIdentifiers', 13),
 
   /// CommunityIdentifiersPerGeohash BoundedVec is full
-  tooManyCommunityIdentifiersPerGeohash('TooManyCommunityIdentifiersPerGeohash', 14),
+  tooManyCommunityIdentifiersPerGeohash(
+      'TooManyCommunityIdentifiersPerGeohash', 14),
 
   /// LocationsPerGeohash BoundedVec is full
   tooManyLocationsPerGeohash('TooManyLocationsPerGeohash', 15),

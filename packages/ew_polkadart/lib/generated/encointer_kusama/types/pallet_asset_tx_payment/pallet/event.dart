@@ -4,7 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i5;
 
-import '../../encointer_primitives/communities/community_identifier.dart' as _i4;
+import '../../encointer_primitives/communities/community_identifier.dart'
+    as _i4;
 import '../../sp_core/crypto/account_id32.dart' as _i3;
 
 /// The `Event` enum of this pallet
@@ -74,7 +75,8 @@ class $EventCodec with _i1.Codec<Event> {
         (value as AssetTxFeePaid).encodeTo(output);
         break;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -84,7 +86,8 @@ class $EventCodec with _i1.Codec<Event> {
       case AssetTxFeePaid:
         return (value as AssetTxFeePaid)._sizeHint();
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -104,7 +107,9 @@ class AssetTxFeePaid extends Event {
       who: const _i1.U8ArrayCodec(32).decode(input),
       actualFee: _i1.U128Codec.codec.decode(input),
       tip: _i1.U128Codec.codec.decode(input),
-      assetId: const _i1.OptionCodec<_i4.CommunityIdentifier>(_i4.CommunityIdentifier.codec).decode(input),
+      assetId: const _i1.OptionCodec<_i4.CommunityIdentifier>(
+              _i4.CommunityIdentifier.codec)
+          .decode(input),
     );
   }
 
@@ -135,7 +140,10 @@ class AssetTxFeePaid extends Event {
     size = size + const _i3.AccountId32Codec().sizeHint(who);
     size = size + _i1.U128Codec.codec.sizeHint(actualFee);
     size = size + _i1.U128Codec.codec.sizeHint(tip);
-    size = size + const _i1.OptionCodec<_i4.CommunityIdentifier>(_i4.CommunityIdentifier.codec).sizeHint(assetId);
+    size = size +
+        const _i1.OptionCodec<_i4.CommunityIdentifier>(
+                _i4.CommunityIdentifier.codec)
+            .sizeHint(assetId);
     return size;
   }
 
@@ -156,7 +164,9 @@ class AssetTxFeePaid extends Event {
       tip,
       output,
     );
-    const _i1.OptionCodec<_i4.CommunityIdentifier>(_i4.CommunityIdentifier.codec).encodeTo(
+    const _i1.OptionCodec<_i4.CommunityIdentifier>(
+            _i4.CommunityIdentifier.codec)
+        .encodeTo(
       assetId,
       output,
     );
