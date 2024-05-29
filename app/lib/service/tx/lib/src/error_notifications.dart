@@ -59,17 +59,17 @@ ErrorNotificationMsg getLocalizedModuleErrorMsg(AppLocalizations l10n, RuntimeEr
       return (error as EncointerBalances).value0.errorMsg(l10n);
     // List the pallets we have available for an overview
     case System:
-    case ParachainSystem:
+    // case ParachainSystem:
     case Balances:
-    case XcmpQueue:
-    case PolkadotXcm:
-    case DmpQueue:
+    // case XcmpQueue:
+    // case PolkadotXcm:
+    // case DmpQueue:
     case Utility:
     case Treasury:
     case Proxy:
     case Scheduler:
-    case Collective:
-    case Membership:
+    // case Collective:
+    // case Membership:
     case EncointerScheduler:
     case EncointerCommunities:
     case EncointerBazaar:
