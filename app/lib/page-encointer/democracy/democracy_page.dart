@@ -22,9 +22,7 @@ class DemocracyPage extends StatefulWidget {
   State<DemocracyPage> createState() => _DemocracyPageState();
 }
 
-
 class _DemocracyPageState extends State<DemocracyPage> {
-
   late final AppStore _appStore;
 
   Map<BigInt, Proposal>? proposals;
@@ -63,26 +61,55 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final appConfig = RepositoryProvider.of<AppConfig>(context);
 
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
-    Widget proposalsList() {
+    Widget activeProposalList() {
       if (proposals == null || tallies == null) {
         return appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator();
       }
 
-      final proposalList = proposals!.entries.toList();
-      final tallyList = tallies!.entries.toList();
+      final activeProposals = proposals!.entries
+          .where((e) => e.value.state.runtimeType == Ongoing || e.value.state.runtimeType == Confirming)
+          .toList();
 
       return ListView.builder(
-          shrinkWrap: true,
-          itemCount: proposals!.length,
-          itemBuilder: (context, index) {
-            final proposalEntry = proposalList[index];
-            return ProposalTile(
-              proposalId: proposalEntry.key,
-              proposal: proposalEntry.value,
-              tally: tallyList[index].value,
-              params: democracyParams!,
-            );
-          }
+        shrinkWrap: true,
+        itemCount: activeProposals.length,
+        itemBuilder: (context, index) {
+          final proposalEntry = activeProposals[index];
+          return ProposalTile(
+            proposalId: proposalEntry.key,
+            proposal: proposalEntry.value,
+            tally: tallies![proposalEntry.key]!,
+            params: democracyParams!,
+          );
+        },
+      );
+    }
+
+    // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
+    Widget pastProposalList() {
+      if (proposals == null || tallies == null) {
+        return appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator();
+      }
+
+      final pastProposals = proposals!.entries
+          .where((e) =>
+              e.value.state.runtimeType == Cancelled ||
+              e.value.state.runtimeType == Enacted ||
+              e.value.state.runtimeType == Approved)
+          .toList();
+
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: pastProposals.length,
+        itemBuilder: (context, index) {
+          final proposalEntry = pastProposals[index];
+          return ProposalTile(
+            proposalId: proposalEntry.key,
+            proposal: proposalEntry.value,
+            tally: tallies![proposalEntry.key]!,
+            params: democracyParams!,
+          );
+        },
       );
     }
 
@@ -101,7 +128,9 @@ class _DemocracyPageState extends State<DemocracyPage> {
           child: Column(
             children: <Widget>[
               const Text('Proposals up for vote'),
-              proposalsList()
+              activeProposalList(),
+              const Text('Past proposals'),
+              pastProposalList(),
             ],
           ),
         ),
