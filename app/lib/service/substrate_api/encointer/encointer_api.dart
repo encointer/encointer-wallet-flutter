@@ -732,7 +732,7 @@ class EncointerApi {
 
   Future<Map<BigInt, Proposal>> getProposals({BlockHash? at}) async {
     try {
-      final prefix = encointerKusama.query.encointerDemocracy.talliesMapPrefix();
+      final prefix = encointerKusama.query.encointerDemocracy.proposalsMapPrefix();
       // Todo: Handle case if we have more than 100 proposals
       final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 100);
 
@@ -748,7 +748,7 @@ class EncointerApi {
         (key) => encointerKusama.query.encointerDemocracy
             .proposals(key, at: at ?? store.chain.latestHash)
             // We know that the proposal exists because we fetched the keys before.
-            .then((maybeTally) => maybeTally!),
+            .then((maybeProposal) => maybeProposal!),
       ));
 
       final proposalMap = Map.fromIterables(proposalIds, proposals);
@@ -762,8 +762,8 @@ class EncointerApi {
 
   Future<Map<BigInt, Tally>> getTallies({BlockHash? at}) async {
     try {
-      final prefix = encointerKusama.query.encointerDemocracy.proposalsMapPrefix();
-      // Todo: Handle case if we have more than 100 proposals
+      final prefix = encointerKusama.query.encointerDemocracy.talliesMapPrefix();
+      // Todo: Handle case if we have more than 100 tallies
       final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 100);
 
       // Keys including storage prefix.
@@ -777,8 +777,8 @@ class EncointerApi {
       final tallies = await Future.wait(proposalIds.map(
         (key) => encointerKusama.query.encointerDemocracy
             .tallies(key, at: at ?? store.chain.latestHash)
-            // We know that the proposal exists because we fetched the keys before.
-            .then((maybeProposal) => maybeProposal!),
+            // We know that the tally exists because we fetched the keys before.
+            .then((maybeTally) => maybeTally!),
       ));
 
       final tallyMap = Map.fromIterables(proposalIds, tallies);
