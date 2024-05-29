@@ -74,7 +74,7 @@ class ProposalTile extends StatelessWidget {
   }
 
   bool isPassing() {
-    if (tally.turnout < params) {
+    if (tally.turnout < params.minTurnout) {
       return false;
     }
 

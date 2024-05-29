@@ -5,8 +5,8 @@ import 'dart:typed_data' as _i8;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i5;
 
-import '../types/encointer_node_notee_runtime/proxy_type.dart' as _i11;
-import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i9;
+import '../types/encointer_kusama_runtime/proxy_type.dart' as _i11;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i9;
 import '../types/pallet_proxy/announcement.dart' as _i6;
 import '../types/pallet_proxy/pallet/call.dart' as _i12;
 import '../types/pallet_proxy/proxy_definition.dart' as _i4;

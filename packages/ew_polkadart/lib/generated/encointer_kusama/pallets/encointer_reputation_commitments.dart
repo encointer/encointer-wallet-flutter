@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i8;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i9;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i9;
 import '../types/encointer_primitives/communities/community_identifier.dart' as _i4;
 import '../types/pallet_encointer_reputation_commitments/pallet/call.dart' as _i10;
 import '../types/primitive_types/h256.dart' as _i6;

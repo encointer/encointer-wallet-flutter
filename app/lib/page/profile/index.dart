@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page-encointer/democracy/democracy_page.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -135,6 +136,14 @@ class _ProfileState extends State<Profile> {
                     children: _buildAccountList(),
                   ),
                 ),
+              ),
+              ListTile(
+                title: Text(
+                  'Democracy',
+                  style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                onTap: () => Navigator.pushNamed(context, DemocracyPage.route),
               ),
               ListTile(
                 title: Text(

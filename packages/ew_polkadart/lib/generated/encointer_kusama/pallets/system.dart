@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i16;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i17;
+import '../types/encointer_kusama_runtime/runtime_call.dart' as _i17;
 import '../types/frame_support/dispatch/per_dispatch_class_1.dart' as _i5;
 import '../types/frame_support/dispatch/per_dispatch_class_2.dart' as _i20;
 import '../types/frame_support/dispatch/per_dispatch_class_3.dart' as _i23;
