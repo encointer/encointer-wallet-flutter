@@ -115,7 +115,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Democracy'),
+        title: Text(l10n.democracy),
         leading: IconButton(
           key: const Key(EWTestKeys.closeAccountManage),
           onPressed: () => Navigator.pop(context),
@@ -127,9 +127,9 @@ class _DemocracyPageState extends State<DemocracyPage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: <Widget>[
-              const Text('Proposals up for vote'),
+              Text(l10n.proposalsUpForVote),
               activeProposalList(),
-              const Text('Past proposals'),
+              Text(l10n.proposalsPast),
               pastProposalList(),
             ],
           ),
