@@ -772,7 +772,7 @@ class EncointerApi {
       final proposalIds = keys.map((key) => U128Codec.codec.decode(ByteInput(key.sublist(32))));
 
       // Keys including storage prefix.
-      Log.d("[getProposals] ProposalIds: $proposalIds')}");
+      Log.d('[getProposals] ProposalIds: $proposalIds)}');
 
       final tallies = await Future.wait(proposalIds.map(
         (key) => encointerKusama.query.encointerDemocracy
