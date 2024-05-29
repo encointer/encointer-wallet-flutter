@@ -56,6 +56,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final titleLargeBlue = context.titleLarge.copyWith(color: context.colorScheme.primary);
     final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
     final store = context.watch<AppStore>();
     final appConfig = RepositoryProvider.of<AppConfig>(context);
@@ -69,6 +70,13 @@ class _DemocracyPageState extends State<DemocracyPage> {
       final activeProposals = proposals!.entries
           .where((e) => e.value.state.runtimeType == Ongoing || e.value.state.runtimeType == Confirming)
           .toList();
+
+      if (activeProposals.isEmpty) {
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(l10n.proposalsEmpty, style: h3Grey),
+        );
+      }
 
       return ListView.builder(
         shrinkWrap: true,
@@ -97,6 +105,13 @@ class _DemocracyPageState extends State<DemocracyPage> {
               e.value.state.runtimeType == Enacted ||
               e.value.state.runtimeType == Approved)
           .toList();
+
+      if (pastProposals.isEmpty) {
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(l10n.proposalsEmpty, style: h3Grey),
+        );
+      }
 
       return ListView.builder(
         shrinkWrap: true,
@@ -127,9 +142,9 @@ class _DemocracyPageState extends State<DemocracyPage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: <Widget>[
-              Text(l10n.proposalsUpForVote),
+              Text(l10n.proposalsUpForVote, style: titleLargeBlue),
               activeProposalList(),
-              Text(l10n.proposalsPast),
+              Text(l10n.proposalsPast, style: titleLargeBlue),
               pastProposalList(),
             ],
           ),

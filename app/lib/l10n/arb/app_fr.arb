@@ -194,6 +194,7 @@
     "pleaseConfirmYourNewPin": "Confirme le nouveau NIP",
     "preview": "Aperçu",
     "print": "Imprimer",
+    "proposalsEmpty": "Pas de propositions",
     "proposalsUpForVote": "Propositions soumises au vote",
     "proposalsPast": "Propositions antérieures",
     "qrScan": "Scannez le code QR",
