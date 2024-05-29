@@ -344,5 +344,18 @@
                 "example": "0.00"
             }
         }
+    },
+    "proposalUpdateNominalIncome": "Ajuster le revenu communautaire à {value} {currency}",
+    "@proposalUpdateNominalIncome": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "currency": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
     }
 }

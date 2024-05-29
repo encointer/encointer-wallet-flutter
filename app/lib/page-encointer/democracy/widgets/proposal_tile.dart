@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
+import 'package:ew_substrate_fixed/substrate_fixed.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
@@ -38,7 +39,7 @@ class ProposalTile extends StatelessWidget {
         child: Text(proposalId.toString(), style: titleSmall),
       ),
       title: Text(
-        'Update community income to 22 Leu',
+        getProposalActionTitle(context, proposal.action),
         style: context.titleMedium.copyWith(color: context.colorScheme.primary),
       ),
       subtitle: Column(
@@ -113,4 +114,20 @@ double approvalThreshold(int electorate, int turnout) {
   final sqrtT = sqrt(turnout);
 
   return (sqrtE * sqrtT) / ((sqrtE / sqrtT) + 1);
+}
+
+String getProposalActionTitle(BuildContext context, ProposalAction action) {
+  final l10n = context.l10n;
+
+  return switch (action.runtimeType) {
+    AddLocation => 'Add Location',
+    RemoveLocation => 'Remove Location',
+    UpdateDemurrage => 'Update Demurrage',
+    UpdateNominalIncome => l10n.proposalUpdateNominalIncome(
+        u64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
+        'Leu',
+      ),
+    SetInactivityTimeout => 'Set Inactivity Timeout',
+    _ => 'Unsupported action found',
+  };
 }

@@ -4,7 +4,8 @@ library ew_polkadart;
 export 'generated/encointer_kusama/encointer_kusama.dart' show EncointerKusama, Constants, Queries, Rpc;
 export 'generated/encointer_kusama/types/tuples.dart' show Tuple2;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal.dart' show Proposal;
-export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action.dart' show ProposalAction;
+export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action.dart'
+    show ProposalAction, AddLocation, RemoveLocation, UpdateDemurrage, UpdateNominalIncome, SetInactivityTimeout;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action_identifier.dart'
     show ProposalActionIdentifier;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart'

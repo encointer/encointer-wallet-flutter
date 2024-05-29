@@ -496,5 +496,18 @@
                 "example": "0.00"
             }
         }
+    },
+    "proposalUpdateNominalIncome": "Update community income to {value} {currency}",
+    "@proposalUpdateNominalIncome": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "currency": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
     }
 }
