@@ -778,10 +778,10 @@ class EncointerApi {
   Future<List<BigInt>> getProposalIds({BigInt? mostRecent, BigInt? count, BlockHash? at}) async {
     final from = mostRecent ?? await encointerKusama.query.encointerDemocracy.proposalCount(at: at);
     final c = count ?? BigInt.one;
-    final lowerBound = max(1, (from - c).toInt());
+    final lowerBound = max(0, (from - c).toInt());
 
-    final proposalIds = [for(var i=lowerBound; i< from.toInt(); i+=1) BigInt.from(i)];
-    return proposalIds.reversed.toList();
+    final proposalIds = [for(var i=from.toInt(); i > lowerBound; i-=1) BigInt.from(i)];
+    return proposalIds;
   }
 
   DemocracyParams democracyParams() {
