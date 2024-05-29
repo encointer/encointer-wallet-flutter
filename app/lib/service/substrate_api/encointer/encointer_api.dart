@@ -729,10 +729,8 @@ class EncointerApi {
     }
   }
 
-  Future<Map<BigInt, Proposal>> getProposalHistory({BigInt? mostRecent, BigInt? count, BlockHash? at}) async {
+  Future<Map<BigInt, Proposal>> getProposals(List<BigInt> proposalIds, {BlockHash? at}) async {
     try {
-      final proposalIds = await getProposalIds(mostRecent: mostRecent, count: count, at: at);
-
       // Keys including storage prefix.
       Log.d("[getProposals] ProposalIds: $proposalIds')}");
 
@@ -752,10 +750,8 @@ class EncointerApi {
     }
   }
 
-  Future<Map<BigInt, Tally>> getTallies({BigInt? mostRecent, BigInt? count, BlockHash? at}) async {
+  Future<Map<BigInt, Tally>> getTallies(List<BigInt> proposalIds, {BlockHash? at}) async {
     try {
-      final proposalIds = await getProposalIds(mostRecent: mostRecent, count: count, at: at);
-
       // Keys including storage prefix.
       Log.d('[getProposals] ProposalIds: $proposalIds)}');
 
@@ -775,7 +771,7 @@ class EncointerApi {
     }
   }
 
-  Future<List<BigInt>> getProposalIds({BigInt? mostRecent, BigInt? count, BlockHash? at}) async {
+  Future<List<BigInt>> getHistoricProposalIds({BigInt? mostRecent, BigInt? count, BlockHash? at}) async {
     final from = mostRecent ?? await encointerKusama.query.encointerDemocracy.proposalCount(at: at);
     final c = count ?? BigInt.one;
     final lowerBound = max(0, (from - c).toInt());
