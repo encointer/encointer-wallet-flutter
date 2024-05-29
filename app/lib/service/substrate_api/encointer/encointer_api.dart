@@ -26,7 +26,17 @@ import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/encointer_types.dart' show ProofOfAttendance;
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show BlockHash, ByteInput, EncointerKusama, RuntimeVersion, SequenceCodec, StorageChangeSet, Tuple2;
+    show
+        BlockHash,
+        ByteInput,
+        EncointerKusama,
+        Tally,
+        Proposal,
+        RuntimeVersion,
+        SequenceCodec,
+        StorageChangeSet,
+        Tuple2,
+        U128Codec;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
@@ -715,6 +725,66 @@ class EncointerApi {
       return f;
     } catch (e, s) {
       Log.e('[getAllFaucets]', '$e', s);
+      return Map.of({});
+    }
+  }
+
+  Future<Map<BigInt, Proposal>> getProposals({BlockHash? at}) async {
+    try {
+      final prefix = encointerKusama.query.encointerDemocracy.talliesMapPrefix();
+      // Todo: Handle case if we have more than 100 proposals
+      final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 100);
+
+      // Keys including storage prefix.
+      Log.d("[getProposals] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
+
+      final proposalIds = keys.map((key) => U128Codec.codec.decode(ByteInput(key.sublist(32))));
+
+      // Keys including storage prefix.
+      Log.d("[getProposals] ProposalIds: $proposalIds')}");
+
+      final proposals = await Future.wait(proposalIds.map(
+        (key) => encointerKusama.query.encointerDemocracy
+            .proposals(key, at: at ?? store.chain.latestHash)
+            // We know that the proposal exists because we fetched the keys before.
+            .then((maybeTally) => maybeTally!),
+      ));
+
+      final proposalMap = Map.fromIterables(proposalIds, proposals);
+      Log.d('[getProposals] proposals: $proposalMap');
+      return proposalMap;
+    } catch (e, s) {
+      Log.e('[getProposals]', '$e', s);
+      return Map.of({});
+    }
+  }
+
+  Future<Map<BigInt, Tally>> getTallies({BlockHash? at}) async {
+    try {
+      final prefix = encointerKusama.query.encointerDemocracy.proposalsMapPrefix();
+      // Todo: Handle case if we have more than 100 proposals
+      final keys = await encointerKusama.rpc.state.getKeysPaged(key: prefix, count: 100);
+
+      // Keys including storage prefix.
+      Log.d("[getTallies] storageKeys: ${keys.map((key) => '0x${hex.encode(key)}')}");
+
+      final proposalIds = keys.map((key) => U128Codec.codec.decode(ByteInput(key.sublist(32))));
+
+      // Keys including storage prefix.
+      Log.d("[getProposals] ProposalIds: $proposalIds')}");
+
+      final tallies = await Future.wait(proposalIds.map(
+            (key) => encointerKusama.query.encointerDemocracy
+            .tallies(key, at: at ?? store.chain.latestHash)
+            // We know that the proposal exists because we fetched the keys before.
+            .then((maybeProposal) => maybeProposal!),
+      ));
+
+      final tallyMap = Map.fromIterables(proposalIds, tallies);
+      Log.d('[getTallies] tallies: $tallyMap');
+      return tallyMap;
+    } catch (e, s) {
+      Log.e('[getTallies]', '$e', s);
       return Map.of({});
     }
   }
