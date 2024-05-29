@@ -27,6 +27,7 @@ class ProposalTile extends StatelessWidget {
 
     final turnout = tally.turnout;
     final electorateSize = proposal.electorateSize;
+    final threshold = approvalThreshold(electorateSize.toInt(), turnout.toInt());
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(),
@@ -42,7 +43,7 @@ class ProposalTile extends StatelessWidget {
       subtitle: Column(
         children: [
           Text('Turnout: $turnout/$electorateSize'),
-          Text('Approval Threshold: ${approvalThreshold(electorateSize.toInt(), turnout.toInt())}%'),
+          Text('Approval Threshold: ${threshold.toStringAsFixed(2)}%'),
           passingOrFailingText()
         ],
       ),
@@ -51,7 +52,6 @@ class ProposalTile extends StatelessWidget {
   }
 
   Widget voteButtonOrProposalStatus() {
-
     return switch (proposal.state.runtimeType) {
       Ongoing => const Text('Ongoing'),
       Confirming => const Text('Confirming'),
@@ -63,7 +63,10 @@ class ProposalTile extends StatelessWidget {
   }
 
   Widget passingOrFailingText() {
-    final ayeRatio = tally.ayes / proposal.electorateSize;
+    var ayeRatio = 0.0;
+    if (proposal.electorateSize != BigInt.zero) {
+      ayeRatio = tally.ayes / proposal.electorateSize;
+    }
     final percentage = (ayeRatio * 100).toStringAsFixed(2);
 
     if (isPassing()) {
@@ -91,6 +94,8 @@ bool positiveTurnoutBias(int electorate, int turnout, int ayes) {
 }
 
 double approvalThreshold(int electorate, int turnout) {
+  if (electorate == 0 || turnout == 0) return 0;
+
   final sqrtE = sqrt(electorate);
   final sqrtT = sqrt(turnout);
 
