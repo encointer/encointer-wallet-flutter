@@ -70,6 +70,16 @@ class ProposalTile extends StatelessWidget {
     }
     final percentage = (ayeRatio * 100).toStringAsFixed(2);
 
+    // This is for past proposals
+    if (proposal.state.runtimeType == Approved || proposal.state.runtimeType == Enacted) {
+      return Text('Passed with $percentage% Aye', style: const TextStyle(color: Colors.green));
+    }
+
+    if (proposal.state.runtimeType == Cancelled) {
+      return Text('Failed with $percentage% Aye', style: const TextStyle(color: Colors.red));
+    }
+
+    // This is for current proposals
     if (isPassing()) {
       return Text('Currently passing: $percentage% Aye', style: const TextStyle(color: Colors.green));
     } else {
