@@ -147,7 +147,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
       appBar: AppBar(
         title: Text(l10n.democracy),
         leading: IconButton(
-          key: const Key(EWTestKeys.closeAccountManage),
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.close),
         ),
