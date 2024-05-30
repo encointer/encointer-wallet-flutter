@@ -23,6 +23,9 @@ import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_u128.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
+import 'package:ew_polkadart/ew_polkadart.dart' show Vote;
+import 'package:ew_polkadart/ew_polkadart.dart' as pd;
+
 /// Helpers to submit transactions.
 
 /// Submit tx to the chain.
@@ -384,6 +387,40 @@ Future<void> submitEncointerTransferAll(
     notification,
     onFinish: onFinish,
     onError: onError,
+  );
+}
+
+typedef ReputationTuple = Tuple2<pd.CommunityIdentifier, int>;
+typedef Reputations = List<ReputationTuple>;
+
+Future<void> submitDemocracyVote(
+    BuildContext context,
+    AppStore store,
+    Api api,
+    KeyringAccount signer,
+    BigInt proposalId,
+    Vote vote,
+    Reputations reputations, {
+      required CommunityIdentifier? txPaymentAsset,
+    }) async {
+  final call = api.encointer.encointerKusama.tx.encointerDemocracy.vote(
+    proposalId: proposalId,
+    vote: vote,
+    reputations: reputations,
+  );
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.faucetDrip(context.l10n),
   );
 }
 

@@ -5,6 +5,7 @@ import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_polkadart/ew_polkadart.dart'
     show
@@ -14,7 +15,8 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         RemoveLocation,
         SetInactivityTimeout,
         UpdateDemurrage,
-        UpdateNominalIncome;
+        UpdateNominalIncome,
+        Vote;
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
@@ -22,10 +24,12 @@ class VoteButton extends StatefulWidget {
   const VoteButton({
     super.key,
     required this.proposal,
+    required this.proposalId,
     required this.purposeId,
   });
 
   final Proposal proposal;
+  final BigInt proposalId;
   final BigInt purposeId;
 
   @override
@@ -33,7 +37,7 @@ class VoteButton extends StatefulWidget {
 }
 
 class _VoteButtonState extends State<VoteButton> {
-  late Future<Map<int, CommunityIdentifier>> future;
+  late Future<Reputations> future;
 
   int? remainingClaims;
 
@@ -48,19 +52,24 @@ class _VoteButtonState extends State<VoteButton> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final store = context.read<AppStore>();
 
     return FutureBuilder(
       future: future,
-      builder: (BuildContext context, AsyncSnapshot<Map<int, CommunityIdentifier>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<Reputations> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.isNotEmpty) {
             return SubmitButtonSmall(
               onPressed: (context) async {
-                // await _submitFaucetDripTxs(
-                //   context,
-                //   snapshot.data!,
-                //   widget.faucetPubKey,
-                // );
+                await submitDemocracyVote(
+                    context,
+                    store,
+                    webApi,
+                    store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                    widget.proposalId,
+                    Vote.aye,
+                    snapshot.data!,
+                    txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid));
                 future = _getUncommittedReputationIds(context);
                 setState(() {});
               },
@@ -78,7 +87,7 @@ class _VoteButtonState extends State<VoteButton> {
 
   /// Returns all reputation ids, which haven't been committed for this proposal's
   /// purpose id yet, i.e., can be used to vote currently.
-  Future<Map<int, CommunityIdentifier>> _getUncommittedReputationIds(BuildContext context) async {
+  Future<Reputations> _getUncommittedReputationIds(BuildContext context) async {
     final store = context.read<AppStore>();
     final address = store.account.currentAddress;
 
@@ -107,7 +116,7 @@ class _VoteButtonState extends State<VoteButton> {
 
     await Future.wait(futures);
 
-    return ids;
+    return ids.entries.map((e) => ReputationTuple(e.value.toPolkadart(), e.key)).toList();
   }
 }
 
