@@ -39,8 +39,6 @@ class VoteButton extends StatefulWidget {
 class _VoteButtonState extends State<VoteButton> {
   late Future<Reputations> future;
 
-  int? remainingClaims;
-
   @override
   void initState() {
     super.initState();
