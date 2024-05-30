@@ -21,7 +21,6 @@ class DemocracyPage extends StatefulWidget {
 }
 
 class _DemocracyPageState extends State<DemocracyPage> {
-
   Map<BigInt, Proposal>? proposals;
   Map<BigInt, Tally>? tallies;
   Map<BigInt, BigInt>? purposeIds;
@@ -62,11 +61,11 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final appConfig = RepositoryProvider.of<AppConfig>(context);
 
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
-    Widget activeProposalList() {
+    Iterable<Widget> activeProposalList() {
       if (proposals == null || tallies == null) {
         return appConfig.isIntegrationTest
-            ? const SizedBox.shrink()
-            : const Center(child: CupertinoActivityIndicator());
+            ? const [SizedBox.shrink()]
+            : const [Center(child: CupertinoActivityIndicator())];
       }
 
       final activeProposals = proposals!.entries
@@ -74,34 +73,33 @@ class _DemocracyPageState extends State<DemocracyPage> {
           .toList();
 
       if (activeProposals.isEmpty) {
-        return Padding(
-          padding: const EdgeInsets.all(16),
-          child: Text(l10n.proposalsEmpty, style: h3Grey),
-        );
+        return [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(l10n.proposalsEmpty, style: h3Grey),
+          )
+        ];
       }
 
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: activeProposals.length,
-        itemBuilder: (context, index) {
-          final proposalEntry = activeProposals[index];
-          return ProposalTile(
-            proposalId: proposalEntry.key,
-            proposal: proposalEntry.value,
-            tally: tallies![proposalEntry.key]!,
-            purposeId: purposeIds![proposalEntry.key]!,
-            params: democracyParams!,
-          );
-        },
-      );
+      return activeProposals
+          .map(
+            (proposalEntry) => ProposalTile(
+              proposalId: proposalEntry.key,
+              proposal: proposalEntry.value,
+              tally: tallies![proposalEntry.key]!,
+              purposeId: purposeIds![proposalEntry.key]!,
+              params: democracyParams!,
+            ),
+          )
+          .toList();
     }
 
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
-    Widget pastProposalList() {
+    Iterable<Widget> pastProposalList() {
       if (proposals == null || tallies == null) {
         return appConfig.isIntegrationTest
-            ? const SizedBox.shrink()
-            : const Center(child: CupertinoActivityIndicator());
+            ? [const SizedBox.shrink()]
+            : [const Center(child: CupertinoActivityIndicator())];
       }
 
       final pastProposals = proposals!.entries
@@ -112,27 +110,38 @@ class _DemocracyPageState extends State<DemocracyPage> {
           .toList();
 
       if (pastProposals.isEmpty) {
-        return Padding(
-          padding: const EdgeInsets.all(16),
-          child: Text(l10n.proposalsEmpty, style: h3Grey),
-        );
+        return [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(l10n.proposalsEmpty, style: h3Grey),
+          )
+        ];
       }
 
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: pastProposals.length,
-        itemBuilder: (context, index) {
-          final proposalEntry = pastProposals[index];
-          return ProposalTile(
-            proposalId: proposalEntry.key,
-            proposal: proposalEntry.value,
-            tally: tallies![proposalEntry.key]!,
-            purposeId: purposeIds![proposalEntry.key]!,
-            params: democracyParams!,
-          );
-        },
+      return pastProposals
+          .map(
+            (proposalEntry) => ProposalTile(
+          proposalId: proposalEntry.key,
+          proposal: proposalEntry.value,
+          tally: tallies![proposalEntry.key]!,
+          purposeId: purposeIds![proposalEntry.key]!,
+          params: democracyParams!,
+        ),
       );
     }
+
+    List<Widget> listViewWidgets() {
+      final widgets = <Widget>[
+        Text(l10n.proposalsUpForVote, style: titleLargeBlue),
+        ...activeProposalList(),
+        Text(l10n.proposalsPast, style: titleLargeBlue),
+        ...pastProposalList()
+      ];
+
+      return widgets;
+    }
+
+    final widgets = listViewWidgets();
 
     return Scaffold(
       appBar: AppBar(
@@ -146,13 +155,10 @@ class _DemocracyPageState extends State<DemocracyPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            children: <Widget>[
-              Text(l10n.proposalsUpForVote, style: titleLargeBlue),
-              activeProposalList(),
-              Text(l10n.proposalsPast, style: titleLargeBlue),
-              pastProposalList(),
-            ],
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: widgets.length,
+            itemBuilder: (context, index) => widgets[index]
           ),
         ),
       ),
