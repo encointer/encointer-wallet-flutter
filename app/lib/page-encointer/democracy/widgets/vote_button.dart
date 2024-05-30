@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/submit_button.dart';
@@ -58,7 +59,7 @@ class _VoteButtonState extends State<VoteButton> {
                 if (snapshot.data!.isNotEmpty) {
                   return SubmitButtonSmall(
                     onPressed: (context) async {
-                      await _showSubmitVoteDialog(store, snapshot.data!);
+                      await _showSubmitVoteDialog(store, snapshot.data!, widget.proposalId);
                     },
                     child: Text(l10n.claim),
                   );
@@ -72,23 +73,37 @@ class _VoteButtonState extends State<VoteButton> {
           );
   }
 
-  Future<void> _showSubmitVoteDialog(AppStore store, Reputations reputations) {
+  Future<void> _showSubmitVoteDialog(AppStore store, Reputations reputations, BigInt proposalId) {
+    final l10n = context.l10n;
+
     return AppAlert.showDialog(
       context,
-      title: const Text('Title'),
-      content: const Text('Do you approve?'),
+      title: Text('${l10n.proposal} $proposalId'),
+      content: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Text(l10n.proposalHowVote),
+      ),
       actions: <Widget>[
-        CupertinoButton(
-          onPressed: () => _submitDemocracyVote(store, Vote.aye, reputations),
-          child: const Text('Nay'),
-        ),
-        CupertinoButton(
-          onPressed: () => _submitDemocracyVote(store, Vote.aye, reputations),
-          child: const Text('Aye'),
-        ),
-        CupertinoButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancl'),
+        Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CupertinoButton(
+                  onPressed: () => _submitDemocracyVote(store, Vote.aye, reputations),
+                  child: Text(l10n.proposalAye, style: const TextStyle(color: Colors.green)),
+                ),
+                CupertinoButton(
+                  onPressed: () => _submitDemocracyVote(store, Vote.aye, reputations),
+                  child: Text(l10n.proposalNay, style: const TextStyle(color: Colors.red)),
+                ),
+              ],
+            ),
+            CupertinoButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(l10n.cancel),
+            ),
+          ],
         ),
       ],
     );
