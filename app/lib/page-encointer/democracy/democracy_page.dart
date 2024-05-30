@@ -3,13 +3,11 @@ import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.d
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 
@@ -23,7 +21,6 @@ class DemocracyPage extends StatefulWidget {
 }
 
 class _DemocracyPageState extends State<DemocracyPage> {
-  late final AppStore _appStore;
 
   Map<BigInt, Proposal>? proposals;
   Map<BigInt, Tally>? tallies;
@@ -33,7 +30,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
   @override
   void initState() {
     super.initState();
-    _appStore = context.read<AppStore>();
     _init();
   }
 
@@ -63,7 +59,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final l10n = context.l10n;
     final titleLargeBlue = context.titleLarge.copyWith(color: context.colorScheme.primary);
     final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
-    final store = context.watch<AppStore>();
     final appConfig = RepositoryProvider.of<AppConfig>(context);
 
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
