@@ -94,6 +94,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
             proposalId: proposalEntry.key,
             proposal: proposalEntry.value,
             tally: tallies![proposalEntry.key]!,
+            purposeId: purposeIds![proposalEntry.key]!,
             params: democracyParams!,
           );
         },
@@ -131,6 +132,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
             proposalId: proposalEntry.key,
             proposal: proposalEntry.value,
             tally: tallies![proposalEntry.key]!,
+            purposeId: purposeIds![proposalEntry.key]!,
             params: democracyParams!,
           );
         },
