@@ -80,7 +80,11 @@ class ProposalTile extends StatelessWidget {
         return const Text('Approved', style: TextStyle(color: Colors.red));
       case Ongoing:
       case Confirming:
-        return VoteButton(proposal: proposal, proposalId: proposalId, purposeId: purposeId);
+        return SizedBox(
+          height: 50,
+          width: 60,
+          child: VoteButton(proposal: proposal, proposalId: proposalId, purposeId: purposeId),
+        );
       default:
         // should never happen.
         return const Text('Unknown Proposal State');

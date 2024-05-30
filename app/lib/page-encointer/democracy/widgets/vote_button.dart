@@ -37,13 +37,14 @@ class VoteButton extends StatefulWidget {
 }
 
 class _VoteButtonState extends State<VoteButton> {
-  late Future<Reputations> future;
+  Future<Reputations>? future;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       future = _getUncommittedReputationIds(context);
+      setState(() {});
     });
   }
 
@@ -52,35 +53,37 @@ class _VoteButtonState extends State<VoteButton> {
     final l10n = context.l10n;
     final store = context.read<AppStore>();
 
-    return FutureBuilder(
-      future: future,
-      builder: (BuildContext context, AsyncSnapshot<Reputations> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data!.isNotEmpty) {
-            return SubmitButtonSmall(
-              onPressed: (context) async {
-                await submitDemocracyVote(
-                    context,
-                    store,
-                    webApi,
-                    store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-                    widget.proposalId,
-                    Vote.aye,
-                    snapshot.data!,
-                    txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid));
-                future = _getUncommittedReputationIds(context);
-                setState(() {});
-              },
-              child: Text(l10n.claim),
-            );
-          } else {
-            return SubmitButtonSmall(child: Text(l10n.claim));
-          }
-        } else {
-          return const CupertinoActivityIndicator();
-        }
-      },
-    );
+    return future == null
+        ? const Center(child: CupertinoActivityIndicator())
+        : FutureBuilder(
+            future: future,
+            builder: (BuildContext context, AsyncSnapshot<Reputations> snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data!.isNotEmpty) {
+                  return SubmitButtonSmall(
+                    onPressed: (context) async {
+                      await submitDemocracyVote(
+                          context,
+                          store,
+                          webApi,
+                          store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                          widget.proposalId,
+                          Vote.aye,
+                          snapshot.data!,
+                          txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid));
+                      future = _getUncommittedReputationIds(context);
+                      setState(() {});
+                    },
+                    child: Text(l10n.claim),
+                  );
+                } else {
+                  return SubmitButtonSmall(child: Text(l10n.claim));
+                }
+              } else {
+                return const CupertinoActivityIndicator();
+              }
+            },
+          );
   }
 
   /// Returns all reputation ids, which haven't been committed for this proposal's
