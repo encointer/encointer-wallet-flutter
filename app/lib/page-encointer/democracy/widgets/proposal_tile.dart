@@ -82,13 +82,14 @@ class ProposalTile extends StatelessWidget {
   }
 
   Widget voteButtonOrProposalStatus(BuildContext context) {
+    final l10n = context.l10n;
     switch (proposal.state.runtimeType) {
       case Cancelled:
-      return const Text('Cancelled', style: TextStyle(color: Colors.red));
+      return Text(l10n.proposalCancelled, style: const TextStyle(color: Colors.red));
       case Enacted:
-      return const Text('Enacted', style: TextStyle(color: Colors.green));
+      return Text(l10n.proposalEnacted, style: const TextStyle(color: Colors.green));
       case Approved:
-      return const Text('Approved', style: TextStyle(color: Colors.green));
+      return Text(l10n.proposalApproved, style: const TextStyle(color: Colors.green));
       case Ongoing:
       case Confirming:
         return SizedBox(
