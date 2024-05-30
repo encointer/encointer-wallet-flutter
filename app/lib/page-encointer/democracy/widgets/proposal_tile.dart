@@ -1,27 +1,12 @@
-import 'dart:math';
+import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/page-encointer/democracy/widgets/vote_button.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
-import 'package:ew_substrate_fixed/substrate_fixed.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart'
-    show
-        AddLocation,
-        Approved,
-        Cancelled,
-        Confirming,
-        Enacted,
-        Ongoing,
-        Proposal,
-        ProposalAction,
-        RemoveLocation,
-        SetInactivityTimeout,
-        Tally,
-        UpdateDemurrage,
-        UpdateNominalIncome;
+import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Cancelled, Confirming, Enacted, Ongoing, Proposal, Tally;
 
 class ProposalTile extends StatelessWidget {
   const ProposalTile({
@@ -63,35 +48,14 @@ class ProposalTile extends StatelessWidget {
         children: [
           Text('Turnout: $turnout/$electorateSize'),
           Text('Approval Threshold: ${threshold.toStringAsFixed(2)}%'),
-          passingOrFailingText(context)
+          passingOrFailingText(context, proposal, tally, params)
         ],
       ),
       trailing: voteButtonOrProposalStatus(context),
     );
   }
 
-  Widget voteButtonOrProposalStatus(BuildContext context) {
-    switch (proposal.state.runtimeType) {
-      case Cancelled:
-        return const Text('Cancelled', style: TextStyle(color: Colors.red));
-      case Enacted:
-        return const Text('Enacted', style: TextStyle(color: Colors.green));
-      case Approved:
-        return const Text('Approved', style: TextStyle(color: Colors.green));
-      case Ongoing:
-      case Confirming:
-        return SizedBox(
-          height: 50,
-          width: 60,
-          child: VoteButton(proposal: proposal, proposalId: proposalId, purposeId: purposeId),
-        );
-      default:
-        // should never happen.
-        return const Text('Unknown Proposal State');
-    }
-  }
-
-  Widget passingOrFailingText(BuildContext context) {
+  Widget passingOrFailingText(BuildContext context, Proposal proposal, Tally tally, DemocracyParams params) {
     final l10n = context.l10n;
 
     var ayeRatio = 0.0;
@@ -110,51 +74,31 @@ class ProposalTile extends StatelessWidget {
     }
 
     // This is for current proposals
-    if (isPassing()) {
+    if (isPassing(tally, proposal.electorateSize, params)) {
       return Text(l10n.proposalIsPassing(percentage), style: const TextStyle(color: Colors.green));
     } else {
       return Text(l10n.proposalIsFailing(percentage), style: const TextStyle(color: Colors.red));
     }
   }
 
-  bool isPassing() {
-    if (tally.turnout < params.minTurnout) {
-      return false;
+  Widget voteButtonOrProposalStatus(BuildContext context) {
+    switch (proposal.state.runtimeType) {
+      case Cancelled:
+      // return const Text('Cancelled', style: TextStyle(color: Colors.red));
+      case Enacted:
+      // return const Text('Enacted', style: TextStyle(color: Colors.green));
+      case Approved:
+      // return const Text('Approved', style: TextStyle(color: Colors.green));
+      case Ongoing:
+      case Confirming:
+        return SizedBox(
+          height: 50,
+          width: 60,
+          child: VoteButton(proposal: proposal, proposalId: proposalId, purposeId: purposeId),
+        );
+      default:
+        // should never happen.
+        return const Text('Unknown Proposal State');
     }
-
-    return positiveTurnoutBias(
-      proposal.electorateSize.toInt(),
-      tally.turnout.toInt(),
-      tally.ayes.toInt(),
-    );
   }
-}
-
-bool positiveTurnoutBias(int electorate, int turnout, int ayes) {
-  return ayes > approvalThreshold(electorate, turnout);
-}
-
-double approvalThreshold(int electorate, int turnout) {
-  if (electorate == 0 || turnout == 0) return 0;
-
-  final sqrtE = sqrt(electorate);
-  final sqrtT = sqrt(turnout);
-
-  return (sqrtE * sqrtT) / ((sqrtE / sqrtT) + 1);
-}
-
-String getProposalActionTitle(BuildContext context, ProposalAction action) {
-  final l10n = context.l10n;
-
-  return switch (action.runtimeType) {
-    AddLocation => 'Add Location',
-    RemoveLocation => 'Remove Location',
-    UpdateDemurrage => 'Update Demurrage',
-    UpdateNominalIncome => l10n.proposalUpdateNominalIncome(
-        u64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
-        'Leu',
-      ),
-    SetInactivityTimeout => 'Set Inactivity Timeout',
-    _ => 'Unsupported action found',
-  };
 }

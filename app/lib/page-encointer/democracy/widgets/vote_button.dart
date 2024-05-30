@@ -8,15 +8,10 @@ import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:ew_polkadart/ew_polkadart.dart'
     show
-        AddLocation,
         Proposal,
-        ProposalAction,
-        RemoveLocation,
-        SetInactivityTimeout,
-        UpdateDemurrage,
-        UpdateNominalIncome,
         Vote;
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
@@ -147,23 +142,5 @@ class _VoteButtonState extends State<VoteButton> {
     await Future.wait(futures);
 
     return ids.entries.map((e) => ReputationTuple(e.value.toPolkadart(), e.key)).toList();
-  }
-}
-
-et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action) {
-  switch (action.runtimeType) {
-    case AddLocation:
-      return (action as AddLocation).value0;
-    case RemoveLocation:
-      return (action as RemoveLocation).value0;
-    case UpdateDemurrage:
-      return (action as UpdateDemurrage).value0;
-    case UpdateNominalIncome:
-      return (action as UpdateNominalIncome).value0;
-    case SetInactivityTimeout:
-      // This is a global action hence all communities can vote for it.
-      return null;
-    default:
-      throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
 }
