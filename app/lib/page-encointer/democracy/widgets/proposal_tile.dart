@@ -33,25 +33,29 @@ class ProposalTile extends StatelessWidget {
     final electorateSize = proposal.electorateSize;
     final threshold = approvalThreshold(electorateSize.toInt(), turnout.toInt());
 
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(),
-      leading: SizedBox(
-        width: 20,
-        height: 20,
-        child: Text(proposalId.toString(), style: titleSmall),
-      ),
-      title: Text(
-        getProposalActionTitle(context, proposal.action),
-        style: context.titleMedium.copyWith(color: context.colorScheme.primary),
-      ),
-      subtitle: Column(
-        children: [
-          Text('Turnout: $turnout/$electorateSize'),
-          Text('Approval Threshold: ${threshold.toStringAsFixed(2)}%'),
-          passingOrFailingText(context, proposal, tally, params)
-        ],
-      ),
-      trailing: voteButtonOrProposalStatus(context),
+    return Column(
+      children: [
+        Text(
+          getProposalActionTitle(context, proposal.action),
+          style: context.titleMedium.copyWith(color: context.colorScheme.primary),
+        ),
+        ListTile(
+          contentPadding: const EdgeInsets.symmetric(),
+          leading: SizedBox(
+            width: 20,
+            height: 20,
+            child: Text(proposalId.toString(), style: titleSmall),
+          ),
+          subtitle: Column(
+            children: [
+              Text('Turnout: $turnout/$electorateSize'),
+              Text('Approval Threshold: ${threshold.toStringAsFixed(2)}%'),
+              passingOrFailingText(context, proposal, tally, params)
+            ],
+          ),
+          trailing: voteButtonOrProposalStatus(context),
+        ),
+      ],
     );
   }
 
