@@ -202,6 +202,8 @@
     "proposalCancelled": "Cancelled",
     "proposalEnacted": "Enacted",
     "proposalApproved": "Approved",
+    "proposalTurnout": "Turnout",
+    "proposalApprovalThreshold": "Approval Threshold",
     "proposalHowVote": "How do you vote?",
     "proposalsEmpty": "No proposals",
     "proposalsUpForVote": "Proposals up for vote",

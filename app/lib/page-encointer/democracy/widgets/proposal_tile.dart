@@ -26,7 +26,7 @@ class ProposalTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final l10n = context.l10n;
+    final l10n = context.l10n;
     final titleSmall = context.titleMedium;
 
     final turnout = tally.turnout;
@@ -48,8 +48,8 @@ class ProposalTile extends StatelessWidget {
           ),
           subtitle: Column(
             children: [
-              Text('Turnout: $turnout/$electorateSize'),
-              Text('Approval Threshold: ${threshold.toStringAsFixed(2)}%'),
+              Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
+              Text('${l10n.proposalApprovalThreshold}: ${threshold.toStringAsFixed(2)}%'),
               passingOrFailingText(context, proposal, tally, params)
             ],
           ),
