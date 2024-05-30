@@ -10,6 +10,9 @@ import 'package:ew_polkadart/encointer_types.dart' as et;
 import 'package:ew_polkadart/ew_polkadart.dart'
     show AddLocation, ProposalAction, RemoveLocation, SetInactivityTimeout, Tally, UpdateDemurrage, UpdateNominalIncome;
 
+/// Gets the localized proposal action title.
+///
+/// Todo: add localization for all variants.
 String getProposalActionTitle(BuildContext context, ProposalAction action) {
   final l10n = context.l10n;
 
@@ -26,6 +29,9 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
   };
 }
 
+/// Gets the community identifier from a proposal for community proposals.
+///
+/// Returns null for global proposals.
 et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action) {
   switch (action.runtimeType) {
     case AddLocation:
