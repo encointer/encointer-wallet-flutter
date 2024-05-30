@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -62,17 +63,7 @@ class _VoteButtonState extends State<VoteButton> {
                 if (snapshot.data!.isNotEmpty) {
                   return SubmitButtonSmall(
                     onPressed: (context) async {
-                      await submitDemocracyVote(
-                          context,
-                          store,
-                          webApi,
-                          store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-                          widget.proposalId,
-                          Vote.aye,
-                          snapshot.data!,
-                          txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid));
-                      future = _getUncommittedReputationIds(context);
-                      setState(() {});
+                      await _showSubmitVoteDialog(store, snapshot.data!);
                     },
                     child: Text(l10n.claim),
                   );
@@ -84,6 +75,44 @@ class _VoteButtonState extends State<VoteButton> {
               }
             },
           );
+  }
+
+  Future<void> _showSubmitVoteDialog(AppStore store, Reputations reputations) {
+    return AppAlert.showDialog(
+      context,
+      title: const Text('Title'),
+      content: const Text('Do you approve?'),
+      actions: <Widget>[
+        CupertinoButton(
+          onPressed: () => _submitDemocracyVote(store, Vote.aye, reputations),
+          child: const Text('Nay'),
+        ),
+        CupertinoButton(
+          onPressed: () => _submitDemocracyVote(store, Vote.aye, reputations),
+          child: const Text('Aye'),
+        ),
+        CupertinoButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancl'),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _submitDemocracyVote(AppStore store, Vote vote, Reputations reputations) async {
+    await submitDemocracyVote(
+      context,
+      store,
+      webApi,
+      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+      widget.proposalId,
+      Vote.aye,
+      reputations,
+      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+    );
+
+    future = _getUncommittedReputationIds(context);
+    setState(() {});
   }
 
   /// Returns all reputation ids, which haven't been committed for this proposal's
