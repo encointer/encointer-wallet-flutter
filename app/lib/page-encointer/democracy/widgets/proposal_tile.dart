@@ -75,9 +75,9 @@ class ProposalTile extends StatelessWidget {
       case Cancelled:
         return const Text('Cancelled', style: TextStyle(color: Colors.red));
       case Enacted:
-        return const Text('Enacted', style: TextStyle(color: Colors.red));
+        return const Text('Enacted', style: TextStyle(color: Colors.green));
       case Approved:
-        return const Text('Approved', style: TextStyle(color: Colors.red));
+        return const Text('Approved', style: TextStyle(color: Colors.green));
       case Ongoing:
       case Confirming:
         return SizedBox(
