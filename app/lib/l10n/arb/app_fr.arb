@@ -86,6 +86,8 @@
     "createPasswordError": "Le code NIP doit être composé d'au moins 4 chiffres et ne contenir aucun autre caractère",
     "deleteAccount": "supprimer",
     "democracy": "Démocratie",
+    "democracyVotedNotificationBody": "Tu as voté pour cette proposition.",
+    "democracyVotedNotificationTitle": "Voté",
     "detail": "Détail",
     "detailsEnter": "Entre tes détails.",
     "developer": "Mode développeur",

@@ -86,6 +86,8 @@
     "createPasswordError": "Der PIN muss aus mindestens 4 Ziffern bestehen und darf keine anderen Zeichen enthalten",
     "deleteAccount": "löschen",
     "democracy": "Demokratie",
+    "democracyVotedNotificationBody": "Du hast für diesen Vorschlag abgestimmt.",
+    "democracyVotedNotificationTitle": "Abgestimmt",
     "detail": "Detail",
     "detailsEnter": "Gib deine Details ein.",
     "developer": "Entwickler-Modus",

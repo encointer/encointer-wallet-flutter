@@ -86,6 +86,8 @@
     "createPasswordError": "PIN должен содержать не менее 4 цифр и никаких других знаков",
     "deleteAccount": "Удалить",
     "democracy": "Демократия",
+    "democracyVotedNotificationBody": "Вы проголосовали за это предложение.",
+    "democracyVotedNotificationTitle": "проголосовали",
     "detail": "Детали",
     "detailsEnter": "Введите свои данные",
     "developer": "Режим разработчика",
