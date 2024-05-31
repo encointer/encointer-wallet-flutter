@@ -61,10 +61,10 @@ class _VoteButtonState extends State<VoteButton> {
                     onPressed: (context) async {
                       await _showSubmitVoteDialog(store, snapshot.data!, widget.proposalId);
                     },
-                    child: Text(l10n.claim),
+                    child: Text(l10n.proposalVote),
                   );
                 } else {
-                  return SubmitButtonSmall(child: Text(l10n.claim));
+                  return SubmitButtonSmall(child: Text(l10n.proposalVote));
                 }
               } else {
                 return const CupertinoActivityIndicator();

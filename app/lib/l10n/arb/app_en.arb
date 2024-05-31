@@ -207,6 +207,7 @@
     "proposalsEmpty": "No proposals",
     "proposalsUpForVote": "Proposals up for vote",
     "proposalsPast": "Past Proposals",
+    "proposalVote": "Vote",
     "qrScan": "Scan QR code",
     "qrScanHintAccount": "Ask the recipient to scan the QR-code in the encointer app.",
     "rawSeed": "Raw Seed",

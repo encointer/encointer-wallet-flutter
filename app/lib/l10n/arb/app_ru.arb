@@ -207,6 +207,7 @@
     "proposalsEmpty": "Нет предложений",
     "proposalsUpForVote": "Предложения для голосования",
     "proposalsPast": "Предложения прошлых лет",
+    "proposalVote": "голосовать",
     "qrScan": "Сканируйте QR-код",
     "qrScanHintAccount": "Попросите получателя отсканировать QR-код в приложении Еncointer",
     "rawSeed": "Raw Seed",
