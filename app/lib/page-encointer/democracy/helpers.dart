@@ -1,9 +1,12 @@
 import 'dart:math';
 
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
@@ -16,18 +19,32 @@ import 'package:ew_polkadart/ew_polkadart.dart'
 String getProposalActionTitle(BuildContext context, ProposalAction action) {
   final l10n = context.l10n;
 
-  return switch (action.runtimeType) {
-    AddLocation => 'Add Location',
-    RemoveLocation => 'Remove Location',
-    UpdateDemurrage => 'Update Demurrage',
-    UpdateNominalIncome => l10n.proposalUpdateNominalIncome(
+  switch (action.runtimeType) {
+    case UpdateNominalIncome:
+      final store = context.read<AppStore>();
+      final cidPolkadart = getCommunityIdentifierFromProposal(action);
+      final cid = CommunityIdentifier(cidPolkadart!.geohash, cidPolkadart.digest);
+      return l10n.proposalUpdateNominalIncome(
         u64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
-        'Leu',
-      ),
-    SetInactivityTimeout => 'Set Inactivity Timeout',
-    _ => 'Unsupported action found',
-  };
+        store.encointer.communityStores![cid.toFmtString()]!.symbol!,
+      );
+    case UpdateDemurrage:
+      // Todo: calculate monthly demurrage
+      return l10n.proposalUpdateDemurrage(
+        u64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
+      );
+    case AddLocation:
+      return 'Add Location (unsupported)';
+    case RemoveLocation:
+      return 'Remove Location (unsupported)';
+    case SetInactivityTimeout:
+      return 'SetInactivity Timeout (unsupported)';
+    default:
+      throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
+  }
 }
+
+String demurragePerMonth()
 
 /// Gets the community identifier from a proposal for community proposals.
 ///
@@ -43,13 +60,12 @@ et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action
     case UpdateNominalIncome:
       return (action as UpdateNominalIncome).value0;
     case SetInactivityTimeout:
-    // This is a global action hence all communities can vote for it.
+      // This is a global action hence all communities can vote for it.
       return null;
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
 }
-
 
 bool isPassing(Tally tally, BigInt electorateSize, DemocracyParams params) {
   if (tally.turnout < params.minTurnout) {

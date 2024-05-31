@@ -378,5 +378,14 @@
                 "example": "LEU"
             }
         }
+    },
+    "proposalUpdateDemurrage": "Обновить Demurrage до {value}%/месяц",
+    "@proposalUpdateDemurrage": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
     }
 }
