@@ -29,7 +29,7 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
 
       return l10n.proposalUpdateNominalIncome(
         u64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
-        store.encointer.communityStores![cid.toFmtString()]!.symbol!,
+        store.encointer.communityStores![cid.toFmtString()]?.symbol ?? cid.toFmtString(),
       );
     case UpdateDemurrage:
       final blockProductionTime = webApi.encointer.encointerKusama.constant.timestamp.minimumPeriod;
