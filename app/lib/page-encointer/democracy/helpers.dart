@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
@@ -22,17 +23,21 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
   switch (action.runtimeType) {
     case UpdateNominalIncome:
       final store = context.read<AppStore>();
+
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
       final cid = CommunityIdentifier(cidPolkadart!.geohash, cidPolkadart.digest);
+
       return l10n.proposalUpdateNominalIncome(
         u64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
         store.encointer.communityStores![cid.toFmtString()]!.symbol!,
       );
     case UpdateDemurrage:
-      // Todo: calculate monthly demurrage
-      return l10n.proposalUpdateDemurrage(
-        u64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
-      );
+      final blockProductionTime = webApi.encointer.encointerKusama.constant.timestamp.minimumPeriod;
+
+      final demurrageDouble = u64F64Util.toDouble((action as UpdateDemurrage).value1.bits);
+      final d = demurragePerMonth(demurrageDouble, blockProductionTime);
+
+      return l10n.proposalUpdateDemurrage(d.toStringAsFixed(2));
     case AddLocation:
       return 'Add Location (unsupported)';
     case RemoveLocation:
@@ -44,7 +49,13 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
   }
 }
 
-String demurragePerMonth()
+double demurragePerMonth(double demurrage, BigInt blockProductionTime) {
+  return (1 - exp(-1 * demurrage * blocksPerMonth(blockProductionTime))) * 100;
+}
+
+double blocksPerMonth(BigInt blockProductionTime) {
+  return (86400 / blockProductionTime.toDouble()) * (365 / 12);
+}
 
 /// Gets the community identifier from a proposal for community proposals.
 ///
