@@ -394,15 +394,15 @@ typedef ReputationTuple = Tuple2<pd.CommunityIdentifier, int>;
 typedef Reputations = List<ReputationTuple>;
 
 Future<void> submitDemocracyVote(
-    BuildContext context,
-    AppStore store,
-    Api api,
-    KeyringAccount signer,
-    BigInt proposalId,
-    Vote vote,
-    Reputations reputations, {
-      required CommunityIdentifier? txPaymentAsset,
-    }) async {
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  BigInt proposalId,
+  Vote vote,
+  Reputations reputations, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
   final call = api.encointer.encointerKusama.tx.encointerDemocracy.vote(
     proposalId: proposalId,
     vote: vote,
