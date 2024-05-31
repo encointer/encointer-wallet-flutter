@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,7 @@ import 'package:encointer_wallet/store/app.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Cancelled, Confirming, Enacted, Ongoing, Proposal, Tally;
 
-class ProposalTile extends StatelessWidget {
+class ProposalTile extends StatefulWidget {
   const ProposalTile({
     super.key,
     required this.proposalId,
@@ -25,6 +26,29 @@ class ProposalTile extends StatelessWidget {
   final Tally tally;
   final BigInt purposeId;
   final DemocracyParams params;
+
+  @override
+  State<ProposalTile> createState() => _ProposalTileState();
+}
+
+class _ProposalTileState extends State<ProposalTile> {
+  @override
+  void initState() {
+    proposal = widget.proposal;
+    tally = widget.tally;
+
+    super.initState();
+  }
+
+  late Proposal proposal;
+  late Tally tally;
+
+  Future<void> _updateState() async {
+    proposal = await webApi.encointer.getProposals([widget.proposalId]).then((map) => map[widget.proposalId]!);
+    tally = await webApi.encointer.getTallies([widget.proposalId]).then((map) => map[widget.proposalId]!);
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,18 +70,18 @@ class ProposalTile extends StatelessWidget {
           leading: SizedBox(
             width: 20,
             height: 20,
-            child: Text(proposalId.toString(), style: titleSmall),
+            child: Text(widget.proposalId.toString(), style: titleSmall),
           ),
           subtitle: Column(
             children: [
               Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
               Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
-              passingOrFailingText(context, proposal, tally, params)
+              passingOrFailingText(context, proposal, tally, widget.params)
             ],
           ),
           trailing: voteButtonOrProposalStatus(context),
         ),
-        proposalStateInfo(context, proposal, params),
+        proposalStateInfo(context, proposal, widget.params),
       ],
     );
   }
@@ -124,7 +148,13 @@ class ProposalTile extends StatelessWidget {
         return SizedBox(
           height: 50,
           width: 60,
-          child: VoteButton(proposal: proposal, proposalId: proposalId, purposeId: purposeId),
+          child: VoteButton(
+            proposal: proposal,
+            proposalId: widget.proposalId,
+            purposeId: widget.purposeId,
+            democracyParams: widget.params,
+            onPressed: _updateState,
+          ),
         );
       default:
         // should never happen.

@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/submit_button_cupertino.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
+import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
@@ -24,12 +24,14 @@ class VoteButton extends StatefulWidget {
     required this.proposalId,
     required this.purposeId,
     required this.democracyParams,
+    required this.onPressed,
   });
 
   final Proposal proposal;
   final BigInt proposalId;
   final BigInt purposeId;
   final DemocracyParams democracyParams;
+  final void Function() onPressed;
 
   @override
   State<VoteButton> createState() => _VoteButtonState();
@@ -62,6 +64,7 @@ class _VoteButtonState extends State<VoteButton> {
                   return SubmitButtonSmall(
                     onPressed: (context) async {
                       await _showSubmitVoteDialog(store, snapshot.data!, widget.proposalId);
+                      widget.onPressed();
                     },
                     child: Text(l10n.proposalVote),
                   );
@@ -185,6 +188,8 @@ class _VoteButtonState extends State<VoteButton> {
           cycleDuration,
         ),
       );
+
+    Log.d('Eligible Reputations: $reputations');
 
     return reputations;
   }
