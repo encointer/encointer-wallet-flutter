@@ -155,7 +155,10 @@ class _DemocracyPageState extends State<DemocracyPage> {
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: widgets.length,
-            itemBuilder: (context, index) => widgets[index],
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: widgets[index],
+            ),
           ),
         ),
       ),

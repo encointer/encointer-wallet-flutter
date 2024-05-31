@@ -59,30 +59,40 @@ class _ProposalTileState extends State<ProposalTile> {
     final electorateSize = proposal.electorateSize;
     final threshold = approvalThreshold(electorateSize.toInt(), turnout.toInt());
 
-    return Column(
-      children: [
-        Text(
-          getProposalActionTitle(context, proposal.action),
-          style: context.titleMedium.copyWith(color: context.colorScheme.primary),
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      decoration: BoxDecoration(
+        color: context.colorScheme.background,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(15),
+          bottom: Radius.circular(15),
         ),
-        ListTile(
-          contentPadding: const EdgeInsets.symmetric(),
-          leading: SizedBox(
-            width: 20,
-            height: 20,
-            child: Text(widget.proposalId.toString(), style: titleSmall),
+      ),
+      child: Column(
+        children: [
+          Text(
+            getProposalActionTitle(context, proposal.action),
+            style: context.titleMedium.copyWith(color: context.colorScheme.primary),
           ),
-          subtitle: Column(
-            children: [
-              Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
-              Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
-              passingOrFailingText(context, proposal, tally, widget.params)
-            ],
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(),
+            leading: SizedBox(
+              width: 20,
+              height: 20,
+              child: Text(widget.proposalId.toString(), style: titleSmall),
+            ),
+            subtitle: Column(
+              children: [
+                Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
+                Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
+                passingOrFailingText(context, proposal, tally, widget.params)
+              ],
+            ),
+            trailing: voteButtonOrProposalStatus(context),
           ),
-          trailing: voteButtonOrProposalStatus(context),
-        ),
-        proposalStateInfo(context, proposal, widget.params),
-      ],
+          proposalStateInfo(context, proposal, widget.params),
+        ],
+      ),
     );
   }
 
