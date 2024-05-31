@@ -63,19 +63,18 @@ class ProposalTile extends StatelessWidget {
   }
 
   Widget proposalStateInfo(BuildContext context, Proposal proposal, DemocracyParams params) {
-
-    if (proposal.state.runtimeType is Ongoing) {
+    if (proposal.state.runtimeType == Ongoing) {
       final date = DateTime.fromMillisecondsSinceEpoch((proposal.start + params.proposalLifetime).toInt());
       return Text('Ongoing until $date');
     }
 
-    if (proposal.state.runtimeType is Confirming) {
+    if (proposal.state.runtimeType == Confirming) {
       final confirmingSince = (proposal.state.runtimeType as Confirming).since;
       final date = DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.proposalLifetime).toInt());
       return Text('Confirming until $date');
     }
 
-    if (proposal.state.runtimeType is Approved) {
+    if (proposal.state.runtimeType == Approved) {
       final store = context.read<AppStore>().encointer.nextRegisteringPhaseStart!;
       final date = DateTime.fromMillisecondsSinceEpoch(store);
       return Text('Pending enactment at $date');
@@ -95,11 +94,11 @@ class ProposalTile extends StatelessWidget {
     final percentage = (ayeRatio * 100).toStringAsFixed(2);
 
     // This is for past proposals
-    if (proposal.state.runtimeType is Approved || proposal.state.runtimeType is Enacted) {
+    if (proposal.state.runtimeType == Approved || proposal.state.runtimeType == Enacted) {
       return Text(l10n.proposalPassed(percentage), style: const TextStyle(color: Colors.green));
     }
 
-    if (proposal.state.runtimeType is Cancelled) {
+    if (proposal.state.runtimeType == Cancelled) {
       return Text(l10n.proposalFailed(percentage), style: const TextStyle(color: Colors.red));
     }
 

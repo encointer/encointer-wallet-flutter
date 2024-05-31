@@ -68,7 +68,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
       }
 
       final activeProposals = proposals!.entries
-          .where((e) => e.value.state.runtimeType is Ongoing || e.value.state.runtimeType is Confirming)
+          .where((e) => e.value.state.runtimeType == Ongoing || e.value.state.runtimeType == Confirming)
           .toList();
 
       if (activeProposals.isEmpty) {
@@ -103,9 +103,9 @@ class _DemocracyPageState extends State<DemocracyPage> {
 
       final pastProposals = proposals!.entries
           .where((e) =>
-              e.value.state.runtimeType is Cancelled ||
-              e.value.state.runtimeType is Enacted ||
-              e.value.state.runtimeType is Approved)
+              e.value.state.runtimeType == Cancelled ||
+              e.value.state.runtimeType == Enacted ||
+              e.value.state.runtimeType == Approved)
           .toList();
 
       if (pastProposals.isEmpty) {
