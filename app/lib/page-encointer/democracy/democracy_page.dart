@@ -1,14 +1,21 @@
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/widgets/proposal_tile.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
-import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+
+import 'package:ew_polkadart/encointer_types.dart' as et;
+
+import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Cancelled, Confirming, Enacted, Ongoing, Proposal, Tally;
 
 class DemocracyPage extends StatefulWidget {
   const DemocracyPage({super.key});
@@ -52,8 +59,16 @@ class _DemocracyPageState extends State<DemocracyPage> {
     super.dispose();
   }
 
+  Iterable<MapEntry<BigInt, Proposal>> proposalsForCommunity(CommunityIdentifier cid) {
+    return proposals!.entries.where((e) {
+      final maybeCid = getCommunityIdentifierFromProposal(e.value.action);
+      return maybeCid == null || maybeCid == et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final store = context.read<AppStore>();
     final l10n = context.l10n;
     final titleLargeBlue = context.titleLarge.copyWith(color: context.colorScheme.primary);
     final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
@@ -67,7 +82,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
             : const [Center(child: CupertinoActivityIndicator())];
       }
 
-      final activeProposals = proposals!.entries
+      final chosenCid = store.encointer.chosenCid!;
+      final activeProposals = proposalsForCommunity(chosenCid)
           .where((e) => e.value.state.runtimeType == Ongoing || e.value.state.runtimeType == Confirming)
           .toList();
 
@@ -101,7 +117,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
             : [const Center(child: CupertinoActivityIndicator())];
       }
 
-      final pastProposals = proposals!.entries
+      final chosenCid = store.encointer.chosenCid!;
+      final pastProposals = proposalsForCommunity(chosenCid)
           .where((e) =>
               e.value.state.runtimeType == Cancelled ||
               e.value.state.runtimeType == Enacted ||
@@ -150,17 +167,19 @@ class _DemocracyPageState extends State<DemocracyPage> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: widgets.length,
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: widgets[index],
-            ),
-          ),
-        ),
+        child: store.encointer.chosenCid == null
+            ? const Text('Need to choose a community for democracy')
+            : Padding(
+                padding: const EdgeInsets.all(16),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widgets.length,
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: widgets[index],
+                  ),
+                ),
+              ),
       ),
     );
   }
