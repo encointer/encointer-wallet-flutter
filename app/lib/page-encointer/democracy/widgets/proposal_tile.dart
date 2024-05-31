@@ -1,10 +1,12 @@
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page-encointer/democracy/widgets/vote_button.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
+import 'package:encointer_wallet/store/app.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Cancelled, Confirming, Enacted, Ongoing, Proposal, Tally;
 
@@ -55,8 +57,31 @@ class ProposalTile extends StatelessWidget {
           ),
           trailing: voteButtonOrProposalStatus(context),
         ),
+        proposalStateInfo(context, proposal, params),
       ],
     );
+  }
+
+  Widget proposalStateInfo(BuildContext context, Proposal proposal, DemocracyParams params) {
+    if (proposal.state.runtimeType == Ongoing) {
+      final date = DateTime.fromMillisecondsSinceEpoch((proposal.start + params.proposalLifetime).toInt());
+      return Text('Ongoing until $date');
+    }
+
+    if (proposal.state.runtimeType == Confirming) {
+      final confirmingSince = (proposal.state.runtimeType as Confirming).since;
+      final date = DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.proposalLifetime).toInt());
+      return Text('Confirming until $date');
+    }
+
+    if (proposal.state.runtimeType == Approved) {
+      final store = context.read<AppStore>().encointer.nextRegisteringPhaseStart!;
+      final date = DateTime.fromMillisecondsSinceEpoch(store);
+      return Text('Pending enactment at $date');
+    }
+
+    // No widget for Enacted || Cancelled
+    return const SizedBox.shrink();
   }
 
   Widget passingOrFailingText(BuildContext context, Proposal proposal, Tally tally, DemocracyParams params) {
@@ -89,11 +114,11 @@ class ProposalTile extends StatelessWidget {
     final l10n = context.l10n;
     switch (proposal.state.runtimeType) {
       case Cancelled:
-      return Text(l10n.proposalCancelled, style: const TextStyle(color: Colors.red));
+        return Text(l10n.proposalCancelled, style: const TextStyle(color: Colors.red));
       case Enacted:
-      return Text(l10n.proposalEnacted, style: const TextStyle(color: Colors.green));
+        return Text(l10n.proposalEnacted, style: const TextStyle(color: Colors.green));
       case Approved:
-      return Text(l10n.proposalApproved, style: const TextStyle(color: Colors.green));
+        return Text(l10n.proposalApproved, style: const TextStyle(color: Colors.green));
       case Ongoing:
       case Confirming:
         return SizedBox(
