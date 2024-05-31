@@ -94,9 +94,10 @@ bool isInVotingCindexes(
   int cycleDuration,
 ) {
   final votingCindexLowerBound =
-      proposal.start.toInt() - reputationLifetime + (params.proposalLifetime.toInt() / cycleDuration).ceil();
+      proposal.startCindex - reputationLifetime + (params.proposalLifetime.toInt() / cycleDuration).ceil();
+  final votingCindexUpperBound = proposal.startCindex - 2;
 
-  return cIndex > votingCindexLowerBound && cIndex < proposal.startCindex - 2;
+  return cIndex > votingCindexLowerBound && cIndex <= votingCindexUpperBound;
 }
 
 bool isPassing(Tally tally, BigInt electorateSize, DemocracyParams params) {
@@ -112,7 +113,7 @@ bool isPassing(Tally tally, BigInt electorateSize, DemocracyParams params) {
 }
 
 bool positiveTurnoutBias(int electorate, int turnout, int ayes) {
-  return ayes > approvalThreshold(electorate, turnout);
+  return ayes / electorate > approvalThreshold(electorate, turnout);
 }
 
 double approvalThreshold(int electorate, int turnout) {
