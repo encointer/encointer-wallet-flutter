@@ -69,8 +69,8 @@ class ProposalTile extends StatelessWidget {
     }
 
     if (proposal.state.runtimeType == Confirming) {
-      final confirmingSince = (proposal.state.runtimeType as Confirming).since;
-      final date = DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.proposalLifetime).toInt());
+      final confirmingSince = (proposal.state as Confirming).since;
+      final date = DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.confirmationPeriod).toInt());
       return Text('Confirming until $date');
     }
 
