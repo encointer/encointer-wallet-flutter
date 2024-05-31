@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/submit_button_cupertino.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -89,12 +90,18 @@ class _VoteButtonState extends State<VoteButton> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CupertinoButton(
-                  onPressed: () => _submitDemocracyVote(store, Vote.aye, reputations),
+                SubmitButtonCupertino(
+                  onPressed: (BuildContext context) async {
+                    await _submitDemocracyVote(store, Vote.aye, reputations);
+                    Navigator.of(context).pop();
+                  },
                   child: Text(l10n.proposalAye, style: const TextStyle(color: Colors.green)),
                 ),
-                CupertinoButton(
-                  onPressed: () => _submitDemocracyVote(store, Vote.aye, reputations),
+                SubmitButtonCupertino(
+                  onPressed: (BuildContext context) async{
+                    await _submitDemocracyVote(store, Vote.aye, reputations);
+                    Navigator.of(context).pop();
+                  },
                   child: Text(l10n.proposalNay, style: const TextStyle(color: Colors.red)),
                 ),
               ],
