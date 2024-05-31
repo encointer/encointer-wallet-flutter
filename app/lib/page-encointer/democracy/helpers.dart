@@ -12,7 +12,15 @@ import 'package:provider/provider.dart';
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show AddLocation, ProposalAction, RemoveLocation, SetInactivityTimeout, Tally, UpdateDemurrage, UpdateNominalIncome;
+    show
+        AddLocation,
+        Proposal,
+        ProposalAction,
+        RemoveLocation,
+        SetInactivityTimeout,
+        Tally,
+        UpdateDemurrage,
+        UpdateNominalIncome;
 
 /// Gets the localized proposal action title.
 ///
@@ -76,6 +84,19 @@ et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
+}
+
+bool isInVotingCindexes(
+  int cIndex,
+  Proposal proposal,
+  int reputationLifetime,
+  DemocracyParams params,
+  int cycleDuration,
+) {
+  final votingCindexLowerBound =
+      proposal.start.toInt() - reputationLifetime + (params.proposalLifetime.toInt() / cycleDuration).ceil();
+
+  return cIndex > votingCindexLowerBound && cIndex < proposal.startCindex - 2;
 }
 
 bool isPassing(Tally tally, BigInt electorateSize, DemocracyParams params) {

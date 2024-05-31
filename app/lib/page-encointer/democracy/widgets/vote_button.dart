@@ -1,4 +1,6 @@
 import 'package:encointer_wallet/common/components/submit_button_cupertino.dart';
+import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/utils/alerts/app_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +13,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
-import 'package:ew_polkadart/ew_polkadart.dart'
-    show
-        Proposal,
-        Vote;
+import 'package:ew_polkadart/ew_polkadart.dart' show Proposal, Vote;
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
@@ -24,11 +23,13 @@ class VoteButton extends StatefulWidget {
     required this.proposal,
     required this.proposalId,
     required this.purposeId,
+    required this.democracyParams,
   });
 
   final Proposal proposal;
   final BigInt proposalId;
   final BigInt purposeId;
+  final DemocracyParams democracyParams;
 
   @override
   State<VoteButton> createState() => _VoteButtonState();
@@ -98,7 +99,7 @@ class _VoteButtonState extends State<VoteButton> {
                   child: Text(l10n.proposalAye, style: const TextStyle(color: Colors.green)),
                 ),
                 SubmitButtonCupertino(
-                  onPressed: (BuildContext context) async{
+                  onPressed: (BuildContext context) async {
                     await _submitDemocracyVote(store, Vote.aye, reputations);
                     Navigator.of(context).pop();
                   },
@@ -138,7 +139,8 @@ class _VoteButtonState extends State<VoteButton> {
     final store = context.read<AppStore>();
     final address = store.account.currentAddress;
 
-    final reputations = store.encointer.accountStores![address]!.verifiedReputations;
+    final reputations = await eligibleVerifiedReputations(store, address);
+
     final ids = Map<int, CommunityIdentifier>.of({});
     final maybeProposalCid = getCommunityIdentifierFromProposal(widget.proposal.action);
 
@@ -164,5 +166,26 @@ class _VoteButtonState extends State<VoteButton> {
     await Future.wait(futures);
 
     return ids.entries.map((e) => ReputationTuple(e.value.toPolkadart(), e.key)).toList();
+  }
+
+  Future<Map<int, CommunityReputation>> eligibleVerifiedReputations(AppStore store, String address) async {
+    final store = context.read<AppStore>();
+    final address = store.account.currentAddress;
+
+    final reputationLifetime = await webApi.encointer.encointerKusama.query.encointerCeremonies.reputationLifetime();
+    final cycleDuration = store.encointer.ceremonyCycleDuration!;
+
+    final reputations = store.encointer.accountStores![address]!.verifiedReputations
+      ..removeWhere(
+        (cIndex, reputation) => !isInVotingCindexes(
+          cIndex,
+          widget.proposal,
+          reputationLifetime,
+          widget.democracyParams,
+          cycleDuration,
+        ),
+      );
+
+    return reputations;
   }
 }
