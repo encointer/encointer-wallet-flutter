@@ -203,7 +203,6 @@
     "proposalEnacted": "Enacted",
     "proposalApproved": "Approved",
     "proposalTurnout": "Turnout",
-    "proposalApprovalThreshold": "Approval Threshold",
     "proposalHowVote": "How do you vote?",
     "proposalsEmpty": "No proposals",
     "proposalsUpForVote": "Proposals up for vote",
@@ -470,6 +469,15 @@
             "value": {
                 "type": "String",
                 "example": "LEU"
+            }
+        }
+    },
+    "proposalApprovalThreshold": "Approval Threshold: {percentage}%",
+    "@proposalApprovalThreshold": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
             }
         }
     },

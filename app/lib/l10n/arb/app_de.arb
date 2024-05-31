@@ -203,7 +203,6 @@
     "proposalEnacted": "Ausgeführt",
     "proposalApproved": "Angenommen",
     "proposalTurnout": "Annahmeschwellenwert",
-    "proposalApprovalThreshold": "Approval Threshold",
     "proposalHowVote": "Wie stimmst du ab?",
     "proposalsEmpty": "Keine Vorschläge",
     "proposalsUpForVote": "Vorschläge zum Abstimmen",
@@ -318,6 +317,15 @@
             "value": {
                 "type": "String",
                 "example": "LEU"
+            }
+        }
+    },
+    "proposalApprovalThreshold": "Annahme bei {percentage}% Zustimmung",
+    "@proposalApprovalThreshold": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
             }
         }
     },

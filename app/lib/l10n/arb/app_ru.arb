@@ -203,7 +203,6 @@
     "proposalEnacted": "выполнено",
     "proposalApproved": "Принято",
     "proposalTurnout": "Явка избирателей",
-    "proposalApprovalThreshold": "Порог приемлемости",
     "proposalHowVote": "Как вы голосуете?",
     "proposalsEmpty": "Нет предложений",
     "proposalsUpForVote": "Предложения для голосования",
@@ -318,6 +317,15 @@
             "value": {
                 "type": "String",
                 "example": "LEU"
+            }
+        }
+    },
+    "proposalApprovalThreshold": "Порог приемлемости: {percentage}%",
+    "@proposalApprovalThreshold": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
             }
         }
     },
