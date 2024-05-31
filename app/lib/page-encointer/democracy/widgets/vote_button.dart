@@ -142,10 +142,10 @@ class _VoteButtonState extends State<VoteButton> {
     final store = context.read<AppStore>();
     final address = store.account.currentAddress;
 
-    final reputations = await eligibleVerifiedReputations(store, address);
-
     final ids = Map<int, CommunityIdentifier>.of({});
     final maybeProposalCid = getCommunityIdentifierFromProposal(widget.proposal.action);
+
+    final reputations = await eligibleVerifiedReputations(store, address);
 
     // Create a set of futures to await in parallel.
     final futures = reputations.entries.map(
@@ -168,6 +168,8 @@ class _VoteButtonState extends State<VoteButton> {
 
     await Future.wait(futures);
 
+    Log.d('Uncommited Reputations for Proposal ${widget.proposalId}: ${ids}');
+
     return ids.entries.map((e) => ReputationTuple(e.value.toPolkadart(), e.key)).toList();
   }
 
@@ -178,7 +180,10 @@ class _VoteButtonState extends State<VoteButton> {
     final reputationLifetime = await webApi.encointer.encointerKusama.query.encointerCeremonies.reputationLifetime();
     final cycleDuration = store.encointer.ceremonyCycleDuration!;
 
-    final reputations = store.encointer.accountStores![address]!.verifiedReputations
+    final verifiedReputations = store.encointer.accountStores![address]!.verifiedReputations;
+    Log.d('Verified Reputations for Proposal ${widget.proposalId}: $verifiedReputations');
+
+    final reputations = verifiedReputations
       ..removeWhere(
         (cIndex, reputation) => !isInVotingCindexes(
           cIndex,
@@ -189,7 +194,7 @@ class _VoteButtonState extends State<VoteButton> {
         ),
       );
 
-    Log.d('Eligible Reputations: $reputations');
+    Log.d('Eligible Reputations for Proposal ${widget.proposalId}: $reputations');
 
     return reputations;
   }
