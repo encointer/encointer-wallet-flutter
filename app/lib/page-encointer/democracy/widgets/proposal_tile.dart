@@ -51,7 +51,7 @@ class ProposalTile extends StatelessWidget {
           subtitle: Column(
             children: [
               Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
-              Text(l10n.proposalApprovalThreshold(threshold.toStringAsFixed(2))),
+              Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
               passingOrFailingText(context, proposal, tally, params)
             ],
           ),
