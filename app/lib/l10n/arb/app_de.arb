@@ -204,7 +204,7 @@
     "proposalCancelled": "Abgebrochen",
     "proposalEnacted": "Ausgeführt",
     "proposalApproved": "Angenommen",
-    "proposalTurnout": "Annahmeschwellenwert",
+    "proposalTurnout": "Wahlbeteiligung",
     "proposalHowVote": "Wie stimmst du ab?",
     "proposalsEmpty": "Keine Vorschläge",
     "proposalsUpForVote": "Vorschläge zum Abstimmen",
