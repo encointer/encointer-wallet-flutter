@@ -99,32 +99,36 @@ class _ProposalTileState extends State<ProposalTile> {
   }
 
   Widget proposalStateInfo(BuildContext context, Proposal proposal, DemocracyParams params) {
-    final settings = context.read<AppSettings>();
+    final l10n = context.l10n;
+    final locale = context.read<AppSettings>().locale.toString();
 
     if (proposal.state.runtimeType == Ongoing) {
       final date = DateTime.fromMillisecondsSinceEpoch((proposal.start + params.proposalLifetime).toInt());
-      final formatter = DateFormat('MEd', settings.locale.toString());
-      return Text('Ongoing until ${formatter.format(date)}');
+      return Text('${l10n.proposalOngoingUntil} ${mMMEdHm(date, locale)}');
     }
 
     if (proposal.state.runtimeType == Confirming) {
       final confirmingSince = (proposal.state as Confirming).since;
       final date = DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.confirmationPeriod).toInt());
-      // final formatter = DateFormat('E dd.MM.yyyy HH:mm', settings.locale.toString());
-      final dateString = DateFormat.MMMEd(settings.locale.toString()).format(date);
-      final timeString = DateFormat.Hm(settings.locale.toString()).add_jms().format(date);
-      return Text('Confirming until $dateString $timeString');
+      return Text('${l10n.proposalConfirmingUntil} ${mMMEdHm(date, locale)}');
     }
 
     if (proposal.state.runtimeType == Approved) {
       final store = context.read<AppStore>().encointer.nextRegisteringPhaseStart!;
       final date = DateTime.fromMillisecondsSinceEpoch(store);
-      final formatter = DateFormat('MEd', settings.locale.toString());
-      return Text('Pending enactment at ${formatter.format(date)}');
+      return Text('${l10n.proposalPendingEnactmentAt} ${mMMEdHm(date, locale)}');
     }
 
     // No widget for Enacted || Cancelled
     return const SizedBox.shrink();
+  }
+
+  /// Localized date string including the date and time.
+  String mMMEdHm(DateTime date, String locale) {
+    final dateString = DateFormat.MMMEd(locale).format(date);
+    // add am/pm if necessary
+    final timeString = DateFormat.Hm(locale).add_jms().format(date);
+    return '$dateString $timeString';
   }
 
   Widget passingOrFailingText(BuildContext context, Proposal proposal, Tally tally, DemocracyParams params) {
