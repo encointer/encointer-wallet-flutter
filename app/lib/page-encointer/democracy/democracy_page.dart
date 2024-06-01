@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/widgets/proposal_tile.dart';
+import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -167,19 +168,33 @@ class _DemocracyPageState extends State<DemocracyPage> {
         ),
       ),
       body: SafeArea(
-        child: store.encointer.chosenCid == null
-            ? const Text('Need to choose a community for democracy')
-            : Padding(
-                padding: const EdgeInsets.all(16),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: widgets.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: widgets[index],
+        child: Column(
+          children: [
+            if (store.encointer.chosenCid == null)
+              const Text('Need to choose a community for democracy')
+            else
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: widgets.length,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: widgets[index],
+                    ),
                   ),
                 ),
               ),
+            InkWell(
+              onTap: () => AppLaunch.launchURL('https://book.encointer.org/protocol-democracy.html'),
+              child: const Text(
+                'Click here',
+                style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
