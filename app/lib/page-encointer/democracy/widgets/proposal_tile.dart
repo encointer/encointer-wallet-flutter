@@ -1,6 +1,8 @@
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page-encointer/democracy/widgets/vote_button.dart';
@@ -97,21 +99,28 @@ class _ProposalTileState extends State<ProposalTile> {
   }
 
   Widget proposalStateInfo(BuildContext context, Proposal proposal, DemocracyParams params) {
+    final settings = context.read<AppSettings>();
+
     if (proposal.state.runtimeType == Ongoing) {
       final date = DateTime.fromMillisecondsSinceEpoch((proposal.start + params.proposalLifetime).toInt());
-      return Text('Ongoing until $date');
+      final formatter = DateFormat('MEd', settings.locale.toString());
+      return Text('Ongoing until ${formatter.format(date)}');
     }
 
     if (proposal.state.runtimeType == Confirming) {
       final confirmingSince = (proposal.state as Confirming).since;
       final date = DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.confirmationPeriod).toInt());
-      return Text('Confirming until $date');
+      // final formatter = DateFormat('E dd.MM.yyyy HH:mm', settings.locale.toString());
+      final dateString = DateFormat.MMMEd(settings.locale.toString()).format(date);
+      final timeString = DateFormat.Hm(settings.locale.toString()).add_jms().format(date);
+      return Text('Confirming until $dateString $timeString');
     }
 
     if (proposal.state.runtimeType == Approved) {
       final store = context.read<AppStore>().encointer.nextRegisteringPhaseStart!;
       final date = DateTime.fromMillisecondsSinceEpoch(store);
-      return Text('Pending enactment at $date');
+      final formatter = DateFormat('MEd', settings.locale.toString());
+      return Text('Pending enactment at ${formatter.format(date)}');
     }
 
     // No widget for Enacted || Cancelled
