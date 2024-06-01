@@ -107,7 +107,7 @@ class _VoteButtonState extends State<VoteButton> {
                 ),
                 SubmitButtonCupertino(
                   onPressed: (BuildContext context) async {
-                    await _submitDemocracyVote(store, Vote.aye, reputations);
+                    await _submitDemocracyVote(store, Vote.nay, reputations);
                     Navigator.of(context).pop();
                   },
                   child: Text(l10n.proposalNay, style: const TextStyle(color: Colors.red)),
@@ -131,7 +131,7 @@ class _VoteButtonState extends State<VoteButton> {
       webApi,
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       widget.proposalId,
-      Vote.aye,
+      vote,
       reputations,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
     );
