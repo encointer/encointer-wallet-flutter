@@ -52,7 +52,6 @@ class _VoteButtonState extends State<VoteButton> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       future = _getUncommittedReputationIds(context);
-      setState(() {});
     });
   }
 
@@ -156,6 +155,10 @@ class _VoteButtonState extends State<VoteButton> {
 
     final reputations = await eligibleVerifiedReputations(store, address);
 
+    // reset cache
+    uncommittedReputations = [];
+    committedReputations = [];
+
     // Create a set of futures to await in parallel.
     final futures = reputations.entries.map(
       (e) async {
@@ -183,6 +186,8 @@ class _VoteButtonState extends State<VoteButton> {
 
     Log.d('Uncommitted Reputations for Proposal ${widget.proposalId}: $uncommittedReputations');
     Log.d('Committed Reputations for Proposal ${widget.proposalId}: $committedReputations');
+
+    setState(() {});
 
     return true;
   }
