@@ -93,9 +93,7 @@ class _ProposalTileState extends State<ProposalTile> {
             ),
             trailing: voteButtonOrProposalStatus(context),
           ),
-          Align(
-              alignment: Alignment.bottomRight,
-              child: proposalStateInfo(context, proposal, widget.params)),
+          Align(alignment: Alignment.bottomRight, child: proposalStateInfo(context, proposal, widget.params)),
         ],
       ),
     );
