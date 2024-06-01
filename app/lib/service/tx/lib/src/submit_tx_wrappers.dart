@@ -420,7 +420,7 @@ Future<void> submitDemocracyVote(
     store,
     api,
     OpaqueExtrinsic(xt),
-    TxNotification.faucetDrip(context.l10n),
+    TxNotification.democracyVote(context.l10n),
   );
 }
 
