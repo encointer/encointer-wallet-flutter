@@ -122,7 +122,7 @@ class _ProposalTileState extends State<ProposalTile> {
     final l10n = context.l10n;
 
     var ayeRatio = 0.0;
-    if (proposal.electorateSize != BigInt.zero) {
+    if (tally.ayes != BigInt.zero) {
       ayeRatio = tally.ayes / tally.turnout;
     }
     final percentage = (ayeRatio * 100).toStringAsFixed(2);
