@@ -84,6 +84,7 @@ class _ProposalTileState extends State<ProposalTile> {
               child: Text(widget.proposalId.toString(), style: titleSmall),
             ),
             subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
                 Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
@@ -92,7 +93,9 @@ class _ProposalTileState extends State<ProposalTile> {
             ),
             trailing: voteButtonOrProposalStatus(context),
           ),
-          proposalStateInfo(context, proposal, widget.params),
+          Align(
+              alignment: Alignment.bottomRight,
+              child: proposalStateInfo(context, proposal, widget.params)),
         ],
       ),
     );
