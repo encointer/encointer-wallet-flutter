@@ -40,6 +40,10 @@ class VoteButton extends StatefulWidget {
 class _VoteButtonState extends State<VoteButton> {
   Future<Reputations>? future;
 
+  // cached values
+  int? reputationLifetime;
+  Map<int, CommunityReputation>? verifiedReputations;
+
   @override
   void initState() {
     super.initState();
@@ -168,19 +172,16 @@ class _VoteButtonState extends State<VoteButton> {
 
     await Future.wait(futures);
 
-    Log.d('Uncommited Reputations for Proposal ${widget.proposalId}: ${ids}');
+    Log.d('Uncommitted Reputations for Proposal ${widget.proposalId}: $ids');
 
     return ids.entries.map((e) => ReputationTuple(e.value.toPolkadart(), e.key)).toList();
   }
 
   Future<Map<int, CommunityReputation>> eligibleVerifiedReputations(AppStore store, String address) async {
     final store = context.read<AppStore>();
-    final address = store.account.currentAddress;
 
-    final reputationLifetime = await webApi.encointer.encointerKusama.query.encointerCeremonies.reputationLifetime();
-    final cycleDuration = store.encointer.ceremonyCycleDuration!;
-
-    final verifiedReputations = store.encointer.accountStores![address]!.verifiedReputations;
+    final reputationLifetime = await _reputationLifetime();
+    final verifiedReputations = await _verifiedReputations();
     Log.d('Verified Reputations for Proposal ${widget.proposalId}: $verifiedReputations');
 
     final reputations = verifiedReputations
@@ -190,12 +191,24 @@ class _VoteButtonState extends State<VoteButton> {
           widget.proposal,
           reputationLifetime,
           widget.democracyParams,
-          cycleDuration,
+          store.encointer.ceremonyCycleDuration!,
         ),
       );
 
     Log.d('Eligible Reputations for Proposal ${widget.proposalId}: $reputations');
-
     return reputations;
+  }
+
+  Future<int> _reputationLifetime() async {
+    reputationLifetime ??= await webApi.encointer.encointerKusama.query.encointerCeremonies.reputationLifetime();
+    return reputationLifetime!;
+  }
+
+  Future< Map<int, CommunityReputation>> _verifiedReputations() async {
+    verifiedReputations ??= await webApi.encointer.getReputations().then((reputations) {
+      reputations.removeWhere((key, value) => !value.reputation.isVerified());
+      return reputations;
+    });
+    return verifiedReputations!;
   }
 }

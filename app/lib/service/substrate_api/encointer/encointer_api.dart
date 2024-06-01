@@ -582,10 +582,10 @@ class EncointerApi {
     }
   }
 
-  Future<void> getReputations({BlockHash? at}) async {
+  Future<Map<int, CommunityReputation>> getReputations({BlockHash? at}) async {
     final address = store.account.currentAddress;
 
-    if (address.isEmpty) return;
+    if (address.isEmpty) return Map.of({});
 
     final runtimeVersion = await encointerKusama.rpc.state.getRuntimeVersion(at: at ?? store.chain.latestHash);
 
@@ -593,6 +593,7 @@ class EncointerApi {
       final reputations = await _dartApi.getReputations(address, at: at ?? store.chain.latestHash);
       Log.d('api: getReputationsV2: $reputations', 'EncointerApi');
       if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
+      return reputations;
     } else {
       final reputationsV1 = await _dartApi.getReputationsV1(address, at: at ?? store.chain.latestHash);
       Log.d('api: getReputations: $reputationsV1', 'EncointerApi');
@@ -601,6 +602,7 @@ class EncointerApi {
       Log.d('api: getReputations (migrated to V2): $reputations', 'EncointerApi');
 
       if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
+      return reputations;
     }
   }
 
