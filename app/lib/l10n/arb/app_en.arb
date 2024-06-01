@@ -86,6 +86,8 @@
     "createPasswordError": "PIN must contain at least 4 digits and no other signs",
     "deleteAccount": "delete",
     "democracy": "Democracy",
+    "democracyFaq": "How does democracy work?",
+    "democracyDiscussion": "Discuss proposals in the Forum!",
     "democracyVotedNotificationBody": "You have voted for this proposal.",
     "democracyVotedNotificationTitle": "Voted",
     "detail": "Detail",

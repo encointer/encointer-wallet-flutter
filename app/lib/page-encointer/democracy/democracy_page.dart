@@ -188,11 +188,20 @@ class _DemocracyPageState extends State<DemocracyPage> {
               ),
             InkWell(
               onTap: () => AppLaunch.launchURL('https://book.encointer.org/protocol-democracy.html'),
-              child: const Text(
-                'Click here',
-                style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue),
+              child: Text(
+                l10n.democracyFaq,
+                style: TextStyle(decoration: TextDecoration.underline, color: context.colorScheme.primary),
               ),
-            )
+            ),
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: () => AppLaunch.launchURL('https://book.encointer.org/protocol-democracy.html'),
+              child: Text(
+                'Todo: Enter link ${l10n.democracyDiscussion}',
+                style: TextStyle(decoration: TextDecoration.underline, color: context.colorScheme.primary),
+              ),
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),
