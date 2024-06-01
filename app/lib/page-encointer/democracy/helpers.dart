@@ -119,9 +119,5 @@ bool positiveTurnoutBias(int electorate, int turnout, int ayes) {
 /// Returns the approval threshold in the range of [0,1].
 double approvalThreshold(int electorate, int turnout) {
   if (electorate == 0 || turnout == 0) return 0;
-
-  final sqrtE = sqrt(electorate);
-  final sqrtT = sqrt(turnout);
-
-  return ((sqrtE * sqrtT) / ((sqrtE / sqrtT) + 1)).clamp(0, 1);
+  return 1 / (1 + sqrt(turnout / electorate));
 }
