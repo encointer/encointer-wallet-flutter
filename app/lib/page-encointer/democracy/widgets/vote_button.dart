@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/submit_button.dart';
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -38,11 +37,15 @@ class VoteButton extends StatefulWidget {
 }
 
 class _VoteButtonState extends State<VoteButton> {
-  Future<Reputations>? future;
+  Future<bool>? future;
 
   // cached values
   int? reputationLifetime;
   Map<int, CommunityReputation>? verifiedReputations;
+
+  // cached but to be updated values
+  List<ReputationTuple> uncommittedReputations = [];
+  List<ReputationTuple> committedReputations = [];
 
   @override
   void initState() {
@@ -62,16 +65,19 @@ class _VoteButtonState extends State<VoteButton> {
         ? const Center(child: CupertinoActivityIndicator())
         : FutureBuilder(
             future: future,
-            builder: (BuildContext context, AsyncSnapshot<Reputations> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData) {
-                if (snapshot.data!.isNotEmpty) {
+                if (uncommittedReputations.isNotEmpty) {
                   return SubmitButtonSmall(
                     onPressed: (context) async {
-                      await _showSubmitVoteDialog(store, snapshot.data!, widget.proposalId);
+                      await _showSubmitVoteDialog(store, uncommittedReputations, widget.proposalId);
                       widget.onPressed();
                     },
                     child: Text(l10n.proposalVote),
                   );
+                } else if (committedReputations.isNotEmpty) {
+                  // indicate that we have already voted on this proposal.
+                  return SubmitButtonSmall(child: Text(l10n.proposalVoted));
                 } else {
                   return SubmitButtonSmall(child: Text(l10n.proposalVote));
                 }
@@ -142,11 +148,10 @@ class _VoteButtonState extends State<VoteButton> {
 
   /// Returns all reputation ids, which haven't been committed for this proposal's
   /// purpose id yet, i.e., can be used to vote currently.
-  Future<Reputations> _getUncommittedReputationIds(BuildContext context) async {
+  Future<bool> _getUncommittedReputationIds(BuildContext context) async {
     final store = context.read<AppStore>();
     final address = store.account.currentAddress;
 
-    final ids = Map<int, CommunityIdentifier>.of({});
     final maybeProposalCid = getCommunityIdentifierFromProposal(widget.proposal.action);
 
     final reputations = await eligibleVerifiedReputations(store, address);
@@ -165,16 +170,21 @@ class _VoteButtonState extends State<VoteButton> {
             address,
           );
 
-          if (!hasCommitted) ids[e.key] = e.value.communityIdentifier;
+          if (!hasCommitted) {
+            uncommittedReputations.add(ReputationTuple(e.value.communityIdentifier.toPolkadart(), e.key));
+          } else {
+            committedReputations.add(ReputationTuple(e.value.communityIdentifier.toPolkadart(), e.key));
+          }
         }
       },
     );
 
     await Future.wait(futures);
 
-    Log.d('Uncommitted Reputations for Proposal ${widget.proposalId}: $ids');
+    Log.d('Uncommitted Reputations for Proposal ${widget.proposalId}: $uncommittedReputations');
+    Log.d('Committed Reputations for Proposal ${widget.proposalId}: $committedReputations');
 
-    return ids.entries.map((e) => ReputationTuple(e.value.toPolkadart(), e.key)).toList();
+    return true;
   }
 
   Future<Map<int, CommunityReputation>> eligibleVerifiedReputations(AppStore store, String address) async {
@@ -204,7 +214,7 @@ class _VoteButtonState extends State<VoteButton> {
     return reputationLifetime!;
   }
 
-  Future< Map<int, CommunityReputation>> _verifiedReputations() async {
+  Future<Map<int, CommunityReputation>> _verifiedReputations() async {
     verifiedReputations ??= await webApi.encointer.getReputations().then((reputations) {
       reputations.removeWhere((key, value) => !value.reputation.isVerified());
       return reputations;

@@ -208,6 +208,7 @@
     "proposalsUpForVote": "Предложения для голосования",
     "proposalsPast": "Предложения прошлых лет",
     "proposalVote": "голосовать",
+    "proposalVoted": "проголосовали",
     "qrScan": "Сканируйте QR-код",
     "qrScanHintAccount": "Попросите получателя отсканировать QR-код в приложении Еncointer",
     "rawSeed": "Raw Seed",

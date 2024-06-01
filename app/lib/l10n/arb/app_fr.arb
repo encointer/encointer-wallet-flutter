@@ -208,6 +208,7 @@
     "proposalsUpForVote": "Propositions soumises au vote",
     "proposalsPast": "Propositions antérieures",
     "proposalVote": "Voter",
+    "proposalVoted": "Voté",
     "qrScan": "Scannez le code QR",
     "qrScanHintAccount": "Demande au destinataire de scanner le code QR dans l'application Encointer.",
     "rawSeed": "Raw Seed",

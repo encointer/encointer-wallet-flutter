@@ -208,6 +208,7 @@
     "proposalsUpForVote": "Vorschläge zum Abstimmen",
     "proposalsPast": "Vergangene Vorschläge",
     "proposalVote": "Stimmen",
+    "proposalVoted": "Abgestimmt",
     "qrScan": "QR-Code scannen",
     "qrScanHintAccount": "Bitte den Empfänger den QR-Code in der Encointer App zu scannen.",
     "rawSeed": "Raw Seed",
