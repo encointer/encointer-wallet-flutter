@@ -48,7 +48,7 @@ scripts:
 
   pub-get:
     run: >-
-      flutter pub global run melos exec -- \
+      dart run melos exec -- \
       flutter pub get
     description: "Get pub dependencies"
 

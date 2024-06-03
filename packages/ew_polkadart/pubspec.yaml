@@ -80,7 +80,10 @@ dependency_overrides:
 # invalid.
 # Run the following script in in a git bash console afterwards to fix it:
 # `./scripts/replace_backslash_in_dart_files.sh packages/ew_polkadart`
+#
+# And then replace the code in the generated community identifier with that line:
+# `export 'package:polkadart/polkadart.dart' show CommunityIdentifier;`
 polkadart:
   output_dir: lib/generated
   chains:
-    encointer_kusama: ws://127.0.0.1:9945
+    encointer_kusama: wss://gesell.encointer.org

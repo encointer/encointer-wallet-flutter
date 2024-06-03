@@ -3,7 +3,7 @@ import 'dart:typed_data' as _i5;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
-import '../encointer_kusama_runtime/origin_caller.dart' as _i4;
+import '../encointer_node_notee_runtime/origin_caller.dart' as _i4;
 import '../frame_support/traits/preimages/bounded.dart' as _i2;
 import '../tuples.dart' as _i3;
 

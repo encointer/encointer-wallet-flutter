@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i13;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i14;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i14;
 import '../types/encointer_primitives/ceremonies/assignment.dart' as _i7;
 import '../types/encointer_primitives/ceremonies/assignment_count.dart' as _i6;
 import '../types/encointer_primitives/ceremonies/assignment_params.dart' as _i12;
@@ -1616,7 +1616,7 @@ class Txs {
 class Constants {
   Constants();
 
-  final BigInt meetupSizeTarget = BigInt.from(10);
+  final BigInt meetupSizeTarget = BigInt.from(15);
 
   final BigInt meetupMinSize = BigInt.from(3);
 

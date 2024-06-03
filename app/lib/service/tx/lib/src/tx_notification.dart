@@ -17,6 +17,11 @@ class TxNotification {
         body: l10n.claimRewardsNotificationBody,
       );
 
+  factory TxNotification.democracyVote(AppLocalizations l10n) => TxNotification(
+        title: l10n.democracyVotedNotificationTitle,
+        body: l10n.democracyVotedNotificationTitle,
+      );
+
   factory TxNotification.encointerBalanceTransfer(AppLocalizations l10n) => TxNotification(
         title: l10n.balanceTransferNotificationTitle,
         body: l10n.balanceTransferNotificationBody,

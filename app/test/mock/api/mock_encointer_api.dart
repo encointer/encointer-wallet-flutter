@@ -70,7 +70,9 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<void> getReputations({BlockHash? at}) async {}
+  Future<Map<int, CommunityReputation>> getReputations({BlockHash? at}) async {
+    return Future.value({});
+  }
 
   @override
   Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid, {BlockHash? at}) async {

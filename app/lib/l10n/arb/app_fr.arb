@@ -85,6 +85,11 @@
     "createPassword2Error": "Les codes NIP ne correspondent pas",
     "createPasswordError": "Le code NIP doit être composé d'au moins 4 chiffres et ne contenir aucun autre caractère",
     "deleteAccount": "supprimer",
+    "democracy": "Démocratie",
+    "democracyFaq": "Comment fonctionne la démocratie?",
+    "democracyDiscussion": "Discute de suggestions dans le forum!",
+    "democracyVotedNotificationBody": "Tu as voté pour cette proposition.",
+    "democracyVotedNotificationTitle": "Voté",
     "detail": "Détail",
     "detailsEnter": "Entre tes détails.",
     "developer": "Mode développeur",
@@ -193,6 +198,22 @@
     "pleaseConfirmYourNewPin": "Confirme le nouveau NIP",
     "preview": "Aperçu",
     "print": "Imprimer",
+    "proposal": "Proposition",
+    "proposalAye": "Aye",
+    "proposalNay": "Nay",
+    "proposalCancelled": "Annulé",
+    "proposalEnacted": "Exécuté",
+    "proposalApproved": "Accepté",
+    "proposalTurnout": "Participation",
+    "proposalHowVote": "Comment voter?",
+    "proposalsEmpty": "Pas de propositions",
+    "proposalsUpForVote": "Propositions soumises au vote",
+    "proposalsPast": "Propositions antérieures",
+    "proposalVote": "Voter",
+    "proposalVoted": "Voté",
+    "proposalOngoingUntil": "En cours jusqu'à",
+    "proposalConfirmingUntil": "En confirmation jusqu'à",
+    "proposalPendingEnactmentAt": "Sera exécutée le",
     "qrScan": "Scannez le code QR",
     "qrScanHintAccount": "Demande au destinataire de scanner le code QR dans l'application Encointer.",
     "rawSeed": "Raw Seed",
@@ -303,6 +324,73 @@
             "value": {
                 "type": "String",
                 "example": "LEU"
+            }
+        }
+    },
+    "proposalApprovalThreshold": "Valeur seuil d'acceptation: {percentage}%",
+    "@proposalApprovalThreshold": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalPassed": "Adopté avec {percentage}% Aye",
+    "@proposalPassed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalFailed": "Rejeté avec {percentage}% Aye",
+    "@proposalFailed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsPassing": "En cours d'adoption avec {percentage}% Aye",
+    "@proposalIsPassing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsFailing": "En cours de rejet avec {percentage}% Aye",
+    "@proposalIsFailing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalUpdateNominalIncome": "Ajuster le revenu communautaire à {value} {currency}",
+    "@proposalUpdateNominalIncome": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "currency": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
+    "proposalUpdateDemurrage": "Ajuster demurrage à {value}%/mois",
+    "@proposalUpdateDemurrage": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
             }
         }
     }

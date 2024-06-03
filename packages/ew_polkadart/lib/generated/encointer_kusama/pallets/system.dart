@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i16;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i17;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i17;
 import '../types/frame_support/dispatch/per_dispatch_class_1.dart' as _i5;
 import '../types/frame_support/dispatch/per_dispatch_class_2.dart' as _i20;
 import '../types/frame_support/dispatch/per_dispatch_class_3.dart' as _i23;
@@ -642,26 +642,35 @@ class Constants {
   /// Block & extrinsics weights: base values and limits.
   final _i19.BlockWeights blockWeights = _i19.BlockWeights(
     baseBlock: _i15.Weight(
-      refTime: BigInt.from(5000000000),
+      refTime: BigInt.from(390584000),
       proofSize: BigInt.zero,
     ),
     maxBlock: _i15.Weight(
-      refTime: BigInt.from(500000000000),
-      proofSize: BigInt.from(5242880),
+      refTime: BigInt.from(2000000000000),
+      proofSize: BigInt.parse(
+        '18446744073709551615',
+        radix: 10,
+      ),
     ),
     perClass: _i20.PerDispatchClass(
       normal: _i21.WeightsPerClass(
         baseExtrinsic: _i15.Weight(
-          refTime: BigInt.from(125000000),
+          refTime: BigInt.from(124414000),
           proofSize: BigInt.zero,
         ),
         maxExtrinsic: _i15.Weight(
-          refTime: BigInt.from(349875000000),
-          proofSize: BigInt.from(3670016),
+          refTime: BigInt.from(1299875586000),
+          proofSize: BigInt.parse(
+            '11990383647911208550',
+            radix: 10,
+          ),
         ),
         maxTotal: _i15.Weight(
-          refTime: BigInt.from(375000000000),
-          proofSize: BigInt.from(3932160),
+          refTime: BigInt.from(1500000000000),
+          proofSize: BigInt.parse(
+            '13835058055282163711',
+            radix: 10,
+          ),
         ),
         reserved: _i15.Weight(
           refTime: BigInt.zero,
@@ -670,25 +679,34 @@ class Constants {
       ),
       operational: _i21.WeightsPerClass(
         baseExtrinsic: _i15.Weight(
-          refTime: BigInt.from(125000000),
+          refTime: BigInt.from(124414000),
           proofSize: BigInt.zero,
         ),
         maxExtrinsic: _i15.Weight(
-          refTime: BigInt.from(474875000000),
-          proofSize: BigInt.from(4980736),
+          refTime: BigInt.from(1799875586000),
+          proofSize: BigInt.parse(
+            '16602069666338596454',
+            radix: 10,
+          ),
         ),
         maxTotal: _i15.Weight(
-          refTime: BigInt.from(500000000000),
-          proofSize: BigInt.from(5242880),
+          refTime: BigInt.from(2000000000000),
+          proofSize: BigInt.parse(
+            '18446744073709551615',
+            radix: 10,
+          ),
         ),
         reserved: _i15.Weight(
-          refTime: BigInt.from(125000000000),
-          proofSize: BigInt.from(1310720),
+          refTime: BigInt.from(500000000000),
+          proofSize: BigInt.parse(
+            '4611686018427387904',
+            radix: 10,
+          ),
         ),
       ),
       mandatory: _i21.WeightsPerClass(
         baseExtrinsic: _i15.Weight(
-          refTime: BigInt.from(125000000),
+          refTime: BigInt.from(124414000),
           proofSize: BigInt.zero,
         ),
         maxExtrinsic: null,
@@ -707,7 +725,7 @@ class Constants {
   ));
 
   /// Maximum number of block number to block hash mappings to keep (oldest pruned first).
-  final int blockHashCount = 4096;
+  final int blockHashCount = 2400;
 
   /// The weight of runtime database operations the runtime can invoke.
   final _i24.RuntimeDbWeight dbWeight = _i24.RuntimeDbWeight(
@@ -717,25 +735,12 @@ class Constants {
 
   /// Get the chain's current version.
   final _i25.RuntimeVersion version = const _i25.RuntimeVersion(
-    specName: 'encointer-parachain',
-    implName: 'encointer-parachain',
-    authoringVersion: 1,
-    specVersion: 1002000,
-    implVersion: 1,
+    specName: 'encointer-node-notee',
+    implName: 'encointer-node-notee',
+    authoringVersion: 0,
+    specVersion: 32,
+    implVersion: 0,
     apis: [
-      _i9.Tuple2<List<int>, int>(
-        <int>[
-          221,
-          113,
-          141,
-          92,
-          197,
-          50,
-          98,
-          212,
-        ],
-        1,
-      ),
       _i9.Tuple2<List<int>, int>(
         <int>[
           223,
@@ -803,6 +808,32 @@ class Constants {
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
+          221,
+          113,
+          141,
+          92,
+          197,
+          50,
+          98,
+          212,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          251,
+          197,
+          119,
+          185,
+          215,
+          71,
+          239,
+          214,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
           171,
           60,
           5,
@@ -813,6 +844,19 @@ class Constants {
           139,
         ],
         1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          237,
+          153,
+          197,
+          172,
+          178,
+          94,
+          237,
+          245,
+        ],
+        3,
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
@@ -842,16 +886,16 @@ class Constants {
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
-          234,
-          147,
-          227,
-          241,
-          111,
-          61,
-          105,
-          98,
+          243,
+          255,
+          20,
+          213,
+          171,
+          82,
+          112,
+          89,
         ],
-        2,
+        3,
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
@@ -905,21 +949,8 @@ class Constants {
         ],
         1,
       ),
-      _i9.Tuple2<List<int>, int>(
-        <int>[
-          251,
-          197,
-          119,
-          185,
-          215,
-          71,
-          239,
-          214,
-        ],
-        1,
-      ),
     ],
-    transactionVersion: 3,
+    transactionVersion: 5,
     stateVersion: 0,
   );
 
@@ -928,5 +959,5 @@ class Constants {
   /// This replaces the "ss58Format" property declared in the chain spec. Reason is
   /// that the runtime should know about the prefix in order to make use of it as
   /// an identifier of the chain.
-  final int sS58Prefix = 2;
+  final int sS58Prefix = 42;
 }
