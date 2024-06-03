@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 /// Button that shows a `CupertinoActivityIndicator` within while `onPressed` is executed.
 ///
 /// Useful for sending transactions because it takes a while until we know the result.
-///
-/// Same as `SubmitButton` but with the style of the secondary button.
 class SubmitButtonCupertino extends StatefulWidget {
   const SubmitButtonCupertino({super.key, required this.child, this.onPressed});
 

@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/page-encointer/democracy/democracy_page.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/components/launch/send_to_trello_list_tile.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/config/biometric_auth_state.dart';
+import 'package:encointer_wallet/page-encointer/democracy/democracy_page.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
@@ -88,7 +88,8 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.title),
-        iconTheme: const IconThemeData(color: AppColors.encointerGrey), //change your color here,
+        iconTheme: const IconThemeData(color: AppColors.encointerGrey),
+        //change your color here,
         centerTitle: true,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -137,14 +138,15 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
-              ListTile(
-                title: Text(
-                  l10n.democracy,
-                  style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19),
+              if (appSettingsStore.developerMode)
+                ListTile(
+                  title: Text(
+                    l10n.democracy,
+                    style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                  onTap: () => Navigator.pushNamed(context, DemocracyPage.route),
                 ),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
-                onTap: () => Navigator.pushNamed(context, DemocracyPage.route),
-              ),
               ListTile(
                 title: Text(
                   l10n.changeYourPin,
