@@ -14,12 +14,12 @@ import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
 
-import 'generated/encointer_kusama/types/cumulus_pallet_dmp_queue/pallet/error.dart' as _i11;
-import 'generated/encointer_kusama/types/cumulus_pallet_parachain_system/pallet/error.dart' as _i4;
-import 'generated/encointer_kusama/types/cumulus_pallet_xcmp_queue/pallet/error.dart' as _i8;
+// import 'generated/encointer_kusama/types/cumulus_pallet_dmp_queue/pallet/error.dart' as _i11;
+// import 'generated/encointer_kusama/types/cumulus_pallet_parachain_system/pallet/error.dart' as _i4;
+// import 'generated/encointer_kusama/types/cumulus_pallet_xcmp_queue/pallet/error.dart' as _i8;
 import 'generated/encointer_kusama/types/frame_system/pallet/error.dart' as _i3;
 import 'generated/encointer_kusama/types/pallet_balances/pallet/error.dart' as _i5;
-import 'generated/encointer_kusama/types/pallet_collective/pallet/error.dart' as _i16;
+// import 'generated/encointer_kusama/types/pallet_collective/pallet/error.dart' as _i16;
 import 'generated/encointer_kusama/types/pallet_encointer_balances/pallet/error.dart' as _i21;
 import 'generated/encointer_kusama/types/pallet_encointer_bazaar/pallet/error.dart' as _i22;
 import 'generated/encointer_kusama/types/pallet_encointer_ceremonies/pallet/error.dart' as _i19;
@@ -27,12 +27,12 @@ import 'generated/encointer_kusama/types/pallet_encointer_communities/pallet/err
 import 'generated/encointer_kusama/types/pallet_encointer_faucet/pallet/error.dart' as _i24;
 import 'generated/encointer_kusama/types/pallet_encointer_reputation_commitments/pallet/error.dart' as _i23;
 import 'generated/encointer_kusama/types/pallet_encointer_scheduler/pallet/error.dart' as _i18;
-import 'generated/encointer_kusama/types/pallet_membership/pallet/error.dart' as _i17;
+// import 'generated/encointer_kusama/types/pallet_membership/pallet/error.dart' as _i17;
 import 'generated/encointer_kusama/types/pallet_proxy/pallet/error.dart' as _i14;
 import 'generated/encointer_kusama/types/pallet_scheduler/pallet/error.dart' as _i15;
 import 'generated/encointer_kusama/types/pallet_treasury/pallet/error.dart' as _i13;
 import 'generated/encointer_kusama/types/pallet_utility/pallet/error.dart' as _i12;
-import 'generated/encointer_kusama/types/pallet_xcm/pallet/error.dart' as _i9;
+// import 'generated/encointer_kusama/types/pallet_xcm/pallet/error.dart' as _i9;
 
 abstract class RuntimeError {
   const RuntimeError();
@@ -75,25 +75,25 @@ class $RuntimeError {
     return System(value0);
   }
 
-  ParachainSystem parachainSystem(_i4.Error value0) {
-    return ParachainSystem(value0);
-  }
+  // ParachainSystem parachainSystem(_i4.Error value0) {
+  //   return ParachainSystem(value0);
+  // }
 
   Balances balances(_i5.Error value0) {
     return Balances(value0);
   }
 
-  XcmpQueue xcmpQueue(_i8.Error value0) {
-    return XcmpQueue(value0);
-  }
-
-  PolkadotXcm polkadotXcm(_i9.Error value0) {
-    return PolkadotXcm(value0);
-  }
-
-  DmpQueue dmpQueue(_i11.Error value0) {
-    return DmpQueue(value0);
-  }
+  // XcmpQueue xcmpQueue(_i8.Error value0) {
+  //   return XcmpQueue(value0);
+  // }
+  //
+  // PolkadotXcm polkadotXcm(_i9.Error value0) {
+  //   return PolkadotXcm(value0);
+  // }
+  //
+  // DmpQueue dmpQueue(_i11.Error value0) {
+  //   return DmpQueue(value0);
+  // }
 
   Utility utility(_i12.Error value0) {
     return Utility(value0);
@@ -111,13 +111,13 @@ class $RuntimeError {
     return Scheduler(value0);
   }
 
-  Collective collective(_i16.Error value0) {
-    return Collective(value0);
-  }
-
-  Membership membership(_i17.Error value0) {
-    return Membership(value0);
-  }
+  // Collective collective(_i16.Error value0) {
+  //   return Collective(value0);
+  // }
+  //
+  // Membership membership(_i17.Error value0) {
+  //   return Membership(value0);
+  // }
 
   EncointerScheduler encointerScheduler(_i18.Error value0) {
     return EncointerScheduler(value0);
@@ -166,21 +166,21 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
       case System:
         (value as System).encodeTo(output);
         break;
-      case ParachainSystem:
-        (value as ParachainSystem).encodeTo(output);
-        break;
+      // case ParachainSystem:
+      //   (value as ParachainSystem).encodeTo(output);
+      //   break;
       case Balances:
         (value as Balances).encodeTo(output);
         break;
-      case XcmpQueue:
-        (value as XcmpQueue).encodeTo(output);
-        break;
-      case PolkadotXcm:
-        (value as PolkadotXcm).encodeTo(output);
-        break;
-      case DmpQueue:
-        (value as DmpQueue).encodeTo(output);
-        break;
+      // case XcmpQueue:
+      //   (value as XcmpQueue).encodeTo(output);
+      //   break;
+      // case PolkadotXcm:
+      //   (value as PolkadotXcm).encodeTo(output);
+      //   break;
+      // case DmpQueue:
+      //   (value as DmpQueue).encodeTo(output);
+      //   break;
       case Utility:
         (value as Utility).encodeTo(output);
         break;
@@ -193,12 +193,12 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
       case Scheduler:
         (value as Scheduler).encodeTo(output);
         break;
-      case Collective:
-        (value as Collective).encodeTo(output);
-        break;
-      case Membership:
-        (value as Membership).encodeTo(output);
-        break;
+      // case Collective:
+      //   (value as Collective).encodeTo(output);
+      //   break;
+      // case Membership:
+      //   (value as Membership).encodeTo(output);
+      //   break;
       case EncointerScheduler:
         (value as EncointerScheduler).encodeTo(output);
         break;
@@ -230,16 +230,16 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
     switch (value.runtimeType) {
       case System:
         return (value as System)._sizeHint();
-      case ParachainSystem:
-        return (value as ParachainSystem)._sizeHint();
+      // case ParachainSystem:
+      //   return (value as ParachainSystem)._sizeHint();
       case Balances:
         return (value as Balances)._sizeHint();
-      case XcmpQueue:
-        return (value as XcmpQueue)._sizeHint();
-      case PolkadotXcm:
-        return (value as PolkadotXcm)._sizeHint();
-      case DmpQueue:
-        return (value as DmpQueue)._sizeHint();
+      // case XcmpQueue:
+      //   return (value as XcmpQueue)._sizeHint();
+      // case PolkadotXcm:
+      //   return (value as PolkadotXcm)._sizeHint();
+      // case DmpQueue:
+      //   return (value as DmpQueue)._sizeHint();
       case Utility:
         return (value as Utility)._sizeHint();
       case Treasury:
@@ -248,10 +248,10 @@ class $RuntimeErrorCodec with _i1.Codec<RuntimeError> {
         return (value as Proxy)._sizeHint();
       case Scheduler:
         return (value as Scheduler)._sizeHint();
-      case Collective:
-        return (value as Collective)._sizeHint();
-      case Membership:
-        return (value as Membership)._sizeHint();
+      // case Collective:
+      //   return (value as Collective)._sizeHint();
+      // case Membership:
+      //   return (value as Membership)._sizeHint();
       case EncointerScheduler:
         return (value as EncointerScheduler)._sizeHint();
       case EncointerCeremonies:
@@ -276,16 +276,16 @@ RuntimeError decodeWithIndex(int index, _i1.Input input) {
   switch (index) {
     case 0:
       return System._decode(input);
-    case 1:
-      return ParachainSystem._decode(input);
+    // case 1:
+    //   return ParachainSystem._decode(input);
     case 10:
       return Balances._decode(input);
-    case 30:
-      return XcmpQueue._decode(input);
-    case 31:
-      return PolkadotXcm._decode(input);
-    case 33:
-      return DmpQueue._decode(input);
+    // case 30:
+    //   return XcmpQueue._decode(input);
+    // case 31:
+    //   return PolkadotXcm._decode(input);
+    // case 33:
+    //   return DmpQueue._decode(input);
     case 40:
       return Utility._decode(input);
     case 43:
@@ -294,10 +294,10 @@ RuntimeError decodeWithIndex(int index, _i1.Input input) {
       return Proxy._decode(input);
     case 48:
       return Scheduler._decode(input);
-    case 50:
-      return Collective._decode(input);
-    case 51:
-      return Membership._decode(input);
+    // case 50:
+    //   return Collective._decode(input);
+    // case 51:
+    //   return Membership._decode(input);
     case 60:
       return EncointerScheduler._decode(input);
     case 61:
@@ -359,47 +359,47 @@ class System extends RuntimeError {
   int get hashCode => value0.hashCode;
 }
 
-class ParachainSystem extends RuntimeError {
-  const ParachainSystem(this.value0);
-
-  factory ParachainSystem._decode(_i1.Input input) {
-    return ParachainSystem(_i4.Error.codec.decode(input));
-  }
-
-  /// cumulus_pallet_parachain_system::Event<Runtime>
-  final _i4.Error value0;
-
-  @override
-  Map<String, String> toJson() => {'ParachainSystem': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i4.Error.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      1,
-      output,
-    );
-    _i4.Error.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is ParachainSystem && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
+// class ParachainSystem extends RuntimeError {
+//   const ParachainSystem(this.value0);
+//
+//   factory ParachainSystem._decode(_i1.Input input) {
+//     return ParachainSystem(_i4.Error.codec.decode(input));
+//   }
+//
+//   /// cumulus_pallet_parachain_system::Event<Runtime>
+//   final _i4.Error value0;
+//
+//   @override
+//   Map<String, String> toJson() => {'ParachainSystem': value0.toJson()};
+//
+//   int _sizeHint() {
+//     int size = 1;
+//     size = size + _i4.Error.codec.sizeHint(value0);
+//     return size;
+//   }
+//
+//   void encodeTo(_i1.Output output) {
+//     _i1.U8Codec.codec.encodeTo(
+//       1,
+//       output,
+//     );
+//     _i4.Error.codec.encodeTo(
+//       value0,
+//       output,
+//     );
+//   }
+//
+//   @override
+//   bool operator ==(Object other) =>
+//       identical(
+//         this,
+//         other,
+//       ) ||
+//       other is ParachainSystem && other.value0 == value0;
+//
+//   @override
+//   int get hashCode => value0.hashCode;
+// }
 
 class Balances extends RuntimeError {
   const Balances(this.value0);
@@ -443,131 +443,131 @@ class Balances extends RuntimeError {
   int get hashCode => value0.hashCode;
 }
 
-class XcmpQueue extends RuntimeError {
-  const XcmpQueue(this.value0);
-
-  factory XcmpQueue._decode(_i1.Input input) {
-    return XcmpQueue(_i8.Error.codec.decode(input));
-  }
-
-  /// cumulus_pallet_xcmp_queue::Event<Runtime>
-  final _i8.Error value0;
-
-  @override
-  Map<String, String> toJson() => {'XcmpQueue': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i8.Error.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      30,
-      output,
-    );
-    _i8.Error.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is XcmpQueue && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
-
-class PolkadotXcm extends RuntimeError {
-  const PolkadotXcm(this.value0);
-
-  factory PolkadotXcm._decode(_i1.Input input) {
-    return PolkadotXcm(_i9.Error.codec.decode(input));
-  }
-
-  /// pallet_xcm::Event<Runtime>
-  final _i9.Error value0;
-
-  @override
-  Map<String, String> toJson() => {'PolkadotXcm': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i9.Error.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      31,
-      output,
-    );
-    _i9.Error.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is PolkadotXcm && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
-
-class DmpQueue extends RuntimeError {
-  const DmpQueue(this.value0);
-
-  factory DmpQueue._decode(_i1.Input input) {
-    return DmpQueue(_i11.Error.codec.decode(input));
-  }
-
-  /// cumulus_pallet_dmp_queue::Event<Runtime>
-  final _i11.Error value0;
-
-  @override
-  Map<String, String> toJson() => {'DmpQueue': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i11.Error.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      33,
-      output,
-    );
-    _i11.Error.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is DmpQueue && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
+// class XcmpQueue extends RuntimeError {
+//   const XcmpQueue(this.value0);
+//
+//   factory XcmpQueue._decode(_i1.Input input) {
+//     return XcmpQueue(_i8.Error.codec.decode(input));
+//   }
+//
+//   /// cumulus_pallet_xcmp_queue::Event<Runtime>
+//   final _i8.Error value0;
+//
+//   @override
+//   Map<String, String> toJson() => {'XcmpQueue': value0.toJson()};
+//
+//   int _sizeHint() {
+//     int size = 1;
+//     size = size + _i8.Error.codec.sizeHint(value0);
+//     return size;
+//   }
+//
+//   void encodeTo(_i1.Output output) {
+//     _i1.U8Codec.codec.encodeTo(
+//       30,
+//       output,
+//     );
+//     _i8.Error.codec.encodeTo(
+//       value0,
+//       output,
+//     );
+//   }
+//
+//   @override
+//   bool operator ==(Object other) =>
+//       identical(
+//         this,
+//         other,
+//       ) ||
+//       other is XcmpQueue && other.value0 == value0;
+//
+//   @override
+//   int get hashCode => value0.hashCode;
+// }
+//
+// class PolkadotXcm extends RuntimeError {
+//   const PolkadotXcm(this.value0);
+//
+//   factory PolkadotXcm._decode(_i1.Input input) {
+//     return PolkadotXcm(_i9.Error.codec.decode(input));
+//   }
+//
+//   /// pallet_xcm::Event<Runtime>
+//   final _i9.Error value0;
+//
+//   @override
+//   Map<String, String> toJson() => {'PolkadotXcm': value0.toJson()};
+//
+//   int _sizeHint() {
+//     int size = 1;
+//     size = size + _i9.Error.codec.sizeHint(value0);
+//     return size;
+//   }
+//
+//   void encodeTo(_i1.Output output) {
+//     _i1.U8Codec.codec.encodeTo(
+//       31,
+//       output,
+//     );
+//     _i9.Error.codec.encodeTo(
+//       value0,
+//       output,
+//     );
+//   }
+//
+//   @override
+//   bool operator ==(Object other) =>
+//       identical(
+//         this,
+//         other,
+//       ) ||
+//       other is PolkadotXcm && other.value0 == value0;
+//
+//   @override
+//   int get hashCode => value0.hashCode;
+// }
+//
+// class DmpQueue extends RuntimeError {
+//   const DmpQueue(this.value0);
+//
+//   factory DmpQueue._decode(_i1.Input input) {
+//     return DmpQueue(_i11.Error.codec.decode(input));
+//   }
+//
+//   /// cumulus_pallet_dmp_queue::Event<Runtime>
+//   final _i11.Error value0;
+//
+//   @override
+//   Map<String, String> toJson() => {'DmpQueue': value0.toJson()};
+//
+//   int _sizeHint() {
+//     int size = 1;
+//     size = size + _i11.Error.codec.sizeHint(value0);
+//     return size;
+//   }
+//
+//   void encodeTo(_i1.Output output) {
+//     _i1.U8Codec.codec.encodeTo(
+//       33,
+//       output,
+//     );
+//     _i11.Error.codec.encodeTo(
+//       value0,
+//       output,
+//     );
+//   }
+//
+//   @override
+//   bool operator ==(Object other) =>
+//       identical(
+//         this,
+//         other,
+//       ) ||
+//       other is DmpQueue && other.value0 == value0;
+//
+//   @override
+//   int get hashCode => value0.hashCode;
+// }
 
 class Utility extends RuntimeError {
   const Utility(this.value0);
@@ -737,89 +737,89 @@ class Scheduler extends RuntimeError {
   int get hashCode => value0.hashCode;
 }
 
-class Collective extends RuntimeError {
-  const Collective(this.value0);
-
-  factory Collective._decode(_i1.Input input) {
-    return Collective(_i16.Error.codec.decode(input));
-  }
-
-  /// pallet_collective::Event<Runtime, pallet_collective::Instance1>
-  final _i16.Error value0;
-
-  @override
-  Map<String, String> toJson() => {'Collective': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i16.Error.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      50,
-      output,
-    );
-    _i16.Error.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is Collective && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
-
-class Membership extends RuntimeError {
-  const Membership(this.value0);
-
-  factory Membership._decode(_i1.Input input) {
-    return Membership(_i17.Error.codec.decode(input));
-  }
-
-  /// pallet_membership::Event<Runtime, pallet_membership::Instance1>
-  final _i17.Error value0;
-
-  @override
-  Map<String, String> toJson() => {'Membership': value0.toJson()};
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i17.Error.codec.sizeHint(value0);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      51,
-      output,
-    );
-    _i17.Error.codec.encodeTo(
-      value0,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is Membership && other.value0 == value0;
-
-  @override
-  int get hashCode => value0.hashCode;
-}
+// class Collective extends RuntimeError {
+//   const Collective(this.value0);
+//
+//   factory Collective._decode(_i1.Input input) {
+//     return Collective(_i16.Error.codec.decode(input));
+//   }
+//
+//   /// pallet_collective::Event<Runtime, pallet_collective::Instance1>
+//   final _i16.Error value0;
+//
+//   @override
+//   Map<String, String> toJson() => {'Collective': value0.toJson()};
+//
+//   int _sizeHint() {
+//     int size = 1;
+//     size = size + _i16.Error.codec.sizeHint(value0);
+//     return size;
+//   }
+//
+//   void encodeTo(_i1.Output output) {
+//     _i1.U8Codec.codec.encodeTo(
+//       50,
+//       output,
+//     );
+//     _i16.Error.codec.encodeTo(
+//       value0,
+//       output,
+//     );
+//   }
+//
+//   @override
+//   bool operator ==(Object other) =>
+//       identical(
+//         this,
+//         other,
+//       ) ||
+//       other is Collective && other.value0 == value0;
+//
+//   @override
+//   int get hashCode => value0.hashCode;
+// }
+//
+// class Membership extends RuntimeError {
+//   const Membership(this.value0);
+//
+//   factory Membership._decode(_i1.Input input) {
+//     return Membership(_i17.Error.codec.decode(input));
+//   }
+//
+//   /// pallet_membership::Event<Runtime, pallet_membership::Instance1>
+//   final _i17.Error value0;
+//
+//   @override
+//   Map<String, String> toJson() => {'Membership': value0.toJson()};
+//
+//   int _sizeHint() {
+//     int size = 1;
+//     size = size + _i17.Error.codec.sizeHint(value0);
+//     return size;
+//   }
+//
+//   void encodeTo(_i1.Output output) {
+//     _i1.U8Codec.codec.encodeTo(
+//       51,
+//       output,
+//     );
+//     _i17.Error.codec.encodeTo(
+//       value0,
+//       output,
+//     );
+//   }
+//
+//   @override
+//   bool operator ==(Object other) =>
+//       identical(
+//         this,
+//         other,
+//       ) ||
+//       other is Membership && other.value0 == value0;
+//
+//   @override
+//   int get hashCode => value0.hashCode;
+// }
 
 class EncointerScheduler extends RuntimeError {
   const EncointerScheduler(this.value0);

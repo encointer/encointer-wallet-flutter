@@ -85,6 +85,11 @@
     "createPassword2Error": "Inconsistent PINs",
     "createPasswordError": "PIN must contain at least 4 digits and no other signs",
     "deleteAccount": "delete",
+    "democracy": "Democracy",
+    "democracyFaq": "How does democracy work?",
+    "democracyDiscussion": "Discuss proposals in the Forum!",
+    "democracyVotedNotificationBody": "You have voted for this proposal.",
+    "democracyVotedNotificationTitle": "Voted",
     "detail": "Detail",
     "detailsEnter": "Enter your details.",
     "developer": "Developer mode",
@@ -193,6 +198,22 @@
     "pleaseConfirmYourNewPin": "Confirm New PIN",
     "preview": "Preview",
     "print": "Print",
+    "proposal": "Proposal",
+    "proposalAye": "Aye",
+    "proposalNay": "Nay",
+    "proposalCancelled": "Cancelled",
+    "proposalEnacted": "Enacted",
+    "proposalApproved": "Approved",
+    "proposalTurnout": "Turnout",
+    "proposalHowVote": "How do you vote?",
+    "proposalsEmpty": "No proposals",
+    "proposalsUpForVote": "Proposals up for vote",
+    "proposalsPast": "Past Proposals",
+    "proposalVote": "Vote",
+    "proposalVoted": "Voted",
+    "proposalOngoingUntil": "Ongoing until",
+    "proposalConfirmingUntil": "Confirming until",
+    "proposalPendingEnactmentAt": "Pending enactment at",
     "qrScan": "Scan QR code",
     "qrScanHintAccount": "Ask the recipient to scan the QR-code in the encointer app.",
     "rawSeed": "Raw Seed",
@@ -455,6 +476,73 @@
             "value": {
                 "type": "String",
                 "example": "LEU"
+            }
+        }
+    },
+    "proposalApprovalThreshold": "Approval Threshold: {percentage}%",
+    "@proposalApprovalThreshold": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalPassed": "Passed with {percentage}% Aye",
+    "@proposalPassed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalFailed": "Failed with {percentage}% Aye",
+    "@proposalFailed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsPassing": "Currently passing with {percentage}% Aye",
+    "@proposalIsPassing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsFailing": "Currently failing with {percentage}% Aye",
+    "@proposalIsFailing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalUpdateNominalIncome": "Update community income to {value} {currency}",
+    "@proposalUpdateNominalIncome": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "currency": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
+    "proposalUpdateDemurrage": "Update demurrage to {value}%/month",
+    "@proposalUpdateDemurrage": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
             }
         }
     }

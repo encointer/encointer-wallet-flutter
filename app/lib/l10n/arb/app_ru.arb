@@ -85,6 +85,11 @@
     "createPassword2Error": "PIN-коды не совпадают",
     "createPasswordError": "PIN должен содержать не менее 4 цифр и никаких других знаков",
     "deleteAccount": "Удалить",
+    "democracy": "Демократия",
+    "democracyFaq": "Как работает демократия?",
+    "democracyDiscussion": "Обсудите предложения на форуме!",
+    "democracyVotedNotificationBody": "Вы проголосовали за это предложение.",
+    "democracyVotedNotificationTitle": "проголосовали",
     "detail": "Детали",
     "detailsEnter": "Введите свои данные",
     "developer": "Режим разработчика",
@@ -193,6 +198,22 @@
     "pleaseConfirmYourNewPin": "Подтвердите PIN-код",
     "preview": "Предпросмотр",
     "print": "Распечатать",
+    "proposal": "предложений",
+    "proposalAye": "Aye",
+    "proposalNay": "Nay",
+    "proposalCancelled": "Отменено",
+    "proposalEnacted": "выполнено",
+    "proposalApproved": "Принято",
+    "proposalTurnout": "Явка избирателей",
+    "proposalHowVote": "Как вы голосуете?",
+    "proposalsEmpty": "Нет предложений",
+    "proposalsUpForVote": "Предложения для голосования",
+    "proposalsPast": "Предложения прошлых лет",
+    "proposalVote": "голосовать",
+    "proposalVoted": "проголосовали",
+    "proposalOngoingUntil": "Продолжается до",
+    "proposalConfirmingUntil": "В подтверждение до",
+    "proposalPendingEnactmentAt": "Выполнено на",
     "qrScan": "Сканируйте QR-код",
     "qrScanHintAccount": "Попросите получателя отсканировать QR-код в приложении Еncointer",
     "rawSeed": "Raw Seed",
@@ -303,6 +324,73 @@
             "value": {
                 "type": "String",
                 "example": "LEU"
+            }
+        }
+    },
+    "proposalApprovalThreshold": "Порог приемлемости: {percentage}%",
+    "@proposalApprovalThreshold": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalPassed": "Отклонено, взято с {percentage}% Aye",
+    "@proposalPassed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalFailed": "Отклонено с {percentage}% Aye",
+    "@proposalFailed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsPassing": "Только что приняли с {percentage}% Aye",
+    "@proposalIsPassing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsFailing": "В настоящее время отвергается с {percentage}% Aye",
+    "@proposalIsFailing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalUpdateNominalIncome": "скорректировать доходы населения с учетом {value} {currency}",
+    "@proposalUpdateNominalIncome": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "currency": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
+    "proposalUpdateDemurrage": "Обновить Demurrage до {value}%/месяц",
+    "@proposalUpdateDemurrage": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
             }
         }
     }

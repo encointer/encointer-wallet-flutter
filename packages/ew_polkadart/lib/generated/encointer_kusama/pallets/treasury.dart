@@ -5,7 +5,7 @@ import 'dart:typed_data' as _i6;
 import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
-import '../types/encointer_kusama_runtime/runtime_call.dart' as _i7;
+import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i7;
 import '../types/frame_support/pallet_id.dart' as _i12;
 import '../types/pallet_treasury/pallet/call.dart' as _i9;
 import '../types/pallet_treasury/proposal.dart' as _i3;
@@ -282,13 +282,13 @@ class Constants {
   final _i11.Permill proposalBond = 50000;
 
   /// Minimum amount of funds that should be placed in a deposit for making a proposal.
-  final BigInt proposalBondMinimum = BigInt.from(33333300);
+  final BigInt proposalBondMinimum = BigInt.from(100000000000);
 
   /// Maximum amount of funds that should be placed in a deposit for making a proposal.
-  final BigInt? proposalBondMaximum = BigInt.from(166666666500);
+  final BigInt? proposalBondMaximum = BigInt.from(500000000000000);
 
   /// Period between successive spends.
-  final int spendPeriod = 43200;
+  final int spendPeriod = 86400;
 
   /// Percentage of spare funds (if any) that are burnt per spend period.
   final _i11.Permill burn = 0;
@@ -311,5 +311,5 @@ class Constants {
   final int maxApprovals = 10;
 
   /// The period during which an approved treasury spend has to be claimed.
-  final int payoutPeriod = 216000;
+  final int payoutPeriod = 86400;
 }

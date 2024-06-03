@@ -26,7 +26,16 @@ import 'package:ew_http/ew_http.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/encointer_types.dart' show ProofOfAttendance;
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show BlockHash, ByteInput, EncointerKusama, RuntimeVersion, SequenceCodec, StorageChangeSet, Tuple2;
+    show
+        BlockHash,
+        ByteInput,
+        EncointerKusama,
+        Tally,
+        Proposal,
+        RuntimeVersion,
+        SequenceCodec,
+        StorageChangeSet,
+        Tuple2;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
@@ -34,6 +43,7 @@ import 'package:ew_substrate_fixed/substrate_fixed.dart';
 // disambiguate global imports of encointer types. We can remove this
 // once we got rid of our manual type definitions.
 import 'package:ew_polkadart/encointer_types.dart' as et;
+import 'package:flutter/cupertino.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -572,10 +582,10 @@ class EncointerApi {
     }
   }
 
-  Future<void> getReputations({BlockHash? at}) async {
+  Future<Map<int, CommunityReputation>> getReputations({BlockHash? at}) async {
     final address = store.account.currentAddress;
 
-    if (address.isEmpty) return;
+    if (address.isEmpty) return Map.of({});
 
     final runtimeVersion = await encointerKusama.rpc.state.getRuntimeVersion(at: at ?? store.chain.latestHash);
 
@@ -583,6 +593,7 @@ class EncointerApi {
       final reputations = await _dartApi.getReputations(address, at: at ?? store.chain.latestHash);
       Log.d('api: getReputationsV2: $reputations', 'EncointerApi');
       if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
+      return reputations;
     } else {
       final reputationsV1 = await _dartApi.getReputationsV1(address, at: at ?? store.chain.latestHash);
       Log.d('api: getReputations: $reputationsV1', 'EncointerApi');
@@ -591,6 +602,7 @@ class EncointerApi {
       Log.d('api: getReputations (migrated to V2): $reputations', 'EncointerApi');
 
       if (reputations.isNotEmpty) await store.encointer.account?.setReputations(reputations);
+      return reputations;
     }
   }
 
@@ -719,6 +731,88 @@ class EncointerApi {
     }
   }
 
+  Future<Map<BigInt, Proposal>> getProposals(List<BigInt> proposalIds, {BlockHash? at}) async {
+    try {
+      // Keys including storage prefix.
+      Log.d("[getProposals] ProposalIds: $proposalIds')}");
+
+      final proposals = await Future.wait(proposalIds.map(
+        (key) => encointerKusama.query.encointerDemocracy
+            .proposals(key, at: at ?? store.chain.latestHash)
+            .then((maybeProposal) => maybeProposal!),
+      ));
+
+      final proposalMap = Map.fromIterables(proposalIds, proposals);
+      Log.d('[getProposals] proposals: $proposalMap');
+      return proposalMap;
+    } catch (e, s) {
+      Log.e('[getProposals]', '$e', s);
+      return Map.of({});
+    }
+  }
+
+  Future<Map<BigInt, Tally>> getTallies(List<BigInt> proposalIds, {BlockHash? at}) async {
+    try {
+      // Keys including storage prefix.
+      Log.d('[getTallies] ProposalIds: $proposalIds)}');
+
+      final tallies = await Future.wait(proposalIds.map(
+        (key) => encointerKusama.query.encointerDemocracy
+            .tallies(key, at: at ?? store.chain.latestHash)
+            .then((maybeTally) => maybeTally!),
+      ));
+
+      final tallyMap = Map.fromIterables(proposalIds, tallies);
+      Log.d('[getTallies] tallies: $tallyMap');
+      return tallyMap;
+    } catch (e, s) {
+      Log.e('[getTallies]', '$e', s);
+      return Map.of({});
+    }
+  }
+
+  Future<Map<BigInt, BigInt>> getProposalPurposeIds(List<BigInt> proposalIds, {BlockHash? at}) async {
+    try {
+      // Keys including storage prefix.
+      Log.d('[getProposalPurposeIds] ProposalIds: $proposalIds)}');
+
+      final purposeIds = await Future.wait(proposalIds.map(
+        (key) => encointerKusama.query.encointerDemocracy
+            .purposeIds(key, at: at ?? store.chain.latestHash)
+            // We know that the tally exists because we fetched the keys before.
+            .then((maybePurposeId) => maybePurposeId!),
+      ));
+
+      final purposeIdMap = Map.fromIterables(proposalIds, purposeIds);
+      Log.d('[getProposalPurposeIds] tallies: $purposeIdMap');
+      return purposeIdMap;
+    } catch (e, s) {
+      Log.e('[getProposalPurposeIds]', '$e', s);
+      return Map.of({});
+    }
+  }
+
+  Future<List<BigInt>> getHistoricProposalIds({BigInt? mostRecent, BigInt? count, BlockHash? at}) async {
+    final from = mostRecent ?? await encointerKusama.query.encointerDemocracy.proposalCount(at: at);
+    final c = count ?? BigInt.one;
+    final lowerBound = max(0, (from - c).toInt());
+
+    final proposalIds = [for (var i = from.toInt(); i > lowerBound; i -= 1) BigInt.from(i)];
+    return proposalIds;
+  }
+
+  DemocracyParams democracyParams() {
+    final minTurnout = encointerKusama.constant.encointerDemocracy.minTurnout;
+    final confirmationPeriod = encointerKusama.constant.encointerDemocracy.confirmationPeriod;
+    final proposalLifetime = encointerKusama.constant.encointerDemocracy.proposalLifetime;
+
+    return DemocracyParams(
+      minTurnout: minTurnout,
+      confirmationPeriod: confirmationPeriod,
+      proposalLifetime: proposalLifetime,
+    );
+  }
+
   Future<bool> hasCommittedFor(
     CommunityIdentifier cid,
     int cIndex,
@@ -809,4 +903,17 @@ class ParticipantRegistration {
 
   final int pIndex;
   final et.ParticipantType participantType;
+}
+
+@immutable
+class DemocracyParams {
+  const DemocracyParams({
+    required this.minTurnout,
+    required this.confirmationPeriod,
+    required this.proposalLifetime,
+  });
+
+  final BigInt minTurnout;
+  final BigInt confirmationPeriod;
+  final BigInt proposalLifetime;
 }
