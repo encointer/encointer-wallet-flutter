@@ -14,7 +14,7 @@ description: EncointerWallet made with Flutter.
 
 # bump version already while working on new release, bumping build number at the same time
 # bump build number even more, if needed to clarify what's deployed
-version: 1.14.0+886
+version: 1.14.1+887
 
 publish_to: none
 
@@ -122,28 +122,28 @@ dependency_overrides:
     #    path: ../../../polkadart/packages/polkadart
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/encointer-signed-extensions
+      ref: cl/add-checkmetadata-extension-rebased
       path: packages/polkadart
 
   polkadart_scale_codec:
     #    path: ../../../polkadart/packages/polkadart_scale_codec
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/encointer-signed-extensions
+      ref: cl/add-checkmetadata-extension-rebased
       path: packages/polkadart_scale_codec
 
   substrate_metadata:
     #    path: ../../../polkadart/packages/substrate_metadata
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/encointer-signed-extensions
+      ref: cl/add-checkmetadata-extension-rebased
       path: packages/substrate_metadata
 
   polkadart_keyring:
     #    path: ../../../polkadart/packages/polkadart_keyring
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/encointer-signed-extensions
+      ref: cl/add-checkmetadata-extension-rebased
       path: packages/polkadart_keyring
 
 flutter_icons:
