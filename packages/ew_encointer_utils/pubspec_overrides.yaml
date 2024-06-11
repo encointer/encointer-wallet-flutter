@@ -11,15 +11,15 @@ dependency_overrides:
   polkadart:
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/encointer-signed-extensions
+      ref: cl/add-checkmetadata-extension-rebased
       path: packages/polkadart
   polkadart_keyring:
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/encointer-signed-extensions
+      ref: cl/add-checkmetadata-extension-rebased
       path: packages/polkadart_keyring
   polkadart_scale_codec:
     git:
       url: https://github.com/encointer/polkadart
-      ref: cl/encointer-signed-extensions
+      ref: cl/add-checkmetadata-extension-rebased
       path: packages/polkadart_scale_codec

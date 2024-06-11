@@ -397,8 +397,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/polkadart_keyring"
-      ref: "cl/encointer-signed-extensions"
-      resolved-ref: "3f60d3498ce4d5b4bb353a0203f8559c8cd6733a"
+      ref: "cl/add-checkmetadata-extension-rebased"
+      resolved-ref: "08c91452beb9868483a9ec0bb60d33dab9838416"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.0"
@@ -406,8 +406,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: "cl/encointer-signed-extensions"
-      resolved-ref: "3f60d3498ce4d5b4bb353a0203f8559c8cd6733a"
+      ref: "cl/add-checkmetadata-extension-rebased"
+      resolved-ref: "08c91452beb9868483a9ec0bb60d33dab9838416"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"
