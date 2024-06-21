@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -36,18 +35,6 @@ abstract class _SettingsStore with Store {
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
-
-  @observable
-  Locale locale = const Locale('en', '');
-
-  @action
-  void changeLang(BuildContext context, String? code) {
-    locale = switch (code) {
-      'en' => const Locale('en', ''),
-      'de' => const Locale('de', ''),
-      _ => Localizations.localeOf(context),
-    };
-  }
 
   @computed
   bool get endpointIsEncointer {
