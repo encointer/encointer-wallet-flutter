@@ -113,7 +113,7 @@ bool isPassing(Tally tally, BigInt electorateSize, DemocracyParams params) {
 }
 
 bool positiveTurnoutBias(int electorate, int turnout, int ayes) {
-  return ayes / electorate > approvalThreshold(electorate, turnout);
+  return ayes / turnout > approvalThreshold(electorate, turnout);
 }
 
 /// Returns the approval threshold in the range of [0,1].
