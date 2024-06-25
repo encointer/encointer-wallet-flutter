@@ -13,15 +13,19 @@ mixin _$ChainStore on _ChainStore, Store {
 
   @override
   Uint8List? get latestHash =>
-      (_$latestHashComputed ??= Computed<Uint8List?>(() => super.latestHash, name: '_ChainStore.latestHash')).value;
+      (_$latestHashComputed ??= Computed<Uint8List?>(() => super.latestHash,
+              name: '_ChainStore.latestHash'))
+          .value;
   Computed<int?>? _$latestHeaderNumberComputed;
 
   @override
   int? get latestHeaderNumber => (_$latestHeaderNumberComputed ??=
-          Computed<int?>(() => super.latestHeaderNumber, name: '_ChainStore.latestHeaderNumber'))
+          Computed<int?>(() => super.latestHeaderNumber,
+              name: '_ChainStore.latestHeaderNumber'))
       .value;
 
-  late final _$latestHeaderAtom = Atom(name: '_ChainStore.latestHeader', context: context);
+  late final _$latestHeaderAtom =
+      Atom(name: '_ChainStore.latestHeader', context: context);
 
   @override
   Header? get latestHeader {
@@ -36,7 +40,8 @@ mixin _$ChainStore on _ChainStore, Store {
     });
   }
 
-  late final _$latestHashHexAtom = Atom(name: '_ChainStore.latestHashHex', context: context);
+  late final _$latestHashHexAtom =
+      Atom(name: '_ChainStore.latestHashHex', context: context);
 
   @override
   String? get latestHashHex {
@@ -51,11 +56,13 @@ mixin _$ChainStore on _ChainStore, Store {
     });
   }
 
-  late final _$_ChainStoreActionController = ActionController(name: '_ChainStore', context: context);
+  late final _$_ChainStoreActionController =
+      ActionController(name: '_ChainStore', context: context);
 
   @override
   void setLatestHeaderHash(String latestHash) {
-    final _$actionInfo = _$_ChainStoreActionController.startAction(name: '_ChainStore.setLatestHeaderHash');
+    final _$actionInfo = _$_ChainStoreActionController.startAction(
+        name: '_ChainStore.setLatestHeaderHash');
     try {
       return super.setLatestHeaderHash(latestHash);
     } finally {
@@ -65,7 +72,8 @@ mixin _$ChainStore on _ChainStore, Store {
 
   @override
   void setLatestHeader(Header latest) {
-    final _$actionInfo = _$_ChainStoreActionController.startAction(name: '_ChainStore.setLatestHeader');
+    final _$actionInfo = _$_ChainStoreActionController.startAction(
+        name: '_ChainStore.setLatestHeader');
     try {
       return super.setLatestHeader(latest);
     } finally {

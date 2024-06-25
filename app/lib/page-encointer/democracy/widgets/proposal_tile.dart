@@ -167,9 +167,9 @@ class _ProposalTileState extends State<ProposalTile> {
     final l10n = context.l10n;
     switch (proposal.state.runtimeType) {
       case Rejected:
-        return Text(l10n.proposalCancelled, style: const TextStyle(color: Colors.red));
+        return Text(l10n.proposalRejected, style: const TextStyle(color: Colors.red));
       case SupersededBy:
-        return Text(l10n.proposalCancelled, style: const TextStyle(color: Colors.red));
+        return Text(l10n.proposalSuperseded, style: const TextStyle(color: Colors.red));
       case Enacted:
         return Text(l10n.proposalEnacted, style: const TextStyle(color: Colors.green));
       case Approved:

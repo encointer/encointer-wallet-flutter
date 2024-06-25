@@ -13,7 +13,8 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       amount: const ShortenedDouble().fromJson(json['amount'] as num),
     );
 
-Map<String, dynamic> _$TransactionToJson(Transaction instance) => <String, dynamic>{
+Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
+    <String, dynamic>{
       'blockNumber': instance.blockNumber,
       'timestamp': instance.timestamp,
       'counterParty': instance.counterParty,

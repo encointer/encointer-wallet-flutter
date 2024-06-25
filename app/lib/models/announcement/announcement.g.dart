@@ -16,7 +16,8 @@ Announcement _$AnnouncementFromJson(Map<String, dynamic> json) => Announcement(
       countFavorite: json['countFavorite'] as int? ?? 0,
     );
 
-Map<String, dynamic> _$AnnouncementToJson(Announcement instance) => <String, dynamic>{
+Map<String, dynamic> _$AnnouncementToJson(Announcement instance) =>
+    <String, dynamic>{
       'communityIdentifier': instance.communityIdentifier,
       'title': instance.title,
       'publisherSVG': instance.publisherSVG,

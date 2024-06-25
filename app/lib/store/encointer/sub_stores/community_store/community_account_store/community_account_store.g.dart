@@ -6,21 +6,30 @@ part of 'community_account_store.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json) => CommunityAccountStore(
+CommunityAccountStore _$CommunityAccountStoreFromJson(
+        Map<String, dynamic> json) =>
+    CommunityAccountStore(
       json['network'] as String,
       CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
       json['address'] as String,
     )
-      ..participantType = $enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType'])
-      ..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>)
+      ..participantType =
+          $enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType'])
+      ..meetup = json['meetup'] == null
+          ? null
+          : Meetup.fromJson(json['meetup'] as Map<String, dynamic>)
       ..attendees = json['attendees'] != null
-          ? ObservableSet<String>.of((json['attendees'] as List).map((e) => e as String))
+          ? ObservableSet<String>.of(
+              (json['attendees'] as List).map((e) => e as String))
           : null
       ..participantCountVote = json['participantCountVote'] as int?
       ..meetupCompleted = json['meetupCompleted'] as bool?
-      ..numberOfNewbieTicketsForBootstrapper = json['numberOfNewbieTicketsForBootstrapper'] as int;
+      ..numberOfNewbieTicketsForBootstrapper =
+          json['numberOfNewbieTicketsForBootstrapper'] as int;
 
-Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
+Map<String, dynamic> _$CommunityAccountStoreToJson(
+        CommunityAccountStore instance) =>
+    <String, dynamic>{
       'network': instance.network,
       'cid': instance.cid.toJson(),
       'address': instance.address,
@@ -29,7 +38,8 @@ Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instanc
       'attendees': instance.attendees?.toList(),
       'participantCountVote': instance.participantCountVote,
       'meetupCompleted': instance.meetupCompleted,
-      'numberOfNewbieTicketsForBootstrapper': instance.numberOfNewbieTicketsForBootstrapper,
+      'numberOfNewbieTicketsForBootstrapper':
+          instance.numberOfNewbieTicketsForBootstrapper,
     };
 
 const _$ParticipantTypeEnumMap = {
@@ -50,22 +60,26 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   int get scannedAttendeesCount => (_$scannedAttendeesCountComputed ??=
-          Computed<int>(() => super.scannedAttendeesCount, name: '_CommunityAccountStore.scannedAttendeesCount'))
+          Computed<int>(() => super.scannedAttendeesCount,
+              name: '_CommunityAccountStore.scannedAttendeesCount'))
       .value;
   Computed<bool>? _$isAssignedComputed;
 
   @override
   bool get isAssigned =>
-      (_$isAssignedComputed ??= Computed<bool>(() => super.isAssigned, name: '_CommunityAccountStore.isAssigned'))
+      (_$isAssignedComputed ??= Computed<bool>(() => super.isAssigned,
+              name: '_CommunityAccountStore.isAssigned'))
           .value;
   Computed<bool>? _$isRegisteredComputed;
 
   @override
   bool get isRegistered =>
-      (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered, name: '_CommunityAccountStore.isRegistered'))
+      (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered,
+              name: '_CommunityAccountStore.isRegistered'))
           .value;
 
-  late final _$participantTypeAtom = Atom(name: '_CommunityAccountStore.participantType', context: context);
+  late final _$participantTypeAtom =
+      Atom(name: '_CommunityAccountStore.participantType', context: context);
 
   @override
   ParticipantType? get participantType {
@@ -80,7 +94,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  late final _$meetupAtom = Atom(name: '_CommunityAccountStore.meetup', context: context);
+  late final _$meetupAtom =
+      Atom(name: '_CommunityAccountStore.meetup', context: context);
 
   @override
   Meetup? get meetup {
@@ -95,7 +110,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  late final _$attendeesAtom = Atom(name: '_CommunityAccountStore.attendees', context: context);
+  late final _$attendeesAtom =
+      Atom(name: '_CommunityAccountStore.attendees', context: context);
 
   @override
   ObservableSet<String>? get attendees {
@@ -110,7 +126,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  late final _$participantCountVoteAtom = Atom(name: '_CommunityAccountStore.participantCountVote', context: context);
+  late final _$participantCountVoteAtom = Atom(
+      name: '_CommunityAccountStore.participantCountVote', context: context);
 
   @override
   int? get participantCountVote {
@@ -120,12 +137,14 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   set participantCountVote(int? value) {
-    _$participantCountVoteAtom.reportWrite(value, super.participantCountVote, () {
+    _$participantCountVoteAtom.reportWrite(value, super.participantCountVote,
+        () {
       super.participantCountVote = value;
     });
   }
 
-  late final _$meetupCompletedAtom = Atom(name: '_CommunityAccountStore.meetupCompleted', context: context);
+  late final _$meetupCompletedAtom =
+      Atom(name: '_CommunityAccountStore.meetupCompleted', context: context);
 
   @override
   bool? get meetupCompleted {
@@ -140,8 +159,9 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  late final _$numberOfNewbieTicketsForBootstrapperAtom =
-      Atom(name: '_CommunityAccountStore.numberOfNewbieTicketsForBootstrapper', context: context);
+  late final _$numberOfNewbieTicketsForBootstrapperAtom = Atom(
+      name: '_CommunityAccountStore.numberOfNewbieTicketsForBootstrapper',
+      context: context);
 
   @override
   int get numberOfNewbieTicketsForBootstrapper {
@@ -151,13 +171,15 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   set numberOfNewbieTicketsForBootstrapper(int value) {
-    _$numberOfNewbieTicketsForBootstrapperAtom.reportWrite(value, super.numberOfNewbieTicketsForBootstrapper, () {
+    _$numberOfNewbieTicketsForBootstrapperAtom
+        .reportWrite(value, super.numberOfNewbieTicketsForBootstrapper, () {
       super.numberOfNewbieTicketsForBootstrapper = value;
     });
   }
 
-  late final _$getNumberOfNewbieTicketsForBootstrapperAsyncAction =
-      AsyncAction('_CommunityAccountStore.getNumberOfNewbieTicketsForBootstrapper', context: context);
+  late final _$getNumberOfNewbieTicketsForBootstrapperAsyncAction = AsyncAction(
+      '_CommunityAccountStore.getNumberOfNewbieTicketsForBootstrapper',
+      context: context);
 
   @override
   Future<void> getNumberOfNewbieTicketsForBootstrapper({Uint8List? at}) {
@@ -170,8 +192,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void setParticipantType([ParticipantType? type]) {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setParticipantType');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.setParticipantType');
     try {
       return super.setParticipantType(type);
     } finally {
@@ -181,8 +203,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void setParticipantCountVote(int vote) {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setParticipantCountVote');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.setParticipantCountVote');
     try {
       return super.setParticipantCountVote(vote);
     } finally {
@@ -192,8 +214,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void purgeParticipantType() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeParticipantType');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.purgeParticipantType');
     try {
       return super.purgeParticipantType();
     } finally {
@@ -203,7 +225,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void setMeetup(Meetup meetup) {
-    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setMeetup');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.setMeetup');
     try {
       return super.setMeetup(meetup);
     } finally {
@@ -213,8 +236,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void setMeetupCompleted() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setMeetupCompleted');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.setMeetupCompleted');
     try {
       return super.setMeetupCompleted();
     } finally {
@@ -224,8 +247,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void clearMeetupCompleted() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.clearMeetupCompleted');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.clearMeetupCompleted');
     try {
       return super.clearMeetupCompleted();
     } finally {
@@ -235,8 +258,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void purgeParticipantCountVote() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeParticipantCountVote');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.purgeParticipantCountVote');
     try {
       return super.purgeParticipantCountVote();
     } finally {
@@ -246,8 +269,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void purgeMeetup() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeMeetup');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.purgeMeetup');
     try {
       return super.purgeMeetup();
     } finally {
@@ -257,8 +280,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void purgeParticipantsClaims() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeParticipantsClaims');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.purgeParticipantsClaims');
     try {
       return super.purgeParticipantsClaims();
     } finally {
@@ -268,8 +291,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void addAttendee(String attendee) {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.addAttendee');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.addAttendee');
     try {
       return super.addAttendee(attendee);
     } finally {
@@ -279,8 +302,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void purgeCeremonySpecificState() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeCeremonySpecificState');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.purgeCeremonySpecificState');
     try {
       return super.purgeCeremonySpecificState();
     } finally {
