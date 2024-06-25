@@ -46,7 +46,7 @@ class $ProposalState {
     return SupersededBy(id: id);
   }
 
-  Rejected rejected({ required BigInt id}) {
+  Rejected rejected() {
     return Rejected();
   }
 
@@ -217,7 +217,7 @@ class SupersededBy extends ProposalState {
   const SupersededBy({required this.id});
 
   factory SupersededBy._decode(_i1.Input input) {
-    return SupersededBy(id: _i1.U64Codec.codec.decode(input));
+    return SupersededBy(id: _i1.U128Codec.codec.decode(input));
   }
 
   /// Moment
@@ -230,7 +230,7 @@ class SupersededBy extends ProposalState {
 
   int _sizeHint() {
     int size = 1;
-    size = size + _i1.U64Codec.codec.sizeHint(id);
+    size = size + _i1.U128Codec.codec.sizeHint(id);
     return size;
   }
 
@@ -239,7 +239,7 @@ class SupersededBy extends ProposalState {
       3,
       output,
     );
-    _i1.U64Codec.codec.encodeTo(
+    _i1.U128Codec.codec.encodeTo(
       id,
       output,
     );
