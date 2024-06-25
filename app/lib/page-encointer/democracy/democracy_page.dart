@@ -3,6 +3,7 @@ import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/widgets/proposal_tile.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -121,7 +122,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
       final chosenCid = store.encointer.chosenCid!;
       final pastProposals = proposalsForCommunity(chosenCid)
           .where((e) =>
-              e.value.state.runtimeType == Cancelled ||
+              e.value.state.runtimeType == Rejected ||
+              e.value.state.runtimeType == SupersededBy ||
               e.value.state.runtimeType == Enacted ||
               e.value.state.runtimeType == Approved)
           .toList();

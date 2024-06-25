@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/service.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -146,7 +147,11 @@ class _ProposalTileState extends State<ProposalTile> {
       return Text(l10n.proposalPassed(percentage), style: const TextStyle(color: Colors.green));
     }
 
-    if (proposal.state.runtimeType == Cancelled) {
+    if (proposal.state.runtimeType == Rejected) {
+      return Text(l10n.proposalFailed(percentage), style: const TextStyle(color: Colors.red));
+    }
+
+    if (proposal.state.runtimeType == SupersededBy) {
       return Text(l10n.proposalFailed(percentage), style: const TextStyle(color: Colors.red));
     }
 
@@ -161,7 +166,9 @@ class _ProposalTileState extends State<ProposalTile> {
   Widget voteButtonOrProposalStatus(BuildContext context) {
     final l10n = context.l10n;
     switch (proposal.state.runtimeType) {
-      case Cancelled:
+      case Rejected:
+        return Text(l10n.proposalCancelled, style: const TextStyle(color: Colors.red));
+      case SupersededBy:
         return Text(l10n.proposalCancelled, style: const TextStyle(color: Colors.red));
       case Enacted:
         return Text(l10n.proposalEnacted, style: const TextStyle(color: Colors.green));
