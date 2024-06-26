@@ -11,8 +11,7 @@ ItemOffered _$ItemOfferedFromJson(Map<String, dynamic> json) => ItemOffered(
       json['price'] as String,
     );
 
-Map<String, dynamic> _$ItemOfferedToJson(ItemOffered instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ItemOfferedToJson(ItemOffered instance) => <String, dynamic>{
       'itemOffered': instance.itemOffered,
       'price': instance.price,
     };

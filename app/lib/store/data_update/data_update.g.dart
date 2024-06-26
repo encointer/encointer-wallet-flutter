@@ -12,25 +12,20 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
   Computed<DateTime>? _$nowComputed;
 
   @override
-  DateTime get now => (_$nowComputed ??=
-          Computed<DateTime>(() => super.now, name: '_DataUpdateStore.now'))
-      .value;
+  DateTime get now => (_$nowComputed ??= Computed<DateTime>(() => super.now, name: '_DataUpdateStore.now')).value;
   Computed<bool>? _$expiredComputed;
 
   @override
-  bool get expired => (_$expiredComputed ??=
-          Computed<bool>(() => super.expired, name: '_DataUpdateStore.expired'))
-      .value;
+  bool get expired =>
+      (_$expiredComputed ??= Computed<bool>(() => super.expired, name: '_DataUpdateStore.expired')).value;
   Computed<bool>? _$needsRefreshComputed;
 
   @override
   bool get needsRefresh =>
-      (_$needsRefreshComputed ??= Computed<bool>(() => super.needsRefresh,
-              name: '_DataUpdateStore.needsRefresh'))
+      (_$needsRefreshComputed ??= Computed<bool>(() => super.needsRefresh, name: '_DataUpdateStore.needsRefresh'))
           .value;
 
-  late final _$lastUpdateAtom =
-      Atom(name: '_DataUpdateStore.lastUpdate', context: context);
+  late final _$lastUpdateAtom = Atom(name: '_DataUpdateStore.lastUpdate', context: context);
 
   @override
   DateTime get lastUpdate {
@@ -45,8 +40,7 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
     });
   }
 
-  late final _$_timeAtom =
-      Atom(name: '_DataUpdateStore._time', context: context);
+  late final _$_timeAtom = Atom(name: '_DataUpdateStore._time', context: context);
 
   @override
   ObservableStream<DateTime> get _time {
@@ -61,8 +55,7 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
     });
   }
 
-  late final _$invalidatedAtom =
-      Atom(name: '_DataUpdateStore.invalidated', context: context);
+  late final _$invalidatedAtom = Atom(name: '_DataUpdateStore.invalidated', context: context);
 
   @override
   bool get invalidated {
@@ -77,21 +70,18 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
     });
   }
 
-  late final _$executeUpdateAsyncAction =
-      AsyncAction('_DataUpdateStore.executeUpdate', context: context);
+  late final _$executeUpdateAsyncAction = AsyncAction('_DataUpdateStore.executeUpdate', context: context);
 
   @override
   Future<void> executeUpdate() {
     return _$executeUpdateAsyncAction.run(() => super.executeUpdate());
   }
 
-  late final _$_DataUpdateStoreActionController =
-      ActionController(name: '_DataUpdateStore', context: context);
+  late final _$_DataUpdateStoreActionController = ActionController(name: '_DataUpdateStore', context: context);
 
   @override
   void setLastUpdate(DateTime dateTime) {
-    final _$actionInfo = _$_DataUpdateStoreActionController.startAction(
-        name: '_DataUpdateStore.setLastUpdate');
+    final _$actionInfo = _$_DataUpdateStoreActionController.startAction(name: '_DataUpdateStore.setLastUpdate');
     try {
       return super.setLastUpdate(dateTime);
     } finally {
@@ -101,8 +91,7 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
 
   @override
   void setInvalidated() {
-    final _$actionInfo = _$_DataUpdateStoreActionController.startAction(
-        name: '_DataUpdateStore.setInvalidated');
+    final _$actionInfo = _$_DataUpdateStoreActionController.startAction(name: '_DataUpdateStore.setInvalidated');
     try {
       return super.setInvalidated();
     } finally {

@@ -11,8 +11,7 @@ BusinessData _$BusinessDataFromJson(Map<String, dynamic> json) => BusinessData(
       json['lastOid'] as int?,
     );
 
-Map<String, dynamic> _$BusinessDataToJson(BusinessData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BusinessDataToJson(BusinessData instance) => <String, dynamic>{
       'url': instance.url,
       'lastOid': instance.lastOid,
     };

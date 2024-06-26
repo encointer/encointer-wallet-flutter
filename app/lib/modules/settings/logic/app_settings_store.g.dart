@@ -12,20 +12,16 @@ mixin _$AppSettings on _AppSettingsBase, Store {
   Computed<bool>? _$isIntegrationTestComputed;
 
   @override
-  bool get isIntegrationTest => (_$isIntegrationTestComputed ??= Computed<bool>(
-          () => super.isIntegrationTest,
-          name: '_AppSettingsBase.isIntegrationTest'))
+  bool get isIntegrationTest => (_$isIntegrationTestComputed ??=
+          Computed<bool>(() => super.isIntegrationTest, name: '_AppSettingsBase.isIntegrationTest'))
       .value;
   Computed<CustomTheme>? _$themeComputed;
 
   @override
   CustomTheme get theme =>
-      (_$themeComputed ??= Computed<CustomTheme>(() => super.theme,
-              name: '_AppSettingsBase.theme'))
-          .value;
+      (_$themeComputed ??= Computed<CustomTheme>(() => super.theme, name: '_AppSettingsBase.theme')).value;
 
-  late final _$localeAtom =
-      Atom(name: '_AppSettingsBase.locale', context: context);
+  late final _$localeAtom = Atom(name: '_AppSettingsBase.locale', context: context);
 
   @override
   Locale get locale {
@@ -40,8 +36,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$developerModeAtom =
-      Atom(name: '_AppSettingsBase.developerMode', context: context);
+  late final _$developerModeAtom = Atom(name: '_AppSettingsBase.developerMode', context: context);
 
   @override
   bool get developerMode {
@@ -56,8 +51,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$_isIntegrationTestAtom =
-      Atom(name: '_AppSettingsBase._isIntegrationTest', context: context);
+  late final _$_isIntegrationTestAtom = Atom(name: '_AppSettingsBase._isIntegrationTest', context: context);
 
   @override
   bool get _isIntegrationTest {
@@ -72,8 +66,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$colorSchemeAtom =
-      Atom(name: '_AppSettingsBase.colorScheme', context: context);
+  late final _$colorSchemeAtom = Atom(name: '_AppSettingsBase.colorScheme', context: context);
 
   @override
   ColorScheme get colorScheme {
@@ -88,21 +81,18 @@ mixin _$AppSettings on _AppSettingsBase, Store {
     });
   }
 
-  late final _$setLocaleAsyncAction =
-      AsyncAction('_AppSettingsBase.setLocale', context: context);
+  late final _$setLocaleAsyncAction = AsyncAction('_AppSettingsBase.setLocale', context: context);
 
   @override
   Future<void> setLocale(String languageCode) {
     return _$setLocaleAsyncAction.run(() => super.setLocale(languageCode));
   }
 
-  late final _$_AppSettingsBaseActionController =
-      ActionController(name: '_AppSettingsBase', context: context);
+  late final _$_AppSettingsBaseActionController = ActionController(name: '_AppSettingsBase', context: context);
 
   @override
   void init() {
-    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(
-        name: '_AppSettingsBase.init');
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.init');
     try {
       return super.init();
     } finally {
@@ -112,8 +102,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
 
   @override
   void toggleDeveloperMode() {
-    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(
-        name: '_AppSettingsBase.toggleDeveloperMode');
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.toggleDeveloperMode');
     try {
       return super.toggleDeveloperMode();
     } finally {
@@ -123,8 +112,7 @@ mixin _$AppSettings on _AppSettingsBase, Store {
 
   @override
   void changeTheme(String? cid) {
-    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(
-        name: '_AppSettingsBase.changeTheme');
+    final _$actionInfo = _$_AppSettingsBaseActionController.startAction(name: '_AppSettingsBase.changeTheme');
     try {
       return super.changeTheme(cid);
     } finally {
