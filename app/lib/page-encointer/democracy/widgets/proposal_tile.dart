@@ -128,8 +128,7 @@ class _ProposalTileState extends State<ProposalTile> {
   /// Localized date string including the date and time.
   String mMMEdHm(DateTime date, String locale) {
     final dateString = DateFormat.MMMEd(locale).format(date);
-    // add am/pm if necessary
-    final timeString = DateFormat.Hm(locale).add_jms().format(date);
+    final timeString = DateFormat.Hm(locale).format(date);
     return '$dateString $timeString';
   }
 
