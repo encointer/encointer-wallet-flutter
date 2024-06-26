@@ -394,5 +394,14 @@
                 "example": "0.00"
             }
         }
+    },
+    "proposalSupersededBy": "Verdrängt durch: {id}",
+    "@proposalSupersededBy": {
+        "placeholders": {
+            "id": {
+                "type": "String",
+                "example": "6"
+            }
+        }
     }
 }

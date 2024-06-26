@@ -228,12 +228,6 @@ class SupersededBy extends ProposalState {
         'SupersededBy': {'id': id}
       };
 
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i1.U128Codec.codec.sizeHint(id);
-    return size;
-  }
-
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
       3,

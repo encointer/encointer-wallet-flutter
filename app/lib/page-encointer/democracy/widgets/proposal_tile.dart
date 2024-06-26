@@ -12,7 +12,7 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Cancelled, Confirming, Enacted, Ongoing, Proposal, Tally;
+import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Confirming, Enacted, Ongoing, Proposal, Tally;
 
 class ProposalTile extends StatefulWidget {
   const ProposalTile({
@@ -152,7 +152,8 @@ class _ProposalTileState extends State<ProposalTile> {
     }
 
     if (proposal.state.runtimeType == SupersededBy) {
-      return Text(l10n.proposalFailed(percentage), style: const TextStyle(color: Colors.red));
+      final replacementId = (proposal.state as SupersededBy).id;
+      return Text(l10n.proposalSupersededBy(replacementId.toString()), style: const TextStyle(color: Colors.red));
     }
 
     // This is for current proposals
