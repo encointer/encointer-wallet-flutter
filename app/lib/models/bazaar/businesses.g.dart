@@ -14,8 +14,7 @@ Businesses _$BusinessesFromJson(Map<String, dynamic> json) => Businesses(
       longitude: json['longitude'] as String,
       latitude: json['latitude'] as String,
       openingHours: json['openingHours'] as String,
-      logo: const ImageHashToLinkOrNullConverter()
-          .fromJson(json['logo'] as String?),
+      logo: const ImageHashToLinkOrNullConverter().fromJson(json['logo'] as String?),
       photos: json['photos'] as String?,
       photo: json['photo'] as String?,
       telephone: json['telephone'] as String?,
@@ -24,8 +23,7 @@ Businesses _$BusinessesFromJson(Map<String, dynamic> json) => Businesses(
       controller: json['controller'] as String?,
     );
 
-Map<String, dynamic> _$BusinessesToJson(Businesses instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BusinessesToJson(Businesses instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'category': _$CategoryEnumMap[instance.category]!,

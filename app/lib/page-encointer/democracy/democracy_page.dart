@@ -17,7 +17,7 @@ import 'package:encointer_wallet/l10n/l10.dart';
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
-import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Cancelled, Confirming, Enacted, Ongoing, Proposal, Tally;
+import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Confirming, Enacted, Ongoing, Proposal, Tally;
 
 class DemocracyPage extends StatefulWidget {
   const DemocracyPage({super.key});

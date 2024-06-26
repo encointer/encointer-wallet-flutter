@@ -201,8 +201,8 @@
     "proposal": "предложений",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
-    "proposalCancelled": "Отменено",
     "proposalRejected": "Отменено",
+    "proposalSuperseded": "заменен",
     "proposalEnacted": "выполнено",
     "proposalApproved": "Принято",
     "proposalTurnout": "Явка избирателей",
@@ -392,6 +392,15 @@
             "value": {
                 "type": "String",
                 "example": "0.00"
+            }
+        }
+    },
+    "proposalSupersededBy": "заменен на: {id}",
+    "@proposalSupersededBy": {
+        "placeholders": {
+            "id": {
+                "type": "String",
+                "example": "6"
             }
         }
     }

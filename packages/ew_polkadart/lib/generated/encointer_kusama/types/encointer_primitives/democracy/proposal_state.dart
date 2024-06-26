@@ -42,7 +42,7 @@ class $ProposalState {
     return Approved();
   }
 
-  SupersededBy supersededBy({ required BigInt id}) {
+  SupersededBy supersededBy({required BigInt id}) {
     return SupersededBy(id: id);
   }
 
@@ -225,14 +225,8 @@ class SupersededBy extends ProposalState {
 
   @override
   Map<String, Map<String, BigInt>> toJson() => {
-    'SupersededBy': {'id': id}
-  };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i1.U128Codec.codec.sizeHint(id);
-    return size;
-  }
+        'SupersededBy': {'id': id}
+      };
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
@@ -251,7 +245,7 @@ class SupersededBy extends ProposalState {
         this,
         other,
       ) ||
-          other is SupersededBy && other.id == id;
+      other is SupersededBy && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
