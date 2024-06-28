@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/service.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +11,8 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Confirming, Enacted, Ongoing, Proposal, Tally;
+import 'package:ew_polkadart/ew_polkadart.dart'
+    show Approved, Confirming, Enacted, Ongoing, Proposal, Tally, SupersededBy, Rejected;
 
 class ProposalTile extends StatefulWidget {
   const ProposalTile({

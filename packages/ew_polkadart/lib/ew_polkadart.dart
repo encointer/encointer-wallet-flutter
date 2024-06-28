@@ -12,7 +12,7 @@ export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action_identifier.dart'
     show ProposalActionIdentifier;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart'
-    show ProposalState, Ongoing, Approved, Confirming, Enacted;
+    show ProposalState, Ongoing, Rejected, SupersededBy, Approved, Confirming, Enacted;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/tally.dart' show Tally;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/vote.dart' show Vote;
 

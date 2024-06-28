@@ -3,7 +3,6 @@ import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/widgets/proposal_tile.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -17,7 +16,8 @@ import 'package:encointer_wallet/l10n/l10.dart';
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
-import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Confirming, Enacted, Ongoing, Proposal, Tally;
+import 'package:ew_polkadart/ew_polkadart.dart'
+    show Approved, Confirming, Enacted, Ongoing, Proposal, Tally, Rejected, SupersededBy;
 
 class DemocracyPage extends StatefulWidget {
   const DemocracyPage({super.key});
