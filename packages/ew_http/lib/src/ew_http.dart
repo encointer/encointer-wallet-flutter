@@ -38,7 +38,10 @@ class EwHttp {
   Future<Either<List<T>, EwHttpException>> getTypeList<T>(String url, {required FromJson<T> fromJson}) async {
     try {
       final data = await get<List<dynamic>>(url);
-      return data.fold(Left.new, (r) => Right(r.map((e) => fromJson(e as Map<String, dynamic>)).toList()));
+      return data.fold(Left.new, (r) => Right(r.map((e) {
+        print("[TransferHistory]: ${e}");
+        return fromJson(e as Map<String, dynamic>);
+      }).toList()));
     } catch (e, s) {
       return Left(EwHttpException(FailureType.deserialization, error: e, stackTrace: s));
     }
