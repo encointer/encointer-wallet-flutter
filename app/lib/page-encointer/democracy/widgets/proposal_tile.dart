@@ -11,7 +11,8 @@ import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Cancelled, Confirming, Enacted, Ongoing, Proposal, Tally;
+import 'package:ew_polkadart/ew_polkadart.dart'
+    show Approved, Confirming, Enacted, Ongoing, Proposal, Tally, SupersededBy, Rejected;
 
 class ProposalTile extends StatefulWidget {
   const ProposalTile({
@@ -127,8 +128,7 @@ class _ProposalTileState extends State<ProposalTile> {
   /// Localized date string including the date and time.
   String mMMEdHm(DateTime date, String locale) {
     final dateString = DateFormat.MMMEd(locale).format(date);
-    // add am/pm if necessary
-    final timeString = DateFormat.Hm(locale).add_jms().format(date);
+    final timeString = DateFormat.Hm(locale).format(date);
     return '$dateString $timeString';
   }
 
@@ -146,8 +146,13 @@ class _ProposalTileState extends State<ProposalTile> {
       return Text(l10n.proposalPassed(percentage), style: const TextStyle(color: Colors.green));
     }
 
-    if (proposal.state.runtimeType == Cancelled) {
+    if (proposal.state.runtimeType == Rejected) {
       return Text(l10n.proposalFailed(percentage), style: const TextStyle(color: Colors.red));
+    }
+
+    if (proposal.state.runtimeType == SupersededBy) {
+      final replacementId = (proposal.state as SupersededBy).id;
+      return Text(l10n.proposalSupersededBy(replacementId.toString()), style: const TextStyle(color: Colors.red));
     }
 
     // This is for current proposals
@@ -161,8 +166,10 @@ class _ProposalTileState extends State<ProposalTile> {
   Widget voteButtonOrProposalStatus(BuildContext context) {
     final l10n = context.l10n;
     switch (proposal.state.runtimeType) {
-      case Cancelled:
-        return Text(l10n.proposalCancelled, style: const TextStyle(color: Colors.red));
+      case Rejected:
+        return Text(l10n.proposalRejected, style: const TextStyle(color: Colors.red));
+      case SupersededBy:
+        return Text(l10n.proposalSuperseded, style: const TextStyle(color: Colors.red));
       case Enacted:
         return Text(l10n.proposalEnacted, style: const TextStyle(color: Colors.green));
       case Approved:
