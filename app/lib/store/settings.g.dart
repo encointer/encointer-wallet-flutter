@@ -39,12 +39,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   @override
   String get ipfsGateway =>
       (_$ipfsGatewayComputed ??= Computed<String>(() => super.ipfsGateway, name: '_SettingsStore.ipfsGateway')).value;
-  Computed<List<EndpointData>>? _$endpointListComputed;
-
-  @override
-  List<EndpointData> get endpointList => (_$endpointListComputed ??=
-          Computed<List<EndpointData>>(() => super.endpointList, name: '_SettingsStore.endpointList'))
-      .value;
   Computed<List<AccountData>>? _$knownAccountsComputed;
 
   @override
@@ -230,7 +224,6 @@ endpoint: ${endpoint},
 contactList: ${contactList},
 endpointIsNoTee: ${endpointIsNoTee},
 ipfsGateway: ${ipfsGateway},
-endpointList: ${endpointList},
 knownAccounts: ${knownAccounts},
 isConnected: ${isConnected}
     ''';

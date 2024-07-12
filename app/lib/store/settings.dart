@@ -44,12 +44,6 @@ abstract class _SettingsStore with Store {
   @computed
   String get ipfsGateway => endpoint.ipfsGateway!;
 
-  @computed
-  List<EndpointData> get endpointList {
-    final ls = List<EndpointData>.of(networkEndpoints)..retainWhere((i) => i.info == endpoint.info);
-    return ls;
-  }
-
   /// Set of known accounts.
   ///
   /// Contains all the accounts and contacts stored on the device.

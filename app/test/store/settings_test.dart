@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
@@ -27,12 +26,6 @@ void main() {
       expect(store.loading, false);
       store.setNetworkLoading(true);
       expect(store.loading, true);
-    });
-
-    test('network endpoint test', () async {
-      await store.init('_en');
-      expect(store.endpoint.info, networkEndpointEncointerMainnet.info);
-      expect(store.endpointList.length, 1);
     });
   });
 }
