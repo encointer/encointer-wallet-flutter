@@ -7,23 +7,17 @@ part of 'settings.dart';
 // **************************************************************************
 
 EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) => EndpointData()
-  ..color = json['color'] as String?
   ..info = json['info'] as String?
   ..ss58 = json['ss58'] as int?
   ..text = json['text'] as String?
   ..value = json['value'] as String?
-  ..worker = json['worker'] as String?
-  ..mrenclave = json['mrenclave'] as String?
   ..ipfsGateway = json['ipfsGateway'] as String?;
 
 Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dynamic>{
-      'color': instance.color,
       'info': instance.info,
       'ss58': instance.ss58,
       'text': instance.text,
       'value': instance.value,
-      'worker': instance.worker,
-      'mrenclave': instance.mrenclave,
       'ipfsGateway': instance.ipfsGateway,
     };
 
@@ -34,23 +28,11 @@ Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dyn
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SettingsStore on _SettingsStore, Store {
-  Computed<bool>? _$endpointIsEncointerComputed;
-
-  @override
-  bool get endpointIsEncointer => (_$endpointIsEncointerComputed ??=
-          Computed<bool>(() => super.endpointIsEncointer, name: '_SettingsStore.endpointIsEncointer'))
-      .value;
   Computed<bool>? _$endpointIsNoTeeComputed;
 
   @override
   bool get endpointIsNoTee => (_$endpointIsNoTeeComputed ??=
           Computed<bool>(() => super.endpointIsNoTee, name: '_SettingsStore.endpointIsNoTee'))
-      .value;
-  Computed<bool>? _$endpointIsTeeProxyComputed;
-
-  @override
-  bool get endpointIsTeeProxy => (_$endpointIsTeeProxyComputed ??=
-          Computed<bool>(() => super.endpointIsTeeProxy, name: '_SettingsStore.endpointIsTeeProxy'))
       .value;
   Computed<String>? _$ipfsGatewayComputed;
 
@@ -246,9 +228,7 @@ loading: ${loading},
 localeCode: ${localeCode},
 endpoint: ${endpoint},
 contactList: ${contactList},
-endpointIsEncointer: ${endpointIsEncointer},
 endpointIsNoTee: ${endpointIsNoTee},
-endpointIsTeeProxy: ${endpointIsTeeProxy},
 ipfsGateway: ${ipfsGateway},
 endpointList: ${endpointList},
 knownAccounts: ${knownAccounts},

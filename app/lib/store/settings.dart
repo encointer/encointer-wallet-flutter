@@ -37,21 +37,8 @@ abstract class _SettingsStore with Store {
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
 
   @computed
-  bool get endpointIsEncointer {
-    return endpoint.info == networkEndpointEncointerGesell.info ||
-        endpoint.info == networkEndpointEncointerGesellDev.info ||
-        endpoint.info == networkEndpointEncointerCantillon.info ||
-        endpoint.info == networkEndpointEncointerCantillonDev.info;
-  }
-
-  @computed
   bool get endpointIsNoTee {
-    return !endpointIsTeeProxy;
-  }
-
-  @computed
-  bool get endpointIsTeeProxy {
-    return endpoint.worker != null;
+    return true;
   }
 
   @computed
@@ -180,12 +167,9 @@ class EndpointData extends _EndpointData {
 }
 
 abstract class _EndpointData {
-  String? color = 'pink';
   String? info = '';
   int? ss58 = 42;
   String? text = '';
   String? value = '';
-  String? worker = ''; // only relevant for cantillon
-  String? mrenclave = ''; // relevant until we fetch mrenclave from substrateeRegistry
   String? ipfsGateway = '';
 }
