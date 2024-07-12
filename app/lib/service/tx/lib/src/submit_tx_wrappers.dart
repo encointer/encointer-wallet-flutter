@@ -11,6 +11,7 @@ import 'package:encointer_wallet/service/tx/lib/src/tx_notification.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 import 'package:encointer_wallet/modules/login/logic/login_store.dart';
 import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
@@ -209,7 +210,7 @@ Future<void> submitRegisterParticipant(
 
       if (registrationType != null) {
         _showEducationalDialog(registrationType, context);
-        if (store.settings.endpoint == networkEndpointEncointerMainnet) {
+        if (store.settings.endpoint == Network.kusama) {
           await CeremonyNotifications.scheduleMeetupReminders(
             ceremonyIndex: data.global.ceremonyIndex,
             meetupTime: store.encointer.community!.meetupTime!,

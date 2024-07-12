@@ -574,7 +574,7 @@ class EncointerApi {
     );
 
     final bootstrappers =
-        bootstrappersBytes.map((p) => AddressUtils.pubKeyToAddress(p, prefix: store.settings.endpoint.ss58!)).toList();
+        bootstrappersBytes.map((p) => AddressUtils.pubKeyToAddress(p, prefix: store.settings.endpoint.ss58())).toList();
 
     Log.d('api: bootstrappers $bootstrappers', 'EncointerApi');
     if (store.encointer.community != null) {

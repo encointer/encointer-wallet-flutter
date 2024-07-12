@@ -99,13 +99,13 @@ mixin _$SettingsStore on _SettingsStore, Store {
   late final _$endpointAtom = Atom(name: '_SettingsStore.endpoint', context: context);
 
   @override
-  EndpointData get endpoint {
+  Network get endpoint {
     _$endpointAtom.reportRead();
     return super.endpoint;
   }
 
   @override
-  set endpoint(EndpointData value) {
+  set endpoint(Network value) {
     _$endpointAtom.reportWrite(value, super.endpoint, () {
       super.endpoint = value;
     });
@@ -205,10 +205,10 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void setEndpoint(EndpointData value) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setEndpoint');
+  void setNetwork(Network network) {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetwork');
     try {
-      return super.setEndpoint(value);
+      return super.setNetwork(network);
     } finally {
       _$_SettingsStoreActionController.endAction(_$actionInfo);
     }

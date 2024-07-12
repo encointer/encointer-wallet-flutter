@@ -25,13 +25,23 @@ enum Network {
   rococo,
   kusama;
 
-  factory Network.fromInfo(String info) {
+  factory Network.fromInfoOrDefault(String info) {
     return switch (info) {
       gesellInfo => Network.gesell,
       rococoInfo => Network.rococo,
       kusamaInfo => Network.kusama,
       gesellDevInfo => Network.gesellDev,
       _ => Network.kusama,
+    };
+  }
+
+  factory Network.tryFromInfo(String info) {
+    return switch (info) {
+      gesellInfo => Network.gesell,
+      rococoInfo => Network.rococo,
+      kusamaInfo => Network.kusama,
+      gesellDevInfo => Network.gesellDev,
+      _ => throw Exception(['Invalid network $info']),
     };
   }
 
@@ -62,6 +72,18 @@ enum Network {
       gesellDev => ipfs_gateway_local,
     };
   }
+
+  /// Exists for simple reverse compatibility.
+  String value() {
+    return switch (this) {
+      gesell => networkEndpoints().first.address,
+      rococo => networkEndpoints().first.address,
+      kusama => networkEndpoints().first.address,
+    // only dev network refers to the local one
+      gesellDev => networkEndpoints().first.address,
+    };
+  }
+
 
   List<NetworkEndpoint> networkEndpoints() {
     return switch (this) {

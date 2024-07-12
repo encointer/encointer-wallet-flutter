@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/store/settings.dart';
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/models/index.dart';
@@ -20,8 +20,7 @@ Future<AppStore> setupAppStore(String networkInfo) async {
   final store = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock());
   await store.init('_en');
 
-  final endpoint = EndpointData()..info = networkInfo;
-  store.settings.setEndpoint(endpoint);
+  store.settings.setNetwork(Network.fromInfoOrDefault(networkInfo));
   await store.init('_en');
 
   webApi = getMockApi(store);

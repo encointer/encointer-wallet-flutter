@@ -101,7 +101,7 @@ abstract class _AccountStore with Store {
   String get currentAddress {
     // Todo #1110: `currentAccountPubkey` should be non-nullable.
     if (currentAccountPubKey == null || currentAccountPubKey!.isEmpty) return '';
-    return AddressUtils.pubKeyHexToAddress(currentAccountPubKey ?? '', prefix: rootStore.settings.endpoint.ss58!);
+    return AddressUtils.pubKeyHexToAddress(currentAccountPubKey ?? '', prefix: rootStore.settings.endpoint.ss58());
   }
 
   @action

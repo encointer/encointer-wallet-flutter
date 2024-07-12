@@ -66,7 +66,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     final amount = params.amount;
     final recipientAddress = Address(
       pubkey: AddressUtils.pubKeyHexToPubKey(recipientAccount.pubKey),
-      prefix: store.settings.endpoint.ss58!,
+      prefix: store.settings.endpoint.ss58(),
     );
 
     return Scaffold(

@@ -21,7 +21,7 @@ class PaymentOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final recipientLabel = recipientAccount!.name;
     final recipientAddress =
-        Fmt.address(AddressUtils.pubKeyHexToAddress(recipientAccount!.pubKey, prefix: store.settings.endpoint.ss58!))!;
+        Fmt.address(AddressUtils.pubKeyHexToAddress(recipientAccount!.pubKey, prefix: store.settings.endpoint.ss58()))!;
 
     return IntrinsicHeight(
       child: Row(

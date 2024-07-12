@@ -113,8 +113,8 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
     await chain.loadCache();
 
     // need to call this after settings was initialized
-    final networkInfo = settings.endpoint.info;
-    await loadOrInitEncointerCache(networkInfo!);
+    final networkInfo = settings.endpoint.info();
+    await loadOrInitEncointerCache(networkInfo);
 
     storeIsReady = true;
   }
@@ -229,7 +229,7 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
 
     if (pubKey != null) {
       // Todo: #1072
-      final address = AddressUtils.pubKeyHexToAddress(pubKey, prefix: settings.endpoint.ss58!);
+      final address = AddressUtils.pubKeyHexToAddress(pubKey, prefix: settings.endpoint.ss58());
       Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
       await encointer.initializeUninitializedStores(address);
     }

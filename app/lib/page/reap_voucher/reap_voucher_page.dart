@@ -58,7 +58,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final store = context.read<AppStore>();
 
     _voucherKeyringAccount = await KeyringAccount.fromUri('Voucher', voucherUri);
-    _voucherAddress = _voucherKeyringAccount.address(prefix: store.settings.endpoint.ss58 ?? 42).encode();
+    _voucherAddress = _voucherKeyringAccount.address(prefix: store.settings.endpoint.ss58()).encode();
 
     setState(() {});
 
@@ -207,7 +207,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   ) async {
     final store = context.read<AppStore>();
 
-    if (store.settings.endpoint.info != networkInfo) {
+    if (store.settings.endpoint.info() != networkInfo) {
       return showChangeNetworkAndCommunityDialog(
         context,
         store,

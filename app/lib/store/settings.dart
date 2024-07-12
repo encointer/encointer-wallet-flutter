@@ -1,7 +1,7 @@
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -18,7 +18,7 @@ abstract class _SettingsStore with Store {
   final AppStore rootStore;
 
   final String localStorageLocaleKey = 'locale';
-  final String localStorageEndpointKey = 'endpoint';
+  final String localStorageNetworkKey = 'network';
 
   /// The bazaar is not active currently. This variable can only be set under profile -> developer options.
   @observable
@@ -31,7 +31,7 @@ abstract class _SettingsStore with Store {
   String localeCode = '';
 
   @observable
-  EndpointData endpoint = networkEndpointEncointerMainnet;
+  Network endpoint = Network.kusama;
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
@@ -42,7 +42,7 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
-  String get ipfsGateway => endpoint.ipfsGateway!;
+  String get ipfsGateway => endpoint.ipfsGateway();
 
   /// Set of known accounts.
   ///
@@ -117,18 +117,18 @@ abstract class _SettingsStore with Store {
   }
 
   @action
-  void setEndpoint(EndpointData value) {
-    endpoint = value;
-    rootStore.localStorage.setObject(localStorageEndpointKey, EndpointData.toJson(value));
+  void setNetwork(Network network) {
+    endpoint = network;
+    rootStore.localStorage.setObject(localStorageNetworkKey, network.info());
   }
 
   @action
   Future<void> loadEndpoint(String sysLocaleCode) async {
-    final value = await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
-    if (value == null) {
-      endpoint = networkEndpointEncointerMainnet;
+    final networkInfo = await rootStore.localStorage.getKV(localStorageNetworkKey);
+    if (networkInfo == null) {
+      endpoint = Network.kusama;
     } else {
-      endpoint = EndpointData.fromJson(value);
+      endpoint = Network.fromInfoOrDefault(networkInfo);
     }
   }
 
@@ -136,18 +136,18 @@ abstract class _SettingsStore with Store {
     return '${endpoint.info}_$key';
   }
 
-  Future<void> reloadNetwork(EndpointData network) async {
+  Future<void> reloadNetwork(Network network) async {
     // Stop networking before loading cache
     await webApi.close();
 
-    setEndpoint(network);
+    setNetwork(network);
 
     // load cache before starting networking again
     await Future.wait(<Future<void>>[
       rootStore.loadAccountCache(),
       rootStore.assets.loadCache(),
       rootStore.chain.loadCache(),
-      rootStore.loadOrInitEncointerCache(network.info!),
+      rootStore.loadOrInitEncointerCache(network.info()),
     ]);
 
     return webApi.init();

@@ -15,7 +15,7 @@ class AccountSelectList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: accounts.map((account) {
-        final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: store.settings.endpoint.ss58!);
+        final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: store.settings.endpoint.ss58());
 
         return ListTile(
           leading: AddressIcon(address, account.pubKey),
