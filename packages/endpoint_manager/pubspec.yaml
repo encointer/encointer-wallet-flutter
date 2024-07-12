@@ -1,4 +1,4 @@
-name: endpoint_manager
+name: ew_endpoint_manager
 description: Manages multiple endpoints and chooses a current one
 version: 0.1.0+1
 publish_to: none

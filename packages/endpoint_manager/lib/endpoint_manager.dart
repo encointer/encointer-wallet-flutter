@@ -2,21 +2,25 @@
 abstract class Endpoint {
 
   String address();
-
-  Future<bool> checkHealth();
 }
 
-class EndpointManager<E extends Endpoint> {
+abstract class EndpointChecker<E extends Endpoint> {
+  Future<bool> checkHealth(E endpoint);
+}
 
-  EndpointManager();
+class EndpointManager<C extends EndpointChecker, E extends Endpoint> {
 
-  EndpointManager.withEndpoints(List<E> endpoints) {
+  EndpointManager(this._checker);
+
+  EndpointManager.withEndpoints(this._checker, List<E> endpoints) {
     for (final e in endpoints) {
       this.endpoints[e.address()] = e;
     }
   }
 
   Map<String, E> endpoints = {};
+
+  final EndpointChecker _checker;
 
   void addEndpoint(E endpoint) {
     endpoints[endpoint.address()] = endpoint;
@@ -32,7 +36,7 @@ class EndpointManager<E extends Endpoint> {
 
   /// Returns the first endpoint that is healthy.
   Future<E?> getHealthyEndpoint() {
-    return firstWhereAsync(endpoints.values, (e) => e.checkHealth());
+    return firstWhereAsync(endpoints.values, _checker.checkHealth);
   }
 }
 
