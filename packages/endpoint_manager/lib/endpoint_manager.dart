@@ -1,8 +1,8 @@
-abstract class Endpoint {
+mixin Endpoint {
   String address();
 }
 
-abstract class EndpointChecker<E extends Endpoint> {
+mixin EndpointChecker<E extends Endpoint> {
   Future<bool> checkHealth(E endpoint);
 }
 
