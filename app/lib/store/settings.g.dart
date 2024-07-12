@@ -3,25 +3,6 @@
 part of 'settings.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) => EndpointData()
-  ..info = json['info'] as String?
-  ..ss58 = json['ss58'] as int?
-  ..text = json['text'] as String?
-  ..value = json['value'] as String?
-  ..ipfsGateway = json['ipfsGateway'] as String?;
-
-Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dynamic>{
-      'info': instance.info,
-      'ss58': instance.ss58,
-      'text': instance.text,
-      'value': instance.value,
-      'ipfsGateway': instance.ipfsGateway,
-    };
-
-// **************************************************************************
 // StoreGenerator
 // **************************************************************************
 

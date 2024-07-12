@@ -79,11 +79,10 @@ enum Network {
       gesell => networkEndpoints().first.address,
       rococo => networkEndpoints().first.address,
       kusama => networkEndpoints().first.address,
-    // only dev network refers to the local one
+      // only dev network refers to the local one
       gesellDev => networkEndpoints().first.address,
     };
   }
-
 
   List<NetworkEndpoint> networkEndpoints() {
     return switch (this) {

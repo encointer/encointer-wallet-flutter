@@ -3,7 +3,6 @@ import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/location/location.dart';
-import 'package:encointer_wallet/store/settings.dart';
 
 const String leuZurich = 'Leu Zurich';
 const String bernBaer = 'Bern Bär';
@@ -61,14 +60,7 @@ Location testLocation1 = Location.fromJson({'lat': '18.2341235412345', 'lon': '3
 Location testLocation2 = Location.fromJson({'lat': '18.3341235412345', 'lon': '35.28324513451'});
 Location testLocation3 = Location.fromJson({'lat': '18.4341235412345', 'lon': '35.38324513451'});
 
-EndpointData unitTestEndpoint = EndpointData.fromJson({
-  'info': 'unit-test-network',
-  'ss58': 42,
-  'text': 'Unit-Test endpoint data',
-  'value': 'Unit-Test network must not connect to a node',
-  'overrideConfig': Map<String, dynamic>.of({}),
-  'ipfsGateway': 'Unit-Test network must no connect to ipfs'
-});
+String unitTestEndpointInfo = 'unit-test-network';
 
 final List<OfferingData> offeringDataMockList = [OfferingData(url: 'url')];
 

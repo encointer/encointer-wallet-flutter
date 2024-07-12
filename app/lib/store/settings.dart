@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/config/networks/networks.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -152,18 +151,4 @@ abstract class _SettingsStore with Store {
 
     return webApi.init();
   }
-}
-
-@JsonSerializable(explicitToJson: true)
-class EndpointData extends _EndpointData {
-  static EndpointData fromJson(Map<String, dynamic> json) => _$EndpointDataFromJson(json);
-  static Map<String, dynamic> toJson(EndpointData data) => _$EndpointDataToJson(data);
-}
-
-abstract class _EndpointData {
-  String? info = '';
-  int? ss58 = 42;
-  String? text = '';
-  String? value = '';
-  String? ipfsGateway = '';
 }

@@ -34,7 +34,7 @@ void main() {
 
   group('Caching and serialization works', () {
     test('encointer store initialization, serialization and cache works', () async {
-      final testNetwork = '${unitTestEndpoint.info!}-0';
+      final testNetwork = '$unitTestEndpointInfo-0';
       final appStore = await setupAppStore(testNetwork);
       final encointerStore = appStore.encointer;
 
@@ -86,7 +86,7 @@ void main() {
     });
 
     test('purging encointer-store works and initializing new works', () async {
-      final testNetwork = '${unitTestEndpoint.info!}-1';
+      final testNetwork = '$unitTestEndpointInfo-1';
       final appStore = await setupAppStore(testNetwork);
 
       await appStore.purgeEncointerCache(testNetwork);
@@ -108,7 +108,7 @@ void main() {
 
   group('next phase computation', () {
     test('works in registering phase', () async {
-      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final appStore = await setupAppStore(unitTestEndpointInfo);
       final encointerStore = appStore.encointer
         ..setPhaseDurations(Map<CeremonyPhase, int>.of({
           CeremonyPhase.Registering: 1,
@@ -124,7 +124,7 @@ void main() {
     });
 
     test('works in assigning phase', () async {
-      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final appStore = await setupAppStore(unitTestEndpointInfo);
       final encointerStore = appStore.encointer
         ..setPhaseDurations(Map<CeremonyPhase, int>.of({
           CeremonyPhase.Registering: 1,
@@ -140,7 +140,7 @@ void main() {
     });
 
     test('works in attesting phase', () async {
-      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final appStore = await setupAppStore(unitTestEndpointInfo);
       final encointerStore = appStore.encointer
         ..setPhaseDurations(Map<CeremonyPhase, int>.of({
           CeremonyPhase.Registering: 1,
@@ -156,7 +156,7 @@ void main() {
     });
 
     test('get ceremony cycle duration', () async {
-      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final appStore = await setupAppStore(unitTestEndpointInfo);
       final encointerStore = appStore.encointer
         ..setPhaseDurations(Map<CeremonyPhase, int>.of({
           CeremonyPhase.Registering: 1,
