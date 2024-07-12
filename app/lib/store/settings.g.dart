@@ -6,13 +6,6 @@ part of 'settings.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$NetworkStateToJson(NetworkState instance) => <String, dynamic>{
-      'endpoint': instance.endpoint,
-      'ss58Format': instance.ss58Format,
-      'tokenDecimals': instance.tokenDecimals,
-      'tokenSymbol': instance.tokenSymbol,
-    };
-
 EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) => EndpointData()
   ..color = json['color'] as String?
   ..info = json['info'] as String?

@@ -173,43 +173,6 @@ abstract class _SettingsStore with Store {
   }
 }
 
-@JsonSerializable(createFactory: false)
-class NetworkState extends _NetworkState {
-  NetworkState(super.endpoint, super.ss58Format, super.tokenDecimals, super.tokenSymbol);
-
-  // Todo: need to test after then fix by linter
-  // ignore: prefer_constructors_over_static_methods
-  static NetworkState fromJson(Map<String, dynamic> json) {
-    // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
-    // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
-    // `NetworkState` should use the first token.
-    final decimals = (json['tokenDecimals'] is List)
-        ? (json['tokenDecimals'] as List<dynamic>)[0] as int?
-        : json['tokenDecimals'] as int?;
-    final symbol = (json['tokenSymbol'] is List)
-        ? (json['tokenSymbol'] as List<dynamic>)[0] as String?
-        : json['tokenSymbol'] as String?;
-
-    final ns = NetworkState(json['endpoint'] as String?, json['ss58Format'] as int?, decimals, symbol);
-    // --dev chain doesn't specify token symbol -> will break things if not specified
-    if ((ns.tokenSymbol?.length ?? 0) < 1) ns.tokenSymbol = 'ERT';
-
-    return ns;
-  }
-
-  static Map<String, dynamic> toJson(NetworkState net) => _$NetworkStateToJson(net);
-}
-
-// TODO: these were empty before, but had to add defaults for development chain
-abstract class _NetworkState {
-  _NetworkState(this.endpoint, this.ss58Format, this.tokenDecimals, this.tokenSymbol);
-
-  String? endpoint = '';
-  int? ss58Format = 42;
-  int? tokenDecimals = 12;
-  String? tokenSymbol = 'ERT';
-}
-
 @JsonSerializable(explicitToJson: true)
 class EndpointData extends _EndpointData {
   static EndpointData fromJson(Map<String, dynamic> json) => _$EndpointDataFromJson(json);
