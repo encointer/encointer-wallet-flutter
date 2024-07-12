@@ -1,6 +1,4 @@
-
 abstract class Endpoint {
-
   String address();
 }
 
@@ -9,7 +7,6 @@ abstract class EndpointChecker<E extends Endpoint> {
 }
 
 class EndpointManager<C extends EndpointChecker, E extends Endpoint> {
-
   EndpointManager(this._checker);
 
   EndpointManager.withEndpoints(this._checker, List<E> endpoints) {
@@ -41,9 +38,9 @@ class EndpointManager<C extends EndpointChecker, E extends Endpoint> {
 }
 
 Future<T?> firstWhereAsync<T>(
-    Iterable<T> items,
-    Future<bool> Function(T) test,
-    ) async {
+  Iterable<T> items,
+  Future<bool> Function(T) test,
+) async {
   for (final item in items) {
     if (await test(item).timeout(const Duration(seconds: 2), onTimeout: () => false)) {
       return item;
