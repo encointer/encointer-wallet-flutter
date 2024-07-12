@@ -5,6 +5,11 @@ class EwHttpException implements Exception {
   final FailureType failureType;
   final StackTrace? stackTrace;
   final int? statusCode;
+
+  @override
+  String toString() {
+    return 'EwHttpException: { failureType: $failureType, error: $error }';
+  }
 }
 
 enum FailureType {
