@@ -32,7 +32,7 @@ List<TestEndpoint> testEndpoints() {
 
 void main() {
   group('EndpointManager', () {
-    test('Returns first healthy endpoint', () async {
+    test('Returns first healthy Endpoint', () async {
       final manager = EndpointManager.withEndpoints(testEndpoints());
       final endpoint = await manager.getHealthyEndpoint();
 

@@ -1,5 +1,4 @@
 
-// Define the CheckEndpointHealth interface
 abstract class Endpoint {
 
   String address();
@@ -42,7 +41,7 @@ Future<T?> firstWhereAsync<T>(
     Future<bool> Function(T) test,
     ) async {
   for (final item in items) {
-    if (await test(item)) {
+    if (await test(item).timeout(const Duration(seconds: 2), onTimeout: () => false)) {
       return item;
     }
   }
