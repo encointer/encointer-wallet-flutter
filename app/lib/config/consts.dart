@@ -10,8 +10,7 @@ const communityIconName = 'community_icon.svg';
 
 // AVD: ${Platform.isAndroid ? androidLocalHost : iosLocalHost} = 127.0.0.1
 const String ipfsGatewayEncointer = 'http://ipfs.encointer.org:8080';
-// ignore: non_constant_identifier_names
-final String ipfs_gateway_local = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:8080';
+final String ipfsGatewayLocal = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:8080';
 
 const encointerFeed = 'https://encointer.github.io/feed';
 const communityMessagesPath = 'community_messages/$localePlaceHolder/cm.json';

@@ -69,7 +69,7 @@ enum Network {
       rococo => ipfsGatewayEncointer,
       kusama => ipfsGatewayEncointer,
       // only dev network refers to the local one
-      gesellDev => ipfs_gateway_local,
+      gesellDev => ipfsGatewayLocal,
     };
   }
 
