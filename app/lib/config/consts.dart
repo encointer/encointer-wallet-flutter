@@ -23,8 +23,6 @@ String getEncointerFeedLink({bool devMode = false}) {
 const int ertDecimals = 12;
 const int encointerCurrenciesDecimals = 18;
 
-const double faucetAmount = 0.1;
-
 // links
 const localePlaceHolder = 'LOCALE_PLACEHOLDER';
 const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';
