@@ -133,7 +133,7 @@ abstract class _SettingsStore with Store {
   }
 
   String getCacheKey(String key) {
-    return '${endpoint.info}_$key';
+    return '${endpoint.info()}_$key';
   }
 
   Future<void> reloadNetwork(Network network) async {
