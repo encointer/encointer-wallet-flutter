@@ -30,7 +30,7 @@ abstract class _SettingsStore with Store {
   String localeCode = '';
 
   @observable
-  Network endpoint = Network.kusama;
+  Network endpoint = Network.encointerKusama;
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
@@ -125,7 +125,7 @@ abstract class _SettingsStore with Store {
   Future<void> loadEndpoint(String sysLocaleCode) async {
     final networkInfo = await rootStore.localStorage.getKV(localStorageNetworkKey);
     if (networkInfo == null) {
-      endpoint = Network.kusama;
+      endpoint = Network.encointerKusama;
     } else {
       endpoint = Network.fromInfoOrDefault(networkInfo);
     }

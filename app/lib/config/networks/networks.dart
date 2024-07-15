@@ -17,29 +17,29 @@ const String kusamaInfo = 'nctr-k';
 /// Enum representing the different networks.
 ///
 /// NOTE: We shouldn't do `_` wildcard matching in the switch statement so that
-///       we get guaranteed type safety when we extend the enum variant due to
+///       we get guaranteed type safety when we extend the enum variant due to the
 ///       compiler check for exhaustive matching.
 enum Network {
+  encointerKusama,
+  encointerRococo,
   gesell,
-  gesellDev,
-  rococo,
-  kusama;
+  gesellDev;
 
   factory Network.fromInfoOrDefault(String info) {
     return switch (info) {
+      kusamaInfo => Network.encointerKusama,
+      rococoInfo => Network.encointerRococo,
       gesellInfo => Network.gesell,
-      rococoInfo => Network.rococo,
-      kusamaInfo => Network.kusama,
       gesellDevInfo => Network.gesellDev,
-      _ => Network.kusama,
+      _ => Network.encointerKusama,
     };
   }
 
   factory Network.tryFromInfo(String info) {
     return switch (info) {
+      kusamaInfo => Network.encointerKusama,
+      rococoInfo => Network.encointerRococo,
       gesellInfo => Network.gesell,
-      rococoInfo => Network.rococo,
-      kusamaInfo => Network.kusama,
       gesellDevInfo => Network.gesellDev,
       _ => throw Exception(['Invalid network $info']),
     };
@@ -47,27 +47,27 @@ enum Network {
 
   String info() {
     return switch (this) {
+      encointerKusama => kusamaInfo,
+      encointerRococo => rococoInfo,
       gesell => gesellInfo,
       gesellDev => gesellDevInfo,
-      rococo => rococoInfo,
-      kusama => kusamaInfo,
     };
   }
 
   int ss58() {
     return switch (this) {
+      encointerKusama => 2,
+      encointerRococo => 42,
       gesell => 42,
       gesellDev => 42,
-      rococo => 42,
-      kusama => 2,
     };
   }
 
   String ipfsGateway() {
     return switch (this) {
+      encointerKusama => ipfsGatewayEncointer,
+      encointerRococo => ipfsGatewayEncointer,
       gesell => ipfsGatewayEncointer,
-      rococo => ipfsGatewayEncointer,
-      kusama => ipfsGatewayEncointer,
       // only dev network refers to the local one
       gesellDev => ipfsGatewayLocal,
     };
@@ -76,9 +76,9 @@ enum Network {
   /// Exists for simple reverse compatibility.
   String value() {
     return switch (this) {
+      encointerKusama => networkEndpoints().first.address,
+      encointerRococo => networkEndpoints().first.address,
       gesell => networkEndpoints().first.address,
-      rococo => networkEndpoints().first.address,
-      kusama => networkEndpoints().first.address,
       // only dev network refers to the local one
       gesellDev => networkEndpoints().first.address,
     };
@@ -86,10 +86,10 @@ enum Network {
 
   List<NetworkEndpoint> networkEndpoints() {
     return switch (this) {
+      encointerKusama => kusamaEndpoints(),
+      encointerRococo => rococoEndpoints(),
       gesell => gesellEndpoints(),
       gesellDev => gesellDevEndpoints(),
-      rococo => rococoEndpoints(),
-      kusama => kusamaEndpoints(),
     };
   }
 }

@@ -31,7 +31,7 @@ void main() {
 
     test('network endpoint test', () async {
       await store.init('_en');
-      expect(store.endpoint, Network.kusama);
+      expect(store.endpoint, Network.encointerKusama);
     });
   });
 }
