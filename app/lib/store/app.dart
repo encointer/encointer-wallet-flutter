@@ -145,7 +145,8 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
   }
 
   Future<bool> purgeEncointerCache(String networkInfo) async {
-    return localStorage.removeKey(encointerCacheKey(networkInfo));
+    await encointer.setChosenCid();
+    return localStorage.removeObject(encointerCacheKey(networkInfo));
   }
 
   Future<void> loadOrInitEncointerCache(String networkInfo) async {
