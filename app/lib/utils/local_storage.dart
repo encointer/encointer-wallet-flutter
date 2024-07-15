@@ -81,7 +81,6 @@ class LocalStorage {
     return storage.removeKey(key);
   }
 
-
   /// Gets the more specific return type that `GetObject. This should always be preferred.
   ///
   /// Should be used instead of `getObject`, see #533.
