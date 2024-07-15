@@ -60,8 +60,6 @@ Location testLocation1 = Location.fromJson({'lat': '18.2341235412345', 'lon': '3
 Location testLocation2 = Location.fromJson({'lat': '18.3341235412345', 'lon': '35.28324513451'});
 Location testLocation3 = Location.fromJson({'lat': '18.4341235412345', 'lon': '35.38324513451'});
 
-String unitTestEndpointInfo = 'unit-test-network';
-
 final List<OfferingData> offeringDataMockList = [OfferingData(url: 'url')];
 
 const itemOfferedMock = {
