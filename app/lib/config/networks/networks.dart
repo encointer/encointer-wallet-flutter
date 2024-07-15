@@ -63,6 +63,8 @@ enum Network {
     };
   }
 
+  /// After #1603 is implemented, we can also replace this with multiple endpoints,
+  /// such that we have fallback endpoints.
   String ipfsGateway() {
     return switch (this) {
       encointerKusama => ipfsGatewayEncointer,
@@ -74,6 +76,7 @@ enum Network {
   }
 
   /// Exists for simple reverse compatibility.
+  /// Will be remove in the course of https://github.com/encointer/encointer-wallet-flutter/issues/1603.
   String value() {
     return switch (this) {
       encointerKusama => networkEndpoints().first.address,
