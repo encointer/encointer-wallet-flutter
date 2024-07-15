@@ -30,7 +30,7 @@ abstract class _SettingsStore with Store {
   String localeCode = '';
 
   @observable
-  Network endpoint = Network.encointerKusama;
+  Network currentNetwork = Network.encointerKusama;
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
@@ -41,7 +41,7 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
-  String get ipfsGateway => endpoint.ipfsGateway();
+  String get ipfsGateway => currentNetwork.ipfsGateway();
 
   /// Set of known accounts.
   ///
@@ -117,7 +117,7 @@ abstract class _SettingsStore with Store {
 
   @action
   void setNetwork(Network network) {
-    endpoint = network;
+    currentNetwork = network;
     rootStore.localStorage.setKV(localStorageNetworkKey, network.id());
   }
 
@@ -125,14 +125,14 @@ abstract class _SettingsStore with Store {
   Future<void> loadEndpoint(String sysLocaleCode) async {
     final networkInfo = await rootStore.localStorage.getKV(localStorageNetworkKey);
     if (networkInfo == null) {
-      endpoint = Network.encointerKusama;
+      currentNetwork = Network.encointerKusama;
     } else {
-      endpoint = Network.fromInfoOrDefault(networkInfo);
+      currentNetwork = Network.fromInfoOrDefault(networkInfo);
     }
   }
 
   String getCacheKey(String key) {
-    return '${endpoint.id()}_$key';
+    return '${currentNetwork.id()}_$key';
   }
 
   Future<void> reloadNetwork(Network network) async {

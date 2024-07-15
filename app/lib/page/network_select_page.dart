@@ -54,7 +54,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onSelect(AccountData accountData, String? address) async {
-    final isCurrentNetwork = _selectedNetwork == context.read<AppStore>().settings.endpoint;
+    final isCurrentNetwork = _selectedNetwork == context.read<AppStore>().settings.currentNetwork;
     if (address != context.read<AppStore>().account.currentAddress || !isCurrentNetwork) {
       /// set current account
       await context.read<AppStore>().setCurrentAccount(accountData.pubKey);
@@ -89,7 +89,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     final accounts = <AccountData>[appStore.account.currentAccount, ...appStore.account.optionalAccounts];
 
     res.addAll(accounts.map((accountData) {
-      final address = AddressUtils.pubKeyHexToAddress(accountData.pubKey, prefix: appStore.settings.endpoint.ss58());
+      final address =
+          AddressUtils.pubKeyHexToAddress(accountData.pubKey, prefix: appStore.settings.currentNetwork.ss58());
 
       return Card(
         shape: RoundedRectangleBorder(
@@ -114,7 +115,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   void initState() {
     super.initState();
 
-    _selectedNetwork = context.read<AppStore>().settings.endpoint;
+    _selectedNetwork = context.read<AppStore>().settings.currentNetwork;
   }
 
   @override

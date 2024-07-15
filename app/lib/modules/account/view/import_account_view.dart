@@ -150,7 +150,7 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
 
     await AppAlert.showDialog<void>(
       context,
-      title: Text(Fmt.address(acc.address(prefix: store.settings.endpoint.ss58()).encode())!),
+      title: Text(Fmt.address(acc.address(prefix: store.settings.currentNetwork.ss58()).encode())!),
       content: Text(l10n.importDuplicate),
       actions: [
         CupertinoButton(

@@ -20,8 +20,8 @@ class PaymentOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final recipientLabel = recipientAccount!.name;
-    final recipientAddress =
-        Fmt.address(AddressUtils.pubKeyHexToAddress(recipientAccount!.pubKey, prefix: store.settings.endpoint.ss58()))!;
+    final recipientAddress = Fmt.address(
+        AddressUtils.pubKeyHexToAddress(recipientAccount!.pubKey, prefix: store.settings.currentNetwork.ss58()))!;
 
     return IntrinsicHeight(
       child: Row(

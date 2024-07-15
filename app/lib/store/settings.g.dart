@@ -77,18 +77,18 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$endpointAtom = Atom(name: '_SettingsStore.endpoint', context: context);
+  late final _$currentNetworkAtom = Atom(name: '_SettingsStore.currentNetwork', context: context);
 
   @override
-  Network get endpoint {
-    _$endpointAtom.reportRead();
-    return super.endpoint;
+  Network get currentNetwork {
+    _$currentNetworkAtom.reportRead();
+    return super.currentNetwork;
   }
 
   @override
-  set endpoint(Network value) {
-    _$endpointAtom.reportWrite(value, super.endpoint, () {
-      super.endpoint = value;
+  set currentNetwork(Network value) {
+    _$currentNetworkAtom.reportWrite(value, super.currentNetwork, () {
+      super.currentNetwork = value;
     });
   }
 
@@ -201,7 +201,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
 enableBazaar: ${enableBazaar},
 loading: ${loading},
 localeCode: ${localeCode},
-endpoint: ${endpoint},
+currentNetwork: ${currentNetwork},
 contactList: ${contactList},
 endpointIsNoTee: ${endpointIsNoTee},
 ipfsGateway: ${ipfsGateway},

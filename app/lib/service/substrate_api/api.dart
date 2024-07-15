@@ -34,7 +34,7 @@ class Api {
     EwHttp ewHttp, {
     bool isIntegrationTest = false,
   }) {
-    final provider = ReconnectingWsProvider(Uri.parse(store.settings.endpoint.value()), autoConnect: false);
+    final provider = ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.value()), autoConnect: false);
     return Api(
       store,
       provider,
@@ -80,11 +80,11 @@ class Api {
   }
 
   Future<void> _connect() {
-    Log.d('[webApi] Connecting to endpoint: ${store.settings.endpoint.value()}', 'Api');
+    Log.d('[webApi] Connecting to endpoint: ${store.settings.currentNetwork.value()}', 'Api');
 
     store.settings.setNetworkLoading(true);
 
-    final endpoint = store.settings.endpoint.value();
+    final endpoint = store.settings.currentNetwork.value();
     return provider.connectToNewEndpoint(Uri.parse(endpoint)).then((voidValue) async {
       Log.p('[webApi] channel is ready...');
       if (await isConnected()) {
@@ -99,7 +99,7 @@ class Api {
   }
 
   Future<void> _onConnected() async {
-    Log.d('[webApi] Connected to endpoint: ${store.settings.endpoint.value()}', 'Api');
+    Log.d('[webApi] Connected to endpoint: ${store.settings.currentNetwork.value()}', 'Api');
 
     if (store.account.currentAddress.isNotEmpty) {
       await store.encointer.initializeUninitializedStores(store.account.currentAddress);
@@ -118,7 +118,7 @@ class Api {
 
     store.settings.setNetworkLoading(false);
 
-    Log.d('[webApi] Obtained basic network data: ${store.settings.endpoint.value()}');
+    Log.d('[webApi] Obtained basic network data: ${store.settings.currentNetwork.value()}');
 
     // need to do this from here as we can't access instance fields in constructor.
     account.setFetchAccountData(fetchAccountData);

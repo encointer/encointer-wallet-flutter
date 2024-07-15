@@ -39,7 +39,8 @@ class ContactsPage extends StatelessWidget {
           itemCount: appStore.settings.contactList.length,
           itemBuilder: (BuildContext context, int index) {
             final contact = appStore.settings.contactList[index];
-            final address = AddressUtils.pubKeyHexToAddress(contact.pubKey, prefix: appStore.settings.endpoint.ss58());
+            final address =
+                AddressUtils.pubKeyHexToAddress(contact.pubKey, prefix: appStore.settings.currentNetwork.ss58());
             return ListTile(
               key: Key(contact.name),
               leading: AddressIcon(address, contact.pubKey, size: 45),

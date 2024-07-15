@@ -210,7 +210,7 @@ Future<void> submitRegisterParticipant(
 
       if (registrationType != null) {
         _showEducationalDialog(registrationType, context);
-        if (store.settings.endpoint == Network.encointerKusama) {
+        if (store.settings.currentNetwork == Network.encointerKusama) {
           await CeremonyNotifications.scheduleMeetupReminders(
             ceremonyIndex: data.global.ceremonyIndex,
             meetupTime: store.encointer.community!.meetupTime!,

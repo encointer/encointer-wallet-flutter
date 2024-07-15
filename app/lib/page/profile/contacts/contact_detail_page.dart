@@ -47,7 +47,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final store = context.watch<AppStore>();
-    final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: store.settings.endpoint.ss58());
+    final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: store.settings.currentNetwork.ss58());
     return Scaffold(
       appBar: AppBar(
         title: isEditing
@@ -281,7 +281,7 @@ class EndorseButton extends StatelessWidget {
     final community = store.encointer.community;
     final bootstrappers = community?.bootstrappers;
     final l10n = context.l10n;
-    final address = AddressUtils.pubKeyHexToAddress(contact.pubKey, prefix: store.settings.endpoint.ss58());
+    final address = AddressUtils.pubKeyHexToAddress(contact.pubKey, prefix: store.settings.currentNetwork.ss58());
 
     if (bootstrappers != null && bootstrappers.contains(address)) {
       await _popupDialog(context, l10n.cantEndorseBootstrapper);

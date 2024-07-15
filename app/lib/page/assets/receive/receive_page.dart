@@ -45,7 +45,7 @@ class _ReceivePageState extends State<ReceivePage> {
     super.initState();
     _appStore = context.read<AppStore>();
     final address = AddressUtils.pubKeyHexToAddress(_appStore.account.currentAccountPubKey!,
-        prefix: _appStore.settings.endpoint.ss58());
+        prefix: _appStore.settings.currentNetwork.ss58());
     invoice = InvoiceQrCode(
       account: address,
       cid: _appStore.encointer.chosenCid,
