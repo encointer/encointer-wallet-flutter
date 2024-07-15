@@ -55,11 +55,11 @@ void main() {
       // - CommunityAccountStore(network, testCid, store.account.currentAddress)
       await encointerStore.setChosenCid(testCid);
 
-      final testCommunityStore = CommunityStore(testNetwork.info(), testCid);
+      final testCommunityStore = CommunityStore(testNetwork.id(), testCid);
       await testCommunityStore.initCommunityAccountStore(appStore.account.currentAddress);
 
       final targetJson = <String, dynamic>{
-        'network': testNetwork.info(),
+        'network': testNetwork.id(),
         'currentPhase': 'Registering',
         'nextPhaseTimestamp': 3,
         'phaseDurations': Map<String, dynamic>.of({}),
@@ -69,7 +69,7 @@ void main() {
         'chosenCid': testCid.toJson(),
         'accountStores': Map<String, dynamic>.of({}),
         'bazaarStores': Map<String, dynamic>.of({
-          testCidFmt: BazaarStore(testNetwork.info(), testCid).toJson(),
+          testCidFmt: BazaarStore(testNetwork.id(), testCid).toJson(),
         }),
         'communityStores': Map<String, dynamic>.of({
           testCidFmt: testCommunityStore.toJson(),
@@ -81,7 +81,7 @@ void main() {
       final deserializedEncointerStore = EncointerStore.fromJson(targetJson);
       expect(deserializedEncointerStore.toJson(), targetJson);
 
-      final cachedEncointerStore = await appStore.loadEncointerCache(appStore.encointerCacheKey(testNetwork.info()));
+      final cachedEncointerStore = await appStore.loadEncointerCache(appStore.encointerCacheKey(testNetwork.id()));
       expect(cachedEncointerStore!.toJson(), targetJson);
     });
 
@@ -89,18 +89,18 @@ void main() {
       const testNetwork = Network.gesell;
       final appStore = await setupAppStore(testNetwork);
 
-      await appStore.purgeEncointerCache(testNetwork.info());
+      await appStore.purgeEncointerCache(testNetwork.id());
       expect(
-        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork.info())),
+        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork.id())),
         null,
       );
 
       // should initialize a new encointer store
       await appStore.init('_en');
-      final expectedStore = EncointerStore(testNetwork.info());
+      final expectedStore = EncointerStore(testNetwork.id());
 
       expect(
-        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork.info())),
+        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork.id())),
         expectedStore.toJson(),
       );
     });

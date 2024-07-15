@@ -118,7 +118,7 @@ abstract class _SettingsStore with Store {
   @action
   void setNetwork(Network network) {
     endpoint = network;
-    rootStore.localStorage.setKV(localStorageNetworkKey, network.info());
+    rootStore.localStorage.setKV(localStorageNetworkKey, network.id());
   }
 
   @action
@@ -132,7 +132,7 @@ abstract class _SettingsStore with Store {
   }
 
   String getCacheKey(String key) {
-    return '${endpoint.info()}_$key';
+    return '${endpoint.id()}_$key';
   }
 
   Future<void> reloadNetwork(Network network) async {
@@ -146,7 +146,7 @@ abstract class _SettingsStore with Store {
       rootStore.loadAccountCache(),
       rootStore.assets.loadCache(),
       rootStore.chain.loadCache(),
-      rootStore.loadOrInitEncointerCache(network.info()),
+      rootStore.loadOrInitEncointerCache(network.id()),
     ]);
 
     return webApi.init();

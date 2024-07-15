@@ -207,7 +207,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   ) async {
     final store = context.read<AppStore>();
 
-    if (store.settings.endpoint.info() != networkInfo) {
+    if (store.settings.endpoint.id() != networkInfo) {
       return showChangeNetworkAndCommunityDialog(
         context,
         store,

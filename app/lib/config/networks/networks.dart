@@ -9,10 +9,10 @@ class NetworkEndpoint {
   final String address;
 }
 
-const String gesellInfo = 'nctr-gsl';
-const String gesellDevInfo = 'nctr-gsl-dev';
-const String rococoInfo = 'nctr-r';
-const String kusamaInfo = 'nctr-k';
+const String gesellId = 'nctr-gsl';
+const String gesellDevId = 'nctr-gsl-dev';
+const String rococoId = 'nctr-r';
+const String kusamaId = 'nctr-k';
 
 /// Enum representing the different networks.
 ///
@@ -27,30 +27,30 @@ enum Network {
 
   factory Network.fromInfoOrDefault(String info) {
     return switch (info) {
-      kusamaInfo => Network.encointerKusama,
-      rococoInfo => Network.encointerRococo,
-      gesellInfo => Network.gesell,
-      gesellDevInfo => Network.gesellDev,
+      kusamaId => Network.encointerKusama,
+      rococoId => Network.encointerRococo,
+      gesellId => Network.gesell,
+      gesellDevId => Network.gesellDev,
       _ => Network.encointerKusama,
     };
   }
 
   factory Network.tryFromInfo(String info) {
     return switch (info) {
-      kusamaInfo => Network.encointerKusama,
-      rococoInfo => Network.encointerRococo,
-      gesellInfo => Network.gesell,
-      gesellDevInfo => Network.gesellDev,
+      kusamaId => Network.encointerKusama,
+      rococoId => Network.encointerRococo,
+      gesellId => Network.gesell,
+      gesellDevId => Network.gesellDev,
       _ => throw Exception(['Invalid network $info']),
     };
   }
 
-  String info() {
+  String id() {
     return switch (this) {
-      encointerKusama => kusamaInfo,
-      encointerRococo => rococoInfo,
-      gesell => gesellInfo,
-      gesellDev => gesellDevInfo,
+      encointerKusama => kusamaId,
+      encointerRococo => rococoId,
+      gesell => gesellId,
+      gesellDev => gesellDevId,
     };
   }
 

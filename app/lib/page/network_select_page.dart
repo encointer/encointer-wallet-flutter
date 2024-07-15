@@ -78,7 +78,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            _selectedNetwork.info().toUpperCase(),
+            _selectedNetwork.id().toUpperCase(),
             style: context.bodyLarge.copyWith(color: context.colorScheme.primary),
           ),
         ],
@@ -140,8 +140,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                           isCurrent ? Border(right: BorderSide(width: 2, color: context.colorScheme.primary)) : null,
                     ),
                     child: IconButton(
-                      key: Key(network.info()),
-                      icon: Image.asset(networkIconFromNetworkId(network.info(), isCurrent)),
+                      key: Key(network.id()),
+                      icon: Image.asset(networkIconFromNetworkId(network.id(), isCurrent)),
                       onPressed: () {
                         if (!isCurrent) {
                           setState(() {

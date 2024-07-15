@@ -113,7 +113,7 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
     await chain.loadCache();
 
     // need to call this after settings was initialized
-    final networkInfo = settings.endpoint.info();
+    final networkInfo = settings.endpoint.id();
     await loadOrInitEncointerCache(networkInfo);
 
     storeIsReady = true;
@@ -136,7 +136,7 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
 
   /// Returns the network dependant cache key.
   String getCacheKey(String key) {
-    return '${settings.endpoint.info()}_$key';
+    return '${settings.endpoint.id()}_$key';
   }
 
   /// Returns the cache key for the encointer-storage.
