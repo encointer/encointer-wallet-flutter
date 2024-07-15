@@ -118,7 +118,7 @@ abstract class _SettingsStore with Store {
   @action
   void setNetwork(Network network) {
     endpoint = network;
-    rootStore.localStorage.setObject(localStorageNetworkKey, network.info());
+    rootStore.localStorage.setKV(localStorageNetworkKey, network.info());
   }
 
   @action
