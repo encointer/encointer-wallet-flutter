@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:encointer_wallet/store/account/services/legacy_storage.dart';
 import 'package:ew_storage/ew_storage.dart' show SecureStorageMock;
 
@@ -26,6 +27,11 @@ void main() {
       expect(store.loading, false);
       store.setNetworkLoading(true);
       expect(store.loading, true);
+    });
+
+    test('network endpoint test', () async {
+      await store.init('_en');
+      expect(store.endpoint, Network.kusama);
     });
   });
 }
