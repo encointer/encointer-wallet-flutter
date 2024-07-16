@@ -98,31 +98,26 @@ enum Network {
 }
 
 List<NetworkEndpoint> gesellEndpoints() {
-  return [
-    NetworkEndpoint(name: 'Encointer Gesell (Hosted by Encointer Association)', address: 'wss://gesell.encointer.org')
-  ];
+  return [NetworkEndpoint(name: 'Encointer Association', address: 'wss://gesell.encointer.org')];
 }
 
 List<NetworkEndpoint> gesellDevEndpoints() {
   return [
-    NetworkEndpoint(
-        name: 'Encointer Gesell Local DevNet',
-        address: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944')
+    NetworkEndpoint(name: 'Local DevNet', address: 'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944')
   ];
 }
 
 List<NetworkEndpoint> rococoEndpoints() {
   return [
-    NetworkEndpoint(
-        name: 'Encointer Lietaer on Rococo (Hosted by Encointer Association)',
-        address: 'wss://rococo.api.encointer.org')
+    NetworkEndpoint(name: 'Encointer Association', address: 'wss://rococo.api.encointer.org'),
   ];
 }
 
 List<NetworkEndpoint> kusamaEndpoints() {
   return [
-    NetworkEndpoint(
-        name: 'Encointer Network on Kusama (Hosted by Encointer Association)',
-        address: 'wss://kusama.api.encointer.org')
+    NetworkEndpoint(name: 'Encointer Association', address: 'wss://kusama.api.encointer.org'),
+    NetworkEndpoint(name: 'Dwellir', address: 'wss://encointer-kusama-rpc.dwellir.com'),
+    NetworkEndpoint(name: 'IBP1', address: 'wss://sys.ibp.network/encointer-kusama'),
+    NetworkEndpoint(name: 'IBP2', address: 'wss://sys.dotters.network/encointer-kusama'),
   ];
 }
