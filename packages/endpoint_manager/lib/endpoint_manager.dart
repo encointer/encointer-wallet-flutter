@@ -32,8 +32,21 @@ class EndpointManager<C extends EndpointChecker, E extends Endpoint> {
   }
 
   /// Returns the first endpoint that is healthy.
+  ///
+  /// Will return null if all endpoints are unhealthy.
   Future<E?> getHealthyEndpoint() {
     return firstWhereAsync(endpoints.values, _checker.checkHealth);
+  }
+
+  /// Returns a future that completes once a healthy endpoint has been found.
+  Future<E> pollHealthyEndpoint() async {
+    E? endpoint;
+
+    while ((endpoint = await getHealthyEndpoint()) == null) {
+      await Future<void>.delayed(const Duration(seconds: 5));
+    }
+
+    return endpoint!;
   }
 }
 

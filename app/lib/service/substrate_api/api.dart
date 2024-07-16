@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/mocks/ipfs_api.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
@@ -9,6 +10,7 @@ import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
+import 'package:ew_endpoint_manager/endpoint_manager.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -17,6 +19,17 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 ///
 /// `late final` because it will be initialized exactly once in lib/app.dart.
 late Api webApi;
+
+class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
+  // Trivial check if we can connect to an endpoint.
+  @override
+  Future<bool> checkHealth(NetworkEndpoint endpoint) async {
+    final provider = WsProvider(Uri.parse(endpoint.address()));
+    final healthy = await provider.ready();
+    await provider.disconnect();
+    return healthy;
+  }
+}
 
 class Api {
   Api(
@@ -79,13 +92,16 @@ class Api {
     });
   }
 
-  Future<void> _connect() {
-    Log.d('[webApi] Connecting to endpoint: ${store.settings.currentNetwork.value()}', 'Api');
+  Future<void> _connect() async{
+    Log.p('[webApi] Looking for a healthy endpoint...', 'Api');
+    final manager = EndpointManager.withEndpoints(NetworkEndpointChecker(), store.settings.currentNetwork.networkEndpoints());
+    final endpoint = await manager.pollHealthyEndpoint();
+
+    Log.p('[webApi] Connecting to healthy endpoint: ${endpoint.address()}', 'Api');
 
     store.settings.setNetworkLoading(true);
 
-    final endpoint = store.settings.currentNetwork.value();
-    return provider.connectToNewEndpoint(Uri.parse(endpoint)).then((voidValue) async {
+    return provider.connectToNewEndpoint(Uri.parse(endpoint.address())).then((voidValue) async {
       Log.p('[webApi] channel is ready...');
       if (await isConnected()) {
         return _onConnected();
