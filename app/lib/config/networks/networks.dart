@@ -79,9 +79,7 @@ enum Network {
     };
   }
 
-  /// Exists for simple reverse compatibility.
-  /// Will be remove in the course of https://github.com/encointer/encointer-wallet-flutter/issues/1603.
-  String value() {
+  String defaultEndpoint() {
     return switch (this) {
       encointerKusama => networkEndpoints().first.addr,
       encointerRococo => networkEndpoints().first.addr,

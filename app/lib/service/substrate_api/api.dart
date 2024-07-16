@@ -24,10 +24,24 @@ class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
   // Trivial check if we can connect to an endpoint.
   @override
   Future<bool> checkHealth(NetworkEndpoint endpoint) async {
+    Log.d('[webApi] Checking health of: ${endpoint.address()}', 'Api');
+
     final provider = WsProvider(Uri.parse(endpoint.address()));
-    final healthy = await provider.ready();
+    final ready = await provider.ready();
+
+    Log.d('[webApi] Endpoint ${endpoint.address()} ready: $ready', 'Api');
+
+    if (!ready) {
+      await provider.disconnect();
+      return false;
+    }
+
+    final offchainIndexing = await SubstrateDartApi(provider).offchainIndexingEnabled();
+    Log.d('[webApi] Endpoint ${endpoint.address()} offchainIndexingEnabled: $offchainIndexing', 'Api');
+
     await provider.disconnect();
-    return healthy;
+    // only allow nodes that have offchain indexing enabled
+    return offchainIndexing;
   }
 }
 
@@ -47,7 +61,8 @@ class Api {
     EwHttp ewHttp, {
     bool isIntegrationTest = false,
   }) {
-    final provider = ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.value()), autoConnect: false);
+    // Initialize with default endpoint, will check for healthiness later.
+    final provider = ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.defaultEndpoint()), autoConnect: false);
     return Api(
       store,
       provider,
@@ -115,7 +130,7 @@ class Api {
   }
 
   Future<void> _onConnected() async {
-    Log.d('[webApi] Connected to endpoint: ${store.settings.currentNetwork.value()}', 'Api');
+    Log.d('[webApi] Connected to endpoint: ${provider.url}', 'Api');
 
     if (store.account.currentAddress.isNotEmpty) {
       await store.encointer.initializeUninitializedStores(store.account.currentAddress);
@@ -134,7 +149,7 @@ class Api {
 
     store.settings.setNetworkLoading(false);
 
-    Log.d('[webApi] Obtained basic network data: ${store.settings.currentNetwork.value()}');
+    Log.d('[webApi] Obtained basic network data: ${provider.url}');
 
     // need to do this from here as we can't access instance fields in constructor.
     account.setFetchAccountData(fetchAccountData);
