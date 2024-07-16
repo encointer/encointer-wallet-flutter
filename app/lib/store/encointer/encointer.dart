@@ -257,7 +257,7 @@ abstract class _EncointerStore with Store {
           initCommunityStore(cid, _rootStore.account.currentAddress)
         ]);
       } else {
-        await _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
+        await _rootStore.localStorage.removeObject(chosenCidCacheKey(network));
       }
     }
 

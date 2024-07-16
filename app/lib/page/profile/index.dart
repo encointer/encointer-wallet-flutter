@@ -216,7 +216,7 @@ class _ProfileState extends State<Profile> {
                         key: const Key(EWTestKeys.chooseNetwork),
                         child: Observer(
                           builder: (_) => Text(
-                            'Change network (current: ${store.settings.endpoint.info})', // for devs only
+                            'Change network (current: ${store.settings.currentNetwork.id()})', // for devs only
                             style: context.titleMedium.copyWith(color: context.colorScheme.primary),
                           ),
                         ),

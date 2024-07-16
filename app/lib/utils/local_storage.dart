@@ -73,8 +73,12 @@ class LocalStorage {
     return Future.value();
   }
 
-  Future<bool> removeKey(String key) {
+  Future<bool> removeObject(String key) {
     return storage.removeKey('${customKVKey}_$key');
+  }
+
+  Future<bool> removeKV(String key) {
+    return storage.removeKey(key);
   }
 
   /// Gets the more specific return type that `GetObject. This should always be preferred.

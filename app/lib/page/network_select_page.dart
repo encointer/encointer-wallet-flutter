@@ -6,13 +6,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:encointer_wallet/gen/assets.gen.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:ew_keyring/ew_keyring.dart';
@@ -27,18 +26,7 @@ class NetworkSelectPage extends StatefulWidget {
 }
 
 class _NetworkSelectPageState extends State<NetworkSelectPage> {
-  // Here we commented out the two not-active networks of Cantillon.
-  // When they will be relevant, they can be uncommented #232
-  final List<EndpointData> networks = [
-    networkEndpointEncointerGesell,
-    networkEndpointEncointerLietaer,
-    networkEndpointEncointerMainnet,
-    networkEndpointEncointerGesellDev,
-    // networkEndpointEncointerCantillon,
-    // networkEndpointEncointerCantillonDev
-  ];
-
-  late EndpointData _selectedNetwork;
+  late Network _selectedNetwork;
   bool _networkChanging = false;
 
   Future<void> _reloadNetwork() async {
@@ -66,7 +54,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onSelect(AccountData accountData, String? address) async {
-    final isCurrentNetwork = _selectedNetwork.info == context.read<AppStore>().settings.endpoint.info;
+    final isCurrentNetwork = _selectedNetwork == context.read<AppStore>().settings.currentNetwork;
     if (address != context.read<AppStore>().account.currentAddress || !isCurrentNetwork) {
       /// set current account
       await context.read<AppStore>().setCurrentAccount(accountData.pubKey);
@@ -90,7 +78,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            _selectedNetwork.info!.toUpperCase(),
+            _selectedNetwork.id().toUpperCase(),
             style: context.bodyLarge.copyWith(color: context.colorScheme.primary),
           ),
         ],
@@ -102,7 +90,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     res.addAll(accounts.map((accountData) {
       final address =
-          AddressUtils.pubKeyHexToAddress(accountData.pubKey, prefix: appStore.settings.endpoint.ss58 ?? 42);
+          AddressUtils.pubKeyHexToAddress(accountData.pubKey, prefix: appStore.settings.currentNetwork.ss58());
 
       return Card(
         shape: RoundedRectangleBorder(
@@ -127,7 +115,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   void initState() {
     super.initState();
 
-    _selectedNetwork = context.read<AppStore>().settings.endpoint;
+    _selectedNetwork = context.read<AppStore>().settings.currentNetwork;
   }
 
   @override
@@ -143,9 +131,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             child: Card(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               child: Column(
-                children: networks.map((i) {
-                  final network = i.info;
-                  final isCurrent = network == _selectedNetwork.info;
+                children: Network.values.map((network) {
+                  final isCurrent = network == _selectedNetwork;
                   return Container(
                     margin: const EdgeInsets.only(bottom: 8),
                     padding: const EdgeInsets.only(right: 8),
@@ -154,12 +141,12 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                           isCurrent ? Border(right: BorderSide(width: 2, color: context.colorScheme.primary)) : null,
                     ),
                     child: IconButton(
-                      key: Key(i.info ?? '$i'),
-                      icon: Image.asset(networkIconFromNetworkId(network!, isCurrent)),
+                      key: Key(network.id()),
+                      icon: Image.asset(networkIconFromNetworkId(network.id(), isCurrent)),
                       onPressed: () {
                         if (!isCurrent) {
                           setState(() {
-                            _selectedNetwork = i;
+                            _selectedNetwork = network;
                           });
                         }
                       },
