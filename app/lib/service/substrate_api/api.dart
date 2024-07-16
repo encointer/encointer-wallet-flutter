@@ -62,7 +62,8 @@ class Api {
     bool isIntegrationTest = false,
   }) {
     // Initialize with default endpoint, will check for healthiness later.
-    final provider = ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.defaultEndpoint()), autoConnect: false);
+    final provider =
+        ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.defaultEndpoint()), autoConnect: false);
     return Api(
       store,
       provider,
@@ -107,9 +108,10 @@ class Api {
     });
   }
 
-  Future<void> _connect() async{
+  Future<void> _connect() async {
     Log.p('[webApi] Looking for a healthy endpoint...', 'Api');
-    final manager = EndpointManager.withEndpoints(NetworkEndpointChecker(), store.settings.currentNetwork.networkEndpoints());
+    final manager =
+        EndpointManager.withEndpoints(NetworkEndpointChecker(), store.settings.currentNetwork.networkEndpoints());
     final endpoint = await manager.pollHealthyEndpoint(randomize: true);
 
     Log.p('[webApi] Connecting to healthy endpoint: ${endpoint.address()}', 'Api');

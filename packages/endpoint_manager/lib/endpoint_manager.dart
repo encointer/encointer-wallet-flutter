@@ -37,7 +37,6 @@ class EndpointManager<C extends EndpointChecker, E extends Endpoint> {
   ///
   /// Will return null if all endpoints are unhealthy.
   Future<E?> getHealthyEndpoint({bool randomize = false}) {
-
     final values = endpoints.values.toList();
 
     if (randomize) {

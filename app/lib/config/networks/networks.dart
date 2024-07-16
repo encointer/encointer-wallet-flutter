@@ -4,8 +4,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:ew_endpoint_manager/endpoint_manager.dart';
 
 class NetworkEndpoint with Endpoint {
-  NetworkEndpoint({required this.name, required String address})
-  : _address = address;
+  NetworkEndpoint({required this.name, required String address}) : _address = address;
 
   final String name;
   final String _address;
