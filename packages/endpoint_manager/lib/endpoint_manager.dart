@@ -1,3 +1,5 @@
+import 'dart:math';
+
 mixin Endpoint {
   String address();
 }
@@ -31,11 +33,12 @@ class EndpointManager<C extends EndpointChecker, E extends Endpoint> {
     return endpoints.values.toList();
   }
 
-  /// Returns the first endpoint that is healthy.
+  /// Returns the first endpoint that is healthy where the checks are run in random order.
   ///
   /// Will return null if all endpoints are unhealthy.
   Future<E?> getHealthyEndpoint() {
-    return firstWhereAsync(endpoints.values, _checker.checkHealth);
+    final values = endpoints.values.toList()..shuffle(Random());
+    return firstWhereAsync(values, _checker.checkHealth);
   }
 
   /// Returns a future that completes once a healthy endpoint has been found.
