@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/mocks/ipfs_api.dart';
 import 'package:encointer_wallet/service/ipfs/ipfs_api.dart';
@@ -9,6 +10,7 @@ import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/reconnecting_ws_provider.dart';
+import 'package:ew_endpoint_manager/endpoint_manager.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -17,6 +19,31 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 ///
 /// `late final` because it will be initialized exactly once in lib/app.dart.
 late Api webApi;
+
+class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
+  // Trivial check if we can connect to an endpoint.
+  @override
+  Future<bool> checkHealth(NetworkEndpoint endpoint) async {
+    Log.d('[NetworkEndpointChecker] Checking health of: ${endpoint.address()}', 'Api');
+
+    final provider = WsProvider(Uri.parse(endpoint.address()));
+    final ready = await provider.ready();
+
+    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} ready: $ready', 'Api');
+
+    if (!ready) {
+      await provider.disconnect();
+      return false;
+    }
+
+    final offchainIndexing = await SubstrateDartApi(provider).offchainIndexingEnabled();
+    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} offchainIndexingEnabled: $offchainIndexing', 'Api');
+
+    await provider.disconnect();
+    // only allow nodes that have offchain indexing enabled
+    return offchainIndexing;
+  }
+}
 
 class Api {
   Api(
@@ -34,7 +61,9 @@ class Api {
     EwHttp ewHttp, {
     bool isIntegrationTest = false,
   }) {
-    final provider = ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.value()), autoConnect: false);
+    // Initialize with default endpoint, will check for healthiness later.
+    final provider =
+        ReconnectingWsProvider(Uri.parse(store.settings.currentNetwork.defaultEndpoint()), autoConnect: false);
     return Api(
       store,
       provider,
@@ -79,13 +108,17 @@ class Api {
     });
   }
 
-  Future<void> _connect() {
-    Log.d('[webApi] Connecting to endpoint: ${store.settings.currentNetwork.value()}', 'Api');
+  Future<void> _connect() async {
+    Log.p('[webApi] Looking for a healthy endpoint...', 'Api');
+    final manager =
+        EndpointManager.withEndpoints(NetworkEndpointChecker(), store.settings.currentNetwork.networkEndpoints());
+    final endpoint = await manager.pollHealthyEndpoint(randomize: true);
+
+    Log.p('[webApi] Connecting to healthy endpoint: ${endpoint.address()}', 'Api');
 
     store.settings.setNetworkLoading(true);
 
-    final endpoint = store.settings.currentNetwork.value();
-    return provider.connectToNewEndpoint(Uri.parse(endpoint)).then((voidValue) async {
+    return provider.connectToNewEndpoint(Uri.parse(endpoint.address())).then((voidValue) async {
       Log.p('[webApi] channel is ready...');
       if (await isConnected()) {
         return _onConnected();
@@ -99,7 +132,7 @@ class Api {
   }
 
   Future<void> _onConnected() async {
-    Log.d('[webApi] Connected to endpoint: ${store.settings.currentNetwork.value()}', 'Api');
+    Log.d('[webApi] Connected to endpoint: ${provider.url}', 'Api');
 
     if (store.account.currentAddress.isNotEmpty) {
       await store.encointer.initializeUninitializedStores(store.account.currentAddress);
@@ -118,7 +151,7 @@ class Api {
 
     store.settings.setNetworkLoading(false);
 
-    Log.d('[webApi] Obtained basic network data: ${store.settings.currentNetwork.value()}');
+    Log.d('[webApi] Obtained basic network data: ${provider.url}');
 
     // need to do this from here as we can't access instance fields in constructor.
     account.setFetchAccountData(fetchAccountData);

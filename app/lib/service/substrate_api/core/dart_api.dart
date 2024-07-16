@@ -13,26 +13,15 @@ class SubstrateDartApi {
   /// Websocket client used to connect to the node.
   final Provider _provider;
 
-  /// The rpc methods exposed by the connected node.
-  RpcMethods? _rpc;
-
-  /// Address of the node we connect to including ws(s).
-  String? _endpoint;
-
   /// Returns the rpc nodes of the connected node or an empty list otherwise.
   Future<RpcMethods> rpcMethods() async {
     return rpc<Map<String, dynamic>>('rpc_methods', []).then(RpcMethods.fromJson);
   }
 
-  /// Gets address of the node we connect to including ws(s).
-  String? get endpoint => _endpoint;
-
   Future<void> connect(String endpoint) async {
     try {
-      _rpc = await rpc<Map<String, dynamic>>('rpc_methods', []).then(RpcMethods.fromJson);
-
       // Sanity check that we are running against valid node with offchain indexing enabled
-      if (!_rpc!.methods!.contains('encointer_getReputations')) {
+      if (!(await offchainIndexingEnabled())) {
         Log.d(
           "rpc_methods does not contain 'getReputations'. Are the following flags passed"
               " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'",
@@ -41,6 +30,17 @@ class SubstrateDartApi {
       }
     } catch (e) {
       Log.e('RPC error $e', 'SubstrateDartApi');
+    }
+  }
+
+  Future<bool> offchainIndexingEnabled() async {
+    try {
+      // Check reputation of Alice. This will return an exception if offchain
+      // indexing is disabled.
+      await rpc<List<dynamic>>('encointer_getReputations', ['5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY']);
+      return Future.value(true);
+    } catch (e) {
+      return Future.value(false);
     }
   }
 

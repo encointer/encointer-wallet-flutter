@@ -408,6 +408,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0+1"
+  ew_endpoint_manager:
+    dependency: "direct main"
+    description:
+      path: "../packages/endpoint_manager"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   ew_http:
     dependency: "direct main"
     description:

@@ -10,11 +10,12 @@ class ReconnectingWsProvider extends Provider {
           autoConnect: autoConnect,
         );
 
-  final Uri url;
+  Uri url;
   WsProvider provider;
 
   Future<void> connectToNewEndpoint(Uri url) async {
     await disconnect();
+    this.url = url;
     provider = WsProvider(url);
     await provider.ready();
   }
