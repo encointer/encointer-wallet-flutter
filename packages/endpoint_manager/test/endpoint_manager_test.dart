@@ -32,7 +32,7 @@ void main() {
   group('EndpointManager', () {
     test('Returns first healthy Endpoint', () async {
       final manager = EndpointManager.withEndpoints(TestEndpointChecker(), testEndpoints);
-      final endpoint = await manager.getHealthyEndpoint();
+      final endpoint = await manager.getHealthyEndpoint(randomize: false);
 
       expect(endpoint!.address(), 'address2');
     });

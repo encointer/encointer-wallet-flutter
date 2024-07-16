@@ -33,19 +33,25 @@ class EndpointManager<C extends EndpointChecker, E extends Endpoint> {
     return endpoints.values.toList();
   }
 
-  /// Returns the first endpoint that is healthy where the checks are run in random order.
+  /// Returns the first endpoint that is healthy where the checks are optionally run in random order.
   ///
   /// Will return null if all endpoints are unhealthy.
-  Future<E?> getHealthyEndpoint() {
-    final values = endpoints.values.toList()..shuffle(Random());
+  Future<E?> getHealthyEndpoint({bool randomize = false}) {
+
+    final values = endpoints.values.toList();
+
+    if (randomize) {
+      values.shuffle(Random());
+    }
+
     return firstWhereAsync(values, _checker.checkHealth);
   }
 
   /// Returns a future that completes once a healthy endpoint has been found.
-  Future<E> pollHealthyEndpoint() async {
+  Future<E> pollHealthyEndpoint({bool randomize = false}) async {
     E? endpoint;
 
-    while ((endpoint = await getHealthyEndpoint()) == null) {
+    while ((endpoint = await getHealthyEndpoint(randomize: randomize)) == null) {
       await Future<void>.delayed(const Duration(seconds: 5));
     }
 
