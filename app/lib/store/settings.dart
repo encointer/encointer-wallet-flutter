@@ -1,8 +1,6 @@
 import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:ew_endpoint_manager/endpoint_manager.dart';
-
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
