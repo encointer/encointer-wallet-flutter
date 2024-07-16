@@ -24,12 +24,12 @@ class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
   // Trivial check if we can connect to an endpoint.
   @override
   Future<bool> checkHealth(NetworkEndpoint endpoint) async {
-    Log.d('[webApi] Checking health of: ${endpoint.address()}', 'Api');
+    Log.d('[NetworkEndpointChecker] Checking health of: ${endpoint.address()}', 'Api');
 
     final provider = WsProvider(Uri.parse(endpoint.address()));
     final ready = await provider.ready();
 
-    Log.d('[webApi] Endpoint ${endpoint.address()} ready: $ready', 'Api');
+    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} ready: $ready', 'Api');
 
     if (!ready) {
       await provider.disconnect();
@@ -37,7 +37,7 @@ class NetworkEndpointChecker with EndpointChecker<NetworkEndpoint> {
     }
 
     final offchainIndexing = await SubstrateDartApi(provider).offchainIndexingEnabled();
-    Log.d('[webApi] Endpoint ${endpoint.address()} offchainIndexingEnabled: $offchainIndexing', 'Api');
+    Log.d('[NetworkEndpointChecker] Endpoint ${endpoint.address()} offchainIndexingEnabled: $offchainIndexing', 'Api');
 
     await provider.disconnect();
     // only allow nodes that have offchain indexing enabled
