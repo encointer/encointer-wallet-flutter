@@ -26,7 +26,7 @@ class SubstrateDartApi {
       _rpc = await rpc<Map<String, dynamic>>('rpc_methods', []).then(RpcMethods.fromJson);
 
       // Sanity check that we are running against valid node with offchain indexing enabled
-      if (!_rpc!.methods!.contains('encointer_getReputations')) {
+      if (!(await offchainIndexingEnabled())) {
         Log.d(
           "rpc_methods does not contain 'getReputations'. Are the following flags passed"
               " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'",
