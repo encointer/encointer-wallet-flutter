@@ -13,9 +13,6 @@ class SubstrateDartApi {
   /// Websocket client used to connect to the node.
   final Provider _provider;
 
-  /// The rpc methods exposed by the connected node.
-  RpcMethods? _rpc;
-
   /// Returns the rpc nodes of the connected node or an empty list otherwise.
   Future<RpcMethods> rpcMethods() async {
     return rpc<Map<String, dynamic>>('rpc_methods', []).then(RpcMethods.fromJson);
@@ -23,8 +20,6 @@ class SubstrateDartApi {
 
   Future<void> connect(String endpoint) async {
     try {
-      _rpc = await rpc<Map<String, dynamic>>('rpc_methods', []).then(RpcMethods.fromJson);
-
       // Sanity check that we are running against valid node with offchain indexing enabled
       if (!(await offchainIndexingEnabled())) {
         Log.d(
