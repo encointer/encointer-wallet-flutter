@@ -12,5 +12,6 @@ extension AppLocalizationsX on BuildContext {
         'fr' => 'Français',
         'ru' => 'Русский',
         'sw' => 'Swahili',
+        _ => '',
       };
 }
