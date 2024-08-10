@@ -201,7 +201,8 @@
     "proposal": "Vorschlag",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
-    "proposalCancelled": "Abgebrochen",
+    "proposalSuperseded": "Verdrängt",
+    "proposalRejected": "Abgelehnt",
     "proposalEnacted": "Ausgeführt",
     "proposalApproved": "Angenommen",
     "proposalTurnout": "Wahlbeteiligung",
@@ -391,6 +392,15 @@
             "value": {
                 "type": "String",
                 "example": "0.00"
+            }
+        }
+    },
+    "proposalSupersededBy": "Verdrängt durch: {id}",
+    "@proposalSupersededBy": {
+        "placeholders": {
+            "id": {
+                "type": "String",
+                "example": "6"
             }
         }
     }

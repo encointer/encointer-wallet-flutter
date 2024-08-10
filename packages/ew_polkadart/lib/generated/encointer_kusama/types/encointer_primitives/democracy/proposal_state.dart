@@ -42,8 +42,12 @@ class $ProposalState {
     return Approved();
   }
 
-  Cancelled cancelled() {
-    return Cancelled();
+  SupersededBy supersededBy({required BigInt id}) {
+    return SupersededBy(id: id);
+  }
+
+  Rejected rejected() {
+    return Rejected();
   }
 
   Enacted enacted() {
@@ -65,8 +69,10 @@ class $ProposalStateCodec with _i1.Codec<ProposalState> {
       case 2:
         return const Approved();
       case 3:
-        return const Cancelled();
+        return SupersededBy._decode(input);
       case 4:
+        return const Rejected();
+      case 5:
         return const Enacted();
       default:
         throw Exception('ProposalState: Invalid variant index: "$index"');
@@ -88,8 +94,11 @@ class $ProposalStateCodec with _i1.Codec<ProposalState> {
       case Approved:
         (value as Approved).encodeTo(output);
         break;
-      case Cancelled:
-        (value as Cancelled).encodeTo(output);
+      case Rejected:
+        (value as Rejected).encodeTo(output);
+        break;
+      case SupersededBy:
+        (value as SupersededBy).encodeTo(output);
         break;
       case Enacted:
         (value as Enacted).encodeTo(output);
@@ -108,7 +117,9 @@ class $ProposalStateCodec with _i1.Codec<ProposalState> {
         return (value as Confirming)._sizeHint();
       case Approved:
         return 1;
-      case Cancelled:
+      case Rejected:
+        return 1;
+      case SupersededBy:
         return 1;
       case Enacted:
         return 1;
@@ -202,21 +213,59 @@ class Approved extends ProposalState {
   int get hashCode => runtimeType.hashCode;
 }
 
-class Cancelled extends ProposalState {
-  const Cancelled();
+class SupersededBy extends ProposalState {
+  const SupersededBy({required this.id});
+
+  factory SupersededBy._decode(_i1.Input input) {
+    return SupersededBy(id: _i1.U128Codec.codec.decode(input));
+  }
+
+  /// Moment
+  final BigInt id;
 
   @override
-  Map<String, dynamic> toJson() => {'Cancelled': null};
+  Map<String, Map<String, BigInt>> toJson() => {
+        'SupersededBy': {'id': id}
+      };
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
       3,
       output,
     );
+    _i1.U128Codec.codec.encodeTo(
+      id,
+      output,
+    );
   }
 
   @override
-  bool operator ==(Object other) => other is Cancelled;
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SupersededBy && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
+}
+
+class Rejected extends ProposalState {
+  const Rejected();
+
+  @override
+  Map<String, dynamic> toJson() => {'Rejected': null};
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      4,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) => other is Rejected;
 
   @override
   int get hashCode => runtimeType.hashCode;
@@ -230,7 +279,7 @@ class Enacted extends ProposalState {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      4,
+      5,
       output,
     );
   }

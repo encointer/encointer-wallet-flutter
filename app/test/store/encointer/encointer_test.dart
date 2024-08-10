@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/store/settings.dart';
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/models/index.dart';
@@ -16,12 +16,11 @@ import '../../mock/mock.dart';
 ///
 /// The `endpoint` should be different for every test if it involves serialization, so that the caching
 /// does not interfere with other tests.
-Future<AppStore> setupAppStore(String networkInfo) async {
+Future<AppStore> setupAppStore(Network network) async {
   final store = AppStore(MockLocalStorage(), SecureStorageMock(), LegacyLocalStorageMock());
   await store.init('_en');
 
-  final endpoint = EndpointData()..info = networkInfo;
-  store.settings.setEndpoint(endpoint);
+  store.settings.setNetwork(network);
   await store.init('_en');
 
   webApi = getMockApi(store);
@@ -35,7 +34,7 @@ void main() {
 
   group('Caching and serialization works', () {
     test('encointer store initialization, serialization and cache works', () async {
-      final testNetwork = '${unitTestEndpoint.info!}-0';
+      const testNetwork = Network.gesell;
       final appStore = await setupAppStore(testNetwork);
       final encointerStore = appStore.encointer;
 
@@ -56,11 +55,11 @@ void main() {
       // - CommunityAccountStore(network, testCid, store.account.currentAddress)
       await encointerStore.setChosenCid(testCid);
 
-      final testCommunityStore = CommunityStore(testNetwork, testCid);
+      final testCommunityStore = CommunityStore(testNetwork.id(), testCid);
       await testCommunityStore.initCommunityAccountStore(appStore.account.currentAddress);
 
       final targetJson = <String, dynamic>{
-        'network': testNetwork,
+        'network': testNetwork.id(),
         'currentPhase': 'Registering',
         'nextPhaseTimestamp': 3,
         'phaseDurations': Map<String, dynamic>.of({}),
@@ -70,7 +69,7 @@ void main() {
         'chosenCid': testCid.toJson(),
         'accountStores': Map<String, dynamic>.of({}),
         'bazaarStores': Map<String, dynamic>.of({
-          testCidFmt: BazaarStore(testNetwork, testCid).toJson(),
+          testCidFmt: BazaarStore(testNetwork.id(), testCid).toJson(),
         }),
         'communityStores': Map<String, dynamic>.of({
           testCidFmt: testCommunityStore.toJson(),
@@ -82,26 +81,26 @@ void main() {
       final deserializedEncointerStore = EncointerStore.fromJson(targetJson);
       expect(deserializedEncointerStore.toJson(), targetJson);
 
-      final cachedEncointerStore = await appStore.loadEncointerCache(appStore.encointerCacheKey(testNetwork));
+      final cachedEncointerStore = await appStore.loadEncointerCache(appStore.encointerCacheKey(testNetwork.id()));
       expect(cachedEncointerStore!.toJson(), targetJson);
     });
 
     test('purging encointer-store works and initializing new works', () async {
-      final testNetwork = '${unitTestEndpoint.info!}-1';
+      const testNetwork = Network.gesell;
       final appStore = await setupAppStore(testNetwork);
 
-      await appStore.purgeEncointerCache(testNetwork);
+      await appStore.purgeEncointerCache(testNetwork.id());
       expect(
-        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork)),
+        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork.id())),
         null,
       );
 
       // should initialize a new encointer store
       await appStore.init('_en');
-      final expectedStore = EncointerStore(testNetwork);
+      final expectedStore = EncointerStore(testNetwork.id());
 
       expect(
-        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork)),
+        await appStore.localStorage.getObject(appStore.encointerCacheKey(testNetwork.id())),
         expectedStore.toJson(),
       );
     });
@@ -109,7 +108,7 @@ void main() {
 
   group('next phase computation', () {
     test('works in registering phase', () async {
-      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final appStore = await setupAppStore(Network.gesell);
       final encointerStore = appStore.encointer
         ..setPhaseDurations(Map<CeremonyPhase, int>.of({
           CeremonyPhase.Registering: 1,
@@ -125,7 +124,7 @@ void main() {
     });
 
     test('works in assigning phase', () async {
-      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final appStore = await setupAppStore(Network.gesell);
       final encointerStore = appStore.encointer
         ..setPhaseDurations(Map<CeremonyPhase, int>.of({
           CeremonyPhase.Registering: 1,
@@ -141,7 +140,7 @@ void main() {
     });
 
     test('works in attesting phase', () async {
-      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final appStore = await setupAppStore(Network.gesell);
       final encointerStore = appStore.encointer
         ..setPhaseDurations(Map<CeremonyPhase, int>.of({
           CeremonyPhase.Registering: 1,
@@ -157,7 +156,7 @@ void main() {
     });
 
     test('get ceremony cycle duration', () async {
-      final appStore = await setupAppStore(unitTestEndpoint.info!);
+      final appStore = await setupAppStore(Network.gesell);
       final encointerStore = appStore.encointer
         ..setPhaseDurations(Map<CeremonyPhase, int>.of({
           CeremonyPhase.Registering: 1,

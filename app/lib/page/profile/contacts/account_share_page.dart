@@ -30,7 +30,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
     final accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     final accountToBeShared = store.account.getAccountData(accountToBeSharedPubKey);
     final addressSS58 =
-        AddressUtils.pubKeyHexToAddress(accountToBeSharedPubKey!, prefix: store.settings.endpoint.ss58!);
+        AddressUtils.pubKeyHexToAddress(accountToBeSharedPubKey!, prefix: store.settings.currentNetwork.ss58());
 
     final contactQrCode = ContactQrCode(
       account: addressSS58,

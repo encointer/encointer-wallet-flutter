@@ -33,7 +33,7 @@ class AddressInputField extends StatefulWidget {
 class _AddressInputFieldState extends State<AddressInputField> {
   /// Returns true if the [account]'s name or address starts with [nameOrAddress].
   bool filterByAddressOrName(AccountData account, String nameOrAddress) {
-    final ss58 = widget.store.settings.endpoint.ss58!;
+    final ss58 = widget.store.settings.currentNetwork.ss58();
     // we can't just use account.address unfortunately, see #1019.
     return account.name.startsWith(nameOrAddress.trim()) ||
         AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: ss58).startsWith(nameOrAddress.trim());
@@ -44,7 +44,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
       return Container();
     }
 
-    final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.endpoint.ss58!);
+    final address =
+        AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.currentNetwork.ss58());
 
     return Container(
       padding: const EdgeInsets.only(top: 8),
@@ -71,7 +72,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
   }
 
   Widget _listItemBuilder(BuildContext context, AccountData account, bool isSelected) {
-    final address = AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.endpoint.ss58!);
+    final address =
+        AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.currentNetwork.ss58());
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),

@@ -1,11 +1,11 @@
 #!/bin/bash
 set -euxo pipefail
 
-DOCKER_TAG=${1:-1.5.4}
+DOCKER_TAG=${1:-1.13.0}
 
 echo "Encointer node docker tag: ${DOCKER_TAG}"
 
-docker run -p 30333:30333 -p 9944:9944 -p 9933:9933 -p 9615:9615 \
+docker run -p 30333:30333 -p 9944:9944 -p 9615:9615 \
   encointer/encointer-node-notee:${DOCKER_TAG} \
   --dev \
   --enable-offchain-indexing true \

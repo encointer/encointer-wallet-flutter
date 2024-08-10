@@ -3,73 +3,23 @@
 part of 'settings.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-Map<String, dynamic> _$NetworkStateToJson(NetworkState instance) => <String, dynamic>{
-      'endpoint': instance.endpoint,
-      'ss58Format': instance.ss58Format,
-      'tokenDecimals': instance.tokenDecimals,
-      'tokenSymbol': instance.tokenSymbol,
-    };
-
-EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) => EndpointData()
-  ..color = json['color'] as String?
-  ..info = json['info'] as String?
-  ..ss58 = json['ss58'] as int?
-  ..text = json['text'] as String?
-  ..value = json['value'] as String?
-  ..worker = json['worker'] as String?
-  ..mrenclave = json['mrenclave'] as String?
-  ..ipfsGateway = json['ipfsGateway'] as String?;
-
-Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dynamic>{
-      'color': instance.color,
-      'info': instance.info,
-      'ss58': instance.ss58,
-      'text': instance.text,
-      'value': instance.value,
-      'worker': instance.worker,
-      'mrenclave': instance.mrenclave,
-      'ipfsGateway': instance.ipfsGateway,
-    };
-
-// **************************************************************************
 // StoreGenerator
 // **************************************************************************
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SettingsStore on _SettingsStore, Store {
-  Computed<bool>? _$endpointIsEncointerComputed;
-
-  @override
-  bool get endpointIsEncointer => (_$endpointIsEncointerComputed ??=
-          Computed<bool>(() => super.endpointIsEncointer, name: '_SettingsStore.endpointIsEncointer'))
-      .value;
   Computed<bool>? _$endpointIsNoTeeComputed;
 
   @override
   bool get endpointIsNoTee => (_$endpointIsNoTeeComputed ??=
           Computed<bool>(() => super.endpointIsNoTee, name: '_SettingsStore.endpointIsNoTee'))
       .value;
-  Computed<bool>? _$endpointIsTeeProxyComputed;
-
-  @override
-  bool get endpointIsTeeProxy => (_$endpointIsTeeProxyComputed ??=
-          Computed<bool>(() => super.endpointIsTeeProxy, name: '_SettingsStore.endpointIsTeeProxy'))
-      .value;
   Computed<String>? _$ipfsGatewayComputed;
 
   @override
   String get ipfsGateway =>
       (_$ipfsGatewayComputed ??= Computed<String>(() => super.ipfsGateway, name: '_SettingsStore.ipfsGateway')).value;
-  Computed<List<EndpointData>>? _$endpointListComputed;
-
-  @override
-  List<EndpointData> get endpointList => (_$endpointListComputed ??=
-          Computed<List<EndpointData>>(() => super.endpointList, name: '_SettingsStore.endpointList'))
-      .value;
   Computed<List<AccountData>>? _$knownAccountsComputed;
 
   @override
@@ -127,18 +77,18 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$endpointAtom = Atom(name: '_SettingsStore.endpoint', context: context);
+  late final _$currentNetworkAtom = Atom(name: '_SettingsStore.currentNetwork', context: context);
 
   @override
-  EndpointData get endpoint {
-    _$endpointAtom.reportRead();
-    return super.endpoint;
+  Network get currentNetwork {
+    _$currentNetworkAtom.reportRead();
+    return super.currentNetwork;
   }
 
   @override
-  set endpoint(EndpointData value) {
-    _$endpointAtom.reportWrite(value, super.endpoint, () {
-      super.endpoint = value;
+  set currentNetwork(Network value) {
+    _$currentNetworkAtom.reportWrite(value, super.currentNetwork, () {
+      super.currentNetwork = value;
     });
   }
 
@@ -236,10 +186,10 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void setEndpoint(EndpointData value) {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setEndpoint');
+  void setNetwork(Network network) {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetwork');
     try {
-      return super.setEndpoint(value);
+      return super.setNetwork(network);
     } finally {
       _$_SettingsStoreActionController.endAction(_$actionInfo);
     }
@@ -251,13 +201,10 @@ mixin _$SettingsStore on _SettingsStore, Store {
 enableBazaar: ${enableBazaar},
 loading: ${loading},
 localeCode: ${localeCode},
-endpoint: ${endpoint},
+currentNetwork: ${currentNetwork},
 contactList: ${contactList},
-endpointIsEncointer: ${endpointIsEncointer},
 endpointIsNoTee: ${endpointIsNoTee},
-endpointIsTeeProxy: ${endpointIsTeeProxy},
 ipfsGateway: ${ipfsGateway},
-endpointList: ${endpointList},
 knownAccounts: ${knownAccounts},
 isConnected: ${isConnected}
     ''';
