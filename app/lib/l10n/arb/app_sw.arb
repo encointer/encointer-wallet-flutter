@@ -48,6 +48,7 @@
     "canUseFaucetOnlyWithCurrentAccount": "Unaweza kutumia vipengele vya kisima tu ikiwa ukurasa huu wa akaunti unaonyesha akaunti hai kwa sasa.",
     "changeYourPin": "Badilisha PIN",
     "checkEmailApp": "Cheki kama umedownload app ya Email",Tafadhali badili jamii kuweza kutuma mali.",
+    "chosenRightCommunity": "Data ni za jamii tofauti. Tafadhali badilisha jamii ili kutuma fedha..",
     "claim": "Dai",
     "claimRewardsNotificationBody": "Tayari umeshapokea mapato yako ya jamii!",
     "claimRewardsNotificationTitle": "Umeshapata mapato yako ya jamii",
@@ -200,6 +201,8 @@
     "proposal": "Pendekezo",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
+    "proposalSuperseded": "Iliyopita",
+    "proposalRejected": "Imekaataliwa",
     "proposalCancelled": "Imwesitishwa",
     "proposalEnacted": "Imetekelezwa",
     "proposalApproved": "Imepitishwa",
@@ -542,6 +545,15 @@
             "value": {
                 "type": "String",
                 "example": "0.00"
+            }
+        }
+    }
+    "proposalSupersededBy": "Imetanguliwa na: {id}",
+    "@proposalSupersededBy": {
+        "placeholders": {
+            "id": {
+                "type": "String",
+                "example": "6"
             }
         }
     }
