@@ -1,0 +1,560 @@
+{
+    "@@locale": "sw",
+    "about": "Kuhusu",
+    "aboutBrief": "Pochi ya simu ya Encointer",
+    "aboutVersion": "Toleo",
+    "acceptancePoints": "Sehemu za makubaliano",
+    "accountDelete": "Una uhakika unataka kufuta akaunti hii?",
+    "accountImport": "Ingiza akaunti",
+    "accountName": "Jina la akaunti",
+    "accountNameChoose": "Chagua jina la akaunti.",
+    "accountNameChooseHint": "Unaweza badilisha badae kwenye mipangilio ya wasifu.",
+    "accounts": "Akaunti",
+    "accountsDelete": "Una uhakika unataka kufuta akaunti zote?",
+    "accountsDeleteAll": "Ondoa akaunti zote",
+    "accountShare": "Shea akaunti",
+    "addAccount": "Ongeza akaunti",
+    "addContact": "Ongeza mawasiliano",
+    "addInvoiceQrToAddress": "Ongeza QR-invoice kwenye anuani",
+    "address": "Anuani",
+    "addressBook": "Kitabu cha anuani",
+    "addToContactFromQrContact": "Ongeza Qr ya mawasiliano",
+    "alreadyEndorsedErrorBody": "Akaunti hii tayari imeidhinishwa kwa ajili ya mzunguko huu",
+    "alreadyEndorsedErrorTitle": "imeidhinishwa tayari",
+    "amountError": "Kiasi kisichokubalika",
+    "amountToBeTransferred": "Tuma kiasi",
+    "appSettings": "Mipangilio ya app",
+    "attestNotificationBody": "Kama washiriki wote wametuma uthibitisho, unaweza kudai pato lako la jamii.",
+    "attestNotificationTitle": "Wahudhuriaji waliothibitishwa.",
+    "available": "Inapatikana",
+    "balance": "Kiasi",
+    "balanceTooLowBody": "Hauna kiasi cha kutosha kwenye akaunti yako. Huwezi kutuma hela yote kwa sababu unahitaji kiasi cha kulipa makato ya ada.",
+    "balanceTooLowTitle": "Kiasi kipo chini sana",
+    "balanceTransferNotificationBody": "Mpokeaji amepokea tokeni",
+    "balanceTransferNotificationTitle": "Muamala umekamilika",
+    "benefits": "Faida",
+    "biometricAuth": "Uhakiki wa kibayometriki",
+    "biometricAuthDescription": "Uthibitishaji wa kibiometri unatumia taarifa za kibiometri zilizohifadhiwa kwenye simu yako kuthibitisha utambulisho wako, badala ya kutumia PIN yako. Unaweza kuwezesha au kuzima uthibitishaji wa kibiometri wakati wowote kwenye mipangilio.",
+    "biometricAuthEnableDisableDescription": "Ingiza PIN yako ili kuwezesha au kuzima uthibitishaji wa kibiometri.",
+    "block": "Zuia",
+    "bootstrapperContent": "Kama una tiketi za kuidhinisha, itapendeza sana ukiwaidhinisha wanachama wapya kwenye jamii.",
+    "bootstrapperTitle": "Umesajiliwa kama kamati anzilishi - nafasi yako ya ushiriki ni ya uhakika.",
+    "calendarEntryDescription": "Kusanyika kupata pato lako la jamii.",
+    "cameraPermissionError": "Kulikuwa na hitilafu katika kupata ruhusa ya kamera. Kwa namna nyingine unaweza kutoa ruhusa kwenye mipangilio ya programu(app settings).",
+    "cancel": "Sitisha",
+    "canEndorseInRegisteringPhaseOnly": "Unaweza idhinisha wakati wa usajili tu",
+    "cantEndorseBootstrapper": "Wanachama waanzilishi tayari wameainishwa kama wenye kuaminika kwenye jamii.",
+    "categories": "Kategoria",
+    "canUseFaucetOnlyWithCurrentAccount": "Unaweza kutumia vipengele vya kisima tu ikiwa ukurasa huu wa akaunti unaonyesha akaunti hai kwa sasa.",
+    "changeYourPin": "Badilisha PIN",
+    "checkEmailApp": "Cheki kama umedownload app ya Email, Tafadhali badili jamii kuweza kutuma mali.",
+    "chosenRightCommunity": "Data ni za jamii tofauti. Tafadhali badilisha jamii ili kutuma fedha..",
+    "claim": "Dai",
+    "claimRewardsNotificationBody": "Tayari umeshapokea mapato yako ya jamii!",
+    "claimRewardsNotificationTitle": "Umeshapata mapato yako ya jamii",
+    "claimsScannedAlready": "Dai lililoskaniwa hapo awali limeboreshwa",
+    "claimsScannedDecodeFailed": "Haikuweza kutafsiri dai lililoskaniwa. Wanachama wengine wanahitaji kuupdate app..",
+    "claimsScannedNew": "Skani madai mapya",
+    "claimsSubmit": "Wasilisha madai",
+    "closeGathering": "Funga mkutano",
+    "communities": "Jamii",
+    "communityChoose": "Chagua jamii:",
+    "communityDoChoose": "Chagua jamii",
+    "communityNotSelected": "Hujachagua jamii, bonyeza alama ya picha kuchagua",
+    "confirmPin": "Ingiza PIN yako kuhakikisha",
+    "confirmThePayment": "3. Hakikisha malipo",
+    "contactAddress": "Anuani",
+    "contactAddressError": "Anuani sio sahihi",
+    "contactAlreadyExists": "Anuani tayari ipo, inatumiwa na mtu mwingine",
+    "contactDelete": "Futa",
+    "contactDeleteWarn": "una uhakika unataka kufuta anuani?",
+    "contactEndorse": "Idhinisha kama mwanachama muaminifu.",
+    "contactMemo": "Taarifa za mawasiliano",
+    "contactName": "Jina",
+    "contactNameAlreadyExists": "Jina tayari lipo",
+    "contactNameError": "Jina haliwezi kuwa baki",
+    "contactSave": "Hifadhi",
+    "contactUs": "Wasiliana nasi",
+    "copy": "Nakili",
+    "count": "Hesabu",
+    "create": "Tengeneza akaunti",
+    "createError": "Kulikuwa na hitilafu kwenye kutengeneza akaunti yako",
+    "createHint": "(Mfano: Alice)",
+    "createPassword": "PIN",
+    "createPassword2": "Thibitisha PIN",
+    "createPassword2Error": "PIN zisizoendana",
+    "createPasswordError": "PIN lazima iwe na angalau tarakimu 4 na isijumuishe ishara nyingine yoyote",
+    "deleteAccount": "futa",
+    "democracy": "Demokrasia",
+    "democracyFaq": "Demokrasia inafanyeje kazi?",
+    "democracyDiscussion": "Jadili mapendekezo kwenye foramu yetu!",
+    "democracyVotedNotificationBody": "Umepigia kura pendekezo hili.",
+    "democracyVotedNotificationTitle": "Umepiga kura",
+    "detail": "Taarifa",
+    "detailsEnter": "ingiza taarifa zako.",
+    "developer": "Developer mode",
+    "done": "Tayari",
+    "doYouAlreadyHaveAnAccount": "Je una akaunti tayari?",
+    "enable": "Wezesha",
+    "enableBazaar": "Wezesha Bazaar",
+    "endorseeContent": "Umeidhinishwa kama mwanachama mwaminifu wa jamii ya Nyota. Hivyo, kuna uhakika wa wewe kuteuliwa kuhudhuria kikao cha mzunguko huu.",
+    "endorseeTitle": "Umesajiliwa kama muidhinishwa - nafasi yako imehakikishwa",
+    "endorseNewcomerNotificationBody": "Asante kwa kumuidhinisha mwanachama mpya!",
+    "endorseNewcomerNotificationTitle": "Mwanachama mpya ameidhinishwa",
+    "enterAmount": "Ingiza kiasi",
+    "error": "Hitilafu",
+    "errorMessageNoCommunity": "Tafadhali chagua jamii.",
+    "errorOccurred": "Kuna hitilafu imetokea:",
+    "errorUserNameIsRequired": "Jina la mtumiaji haliwezi kuwa baki",
+    "event": "ID ya tukio",
+    "export": "Onyesha taarifa za siri za akaunti yako kuweza kuisafirisha",
+    "exportAccount": "Safirisha",
+    "exportMnemonicOk": "Maneno ya siri yamenakiliwa.",
+    "exportWarn": "Andika haya maneno kwenye karatasi. Karatasi hio itunze. Maneno hayo yanamruhusu mtu yeyote kuingia kwenye akaunti na kuweza kutumia mapato yaliyomo.",
+    "fail": "Imefeli",
+    "fee": "Ada",
+    "finish": "Maliza",
+    "from": "Kutoka kwa",
+    "fundsReceived": "Mali zimepokelewa",
+    "fundVoucher": "Vocha ya mali",
+    "gatheringSuccessfullyCompleted": "Mkutano umefanikiwa",
+    "hash": "Hashi ya muamala",
+    "hintEnterCurrentPin": "Kubadili PIN yako, tafadhali ingiza ya sasa.",
+    "hintThenEnterANewPin": "Halafu unaweza ingiza mpya na hapo ndipo inakuwa imebadilika.",
+    "home": "Nyumbani",
+     "howManyParticipantsShowedUp": "Ni wahudhuriaji wangapi ukijumlisha na wewe?",
+    "import": "Ingiza",
+    "importDuplicate": "Akaunti ipo, Je unataka kubadili akaunti iliyopo?",
+    "importedWithRawSeedHenceNoMnemonic": "Akaunti imeingizwa kwa mbegu za kriptografia hivyo haina maneno ya siri.",
+    "importInvalidMnemonic": "Maneno ya siri yaliyoingizwa sio sahihi",
+    "importInvalidRawSeed": "Ufunguo wa siri ulioingizwa sio sahihi",
+    "importMustNotBeEmpty": "Lazima ujaze chochote",
+    "importPrivateKeyUnsupported": "Uigizaji wa funguo za siri haujasapotiwa bado.",
+    "incomeIssuance": "Mapato ya jamii",
+    "insufficientBalance": "Kiasi hakitoshi",
+    "insufficientFundsErrorBody": "Hauna mali za kutosha kwenye akaunti hii. Angalia kwenye tovuti ya jamii yako kuweza kupata kadhaa.",
+    "insufficientFundsErrorTitle": "Mali hazitoshi",
+    "invalidCommunity": "sio jamii sahihi",
+    "invalidNetwork": "Mtandao sio sahihi",
+    "invoice": "Ankara",
+    "issuanceClaimed": "Hakuna mapato ya jamii yanayosubiriwa",
+    "issuancePending": "Dai mapato ya jamii yanayosubiri",
+    "keySigningCycle": "Mzunguko wa Kusaini Funguo",
+    "keystore": "Hifadhi ya funguo (json)",
+    "kusamaFaucet": "Kisima cha Kusama",
+    "lang": "Lugha",
+    "leuZurichFAQ": "leu.zuerich FAQ",
+    "like": "Penda",
+    "loading": "inaload...",
+    "meetingPoint": "Sehemu ya kukutana",
+    "meetupClaimantEqualToSelf": "Hitilafu: Mtoa madai ni sawa na yeye mwenyewe. Dai halijahifadhiwa",
+    "meetupClaimantInvalid": "Mdai huyu sio sehemu ya mkutano. Dai halijahifadhiwa.",
+    "meetupLocation": "Sehemu ya kukutana.",
+    "meetupIndex": "Namba ya mkusanyiko {index}",
+    "meetupIndexPopupExplanation": "Tumia Nambari ya Mkusanyiko kupata eneo lako halisi la mkusanyiko. Kiongozi wa jamii ndiye anayehusika kubainisha maeneo ya mkusanyiko katika jamii yako. Eneo halisi linaweza kuwa tofauti kidogo na lile lililoonyeshwa hapa..",
+    "meetupNotificationOneDayBeforeContent": "Mkutano unaanza ndani ya masaa 24",
+    "meetupNotificationOneDayBeforeTitle": "Masaa 24 yamebaki",
+    "meetupNotificationOneHourBeforeContent": "Mkutano unaanza ndani ya lisaa 1",
+    "meetupNotificationOneHourBeforeTitle": "Saa 1 imebaki",
+    "mnemonic": "Maneno ya siri",
+    "newbieContent": "Kwa hali yako ya sasa, ushiriki wako katika mzunguko ujao hauhakikishiwi. Tafadhali waombe waachama wa jamii yako wakuidhinishe.",
+    "newbieTitle": "Ushiriki wa awali",
+    "next": "Inayofuata",
+    "nextCycleDateLabel": "Mzunguko ujao unaanza",
+    "nextCycleTimeLeft": "Mzunguko ujao unaisha",
+    "noCommunitiesAreYouOffline": "Hakuna jamii zilizopatikana. Unaweza kuchagua moja baadaye. Je, uko mtandaoni?",
+    "noInvoice": "Hakuna ankara",
+    "noItems": "Hakuna vitu vilivyopatikana",
+    "noMnemonicFound": "Hakuna maneno ya siri yaliyopatikana",
+    "notNow": "Sio sasa",
+    "notifySubmittedQueued": "Muamala uliowekwa kwenye foleni umetumwa",
+    "noTransactions": "Hakuna muamala",
+    "noValidClaimsErrorBody": "Hujatuma madai yeyote halali. Je umewaskani wahudhuriaji wengine?",
+    "noValidClaimsErrorTitle": "Hakuna madai halali",
+    "numberOfAttendees": "Idadi ya wahudhuriaji",
+    "observe": "Uchunguzi",
+    "observeBrief": "Weka anwani hii kwenye uchunguzi, kisha unaweza kuchagua anwani hii katika ukurasa wa kuchagua akaunti, ili kutazama mali na vitendo vyake.",
+    "observedPendingExtrinsic": "Muamala unaosubiri umeonekana. Tafadhali subiri uthibitisho.!",
+    "offlineMessage": "Kwa sasa hauko mtandaoni(offline). Madai yako yanaweza kutumwa baadaye kwenye Home screen yako.",
+    "ok": "OK",
+    "onlyReputablesCanEndorseAttendGatheringToBecomeOne": "Ni wanachama hai wenye sifa pekee ndio wanaoweza kuidhinisha. Hudhuria mkusanyiko/vikao ili kupata sifa!",
+    "openMapApplication": "Programu ya Open Map",
+    "openTheEncointerApp": "1. Fungua programu \n«Encointer Wallet»",
+    "passOld": "PIN yako ya sasa",
+    "passSuccess": "Imefanikiwa",
+    "passSuccessTxt": "PIN imefanikiwa kubadilishwa",
+    "payHereWithLeu": "Lipa hapa na Leu",
+    "payment": "Malipo",
+    "paymentDoYouWantToProceed": "Endelea a malipo?",
+    "paymentError": "Kuna hitilafu kwenye muamala wa malipo",
+    "paymentFinished": "Malipo yamekamilika",
+    "paymentSubmitting": "Malipo yanawasilishwa...",
+    "personalKey": "Ufunguo binafsi",
+    "personalKeyEnter": "Tafadhali ingiza funguo zako za kibinafsi (maneno 12) ili kuingiza akaunti mpya.",
+    "pinHint": "Utahitaji PIN hii kwa ajili ya miamala na kuongeza akaunti mpya.",
+    "pinInfo": "PIN inapaswa kuwa na angalau tarakimu 4. Ikiwa PIN imepotea, hakuna chaguo la kurejesha akaunti isipokuwa ikiwa ulifanya backup kupitia ukurasa wa wasifu..",
+    "pinSecure": "Linda akaunti yako kwa kutumia PIN.",
+    "pleaseCommunityChoose": "Tafadhali chagua jamii",
+    "pleaseConfirmYourNewPin": "Hakikisha PIN mpya",
+    "preview": "Onyesha",
+    "print": "Chapisha",
+    "proposal": "Pendekezo",
+    "proposalAye": "Aye",
+    "proposalNay": "Nay",
+    "proposalSuperseded": "Iliyopita",
+    "proposalRejected": "Imekaataliwa",
+    "proposalCancelled": "Imwesitishwa",
+    "proposalEnacted": "Imetekelezwa",
+    "proposalApproved": "Imepitishwa",
+    "proposalTurnout": "Mahudhurio",
+    "proposalHowVote": "Unapigaje kura?",
+    "proposalsEmpty": "Hakuna mapendekezo",
+    "proposalsUpForVote": "Mapendekezo yanayopigiwa kura",
+    "proposalsPast": "Mapendekezo yaliyopita",
+    "proposalVote": "Piga kura",
+    "proposalVoted": "Imepigiwa kura",
+    "proposalOngoingUntil": "Inaendelea hadi",
+    "proposalConfirmingUntil": "Inadhibitisha hadi",
+    "proposalPendingEnactmentAt": "Inasubiri utekeleazaji kwenye",
+    "qrScan": "Skani QR",
+    "qrScanHintAccount": "Muombe mpokeaji askani QR kwenye app ya Encointer.",
+    "rawSeed": "Mbegu za kriptografia",
+    "receive": "Pokea",
+    "received": "Imepokelewa",
+    "receiverAccount": "Akaunti ya mpokeaji:",
+    "redeemFailure": "Kulikuwa na hitilafu wakati wa kutumia vocha. Sababu:",
+    "redeemSuccess": "Umefaikiwa kutumia vocha.",
+    "redeemVoucher": "Tumia vocha",
+    "registeringPhaseReminderContent": "Usajili wa kikao kijacho umeanza.",
+    "registeringPhaseReminderTitle": "Jisajili sasa!",
+    "registerParticipantNotificationBody": "Utapokea ukumbusho siku moja kabla.",
+    "registerParticipantNotificationTitle": "Umejisajili kwa ajili ya kikao kijacho!",
+    "registerUntil": "Jisajili kabla",
+    "remainingNewbieTicketsAsBootStrapper": "Tiketi za wanachama wapya/wageni zilizobaki kama mwanachama anzilishi:",
+    "remainingNewbieTicketsAsReputable": "Tiketi za wanachama wageni zilizobaki kama mwanachama hai:",
+    "reputableContent": "Umetumia sifa yako kupata kiti kilicho hakikishiwa. Tahadhari: Ikiwa utajiandikisha lakini usijitokeze katika mzunguko, utarudi kuwa mwanachama mpya/mgeni tena..",
+    "reputableTitle": "Umejisajili kama mwenye mwanachama hai - kiti chako kimehakikishiwa",
+    "reputationAlreadyCommittedTitle": "Hadhi yako imetumika",
+    "reputationAlreadyCommittedContent": "Umeshatumia hadhi yako kukamua kisima cha Kusama.",
+    "reputationOverall": "Hadhi yako kwa ujumla",
+    "restartGathering": "Anzisha mkutano tena",
+    "retry": "Jaribu tena",
+    "rewardsAlreadyIssuedErrorBody": "Mhudhuriaji mwingine ameanzisha malipo kwa ajili ya mkusanyiko huu. Unapaswa kuwa umepokea mapato yako tayari..",
+    "rewardsAlreadyIssuedErrorTitle": "Zawadi tayari zimetolewa",
+    "scan": "Skani",
+    "scanDescriptionForMeetup": "Kila muhudhuriaji lazima askani na askaniwe na kila mtu.",
+    "scanOthers": "Waskani wengine",
+    "scanQrCodeOnTheLeft": "2. Skani code ya QR \non the left",
+    "sendLink": "Tuma link",
+    "sent": "Imetumwa",
+    "setting": "Mipangilio",
+    "settingLang": "Lugha",
+    "settingLangAuto": "Gundua kiotomatiki",
+    "settingNetwork": "Chagua Wallet",
+    "settingNode": "Nodi ya mbali",
+    "settingNodeList": "Nodi zilizopo",
+    "settingPrefix": "Alama za mwanzoni za anuani yako",
+    "settingPrefixList": "Available Prefixes",
+    "share": "Shea",
+    "shareInvoice": "Shea Ankara",
+    "shareLinkHint": "Au unaweza kushea link:",
+    "showRouteMeetupLocation": "Onyesha ruti.",
+    "startGathering": "Azisha mkutano",
+    "submittedFaucetDripTitle": "Zawadi za kisima",
+    "submittedFaucetDripBody": "Umefanikiwa kupata zawadi zako za kisima.",
+    "success": "Umefanikiwa",
+    "switchAccount": "Badilisha akaunti",
+    "switchCommunity": "Badilisha Jamii",
+    "thankYou": "Asante",
+    "title": "Profaili",
+    "to": "Kwa",
+    "today": "Leo",
+    "tomorrow": "Kesho",
+    "transactionError": "Hitilafu kwenye muamala",
+    "transactionQueuedOffline": "Programu haijaunganishwa na blockchain. Muamala uliowekwa foleni (itatumwa kiotomatiki wakati itakapounganishwa tena).",
+    "transfer": "Tuma",
+    "transferHistory": "Miamala",
+    "transferHistoryEnd": "Kupakia miamala ya zamani haijasapotiwa bado",
+    "transferHistoryTop": "Inaweza kuchukua hadi sekunde 30 kwa ajili ya uhamishaji kuonekana hapa",
+    "txBroadcast": "Muamala umetumwa.",
+    "txError": "Kuna hitilafu kwenye muamala",
+    "txInBlock": "Muamala uko kwenye block.",
+    "txQueued": "Muamala upo kwenye foleni",
+    "txQueuedOffline": "Haupo online. Miamala itatumwa punde tu urudipo online.",
+    "txReady": "Muamala upo tayari.",
+    "txTooLowPriorityErrorBody": "Hitilafu ya kipaumbele ya kiufundi ya muamala. Hii inaweza kutokea ikiwa utagusa mara mbili kwa haraka kwenye kitufe cha kutuma. Tafadhali subiri kwa sekunde chache.",
+    "txTooLowPriorityErrorTitle": "Hitilafu ya kipaumbele ya muamala",
+    "unknown": "Haijulikani",
+    "unknownAccount": "Akaunti haijulikani",
+    "unknownError": "Kuna hitilafu imetokea. Tafadhali kagua muunganisho wako wa intaneti halafu ujaribu tena.",
+    "unregister": "Jiondoe",
+    "unregisterDialogTitle": "Unataka kufuta usajili wako wa kikao kijacho?",
+    "unregisterParticipantNotificationBody": "Usajili wako kwa mzunguko ujao umefutwa. Ikiwa utabadilisha maoni yako, unaweza kujisajili tena.",
+    "unregisterParticipantNotificationTitle": "Usajili umefutwa",
+    "updatingAppState": "Inaboresha hali ya programu...",
+    "value": "Thamani",
+    "votesNotDependableErrorBody": "Nusu au chini ya washiriki walioteuliwa ndio walithibitishwa kwa mkusanyiko huu. Inaweza pia kuwa baadhi ya wahudhuriaji hawajaweka uthibitisho wao bado. Hii inazuia malipo ya mapema, na unahitaji kusubiri kwa masaa 48.",
+    "votesNotDependableErrorTitle": "Kura hazitegemeani",
+    "voucher": "Vocha",
+    "voucherBalance": "Salio la Vocha",
+    "voucherBalanceTooLow": "Vocha haina mafao ya kutosha kutumiwa.",
+    "weHopeToSeeYouAtTheNextGathering": "Tuna matumaini kukuona kwenye kikao kijacho.",
+    "wrongPin": "PIN sio sahihi",
+    "wrongPinHint": "Imeshindwa kuifungua akaunti, tafadhali cheki PIN.",
+    "youAreNotRegisteredPleaseRegisterNextTime": "Hujawekwa kwenye mzunguko huu. Tafadhali jiunge na mzunguko ujao ili upokee mapato yako ya jamii.",
+    "yourNewPin": "PIN mpya.",
+    "unlockAccount": "Fungua akaunti {currentAccountName} na PIN",
+    "@unlockAccount": {
+        "placeholders": {
+            "currentAccountName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+    "errorMessageWithStatusCode": "Kuna kitu hakijaenda sawa, tafadhali jaribu tena! StatusCode: {errorText}",
+    "@errorMessageWithStatusCode": {
+        "placeholders": {
+            "errorText": {
+                "type": "String",
+                "example": "Format exception"
+            }
+        }
+    },
+    "yourBalanceFor": "Salio lako, {accountName}",
+    "@yourBalanceFor": {
+        "placeholders": {
+            "accountName": {
+                "type": "String",
+                "example": "Format exception"
+            }
+        }
+    },
+    "incomingConfirmed": "Salio la {amount} {cidSymbol} Linaloingia kwa {accountName} imethibitishwa",
+    "@incomingConfirmed": {
+        "placeholders": {
+            "amount": {
+                "type": "num",
+                "example": "0.1"
+            },
+            "cidSymbol": {
+                "type": "String",
+                "example": "#"
+            },
+            "accountName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+    "voucherDifferentNetworkAndCommunity": "Vocha hii ni ya mtandao tofauti. Je, unataka kubadilisha mtandao kwenda {network} na {community}? Unaweza kubadilisha mtandao chini ya Wasifu > Developer mode",
+    "@voucherDifferentNetworkAndCommunity": {
+        "placeholders": {
+            "network": {
+                "type": "String",
+                "example": "Dev-Gesell"
+            },
+            "community": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "voucherDifferentCommunity": "Vocha hii ni ya jamii tofauti. Je, unataka kubadilisha jamii kwenda {community}?",
+    "@voucherDifferentCommunity": {
+        "placeholders": {
+            "community": {
+                "type": "String",
+                "example": "Leu"
+            }
+        }
+    },
+    "doYouWantToRedeemThisVoucher": "Je, unataka kutumia vocha hii kwa {accountName}?",
+    "@doYouWantToRedeemThisVoucher": {
+        "placeholders": {
+            "accountName": {
+                "type": "String",
+                "example": "Alice"
+            }
+        }
+    },
+    "claimsSubmitN": "Tuma madai {count}",
+    "@claimsSubmitN": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "claimsScanned": "Umeskani madai {amount}",
+    "@claimsScanned": {
+        "placeholders": {
+            "amount": {
+                "type": "num",
+                "example": "0.1"
+            }
+        }
+    },
+    "claimsScannedNOfM": "Madai yaliyoskaniwa {scannedCount} / madai {totalCount}",
+    "@claimsScannedNOfM": {
+        "placeholders": {
+            "scannedCount": {
+                "type": "int",
+                "example": "2"
+            },
+            "totalCount": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "claimsSubmitDetail": "Inatuma madai {amount} kwa mkusanyiko wa hivi karibuni",
+    "@claimsSubmitDetail": {
+        "placeholders": {
+            "amount": {
+                "type": "num",
+                "example": "0.1"
+            }
+        }
+    },
+    "youAreRegisteredAs": "Umejisajili kwenye kikao kijacho kama {participantType}.",
+    "@youAreRegisteredAs": {
+        "placeholders": {
+            "participantType": {
+                "type": "String",
+                "example": "Newbie"
+            }
+        }
+    },
+    "youAreAssignedToAGatheringWithNParticipants": "Umewekwa kwenye mkusanyiko na watu {participantsCount}",
+    "@youAreAssignedToAGatheringWithNParticipants": {
+        "placeholders": {
+            "participantsCount": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "successfullySentNAttestations": "Umefanikiwa kuwasilisha uthibitisho wa watu {participantsCount} wengine.",
+    "@successfullySentNAttestations": {
+        "placeholders": {
+            "participantsCount": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "tokenSend": "Tuma {symbol}",
+    "@tokenSend": {
+        "placeholders": {
+            "symbol": {
+                "type": "String",
+                "example": "#"
+            }
+        }
+    },
+    "communityWithName": "Jamii ya {name}",
+    "@communityWithName": {
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
+    "verifyAuthTitle": "Tafadhali thibitisha {useBioAuth, select, true{utambulisho wako} false{PIN yako} other{ }}.",
+    "@verifyAuthTitle": {
+        "placeholders": {
+            "useBioAuth": {
+                "type": "String",
+                "example": "true"
+            }
+        }
+    },
+    "offersForCommunity": "Ofa za {value}",
+    "@offersForCommunity": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
+    "proposalApprovalThreshold": "Kiwango cha Uhakiki: {percentage}%",
+    "@proposalApprovalThreshold": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalPassed": "Imepita kwa {percentage}% Aye",
+    "@proposalPassed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalFailed": "imefeli kwa {percentage}% Aye",
+    "@proposalFailed": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsPassing": "Kwa sasa inapita kwa {percentage}% Aye",
+    "@proposalIsPassing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalIsFailing": "Kwa sasa inafeli kwa {percentage}% Aye",
+    "@proposalIsFailing": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalUpdateNominalIncome": "Sahisha mapato ya jamii kuwa {value} {currency}",
+    "@proposalUpdateNominalIncome": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "currency": {
+                "type": "String",
+                "example": "LEU"
+            }
+        }
+    },
+    "proposalUpdateDemurrage": "Sasisha demurrage kuwa {value}%/mwezi",
+    "@proposalUpdateDemurrage": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalSupersededBy": "Imetanguliwa na: {id}",
+    "@proposalSupersededBy": {
+        "placeholders": {
+            "id": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    }
+}
