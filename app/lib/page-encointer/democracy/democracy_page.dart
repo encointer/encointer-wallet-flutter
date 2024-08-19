@@ -16,7 +16,8 @@ import 'package:encointer_wallet/l10n/l10.dart';
 
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
-import 'package:ew_polkadart/ew_polkadart.dart' show Approved, Cancelled, Confirming, Enacted, Ongoing, Proposal, Tally;
+import 'package:ew_polkadart/ew_polkadart.dart'
+    show Approved, Confirming, Enacted, Ongoing, Proposal, Tally, Rejected, SupersededBy;
 
 class DemocracyPage extends StatefulWidget {
   const DemocracyPage({super.key});
@@ -121,7 +122,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
       final chosenCid = store.encointer.chosenCid!;
       final pastProposals = proposalsForCommunity(chosenCid)
           .where((e) =>
-              e.value.state.runtimeType == Cancelled ||
+              e.value.state.runtimeType == Rejected ||
+              e.value.state.runtimeType == SupersededBy ||
               e.value.state.runtimeType == Enacted ||
               e.value.state.runtimeType == Approved)
           .toList();

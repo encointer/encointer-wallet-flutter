@@ -14,7 +14,7 @@ description: EncointerWallet made with Flutter.
 
 # bump version already while working on new release, bumping build number at the same time
 # bump build number even more, if needed to clarify what's deployed
-version: 1.14.1+887
+version: 1.14.3+889
 
 publish_to: none
 
@@ -80,6 +80,8 @@ dependencies:
   pointycastle: ^3.7.3
   connectivity_plus: ^5.0.2
   timezone: ^0.9.2
+  ew_endpoint_manager:
+    path: ../packages/endpoint_manager
   ew_encointer_utils:
     path: ../packages/ew_encointer_utils/
   ew_storage:

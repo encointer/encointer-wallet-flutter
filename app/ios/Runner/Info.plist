@@ -23,6 +23,7 @@
 			<string>de</string>
 			<string>fr</string>
 			<string>ru</string>
+			<string>sw</string>
 		</array>
 		<!-- localization -->
 		<key>CFBundleName</key>

@@ -113,8 +113,8 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
     await chain.loadCache();
 
     // need to call this after settings was initialized
-    final networkInfo = settings.endpoint.info;
-    await loadOrInitEncointerCache(networkInfo!);
+    final networkInfo = settings.currentNetwork.id();
+    await loadOrInitEncointerCache(networkInfo);
 
     storeIsReady = true;
   }
@@ -136,7 +136,7 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
 
   /// Returns the network dependant cache key.
   String getCacheKey(String key) {
-    return '${settings.endpoint.info}_$key';
+    return '${settings.currentNetwork.id()}_$key';
   }
 
   /// Returns the cache key for the encointer-storage.
@@ -145,7 +145,8 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
   }
 
   Future<bool> purgeEncointerCache(String networkInfo) async {
-    return localStorage.removeKey(encointerCacheKey(networkInfo));
+    await encointer.setChosenCid();
+    return localStorage.removeObject(encointerCacheKey(networkInfo));
   }
 
   Future<void> loadOrInitEncointerCache(String networkInfo) async {
@@ -229,7 +230,7 @@ abstract class _AppStore<S extends SecureStorageInterface, L extends LegacyStora
 
     if (pubKey != null) {
       // Todo: #1072
-      final address = AddressUtils.pubKeyHexToAddress(pubKey, prefix: settings.endpoint.ss58!);
+      final address = AddressUtils.pubKeyHexToAddress(pubKey, prefix: settings.currentNetwork.ss58());
       Log.d('setCurrentAccount: new current account address: $address', '_AppStore');
       await encointer.initializeUninitializedStores(address);
     }

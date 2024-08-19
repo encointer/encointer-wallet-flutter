@@ -201,7 +201,8 @@
     "proposal": "Proposal",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
-    "proposalCancelled": "Cancelled",
+    "proposalSuperseded": "Superseded",
+    "proposalRejected": "Rejected",
     "proposalEnacted": "Enacted",
     "proposalApproved": "Approved",
     "proposalTurnout": "Turnout",
@@ -543,6 +544,15 @@
             "value": {
                 "type": "String",
                 "example": "0.00"
+            }
+        }
+    },
+    "proposalSupersededBy": "Superseded by: {id}",
+    "@proposalSupersededBy": {
+        "placeholders": {
+            "id": {
+                "type": "String",
+                "example": "6"
             }
         }
     }

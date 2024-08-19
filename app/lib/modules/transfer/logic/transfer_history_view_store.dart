@@ -49,7 +49,7 @@ abstract class _TransferHistoryViewStoreBase with Store {
     try {
       final address = AddressUtils.pubKeyHexToAddress(
         pubKey,
-        prefix: appStore.settings.endpoint.ss58 ?? 42,
+        prefix: appStore.settings.currentNetwork.ss58(),
       );
 
       final response = await ewHttp.getTypeList<Transaction>(
@@ -58,7 +58,10 @@ abstract class _TransferHistoryViewStoreBase with Store {
       );
 
       response.fold(
-        (l) => fetchStatus = FetchStatus.error,
+        (l) {
+          fetchStatus = FetchStatus.error;
+          throw l;
+        },
         (r) {
           fetchStatus = FetchStatus.success;
           transactions = r.reversed.toList();
