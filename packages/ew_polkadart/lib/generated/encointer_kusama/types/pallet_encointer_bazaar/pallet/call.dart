@@ -4,7 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i4;
 
-import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart'
+    as _i3;
 
 /// Contains a variant per dispatchable extrinsic that this pallet has.
 abstract class Call {
@@ -140,7 +141,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as DeleteOffering).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -160,12 +162,12 @@ class $CallCodec with _i1.Codec<Call> {
       case DeleteOffering:
         return (value as DeleteOffering)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
 
-/// See [`Pallet::create_business`].
 class CreateBusiness extends Call {
   const CreateBusiness({
     required this.cid,
@@ -235,7 +237,6 @@ class CreateBusiness extends Call {
       );
 }
 
-/// See [`Pallet::update_business`].
 class UpdateBusiness extends Call {
   const UpdateBusiness({
     required this.cid,
@@ -305,7 +306,6 @@ class UpdateBusiness extends Call {
       );
 }
 
-/// See [`Pallet::delete_business`].
 class DeleteBusiness extends Call {
   const DeleteBusiness({required this.cid});
 
@@ -350,7 +350,6 @@ class DeleteBusiness extends Call {
   int get hashCode => cid.hashCode;
 }
 
-/// See [`Pallet::create_offering`].
 class CreateOffering extends Call {
   const CreateOffering({
     required this.cid,
@@ -420,7 +419,6 @@ class CreateOffering extends Call {
       );
 }
 
-/// See [`Pallet::update_offering`].
 class UpdateOffering extends Call {
   const UpdateOffering({
     required this.cid,
@@ -503,7 +501,6 @@ class UpdateOffering extends Call {
       );
 }
 
-/// See [`Pallet::delete_offering`].
 class DeleteOffering extends Call {
   const DeleteOffering({
     required this.cid,

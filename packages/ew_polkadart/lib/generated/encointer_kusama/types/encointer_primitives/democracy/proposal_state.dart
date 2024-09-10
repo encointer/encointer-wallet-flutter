@@ -94,17 +94,18 @@ class $ProposalStateCodec with _i1.Codec<ProposalState> {
       case Approved:
         (value as Approved).encodeTo(output);
         break;
-      case Rejected:
-        (value as Rejected).encodeTo(output);
-        break;
       case SupersededBy:
         (value as SupersededBy).encodeTo(output);
+        break;
+      case Rejected:
+        (value as Rejected).encodeTo(output);
         break;
       case Enacted:
         (value as Enacted).encodeTo(output);
         break;
       default:
-        throw Exception('ProposalState: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'ProposalState: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -117,14 +118,15 @@ class $ProposalStateCodec with _i1.Codec<ProposalState> {
         return (value as Confirming)._sizeHint();
       case Approved:
         return 1;
-      case Rejected:
-        return 1;
       case SupersededBy:
+        return (value as SupersededBy)._sizeHint();
+      case Rejected:
         return 1;
       case Enacted:
         return 1;
       default:
-        throw Exception('ProposalState: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'ProposalState: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -220,13 +222,19 @@ class SupersededBy extends ProposalState {
     return SupersededBy(id: _i1.U128Codec.codec.decode(input));
   }
 
-  /// Moment
+  /// ProposalIdType
   final BigInt id;
 
   @override
   Map<String, Map<String, BigInt>> toJson() => {
         'SupersededBy': {'id': id}
       };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i1.U128Codec.codec.sizeHint(id);
+    return size;
+  }
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(

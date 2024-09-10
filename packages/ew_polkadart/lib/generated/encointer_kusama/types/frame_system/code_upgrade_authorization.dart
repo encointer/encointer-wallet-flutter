@@ -22,7 +22,8 @@ class CodeUpgradeAuthorization {
   /// bool
   final bool checkVersion;
 
-  static const $CodeUpgradeAuthorizationCodec codec = $CodeUpgradeAuthorizationCodec();
+  static const $CodeUpgradeAuthorizationCodec codec =
+      $CodeUpgradeAuthorizationCodec();
 
   _i3.Uint8List encode() {
     return codec.encode(this);

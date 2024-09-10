@@ -9,7 +9,8 @@ import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i10;
 import '../types/encointer_primitives/bazaar/business_data.dart' as _i4;
 import '../types/encointer_primitives/bazaar/business_identifier.dart' as _i5;
 import '../types/encointer_primitives/bazaar/offering_data.dart' as _i6;
-import '../types/encointer_primitives/communities/community_identifier.dart' as _i2;
+import '../types/encointer_primitives/communities/community_identifier.dart'
+    as _i2;
 import '../types/pallet_encointer_bazaar/pallet/call.dart' as _i11;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 
@@ -18,8 +19,10 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32, _i4.BusinessData> _businessRegistry =
-      const _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32, _i4.BusinessData>(
+  final _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32,
+          _i4.BusinessData> _businessRegistry =
+      const _i1.StorageDoubleMap<_i2.CommunityIdentifier, _i3.AccountId32,
+          _i4.BusinessData>(
     prefix: 'EncointerBazaar',
     storage: 'BusinessRegistry',
     valueCodec: _i4.BusinessData.codec,
@@ -27,7 +30,8 @@ class Queries {
     hasher2: _i1.StorageHasher.blake2b128Concat(_i3.AccountId32Codec()),
   );
 
-  final _i1.StorageDoubleMap<_i5.BusinessIdentifier, int, _i6.OfferingData> _offeringRegistry =
+  final _i1.StorageDoubleMap<_i5.BusinessIdentifier, int, _i6.OfferingData>
+      _offeringRegistry =
       const _i1.StorageDoubleMap<_i5.BusinessIdentifier, int, _i6.OfferingData>(
     prefix: 'EncointerBazaar',
     storage: 'OfferingRegistry',
@@ -126,7 +130,6 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::create_business`].
   _i10.RuntimeCall createBusiness({
     required _i2.CommunityIdentifier cid,
     required List<int> url,
@@ -138,7 +141,6 @@ class Txs {
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::update_business`].
   _i10.RuntimeCall updateBusiness({
     required _i2.CommunityIdentifier cid,
     required List<int> url,
@@ -150,13 +152,11 @@ class Txs {
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::delete_business`].
   _i10.RuntimeCall deleteBusiness({required _i2.CommunityIdentifier cid}) {
     final _call = _i11.Call.values.deleteBusiness(cid: cid);
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::create_offering`].
   _i10.RuntimeCall createOffering({
     required _i2.CommunityIdentifier cid,
     required List<int> url,
@@ -168,7 +168,6 @@ class Txs {
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::update_offering`].
   _i10.RuntimeCall updateOffering({
     required _i2.CommunityIdentifier cid,
     required int oid,
@@ -182,7 +181,6 @@ class Txs {
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::delete_offering`].
   _i10.RuntimeCall deleteOffering({
     required _i2.CommunityIdentifier cid,
     required int oid,

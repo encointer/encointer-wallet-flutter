@@ -211,7 +211,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as CancelRetryNamed).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -239,12 +240,13 @@ class $CallCodec with _i1.Codec<Call> {
       case CancelRetryNamed:
         return (value as CancelRetryNamed)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
 
-/// See [`Pallet::schedule`].
+/// Anonymously schedule a task.
 class Schedule extends Call {
   const Schedule({
     required this.when,
@@ -256,7 +258,8 @@ class Schedule extends Call {
   factory Schedule._decode(_i1.Input input) {
     return Schedule(
       when: _i1.U32Codec.codec.decode(input),
-      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic:
+          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -350,7 +353,7 @@ class Schedule extends Call {
       );
 }
 
-/// See [`Pallet::cancel`].
+/// Cancel an anonymously scheduled task.
 class Cancel extends Call {
   const Cancel({
     required this.when,
@@ -415,7 +418,7 @@ class Cancel extends Call {
       );
 }
 
-/// See [`Pallet::schedule_named`].
+/// Schedule a named task.
 class ScheduleNamed extends Call {
   const ScheduleNamed({
     required this.id,
@@ -429,7 +432,8 @@ class ScheduleNamed extends Call {
     return ScheduleNamed(
       id: const _i1.U8ArrayCodec(32).decode(input),
       when: _i1.U32Codec.codec.decode(input),
-      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic:
+          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -537,7 +541,7 @@ class ScheduleNamed extends Call {
       );
 }
 
-/// See [`Pallet::cancel_named`].
+/// Cancel a named scheduled task.
 class CancelNamed extends Call {
   const CancelNamed({required this.id});
 
@@ -586,7 +590,7 @@ class CancelNamed extends Call {
   int get hashCode => id.hashCode;
 }
 
-/// See [`Pallet::schedule_after`].
+/// Anonymously schedule a task after a delay.
 class ScheduleAfter extends Call {
   const ScheduleAfter({
     required this.after,
@@ -598,7 +602,8 @@ class ScheduleAfter extends Call {
   factory ScheduleAfter._decode(_i1.Input input) {
     return ScheduleAfter(
       after: _i1.U32Codec.codec.decode(input),
-      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic:
+          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -692,7 +697,7 @@ class ScheduleAfter extends Call {
       );
 }
 
-/// See [`Pallet::schedule_named_after`].
+/// Schedule a named task after a delay.
 class ScheduleNamedAfter extends Call {
   const ScheduleNamedAfter({
     required this.id,
@@ -706,7 +711,8 @@ class ScheduleNamedAfter extends Call {
     return ScheduleNamedAfter(
       id: const _i1.U8ArrayCodec(32).decode(input),
       after: _i1.U32Codec.codec.decode(input),
-      maybePeriodic: const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
+      maybePeriodic:
+          const _i1.OptionCodec<_i3.Tuple2<int, int>>(_i3.Tuple2Codec<int, int>(
         _i1.U32Codec.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -814,7 +820,18 @@ class ScheduleNamedAfter extends Call {
       );
 }
 
-/// See [`Pallet::set_retry`].
+/// Set a retry configuration for a task so that, in case its scheduled run fails, it will
+/// be retried after `period` blocks, for a total amount of `retries` retries or until it
+/// succeeds.
+///
+/// Tasks which need to be scheduled for a retry are still subject to weight metering and
+/// agenda space, same as a regular task. If a periodic task fails, it will be scheduled
+/// normally while the task is retrying.
+///
+/// Tasks scheduled as a result of a retry for a periodic task are unnamed, non-periodic
+/// clones of the original task. Their retry configuration will be derived from the
+/// original task's configuration, but will have a lower value for `remaining` than the
+/// original `total_retries`.
 class SetRetry extends Call {
   const SetRetry({
     required this.task,
@@ -894,7 +911,10 @@ class SetRetry extends Call {
         this,
         other,
       ) ||
-      other is SetRetry && other.task == task && other.retries == retries && other.period == period;
+      other is SetRetry &&
+          other.task == task &&
+          other.retries == retries &&
+          other.period == period;
 
   @override
   int get hashCode => Object.hash(
@@ -904,7 +924,18 @@ class SetRetry extends Call {
       );
 }
 
-/// See [`Pallet::set_retry_named`].
+/// Set a retry configuration for a named task so that, in case its scheduled run fails, it
+/// will be retried after `period` blocks, for a total amount of `retries` retries or until
+/// it succeeds.
+///
+/// Tasks which need to be scheduled for a retry are still subject to weight metering and
+/// agenda space, same as a regular task. If a periodic task fails, it will be scheduled
+/// normally while the task is retrying.
+///
+/// Tasks scheduled as a result of a retry for a periodic task are unnamed, non-periodic
+/// clones of the original task. Their retry configuration will be derived from the
+/// original task's configuration, but will have a lower value for `remaining` than the
+/// original `total_retries`.
 class SetRetryNamed extends Call {
   const SetRetryNamed({
     required this.id,
@@ -987,7 +1018,7 @@ class SetRetryNamed extends Call {
       );
 }
 
-/// See [`Pallet::cancel_retry`].
+/// Removes the retry configuration of a task.
 class CancelRetry extends Call {
   const CancelRetry({required this.task});
 
@@ -1048,7 +1079,7 @@ class CancelRetry extends Call {
   int get hashCode => task.hashCode;
 }
 
-/// See [`Pallet::cancel_retry_named`].
+/// Cancel the retry configuration of a named task.
 class CancelRetryNamed extends Call {
   const CancelRetryNamed({required this.id});
 

@@ -15,7 +15,8 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.AccountId32> _key = const _i1.StorageValue<_i2.AccountId32>(
+  final _i1.StorageValue<_i2.AccountId32> _key =
+      const _i1.StorageValue<_i2.AccountId32>(
     prefix: 'Sudo',
     storage: 'Key',
     valueCodec: _i2.AccountId32Codec(),
@@ -44,13 +45,17 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::sudo`].
+  /// Authenticates the sudo key and dispatches a function call with `Root` origin.
   _i5.RuntimeCall sudo({required _i5.RuntimeCall call}) {
     final _call = _i6.Call.values.sudo(call: call);
     return _i5.RuntimeCall.values.sudo(_call);
   }
 
-  /// See [`Pallet::sudo_unchecked_weight`].
+  /// Authenticates the sudo key and dispatches a function call with `Root` origin.
+  /// This function does not check the weight of the call, and instead allows the
+  /// Sudo user to specify the weight of the call.
+  ///
+  /// The dispatch origin for this call must be _Signed_.
   _i5.RuntimeCall sudoUncheckedWeight({
     required _i5.RuntimeCall call,
     required _i7.Weight weight,
@@ -62,13 +67,17 @@ class Txs {
     return _i5.RuntimeCall.values.sudo(_call);
   }
 
-  /// See [`Pallet::set_key`].
+  /// Authenticates the current sudo key and sets the given AccountId (`new`) as the new sudo
+  /// key.
   _i5.RuntimeCall setKey({required _i8.MultiAddress new_}) {
     final _call = _i6.Call.values.setKey(new_: new_);
     return _i5.RuntimeCall.values.sudo(_call);
   }
 
-  /// See [`Pallet::sudo_as`].
+  /// Authenticates the sudo key and dispatches a function call with `Signed` origin from
+  /// a given account.
+  ///
+  /// The dispatch origin for this call must be _Signed_.
   _i5.RuntimeCall sudoAs({
     required _i8.MultiAddress who,
     required _i5.RuntimeCall call,
@@ -80,7 +89,9 @@ class Txs {
     return _i5.RuntimeCall.values.sudo(_call);
   }
 
-  /// See [`Pallet::remove_key`].
+  /// Permanently removes the sudo key.
+  ///
+  /// **This cannot be un-done.**
   _i5.RuntimeCall removeKey() {
     final _call = _i6.Call.values.removeKey();
     return _i5.RuntimeCall.values.sudo(_call);

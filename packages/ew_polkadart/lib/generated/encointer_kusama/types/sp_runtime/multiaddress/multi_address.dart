@@ -98,7 +98,8 @@ class $MultiAddressCodec with _i1.Codec<MultiAddress> {
         (value as Address20).encodeTo(output);
         break;
       default:
-        throw Exception('MultiAddress: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'MultiAddress: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -116,7 +117,8 @@ class $MultiAddressCodec with _i1.Codec<MultiAddress> {
       case Address20:
         return (value as Address20)._sizeHint();
       default:
-        throw Exception('MultiAddress: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'MultiAddress: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

@@ -22,7 +22,8 @@ class DispatchErrorWithPostInfo {
   /// DispatchError
   final _i3.DispatchError error;
 
-  static const $DispatchErrorWithPostInfoCodec codec = $DispatchErrorWithPostInfoCodec();
+  static const $DispatchErrorWithPostInfoCodec codec =
+      $DispatchErrorWithPostInfoCodec();
 
   _i4.Uint8List encode() {
     return codec.encode(this);
@@ -39,7 +40,9 @@ class DispatchErrorWithPostInfo {
         this,
         other,
       ) ||
-      other is DispatchErrorWithPostInfo && other.postInfo == postInfo && other.error == error;
+      other is DispatchErrorWithPostInfo &&
+          other.postInfo == postInfo &&
+          other.error == error;
 
   @override
   int get hashCode => Object.hash(
@@ -48,7 +51,8 @@ class DispatchErrorWithPostInfo {
       );
 }
 
-class $DispatchErrorWithPostInfoCodec with _i1.Codec<DispatchErrorWithPostInfo> {
+class $DispatchErrorWithPostInfoCodec
+    with _i1.Codec<DispatchErrorWithPostInfo> {
   const $DispatchErrorWithPostInfoCodec();
 
   @override

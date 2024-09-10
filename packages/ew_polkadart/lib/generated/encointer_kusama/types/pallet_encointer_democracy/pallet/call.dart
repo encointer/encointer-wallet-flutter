@@ -4,7 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
-import '../../encointer_primitives/communities/community_identifier.dart' as _i6;
+import '../../encointer_primitives/communities/community_identifier.dart'
+    as _i6;
 import '../../encointer_primitives/democracy/proposal_action.dart' as _i3;
 import '../../encointer_primitives/democracy/vote.dart' as _i4;
 import '../../tuples.dart' as _i5;
@@ -92,7 +93,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as UpdateProposalState).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -106,20 +108,21 @@ class $CallCodec with _i1.Codec<Call> {
       case UpdateProposalState:
         return (value as UpdateProposalState)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
 
-/// See [`Pallet::submit_proposal`].
 class SubmitProposal extends Call {
   const SubmitProposal({required this.proposalAction});
 
   factory SubmitProposal._decode(_i1.Input input) {
-    return SubmitProposal(proposalAction: _i3.ProposalAction.codec.decode(input));
+    return SubmitProposal(
+        proposalAction: _i3.ProposalAction.codec.decode(input));
   }
 
-  /// ProposalAction
+  /// ProposalAction<T::AccountId, BalanceOf<T>>
   final _i3.ProposalAction proposalAction;
 
   @override
@@ -156,7 +159,6 @@ class SubmitProposal extends Call {
   int get hashCode => proposalAction.hashCode;
 }
 
-/// See [`Pallet::vote`].
 class Vote extends Call {
   const Vote({
     required this.proposalId,
@@ -168,8 +170,9 @@ class Vote extends Call {
     return Vote(
       proposalId: _i1.U128Codec.codec.decode(input),
       vote: _i4.Vote.codec.decode(input),
-      reputations: const _i1.SequenceCodec<_i5.Tuple2<_i6.CommunityIdentifier, int>>(
-          _i5.Tuple2Codec<_i6.CommunityIdentifier, int>(
+      reputations:
+          const _i1.SequenceCodec<_i5.Tuple2<_i6.CommunityIdentifier, int>>(
+              _i5.Tuple2Codec<_i6.CommunityIdentifier, int>(
         _i6.CommunityIdentifier.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -204,7 +207,8 @@ class Vote extends Call {
     size = size + _i1.U128Codec.codec.sizeHint(proposalId);
     size = size + _i4.Vote.codec.sizeHint(vote);
     size = size +
-        const _i1.SequenceCodec<_i5.Tuple2<_i6.CommunityIdentifier, int>>(_i5.Tuple2Codec<_i6.CommunityIdentifier, int>(
+        const _i1.SequenceCodec<_i5.Tuple2<_i6.CommunityIdentifier, int>>(
+            _i5.Tuple2Codec<_i6.CommunityIdentifier, int>(
           _i6.CommunityIdentifier.codec,
           _i1.U32Codec.codec,
         )).sizeHint(reputations);
@@ -224,7 +228,8 @@ class Vote extends Call {
       vote,
       output,
     );
-    const _i1.SequenceCodec<_i5.Tuple2<_i6.CommunityIdentifier, int>>(_i5.Tuple2Codec<_i6.CommunityIdentifier, int>(
+    const _i1.SequenceCodec<_i5.Tuple2<_i6.CommunityIdentifier, int>>(
+        _i5.Tuple2Codec<_i6.CommunityIdentifier, int>(
       _i6.CommunityIdentifier.codec,
       _i1.U32Codec.codec,
     )).encodeTo(
@@ -255,7 +260,6 @@ class Vote extends Call {
       );
 }
 
-/// See [`Pallet::update_proposal_state`].
 class UpdateProposalState extends Call {
   const UpdateProposalState({required this.proposalId});
 

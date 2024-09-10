@@ -25,7 +25,7 @@ class Proposal {
   /// CeremonyIndexType
   final int startCindex;
 
-  /// ProposalAction
+  /// ProposalAction<AccountId, Balance>
   final _i2.ProposalAction action;
 
   /// ProposalState<Moment>

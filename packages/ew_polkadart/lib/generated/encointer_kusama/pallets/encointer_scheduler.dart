@@ -6,7 +6,8 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i6;
-import '../types/encointer_primitives/scheduler/ceremony_phase_type.dart' as _i3;
+import '../types/encointer_primitives/scheduler/ceremony_phase_type.dart'
+    as _i3;
 import '../types/pallet_encointer_scheduler/pallet/call.dart' as _i7;
 
 class Queries {
@@ -14,7 +15,8 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<int> _currentCeremonyIndex = const _i1.StorageValue<int>(
+  final _i1.StorageValue<int> _currentCeremonyIndex =
+      const _i1.StorageValue<int>(
     prefix: 'EncointerScheduler',
     storage: 'CurrentCeremonyIndex',
     valueCodec: _i2.U32Codec.codec,
@@ -26,13 +28,15 @@ class Queries {
     valueCodec: _i2.U32Codec.codec,
   );
 
-  final _i1.StorageValue<_i3.CeremonyPhaseType> _currentPhase = const _i1.StorageValue<_i3.CeremonyPhaseType>(
+  final _i1.StorageValue<_i3.CeremonyPhaseType> _currentPhase =
+      const _i1.StorageValue<_i3.CeremonyPhaseType>(
     prefix: 'EncointerScheduler',
     storage: 'CurrentPhase',
     valueCodec: _i3.CeremonyPhaseType.codec,
   );
 
-  final _i1.StorageValue<BigInt> _nextPhaseTimestamp = const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _nextPhaseTimestamp =
+      const _i1.StorageValue<BigInt>(
     prefix: 'EncointerScheduler',
     storage: 'NextPhaseTimestamp',
     valueCodec: _i2.U64Codec.codec,
@@ -149,19 +153,22 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::next_phase`].
+  /// Manually transition to next phase without affecting the ceremony rhythm
+  ///
+  /// May only be called from `T::CeremonyMaster`.
   _i6.RuntimeCall nextPhase() {
     final _call = _i7.Call.values.nextPhase();
     return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 
-  /// See [`Pallet::push_by_one_day`].
+  /// Push next phase change by one entire day
+  ///
+  /// May only be called from `T::CeremonyMaster`.
   _i6.RuntimeCall pushByOneDay() {
     final _call = _i7.Call.values.pushByOneDay();
     return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 
-  /// See [`Pallet::set_phase_duration`].
   _i6.RuntimeCall setPhaseDuration({
     required _i3.CeremonyPhaseType ceremonyPhase,
     required BigInt duration,
@@ -173,7 +180,6 @@ class Txs {
     return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 
-  /// See [`Pallet::set_next_phase_timestamp`].
   _i6.RuntimeCall setNextPhaseTimestamp({required BigInt timestamp}) {
     final _call = _i7.Call.values.setNextPhaseTimestamp(timestamp: timestamp);
     return _i6.RuntimeCall.values.encointerScheduler(_call);

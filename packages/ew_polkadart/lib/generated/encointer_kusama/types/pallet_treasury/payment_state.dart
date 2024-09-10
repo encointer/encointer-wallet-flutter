@@ -77,7 +77,8 @@ class $PaymentStateCodec with _i1.Codec<PaymentState> {
         (value as Failed).encodeTo(output);
         break;
       default:
-        throw Exception('PaymentState: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'PaymentState: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -91,7 +92,8 @@ class $PaymentStateCodec with _i1.Codec<PaymentState> {
       case Failed:
         return 1;
       default:
-        throw Exception('PaymentState: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'PaymentState: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

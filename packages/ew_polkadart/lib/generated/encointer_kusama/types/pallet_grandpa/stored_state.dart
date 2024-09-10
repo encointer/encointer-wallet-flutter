@@ -98,7 +98,8 @@ class $StoredStateCodec with _i1.Codec<StoredState> {
         (value as PendingResume).encodeTo(output);
         break;
       default:
-        throw Exception('StoredState: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'StoredState: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -114,7 +115,8 @@ class $StoredStateCodec with _i1.Codec<StoredState> {
       case PendingResume:
         return (value as PendingResume)._sizeHint();
       default:
-        throw Exception('StoredState: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'StoredState: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -194,7 +196,9 @@ class PendingPause extends StoredState {
         this,
         other,
       ) ||
-      other is PendingPause && other.scheduledAt == scheduledAt && other.delay == delay;
+      other is PendingPause &&
+          other.scheduledAt == scheduledAt &&
+          other.delay == delay;
 
   @override
   int get hashCode => Object.hash(
@@ -278,7 +282,9 @@ class PendingResume extends StoredState {
         this,
         other,
       ) ||
-      other is PendingResume && other.scheduledAt == scheduledAt && other.delay == delay;
+      other is PendingResume &&
+          other.scheduledAt == scheduledAt &&
+          other.delay == delay;
 
   @override
   int get hashCode => Object.hash(

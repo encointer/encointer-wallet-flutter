@@ -34,15 +34,15 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  TransactionFeePaid transactionFeePaid({
-    required _i3.AccountId32 who,
-    required BigInt actualFee,
-    required BigInt tip,
+  SpentNative spentNative({
+    required _i3.AccountId32 treasury,
+    required _i3.AccountId32 beneficiary,
+    required BigInt amount,
   }) {
-    return TransactionFeePaid(
-      who: who,
-      actualFee: actualFee,
-      tip: tip,
+    return SpentNative(
+      treasury: treasury,
+      beneficiary: beneficiary,
+      amount: amount,
     );
   }
 }
@@ -55,7 +55,7 @@ class $EventCodec with _i1.Codec<Event> {
     final index = _i1.U8Codec.codec.decode(input);
     switch (index) {
       case 0:
-        return TransactionFeePaid._decode(input);
+        return SpentNative._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -67,8 +67,8 @@ class $EventCodec with _i1.Codec<Event> {
     _i1.Output output,
   ) {
     switch (value.runtimeType) {
-      case TransactionFeePaid:
-        (value as TransactionFeePaid).encodeTo(output);
+      case SpentNative:
+        (value as SpentNative).encodeTo(output);
         break;
       default:
         throw Exception(
@@ -79,8 +79,8 @@ class $EventCodec with _i1.Codec<Event> {
   @override
   int sizeHint(Event value) {
     switch (value.runtimeType) {
-      case TransactionFeePaid:
-        return (value as TransactionFeePaid)._sizeHint();
+      case SpentNative:
+        return (value as SpentNative)._sizeHint();
       default:
         throw Exception(
             'Event: Unsupported "$value" of type "${value.runtimeType}"');
@@ -88,46 +88,45 @@ class $EventCodec with _i1.Codec<Event> {
   }
 }
 
-/// A transaction fee `actual_fee`, of which `tip` was added to the minimum inclusion fee,
-/// has been paid by `who`.
-class TransactionFeePaid extends Event {
-  const TransactionFeePaid({
-    required this.who,
-    required this.actualFee,
-    required this.tip,
+/// treasury spent native tokens from community `cid` to `beneficiary` amounting `amount`
+class SpentNative extends Event {
+  const SpentNative({
+    required this.treasury,
+    required this.beneficiary,
+    required this.amount,
   });
 
-  factory TransactionFeePaid._decode(_i1.Input input) {
-    return TransactionFeePaid(
-      who: const _i1.U8ArrayCodec(32).decode(input),
-      actualFee: _i1.U128Codec.codec.decode(input),
-      tip: _i1.U128Codec.codec.decode(input),
+  factory SpentNative._decode(_i1.Input input) {
+    return SpentNative(
+      treasury: const _i1.U8ArrayCodec(32).decode(input),
+      beneficiary: const _i1.U8ArrayCodec(32).decode(input),
+      amount: _i1.U128Codec.codec.decode(input),
     );
   }
 
   /// T::AccountId
-  final _i3.AccountId32 who;
+  final _i3.AccountId32 treasury;
+
+  /// T::AccountId
+  final _i3.AccountId32 beneficiary;
 
   /// BalanceOf<T>
-  final BigInt actualFee;
-
-  /// BalanceOf<T>
-  final BigInt tip;
+  final BigInt amount;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
-        'TransactionFeePaid': {
-          'who': who.toList(),
-          'actualFee': actualFee,
-          'tip': tip,
+        'SpentNative': {
+          'treasury': treasury.toList(),
+          'beneficiary': beneficiary.toList(),
+          'amount': amount,
         }
       };
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i3.AccountId32Codec().sizeHint(who);
-    size = size + _i1.U128Codec.codec.sizeHint(actualFee);
-    size = size + _i1.U128Codec.codec.sizeHint(tip);
+    size = size + const _i3.AccountId32Codec().sizeHint(treasury);
+    size = size + const _i3.AccountId32Codec().sizeHint(beneficiary);
+    size = size + _i1.U128Codec.codec.sizeHint(amount);
     return size;
   }
 
@@ -137,15 +136,15 @@ class TransactionFeePaid extends Event {
       output,
     );
     const _i1.U8ArrayCodec(32).encodeTo(
-      who,
+      treasury,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      beneficiary,
       output,
     );
     _i1.U128Codec.codec.encodeTo(
-      actualFee,
-      output,
-    );
-    _i1.U128Codec.codec.encodeTo(
-      tip,
+      amount,
       output,
     );
   }
@@ -156,18 +155,21 @@ class TransactionFeePaid extends Event {
         this,
         other,
       ) ||
-      other is TransactionFeePaid &&
+      other is SpentNative &&
           _i4.listsEqual(
-            other.who,
-            who,
+            other.treasury,
+            treasury,
           ) &&
-          other.actualFee == actualFee &&
-          other.tip == tip;
+          _i4.listsEqual(
+            other.beneficiary,
+            beneficiary,
+          ) &&
+          other.amount == amount;
 
   @override
   int get hashCode => Object.hash(
-        who,
-        actualFee,
-        tip,
+        treasury,
+        beneficiary,
+        amount,
       );
 }

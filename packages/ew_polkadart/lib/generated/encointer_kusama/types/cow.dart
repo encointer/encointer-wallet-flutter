@@ -10,7 +10,8 @@ class CowCodec with _i2.Codec<Cow> {
 
   @override
   Cow decode(_i2.Input input) {
-    return const _i2.SequenceCodec<_i1.Tuple2<List<int>, int>>(_i1.Tuple2Codec<List<int>, int>(
+    return const _i2.SequenceCodec<_i1.Tuple2<List<int>, int>>(
+        _i1.Tuple2Codec<List<int>, int>(
       _i2.U8ArrayCodec(8),
       _i2.U32Codec.codec,
     )).decode(input);
@@ -21,7 +22,8 @@ class CowCodec with _i2.Codec<Cow> {
     Cow value,
     _i2.Output output,
   ) {
-    const _i2.SequenceCodec<_i1.Tuple2<List<int>, int>>(_i1.Tuple2Codec<List<int>, int>(
+    const _i2.SequenceCodec<_i1.Tuple2<List<int>, int>>(
+        _i1.Tuple2Codec<List<int>, int>(
       _i2.U8ArrayCodec(8),
       _i2.U32Codec.codec,
     )).encodeTo(
@@ -32,7 +34,8 @@ class CowCodec with _i2.Codec<Cow> {
 
   @override
   int sizeHint(Cow value) {
-    return const _i2.SequenceCodec<_i1.Tuple2<List<int>, int>>(_i1.Tuple2Codec<List<int>, int>(
+    return const _i2.SequenceCodec<_i1.Tuple2<List<int>, int>>(
+        _i1.Tuple2Codec<List<int>, int>(
       _i2.U8ArrayCodec(8),
       _i2.U32Codec.codec,
     )).sizeHint(value);

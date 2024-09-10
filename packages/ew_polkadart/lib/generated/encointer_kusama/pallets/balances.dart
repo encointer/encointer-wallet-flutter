@@ -6,11 +6,11 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i10;
+import '../types/frame_support/traits/tokens/misc/id_amount.dart' as _i7;
 import '../types/pallet_balances/pallet/call.dart' as _i12;
 import '../types/pallet_balances/types/account_data.dart' as _i4;
 import '../types/pallet_balances/types/adjustment_direction.dart' as _i13;
 import '../types/pallet_balances/types/balance_lock.dart' as _i5;
-import '../types/pallet_balances/types/id_amount.dart' as _i7;
 import '../types/pallet_balances/types/reserve_data.dart' as _i6;
 import '../types/sp_core/crypto/account_id32.dart' as _i3;
 import '../types/sp_runtime/multiaddress/multi_address.dart' as _i11;
@@ -20,13 +20,15 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<BigInt> _totalIssuance = const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _totalIssuance =
+      const _i1.StorageValue<BigInt>(
     prefix: 'Balances',
     storage: 'TotalIssuance',
     valueCodec: _i2.U128Codec.codec,
   );
 
-  final _i1.StorageValue<BigInt> _inactiveIssuance = const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _inactiveIssuance =
+      const _i1.StorageValue<BigInt>(
     prefix: 'Balances',
     storage: 'InactiveIssuance',
     valueCodec: _i2.U128Codec.codec,
@@ -147,6 +149,8 @@ class Queries {
 
   /// Any liquidity locks on some account balances.
   /// NOTE: Should only be accessed when setting, changing and freeing a lock.
+  ///
+  /// Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
   _i8.Future<List<_i5.BalanceLock>> locks(
     _i3.AccountId32 key1, {
     _i1.BlockHash? at,
@@ -163,6 +167,8 @@ class Queries {
   }
 
   /// Named reserves on some account balances.
+  ///
+  /// Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
   _i8.Future<List<_i6.ReserveData>> reserves(
     _i3.AccountId32 key1, {
     _i1.BlockHash? at,
@@ -286,7 +292,13 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::transfer_allow_death`].
+  /// Transfer some liquid free balance to another account.
+  ///
+  /// `transfer_allow_death` will set the `FreeBalance` of the sender and receiver.
+  /// If the sender's account is below the existential deposit as a result
+  /// of the transfer, the account will be reaped.
+  ///
+  /// The dispatch origin for this call must be `Signed` by the transactor.
   _i10.RuntimeCall transferAllowDeath({
     required _i11.MultiAddress dest,
     required BigInt value,
@@ -298,7 +310,8 @@ class Txs {
     return _i10.RuntimeCall.values.balances(_call);
   }
 
-  /// See [`Pallet::force_transfer`].
+  /// Exactly as `transfer_allow_death`, except the origin must be root and the source account
+  /// may be specified.
   _i10.RuntimeCall forceTransfer({
     required _i11.MultiAddress source,
     required _i11.MultiAddress dest,
@@ -312,7 +325,12 @@ class Txs {
     return _i10.RuntimeCall.values.balances(_call);
   }
 
-  /// See [`Pallet::transfer_keep_alive`].
+  /// Same as the [`transfer_allow_death`] call, but with a check that the transfer will not
+  /// kill the origin account.
+  ///
+  /// 99% of the time you want [`transfer_allow_death`] instead.
+  ///
+  /// [`transfer_allow_death`]: struct.Pallet.html#method.transfer
   _i10.RuntimeCall transferKeepAlive({
     required _i11.MultiAddress dest,
     required BigInt value,
@@ -324,7 +342,21 @@ class Txs {
     return _i10.RuntimeCall.values.balances(_call);
   }
 
-  /// See [`Pallet::transfer_all`].
+  /// Transfer the entire transferable balance from the caller account.
+  ///
+  /// NOTE: This function only attempts to transfer _transferable_ balances. This means that
+  /// any locked, reserved, or existential deposits (when `keep_alive` is `true`), will not be
+  /// transferred by this function. To ensure that this function results in a killed account,
+  /// you might need to prepare the account by removing any reference counters, storage
+  /// deposits, etc...
+  ///
+  /// The dispatch origin of this call must be Signed.
+  ///
+  /// - `dest`: The recipient of the transfer.
+  /// - `keep_alive`: A boolean to determine if the `transfer_all` operation should send all
+  ///  of the funds the account has, causing the sender account to be killed (false), or
+  ///  transfer everything except at least the existential deposit, which will guarantee to
+  ///  keep the sender account alive (true).
   _i10.RuntimeCall transferAll({
     required _i11.MultiAddress dest,
     required bool keepAlive,
@@ -336,7 +368,9 @@ class Txs {
     return _i10.RuntimeCall.values.balances(_call);
   }
 
-  /// See [`Pallet::force_unreserve`].
+  /// Unreserve some balance from a user by force.
+  ///
+  /// Can only be called by ROOT.
   _i10.RuntimeCall forceUnreserve({
     required _i11.MultiAddress who,
     required BigInt amount,
@@ -348,13 +382,22 @@ class Txs {
     return _i10.RuntimeCall.values.balances(_call);
   }
 
-  /// See [`Pallet::upgrade_accounts`].
+  /// Upgrade a specified account.
+  ///
+  /// - `origin`: Must be `Signed`.
+  /// - `who`: The account to be upgraded.
+  ///
+  /// This will waive the transaction fee if at least all but 10% of the accounts needed to
+  /// be upgraded. (We let some not have to be upgraded just in order to allow for the
+  /// possibility of churn).
   _i10.RuntimeCall upgradeAccounts({required List<_i3.AccountId32> who}) {
     final _call = _i12.Call.values.upgradeAccounts(who: who);
     return _i10.RuntimeCall.values.balances(_call);
   }
 
-  /// See [`Pallet::force_set_balance`].
+  /// Set the regular balance of a given account.
+  ///
+  /// The dispatch origin for this call is `root`.
   _i10.RuntimeCall forceSetBalance({
     required _i11.MultiAddress who,
     required BigInt newFree,
@@ -366,7 +409,11 @@ class Txs {
     return _i10.RuntimeCall.values.balances(_call);
   }
 
-  /// See [`Pallet::force_adjust_total_issuance`].
+  /// Adjust the total issuance in a saturating way.
+  ///
+  /// Can only be called by root and always needs a positive `delta`.
+  ///
+  /// # Example
   _i10.RuntimeCall forceAdjustTotalIssuance({
     required _i13.AdjustmentDirection direction,
     required BigInt delta,
@@ -374,6 +421,24 @@ class Txs {
     final _call = _i12.Call.values.forceAdjustTotalIssuance(
       direction: direction,
       delta: delta,
+    );
+    return _i10.RuntimeCall.values.balances(_call);
+  }
+
+  /// Burn the specified liquid free balance from the origin account.
+  ///
+  /// If the origin's account ends up below the existential deposit as a result
+  /// of the burn and `keep_alive` is false, the account will be reaped.
+  ///
+  /// Unlike sending funds to a _burn_ address, which merely makes the funds inaccessible,
+  /// this `burn` operation will reduce total issuance by the amount _burned_.
+  _i10.RuntimeCall burn({
+    required BigInt value,
+    required bool keepAlive,
+  }) {
+    final _call = _i12.Call.values.burn(
+      value: value,
+      keepAlive: keepAlive,
     );
     return _i10.RuntimeCall.values.balances(_call);
   }
@@ -394,9 +459,13 @@ class Constants {
 
   /// The maximum number of locks that should exist on an account.
   /// Not strictly enforced, but used for weight estimation.
+  ///
+  /// Use of locks is deprecated in favour of freezes. See `https://github.com/paritytech/substrate/pull/12951/`
   final int maxLocks = 50;
 
   /// The maximum number of named reserves that can exist on an account.
+  ///
+  /// Use of reserves is deprecated in favour of holds. See `https://github.com/paritytech/substrate/pull/12951/`
   final int maxReserves = 128;
 
   /// The maximum number of individual freeze locks that can exist on an account at any time.

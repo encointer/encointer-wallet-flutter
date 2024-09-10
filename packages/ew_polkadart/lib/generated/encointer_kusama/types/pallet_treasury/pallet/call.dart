@@ -35,24 +35,6 @@ abstract class Call {
 class $Call {
   const $Call();
 
-  ProposeSpend proposeSpend({
-    required BigInt value,
-    required _i3.MultiAddress beneficiary,
-  }) {
-    return ProposeSpend(
-      value: value,
-      beneficiary: beneficiary,
-    );
-  }
-
-  RejectProposal rejectProposal({required BigInt proposalId}) {
-    return RejectProposal(proposalId: proposalId);
-  }
-
-  ApproveProposal approveProposal({required BigInt proposalId}) {
-    return ApproveProposal(proposalId: proposalId);
-  }
-
   SpendLocal spendLocal({
     required BigInt amount,
     required _i3.MultiAddress beneficiary,
@@ -101,12 +83,6 @@ class $CallCodec with _i1.Codec<Call> {
   Call decode(_i1.Input input) {
     final index = _i1.U8Codec.codec.decode(input);
     switch (index) {
-      case 0:
-        return ProposeSpend._decode(input);
-      case 1:
-        return RejectProposal._decode(input);
-      case 2:
-        return ApproveProposal._decode(input);
       case 3:
         return SpendLocal._decode(input);
       case 4:
@@ -130,15 +106,6 @@ class $CallCodec with _i1.Codec<Call> {
     _i1.Output output,
   ) {
     switch (value.runtimeType) {
-      case ProposeSpend:
-        (value as ProposeSpend).encodeTo(output);
-        break;
-      case RejectProposal:
-        (value as RejectProposal).encodeTo(output);
-        break;
-      case ApproveProposal:
-        (value as ApproveProposal).encodeTo(output);
-        break;
       case SpendLocal:
         (value as SpendLocal).encodeTo(output);
         break;
@@ -158,19 +125,14 @@ class $CallCodec with _i1.Codec<Call> {
         (value as VoidSpend).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
   @override
   int sizeHint(Call value) {
     switch (value.runtimeType) {
-      case ProposeSpend:
-        return (value as ProposeSpend)._sizeHint();
-      case RejectProposal:
-        return (value as RejectProposal)._sizeHint();
-      case ApproveProposal:
-        return (value as ApproveProposal)._sizeHint();
       case SpendLocal:
         return (value as SpendLocal)._sizeHint();
       case RemoveApproval:
@@ -184,167 +146,29 @@ class $CallCodec with _i1.Codec<Call> {
       case VoidSpend:
         return (value as VoidSpend)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
 
-/// See [`Pallet::propose_spend`].
-class ProposeSpend extends Call {
-  const ProposeSpend({
-    required this.value,
-    required this.beneficiary,
-  });
-
-  factory ProposeSpend._decode(_i1.Input input) {
-    return ProposeSpend(
-      value: _i1.CompactBigIntCodec.codec.decode(input),
-      beneficiary: _i3.MultiAddress.codec.decode(input),
-    );
-  }
-
-  /// BalanceOf<T, I>
-  final BigInt value;
-
-  /// AccountIdLookupOf<T>
-  final _i3.MultiAddress beneficiary;
-
-  @override
-  Map<String, Map<String, dynamic>> toJson() => {
-        'propose_spend': {
-          'value': value,
-          'beneficiary': beneficiary.toJson(),
-        }
-      };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i1.CompactBigIntCodec.codec.sizeHint(value);
-    size = size + _i3.MultiAddress.codec.sizeHint(beneficiary);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      0,
-      output,
-    );
-    _i1.CompactBigIntCodec.codec.encodeTo(
-      value,
-      output,
-    );
-    _i3.MultiAddress.codec.encodeTo(
-      beneficiary,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is ProposeSpend && other.value == value && other.beneficiary == beneficiary;
-
-  @override
-  int get hashCode => Object.hash(
-        value,
-        beneficiary,
-      );
-}
-
-/// See [`Pallet::reject_proposal`].
-class RejectProposal extends Call {
-  const RejectProposal({required this.proposalId});
-
-  factory RejectProposal._decode(_i1.Input input) {
-    return RejectProposal(proposalId: _i1.CompactBigIntCodec.codec.decode(input));
-  }
-
-  /// ProposalIndex
-  final BigInt proposalId;
-
-  @override
-  Map<String, Map<String, BigInt>> toJson() => {
-        'reject_proposal': {'proposalId': proposalId}
-      };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i1.CompactBigIntCodec.codec.sizeHint(proposalId);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      1,
-      output,
-    );
-    _i1.CompactBigIntCodec.codec.encodeTo(
-      proposalId,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is RejectProposal && other.proposalId == proposalId;
-
-  @override
-  int get hashCode => proposalId.hashCode;
-}
-
-/// See [`Pallet::approve_proposal`].
-class ApproveProposal extends Call {
-  const ApproveProposal({required this.proposalId});
-
-  factory ApproveProposal._decode(_i1.Input input) {
-    return ApproveProposal(proposalId: _i1.CompactBigIntCodec.codec.decode(input));
-  }
-
-  /// ProposalIndex
-  final BigInt proposalId;
-
-  @override
-  Map<String, Map<String, BigInt>> toJson() => {
-        'approve_proposal': {'proposalId': proposalId}
-      };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i1.CompactBigIntCodec.codec.sizeHint(proposalId);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      2,
-      output,
-    );
-    _i1.CompactBigIntCodec.codec.encodeTo(
-      proposalId,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is ApproveProposal && other.proposalId == proposalId;
-
-  @override
-  int get hashCode => proposalId.hashCode;
-}
-
-/// See [`Pallet::spend_local`].
+/// Propose and approve a spend of treasury funds.
+///
+/// ## Dispatch Origin
+///
+/// Must be [`Config::SpendOrigin`] with the `Success` value being at least `amount`.
+///
+/// ### Details
+/// NOTE: For record-keeping purposes, the proposer is deemed to be equivalent to the
+/// beneficiary.
+///
+/// ### Parameters
+/// - `amount`: The amount to be transferred from the treasury to the `beneficiary`.
+/// - `beneficiary`: The destination account for the transfer.
+///
+/// ## Events
+///
+/// Emits [`Event::SpendApproved`] if successful.
 class SpendLocal extends Call {
   const SpendLocal({
     required this.amount,
@@ -400,7 +224,9 @@ class SpendLocal extends Call {
         this,
         other,
       ) ||
-      other is SpendLocal && other.amount == amount && other.beneficiary == beneficiary;
+      other is SpendLocal &&
+          other.amount == amount &&
+          other.beneficiary == beneficiary;
 
   @override
   int get hashCode => Object.hash(
@@ -409,12 +235,33 @@ class SpendLocal extends Call {
       );
 }
 
-/// See [`Pallet::remove_approval`].
+/// Force a previously approved proposal to be removed from the approval queue.
+///
+/// ## Dispatch Origin
+///
+/// Must be [`Config::RejectOrigin`].
+///
+/// ## Details
+///
+/// The original deposit will no longer be returned.
+///
+/// ### Parameters
+/// - `proposal_id`: The index of a proposal
+///
+/// ### Complexity
+/// - O(A) where `A` is the number of approvals
+///
+/// ### Errors
+/// - [`Error::ProposalNotApproved`]: The `proposal_id` supplied was not found in the
+///  approval queue, i.e., the proposal has not been approved. This could also mean the
+///  proposal does not exist altogether, thus there is no way it would have been approved
+///  in the first place.
 class RemoveApproval extends Call {
   const RemoveApproval({required this.proposalId});
 
   factory RemoveApproval._decode(_i1.Input input) {
-    return RemoveApproval(proposalId: _i1.CompactBigIntCodec.codec.decode(input));
+    return RemoveApproval(
+        proposalId: _i1.CompactBigIntCodec.codec.decode(input));
   }
 
   /// ProposalIndex
@@ -454,7 +301,32 @@ class RemoveApproval extends Call {
   int get hashCode => proposalId.hashCode;
 }
 
-/// See [`Pallet::spend`].
+/// Propose and approve a spend of treasury funds.
+///
+/// ## Dispatch Origin
+///
+/// Must be [`Config::SpendOrigin`] with the `Success` value being at least
+/// `amount` of `asset_kind` in the native asset. The amount of `asset_kind` is converted
+/// for assertion using the [`Config::BalanceConverter`].
+///
+/// ## Details
+///
+/// Create an approved spend for transferring a specific `amount` of `asset_kind` to a
+/// designated beneficiary. The spend must be claimed using the `payout` dispatchable within
+/// the [`Config::PayoutPeriod`].
+///
+/// ### Parameters
+/// - `asset_kind`: An indicator of the specific asset class to be spent.
+/// - `amount`: The amount to be transferred from the treasury to the `beneficiary`.
+/// - `beneficiary`: The beneficiary of the spend.
+/// - `valid_from`: The block number from which the spend can be claimed. It can refer to
+///  the past if the resulting spend has not yet expired according to the
+///  [`Config::PayoutPeriod`]. If `None`, the spend can be claimed immediately after
+///  approval.
+///
+/// ## Events
+///
+/// Emits [`Event::AssetSpendApproved`] if successful.
 class Spend extends Call {
   const Spend({
     required this.assetKind,
@@ -499,7 +371,8 @@ class Spend extends Call {
     size = size + _i1.NullCodec.codec.sizeHint(assetKind);
     size = size + _i1.CompactBigIntCodec.codec.sizeHint(amount);
     size = size + const _i4.AccountId32Codec().sizeHint(beneficiary);
-    size = size + const _i1.OptionCodec<int>(_i1.U32Codec.codec).sizeHint(validFrom);
+    size = size +
+        const _i1.OptionCodec<int>(_i1.U32Codec.codec).sizeHint(validFrom);
     return size;
   }
 
@@ -550,7 +423,25 @@ class Spend extends Call {
       );
 }
 
-/// See [`Pallet::payout`].
+/// Claim a spend.
+///
+/// ## Dispatch Origin
+///
+/// Must be signed
+///
+/// ## Details
+///
+/// Spends must be claimed within some temporal bounds. A spend may be claimed within one
+/// [`Config::PayoutPeriod`] from the `valid_from` block.
+/// In case of a payout failure, the spend status must be updated with the `check_status`
+/// dispatchable before retrying with the current function.
+///
+/// ### Parameters
+/// - `index`: The spend index.
+///
+/// ## Events
+///
+/// Emits [`Event::Paid`] if successful.
 class Payout extends Call {
   const Payout({required this.index});
 
@@ -595,7 +486,25 @@ class Payout extends Call {
   int get hashCode => index.hashCode;
 }
 
-/// See [`Pallet::check_status`].
+/// Check the status of the spend and remove it from the storage if processed.
+///
+/// ## Dispatch Origin
+///
+/// Must be signed.
+///
+/// ## Details
+///
+/// The status check is a prerequisite for retrying a failed payout.
+/// If a spend has either succeeded or expired, it is removed from the storage by this
+/// function. In such instances, transaction fees are refunded.
+///
+/// ### Parameters
+/// - `index`: The spend index.
+///
+/// ## Events
+///
+/// Emits [`Event::PaymentFailed`] if the spend payout has failed.
+/// Emits [`Event::SpendProcessed`] if the spend payout has succeed.
 class CheckStatus extends Call {
   const CheckStatus({required this.index});
 
@@ -640,7 +549,22 @@ class CheckStatus extends Call {
   int get hashCode => index.hashCode;
 }
 
-/// See [`Pallet::void_spend`].
+/// Void previously approved spend.
+///
+/// ## Dispatch Origin
+///
+/// Must be [`Config::RejectOrigin`].
+///
+/// ## Details
+///
+/// A spend void is only possible if the payout has not been attempted yet.
+///
+/// ### Parameters
+/// - `index`: The spend index.
+///
+/// ## Events
+///
+/// Emits [`Event::AssetSpendVoided`] if successful.
 class VoidSpend extends Call {
   const VoidSpend({required this.index});
 

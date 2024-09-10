@@ -14,6 +14,7 @@ import '../pallet_encointer_democracy/pallet/event.dart' as _i20;
 import '../pallet_encointer_faucet/pallet/event.dart' as _i19;
 import '../pallet_encointer_reputation_commitments/pallet/event.dart' as _i18;
 import '../pallet_encointer_scheduler/pallet/event.dart' as _i13;
+import '../pallet_encointer_treasuries/pallet/event.dart' as _i21;
 import '../pallet_grandpa/pallet/event.dart' as _i8;
 import '../pallet_proxy/pallet/event.dart' as _i10;
 import '../pallet_scheduler/pallet/event.dart' as _i11;
@@ -109,7 +110,8 @@ class $RuntimeEvent {
     return EncointerBazaar(value0);
   }
 
-  EncointerReputationCommitments encointerReputationCommitments(_i18.Event value0) {
+  EncointerReputationCommitments encointerReputationCommitments(
+      _i18.Event value0) {
     return EncointerReputationCommitments(value0);
   }
 
@@ -119,6 +121,10 @@ class $RuntimeEvent {
 
   EncointerDemocracy encointerDemocracy(_i20.Event value0) {
     return EncointerDemocracy(value0);
+  }
+
+  EncointerTreasuries encointerTreasuries(_i21.Event value0) {
+    return EncointerTreasuries(value0);
   }
 }
 
@@ -165,6 +171,8 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         return EncointerFaucet._decode(input);
       case 67:
         return EncointerDemocracy._decode(input);
+      case 68:
+        return EncointerTreasuries._decode(input);
       default:
         throw Exception('RuntimeEvent: Invalid variant index: "$index"');
     }
@@ -230,8 +238,12 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
       case EncointerDemocracy:
         (value as EncointerDemocracy).encodeTo(output);
         break;
+      case EncointerTreasuries:
+        (value as EncointerTreasuries).encodeTo(output);
+        break;
       default:
-        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -274,8 +286,11 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         return (value as EncointerFaucet)._sizeHint();
       case EncointerDemocracy:
         return (value as EncointerDemocracy)._sizeHint();
+      case EncointerTreasuries:
+        return (value as EncointerTreasuries)._sizeHint();
       default:
-        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -375,7 +390,8 @@ class Balances extends RuntimeEvent {
   final _i5.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Balances': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
+      {'Balances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -417,7 +433,8 @@ class TransactionPayment extends RuntimeEvent {
   final _i6.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'TransactionPayment': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
+      {'TransactionPayment': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -459,7 +476,8 @@ class AssetTxPayment extends RuntimeEvent {
   final _i7.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'AssetTxPayment': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
+      {'AssetTxPayment': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -585,7 +603,8 @@ class Proxy extends RuntimeEvent {
   final _i10.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Proxy': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
+      {'Proxy': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -627,7 +646,8 @@ class Scheduler extends RuntimeEvent {
   final _i11.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Scheduler': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
+      {'Scheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -669,7 +689,8 @@ class Treasury extends RuntimeEvent {
   final _i12.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Treasury': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
+      {'Treasury': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -711,7 +732,8 @@ class EncointerScheduler extends RuntimeEvent {
   final _i13.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerScheduler': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() =>
+      {'EncointerScheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -753,7 +775,8 @@ class EncointerCeremonies extends RuntimeEvent {
   final _i14.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerCeremonies': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() =>
+      {'EncointerCeremonies': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -795,7 +818,8 @@ class EncointerCommunities extends RuntimeEvent {
   final _i15.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerCommunities': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() =>
+      {'EncointerCommunities': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -837,7 +861,8 @@ class EncointerBalances extends RuntimeEvent {
   final _i16.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerBalances': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() =>
+      {'EncointerBalances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -879,7 +904,8 @@ class EncointerBazaar extends RuntimeEvent {
   final _i17.Event value0;
 
   @override
-  Map<String, Map<String, List<dynamic>>> toJson() => {'EncointerBazaar': value0.toJson()};
+  Map<String, Map<String, List<dynamic>>> toJson() =>
+      {'EncointerBazaar': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -921,7 +947,8 @@ class EncointerReputationCommitments extends RuntimeEvent {
   final _i18.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerReputationCommitments': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() =>
+      {'EncointerReputationCommitments': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -963,7 +990,8 @@ class EncointerFaucet extends RuntimeEvent {
   final _i19.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() => {'EncointerFaucet': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() =>
+      {'EncointerFaucet': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1005,7 +1033,8 @@ class EncointerDemocracy extends RuntimeEvent {
   final _i20.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerDemocracy': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
+      {'EncointerDemocracy': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1031,6 +1060,49 @@ class EncointerDemocracy extends RuntimeEvent {
         other,
       ) ||
       other is EncointerDemocracy && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class EncointerTreasuries extends RuntimeEvent {
+  const EncointerTreasuries(this.value0);
+
+  factory EncointerTreasuries._decode(_i1.Input input) {
+    return EncointerTreasuries(_i21.Event.codec.decode(input));
+  }
+
+  /// pallet_encointer_treasuries::Event<Runtime>
+  final _i21.Event value0;
+
+  @override
+  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
+      {'EncointerTreasuries': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i21.Event.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      68,
+      output,
+    );
+    _i21.Event.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerTreasuries && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;

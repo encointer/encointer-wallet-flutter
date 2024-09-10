@@ -219,7 +219,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as ProxyAnnounced).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -247,12 +248,21 @@ class $CallCodec with _i1.Codec<Call> {
       case ProxyAnnounced:
         return (value as ProxyAnnounced)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
 
-/// See [`Pallet::proxy`].
+/// Dispatch the given `call` from an account that the sender is authorised for through
+/// `add_proxy`.
+///
+/// The dispatch origin for this call must be _Signed_.
+///
+/// Parameters:
+/// - `real`: The account that the proxy will make a call on behalf of.
+/// - `force_proxy_type`: Specify the exact proxy type to be used and checked for this call.
+/// - `call`: The call to be made by the `real` account.
 class Proxy extends Call {
   const Proxy({
     required this.real,
@@ -263,7 +273,8 @@ class Proxy extends Call {
   factory Proxy._decode(_i1.Input input) {
     return Proxy(
       real: _i3.MultiAddress.codec.decode(input),
-      forceProxyType: const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec).decode(input),
+      forceProxyType: const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec)
+          .decode(input),
       call: _i5.RuntimeCall.codec.decode(input),
     );
   }
@@ -289,7 +300,9 @@ class Proxy extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.MultiAddress.codec.sizeHint(real);
-    size = size + const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec).sizeHint(forceProxyType);
+    size = size +
+        const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec)
+            .sizeHint(forceProxyType);
     size = size + _i5.RuntimeCall.codec.sizeHint(call);
     return size;
   }
@@ -319,7 +332,10 @@ class Proxy extends Call {
         this,
         other,
       ) ||
-      other is Proxy && other.real == real && other.forceProxyType == forceProxyType && other.call == call;
+      other is Proxy &&
+          other.real == real &&
+          other.forceProxyType == forceProxyType &&
+          other.call == call;
 
   @override
   int get hashCode => Object.hash(
@@ -329,7 +345,15 @@ class Proxy extends Call {
       );
 }
 
-/// See [`Pallet::add_proxy`].
+/// Register a proxy account for the sender that is able to make calls on its behalf.
+///
+/// The dispatch origin for this call must be _Signed_.
+///
+/// Parameters:
+/// - `proxy`: The account that the `caller` would like to make a proxy.
+/// - `proxy_type`: The permissions allowed for this proxy account.
+/// - `delay`: The announcement period required of the initial proxy. Will generally be
+/// zero.
 class AddProxy extends Call {
   const AddProxy({
     required this.delegate,
@@ -396,7 +420,10 @@ class AddProxy extends Call {
         this,
         other,
       ) ||
-      other is AddProxy && other.delegate == delegate && other.proxyType == proxyType && other.delay == delay;
+      other is AddProxy &&
+          other.delegate == delegate &&
+          other.proxyType == proxyType &&
+          other.delay == delay;
 
   @override
   int get hashCode => Object.hash(
@@ -406,7 +433,13 @@ class AddProxy extends Call {
       );
 }
 
-/// See [`Pallet::remove_proxy`].
+/// Unregister a proxy account for the sender.
+///
+/// The dispatch origin for this call must be _Signed_.
+///
+/// Parameters:
+/// - `proxy`: The account that the `caller` would like to remove as a proxy.
+/// - `proxy_type`: The permissions currently enabled for the removed proxy account.
 class RemoveProxy extends Call {
   const RemoveProxy({
     required this.delegate,
@@ -473,7 +506,10 @@ class RemoveProxy extends Call {
         this,
         other,
       ) ||
-      other is RemoveProxy && other.delegate == delegate && other.proxyType == proxyType && other.delay == delay;
+      other is RemoveProxy &&
+          other.delegate == delegate &&
+          other.proxyType == proxyType &&
+          other.delay == delay;
 
   @override
   int get hashCode => Object.hash(
@@ -483,7 +519,12 @@ class RemoveProxy extends Call {
       );
 }
 
-/// See [`Pallet::remove_proxies`].
+/// Unregister all proxy accounts for the sender.
+///
+/// The dispatch origin for this call must be _Signed_.
+///
+/// WARNING: This may be called on accounts created by `pure`, however if done, then
+/// the unreserved fees will be inaccessible. **All access to this account will be lost.**
 class RemoveProxies extends Call {
   const RemoveProxies();
 
@@ -504,7 +545,24 @@ class RemoveProxies extends Call {
   int get hashCode => runtimeType.hashCode;
 }
 
-/// See [`Pallet::create_pure`].
+/// Spawn a fresh new account that is guaranteed to be otherwise inaccessible, and
+/// initialize it with a proxy of `proxy_type` for `origin` sender.
+///
+/// Requires a `Signed` origin.
+///
+/// - `proxy_type`: The type of the proxy that the sender will be registered as over the
+/// new account. This will almost always be the most permissive `ProxyType` possible to
+/// allow for maximum flexibility.
+/// - `index`: A disambiguation index, in case this is called multiple times in the same
+/// transaction (e.g. with `utility::batch`). Unless you're using `batch` you probably just
+/// want to use `0`.
+/// - `delay`: The announcement period required of the initial proxy. Will generally be
+/// zero.
+///
+/// Fails with `Duplicate` if this has already been called in this transaction, from the
+/// same sender, with the same parameters.
+///
+/// Fails if there are insufficient funds to pay for deposit.
 class CreatePure extends Call {
   const CreatePure({
     required this.proxyType,
@@ -571,7 +629,10 @@ class CreatePure extends Call {
         this,
         other,
       ) ||
-      other is CreatePure && other.proxyType == proxyType && other.delay == delay && other.index == index;
+      other is CreatePure &&
+          other.proxyType == proxyType &&
+          other.delay == delay &&
+          other.index == index;
 
   @override
   int get hashCode => Object.hash(
@@ -581,7 +642,22 @@ class CreatePure extends Call {
       );
 }
 
-/// See [`Pallet::kill_pure`].
+/// Removes a previously spawned pure proxy.
+///
+/// WARNING: **All access to this account will be lost.** Any funds held in it will be
+/// inaccessible.
+///
+/// Requires a `Signed` origin, and the sender account must have been created by a call to
+/// `pure` with corresponding parameters.
+///
+/// - `spawner`: The account that originally called `pure` to create this account.
+/// - `index`: The disambiguation index originally passed to `pure`. Probably `0`.
+/// - `proxy_type`: The proxy type originally passed to `pure`.
+/// - `height`: The height of the chain when the call to `pure` was processed.
+/// - `ext_index`: The extrinsic index in which the call to `pure` was processed.
+///
+/// Fails with `NoPermission` in case the caller is not a previously created pure
+/// account whose `pure` call has corresponding parameters.
 class KillPure extends Call {
   const KillPure({
     required this.spawner,
@@ -687,7 +763,21 @@ class KillPure extends Call {
       );
 }
 
-/// See [`Pallet::announce`].
+/// Publish the hash of a proxy-call that will be made in the future.
+///
+/// This must be called some number of blocks before the corresponding `proxy` is attempted
+/// if the delay associated with the proxy relationship is greater than zero.
+///
+/// No more than `MaxPending` announcements may be made at any one time.
+///
+/// This will take a deposit of `AnnouncementDepositFactor` as well as
+/// `AnnouncementDepositBase` if there are no other pending announcements.
+///
+/// The dispatch origin for this call must be _Signed_ and a proxy of `real`.
+///
+/// Parameters:
+/// - `real`: The account that the proxy will make a call on behalf of.
+/// - `call_hash`: The hash of the call to be made by the `real` account.
 class Announce extends Call {
   const Announce({
     required this.real,
@@ -757,7 +847,16 @@ class Announce extends Call {
       );
 }
 
-/// See [`Pallet::remove_announcement`].
+/// Remove a given announcement.
+///
+/// May be called by a proxy account to remove a call they previously announced and return
+/// the deposit.
+///
+/// The dispatch origin for this call must be _Signed_.
+///
+/// Parameters:
+/// - `real`: The account that the proxy will make a call on behalf of.
+/// - `call_hash`: The hash of the call to be made by the `real` account.
 class RemoveAnnouncement extends Call {
   const RemoveAnnouncement({
     required this.real,
@@ -827,7 +926,16 @@ class RemoveAnnouncement extends Call {
       );
 }
 
-/// See [`Pallet::reject_announcement`].
+/// Remove the given announcement of a delegate.
+///
+/// May be called by a target (proxied) account to remove a call that one of their delegates
+/// (`delegate`) has announced they want to execute. The deposit is returned.
+///
+/// The dispatch origin for this call must be _Signed_.
+///
+/// Parameters:
+/// - `delegate`: The account that previously announced the call.
+/// - `call_hash`: The hash of the call to be made.
 class RejectAnnouncement extends Call {
   const RejectAnnouncement({
     required this.delegate,
@@ -897,7 +1005,17 @@ class RejectAnnouncement extends Call {
       );
 }
 
-/// See [`Pallet::proxy_announced`].
+/// Dispatch the given `call` from an account that the sender is authorized for through
+/// `add_proxy`.
+///
+/// Removes any corresponding announcement(s).
+///
+/// The dispatch origin for this call must be _Signed_.
+///
+/// Parameters:
+/// - `real`: The account that the proxy will make a call on behalf of.
+/// - `force_proxy_type`: Specify the exact proxy type to be used and checked for this call.
+/// - `call`: The call to be made by the `real` account.
 class ProxyAnnounced extends Call {
   const ProxyAnnounced({
     required this.delegate,
@@ -910,7 +1028,8 @@ class ProxyAnnounced extends Call {
     return ProxyAnnounced(
       delegate: _i3.MultiAddress.codec.decode(input),
       real: _i3.MultiAddress.codec.decode(input),
-      forceProxyType: const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec).decode(input),
+      forceProxyType: const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec)
+          .decode(input),
       call: _i5.RuntimeCall.codec.decode(input),
     );
   }
@@ -941,7 +1060,9 @@ class ProxyAnnounced extends Call {
     int size = 1;
     size = size + _i3.MultiAddress.codec.sizeHint(delegate);
     size = size + _i3.MultiAddress.codec.sizeHint(real);
-    size = size + const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec).sizeHint(forceProxyType);
+    size = size +
+        const _i1.OptionCodec<_i4.ProxyType>(_i4.ProxyType.codec)
+            .sizeHint(forceProxyType);
     size = size + _i5.RuntimeCall.codec.sizeHint(call);
     return size;
   }

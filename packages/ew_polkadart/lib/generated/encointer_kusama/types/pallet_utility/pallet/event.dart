@@ -59,7 +59,8 @@ class $Event {
     return ItemFailed(error: error);
   }
 
-  DispatchedAs dispatchedAs({required _i1.Result<dynamic, _i3.DispatchError> result}) {
+  DispatchedAs dispatchedAs(
+      {required _i1.Result<dynamic, _i3.DispatchError> result}) {
     return DispatchedAs(result: result);
   }
 }
@@ -113,7 +114,8 @@ class $EventCodec with _i1.Codec<Event> {
         (value as DispatchedAs).encodeTo(output);
         break;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -133,7 +135,8 @@ class $EventCodec with _i1.Codec<Event> {
       case DispatchedAs:
         return (value as DispatchedAs)._sizeHint();
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

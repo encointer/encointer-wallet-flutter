@@ -83,7 +83,8 @@ class $BusinessIdentifierCodec with _i1.Codec<BusinessIdentifier> {
   @override
   int sizeHint(BusinessIdentifier obj) {
     int size = 0;
-    size = size + _i2.CommunityIdentifier.codec.sizeHint(obj.communityIdentifier);
+    size =
+        size + _i2.CommunityIdentifier.codec.sizeHint(obj.communityIdentifier);
     size = size + const _i3.AccountId32Codec().sizeHint(obj.controller);
     return size;
   }

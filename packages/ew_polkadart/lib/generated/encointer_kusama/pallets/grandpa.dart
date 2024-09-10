@@ -20,13 +20,15 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageValue<_i2.StoredState> _state = const _i1.StorageValue<_i2.StoredState>(
+  final _i1.StorageValue<_i2.StoredState> _state =
+      const _i1.StorageValue<_i2.StoredState>(
     prefix: 'Grandpa',
     storage: 'State',
     valueCodec: _i2.StoredState.codec,
   );
 
-  final _i1.StorageValue<_i3.StoredPendingChange> _pendingChange = const _i1.StorageValue<_i3.StoredPendingChange>(
+  final _i1.StorageValue<_i3.StoredPendingChange> _pendingChange =
+      const _i1.StorageValue<_i3.StoredPendingChange>(
     prefix: 'Grandpa',
     storage: 'PendingChange',
     valueCodec: _i3.StoredPendingChange.codec,
@@ -38,7 +40,8 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
-  final _i1.StorageValue<_i5.Tuple2<int, int>> _stalled = const _i1.StorageValue<_i5.Tuple2<int, int>>(
+  final _i1.StorageValue<_i5.Tuple2<int, int>> _stalled =
+      const _i1.StorageValue<_i5.Tuple2<int, int>>(
     prefix: 'Grandpa',
     storage: 'Stalled',
     valueCodec: _i5.Tuple2Codec<int, int>(
@@ -53,7 +56,8 @@ class Queries {
     valueCodec: _i4.U64Codec.codec,
   );
 
-  final _i1.StorageMap<BigInt, int> _setIdSession = const _i1.StorageMap<BigInt, int>(
+  final _i1.StorageMap<BigInt, int> _setIdSession =
+      const _i1.StorageMap<BigInt, int>(
     prefix: 'Grandpa',
     storage: 'SetIdSession',
     valueCodec: _i4.U32Codec.codec,
@@ -64,7 +68,8 @@ class Queries {
       const _i1.StorageValue<List<_i6.Tuple2<_i7.Public, BigInt>>>(
     prefix: 'Grandpa',
     storage: 'Authorities',
-    valueCodec: _i4.SequenceCodec<_i6.Tuple2<_i7.Public, BigInt>>(_i6.Tuple2Codec<_i7.Public, BigInt>(
+    valueCodec: _i4.SequenceCodec<_i6.Tuple2<_i7.Public, BigInt>>(
+        _i6.Tuple2Codec<_i7.Public, BigInt>(
       _i7.PublicCodec(),
       _i4.U64Codec.codec,
     )),
@@ -84,7 +89,8 @@ class Queries {
   }
 
   /// Pending change: (signaled at, scheduled change).
-  _i8.Future<_i3.StoredPendingChange?> pendingChange({_i1.BlockHash? at}) async {
+  _i8.Future<_i3.StoredPendingChange?> pendingChange(
+      {_i1.BlockHash? at}) async {
     final hashedKey = _pendingChange.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -162,7 +168,8 @@ class Queries {
   }
 
   /// The current list of authorities.
-  _i8.Future<List<_i6.Tuple2<_i7.Public, BigInt>>> authorities({_i1.BlockHash? at}) async {
+  _i8.Future<List<_i6.Tuple2<_i7.Public, BigInt>>> authorities(
+      {_i1.BlockHash? at}) async {
     final hashedKey = _authorities.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -226,7 +233,10 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::report_equivocation`].
+  /// Report voter equivocation/misbehavior. This method will verify the
+  /// equivocation proof and validate the given key ownership proof
+  /// against the extracted offender. If both are valid, the offence
+  /// will be reported.
   _i10.RuntimeCall reportEquivocation({
     required _i11.EquivocationProof equivocationProof,
     required _i12.Void keyOwnerProof,
@@ -238,7 +248,15 @@ class Txs {
     return _i10.RuntimeCall.values.grandpa(_call);
   }
 
-  /// See [`Pallet::report_equivocation_unsigned`].
+  /// Report voter equivocation/misbehavior. This method will verify the
+  /// equivocation proof and validate the given key ownership proof
+  /// against the extracted offender. If both are valid, the offence
+  /// will be reported.
+  ///
+  /// This extrinsic must be called unsigned and it is expected that only
+  /// block authors will call it (validated in `ValidateUnsigned`), as such
+  /// if the block author is defined it will be defined as the equivocation
+  /// reporter.
   _i10.RuntimeCall reportEquivocationUnsigned({
     required _i11.EquivocationProof equivocationProof,
     required _i12.Void keyOwnerProof,
@@ -250,7 +268,18 @@ class Txs {
     return _i10.RuntimeCall.values.grandpa(_call);
   }
 
-  /// See [`Pallet::note_stalled`].
+  /// Note that the current authority set of the GRANDPA finality gadget has stalled.
+  ///
+  /// This will trigger a forced authority set change at the beginning of the next session, to
+  /// be enacted `delay` blocks after that. The `delay` should be high enough to safely assume
+  /// that the block signalling the forced change will not be re-orged e.g. 1000 blocks.
+  /// The block production rate (which may be slowed down because of finality lagging) should
+  /// be taken into account when choosing the `delay`. The GRANDPA voters based on the new
+  /// authority will start voting on top of `best_finalized_block_number` for new finalized
+  /// blocks. `best_finalized_block_number` should be the highest of the latest finalized
+  /// block of all validators of the new authority set.
+  ///
+  /// Only callable by root.
   _i10.RuntimeCall noteStalled({
     required int delay,
     required int bestFinalizedBlockNumber,

@@ -114,7 +114,8 @@ class $DigestItemCodec with _i1.Codec<DigestItem> {
         (value as RuntimeEnvironmentUpdated).encodeTo(output);
         break;
       default:
-        throw Exception('DigestItem: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'DigestItem: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -132,7 +133,8 @@ class $DigestItemCodec with _i1.Codec<DigestItem> {
       case RuntimeEnvironmentUpdated:
         return 1;
       default:
-        throw Exception('DigestItem: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'DigestItem: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

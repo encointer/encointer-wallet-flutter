@@ -1,8 +1,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i21;
+import 'dart:async' as _i23;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 
+import 'pallets/aura.dart' as _i21;
 import 'pallets/balances.dart' as _i6;
 import 'pallets/encointer_balances.dart' as _i15;
 import 'pallets/encointer_bazaar.dart' as _i16;
@@ -12,6 +13,7 @@ import 'pallets/encointer_democracy.dart' as _i19;
 import 'pallets/encointer_faucet.dart' as _i18;
 import 'pallets/encointer_reputation_commitments.dart' as _i17;
 import 'pallets/encointer_scheduler.dart' as _i12;
+import 'pallets/encointer_treasuries.dart' as _i22;
 import 'pallets/grandpa.dart' as _i8;
 import 'pallets/proxy.dart' as _i9;
 import 'pallets/randomness_collective_flip.dart' as _i3;
@@ -130,6 +132,8 @@ class Constants {
 
   final _i7.Constants transactionPayment = _i7.Constants();
 
+  final _i21.Constants aura = _i21.Constants();
+
   final _i8.Constants grandpa = _i8.Constants();
 
   final _i20.Constants utility = _i20.Constants();
@@ -151,6 +155,8 @@ class Constants {
   final _i18.Constants encointerFaucet = _i18.Constants();
 
   final _i19.Constants encointerDemocracy = _i19.Constants();
+
+  final _i22.Constants encointerTreasuries = _i22.Constants();
 }
 
 class Rpc {
@@ -170,11 +176,22 @@ class Registry {
   final int extrinsicVersion = 4;
 
   List getSignedExtensionTypes() {
-    return ['CheckMortality', 'CheckNonce', 'ChargeAssetTxPayment', 'CheckMetadataHash'];
+    return [
+      'CheckMortality',
+      'CheckNonce',
+      'ChargeAssetTxPayment',
+      'CheckMetadataHash'
+    ];
   }
 
   List getSignedExtensionExtra() {
-    return ['CheckSpecVersion', 'CheckTxVersion', 'CheckGenesis', 'CheckMortality', 'CheckMetadataHash'];
+    return [
+      'CheckSpecVersion',
+      'CheckTxVersion',
+      'CheckGenesis',
+      'CheckMortality',
+      'CheckMetadataHash'
+    ];
   }
 }
 
@@ -215,11 +232,11 @@ class EncointerKusama {
 
   final Registry registry;
 
-  _i21.Future connect() async {
+  _i23.Future connect() async {
     return await _provider.connect();
   }
 
-  _i21.Future disconnect() async {
+  _i23.Future disconnect() async {
     return await _provider.disconnect();
   }
 }

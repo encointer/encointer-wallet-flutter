@@ -6,8 +6,10 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
 import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i12;
-import '../types/encointer_primitives/communities/community_identifier.dart' as _i3;
-import '../types/encointer_primitives/communities/community_metadata.dart' as _i7;
+import '../types/encointer_primitives/communities/community_identifier.dart'
+    as _i3;
+import '../types/encointer_primitives/communities/community_metadata.dart'
+    as _i7;
 import '../types/encointer_primitives/communities/community_rules.dart' as _i10;
 import '../types/encointer_primitives/communities/location.dart' as _i5;
 import '../types/pallet_encointer_communities/pallet/call.dart' as _i14;
@@ -21,16 +23,20 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<_i2.GeoHash, List<_i3.CommunityIdentifier>> _communityIdentifiersByGeohash =
+  final _i1.StorageMap<_i2.GeoHash, List<_i3.CommunityIdentifier>>
+      _communityIdentifiersByGeohash =
       const _i1.StorageMap<_i2.GeoHash, List<_i3.CommunityIdentifier>>(
     prefix: 'EncointerCommunities',
     storage: 'CommunityIdentifiersByGeohash',
-    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec),
+    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(
+        _i3.CommunityIdentifier.codec),
     hasher: _i1.StorageHasher.identity(_i2.GeoHashCodec()),
   );
 
-  final _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash, List<_i5.Location>> _locations =
-      const _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash, List<_i5.Location>>(
+  final _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash,
+          List<_i5.Location>> _locations =
+      const _i1.StorageDoubleMap<_i3.CommunityIdentifier, _i2.GeoHash,
+          List<_i5.Location>>(
     prefix: 'EncointerCommunities',
     storage: 'Locations',
     valueCodec: _i4.SequenceCodec<_i5.Location>(_i5.Location.codec),
@@ -38,7 +44,8 @@ class Queries {
     hasher2: _i1.StorageHasher.identity(_i2.GeoHashCodec()),
   );
 
-  final _i1.StorageMap<_i3.CommunityIdentifier, List<_i6.AccountId32>> _bootstrappers =
+  final _i1.StorageMap<_i3.CommunityIdentifier, List<_i6.AccountId32>>
+      _bootstrappers =
       const _i1.StorageMap<_i3.CommunityIdentifier, List<_i6.AccountId32>>(
     prefix: 'EncointerCommunities',
     storage: 'Bootstrappers',
@@ -50,10 +57,12 @@ class Queries {
       const _i1.StorageValue<List<_i3.CommunityIdentifier>>(
     prefix: 'EncointerCommunities',
     storage: 'CommunityIdentifiers',
-    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec),
+    valueCodec: _i4.SequenceCodec<_i3.CommunityIdentifier>(
+        _i3.CommunityIdentifier.codec),
   );
 
-  final _i1.StorageMap<_i3.CommunityIdentifier, _i7.CommunityMetadata> _communityMetadata =
+  final _i1.StorageMap<_i3.CommunityIdentifier, _i7.CommunityMetadata>
+      _communityMetadata =
       const _i1.StorageMap<_i3.CommunityIdentifier, _i7.CommunityMetadata>(
     prefix: 'EncointerCommunities',
     storage: 'CommunityMetadata',
@@ -130,7 +139,8 @@ class Queries {
     return []; /* Default */
   }
 
-  _i9.Future<List<_i3.CommunityIdentifier>> communityIdentifiers({_i1.BlockHash? at}) async {
+  _i9.Future<List<_i3.CommunityIdentifier>> communityIdentifiers(
+      {_i1.BlockHash? at}) async {
     final hashedKey = _communityIdentifiers.hashedKey();
     final bytes = await __api.getStorage(
       hashedKey,
@@ -363,7 +373,9 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::new_community`].
+  /// Add a new community.
+  ///
+  /// May only be called from `T::TrustableForNonDestructiveAction`.
   _i12.RuntimeCall newCommunity({
     required _i5.Location location,
     required List<_i6.AccountId32> bootstrappers,
@@ -381,7 +393,11 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::add_location`].
+  /// Add a new meetup `location` to the community with `cid`.
+  ///
+  /// May only be called from `T::TrustableForNonDestructiveAction`.
+  ///
+  /// Todo: Replace `T::CommunityMaster` with community governance: #137.
   _i12.RuntimeCall addLocation({
     required _i3.CommunityIdentifier cid,
     required _i5.Location location,
@@ -393,7 +409,11 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::remove_location`].
+  /// Remove an existing meetup `location` from the community with `cid`.
+  ///
+  /// May only be called from `T::CommunityMaster`.
+  ///
+  /// Todo: Replace `T::CommunityMaster` with community governance: #137.
   _i12.RuntimeCall removeLocation({
     required _i3.CommunityIdentifier cid,
     required _i5.Location location,
@@ -405,7 +425,9 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::update_community_metadata`].
+  /// Update the metadata of the community with `cid`.
+  ///
+  /// May only be called from `T::CommunityMaster`.
   _i12.RuntimeCall updateCommunityMetadata({
     required _i3.CommunityIdentifier cid,
     required _i7.CommunityMetadata communityMetadata,
@@ -417,7 +439,6 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::update_demurrage`].
   _i12.RuntimeCall updateDemurrage({
     required _i3.CommunityIdentifier cid,
     required _i13.FixedI128 demurrage,
@@ -429,7 +450,6 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::update_nominal_income`].
   _i12.RuntimeCall updateNominalIncome({
     required _i3.CommunityIdentifier cid,
     required _i8.FixedU128 nominalIncome,
@@ -441,19 +461,17 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::set_min_solar_trip_time_s`].
   _i12.RuntimeCall setMinSolarTripTimeS({required int minSolarTripTimeS}) {
-    final _call = _i14.Call.values.setMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS);
+    final _call = _i14.Call.values
+        .setMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS);
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::set_max_speed_mps`].
   _i12.RuntimeCall setMaxSpeedMps({required int maxSpeedMps}) {
     final _call = _i14.Call.values.setMaxSpeedMps(maxSpeedMps: maxSpeedMps);
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::purge_community`].
   _i12.RuntimeCall purgeCommunity({required _i3.CommunityIdentifier cid}) {
     final _call = _i14.Call.values.purgeCommunity(cid: cid);
     return _i12.RuntimeCall.values.encointerCommunities(_call);

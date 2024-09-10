@@ -34,10 +34,6 @@ abstract class Event {
 class $Event {
   const $Event();
 
-  Proposed proposed({required int proposalIndex}) {
-    return Proposed(proposalIndex: proposalIndex);
-  }
-
   Spending spending({required BigInt budgetRemaining}) {
     return Spending(budgetRemaining: budgetRemaining);
   }
@@ -51,16 +47,6 @@ class $Event {
       proposalIndex: proposalIndex,
       award: award,
       account: account,
-    );
-  }
-
-  Rejected rejected({
-    required int proposalIndex,
-    required BigInt slashed,
-  }) {
-    return Rejected(
-      proposalIndex: proposalIndex,
-      slashed: slashed,
     );
   }
 
@@ -153,32 +139,28 @@ class $EventCodec with _i1.Codec<Event> {
     final index = _i1.U8Codec.codec.decode(input);
     switch (index) {
       case 0:
-        return Proposed._decode(input);
-      case 1:
         return Spending._decode(input);
-      case 2:
+      case 1:
         return Awarded._decode(input);
-      case 3:
-        return Rejected._decode(input);
-      case 4:
+      case 2:
         return Burnt._decode(input);
-      case 5:
+      case 3:
         return Rollover._decode(input);
-      case 6:
+      case 4:
         return Deposit._decode(input);
-      case 7:
+      case 5:
         return SpendApproved._decode(input);
-      case 8:
+      case 6:
         return UpdatedInactive._decode(input);
-      case 9:
+      case 7:
         return AssetSpendApproved._decode(input);
-      case 10:
+      case 8:
         return AssetSpendVoided._decode(input);
-      case 11:
+      case 9:
         return Paid._decode(input);
-      case 12:
+      case 10:
         return PaymentFailed._decode(input);
-      case 13:
+      case 11:
         return SpendProcessed._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
@@ -191,17 +173,11 @@ class $EventCodec with _i1.Codec<Event> {
     _i1.Output output,
   ) {
     switch (value.runtimeType) {
-      case Proposed:
-        (value as Proposed).encodeTo(output);
-        break;
       case Spending:
         (value as Spending).encodeTo(output);
         break;
       case Awarded:
         (value as Awarded).encodeTo(output);
-        break;
-      case Rejected:
-        (value as Rejected).encodeTo(output);
         break;
       case Burnt:
         (value as Burnt).encodeTo(output);
@@ -234,21 +210,18 @@ class $EventCodec with _i1.Codec<Event> {
         (value as SpendProcessed).encodeTo(output);
         break;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
   @override
   int sizeHint(Event value) {
     switch (value.runtimeType) {
-      case Proposed:
-        return (value as Proposed)._sizeHint();
       case Spending:
         return (value as Spending)._sizeHint();
       case Awarded:
         return (value as Awarded)._sizeHint();
-      case Rejected:
-        return (value as Rejected)._sizeHint();
       case Burnt:
         return (value as Burnt)._sizeHint();
       case Rollover:
@@ -270,54 +243,10 @@ class $EventCodec with _i1.Codec<Event> {
       case SpendProcessed:
         return (value as SpendProcessed)._sizeHint();
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
-}
-
-/// New proposal.
-class Proposed extends Event {
-  const Proposed({required this.proposalIndex});
-
-  factory Proposed._decode(_i1.Input input) {
-    return Proposed(proposalIndex: _i1.U32Codec.codec.decode(input));
-  }
-
-  /// ProposalIndex
-  final int proposalIndex;
-
-  @override
-  Map<String, Map<String, int>> toJson() => {
-        'Proposed': {'proposalIndex': proposalIndex}
-      };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i1.U32Codec.codec.sizeHint(proposalIndex);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      0,
-      output,
-    );
-    _i1.U32Codec.codec.encodeTo(
-      proposalIndex,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is Proposed && other.proposalIndex == proposalIndex;
-
-  @override
-  int get hashCode => proposalIndex.hashCode;
 }
 
 /// We have ended a spend period and will now allocate funds.
@@ -344,7 +273,7 @@ class Spending extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      1,
+      0,
       output,
     );
     _i1.U128Codec.codec.encodeTo(
@@ -409,7 +338,7 @@ class Awarded extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      2,
+      1,
       output,
     );
     _i1.U32Codec.codec.encodeTo(
@@ -448,71 +377,6 @@ class Awarded extends Event {
       );
 }
 
-/// A proposal was rejected; funds were slashed.
-class Rejected extends Event {
-  const Rejected({
-    required this.proposalIndex,
-    required this.slashed,
-  });
-
-  factory Rejected._decode(_i1.Input input) {
-    return Rejected(
-      proposalIndex: _i1.U32Codec.codec.decode(input),
-      slashed: _i1.U128Codec.codec.decode(input),
-    );
-  }
-
-  /// ProposalIndex
-  final int proposalIndex;
-
-  /// BalanceOf<T, I>
-  final BigInt slashed;
-
-  @override
-  Map<String, Map<String, dynamic>> toJson() => {
-        'Rejected': {
-          'proposalIndex': proposalIndex,
-          'slashed': slashed,
-        }
-      };
-
-  int _sizeHint() {
-    int size = 1;
-    size = size + _i1.U32Codec.codec.sizeHint(proposalIndex);
-    size = size + _i1.U128Codec.codec.sizeHint(slashed);
-    return size;
-  }
-
-  void encodeTo(_i1.Output output) {
-    _i1.U8Codec.codec.encodeTo(
-      3,
-      output,
-    );
-    _i1.U32Codec.codec.encodeTo(
-      proposalIndex,
-      output,
-    );
-    _i1.U128Codec.codec.encodeTo(
-      slashed,
-      output,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(
-        this,
-        other,
-      ) ||
-      other is Rejected && other.proposalIndex == proposalIndex && other.slashed == slashed;
-
-  @override
-  int get hashCode => Object.hash(
-        proposalIndex,
-        slashed,
-      );
-}
-
 /// Some of our funds have been burnt.
 class Burnt extends Event {
   const Burnt({required this.burntFunds});
@@ -537,7 +401,7 @@ class Burnt extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      4,
+      2,
       output,
     );
     _i1.U128Codec.codec.encodeTo(
@@ -582,7 +446,7 @@ class Rollover extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      5,
+      3,
       output,
     );
     _i1.U128Codec.codec.encodeTo(
@@ -627,7 +491,7 @@ class Deposit extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      6,
+      4,
       output,
     );
     _i1.U128Codec.codec.encodeTo(
@@ -692,7 +556,7 @@ class SpendApproved extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      7,
+      5,
       output,
     );
     _i1.U32Codec.codec.encodeTo(
@@ -768,7 +632,7 @@ class UpdatedInactive extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      8,
+      6,
       output,
     );
     _i1.U128Codec.codec.encodeTo(
@@ -787,7 +651,9 @@ class UpdatedInactive extends Event {
         this,
         other,
       ) ||
-      other is UpdatedInactive && other.reactivated == reactivated && other.deactivated == deactivated;
+      other is UpdatedInactive &&
+          other.reactivated == reactivated &&
+          other.deactivated == deactivated;
 
   @override
   int get hashCode => Object.hash(
@@ -861,7 +727,7 @@ class AssetSpendApproved extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      9,
+      7,
       output,
     );
     _i1.U32Codec.codec.encodeTo(
@@ -942,7 +808,7 @@ class AssetSpendVoided extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      10,
+      8,
       output,
     );
     _i1.U32Codec.codec.encodeTo(
@@ -1000,7 +866,7 @@ class Paid extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      11,
+      9,
       output,
     );
     _i1.U32Codec.codec.encodeTo(
@@ -1065,7 +931,7 @@ class PaymentFailed extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      12,
+      10,
       output,
     );
     _i1.U32Codec.codec.encodeTo(
@@ -1084,7 +950,9 @@ class PaymentFailed extends Event {
         this,
         other,
       ) ||
-      other is PaymentFailed && other.index == index && other.paymentId == paymentId;
+      other is PaymentFailed &&
+          other.index == index &&
+          other.paymentId == paymentId;
 
   @override
   int get hashCode => Object.hash(
@@ -1118,7 +986,7 @@ class SpendProcessed extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      13,
+      11,
       output,
     );
     _i1.U32Codec.codec.encodeTo(

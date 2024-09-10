@@ -112,7 +112,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as RemoveKey).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -130,12 +131,13 @@ class $CallCodec with _i1.Codec<Call> {
       case RemoveKey:
         return 1;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
 
-/// See [`Pallet::sudo`].
+/// Authenticates the sudo key and dispatches a function call with `Root` origin.
 class Sudo extends Call {
   const Sudo({required this.call});
 
@@ -180,7 +182,11 @@ class Sudo extends Call {
   int get hashCode => call.hashCode;
 }
 
-/// See [`Pallet::sudo_unchecked_weight`].
+/// Authenticates the sudo key and dispatches a function call with `Root` origin.
+/// This function does not check the weight of the call, and instead allows the
+/// Sudo user to specify the weight of the call.
+///
+/// The dispatch origin for this call must be _Signed_.
 class SudoUncheckedWeight extends Call {
   const SudoUncheckedWeight({
     required this.call,
@@ -236,7 +242,9 @@ class SudoUncheckedWeight extends Call {
         this,
         other,
       ) ||
-      other is SudoUncheckedWeight && other.call == call && other.weight == weight;
+      other is SudoUncheckedWeight &&
+          other.call == call &&
+          other.weight == weight;
 
   @override
   int get hashCode => Object.hash(
@@ -245,7 +253,8 @@ class SudoUncheckedWeight extends Call {
       );
 }
 
-/// See [`Pallet::set_key`].
+/// Authenticates the current sudo key and sets the given AccountId (`new`) as the new sudo
+/// key.
 class SetKey extends Call {
   const SetKey({required this.new_});
 
@@ -290,7 +299,10 @@ class SetKey extends Call {
   int get hashCode => new_.hashCode;
 }
 
-/// See [`Pallet::sudo_as`].
+/// Authenticates the sudo key and dispatches a function call with `Signed` origin from
+/// a given account.
+///
+/// The dispatch origin for this call must be _Signed_.
 class SudoAs extends Call {
   const SudoAs({
     required this.who,
@@ -355,7 +367,9 @@ class SudoAs extends Call {
       );
 }
 
-/// See [`Pallet::remove_key`].
+/// Permanently removes the sudo key.
+///
+/// **This cannot be un-done.**
 class RemoveKey extends Call {
   const RemoveKey();
 

@@ -5,7 +5,8 @@ import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i7;
 
 import '../../encointer_primitives/ceremonies/proof_of_attendance.dart' as _i4;
-import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart'
+    as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i6;
 import '../../tuples.dart' as _i5;
 
@@ -105,14 +106,18 @@ class $Call {
 
   SetEndorsementTicketsPerBootstrapper setEndorsementTicketsPerBootstrapper(
       {required int endorsementTicketsPerBootstrapper}) {
-    return SetEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
+    return SetEndorsementTicketsPerBootstrapper(
+        endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
   }
 
-  SetEndorsementTicketsPerReputable setEndorsementTicketsPerReputable({required int endorsementTicketsPerReputable}) {
-    return SetEndorsementTicketsPerReputable(endorsementTicketsPerReputable: endorsementTicketsPerReputable);
+  SetEndorsementTicketsPerReputable setEndorsementTicketsPerReputable(
+      {required int endorsementTicketsPerReputable}) {
+    return SetEndorsementTicketsPerReputable(
+        endorsementTicketsPerReputable: endorsementTicketsPerReputable);
   }
 
-  SetReputationLifetime setReputationLifetime({required int reputationLifetime}) {
+  SetReputationLifetime setReputationLifetime(
+      {required int reputationLifetime}) {
     return SetReputationLifetime(reputationLifetime: reputationLifetime);
   }
 
@@ -128,7 +133,8 @@ class $Call {
     return SetLocationTolerance(locationTolerance: locationTolerance);
   }
 
-  PurgeCommunityCeremony purgeCommunityCeremony({required _i5.Tuple2<_i3.CommunityIdentifier, int> communityCeremony}) {
+  PurgeCommunityCeremony purgeCommunityCeremony(
+      {required _i5.Tuple2<_i3.CommunityIdentifier, int> communityCeremony}) {
     return PurgeCommunityCeremony(communityCeremony: communityCeremony);
   }
 }
@@ -222,7 +228,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as PurgeCommunityCeremony).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -258,12 +265,12 @@ class $CallCodec with _i1.Codec<Call> {
       case PurgeCommunityCeremony:
         return (value as PurgeCommunityCeremony)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
 
-/// See [`Pallet::register_participant`].
 class RegisterParticipant extends Call {
   const RegisterParticipant({
     required this.cid,
@@ -273,7 +280,9 @@ class RegisterParticipant extends Call {
   factory RegisterParticipant._decode(_i1.Input input) {
     return RegisterParticipant(
       cid: _i3.CommunityIdentifier.codec.decode(input),
-      proof: const _i1.OptionCodec<_i4.ProofOfAttendance>(_i4.ProofOfAttendance.codec).decode(input),
+      proof: const _i1.OptionCodec<_i4.ProofOfAttendance>(
+              _i4.ProofOfAttendance.codec)
+          .decode(input),
     );
   }
 
@@ -294,7 +303,10 @@ class RegisterParticipant extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
-    size = size + const _i1.OptionCodec<_i4.ProofOfAttendance>(_i4.ProofOfAttendance.codec).sizeHint(proof);
+    size = size +
+        const _i1.OptionCodec<_i4.ProofOfAttendance>(
+                _i4.ProofOfAttendance.codec)
+            .sizeHint(proof);
     return size;
   }
 
@@ -307,7 +319,8 @@ class RegisterParticipant extends Call {
       cid,
       output,
     );
-    const _i1.OptionCodec<_i4.ProofOfAttendance>(_i4.ProofOfAttendance.codec).encodeTo(
+    const _i1.OptionCodec<_i4.ProofOfAttendance>(_i4.ProofOfAttendance.codec)
+        .encodeTo(
       proof,
       output,
     );
@@ -328,7 +341,6 @@ class RegisterParticipant extends Call {
       );
 }
 
-/// See [`Pallet::upgrade_registration`].
 class UpgradeRegistration extends Call {
   const UpgradeRegistration({
     required this.cid,
@@ -393,7 +405,6 @@ class UpgradeRegistration extends Call {
       );
 }
 
-/// See [`Pallet::unregister_participant`].
 class UnregisterParticipant extends Call {
   const UnregisterParticipant({
     required this.cid,
@@ -404,7 +415,8 @@ class UnregisterParticipant extends Call {
     return UnregisterParticipant(
       cid: _i3.CommunityIdentifier.codec.decode(input),
       maybeReputationCommunityCeremony:
-          const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(_i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
+          const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(
+              _i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
         _i3.CommunityIdentifier.codec,
         _i1.U32Codec.codec,
       )).decode(input),
@@ -415,7 +427,8 @@ class UnregisterParticipant extends Call {
   final _i3.CommunityIdentifier cid;
 
   /// Option<CommunityCeremony>
-  final _i5.Tuple2<_i3.CommunityIdentifier, int>? maybeReputationCommunityCeremony;
+  final _i5.Tuple2<_i3.CommunityIdentifier, int>?
+      maybeReputationCommunityCeremony;
 
   @override
   Map<String, Map<String, dynamic>> toJson() => {
@@ -432,7 +445,8 @@ class UnregisterParticipant extends Call {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
     size = size +
-        const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(_i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
+        const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(
+            _i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
           _i3.CommunityIdentifier.codec,
           _i1.U32Codec.codec,
         )).sizeHint(maybeReputationCommunityCeremony);
@@ -448,7 +462,8 @@ class UnregisterParticipant extends Call {
       cid,
       output,
     );
-    const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(_i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
+    const _i1.OptionCodec<_i5.Tuple2<_i3.CommunityIdentifier, int>>(
+        _i5.Tuple2Codec<_i3.CommunityIdentifier, int>(
       _i3.CommunityIdentifier.codec,
       _i1.U32Codec.codec,
     )).encodeTo(
@@ -465,7 +480,8 @@ class UnregisterParticipant extends Call {
       ) ||
       other is UnregisterParticipant &&
           other.cid == cid &&
-          other.maybeReputationCommunityCeremony == maybeReputationCommunityCeremony;
+          other.maybeReputationCommunityCeremony ==
+              maybeReputationCommunityCeremony;
 
   @override
   int get hashCode => Object.hash(
@@ -474,7 +490,6 @@ class UnregisterParticipant extends Call {
       );
 }
 
-/// See [`Pallet::attest_attendees`].
 class AttestAttendees extends Call {
   const AttestAttendees({
     required this.cid,
@@ -486,7 +501,9 @@ class AttestAttendees extends Call {
     return AttestAttendees(
       cid: _i3.CommunityIdentifier.codec.decode(input),
       numberOfParticipantsVote: _i1.U32Codec.codec.decode(input),
-      attestations: const _i1.SequenceCodec<_i6.AccountId32>(_i6.AccountId32Codec()).decode(input),
+      attestations:
+          const _i1.SequenceCodec<_i6.AccountId32>(_i6.AccountId32Codec())
+              .decode(input),
     );
   }
 
@@ -512,7 +529,9 @@ class AttestAttendees extends Call {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
     size = size + _i1.U32Codec.codec.sizeHint(numberOfParticipantsVote);
-    size = size + const _i1.SequenceCodec<_i6.AccountId32>(_i6.AccountId32Codec()).sizeHint(attestations);
+    size = size +
+        const _i1.SequenceCodec<_i6.AccountId32>(_i6.AccountId32Codec())
+            .sizeHint(attestations);
     return size;
   }
 
@@ -557,7 +576,6 @@ class AttestAttendees extends Call {
       );
 }
 
-/// See [`Pallet::endorse_newcomer`].
 class EndorseNewcomer extends Call {
   const EndorseNewcomer({
     required this.cid,
@@ -627,7 +645,6 @@ class EndorseNewcomer extends Call {
       );
 }
 
-/// See [`Pallet::claim_rewards`].
 class ClaimRewards extends Call {
   const ClaimRewards({
     required this.cid,
@@ -637,7 +654,8 @@ class ClaimRewards extends Call {
   factory ClaimRewards._decode(_i1.Input input) {
     return ClaimRewards(
       cid: _i3.CommunityIdentifier.codec.decode(input),
-      maybeMeetupIndex: const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).decode(input),
+      maybeMeetupIndex:
+          const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).decode(input),
     );
   }
 
@@ -658,7 +676,9 @@ class ClaimRewards extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.CommunityIdentifier.codec.sizeHint(cid);
-    size = size + const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec).sizeHint(maybeMeetupIndex);
+    size = size +
+        const _i1.OptionCodec<BigInt>(_i1.U64Codec.codec)
+            .sizeHint(maybeMeetupIndex);
     return size;
   }
 
@@ -683,7 +703,9 @@ class ClaimRewards extends Call {
         this,
         other,
       ) ||
-      other is ClaimRewards && other.cid == cid && other.maybeMeetupIndex == maybeMeetupIndex;
+      other is ClaimRewards &&
+          other.cid == cid &&
+          other.maybeMeetupIndex == maybeMeetupIndex;
 
   @override
   int get hashCode => Object.hash(
@@ -692,12 +714,12 @@ class ClaimRewards extends Call {
       );
 }
 
-/// See [`Pallet::set_inactivity_timeout`].
 class SetInactivityTimeout extends Call {
   const SetInactivityTimeout({required this.inactivityTimeout});
 
   factory SetInactivityTimeout._decode(_i1.Input input) {
-    return SetInactivityTimeout(inactivityTimeout: _i1.U32Codec.codec.decode(input));
+    return SetInactivityTimeout(
+        inactivityTimeout: _i1.U32Codec.codec.decode(input));
   }
 
   /// InactivityTimeoutType
@@ -731,18 +753,20 @@ class SetInactivityTimeout extends Call {
         this,
         other,
       ) ||
-      other is SetInactivityTimeout && other.inactivityTimeout == inactivityTimeout;
+      other is SetInactivityTimeout &&
+          other.inactivityTimeout == inactivityTimeout;
 
   @override
   int get hashCode => inactivityTimeout.hashCode;
 }
 
-/// See [`Pallet::set_endorsement_tickets_per_bootstrapper`].
 class SetEndorsementTicketsPerBootstrapper extends Call {
-  const SetEndorsementTicketsPerBootstrapper({required this.endorsementTicketsPerBootstrapper});
+  const SetEndorsementTicketsPerBootstrapper(
+      {required this.endorsementTicketsPerBootstrapper});
 
   factory SetEndorsementTicketsPerBootstrapper._decode(_i1.Input input) {
-    return SetEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: _i1.U8Codec.codec.decode(input));
+    return SetEndorsementTicketsPerBootstrapper(
+        endorsementTicketsPerBootstrapper: _i1.U8Codec.codec.decode(input));
   }
 
   /// EndorsementTicketsType
@@ -779,18 +803,20 @@ class SetEndorsementTicketsPerBootstrapper extends Call {
         other,
       ) ||
       other is SetEndorsementTicketsPerBootstrapper &&
-          other.endorsementTicketsPerBootstrapper == endorsementTicketsPerBootstrapper;
+          other.endorsementTicketsPerBootstrapper ==
+              endorsementTicketsPerBootstrapper;
 
   @override
   int get hashCode => endorsementTicketsPerBootstrapper.hashCode;
 }
 
-/// See [`Pallet::set_endorsement_tickets_per_reputable`].
 class SetEndorsementTicketsPerReputable extends Call {
-  const SetEndorsementTicketsPerReputable({required this.endorsementTicketsPerReputable});
+  const SetEndorsementTicketsPerReputable(
+      {required this.endorsementTicketsPerReputable});
 
   factory SetEndorsementTicketsPerReputable._decode(_i1.Input input) {
-    return SetEndorsementTicketsPerReputable(endorsementTicketsPerReputable: _i1.U8Codec.codec.decode(input));
+    return SetEndorsementTicketsPerReputable(
+        endorsementTicketsPerReputable: _i1.U8Codec.codec.decode(input));
   }
 
   /// EndorsementTicketsType
@@ -798,7 +824,9 @@ class SetEndorsementTicketsPerReputable extends Call {
 
   @override
   Map<String, Map<String, int>> toJson() => {
-        'set_endorsement_tickets_per_reputable': {'endorsementTicketsPerReputable': endorsementTicketsPerReputable}
+        'set_endorsement_tickets_per_reputable': {
+          'endorsementTicketsPerReputable': endorsementTicketsPerReputable
+        }
       };
 
   int _sizeHint() {
@@ -825,18 +853,19 @@ class SetEndorsementTicketsPerReputable extends Call {
         other,
       ) ||
       other is SetEndorsementTicketsPerReputable &&
-          other.endorsementTicketsPerReputable == endorsementTicketsPerReputable;
+          other.endorsementTicketsPerReputable ==
+              endorsementTicketsPerReputable;
 
   @override
   int get hashCode => endorsementTicketsPerReputable.hashCode;
 }
 
-/// See [`Pallet::set_reputation_lifetime`].
 class SetReputationLifetime extends Call {
   const SetReputationLifetime({required this.reputationLifetime});
 
   factory SetReputationLifetime._decode(_i1.Input input) {
-    return SetReputationLifetime(reputationLifetime: _i1.U32Codec.codec.decode(input));
+    return SetReputationLifetime(
+        reputationLifetime: _i1.U32Codec.codec.decode(input));
   }
 
   /// ReputationLifetimeType
@@ -870,18 +899,19 @@ class SetReputationLifetime extends Call {
         this,
         other,
       ) ||
-      other is SetReputationLifetime && other.reputationLifetime == reputationLifetime;
+      other is SetReputationLifetime &&
+          other.reputationLifetime == reputationLifetime;
 
   @override
   int get hashCode => reputationLifetime.hashCode;
 }
 
-/// See [`Pallet::set_meetup_time_offset`].
 class SetMeetupTimeOffset extends Call {
   const SetMeetupTimeOffset({required this.meetupTimeOffset});
 
   factory SetMeetupTimeOffset._decode(_i1.Input input) {
-    return SetMeetupTimeOffset(meetupTimeOffset: _i1.I32Codec.codec.decode(input));
+    return SetMeetupTimeOffset(
+        meetupTimeOffset: _i1.I32Codec.codec.decode(input));
   }
 
   /// MeetupTimeOffsetType
@@ -915,13 +945,13 @@ class SetMeetupTimeOffset extends Call {
         this,
         other,
       ) ||
-      other is SetMeetupTimeOffset && other.meetupTimeOffset == meetupTimeOffset;
+      other is SetMeetupTimeOffset &&
+          other.meetupTimeOffset == meetupTimeOffset;
 
   @override
   int get hashCode => meetupTimeOffset.hashCode;
 }
 
-/// See [`Pallet::set_time_tolerance`].
 class SetTimeTolerance extends Call {
   const SetTimeTolerance({required this.timeTolerance});
 
@@ -966,12 +996,12 @@ class SetTimeTolerance extends Call {
   int get hashCode => timeTolerance.hashCode;
 }
 
-/// See [`Pallet::set_location_tolerance`].
 class SetLocationTolerance extends Call {
   const SetLocationTolerance({required this.locationTolerance});
 
   factory SetLocationTolerance._decode(_i1.Input input) {
-    return SetLocationTolerance(locationTolerance: _i1.U32Codec.codec.decode(input));
+    return SetLocationTolerance(
+        locationTolerance: _i1.U32Codec.codec.decode(input));
   }
 
   /// u32
@@ -1005,13 +1035,13 @@ class SetLocationTolerance extends Call {
         this,
         other,
       ) ||
-      other is SetLocationTolerance && other.locationTolerance == locationTolerance;
+      other is SetLocationTolerance &&
+          other.locationTolerance == locationTolerance;
 
   @override
   int get hashCode => locationTolerance.hashCode;
 }
 
-/// See [`Pallet::purge_community_ceremony`].
 class PurgeCommunityCeremony extends Call {
   const PurgeCommunityCeremony({required this.communityCeremony});
 
@@ -1066,7 +1096,8 @@ class PurgeCommunityCeremony extends Call {
         this,
         other,
       ) ||
-      other is PurgeCommunityCeremony && other.communityCeremony == communityCeremony;
+      other is PurgeCommunityCeremony &&
+          other.communityCeremony == communityCeremony;
 
   @override
   int get hashCode => communityCeremony.hashCode;

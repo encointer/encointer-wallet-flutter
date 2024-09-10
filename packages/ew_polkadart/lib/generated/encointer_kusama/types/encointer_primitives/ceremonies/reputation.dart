@@ -86,7 +86,8 @@ class $ReputationCodec with _i1.Codec<Reputation> {
         (value as VerifiedLinked).encodeTo(output);
         break;
       default:
-        throw Exception('Reputation: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Reputation: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -102,7 +103,8 @@ class $ReputationCodec with _i1.Codec<Reputation> {
       case VerifiedLinked:
         return (value as VerifiedLinked)._sizeHint();
       default:
-        throw Exception('Reputation: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Reputation: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

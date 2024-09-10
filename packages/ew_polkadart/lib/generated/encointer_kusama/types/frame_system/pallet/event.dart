@@ -138,7 +138,8 @@ class $EventCodec with _i1.Codec<Event> {
         (value as UpgradeAuthorized).encodeTo(output);
         break;
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -160,7 +161,8 @@ class $EventCodec with _i1.Codec<Event> {
       case UpgradeAuthorized:
         return (value as UpgradeAuthorized)._sizeHint();
       default:
-        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -266,7 +268,9 @@ class ExtrinsicFailed extends Event {
         this,
         other,
       ) ||
-      other is ExtrinsicFailed && other.dispatchError == dispatchError && other.dispatchInfo == dispatchInfo;
+      other is ExtrinsicFailed &&
+          other.dispatchError == dispatchError &&
+          other.dispatchInfo == dispatchInfo;
 
   @override
   int get hashCode => Object.hash(

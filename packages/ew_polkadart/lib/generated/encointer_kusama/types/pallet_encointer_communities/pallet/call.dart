@@ -4,7 +4,8 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i9;
 
-import '../../encointer_primitives/communities/community_identifier.dart' as _i8;
+import '../../encointer_primitives/communities/community_identifier.dart'
+    as _i8;
 import '../../encointer_primitives/communities/community_metadata.dart' as _i5;
 import '../../encointer_primitives/communities/location.dart' as _i3;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
@@ -182,7 +183,8 @@ class $CallCodec with _i1.Codec<Call> {
         (value as PurgeCommunity).encodeTo(output);
         break;
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -208,12 +210,15 @@ class $CallCodec with _i1.Codec<Call> {
       case PurgeCommunity:
         return (value as PurgeCommunity)._sizeHint();
       default:
-        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception(
+            'Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
 
-/// See [`Pallet::new_community`].
+/// Add a new community.
+///
+/// May only be called from `T::TrustableForNonDestructiveAction`.
 class NewCommunity extends Call {
   const NewCommunity({
     required this.location,
@@ -226,10 +231,14 @@ class NewCommunity extends Call {
   factory NewCommunity._decode(_i1.Input input) {
     return NewCommunity(
       location: _i3.Location.codec.decode(input),
-      bootstrappers: const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).decode(input),
+      bootstrappers:
+          const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec())
+              .decode(input),
       communityMetadata: _i5.CommunityMetadata.codec.decode(input),
-      demurrage: const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec).decode(input),
-      nominalIncome: const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec).decode(input),
+      demurrage: const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec)
+          .decode(input),
+      nominalIncome: const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec)
+          .decode(input),
     );
   }
 
@@ -252,7 +261,8 @@ class NewCommunity extends Call {
   Map<String, Map<String, dynamic>> toJson() => {
         'new_community': {
           'location': location.toJson(),
-          'bootstrappers': bootstrappers.map((value) => value.toList()).toList(),
+          'bootstrappers':
+              bootstrappers.map((value) => value.toList()).toList(),
           'communityMetadata': communityMetadata.toJson(),
           'demurrage': demurrage?.toJson(),
           'nominalIncome': nominalIncome?.toJson(),
@@ -262,10 +272,16 @@ class NewCommunity extends Call {
   int _sizeHint() {
     int size = 1;
     size = size + _i3.Location.codec.sizeHint(location);
-    size = size + const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec()).sizeHint(bootstrappers);
+    size = size +
+        const _i1.SequenceCodec<_i4.AccountId32>(_i4.AccountId32Codec())
+            .sizeHint(bootstrappers);
     size = size + _i5.CommunityMetadata.codec.sizeHint(communityMetadata);
-    size = size + const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec).sizeHint(demurrage);
-    size = size + const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec).sizeHint(nominalIncome);
+    size = size +
+        const _i1.OptionCodec<_i6.FixedI128>(_i6.FixedI128.codec)
+            .sizeHint(demurrage);
+    size = size +
+        const _i1.OptionCodec<_i7.FixedU128>(_i7.FixedU128.codec)
+            .sizeHint(nominalIncome);
     return size;
   }
 
@@ -322,7 +338,11 @@ class NewCommunity extends Call {
       );
 }
 
-/// See [`Pallet::add_location`].
+/// Add a new meetup `location` to the community with `cid`.
+///
+/// May only be called from `T::TrustableForNonDestructiveAction`.
+///
+/// Todo: Replace `T::CommunityMaster` with community governance: #137.
 class AddLocation extends Call {
   const AddLocation({
     required this.cid,
@@ -387,7 +407,11 @@ class AddLocation extends Call {
       );
 }
 
-/// See [`Pallet::remove_location`].
+/// Remove an existing meetup `location` from the community with `cid`.
+///
+/// May only be called from `T::CommunityMaster`.
+///
+/// Todo: Replace `T::CommunityMaster` with community governance: #137.
 class RemoveLocation extends Call {
   const RemoveLocation({
     required this.cid,
@@ -452,7 +476,9 @@ class RemoveLocation extends Call {
       );
 }
 
-/// See [`Pallet::update_community_metadata`].
+/// Update the metadata of the community with `cid`.
+///
+/// May only be called from `T::CommunityMaster`.
 class UpdateCommunityMetadata extends Call {
   const UpdateCommunityMetadata({
     required this.cid,
@@ -508,7 +534,9 @@ class UpdateCommunityMetadata extends Call {
         this,
         other,
       ) ||
-      other is UpdateCommunityMetadata && other.cid == cid && other.communityMetadata == communityMetadata;
+      other is UpdateCommunityMetadata &&
+          other.cid == cid &&
+          other.communityMetadata == communityMetadata;
 
   @override
   int get hashCode => Object.hash(
@@ -517,7 +545,6 @@ class UpdateCommunityMetadata extends Call {
       );
 }
 
-/// See [`Pallet::update_demurrage`].
 class UpdateDemurrage extends Call {
   const UpdateDemurrage({
     required this.cid,
@@ -573,7 +600,9 @@ class UpdateDemurrage extends Call {
         this,
         other,
       ) ||
-      other is UpdateDemurrage && other.cid == cid && other.demurrage == demurrage;
+      other is UpdateDemurrage &&
+          other.cid == cid &&
+          other.demurrage == demurrage;
 
   @override
   int get hashCode => Object.hash(
@@ -582,7 +611,6 @@ class UpdateDemurrage extends Call {
       );
 }
 
-/// See [`Pallet::update_nominal_income`].
 class UpdateNominalIncome extends Call {
   const UpdateNominalIncome({
     required this.cid,
@@ -638,7 +666,9 @@ class UpdateNominalIncome extends Call {
         this,
         other,
       ) ||
-      other is UpdateNominalIncome && other.cid == cid && other.nominalIncome == nominalIncome;
+      other is UpdateNominalIncome &&
+          other.cid == cid &&
+          other.nominalIncome == nominalIncome;
 
   @override
   int get hashCode => Object.hash(
@@ -647,12 +677,12 @@ class UpdateNominalIncome extends Call {
       );
 }
 
-/// See [`Pallet::set_min_solar_trip_time_s`].
 class SetMinSolarTripTimeS extends Call {
   const SetMinSolarTripTimeS({required this.minSolarTripTimeS});
 
   factory SetMinSolarTripTimeS._decode(_i1.Input input) {
-    return SetMinSolarTripTimeS(minSolarTripTimeS: _i1.U32Codec.codec.decode(input));
+    return SetMinSolarTripTimeS(
+        minSolarTripTimeS: _i1.U32Codec.codec.decode(input));
   }
 
   /// MinSolarTripTimeType
@@ -686,13 +716,13 @@ class SetMinSolarTripTimeS extends Call {
         this,
         other,
       ) ||
-      other is SetMinSolarTripTimeS && other.minSolarTripTimeS == minSolarTripTimeS;
+      other is SetMinSolarTripTimeS &&
+          other.minSolarTripTimeS == minSolarTripTimeS;
 
   @override
   int get hashCode => minSolarTripTimeS.hashCode;
 }
 
-/// See [`Pallet::set_max_speed_mps`].
 class SetMaxSpeedMps extends Call {
   const SetMaxSpeedMps({required this.maxSpeedMps});
 
@@ -737,7 +767,6 @@ class SetMaxSpeedMps extends Call {
   int get hashCode => maxSpeedMps.hashCode;
 }
 
-/// See [`Pallet::purge_community`].
 class PurgeCommunity extends Call {
   const PurgeCommunity({required this.cid});
 
