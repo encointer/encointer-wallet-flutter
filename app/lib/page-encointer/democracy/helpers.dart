@@ -20,7 +20,9 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         SetInactivityTimeout,
         Tally,
         UpdateDemurrage,
-        UpdateNominalIncome;
+        UpdateNominalIncome,
+        SpendNative;
+
 
 /// Gets the localized proposal action title.
 ///
@@ -52,6 +54,9 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       return 'Remove Location (unsupported)';
     case SetInactivityTimeout:
       return 'SetInactivity Timeout (unsupported)';
+    case SpendNative:
+      final maybecid = (action as SpendNative).value0;
+      return 'SpendNative (unsupported)';
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
@@ -80,6 +85,10 @@ et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action
       return (action as UpdateNominalIncome).value0;
     case SetInactivityTimeout:
       // This is a global action hence all communities can vote for it.
+      return null;
+    case SpendNative:
+      // return (action as SpendNative).value0;
+      // fixme! handle maybecid
       return null;
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
