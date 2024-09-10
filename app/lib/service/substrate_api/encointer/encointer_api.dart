@@ -734,21 +734,24 @@ class EncointerApi {
 
   Future<Map<BigInt, Proposal>> getProposals(List<BigInt> proposalIds, {BlockHash? at}) async {
     try {
-      // Keys including storage prefix.
-      Log.d("[getProposals] ProposalIds: $proposalIds')}");
+      Log.d("[getProposals] ProposalIds: $proposalIds");
 
       final proposals = await Future.wait(proposalIds.map(
-        (key) => encointerKusama.query.encointerDemocracy
-            .proposals(key, at: at ?? store.chain.latestHash)
-            .then((maybeProposal) => maybeProposal!),
+            (key) => encointerKusama.query.encointerDemocracy.proposals(key, at: at ?? store.chain.latestHash),
       ));
 
-      final proposalMap = Map.fromIterables(proposalIds, proposals);
-      Log.d('[getProposals] proposals: $proposalMap');
-      return proposalMap;
+      final validProposals = <BigInt, Proposal>{};
+      for (int i = 0; i < proposalIds.length; i++) {
+        if (proposals[i] != null) {
+          validProposals[proposalIds[i]] = proposals[i]!;
+        }
+      }
+
+      Log.d('[getProposals] proposals: $validProposals');
+      return validProposals;
     } catch (e, s) {
       Log.e('[getProposals]', '$e', s);
-      return Map.of({});
+      return {};
     }
   }
 

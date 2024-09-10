@@ -21,6 +21,7 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         Tally,
         UpdateDemurrage,
         UpdateNominalIncome,
+        Petition,
         SpendNative;
 
 
@@ -54,6 +55,9 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       return 'Remove Location (unsupported)';
     case SetInactivityTimeout:
       return 'SetInactivity Timeout (unsupported)';
+    case Petition:
+      final maybecid = (action as Petition).value0;
+      return 'Petition (unsupported)';
     case SpendNative:
       final maybecid = (action as SpendNative).value0;
       return 'SpendNative (unsupported)';
@@ -85,6 +89,9 @@ et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action
       return (action as UpdateNominalIncome).value0;
     case SetInactivityTimeout:
       // This is a global action hence all communities can vote for it.
+      return null;
+    case Petition:
+      // fixme! handle maybecid
       return null;
     case SpendNative:
       // return (action as SpendNative).value0;
