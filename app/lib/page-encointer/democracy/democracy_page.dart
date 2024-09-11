@@ -50,11 +50,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final proposalIds = maybeProposalIds.where((id) => allProposals.containsKey(id)).toList();
     final allTallies = await webApi.encointer.getTallies(proposalIds);
     final allPurposeIds = await webApi.encointer.getProposalPurposeIds(proposalIds);
-    // Log the fetched data
-    print('allProposalIds: $proposalIds');
-    print('allProposals: $allProposals');
-    print('allTallies: $allTallies');
-    print('allPurposeIds: $allPurposeIds');
     democracyParams = webApi.encointer.democracyParams();
 
     proposals = allProposals;

@@ -747,7 +747,7 @@ class EncointerApi {
         }
       }
 
-      Log.d('[getProposals] proposals: $validProposals');
+      Log.d('[getProposals] valid proposals: $validProposals');
       return validProposals;
     } catch (e, s) {
       Log.e('[getProposals]', '$e', s);

@@ -57,7 +57,7 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
           ? 'global'
           : (store.encointer.communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]?.symbol
           ?? CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
-      final demand = (action as Petition).value1.toString();
+      final demand = String.fromCharCodes((action as Petition).value1);
       return l10n.proposalPetition(cid_str, demand);
     case SpendNative:
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
