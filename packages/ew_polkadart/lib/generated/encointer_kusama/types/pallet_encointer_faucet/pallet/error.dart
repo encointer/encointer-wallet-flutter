@@ -30,8 +30,7 @@ enum Error {
   notCreator('NotCreator', 7),
 
   /// invalid community identifier in whitelist
-  invalidCommunityIdentifierInWhitelist(
-      'InvalidCommunityIdentifierInWhitelist', 8),
+  invalidCommunityIdentifierInWhitelist('InvalidCommunityIdentifierInWhitelist', 8),
 
   /// drip amount too small
   dripAmountTooSmall('DripAmountTooSmall', 9);

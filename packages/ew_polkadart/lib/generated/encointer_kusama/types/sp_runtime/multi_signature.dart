@@ -78,8 +78,7 @@ class $MultiSignatureCodec with _i1.Codec<MultiSignature> {
         (value as Ecdsa).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'MultiSignature: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('MultiSignature: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -93,8 +92,7 @@ class $MultiSignatureCodec with _i1.Codec<MultiSignature> {
       case Ecdsa:
         return (value as Ecdsa)._sizeHint();
       default:
-        throw Exception(
-            'MultiSignature: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('MultiSignature: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

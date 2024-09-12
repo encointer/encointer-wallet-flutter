@@ -12,8 +12,7 @@ abstract class ProposalActionIdentifier {
     return codec.decode(input);
   }
 
-  static const $ProposalActionIdentifierCodec codec =
-      $ProposalActionIdentifierCodec();
+  static const $ProposalActionIdentifierCodec codec = $ProposalActionIdentifierCodec();
 
   static const $ProposalActionIdentifier values = $ProposalActionIdentifier();
 
@@ -41,8 +40,7 @@ class $ProposalActionIdentifier {
     return RemoveLocation(value0);
   }
 
-  UpdateCommunityMetadata updateCommunityMetadata(
-      _i3.CommunityIdentifier value0) {
+  UpdateCommunityMetadata updateCommunityMetadata(_i3.CommunityIdentifier value0) {
     return UpdateCommunityMetadata(value0);
   }
 
@@ -91,8 +89,7 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
       case 7:
         return SpendNative._decode(input);
       default:
-        throw Exception(
-            'ProposalActionIdentifier: Invalid variant index: "$index"');
+        throw Exception('ProposalActionIdentifier: Invalid variant index: "$index"');
     }
   }
 
@@ -127,8 +124,7 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
         (value as SpendNative).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -152,8 +148,7 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
       case SpendNative:
         return (value as SpendNative)._sizeHint();
       default:
-        throw Exception(
-            'ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -169,8 +164,7 @@ class AddLocation extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'AddLocation': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'AddLocation': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -212,8 +206,7 @@ class RemoveLocation extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'RemoveLocation': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'RemoveLocation': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -255,8 +248,7 @@ class UpdateCommunityMetadata extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'UpdateCommunityMetadata': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'UpdateCommunityMetadata': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -298,8 +290,7 @@ class UpdateDemurrage extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'UpdateDemurrage': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'UpdateDemurrage': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -341,8 +332,7 @@ class UpdateNominalIncome extends ProposalActionIdentifier {
   final _i3.CommunityIdentifier value0;
 
   @override
-  Map<String, Map<String, List<int>>> toJson() =>
-      {'UpdateNominalIncome': value0.toJson()};
+  Map<String, Map<String, List<int>>> toJson() => {'UpdateNominalIncome': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -397,24 +387,18 @@ class Petition extends ProposalActionIdentifier {
   const Petition(this.value0);
 
   factory Petition._decode(_i1.Input input) {
-    return Petition(const _i1.OptionCodec<_i3.CommunityIdentifier>(
-            _i3.CommunityIdentifier.codec)
-        .decode(input));
+    return Petition(const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).decode(input));
   }
 
   /// Option<CommunityIdentifier>
   final _i3.CommunityIdentifier? value0;
 
   @override
-  Map<String, Map<String, List<int>>?> toJson() =>
-      {'Petition': value0?.toJson()};
+  Map<String, Map<String, List<int>>?> toJson() => {'Petition': value0?.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i3.CommunityIdentifier>(
-                _i3.CommunityIdentifier.codec)
-            .sizeHint(value0);
+    size = size + const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).sizeHint(value0);
     return size;
   }
 
@@ -423,9 +407,7 @@ class Petition extends ProposalActionIdentifier {
       6,
       output,
     );
-    const _i1.OptionCodec<_i3.CommunityIdentifier>(
-            _i3.CommunityIdentifier.codec)
-        .encodeTo(
+    const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).encodeTo(
       value0,
       output,
     );
@@ -447,24 +429,18 @@ class SpendNative extends ProposalActionIdentifier {
   const SpendNative(this.value0);
 
   factory SpendNative._decode(_i1.Input input) {
-    return SpendNative(const _i1.OptionCodec<_i3.CommunityIdentifier>(
-            _i3.CommunityIdentifier.codec)
-        .decode(input));
+    return SpendNative(const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).decode(input));
   }
 
   /// Option<CommunityIdentifier>
   final _i3.CommunityIdentifier? value0;
 
   @override
-  Map<String, Map<String, List<int>>?> toJson() =>
-      {'SpendNative': value0?.toJson()};
+  Map<String, Map<String, List<int>>?> toJson() => {'SpendNative': value0?.toJson()};
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i3.CommunityIdentifier>(
-                _i3.CommunityIdentifier.codec)
-            .sizeHint(value0);
+    size = size + const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).sizeHint(value0);
     return size;
   }
 
@@ -473,9 +449,7 @@ class SpendNative extends ProposalActionIdentifier {
       7,
       output,
     );
-    const _i1.OptionCodec<_i3.CommunityIdentifier>(
-            _i3.CommunityIdentifier.codec)
-        .encodeTo(
+    const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).encodeTo(
       value0,
       output,
     );

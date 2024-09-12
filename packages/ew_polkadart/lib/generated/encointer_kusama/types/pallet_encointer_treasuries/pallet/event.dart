@@ -71,8 +71,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as SpentNative).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -82,8 +81,7 @@ class $EventCodec with _i1.Codec<Event> {
       case SpentNative:
         return (value as SpentNative)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

@@ -110,8 +110,7 @@ class $RuntimeEvent {
     return EncointerBazaar(value0);
   }
 
-  EncointerReputationCommitments encointerReputationCommitments(
-      _i18.Event value0) {
+  EncointerReputationCommitments encointerReputationCommitments(_i18.Event value0) {
     return EncointerReputationCommitments(value0);
   }
 
@@ -242,8 +241,7 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
         (value as EncointerTreasuries).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -289,8 +287,7 @@ class $RuntimeEventCodec with _i1.Codec<RuntimeEvent> {
       case EncointerTreasuries:
         return (value as EncointerTreasuries)._sizeHint();
       default:
-        throw Exception(
-            'RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('RuntimeEvent: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -390,8 +387,7 @@ class Balances extends RuntimeEvent {
   final _i5.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Balances': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Balances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -433,8 +429,7 @@ class TransactionPayment extends RuntimeEvent {
   final _i6.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'TransactionPayment': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'TransactionPayment': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -476,8 +471,7 @@ class AssetTxPayment extends RuntimeEvent {
   final _i7.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'AssetTxPayment': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'AssetTxPayment': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -603,8 +597,7 @@ class Proxy extends RuntimeEvent {
   final _i10.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Proxy': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Proxy': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -646,8 +639,7 @@ class Scheduler extends RuntimeEvent {
   final _i11.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Scheduler': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Scheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -689,8 +681,7 @@ class Treasury extends RuntimeEvent {
   final _i12.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'Treasury': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'Treasury': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -732,8 +723,7 @@ class EncointerScheduler extends RuntimeEvent {
   final _i13.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerScheduler': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerScheduler': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -775,8 +765,7 @@ class EncointerCeremonies extends RuntimeEvent {
   final _i14.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerCeremonies': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerCeremonies': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -818,8 +807,7 @@ class EncointerCommunities extends RuntimeEvent {
   final _i15.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerCommunities': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerCommunities': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -861,8 +849,7 @@ class EncointerBalances extends RuntimeEvent {
   final _i16.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerBalances': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerBalances': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -904,8 +891,7 @@ class EncointerBazaar extends RuntimeEvent {
   final _i17.Event value0;
 
   @override
-  Map<String, Map<String, List<dynamic>>> toJson() =>
-      {'EncointerBazaar': value0.toJson()};
+  Map<String, Map<String, List<dynamic>>> toJson() => {'EncointerBazaar': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -947,8 +933,7 @@ class EncointerReputationCommitments extends RuntimeEvent {
   final _i18.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerReputationCommitments': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerReputationCommitments': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -990,8 +975,7 @@ class EncointerFaucet extends RuntimeEvent {
   final _i19.Event value0;
 
   @override
-  Map<String, Map<String, dynamic>> toJson() =>
-      {'EncointerFaucet': value0.toJson()};
+  Map<String, Map<String, dynamic>> toJson() => {'EncointerFaucet': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1033,8 +1017,7 @@ class EncointerDemocracy extends RuntimeEvent {
   final _i20.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'EncointerDemocracy': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerDemocracy': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;
@@ -1076,8 +1059,7 @@ class EncointerTreasuries extends RuntimeEvent {
   final _i21.Event value0;
 
   @override
-  Map<String, Map<String, Map<String, dynamic>>> toJson() =>
-      {'EncointerTreasuries': value0.toJson()};
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerTreasuries': value0.toJson()};
 
   int _sizeHint() {
     int size = 1;

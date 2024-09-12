@@ -4,8 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i6;
 
-import '../../encointer_primitives/communities/community_identifier.dart'
-    as _i3;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i3;
 import '../../primitive_types/h256.dart' as _i5;
 import '../../sp_core/crypto/account_id32.dart' as _i4;
 
@@ -102,8 +101,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as CommitmentRegistryPurged).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -117,8 +115,7 @@ class $EventCodec with _i1.Codec<Event> {
       case CommitmentRegistryPurged:
         return (value as CommitmentRegistryPurged)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -245,8 +242,7 @@ class CommitedReputation extends Event {
     size = size + _i1.U32Codec.codec.sizeHint(value1);
     size = size + _i1.U64Codec.codec.sizeHint(value2);
     size = size + const _i4.AccountId32Codec().sizeHint(value3);
-    size = size +
-        const _i1.OptionCodec<_i5.H256>(_i5.H256Codec()).sizeHint(value4);
+    size = size + const _i1.OptionCodec<_i5.H256>(_i5.H256Codec()).sizeHint(value4);
     return size;
   }
 

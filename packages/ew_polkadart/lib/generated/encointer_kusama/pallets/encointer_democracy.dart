@@ -6,12 +6,10 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i2;
 
 import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i9;
-import '../types/encointer_primitives/communities/community_identifier.dart'
-    as _i13;
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i13;
 import '../types/encointer_primitives/democracy/proposal.dart' as _i3;
 import '../types/encointer_primitives/democracy/proposal_action.dart' as _i10;
-import '../types/encointer_primitives/democracy/proposal_action_identifier.dart'
-    as _i5;
+import '../types/encointer_primitives/democracy/proposal_action_identifier.dart' as _i5;
 import '../types/encointer_primitives/democracy/tally.dart' as _i4;
 import '../types/encointer_primitives/democracy/vote.dart' as _i12;
 import '../types/pallet_encointer_democracy/pallet/call.dart' as _i11;
@@ -22,48 +20,42 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<BigInt, BigInt> _purposeIds =
-      const _i1.StorageMap<BigInt, BigInt>(
+  final _i1.StorageMap<BigInt, BigInt> _purposeIds = const _i1.StorageMap<BigInt, BigInt>(
     prefix: 'EncointerDemocracy',
     storage: 'PurposeIds',
     valueCodec: _i2.U64Codec.codec,
     hasher: _i1.StorageHasher.blake2b128Concat(_i2.U128Codec.codec),
   );
 
-  final _i1.StorageMap<BigInt, _i3.Proposal> _proposals =
-      const _i1.StorageMap<BigInt, _i3.Proposal>(
+  final _i1.StorageMap<BigInt, _i3.Proposal> _proposals = const _i1.StorageMap<BigInt, _i3.Proposal>(
     prefix: 'EncointerDemocracy',
     storage: 'Proposals',
     valueCodec: _i3.Proposal.codec,
     hasher: _i1.StorageHasher.blake2b128Concat(_i2.U128Codec.codec),
   );
 
-  final _i1.StorageValue<BigInt> _proposalCount =
-      const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _proposalCount = const _i1.StorageValue<BigInt>(
     prefix: 'EncointerDemocracy',
     storage: 'ProposalCount',
     valueCodec: _i2.U128Codec.codec,
   );
 
-  final _i1.StorageMap<BigInt, _i4.Tally> _tallies =
-      const _i1.StorageMap<BigInt, _i4.Tally>(
+  final _i1.StorageMap<BigInt, _i4.Tally> _tallies = const _i1.StorageMap<BigInt, _i4.Tally>(
     prefix: 'EncointerDemocracy',
     storage: 'Tallies',
     valueCodec: _i4.Tally.codec,
     hasher: _i1.StorageHasher.blake2b128Concat(_i2.U128Codec.codec),
   );
 
-  final _i1.StorageMap<_i5.ProposalActionIdentifier, _i6.Tuple2<BigInt, BigInt>>
-      _lastApprovedProposalForAction = const _i1
-          .StorageMap<_i5.ProposalActionIdentifier, _i6.Tuple2<BigInt, BigInt>>(
+  final _i1.StorageMap<_i5.ProposalActionIdentifier, _i6.Tuple2<BigInt, BigInt>> _lastApprovedProposalForAction =
+      const _i1.StorageMap<_i5.ProposalActionIdentifier, _i6.Tuple2<BigInt, BigInt>>(
     prefix: 'EncointerDemocracy',
     storage: 'LastApprovedProposalForAction',
     valueCodec: _i6.Tuple2Codec<BigInt, BigInt>(
       _i2.U64Codec.codec,
       _i2.U128Codec.codec,
     ),
-    hasher:
-        _i1.StorageHasher.blake2b128Concat(_i5.ProposalActionIdentifier.codec),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.ProposalActionIdentifier.codec),
   );
 
   final _i1.StorageMap<_i5.ProposalActionIdentifier, BigInt> _enactmentQueue =
@@ -71,8 +63,7 @@ class Queries {
     prefix: 'EncointerDemocracy',
     storage: 'EnactmentQueue',
     valueCodec: _i2.U128Codec.codec,
-    hasher:
-        _i1.StorageHasher.blake2b128Concat(_i5.ProposalActionIdentifier.codec),
+    hasher: _i1.StorageHasher.blake2b128Concat(_i5.ProposalActionIdentifier.codec),
   );
 
   /// Unique `PurposeIds` of a `Proposal`.
@@ -193,8 +184,7 @@ class Queries {
   }
 
   /// Returns the storage key for `lastApprovedProposalForAction`.
-  _i8.Uint8List lastApprovedProposalForActionKey(
-      _i5.ProposalActionIdentifier key1) {
+  _i8.Uint8List lastApprovedProposalForActionKey(_i5.ProposalActionIdentifier key1) {
     final hashedKey = _lastApprovedProposalForAction.hashedKeyFor(key1);
     return hashedKey;
   }
@@ -239,10 +229,8 @@ class Queries {
 class Txs {
   const Txs();
 
-  _i9.RuntimeCall submitProposal(
-      {required _i10.ProposalAction proposalAction}) {
-    final _call =
-        _i11.Call.values.submitProposal(proposalAction: proposalAction);
+  _i9.RuntimeCall submitProposal({required _i10.ProposalAction proposalAction}) {
+    final _call = _i11.Call.values.submitProposal(proposalAction: proposalAction);
     return _i9.RuntimeCall.values.encointerDemocracy(_call);
   }
 

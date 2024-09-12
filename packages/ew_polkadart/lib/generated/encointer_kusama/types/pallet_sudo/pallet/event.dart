@@ -53,8 +53,7 @@ class $Event {
     return KeyRemoved();
   }
 
-  SudoAsDone sudoAsDone(
-      {required _i1.Result<dynamic, _i3.DispatchError> sudoResult}) {
+  SudoAsDone sudoAsDone({required _i1.Result<dynamic, _i3.DispatchError> sudoResult}) {
     return SudoAsDone(sudoResult: sudoResult);
   }
 }
@@ -98,8 +97,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as SudoAsDone).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -115,8 +113,7 @@ class $EventCodec with _i1.Codec<Event> {
       case SudoAsDone:
         return (value as SudoAsDone)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -187,8 +184,7 @@ class KeyChanged extends Event {
 
   factory KeyChanged._decode(_i1.Input input) {
     return KeyChanged(
-      old: const _i1.OptionCodec<_i4.AccountId32>(_i4.AccountId32Codec())
-          .decode(input),
+      old: const _i1.OptionCodec<_i4.AccountId32>(_i4.AccountId32Codec()).decode(input),
       new_: const _i1.U8ArrayCodec(32).decode(input),
     );
   }
@@ -211,9 +207,7 @@ class KeyChanged extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i4.AccountId32>(_i4.AccountId32Codec())
-            .sizeHint(old);
+    size = size + const _i1.OptionCodec<_i4.AccountId32>(_i4.AccountId32Codec()).sizeHint(old);
     size = size + const _i4.AccountId32Codec().sizeHint(new_);
     return size;
   }

@@ -174,8 +174,7 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
         (value as SpendNative).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -199,8 +198,7 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
       case SpendNative:
         return (value as SpendNative)._sizeHint();
       default:
-        throw Exception(
-            'ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -324,9 +322,7 @@ class RemoveLocation extends ProposalAction {
         this,
         other,
       ) ||
-      other is RemoveLocation &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is RemoveLocation && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -390,9 +386,7 @@ class UpdateCommunityMetadata extends ProposalAction {
         this,
         other,
       ) ||
-      other is UpdateCommunityMetadata &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is UpdateCommunityMetadata && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -456,9 +450,7 @@ class UpdateDemurrage extends ProposalAction {
         this,
         other,
       ) ||
-      other is UpdateDemurrage &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is UpdateDemurrage && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -522,9 +514,7 @@ class UpdateNominalIncome extends ProposalAction {
         this,
         other,
       ) ||
-      other is UpdateNominalIncome &&
-          other.value0 == value0 &&
-          other.value1 == value1;
+      other is UpdateNominalIncome && other.value0 == value0 && other.value1 == value1;
 
   @override
   int get hashCode => Object.hash(
@@ -583,9 +573,7 @@ class Petition extends ProposalAction {
 
   factory Petition._decode(_i1.Input input) {
     return Petition(
-      const _i1.OptionCodec<_i3.CommunityIdentifier>(
-              _i3.CommunityIdentifier.codec)
-          .decode(input),
+      const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).decode(input),
       _i1.U8SequenceCodec.codec.decode(input),
     );
   }
@@ -606,10 +594,7 @@ class Petition extends ProposalAction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i3.CommunityIdentifier>(
-                _i3.CommunityIdentifier.codec)
-            .sizeHint(value0);
+    size = size + const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).sizeHint(value0);
     size = size + _i1.U8SequenceCodec.codec.sizeHint(value1);
     return size;
   }
@@ -619,9 +604,7 @@ class Petition extends ProposalAction {
       6,
       output,
     );
-    const _i1.OptionCodec<_i3.CommunityIdentifier>(
-            _i3.CommunityIdentifier.codec)
-        .encodeTo(
+    const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).encodeTo(
       value0,
       output,
     );
@@ -660,9 +643,7 @@ class SpendNative extends ProposalAction {
 
   factory SpendNative._decode(_i1.Input input) {
     return SpendNative(
-      const _i1.OptionCodec<_i3.CommunityIdentifier>(
-              _i3.CommunityIdentifier.codec)
-          .decode(input),
+      const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).decode(input),
       const _i1.U8ArrayCodec(32).decode(input),
       _i1.U128Codec.codec.decode(input),
     );
@@ -688,10 +669,7 @@ class SpendNative extends ProposalAction {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i3.CommunityIdentifier>(
-                _i3.CommunityIdentifier.codec)
-            .sizeHint(value0);
+    size = size + const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).sizeHint(value0);
     size = size + const _i8.AccountId32Codec().sizeHint(value1);
     size = size + _i1.U128Codec.codec.sizeHint(value2);
     return size;
@@ -702,9 +680,7 @@ class SpendNative extends ProposalAction {
       7,
       output,
     );
-    const _i1.OptionCodec<_i3.CommunityIdentifier>(
-            _i3.CommunityIdentifier.codec)
-        .encodeTo(
+    const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).encodeTo(
       value0,
       output,
     );

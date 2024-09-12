@@ -737,7 +737,7 @@ class EncointerApi {
       Log.d("[getProposals] ProposalIds: $proposalIds");
 
       final proposals = await Future.wait(proposalIds.map(
-            (key) => encointerKusama.query.encointerDemocracy.proposals(key, at: at ?? store.chain.latestHash),
+        (key) => encointerKusama.query.encointerDemocracy.proposals(key, at: at ?? store.chain.latestHash),
       ));
 
       final validProposals = <BigInt, Proposal>{};

@@ -95,8 +95,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as SetNextPhaseTimestamp).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -112,8 +111,7 @@ class $CallCodec with _i1.Codec<Call> {
       case SetNextPhaseTimestamp:
         return (value as SetNextPhaseTimestamp)._sizeHint();
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -219,9 +217,7 @@ class SetPhaseDuration extends Call {
         this,
         other,
       ) ||
-      other is SetPhaseDuration &&
-          other.ceremonyPhase == ceremonyPhase &&
-          other.duration == duration;
+      other is SetPhaseDuration && other.ceremonyPhase == ceremonyPhase && other.duration == duration;
 
   @override
   int get hashCode => Object.hash(

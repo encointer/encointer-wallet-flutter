@@ -39,9 +39,7 @@ class PostDispatchInfo {
         this,
         other,
       ) ||
-      other is PostDispatchInfo &&
-          other.actualWeight == actualWeight &&
-          other.paysFee == paysFee;
+      other is PostDispatchInfo && other.actualWeight == actualWeight && other.paysFee == paysFee;
 
   @override
   int get hashCode => Object.hash(
@@ -71,8 +69,7 @@ class $PostDispatchInfoCodec with _i1.Codec<PostDispatchInfo> {
   @override
   PostDispatchInfo decode(_i1.Input input) {
     return PostDispatchInfo(
-      actualWeight:
-          const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).decode(input),
+      actualWeight: const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).decode(input),
       paysFee: _i3.Pays.codec.decode(input),
     );
   }
@@ -80,9 +77,7 @@ class $PostDispatchInfoCodec with _i1.Codec<PostDispatchInfo> {
   @override
   int sizeHint(PostDispatchInfo obj) {
     int size = 0;
-    size = size +
-        const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec)
-            .sizeHint(obj.actualWeight);
+    size = size + const _i1.OptionCodec<_i2.Weight>(_i2.Weight.codec).sizeHint(obj.actualWeight);
     size = size + _i3.Pays.codec.sizeHint(obj.paysFee);
     return size;
   }

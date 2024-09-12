@@ -71,8 +71,7 @@ class $OriginCallerCodec with _i1.Codec<OriginCaller> {
         (value as Void).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'OriginCaller: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('OriginCaller: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -84,8 +83,7 @@ class $OriginCallerCodec with _i1.Codec<OriginCaller> {
       case Void:
         return (value as Void)._sizeHint();
       default:
-        throw Exception(
-            'OriginCaller: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('OriginCaller: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

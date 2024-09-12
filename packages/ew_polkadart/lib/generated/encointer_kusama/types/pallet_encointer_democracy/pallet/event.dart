@@ -4,8 +4,7 @@ import 'dart:typed_data' as _i2;
 import 'package:polkadart/scale_codec.dart' as _i1;
 import 'package:quiver/collection.dart' as _i8;
 
-import '../../encointer_primitives/communities/community_identifier.dart'
-    as _i7;
+import '../../encointer_primitives/communities/community_identifier.dart' as _i7;
 import '../../encointer_primitives/democracy/proposal_action.dart' as _i3;
 import '../../encointer_primitives/democracy/proposal_state.dart' as _i5;
 import '../../encointer_primitives/democracy/vote.dart' as _i4;
@@ -160,8 +159,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as PetitionApproved).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -183,8 +181,7 @@ class $EventCodec with _i1.Codec<Event> {
       case PetitionApproved:
         return (value as PetitionApproved)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -289,9 +286,7 @@ class ProposalSubmitted extends Event {
         this,
         other,
       ) ||
-      other is ProposalSubmitted &&
-          other.proposalId == proposalId &&
-          other.proposalAction == proposalAction;
+      other is ProposalSubmitted && other.proposalId == proposalId && other.proposalAction == proposalAction;
 
   @override
   int get hashCode => Object.hash(
@@ -366,10 +361,7 @@ class VotePlaced extends Event {
         this,
         other,
       ) ||
-      other is VotePlaced &&
-          other.proposalId == proposalId &&
-          other.vote == vote &&
-          other.numVotes == numVotes;
+      other is VotePlaced && other.proposalId == proposalId && other.vote == vote && other.numVotes == numVotes;
 
   @override
   int get hashCode => Object.hash(
@@ -434,9 +426,7 @@ class VoteFailed extends Event {
         this,
         other,
       ) ||
-      other is VoteFailed &&
-          other.proposalId == proposalId &&
-          other.vote == vote;
+      other is VoteFailed && other.proposalId == proposalId && other.vote == vote;
 
   @override
   int get hashCode => Object.hash(
@@ -500,9 +490,7 @@ class ProposalStateUpdated extends Event {
         this,
         other,
       ) ||
-      other is ProposalStateUpdated &&
-          other.proposalId == proposalId &&
-          other.proposalState == proposalState;
+      other is ProposalStateUpdated && other.proposalId == proposalId && other.proposalState == proposalState;
 
   @override
   int get hashCode => Object.hash(
@@ -566,9 +554,7 @@ class EnactmentFailed extends Event {
         this,
         other,
       ) ||
-      other is EnactmentFailed &&
-          other.proposalId == proposalId &&
-          other.reason == reason;
+      other is EnactmentFailed && other.proposalId == proposalId && other.reason == reason;
 
   @override
   int get hashCode => Object.hash(
@@ -585,9 +571,7 @@ class PetitionApproved extends Event {
 
   factory PetitionApproved._decode(_i1.Input input) {
     return PetitionApproved(
-      cid: const _i1.OptionCodec<_i7.CommunityIdentifier>(
-              _i7.CommunityIdentifier.codec)
-          .decode(input),
+      cid: const _i1.OptionCodec<_i7.CommunityIdentifier>(_i7.CommunityIdentifier.codec).decode(input),
       text: _i1.U8SequenceCodec.codec.decode(input),
     );
   }
@@ -608,10 +592,7 @@ class PetitionApproved extends Event {
 
   int _sizeHint() {
     int size = 1;
-    size = size +
-        const _i1.OptionCodec<_i7.CommunityIdentifier>(
-                _i7.CommunityIdentifier.codec)
-            .sizeHint(cid);
+    size = size + const _i1.OptionCodec<_i7.CommunityIdentifier>(_i7.CommunityIdentifier.codec).sizeHint(cid);
     size = size + _i1.U8SequenceCodec.codec.sizeHint(text);
     return size;
   }
@@ -621,9 +602,7 @@ class PetitionApproved extends Event {
       6,
       output,
     );
-    const _i1.OptionCodec<_i7.CommunityIdentifier>(
-            _i7.CommunityIdentifier.codec)
-        .encodeTo(
+    const _i1.OptionCodec<_i7.CommunityIdentifier>(_i7.CommunityIdentifier.codec).encodeTo(
       cid,
       output,
     );

@@ -44,10 +44,7 @@ class BlockWeights {
         this,
         other,
       ) ||
-      other is BlockWeights &&
-          other.baseBlock == baseBlock &&
-          other.maxBlock == maxBlock &&
-          other.perClass == perClass;
+      other is BlockWeights && other.baseBlock == baseBlock && other.maxBlock == maxBlock && other.perClass == perClass;
 
   @override
   int get hashCode => Object.hash(

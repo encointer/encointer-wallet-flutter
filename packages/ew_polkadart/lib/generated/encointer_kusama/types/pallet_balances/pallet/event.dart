@@ -373,8 +373,7 @@ class $EventCodec with _i1.Codec<Event> {
         (value as TotalIssuanceForced).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -426,8 +425,7 @@ class $EventCodec with _i1.Codec<Event> {
       case TotalIssuanceForced:
         return (value as TotalIssuanceForced)._sizeHint();
       default:
-        throw Exception(
-            'Event: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }

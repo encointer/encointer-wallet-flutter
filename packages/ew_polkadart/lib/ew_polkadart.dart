@@ -8,7 +8,15 @@ export 'package:polkadart/polkadart.dart';
 // encointer democracy exports
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal.dart' show Proposal;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action.dart'
-    show ProposalAction, AddLocation, RemoveLocation, UpdateDemurrage, UpdateNominalIncome, SetInactivityTimeout, Petition, SpendNative;
+    show
+        ProposalAction,
+        AddLocation,
+        RemoveLocation,
+        UpdateDemurrage,
+        UpdateNominalIncome,
+        SetInactivityTimeout,
+        Petition,
+        SpendNative;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action_identifier.dart'
     show ProposalActionIdentifier;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart'

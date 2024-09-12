@@ -6,8 +6,7 @@ import 'package:polkadart/polkadart.dart' as _i1;
 import 'package:polkadart/scale_codec.dart' as _i4;
 
 import '../types/encointer_node_notee_runtime/runtime_call.dart' as _i7;
-import '../types/encointer_primitives/communities/community_identifier.dart'
-    as _i8;
+import '../types/encointer_primitives/communities/community_identifier.dart' as _i8;
 import '../types/encointer_primitives/faucet/faucet.dart' as _i3;
 import '../types/frame_support/pallet_id.dart' as _i10;
 import '../types/pallet_encointer_faucet/pallet/call.dart' as _i9;
@@ -18,16 +17,14 @@ class Queries {
 
   final _i1.StateApi __api;
 
-  final _i1.StorageMap<_i2.AccountId32, _i3.Faucet> _faucets =
-      const _i1.StorageMap<_i2.AccountId32, _i3.Faucet>(
+  final _i1.StorageMap<_i2.AccountId32, _i3.Faucet> _faucets = const _i1.StorageMap<_i2.AccountId32, _i3.Faucet>(
     prefix: 'EncointerFaucet',
     storage: 'Faucets',
     valueCodec: _i3.Faucet.codec,
     hasher: _i1.StorageHasher.identity(_i2.AccountId32Codec()),
   );
 
-  final _i1.StorageValue<BigInt> _reserveAmount =
-      const _i1.StorageValue<BigInt>(
+  final _i1.StorageValue<BigInt> _reserveAmount = const _i1.StorageValue<BigInt>(
     prefix: 'EncointerFaucet',
     storage: 'ReserveAmount',
     valueCodec: _i4.U128Codec.codec,
@@ -127,8 +124,7 @@ class Txs {
   }
 
   _i7.RuntimeCall setReserveAmount({required BigInt reserveAmount}) {
-    final _call =
-        _i9.Call.values.setReserveAmount(reserveAmount: reserveAmount);
+    final _call = _i9.Call.values.setReserveAmount(reserveAmount: reserveAmount);
     return _i7.RuntimeCall.values.encointerFaucet(_call);
   }
 }

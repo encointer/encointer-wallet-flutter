@@ -176,22 +176,11 @@ class Registry {
   final int extrinsicVersion = 4;
 
   List getSignedExtensionTypes() {
-    return [
-      'CheckMortality',
-      'CheckNonce',
-      'ChargeAssetTxPayment',
-      'CheckMetadataHash'
-    ];
+    return ['CheckMortality', 'CheckNonce', 'ChargeAssetTxPayment', 'CheckMetadataHash'];
   }
 
   List getSignedExtensionExtra() {
-    return [
-      'CheckSpecVersion',
-      'CheckTxVersion',
-      'CheckGenesis',
-      'CheckMortality',
-      'CheckMetadataHash'
-    ];
+    return ['CheckSpecVersion', 'CheckTxVersion', 'CheckGenesis', 'CheckMortality', 'CheckMetadataHash'];
   }
 }
 

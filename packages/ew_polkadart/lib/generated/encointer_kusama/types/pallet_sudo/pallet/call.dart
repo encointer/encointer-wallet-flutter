@@ -112,8 +112,7 @@ class $CallCodec with _i1.Codec<Call> {
         (value as RemoveKey).encodeTo(output);
         break;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 
@@ -131,8 +130,7 @@ class $CallCodec with _i1.Codec<Call> {
       case RemoveKey:
         return 1;
       default:
-        throw Exception(
-            'Call: Unsupported "$value" of type "${value.runtimeType}"');
+        throw Exception('Call: Unsupported "$value" of type "${value.runtimeType}"');
     }
   }
 }
@@ -242,9 +240,7 @@ class SudoUncheckedWeight extends Call {
         this,
         other,
       ) ||
-      other is SudoUncheckedWeight &&
-          other.call == call &&
-          other.weight == weight;
+      other is SudoUncheckedWeight && other.call == call && other.weight == weight;
 
   @override
   int get hashCode => Object.hash(

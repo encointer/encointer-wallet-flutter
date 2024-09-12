@@ -14,11 +14,21 @@ import 'package:provider/provider.dart';
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show AddLocation, Petition, Proposal, ProposalAction, RemoveLocation, SetInactivityTimeout, SpendNative, Tally, U128Codec, UpdateDemurrage, UpdateNominalIncome;
+    show
+        AddLocation,
+        Petition,
+        Proposal,
+        ProposalAction,
+        RemoveLocation,
+        SetInactivityTimeout,
+        SpendNative,
+        Tally,
+        U128Codec,
+        UpdateDemurrage,
+        UpdateNominalIncome;
 
 import '../../config/consts.dart';
 import '../../utils/format.dart';
-
 
 /// Gets the localized proposal action title.
 ///
@@ -55,17 +65,24 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
       final cid_str = cidPolkadart == null
           ? 'global'
-          : (store.encointer.communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]?.symbol
-          ?? CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
+          : (store
+                  .encointer
+                  .communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]
+                  ?.symbol ??
+              CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
       final demand = String.fromCharCodes((action as Petition).value1);
       return l10n.proposalPetition(cid_str, demand);
     case SpendNative:
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
       final cid_str = cidPolkadart == null
           ? 'global'
-          : (store.encointer.communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]?.symbol
-          ?? CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
-      final beneficiary = Fmt.address(AddressUtils.pubKeyToAddress((action as SpendNative).value1, prefix: store.settings.currentNetwork.ss58()))!;
+          : (store
+                  .encointer
+                  .communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]
+                  ?.symbol ??
+              CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
+      final beneficiary = Fmt.address(
+          AddressUtils.pubKeyToAddress((action as SpendNative).value1, prefix: store.settings.currentNetwork.ss58()))!;
       final amount = Fmt.token((action as SpendNative).value2, ertDecimals);
       return l10n.proposalSpendNative(cid_str, amount, beneficiary);
     default:

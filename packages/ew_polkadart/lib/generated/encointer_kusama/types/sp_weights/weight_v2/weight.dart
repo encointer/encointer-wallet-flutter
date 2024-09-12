@@ -36,9 +36,7 @@ class Weight {
         this,
         other,
       ) ||
-      other is Weight &&
-          other.refTime == refTime &&
-          other.proofSize == proofSize;
+      other is Weight && other.refTime == refTime && other.proofSize == proofSize;
 
   @override
   int get hashCode => Object.hash(

@@ -30,8 +30,7 @@ class Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> {
   final T7 value7;
 }
 
-class Tuple8Codec<T0, T1, T2, T3, T4, T5, T6, T7>
-    with _i1.Codec<Tuple8<T0, T1, T2, T3, T4, T5, T6, T7>> {
+class Tuple8Codec<T0, T1, T2, T3, T4, T5, T6, T7> with _i1.Codec<Tuple8<T0, T1, T2, T3, T4, T5, T6, T7>> {
   const Tuple8Codec(
     this.codec0,
     this.codec1,

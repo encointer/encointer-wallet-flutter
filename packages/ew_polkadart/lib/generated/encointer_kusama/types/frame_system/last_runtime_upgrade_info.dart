@@ -19,8 +19,7 @@ class LastRuntimeUpgradeInfo {
   /// sp_runtime::RuntimeString
   final String specName;
 
-  static const $LastRuntimeUpgradeInfoCodec codec =
-      $LastRuntimeUpgradeInfoCodec();
+  static const $LastRuntimeUpgradeInfoCodec codec = $LastRuntimeUpgradeInfoCodec();
 
   _i2.Uint8List encode() {
     return codec.encode(this);
@@ -37,9 +36,7 @@ class LastRuntimeUpgradeInfo {
         this,
         other,
       ) ||
-      other is LastRuntimeUpgradeInfo &&
-          other.specVersion == specVersion &&
-          other.specName == specName;
+      other is LastRuntimeUpgradeInfo && other.specVersion == specVersion && other.specName == specName;
 
   @override
   int get hashCode => Object.hash(
