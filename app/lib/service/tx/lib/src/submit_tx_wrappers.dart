@@ -89,6 +89,40 @@ Future<void> submitClaimRewards(
   );
 }
 
+Future<void> submitRemark(
+    BuildContext context,
+    AppStore store,
+    Api api,
+    KeyringAccount signer,
+    String remark,
+ {
+      required CommunityIdentifier? txPaymentAsset,
+    }
+    ) async {
+  final List<int> remarkList = remark.codeUnits;
+  final call = api.encointer.encointerKusama.tx.system.remarkWithEvent(remark: remarkList);
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.claimRewards(context.l10n),
+    onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
+      // Claiming the rewards creates a new reputation if successful.
+      // Hence, we should update the state afterwards.
+      store.encointer.getEncointerBalance();
+      webApi.encointer.getReputations();
+      return report;
+    },
+  );
+}
+
 Future<void> submitEndorseNewcomer(
   BuildContext context,
   AppStore store,

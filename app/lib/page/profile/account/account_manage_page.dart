@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page/profile/account/remark.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -192,6 +193,26 @@ class _AccountManagePageState extends State<AccountManagePage> {
       );
     }
 
+    // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later ;-)
+    Widget remarks() {
+      if (faucets == null) {
+        return appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator();
+      }
+
+      if (store.account.currentAccountPubKey! != accountToBeEditedPubKey) {
+        return Column(children: [
+          Text(l10n.remarks, style: h3Grey, textAlign: TextAlign.left),
+        ]);
+      }
+
+      return Remarks(
+        store,
+        userAddress: Address(
+          pubkey: AddressUtils.pubKeyHexToPubKey(accountToBeEditedPubKey),
+          prefix: store.settings.currentNetwork.ss58(),
+        ),
+      );
+    }
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
@@ -277,6 +298,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   ),
                 ),
                 benefits(),
+                remarks(),
                 const Spacer(),
                 DecoratedBox(
                   // width: double.infinity,
