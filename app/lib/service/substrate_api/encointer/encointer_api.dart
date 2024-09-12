@@ -740,6 +740,7 @@ class EncointerApi {
         (key) => encointerKusama.query.encointerDemocracy.proposals(key, at: at ?? store.chain.latestHash),
       ));
 
+      // We need to assume that old proposals have been purged from the state. So we need to filter out null values.
       final validProposals = <BigInt, Proposal>{};
       for (var i = 0; i < proposalIds.length; i++) {
         if (proposals[i] != null) {
