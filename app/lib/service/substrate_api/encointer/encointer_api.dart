@@ -734,14 +734,14 @@ class EncointerApi {
 
   Future<Map<BigInt, Proposal>> getProposals(List<BigInt> proposalIds, {BlockHash? at}) async {
     try {
-      Log.d("[getProposals] ProposalIds: $proposalIds");
+      Log.d('[getProposals] ProposalIds: $proposalIds');
 
       final proposals = await Future.wait(proposalIds.map(
         (key) => encointerKusama.query.encointerDemocracy.proposals(key, at: at ?? store.chain.latestHash),
       ));
 
       final validProposals = <BigInt, Proposal>{};
-      for (int i = 0; i < proposalIds.length; i++) {
+      for (var i = 0; i < proposalIds.length; i++) {
         if (proposals[i] != null) {
           validProposals[proposalIds[i]] = proposals[i]!;
         }

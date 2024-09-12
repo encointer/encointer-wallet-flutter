@@ -1,12 +1,13 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_keyring/ew_keyring.dart';
-import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,12 +24,8 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         SetInactivityTimeout,
         SpendNative,
         Tally,
-        U128Codec,
         UpdateDemurrage,
         UpdateNominalIncome;
-
-import '../../config/consts.dart';
-import '../../utils/format.dart';
 
 /// Gets the localized proposal action title.
 ///
@@ -63,7 +60,7 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       return 'SetInactivity Timeout (unsupported)';
     case Petition:
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
-      final cid_str = cidPolkadart == null
+      final cidStr = cidPolkadart == null
           ? 'global'
           : (store
                   .encointer
@@ -71,10 +68,10 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
                   ?.symbol ??
               CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
       final demand = String.fromCharCodes((action as Petition).value1);
-      return l10n.proposalPetition(cid_str, demand);
+      return l10n.proposalPetition(cidStr, demand);
     case SpendNative:
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
-      final cid_str = cidPolkadart == null
+      final cidStr = cidPolkadart == null
           ? 'global'
           : (store
                   .encointer
@@ -83,8 +80,8 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
               CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
       final beneficiary = Fmt.address(
           AddressUtils.pubKeyToAddress((action as SpendNative).value1, prefix: store.settings.currentNetwork.ss58()))!;
-      final amount = Fmt.token((action as SpendNative).value2, ertDecimals);
-      return l10n.proposalSpendNative(cid_str, amount, beneficiary);
+      final amount = Fmt.token(action.value2, ertDecimals);
+      return l10n.proposalSpendNative(cidStr, amount, beneficiary);
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
