@@ -60,24 +60,12 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       return 'SetInactivity Timeout (unsupported)';
     case Petition:
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
-      final cidStr = cidPolkadart == null
-          ? 'global'
-          : (store
-                  .encointer
-                  .communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]
-                  ?.symbol ??
-              CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
+      final cidStr = cidOrGlobal(cidPolkadart, store);
       final demand = String.fromCharCodes((action as Petition).value1);
       return l10n.proposalPetition(cidStr, demand);
     case SpendNative:
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
-      final cidStr = cidPolkadart == null
-          ? 'global'
-          : (store
-                  .encointer
-                  .communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]
-                  ?.symbol ??
-              CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
+      final cidStr = cidOrGlobal(cidPolkadart, store);
       final beneficiary = Fmt.address(
           AddressUtils.pubKeyToAddress((action as SpendNative).value1, prefix: store.settings.currentNetwork.ss58()))!;
       final amount = Fmt.token(action.value2, ertDecimals);
@@ -85,6 +73,17 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
+}
+
+String cidOrGlobal(et.CommunityIdentifier? cidPolkadart, AppStore store) {
+  final cidStr = cidPolkadart == null
+      ? 'global'
+      : (store
+              .encointer
+              .communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]
+              ?.symbol ??
+          CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
+  return cidStr;
 }
 
 double demurragePerMonth(double demurrage, BigInt blockProductionTime) {
