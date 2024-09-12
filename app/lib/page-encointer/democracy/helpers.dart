@@ -78,9 +78,7 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
 String cidOrGlobal(et.CommunityIdentifier? cidPolkadart, AppStore store) {
   final cidStr = cidPolkadart == null
       ? 'global'
-      : (store
-              .encointer
-              .communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]
+      : (store.encointer.communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]
               ?.symbol ??
           CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
   return cidStr;
