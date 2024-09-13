@@ -116,7 +116,9 @@ class $CallCodec with _i1.Codec<Call> {
   }
 }
 
-/// See [`Pallet::next_phase`].
+/// Manually transition to next phase without affecting the ceremony rhythm
+///
+/// May only be called from `T::CeremonyMaster`.
 class NextPhase extends Call {
   const NextPhase();
 
@@ -137,7 +139,9 @@ class NextPhase extends Call {
   int get hashCode => runtimeType.hashCode;
 }
 
-/// See [`Pallet::push_by_one_day`].
+/// Push next phase change by one entire day
+///
+/// May only be called from `T::CeremonyMaster`.
 class PushByOneDay extends Call {
   const PushByOneDay();
 
@@ -158,7 +162,6 @@ class PushByOneDay extends Call {
   int get hashCode => runtimeType.hashCode;
 }
 
-/// See [`Pallet::set_phase_duration`].
 class SetPhaseDuration extends Call {
   const SetPhaseDuration({
     required this.ceremonyPhase,
@@ -223,7 +226,6 @@ class SetPhaseDuration extends Call {
       );
 }
 
-/// See [`Pallet::set_next_phase_timestamp`].
 class SetNextPhaseTimestamp extends Call {
   const SetNextPhaseTimestamp({required this.timestamp});
 

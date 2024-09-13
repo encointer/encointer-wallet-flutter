@@ -153,7 +153,24 @@ class $CallCodec with _i1.Codec<Call> {
   }
 }
 
-/// See [`Pallet::batch`].
+/// Send a batch of dispatch calls.
+///
+/// May be called from any origin except `None`.
+///
+/// - `calls`: The calls to be dispatched from the same origin. The number of call must not
+///  exceed the constant: `batched_calls_limit` (available in constant metadata).
+///
+/// If origin is root then the calls are dispatched without checking origin filter. (This
+/// includes bypassing `frame_system::Config::BaseCallFilter`).
+///
+/// ## Complexity
+/// - O(C) where C is the number of calls to be batched.
+///
+/// This will return `Ok` in all circumstances. To determine the success of the batch, an
+/// event is deposited. If a call failed and the batch was interrupted, then the
+/// `BatchInterrupted` event is deposited, along with the number of successful calls made
+/// and the error of the failed call. If all were successful, then the `BatchCompleted`
+/// event is deposited.
 class Batch extends Call {
   const Batch({required this.calls});
 
@@ -202,7 +219,19 @@ class Batch extends Call {
   int get hashCode => calls.hashCode;
 }
 
-/// See [`Pallet::as_derivative`].
+/// Send a call through an indexed pseudonym of the sender.
+///
+/// Filter from origin are passed along. The call will be dispatched with an origin which
+/// use the same filter as the origin of this call.
+///
+/// NOTE: If you need to ensure that any account-based filtering is not honored (i.e.
+/// because you expect `proxy` to have been used prior in the call stack and you do not want
+/// the call restrictions to apply to any sub-accounts), then use `as_multi_threshold_1`
+/// in the Multisig pallet instead.
+///
+/// NOTE: Prior to version *12, this was called `as_limited_sub`.
+///
+/// The dispatch origin for this call must be _Signed_.
 class AsDerivative extends Call {
   const AsDerivative({
     required this.index,
@@ -267,7 +296,19 @@ class AsDerivative extends Call {
       );
 }
 
-/// See [`Pallet::batch_all`].
+/// Send a batch of dispatch calls and atomically execute them.
+/// The whole transaction will rollback and fail if any of the calls failed.
+///
+/// May be called from any origin except `None`.
+///
+/// - `calls`: The calls to be dispatched from the same origin. The number of call must not
+///  exceed the constant: `batched_calls_limit` (available in constant metadata).
+///
+/// If origin is root then the calls are dispatched without checking origin filter. (This
+/// includes bypassing `frame_system::Config::BaseCallFilter`).
+///
+/// ## Complexity
+/// - O(C) where C is the number of calls to be batched.
 class BatchAll extends Call {
   const BatchAll({required this.calls});
 
@@ -316,7 +357,12 @@ class BatchAll extends Call {
   int get hashCode => calls.hashCode;
 }
 
-/// See [`Pallet::dispatch_as`].
+/// Dispatches a function call with a provided origin.
+///
+/// The dispatch origin for this call must be _Root_.
+///
+/// ## Complexity
+/// - O(1).
 class DispatchAs extends Call {
   const DispatchAs({
     required this.asOrigin,
@@ -381,7 +427,19 @@ class DispatchAs extends Call {
       );
 }
 
-/// See [`Pallet::force_batch`].
+/// Send a batch of dispatch calls.
+/// Unlike `batch`, it allows errors and won't interrupt.
+///
+/// May be called from any origin except `None`.
+///
+/// - `calls`: The calls to be dispatched from the same origin. The number of call must not
+///  exceed the constant: `batched_calls_limit` (available in constant metadata).
+///
+/// If origin is root then the calls are dispatch without checking origin filter. (This
+/// includes bypassing `frame_system::Config::BaseCallFilter`).
+///
+/// ## Complexity
+/// - O(C) where C is the number of calls to be batched.
 class ForceBatch extends Call {
   const ForceBatch({required this.calls});
 
@@ -430,7 +488,12 @@ class ForceBatch extends Call {
   int get hashCode => calls.hashCode;
 }
 
-/// See [`Pallet::with_weight`].
+/// Dispatch a function call with a specified weight.
+///
+/// This function does not check the weight of the call, and instead allows the
+/// Root origin to specify the weight of the call.
+///
+/// The dispatch origin for this call must be _Root_.
 class WithWeight extends Call {
   const WithWeight({
     required this.call,

@@ -195,7 +195,9 @@ class $CallCodec with _i1.Codec<Call> {
   }
 }
 
-/// See [`Pallet::remark`].
+/// Make some on-chain remark.
+///
+/// Can be executed by every `origin`.
 class Remark extends Call {
   const Remark({required this.remark});
 
@@ -244,7 +246,7 @@ class Remark extends Call {
   int get hashCode => remark.hashCode;
 }
 
-/// See [`Pallet::set_heap_pages`].
+/// Set the number of pages in the WebAssembly environment's heap.
 class SetHeapPages extends Call {
   const SetHeapPages({required this.pages});
 
@@ -289,7 +291,7 @@ class SetHeapPages extends Call {
   int get hashCode => pages.hashCode;
 }
 
-/// See [`Pallet::set_code`].
+/// Set the new runtime code.
 class SetCode extends Call {
   const SetCode({required this.code});
 
@@ -338,7 +340,10 @@ class SetCode extends Call {
   int get hashCode => code.hashCode;
 }
 
-/// See [`Pallet::set_code_without_checks`].
+/// Set the new runtime code without doing any checks of the given `code`.
+///
+/// Note that runtime upgrades will not run if this is called with a not-increasing spec
+/// version!
 class SetCodeWithoutChecks extends Call {
   const SetCodeWithoutChecks({required this.code});
 
@@ -387,7 +392,7 @@ class SetCodeWithoutChecks extends Call {
   int get hashCode => code.hashCode;
 }
 
-/// See [`Pallet::set_storage`].
+/// Set some items of storage.
 class SetStorage extends Call {
   const SetStorage({required this.items});
 
@@ -454,7 +459,7 @@ class SetStorage extends Call {
   int get hashCode => items.hashCode;
 }
 
-/// See [`Pallet::kill_storage`].
+/// Kill some items from storage.
 class KillStorage extends Call {
   const KillStorage({required this.keys});
 
@@ -503,7 +508,10 @@ class KillStorage extends Call {
   int get hashCode => keys.hashCode;
 }
 
-/// See [`Pallet::kill_prefix`].
+/// Kill all storage items with a key that starts with the given prefix.
+///
+/// **NOTE:** We rely on the Root origin to provide us the number of subkeys under
+/// the prefix we are removing to accurately calculate the weight of this function.
 class KillPrefix extends Call {
   const KillPrefix({
     required this.prefix,
@@ -573,7 +581,7 @@ class KillPrefix extends Call {
       );
 }
 
-/// See [`Pallet::remark_with_event`].
+/// Make some on-chain remark and emit event.
 class RemarkWithEvent extends Call {
   const RemarkWithEvent({required this.remark});
 
@@ -622,7 +630,10 @@ class RemarkWithEvent extends Call {
   int get hashCode => remark.hashCode;
 }
 
-/// See [`Pallet::authorize_upgrade`].
+/// Authorize an upgrade to a given `code_hash` for the runtime. The runtime can be supplied
+/// later.
+///
+/// This call requires Root origin.
 class AuthorizeUpgrade extends Call {
   const AuthorizeUpgrade({required this.codeHash});
 
@@ -671,7 +682,14 @@ class AuthorizeUpgrade extends Call {
   int get hashCode => codeHash.hashCode;
 }
 
-/// See [`Pallet::authorize_upgrade_without_checks`].
+/// Authorize an upgrade to a given `code_hash` for the runtime. The runtime can be supplied
+/// later.
+///
+/// WARNING: This authorizes an upgrade that will take place without any safety checks, for
+/// example that the spec name remains the same and that the version number increases. Not
+/// recommended for normal use. Use `authorize_upgrade` instead.
+///
+/// This call requires Root origin.
 class AuthorizeUpgradeWithoutChecks extends Call {
   const AuthorizeUpgradeWithoutChecks({required this.codeHash});
 
@@ -720,7 +738,15 @@ class AuthorizeUpgradeWithoutChecks extends Call {
   int get hashCode => codeHash.hashCode;
 }
 
-/// See [`Pallet::apply_authorized_upgrade`].
+/// Provide the preimage (runtime binary) `code` for an upgrade that has been authorized.
+///
+/// If the authorization required a version check, this call will ensure the spec name
+/// remains unchanged and that the spec version has increased.
+///
+/// Depending on the runtime's `OnSetCode` configuration, this function may directly apply
+/// the new `code` in the same block or attempt to schedule the upgrade.
+///
+/// All origins are allowed.
 class ApplyAuthorizedUpgrade extends Call {
   const ApplyAuthorizedUpgrade({required this.code});
 

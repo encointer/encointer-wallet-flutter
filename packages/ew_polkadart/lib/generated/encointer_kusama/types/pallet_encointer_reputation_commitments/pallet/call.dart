@@ -100,7 +100,6 @@ class $CallCodec with _i1.Codec<Call> {
   }
 }
 
-/// See [`Pallet::register_purpose`].
 class RegisterPurpose extends Call {
   const RegisterPurpose({required this.descriptor});
 
@@ -149,7 +148,6 @@ class RegisterPurpose extends Call {
   int get hashCode => descriptor.hashCode;
 }
 
-/// See [`Pallet::commit_reputation`].
 class CommitReputation extends Call {
   const CommitReputation({
     required this.cid,

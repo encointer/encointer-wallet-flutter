@@ -27,11 +27,14 @@ enum Error {
   /// The origin filter prevent the call to be dispatched.
   callFiltered('CallFiltered', 5),
 
+  /// A multi-block migration is ongoing and prevents the current code from being replaced.
+  multiBlockMigrationsOngoing('MultiBlockMigrationsOngoing', 6),
+
   /// No upgrade authorized.
-  nothingAuthorized('NothingAuthorized', 6),
+  nothingAuthorized('NothingAuthorized', 7),
 
   /// The submitted code is not authorized.
-  unauthorized('Unauthorized', 7);
+  unauthorized('Unauthorized', 8);
 
   const Error(
     this.variantName,
@@ -74,8 +77,10 @@ class $ErrorCodec with _i1.Codec<Error> {
       case 5:
         return Error.callFiltered;
       case 6:
-        return Error.nothingAuthorized;
+        return Error.multiBlockMigrationsOngoing;
       case 7:
+        return Error.nothingAuthorized;
+      case 8:
         return Error.unauthorized;
       default:
         throw Exception('Error: Invalid variant index: "$index"');

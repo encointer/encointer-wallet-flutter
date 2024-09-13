@@ -111,7 +111,6 @@ class $CallCodec with _i1.Codec<Call> {
   }
 }
 
-/// See [`Pallet::submit_proposal`].
 class SubmitProposal extends Call {
   const SubmitProposal({required this.proposalAction});
 
@@ -119,7 +118,7 @@ class SubmitProposal extends Call {
     return SubmitProposal(proposalAction: _i3.ProposalAction.codec.decode(input));
   }
 
-  /// ProposalAction
+  /// ProposalAction<T::AccountId, BalanceOf<T>>
   final _i3.ProposalAction proposalAction;
 
   @override
@@ -156,7 +155,6 @@ class SubmitProposal extends Call {
   int get hashCode => proposalAction.hashCode;
 }
 
-/// See [`Pallet::vote`].
 class Vote extends Call {
   const Vote({
     required this.proposalId,
@@ -255,7 +253,6 @@ class Vote extends Call {
       );
 }
 
-/// See [`Pallet::update_proposal_state`].
 class UpdateProposalState extends Call {
   const UpdateProposalState({required this.proposalId});
 

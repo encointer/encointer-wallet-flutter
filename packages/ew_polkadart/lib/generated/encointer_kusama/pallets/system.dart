@@ -46,6 +46,12 @@ class Queries {
     valueCodec: _i4.U32Codec.codec,
   );
 
+  final _i1.StorageValue<bool> _inherentsApplied = const _i1.StorageValue<bool>(
+    prefix: 'System',
+    storage: 'InherentsApplied',
+    valueCodec: _i4.BoolCodec.codec,
+  );
+
   final _i1.StorageValue<_i5.PerDispatchClass> _blockWeight = const _i1.StorageValue<_i5.PerDispatchClass>(
     prefix: 'System',
     storage: 'BlockWeight',
@@ -186,6 +192,19 @@ class Queries {
       return _extrinsicCount.decodeValue(bytes);
     }
     return null; /* Nullable */
+  }
+
+  /// Whether all inherents have been applied.
+  _i13.Future<bool> inherentsApplied({_i1.BlockHash? at}) async {
+    final hashedKey = _inherentsApplied.hashedKey();
+    final bytes = await __api.getStorage(
+      hashedKey,
+      at: at,
+    );
+    if (bytes != null) {
+      return _inherentsApplied.decodeValue(bytes);
+    }
+    return false; /* Default */
   }
 
   /// The current weight for the block.
@@ -445,6 +464,12 @@ class Queries {
     return hashedKey;
   }
 
+  /// Returns the storage key for `inherentsApplied`.
+  _i16.Uint8List inherentsAppliedKey() {
+    final hashedKey = _inherentsApplied.hashedKey();
+    return hashedKey;
+  }
+
   /// Returns the storage key for `blockWeight`.
   _i16.Uint8List blockWeightKey() {
     final hashedKey = _blockWeight.hashedKey();
@@ -563,43 +588,51 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::remark`].
+  /// Make some on-chain remark.
+  ///
+  /// Can be executed by every `origin`.
   _i17.RuntimeCall remark({required List<int> remark}) {
     final _call = _i18.Call.values.remark(remark: remark);
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::set_heap_pages`].
+  /// Set the number of pages in the WebAssembly environment's heap.
   _i17.RuntimeCall setHeapPages({required BigInt pages}) {
     final _call = _i18.Call.values.setHeapPages(pages: pages);
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::set_code`].
+  /// Set the new runtime code.
   _i17.RuntimeCall setCode({required List<int> code}) {
     final _call = _i18.Call.values.setCode(code: code);
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::set_code_without_checks`].
+  /// Set the new runtime code without doing any checks of the given `code`.
+  ///
+  /// Note that runtime upgrades will not run if this is called with a not-increasing spec
+  /// version!
   _i17.RuntimeCall setCodeWithoutChecks({required List<int> code}) {
     final _call = _i18.Call.values.setCodeWithoutChecks(code: code);
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::set_storage`].
+  /// Set some items of storage.
   _i17.RuntimeCall setStorage({required List<_i9.Tuple2<List<int>, List<int>>> items}) {
     final _call = _i18.Call.values.setStorage(items: items);
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::kill_storage`].
+  /// Kill some items from storage.
   _i17.RuntimeCall killStorage({required List<List<int>> keys}) {
     final _call = _i18.Call.values.killStorage(keys: keys);
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::kill_prefix`].
+  /// Kill all storage items with a key that starts with the given prefix.
+  ///
+  /// **NOTE:** We rely on the Root origin to provide us the number of subkeys under
+  /// the prefix we are removing to accurately calculate the weight of this function.
   _i17.RuntimeCall killPrefix({
     required List<int> prefix,
     required int subkeys,
@@ -611,25 +644,43 @@ class Txs {
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::remark_with_event`].
+  /// Make some on-chain remark and emit event.
   _i17.RuntimeCall remarkWithEvent({required List<int> remark}) {
     final _call = _i18.Call.values.remarkWithEvent(remark: remark);
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::authorize_upgrade`].
+  /// Authorize an upgrade to a given `code_hash` for the runtime. The runtime can be supplied
+  /// later.
+  ///
+  /// This call requires Root origin.
   _i17.RuntimeCall authorizeUpgrade({required _i6.H256 codeHash}) {
     final _call = _i18.Call.values.authorizeUpgrade(codeHash: codeHash);
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::authorize_upgrade_without_checks`].
+  /// Authorize an upgrade to a given `code_hash` for the runtime. The runtime can be supplied
+  /// later.
+  ///
+  /// WARNING: This authorizes an upgrade that will take place without any safety checks, for
+  /// example that the spec name remains the same and that the version number increases. Not
+  /// recommended for normal use. Use `authorize_upgrade` instead.
+  ///
+  /// This call requires Root origin.
   _i17.RuntimeCall authorizeUpgradeWithoutChecks({required _i6.H256 codeHash}) {
     final _call = _i18.Call.values.authorizeUpgradeWithoutChecks(codeHash: codeHash);
     return _i17.RuntimeCall.values.system(_call);
   }
 
-  /// See [`Pallet::apply_authorized_upgrade`].
+  /// Provide the preimage (runtime binary) `code` for an upgrade that has been authorized.
+  ///
+  /// If the authorization required a version check, this call will ensure the spec name
+  /// remains unchanged and that the spec version has increased.
+  ///
+  /// Depending on the runtime's `OnSetCode` configuration, this function may directly apply
+  /// the new `code` in the same block or attempt to schedule the upgrade.
+  ///
+  /// All origins are allowed.
   _i17.RuntimeCall applyAuthorizedUpgrade({required List<int> code}) {
     final _call = _i18.Call.values.applyAuthorizedUpgrade(code: code);
     return _i17.RuntimeCall.values.system(_call);
@@ -642,7 +693,7 @@ class Constants {
   /// Block & extrinsics weights: base values and limits.
   final _i19.BlockWeights blockWeights = _i19.BlockWeights(
     baseBlock: _i15.Weight(
-      refTime: BigInt.from(390584000),
+      refTime: BigInt.from(453383000),
       proofSize: BigInt.zero,
     ),
     maxBlock: _i15.Weight(
@@ -655,11 +706,11 @@ class Constants {
     perClass: _i20.PerDispatchClass(
       normal: _i21.WeightsPerClass(
         baseExtrinsic: _i15.Weight(
-          refTime: BigInt.from(124414000),
+          refTime: BigInt.from(107074000),
           proofSize: BigInt.zero,
         ),
         maxExtrinsic: _i15.Weight(
-          refTime: BigInt.from(1299875586000),
+          refTime: BigInt.from(1299892926000),
           proofSize: BigInt.parse(
             '11990383647911208550',
             radix: 10,
@@ -679,11 +730,11 @@ class Constants {
       ),
       operational: _i21.WeightsPerClass(
         baseExtrinsic: _i15.Weight(
-          refTime: BigInt.from(124414000),
+          refTime: BigInt.from(107074000),
           proofSize: BigInt.zero,
         ),
         maxExtrinsic: _i15.Weight(
-          refTime: BigInt.from(1799875586000),
+          refTime: BigInt.from(1799892926000),
           proofSize: BigInt.parse(
             '16602069666338596454',
             radix: 10,
@@ -706,7 +757,7 @@ class Constants {
       ),
       mandatory: _i21.WeightsPerClass(
         baseExtrinsic: _i15.Weight(
-          refTime: BigInt.from(124414000),
+          refTime: BigInt.from(107074000),
           proofSize: BigInt.zero,
         ),
         maxExtrinsic: null,
@@ -733,12 +784,12 @@ class Constants {
     write: BigInt.from(100000000),
   );
 
-  /// Get the chain's current version.
+  /// Get the chain's in-code version.
   final _i25.RuntimeVersion version = const _i25.RuntimeVersion(
     specName: 'encointer-node-notee',
     implName: 'encointer-node-notee',
     authoringVersion: 0,
-    specVersion: 32,
+    specVersion: 361,
     implVersion: 0,
     apis: [
       _i9.Tuple2<List<int>, int>(
@@ -752,7 +803,7 @@ class Constants {
           96,
           155,
         ],
-        4,
+        5,
       ),
       _i9.Tuple2<List<int>, int>(
         <int>[
@@ -946,6 +997,19 @@ class Constants {
           164,
           58,
           212,
+        ],
+        1,
+      ),
+      _i9.Tuple2<List<int>, int>(
+        <int>[
+          123,
+          79,
+          66,
+          162,
+          91,
+          118,
+          252,
+          21,
         ],
         1,
       ),

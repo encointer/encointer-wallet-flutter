@@ -395,6 +395,36 @@
             }
         }
     },
+    "proposalPetition": "{cid} petition: {value}",
+    "@proposalPetition": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "value": {
+                "type": "String",
+                "example": "Peace to the World"
+            }
+        }
+    },
+    "proposalSpendNative": "{cid} trèsor enverra {amount} KSM à {beneficiary}",
+    "@proposalSpendNative": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "amount": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            }
+        }
+    },
     "proposalSupersededBy": "Epargné par: {id}",
     "@proposalSupersededBy": {
         "placeholders": {

@@ -116,7 +116,7 @@ class $CallCodec with _i1.Codec<Call> {
   }
 }
 
-/// See [`Pallet::transfer`].
+/// Transfer some balance to another account.
 class Transfer extends Call {
   const Transfer({
     required this.dest,
@@ -199,7 +199,6 @@ class Transfer extends Call {
       );
 }
 
-/// See [`Pallet::set_fee_conversion_factor`].
 class SetFeeConversionFactor extends Call {
   const SetFeeConversionFactor({required this.feeConversionFactor});
 
@@ -244,7 +243,6 @@ class SetFeeConversionFactor extends Call {
   int get hashCode => feeConversionFactor.hashCode;
 }
 
-/// See [`Pallet::transfer_all`].
 class TransferAll extends Call {
   const TransferAll({
     required this.dest,
