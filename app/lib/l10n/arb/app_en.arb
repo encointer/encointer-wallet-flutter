@@ -234,7 +234,7 @@
     "remarkNotificationTitle": "note submitted",
     "remarkNotificationBody": "You have submitted a note.",
     "remarks": "Remarks",
-    "remarksButton": "Add note",
+    "remarksButton": "submit public note",
     "remarksExplain": "You can submit a note to the network. This note will be public and immutable. It can be read and authenticated by everyone as it will be digitally signed by you.",
     "remarksNote": "Note",
     "remarksSubmit": "Submit note",
