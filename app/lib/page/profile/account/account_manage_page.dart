@@ -195,16 +195,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later ;-)
     Widget remarks() {
-      if (faucets == null) {
-        return appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator();
-      }
-
-      if (store.account.currentAccountPubKey! != accountToBeEditedPubKey) {
-        return Column(children: [
-          Text(l10n.remarks, style: h3Grey, textAlign: TextAlign.left),
-        ]);
-      }
-
       return Remarks(
         store,
         userAddress: Address(
