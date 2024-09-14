@@ -280,6 +280,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Text(l10n.communities, style: h3Grey, textAlign: TextAlign.left),
                       ListView.builder(
                         shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: store.encointer.accountStores!.containsKey(addressSS58)
                             ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
                             : 0,
