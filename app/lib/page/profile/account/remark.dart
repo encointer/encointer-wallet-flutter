@@ -69,9 +69,7 @@ class Remarks extends StatelessWidget {
               onPressed: () async {
                 final remark = _remarkController.text;
                 if (remark.isNotEmpty) {
-                  await _submitRemarkTx(
-                      context,
-                      remark);
+                  await _submitRemarkTx(context, remark);
                   Navigator.of(context).pop();
                 }
               },

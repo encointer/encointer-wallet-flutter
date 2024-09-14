@@ -170,7 +170,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
 
-    // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
     Widget benefits() {
       if (faucets == null) {
         return appConfig.isIntegrationTest ? const SizedBox.shrink() : const CupertinoActivityIndicator();
@@ -193,7 +192,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
       );
     }
 
-    // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later ;-)
     Widget remarks() {
       return Remarks(
         store,
@@ -203,6 +201,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
         ),
       );
     }
+
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
@@ -243,55 +242,62 @@ class _AccountManagePageState extends State<AccountManagePage> {
           ],
         ),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 20),
-                if (!isKeyboard)
-                  AddressIcon(
-                    addressSS58,
-                    accountToBeEditedPubKey,
-                    size: 130,
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(height: 20),
+                      if (!isKeyboard)
+                        AddressIcon(
+                          addressSS58,
+                          accountToBeEditedPubKey,
+                          size: 130,
+                        ),
+                      Text(
+                        addressSS58,
+                        key: const Key(EWTestKeys.accountPublicKey),
+                        style: const TextStyle(fontSize: 2, color: Colors.transparent),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            Fmt.address(addressSS58)!,
+                            style: const TextStyle(fontSize: 20),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          IconButton(
+                            icon: const Icon(Iconsax.copy),
+                            color: context.colorScheme.secondary,
+                            onPressed: () => UI.copyAndNotify(context, addressSS58),
+                          ),
+                        ],
+                      ),
+                      Text(l10n.communities, style: h3Grey, textAlign: TextAlign.left),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: store.encointer.accountStores!.containsKey(addressSS58)
+                            ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
+                            : 0,
+                        itemBuilder: (BuildContext context, int index) => _getBalanceEntryListTile(
+                          index,
+                          addressSS58,
+                        ),
+                      ),
+                      benefits(),
+                      remarks(),
+                      const SizedBox(height: 20),
+                    ],
                   ),
-                Text(
-                  addressSS58,
-                  key: const Key(EWTestKeys.accountPublicKey),
-                  // Text only read `addressSS58` for integration test
-                  style: const TextStyle(fontSize: 2, color: Colors.transparent),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      Fmt.address(addressSS58)!,
-                      style: const TextStyle(fontSize: 20),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    IconButton(
-                      icon: const Icon(Iconsax.copy),
-                      color: context.colorScheme.secondary,
-                      onPressed: () => UI.copyAndNotify(context, addressSS58),
-                    ),
-                  ],
-                ),
-                Text(l10n.communities, style: h3Grey, textAlign: TextAlign.left),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: store.encointer.accountStores!.containsKey(addressSS58)
-                      ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
-                      : 0,
-                  itemBuilder: (BuildContext context, int index) => _getBalanceEntryListTile(
-                    index,
-                    addressSS58,
-                  ),
-                ),
-                benefits(),
-                remarks(),
-                const Spacer(),
-                DecoratedBox(
-                  // width: double.infinity,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: AppColors.primaryGradient(context),
                     borderRadius: BorderRadius.circular(20),
@@ -301,7 +307,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       ElevatedButton(
                         key: const Key(EWTestKeys.goToAccountShare),
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(16), // make splash animation as high as the container
+                          padding: const EdgeInsets.all(16),
                           backgroundColor: Colors.transparent,
                           foregroundColor: Colors.white,
                           shadowColor: Colors.transparent,
@@ -322,55 +328,52 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       ),
                       const Spacer(),
                       PopupMenuButton<AccountAction>(
-                          offset: const Offset(-10, -150),
-                          icon: const Icon(
-                            Iconsax.more,
-                            key: Key(EWTestKeys.popupMenuAccountTrashExport),
-                            color: Colors.white,
+                        offset: const Offset(-10, -150),
+                        icon: const Icon(
+                          Iconsax.more,
+                          key: Key(EWTestKeys.popupMenuAccountTrashExport),
+                          color: Colors.white,
+                        ),
+                        color: context.colorScheme.background,
+                        padding: const EdgeInsets.all(20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        onSelected: (AccountAction accountAction) {
+                          return switch (accountAction) {
+                            AccountAction.delete => _onDeleteAccount(context, accountToBeEdited),
+                            AccountAction.export => _showPasswordDialog(context, accountToBeEdited),
+                          };
+                        },
+                        itemBuilder: (BuildContext context) => [
+                          AccountActionItemData(
+                            accountAction: AccountAction.delete,
+                            icon: Iconsax.trash,
+                            title: l10n.deleteAccount,
                           ),
-                          color: context.colorScheme.background,
-                          padding: const EdgeInsets.all(20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          onSelected: (AccountAction accountAction) {
-                            return switch (accountAction) {
-                              AccountAction.delete => _onDeleteAccount(context, accountToBeEdited),
-                              AccountAction.export => _showPasswordDialog(context, accountToBeEdited),
-                            };
-                          },
-                          itemBuilder: (BuildContext context) => [
-                                AccountActionItemData(
-                                  accountAction: AccountAction.delete,
-                                  icon: Iconsax.trash,
-                                  title: l10n.deleteAccount,
-                                ),
-                                AccountActionItemData(
-                                    accountAction: AccountAction.export,
-                                    icon: Iconsax.export,
-                                    title: l10n.exportAccount),
-                              ]
-                                  .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
-                                        key: Key(data.accountAction.name),
-                                        value: data.accountAction,
-                                        // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
-                                        child: ListTileTheme(
-                                          textColor: context.colorScheme.secondary,
-                                          iconColor: context.colorScheme.secondary,
-                                          child: ListTile(
-                                            minLeadingWidth: 0,
-                                            title: Text(data.title),
-                                            leading: Icon(data.icon),
-                                          ),
-                                        ),
-                                      ))
-                                  .toList() //<PopupMenuEntry<AccountAction>>,
-                          ),
+                          AccountActionItemData(
+                              accountAction: AccountAction.export, icon: Iconsax.export, title: l10n.exportAccount),
+                        ]
+                            .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
+                                  key: Key(data.accountAction.name),
+                                  value: data.accountAction,
+                                  child: ListTileTheme(
+                                    textColor: context.colorScheme.secondary,
+                                    iconColor: context.colorScheme.secondary,
+                                    child: ListTile(
+                                      minLeadingWidth: 0,
+                                      title: Text(data.title),
+                                      leading: Icon(data.icon),
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

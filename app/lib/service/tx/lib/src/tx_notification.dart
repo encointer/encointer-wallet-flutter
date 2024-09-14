@@ -18,9 +18,9 @@ class TxNotification {
       );
 
   factory TxNotification.remark(AppLocalizations l10n) => TxNotification(
-    title: l10n.remarkNotificationTitle,
-    body: l10n.remarkNotificationBody,
-  );
+        title: l10n.remarkNotificationTitle,
+        body: l10n.remarkNotificationBody,
+      );
 
   factory TxNotification.democracyVote(AppLocalizations l10n) => TxNotification(
         title: l10n.democracyVotedNotificationTitle,

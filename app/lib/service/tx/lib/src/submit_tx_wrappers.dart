@@ -90,15 +90,13 @@ Future<void> submitClaimRewards(
 }
 
 Future<void> submitRemark(
-    BuildContext context,
-    AppStore store,
-    Api api,
-    KeyringAccount signer,
-    String remark,
- {
-      required CommunityIdentifier? txPaymentAsset,
-    }
-    ) async {
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  String remark, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
   final List<int> remarkList = remark.codeUnits;
   final call = api.encointer.encointerKusama.tx.system.remarkWithEvent(remark: remarkList);
   final xt = await TxBuilder(api.provider).createSignedExtrinsic(
