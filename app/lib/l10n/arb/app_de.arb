@@ -233,7 +233,7 @@
     "remainingNewbieTicketsAsReputable": "Verbleibende Newbie Tickets als Reputable:",
     "remarkNotificationTitle": "Notiz eingereicht",
     "remarkNotificationBody": "Sie haben eine Notiz eingereicht.",
-    "remarks": "Notizen",
+    "remarks": "Onchain Notizen",
     "remarksButton": "öffentliche Notiz einreichen",
     "remarksExplain": "Sie können eine Notiz an das Netzwerk senden. Diese Notiz wird öffentlich und unveränderlich sein. Sie kann von jemensch gelesen und authentifiziert werden, da sie digital von Dir signiert wird.",
     "remarksNote": "Notiz",
