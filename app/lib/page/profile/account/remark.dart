@@ -1,17 +1,12 @@
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/theme/theme.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 
-import '../../../common/components/submit_button.dart';
-import '../../../service/substrate_api/api.dart';
-import '../../../service/tx/lib/tx.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 
 class Remarks extends StatelessWidget {
   const Remarks(
@@ -28,7 +23,6 @@ class Remarks extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final titleLarge = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
-    final titleMedium = context.titleMedium.copyWith(color: AppColors.encointerGrey);
 
     return Column(
       children: [
@@ -46,15 +40,15 @@ class Remarks extends StatelessWidget {
   }
 
   void _showRemarkDialog(BuildContext context) {
-    final TextEditingController _remarkController = TextEditingController();
+    final TextEditingController remarkController = TextEditingController();
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(context.l10n.remarksNote),
+          title: Text(context.l10n.remarksSubmit),
           content: TextField(
-            controller: _remarkController,
+            controller: remarkController,
             decoration: InputDecoration(hintText: context.l10n.remarksNote),
           ),
           actions: <Widget>[
@@ -67,7 +61,7 @@ class Remarks extends StatelessWidget {
             TextButton(
               child: Text(context.l10n.remarksSubmit),
               onPressed: () async {
-                final remark = _remarkController.text;
+                final remark = remarkController.text;
                 if (remark.isNotEmpty) {
                   await _submitRemarkTx(context, remark);
                   Navigator.of(context).pop();
