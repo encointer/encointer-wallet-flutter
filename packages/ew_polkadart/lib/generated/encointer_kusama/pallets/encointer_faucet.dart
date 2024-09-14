@@ -79,7 +79,6 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::create_faucet`].
   _i7.RuntimeCall createFaucet({
     required List<int> name,
     required BigInt amount,
@@ -95,7 +94,6 @@ class Txs {
     return _i7.RuntimeCall.values.encointerFaucet(_call);
   }
 
-  /// See [`Pallet::drip`].
   _i7.RuntimeCall drip({
     required _i2.AccountId32 faucetAccount,
     required _i8.CommunityIdentifier cid,
@@ -109,7 +107,6 @@ class Txs {
     return _i7.RuntimeCall.values.encointerFaucet(_call);
   }
 
-  /// See [`Pallet::dissolve_faucet`].
   _i7.RuntimeCall dissolveFaucet({
     required _i2.AccountId32 faucetAccount,
     required _i2.AccountId32 beneficiary,
@@ -121,13 +118,11 @@ class Txs {
     return _i7.RuntimeCall.values.encointerFaucet(_call);
   }
 
-  /// See [`Pallet::close_faucet`].
   _i7.RuntimeCall closeFaucet({required _i2.AccountId32 faucetAccount}) {
     final _call = _i9.Call.values.closeFaucet(faucetAccount: faucetAccount);
     return _i7.RuntimeCall.values.encointerFaucet(_call);
   }
 
-  /// See [`Pallet::set_reserve_amount`].
   _i7.RuntimeCall setReserveAmount({required BigInt reserveAmount}) {
     final _call = _i9.Call.values.setReserveAmount(reserveAmount: reserveAmount);
     return _i7.RuntimeCall.values.encointerFaucet(_call);
@@ -137,6 +132,7 @@ class Txs {
 class Constants {
   Constants();
 
+  /// The treasury's pallet id, used for deriving its sovereign account ID.
   final _i10.PalletId palletId = const <int>[
     101,
     99,

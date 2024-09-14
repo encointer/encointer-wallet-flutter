@@ -213,7 +213,9 @@ class $CallCodec with _i1.Codec<Call> {
   }
 }
 
-/// See [`Pallet::new_community`].
+/// Add a new community.
+///
+/// May only be called from `T::TrustableForNonDestructiveAction`.
 class NewCommunity extends Call {
   const NewCommunity({
     required this.location,
@@ -322,7 +324,11 @@ class NewCommunity extends Call {
       );
 }
 
-/// See [`Pallet::add_location`].
+/// Add a new meetup `location` to the community with `cid`.
+///
+/// May only be called from `T::TrustableForNonDestructiveAction`.
+///
+/// Todo: Replace `T::CommunityMaster` with community governance: #137.
 class AddLocation extends Call {
   const AddLocation({
     required this.cid,
@@ -387,7 +393,11 @@ class AddLocation extends Call {
       );
 }
 
-/// See [`Pallet::remove_location`].
+/// Remove an existing meetup `location` from the community with `cid`.
+///
+/// May only be called from `T::CommunityMaster`.
+///
+/// Todo: Replace `T::CommunityMaster` with community governance: #137.
 class RemoveLocation extends Call {
   const RemoveLocation({
     required this.cid,
@@ -452,7 +462,9 @@ class RemoveLocation extends Call {
       );
 }
 
-/// See [`Pallet::update_community_metadata`].
+/// Update the metadata of the community with `cid`.
+///
+/// May only be called from `T::CommunityMaster`.
 class UpdateCommunityMetadata extends Call {
   const UpdateCommunityMetadata({
     required this.cid,
@@ -517,7 +529,6 @@ class UpdateCommunityMetadata extends Call {
       );
 }
 
-/// See [`Pallet::update_demurrage`].
 class UpdateDemurrage extends Call {
   const UpdateDemurrage({
     required this.cid,
@@ -582,7 +593,6 @@ class UpdateDemurrage extends Call {
       );
 }
 
-/// See [`Pallet::update_nominal_income`].
 class UpdateNominalIncome extends Call {
   const UpdateNominalIncome({
     required this.cid,
@@ -647,7 +657,6 @@ class UpdateNominalIncome extends Call {
       );
 }
 
-/// See [`Pallet::set_min_solar_trip_time_s`].
 class SetMinSolarTripTimeS extends Call {
   const SetMinSolarTripTimeS({required this.minSolarTripTimeS});
 
@@ -692,7 +701,6 @@ class SetMinSolarTripTimeS extends Call {
   int get hashCode => minSolarTripTimeS.hashCode;
 }
 
-/// See [`Pallet::set_max_speed_mps`].
 class SetMaxSpeedMps extends Call {
   const SetMaxSpeedMps({required this.maxSpeedMps});
 
@@ -737,7 +745,6 @@ class SetMaxSpeedMps extends Call {
   int get hashCode => maxSpeedMps.hashCode;
 }
 
-/// See [`Pallet::purge_community`].
 class PurgeCommunity extends Call {
   const PurgeCommunity({required this.cid});
 

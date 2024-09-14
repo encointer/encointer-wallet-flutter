@@ -95,8 +95,8 @@ class Prevote extends Equivocation {
     return Prevote(_i3.Equivocation.codec.decode(input));
   }
 
-  /// grandpa::Equivocation<AuthorityId, grandpa::Prevote<H, N>,
-  ///AuthoritySignature>
+  /// finality_grandpa::Equivocation<AuthorityId, finality_grandpa::Prevote<
+  ///H, N>, AuthoritySignature,>
   final _i3.Equivocation value0;
 
   @override
@@ -138,8 +138,8 @@ class Precommit extends Equivocation {
     return Precommit(_i4.Equivocation.codec.decode(input));
   }
 
-  /// grandpa::Equivocation<AuthorityId, grandpa::Precommit<H, N>,
-  ///AuthoritySignature>
+  /// finality_grandpa::Equivocation<AuthorityId, finality_grandpa::Precommit
+  ///<H, N>, AuthoritySignature,>
   final _i4.Equivocation value0;
 
   @override

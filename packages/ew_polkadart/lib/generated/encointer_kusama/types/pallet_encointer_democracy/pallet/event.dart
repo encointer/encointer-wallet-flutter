@@ -2,7 +2,9 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i8;
 
+import '../../encointer_primitives/communities/community_identifier.dart' as _i7;
 import '../../encointer_primitives/democracy/proposal_action.dart' as _i3;
 import '../../encointer_primitives/democracy/proposal_state.dart' as _i5;
 import '../../encointer_primitives/democracy/vote.dart' as _i4;
@@ -91,6 +93,16 @@ class $Event {
       reason: reason,
     );
   }
+
+  PetitionApproved petitionApproved({
+    _i7.CommunityIdentifier? cid,
+    required List<int> text,
+  }) {
+    return PetitionApproved(
+      cid: cid,
+      text: text,
+    );
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -112,6 +124,8 @@ class $EventCodec with _i1.Codec<Event> {
         return ProposalStateUpdated._decode(input);
       case 5:
         return EnactmentFailed._decode(input);
+      case 6:
+        return PetitionApproved._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -141,6 +155,9 @@ class $EventCodec with _i1.Codec<Event> {
       case EnactmentFailed:
         (value as EnactmentFailed).encodeTo(output);
         break;
+      case PetitionApproved:
+        (value as PetitionApproved).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -161,6 +178,8 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as ProposalStateUpdated)._sizeHint();
       case EnactmentFailed:
         return (value as EnactmentFailed)._sizeHint();
+      case PetitionApproved:
+        return (value as PetitionApproved)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -228,7 +247,7 @@ class ProposalSubmitted extends Event {
   /// ProposalIdType
   final BigInt proposalId;
 
-  /// ProposalAction
+  /// ProposalAction<T::AccountId, BalanceOf<T>>
   final _i3.ProposalAction proposalAction;
 
   @override
@@ -541,5 +560,74 @@ class EnactmentFailed extends Event {
   int get hashCode => Object.hash(
         proposalId,
         reason,
+      );
+}
+
+class PetitionApproved extends Event {
+  const PetitionApproved({
+    this.cid,
+    required this.text,
+  });
+
+  factory PetitionApproved._decode(_i1.Input input) {
+    return PetitionApproved(
+      cid: const _i1.OptionCodec<_i7.CommunityIdentifier>(_i7.CommunityIdentifier.codec).decode(input),
+      text: _i1.U8SequenceCodec.codec.decode(input),
+    );
+  }
+
+  /// Option<CommunityIdentifier>
+  final _i7.CommunityIdentifier? cid;
+
+  /// PalletString
+  final List<int> text;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'PetitionApproved': {
+          'cid': cid?.toJson(),
+          'text': text,
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i1.OptionCodec<_i7.CommunityIdentifier>(_i7.CommunityIdentifier.codec).sizeHint(cid);
+    size = size + _i1.U8SequenceCodec.codec.sizeHint(text);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      6,
+      output,
+    );
+    const _i1.OptionCodec<_i7.CommunityIdentifier>(_i7.CommunityIdentifier.codec).encodeTo(
+      cid,
+      output,
+    );
+    _i1.U8SequenceCodec.codec.encodeTo(
+      text,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is PetitionApproved &&
+          other.cid == cid &&
+          _i8.listsEqual(
+            other.text,
+            text,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        text,
       );
 }

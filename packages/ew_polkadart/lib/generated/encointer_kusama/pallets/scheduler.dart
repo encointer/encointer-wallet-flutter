@@ -160,7 +160,7 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::schedule`].
+  /// Anonymously schedule a task.
   _i8.RuntimeCall schedule({
     required int when,
     _i4.Tuple2<int, int>? maybePeriodic,
@@ -176,7 +176,7 @@ class Txs {
     return _i8.RuntimeCall.values.scheduler(_call);
   }
 
-  /// See [`Pallet::cancel`].
+  /// Cancel an anonymously scheduled task.
   _i8.RuntimeCall cancel({
     required int when,
     required int index,
@@ -188,7 +188,7 @@ class Txs {
     return _i8.RuntimeCall.values.scheduler(_call);
   }
 
-  /// See [`Pallet::schedule_named`].
+  /// Schedule a named task.
   _i8.RuntimeCall scheduleNamed({
     required List<int> id,
     required int when,
@@ -206,13 +206,13 @@ class Txs {
     return _i8.RuntimeCall.values.scheduler(_call);
   }
 
-  /// See [`Pallet::cancel_named`].
+  /// Cancel a named scheduled task.
   _i8.RuntimeCall cancelNamed({required List<int> id}) {
     final _call = _i9.Call.values.cancelNamed(id: id);
     return _i8.RuntimeCall.values.scheduler(_call);
   }
 
-  /// See [`Pallet::schedule_after`].
+  /// Anonymously schedule a task after a delay.
   _i8.RuntimeCall scheduleAfter({
     required int after,
     _i4.Tuple2<int, int>? maybePeriodic,
@@ -228,7 +228,7 @@ class Txs {
     return _i8.RuntimeCall.values.scheduler(_call);
   }
 
-  /// See [`Pallet::schedule_named_after`].
+  /// Schedule a named task after a delay.
   _i8.RuntimeCall scheduleNamedAfter({
     required List<int> id,
     required int after,
@@ -246,7 +246,18 @@ class Txs {
     return _i8.RuntimeCall.values.scheduler(_call);
   }
 
-  /// See [`Pallet::set_retry`].
+  /// Set a retry configuration for a task so that, in case its scheduled run fails, it will
+  /// be retried after `period` blocks, for a total amount of `retries` retries or until it
+  /// succeeds.
+  ///
+  /// Tasks which need to be scheduled for a retry are still subject to weight metering and
+  /// agenda space, same as a regular task. If a periodic task fails, it will be scheduled
+  /// normally while the task is retrying.
+  ///
+  /// Tasks scheduled as a result of a retry for a periodic task are unnamed, non-periodic
+  /// clones of the original task. Their retry configuration will be derived from the
+  /// original task's configuration, but will have a lower value for `remaining` than the
+  /// original `total_retries`.
   _i8.RuntimeCall setRetry({
     required _i4.Tuple2<int, int> task,
     required int retries,
@@ -260,7 +271,18 @@ class Txs {
     return _i8.RuntimeCall.values.scheduler(_call);
   }
 
-  /// See [`Pallet::set_retry_named`].
+  /// Set a retry configuration for a named task so that, in case its scheduled run fails, it
+  /// will be retried after `period` blocks, for a total amount of `retries` retries or until
+  /// it succeeds.
+  ///
+  /// Tasks which need to be scheduled for a retry are still subject to weight metering and
+  /// agenda space, same as a regular task. If a periodic task fails, it will be scheduled
+  /// normally while the task is retrying.
+  ///
+  /// Tasks scheduled as a result of a retry for a periodic task are unnamed, non-periodic
+  /// clones of the original task. Their retry configuration will be derived from the
+  /// original task's configuration, but will have a lower value for `remaining` than the
+  /// original `total_retries`.
   _i8.RuntimeCall setRetryNamed({
     required List<int> id,
     required int retries,
@@ -274,13 +296,13 @@ class Txs {
     return _i8.RuntimeCall.values.scheduler(_call);
   }
 
-  /// See [`Pallet::cancel_retry`].
+  /// Removes the retry configuration of a task.
   _i8.RuntimeCall cancelRetry({required _i4.Tuple2<int, int> task}) {
     final _call = _i9.Call.values.cancelRetry(task: task);
     return _i8.RuntimeCall.values.scheduler(_call);
   }
 
-  /// See [`Pallet::cancel_retry_named`].
+  /// Cancel the retry configuration of a named task.
   _i8.RuntimeCall cancelRetryNamed({required List<int> id}) {
     final _call = _i9.Call.values.cancelRetryNamed(id: id);
     return _i8.RuntimeCall.values.scheduler(_call);

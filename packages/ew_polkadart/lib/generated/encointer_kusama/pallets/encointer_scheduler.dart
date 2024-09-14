@@ -149,19 +149,22 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::next_phase`].
+  /// Manually transition to next phase without affecting the ceremony rhythm
+  ///
+  /// May only be called from `T::CeremonyMaster`.
   _i6.RuntimeCall nextPhase() {
     final _call = _i7.Call.values.nextPhase();
     return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 
-  /// See [`Pallet::push_by_one_day`].
+  /// Push next phase change by one entire day
+  ///
+  /// May only be called from `T::CeremonyMaster`.
   _i6.RuntimeCall pushByOneDay() {
     final _call = _i7.Call.values.pushByOneDay();
     return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 
-  /// See [`Pallet::set_phase_duration`].
   _i6.RuntimeCall setPhaseDuration({
     required _i3.CeremonyPhaseType ceremonyPhase,
     required BigInt duration,
@@ -173,7 +176,6 @@ class Txs {
     return _i6.RuntimeCall.values.encointerScheduler(_call);
   }
 
-  /// See [`Pallet::set_next_phase_timestamp`].
   _i6.RuntimeCall setNextPhaseTimestamp({required BigInt timestamp}) {
     final _call = _i7.Call.values.setNextPhaseTimestamp(timestamp: timestamp);
     return _i6.RuntimeCall.values.encointerScheduler(_call);

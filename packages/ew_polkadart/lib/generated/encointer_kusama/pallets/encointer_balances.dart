@@ -168,7 +168,7 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::transfer`].
+  /// Transfer some balance to another account.
   _i10.RuntimeCall transfer({
     required _i4.AccountId32 dest,
     required _i2.CommunityIdentifier communityId,
@@ -182,13 +182,11 @@ class Txs {
     return _i10.RuntimeCall.values.encointerBalances(_call);
   }
 
-  /// See [`Pallet::set_fee_conversion_factor`].
   _i10.RuntimeCall setFeeConversionFactor({required BigInt feeConversionFactor}) {
     final _call = _i11.Call.values.setFeeConversionFactor(feeConversionFactor: feeConversionFactor);
     return _i10.RuntimeCall.values.encointerBalances(_call);
   }
 
-  /// See [`Pallet::transfer_all`].
   _i10.RuntimeCall transferAll({
     required _i4.AccountId32 dest,
     required _i2.CommunityIdentifier cid,

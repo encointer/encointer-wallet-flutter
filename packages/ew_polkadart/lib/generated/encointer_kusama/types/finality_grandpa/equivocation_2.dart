@@ -2,6 +2,7 @@
 import 'dart:typed_data' as _i6;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i7;
 
 import '../sp_consensus_grandpa/app/public.dart' as _i2;
 import '../sp_consensus_grandpa/app/signature.dart' as _i5;
@@ -59,7 +60,10 @@ class Equivocation {
       ) ||
       other is Equivocation &&
           other.roundNumber == roundNumber &&
-          other.identity == identity &&
+          _i7.listsEqual(
+            other.identity,
+            identity,
+          ) &&
           other.first == first &&
           other.second == second;
 

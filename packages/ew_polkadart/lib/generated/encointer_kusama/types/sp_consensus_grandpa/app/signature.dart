@@ -1,24 +1,22 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart/scale_codec.dart' as _i1;
 
-import '../../sp_core/ed25519/signature.dart' as _i1;
+typedef Signature = List<int>;
 
-typedef Signature = _i1.Signature;
-
-class SignatureCodec with _i2.Codec<Signature> {
+class SignatureCodec with _i1.Codec<Signature> {
   const SignatureCodec();
 
   @override
-  Signature decode(_i2.Input input) {
-    return const _i2.U8ArrayCodec(64).decode(input);
+  Signature decode(_i1.Input input) {
+    return const _i1.U8ArrayCodec(64).decode(input);
   }
 
   @override
   void encodeTo(
     Signature value,
-    _i2.Output output,
+    _i1.Output output,
   ) {
-    const _i2.U8ArrayCodec(64).encodeTo(
+    const _i1.U8ArrayCodec(64).encodeTo(
       value,
       output,
     );
@@ -26,6 +24,6 @@ class SignatureCodec with _i2.Codec<Signature> {
 
   @override
   int sizeHint(Signature value) {
-    return const _i1.SignatureCodec().sizeHint(value);
+    return const _i1.U8ArrayCodec(64).sizeHint(value);
   }
 }

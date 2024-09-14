@@ -55,6 +55,14 @@ class $ProposalActionIdentifier {
   SetInactivityTimeout setInactivityTimeout() {
     return SetInactivityTimeout();
   }
+
+  Petition petition(_i3.CommunityIdentifier? value0) {
+    return Petition(value0);
+  }
+
+  SpendNative spendNative(_i3.CommunityIdentifier? value0) {
+    return SpendNative(value0);
+  }
 }
 
 class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
@@ -76,6 +84,10 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
         return UpdateNominalIncome._decode(input);
       case 5:
         return const SetInactivityTimeout();
+      case 6:
+        return Petition._decode(input);
+      case 7:
+        return SpendNative._decode(input);
       default:
         throw Exception('ProposalActionIdentifier: Invalid variant index: "$index"');
     }
@@ -105,6 +117,12 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
       case SetInactivityTimeout:
         (value as SetInactivityTimeout).encodeTo(output);
         break;
+      case Petition:
+        (value as Petition).encodeTo(output);
+        break;
+      case SpendNative:
+        (value as SpendNative).encodeTo(output);
+        break;
       default:
         throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -125,6 +143,10 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
         return (value as UpdateNominalIncome)._sizeHint();
       case SetInactivityTimeout:
         return 1;
+      case Petition:
+        return (value as Petition)._sizeHint();
+      case SpendNative:
+        return (value as SpendNative)._sizeHint();
       default:
         throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -359,4 +381,88 @@ class SetInactivityTimeout extends ProposalActionIdentifier {
 
   @override
   int get hashCode => runtimeType.hashCode;
+}
+
+class Petition extends ProposalActionIdentifier {
+  const Petition(this.value0);
+
+  factory Petition._decode(_i1.Input input) {
+    return Petition(const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).decode(input));
+  }
+
+  /// Option<CommunityIdentifier>
+  final _i3.CommunityIdentifier? value0;
+
+  @override
+  Map<String, Map<String, List<int>>?> toJson() => {'Petition': value0?.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      6,
+      output,
+    );
+    const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Petition && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class SpendNative extends ProposalActionIdentifier {
+  const SpendNative(this.value0);
+
+  factory SpendNative._decode(_i1.Input input) {
+    return SpendNative(const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).decode(input));
+  }
+
+  /// Option<CommunityIdentifier>
+  final _i3.CommunityIdentifier? value0;
+
+  @override
+  Map<String, Map<String, List<int>>?> toJson() => {'SpendNative': value0?.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      7,
+      output,
+    );
+    const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SpendNative && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
 }
