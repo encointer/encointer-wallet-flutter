@@ -110,14 +110,7 @@ Future<void> submitRemark(
     store,
     api,
     OpaqueExtrinsic(xt),
-    TxNotification.claimRewards(context.l10n),
-    onFinish: (BuildContext txPageContext, ExtrinsicReport report) {
-      // Claiming the rewards creates a new reputation if successful.
-      // Hence, we should update the state afterwards.
-      store.encointer.getEncointerBalance();
-      webApi.encointer.getReputations();
-      return report;
-    },
+    TxNotification.remark(context.l10n),
   );
 }
 
