@@ -89,6 +89,31 @@ Future<void> submitClaimRewards(
   );
 }
 
+Future<void> submitRemark(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  String remark, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
+  final remarkList = remark.codeUnits;
+  final call = api.encointer.encointerKusama.tx.system.remarkWithEvent(remark: remarkList);
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.remark(context.l10n),
+  );
+}
+
 Future<void> submitEndorseNewcomer(
   BuildContext context,
   AppStore store,
