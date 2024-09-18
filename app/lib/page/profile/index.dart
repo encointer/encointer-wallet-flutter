@@ -138,15 +138,14 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
-              if (appSettingsStore.developerMode)
-                ListTile(
-                  title: Text(
-                    l10n.democracy,
-                    style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19),
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
-                  onTap: () => Navigator.pushNamed(context, DemocracyPage.route),
+              ListTile(
+                title: Text(
+                  l10n.democracy,
+                  style: context.titleLarge.copyWith(color: context.colorScheme.secondary, fontSize: 19),
                 ),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                onTap: () => Navigator.pushNamed(context, DemocracyPage.route),
+              ),
               ListTile(
                 title: Text(
                   l10n.changeYourPin,
