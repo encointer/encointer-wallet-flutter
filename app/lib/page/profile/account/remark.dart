@@ -40,7 +40,7 @@ class Remarks extends StatelessWidget {
   }
 
   void _showRemarkDialog(BuildContext context) {
-    final TextEditingController remarkController = TextEditingController();
+    final remarkController = TextEditingController();
 
     showDialog<void>(
       context: context,
