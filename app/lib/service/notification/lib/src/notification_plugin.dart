@@ -39,7 +39,10 @@ class NotificationPlugin {
     Log.d('notification_plugin initialised: $initialised', 'main.dart');
   }
 
-  static void init(BuildContext context) => _requestIOSPermissions();
+  static void init(BuildContext context) {
+    _requestAndroidPermissions();
+    _requestIOSPermissions();
+  }
 
   static void _requestIOSPermissions() {
     flutterLocalNotificationsPlugin
@@ -49,6 +52,12 @@ class NotificationPlugin {
           badge: true,
           sound: true,
         );
+  }
+
+  static void _requestAndroidPermissions() {
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
   }
 
   static AndroidNotificationDetails _androidPlatformChannelSpecifics(String body, String sound) {
