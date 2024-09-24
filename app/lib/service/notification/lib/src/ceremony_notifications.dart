@@ -49,7 +49,7 @@ class CeremonyNotifications {
     String? cid,
   }) async {
     if (DateTime.now().isAfter(DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase))) {
-      // Doesn't happen except for occasionally on first app startup. So we don't care about it.
+      // Doesn't happen except occasionally on first app startup. So we don't care about it.
       Log.e(
         '[CeremonyNotifications] nextRegisteringPhase is in the past: ${DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase)}',
       );
