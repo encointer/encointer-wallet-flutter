@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/lib/notification.dart';
 
 /// Manages meetups reminder notifications.
@@ -47,6 +48,14 @@ class CeremonyNotifications {
     int numberOfCyclesToSchedule = 5,
     String? cid,
   }) async {
+    if (DateTime.now().isAfter(DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase))) {
+      // Doesn't happen except for occasionally on first app startup. So we don't care about it.
+      Log.e(
+        '[CeremonyNotifications] nextRegisteringPhase is in the past: ${DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase)}',
+      );
+      return;
+    }
+
     for (var i = 0; i < numberOfCyclesToSchedule; i++) {
       // calculate the scheduled date by adding i*ceremonyCycleDuration to nextRegisteringPhase
       final scheduledDate = DateTime.fromMillisecondsSinceEpoch(nextRegisteringPhase + i * ceremonyCycleDuration);
