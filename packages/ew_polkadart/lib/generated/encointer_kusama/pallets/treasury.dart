@@ -197,31 +197,23 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::propose_spend`].
-  _i7.RuntimeCall proposeSpend({
-    required BigInt value,
-    required _i8.MultiAddress beneficiary,
-  }) {
-    final _call = _i9.Call.values.proposeSpend(
-      value: value,
-      beneficiary: beneficiary,
-    );
-    return _i7.RuntimeCall.values.treasury(_call);
-  }
-
-  /// See [`Pallet::reject_proposal`].
-  _i7.RuntimeCall rejectProposal({required BigInt proposalId}) {
-    final _call = _i9.Call.values.rejectProposal(proposalId: proposalId);
-    return _i7.RuntimeCall.values.treasury(_call);
-  }
-
-  /// See [`Pallet::approve_proposal`].
-  _i7.RuntimeCall approveProposal({required BigInt proposalId}) {
-    final _call = _i9.Call.values.approveProposal(proposalId: proposalId);
-    return _i7.RuntimeCall.values.treasury(_call);
-  }
-
-  /// See [`Pallet::spend_local`].
+  /// Propose and approve a spend of treasury funds.
+  ///
+  /// ## Dispatch Origin
+  ///
+  /// Must be [`Config::SpendOrigin`] with the `Success` value being at least `amount`.
+  ///
+  /// ### Details
+  /// NOTE: For record-keeping purposes, the proposer is deemed to be equivalent to the
+  /// beneficiary.
+  ///
+  /// ### Parameters
+  /// - `amount`: The amount to be transferred from the treasury to the `beneficiary`.
+  /// - `beneficiary`: The destination account for the transfer.
+  ///
+  /// ## Events
+  ///
+  /// Emits [`Event::SpendApproved`] if successful.
   _i7.RuntimeCall spendLocal({
     required BigInt amount,
     required _i8.MultiAddress beneficiary,
@@ -233,13 +225,58 @@ class Txs {
     return _i7.RuntimeCall.values.treasury(_call);
   }
 
-  /// See [`Pallet::remove_approval`].
+  /// Force a previously approved proposal to be removed from the approval queue.
+  ///
+  /// ## Dispatch Origin
+  ///
+  /// Must be [`Config::RejectOrigin`].
+  ///
+  /// ## Details
+  ///
+  /// The original deposit will no longer be returned.
+  ///
+  /// ### Parameters
+  /// - `proposal_id`: The index of a proposal
+  ///
+  /// ### Complexity
+  /// - O(A) where `A` is the number of approvals
+  ///
+  /// ### Errors
+  /// - [`Error::ProposalNotApproved`]: The `proposal_id` supplied was not found in the
+  ///  approval queue, i.e., the proposal has not been approved. This could also mean the
+  ///  proposal does not exist altogether, thus there is no way it would have been approved
+  ///  in the first place.
   _i7.RuntimeCall removeApproval({required BigInt proposalId}) {
     final _call = _i9.Call.values.removeApproval(proposalId: proposalId);
     return _i7.RuntimeCall.values.treasury(_call);
   }
 
-  /// See [`Pallet::spend`].
+  /// Propose and approve a spend of treasury funds.
+  ///
+  /// ## Dispatch Origin
+  ///
+  /// Must be [`Config::SpendOrigin`] with the `Success` value being at least
+  /// `amount` of `asset_kind` in the native asset. The amount of `asset_kind` is converted
+  /// for assertion using the [`Config::BalanceConverter`].
+  ///
+  /// ## Details
+  ///
+  /// Create an approved spend for transferring a specific `amount` of `asset_kind` to a
+  /// designated beneficiary. The spend must be claimed using the `payout` dispatchable within
+  /// the [`Config::PayoutPeriod`].
+  ///
+  /// ### Parameters
+  /// - `asset_kind`: An indicator of the specific asset class to be spent.
+  /// - `amount`: The amount to be transferred from the treasury to the `beneficiary`.
+  /// - `beneficiary`: The beneficiary of the spend.
+  /// - `valid_from`: The block number from which the spend can be claimed. It can refer to
+  ///  the past if the resulting spend has not yet expired according to the
+  ///  [`Config::PayoutPeriod`]. If `None`, the spend can be claimed immediately after
+  ///  approval.
+  ///
+  /// ## Events
+  ///
+  /// Emits [`Event::AssetSpendApproved`] if successful.
   _i7.RuntimeCall spend({
     required dynamic assetKind,
     required BigInt amount,
@@ -255,19 +292,70 @@ class Txs {
     return _i7.RuntimeCall.values.treasury(_call);
   }
 
-  /// See [`Pallet::payout`].
+  /// Claim a spend.
+  ///
+  /// ## Dispatch Origin
+  ///
+  /// Must be signed
+  ///
+  /// ## Details
+  ///
+  /// Spends must be claimed within some temporal bounds. A spend may be claimed within one
+  /// [`Config::PayoutPeriod`] from the `valid_from` block.
+  /// In case of a payout failure, the spend status must be updated with the `check_status`
+  /// dispatchable before retrying with the current function.
+  ///
+  /// ### Parameters
+  /// - `index`: The spend index.
+  ///
+  /// ## Events
+  ///
+  /// Emits [`Event::Paid`] if successful.
   _i7.RuntimeCall payout({required int index}) {
     final _call = _i9.Call.values.payout(index: index);
     return _i7.RuntimeCall.values.treasury(_call);
   }
 
-  /// See [`Pallet::check_status`].
+  /// Check the status of the spend and remove it from the storage if processed.
+  ///
+  /// ## Dispatch Origin
+  ///
+  /// Must be signed.
+  ///
+  /// ## Details
+  ///
+  /// The status check is a prerequisite for retrying a failed payout.
+  /// If a spend has either succeeded or expired, it is removed from the storage by this
+  /// function. In such instances, transaction fees are refunded.
+  ///
+  /// ### Parameters
+  /// - `index`: The spend index.
+  ///
+  /// ## Events
+  ///
+  /// Emits [`Event::PaymentFailed`] if the spend payout has failed.
+  /// Emits [`Event::SpendProcessed`] if the spend payout has succeed.
   _i7.RuntimeCall checkStatus({required int index}) {
     final _call = _i9.Call.values.checkStatus(index: index);
     return _i7.RuntimeCall.values.treasury(_call);
   }
 
-  /// See [`Pallet::void_spend`].
+  /// Void previously approved spend.
+  ///
+  /// ## Dispatch Origin
+  ///
+  /// Must be [`Config::RejectOrigin`].
+  ///
+  /// ## Details
+  ///
+  /// A spend void is only possible if the payout has not been attempted yet.
+  ///
+  /// ### Parameters
+  /// - `index`: The spend index.
+  ///
+  /// ## Events
+  ///
+  /// Emits [`Event::AssetSpendVoided`] if successful.
   _i7.RuntimeCall voidSpend({required int index}) {
     final _call = _i9.Call.values.voidSpend(index: index);
     return _i7.RuntimeCall.values.treasury(_call);
@@ -276,16 +364,6 @@ class Txs {
 
 class Constants {
   Constants();
-
-  /// Fraction of a proposal's value that should be bonded in order to place the proposal.
-  /// An accepted proposal gets these back. A rejected proposal does not.
-  final _i11.Permill proposalBond = 50000;
-
-  /// Minimum amount of funds that should be placed in a deposit for making a proposal.
-  final BigInt proposalBondMinimum = BigInt.from(100000000000);
-
-  /// Maximum amount of funds that should be placed in a deposit for making a proposal.
-  final BigInt? proposalBondMaximum = BigInt.from(500000000000000);
 
   /// Period between successive spends.
   final int spendPeriod = 86400;

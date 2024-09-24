@@ -2,7 +2,9 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
+import 'package:quiver/collection.dart' as _i9;
 
+import '../../sp_core/crypto/account_id32.dart' as _i8;
 import '../../substrate_fixed/fixed_i128.dart' as _i6;
 import '../../substrate_fixed/fixed_u128.dart' as _i7;
 import '../communities/community_identifier.dart' as _i3;
@@ -89,6 +91,28 @@ class $ProposalAction {
   SetInactivityTimeout setInactivityTimeout(int value0) {
     return SetInactivityTimeout(value0);
   }
+
+  Petition petition(
+    _i3.CommunityIdentifier? value0,
+    List<int> value1,
+  ) {
+    return Petition(
+      value0,
+      value1,
+    );
+  }
+
+  SpendNative spendNative(
+    _i3.CommunityIdentifier? value0,
+    _i8.AccountId32 value1,
+    BigInt value2,
+  ) {
+    return SpendNative(
+      value0,
+      value1,
+      value2,
+    );
+  }
 }
 
 class $ProposalActionCodec with _i1.Codec<ProposalAction> {
@@ -110,6 +134,10 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
         return UpdateNominalIncome._decode(input);
       case 5:
         return SetInactivityTimeout._decode(input);
+      case 6:
+        return Petition._decode(input);
+      case 7:
+        return SpendNative._decode(input);
       default:
         throw Exception('ProposalAction: Invalid variant index: "$index"');
     }
@@ -139,6 +167,12 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
       case SetInactivityTimeout:
         (value as SetInactivityTimeout).encodeTo(output);
         break;
+      case Petition:
+        (value as Petition).encodeTo(output);
+        break;
+      case SpendNative:
+        (value as SpendNative).encodeTo(output);
+        break;
       default:
         throw Exception('ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -159,6 +193,10 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
         return (value as UpdateNominalIncome)._sizeHint();
       case SetInactivityTimeout:
         return (value as SetInactivityTimeout)._sizeHint();
+      case Petition:
+        return (value as Petition)._sizeHint();
+      case SpendNative:
+        return (value as SpendNative)._sizeHint();
       default:
         throw Exception('ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -525,4 +563,155 @@ class SetInactivityTimeout extends ProposalAction {
 
   @override
   int get hashCode => value0.hashCode;
+}
+
+class Petition extends ProposalAction {
+  const Petition(
+    this.value0,
+    this.value1,
+  );
+
+  factory Petition._decode(_i1.Input input) {
+    return Petition(
+      const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).decode(input),
+      _i1.U8SequenceCodec.codec.decode(input),
+    );
+  }
+
+  /// Option<CommunityIdentifier>
+  final _i3.CommunityIdentifier? value0;
+
+  /// PalletString
+  final List<int> value1;
+
+  @override
+  Map<String, List<dynamic>> toJson() => {
+        'Petition': [
+          value0?.toJson(),
+          value1,
+        ]
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).sizeHint(value0);
+    size = size + _i1.U8SequenceCodec.codec.sizeHint(value1);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      6,
+      output,
+    );
+    const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).encodeTo(
+      value0,
+      output,
+    );
+    _i1.U8SequenceCodec.codec.encodeTo(
+      value1,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Petition &&
+          other.value0 == value0 &&
+          _i9.listsEqual(
+            other.value1,
+            value1,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+      );
+}
+
+class SpendNative extends ProposalAction {
+  const SpendNative(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
+
+  factory SpendNative._decode(_i1.Input input) {
+    return SpendNative(
+      const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      _i1.U128Codec.codec.decode(input),
+    );
+  }
+
+  /// Option<CommunityIdentifier>
+  final _i3.CommunityIdentifier? value0;
+
+  /// AccountId
+  final _i8.AccountId32 value1;
+
+  /// Balance
+  final BigInt value2;
+
+  @override
+  Map<String, List<dynamic>> toJson() => {
+        'SpendNative': [
+          value0?.toJson(),
+          value1.toList(),
+          value2,
+        ]
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).sizeHint(value0);
+    size = size + const _i8.AccountId32Codec().sizeHint(value1);
+    size = size + _i1.U128Codec.codec.sizeHint(value2);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      7,
+      output,
+    );
+    const _i1.OptionCodec<_i3.CommunityIdentifier>(_i3.CommunityIdentifier.codec).encodeTo(
+      value0,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      value1,
+      output,
+    );
+    _i1.U128Codec.codec.encodeTo(
+      value2,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is SpendNative &&
+          other.value0 == value0 &&
+          _i9.listsEqual(
+            other.value1,
+            value1,
+          ) &&
+          other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
 }

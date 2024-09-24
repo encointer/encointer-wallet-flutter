@@ -363,7 +363,9 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::new_community`].
+  /// Add a new community.
+  ///
+  /// May only be called from `T::TrustableForNonDestructiveAction`.
   _i12.RuntimeCall newCommunity({
     required _i5.Location location,
     required List<_i6.AccountId32> bootstrappers,
@@ -381,7 +383,11 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::add_location`].
+  /// Add a new meetup `location` to the community with `cid`.
+  ///
+  /// May only be called from `T::TrustableForNonDestructiveAction`.
+  ///
+  /// Todo: Replace `T::CommunityMaster` with community governance: #137.
   _i12.RuntimeCall addLocation({
     required _i3.CommunityIdentifier cid,
     required _i5.Location location,
@@ -393,7 +399,11 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::remove_location`].
+  /// Remove an existing meetup `location` from the community with `cid`.
+  ///
+  /// May only be called from `T::CommunityMaster`.
+  ///
+  /// Todo: Replace `T::CommunityMaster` with community governance: #137.
   _i12.RuntimeCall removeLocation({
     required _i3.CommunityIdentifier cid,
     required _i5.Location location,
@@ -405,7 +415,9 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::update_community_metadata`].
+  /// Update the metadata of the community with `cid`.
+  ///
+  /// May only be called from `T::CommunityMaster`.
   _i12.RuntimeCall updateCommunityMetadata({
     required _i3.CommunityIdentifier cid,
     required _i7.CommunityMetadata communityMetadata,
@@ -417,7 +429,6 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::update_demurrage`].
   _i12.RuntimeCall updateDemurrage({
     required _i3.CommunityIdentifier cid,
     required _i13.FixedI128 demurrage,
@@ -429,7 +440,6 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::update_nominal_income`].
   _i12.RuntimeCall updateNominalIncome({
     required _i3.CommunityIdentifier cid,
     required _i8.FixedU128 nominalIncome,
@@ -441,19 +451,16 @@ class Txs {
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::set_min_solar_trip_time_s`].
   _i12.RuntimeCall setMinSolarTripTimeS({required int minSolarTripTimeS}) {
     final _call = _i14.Call.values.setMinSolarTripTimeS(minSolarTripTimeS: minSolarTripTimeS);
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::set_max_speed_mps`].
   _i12.RuntimeCall setMaxSpeedMps({required int maxSpeedMps}) {
     final _call = _i14.Call.values.setMaxSpeedMps(maxSpeedMps: maxSpeedMps);
     return _i12.RuntimeCall.values.encointerCommunities(_call);
   }
 
-  /// See [`Pallet::purge_community`].
   _i12.RuntimeCall purgeCommunity({required _i3.CommunityIdentifier cid}) {
     final _call = _i14.Call.values.purgeCommunity(cid: cid);
     return _i12.RuntimeCall.values.encointerCommunities(_call);

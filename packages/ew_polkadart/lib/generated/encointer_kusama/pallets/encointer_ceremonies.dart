@@ -1488,7 +1488,6 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::register_participant`].
   _i14.RuntimeCall registerParticipant({
     required _i2.CommunityIdentifier cid,
     _i15.ProofOfAttendance? proof,
@@ -1500,7 +1499,6 @@ class Txs {
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::upgrade_registration`].
   _i14.RuntimeCall upgradeRegistration({
     required _i2.CommunityIdentifier cid,
     required _i15.ProofOfAttendance proof,
@@ -1512,7 +1510,6 @@ class Txs {
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::unregister_participant`].
   _i14.RuntimeCall unregisterParticipant({
     required _i2.CommunityIdentifier cid,
     _i5.Tuple2<_i2.CommunityIdentifier, int>? maybeReputationCommunityCeremony,
@@ -1524,7 +1521,6 @@ class Txs {
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::attest_attendees`].
   _i14.RuntimeCall attestAttendees({
     required _i2.CommunityIdentifier cid,
     required int numberOfParticipantsVote,
@@ -1538,7 +1534,6 @@ class Txs {
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::endorse_newcomer`].
   _i14.RuntimeCall endorseNewcomer({
     required _i2.CommunityIdentifier cid,
     required _i3.AccountId32 newbie,
@@ -1550,7 +1545,6 @@ class Txs {
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::claim_rewards`].
   _i14.RuntimeCall claimRewards({
     required _i2.CommunityIdentifier cid,
     BigInt? maybeMeetupIndex,
@@ -1562,51 +1556,43 @@ class Txs {
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::set_inactivity_timeout`].
   _i14.RuntimeCall setInactivityTimeout({required int inactivityTimeout}) {
     final _call = _i16.Call.values.setInactivityTimeout(inactivityTimeout: inactivityTimeout);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::set_endorsement_tickets_per_bootstrapper`].
   _i14.RuntimeCall setEndorsementTicketsPerBootstrapper({required int endorsementTicketsPerBootstrapper}) {
     final _call = _i16.Call.values
         .setEndorsementTicketsPerBootstrapper(endorsementTicketsPerBootstrapper: endorsementTicketsPerBootstrapper);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::set_endorsement_tickets_per_reputable`].
   _i14.RuntimeCall setEndorsementTicketsPerReputable({required int endorsementTicketsPerReputable}) {
     final _call = _i16.Call.values
         .setEndorsementTicketsPerReputable(endorsementTicketsPerReputable: endorsementTicketsPerReputable);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::set_reputation_lifetime`].
   _i14.RuntimeCall setReputationLifetime({required int reputationLifetime}) {
     final _call = _i16.Call.values.setReputationLifetime(reputationLifetime: reputationLifetime);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::set_meetup_time_offset`].
   _i14.RuntimeCall setMeetupTimeOffset({required int meetupTimeOffset}) {
     final _call = _i16.Call.values.setMeetupTimeOffset(meetupTimeOffset: meetupTimeOffset);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::set_time_tolerance`].
   _i14.RuntimeCall setTimeTolerance({required BigInt timeTolerance}) {
     final _call = _i16.Call.values.setTimeTolerance(timeTolerance: timeTolerance);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::set_location_tolerance`].
   _i14.RuntimeCall setLocationTolerance({required int locationTolerance}) {
     final _call = _i16.Call.values.setLocationTolerance(locationTolerance: locationTolerance);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);
   }
 
-  /// See [`Pallet::purge_community_ceremony`].
   _i14.RuntimeCall purgeCommunityCeremony({required _i5.Tuple2<_i2.CommunityIdentifier, int> communityCeremony}) {
     final _call = _i16.Call.values.purgeCommunityCeremony(communityCeremony: communityCeremony);
     return _i14.RuntimeCall.values.encointerCeremonies(_call);

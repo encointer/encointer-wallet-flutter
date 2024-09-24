@@ -232,6 +232,13 @@
     "registerUntil": "Jisajili kabla",
     "remainingNewbieTicketsAsBootStrapper": "Tiketi za wanachama wapya/wageni zilizobaki kama mwanachama anzilishi:",
     "remainingNewbieTicketsAsReputable": "Tiketi za wanachama wageni zilizobaki kama mwanachama hai:",
+    "remarkNotificationBody": "Umetuma kumbuka.",
+    "remarkNotificationTitle": "kumbuka imetumwa",
+    "remarks": "Maoni ya Onchain",
+    "remarksButton": "tuma kumbuka ya umma",
+    "remarksExplain": "Unaweza kutuma kumbuka kwenye mtandao. Kumbuka hii itakuwa ya umma na isiyobadilika. Inaweza kusomwa na kuthibitishwa na kila mtu kwani itasainiwa kidijitali na wewe.",
+    "remarksNote": "Kumbuka",
+    "remarksSubmit": "Tuma kumbuka",
     "reputableContent": "Umetumia sifa yako kupata kiti kilicho hakikishiwa. Tahadhari: Ikiwa utajiandikisha lakini usijitokeze katika mzunguko, utarudi kuwa mwanachama mpya/mgeni tena..",
     "reputableTitle": "Umejisajili kama mwenye mwanachama hai - kiti chako kimehakikishiwa",
     "reputationAlreadyCommittedTitle": "Hadhi yako imetumika",
@@ -545,6 +552,36 @@
             "value": {
                 "type": "String",
                 "example": "0.00"
+            }
+        }
+    },
+    "proposalPetition": "{cid} petitioni: {value}",
+    "@proposalPetition": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "value": {
+                "type": "String",
+                "example": "Peace to the World"
+            }
+        }
+    },
+    "proposalSpendNative": "{cid} hazina itatuma {amount} KSM kwa {beneficiary}",
+    "@proposalSpendNative": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "amount": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
             }
         }
     },

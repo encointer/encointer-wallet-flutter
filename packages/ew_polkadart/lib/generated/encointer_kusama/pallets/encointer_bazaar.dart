@@ -126,7 +126,6 @@ class Queries {
 class Txs {
   const Txs();
 
-  /// See [`Pallet::create_business`].
   _i10.RuntimeCall createBusiness({
     required _i2.CommunityIdentifier cid,
     required List<int> url,
@@ -138,7 +137,6 @@ class Txs {
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::update_business`].
   _i10.RuntimeCall updateBusiness({
     required _i2.CommunityIdentifier cid,
     required List<int> url,
@@ -150,13 +148,11 @@ class Txs {
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::delete_business`].
   _i10.RuntimeCall deleteBusiness({required _i2.CommunityIdentifier cid}) {
     final _call = _i11.Call.values.deleteBusiness(cid: cid);
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::create_offering`].
   _i10.RuntimeCall createOffering({
     required _i2.CommunityIdentifier cid,
     required List<int> url,
@@ -168,7 +164,6 @@ class Txs {
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::update_offering`].
   _i10.RuntimeCall updateOffering({
     required _i2.CommunityIdentifier cid,
     required int oid,
@@ -182,7 +177,6 @@ class Txs {
     return _i10.RuntimeCall.values.encointerBazaar(_call);
   }
 
-  /// See [`Pallet::delete_offering`].
   _i10.RuntimeCall deleteOffering({
     required _i2.CommunityIdentifier cid,
     required int oid,

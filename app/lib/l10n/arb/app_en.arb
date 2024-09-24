@@ -231,6 +231,13 @@
     "registerUntil": "Register before",
     "remainingNewbieTicketsAsBootStrapper": "Remaining newbie tickets as bootsrapper:",
     "remainingNewbieTicketsAsReputable": "Remaining newbie tickets as reputable:",
+    "remarkNotificationBody": "You have submitted a note.",
+    "remarkNotificationTitle": "note submitted",
+    "remarks": "Onchain Remarks",
+    "remarksButton": "submit public note",
+    "remarksExplain": "You can submit a note to the network. This note will be public and immutable. It can be read and authenticated by everyone as it will be digitally signed by you.",
+    "remarksNote": "Note",
+    "remarksSubmit": "Submit note",
     "reputableContent": "You used your reputation to get a guaranteed seat. Caution: Should you register, but not show up at the cycle, you become a newbie again.",
     "reputableTitle": "Registered as reputable - your seat is guaranteed",
     "reputationAlreadyCommittedTitle": "Reputation already used",
@@ -544,6 +551,36 @@
             "value": {
                 "type": "String",
                 "example": "0.00"
+            }
+        }
+    },
+    "proposalPetition": "{cid} petition: {value}",
+    "@proposalPetition": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "value": {
+                "type": "String",
+                "example": "Peace to the World"
+            }
+        }
+    },
+    "proposalSpendNative": "{cid} treasury shall spend {amount} KSM to {beneficiary}",
+    "@proposalSpendNative": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "amount": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
             }
         }
     },

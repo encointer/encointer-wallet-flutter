@@ -52,6 +52,7 @@ class Benefits extends StatelessWidget {
         ),
         ListView.builder(
           shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: faucets.length,
           itemBuilder: (BuildContext context, int index) {
             final faucetPubKeyHex = faucets.keys.elementAt(index);

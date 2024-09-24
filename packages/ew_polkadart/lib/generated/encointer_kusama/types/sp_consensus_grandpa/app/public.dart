@@ -1,24 +1,22 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:polkadart/scale_codec.dart' as _i2;
+import 'package:polkadart/scale_codec.dart' as _i1;
 
-import '../../sp_core/ed25519/public.dart' as _i1;
+typedef Public = List<int>;
 
-typedef Public = _i1.Public;
-
-class PublicCodec with _i2.Codec<Public> {
+class PublicCodec with _i1.Codec<Public> {
   const PublicCodec();
 
   @override
-  Public decode(_i2.Input input) {
-    return const _i2.U8ArrayCodec(32).decode(input);
+  Public decode(_i1.Input input) {
+    return const _i1.U8ArrayCodec(32).decode(input);
   }
 
   @override
   void encodeTo(
     Public value,
-    _i2.Output output,
+    _i1.Output output,
   ) {
-    const _i2.U8ArrayCodec(32).encodeTo(
+    const _i1.U8ArrayCodec(32).encodeTo(
       value,
       output,
     );
@@ -26,6 +24,6 @@ class PublicCodec with _i2.Codec<Public> {
 
   @override
   int sizeHint(Public value) {
-    return const _i1.PublicCodec().sizeHint(value);
+    return const _i1.U8ArrayCodec(32).sizeHint(value);
   }
 }

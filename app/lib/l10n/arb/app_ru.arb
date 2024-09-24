@@ -231,6 +231,13 @@
     "registerUntil": "Зарегистрируйтесь до",
     "remainingNewbieTicketsAsBootStrapper": "Оставшиеся билеты для новичков Бутстреппера:",
     "remainingNewbieTicketsAsReputable": "Оставшиеся билеты для новичков Уважаемого:",
+    "remarkNotificationBody": "Вы отправили заметку.",
+    "remarkNotificationTitle": "заметка отправлена",
+    "remarks": "Замечания в блокчейне",
+    "remarksButton": "отправить публичную заметку",
+    "remarksExplain": "Вы можете отправить заметку в сеть. Эта заметка будет публичной и неизменяемой. Её могут прочитать и аутентифицировать все, так как она будет цифрово подписана вами.",
+    "remarksNote": "Заметка",
+    "remarksSubmit": "Отправить заметку",
     "reputableContent": "Вы воспользовались своей репутаций для получения гарантированного места. Внимание: Если вы зарегистрируетесь, но не явитесь на цикл, вы снова станете новичком.",
     "reputableTitle": "Зарегистрирован в качестве Уважаемого - ваше место гарантировано.",
     "reputationAlreadyCommittedTitle": "Репутация уже использована",
@@ -392,6 +399,36 @@
             "value": {
                 "type": "String",
                 "example": "0.00"
+            }
+        }
+    },
+    "proposalPetition": "{cid} петиция: {value}",
+    "@proposalPetition": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "value": {
+                "type": "String",
+                "example": "Peace to the World"
+            }
+        }
+    },
+    "proposalSpendNative": "{cid} Казначейство отправит {amount} KSM {beneficiary}",
+    "@proposalSpendNative": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "amount": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
             }
         }
     },

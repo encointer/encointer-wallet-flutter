@@ -2,11 +2,7 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
-import 'package:quiver/collection.dart' as _i6;
-
-import '../sp_core/ecdsa/signature.dart' as _i5;
-import '../sp_core/ed25519/signature.dart' as _i3;
-import '../sp_core/sr25519/signature.dart' as _i4;
+import 'package:quiver/collection.dart' as _i3;
 
 abstract class MultiSignature {
   const MultiSignature();
@@ -35,15 +31,15 @@ abstract class MultiSignature {
 class $MultiSignature {
   const $MultiSignature();
 
-  Ed25519 ed25519(_i3.Signature value0) {
+  Ed25519 ed25519(List<int> value0) {
     return Ed25519(value0);
   }
 
-  Sr25519 sr25519(_i4.Signature value0) {
+  Sr25519 sr25519(List<int> value0) {
     return Sr25519(value0);
   }
 
-  Ecdsa ecdsa(_i5.Signature value0) {
+  Ecdsa ecdsa(List<int> value0) {
     return Ecdsa(value0);
   }
 }
@@ -109,14 +105,14 @@ class Ed25519 extends MultiSignature {
   }
 
   /// ed25519::Signature
-  final _i3.Signature value0;
+  final List<int> value0;
 
   @override
   Map<String, List<int>> toJson() => {'Ed25519': value0.toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i3.SignatureCodec().sizeHint(value0);
+    size = size + const _i1.U8ArrayCodec(64).sizeHint(value0);
     return size;
   }
 
@@ -138,7 +134,7 @@ class Ed25519 extends MultiSignature {
         other,
       ) ||
       other is Ed25519 &&
-          _i6.listsEqual(
+          _i3.listsEqual(
             other.value0,
             value0,
           );
@@ -155,14 +151,14 @@ class Sr25519 extends MultiSignature {
   }
 
   /// sr25519::Signature
-  final _i4.Signature value0;
+  final List<int> value0;
 
   @override
   Map<String, List<int>> toJson() => {'Sr25519': value0.toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i4.SignatureCodec().sizeHint(value0);
+    size = size + const _i1.U8ArrayCodec(64).sizeHint(value0);
     return size;
   }
 
@@ -184,7 +180,7 @@ class Sr25519 extends MultiSignature {
         other,
       ) ||
       other is Sr25519 &&
-          _i6.listsEqual(
+          _i3.listsEqual(
             other.value0,
             value0,
           );
@@ -201,14 +197,14 @@ class Ecdsa extends MultiSignature {
   }
 
   /// ecdsa::Signature
-  final _i5.Signature value0;
+  final List<int> value0;
 
   @override
   Map<String, List<int>> toJson() => {'Ecdsa': value0.toList()};
 
   int _sizeHint() {
     int size = 1;
-    size = size + const _i5.SignatureCodec().sizeHint(value0);
+    size = size + const _i1.U8ArrayCodec(65).sizeHint(value0);
     return size;
   }
 
@@ -230,7 +226,7 @@ class Ecdsa extends MultiSignature {
         other,
       ) ||
       other is Ecdsa &&
-          _i6.listsEqual(
+          _i3.listsEqual(
             other.value0,
             value0,
           );

@@ -1,10 +1,13 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/format.dart';
+import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +17,12 @@ import 'package:ew_polkadart/encointer_types.dart' as et;
 import 'package:ew_polkadart/ew_polkadart.dart'
     show
         AddLocation,
+        Petition,
         Proposal,
         ProposalAction,
         RemoveLocation,
         SetInactivityTimeout,
+        SpendNative,
         Tally,
         UpdateDemurrage,
         UpdateNominalIncome;
@@ -27,6 +32,7 @@ import 'package:ew_polkadart/ew_polkadart.dart'
 /// Todo: add localization for all variants.
 String getProposalActionTitle(BuildContext context, ProposalAction action) {
   final l10n = context.l10n;
+  final store = context.read<AppStore>();
 
   switch (action.runtimeType) {
     case UpdateNominalIncome:
@@ -52,9 +58,30 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       return 'Remove Location (unsupported)';
     case SetInactivityTimeout:
       return 'SetInactivity Timeout (unsupported)';
+    case Petition:
+      final cidPolkadart = getCommunityIdentifierFromProposal(action);
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final demand = String.fromCharCodes((action as Petition).value1);
+      return l10n.proposalPetition(cidStr, demand);
+    case SpendNative:
+      final cidPolkadart = getCommunityIdentifierFromProposal(action);
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final beneficiary = Fmt.address(
+          AddressUtils.pubKeyToAddress((action as SpendNative).value1, prefix: store.settings.currentNetwork.ss58()))!;
+      final amount = Fmt.token(action.value2, ertDecimals);
+      return l10n.proposalSpendNative(cidStr, amount, beneficiary);
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
+}
+
+String cidOrGlobal(et.CommunityIdentifier? cidPolkadart, AppStore store) {
+  final cidStr = cidPolkadart == null
+      ? 'global'
+      : (store.encointer.communityStores![CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString()]
+              ?.symbol ??
+          CommunityIdentifier(cidPolkadart.geohash, cidPolkadart.digest).toFmtString());
+  return cidStr;
 }
 
 double demurragePerMonth(double demurrage, BigInt blockProductionTime) {
@@ -81,6 +108,12 @@ et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action
     case SetInactivityTimeout:
       // This is a global action hence all communities can vote for it.
       return null;
+    case Petition:
+      // can be global or local
+      return (action as Petition).value0;
+    case SpendNative:
+      // can be global or local
+      return (action as SpendNative).value0;
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }

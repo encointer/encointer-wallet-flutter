@@ -41,12 +41,15 @@ class _DemocracyPageState extends State<DemocracyPage> {
   }
 
   Future<void> _init() async {
-    final proposalIds = await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
+    final maybeProposalIds = await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
 
-    final allProposals = await webApi.encointer.getProposals(proposalIds);
+    final allProposals = await webApi.encointer.getProposals(maybeProposalIds);
+    // Reduce proposalIds to the entries which also exist in allProposals
+    // this is necessary, because migrations may purge incompatible (non-decodable) proposals,
+    // but never the index
+    final proposalIds = maybeProposalIds.where(allProposals.containsKey).toList();
     final allTallies = await webApi.encointer.getTallies(proposalIds);
     final allPurposeIds = await webApi.encointer.getProposalPurposeIds(proposalIds);
-
     democracyParams = webApi.encointer.democracyParams();
 
     proposals = allProposals;

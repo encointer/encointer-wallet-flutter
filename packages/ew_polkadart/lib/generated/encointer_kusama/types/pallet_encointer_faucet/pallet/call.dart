@@ -147,7 +147,6 @@ class $CallCodec with _i1.Codec<Call> {
   }
 }
 
-/// See [`Pallet::create_faucet`].
 class CreateFaucet extends Call {
   const CreateFaucet({
     required this.name,
@@ -250,7 +249,6 @@ class CreateFaucet extends Call {
       );
 }
 
-/// See [`Pallet::drip`].
 class Drip extends Call {
   const Drip({
     required this.faucetAccount,
@@ -333,7 +331,6 @@ class Drip extends Call {
       );
 }
 
-/// See [`Pallet::dissolve_faucet`].
 class DissolveFaucet extends Call {
   const DissolveFaucet({
     required this.faucetAccount,
@@ -406,7 +403,6 @@ class DissolveFaucet extends Call {
       );
 }
 
-/// See [`Pallet::close_faucet`].
 class CloseFaucet extends Call {
   const CloseFaucet({required this.faucetAccount});
 
@@ -455,7 +451,6 @@ class CloseFaucet extends Call {
   int get hashCode => faucetAccount.hashCode;
 }
 
-/// See [`Pallet::set_reserve_amount`].
 class SetReserveAmount extends Call {
   const SetReserveAmount({required this.reserveAmount});
 

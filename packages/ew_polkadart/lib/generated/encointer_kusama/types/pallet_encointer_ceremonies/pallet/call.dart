@@ -263,7 +263,6 @@ class $CallCodec with _i1.Codec<Call> {
   }
 }
 
-/// See [`Pallet::register_participant`].
 class RegisterParticipant extends Call {
   const RegisterParticipant({
     required this.cid,
@@ -328,7 +327,6 @@ class RegisterParticipant extends Call {
       );
 }
 
-/// See [`Pallet::upgrade_registration`].
 class UpgradeRegistration extends Call {
   const UpgradeRegistration({
     required this.cid,
@@ -393,7 +391,6 @@ class UpgradeRegistration extends Call {
       );
 }
 
-/// See [`Pallet::unregister_participant`].
 class UnregisterParticipant extends Call {
   const UnregisterParticipant({
     required this.cid,
@@ -474,7 +471,6 @@ class UnregisterParticipant extends Call {
       );
 }
 
-/// See [`Pallet::attest_attendees`].
 class AttestAttendees extends Call {
   const AttestAttendees({
     required this.cid,
@@ -557,7 +553,6 @@ class AttestAttendees extends Call {
       );
 }
 
-/// See [`Pallet::endorse_newcomer`].
 class EndorseNewcomer extends Call {
   const EndorseNewcomer({
     required this.cid,
@@ -627,7 +622,6 @@ class EndorseNewcomer extends Call {
       );
 }
 
-/// See [`Pallet::claim_rewards`].
 class ClaimRewards extends Call {
   const ClaimRewards({
     required this.cid,
@@ -692,7 +686,6 @@ class ClaimRewards extends Call {
       );
 }
 
-/// See [`Pallet::set_inactivity_timeout`].
 class SetInactivityTimeout extends Call {
   const SetInactivityTimeout({required this.inactivityTimeout});
 
@@ -737,7 +730,6 @@ class SetInactivityTimeout extends Call {
   int get hashCode => inactivityTimeout.hashCode;
 }
 
-/// See [`Pallet::set_endorsement_tickets_per_bootstrapper`].
 class SetEndorsementTicketsPerBootstrapper extends Call {
   const SetEndorsementTicketsPerBootstrapper({required this.endorsementTicketsPerBootstrapper});
 
@@ -785,7 +777,6 @@ class SetEndorsementTicketsPerBootstrapper extends Call {
   int get hashCode => endorsementTicketsPerBootstrapper.hashCode;
 }
 
-/// See [`Pallet::set_endorsement_tickets_per_reputable`].
 class SetEndorsementTicketsPerReputable extends Call {
   const SetEndorsementTicketsPerReputable({required this.endorsementTicketsPerReputable});
 
@@ -831,7 +822,6 @@ class SetEndorsementTicketsPerReputable extends Call {
   int get hashCode => endorsementTicketsPerReputable.hashCode;
 }
 
-/// See [`Pallet::set_reputation_lifetime`].
 class SetReputationLifetime extends Call {
   const SetReputationLifetime({required this.reputationLifetime});
 
@@ -876,7 +866,6 @@ class SetReputationLifetime extends Call {
   int get hashCode => reputationLifetime.hashCode;
 }
 
-/// See [`Pallet::set_meetup_time_offset`].
 class SetMeetupTimeOffset extends Call {
   const SetMeetupTimeOffset({required this.meetupTimeOffset});
 
@@ -921,7 +910,6 @@ class SetMeetupTimeOffset extends Call {
   int get hashCode => meetupTimeOffset.hashCode;
 }
 
-/// See [`Pallet::set_time_tolerance`].
 class SetTimeTolerance extends Call {
   const SetTimeTolerance({required this.timeTolerance});
 
@@ -966,7 +954,6 @@ class SetTimeTolerance extends Call {
   int get hashCode => timeTolerance.hashCode;
 }
 
-/// See [`Pallet::set_location_tolerance`].
 class SetLocationTolerance extends Call {
   const SetLocationTolerance({required this.locationTolerance});
 
@@ -1011,7 +998,6 @@ class SetLocationTolerance extends Call {
   int get hashCode => locationTolerance.hashCode;
 }
 
-/// See [`Pallet::purge_community_ceremony`].
 class PurgeCommunityCeremony extends Call {
   const PurgeCommunityCeremony({required this.communityCeremony});
 
