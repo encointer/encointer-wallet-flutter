@@ -79,7 +79,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
     final appConfig = RepositoryProvider.of<AppConfig>(context);
 
-    // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
+    // Not an ideal practice, see #1702
     Iterable<Widget> activeProposalList() {
       if (proposals == null || tallies == null) {
         return appConfig.isIntegrationTest
