@@ -79,11 +79,7 @@ class _ProposalTileState extends State<ProposalTile> {
           ),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(),
-            leading: SizedBox(
-              width: 20,
-              height: 20,
-              child: Text(widget.proposalId.toString(), style: titleSmall),
-            ),
+            leading: Text(widget.proposalId.toString(), style: titleSmall),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
