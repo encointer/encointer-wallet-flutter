@@ -200,7 +200,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
             ),
             const SizedBox(height: 10),
             InkWell(
-              onTap: () => AppLaunch.launchURL('https://forum.encointer.org/t/deliberation-for-encointer-democracy-proposals/126'),
+              onTap: () => AppLaunch.launchURL(
+                  'https://forum.encointer.org/t/deliberation-for-encointer-democracy-proposals/126'),
               child: Text(
                 l10n.democracyDiscussion,
                 style: TextStyle(decoration: TextDecoration.underline, color: context.colorScheme.primary),
