@@ -26,10 +26,7 @@ abstract class _LoginStoreBase with Store {
 
   FutureOr<String?> getPin(BuildContext context) async {
     if (cachedPin != null) return cachedPin!;
-    await LoginDialog.verifyPinOrBioAuth(
-      context,
-      onSuccess: (v) async => cachedPin = await loginService.getPin(),
-    );
+    await LoginDialog.verifyPinOrBioAuth(context);
     return cachedPin;
   }
 

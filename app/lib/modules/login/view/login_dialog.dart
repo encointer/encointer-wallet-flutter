@@ -39,17 +39,17 @@ final class LoginDialog {
       ? showLocalAuth(
           context,
           titleText: context.l10n.biometricAuthEnableDisableDescription,
-          onSuccess: (_) => context.read<LoginStore>().setBiometricAuthState(BiometricAuthState.enabled),
+          onSuccess: () => context.read<LoginStore>().setBiometricAuthState(BiometricAuthState.enabled),
         )
       : showPasswordInputDialog(
           context,
           titleText: context.l10n.biometricAuthEnableDisableDescription,
-          onSuccess: (_) => context.read<LoginStore>().setBiometricAuthState(BiometricAuthState.disabled),
+          onSuccess: () => context.read<LoginStore>().setBiometricAuthState(BiometricAuthState.disabled),
         );
 
   static Future<void> verifyPinOrBioAuth(
     BuildContext context, {
-    required Future<void> Function(String password) onSuccess,
+    Future<void> Function()? onSuccess,
     bool barrierDismissible = true,
     bool autoCloseOnSuccess = true,
     bool showCancelButton = true,
@@ -93,14 +93,23 @@ final class LoginDialog {
 
   static Future<void> showLocalAuth(
     BuildContext context, {
-    required Future<void> Function(String password) onSuccess,
+    required Future<void> Function()? onSuccess,
     String? titleText,
     bool stickyAuth = false,
   }) async {
     final loginStore = context.read<LoginStore>();
     try {
-      final value = await loginStore.localAuthenticate(titleText ?? context.l10n.verifyAuthTitle('true'), stickyAuth);
-      if (value) await onSuccess(loginStore.cachedPin ?? await loginStore.loginService.getPin() ?? '');
+      final success = await loginStore.localAuthenticate(titleText ?? context.l10n.verifyAuthTitle('true'), stickyAuth);
+
+      if (success) {
+        loginStore.cachedPin = await loginStore.loginService.getPin();
+
+        if (loginStore.cachedPin == null) {
+          throw Exception(['Pin retrieved from storage is null, fatal error']);
+        }
+
+        if (onSuccess != null) await onSuccess();
+      }
     } catch (e) {
       rethrow;
     }
@@ -108,7 +117,7 @@ final class LoginDialog {
 
   static Future<void> showPasswordInputDialog(
     BuildContext context, {
-    required Future<void> Function(String password) onSuccess,
+    Future<void> Function()? onSuccess,
     bool barrierDismissible = true,
     bool autoCloseOnSuccess = true,
     bool showCancelButton = true,
@@ -147,9 +156,11 @@ final class LoginDialog {
             key: const Key(EWTestKeys.passwordOk),
             onPressed: () async {
               loginStore.loading = true;
-              final value = await _onOk(context, passCtrl.text.trim());
-              if (value) {
-                await onSuccess(passCtrl.text.trim());
+              final success = await _checkPassword(context, passCtrl.text.trim());
+              if (success) {
+                loginStore.cachedPin = passCtrl.text.trim();
+
+                if (onSuccess != null) await onSuccess();
                 if (autoCloseOnSuccess) Navigator.of(context).pop();
               } else {
                 AppAlert.showErrorDialog(
@@ -170,7 +181,7 @@ final class LoginDialog {
     );
   }
 
-  static Future<bool> _onOk(BuildContext context, String password) async {
+  static Future<bool> _checkPassword(BuildContext context, String password) async {
     final loginStore = context.read<LoginStore>();
     return loginStore.isValid(password);
   }
