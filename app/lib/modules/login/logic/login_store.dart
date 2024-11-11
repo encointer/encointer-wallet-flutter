@@ -24,7 +24,7 @@ abstract class _LoginStoreBase with Store {
   @observable
   bool loading = false;
 
-  /// If the user has already authenticated this session this function will just return true.
+  /// If the user has already authenticated this session, true will be returned.
   /// if not, the user will be asked to authenticate with PIN or biometric depending on the
   /// settings.
   FutureOr<bool> ensureAuthenticated(BuildContext context) async {
