@@ -319,7 +319,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             const SizedBox(width: 12),
                             Text(
                               l10n.accountShare,
-                              style: context.titleLarge.copyWith(color: context.colorScheme.background, fontSize: 19),
+                              style: context.titleLarge.copyWith(color: context.colorScheme.surface, fontSize: 19),
                             ),
                           ],
                         ),
@@ -334,7 +334,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           key: Key(EWTestKeys.popupMenuAccountTrashExport),
                           color: Colors.white,
                         ),
-                        color: context.colorScheme.background,
+                        color: context.colorScheme.surface,
                         padding: const EdgeInsets.all(20),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),

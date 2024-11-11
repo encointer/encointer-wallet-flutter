@@ -96,7 +96,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: address == context.read<AppStore>().account.currentAddress
-              ? BorderSide(color: context.colorScheme.background)
+              ? BorderSide(color: context.colorScheme.surface)
               : BorderSide.none,
         ),
         margin: const EdgeInsets.only(bottom: 16),

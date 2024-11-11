@@ -9,7 +9,7 @@ mixin CompomnentTheme {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: colorScheme.background,
+        backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.secondary,
         shadowColor: Colors.transparent,
         shape: roundedRectBorder20,
@@ -33,7 +33,7 @@ mixin CompomnentTheme {
 
   CardTheme cardTheme(ColorScheme colorScheme) {
     return CardTheme(
-      color: colorScheme.background,
+      color: colorScheme.surface,
     );
   }
 

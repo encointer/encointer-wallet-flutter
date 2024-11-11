@@ -102,7 +102,7 @@ class CreateAccountForm extends StatelessWidget with HandleNewAccountResultMixin
               Text(
                 l10n.next,
                 style: context.titleMedium.copyWith(
-                  color: context.colorScheme.background,
+                  color: context.colorScheme.surface,
                 ),
               ),
             ],

@@ -29,7 +29,7 @@ class AnnouncementCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 24),
       child: Card(
-        color: context.colorScheme.background,
+        color: context.colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),

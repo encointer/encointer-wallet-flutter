@@ -51,7 +51,7 @@ class CeremonyBox extends StatelessWidget {
           Container(
             padding: EdgeInsets.fromLTRB(24, 24, 24, store.encointer.showMeetupInfo ? 12 : 24),
             decoration: BoxDecoration(
-              color: context.colorScheme.background,
+              color: context.colorScheme.surface,
               borderRadius: BorderRadius.vertical(
                 top: const Radius.circular(15),
                 bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15),

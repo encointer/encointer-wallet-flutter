@@ -233,9 +233,9 @@ class _TransferPageState extends State<TransferPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Iconsax.login_1, color: context.colorScheme.background),
+                    Icon(Iconsax.login_1, color: context.colorScheme.surface),
                     const SizedBox(width: 12),
-                    Text(l10n.next, style: context.bodyLarge.copyWith(color: context.colorScheme.background)),
+                    Text(l10n.next, style: context.bodyLarge.copyWith(color: context.colorScheme.surface)),
                   ],
                 ),
               ),

@@ -355,7 +355,7 @@ class _AssetsViewState extends State<AssetsView> {
               height: avatarSize,
               width: avatarSize,
               decoration: BoxDecoration(
-                color: context.colorScheme.background,
+                color: context.colorScheme.surface,
                 shape: BoxShape.circle,
               ),
               child: e.communityIcon != null

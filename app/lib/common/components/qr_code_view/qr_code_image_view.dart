@@ -24,7 +24,7 @@ class QrCodeImage extends StatelessWidget {
       child: PhotoView.customChild(
         maxScale: 1.0,
         minScale: 0.2,
-        backgroundDecoration: BoxDecoration(color: context.colorScheme.background),
+        backgroundDecoration: BoxDecoration(color: context.colorScheme.surface),
         child: PrettyQrView.data(
           data: qrCode,
           errorCorrectLevel: errorCorrectionLevel,

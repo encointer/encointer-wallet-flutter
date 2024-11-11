@@ -17,7 +17,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      backgroundColor: context.colorScheme.background,
+      backgroundColor: context.colorScheme.surface,
       appBar: AppBar(
         title: Text(l10n.about),
         centerTitle: true,

@@ -65,7 +65,7 @@ class _ProposalTileState extends State<ProposalTile> {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
-        color: context.colorScheme.background,
+        color: context.colorScheme.surface,
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(15),
           bottom: Radius.circular(15),
