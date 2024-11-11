@@ -354,8 +354,8 @@ packages:
     dependency: transitive
     description:
       path: "packages/polkadart"
-      ref: "cl/bump-http"
-      resolved-ref: "d0b571dbe096e47926b82c61b5da35d26a7402fc"
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "91ad010d2be9acbe2bf39d3a5a213e9578b5bb27"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.2"
@@ -363,8 +363,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_keyring"
-      ref: "cl/bump-http"
-      resolved-ref: "d0b571dbe096e47926b82c61b5da35d26a7402fc"
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "91ad010d2be9acbe2bf39d3a5a213e9578b5bb27"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "0.3.0"
@@ -372,8 +372,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: "cl/bump-http"
-      resolved-ref: "d0b571dbe096e47926b82c61b5da35d26a7402fc"
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "91ad010d2be9acbe2bf39d3a5a213e9578b5bb27"
       url: "https://github.com/encointer/polkadart"
     source: git
     version: "1.1.2"

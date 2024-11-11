@@ -1258,29 +1258,29 @@ packages:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart"
-      ref: "cl/bump-http"
-      resolved-ref: d0b571dbe096e47926b82c61b5da35d26a7402fc
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "91ad010d2be9acbe2bf39d3a5a213e9578b5bb27"
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.4.7"
+    version: "0.3.2"
   polkadart_keyring:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_keyring"
-      ref: "cl/bump-http"
-      resolved-ref: d0b571dbe096e47926b82c61b5da35d26a7402fc
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "91ad010d2be9acbe2bf39d3a5a213e9578b5bb27"
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "0.4.4"
+    version: "0.3.0"
   polkadart_scale_codec:
     dependency: "direct overridden"
     description:
       path: "packages/polkadart_scale_codec"
-      ref: "cl/bump-http"
-      resolved-ref: d0b571dbe096e47926b82c61b5da35d26a7402fc
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "91ad010d2be9acbe2bf39d3a5a213e9578b5bb27"
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "1.2.1"
+    version: "1.1.2"
   polylabel:
     dependency: transitive
     description:
@@ -1449,14 +1449,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.3"
-  secp256k1_ecdsa:
-    dependency: transitive
-    description:
-      name: secp256k1_ecdsa
-      sha256: "7e731f4039f44d8e416a193db449f80c67a69ab6933a4970eb6ac7a91e1ca7b2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.1"
   share_plus:
     dependency: "direct main"
     description:
@@ -1626,10 +1618,10 @@ packages:
     dependency: transitive
     description:
       name: sr25519
-      sha256: "351a42deaf7656690fb3e09568701a13c1813229cee15a21a5ca1b322246c24d"
+      sha256: b26343af32bc934d86fac7e3f6dda42770db3ffafa79db564c49db2f7ade4ac9
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.1"
+    version: "0.1.1"
   ss58:
     dependency: transitive
     description:
@@ -1682,19 +1674,19 @@ packages:
     dependency: transitive
     description:
       name: substrate_bip39
-      sha256: fa950b80b92b7fc96f13683033fe974cdfd3ee0d30d989f6b8f3fcbfe6021ac2
+      sha256: "78b45e9959c3394ecc9b56d9bfb07e11f93db70d273eccd93e3e4d84b28f11c0"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.1"
+    version: "0.2.0"
   substrate_metadata:
     dependency: "direct overridden"
     description:
       path: "packages/substrate_metadata"
-      ref: "cl/bump-http"
-      resolved-ref: d0b571dbe096e47926b82c61b5da35d26a7402fc
+      ref: "cl/encointer-signed-extensions"
+      resolved-ref: "91ad010d2be9acbe2bf39d3a5a213e9578b5bb27"
       url: "https://github.com/encointer/polkadart"
     source: git
-    version: "1.2.3"
+    version: "1.1.2"
   sync_http:
     dependency: transitive
     description:
