@@ -1,10 +1,8 @@
-import 'package:upgrader/upgrader.dart';
-
 class AppConfig {
-  const AppConfig({this.isIntegrationTest = false, this.appCast});
+  const AppConfig({this.isIntegrationTest = false, this.appCastUrl});
 
-  /// [appCast] is used to provide fake information about the app version for the `Upgrader` package.
-  final AppcastConfiguration? appCast;
+  /// [appCastUrl] is used to provide fake information about the app version for the `Upgrader` package.
+  final String? appCastUrl;
 
   /// If the [isIntegrationTest] value is `true`, the following conditions will occur:
   /// 1) The test will close the Upgrader alert.
