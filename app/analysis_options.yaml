@@ -12,6 +12,7 @@ linter:
     comment_references: false
     require_trailing_commas: false
     depend_on_referenced_packages: false
+    one_member_abstracts: false
 
     unawaited_futures: true
     use_build_context_synchronously: false
