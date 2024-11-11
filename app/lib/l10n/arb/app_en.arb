@@ -21,6 +21,7 @@
     "addToContactFromQrContact": "Add Contact-Qr",
     "alreadyEndorsedErrorBody": "This account has already been endorsed for this cycle.",
     "alreadyEndorsedErrorTitle": "Already Endorsed",
+    "authenticationNeeded": "Authentication Needed",
     "amountError": "Invalid amount",
     "amountToBeTransferred": "Send amount",
     "appSettings": "App settings",

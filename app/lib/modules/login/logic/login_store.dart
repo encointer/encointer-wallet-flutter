@@ -24,10 +24,13 @@ abstract class _LoginStoreBase with Store {
   @observable
   bool loading = false;
 
-  FutureOr<String?> getPin(BuildContext context) async {
-    if (cachedPin != null) return cachedPin!;
+  /// If the user has already authenticated this session this function will just return true.
+  /// if not, the user will be asked to authenticate with PIN or biometric depending on the
+  /// settings.
+  FutureOr<bool> ensureAuthenticated(BuildContext context) async {
+    if (cachedPin != null) return true;
     await LoginDialog.verifyPinOrBioAuth(context);
-    return cachedPin;
+    return cachedPin != null;
   }
 
   /// Persists the new PIN in the secure storage.

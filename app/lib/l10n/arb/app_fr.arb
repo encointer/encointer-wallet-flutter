@@ -21,6 +21,7 @@
     "addToContactFromQrContact": "Add Contact-Qr",
     "alreadyEndorsedErrorBody": "Ce compte a déjà été endossé pour ce cycle",
     "alreadyEndorsedErrorTitle": "Déjà endossé",
+    "authenticationNeeded": "Authentification nécessaire",
     "amountError": "Solde non valide",
     "amountToBeTransferred": "Montant",
     "appSettings": "Paramètres de l'app",

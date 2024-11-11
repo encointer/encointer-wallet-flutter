@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -141,8 +142,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     Address recipientAddress,
     double amount,
   ) async {
-    final pin = await context.read<LoginStore>().getPin(context);
-    if (pin != null) {
+    final authenticated = await context.read<LoginStore>().ensureAuthenticated(context);
+    if (authenticated) {
       setState(() {
         _transferState = TransferState.submitting;
       });
@@ -164,6 +165,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       Log.d('TransferState after callback: $_transferState', 'PaymentConfirmationPage');
       // trigger rebuild after state update in callback
       setState(() {});
+    } else {
+      RootSnackBar.showMsg(context.l10n.authenticationNeeded);
     }
   }
 
