@@ -21,10 +21,10 @@ class _DropdownWidgetState extends State<DropdownWidget> {
     return DropdownMenu<Category>(
       initialSelection: Category.all,
       menuStyle: MenuStyle(
-        backgroundColor: MaterialStateProperty.all(const Color(0xFFf4f7f8)),
-        shadowColor: MaterialStateProperty.all(context.colorScheme.secondary),
-        elevation: MaterialStateProperty.all(40),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
+        backgroundColor: WidgetStateProperty.all(const Color(0xFFf4f7f8)),
+        shadowColor: WidgetStateProperty.all(context.colorScheme.secondary),
+        elevation: WidgetStateProperty.all(40),
+        shape: WidgetStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -36,7 +36,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
               value: e,
               label: e.name,
               style: ButtonStyle(
-                textStyle: MaterialStateProperty.all(context.textTheme.bodySmall),
+                textStyle: WidgetStateProperty.all(context.textTheme.bodySmall),
               ),
             ),
           )
