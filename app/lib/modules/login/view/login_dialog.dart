@@ -52,7 +52,6 @@ final class LoginDialog {
     Future<void> Function()? onSuccess,
     bool barrierDismissible = true,
     bool showCancelButton = true,
-    bool canPop = true,
     bool stickyAuth = false,
     String? titleText,
   }) async {
@@ -72,7 +71,6 @@ final class LoginDialog {
           onSuccess: onSuccess,
           barrierDismissible: barrierDismissible,
           showCancelButton: showCancelButton,
-          canPop: canPop,
           titleText: titleText,
         );
       }
@@ -82,7 +80,6 @@ final class LoginDialog {
         onSuccess: onSuccess,
         barrierDismissible: barrierDismissible,
         showCancelButton: showCancelButton,
-        canPop: canPop,
         titleText: titleText,
       );
     }
@@ -117,7 +114,6 @@ final class LoginDialog {
     Future<void> Function()? onSuccess,
     bool barrierDismissible = true,
     bool showCancelButton = true,
-    bool canPop = true,
     String? titleText,
   }) async {
     final l10n = context.l10n;
@@ -147,7 +143,6 @@ final class LoginDialog {
             child: Text(l10n.cancel),
           ),
         PopScope(
-          onPopInvoked: (bool didPop) async => canPop,
           child: CupertinoButton(
             key: const Key(EWTestKeys.passwordOk),
             onPressed: () async {
