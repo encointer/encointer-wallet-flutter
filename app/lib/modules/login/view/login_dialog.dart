@@ -51,7 +51,6 @@ final class LoginDialog {
     BuildContext context, {
     Future<void> Function()? onSuccess,
     bool barrierDismissible = true,
-    bool autoCloseOnSuccess = true,
     bool showCancelButton = true,
     bool canPop = true,
     bool stickyAuth = false,
@@ -72,7 +71,6 @@ final class LoginDialog {
           context,
           onSuccess: onSuccess,
           barrierDismissible: barrierDismissible,
-          autoCloseOnSuccess: autoCloseOnSuccess,
           showCancelButton: showCancelButton,
           canPop: canPop,
           titleText: titleText,
@@ -83,7 +81,6 @@ final class LoginDialog {
         context,
         onSuccess: onSuccess,
         barrierDismissible: barrierDismissible,
-        autoCloseOnSuccess: autoCloseOnSuccess,
         showCancelButton: showCancelButton,
         canPop: canPop,
         titleText: titleText,
@@ -119,7 +116,6 @@ final class LoginDialog {
     BuildContext context, {
     Future<void> Function()? onSuccess,
     bool barrierDismissible = true,
-    bool autoCloseOnSuccess = true,
     bool showCancelButton = true,
     bool canPop = true,
     String? titleText,
@@ -161,7 +157,8 @@ final class LoginDialog {
                 loginStore.cachedPin = passCtrl.text.trim();
 
                 if (onSuccess != null) await onSuccess();
-                if (autoCloseOnSuccess) Navigator.of(context).pop();
+
+                Navigator.of(context).pop();
               } else {
                 AppAlert.showErrorDialog(
                   context,

@@ -142,7 +142,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
     await LoginDialog.verifyPinOrBioAuth(
       context,
       titleText: context.l10n.confirmPin,
-      autoCloseOnSuccess: false,
       onSuccess: () async {
         Navigator.of(context).pop();
         final account = _appStore.account.getKeyringAccount(accountToBeEdited.pubKey);
