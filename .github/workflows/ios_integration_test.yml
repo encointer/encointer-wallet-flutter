@@ -59,9 +59,6 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Install flutter wrapper
-        run: ./scripts/install_flutter_wrapper.sh
-
       - name: "Create Simulator if iPad Pro 2nd gen"
         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
         # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
@@ -75,6 +72,9 @@ jobs:
         run: |
           xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-17-2" || \
           xcrun simctl create "iPhone 8 Plus" "com.apple.CoreSimulator.SimDeviceType.iPhone-8-Plus" "com.apple.CoreSimulator.SimRuntime.iOS-17-0"
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
 
       - name: Get dependencies (i.e., melos)
         run: .flutter/bin/dart pub get
