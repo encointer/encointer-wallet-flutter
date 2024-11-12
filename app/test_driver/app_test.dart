@@ -232,7 +232,7 @@ void main() async {
 
   test('Go to Profile Page and Check reputation count', () async {
     await goToProfileViewFromNavBar(driver);
-    await checkPeputationCount(driver, 2);
+    await checkReputationCount(driver, 2);
   }, timeout: timeout240);
 
   test('Get Registering phase', () async {
@@ -253,7 +253,7 @@ void main() async {
     await sendEndorse(driver);
   }, timeout: timeout240);
 
-  test('send money to account from Bootstraper account', () async {
+  test('send money to account from Bootstrapper account', () async {
     await senMoneyToContact(driver);
     await sendMoneyToSelectedAccount(driver, '0.2');
     await goToHomeViewFromNavBar(driver);
@@ -270,7 +270,7 @@ void main() async {
     await verifyInputPin(driver);
   }, timeout: timeout240);
 
-  test('create niewbie Account', () async {
+  test('create newbie Account', () async {
     await goToHomeViewFromNavBar(driver);
     await goToAddAcoountViewFromPanel(driver);
     await createNewbieAccount(driver, 'Li');
@@ -353,7 +353,7 @@ void main() async {
     await verifyInputPin(driver);
   }, timeout: timeout240);
 
-  test('import account with menemonic phrase', () async {
+  test('import account with mnemonic phrase', () async {
     await goToHomeViewFromNavBar(driver);
     await goToAddAcoountViewFromPanel(driver);
     await importAccount(driver, 'Bob', menemonic);
