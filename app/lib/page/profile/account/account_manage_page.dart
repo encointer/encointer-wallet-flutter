@@ -143,7 +143,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
       context,
       titleText: context.l10n.confirmPin,
       onSuccess: () async {
-        Navigator.of(context).pop();
         final account = _appStore.account.getKeyringAccount(accountToBeEdited.pubKey);
         await Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
           'key': account.uri,
