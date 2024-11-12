@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -108,14 +109,16 @@ class AddAccountForm extends StatelessWidget with HandleNewAccountResultMixin {
           final newAccount = context.read<NewAccountStore>();
           if (_formKey.currentState!.validate() && !newAccount.loading) {
             newAccount.setName(_nameCtrl.text.trim());
-            final pin = await context.read<LoginStore>().getPin(context);
-            if (pin != null) {
+            final authenticated = await context.read<LoginStore>().ensureAuthenticated(context);
+            if (authenticated) {
               final res = await newAccount.generateAccount();
               await navigate(
                 context: context,
                 type: res.operationResult,
                 onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
               );
+            } else {
+              RootSnackBar.showMsg(context.l10n.authenticationNeeded);
             }
           }
         },

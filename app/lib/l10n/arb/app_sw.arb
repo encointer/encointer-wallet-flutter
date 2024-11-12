@@ -21,6 +21,7 @@
     "addToContactFromQrContact": "Ongeza Qr ya mawasiliano",
     "alreadyEndorsedErrorBody": "Akaunti hii tayari imeidhinishwa kwa ajili ya mzunguko huu",
     "alreadyEndorsedErrorTitle": "imeidhinishwa tayari",
+    "authenticationNeeded": "Uthibitishaji Unahitajika",
     "amountError": "Kiasi kisichokubalika",
     "amountToBeTransferred": "Tuma kiasi",
     "appSettings": "Mipangilio ya app",

@@ -21,6 +21,7 @@
     "addToContactFromQrContact": "Add Contact-Qr",
     "alreadyEndorsedErrorBody": "Этот аккаунт уже был подтвержден в этом цикле.",
     "alreadyEndorsedErrorTitle": "Уже подтверждено",
+    "authenticationNeeded": "Необходима аутентификация",
     "amountError": "Недопустимая сумма",
     "amountToBeTransferred": "Отправить сумму",
     "appSettings": "Настройки приложения",

@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -118,8 +119,8 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                   ),
                 );
               } else {
-                final pin = await context.read<LoginStore>().getPin(context);
-                if (pin != null) {
+                final authenticated = await context.read<LoginStore>().ensureAuthenticated(context);
+                if (authenticated) {
                   final res = await newAccount.importAccount();
                   await navigate(
                     context: context,
@@ -127,6 +128,8 @@ class ImportAccountForm extends StatelessWidget with HandleNewAccountResultMixin
                     onOk: () => Navigator.of(context).popUntil((route) => route.isFirst),
                     onDuplicateAccount: () => _onDuplicateAccount(context, res.duplicateAccountData),
                   );
+                } else {
+                  RootSnackBar.showMsg(l10n.authenticationNeeded);
                 }
               }
             }

@@ -21,7 +21,7 @@ Future<void> getNextPhase(FlutterDriver driver) async {
   await tapNextPhase(driver);
 }
 
-Future<void> checkPeputationCount(FlutterDriver driver, int count) async {
+Future<void> checkReputationCount(FlutterDriver driver, int count) async {
   await driver.waitFor(find.text('$count'));
 }
 
