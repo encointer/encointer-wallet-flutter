@@ -85,6 +85,7 @@ jobs:
       - name: Start colima a docker runtime for MacOs
         run: |
           brew install docker colima
+          colima delete
           colima start
 
       - name: Run encointer-node
