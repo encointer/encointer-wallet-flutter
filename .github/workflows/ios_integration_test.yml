@@ -37,7 +37,7 @@ jobs:
           - device: "iPad Pro (12.9-inch) (6th generation)"
             record_video: false
             docker_tag: "1.13.0"
-          - device: "iPad Pro (12.9-inch) (2nd generation)"
+          - device: "iPad Pro 13-inch (M4)"
             record_video: false
             docker_tag: "1.13.0"
       fail-fast: false
@@ -58,13 +58,6 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-
-      - name: "Create Simulator if iPad Pro 2nd gen"
-        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
-        # Unfortunately it is not deterministic if the 16.2 or the 16.4 runtime is available
-        run: |
-          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-18-1" || \
-          xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-18-0"
 
       - name: "Create Simulator if iPad 8 Plus"
         if: ${{ matrix.device == 'iPhone 8 Plus' }}
