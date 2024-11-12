@@ -88,6 +88,10 @@ jobs:
           colima delete
           colima start
 
+      - name: Check colima error log
+        if: failure()
+        run: cat /Users/runner/.colima/_lima/colima/ha.stderr.log
+
       - name: Run encointer-node
         run: ./scripts/docker_run_encointer_node_notee.sh ${{ matrix.docker_tag }} &
 
