@@ -161,7 +161,7 @@ class _ProfileState extends State<Profile> {
                   LoginDialog.verifyPinOrBioAuth(
                     context,
                     titleText: l10n.accountsDelete,
-                    onSuccess: (v) async {
+                    onSuccess: () async {
                       for (final acc in context.read<AppStore>().account.accountListAll) {
                         await store.account.removeAccount(acc);
                       }

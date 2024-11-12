@@ -81,7 +81,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     LoginDialog.verifyPinOrBioAuth(
       context,
       titleText: context.l10n.accountDelete,
-      onSuccess: (v) async {
+      onSuccess: () async {
         await _appStore.account
             .removeAccount(accountToBeEdited)
             .then((_) => _appStore.loadAccountCache())
@@ -142,9 +142,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     await LoginDialog.verifyPinOrBioAuth(
       context,
       titleText: context.l10n.confirmPin,
-      autoCloseOnSuccess: false,
-      onSuccess: (password) async {
-        Navigator.of(context).pop();
+      onSuccess: () async {
         final account = _appStore.account.getKeyringAccount(accountToBeEdited.pubKey);
         await Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
           'key': account.uri,

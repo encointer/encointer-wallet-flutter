@@ -21,6 +21,7 @@
     "addToContactFromQrContact": "Kontakt per Qr hinzufügen",
     "alreadyEndorsedErrorBody": "Dieses Konto wurde bereits für diesen Key-Signing Cycle endorsed.",
     "alreadyEndorsedErrorTitle": "Bereits endorsed",
+    "authenticationNeeded": "Authentifizierung notwendig",
     "amountError": "Ungültiger Betrag",
     "amountToBeTransferred": "Betrag",
     "appSettings": "App-Einstellungen",

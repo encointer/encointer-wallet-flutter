@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -43,8 +44,8 @@ Future<void> submitTx(
   dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
-  final pin = await context.read<LoginStore>().getPin(context);
-  if (pin != null) {
+  final authenticated = await context.read<LoginStore>().ensureAuthenticated(context);
+  if (authenticated) {
     return submitTxInner(
       context,
       store,
@@ -54,6 +55,8 @@ Future<void> submitTx(
       onError: onError,
       onFinish: onFinish,
     );
+  } else {
+    RootSnackBar.showMsg(context.l10n.authenticationNeeded);
   }
 }
 
