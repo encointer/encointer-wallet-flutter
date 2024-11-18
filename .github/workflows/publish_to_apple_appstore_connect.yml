@@ -1,0 +1,43 @@
+name: Deploy Flutter App to Appstore Connect
+
+on:
+  push:
+    branches:
+      - beta
+
+jobs:
+  build-and-deploy:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: Setup Apple Code Signing - Import Certificates and Provisioning Profiles
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.P12_FILE }}
+          p12-password: ${{ secrets.P12_PASSWORD }}
+          mobileprovision-file-base64: ${{ secrets.PROVISION_PROFILE }}
+
+      - name: Build iOS IPA
+        run: .flutter/bin/dart run melos build-ipa-release
+        env:
+          CI: true
+
+      - name: Upload to App Store Connect
+        uses: appleboy/app-store-connect-action@v1.1.0
+        with:
+          issuer_id: ${{ secrets.APP_STORE_ISSUER_ID }}
+          key_id: ${{ secrets.APP_STORE_KEY_ID }}
+          private_key: ${{ secrets.APP_STORE_PRIVATE_KEY }}
+          ipa_path: app/build/ios/ipa/*.ipa

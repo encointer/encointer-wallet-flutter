@@ -115,6 +115,10 @@ scripts:
     run: cd app && flutter build appbundle --release
     description: "Build an appbundle file ready to be submitted to the google play console"
 
+  build-ipa-release:
+    run: cd app && flutter build appbundle --release
+    description: "Build an appbundle file ready to be submitted to the google play console"
+
   # Integration test Encointer Wallet
   integration-app-test-android:
     run: cd app && flutter drive --target=test_driver/app.dart --flavor dev
