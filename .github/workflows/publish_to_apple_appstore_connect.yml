@@ -26,9 +26,9 @@ jobs:
       - name: Setup Apple Code Signing - Import Certificates and Provisioning Profiles
         uses: apple-actions/import-codesign-certs@v1
         with:
-          p12-file-base64: ${{ secrets.P12_FILE }}
-          p12-password: ${{ secrets.P12_PASSWORD }}
-          mobileprovision-file-base64: ${{ secrets.PROVISION_PROFILE }}
+          p12-file-base64: ${{ secrets.CERT_P12_BASE64 }}
+          p12-password: ${{ secrets.CERT_P12_PASSWORD }}
+          mobileprovision-file-base64: ${{ secrets.MOBILE_PROVISION_BASE64 }}
 
       - name: Build iOS IPA
         run: .flutter/bin/dart run melos build-ipa-release
