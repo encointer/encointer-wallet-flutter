@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - beta
+      - publish-from-ci
 
 jobs:
   build-and-deploy:
