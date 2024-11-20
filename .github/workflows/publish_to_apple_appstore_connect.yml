@@ -35,13 +35,35 @@ jobs:
         env:
           CI: true
 
-      - name: Install Fastlane
-        run: brew install fastlane
+      - name: Set up code signing
+        run: |
+          cd app
+          echo "${{ secrets.CERT_P12_BASE64 }}" | base64 --decode > certificate.p12
+          echo "${{ secrets.CERT_P12_PASSWORD }}" > certificate_password.txt
+          security create-keychain -p "${{ secrets.IOS_KEYCHAIN_PASSWORD }}" build.keychain
+          security import certificate.p12 -k build.keychain -P "$(cat certificate_password.txt)" -T /usr/bin/codesign
+          security list-keychains -s build.keychain
+          echo "${{ secrets.MOBILE_PROVISION_BASE64 }}" | base64 --decode > provisioning_profile.mobileprovision
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
-      - name: Upload to App Store Connect
-        uses: akiojin/publish-testflight-github-action@v0.1.11
-        with:
-          ipa-path: app/build/ios/ipa/*.ipa
-          api-key: ${{ secrets.APP_STORE_PRIVATE_KEY }}
-          issuer-id: ${{ secrets.APP_STORE_ISSUER_ID }}
-          key-id: ${{ secrets.APP_STORE_KEY_ID }}
+      - name: Archive the app
+        run: |
+          cd app
+          xcodebuild -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -archivePath $PWD/build/Runner.xcarchive archive
+          xcodebuild -exportArchive \
+            -archivePath $PWD/build/Runner.xcarchive \
+            -exportPath $PWD/build \
+            -exportOptionsPlist ios/ExportOptions.plist
+
+      - name: Upload to TestFlight
+        run: |
+          cd app
+          xcrun altool --upload-app --type ios \
+            --file build/Runner.ipa \
+            --apiKey ${{ secrets.APPLE_STORE_CONNECT_API_KEY }} \
+            --issuerId ${{ secrets.APPLE_STORE_CONNECT_ISSUER_ID }} \
+            --keyId ${{ secrets.APPLE_STORE_CONNECT_KEY_ID }}
