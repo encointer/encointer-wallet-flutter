@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - beta
-      - cl/publish-from-ci
+      - cl/publish-test
 
 jobs:
   build-and-deploy:
