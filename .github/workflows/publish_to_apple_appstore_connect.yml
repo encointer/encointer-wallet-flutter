@@ -53,17 +53,17 @@ jobs:
           xcodebuild -workspace ios/Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
-            -archivePath $PWD/build/Runner.xcarchive archive
+            -archivePath ios/build/Runner.xcarchive archive
           xcodebuild -exportArchive \
-            -archivePath $PWD/build/Runner.xcarchive \
-            -exportPath $PWD/build \
+            -archivePath ios/build/Runner.xcarchive \
+            -exportPath ios/build \
             -exportOptionsPlist ios/ExportOptions.plist
 
       - name: Upload to TestFlight
         run: |
           cd app
           xcrun altool --upload-app --type ios \
-            --file build/Runner.ipa \
+            --file ios/build/Runner.ipa \
             --apiKey ${{ secrets.APPLE_STORE_CONNECT_API_KEY }} \
             --issuerId ${{ secrets.APPLE_STORE_CONNECT_ISSUER_ID }} \
             --keyId ${{ secrets.APPLE_STORE_CONNECT_KEY_ID }}
