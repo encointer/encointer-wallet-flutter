@@ -35,10 +35,13 @@ jobs:
         env:
           CI: true
 
+      - name: Install Fastlane
+        run: brew install fastlane
+
       - name: Upload to App Store Connect
-        uses: appleboy/app-store-connect-action@v1.1.0
+        uses: akiojin/publish-testflight-github-action@v0.1.11
         with:
-          issuer_id: ${{ secrets.APP_STORE_ISSUER_ID }}
-          key_id: ${{ secrets.APP_STORE_KEY_ID }}
-          private_key: ${{ secrets.APP_STORE_PRIVATE_KEY }}
-          ipa_path: app/build/ios/ipa/*.ipa
+          ipa-path: app/build/ios/ipa/*.ipa
+          api-key: ${{ secrets.APP_STORE_PRIVATE_KEY }}
+          issuer-id: ${{ secrets.APP_STORE_ISSUER_ID }}
+          key-id: ${{ secrets.APP_STORE_KEY_ID }}
