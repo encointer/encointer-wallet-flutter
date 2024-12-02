@@ -130,7 +130,9 @@ bool isInVotingCindexes(
       proposal.startCindex - reputationLifetime + (params.proposalLifetime.toInt() / cycleDuration).ceil();
   final votingCindexUpperBound = proposal.startCindex - 2;
 
-  return cIndex > votingCindexLowerBound && cIndex <= votingCindexUpperBound;
+  Log.d('[Democracy] valid voting cIndexes (inclusive): [$votingCindexLowerBound, $votingCindexUpperBound]');
+
+  return cIndex >= votingCindexLowerBound && cIndex <= votingCindexUpperBound;
 }
 
 bool isPassing(Tally tally, BigInt electorateSize, DemocracyParams params) {
