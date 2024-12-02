@@ -46,8 +46,6 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
         store.encointer.communityStores![cid.toFmtString()]?.symbol ?? cid.toFmtString(),
       );
     case UpdateDemurrage:
-      final blockProductionTime = webApi.encointer.encointerKusama.constant.timestamp.minimumPeriod;
-
       final demurrageDouble = u64F64Util.toDouble((action as UpdateDemurrage).value1.bits);
       final d = demurragePerMonth(demurrageDouble, BigInt.from(6));
 
