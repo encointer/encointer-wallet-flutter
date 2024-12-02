@@ -49,7 +49,7 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       final blockProductionTime = webApi.encointer.encointerKusama.constant.timestamp.minimumPeriod;
 
       final demurrageDouble = u64F64Util.toDouble((action as UpdateDemurrage).value1.bits);
-      final d = demurragePerMonth(demurrageDouble, blockProductionTime);
+      final d = demurragePerMonth(demurrageDouble, BigInt.from(6));
 
       return l10n.proposalUpdateDemurrage(d.toStringAsFixed(2));
     case AddLocation:
