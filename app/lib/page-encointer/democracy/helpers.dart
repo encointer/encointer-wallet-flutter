@@ -134,7 +134,8 @@ bool isInVotingCindexes(
 }
 
 bool isPassing(Tally tally, BigInt electorateSize, DemocracyParams params) {
-  if (tally.turnout < params.minTurnout) {
+  // minTurnout is in perThousands
+  if ((tally.turnout < BigInt.from(1)) | (tally.turnout < params.minTurnout * electorateSize ~/ BigInt.from(1000))) {
     return false;
   }
 
