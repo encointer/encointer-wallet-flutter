@@ -115,9 +115,9 @@ scripts:
     run: cd app && flutter build appbundle --release
     description: "Build an appbundle file ready to be submitted to the google play console"
 
-  build-and-sign-ipa-release:
-    run: cd app && flutter build ios --release
-    description: "Build and sign an IPA file"
+  build-ipa-release:
+    run: cd app && flutter build ios --release --no-codesign
+    description: "Build an appbundle ready for signing"
 
   # Integration test Encointer Wallet
   integration-app-test-android:
