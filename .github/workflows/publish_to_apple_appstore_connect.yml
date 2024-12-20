@@ -72,8 +72,8 @@ jobs:
             -scheme Runner \
             -configuration Release \
             -archivePath ios/build/Runner.xcarchive \
-            -destination "generic/platform=iOS" archive
-            -exportOptionsPlist ios/ExportOptions.plist
+            -destination "generic/platform=iOS"
+            -exportOptionsPlist ios/ExportOptions.plist archive
 
       - name: Export the .ipa file
         run: | 
