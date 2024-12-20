@@ -58,7 +58,7 @@ jobs:
           FLUTTER_XCODE_DEVELOPMENT_TEAM: ${{ secrets.APPLE_DEV_TEAM_ID }}
           FLUTTER_XCODE_PROVISIONING_PROFILE_SPECIFIER: org.encointer.wallet
           FLUTTER_XCODE_CODE_SIGN_IDENTITY: "iPhone Distribution: Verein Encointer (${{ secrets.APPLE_DEV_TEAM_ID }})"
-          FLUTTER_XCODE_CODE_SIGN_STYLE: Manual
+          FLUTTER_XCODE_CODE_SIGN_STYLE: Automatic
         run: .flutter/bin/dart run melos build-and-sign-ipa-release
 
       - name: Upload to TestFlight
