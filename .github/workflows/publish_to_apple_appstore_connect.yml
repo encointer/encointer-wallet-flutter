@@ -72,6 +72,7 @@ jobs:
             -scheme Runner \
             -configuration Release \
             -archivePath ios/build/Runner.xcarchive archive
+            -destination "generic/platform=iOS" archive
           xcodebuild -exportArchive \
             -archivePath ios/build/Runner.xcarchive \
             -exportPath ios/build \
