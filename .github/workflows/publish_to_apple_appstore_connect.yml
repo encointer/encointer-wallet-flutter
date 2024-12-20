@@ -48,13 +48,11 @@ jobs:
           ls ~/Library/MobileDevice/Provisioning\ Profiles/
           
 
-#      - name: Generate ExportOptions.plist
-#        run: |
-#          export EXPORT_METHOD=app-store
-##          export EXPORT_DESTINATION=export
-#          export BUNDLE_ID=org.encointer.wallet
-#          export PROVISIONING_PROFILE=${{ inputs.ios_provisioning_profile }}
-#          envsubst < ios/Runner/ExportOptions-Template.plist > ios/Runner/ExportOptions.plist
+          echo "Generate ExportOptions.plist"
+          export EXPORT_METHOD=app-store
+          export BUNDLE_ID=org.encointer.wallet
+          export PROVISIONING_PROFILE=build_pp.mobileprovision
+          envsubst < ios/ExportOptions-Template.plist > ios/ExportOptions.plist
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
