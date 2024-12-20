@@ -14,27 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install flutter wrapper
-        run: ./scripts/install_flutter_wrapper.sh
-
-      - name: Get dependencies (i.e., melos)
-        run: .flutter/bin/dart pub get
-
-      - name: Melos Bootstrap
-        run: .flutter/bin/dart run melos bootstrap
-
-#      - name: Setup Apple Code Signing - Import Certificates and Provisioning Profiles
-#        uses: apple-actions/import-codesign-certs@v1
-#        with:
-#          p12-file-base64: ${{ secrets.CERT_P12_BASE64 }}
-#          p12-password: ${{ secrets.CERT_P12_PASSWORD }}
-#          mobileprovision-file-base64: ${{ secrets.MOBILE_PROVISION_BASE64 }}
-
-      - name: Build iOS IPA
-        run: .flutter/bin/dart run melos build-ipa-release
-        env:
-          CI: true
-
       - name: Set up code signing
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.CERT_P12_BASE64 }}
@@ -65,18 +44,17 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-      - name: Archive the app
-        run: |
-          cd app
-          xcodebuild -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -archivePath ios/build/Runner.xcarchive \
-            -destination "generic/platform=iOS" archive
-          xcodebuild -exportArchive \
-            -archivePath ios/build/Runner.xcarchive \
-            -exportPath ios/build \
-            -exportOptionsPlist ios/ExportOptions.plist
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: Build iOS IPA
+        run: .flutter/bin/dart run melos build-and-sign-ipa-release
 
       - name: Upload to TestFlight
         run: |
