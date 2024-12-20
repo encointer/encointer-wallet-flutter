@@ -23,7 +23,7 @@ jobs:
         run: |
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          PP_PATH=$RUNNER_TEMP/Encointer_AppStore_Deployment.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
@@ -46,12 +46,11 @@ jobs:
           
           echo "show provisioning profiles"
           ls ~/Library/MobileDevice/Provisioning\ Profiles/
-          
 
           echo "Generate ExportOptions.plist"
           export EXPORT_METHOD=app-store
           export BUNDLE_ID=org.encointer.wallet
-          export PROVISIONING_PROFILE=build_pp.mobileprovision
+          export PROVISIONING_PROFILE=$PP_PATH
           envsubst < app/ios/ExportOptions-Template.plist > app/ios/ExportOptions.plist
 
       - name: Install flutter wrapper
