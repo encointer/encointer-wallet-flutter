@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+  <dict>
+    <key>method</key>
+    <string>app-store</string>
+    <key>teamID</key>
+    <string>R3B3857K83</string>
+    <key>bundleIdentifier</key>
+    <string>org.encointer.wallet</string>
+    <key>uploadSymbols</key>
+    <false/>
+    <key>compileBitcode</key>
+    <true/>
+  </dict>
+</plist>

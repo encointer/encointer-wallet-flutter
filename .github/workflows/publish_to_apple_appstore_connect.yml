@@ -54,12 +54,24 @@ jobs:
         run: .flutter/bin/dart run melos bootstrap
 
       - name: Build iOS IPA
-        env:
-          FLUTTER_XCODE_DEVELOPMENT_TEAM: ${{ secrets.APPLE_DEV_TEAM_ID }}
-          FLUTTER_XCODE_PROVISIONING_PROFILE_SPECIFIER: org.encointer.wallet
-          FLUTTER_XCODE_CODE_SIGN_IDENTITY: "iPhone Distribution: Verein Encointer (${{ secrets.APPLE_DEV_TEAM_ID }})"
-          FLUTTER_XCODE_CODE_SIGN_STYLE: Automatic
-        run: .flutter/bin/dart run melos build-and-sign-ipa-release
+        run: .flutter/bin/dart run melos build--ipa-release
+
+      - name: Archive the app
+        run: |
+          cd app
+          xcodebuild -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -archivePath ios/build/Runner.xcarchive \
+            -destination "generic/platform=iOS" archive
+
+      - name: Export the .ipa file
+        run: | 
+          cd app
+          xcodebuild -exportArchive \
+            -archivePath ios/build/Runner.xcarchive \
+            -exportPath ios/build \
+            -exportOptionsPlist ios/ExportOptions.plist
 
       - name: Upload to TestFlight
         run: |
