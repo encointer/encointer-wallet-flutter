@@ -71,7 +71,7 @@ jobs:
           xcodebuild -workspace ios/Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
-            -archivePath ios/build/Runner.xcarchive archive
+            -archivePath ios/build/Runner.xcarchive \
             -destination "generic/platform=iOS" archive
           xcodebuild -exportArchive \
             -archivePath ios/build/Runner.xcarchive \
