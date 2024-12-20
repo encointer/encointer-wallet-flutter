@@ -43,6 +43,18 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+          
+          echo "show provisioning profiles"
+          ls ~/Library/MobileDevice/Provisioning Profiles/
+          
+
+#      - name: Generate ExportOptions.plist
+#        run: |
+#          export EXPORT_METHOD=app-store
+##          export EXPORT_DESTINATION=export
+#          export BUNDLE_ID=org.encointer.wallet
+#          export PROVISIONING_PROFILE=${{ inputs.ios_provisioning_profile }}
+#          envsubst < ios/Runner/ExportOptions-Template.plist > ios/Runner/ExportOptions.plist
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
