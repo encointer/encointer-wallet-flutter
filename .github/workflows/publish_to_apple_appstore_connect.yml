@@ -45,7 +45,7 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
           
           echo "show provisioning profiles"
-          ls ~/Library/MobileDevice/Provisioning Profiles/
+          ls ~/Library/MobileDevice/Provisioning\ Profiles/
           
 
 #      - name: Generate ExportOptions.plist
