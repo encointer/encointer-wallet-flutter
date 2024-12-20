@@ -54,7 +54,7 @@ jobs:
         run: .flutter/bin/dart run melos bootstrap
 
       - name: Build iOS IPA
-        run: .flutter/bin/dart run melos build--ipa-release
+        run: .flutter/bin/dart run melos build-ipa-release
 
       - name: Archive the app
         run: |
