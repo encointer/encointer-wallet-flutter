@@ -72,8 +72,11 @@ jobs:
             -scheme Runner \
             -configuration Release \
             -archivePath ios/build/Runner.xcarchive \
-            -destination "generic/platform=iOS"
-            -exportOptionsPlist ios/ExportOptions.plist archive
+            -destination "generic/platform=iOS" \
+          CODE_SIGN_IDENTITY="iPhone Distribution: Verein Encointer (${{ secrets.APPLE_DEV_TEAM_ID }})" \
+            PROVISIONING_PROFILE_SPECIFIER="Encointer_AppStore_Deployment" \
+            clean archive
+
 
       - name: Export the .ipa file
         run: | 
