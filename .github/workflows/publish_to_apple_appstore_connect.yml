@@ -63,6 +63,9 @@ jobs:
           export BUNDLE_ID=org.encointer.wallet
           export PROVISIONING_PROFILE=$PP_PATH
           envsubst < app/ios/ExportOptions-Template.plist > app/ios/ExportOptions.plist
+          
+          echo "cat ExportOptions.plist"
+          cat app/ios/ExportOptions.plist
 
       - name: Install flutter wrapper
         run: ./scripts/install_flutter_wrapper.sh
