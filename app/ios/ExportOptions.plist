@@ -5,11 +5,11 @@
 	<key>compileBitcode</key>
 	<true/>
 	<key>method</key>
-	<string>${EXPORT_METHOD}</string>
+	<string>app-store</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>${BUNDLE_ID}</key>
-		<string>${PROVISIONING_PROFILE}</string>
+		<key>org.encointer.wallet</key>
+		<string>Encointer_AppStore_Deployment.mobileprovision</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>iOS Distribution</string>
