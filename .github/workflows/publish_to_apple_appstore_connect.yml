@@ -41,18 +41,23 @@ jobs:
           security list-keychain -d user -s $KEYCHAIN_PATH
           
           # check if certificate has been imported correctly
+          echo "find keychain identity"
           security find-identity -v -p codesigning $KEYCHAIN_PATH
 
           # check if the keychain is accessible, and unlocked for signing
+          echo "security show-keychain-info"
           security show-keychain-info $KEYCHAIN_PATH
+          
+          echo "provisioning profile UUID"
+          grep -a -A1 UUID $PP_PATH
 
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
           
-          echo "show provisioning profiles"
+          echo "provisioning profiles"
           ls ~/Library/MobileDevice/Provisioning\ Profiles/
-
+          
           echo "Generate ExportOptions.plist"
           export EXPORT_METHOD=app-store
           export BUNDLE_ID=org.encointer.wallet
