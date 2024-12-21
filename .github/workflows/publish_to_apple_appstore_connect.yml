@@ -23,7 +23,8 @@ jobs:
         run: |
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/Encointer_AppStore_Deployment.mobileprovision
+          PP_NAME=Encointer_AppStore_Deployment
+          PP_PATH=$RUNNER_TEMP/$PP_NAME.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
@@ -61,7 +62,7 @@ jobs:
           echo "Generate ExportOptions.plist"
           export EXPORT_METHOD=app-store
           export BUNDLE_ID=org.encointer.wallet
-          export PROVISIONING_PROFILE=$PP_PATH
+          export PROVISIONING_PROFILE=$PP_NAME
           envsubst < app/ios/ExportOptions-Template.plist > app/ios/ExportOptions.plist
           
           echo "cat ExportOptions.plist"
