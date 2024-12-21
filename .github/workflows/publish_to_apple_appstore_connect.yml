@@ -90,8 +90,8 @@ jobs:
 
       - name: xcode archive
         run: |
-          ls -al app/build/ios
-          ls -al app/build/ios/iphoneos
+          echo "Xcode build settings"
+          xcodebuild -workspace app/ios/Runner.xcworkspace -scheme Runner -showBuildSettings
           
           xcodebuild \
             -workspace app/ios/Runner.xcworkspace \
