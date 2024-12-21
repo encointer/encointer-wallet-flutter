@@ -78,37 +78,36 @@ jobs:
 
       - name: xcode clean
         run: |
-          cd app
           xcodebuild -sdk iphoneos \
-            -workspace ios/Runner.xcworkspace \
+            -workspace app/ios/Runner.xcworkspace \
             -scheme Runner \
             clean \
             CODE_SIGN_STYLE=Manual
 
       - name: xcode archive
         run: |
-          cd app
+          ls -al app/ios/build
+          ls -al app/ios/build/Runner
+          
           xcodebuild \
-            -workspace ios/Runner.xcworkspace \
+            -workspace app/ios/Runner.xcworkspace \
             -scheme Runner \
             archive \
             -sdk iphoneos \
-            -archivePath ios/build/Runner \
+            -archivePath app/ios/build/Runner \
             CODE_SIGN_STYLE=Manual
 
       - name: Export the .ipa file
         run: | 
-          cd app
           xcodebuild -exportArchive \
-            -archivePath ios/build/Runner.xcarchive \
-            -exportPath ios/build \
-            -exportOptionsPlist ios/ExportOptions.plist
+            -archivePath app/ios/build/Runner.xcarchive \
+            -exportPath app/ios/build \
+            -exportOptionsPlist app/ios/ExportOptions.plist
 
       - name: Upload to TestFlight
         run: |
-          cd app
           xcrun altool --upload-app --type ios \
-            --file ios/build/Runner.ipa \
+            --file app/ios/build/Runner.ipa \
             --apiKey ${{ secrets.APPLE_STORE_CONNECT_API_KEY }} \
             --issuerId ${{ secrets.APPLE_STORE_CONNECT_ISSUER_ID }} \
             --keyId ${{ secrets.APPLE_STORE_CONNECT_KEY_ID }}
