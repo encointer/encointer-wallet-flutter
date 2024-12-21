@@ -14,6 +14,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: use current cocoapod
+        run: |
+          echo "uninstalling all cocoapods versions"
+          sudo gem uninstall cocoapods -ax
+          echo "installing cocoapods version latest"
+          sudo gem install cocoapods --pre
+
       - name: Set up code signing
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.CERT_P12_BASE64 }}
