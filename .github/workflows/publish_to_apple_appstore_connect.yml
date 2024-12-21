@@ -87,7 +87,7 @@ jobs:
       - name: xcode archive
         run: |
           ls -al app/build/ios
-          ls -al app/build/ios/Runner
+          ls -al app/build/ios/iphoneos
           
           xcodebuild \
             -workspace app/ios/Runner.xcworkspace \
