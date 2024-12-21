@@ -84,38 +84,14 @@ jobs:
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
-      - name: Build iOS IPA
-        run: .flutter/bin/dart run melos build-ipa-release
-
-      - name: xcode clean
-        run: |
-          xcodebuild -sdk iphoneos \
-            -workspace app/ios/Runner.xcworkspace \
-            -scheme Runner \
-            clean \
-            CODE_SIGN_STYLE=Manual
-
-      - name: xcode archive
-        run: |
-          echo "Xcode build settings"
-          xcodebuild -workspace app/ios/Runner.xcworkspace -scheme Runner -showBuildSettings
-          
-          xcodebuild \
-            -workspace app/ios/Runner.xcworkspace \
-            -scheme Runner \
-            archive \
-            -sdk iphoneos \
-            -archivePath app/ios/build/Runner \
-            CODE_SIGN_STYLE=Manual \
-            CODE_SIGN_IDENTITY="iPhone Distribution: Verein Encointer (R3B3857K83)" \
-            PROVISIONING_PROFILE_SPECIFIER="Encointer_AppStore_Deployment"
-
-      - name: Export the .ipa file
-        run: | 
-          xcodebuild -exportArchive \
-            -archivePath app/ios/build/Runner.xcarchive \
-            -exportPath app/ios/build \
-            -exportOptionsPlist app/ios/ExportOptions.plist
+      - name: iOS Application Building...
+        uses: cedvdb/action-flutter-build-ios@v1
+        with:
+          build-cmd: .flutter/bin/dart run melos build-ipa-release
+          certificate-base64: ${{ secrets.CERT_P12_BASE64 }}
+          certificate-password: ${{ secrets.CERT_P12_PASSWORD }}
+          provisioning-profile-base64: ${{ secrets.MOBILE_PROVISION_BASE64 }}
+          keychain-password: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
 
       - name: Upload to TestFlight
         run: |
