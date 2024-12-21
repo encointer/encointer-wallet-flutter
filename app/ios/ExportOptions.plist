@@ -9,7 +9,7 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>org.encointer.wallet</key>
-		<string>Encointer_AppStore_Deployment.mobileprovision</string>
+		<string>Encointer_AppStore_Deployment</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>iOS Distribution</string>
