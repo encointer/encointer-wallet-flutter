@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - beta
+      - cl/android-store-publish
 
 # Cancel a currently running workflow from the same PR, branch or tag when a new workflow is
 # triggered (ref https://stackoverflow.com/a/72408109)
@@ -29,7 +30,7 @@ jobs:
         run: .flutter/bin/dart run melos bootstrap
 
       - name: Build Android AppBundle
-        run: .flutter/bin/dart run melos build-appbundle-release
+        run: .flutter/bin/dart run melos build-appbundle-play
 
       - name: Deploy to Google Play (Beta)
         uses: r0adkll/upload-google-play@v1

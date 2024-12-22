@@ -111,8 +111,8 @@ scripts:
     run: cd app && flutter build apk --split-per-abi --flavor dev
     description: "Build an APK file"
 
-  build-appbundle-release:
-    run: cd app && flutter build appbundle --release
+  build-appbundle-play:
+    run: cd app && flutter build appbundle --release --flavor play
     description: "Build an appbundle file ready to be submitted to the google play console"
 
   build-ipa-release:
