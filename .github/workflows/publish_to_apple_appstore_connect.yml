@@ -34,7 +34,7 @@ jobs:
       - name: iOS Application Building...
         uses: cedvdb/action-flutter-build-ios@v1
         with:
-          build-cmd: cd app && flutter build ios --release --export-options-plist ios/ExportOptions.plist
+          build-cmd: cd app && flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
           certificate-base64: ${{ secrets.CERT_P12_BASE64 }}
           certificate-password: ${{ secrets.CERT_P12_PASSWORD }}
           provisioning-profile-base64: ${{ secrets.MOBILE_PROVISION_BASE64 }}
