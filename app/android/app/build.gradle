@@ -25,7 +25,9 @@ if (flutterVersionName == null) {
 android {
     namespace "org.encointer.wallet"
     compileSdk flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    // flutter ndk version is too low for some reason.
+    // This will probably be fixed by an flutter update.
+    ndkVersion "25.1.8937393"
 
     compileOptions {
         // Flag to enable support for the new language API, see #1165.
