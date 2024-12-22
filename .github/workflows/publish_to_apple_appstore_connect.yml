@@ -23,10 +23,18 @@ jobs:
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+            channel: stable
+            flutter-version-file: pubspec.yaml
+
+      - run: flutter build ios --help -v
+
       - name: iOS Application Building...
         uses: cedvdb/action-flutter-build-ios@v1
         with:
-          build-cmd: .flutter/bin/dart run melos build-ipa-release
+          build-cmd: cd app && flutter build ios --release --export-options-plist ios/ExportOptions.plist
           certificate-base64: ${{ secrets.CERT_P12_BASE64 }}
           certificate-password: ${{ secrets.CERT_P12_PASSWORD }}
           provisioning-profile-base64: ${{ secrets.MOBILE_PROVISION_BASE64 }}
