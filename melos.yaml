@@ -117,7 +117,7 @@ scripts:
 
   build-ipa-release:
     run: cd app && flutter build ios --release --export-options-plist=app/ios/ExportOptions.plist
-    description: "Build a signed IPA signing"
+    description: "Build a signed IPA"
 
   # Integration test Encointer Wallet
   integration-app-test-android:
