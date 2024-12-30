@@ -23,13 +23,12 @@ jobs:
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
+      # The cedvdb action can't use flutter wrapper.
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
             channel: stable
             flutter-version-file: pubspec.yaml
-
-      - run: flutter build ios --help -v
 
       - name: iOS Application Building...
         uses: cedvdb/action-flutter-build-ios@v1
