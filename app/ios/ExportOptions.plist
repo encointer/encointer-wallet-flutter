@@ -8,8 +8,8 @@
 	<string>app-store</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>org.encointer.wallet</key>
-		<string>c8157f89-44fb-4438-a9e9-795b188edfa8</string>
+		<key>R3B3857K83.org.encointer.wallet</key>
+		<string>Encointer_AppStore_Deployment.mobileprovision</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>iOS Distribution</string>
