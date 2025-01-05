@@ -8,7 +8,7 @@
 	<string>app-store</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>R3B3857K83.org.encointer.wallet</key>
+		<key>org.encointer.wallet</key>
 		<string>Encointer_AppStore_Deployment.mobileprovision</string>
 	</dict>
 	<key>signingCertificate</key>
