@@ -55,6 +55,6 @@ jobs:
         run: |
           xcrun altool --upload-app --type ios \
             --file app/build/ios/ipa/*.ipa \
-            --apiKey ${{ secrets.APPLE_STORE_CONNECT_API_KEY }} \
-            --issuerId ${{ secrets.APPLE_STORE_CONNECT_ISSUER_ID }} \
-            --keyId ${{ secrets.APPLE_STORE_CONNECT_KEY_ID }}
+            --apiKey ${{ secrets.APPL_STORE_CONNECT_API_KEY }} \
+            --issuerId ${{ secrets.APP_STORE_ISSUER_ID }} \
+            --keyId ${{ secrets.APP_STORE_PRIVATE_KEY }}
