@@ -1,4 +1,4 @@
-name: Deploy Flutter App to Appstore Connect
+name: IOS Build and Deploy
 
 on:
   push:
