@@ -39,6 +39,12 @@ jobs:
           provisioning-profile-base64: ${{ secrets.MOBILE_PROVISION_BASE64 }}
           keychain-password: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
 
+      - name: Show available profiles
+        if: always()
+        run: |
+          cargo install --git https://github.com/juwens/pputil.git
+          pputil
+
       - name: Upload to TestFlight
         run: |
           xcrun altool --upload-app --type ios \
