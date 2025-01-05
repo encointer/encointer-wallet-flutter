@@ -6,11 +6,6 @@ on:
       - beta
       - cl/publish-test
 
-env:
-  FLUTTER_XCODE_DEVELOPMENT_TEAM: R3B3857K83
-  FLUTTER_XCODE_PROVISIONING_PROFILE_SPECIFIER: Encointer_AppStore_Deployment.mobileprovision
-  FLUTTER_XCODE_CODE_SIGN_IDENTITY: Apple Distribution
-
 jobs:
   build-and-deploy:
     runs-on: macos-latest
