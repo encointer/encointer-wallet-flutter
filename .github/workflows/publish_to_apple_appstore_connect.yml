@@ -43,7 +43,8 @@ jobs:
         if: always()
         run: |
           cargo install --git https://github.com/juwens/pputil.git
-          pputil
+          pputil list
+          pputil list-ext
 
       - name: Upload to TestFlight
         run: |
