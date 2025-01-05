@@ -51,10 +51,10 @@ jobs:
         run: |
           ls app/build/ios/ipa
 
-      - name: Upload to TestFlight
-        run: |
-          xcrun altool --upload-app --type ios \
-            --file app/build/ios/ipa/*.ipa \
-            --apiKey ${{ secrets.APP_STORE_PRIVATE_KEY }} \
-            --issuerId ${{ secrets.APP_STORE_ISSUER_ID }} \
-            --keyId ${{ secrets.APP_STORE_PRIVATE_KEY }}
+      - name: 'Upload app to TestFlight'
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: app/build/ios/ipa/Encointerwallet.ipa
+          issuer-id: ${{ secrets.APP_STORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APP_STORE_KEY_ID }}
+          api-private-key: ${{ secrets.APP_STORE_PRIVATE_KEY }}
