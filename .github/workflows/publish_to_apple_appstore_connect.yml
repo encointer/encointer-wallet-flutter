@@ -2,8 +2,11 @@ name: Deploy Flutter App to Appstore Connect
 
 on:
   push:
-    branches:
-      - beta
+    branches: [ master, beta ]
+    tags:
+      - "*"
+  pull_request:
+    branches: [ master, beta ]
 
 jobs:
   build-and-deploy:
@@ -53,6 +56,8 @@ jobs:
       # This will fail if the version and build number in the app/pubspec.yaml
       # is not monotonically increasing compared to the last released version.
       - name: 'Upload app to TestFlight'
+        # Only deploy if we are on beta
+        if: github.ref == 'refs/heads/beta'
         uses: apple-actions/upload-testflight-build@v1
         with:
           app-path: app/build/ios/ipa/Encointerwallet.ipa
