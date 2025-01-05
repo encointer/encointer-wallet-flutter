@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - beta
-      - cl/publish-test
 
 jobs:
   build-and-deploy:
@@ -51,6 +50,8 @@ jobs:
         run: |
           ls app/build/ios/ipa
 
+      # This will fail if the version and build number in the app/pubspec.yaml
+      # is not monotonically increasing compared to the last released version.
       - name: 'Upload app to TestFlight'
         uses: apple-actions/upload-testflight-build@v1
         with:
