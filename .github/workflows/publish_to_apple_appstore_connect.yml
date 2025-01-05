@@ -40,7 +40,7 @@ jobs:
           keychain-password: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
 
       # Used for debugging
-#      - name: Show available profiles
+#      - name: Show available provisioning profiles
 #        if: always()
 #        run: |
 #          cargo install --git https://github.com/juwens/pputil.git
