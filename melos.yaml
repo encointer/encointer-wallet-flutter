@@ -116,7 +116,7 @@ scripts:
     description: "Build an appbundle file ready to be submitted to the google play console"
 
   build-ipa-release:
-    run: cd app && flutter build ios --release --export-options-plist ios/ExportOptions.plist
+    run: cd app && flutter build ios --release 
     description: "Build a signed IPA"
 
   # Integration test Encointer Wallet
