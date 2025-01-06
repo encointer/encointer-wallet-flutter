@@ -38,7 +38,7 @@ jobs:
       - name: Deploy to Google Play (Beta)
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON }}
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_JSON }}
           packageName: org.encointer.wallet
           releaseFiles: app/build/app/outputs/bundle/playRelease/app-play-release.aab
           track: beta  # Publish to the beta track
