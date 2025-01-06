@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   ios_device_test:
-    runs-on: macos-15
+    runs-on: macos-15-large
     timeout-minutes: 60
     strategy:
       matrix:
