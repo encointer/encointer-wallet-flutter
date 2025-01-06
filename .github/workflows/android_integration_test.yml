@@ -63,12 +63,7 @@ jobs:
         run: .flutter/bin/dart run melos bootstrap
 
       - name: Gradle cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+        uses: gradle/actions/setup-gradle@v3
 
       - name: AVD cache
         uses: actions/cache@v4
