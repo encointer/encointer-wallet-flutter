@@ -75,9 +75,12 @@ jobs:
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
+        # The brew install returns exit code 1 for a non-fatal dependency linker error.
+        # We don't care, the subsequent steps will work still.
       - name: Start colima a docker runtime for MacOs
         run: |
-          brew install docker colima
+          brew install docker || true
+          brew install colima || true
           colima delete
           colima start
 
