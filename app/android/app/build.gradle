@@ -65,15 +65,6 @@ android {
         versionName flutterVersionName
     }
 
-    signingConfigs {
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-    }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -92,12 +83,17 @@ android {
         }
         fdroid {
             dimension "deploy"
-            signingConfig null
+//            signingConfig null
             versionNameSuffix ""
         }
         play {
             dimension "deploy"
-            signingConfig signingConfigs.release
+            signingConfig {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
             versionNameSuffix ""
         }
     }
