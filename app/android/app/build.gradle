@@ -92,7 +92,7 @@ android {
         }
         fdroid {
             dimension "deploy"
-//            signingConfig null
+            signingConfig null
             versionNameSuffix ""
         }
         play {
