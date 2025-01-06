@@ -1,0 +1,66 @@
+name: IOS Build and Deploy
+
+on:
+  push:
+    branches: [ master, beta ]
+    tags:
+      - "*"
+  pull_request:
+    branches: [ master, beta ]
+
+jobs:
+  build-and-deploy:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      # The cedvdb action can't use flutter wrapper.
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+            channel: stable
+            flutter-version-file: pubspec.yaml
+
+      - name: iOS Application Building...
+        uses: cedvdb/action-flutter-build-ios@v1
+        with:
+          build-cmd: cd app && flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+          certificate-base64: ${{ secrets.CERT_P12_BASE64 }}
+          certificate-password: ${{ secrets.CERT_P12_PASSWORD }}
+          provisioning-profile-base64: ${{ secrets.MOBILE_PROVISION_BASE64 }}
+          keychain-password: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
+
+      # Used for debugging
+#      - name: Show available provisioning profiles
+#        if: always()
+#        run: |
+#          cargo install --git https://github.com/juwens/pputil.git
+#          pputil list
+#          pputil list-ext
+
+      - name: Show Generated files
+        run: |
+          ls app/build/ios/ipa
+
+      # This will fail if the version and build number in the app/pubspec.yaml
+      # is not monotonically increasing compared to the last released version.
+      - name: 'Upload app to TestFlight'
+        # Only deploy if we are on beta
+        if: github.ref == 'refs/heads/beta'
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: app/build/ios/ipa/Encointerwallet.ipa
+          issuer-id: ${{ secrets.APP_STORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APP_STORE_KEY_ID }}
+          api-private-key: ${{ secrets.APP_STORE_PRIVATE_KEY }}

@@ -111,9 +111,13 @@ scripts:
     run: cd app && flutter build apk --split-per-abi --flavor dev
     description: "Build an APK file"
 
-  build-appbundle:
-    run: cd app && flutter build appbundle
-    description: "Build an appbundle file"
+  build-appbundle-release:
+    run: cd app && flutter build appbundle --release
+    description: "Build an appbundle file ready to be submitted to the google play console"
+
+  build-ipa-release:
+    run: cd app && flutter build ios --release --export-options-plist ios/ExportOptions.plist
+    description: "Build a signed IPA"
 
   # Integration test Encointer Wallet
   integration-app-test-android:
