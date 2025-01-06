@@ -46,10 +46,8 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
         store.encointer.communityStores![cid.toFmtString()]?.symbol ?? cid.toFmtString(),
       );
     case UpdateDemurrage:
-      final blockProductionTime = webApi.encointer.encointerKusama.constant.timestamp.minimumPeriod;
-
       final demurrageDouble = u64F64Util.toDouble((action as UpdateDemurrage).value1.bits);
-      final d = demurragePerMonth(demurrageDouble, blockProductionTime);
+      final d = demurragePerMonth(demurrageDouble, BigInt.from(6));
 
       return l10n.proposalUpdateDemurrage(d.toStringAsFixed(2));
     case AddLocation:
@@ -130,11 +128,14 @@ bool isInVotingCindexes(
       proposal.startCindex - reputationLifetime + (params.proposalLifetime.toInt() / cycleDuration).ceil();
   final votingCindexUpperBound = proposal.startCindex - 2;
 
-  return cIndex > votingCindexLowerBound && cIndex <= votingCindexUpperBound;
+  Log.d('[Democracy] valid voting cIndexes (inclusive): [$votingCindexLowerBound, $votingCindexUpperBound]');
+
+  return cIndex >= votingCindexLowerBound && cIndex <= votingCindexUpperBound;
 }
 
 bool isPassing(Tally tally, BigInt electorateSize, DemocracyParams params) {
-  if (tally.turnout < params.minTurnout) {
+  // minTurnout is in perThousands
+  if ((tally.turnout < BigInt.from(1)) | (tally.turnout < params.minTurnout * electorateSize ~/ BigInt.from(1000))) {
     return false;
   }
 
