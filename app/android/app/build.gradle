@@ -12,6 +12,12 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
@@ -59,18 +65,22 @@ android {
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        play {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            // Avoid null error if file doesn't exist, as gradle evaluates the statements even
+            // if the signing config is not used.
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
-            // AppCenter will take care of signing, so the bundle may not be signed here.
-            // uncomment the following line if you need to sign locally and provide all
-            // credentials and jsk file path in ../key.properties
-            // also uncomment the signing config referenced
-            //signingConfig signingConfigs.release
-
-            // To run `flutter run --release` locally, uncomment the following line
-            //signingConfig signingConfigs.debug
-
             minifyEnabled true
+            shrinkResources true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -79,7 +89,6 @@ android {
     productFlavors {
         dev {
             dimension "deploy"
-            signingConfig signingConfigs.debug
             versionNameSuffix "-dev"
         }
         fdroid {
@@ -89,7 +98,7 @@ android {
         }
         play {
             dimension "deploy"
-            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.play
             versionNameSuffix ""
         }
     }

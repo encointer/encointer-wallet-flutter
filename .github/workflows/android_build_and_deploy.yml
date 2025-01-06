@@ -1,0 +1,64 @@
+name: Android Build and Deploy
+
+on:
+  push:
+    branches: [ master, beta ]
+    tags:
+      - "*"
+  pull_request:
+    branches: [ master, beta ]
+
+# Cancel a currently running workflow from the same PR, branch or tag when a new workflow is
+# triggered (ref https://stackoverflow.com/a/72408109)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.GOOGLE_PLAY_KEYSTORE_BASE64 }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 --decode > app/android/app/my-release-key.jks
+
+      - name: Create key.properties
+        # Keystore has only one key, hence the storePassword and the keyPassword are the same.
+        run: |
+          cat <<EOF > app/android/key.properties
+          storePassword=${{ secrets.GOOGLE_PLAY_KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.GOOGLE_PLAY_KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.GOOGLE_PLAY_KEY_ALIAS }}
+          storeFile=my-release-key.jks
+          EOF
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: Build Android AppBundle
+        run: |
+          .flutter/bin/dart run melos build-appbundle-play
+          echo "Check release files"
+          ls app/build/app/outputs/bundle/playRelease
+
+      - name: Deploy to Google Play (Beta)
+        # Only deploy if we are on beta
+        if: github.ref == 'refs/heads/beta'
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_JSON }}
+          packageName: org.encointer.wallet
+          releaseFiles: app/build/app/outputs/bundle/playRelease/app-play-release.aab
+          track: beta  # Publish to the beta track
