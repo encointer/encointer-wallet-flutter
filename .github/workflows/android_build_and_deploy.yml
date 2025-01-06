@@ -1,4 +1,4 @@
-name: Deploy Flutter App to Google Playconsole
+name: Android Build and Deploy
 
 on:
   push:
