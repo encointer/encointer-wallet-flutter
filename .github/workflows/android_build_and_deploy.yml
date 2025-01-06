@@ -33,7 +33,7 @@ jobs:
           storePassword=${{ secrets.GOOGLE_PLAY_KEYSTORE_PASSWORD }}
           keyPassword=${{ secrets.GOOGLE_PLAY_KEYSTORE_PASSWORD }}
           keyAlias=${{ secrets.GOOGLE_PLAY_KEY_ALIAS }}
-          storeFile=app/android/app/my-release-key.jks
+          storeFile=my-release-key.jks
           EOF
 
       - name: Install flutter wrapper
