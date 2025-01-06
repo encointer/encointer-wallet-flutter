@@ -2,9 +2,11 @@ name: Deploy Flutter App to Google Playconsole
 
 on:
   push:
-    branches:
-      - beta
-      - cl/android-store-publish
+    branches: [ master, beta ]
+    tags:
+      - "*"
+  pull_request:
+    branches: [ master, beta ]
 
 # Cancel a currently running workflow from the same PR, branch or tag when a new workflow is
 # triggered (ref https://stackoverflow.com/a/72408109)
@@ -52,6 +54,8 @@ jobs:
           ls app/build/app/outputs/bundle/playRelease
 
       - name: Deploy to Google Play (Beta)
+        # Only deploy if we are on beta
+        if: github.ref == 'refs/heads/beta'
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_JSON }}
