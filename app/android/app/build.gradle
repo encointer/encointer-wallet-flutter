@@ -69,7 +69,9 @@ android {
         play {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
+            // Avoid null error if file doesn't exist, as gradle evaluates the statements even
+            // if the signing config is not used.
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
             storePassword keystoreProperties['storePassword']
         }
 
