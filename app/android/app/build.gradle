@@ -72,6 +72,13 @@ android {
             storeFile file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
         }
+
+        noSign {
+            storeFile file("empty.keystore")  // Empty keystore or any dummy file
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
+        }
     }
 
     buildTypes {
@@ -80,13 +87,6 @@ android {
             shrinkResources true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-
-        noSign {
-            storeFile file("empty.keystore")  // Empty keystore or any dummy file
-            storePassword ""
-            keyAlias ""
-            keyPassword ""
         }
     }
     // add a product flavor for fdroid release
