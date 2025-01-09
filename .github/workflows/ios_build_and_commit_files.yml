@@ -40,7 +40,7 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add app/ios
-          git commit -m "Run pod install and build app [skip ci]" || echo "No changes to commit."
+          git commit -m "Update ios project files [skip ci]" || echo "No changes to commit."
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
