@@ -30,11 +30,6 @@ jobs:
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
-      - name: Install dependencies (pod install)
-        run: |
-          cd app/ios
-          pod install
-
       # Build the Flutter app
       - name: Build Flutter app
         run: .flutter/bin/dart run melos build-ipa-debug
