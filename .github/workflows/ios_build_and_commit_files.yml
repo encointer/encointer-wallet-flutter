@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies (pod install)
         run: |
-          cd ios
+          cd app/ios
           pod install
 
       # Build the Flutter app
