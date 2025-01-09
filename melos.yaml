@@ -115,7 +115,7 @@ scripts:
     description: "Build a signed IPA"
 
   build-ipa-debug:
-    run: cd app && flutter build ios
+    run: cd app && flutter build ios --no-codesign
     description: "Build a signed IPA"
 
   # Integration test Encointer Wallet
