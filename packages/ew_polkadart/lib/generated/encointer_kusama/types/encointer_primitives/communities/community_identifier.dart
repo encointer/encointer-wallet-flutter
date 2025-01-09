@@ -27,9 +27,9 @@ class CommunityIdentifier {
   }
 
   Map<String, List<int>> toJson() => {
-    'geohash': geohash.toList(),
-    'digest': digest.toList(),
-  };
+        'geohash': geohash.toList(),
+        'digest': digest.toList(),
+      };
 
   @override
   bool operator ==(Object other) =>
@@ -37,21 +37,21 @@ class CommunityIdentifier {
         this,
         other,
       ) ||
-          other is CommunityIdentifier &&
-              _i3.listsEqual(
-                other.geohash,
-                geohash,
-              ) &&
-              _i3.listsEqual(
-                other.digest,
-                digest,
-              );
+      other is CommunityIdentifier &&
+          _i3.listsEqual(
+            other.geohash,
+            geohash,
+          ) &&
+          _i3.listsEqual(
+            other.digest,
+            digest,
+          );
 
   @override
   int get hashCode => Object.hash(
-    geohash,
-    digest,
-  );
+        geohash,
+        digest,
+      );
 }
 
 class $CommunityIdentifierCodec with _i1.Codec<CommunityIdentifier> {
@@ -59,9 +59,9 @@ class $CommunityIdentifierCodec with _i1.Codec<CommunityIdentifier> {
 
   @override
   void encodeTo(
-      CommunityIdentifier obj,
-      _i1.Output output,
-      ) {
+    CommunityIdentifier obj,
+    _i1.Output output,
+  ) {
     const _i1.U8ArrayCodec(5).encodeTo(
       obj.geohash,
       output,
