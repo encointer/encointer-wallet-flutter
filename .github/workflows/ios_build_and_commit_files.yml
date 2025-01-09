@@ -1,0 +1,43 @@
+name: IOS build and commit files
+
+on:
+  push:
+    branches:
+      - ios-update-files
+
+jobs:
+  flutter-build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter_wrapper.sh
+
+      - name: Get dependencies (i.e., melos)
+        run: .flutter/bin/dart pub get
+
+      - name: Melos Bootstrap
+        run: .flutter/bin/dart run melos bootstrap
+
+      - name: Install dependencies (pod install)
+        run: |
+          cd ios
+          pod install
+
+      # Build the Flutter app
+      - name: Build Flutter app
+        run: .flutter/bin/dart run melos build-ipa-debug
+
+      # Check for changes and commit
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Run pod install and build app [skip ci]" || echo "No changes to commit."
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

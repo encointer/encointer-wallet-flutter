@@ -114,6 +114,10 @@ scripts:
     run: cd app && flutter build ios --release --export-options-plist ios/ExportOptions.plist
     description: "Build a signed IPA"
 
+  build-ipa-debug:
+    run: cd app && flutter build ios
+    description: "Build a signed IPA"
+
   # Integration test Encointer Wallet
   integration-app-test-android:
     run: cd app && flutter drive --target=test_driver/app.dart --flavor dev
