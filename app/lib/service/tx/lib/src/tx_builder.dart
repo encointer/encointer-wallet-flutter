@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:convert/convert.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_polkadart/encointer_types.dart' show CommunityIdentifier;
 import 'package:ew_polkadart/ew_polkadart.dart';
@@ -16,19 +15,20 @@ class TxBuilder {
     RuntimeCall call, {
     CommunityIdentifier? paymentAsset,
   }) async {
-    final encodedCall = hex.encode(call.encode());
-    // print('encodedCall: $encodedCall');
-    return createSignedExtrinsicWithEncodedCall(pair, encodedCall, paymentAsset: paymentAsset);
+    return createSignedExtrinsicWithEncodedCall(
+      pair,
+      call.encode(),
+      paymentAsset: paymentAsset,
+    );
   }
 
   /// Creates an extrinsic from an opaque call.
   Future<Uint8List> createSignedExtrinsicWithEncodedCall(
     Sr25519KeyPair pair,
-    String encodedCall, {
+    Uint8List encodedCall, {
     CommunityIdentifier? paymentAsset,
   }) async {
     final encointerKusama = EncointerKusama(provider);
-    final call = encodedCall.replaceFirst('0x', '');
 
     // fetch recent relevant data from chain
     final runtimeVersion = await _getRuntimeVersion();
@@ -46,7 +46,7 @@ class TxBuilder {
     // print('encodedCall: call');
 
     final payloadToSign = SigningPayload(
-      method: call,
+      method: encodedCall,
       specVersion: runtimeVersion.specVersion,
       transactionVersion: runtimeVersion.transactionVersion,
       genesisHash: genesisHash,
@@ -55,19 +55,34 @@ class TxBuilder {
       eraPeriod: 64,
       nonce: accountInfo.nonce,
       tip: 0,
-      assetId: paymentAsset,
+      customSignedExtensions: <String, dynamic>{
+        'ChargeAssetTxPayment': {
+          'tip': BigInt.zero,
+          'asset_id':
+              paymentAsset != null ? Option.some(paymentAsset.toJson()) : const Option<CommunityIdentifier>.none(),
+        }, // A custom Signed Extensions
+      },
     );
 
     final payload = payloadToSign.encode(encointerKusama.registry);
     final signature = pair.sign(payload);
-    final hexSignature = hex.encode(signature);
 
-    final publicKey = hex.encode(pair.publicKey.bytes);
-    final extrinsic = Extrinsic.withSigningPayload(
+    final publicKey = Uint8List.fromList(pair.publicKey.bytes);
+    final extrinsic = ExtrinsicPayload(
       signer: publicKey,
-      method: call,
-      signature: hexSignature,
-      payload: payloadToSign,
+      method: encodedCall,
+      signature: signature,
+      eraPeriod: 64,
+      blockNumber: blockNumber,
+      nonce: accountInfo.nonce,
+      tip: 0,
+      customSignedExtensions: <String, dynamic>{
+        'ChargeAssetTxPayment': {
+          'tip': BigInt.zero,
+          'asset_id':
+              paymentAsset != null ? Option.some(paymentAsset.toJson()) : const Option<CommunityIdentifier>.none(),
+        }, // A custom Signed Extensions
+      },
     );
 
     return extrinsic.encode(encointerKusama.registry, SignatureType.sr25519);

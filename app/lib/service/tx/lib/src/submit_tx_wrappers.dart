@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:convert/convert.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +30,6 @@ import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart' show Vote;
 import 'package:ew_polkadart/encointer_types.dart' as pd;
-
 
 /// Helpers to submit transactions.
 
@@ -366,12 +368,12 @@ Future<dynamic> submitNextPhaseWithAlice(BuildContext context, AppStore store, A
   // This is valid for the encointer-node dev chain config.
   // We currently don't have access to the dev nodes metadata
   // so we hardcode the call.
-  const sudoNextPhaseCall = '0x05003c00';
+  const sudoNextPhaseCall = '05003c00';
   final alice = await KeyringAccount.fromUri('Alice', '//Alice');
 
   final xt = await TxBuilder(api.provider).createSignedExtrinsicWithEncodedCall(
     alice.pair,
-    sudoNextPhaseCall,
+    Uint8List.fromList(hex.decode(sudoNextPhaseCall)),
   );
 
   try {

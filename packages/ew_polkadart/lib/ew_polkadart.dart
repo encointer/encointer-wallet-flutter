@@ -38,4 +38,5 @@ export 'package:polkadart_scale_codec/polkadart_scale_codec.dart'
         U8Codec,
         U8ArrayCodec,
         SequenceCodec,
-        StrCodec;
+        StrCodec,
+        Option;
