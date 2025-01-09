@@ -29,6 +29,11 @@ class TxBuilder {
     CommunityIdentifier? paymentAsset,
   }) async {
     final encointerKusama = EncointerKusama(provider);
+    final encointerState = StateApi(provider);
+
+    final customMetadata = await encointerState.getMetadata();
+    // We have to use this special registry to use custom signed extensions
+    final registry = customMetadata.chainInfo.scaleCodec.registry;
 
     // fetch recent relevant data from chain
     final runtimeVersion = await _getRuntimeVersion();
@@ -64,7 +69,7 @@ class TxBuilder {
       },
     );
 
-    final payload = payloadToSign.encode(encointerKusama.registry);
+    final payload = payloadToSign.encode(registry);
     final signature = pair.sign(payload);
 
     final publicKey = Uint8List.fromList(pair.publicKey.bytes);
@@ -85,7 +90,7 @@ class TxBuilder {
       },
     );
 
-    return extrinsic.encode(encointerKusama.registry, SignatureType.sr25519);
+    return extrinsic.encode(registry, SignatureType.sr25519);
   }
 
   Future<RuntimeVersion> _getRuntimeVersion() async {
