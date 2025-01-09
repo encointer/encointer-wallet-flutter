@@ -45,10 +45,13 @@ jobs:
       # Setup Environment
       - uses: actions/checkout@v4
 
+      - name: Set xcode version via env file
+        run: cat .github/env >> $GITHUB_ENV
+
       - name: prepare xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "15.2"
+          xcode-version: $XCODE_VERSION
 
       - name: "Prepare environment for ios"
         working-directory: ./scripts
