@@ -26,7 +26,8 @@ import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fi
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart' show Vote;
-import 'package:ew_polkadart/ew_polkadart.dart' as pd;
+import 'package:ew_polkadart/encointer_types.dart' as pd;
+
 
 /// Helpers to submit transactions.
 

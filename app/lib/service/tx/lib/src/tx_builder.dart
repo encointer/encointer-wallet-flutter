@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:ew_keyring/ew_keyring.dart';
+import 'package:ew_polkadart/encointer_types.dart' show CommunityIdentifier;
 import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_polkadart/runtime_call.dart';
 
