@@ -7,7 +7,7 @@ environment:
   sdk: ">=3.2.0 <4.0.0"
 
 dependencies:
-  collection: ^1.18.0
+  collection: ^1.19.0
   ew_keyring:
     path: ../ew_keyring
   ew_primitives:

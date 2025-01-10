@@ -17,7 +17,7 @@ dependencies:
 
 dev_dependencies:
   # The generated files do not satisfy the `very_good_analysis` lints.
-  lints: ^2.1.1
+  lints: ^5.1.1
   polkadart_cli: ^0.5.0
   substrate_metadata: ^1.3.0
 
