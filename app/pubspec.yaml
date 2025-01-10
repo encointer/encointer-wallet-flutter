@@ -28,7 +28,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   latlong2: ^0.9.0
   # intl - format numbers
-  intl: ^0.18.1
+  intl: ^0.19.0
   json_annotation: ^4.8.1
   # state management with mobx
   mobx: ^2.3.0+1
@@ -40,7 +40,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   base58check: ^2.0.0
-  package_info_plus: ^5.0.1
+  package_info_plus: ^8.1.2
   quiver: ^3.2.1
   share_plus: ^7.2.1
   flutter_timezone: ^1.0.8
@@ -69,7 +69,7 @@ dependencies:
   focus_detector: ^2.0.1 # Todo: #1273: replace with alternative package
   jdenticon_dart: ^2.0.0 # Todo: #1274: replace with alternative package
   photo_view: ^0.14.0
-  upgrader: ^8.4.0
+  upgrader: ^11.3.1
   app_links: ^3.4.5
   local_auth: ^2.1.7
   printing: ^5.11.1

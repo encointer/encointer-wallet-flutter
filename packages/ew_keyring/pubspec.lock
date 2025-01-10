@@ -397,18 +397,18 @@ packages:
     dependency: "direct main"
     description:
       name: polkadart_keyring
-      sha256: "482260a119110ef21f8d66e69ae8c2716afab974247391535d1b02dee613f9e9"
+      sha256: bed5af744e801e88bf7d067ea477fc7eb0a5955801491a8b3e57b578d9de8bea
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.4"
+    version: "0.5.0"
   polkadart_scale_codec:
     dependency: transitive
     description:
       name: polkadart_scale_codec
-      sha256: "0bc6700e93af2dd054db413837433b8383aae095348282d7837583da3e621978"
+      sha256: a9b295ddbd8ace501066800ab521575095464f324cb4185be386bd78ee9316d0
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.3.0"
   pool:
     dependency: transitive
     description:
@@ -453,10 +453,10 @@ packages:
     dependency: transitive
     description:
       name: secp256k1_ecdsa
-      sha256: "7e731f4039f44d8e416a193db449f80c67a69ab6933a4970eb6ac7a91e1ca7b2"
+      sha256: "8d516e3f9ad716e721a4e961b890bb03bf3c68ba51bca256a617a055e3c7ef89"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.1"
+    version: "0.5.0"
   shelf:
     dependency: transitive
     description:
@@ -533,18 +533,18 @@ packages:
     dependency: transitive
     description:
       name: sr25519
-      sha256: "351a42deaf7656690fb3e09568701a13c1813229cee15a21a5ca1b322246c24d"
+      sha256: d10247ff98330efb658042357c8c7fc46074c3c160ea16d3dcdfedf8a9a87b60
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.1"
+    version: "0.5.0"
   ss58:
     dependency: "direct main"
     description:
       name: ss58
-      sha256: b24d2713597b83708ef30daea5a565dba8bc9129031b30c025069e168301ae5e
+      sha256: "74dce6fbfbac9dba5f87b8f104ed2b7253c6aeac39d508f088044cf4827d9cd7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.2"
+    version: "1.2.0"
   stack_trace:
     dependency: transitive
     description:
@@ -589,10 +589,10 @@ packages:
     dependency: "direct main"
     description:
       name: substrate_bip39
-      sha256: fa950b80b92b7fc96f13683033fe974cdfd3ee0d30d989f6b8f3fcbfe6021ac2
+      sha256: "6680dc10eb4f165659374eec5c5aa75920e720b3c00b65490e1dfe3d5ea5a52d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.1"
+    version: "0.5.0"
   term_glyph:
     dependency: transitive
     description:
