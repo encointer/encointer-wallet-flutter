@@ -124,10 +124,10 @@ class _ProfileState extends State<Profile> {
                       begin: Alignment.centerRight,
                       end: Alignment.centerLeft,
                       colors: [
-                        context.colorScheme.surface.withOpacity(0),
+                        context.colorScheme.surface.withValues(alpha: 0),
                         context.colorScheme.surface,
                         context.colorScheme.surface,
-                        context.colorScheme.surface.withOpacity(0),
+                        context.colorScheme.surface.withValues(alpha: 0),
                       ],
                       stops: const [0.0, 0.1, 0.9, 1.0],
                     ).createShader(bounds);

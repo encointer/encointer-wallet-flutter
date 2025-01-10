@@ -560,7 +560,9 @@ abstract class _EncointerStore with Store {
   int? get ceremonyCycleDuration {
     if (phaseDurations[CeremonyPhase.Registering] == null ||
         phaseDurations[CeremonyPhase.Assigning] == null ||
-        phaseDurations[CeremonyPhase.Attesting] == null) return null;
+        phaseDurations[CeremonyPhase.Attesting] == null) {
+      return null;
+    }
 
     return phaseDurations[CeremonyPhase.Registering]! +
         phaseDurations[CeremonyPhase.Assigning]! +
