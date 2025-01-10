@@ -13,7 +13,7 @@ class CommunityCircleAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: context.colorScheme.background,
+      backgroundColor: context.colorScheme.surface,
       radius: radius,
       child: icon,
     );
