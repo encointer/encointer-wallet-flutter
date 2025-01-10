@@ -8,18 +8,3 @@ dependency_overrides:
     path: ../ew_primitives
   ew_substrate_fixed:
     path: ../ew_substrate_fixed
-  polkadart:
-    git:
-      url: https://github.com/encointer/polkadart
-      ref: cl/add-checkmetadata-extension-rebased
-      path: packages/polkadart
-  polkadart_keyring:
-    git:
-      url: https://github.com/encointer/polkadart
-      ref: cl/add-checkmetadata-extension-rebased
-      path: packages/polkadart_keyring
-  polkadart_scale_codec:
-    git:
-      url: https://github.com/encointer/polkadart
-      ref: cl/add-checkmetadata-extension-rebased
-      path: packages/polkadart_scale_codec
