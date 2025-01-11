@@ -3,7 +3,7 @@ description: EncointerWallet made with Flutter.
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
-  flutter: "3.19.0"
+  flutter: "3.27.1"
 
 dev_dependencies:
   melos: 3.4.0
