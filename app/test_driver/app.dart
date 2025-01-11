@@ -19,8 +19,7 @@ void main() async {
 
   late final AppSettings appSettings;
   late final AppService appService;
-  final appCast = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
-  final appConfig = AppConfig(appCast: appCast, isIntegrationTest: true);
+  const appConfig = AppConfig(appCastUrl: appcastURL, isIntegrationTest: true);
 
   enableFlutterDriverExtension(
     handler: (command) async {

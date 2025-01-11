@@ -43,8 +43,10 @@ scripts:
     description: "Analyze all Dart code and exit if there are any fatal warnings"
 
   flutter-clean:
-    run: flutter clean
-    description: "Clean pub dependencies"
+    run: >-
+      dart run melos exec -- \
+      flutter clean
+    description: "Get pub dependencies"
 
   pub-get:
     run: >-
@@ -110,6 +112,10 @@ scripts:
     run: cd app && flutter build appbundle --release --flavor play
     description: "Build an appbundle file ready to be submitted to the google play console"
 
+  precache-ios:
+    run: cd app && flutter precache –ios
+    description: "Precache IOS - needed for manual pod install"
+
   build-ipa-release:
     run: cd app && flutter build ios --release --export-options-plist ios/ExportOptions.plist
     description: "Build a signed IPA"
@@ -124,7 +130,8 @@ scripts:
     description: "Run integration test on Android"
 
   integration-app-test-android-screenshot:
-    run: cd app && flutter drive --target=test_driver/app.dart --flavor dev --dart-define=locales=en
+    # screenshots are not possible with the impeller engine
+    run: cd app && flutter drive --no-enable-impeller --target=test_driver/app.dart --flavor dev --dart-define=locales=en
     description: "Run integration test on Android with screenshot capturing enabled."
 
   integration-app-test-ios:
@@ -144,7 +151,8 @@ scripts:
     description: "Run integration test on Android with screenshot multi language capturing enabled. "  
 
   integration-scan-test-android:
-    run: cd app && flutter drive --target=test_driver/scan_page.dart --flavor dev
+    # screenshots are not possible with the impeller engine
+    run: cd app && flutter drive --no-enable-impeller --target=test_driver/scan_page.dart --flavor dev
     description: "Run integration test for QR scan on Android"
 
   integration-scan-test-ios:

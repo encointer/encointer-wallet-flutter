@@ -8,7 +8,7 @@ part of 'ipfs_offering.dart';
 
 IpfsOffering _$IpfsOfferingFromJson(Map<String, dynamic> json) => IpfsOffering(
       json['name'] as String?,
-      json['price'] as int?,
+      (json['price'] as num?)?.toInt(),
       json['description'] as String?,
       json['contactInfo'] as String?,
       json['imagesCid'] as String?,

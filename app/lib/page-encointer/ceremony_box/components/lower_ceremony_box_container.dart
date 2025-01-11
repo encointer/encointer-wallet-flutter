@@ -13,7 +13,7 @@ class LowerCeremonyBoxContainer extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(15)),
-        color: context.colorScheme.background,
+        color: context.colorScheme.surface,
       ),
       child: child,
     );

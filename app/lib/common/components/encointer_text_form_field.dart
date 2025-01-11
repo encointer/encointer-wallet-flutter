@@ -41,7 +41,7 @@ class EncointerTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.colorScheme.background,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: TextFormField(

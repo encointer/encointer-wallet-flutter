@@ -104,7 +104,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     final l10n = context.l10n;
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.colorScheme.background,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(

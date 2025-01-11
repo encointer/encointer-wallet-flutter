@@ -1,4 +1,5 @@
 /// Re-export well defined-types.
+library;
 
 // export primitive types
 export 'generated/encointer_kusama/types/sp_runtime/multiaddress/multi_address.dart'

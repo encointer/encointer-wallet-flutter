@@ -8,7 +8,7 @@ part of 'business_data.dart';
 
 BusinessData _$BusinessDataFromJson(Map<String, dynamic> json) => BusinessData(
       json['url'] as String?,
-      json['lastOid'] as int?,
+      (json['lastOid'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$BusinessDataToJson(BusinessData instance) => <String, dynamic>{

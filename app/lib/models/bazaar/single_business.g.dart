@@ -27,7 +27,7 @@ SingleBusiness _$SingleBusinessFromJson(Map<String, dynamic> json) => SingleBusi
       status: json['status'] as String?,
       isLiked: json['isLiked'] as bool? ?? false,
       isLikedPersonally: json['isLikedPersonally'] as bool? ?? false,
-      countLikes: json['countLikes'] as int? ?? 0,
+      countLikes: (json['countLikes'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$SingleBusinessToJson(SingleBusiness instance) => <String, dynamic>{

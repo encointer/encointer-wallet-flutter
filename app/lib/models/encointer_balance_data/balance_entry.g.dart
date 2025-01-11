@@ -8,7 +8,7 @@ part of 'balance_entry.dart';
 
 BalanceEntry _$BalanceEntryFromJson(Map<String, dynamic> json) => BalanceEntry(
       BalanceEntry._principalFromMaybeString(json['principal']),
-      json['lastUpdate'] as int,
+      (json['lastUpdate'] as num).toInt(),
     );
 
 Map<String, dynamic> _$BalanceEntryToJson(BalanceEntry instance) => <String, dynamic>{
