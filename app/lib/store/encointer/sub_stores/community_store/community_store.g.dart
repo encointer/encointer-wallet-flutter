@@ -13,8 +13,8 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityS
       ..metadata =
           json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
       ..demurrage = (json['demurrage'] as num?)?.toDouble()
-      ..meetupTime = json['meetupTime'] as int?
-      ..meetupTimeOverride = json['meetupTimeOverride'] as int?
+      ..meetupTime = (json['meetupTime'] as num?)?.toInt()
+      ..meetupTimeOverride = (json['meetupTimeOverride'] as num?)?.toInt()
       ..bootstrappers = (json['bootstrappers'] as List<dynamic>?)?.map((e) => e as String).toList()
       ..meetupLocations = json['meetupLocations'] != null
           ? ObservableList<Location>.of(

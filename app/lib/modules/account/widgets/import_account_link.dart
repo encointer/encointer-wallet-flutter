@@ -16,7 +16,7 @@ class ImportAccountLink extends StatelessWidget {
       children: [
         Text(
           '${context.l10n.doYouAlreadyHaveAnAccount} ',
-          style: TextStyle(color: context.colorScheme.background),
+          style: TextStyle(color: context.colorScheme.surface),
         ),
         InkWell(
           key: const Key(EWTestKeys.importAccount),
@@ -24,7 +24,7 @@ class ImportAccountLink extends StatelessWidget {
           child: Text(
             context.l10n.import,
             style: TextStyle(
-              color: context.colorScheme.background,
+              color: context.colorScheme.surface,
               decoration: TextDecoration.underline,
             ),
           ),

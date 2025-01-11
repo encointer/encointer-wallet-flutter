@@ -15,7 +15,7 @@ Future<void> initialDeepLinks(BuildContext context) async {
   final appLinks = AppLinks();
   if (!_initialURILinkHandled) {
     _initialURILinkHandled = true;
-    final url = await appLinks.getInitialAppLinkString();
+    final url = await appLinks.getLatestLinkString();
     await _init(context, url);
   }
   appLinks.stringLinkStream.listen((url) async {

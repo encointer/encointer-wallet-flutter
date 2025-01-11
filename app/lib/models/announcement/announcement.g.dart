@@ -13,7 +13,7 @@ Announcement _$AnnouncementFromJson(Map<String, dynamic> json) => Announcement(
       content: json['content'] as String,
       publishDate: DateTime.parse(json['publishDate'] as String),
       isFavorite: json['isFavorite'] as bool? ?? false,
-      countFavorite: json['countFavorite'] as int? ?? 0,
+      countFavorite: (json['countFavorite'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$AnnouncementToJson(Announcement instance) => <String, dynamic>{

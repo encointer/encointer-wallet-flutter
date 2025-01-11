@@ -8,12 +8,12 @@ part of 'faucet.dart';
 
 Faucet _$FaucetFromJson(Map<String, dynamic> json) => Faucet(
       const HexToUtf8Converter().fromJson(json['name'] as String),
-      json['purposeId'] as int,
+      (json['purposeId'] as num).toInt(),
       (json['whitelist'] as List<dynamic>?)
           ?.map((e) => CommunityIdentifier.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['dripAmount'] as int,
-      (json['creator'] as List<dynamic>).map((e) => e as int).toList(),
+      (json['dripAmount'] as num).toInt(),
+      (json['creator'] as List<dynamic>).map((e) => (e as num).toInt()).toList(),
     );
 
 Map<String, dynamic> _$FaucetToJson(Faucet instance) => <String, dynamic>{

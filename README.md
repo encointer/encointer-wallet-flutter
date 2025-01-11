@@ -28,10 +28,10 @@ Encointer wallet and client for mobile phones
 </p>
 
 ### Requirements
-- Dart sdk: ">=3.2.0 <3.0.0"
-- flutter: "3.16.3"
-- Android: minSdkVersion 17
-- iOS: --ios-language swift, Xcode version >= 14.3
+- Dart sdk: ">=3.2.0 <4.0.0"
+- flutter: "3.27.1"
+- Android: minSdkVersion 21
+- iOS: --ios-language swift, Xcode version >= 15.2
 
 # Build Instructions
 

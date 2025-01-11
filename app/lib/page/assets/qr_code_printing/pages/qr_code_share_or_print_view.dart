@@ -41,7 +41,7 @@ class _QrCodeShareOrPrintViewState extends State<QrCodeShareOrPrintView> {
             maxScale: 1.0,
             minScale: 0.2,
             initialScale: 1.0,
-            backgroundDecoration: BoxDecoration(color: context.colorScheme.background),
+            backgroundDecoration: BoxDecoration(color: context.colorScheme.surface),
             child: Center(
               child: RepaintBoundary(
                 key: _renderObjectKey,

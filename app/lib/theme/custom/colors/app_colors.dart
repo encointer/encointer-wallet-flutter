@@ -7,12 +7,10 @@ class AppColors {
     onPrimary: Color(0xffF4F8F9),
     secondary: Color(0xFF3969AC), // end color of gradient
     onSecondary: Color(0xffF4F8F9),
-    background: Color(0xffF4F8F9), // used for light blue buttons (i.e. secondary buttons)
-    onBackground: Color(0xFF000022),
+    surface: Color(0xffF4F8F9), // used for light blue buttons (i.e. secondary buttons)
+    onSurface: Color(0xFF000022),
     error: Color(0xffF51D07),
     onError: Color(0xffF4F8F9),
-    surface: Color(0xffF4F8F9), // dark blue for the scan bottomButtonBar icon
-    onSurface: Color(0xFF000022),
     tertiary: Color(0xFF3880BD), // starting color of gradient
     brightness: Brightness.light,
   );
@@ -23,12 +21,10 @@ class AppColors {
     onPrimary: Color(0xFFF6FAF1),
     secondary: Color.fromARGB(255, 41, 119, 86), // end color of gradient
     onSecondary: Color(0xFFF6FAF1),
-    background: Color(0xFFF6FAF1), // used for light blue buttons (i.e. secondary buttons)
-    onBackground: Color(0xFF000022),
+    surface: Color(0xFFF6FAF1), // used for light blue buttons (i.e. secondary buttons)
+    onSurface: Color(0xFF000022),
     error: Color(0xffF51D07),
     onError: Color(0xFFF6FAF1),
-    surface: Color(0xFFF6FAF1), // dark blue for the scan bottomButtonBar icon
-    onSurface: Color(0xFF000022),
     tertiary: Color(0xff319673), // starting color of gradient
     brightness: Brightness.light,
   );

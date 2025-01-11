@@ -106,13 +106,19 @@ class _AssetsViewState extends State<AssetsView> {
   UpgradeAlert _upgradeAlert(
     AppBar appBar,
   ) {
+    final url = RepositoryProvider.of<AppConfig>(context).appCastUrl;
+    final controller = url != null
+        ? UpgraderStoreController(
+            onAndroid: () => UpgraderAppcastStore(appcastURL: RepositoryProvider.of<AppConfig>(context).appCastUrl!))
+        : null;
+
     return UpgradeAlert(
       upgrader: Upgrader(
-        appcastConfig: RepositoryProvider.of<AppConfig>(context).appCast,
+        storeController: controller,
         debugLogging: RepositoryProvider.of<AppConfig>(context).isIntegrationTest,
-        shouldPopScope: () => true,
-        canDismissDialog: true,
       ),
+      shouldPopScope: () => true,
+      barrierDismissible: true,
       child: _slidingUpPanel(appBar),
     );
   }
@@ -355,7 +361,7 @@ class _AssetsViewState extends State<AssetsView> {
               height: avatarSize,
               width: avatarSize,
               decoration: BoxDecoration(
-                color: context.colorScheme.background,
+                color: context.colorScheme.surface,
                 shape: BoxShape.circle,
               ),
               child: e.communityIcon != null

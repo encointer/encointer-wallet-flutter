@@ -37,7 +37,7 @@ class LightShadedBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.colorScheme.background,
+        color: context.colorScheme.surface,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: const SizedBox(height: 5),

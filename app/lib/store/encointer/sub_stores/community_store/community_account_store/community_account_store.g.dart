@@ -16,9 +16,9 @@ CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json)
       ..attendees = json['attendees'] != null
           ? ObservableSet<String>.of((json['attendees'] as List).map((e) => e as String))
           : null
-      ..participantCountVote = json['participantCountVote'] as int?
+      ..participantCountVote = (json['participantCountVote'] as num?)?.toInt()
       ..meetupCompleted = json['meetupCompleted'] as bool?
-      ..numberOfNewbieTicketsForBootstrapper = json['numberOfNewbieTicketsForBootstrapper'] as int;
+      ..numberOfNewbieTicketsForBootstrapper = (json['numberOfNewbieTicketsForBootstrapper'] as num).toInt();
 
 Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
       'network': instance.network,

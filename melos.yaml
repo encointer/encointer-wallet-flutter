@@ -43,8 +43,10 @@ scripts:
     description: "Analyze all Dart code and exit if there are any fatal warnings"
 
   flutter-clean:
-    run: flutter clean
-    description: "Clean pub dependencies"
+    run: >-
+      dart run melos exec -- \
+      flutter clean
+    description: "Get pub dependencies"
 
   pub-get:
     run: >-
@@ -109,6 +111,10 @@ scripts:
   build-appbundle-play:
     run: cd app && flutter build appbundle --release --flavor play
     description: "Build an appbundle file ready to be submitted to the google play console"
+
+  precache-ios:
+    run: cd app && flutter precache –ios
+    description: "Precache IOS - needed for manual pod install"
 
   build-ipa-release:
     run: cd app && flutter build ios --release --export-options-plist ios/ExportOptions.plist

@@ -21,9 +21,9 @@ Map<String, dynamic> _$AggregatedAccountDataToJson(AggregatedAccountData instanc
 AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(Map<String, dynamic> json) =>
     AggregatedAccountDataPersonal(
       $enumDecode(_$ParticipantTypeEnumMap, json['participantType']),
-      json['meetupIndex'] as int?,
-      json['meetupLocationIndex'] as int?,
-      json['meetupTime'] as int?,
+      (json['meetupIndex'] as num?)?.toInt(),
+      (json['meetupLocationIndex'] as num?)?.toInt(),
+      (json['meetupTime'] as num?)?.toInt(),
       (json['meetupRegistry'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
@@ -45,7 +45,7 @@ const _$ParticipantTypeEnumMap = {
 AggregatedAccountDataGlobal _$AggregatedAccountDataGlobalFromJson(Map<String, dynamic> json) =>
     AggregatedAccountDataGlobal(
       $enumDecode(_$CeremonyPhaseEnumMap, json['ceremonyPhase']),
-      json['ceremonyIndex'] as int,
+      (json['ceremonyIndex'] as num).toInt(),
     );
 
 Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(AggregatedAccountDataGlobal instance) => <String, dynamic>{
@@ -60,9 +60,9 @@ const _$CeremonyPhaseEnumMap = {
 };
 
 Meetup _$MeetupFromJson(Map<String, dynamic> json) => Meetup(
-      json['index'] as int,
-      json['locationIndex'] as int,
-      json['time'] as int?,
+      (json['index'] as num).toInt(),
+      (json['locationIndex'] as num).toInt(),
+      (json['time'] as num?)?.toInt(),
       (json['registry'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
