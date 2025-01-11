@@ -51,7 +51,7 @@ dependencies:
 
   # QR code generator & reader
   pretty_qr_code: ^3.3.0
-  mobile_scanner: ^6.0.2
+  mobile_scanner: ^5.2.3 # Higher version needs xcode 15.3, which in turn needs macos 14 in CI, which can't run docker...
   aes_ecb_pkcs5_flutter: ^0.1.2 # Todo: #1460: replace with alternative package
   permission_handler: ^11.3.1
   flutter_svg: ^2.0.17
