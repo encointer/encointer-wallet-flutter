@@ -11,8 +11,6 @@ class AppColors {
     onSurface: Color(0xFF000022),
     error: Color(0xffF51D07),
     onError: Color(0xffF4F8F9),
-    // surface: Color(0xffF4F8F9), // dark blue for the scan bottomButtonBar icon
-    // onSurface: Color(0xFF000022),
     tertiary: Color(0xFF3880BD), // starting color of gradient
     brightness: Brightness.light,
   );
@@ -27,8 +25,6 @@ class AppColors {
     onSurface: Color(0xFF000022),
     error: Color(0xffF51D07),
     onError: Color(0xFFF6FAF1),
-    // surface: Color(0xFFF6FAF1), // dark blue for the scan bottomButtonBar icon
-    // onSurface: Color(0xFF000022),
     tertiary: Color(0xff319673), // starting color of gradient
     brightness: Brightness.light,
   );
