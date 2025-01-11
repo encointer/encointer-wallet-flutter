@@ -71,7 +71,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     );
   }
 
-  Widget _listItemBuilder(BuildContext context, AccountData account, bool isSelected) {
+  Widget _listItemBuilder(BuildContext context, AccountData account, bool isDisabled, bool isSelected) {
     final address =
         AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.currentNetwork.ss58());
 
@@ -110,7 +110,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
       child: DropdownSearch<AccountData>(
         key: const Key(EWTestKeys.transferSelectAccount),
         popupProps: PopupProps.modalBottomSheet(
-          isFilterOnline: true,
+          disableFilter: false,
           showSearchBox: true,
           showSelectedItems: true,
           itemBuilder: _listItemBuilder,
@@ -124,7 +124,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
                 address: address,
                 pubKey: pubKey,
               );
-              return _listItemBuilder(context, newAccount, false);
+              return _listItemBuilder(context, newAccount, false, false);
             } else {
               return Align(
                 alignment: Alignment.topCenter,
@@ -133,8 +133,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
             }
           },
         ),
-        dropdownDecoratorProps: DropDownDecoratorProps(
-          dropdownSearchDecoration: InputDecoration(
+        decoratorProps: DropDownDecoratorProps(
+          decoration: InputDecoration(
             labelText: widget.label,
             labelStyle: context.bodyLarge.copyWith(color: context.colorScheme.primary),
             contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
@@ -146,7 +146,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? l10n.errorUserNameIsRequired : null,
-        items: widget.store.settings.knownAccounts,
+        items: (_,__) => widget.store.settings.knownAccounts,
         filterFn: filterByAddressOrName,
         onChanged: (AccountData? data) {
           if (widget.onChanged != null && data != null) {
