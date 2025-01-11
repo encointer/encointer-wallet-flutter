@@ -1,19 +1,18 @@
 name: ew_encointer_utils
 description: Encointer Utils Package
-version: 0.1.0+1
+version: 0.1.0
 publish_to: none
+
+resolution: workspace
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
 
 dependencies:
   collection: ^1.19.0
-  ew_keyring:
-    path: ../ew_keyring
-  ew_primitives:
-    path: ../ew_primitives
-  ew_polkadart:
-    path: ../ew_polkadart
+  ew_keyring: 0.1.0
+  ew_primitives: 0.1.0
+  ew_polkadart: 0.1.0
 
 dev_dependencies:
   test: ^1.24.9

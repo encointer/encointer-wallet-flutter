@@ -1,18 +1,17 @@
 name: ew_primitives
 description: Primitives for Encointer
-version: 0.1.0+1
+version: 0.1.0
 publish_to: none
+
+resolution: workspace
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
 
 dependencies:
-  ew_keyring:
-    path: ../ew_keyring
-  ew_polkadart:
-    path: ../ew_polkadart
-  ew_substrate_fixed:
-    path: ../ew_substrate_fixed
+  ew_keyring: 0.1.0
+  ew_polkadart: 0.1.0
+  ew_substrate_fixed: 0.1.0
 
 dev_dependencies:
   test: ^1.24.9

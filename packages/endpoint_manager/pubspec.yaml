@@ -1,7 +1,9 @@
 name: ew_endpoint_manager
 description: Manages multiple endpoints and chooses a current one
-version: 0.1.0+1
+version: 0.1.0
 publish_to: none
+
+resolution: workspace
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
