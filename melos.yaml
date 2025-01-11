@@ -130,7 +130,8 @@ scripts:
     description: "Run integration test on Android"
 
   integration-app-test-android-screenshot:
-    run: cd app && flutter drive --target=test_driver/app.dart --flavor dev --dart-define=locales=en
+    # screenshots are not possible with the impeller engine
+    run: cd app && flutter drive --no-enable-impeller --target=test_driver/app.dart --flavor dev --dart-define=locales=en
     description: "Run integration test on Android with screenshot capturing enabled."
 
   integration-app-test-ios:
@@ -150,7 +151,8 @@ scripts:
     description: "Run integration test on Android with screenshot multi language capturing enabled. "  
 
   integration-scan-test-android:
-    run: cd app && flutter drive --target=test_driver/scan_page.dart --flavor dev
+    # screenshots are not possible with the impeller engine
+    run: cd app && flutter drive --no-enable-impeller --target=test_driver/scan_page.dart --flavor dev
     description: "Run integration test for QR scan on Android"
 
   integration-scan-test-ios:
