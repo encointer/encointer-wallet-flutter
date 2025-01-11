@@ -31,7 +31,13 @@ jobs:
         run: .flutter/bin/dart run melos bootstrap
 
       - name: Update pod repo
-        run: cd app/ios pod repo update
+        # sometimes we need to do a clean up for it to work
+        run: |
+          .flutter/bin/dart run melos flutter-clean
+          cd app/ios
+          rm ios/podfile.lock
+          .flutter/bin/dart run melos pub-get
+          pod install
 
       # Build the Flutter app
       - name: Build Flutter app
