@@ -30,6 +30,9 @@ jobs:
       - name: Melos Bootstrap
         run: .flutter/bin/dart run melos bootstrap
 
+      - name: Update pod repo
+        run: cd app/ios pod repo update
+
       # Build the Flutter app
       - name: Build Flutter app
         run: .flutter/bin/dart run melos build-ipa-debug
