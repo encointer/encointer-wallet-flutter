@@ -34,9 +34,9 @@ jobs:
         # sometimes we need to do a clean up for it to work
         run: |
           .flutter/bin/dart run melos flutter-clean
-          cd app/ios
-          rm ios/podfile.lock
+          rm app/ios/podfile.lock
           .flutter/bin/dart run melos pub-get
+          cd app/ios
           pod install
 
       # Build the Flutter app
