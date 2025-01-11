@@ -36,6 +36,7 @@ jobs:
           .flutter/bin/dart run melos flutter-clean
           rm app/ios/podfile.lock
           .flutter/bin/dart run melos pub-get
+          .flutter/bin/dart run melos precache-ios
           cd app/ios
           pod install
 
