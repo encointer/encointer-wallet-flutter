@@ -110,7 +110,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
       child: DropdownSearch<AccountData>(
         key: const Key(EWTestKeys.transferSelectAccount),
         popupProps: PopupProps.modalBottomSheet(
-          disableFilter: false,
           showSearchBox: true,
           showSelectedItems: true,
           itemBuilder: _listItemBuilder,
@@ -146,7 +145,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? l10n.errorUserNameIsRequired : null,
-        items: (_,__) => widget.store.settings.knownAccounts,
+        items: (_, __) => widget.store.settings.knownAccounts,
         filterFn: filterByAddressOrName,
         onChanged: (AccountData? data) {
           if (widget.onChanged != null && data != null) {
