@@ -58,9 +58,9 @@ class _ProposalTileState extends State<ProposalTile> {
     final l10n = context.l10n;
     final titleSmall = context.titleMedium;
 
-    final turnout = tally.turnout;
+    final turnout = tally.turnout.toInt();
     final electorateSize = proposal.electorateSize;
-    final threshold = approvalThreshold(electorateSize.toInt(), turnout.toInt());
+    final threshold = approvalThreshold(electorateSize.toInt(), turnout);
 
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
@@ -87,8 +87,8 @@ class _ProposalTileState extends State<ProposalTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
-                  if (threshold != 0) Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
-                  if (threshold != 0) passingOrFailingText(context, proposal, tally, widget.params),
+                  if (turnout != 0) Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
+                  if (turnout != 0) passingOrFailingText(context, proposal, tally, widget.params),
                 ],
               ),
             ),
