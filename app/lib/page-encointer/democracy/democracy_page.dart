@@ -92,104 +92,17 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final l10n = context.l10n;
     final titleLargeBlue = context.titleLarge.copyWith(color: context.colorScheme.primary);
     final titleMediumBlue = context.titleMedium.copyWith(color: context.colorScheme.primary);
-    final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
-    final appConfig = RepositoryProvider.of<AppConfig>(context);
 
     // Not an ideal practice, see #1702
-    Iterable<Widget> activeProposalList() {
-      if (activeProposals == null || tallies == null) {
-        return appConfig.isIntegrationTest
-            ? const [SizedBox.shrink()]
-            : const [Center(child: CupertinoActivityIndicator())];
-      }
-
-      if (activeProposals!.isEmpty) {
-        return [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(l10n.proposalsEmpty, style: h3Grey),
-          )
-        ];
-      }
-
-      return activeProposals!.entries
-          .map(
-            (proposalEntry) => ProposalTile(
-              proposalId: proposalEntry.key,
-              proposal: proposalEntry.value,
-              tally: tallies![proposalEntry.key]!,
-              purposeId: purposeIds![proposalEntry.key]!,
-              params: democracyParams!,
-            ),
-          )
-          .toList();
-    }
-
-    // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
-    Iterable<Widget> pastRejectedProposalList() {
-      if (pastRejectedProposals == null || tallies == null) {
-        return appConfig.isIntegrationTest
-            ? [const SizedBox.shrink()]
-            : [const Center(child: CupertinoActivityIndicator())];
-      }
-
-      if (pastRejectedProposals!.isEmpty) {
-        return [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(l10n.proposalsEmpty, style: h3Grey),
-          )
-        ];
-      }
-
-      return pastRejectedProposals!.entries.map(
-        (proposalEntry) => ProposalTile(
-          proposalId: proposalEntry.key,
-          proposal: proposalEntry.value,
-          tally: tallies![proposalEntry.key]!,
-          purposeId: purposeIds![proposalEntry.key]!,
-          params: democracyParams!,
-        ),
-      );
-    }
-
-    Iterable<Widget> pastApprovedProposalList() {
-      if (pastApprovedProposals == null || tallies == null) {
-        return appConfig.isIntegrationTest
-            ? [const SizedBox.shrink()]
-            : [const Center(child: CupertinoActivityIndicator())];
-      }
-
-      if (pastApprovedProposals!.isEmpty) {
-        return [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(l10n.proposalsEmpty, style: h3Grey),
-          )
-        ];
-      }
-
-      return pastApprovedProposals!.entries.map(
-            (proposalEntry) => ProposalTile(
-          proposalId: proposalEntry.key,
-          proposal: proposalEntry.value,
-          tally: tallies![proposalEntry.key]!,
-          purposeId: purposeIds![proposalEntry.key]!,
-          params: democracyParams!,
-        ),
-      );
-    }
-
-
     List<Widget> listViewWidgets() {
       final widgets = <Widget>[
         Text(l10n.proposalsUpForVote, style: titleLargeBlue),
-        ...activeProposalList(),
+        ...proposalTilesOrEmptyWidget(context, activeProposals),
         Text(l10n.proposalsPast, style: titleLargeBlue),
         Text(l10n.proposalApproved, style: titleMediumBlue),
-        ...pastApprovedProposalList(),
+        ...proposalTilesOrEmptyWidget(context, pastApprovedProposals),
         Text(l10n.proposalRejected, style: titleMediumBlue),
-        ...pastRejectedProposalList()
+        ...proposalTilesOrEmptyWidget(context, pastRejectedProposals),
       ];
 
       return widgets;
@@ -243,6 +156,37 @@ class _DemocracyPageState extends State<DemocracyPage> {
             const SizedBox(height: 10),
           ],
         ),
+      ),
+    );
+  }
+
+  Iterable<Widget> proposalTilesOrEmptyWidget(BuildContext context, Map<BigInt, Proposal>? proposals) {
+    final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
+    final appConfig = RepositoryProvider.of<AppConfig>(context);
+    final l10n = context.l10n;
+
+    if (proposals == null || tallies == null) {
+      return appConfig.isIntegrationTest
+          ? [const SizedBox.shrink()]
+          : [const Center(child: CupertinoActivityIndicator())];
+    }
+
+    if (proposals.isEmpty) {
+      return [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(l10n.proposalsEmpty, style: h3Grey),
+        )
+      ];
+    }
+
+    return proposals.entries.map(
+          (proposalEntry) => ProposalTile(
+        proposalId: proposalEntry.key,
+        proposal: proposalEntry.value,
+        tally: tallies![proposalEntry.key]!,
+        purposeId: purposeIds![proposalEntry.key]!,
+        params: democracyParams!,
       ),
     );
   }
