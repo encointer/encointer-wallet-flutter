@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/widgets/proposal_tile.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
@@ -14,10 +13,7 @@ import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
-import 'package:ew_polkadart/encointer_types.dart' as et;
-
-import 'package:ew_polkadart/ew_polkadart.dart'
-    show Approved, Confirming, Enacted, Ongoing, Proposal, Tally, Rejected, SupersededBy;
+import 'package:ew_polkadart/ew_polkadart.dart' show Proposal, Tally;
 
 class DemocracyPage extends StatefulWidget {
   const DemocracyPage({super.key});
@@ -29,10 +25,15 @@ class DemocracyPage extends StatefulWidget {
 }
 
 class _DemocracyPageState extends State<DemocracyPage> {
-  Map<BigInt, Proposal>? proposals;
+  Map<BigInt, Proposal>? activeProposals;
+  Map<BigInt, Proposal>? pastApprovedProposals;
+  Map<BigInt, Proposal>? pastRejectedProposals;
   Map<BigInt, Tally>? tallies;
   Map<BigInt, BigInt>? purposeIds;
   DemocracyParams? democracyParams;
+
+  static const pruneApprovedProposalsDays = 150;
+  static const pruneRejectedProposalsDays = 10;
 
   @override
   void initState() {
@@ -41,6 +42,14 @@ class _DemocracyPageState extends State<DemocracyPage> {
   }
 
   Future<void> _init() async {
+    democracyParams = webApi.encointer.democracyParams();
+
+    await updateProposals(context);
+  }
+
+  Future<void> updateProposals(BuildContext context) async {
+    final store = context.read<AppStore>();
+
     final maybeProposalIds = await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
 
     final allProposals = await webApi.encointer.getProposals(maybeProposalIds);
@@ -50,9 +59,18 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final proposalIds = maybeProposalIds.where(allProposals.containsKey).toList();
     final allTallies = await webApi.encointer.getTallies(proposalIds);
     final allPurposeIds = await webApi.encointer.getProposalPurposeIds(proposalIds);
-    democracyParams = webApi.encointer.democracyParams();
 
-    proposals = allProposals;
+    final chosenCidOrGlobalProposals = proposalsForCommunityOrGlobal(allProposals, store.encointer.chosenCid!);
+    final activeAndPast = partition(chosenCidOrGlobalProposals, (p) => p.value.isActive());
+    final approvedAndRejected = partition(activeAndPast[1], (p) => p.value.hasPassed());
+
+    activeProposals = Map.fromEntries(activeAndPast[0]);
+
+    pastApprovedProposals = Map.fromEntries(approvedAndRejected[0]
+        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneApprovedProposalsDays))));
+    pastRejectedProposals = Map.fromEntries(approvedAndRejected[1]
+        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneRejectedProposalsDays))));
+
     tallies = allTallies;
     purposeIds = allPurposeIds;
 
@@ -64,99 +82,23 @@ class _DemocracyPageState extends State<DemocracyPage> {
     super.dispose();
   }
 
-  Iterable<MapEntry<BigInt, Proposal>> proposalsForCommunity(CommunityIdentifier cid) {
-    return proposals!.entries.where((e) {
-      final maybeCid = getCommunityIdentifierFromProposal(e.value.action);
-      return maybeCid == null || maybeCid == et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
     final titleLargeBlue = context.titleLarge.copyWith(color: context.colorScheme.primary);
-    final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
-    final appConfig = RepositoryProvider.of<AppConfig>(context);
+    final titleMediumBlue = context.titleMedium.copyWith(color: context.colorScheme.primary);
 
     // Not an ideal practice, see #1702
-    Iterable<Widget> activeProposalList() {
-      if (proposals == null || tallies == null) {
-        return appConfig.isIntegrationTest
-            ? const [SizedBox.shrink()]
-            : const [Center(child: CupertinoActivityIndicator())];
-      }
-
-      final chosenCid = store.encointer.chosenCid!;
-      final activeProposals = proposalsForCommunity(chosenCid)
-          .where((e) => e.value.state.runtimeType == Ongoing || e.value.state.runtimeType == Confirming)
-          .toList();
-
-      if (activeProposals.isEmpty) {
-        return [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(l10n.proposalsEmpty, style: h3Grey),
-          )
-        ];
-      }
-
-      return activeProposals
-          .map(
-            (proposalEntry) => ProposalTile(
-              proposalId: proposalEntry.key,
-              proposal: proposalEntry.value,
-              tally: tallies![proposalEntry.key]!,
-              purposeId: purposeIds![proposalEntry.key]!,
-              params: democracyParams!,
-            ),
-          )
-          .toList();
-    }
-
-    // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
-    Iterable<Widget> pastProposalList() {
-      if (proposals == null || tallies == null) {
-        return appConfig.isIntegrationTest
-            ? [const SizedBox.shrink()]
-            : [const Center(child: CupertinoActivityIndicator())];
-      }
-
-      final chosenCid = store.encointer.chosenCid!;
-      final pastProposals = proposalsForCommunity(chosenCid)
-          .where((e) =>
-              e.value.state.runtimeType == Rejected ||
-              e.value.state.runtimeType == SupersededBy ||
-              e.value.state.runtimeType == Enacted ||
-              e.value.state.runtimeType == Approved)
-          .toList();
-
-      if (pastProposals.isEmpty) {
-        return [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(l10n.proposalsEmpty, style: h3Grey),
-          )
-        ];
-      }
-
-      return pastProposals.map(
-        (proposalEntry) => ProposalTile(
-          proposalId: proposalEntry.key,
-          proposal: proposalEntry.value,
-          tally: tallies![proposalEntry.key]!,
-          purposeId: purposeIds![proposalEntry.key]!,
-          params: democracyParams!,
-        ),
-      );
-    }
-
     List<Widget> listViewWidgets() {
       final widgets = <Widget>[
         Text(l10n.proposalsUpForVote, style: titleLargeBlue),
-        ...activeProposalList(),
+        ...proposalTilesOrEmptyWidget(context, activeProposals),
         Text(l10n.proposalsPast, style: titleLargeBlue),
-        ...pastProposalList()
+        Text(l10n.proposalApproved, style: titleMediumBlue),
+        ...proposalTilesOrEmptyWidget(context, pastApprovedProposals),
+        Text(l10n.proposalRejected, style: titleMediumBlue),
+        ...proposalTilesOrEmptyWidget(context, pastRejectedProposals),
       ];
 
       return widgets;
@@ -210,6 +152,37 @@ class _DemocracyPageState extends State<DemocracyPage> {
             const SizedBox(height: 10),
           ],
         ),
+      ),
+    );
+  }
+
+  Iterable<Widget> proposalTilesOrEmptyWidget(BuildContext context, Map<BigInt, Proposal>? proposals) {
+    final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
+    final appConfig = RepositoryProvider.of<AppConfig>(context);
+    final l10n = context.l10n;
+
+    if (proposals == null || tallies == null) {
+      return appConfig.isIntegrationTest
+          ? [const SizedBox.shrink()]
+          : [const Center(child: CupertinoActivityIndicator())];
+    }
+
+    if (proposals.isEmpty) {
+      return [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(l10n.proposalsEmpty, style: h3Grey),
+        )
+      ];
+    }
+
+    return proposals.entries.map(
+      (proposalEntry) => ProposalTile(
+        proposalId: proposalEntry.key,
+        proposal: proposalEntry.value,
+        tally: tallies![proposalEntry.key]!,
+        purposeId: purposeIds![proposalEntry.key]!,
+        params: democracyParams!,
       ),
     );
   }
