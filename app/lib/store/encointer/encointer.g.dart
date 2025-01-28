@@ -125,6 +125,12 @@ mixin _$EncointerStore on _EncointerStore, Store {
   SvgPicture get communityIconOrDefault => (_$communityIconOrDefaultComputed ??=
           Computed<SvgPicture>(() => super.communityIconOrDefault, name: '_EncointerStore.communityIconOrDefault'))
       .value;
+  Computed<int?>? _$proposalEnactmentDateComputed;
+
+  @override
+  int? get proposalEnactmentDate => (_$proposalEnactmentDateComputed ??=
+          Computed<int?>(() => super.proposalEnactmentDate, name: '_EncointerStore.proposalEnactmentDate'))
+      .value;
   Computed<int?>? _$assigningPhaseStartComputed;
 
   @override
@@ -455,6 +461,7 @@ account: ${account},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
 communityIconOrDefault: ${communityIconOrDefault},
+proposalEnactmentDate: ${proposalEnactmentDate},
 assigningPhaseStart: ${assigningPhaseStart},
 attestingPhaseStart: ${attestingPhaseStart},
 nextRegisteringPhaseStart: ${nextRegisteringPhaseStart},
