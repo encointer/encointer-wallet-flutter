@@ -17,7 +17,7 @@ import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show Approved, Confirming, Enacted, Ongoing, Proposal, Tally, Rejected, SupersededBy;
+    show Proposal, Tally;
 
 class DemocracyPage extends StatefulWidget {
   const DemocracyPage({super.key});
@@ -103,11 +103,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
             : const [Center(child: CupertinoActivityIndicator())];
       }
 
-      // final chosenCid = store.encointer.chosenCid!;
-      // final activeProposals = proposalsForCommunity(chosenCid)
-      //     .where((e) => e.value.state.runtimeType == Ongoing || e.value.state.runtimeType == Confirming)
-      //     .toList();
-
       if (activeProposals!.isEmpty) {
         return [
           Padding(
@@ -138,15 +133,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
             : [const Center(child: CupertinoActivityIndicator())];
       }
 
-      // final chosenCid = store.encointer.chosenCid!;
-      // final pastProposals = proposalsForCommunity(chosenCid)
-      //     .where((e) =>
-      //         e.value.state.runtimeType == Rejected ||
-      //         e.value.state.runtimeType == SupersededBy ||
-      //         e.value.state.runtimeType == Enacted ||
-      //         e.value.state.runtimeType == Approved)
-      //     .toList();
-
       if (pastRejectedProposals!.isEmpty) {
         return [
           Padding(
@@ -173,15 +159,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
             ? [const SizedBox.shrink()]
             : [const Center(child: CupertinoActivityIndicator())];
       }
-
-      // final chosenCid = store.encointer.chosenCid!;
-      // final pastProposals = proposalsForCommunity(chosenCid)
-      //     .where((e) =>
-      //         e.value.state.runtimeType == Rejected ||
-      //         e.value.state.runtimeType == SupersededBy ||
-      //         e.value.state.runtimeType == Enacted ||
-      //         e.value.state.runtimeType == Approved)
-      //     .toList();
 
       if (pastApprovedProposals!.isEmpty) {
         return [
