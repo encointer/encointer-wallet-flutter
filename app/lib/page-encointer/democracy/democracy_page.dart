@@ -13,8 +13,7 @@ import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 
-import 'package:ew_polkadart/ew_polkadart.dart'
-    show Proposal, Tally;
+import 'package:ew_polkadart/ew_polkadart.dart' show Proposal, Tally;
 
 class DemocracyPage extends StatefulWidget {
   const DemocracyPage({super.key});
@@ -32,6 +31,9 @@ class _DemocracyPageState extends State<DemocracyPage> {
   Map<BigInt, Tally>? tallies;
   Map<BigInt, BigInt>? purposeIds;
   DemocracyParams? democracyParams;
+
+  static const pruneApprovedProposalsDays = 150;
+  static const pruneRejectedProposalsDays = 10;
 
   @override
   void initState() {
@@ -63,8 +65,11 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final approvedAndRejected = partition(activeAndPast[1], (p) => p.value.hasPassed());
 
     activeProposals = Map.fromEntries(activeAndPast[0]);
-    pastApprovedProposals = Map.fromEntries(approvedAndRejected[0]);
-    pastRejectedProposals = Map.fromEntries(approvedAndRejected[1]);
+
+    pastApprovedProposals = Map.fromEntries(approvedAndRejected[0]
+        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneApprovedProposalsDays))));
+    pastRejectedProposals = Map.fromEntries(approvedAndRejected[1]
+        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneRejectedProposalsDays))));
 
     tallies = allTallies;
     purposeIds = allPurposeIds;
@@ -172,7 +177,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
     }
 
     return proposals.entries.map(
-          (proposalEntry) => ProposalTile(
+      (proposalEntry) => ProposalTile(
         proposalId: proposalEntry.key,
         proposal: proposalEntry.value,
         tally: tallies![proposalEntry.key]!,

@@ -15,7 +15,23 @@ import 'package:provider/provider.dart';
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show AddLocation, Approved, Confirming, Enacted, Ongoing, Petition, Proposal, ProposalAction, Rejected, RemoveLocation, SetInactivityTimeout, SpendNative, SupersededBy, Tally, UpdateDemurrage, UpdateNominalIncome;
+    show
+        AddLocation,
+        Approved,
+        Confirming,
+        Enacted,
+        Ongoing,
+        Petition,
+        Proposal,
+        ProposalAction,
+        Rejected,
+        RemoveLocation,
+        SetInactivityTimeout,
+        SpendNative,
+        SupersededBy,
+        Tally,
+        UpdateDemurrage,
+        UpdateNominalIncome;
 
 /// Gets the localized proposal action title.
 ///
@@ -165,7 +181,8 @@ List<List<T>> partition<T>(Iterable<T> items, bool Function(T) predicate) {
   return [trueList, falseList];
 }
 
-Iterable<MapEntry<BigInt, Proposal>> proposalsForCommunityOrGlobal(Map<BigInt, Proposal> proposals, CommunityIdentifier cid) {
+Iterable<MapEntry<BigInt, Proposal>> proposalsForCommunityOrGlobal(
+    Map<BigInt, Proposal> proposals, CommunityIdentifier cid) {
   return proposals.entries.where((e) {
     final maybeCid = getCommunityIdentifierFromProposal(e.value.action);
     return maybeCid == null || maybeCid == et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest);
@@ -173,22 +190,24 @@ Iterable<MapEntry<BigInt, Proposal>> proposalsForCommunityOrGlobal(Map<BigInt, P
 }
 
 extension ProposalExt on Proposal {
+  bool isActive() {
+    return state.runtimeType == Ongoing || state.runtimeType == Confirming;
+  }
 
-    bool isActive() {
-      return state.runtimeType == Ongoing || state.runtimeType == Confirming;
-    }
+  bool isPast() {
+    // Approved, Enacted, Superseded, Rejected
+    return !isActive();
+  }
 
-    bool isPast() {
-      // Approved, Enacted, Superseded, Rejected
-      return !isActive();
-    }
+  bool hasPassed() {
+    return state.runtimeType == Approved || state.runtimeType == Enacted;
+  }
 
-    bool hasPassed() {
-      return state.runtimeType == Approved || state.runtimeType == Enacted;
-    }
+  bool supersededOrRejected() {
+    return state.runtimeType == SupersededBy || state.runtimeType == Rejected;
+  }
 
-    bool supersededOrRejected() {
-      return state.runtimeType == SupersededBy || state.runtimeType == Rejected;
-
-    }
+  bool isMoreRecentThan(Duration duration) {
+    return DateTime.now().subtract(duration).isBefore(DateTime.fromMillisecondsSinceEpoch(start.toInt()));
+  }
 }
