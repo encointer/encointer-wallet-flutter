@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
 import 'package:encointer_wallet/page-encointer/democracy/widgets/proposal_tile.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
@@ -13,8 +12,6 @@ import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/utils/repository_provider.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
-
-import 'package:ew_polkadart/encointer_types.dart' as et;
 
 import 'package:ew_polkadart/ew_polkadart.dart'
     show Proposal, Tally;
@@ -43,6 +40,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
   }
 
   Future<void> _init() async {
+    democracyParams = webApi.encointer.democracyParams();
+
     await updateProposals(context);
   }
 
@@ -58,9 +57,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final proposalIds = maybeProposalIds.where(allProposals.containsKey).toList();
     final allTallies = await webApi.encointer.getTallies(proposalIds);
     final allPurposeIds = await webApi.encointer.getProposalPurposeIds(proposalIds);
-    democracyParams = webApi.encointer.democracyParams();
 
-    final chosenCidOrGlobalProposals = proposalsForCommunity(allProposals, store.encointer.chosenCid!);
+    final chosenCidOrGlobalProposals = proposalsForCommunityOrGlobal(allProposals, store.encointer.chosenCid!);
     final activeAndPast = partition(chosenCidOrGlobalProposals, (p) => p.value.isActive());
     final approvedAndRejected = partition(activeAndPast[1], (p) => p.value.hasPassed());
 
@@ -77,13 +75,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
   @override
   void dispose() {
     super.dispose();
-  }
-
-  Iterable<MapEntry<BigInt, Proposal>> proposalsForCommunity(Map<BigInt, Proposal> proposals, CommunityIdentifier cid) {
-    return proposals.entries.where((e) {
-      final maybeCid = getCommunityIdentifierFromProposal(e.value.action);
-      return maybeCid == null || maybeCid == et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest);
-    });
   }
 
   @override

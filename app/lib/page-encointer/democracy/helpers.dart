@@ -165,6 +165,13 @@ List<List<T>> partition<T>(Iterable<T> items, bool Function(T) predicate) {
   return [trueList, falseList];
 }
 
+Iterable<MapEntry<BigInt, Proposal>> proposalsForCommunityOrGlobal(Map<BigInt, Proposal> proposals, CommunityIdentifier cid) {
+  return proposals.entries.where((e) {
+    final maybeCid = getCommunityIdentifierFromProposal(e.value.action);
+    return maybeCid == null || maybeCid == et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest);
+  });
+}
+
 extension ProposalExt on Proposal {
 
     bool isActive() {
