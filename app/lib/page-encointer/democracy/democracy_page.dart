@@ -29,7 +29,9 @@ class DemocracyPage extends StatefulWidget {
 }
 
 class _DemocracyPageState extends State<DemocracyPage> {
-  Map<BigInt, Proposal>? proposals;
+  Map<BigInt, Proposal>? activeProposals;
+  Map<BigInt, Proposal>? pastApprovedProposals;
+  Map<BigInt, Proposal>? pastRejectedProposals;
   Map<BigInt, Tally>? tallies;
   Map<BigInt, BigInt>? purposeIds;
   DemocracyParams? democracyParams;
@@ -41,6 +43,12 @@ class _DemocracyPageState extends State<DemocracyPage> {
   }
 
   Future<void> _init() async {
+    await updateProposals(context);
+  }
+
+  Future<void> updateProposals(BuildContext context) async {
+    final store = context.read<AppStore>();
+
     final maybeProposalIds = await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
 
     final allProposals = await webApi.encointer.getProposals(maybeProposalIds);
@@ -52,7 +60,14 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final allPurposeIds = await webApi.encointer.getProposalPurposeIds(proposalIds);
     democracyParams = webApi.encointer.democracyParams();
 
-    proposals = allProposals;
+    final chosenCidOrGlobalProposals = proposalsForCommunity(allProposals, store.encointer.chosenCid!);
+    final activeAndPast = partition(chosenCidOrGlobalProposals, (p) => p.value.isActive());
+    final approvedAndRejected = partition(activeAndPast[1], (p) => p.value.hasPassed());
+
+    activeProposals = Map.fromEntries(activeAndPast[0]);
+    pastApprovedProposals = Map.fromEntries(approvedAndRejected[0]);
+    pastRejectedProposals = Map.fromEntries(approvedAndRejected[1]);
+
     tallies = allTallies;
     purposeIds = allPurposeIds;
 
@@ -64,8 +79,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
     super.dispose();
   }
 
-  Iterable<MapEntry<BigInt, Proposal>> proposalsForCommunity(CommunityIdentifier cid) {
-    return proposals!.entries.where((e) {
+  Iterable<MapEntry<BigInt, Proposal>> proposalsForCommunity(Map<BigInt, Proposal> proposals, CommunityIdentifier cid) {
+    return proposals.entries.where((e) {
       final maybeCid = getCommunityIdentifierFromProposal(e.value.action);
       return maybeCid == null || maybeCid == et.CommunityIdentifier(geohash: cid.geohash, digest: cid.digest);
     });
@@ -76,23 +91,24 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
     final titleLargeBlue = context.titleLarge.copyWith(color: context.colorScheme.primary);
+    final titleMediumBlue = context.titleMedium.copyWith(color: context.colorScheme.primary);
     final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
     final appConfig = RepositoryProvider.of<AppConfig>(context);
 
     // Not an ideal practice, see #1702
     Iterable<Widget> activeProposalList() {
-      if (proposals == null || tallies == null) {
+      if (activeProposals == null || tallies == null) {
         return appConfig.isIntegrationTest
             ? const [SizedBox.shrink()]
             : const [Center(child: CupertinoActivityIndicator())];
       }
 
-      final chosenCid = store.encointer.chosenCid!;
-      final activeProposals = proposalsForCommunity(chosenCid)
-          .where((e) => e.value.state.runtimeType == Ongoing || e.value.state.runtimeType == Confirming)
-          .toList();
+      // final chosenCid = store.encointer.chosenCid!;
+      // final activeProposals = proposalsForCommunity(chosenCid)
+      //     .where((e) => e.value.state.runtimeType == Ongoing || e.value.state.runtimeType == Confirming)
+      //     .toList();
 
-      if (activeProposals.isEmpty) {
+      if (activeProposals!.isEmpty) {
         return [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -101,7 +117,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
         ];
       }
 
-      return activeProposals
+      return activeProposals!.entries
           .map(
             (proposalEntry) => ProposalTile(
               proposalId: proposalEntry.key,
@@ -115,23 +131,23 @@ class _DemocracyPageState extends State<DemocracyPage> {
     }
 
     // Not an ideal practice, but we only release a dev-version of the faucet, and cleanup can be later.
-    Iterable<Widget> pastProposalList() {
-      if (proposals == null || tallies == null) {
+    Iterable<Widget> pastRejectedProposalList() {
+      if (pastRejectedProposals == null || tallies == null) {
         return appConfig.isIntegrationTest
             ? [const SizedBox.shrink()]
             : [const Center(child: CupertinoActivityIndicator())];
       }
 
-      final chosenCid = store.encointer.chosenCid!;
-      final pastProposals = proposalsForCommunity(chosenCid)
-          .where((e) =>
-              e.value.state.runtimeType == Rejected ||
-              e.value.state.runtimeType == SupersededBy ||
-              e.value.state.runtimeType == Enacted ||
-              e.value.state.runtimeType == Approved)
-          .toList();
+      // final chosenCid = store.encointer.chosenCid!;
+      // final pastProposals = proposalsForCommunity(chosenCid)
+      //     .where((e) =>
+      //         e.value.state.runtimeType == Rejected ||
+      //         e.value.state.runtimeType == SupersededBy ||
+      //         e.value.state.runtimeType == Enacted ||
+      //         e.value.state.runtimeType == Approved)
+      //     .toList();
 
-      if (pastProposals.isEmpty) {
+      if (pastRejectedProposals!.isEmpty) {
         return [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -140,7 +156,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
         ];
       }
 
-      return pastProposals.map(
+      return pastRejectedProposals!.entries.map(
         (proposalEntry) => ProposalTile(
           proposalId: proposalEntry.key,
           proposal: proposalEntry.value,
@@ -151,12 +167,52 @@ class _DemocracyPageState extends State<DemocracyPage> {
       );
     }
 
+    Iterable<Widget> pastApprovedProposalList() {
+      if (pastApprovedProposals == null || tallies == null) {
+        return appConfig.isIntegrationTest
+            ? [const SizedBox.shrink()]
+            : [const Center(child: CupertinoActivityIndicator())];
+      }
+
+      // final chosenCid = store.encointer.chosenCid!;
+      // final pastProposals = proposalsForCommunity(chosenCid)
+      //     .where((e) =>
+      //         e.value.state.runtimeType == Rejected ||
+      //         e.value.state.runtimeType == SupersededBy ||
+      //         e.value.state.runtimeType == Enacted ||
+      //         e.value.state.runtimeType == Approved)
+      //     .toList();
+
+      if (pastApprovedProposals!.isEmpty) {
+        return [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(l10n.proposalsEmpty, style: h3Grey),
+          )
+        ];
+      }
+
+      return pastApprovedProposals!.entries.map(
+            (proposalEntry) => ProposalTile(
+          proposalId: proposalEntry.key,
+          proposal: proposalEntry.value,
+          tally: tallies![proposalEntry.key]!,
+          purposeId: purposeIds![proposalEntry.key]!,
+          params: democracyParams!,
+        ),
+      );
+    }
+
+
     List<Widget> listViewWidgets() {
       final widgets = <Widget>[
         Text(l10n.proposalsUpForVote, style: titleLargeBlue),
         ...activeProposalList(),
         Text(l10n.proposalsPast, style: titleLargeBlue),
-        ...pastProposalList()
+        Text(l10n.proposalApproved, style: titleMediumBlue),
+        ...pastApprovedProposalList(),
+        Text(l10n.proposalRejected, style: titleMediumBlue),
+        ...pastRejectedProposalList()
       ];
 
       return widgets;

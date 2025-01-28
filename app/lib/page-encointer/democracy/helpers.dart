@@ -15,17 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:ew_polkadart/encointer_types.dart' as et;
 
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show
-        AddLocation,
-        Petition,
-        Proposal,
-        ProposalAction,
-        RemoveLocation,
-        SetInactivityTimeout,
-        SpendNative,
-        Tally,
-        UpdateDemurrage,
-        UpdateNominalIncome;
+    show AddLocation, Approved, Confirming, Enacted, Ongoing, Petition, Proposal, ProposalAction, Rejected, RemoveLocation, SetInactivityTimeout, SpendNative, SupersededBy, Tally, UpdateDemurrage, UpdateNominalIncome;
 
 /// Gets the localized proposal action title.
 ///
@@ -154,4 +144,44 @@ bool positiveTurnoutBias(int electorate, int turnout, int ayes) {
 double approvalThreshold(int electorate, int turnout) {
   if (electorate == 0 || turnout == 0) return 0;
   return 1 / (1 + sqrt(turnout / electorate));
+}
+
+/// Function to partition a list into two lists based on a predicate
+///
+/// The first value of the result are the items for which the predicate
+/// returned true.
+List<List<T>> partition<T>(Iterable<T> items, bool Function(T) predicate) {
+  final trueList = <T>[];
+  final falseList = <T>[];
+
+  for (final item in items) {
+    if (predicate(item)) {
+      trueList.add(item);
+    } else {
+      falseList.add(item);
+    }
+  }
+
+  return [trueList, falseList];
+}
+
+extension ProposalExt on Proposal {
+
+    bool isActive() {
+      return state.runtimeType == Ongoing || state.runtimeType == Confirming;
+    }
+
+    bool isPast() {
+      // Approved, Enacted, Superseded, Rejected
+      return !isActive();
+    }
+
+    bool hasPassed() {
+      return state.runtimeType == Approved || state.runtimeType == Enacted;
+    }
+
+    bool supersededOrRejected() {
+      return state.runtimeType == SupersededBy || state.runtimeType == Rejected;
+
+    }
 }
