@@ -112,8 +112,8 @@ class _ProposalTileState extends State<ProposalTile> {
     }
 
     if (proposal.state.runtimeType == Approved) {
-      final assigningStart = context.read<AppStore>().encointer.proposalEnactmentDate!;
-      final date = DateTime.fromMillisecondsSinceEpoch(assigningStart);
+      final enactmentDate = context.read<AppStore>().encointer.proposalEnactmentDate!;
+      final date = DateTime.fromMillisecondsSinceEpoch(enactmentDate);
       return Text('${l10n.proposalPendingEnactmentAt} ${mMMEdHm(date, locale)}');
     }
 
