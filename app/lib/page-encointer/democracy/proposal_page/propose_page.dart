@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
@@ -515,7 +517,7 @@ class _ProposePageState extends State<ProposePage> {
         return SpendNative(
           maybeCid,
           hex.decode(ben.replaceFirst('0x', '')),
-          BigInt.from(amount),
+          BigInt.from(amount * pow(10, 12)),
         );
 
       case ProposalActionIdentifier.issueSwapNativeOption:
