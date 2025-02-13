@@ -146,8 +146,7 @@ class _ProposePageState extends State<ProposePage> {
         return latitudeLongitudeInput();
 
       case ProposalActionIdentifier.updateDemurrage:
-        return TextFormField(
-            controller: demurrageController, decoration: const InputDecoration(labelText: 'Demurrage (%)'));
+        return demurrageInput();
 
       case ProposalActionIdentifier.updateNominalIncome:
         return TextFormField(
@@ -177,6 +176,32 @@ class _ProposePageState extends State<ProposePage> {
           const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
         ]);
     }
+  }
+
+  /// Demurrage text form allowing numbers between 0 and 100 % per month.
+  Widget demurrageInput() {
+      return
+        TextFormField(
+          controller: demurrageController,
+          decoration: const InputDecoration(labelText: 'Demurrage (%/month)'),
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')), // Only numbers & decimal
+          ],
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Enter a demurrage percentage';
+            }
+            final demurrage = double.tryParse(value);
+            if (demurrage == null) {
+              return 'Enter a valid number';
+            }
+            if (demurrage < 0 || demurrage > 100) {
+              return 'Demurrage must be between 0 and 100';
+            }
+            return null;
+          },
+        );
   }
 
   Widget latitudeLongitudeInput() {
