@@ -1,4 +1,7 @@
+import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:encointer_wallet/store/app.dart';
@@ -7,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
@@ -43,11 +47,17 @@ class _ProposePageState extends State<ProposePage> {
   String? demurrageError;
   String? nominalIncomeError;
   String? inactivityTimeoutError;
+  String? amountError;
+
+  // Beneficiary in for the spendNative/issueSwapNativeOption
+  AccountData? beneficiary;
 
   @override
   void initState() {
     super.initState();
     _updateAllowedScopes();
+
+    beneficiary = context.read<AppStore>().account.currentAccount;
   }
 
   /// Updates the allowed scope options and resets the selectedScope
@@ -127,7 +137,7 @@ class _ProposePageState extends State<ProposePage> {
                 const SizedBox(height: 10),
 
                 // Dynamic Fields Based on Selected Proposal Action
-                _buildDynamicFields(),
+                _buildDynamicFields(context),
 
                 // Submit Button
                 const SizedBox(height: 20),
@@ -136,8 +146,7 @@ class _ProposePageState extends State<ProposePage> {
                     _formKey.currentState!.validate();
                     _submitProposal();
                   },
-                  child: const Text('Submit Proposal'
-                  ),
+                  child: const Text('Submit Proposal'),
                 ),
               ],
             ),
@@ -148,7 +157,7 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   /// Dynamically generates form fields based on selected proposal type
-  Widget _buildDynamicFields() {
+  Widget _buildDynamicFields(BuildContext context) {
     switch (selectedAction) {
       case ProposalActionIdentifier.addLocation:
         return latitudeLongitudeInput();
@@ -167,10 +176,7 @@ class _ProposePageState extends State<ProposePage> {
             controller: petitionTextController, decoration: const InputDecoration(labelText: 'Petition Text'));
 
       case ProposalActionIdentifier.spendNative:
-        return Column(children: [
-          TextFormField(controller: amountController, decoration: const InputDecoration(labelText: 'Amount')),
-          // Implement dropdown for beneficiary selection (contacts and own accounts)
-        ]);
+        return spendNativeInput(context);
 
       case ProposalActionIdentifier.issueSwapNativeOption:
         return Column(children: [
@@ -183,70 +189,107 @@ class _ProposePageState extends State<ProposePage> {
     }
   }
 
-  /// Inactivity timeout text form allowing positive integers.
-  Widget inactivityTimeoutInput() {
-    return
+  Widget spendNativeInput(BuildContext context) {
+    final store = context.read<AppStore>();
+    final l10n = context.l10n;
+
+    return Column(children: [
       TextFormField(
-        controller: inactivityTimeoutController,
+        controller: amountController,
         decoration: InputDecoration(
-          labelText: 'Inactivity Timeout (cycles)',
-          errorText: inactivityTimeoutError,
+          labelText: 'Amount',
+          errorText: amountError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')), // Only numbers & decimal
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+          // Only numbers & decimal
         ],
-        validator: validateInactivityTimeout,
+        validator: validatePositiveNumber,
         onChanged: (value) {
           setState(() {
-            inactivityTimeoutError = validateInactivityTimeout(value);
+            amountError = validatePositiveNumber(value);
           });
         },
-      );
+      ),
+      AddressInputField(
+        store,
+        label: l10n.address,
+        initialValue: beneficiary,
+        onChanged: (AccountData acc) {
+          setState(() {
+            beneficiary = acc;
+          });
+        },
+        hideIdenticon: true,
+      ),
+    ]);
+  }
+
+  /// Inactivity timeout text form allowing positive integers.
+  Widget inactivityTimeoutInput() {
+    return TextFormField(
+      controller: inactivityTimeoutController,
+      decoration: InputDecoration(
+        labelText: 'Inactivity Timeout (cycles)',
+        errorText: inactivityTimeoutError,
+      ),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+        // Only numbers & decimal
+      ],
+      validator: validateInactivityTimeout,
+      onChanged: (value) {
+        setState(() {
+          inactivityTimeoutError = validateInactivityTimeout(value);
+        });
+      },
+    );
   }
 
   /// Nominal income text form allowing positive integers.
   Widget nominalIncomeInput() {
-    return
-      TextFormField(
-        controller: nominalIncomeController,
-        decoration: InputDecoration(
-            labelText: 'Nominal Income',
-            errorText: nominalIncomeError,
-        ),
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')), // Only numbers & decimal
-        ],
-        validator: validateNominalIncome,
-        onChanged: (value) {
-          setState(() {
-            nominalIncomeError = validateNominalIncome(value);
-          });
-        },
-      );
+    return TextFormField(
+      controller: nominalIncomeController,
+      decoration: InputDecoration(
+        labelText: 'Nominal Income',
+        errorText: nominalIncomeError,
+      ),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+        // Only numbers & decimal
+      ],
+      validator: validatePositiveNumber,
+      onChanged: (value) {
+        setState(() {
+          nominalIncomeError = validatePositiveNumber(value);
+        });
+      },
+    );
   }
 
   /// Demurrage text form allowing numbers between 0 and 100 % per month.
   Widget demurrageInput() {
-      return
-        TextFormField(
-          controller: demurrageController,
-          decoration: InputDecoration(
-              labelText: 'Demurrage (%/month)',
-              errorText: demurrageError,
-          ),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')), // Only numbers & decimal
-          ],
-          validator: validateDemurrage,
-          onChanged: (value) {
-            setState(() {
-              demurrageError = validateDemurrage(value);
-            });
-          },
-        );
+    return TextFormField(
+      controller: demurrageController,
+      decoration: InputDecoration(
+        labelText: 'Demurrage (%/month)',
+        errorText: demurrageError,
+      ),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+        // Only numbers & decimal
+      ],
+      validator: validateDemurrage,
+      onChanged: (value) {
+        setState(() {
+          demurrageError = validateDemurrage(value);
+        });
+      },
+    );
   }
 
   Widget latitudeLongitudeInput() {
@@ -254,12 +297,13 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: latController,
         decoration: InputDecoration(
-            labelText: 'Latitude',
-            errorText: latError,
+          labelText: 'Latitude',
+          errorText: latError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')), // Allows negative, decimals, and numbers
+          FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')),
+          // Allows negative, decimals, and numbers
         ],
         validator: validateLatitude,
         onChanged: (value) {
@@ -271,8 +315,8 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: lonController,
         decoration: InputDecoration(
-            labelText: 'Longitude',
-            errorText: lonError,
+          labelText: 'Longitude',
+          errorText: lonError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
@@ -290,55 +334,54 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Validates Latitude (-90 to 90)
   String? validateLatitude(String? value) {
-      if (value == null || value.isEmpty) {
-        return 'Enter latitude';
+    if (value == null || value.isEmpty) {
+      return 'Enter latitude';
+    } else {
+      final latitude = double.tryParse(value);
+      if (latitude == null || latitude < -90 || latitude > 90) {
+        return 'Latitude must be between -90 and 90';
       } else {
-        final latitude = double.tryParse(value);
-        if (latitude == null || latitude < -90 || latitude > 90) {
-          return 'Latitude must be between -90 and 90';
-        } else {
-          return null;
-        }
+        return null;
       }
+    }
   }
 
   /// Validates Longitude (-180 to 180)
   String? validateLongitude(String? value) {
     if (value == null || value.isEmpty) {
-        return 'Enter longitude';
+      return 'Enter longitude';
+    } else {
+      final longitude = double.tryParse(value);
+      if (longitude == null || longitude < -180 || longitude > 180) {
+        return 'Longitude must be between -180 and 180';
       } else {
-        final longitude = double.tryParse(value);
-        if (longitude == null || longitude < -180 || longitude > 180) {
-          return 'Longitude must be between -180 and 180';
-        } else {
-          return  null;
-        }
+        return null;
       }
+    }
   }
-
 
   /// Validates Demurrage (0 to 100)
   String? validateDemurrage(String? value) {
-      if (value == null || value.isEmpty) {
-        return 'Enter demurrage';
+    if (value == null || value.isEmpty) {
+      return 'Enter demurrage';
+    } else {
+      final demurrage = double.tryParse(value);
+      if (demurrage == null || demurrage < 0 || demurrage > 100) {
+        return 'Demurrage must be between 0 and 100';
       } else {
-        final demurrage = double.tryParse(value);
-        if (demurrage == null || demurrage < 0 || demurrage > 100) {
-          return 'Demurrage must be between 0 and 100';
-        } else {
-          return null;
-        }
+        return null;
       }
+    }
   }
 
-  /// Validates Nominal Income (Only positive integers)
-  String? validateNominalIncome(String? value) {
+  /// Ensures that the number is positive (doubles)
+  String? validatePositiveNumber(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Enter nominal income';
+      return 'Enter positive number';
     } else {
-      final timeout = int.tryParse(value);
-      if (timeout == null || timeout <= 0) {
-        return 'Must be a positive integer';
+      final number = double.tryParse(value);
+      if (number == null || number <= 0) {
+        return 'Must be a positive number';
       } else {
         return null;
       }
