@@ -47,36 +47,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
     await updateProposals(context);
   }
 
-  Future<void> updateProposals(BuildContext context) async {
-    final store = context.read<AppStore>();
-
-    final maybeProposalIds = await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
-
-    final allProposals = await webApi.encointer.getProposals(maybeProposalIds);
-    // Reduce proposalIds to the entries which also exist in allProposals
-    // this is necessary, because migrations may purge incompatible (non-decodable) proposals,
-    // but never the index
-    final proposalIds = maybeProposalIds.where(allProposals.containsKey).toList();
-    final allTallies = await webApi.encointer.getTallies(proposalIds);
-    final allPurposeIds = await webApi.encointer.getProposalPurposeIds(proposalIds);
-
-    final chosenCidOrGlobalProposals = proposalsForCommunityOrGlobal(allProposals, store.encointer.chosenCid!);
-    final activeAndPast = partition(chosenCidOrGlobalProposals, (p) => p.value.isActive());
-    final approvedAndRejected = partition(activeAndPast[1], (p) => p.value.hasPassed());
-
-    activeProposals = Map.fromEntries(activeAndPast[0]);
-
-    pastApprovedProposals = Map.fromEntries(approvedAndRejected[0]
-        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneApprovedProposalsDays))));
-    pastRejectedProposals = Map.fromEntries(approvedAndRejected[1]
-        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneRejectedProposalsDays))));
-
-    tallies = allTallies;
-    purposeIds = allPurposeIds;
-
-    setState(() {});
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -154,6 +124,36 @@ class _DemocracyPageState extends State<DemocracyPage> {
         ),
       ),
     );
+  }
+
+  Future<void> updateProposals(BuildContext context) async {
+    final store = context.read<AppStore>();
+
+    final maybeProposalIds = await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
+
+    final allProposals = await webApi.encointer.getProposals(maybeProposalIds);
+    // Reduce proposalIds to the entries which also exist in allProposals
+    // this is necessary, because migrations may purge incompatible (non-decodable) proposals,
+    // but never the index
+    final proposalIds = maybeProposalIds.where(allProposals.containsKey).toList();
+    final allTallies = await webApi.encointer.getTallies(proposalIds);
+    final allPurposeIds = await webApi.encointer.getProposalPurposeIds(proposalIds);
+
+    final chosenCidOrGlobalProposals = proposalsForCommunityOrGlobal(allProposals, store.encointer.chosenCid!);
+    final activeAndPast = partition(chosenCidOrGlobalProposals, (p) => p.value.isActive());
+    final approvedAndRejected = partition(activeAndPast[1], (p) => p.value.hasPassed());
+
+    activeProposals = Map.fromEntries(activeAndPast[0]);
+
+    pastApprovedProposals = Map.fromEntries(approvedAndRejected[0]
+        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneApprovedProposalsDays))));
+    pastRejectedProposals = Map.fromEntries(approvedAndRejected[1]
+        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneRejectedProposalsDays))));
+
+    tallies = allTallies;
+    purposeIds = allPurposeIds;
+
+    setState(() {});
   }
 
   Iterable<Widget> proposalTilesOrEmptyWidget(BuildContext context, Map<BigInt, Proposal>? proposals) {
