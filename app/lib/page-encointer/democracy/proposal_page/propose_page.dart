@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
+import 'package:flutter/services.dart';
 
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
@@ -17,6 +18,8 @@ class ProposePage extends StatefulWidget {
 }
 
 class _ProposePageState extends State<ProposePage> {
+  final _formKey = GlobalKey<FormState>();
+
   // Default selected values
   ProposalActionIdentifier selectedAction = ProposalActionIdentifier.petition;
   late ProposalScope selectedScope;
@@ -68,61 +71,68 @@ class _ProposePageState extends State<ProposePage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              // Proposal Action Selector
-              DropdownButtonFormField<ProposalActionIdentifier>(
-                value: selectedAction,
-                onChanged: (ProposalActionIdentifier? newValue) {
-                  setState(() {
-                    selectedAction = newValue!;
-                    _updateAllowedScopes();
-                  });
-                },
-                items: ProposalActionIdentifier.values.map((ProposalActionIdentifier action) {
-                  return DropdownMenuItem<ProposalActionIdentifier>(
-                    value: action,
-                    child: Text(action.name), // Converts enum to string
-                  );
-                }).toList(),
-                decoration: const InputDecoration(labelText: 'Proposal Action Identifier'),
-              ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                // Proposal Action Selector
+                DropdownButtonFormField<ProposalActionIdentifier>(
+                  value: selectedAction,
+                  onChanged: (ProposalActionIdentifier? newValue) {
+                    setState(() {
+                      selectedAction = newValue!;
+                      _updateAllowedScopes();
+                    });
+                  },
+                  items: ProposalActionIdentifier.values.map((ProposalActionIdentifier action) {
+                    return DropdownMenuItem<ProposalActionIdentifier>(
+                      value: action,
+                      child: Text(action.name), // Converts enum to string
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(labelText: 'Proposal Action Identifier'),
+                ),
 
-              const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-              // Scope Selector (Dropdown using Enum)
-              DropdownButtonFormField<ProposalScope>(
-                value: selectedScope,
-                onChanged: allowedScopes.length > 1
-                    ? (ProposalScope? newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            selectedScope = newValue;
-                          });
+                // Scope Selector (Dropdown using Enum)
+                DropdownButtonFormField<ProposalScope>(
+                  value: selectedScope,
+                  onChanged: allowedScopes.length > 1
+                      ? (ProposalScope? newValue) {
+                          if (newValue != null) {
+                            setState(() {
+                              selectedScope = newValue;
+                            });
+                          }
                         }
-                      }
-                    : null, // Disable dropdown if only one option
-                items: allowedScopes.map((ProposalScope scope) {
-                  return DropdownMenuItem<ProposalScope>(
-                    value: scope,
-                    child: Text(scope.name),
-                  );
-                }).toList(),
-                decoration: const InputDecoration(labelText: 'Scope'),
-              ),
+                      : null, // Disable dropdown if only one option
+                  items: allowedScopes.map((ProposalScope scope) {
+                    return DropdownMenuItem<ProposalScope>(
+                      value: scope,
+                      child: Text(scope.name),
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(labelText: 'Scope'),
+                ),
 
-              const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-              // Dynamic Fields Based on Selected Proposal Action
-              _buildDynamicFields(),
+                // Dynamic Fields Based on Selected Proposal Action
+                _buildDynamicFields(),
 
-              // Submit Button
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _submitProposal,
-                child: const Text('Submit Proposal'),
-              ),
-            ],
+                // Submit Button
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    _formKey.currentState!.validate();
+                    _submitProposal();
+                  },
+                  child: const Text('Submit Proposal'
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -133,10 +143,7 @@ class _ProposePageState extends State<ProposePage> {
   Widget _buildDynamicFields() {
     switch (selectedAction) {
       case ProposalActionIdentifier.addLocation:
-        return Column(children: [
-          TextFormField(controller: latController, decoration: const InputDecoration(labelText: 'Latitude')),
-          TextFormField(controller: lonController, decoration: const InputDecoration(labelText: 'Longitude')),
-        ]);
+        return latitudeLongitudeInput();
 
       case ProposalActionIdentifier.updateDemurrage:
         return TextFormField(
@@ -170,6 +177,53 @@ class _ProposePageState extends State<ProposePage> {
           const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
         ]);
     }
+  }
+
+  Widget latitudeLongitudeInput() {
+    return Column(children: [
+      TextFormField(
+        controller: latController,
+        decoration: const InputDecoration(labelText: 'Latitude'),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')), // Allows negative, decimals, and numbers
+        ],
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Enter a latitude';
+          }
+          final latitude = double.tryParse(value);
+          if (latitude == null) {
+            return 'Enter a valid number';
+          }
+          if (latitude < -90 || latitude > 90) {
+            return 'Latitude must be between -90 and 90';
+          }
+          return null;
+        },
+      ),
+      TextFormField(
+        controller: lonController,
+        decoration: const InputDecoration(labelText: 'Longitude'),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')),
+        ],
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Enter a longitude';
+          }
+          final longitude = double.tryParse(value);
+          if (longitude == null) {
+            return 'Enter a valid number';
+          }
+          if (longitude < -180 || longitude > 180) {
+            return 'Longitude must be between -180 and 180';
+          }
+          return null;
+        },
+      ),
+    ]);
   }
 
   /// Handles form submission
