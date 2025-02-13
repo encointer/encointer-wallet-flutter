@@ -3,11 +3,6 @@ import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:encointer_wallet/store/app.dart';
-// import 'package:provider/provider.dart';
-
-import 'package:encointer_wallet/theme/theme.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
