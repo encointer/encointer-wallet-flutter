@@ -48,6 +48,8 @@ class _ProposePageState extends State<ProposePage> {
   String? nominalIncomeError;
   String? inactivityTimeoutError;
   String? amountError;
+  String? allowanceError;
+  String? rateError;
 
   // Beneficiary in for the spendNative/issueSwapNativeOption
   AccountData? beneficiary;
@@ -179,14 +181,65 @@ class _ProposePageState extends State<ProposePage> {
         return spendNativeInput(context);
 
       case ProposalActionIdentifier.issueSwapNativeOption:
-        return Column(children: [
-          TextFormField(
-              controller: allowanceController, decoration: const InputDecoration(labelText: 'Allowance (KSM)')),
-          TextFormField(controller: rateController, decoration: const InputDecoration(labelText: 'Rate')),
-          const Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
-          const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
-        ]);
+        return issueSwapNativeOptionInput();
     }
+  }
+
+  Widget issueSwapNativeOptionInput() {
+    final store = context.read<AppStore>();
+    final l10n = context.l10n;
+
+    return Column(children: [
+      AddressInputField(
+        store,
+        label: l10n.address,
+        initialValue: beneficiary,
+        onChanged: (AccountData acc) {
+          setState(() {
+            beneficiary = acc;
+          });
+        },
+        hideIdenticon: true,
+      ),
+      TextFormField(
+        controller: allowanceController,
+        decoration: InputDecoration(
+          labelText: 'Allowance (KSM)',
+          errorText: allowanceError,
+        ),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+          // Only numbers & decimal
+        ],
+        validator: validatePositiveNumber,
+        onChanged: (value) {
+          setState(() {
+            allowanceError = validatePositiveNumber(value);
+          });
+        },
+      ),
+      TextFormField(
+        controller: rateController,
+        decoration: InputDecoration(
+          labelText: 'Rate',
+          errorText: rateError,
+        ),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+          // Only numbers & decimal
+        ],
+        validator: validatePositiveNumber,
+        onChanged: (value) {
+          setState(() {
+            rateError = validatePositiveNumber(value);
+          });
+        },
+      ),
+      const Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
+      const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
+    ]);
   }
 
   Widget spendNativeInput(BuildContext context) {
@@ -194,6 +247,17 @@ class _ProposePageState extends State<ProposePage> {
     final l10n = context.l10n;
 
     return Column(children: [
+      AddressInputField(
+        store,
+        label: l10n.address,
+        initialValue: beneficiary,
+        onChanged: (AccountData acc) {
+          setState(() {
+            beneficiary = acc;
+          });
+        },
+        hideIdenticon: true,
+      ),
       TextFormField(
         controller: amountController,
         decoration: InputDecoration(
@@ -211,17 +275,6 @@ class _ProposePageState extends State<ProposePage> {
             amountError = validatePositiveNumber(value);
           });
         },
-      ),
-      AddressInputField(
-        store,
-        label: l10n.address,
-        initialValue: beneficiary,
-        onChanged: (AccountData acc) {
-          setState(() {
-            beneficiary = acc;
-          });
-        },
-        hideIdenticon: true,
       ),
     ]);
   }
