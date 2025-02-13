@@ -16,6 +16,17 @@ class ProposePage extends StatefulWidget {
 }
 
 class _ProposePageState extends State<ProposePage> {
+  String proposalType = 'petition';
+  String scope = 'local';
+  final TextEditingController latController = TextEditingController();
+  final TextEditingController lonController = TextEditingController();
+  final TextEditingController demurrageController = TextEditingController();
+  final TextEditingController nominalIncomeController = TextEditingController();
+  final TextEditingController inactivityTimeoutController = TextEditingController();
+  final TextEditingController petitionTextController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
+  final TextEditingController allowanceController = TextEditingController();
+  final TextEditingController rateController = TextEditingController();
 
   @override
   void initState() {
@@ -43,23 +54,71 @@ class _ProposePageState extends State<ProposePage> {
       body: SafeArea(
         child: Column(
           children: [
-            InkWell(
-              onTap: () => AppLaunch.launchURL('https://book.encointer.org/protocol-democracy.html'),
-              child: Text(
-                l10n.democracyFaq,
-                style: TextStyle(decoration: TextDecoration.underline, color: context.colorScheme.primary),
-              ),
+            // Proposal Action Selector
+            DropdownButtonFormField<String>(
+              value: proposalType,
+              onChanged: (value) {
+                setState(() {
+                  proposalType = value!;
+                });
+              },
+              items: [
+                'addlocation',
+                'updateDemurrage',
+                'updateNominalIncome',
+                'setInactivityTimeout',
+                'petition',
+                'spendNative',
+                'issueSwapNativeOption'
+              ].map((type) => DropdownMenuItem(value: type, child: Text(type))).toList(),
+              decoration: InputDecoration(labelText: 'Proposal Action Identifier'),
             ),
-            const SizedBox(height: 10),
-            InkWell(
-              onTap: () => AppLaunch.launchURL(
-                  'https://forum.encointer.org/t/deliberation-for-encointer-democracy-proposals/126'),
-              child: Text(
-                l10n.democracyDiscussion,
-                style: TextStyle(decoration: TextDecoration.underline, color: context.colorScheme.primary),
-              ),
+
+            // Scope Selector
+            DropdownButtonFormField<String>(
+              value: scope,
+              onChanged: (value) {
+                setState(() {
+                  scope = value!;
+                });
+              },
+              items: ['global', 'local'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+              decoration: InputDecoration(labelText: 'Scope'),
             ),
-            const SizedBox(height: 10),
+
+            // Dynamic Fields
+            if (proposalType == 'addlocation') ...[
+              TextFormField(controller: latController, decoration: InputDecoration(labelText: 'Latitude')),
+              TextFormField(controller: lonController, decoration: InputDecoration(labelText: 'Longitude')),
+            ],
+            if (proposalType == 'updateDemurrage')
+              TextFormField(controller: demurrageController, decoration: InputDecoration(labelText: 'Demurrage (%)')),
+            if (proposalType == 'updateNominalIncome')
+              TextFormField(controller: nominalIncomeController, decoration: InputDecoration(labelText: 'Nominal Income')),
+            if (proposalType == 'setInactivityTimeout')
+              TextFormField(controller: inactivityTimeoutController, decoration: InputDecoration(labelText: 'Inactivity Timeout (cycles)')),
+            if (proposalType == 'petition')
+              TextFormField(controller: petitionTextController, decoration: InputDecoration(labelText: 'Petition Text')),
+            if (proposalType == 'spendNative') ...[
+              TextFormField(controller: amountController, decoration: InputDecoration(labelText: 'Amount')),
+              // Implement dropdown for beneficiary (linked to contacts and accounts)
+            ],
+            if (proposalType == 'issueSwapNativeOption') ...[
+              TextFormField(controller: allowanceController, decoration: InputDecoration(labelText: 'Allowance (KSM)')),
+              TextFormField(controller: rateController, decoration: InputDecoration(labelText: 'Rate')),
+              Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
+            ],
+
+            // Submit Button
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Handle form submission
+                print('Submitted Proposal: $proposalType');
+              },
+              child: Text('Submit Proposal'),
+            ),
           ],
         ),
       ),
