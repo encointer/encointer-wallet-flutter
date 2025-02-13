@@ -1,5 +1,13 @@
+import 'dart:math';
+
 /// Enum for Scope selection
 enum ProposalScope { global, local }
+
+extension ProposalScopeExt on ProposalScope {
+  bool get isGlobal => this == ProposalScope.global;
+
+  bool get isLocal => this == ProposalScope.local;
+}
 
 /// Enum representing different proposal actions
 enum ProposalActionIdentifier {
@@ -31,4 +39,13 @@ extension PropsalActionExt on ProposalActionIdentifier {
       ProposalActionIdentifier.spendNative => [ProposalScope.local, ProposalScope.global],
     };
   }
+}
+
+double monthlyDemurragePercentToDemurrage(double monthly, BigInt blockProductionTime) {
+  final blocks = blocksPerMonth(blockProductionTime);
+  return -log(1 - (monthly / 100)) / blocks;
+}
+
+double blocksPerMonth(BigInt blockProductionTime) {
+  return (86400 / blockProductionTime.toDouble()) * (365 / 12);
 }
