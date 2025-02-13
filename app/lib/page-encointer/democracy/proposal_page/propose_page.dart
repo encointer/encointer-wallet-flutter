@@ -36,6 +36,13 @@ class _ProposePageState extends State<ProposePage> {
   final TextEditingController allowanceController = TextEditingController();
   final TextEditingController rateController = TextEditingController();
 
+  // Store errors of the text form fields. This is necessary for
+  // input verification as we type.
+  String? latError;
+  String? lonError;
+  String? demurrageError;
+  String? inactivityTimeoutError;
+
   @override
   void initState() {
     super.initState();
@@ -233,47 +240,67 @@ class _ProposePageState extends State<ProposePage> {
     return Column(children: [
       TextFormField(
         controller: latController,
-        decoration: const InputDecoration(labelText: 'Latitude'),
+        decoration: InputDecoration(
+            labelText: 'Latitude',
+            errorText: latError
+        ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')), // Allows negative, decimals, and numbers
         ],
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Enter a latitude';
-          }
-          final latitude = double.tryParse(value);
-          if (latitude == null) {
-            return 'Enter a valid number';
-          }
-          if (latitude < -90 || latitude > 90) {
-            return 'Latitude must be between -90 and 90';
-          }
-          return null;
+        validator: validateLatitude,
+        onChanged: (value) {
+          setState(() {
+            latError = validateLatitude(value);
+          });
         },
       ),
       TextFormField(
         controller: lonController,
-        decoration: const InputDecoration(labelText: 'Longitude'),
+        decoration: InputDecoration(
+            labelText: 'Longitude',
+            errorText: lonError,
+        ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*$')),
         ],
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Enter a longitude';
-          }
-          final longitude = double.tryParse(value);
-          if (longitude == null) {
-            return 'Enter a valid number';
-          }
-          if (longitude < -180 || longitude > 180) {
-            return 'Longitude must be between -180 and 180';
-          }
-          return null;
+        validator: validateLongitude,
+        onChanged: (value) {
+          setState(() {
+            lonError = validateLongitude(value);
+          });
         },
       ),
     ]);
+  }
+
+  /// Validates Latitude (-90 to 90)
+  String? validateLatitude(String? value) {
+      if (value == null || value.isEmpty) {
+        return 'Enter latitude';
+      } else {
+        final latitude = double.tryParse(value);
+        if (latitude == null || latitude < -90 || latitude > 90) {
+          return 'Latitude must be between -90 and 90';
+        } else {
+          return null;
+        }
+      }
+  }
+
+  /// Validates Longitude (-180 to 180)
+  String? validateLongitude(String? value) {
+    if (value == null || value.isEmpty) {
+        return 'Enter longitude';
+      } else {
+        final longitude = double.tryParse(value);
+        if (longitude == null || longitude < -180 || longitude > 180) {
+          return 'Longitude must be between -180 and 180';
+        } else {
+          return  null;
+        }
+      }
   }
 
   /// Handles form submission
