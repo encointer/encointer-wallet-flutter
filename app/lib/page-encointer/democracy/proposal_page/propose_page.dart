@@ -41,6 +41,7 @@ class _ProposePageState extends State<ProposePage> {
   String? latError;
   String? lonError;
   String? demurrageError;
+  String? nominalIncomeError;
   String? inactivityTimeoutError;
 
   @override
@@ -189,23 +190,19 @@ class _ProposePageState extends State<ProposePage> {
     return
       TextFormField(
         controller: nominalIncomeController,
-        decoration: const InputDecoration(labelText: 'Nominal Income'),
+        decoration: InputDecoration(
+            labelText: 'Nominal Income',
+            errorText: nominalIncomeError,
+        ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')), // Only numbers & decimal
         ],
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Enter a nominal income';
-          }
-          final demurrage = double.tryParse(value);
-          if (demurrage == null) {
-            return 'Enter a valid number';
-          }
-          if (demurrage < 0) {
-            return 'Nominal Income must not be negative';
-          }
-          return null;
+        validator: validateNominalIncome,
+        onChanged: (value) {
+          setState(() {
+            nominalIncomeError = validateNominalIncome(value);
+          });
         },
       );
   }
@@ -215,23 +212,19 @@ class _ProposePageState extends State<ProposePage> {
       return
         TextFormField(
           controller: demurrageController,
-          decoration: const InputDecoration(labelText: 'Demurrage (%/month)'),
+          decoration: InputDecoration(
+              labelText: 'Demurrage (%/month)',
+              errorText: demurrageError,
+          ),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')), // Only numbers & decimal
           ],
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Enter a demurrage percentage';
-            }
-            final demurrage = double.tryParse(value);
-            if (demurrage == null) {
-              return 'Enter a valid number';
-            }
-            if (demurrage < 0 || demurrage > 100) {
-              return 'Demurrage must be between 0 and 100';
-            }
-            return null;
+          validator: validateDemurrage,
+          onChanged: (value) {
+            setState(() {
+              demurrageError = validateDemurrage(value);
+            });
           },
         );
   }
@@ -242,7 +235,7 @@ class _ProposePageState extends State<ProposePage> {
         controller: latController,
         decoration: InputDecoration(
             labelText: 'Latitude',
-            errorText: latError
+            errorText: latError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
@@ -301,6 +294,35 @@ class _ProposePageState extends State<ProposePage> {
           return  null;
         }
       }
+  }
+
+
+  /// Validates Demurrage (0 to 100)
+  String? validateDemurrage(String? value) {
+      if (value == null || value.isEmpty) {
+        return 'Enter demurrage';
+      } else {
+        final demurrage = double.tryParse(value);
+        if (demurrage == null || demurrage < 0 || demurrage > 100) {
+          return 'Demurrage must be between 0 and 100';
+        } else {
+          return null;
+        }
+      }
+  }
+
+  /// Validates Nominal Income (Only positive integers)
+  String? validateNominalIncome(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Enter nominal income';
+    } else {
+      final timeout = int.tryParse(value);
+      if (timeout == null || timeout <= 0) {
+        return 'Must be a positive integer';
+      } else {
+        return null;
+      }
+    }
   }
 
   /// Handles form submission
