@@ -54,6 +54,13 @@ class _DemocracyPageState extends State<DemocracyPage> {
     super.dispose();
   }
 
+  Future<void> pushProposePage() async {
+    await Navigator.of(context).pushNamed(ProposePage.route).then((_) {
+      print('Updating proposals after returning from propose page');
+      updateProposals(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = context.read<AppStore>();
@@ -71,7 +78,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
             IconButton(
               icon: const Icon(Iconsax.add_square),
               color: context.colorScheme.secondary,
-              onPressed: () => Navigator.of(context).pushNamed(ProposePage.route),
+              onPressed: pushProposePage,
             ),
           ],
         ),
@@ -141,6 +148,15 @@ class _DemocracyPageState extends State<DemocracyPage> {
   Future<void> updateProposals(BuildContext context) async {
     final store = context.read<AppStore>();
 
+    setState(() {
+      // need to set null to trigger proper widget rebuild
+      activeProposals = null;
+      pastApprovedProposals = null;
+      pastRejectedProposals = null;
+      tallies = null;
+      purposeIds = null;
+    });
+
     final maybeProposalIds = await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
 
     final allProposals = await webApi.encointer.getProposals(maybeProposalIds);
@@ -155,17 +171,18 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final activeAndPast = partition(chosenCidOrGlobalProposals, (p) => p.value.isActive());
     final approvedAndRejected = partition(activeAndPast[1], (p) => p.value.hasPassed());
 
-    activeProposals = Map.fromEntries(activeAndPast[0]);
 
-    pastApprovedProposals = Map.fromEntries(approvedAndRejected[0]
-        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneApprovedProposalsDays))));
-    pastRejectedProposals = Map.fromEntries(approvedAndRejected[1]
-        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneRejectedProposalsDays))));
+    setState(() {
+      activeProposals = Map.fromEntries(activeAndPast[0]);
 
-    tallies = allTallies;
-    purposeIds = allPurposeIds;
+      pastApprovedProposals = Map.fromEntries(approvedAndRejected[0]
+          .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneApprovedProposalsDays))));
+      pastRejectedProposals = Map.fromEntries(approvedAndRejected[1]
+          .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneRejectedProposalsDays))));
 
-    setState(() {});
+      tallies = allTallies;
+      purposeIds = allPurposeIds;
+    });
   }
 
   Iterable<Widget> proposalTilesOrEmptyWidget(BuildContext context, Map<BigInt, Proposal>? proposals) {
