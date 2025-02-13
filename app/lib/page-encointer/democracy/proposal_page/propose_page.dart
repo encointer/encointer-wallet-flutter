@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:encointer_wallet/store/app.dart';
@@ -18,7 +19,8 @@ class ProposePage extends StatefulWidget {
 class _ProposePageState extends State<ProposePage> {
   // Default selected values
   ProposalActionIdentifier selectedAction = ProposalActionIdentifier.petition;
-  ProposalScope selectedScope = ProposalScope.local;
+  late ProposalScope selectedScope;
+  List<ProposalScope> allowedScopes = [];
 
   // Controllers for text fields
   final TextEditingController latController = TextEditingController();
@@ -30,9 +32,19 @@ class _ProposePageState extends State<ProposePage> {
   final TextEditingController amountController = TextEditingController();
   final TextEditingController allowanceController = TextEditingController();
   final TextEditingController rateController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+    _updateAllowedScopes();
+  }
+
+  /// Updates the allowed scope options and resets the selectedScope
+  void _updateAllowedScopes() {
+    setState(() {
+      allowedScopes = selectedAction.allowedPolicies();
+      selectedScope = allowedScopes.first; // Default to the first allowed scope
+    });
   }
 
   @override
@@ -58,23 +70,22 @@ class _ProposePageState extends State<ProposePage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              // Proposal Action Selector (Dropdown using Enum)
+              // Proposal Action Selector
               DropdownButtonFormField<ProposalActionIdentifier>(
                 value: selectedAction,
                 onChanged: (ProposalActionIdentifier? newValue) {
                   setState(() {
                     selectedAction = newValue!;
+                    _updateAllowedScopes();
                   });
                 },
-                items: ProposalActionIdentifier.values
-                    .map((ProposalActionIdentifier action) {
+                items: ProposalActionIdentifier.values.map((ProposalActionIdentifier action) {
                   return DropdownMenuItem<ProposalActionIdentifier>(
                     value: action,
                     child: Text(action.name), // Converts enum to string
                   );
                 }).toList(),
-                decoration:
-                    const InputDecoration(labelText: 'Proposal Action Identifier'),
+                decoration: const InputDecoration(labelText: 'Proposal Action Identifier'),
               ),
 
               const SizedBox(height: 10),
@@ -82,12 +93,16 @@ class _ProposePageState extends State<ProposePage> {
               // Scope Selector (Dropdown using Enum)
               DropdownButtonFormField<ProposalScope>(
                 value: selectedScope,
-                onChanged: (ProposalScope? newValue) {
-                  setState(() {
-                    selectedScope = newValue!;
-                  });
-                },
-                items: ProposalScope.values.map((ProposalScope scope) {
+                onChanged: allowedScopes.length > 1
+                    ? (ProposalScope? newValue) {
+                        if (newValue != null) {
+                          setState(() {
+                            selectedScope = newValue;
+                          });
+                        }
+                      }
+                    : null, // Disable dropdown if only one option
+                items: allowedScopes.map((ProposalScope scope) {
                   return DropdownMenuItem<ProposalScope>(
                     value: scope,
                     child: Text(scope.name),
@@ -119,55 +134,40 @@ class _ProposePageState extends State<ProposePage> {
     switch (selectedAction) {
       case ProposalActionIdentifier.addLocation:
         return Column(children: [
-          TextFormField(
-              controller: latController,
-              decoration: const InputDecoration(labelText: 'Latitude')),
-          TextFormField(
-              controller: lonController,
-              decoration: const InputDecoration(labelText: 'Longitude')),
+          TextFormField(controller: latController, decoration: const InputDecoration(labelText: 'Latitude')),
+          TextFormField(controller: lonController, decoration: const InputDecoration(labelText: 'Longitude')),
         ]);
 
       case ProposalActionIdentifier.updateDemurrage:
         return TextFormField(
-            controller: demurrageController,
-            decoration: const InputDecoration(labelText: 'Demurrage (%)'));
+            controller: demurrageController, decoration: const InputDecoration(labelText: 'Demurrage (%)'));
 
       case ProposalActionIdentifier.updateNominalIncome:
         return TextFormField(
-            controller: nominalIncomeController,
-            decoration: const InputDecoration(labelText: 'Nominal Income'));
+            controller: nominalIncomeController, decoration: const InputDecoration(labelText: 'Nominal Income'));
 
       case ProposalActionIdentifier.setInactivityTimeout:
         return TextFormField(
             controller: inactivityTimeoutController,
-            decoration:
-                const InputDecoration(labelText: 'Inactivity Timeout (cycles)'));
+            decoration: const InputDecoration(labelText: 'Inactivity Timeout (cycles)'));
 
       case ProposalActionIdentifier.petition:
         return TextFormField(
-            controller: petitionTextController,
-            decoration: const InputDecoration(labelText: 'Petition Text'));
+            controller: petitionTextController, decoration: const InputDecoration(labelText: 'Petition Text'));
 
       case ProposalActionIdentifier.spendNative:
         return Column(children: [
-          TextFormField(
-              controller: amountController,
-              decoration: const InputDecoration(labelText: 'Amount')),
+          TextFormField(controller: amountController, decoration: const InputDecoration(labelText: 'Amount')),
           // Implement dropdown for beneficiary selection (contacts and own accounts)
         ]);
 
       case ProposalActionIdentifier.issueSwapNativeOption:
         return Column(children: [
           TextFormField(
-              controller: allowanceController,
-              decoration: const InputDecoration(labelText: 'Allowance (KSM)')),
-          TextFormField(
-              controller: rateController,
-              decoration: const InputDecoration(labelText: 'Rate')),
-          const Text('Burn: true (hardcoded)',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          const Text('Validity: None (hardcoded)',
-              style: TextStyle(fontWeight: FontWeight.bold)),
+              controller: allowanceController, decoration: const InputDecoration(labelText: 'Allowance (KSM)')),
+          TextFormField(controller: rateController, decoration: const InputDecoration(labelText: 'Rate')),
+          const Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
+          const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
         ]);
     }
   }
@@ -178,18 +178,4 @@ class _ProposePageState extends State<ProposePage> {
     print('Scope: $selectedScope');
     // Implement logic to send data where needed
   }
-}
-
-/// Enum for Scope selection
-enum ProposalScope { global, local }
-
-/// Enum representing different proposal actions
-enum ProposalActionIdentifier {
-  addLocation,
-  updateDemurrage,
-  updateNominalIncome,
-  setInactivityTimeout,
-  petition,
-  spendNative,
-  issueSwapNativeOption
 }

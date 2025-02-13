@@ -58,10 +58,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
   Widget build(BuildContext context) {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
-    final titleLargeBlue =
-        context.titleLarge.copyWith(color: context.colorScheme.primary);
-    final titleMediumBlue =
-        context.titleMedium.copyWith(color: context.colorScheme.primary);
+    final titleLargeBlue = context.titleLarge.copyWith(color: context.colorScheme.primary);
+    final titleMediumBlue = context.titleMedium.copyWith(color: context.colorScheme.primary);
 
     // Not an ideal practice, see #1702
     List<Widget> listViewWidgets() {
@@ -73,8 +71,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
             IconButton(
               icon: const Icon(Iconsax.add_square),
               color: context.colorScheme.secondary,
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(ProposePage.route),
+              onPressed: () => Navigator.of(context).pushNamed(ProposePage.route),
             ),
           ],
         ),
@@ -119,13 +116,10 @@ class _DemocracyPageState extends State<DemocracyPage> {
                 ),
               ),
             InkWell(
-              onTap: () => AppLaunch.launchURL(
-                  'https://book.encointer.org/protocol-democracy.html'),
+              onTap: () => AppLaunch.launchURL('https://book.encointer.org/protocol-democracy.html'),
               child: Text(
                 l10n.democracyFaq,
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: context.colorScheme.primary),
+                style: TextStyle(decoration: TextDecoration.underline, color: context.colorScheme.primary),
               ),
             ),
             const SizedBox(height: 10),
@@ -134,9 +128,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
                   'https://forum.encointer.org/t/deliberation-for-encointer-democracy-proposals/126'),
               child: Text(
                 l10n.democracyDiscussion,
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: context.colorScheme.primary),
+                style: TextStyle(decoration: TextDecoration.underline, color: context.colorScheme.primary),
               ),
             ),
             const SizedBox(height: 10),
@@ -149,34 +141,26 @@ class _DemocracyPageState extends State<DemocracyPage> {
   Future<void> updateProposals(BuildContext context) async {
     final store = context.read<AppStore>();
 
-    final maybeProposalIds =
-        await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
+    final maybeProposalIds = await webApi.encointer.getHistoricProposalIds(count: BigInt.from(50));
 
     final allProposals = await webApi.encointer.getProposals(maybeProposalIds);
     // Reduce proposalIds to the entries which also exist in allProposals
     // this is necessary, because migrations may purge incompatible (non-decodable) proposals,
     // but never the index
-    final proposalIds =
-        maybeProposalIds.where(allProposals.containsKey).toList();
+    final proposalIds = maybeProposalIds.where(allProposals.containsKey).toList();
     final allTallies = await webApi.encointer.getTallies(proposalIds);
-    final allPurposeIds =
-        await webApi.encointer.getProposalPurposeIds(proposalIds);
+    final allPurposeIds = await webApi.encointer.getProposalPurposeIds(proposalIds);
 
-    final chosenCidOrGlobalProposals =
-        proposalsForCommunityOrGlobal(allProposals, store.encointer.chosenCid!);
-    final activeAndPast =
-        partition(chosenCidOrGlobalProposals, (p) => p.value.isActive());
-    final approvedAndRejected =
-        partition(activeAndPast[1], (p) => p.value.hasPassed());
+    final chosenCidOrGlobalProposals = proposalsForCommunityOrGlobal(allProposals, store.encointer.chosenCid!);
+    final activeAndPast = partition(chosenCidOrGlobalProposals, (p) => p.value.isActive());
+    final approvedAndRejected = partition(activeAndPast[1], (p) => p.value.hasPassed());
 
     activeProposals = Map.fromEntries(activeAndPast[0]);
 
-    pastApprovedProposals = Map.fromEntries(approvedAndRejected[0].where((e) =>
-        e.value.isMoreRecentThan(
-            const Duration(days: pruneApprovedProposalsDays))));
-    pastRejectedProposals = Map.fromEntries(approvedAndRejected[1].where((e) =>
-        e.value.isMoreRecentThan(
-            const Duration(days: pruneRejectedProposalsDays))));
+    pastApprovedProposals = Map.fromEntries(approvedAndRejected[0]
+        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneApprovedProposalsDays))));
+    pastRejectedProposals = Map.fromEntries(approvedAndRejected[1]
+        .where((e) => e.value.isMoreRecentThan(const Duration(days: pruneRejectedProposalsDays))));
 
     tallies = allTallies;
     purposeIds = allPurposeIds;
@@ -184,10 +168,8 @@ class _DemocracyPageState extends State<DemocracyPage> {
     setState(() {});
   }
 
-  Iterable<Widget> proposalTilesOrEmptyWidget(
-      BuildContext context, Map<BigInt, Proposal>? proposals) {
-    final h3Grey = context.titleLarge
-        .copyWith(fontSize: 19, color: AppColors.encointerGrey);
+  Iterable<Widget> proposalTilesOrEmptyWidget(BuildContext context, Map<BigInt, Proposal>? proposals) {
+    final h3Grey = context.titleLarge.copyWith(fontSize: 19, color: AppColors.encointerGrey);
     final appConfig = RepositoryProvider.of<AppConfig>(context);
     final l10n = context.l10n;
 
