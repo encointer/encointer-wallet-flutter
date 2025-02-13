@@ -185,7 +185,7 @@ class _ProposePageState extends State<ProposePage> {
     }
   }
 
-  /// Demurrage text form allowing numbers between 0 and 100 % per month.
+  /// Nominal income text form allowing positive integers.
   Widget nominalIncomeInput() {
     return
       TextFormField(
@@ -315,6 +315,20 @@ class _ProposePageState extends State<ProposePage> {
   String? validateNominalIncome(String? value) {
     if (value == null || value.isEmpty) {
       return 'Enter nominal income';
+    } else {
+      final timeout = int.tryParse(value);
+      if (timeout == null || timeout <= 0) {
+        return 'Must be a positive integer';
+      } else {
+        return null;
+      }
+    }
+  }
+
+  /// Validates Inactivity Timeout (Only positive integers)
+  String? validateInactivityTimeout(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Enter inactivity timeout';
     } else {
       final timeout = int.tryParse(value);
       if (timeout == null || timeout <= 0) {
