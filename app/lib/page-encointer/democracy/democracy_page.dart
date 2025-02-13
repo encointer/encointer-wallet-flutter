@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/page-encointer/democracy/helpers.dart';
-import 'package:encointer_wallet/page-encointer/democracy/propose_page.dart';
+import 'package:encointer_wallet/page-encointer/democracy/proposal_page/propose_page.dart';
 import 'package:encointer_wallet/page-encointer/democracy/widgets/proposal_tile.dart';
 import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
