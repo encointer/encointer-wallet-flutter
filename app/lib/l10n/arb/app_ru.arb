@@ -91,6 +91,8 @@
     "democracyDiscussion": "Обсудите предложения на форуме!",
     "democracyVotedNotificationBody": "Вы проголосовали за это предложение.",
     "democracyVotedNotificationTitle": "проголосовали",
+    "democracySubmitProposalNotificationBody": "Вы сделали предложение.",
+    "democracySubmitProposalNotificationTitle": "Предложение отправлено",
     "detail": "Детали",
     "detailsEnter": "Введите свои данные",
     "developer": "Режим разработчика",

@@ -1,6 +1,8 @@
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:ew_primitives/ew_primitives.dart';
@@ -10,14 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show
-        AddLocation,
-        Petition,
-        ProposalAction,
-        SetInactivityTimeout,
-        SpendNative,
-        UpdateDemurrage,
-        UpdateNominalIncome;
+    show AddLocation, Petition, ProposalAction, SetInactivityTimeout, SpendNative, UpdateDemurrage, UpdateNominalIncome;
 
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
@@ -41,8 +36,7 @@ class _ProposePageState extends State<ProposePage> {
   final TextEditingController lonController = TextEditingController();
   final TextEditingController demurrageController = TextEditingController();
   final TextEditingController nominalIncomeController = TextEditingController();
-  final TextEditingController inactivityTimeoutController =
-      TextEditingController();
+  final TextEditingController inactivityTimeoutController = TextEditingController();
   final TextEditingController petitionTextController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
   final TextEditingController allowanceController = TextEditingController();
@@ -112,15 +106,13 @@ class _ProposePageState extends State<ProposePage> {
                       _updateAllowedScopes();
                     });
                   },
-                  items: ProposalActionIdentifier.values
-                      .map((ProposalActionIdentifier action) {
+                  items: ProposalActionIdentifier.values.map((ProposalActionIdentifier action) {
                     return DropdownMenuItem<ProposalActionIdentifier>(
                       value: action,
                       child: Text(action.name), // Converts enum to string
                     );
                   }).toList(),
-                  decoration: const InputDecoration(
-                      labelText: 'Proposal Action Identifier'),
+                  decoration: const InputDecoration(labelText: 'Proposal Action Identifier'),
                 ),
 
                 const SizedBox(height: 10),
@@ -185,8 +177,7 @@ class _ProposePageState extends State<ProposePage> {
 
       case ProposalActionIdentifier.petition:
         return TextFormField(
-            controller: petitionTextController,
-            decoration: const InputDecoration(labelText: 'Petition Text'));
+            controller: petitionTextController, decoration: const InputDecoration(labelText: 'Petition Text'));
 
       case ProposalActionIdentifier.spendNative:
         return spendNativeInput(context);
@@ -248,10 +239,8 @@ class _ProposePageState extends State<ProposePage> {
           });
         },
       ),
-      const Text('Burn: true (hardcoded)',
-          style: TextStyle(fontWeight: FontWeight.bold)),
-      const Text('Validity: None (hardcoded)',
-          style: TextStyle(fontWeight: FontWeight.bold)),
+      const Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
+      const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
     ]);
   }
 
@@ -469,16 +458,23 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   /// Handles form submission
-  void _submitProposal() {
+  Future<void> _submitProposal() async {
     final store = context.read<AppStore>();
 
     print('Submitted Proposal: $selectedAction');
     print('Scope: $selectedScope');
 
     if (_formKey.currentState!.validate()) {
-
       final action = getProposalAction(store);
-      print('action: $action');
+
+      await submitDemocracyProposal(
+        context,
+        store,
+        webApi,
+        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+        action!,
+        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+      );
     }
   }
 
@@ -505,8 +501,7 @@ class _ProposePageState extends State<ProposePage> {
         return UpdateNominalIncome(cid, fixedU128FromDouble(ni));
 
       case ProposalActionIdentifier.setInactivityTimeout:
-        return SetInactivityTimeout(
-            int.tryParse(inactivityTimeoutController.text)!);
+        return SetInactivityTimeout(int.tryParse(inactivityTimeoutController.text)!);
 
       case ProposalActionIdentifier.petition:
         final maybeCid = selectedScope.isLocal ? cid : null;

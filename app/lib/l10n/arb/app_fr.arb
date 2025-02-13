@@ -91,6 +91,8 @@
     "democracyDiscussion": "Discute de suggestions dans le forum!",
     "democracyVotedNotificationBody": "Tu as voté pour cette proposition.",
     "democracyVotedNotificationTitle": "Voté",
+    "democracySubmitProposalNotificationBody": "Tu as fait un proposition.",
+    "democracySubmitProposalNotificationTitle": "Proposition soumise",
     "detail": "Détail",
     "detailsEnter": "Entre tes détails.",
     "developer": "Mode développeur",

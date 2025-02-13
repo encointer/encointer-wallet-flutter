@@ -91,6 +91,8 @@
     "democracyDiscussion": "Jadili mapendekezo kwenye foramu yetu!",
     "democracyVotedNotificationBody": "Umepigia kura pendekezo hili.",
     "democracyVotedNotificationTitle": "Umepiga kura",
+    "democracySubmitProposalNotificationBody": "Umetoa pendekezo.",
+    "democracySubmitProposalNotificationTitle": "Pendekezo limewasilishwa",
     "detail": "Taarifa",
     "detailsEnter": "ingiza taarifa zako.",
     "developer": "Developer mode",

@@ -65,5 +65,4 @@ typedef ProverCeremonyIndexTuple = Tuple2<AccountId32, int>;
 
 typedef ProverCeremonyIndexTupleCodecType = Tuple2Codec<AccountId32, int>;
 
-const proverCeremonyIndexTupleCodec =
-    ProverCeremonyIndexTupleCodecType(AccountId32Codec(), U32Codec.codec);
+const proverCeremonyIndexTupleCodec = ProverCeremonyIndexTupleCodecType(AccountId32Codec(), U32Codec.codec);
