@@ -20,6 +20,19 @@ enum ProposalActionIdentifier {
   issueSwapNativeOption
 }
 
+/// We still have to implement support for:
+/// * issueSwapOption: It does not exist yet in the generated types
+List<ProposalActionIdentifier> supportedProposalIds() {
+  return [
+    ProposalActionIdentifier.addLocation,
+    ProposalActionIdentifier.updateDemurrage,
+    ProposalActionIdentifier.updateNominalIncome,
+    ProposalActionIdentifier.setInactivityTimeout,
+    ProposalActionIdentifier.petition,
+    ProposalActionIdentifier.spendNative,
+  ];
+}
+
 extension PropsalActionExt on ProposalActionIdentifier {
   /// Returns the allowed proposal policies corresponding
   /// to a specific proposal variant.

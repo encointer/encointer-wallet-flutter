@@ -108,7 +108,7 @@ class _ProposePageState extends State<ProposePage> {
                       _updateAllowedScopes();
                     });
                   },
-                  items: ProposalActionIdentifier.values.map((ProposalActionIdentifier action) {
+                  items: supportedProposalIds().map((ProposalActionIdentifier action) {
                     return DropdownMenuItem<ProposalActionIdentifier>(
                       value: action,
                       child: Text(action.name), // Converts enum to string
