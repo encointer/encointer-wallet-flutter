@@ -202,6 +202,7 @@
     "proposal": "Vorschlag",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
+    "proposalNew": "Neuer Vorschlag",
     "proposalSuperseded": "Verdrängt",
     "proposalRejected": "Abgelehnt",
     "proposalEnacted": "Ausgeführt",

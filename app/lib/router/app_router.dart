@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/page-encointer/democracy/democracy_page.dart';
+import 'package:encointer_wallet/page-encointer/democracy/propose_page.dart';
 import 'package:ew_http/ew_http.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -180,6 +181,8 @@ class AppRoute {
         );
       case DemocracyPage.route:
         return CupertinoPageRoute(builder: (_) => const DemocracyPage(), settings: settings);
+      case ProposePage.route:
+        return CupertinoPageRoute(builder: (_) => const ProposePage(), settings: settings);
       default:
         throw Exception('no builder specified for route named: [${settings.name}]');
     }
