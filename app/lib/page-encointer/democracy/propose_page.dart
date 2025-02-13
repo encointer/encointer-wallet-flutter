@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/service/launch/app_launch.dart';
 import 'package:flutter/material.dart';
+
 // import 'package:encointer_wallet/store/app.dart';
 // import 'package:provider/provider.dart';
 
@@ -16,8 +16,11 @@ class ProposePage extends StatefulWidget {
 }
 
 class _ProposePageState extends State<ProposePage> {
-  String proposalType = 'petition';
-  String scope = 'local';
+  // Default selected values
+  ProposalActionIdentifier selectedAction = ProposalActionIdentifier.petition;
+  ProposalScope selectedScope = ProposalScope.local;
+
+  // Controllers for text fields
   final TextEditingController latController = TextEditingController();
   final TextEditingController lonController = TextEditingController();
   final TextEditingController demurrageController = TextEditingController();
@@ -27,7 +30,6 @@ class _ProposePageState extends State<ProposePage> {
   final TextEditingController amountController = TextEditingController();
   final TextEditingController allowanceController = TextEditingController();
   final TextEditingController rateController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -52,76 +54,142 @@ class _ProposePageState extends State<ProposePage> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Proposal Action Selector
-            DropdownButtonFormField<String>(
-              value: proposalType,
-              onChanged: (value) {
-                setState(() {
-                  proposalType = value!;
-                });
-              },
-              items: [
-                'addlocation',
-                'updateDemurrage',
-                'updateNominalIncome',
-                'setInactivityTimeout',
-                'petition',
-                'spendNative',
-                'issueSwapNativeOption'
-              ].map((type) => DropdownMenuItem(value: type, child: Text(type))).toList(),
-              decoration: InputDecoration(labelText: 'Proposal Action Identifier'),
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              // Proposal Action Selector (Dropdown using Enum)
+              DropdownButtonFormField<ProposalActionIdentifier>(
+                value: selectedAction,
+                onChanged: (ProposalActionIdentifier? newValue) {
+                  setState(() {
+                    selectedAction = newValue!;
+                  });
+                },
+                items: ProposalActionIdentifier.values
+                    .map((ProposalActionIdentifier action) {
+                  return DropdownMenuItem<ProposalActionIdentifier>(
+                    value: action,
+                    child: Text(action.name), // Converts enum to string
+                  );
+                }).toList(),
+                decoration:
+                    const InputDecoration(labelText: 'Proposal Action Identifier'),
+              ),
 
-            // Scope Selector
-            DropdownButtonFormField<String>(
-              value: scope,
-              onChanged: (value) {
-                setState(() {
-                  scope = value!;
-                });
-              },
-              items: ['global', 'local'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
-              decoration: InputDecoration(labelText: 'Scope'),
-            ),
+              const SizedBox(height: 10),
 
-            // Dynamic Fields
-            if (proposalType == 'addlocation') ...[
-              TextFormField(controller: latController, decoration: InputDecoration(labelText: 'Latitude')),
-              TextFormField(controller: lonController, decoration: InputDecoration(labelText: 'Longitude')),
-            ],
-            if (proposalType == 'updateDemurrage')
-              TextFormField(controller: demurrageController, decoration: InputDecoration(labelText: 'Demurrage (%)')),
-            if (proposalType == 'updateNominalIncome')
-              TextFormField(controller: nominalIncomeController, decoration: InputDecoration(labelText: 'Nominal Income')),
-            if (proposalType == 'setInactivityTimeout')
-              TextFormField(controller: inactivityTimeoutController, decoration: InputDecoration(labelText: 'Inactivity Timeout (cycles)')),
-            if (proposalType == 'petition')
-              TextFormField(controller: petitionTextController, decoration: InputDecoration(labelText: 'Petition Text')),
-            if (proposalType == 'spendNative') ...[
-              TextFormField(controller: amountController, decoration: InputDecoration(labelText: 'Amount')),
-              // Implement dropdown for beneficiary (linked to contacts and accounts)
-            ],
-            if (proposalType == 'issueSwapNativeOption') ...[
-              TextFormField(controller: allowanceController, decoration: InputDecoration(labelText: 'Allowance (KSM)')),
-              TextFormField(controller: rateController, decoration: InputDecoration(labelText: 'Rate')),
-              Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
-            ],
+              // Scope Selector (Dropdown using Enum)
+              DropdownButtonFormField<ProposalScope>(
+                value: selectedScope,
+                onChanged: (ProposalScope? newValue) {
+                  setState(() {
+                    selectedScope = newValue!;
+                  });
+                },
+                items: ProposalScope.values.map((ProposalScope scope) {
+                  return DropdownMenuItem<ProposalScope>(
+                    value: scope,
+                    child: Text(scope.name),
+                  );
+                }).toList(),
+                decoration: const InputDecoration(labelText: 'Scope'),
+              ),
 
-            // Submit Button
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Handle form submission
-                print('Submitted Proposal: $proposalType');
-              },
-              child: Text('Submit Proposal'),
-            ),
-          ],
+              const SizedBox(height: 10),
+
+              // Dynamic Fields Based on Selected Proposal Action
+              _buildDynamicFields(),
+
+              // Submit Button
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _submitProposal,
+                child: const Text('Submit Proposal'),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  /// Dynamically generates form fields based on selected proposal type
+  Widget _buildDynamicFields() {
+    switch (selectedAction) {
+      case ProposalActionIdentifier.addLocation:
+        return Column(children: [
+          TextFormField(
+              controller: latController,
+              decoration: const InputDecoration(labelText: 'Latitude')),
+          TextFormField(
+              controller: lonController,
+              decoration: const InputDecoration(labelText: 'Longitude')),
+        ]);
+
+      case ProposalActionIdentifier.updateDemurrage:
+        return TextFormField(
+            controller: demurrageController,
+            decoration: const InputDecoration(labelText: 'Demurrage (%)'));
+
+      case ProposalActionIdentifier.updateNominalIncome:
+        return TextFormField(
+            controller: nominalIncomeController,
+            decoration: const InputDecoration(labelText: 'Nominal Income'));
+
+      case ProposalActionIdentifier.setInactivityTimeout:
+        return TextFormField(
+            controller: inactivityTimeoutController,
+            decoration:
+                const InputDecoration(labelText: 'Inactivity Timeout (cycles)'));
+
+      case ProposalActionIdentifier.petition:
+        return TextFormField(
+            controller: petitionTextController,
+            decoration: const InputDecoration(labelText: 'Petition Text'));
+
+      case ProposalActionIdentifier.spendNative:
+        return Column(children: [
+          TextFormField(
+              controller: amountController,
+              decoration: const InputDecoration(labelText: 'Amount')),
+          // Implement dropdown for beneficiary selection (contacts and own accounts)
+        ]);
+
+      case ProposalActionIdentifier.issueSwapNativeOption:
+        return Column(children: [
+          TextFormField(
+              controller: allowanceController,
+              decoration: const InputDecoration(labelText: 'Allowance (KSM)')),
+          TextFormField(
+              controller: rateController,
+              decoration: const InputDecoration(labelText: 'Rate')),
+          const Text('Burn: true (hardcoded)',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          const Text('Validity: None (hardcoded)',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+        ]);
+    }
+  }
+
+  /// Handles form submission
+  void _submitProposal() {
+    print('Submitted Proposal: $selectedAction');
+    print('Scope: $selectedScope');
+    // Implement logic to send data where needed
+  }
+}
+
+/// Enum for Scope selection
+enum ProposalScope { global, local }
+
+/// Enum representing different proposal actions
+enum ProposalActionIdentifier {
+  addLocation,
+  updateDemurrage,
+  updateNominalIncome,
+  setInactivityTimeout,
+  petition,
+  spendNative,
+  issueSwapNativeOption
 }
