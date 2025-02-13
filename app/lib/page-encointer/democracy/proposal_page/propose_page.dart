@@ -160,9 +160,7 @@ class _ProposePageState extends State<ProposePage> {
         return nominalIncomeInput();
 
       case ProposalActionIdentifier.setInactivityTimeout:
-        return TextFormField(
-            controller: inactivityTimeoutController,
-            decoration: const InputDecoration(labelText: 'Inactivity Timeout (cycles)'));
+        return inactivityTimeoutInput();
 
       case ProposalActionIdentifier.petition:
         return TextFormField(
@@ -183,6 +181,28 @@ class _ProposePageState extends State<ProposePage> {
           const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
         ]);
     }
+  }
+
+  /// Inactivity timeout text form allowing positive integers.
+  Widget inactivityTimeoutInput() {
+    return
+      TextFormField(
+        controller: inactivityTimeoutController,
+        decoration: InputDecoration(
+          labelText: 'Inactivity Timeout (cycles)',
+          errorText: inactivityTimeoutError,
+        ),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')), // Only numbers & decimal
+        ],
+        validator: validateInactivityTimeout,
+        onChanged: (value) {
+          setState(() {
+            inactivityTimeoutError = validateInactivityTimeout(value);
+          });
+        },
+      );
   }
 
   /// Nominal income text form allowing positive integers.
