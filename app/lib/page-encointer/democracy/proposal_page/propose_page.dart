@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/common/components/address_input_field.dart';
+import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
@@ -146,14 +147,14 @@ class _ProposePageState extends State<ProposePage> {
                 _buildDynamicFields(context),
 
                 // Submit Button
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
+                const Spacer(),
+                SubmitButton(
+                  onPressed: (context) async {
                     _formKey.currentState!.validate();
                     await _submitProposal();
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Submit Proposal'),
+                  child: Text('Submit Proposal'),
                 ),
               ],
             ),
@@ -192,8 +193,6 @@ class _ProposePageState extends State<ProposePage> {
 
   Widget issueSwapNativeOptionInput() {
     final store = context.read<AppStore>();
-    final l10n = context.l10n;
-
     return Column(children: [
       TextFormField(
         controller: allowanceController,
@@ -250,8 +249,6 @@ class _ProposePageState extends State<ProposePage> {
 
   Widget spendNativeInput(BuildContext context) {
     final store = context.read<AppStore>();
-    final l10n = context.l10n;
-
     return Column(children: [
       TextFormField(
         controller: amountController,
