@@ -31,7 +31,8 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         SupersededBy,
         Tally,
         UpdateDemurrage,
-        UpdateNominalIncome;
+        UpdateNominalIncome,
+        IssueSwapNativeOption;
 
 /// Gets the localized proposal action title.
 ///
@@ -74,6 +75,15 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
           AddressUtils.pubKeyToAddress((action as SpendNative).value1, prefix: store.settings.currentNetwork.ss58()))!;
       final amount = Fmt.token(action.value2, ertDecimals);
       return l10n.proposalSpendNative(cidStr, amount, beneficiary);
+    case IssueSwapNativeOption:
+      final issueOption = action as IssueSwapNativeOption;
+      // final cidPolkadart = getCommunityIdentifierFromProposal(action);
+      // final cidStr = cidOrGlobal(cidPolkadart, store);
+      // final beneficiary = Fmt.address(
+      //     AddressUtils.pubKeyToAddress(issueOption.value1, prefix: store.settings.currentNetwork.ss58()))!;
+      final swapNativeOption = issueOption.value2;
+      final rate = swapNativeOption.rate != null ? i64F64Parser.toDouble(swapNativeOption.rate!.bits) : null;
+      return 'Swap Native ${swapNativeOption.nativeAllowance}, $rate';
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
@@ -123,6 +133,9 @@ et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action
     case SpendNative:
       // can be global or local
       return (action as SpendNative).value0;
+    case IssueSwapNativeOption:
+      // can be global or local
+      return (action as IssueSwapNativeOption).value0;
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }

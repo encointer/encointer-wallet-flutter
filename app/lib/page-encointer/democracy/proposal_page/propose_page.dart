@@ -15,7 +15,16 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show AddLocation, Petition, ProposalAction, SetInactivityTimeout, SpendNative, UpdateDemurrage, UpdateNominalIncome;
+    show
+        AddLocation,
+        IssueSwapNativeOption,
+        Petition,
+        ProposalAction,
+        SetInactivityTimeout,
+        SpendNative,
+        UpdateDemurrage,
+        UpdateNominalIncome,
+        SwapNativeOption;
 
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
@@ -525,13 +534,13 @@ class _ProposePageState extends State<ProposePage> {
         store,
         webApi,
         store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-        action!,
+        action,
         txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       );
     }
   }
 
-  ProposalAction? getProposalAction(AppStore store) {
+  ProposalAction getProposalAction(AppStore store) {
     final cid = store.encointer.chosenCid!.toPolkadart();
 
     switch (selectedAction) {
@@ -572,8 +581,19 @@ class _ProposePageState extends State<ProposePage> {
         );
 
       case ProposalActionIdentifier.issueSwapNativeOption:
-      // @todo: Generate issueSwapNativeType
+        final maybeCid = selectedScope.isLocal ? cid : null;
+        final ben = beneficiary!.pubKey;
+
+        final amount = double.tryParse(allowanceController.text)!;
+        final rate = double.tryParse(rateController.text)!;
+        final issueOption = SwapNativeOption(
+          cid: cid,
+          nativeAllowance: BigInt.from(amount),
+          rate: fixedU128FromDouble(rate),
+          doBurn: true,
+        );
+
+        return IssueSwapNativeOption(maybeCid!, hex.decode(ben.replaceFirst('0x', '')), issueOption);
     }
-    return null;
   }
 }

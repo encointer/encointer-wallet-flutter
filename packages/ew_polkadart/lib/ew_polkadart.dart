@@ -16,13 +16,15 @@ export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal
         UpdateNominalIncome,
         SetInactivityTimeout,
         Petition,
-        SpendNative;
+        SpendNative,
+        IssueSwapNativeOption;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action_identifier.dart'
     show ProposalActionIdentifier;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart'
     show ProposalState, Ongoing, Rejected, SupersededBy, Approved, Confirming, Enacted;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/tally.dart' show Tally;
 export 'generated/encointer_kusama/types/encointer_primitives/democracy/vote.dart' show Vote;
+export 'generated/encointer_kusama/types/encointer_primitives/treasuries/swap_native_option.dart' show SwapNativeOption;
 
 export 'package:polkadart_scale_codec/polkadart_scale_codec.dart'
     show
