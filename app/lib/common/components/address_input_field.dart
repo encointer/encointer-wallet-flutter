@@ -17,8 +17,7 @@ class EncointerAddressInputField extends StatelessWidget {
     this.label,
     this.initialValue,
     this.onChanged,
-    this.contentPadding =
-        const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+    this.contentPadding = const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
     this.border = const UnderlineInputBorder(
       borderSide: BorderSide(width: 0, style: BorderStyle.none),
     ),
@@ -85,8 +84,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     final ss58 = widget.store.settings.currentNetwork.ss58();
     // we can't just use account.address unfortunately, see #1019.
     return account.name.startsWith(nameOrAddress.trim()) ||
-        AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: ss58)
-            .startsWith(nameOrAddress.trim());
+        AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: ss58).startsWith(nameOrAddress.trim());
   }
 
   Widget _selectedItemBuilder(BuildContext context, AccountData? account) {
@@ -94,16 +92,15 @@ class _AddressInputFieldState extends State<AddressInputField> {
       return Container();
     }
 
-    final address = AddressUtils.pubKeyHexToAddress(account.pubKey,
-        prefix: widget.store.settings.currentNetwork.ss58());
+    final address =
+        AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.currentNetwork.ss58());
 
     return Row(
       children: [
         if (!widget.hideIdenticon)
           Padding(
             padding: const EdgeInsets.only(right: 8),
-            child: AddressIcon(address, account.pubKey,
-                tapToCopy: false, size: 36),
+            child: AddressIcon(address, account.pubKey, tapToCopy: false, size: 36),
           ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,10 +116,9 @@ class _AddressInputFieldState extends State<AddressInputField> {
     );
   }
 
-  Widget _listItemBuilder(BuildContext context, AccountData account,
-      bool isDisabled, bool isSelected) {
-    final address = AddressUtils.pubKeyHexToAddress(account.pubKey,
-        prefix: widget.store.settings.currentNetwork.ss58());
+  Widget _listItemBuilder(BuildContext context, AccountData account, bool isDisabled, bool isSelected) {
+    final address =
+        AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.currentNetwork.ss58());
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -178,17 +174,14 @@ class _AddressInputFieldState extends State<AddressInputField> {
       ),
       decoratorProps: DropDownDecoratorProps(
         decoration: InputDecoration(
-          labelText: widget.label,
-          labelStyle:
-              context.bodyLarge.copyWith(color: context.colorScheme.primary),
-          contentPadding: widget.contentPadding,
-          border: widget.border
-        ),
+            labelText: widget.label,
+            labelStyle: context.bodyLarge.copyWith(color: context.colorScheme.primary),
+            contentPadding: widget.contentPadding,
+            border: widget.border),
       ),
       selectedItem: widget.initialValue,
       compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
-      validator: (AccountData? u) =>
-          u == null ? l10n.errorUserNameIsRequired : null,
+      validator: (AccountData? u) => u == null ? l10n.errorUserNameIsRequired : null,
       items: (_, __) => widget.store.settings.knownAccounts,
       filterFn: filterByAddressOrName,
       onChanged: (AccountData? data) {

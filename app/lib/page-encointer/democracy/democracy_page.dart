@@ -171,7 +171,6 @@ class _DemocracyPageState extends State<DemocracyPage> {
     final activeAndPast = partition(chosenCidOrGlobalProposals, (p) => p.value.isActive());
     final approvedAndRejected = partition(activeAndPast[1], (p) => p.value.hasPassed());
 
-
     setState(() {
       activeProposals = Map.fromEntries(activeAndPast[0]);
 
