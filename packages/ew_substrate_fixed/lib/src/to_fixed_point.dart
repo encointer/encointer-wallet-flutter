@@ -4,10 +4,10 @@
 /// Note: This doesn't work for negative numbers yet, but as the runtime uses
 /// unsigned types, we don't really need it anyhow.
 BigInt toFixedPoint(
-    double input, {
-      required int integerBitCount,
-      required int fractionalBitCount,
-    }) {
+  double input, {
+  required int integerBitCount,
+  required int fractionalBitCount,
+}) {
   // Separate integer and fractional parts
   final integerPart = input.truncate();
   final fractionalPart = (input - integerPart).abs();
