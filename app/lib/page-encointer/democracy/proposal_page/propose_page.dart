@@ -414,12 +414,14 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Validates Latitude (-90 to 90)
   String? validateLatitude(String? value) {
+    final l10n = context.l10n;
+
     if (value == null || value.isEmpty) {
-      return 'Enter latitude';
+      return l10n.proposalFieldErrorEnterLatitude;
     } else {
       final latitude = double.tryParse(value);
       if (latitude == null || latitude < -90 || latitude > 90) {
-        return 'Latitude must be between -90 and 90';
+        return l10n.proposalFieldErrorLatitudeRange;
       } else {
         return null;
       }
@@ -428,12 +430,14 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Validates Longitude (-180 to 180)
   String? validateLongitude(String? value) {
+    final l10n = context.l10n;
+
     if (value == null || value.isEmpty) {
-      return 'Enter longitude';
+      return l10n.proposalFieldErrorEnterLongitude;
     } else {
       final longitude = double.tryParse(value);
       if (longitude == null || longitude < -180 || longitude > 180) {
-        return 'Longitude must be between -180 and 180';
+        return l10n.proposalFieldErrorLongitudeRange;
       } else {
         return null;
       }
@@ -442,12 +446,14 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Validates Demurrage (0 to 100)
   String? validateDemurrage(String? value) {
+    final l10n = context.l10n;
+
     if (value == null || value.isEmpty) {
-      return 'Enter demurrage';
+      return l10n.proposalFieldErrorEnterDemurrage;
     } else {
       final demurrage = double.tryParse(value);
       if (demurrage == null || demurrage < 0 || demurrage > 100) {
-        return 'Demurrage must be between 0 and 100';
+        return l10n.proposalFieldErrorDemurrageRange;
       } else {
         return null;
       }
@@ -456,12 +462,13 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Ensures that the number is positive (doubles)
   String? validatePositiveNumber(String? value) {
+    final l10n = context.l10n;
     if (value == null || value.isEmpty) {
-      return 'Enter positive number';
+      return l10n.proposalFieldErrorEnterPositiveNumber;
     } else {
       final number = double.tryParse(value);
       if (number == null || number <= 0) {
-        return 'Must be a positive number';
+        return l10n.proposalFieldErrorPositiveNumberRange;
       } else {
         return null;
       }
@@ -470,12 +477,14 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Validates Inactivity Timeout (Only positive integers)
   String? validateInactivityTimeout(String? value) {
+    final l10n = context.l10n;
+
     if (value == null || value.isEmpty) {
-      return 'Enter inactivity timeout';
+      return l10n.proposalFieldErrorEnterInactivityTimeout;
     } else {
       final timeout = int.tryParse(value);
       if (timeout == null || timeout <= 0) {
-        return 'Must be a positive integer';
+        return l10n.proposalFieldErrorPositiveIntegerRange;
       } else {
         return null;
       }
@@ -485,9 +494,6 @@ class _ProposePageState extends State<ProposePage> {
   /// Handles form submission
   Future<void> _submitProposal() async {
     final store = context.read<AppStore>();
-
-    print('Submitted Proposal: $selectedAction');
-    print('Scope: $selectedScope');
 
     if (_formKey.currentState!.validate()) {
       final action = getProposalAction(store);
