@@ -4,6 +4,7 @@ import 'package:ew_polkadart/ew_polkadart.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_runtime/multi_signature.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_i128.dart';
+import 'package:ew_polkadart/generated/encointer_kusama/types/substrate_fixed/fixed_u128.dart';
 import 'package:ew_polkadart/generated/encointer_kusama/types/tuples.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
 
@@ -19,14 +20,22 @@ extension KeyringAccountDataMultiAddressExt on Sr25519KeyPair {
   }
 }
 
+FixedI128 fixedI128FromDouble(double value) {
+  return FixedI128(bits: u64F64Util.toFixed(value));
+}
+
+FixedU128 fixedU128FromDouble(double value) {
+  return FixedU128(bits: u64F64Util.toFixed(value));
+}
+
 abstract class LocationFactory {
   static Location fromDouble({
     required double lat,
     required double lon,
   }) {
     return Location(
-      lat: FixedI128(bits: u64F64Util.toFixed(lat)),
-      lon: FixedI128(bits: u64F64Util.toFixed(lat)),
+      lat: fixedI128FromDouble(lat),
+      lon: fixedI128FromDouble(lon),
     );
   }
 }

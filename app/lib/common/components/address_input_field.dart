@@ -10,13 +10,17 @@ import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 
-class AddressInputField extends StatefulWidget {
-  const AddressInputField(
+class EncointerAddressInputField extends StatelessWidget {
+  const EncointerAddressInputField(
     this.store, {
     super.key,
     this.label,
     this.initialValue,
     this.onChanged,
+    this.contentPadding = const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+    this.border = const UnderlineInputBorder(
+      borderSide: BorderSide(width: 0, style: BorderStyle.none),
+    ),
     this.hideIdenticon = false,
   });
 
@@ -24,6 +28,50 @@ class AddressInputField extends StatefulWidget {
   final String? label;
   final AccountData? initialValue;
   final void Function(AccountData)? onChanged;
+  final EdgeInsets contentPadding;
+  final InputBorder border;
+  final bool hideIdenticon;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.colorScheme.surface,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: AddressInputField(
+        store,
+        label: label,
+        initialValue: initialValue,
+        onChanged: onChanged,
+        hideIdenticon: hideIdenticon,
+        contentPadding: contentPadding,
+        border: border,
+      ),
+    );
+  }
+}
+
+class AddressInputField extends StatefulWidget {
+  const AddressInputField(
+    this.store, {
+    super.key,
+    this.label,
+    this.initialValue,
+    this.onChanged,
+    this.contentPadding = EdgeInsets.zero,
+    this.border = const UnderlineInputBorder(
+      borderSide: BorderSide(width: 0),
+    ),
+    this.hideIdenticon = false,
+  });
+
+  final AppStore store;
+  final String? label;
+  final AccountData? initialValue;
+  final void Function(AccountData)? onChanged;
+  final EdgeInsets contentPadding;
+  final InputBorder border;
   final bool hideIdenticon;
 
   @override
@@ -47,27 +95,24 @@ class _AddressInputFieldState extends State<AddressInputField> {
     final address =
         AddressUtils.pubKeyHexToAddress(account.pubKey, prefix: widget.store.settings.currentNetwork.ss58());
 
-    return Container(
-      padding: const EdgeInsets.only(top: 8),
-      child: Row(
-        children: [
-          if (!widget.hideIdenticon)
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: AddressIcon(address, account.pubKey, tapToCopy: false, size: 36),
+    return Row(
+      children: [
+        if (!widget.hideIdenticon)
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: AddressIcon(address, account.pubKey, tapToCopy: false, size: 36),
+          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(account.name),
+            Text(
+              Fmt.address(address)!,
+              style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
             ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(account.name),
-              Text(
-                Fmt.address(address)!,
-                style: context.bodySmall.copyWith(color: AppColors.encointerGrey),
-              ),
-            ],
-          )
-        ],
-      ),
+          ],
+        )
+      ],
     );
   }
 
@@ -102,58 +147,49 @@ class _AddressInputFieldState extends State<AddressInputField> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: context.colorScheme.surface,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: DropdownSearch<AccountData>(
-        key: const Key(EWTestKeys.transferSelectAccount),
-        popupProps: PopupProps.modalBottomSheet(
-          showSearchBox: true,
-          showSelectedItems: true,
-          itemBuilder: _listItemBuilder,
-          interceptCallBacks: true,
-          emptyBuilder: (context, searchEntry) {
-            if (Fmt.isAddress(searchEntry)) {
-              final address = searchEntry.replaceAll(' ', '');
-              final pubKey = AddressUtils.addressToPubKeyHex(address);
-              final newAccount = AccountData(
-                name: l10n.unknownAccount,
-                address: address,
-                pubKey: pubKey,
-              );
-              return _listItemBuilder(context, newAccount, false, false);
-            } else {
-              return Align(
-                alignment: Alignment.topCenter,
-                child: Text(l10n.contactAddressError),
-              );
-            }
-          },
-        ),
-        decoratorProps: DropDownDecoratorProps(
-          decoration: InputDecoration(
-            labelText: widget.label,
-            labelStyle: context.bodyLarge.copyWith(color: context.colorScheme.primary),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-            border: const UnderlineInputBorder(
-              borderSide: BorderSide(width: 0, style: BorderStyle.none),
-            ),
-          ),
-        ),
-        selectedItem: widget.initialValue,
-        compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
-        validator: (AccountData? u) => u == null ? l10n.errorUserNameIsRequired : null,
-        items: (_, __) => widget.store.settings.knownAccounts,
-        filterFn: filterByAddressOrName,
-        onChanged: (AccountData? data) {
-          if (widget.onChanged != null && data != null) {
-            widget.onChanged!(data);
+    return DropdownSearch<AccountData>(
+      key: const Key(EWTestKeys.transferSelectAccount),
+      popupProps: PopupProps.modalBottomSheet(
+        showSearchBox: true,
+        showSelectedItems: true,
+        itemBuilder: _listItemBuilder,
+        interceptCallBacks: true,
+        emptyBuilder: (context, searchEntry) {
+          if (Fmt.isAddress(searchEntry)) {
+            final address = searchEntry.replaceAll(' ', '');
+            final pubKey = AddressUtils.addressToPubKeyHex(address);
+            final newAccount = AccountData(
+              name: l10n.unknownAccount,
+              address: address,
+              pubKey: pubKey,
+            );
+            return _listItemBuilder(context, newAccount, false, false);
+          } else {
+            return Align(
+              alignment: Alignment.topCenter,
+              child: Text(l10n.contactAddressError),
+            );
           }
         },
-        dropdownBuilder: _selectedItemBuilder,
       ),
+      decoratorProps: DropDownDecoratorProps(
+        decoration: InputDecoration(
+            labelText: widget.label,
+            labelStyle: context.bodyLarge.copyWith(color: context.colorScheme.primary),
+            contentPadding: widget.contentPadding,
+            border: widget.border),
+      ),
+      selectedItem: widget.initialValue,
+      compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
+      validator: (AccountData? u) => u == null ? l10n.errorUserNameIsRequired : null,
+      items: (_, __) => widget.store.settings.knownAccounts,
+      filterFn: filterByAddressOrName,
+      onChanged: (AccountData? data) {
+        if (widget.onChanged != null && data != null) {
+          widget.onChanged!(data);
+        }
+      },
+      dropdownBuilder: _selectedItemBuilder,
     );
   }
 }

@@ -92,6 +92,11 @@ double demurragePerMonth(double demurrage, BigInt blockProductionTime) {
   return (1 - exp(-1 * demurrage * blocksPerMonth(blockProductionTime))) * 100;
 }
 
+double monthlyDemurragePercentToDemurrage(double monthly, BigInt blockProductionTime) {
+  final blocks = blocksPerMonth(blockProductionTime);
+  return -log(1 - (monthly / 100)) / blocks;
+}
+
 double blocksPerMonth(BigInt blockProductionTime) {
   return (86400 / blockProductionTime.toDouble()) * (365 / 12);
 }
