@@ -56,7 +56,7 @@ class _DemocracyPageState extends State<DemocracyPage> {
 
   Future<void> pushProposePage() async {
     await Navigator.of(context).pushNamed(ProposePage.route).then((_) {
-      print('Updating proposals after returning from propose page');
+      // print('Updating proposals after returning from propose page');
       updateProposals(context);
     });
   }

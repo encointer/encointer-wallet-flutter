@@ -15,14 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show
-        AddLocation,
-        Petition,
-        ProposalAction,
-        SetInactivityTimeout,
-        SpendNative,
-        UpdateDemurrage,
-        UpdateNominalIncome;
+    show AddLocation, Petition, ProposalAction, SetInactivityTimeout, SpendNative, UpdateDemurrage, UpdateNominalIncome;
 
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
@@ -46,8 +39,7 @@ class _ProposePageState extends State<ProposePage> {
   final TextEditingController lonController = TextEditingController();
   final TextEditingController demurrageController = TextEditingController();
   final TextEditingController nominalIncomeController = TextEditingController();
-  final TextEditingController inactivityTimeoutController =
-      TextEditingController();
+  final TextEditingController inactivityTimeoutController = TextEditingController();
   final TextEditingController petitionTextController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
   final TextEditingController allowanceController = TextEditingController();
@@ -118,8 +110,7 @@ class _ProposePageState extends State<ProposePage> {
                       _updateAllowedScopes();
                     });
                   },
-                  items: supportedProposalIds()
-                      .map((ProposalActionIdentifier action) {
+                  items: supportedProposalIds().map((ProposalActionIdentifier action) {
                     return DropdownMenuItem<ProposalActionIdentifier>(
                       value: action,
                       child: Text(action.localizedStr(l10n)),
@@ -253,10 +244,8 @@ class _ProposePageState extends State<ProposePage> {
         },
         hideIdenticon: true,
       ),
-      const Text('Burn: true (hardcoded)',
-          style: TextStyle(fontWeight: FontWeight.bold)),
-      const Text('Validity: None (hardcoded)',
-          style: TextStyle(fontWeight: FontWeight.bold)),
+      const Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
+      const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
     ]);
   }
 
@@ -266,8 +255,8 @@ class _ProposePageState extends State<ProposePage> {
     return TextFormField(
       controller: petitionTextController,
       decoration: InputDecoration(
-          labelText: l10n.proposalFieldPetitionText,
-          errorText: petitionError,
+        labelText: l10n.proposalFieldPetitionText,
+        errorText: petitionError,
       ),
       validator: validatePetitionText,
       onChanged: (value) {
@@ -537,8 +526,7 @@ class _ProposePageState extends State<ProposePage> {
         webApi,
         store.account.getKeyringAccount(store.account.currentAccountPubKey!),
         action!,
-        txPaymentAsset:
-            store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       );
     }
   }
@@ -566,8 +554,7 @@ class _ProposePageState extends State<ProposePage> {
         return UpdateNominalIncome(cid, fixedU128FromDouble(ni));
 
       case ProposalActionIdentifier.setInactivityTimeout:
-        return SetInactivityTimeout(
-            int.tryParse(inactivityTimeoutController.text)!);
+        return SetInactivityTimeout(int.tryParse(inactivityTimeoutController.text)!);
 
       case ProposalActionIdentifier.petition:
         final maybeCid = selectedScope.isLocal ? cid : null;

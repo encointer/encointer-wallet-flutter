@@ -58,36 +58,25 @@ extension PropsalActionExt on ProposalActionIdentifier {
       ProposalActionIdentifier.issueSwapNativeOption => [ProposalScope.local],
 
       // Global or Local allowed (first value is the default)
-      ProposalActionIdentifier.petition => [
-          ProposalScope.local,
-          ProposalScope.global
-        ],
-      ProposalActionIdentifier.spendNative => [
-          ProposalScope.local,
-          ProposalScope.global
-        ],
+      ProposalActionIdentifier.petition => [ProposalScope.local, ProposalScope.global],
+      ProposalActionIdentifier.spendNative => [ProposalScope.local, ProposalScope.global],
     };
   }
 
   String localizedStr(AppLocalizations l10n) {
     return switch (this) {
       ProposalActionIdentifier.addLocation => l10n.proposalTypeAddLocation,
-      ProposalActionIdentifier.updateDemurrage =>
-        l10n.proposalTypeUpdateDemurrage,
-      ProposalActionIdentifier.updateNominalIncome =>
-        l10n.proposalTypeUpdateNominalIncome,
-      ProposalActionIdentifier.setInactivityTimeout =>
-        l10n.proposalTypeSetInactivityTimeout,
+      ProposalActionIdentifier.updateDemurrage => l10n.proposalTypeUpdateDemurrage,
+      ProposalActionIdentifier.updateNominalIncome => l10n.proposalTypeUpdateNominalIncome,
+      ProposalActionIdentifier.setInactivityTimeout => l10n.proposalTypeSetInactivityTimeout,
       ProposalActionIdentifier.petition => l10n.proposalTypePetition,
       ProposalActionIdentifier.spendNative => l10n.proposalTypeSpendNative,
-      ProposalActionIdentifier.issueSwapNativeOption =>
-        l10n.proposalTypeIssueSwapNativeOption,
+      ProposalActionIdentifier.issueSwapNativeOption => l10n.proposalTypeIssueSwapNativeOption,
     };
   }
 }
 
-double monthlyDemurragePercentToDemurrage(
-    double monthly, BigInt blockProductionTime) {
+double monthlyDemurragePercentToDemurrage(double monthly, BigInt blockProductionTime) {
   final blocks = blocksPerMonth(blockProductionTime);
   return -log(1 - (monthly / 100)) / blocks;
 }
