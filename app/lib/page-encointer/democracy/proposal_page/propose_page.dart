@@ -60,6 +60,7 @@ class _ProposePageState extends State<ProposePage> {
   String? demurrageError;
   String? nominalIncomeError;
   String? inactivityTimeoutError;
+  String? petitionError;
   String? amountError;
   String? allowanceError;
   String? rateError;
@@ -265,6 +266,21 @@ class _ProposePageState extends State<ProposePage> {
     ]);
   }
 
+  Widget petitionInput(BuildContext context) {
+    final l10n = context.l10n;
+
+    return TextFormField(
+      controller: petitionTextController,
+      decoration: InputDecoration(labelText: l10n.proposalFieldPetitionText),
+      validator: validatePetitionText,
+      onChanged: (value) {
+        setState(() {
+          petitionError = validatePetitionText(value);
+        });
+      },
+    );
+  }
+
   Widget spendNativeInput(BuildContext context) {
     final store = context.read<AppStore>();
     final l10n = context.l10n;
@@ -410,6 +426,21 @@ class _ProposePageState extends State<ProposePage> {
         },
       ),
     ]);
+  }
+
+  String? validatePetitionText(String? value) {
+    final l10n = context.l10n;
+
+    if (value == null || value.isEmpty) {
+      return l10n.proposalFieldErrorEnterPetitionText;
+    } else {
+      final bytes = value.codeUnits;
+      if (bytes.length > 256) {
+        return l10n.proposalFieldErrorEnterPetitionText;
+      } else {
+        return null;
+      }
+    }
   }
 
   /// Validates Latitude (-90 to 90)

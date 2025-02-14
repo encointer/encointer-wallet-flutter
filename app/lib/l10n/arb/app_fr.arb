@@ -228,6 +228,8 @@
     "proposalFieldRate": "Taux",
     "proposalFieldBurn": "Brûler",
     "proposalFieldValidity": "Validité",
+    "proposalFieldErrorEnterPetitionText": "Entrez le texte de la pétition",
+    "proposalFieldErrorPetitionTextTooLong": "Le texte de la pétition est trop long",
     "proposalFieldErrorEnterLatitude": "Entrez la latitude",
     "proposalFieldErrorLatitudeRange": "La latitude doit être comprise entre -90 et 90",
     "proposalFieldErrorEnterLongitude": "Entrez la longitude",

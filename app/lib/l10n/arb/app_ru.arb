@@ -228,6 +228,8 @@
     "proposalFieldRate": "Ставка",
     "proposalFieldBurn": "Сжигание",
     "proposalFieldValidity": "Срок действия",
+    "proposalFieldErrorEnterPetitionText": "Введите текст петиции",
+    "proposalFieldErrorPetitionTextTooLong": "Текст петиции слишком длинный",
     "proposalFieldErrorEnterLatitude": "Введите широту",
     "proposalFieldErrorLatitudeRange": "Широта должна быть от -90 до 90",
     "proposalFieldErrorEnterLongitude": "Введите долготу",

@@ -228,6 +228,8 @@
     "proposalFieldRate": "Kiwango",
     "proposalFieldBurn": "Teketeza",
     "proposalFieldValidity": "Uhalali",
+    "proposalFieldErrorEnterPetitionText": "Weka maandishi ya ombi rasmi",
+    "proposalFieldErrorPetitionTextTooLong": "Maandishi ya ombi rasmi ni marefu sana",
     "proposalFieldErrorEnterLatitude": "Weka latitudo",
     "proposalFieldErrorLatitudeRange": "Latitudo lazima iwe kati ya -90 na 90",
     "proposalFieldErrorEnterLongitude": "Weka longitudo",
