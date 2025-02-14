@@ -148,9 +148,10 @@ class _ProposePageState extends State<ProposePage> {
                 // Submit Button
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     _formKey.currentState!.validate();
-                    _submitProposal();
+                    await _submitProposal();
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Submit Proposal'),
                 ),
@@ -194,17 +195,6 @@ class _ProposePageState extends State<ProposePage> {
     final l10n = context.l10n;
 
     return Column(children: [
-      EncointerAddressInputField(
-        store,
-        label: l10n.address,
-        initialValue: beneficiary,
-        onChanged: (AccountData acc) {
-          setState(() {
-            beneficiary = acc;
-          });
-        },
-        hideIdenticon: true,
-      ),
       TextFormField(
         controller: allowanceController,
         decoration: InputDecoration(
@@ -241,6 +231,18 @@ class _ProposePageState extends State<ProposePage> {
           });
         },
       ),
+      const SizedBox(height: 10),
+      EncointerAddressInputField(
+        store,
+        label: 'Beneficiary',
+        initialValue: beneficiary,
+        onChanged: (AccountData acc) {
+          setState(() {
+            beneficiary = acc;
+          });
+        },
+        hideIdenticon: true,
+      ),
       const Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
       const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
     ]);
@@ -251,17 +253,6 @@ class _ProposePageState extends State<ProposePage> {
     final l10n = context.l10n;
 
     return Column(children: [
-      EncointerAddressInputField(
-        store,
-        label: l10n.address,
-        initialValue: beneficiary,
-        onChanged: (AccountData acc) {
-          setState(() {
-            beneficiary = acc;
-          });
-        },
-        hideIdenticon: true,
-      ),
       TextFormField(
         controller: amountController,
         decoration: InputDecoration(
@@ -279,6 +270,18 @@ class _ProposePageState extends State<ProposePage> {
             amountError = validatePositiveNumber(value);
           });
         },
+      ),
+      const SizedBox(height: 10),
+      EncointerAddressInputField(
+        store,
+        label: 'Beneficiary',
+        initialValue: beneficiary,
+        onChanged: (AccountData acc) {
+          setState(() {
+            beneficiary = acc;
+          });
+        },
+        hideIdenticon: true,
       ),
     ]);
   }
