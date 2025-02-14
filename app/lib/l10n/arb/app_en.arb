@@ -224,7 +224,7 @@
     "proposalFieldPetitionText": "Petition Text",
     "proposalFieldAmount": "Amount",
     "proposalFieldBeneficiary": "Beneficiary",
-    "proposalFieldAllowance": "Allowance (KSM)",
+    "proposalFieldAllowance": "Limit (KSM)",
     "proposalFieldRate": "Rate",
     "proposalFieldBurn": "Burn",
     "proposalFieldValidity": "Validity",

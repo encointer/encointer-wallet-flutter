@@ -224,7 +224,7 @@
     "proposalFieldPetitionText": "Текст петиции",
     "proposalFieldAmount": "Сумма",
     "proposalFieldBeneficiary": "Получатель",
-    "proposalFieldAllowance": "Пособие (KSM)",
+    "proposalFieldAllowance": "Лимит (KSM)",
     "proposalFieldRate": "Ставка",
     "proposalFieldBurn": "Сжигание",
     "proposalFieldValidity": "Срок действия",
