@@ -194,7 +194,7 @@ class _ProposePageState extends State<ProposePage> {
     final l10n = context.l10n;
 
     return Column(children: [
-      AddressInputField(
+      EncointerAddressInputField(
         store,
         label: l10n.address,
         initialValue: beneficiary,
@@ -251,7 +251,7 @@ class _ProposePageState extends State<ProposePage> {
     final l10n = context.l10n;
 
     return Column(children: [
-      AddressInputField(
+      EncointerAddressInputField(
         store,
         label: l10n.address,
         initialValue: beneficiary,

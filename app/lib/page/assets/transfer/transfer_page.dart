@@ -197,7 +197,7 @@ class _TransferPageState extends State<TransferPage> {
               suffixIcon: const Text('ⵐ', style: TextStyle(color: AppColors.encointerGrey, fontSize: 44)),
             ),
             const SizedBox(height: 24),
-            AddressInputField(
+            EncointerAddressInputField(
               store,
               label: l10n.address,
               initialValue: _accountTo,

@@ -10,8 +10,8 @@ import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:ew_keyring/ew_keyring.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 
-class AddressInputField extends StatefulWidget {
-  const AddressInputField(
+class EncointerAddressInputField extends StatefulWidget {
+  const EncointerAddressInputField(
     this.store, {
     super.key,
     this.label,
@@ -27,10 +27,10 @@ class AddressInputField extends StatefulWidget {
   final bool hideIdenticon;
 
   @override
-  State<AddressInputField> createState() => _AddressInputFieldState();
+  State<EncointerAddressInputField> createState() => _EncointerAddressInputFieldState();
 }
 
-class _AddressInputFieldState extends State<AddressInputField> {
+class _EncointerAddressInputFieldState extends State<EncointerAddressInputField> {
   /// Returns true if the [account]'s name or address starts with [nameOrAddress].
   bool filterByAddressOrName(AccountData account, String nameOrAddress) {
     final ss58 = widget.store.settings.currentNetwork.ss58();
