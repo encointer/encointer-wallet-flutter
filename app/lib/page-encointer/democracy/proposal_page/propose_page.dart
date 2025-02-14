@@ -176,8 +176,6 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Dynamically generates form fields based on selected proposal type
   Widget _buildDynamicFields(BuildContext context) {
-    final l10n = context.l10n;
-
     switch (selectedAction) {
       case ProposalActionIdentifier.addLocation:
         return latitudeLongitudeInput();
@@ -192,11 +190,7 @@ class _ProposePageState extends State<ProposePage> {
         return inactivityTimeoutInput();
 
       case ProposalActionIdentifier.petition:
-        return TextFormField(
-            controller: petitionTextController,
-            decoration: InputDecoration(
-              labelText: l10n.proposalFieldPetitionText,
-            ));
+        return petitionInput(context);
 
       case ProposalActionIdentifier.spendNative:
         return spendNativeInput(context);
@@ -271,13 +265,19 @@ class _ProposePageState extends State<ProposePage> {
 
     return TextFormField(
       controller: petitionTextController,
-      decoration: InputDecoration(labelText: l10n.proposalFieldPetitionText),
+      decoration: InputDecoration(
+          labelText: l10n.proposalFieldPetitionText,
+          errorText: petitionError,
+      ),
       validator: validatePetitionText,
       onChanged: (value) {
         setState(() {
           petitionError = validatePetitionText(value);
         });
       },
+      keyboardType: TextInputType.multiline,
+      minLines: 5,
+      maxLines: 10,
     );
   }
 
@@ -428,6 +428,7 @@ class _ProposePageState extends State<ProposePage> {
     ]);
   }
 
+  /// Validates the petition text (max length = 256 bytes)
   String? validatePetitionText(String? value) {
     final l10n = context.l10n;
 
@@ -436,7 +437,8 @@ class _ProposePageState extends State<ProposePage> {
     } else {
       final bytes = value.codeUnits;
       if (bytes.length > 256) {
-        return l10n.proposalFieldErrorEnterPetitionText;
+        // Onchain we limit the number of bytes to 256
+        return l10n.proposalFieldErrorPetitionTextTooLong;
       } else {
         return null;
       }
