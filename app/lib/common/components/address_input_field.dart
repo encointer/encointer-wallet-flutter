@@ -61,7 +61,9 @@ class AddressInputField extends StatefulWidget {
     this.initialValue,
     this.onChanged,
     this.contentPadding = EdgeInsets.zero,
-    this.border = InputBorder.none,
+    this.border = const UnderlineInputBorder(
+      borderSide: BorderSide(width: 0),
+    ),
     this.hideIdenticon = false,
   });
 
@@ -180,9 +182,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
           labelStyle:
               context.bodyLarge.copyWith(color: context.colorScheme.primary),
           contentPadding: widget.contentPadding,
-          border: const UnderlineInputBorder(
-            borderSide: BorderSide(width: 0, style: BorderStyle.none),
-          ),
+          border: widget.border
         ),
       ),
       selectedItem: widget.initialValue,
