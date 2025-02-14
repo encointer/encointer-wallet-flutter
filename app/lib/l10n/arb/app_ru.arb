@@ -204,7 +204,7 @@
     "proposal": "Предложение",
     "proposalAye": "Aye",
     "proposalNay": "Nay",
-    "proposalNay": "новое предложение",
+    "proposalNew": "новое предложение",
     "proposalRejected": "Отменено",
     "proposalSuperseded": "заменен",
     "proposalEnacted": "выполнено",
