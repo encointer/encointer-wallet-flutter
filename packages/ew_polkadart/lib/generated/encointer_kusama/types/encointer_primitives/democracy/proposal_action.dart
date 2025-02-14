@@ -2,7 +2,7 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
-import 'package:quiver/collection.dart' as _i9;
+import 'package:quiver/collection.dart' as _i10;
 
 import '../../sp_core/crypto/account_id32.dart' as _i8;
 import '../../substrate_fixed/fixed_i128.dart' as _i6;
@@ -10,6 +10,7 @@ import '../../substrate_fixed/fixed_u128.dart' as _i7;
 import '../communities/community_identifier.dart' as _i3;
 import '../communities/community_metadata.dart' as _i5;
 import '../communities/location.dart' as _i4;
+import '../treasuries/swap_native_option.dart' as _i9;
 
 abstract class ProposalAction {
   const ProposalAction();
@@ -113,6 +114,18 @@ class $ProposalAction {
       value2,
     );
   }
+
+  IssueSwapNativeOption issueSwapNativeOption(
+    _i3.CommunityIdentifier value0,
+    _i8.AccountId32 value1,
+    _i9.SwapNativeOption value2,
+  ) {
+    return IssueSwapNativeOption(
+      value0,
+      value1,
+      value2,
+    );
+  }
 }
 
 class $ProposalActionCodec with _i1.Codec<ProposalAction> {
@@ -138,6 +151,8 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
         return Petition._decode(input);
       case 7:
         return SpendNative._decode(input);
+      case 8:
+        return IssueSwapNativeOption._decode(input);
       default:
         throw Exception('ProposalAction: Invalid variant index: "$index"');
     }
@@ -173,6 +188,9 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
       case SpendNative:
         (value as SpendNative).encodeTo(output);
         break;
+      case IssueSwapNativeOption:
+        (value as IssueSwapNativeOption).encodeTo(output);
+        break;
       default:
         throw Exception('ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -197,6 +215,8 @@ class $ProposalActionCodec with _i1.Codec<ProposalAction> {
         return (value as Petition)._sizeHint();
       case SpendNative:
         return (value as SpendNative)._sizeHint();
+      case IssueSwapNativeOption:
+        return (value as IssueSwapNativeOption)._sizeHint();
       default:
         throw Exception('ProposalAction: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -622,7 +642,7 @@ class Petition extends ProposalAction {
       ) ||
       other is Petition &&
           other.value0 == value0 &&
-          _i9.listsEqual(
+          _i10.listsEqual(
             other.value1,
             value1,
           );
@@ -702,7 +722,89 @@ class SpendNative extends ProposalAction {
       ) ||
       other is SpendNative &&
           other.value0 == value0 &&
-          _i9.listsEqual(
+          _i10.listsEqual(
+            other.value1,
+            value1,
+          ) &&
+          other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
+}
+
+class IssueSwapNativeOption extends ProposalAction {
+  const IssueSwapNativeOption(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
+
+  factory IssueSwapNativeOption._decode(_i1.Input input) {
+    return IssueSwapNativeOption(
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      _i9.SwapNativeOption.codec.decode(input),
+    );
+  }
+
+  /// CommunityIdentifier
+  final _i3.CommunityIdentifier value0;
+
+  /// AccountId
+  final _i8.AccountId32 value1;
+
+  /// SwapNativeOption<Balance, Moment>
+  final _i9.SwapNativeOption value2;
+
+  @override
+  Map<String, List<dynamic>> toJson() => {
+        'IssueSwapNativeOption': [
+          value0.toJson(),
+          value1.toList(),
+          value2.toJson(),
+        ]
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
+    size = size + const _i8.AccountId32Codec().sizeHint(value1);
+    size = size + _i9.SwapNativeOption.codec.sizeHint(value2);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      8,
+      output,
+    );
+    _i3.CommunityIdentifier.codec.encodeTo(
+      value0,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      value1,
+      output,
+    );
+    _i9.SwapNativeOption.codec.encodeTo(
+      value2,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is IssueSwapNativeOption &&
+          other.value0 == value0 &&
+          _i10.listsEqual(
             other.value1,
             value1,
           ) &&

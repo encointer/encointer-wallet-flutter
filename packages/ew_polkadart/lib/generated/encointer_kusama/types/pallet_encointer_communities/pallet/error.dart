@@ -8,7 +8,7 @@ enum Error {
   /// Location is not a valid geolocation
   invalidLocation('InvalidLocation', 0),
 
-  /// Invalid amount of bootstrappers supplied. Needs to be \[3, 12\]
+  /// Invalid amount of bootstrappers supplied. Needs to be /[3, 12/]
   invalidAmountBootstrappers('InvalidAmountBootstrappers', 1),
 
   /// minimum distance violation to other location

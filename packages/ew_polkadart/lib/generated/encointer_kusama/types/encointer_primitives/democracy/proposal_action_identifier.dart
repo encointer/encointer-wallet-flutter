@@ -63,6 +63,10 @@ class $ProposalActionIdentifier {
   SpendNative spendNative(_i3.CommunityIdentifier? value0) {
     return SpendNative(value0);
   }
+
+  IssueSwapNativeOption issueSwapNativeOption(_i3.CommunityIdentifier value0) {
+    return IssueSwapNativeOption(value0);
+  }
 }
 
 class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
@@ -88,6 +92,8 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
         return Petition._decode(input);
       case 7:
         return SpendNative._decode(input);
+      case 8:
+        return IssueSwapNativeOption._decode(input);
       default:
         throw Exception('ProposalActionIdentifier: Invalid variant index: "$index"');
     }
@@ -123,6 +129,9 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
       case SpendNative:
         (value as SpendNative).encodeTo(output);
         break;
+      case IssueSwapNativeOption:
+        (value as IssueSwapNativeOption).encodeTo(output);
+        break;
       default:
         throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -147,6 +156,8 @@ class $ProposalActionIdentifierCodec with _i1.Codec<ProposalActionIdentifier> {
         return (value as Petition)._sizeHint();
       case SpendNative:
         return (value as SpendNative)._sizeHint();
+      case IssueSwapNativeOption:
+        return (value as IssueSwapNativeOption)._sizeHint();
       default:
         throw Exception('ProposalActionIdentifier: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -462,6 +473,48 @@ class SpendNative extends ProposalActionIdentifier {
         other,
       ) ||
       other is SpendNative && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class IssueSwapNativeOption extends ProposalActionIdentifier {
+  const IssueSwapNativeOption(this.value0);
+
+  factory IssueSwapNativeOption._decode(_i1.Input input) {
+    return IssueSwapNativeOption(_i3.CommunityIdentifier.codec.decode(input));
+  }
+
+  /// CommunityIdentifier
+  final _i3.CommunityIdentifier value0;
+
+  @override
+  Map<String, Map<String, List<int>>> toJson() => {'IssueSwapNativeOption': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      8,
+      output,
+    );
+    _i3.CommunityIdentifier.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is IssueSwapNativeOption && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;

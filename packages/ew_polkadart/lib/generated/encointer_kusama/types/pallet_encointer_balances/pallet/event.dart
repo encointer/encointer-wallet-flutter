@@ -74,6 +74,18 @@ class $Event {
     );
   }
 
+  Burned burned(
+    _i3.CommunityIdentifier value0,
+    _i4.AccountId32 value1,
+    _i5.FixedU128 value2,
+  ) {
+    return Burned(
+      value0,
+      value1,
+      value2,
+    );
+  }
+
   FeeConversionFactorUpdated feeConversionFactorUpdated(BigInt value0) {
     return FeeConversionFactorUpdated(value0);
   }
@@ -93,6 +105,8 @@ class $EventCodec with _i1.Codec<Event> {
       case 2:
         return Issued._decode(input);
       case 3:
+        return Burned._decode(input);
+      case 4:
         return FeeConversionFactorUpdated._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
@@ -114,6 +128,9 @@ class $EventCodec with _i1.Codec<Event> {
       case Issued:
         (value as Issued).encodeTo(output);
         break;
+      case Burned:
+        (value as Burned).encodeTo(output);
+        break;
       case FeeConversionFactorUpdated:
         (value as FeeConversionFactorUpdated).encodeTo(output);
         break;
@@ -131,6 +148,8 @@ class $EventCodec with _i1.Codec<Event> {
         return (value as Transferred)._sizeHint();
       case Issued:
         return (value as Issued)._sizeHint();
+      case Burned:
+        return (value as Burned)._sizeHint();
       case FeeConversionFactorUpdated:
         return (value as FeeConversionFactorUpdated)._sizeHint();
       default:
@@ -404,6 +423,89 @@ class Issued extends Event {
       );
 }
 
+/// Token burn success `[community_id, who, amount]`
+class Burned extends Event {
+  const Burned(
+    this.value0,
+    this.value1,
+    this.value2,
+  );
+
+  factory Burned._decode(_i1.Input input) {
+    return Burned(
+      _i3.CommunityIdentifier.codec.decode(input),
+      const _i1.U8ArrayCodec(32).decode(input),
+      _i5.FixedU128.codec.decode(input),
+    );
+  }
+
+  /// CommunityIdentifier
+  final _i3.CommunityIdentifier value0;
+
+  /// T::AccountId
+  final _i4.AccountId32 value1;
+
+  /// BalanceType
+  final _i5.FixedU128 value2;
+
+  @override
+  Map<String, List<dynamic>> toJson() => {
+        'Burned': [
+          value0.toJson(),
+          value1.toList(),
+          value2.toJson(),
+        ]
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i3.CommunityIdentifier.codec.sizeHint(value0);
+    size = size + const _i4.AccountId32Codec().sizeHint(value1);
+    size = size + _i5.FixedU128.codec.sizeHint(value2);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      3,
+      output,
+    );
+    _i3.CommunityIdentifier.codec.encodeTo(
+      value0,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      value1,
+      output,
+    );
+    _i5.FixedU128.codec.encodeTo(
+      value2,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is Burned &&
+          other.value0 == value0 &&
+          _i6.listsEqual(
+            other.value1,
+            value1,
+          ) &&
+          other.value2 == value2;
+
+  @override
+  int get hashCode => Object.hash(
+        value0,
+        value1,
+        value2,
+      );
+}
+
 /// fee conversion factor updated successfully
 class FeeConversionFactorUpdated extends Event {
   const FeeConversionFactorUpdated(this.value0);
@@ -426,7 +528,7 @@ class FeeConversionFactorUpdated extends Event {
 
   void encodeTo(_i1.Output output) {
     _i1.U8Codec.codec.encodeTo(
-      3,
+      4,
       output,
     );
     _i1.U128Codec.codec.encodeTo(

@@ -104,7 +104,8 @@ enum Error {
   /// Only newbies can upgrade their registration
   mustBeNewbieToUpgradeRegistration('MustBeNewbieToUpgradeRegistration', 32),
 
-  /// To unregister as a reputable you need to provide a provide a community ceremony where you have a linked reputation
+  /// To unregister as a reputable you need to provide a provide a community ceremony where
+  /// you have a linked reputation
   reputationCommunityCeremonyRequired('ReputationCommunityCeremonyRequired', 33),
 
   /// In order to unregister a reputable, the provided reputation must be linked

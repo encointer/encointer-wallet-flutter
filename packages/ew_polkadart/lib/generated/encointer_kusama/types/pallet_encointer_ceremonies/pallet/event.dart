@@ -385,7 +385,8 @@ class ParticipantRegistered extends Event {
       );
 }
 
-/// A bootstrapper (first accountid) has endorsed a participant (second accountid) who can now register as endorsee for this ceremony
+/// A bootstrapper (first accountid) has endorsed a participant (second accountid) who can
+/// now register as endorsee for this ceremony
 class EndorsedParticipant extends Event {
   const EndorsedParticipant(
     this.value0,
@@ -567,7 +568,8 @@ class AttestationsRegistered extends Event {
       );
 }
 
-/// rewards have been claimed and issued successfully for N participants for their meetup at the previous ceremony
+/// rewards have been claimed and issued successfully for N participants for their meetup
+/// at the previous ceremony
 class RewardsIssued extends Event {
   const RewardsIssued(
     this.value0,
@@ -644,7 +646,8 @@ class RewardsIssued extends Event {
       );
 }
 
-/// inactivity timeout has changed. affects how many ceremony cycles a community can be idle before getting purged
+/// inactivity timeout has changed. affects how many ceremony cycles a community can be
+/// idle before getting purged
 class InactivityTimeoutUpdated extends Event {
   const InactivityTimeoutUpdated(this.value0);
 
@@ -773,7 +776,8 @@ class EndorsementTicketsPerReputableUpdated extends Event {
   int get hashCode => value0.hashCode;
 }
 
-/// reputation lifetime has changed. After this many ceremony cycles, reputations is outdated
+/// reputation lifetime has changed. After this many ceremony cycles, reputations is
+/// outdated
 class ReputationLifetimeUpdated extends Event {
   const ReputationLifetimeUpdated(this.value0);
 
@@ -816,7 +820,8 @@ class ReputationLifetimeUpdated extends Event {
   int get hashCode => value0.hashCode;
 }
 
-/// meetup time offset has changed. affects the exact time the upcoming ceremony meetups will take place
+/// meetup time offset has changed. affects the exact time the upcoming ceremony meetups
+/// will take place
 class MeetupTimeOffsetUpdated extends Event {
   const MeetupTimeOffsetUpdated(this.value0);
 

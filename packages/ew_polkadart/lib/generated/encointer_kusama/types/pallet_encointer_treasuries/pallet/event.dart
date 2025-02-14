@@ -2,8 +2,9 @@
 import 'dart:typed_data' as _i2;
 
 import 'package:polkadart/scale_codec.dart' as _i1;
-import 'package:quiver/collection.dart' as _i4;
+import 'package:quiver/collection.dart' as _i5;
 
+import '../../encointer_primitives/communities/community_identifier.dart' as _i4;
 import '../../sp_core/crypto/account_id32.dart' as _i3;
 
 /// The `Event` enum of this pallet
@@ -45,6 +46,16 @@ class $Event {
       amount: amount,
     );
   }
+
+  GrantedSwapNativeOption grantedSwapNativeOption({
+    required _i4.CommunityIdentifier cid,
+    required _i3.AccountId32 who,
+  }) {
+    return GrantedSwapNativeOption(
+      cid: cid,
+      who: who,
+    );
+  }
 }
 
 class $EventCodec with _i1.Codec<Event> {
@@ -56,6 +67,8 @@ class $EventCodec with _i1.Codec<Event> {
     switch (index) {
       case 0:
         return SpentNative._decode(input);
+      case 1:
+        return GrantedSwapNativeOption._decode(input);
       default:
         throw Exception('Event: Invalid variant index: "$index"');
     }
@@ -70,6 +83,9 @@ class $EventCodec with _i1.Codec<Event> {
       case SpentNative:
         (value as SpentNative).encodeTo(output);
         break;
+      case GrantedSwapNativeOption:
+        (value as GrantedSwapNativeOption).encodeTo(output);
+        break;
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -80,6 +96,8 @@ class $EventCodec with _i1.Codec<Event> {
     switch (value.runtimeType) {
       case SpentNative:
         return (value as SpentNative)._sizeHint();
+      case GrantedSwapNativeOption:
+        return (value as GrantedSwapNativeOption)._sizeHint();
       default:
         throw Exception('Event: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -154,11 +172,11 @@ class SpentNative extends Event {
         other,
       ) ||
       other is SpentNative &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.treasury,
             treasury,
           ) &&
-          _i4.listsEqual(
+          _i5.listsEqual(
             other.beneficiary,
             beneficiary,
           ) &&
@@ -169,5 +187,74 @@ class SpentNative extends Event {
         treasury,
         beneficiary,
         amount,
+      );
+}
+
+class GrantedSwapNativeOption extends Event {
+  const GrantedSwapNativeOption({
+    required this.cid,
+    required this.who,
+  });
+
+  factory GrantedSwapNativeOption._decode(_i1.Input input) {
+    return GrantedSwapNativeOption(
+      cid: _i4.CommunityIdentifier.codec.decode(input),
+      who: const _i1.U8ArrayCodec(32).decode(input),
+    );
+  }
+
+  /// CommunityIdentifier
+  final _i4.CommunityIdentifier cid;
+
+  /// T::AccountId
+  final _i3.AccountId32 who;
+
+  @override
+  Map<String, Map<String, dynamic>> toJson() => {
+        'GrantedSwapNativeOption': {
+          'cid': cid.toJson(),
+          'who': who.toList(),
+        }
+      };
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i4.CommunityIdentifier.codec.sizeHint(cid);
+    size = size + const _i3.AccountId32Codec().sizeHint(who);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      1,
+      output,
+    );
+    _i4.CommunityIdentifier.codec.encodeTo(
+      cid,
+      output,
+    );
+    const _i1.U8ArrayCodec(32).encodeTo(
+      who,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is GrantedSwapNativeOption &&
+          other.cid == cid &&
+          _i5.listsEqual(
+            other.who,
+            who,
+          );
+
+  @override
+  int get hashCode => Object.hash(
+        cid,
+        who,
       );
 }

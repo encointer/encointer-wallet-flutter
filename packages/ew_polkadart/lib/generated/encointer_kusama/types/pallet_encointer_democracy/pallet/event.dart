@@ -247,7 +247,7 @@ class ProposalSubmitted extends Event {
   /// ProposalIdType
   final BigInt proposalId;
 
-  /// ProposalAction<T::AccountId, BalanceOf<T>>
+  /// ProposalAction<T::AccountId, BalanceOf<T>, T::Moment>
   final _i3.ProposalAction proposalAction;
 
   @override
