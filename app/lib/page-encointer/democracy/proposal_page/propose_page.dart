@@ -15,7 +15,14 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart'
-    show AddLocation, Petition, ProposalAction, SetInactivityTimeout, SpendNative, UpdateDemurrage, UpdateNominalIncome;
+    show
+        AddLocation,
+        Petition,
+        ProposalAction,
+        SetInactivityTimeout,
+        SpendNative,
+        UpdateDemurrage,
+        UpdateNominalIncome;
 
 class ProposePage extends StatefulWidget {
   const ProposePage({super.key});
@@ -39,7 +46,8 @@ class _ProposePageState extends State<ProposePage> {
   final TextEditingController lonController = TextEditingController();
   final TextEditingController demurrageController = TextEditingController();
   final TextEditingController nominalIncomeController = TextEditingController();
-  final TextEditingController inactivityTimeoutController = TextEditingController();
+  final TextEditingController inactivityTimeoutController =
+      TextEditingController();
   final TextEditingController petitionTextController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
   final TextEditingController allowanceController = TextEditingController();
@@ -109,13 +117,14 @@ class _ProposePageState extends State<ProposePage> {
                       _updateAllowedScopes();
                     });
                   },
-                  items: supportedProposalIds().map((ProposalActionIdentifier action) {
+                  items: supportedProposalIds()
+                      .map((ProposalActionIdentifier action) {
                     return DropdownMenuItem<ProposalActionIdentifier>(
                       value: action,
-                      child: Text(action.name), // Converts enum to string
+                      child: Text(action.localizedStr(l10n)),
                     );
                   }).toList(),
-                  decoration: const InputDecoration(labelText: 'Proposal Action Identifier'),
+                  decoration: InputDecoration(labelText: l10n.proposalType),
                 ),
 
                 const SizedBox(height: 10),
@@ -135,10 +144,10 @@ class _ProposePageState extends State<ProposePage> {
                   items: allowedScopes.map((ProposalScope scope) {
                     return DropdownMenuItem<ProposalScope>(
                       value: scope,
-                      child: Text(scope.name),
+                      child: Text(scope.localizedStr(l10n)),
                     );
                   }).toList(),
-                  decoration: const InputDecoration(labelText: 'Scope'),
+                  decoration: InputDecoration(labelText: l10n.proposalScope),
                 ),
 
                 const SizedBox(height: 10),
@@ -154,7 +163,7 @@ class _ProposePageState extends State<ProposePage> {
                     await _submitProposal();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Submit Proposal'),
+                  child: Text(l10n.proposalSubmit),
                 ),
               ],
             ),
@@ -166,6 +175,8 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Dynamically generates form fields based on selected proposal type
   Widget _buildDynamicFields(BuildContext context) {
+    final l10n = context.l10n;
+
     switch (selectedAction) {
       case ProposalActionIdentifier.addLocation:
         return latitudeLongitudeInput();
@@ -181,7 +192,10 @@ class _ProposePageState extends State<ProposePage> {
 
       case ProposalActionIdentifier.petition:
         return TextFormField(
-            controller: petitionTextController, decoration: const InputDecoration(labelText: 'Petition Text'));
+            controller: petitionTextController,
+            decoration: InputDecoration(
+              labelText: l10n.proposalFieldPetitionText,
+            ));
 
       case ProposalActionIdentifier.spendNative:
         return spendNativeInput(context);
@@ -193,11 +207,13 @@ class _ProposePageState extends State<ProposePage> {
 
   Widget issueSwapNativeOptionInput() {
     final store = context.read<AppStore>();
+    final l10n = context.l10n;
+
     return Column(children: [
       TextFormField(
         controller: allowanceController,
         decoration: InputDecoration(
-          labelText: 'Allowance (KSM)',
+          labelText: l10n.proposalFieldAllowance,
           errorText: allowanceError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -215,7 +231,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: rateController,
         decoration: InputDecoration(
-          labelText: 'Rate',
+          labelText: l10n.proposalFieldRate,
           errorText: rateError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -233,7 +249,7 @@ class _ProposePageState extends State<ProposePage> {
       const SizedBox(height: 10),
       EncointerAddressInputField(
         store,
-        label: 'Beneficiary',
+        label: l10n.proposalFieldBeneficiary,
         initialValue: beneficiary,
         onChanged: (AccountData acc) {
           setState(() {
@@ -242,18 +258,21 @@ class _ProposePageState extends State<ProposePage> {
         },
         hideIdenticon: true,
       ),
-      const Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
-      const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
+      const Text('Burn: true (hardcoded)',
+          style: TextStyle(fontWeight: FontWeight.bold)),
+      const Text('Validity: None (hardcoded)',
+          style: TextStyle(fontWeight: FontWeight.bold)),
     ]);
   }
 
   Widget spendNativeInput(BuildContext context) {
     final store = context.read<AppStore>();
+    final l10n = context.l10n;
     return Column(children: [
       TextFormField(
         controller: amountController,
         decoration: InputDecoration(
-          labelText: 'Amount',
+          labelText: l10n.proposalFieldAmount,
           errorText: amountError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -271,7 +290,7 @@ class _ProposePageState extends State<ProposePage> {
       const SizedBox(height: 10),
       EncointerAddressInputField(
         store,
-        label: 'Beneficiary',
+        label: l10n.proposalFieldBeneficiary,
         initialValue: beneficiary,
         onChanged: (AccountData acc) {
           setState(() {
@@ -285,10 +304,11 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Inactivity timeout text form allowing positive integers.
   Widget inactivityTimeoutInput() {
+    final l10n = context.l10n;
     return TextFormField(
       controller: inactivityTimeoutController,
       decoration: InputDecoration(
-        labelText: 'Inactivity Timeout (cycles)',
+        labelText: l10n.proposalFieldInactivityTimeoutCycles,
         errorText: inactivityTimeoutError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -307,10 +327,11 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Nominal income text form allowing positive integers.
   Widget nominalIncomeInput() {
+    final l10n = context.l10n;
     return TextFormField(
       controller: nominalIncomeController,
       decoration: InputDecoration(
-        labelText: 'Nominal Income',
+        labelText: l10n.proposalFieldNominalIncome,
         errorText: nominalIncomeError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -329,10 +350,11 @@ class _ProposePageState extends State<ProposePage> {
 
   /// Demurrage text form allowing numbers between 0 and 100 % per month.
   Widget demurrageInput() {
+    final l10n = context.l10n;
     return TextFormField(
       controller: demurrageController,
       decoration: InputDecoration(
-        labelText: 'Demurrage (%/month)',
+        labelText: l10n.proposalFieldDemurragePerMonth,
         errorText: demurrageError,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -350,11 +372,12 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Widget latitudeLongitudeInput() {
+    final l10n = context.l10n;
     return Column(children: [
       TextFormField(
         controller: latController,
         decoration: InputDecoration(
-          labelText: 'Latitude',
+          labelText: l10n.proposalFieldLatitude,
           errorText: latError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -372,7 +395,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: lonController,
         decoration: InputDecoration(
-          labelText: 'Longitude',
+          labelText: l10n.proposalFieldLongitude,
           errorText: lonError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -475,7 +498,8 @@ class _ProposePageState extends State<ProposePage> {
         webApi,
         store.account.getKeyringAccount(store.account.currentAccountPubKey!),
         action!,
-        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+        txPaymentAsset:
+            store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       );
     }
   }
@@ -503,7 +527,8 @@ class _ProposePageState extends State<ProposePage> {
         return UpdateNominalIncome(cid, fixedU128FromDouble(ni));
 
       case ProposalActionIdentifier.setInactivityTimeout:
-        return SetInactivityTimeout(int.tryParse(inactivityTimeoutController.text)!);
+        return SetInactivityTimeout(
+            int.tryParse(inactivityTimeoutController.text)!);
 
       case ProposalActionIdentifier.petition:
         final maybeCid = selectedScope.isLocal ? cid : null;

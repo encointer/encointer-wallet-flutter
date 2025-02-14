@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/l10n/l10.dart';
+
 /// Enum for Scope selection
 enum ProposalScope { global, local }
 
@@ -7,6 +9,13 @@ extension ProposalScopeExt on ProposalScope {
   bool get isGlobal => this == ProposalScope.global;
 
   bool get isLocal => this == ProposalScope.local;
+
+  String localizedStr(AppLocalizations l10n) {
+    return switch (this) {
+      ProposalScope.global => l10n.proposalScopeGlobal,
+      ProposalScope.local => l10n.proposalScopeLocal,
+    };
+  }
 }
 
 /// Enum representing different proposal actions
@@ -30,6 +39,7 @@ List<ProposalActionIdentifier> supportedProposalIds() {
     ProposalActionIdentifier.setInactivityTimeout,
     ProposalActionIdentifier.petition,
     ProposalActionIdentifier.spendNative,
+    ProposalActionIdentifier.issueSwapNativeOption,
   ];
 }
 
@@ -48,13 +58,36 @@ extension PropsalActionExt on ProposalActionIdentifier {
       ProposalActionIdentifier.issueSwapNativeOption => [ProposalScope.local],
 
       // Global or Local allowed (first value is the default)
-      ProposalActionIdentifier.petition => [ProposalScope.local, ProposalScope.global],
-      ProposalActionIdentifier.spendNative => [ProposalScope.local, ProposalScope.global],
+      ProposalActionIdentifier.petition => [
+          ProposalScope.local,
+          ProposalScope.global
+        ],
+      ProposalActionIdentifier.spendNative => [
+          ProposalScope.local,
+          ProposalScope.global
+        ],
+    };
+  }
+
+  String localizedStr(AppLocalizations l10n) {
+    return switch (this) {
+      ProposalActionIdentifier.addLocation => l10n.proposalTypeAddLocation,
+      ProposalActionIdentifier.updateDemurrage =>
+        l10n.proposalTypeUpdateDemurrage,
+      ProposalActionIdentifier.updateNominalIncome =>
+        l10n.proposalTypeUpdateNominalIncome,
+      ProposalActionIdentifier.setInactivityTimeout =>
+        l10n.proposalTypeSetInactivityTimeout,
+      ProposalActionIdentifier.petition => l10n.proposalTypePetition,
+      ProposalActionIdentifier.spendNative => l10n.proposalTypeSpendNative,
+      ProposalActionIdentifier.issueSwapNativeOption =>
+        l10n.proposalTypeIssueSwapNativeOption,
     };
   }
 }
 
-double monthlyDemurragePercentToDemurrage(double monthly, BigInt blockProductionTime) {
+double monthlyDemurragePercentToDemurrage(
+    double monthly, BigInt blockProductionTime) {
   final blocks = blocksPerMonth(blockProductionTime);
   return -log(1 - (monthly / 100)) / blocks;
 }
