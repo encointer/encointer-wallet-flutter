@@ -121,7 +121,7 @@ class _ProposePageState extends State<ProposePage> {
 
                 const SizedBox(height: 10),
 
-                // Scope Selector (Dropdown using Enum)
+                // Scope Selector
                 DropdownButtonFormField<ProposalScope>(
                   value: selectedScope,
                   onChanged: allowedScopes.length > 1
