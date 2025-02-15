@@ -253,8 +253,8 @@ class _ProposePageState extends State<ProposePage> {
         },
         hideIdenticon: true,
       ),
-      const Text('Burn: true (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
-      const Text('Validity: None (hardcoded)', style: TextStyle(fontWeight: FontWeight.bold)),
+      // Text(l10n.proposalFieldBurn, style: const TextStyle(fontWeight: FontWeight.bold)),
+      // Text(l10n.proposalFieldValidity, style: const TextStyle(fontWeight: FontWeight.bold)),
     ]);
   }
 
