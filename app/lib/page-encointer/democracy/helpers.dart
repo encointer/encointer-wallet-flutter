@@ -61,12 +61,12 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
     case AddLocation:
       final cidPolkadart = (action as AddLocation).value0;
       final cidStr = cidOrGlobal(cidPolkadart, store);
-      final location =  Location.fromPolkadart(action.value1);
+      final location = Location.fromPolkadart(action.value1);
       return '${l10n.proposalAddLocation(cidStr)} (${location.latLongFmt()})';
     case RemoveLocation:
       final cidPolkadart = (action as AddLocation).value0;
       final cidStr = cidOrGlobal(cidPolkadart, store);
-      final location =  Location.fromPolkadart(action.value1);
+      final location = Location.fromPolkadart(action.value1);
       return '${l10n.proposalRemoveLocation(cidStr)} (${location.latLongFmt()})';
     case SetInactivityTimeout:
       final timeout = (action as SetInactivityTimeout).value0;
@@ -87,8 +87,8 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       final issueOption = action as IssueSwapNativeOption;
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
       final cidStr = cidOrGlobal(cidPolkadart, store);
-      final beneficiary = Fmt.address(
-          AddressUtils.pubKeyToAddress(issueOption.value1, prefix: store.settings.currentNetwork.ss58()))!;
+      final beneficiary =
+          Fmt.address(AddressUtils.pubKeyToAddress(issueOption.value1, prefix: store.settings.currentNetwork.ss58()))!;
       final swapNativeOption = issueOption.value2;
       final allowance = Fmt.token(swapNativeOption.nativeAllowance, ertDecimals);
       final rate = swapNativeOption.rate != null ? i64F64Parser.toDouble(swapNativeOption.rate!.bits) : null;
