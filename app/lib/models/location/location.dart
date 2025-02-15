@@ -1,8 +1,11 @@
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 import 'dart:convert';
 
+import 'package:ew_primitives/ew_primitives.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:latlong2/latlong.dart';
+
+import 'package:ew_polkadart/encointer_types.dart' as et;
 
 part 'location.g.dart';
 
@@ -12,21 +15,30 @@ class Location {
 
   // explicitly use `toString()`, which works for the old `Degree` type `i64` and the new one `i128`
   factory Location.fromJson(Map<String, dynamic> json) => Location(
-        json['lat'].toString(),
-        json['lon'].toString(),
+        double.parse(json['lat'].toString()),
+        double.parse(json['lon'].toString()),
+      );
+
+  factory Location.fromPolkadart(et.Location loc) => Location(
+        latLongToDouble(loc.lat),
+        latLongToDouble(loc.lon),
       );
 
   Map<String, dynamic> toJson() => _$LocationToJson(this);
 
-  final String lat;
-  final String lon;
+  final double lat;
+  final double lon;
 
   @override
   String toString() {
     return jsonEncode(this);
   }
 
+  String latLongFmt() {
+    return '${lat.toStringAsFixed(6)},${lon.toStringAsFixed(6)}';
+  }
+
   LatLng toLatLng() {
-    return LatLng(double.parse(lat), double.parse(lon));
+    return LatLng(lat, lon);
   }
 }
