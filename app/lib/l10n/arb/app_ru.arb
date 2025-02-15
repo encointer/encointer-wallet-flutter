@@ -472,6 +472,27 @@
             }
         }
     },
+    "proposalIssueSwapNativeOption": "{cid}: позволяет {beneficiary} обменять до {allowance} KSM по курсу {rate}",
+    "@proposalIssueSwapNativeOption": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "rate": {
+                "type": "String",
+                "example": "1.2"
+            }
+        }
+    },
     "proposalSupersededBy": "заменен на: {id}",
     "@proposalSupersededBy": {
         "placeholders": {

@@ -77,13 +77,14 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       return l10n.proposalSpendNative(cidStr, amount, beneficiary);
     case IssueSwapNativeOption:
       final issueOption = action as IssueSwapNativeOption;
-      // final cidPolkadart = getCommunityIdentifierFromProposal(action);
-      // final cidStr = cidOrGlobal(cidPolkadart, store);
-      // final beneficiary = Fmt.address(
-      //     AddressUtils.pubKeyToAddress(issueOption.value1, prefix: store.settings.currentNetwork.ss58()))!;
+      final cidPolkadart = getCommunityIdentifierFromProposal(action);
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final beneficiary = Fmt.address(
+          AddressUtils.pubKeyToAddress(issueOption.value1, prefix: store.settings.currentNetwork.ss58()))!;
       final swapNativeOption = issueOption.value2;
+      final allowance = Fmt.token(swapNativeOption.nativeAllowance, ertDecimals);
       final rate = swapNativeOption.rate != null ? i64F64Parser.toDouble(swapNativeOption.rate!.bits) : null;
-      return 'Swap Native ${swapNativeOption.nativeAllowance}, $rate';
+      return l10n.proposalIssueSwapNativeOption(cidStr, beneficiary, allowance, rate.toString());
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }

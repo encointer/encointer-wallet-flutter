@@ -588,7 +588,7 @@ class _ProposePageState extends State<ProposePage> {
         final rate = double.tryParse(rateController.text)!;
         final issueOption = SwapNativeOption(
           cid: cid,
-          nativeAllowance: BigInt.from(amount),
+          nativeAllowance: BigInt.from(amount * pow(10, 12)),
           rate: fixedU128FromDouble(rate),
           doBurn: true,
         );
