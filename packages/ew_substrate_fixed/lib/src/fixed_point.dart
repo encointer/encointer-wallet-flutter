@@ -1,4 +1,4 @@
-import 'package:ew_substrate_fixed/src/fixed_point_util.dart' show u16F16Util, u32F32Util, u64F64Util;
+import 'package:ew_substrate_fixed/src/fixed_point_util.dart' show i16F16Util, i32F32Util, i64F64Util;
 
 abstract class FixedPoint {
   FixedPoint(this._bits);
@@ -15,7 +15,7 @@ class U16F16 extends FixedPoint {
 
   @override
   double asDouble() {
-    return u16F16Util.toDouble(_bits);
+    return i16F16Util.toDouble(_bits);
   }
 }
 
@@ -24,7 +24,7 @@ class U32F32 extends FixedPoint {
 
   @override
   double asDouble() {
-    return u32F32Util.toDouble(_bits);
+    return i32F32Util.toDouble(_bits);
   }
 }
 
@@ -33,6 +33,6 @@ class U64F64 extends FixedPoint {
 
   @override
   double asDouble() {
-    return u64F64Util.toDouble(_bits);
+    return i64F64Util.toDouble(_bits);
   }
 }
