@@ -572,6 +572,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Global: Set the new inactivity timeout to {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid}: Add a new location",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid} Remove a location",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateNominalIncome": "Update community income to {value} {currency}",
     "@proposalUpdateNominalIncome": {
         "placeholders": {

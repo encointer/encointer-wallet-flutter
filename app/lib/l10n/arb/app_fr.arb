@@ -433,6 +433,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Global : Définir le nouveau délai d'inactivité sur {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid} : Ajouter un nouvel emplacement",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid} : Supprimer un emplacement",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateDemurrage": "Ajuster demurrage à {value}%/mois",
     "@proposalUpdateDemurrage": {
         "placeholders": {

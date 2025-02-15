@@ -586,6 +586,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Kimataifa: Weka muda mpya wa kutokufanya kazi kuwa {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid}: Ongeza eneo jipya",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid}: Ondoa eneo",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateDemurrage": "Sasisha demurrage kuwa {value}%/mwezi",
     "@proposalUpdateDemurrage": {
         "placeholders": {

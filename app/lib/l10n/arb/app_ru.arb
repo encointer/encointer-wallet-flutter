@@ -433,6 +433,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Глобально: Установить новый тайм-аут неактивности на {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid}: Добавить новое местоположение",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid}: Удалить местоположение",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateDemurrage": "Обновить Demurrage до {value}%/месяц",
     "@proposalUpdateDemurrage": {
         "placeholders": {

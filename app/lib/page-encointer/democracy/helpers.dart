@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -49,20 +50,27 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       final cid = CommunityIdentifier(cidPolkadart!.geohash, cidPolkadart.digest);
 
       return l10n.proposalUpdateNominalIncome(
-        u64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
+        i64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
         store.encointer.communityStores![cid.toFmtString()]?.symbol ?? cid.toFmtString(),
       );
     case UpdateDemurrage:
-      final demurrageDouble = u64F64Util.toDouble((action as UpdateDemurrage).value1.bits);
+      final demurrageDouble = i64F64Util.toDouble((action as UpdateDemurrage).value1.bits);
       final d = demurragePerMonth(demurrageDouble, BigInt.from(6));
 
       return l10n.proposalUpdateDemurrage(d.toStringAsFixed(2));
     case AddLocation:
-      return 'Add Location (unsupported)';
+      final cidPolkadart = (action as AddLocation).value0;
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final location =  Location.fromPolkadart(action.value1);
+      return '${l10n.proposalAddLocation(cidStr)} (${location.latLongFmt()})';
     case RemoveLocation:
-      return 'Remove Location (unsupported)';
+      final cidPolkadart = (action as AddLocation).value0;
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final location =  Location.fromPolkadart(action.value1);
+      return '${l10n.proposalRemoveLocation(cidStr)} (${location.latLongFmt()})';
     case SetInactivityTimeout:
-      return 'SetInactivity Timeout (unsupported)';
+      final timeout = (action as SetInactivityTimeout).value0;
+      return l10n.proposalSetInactivityTimeoutTo(timeout.toString());
     case Petition:
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
       final cidStr = cidOrGlobal(cidPolkadart, store);

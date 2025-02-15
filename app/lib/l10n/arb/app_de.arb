@@ -420,6 +420,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Global: Setze das neue Inaktivitätszeitlimit auf {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid}: Füge einen neuen Standort hinzu",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid}: Entferne einen Standort",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateNominalIncome": "Gemeinschaftseinkommen anpassen auf {value} {currency}",
     "@proposalUpdateNominalIncome": {
         "placeholders": {

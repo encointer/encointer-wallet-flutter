@@ -35,7 +35,7 @@ class Location {
   }
 
   String latLongFmt() {
-    return '${lat.toStringAsFixed(6)},${lon.toStringAsFixed(6)}';
+    return 'lat=${lat.toStringAsFixed(6)},lon=${lon.toStringAsFixed(6)}';
   }
 
   LatLng toLatLng() {
