@@ -1,10 +1,10 @@
 import 'package:ew_substrate_fixed/src/parse_fixed_point.dart' as pf;
 import 'package:ew_substrate_fixed/src/to_fixed_point.dart' as tf;
 
-// Utils offering parsing and encoding to unsigned fixed point numbers.
-const u16F16Util = FixedPointUtil(BitCount(16, 16));
-const u32F32Util = FixedPointUtil(BitCount(32, 32));
-const u64F64Util = FixedPointUtil(BitCount(64, 64));
+// Utils offering parsing and encoding to signed fixed point numbers.
+const i16F16Util = FixedPointUtil(BitCount(16, 16));
+const i32F32Util = FixedPointUtil(BitCount(32, 32));
+const i64F64Util = FixedPointUtil(BitCount(64, 64));
 
 // Utils offering parsing signed fixed point numbers.
 const i16F16Parser = FixedPointParser(BitCount(16, 16));

@@ -116,8 +116,8 @@ class SingleBusinessDetail extends StatelessWidget {
                   MapButton(
                     onPressed: () {
                       final location = Location(
-                        singleBusiness.latitude.toString(),
-                        singleBusiness.longitude.toString(),
+                        singleBusiness.latitude,
+                        singleBusiness.longitude,
                       );
                       AppLaunch.launchMap(location);
                     },

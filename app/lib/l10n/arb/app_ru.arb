@@ -433,6 +433,33 @@
             }
         }
     },
+    "proposalSetInactivityTimeoutTo": "Глобально: Установить новый тайм-аут неактивности на {value}",
+    "@proposalSetInactivityTimeoutTo": {
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "0.00"
+            }
+        }
+    },
+    "proposalAddLocation": "{cid}: Добавить новое местоположение",
+    "@proposalAddLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
+    "proposalRemoveLocation": "{cid}: Удалить местоположение",
+    "@proposalRemoveLocation": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            }
+        }
+    },
     "proposalUpdateDemurrage": "Обновить Demurrage до {value}%/месяц",
     "@proposalUpdateDemurrage": {
         "placeholders": {
@@ -469,6 +496,27 @@
             "beneficiary": {
                 "type": "String",
                 "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            }
+        }
+    },
+    "proposalIssueSwapNativeOption": "{cid}: позволяет {beneficiary} обменять до {allowance} KSM по курсу {rate}",
+    "@proposalIssueSwapNativeOption": {
+        "placeholders": {
+            "cid": {
+                "type": "String",
+                "example": "global"
+            },
+            "beneficiary": {
+                "type": "String",
+                "example": "HNZata7iMYWmk5RvZRTiAsSDhV8366zq2YGb3tLH5Upf74F"
+            },
+            "allowance": {
+                "type": "String",
+                "example": "0.00"
+            },
+            "rate": {
+                "type": "String",
+                "example": "1.2"
             }
         }
     },

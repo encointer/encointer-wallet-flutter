@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -31,7 +32,8 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         SupersededBy,
         Tally,
         UpdateDemurrage,
-        UpdateNominalIncome;
+        UpdateNominalIncome,
+        IssueSwapNativeOption;
 
 /// Gets the localized proposal action title.
 ///
@@ -48,20 +50,27 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       final cid = CommunityIdentifier(cidPolkadart!.geohash, cidPolkadart.digest);
 
       return l10n.proposalUpdateNominalIncome(
-        u64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
+        i64F64Util.toDouble((action as UpdateNominalIncome).value1.bits).toStringAsFixed(2),
         store.encointer.communityStores![cid.toFmtString()]?.symbol ?? cid.toFmtString(),
       );
     case UpdateDemurrage:
-      final demurrageDouble = u64F64Util.toDouble((action as UpdateDemurrage).value1.bits);
+      final demurrageDouble = i64F64Util.toDouble((action as UpdateDemurrage).value1.bits);
       final d = demurragePerMonth(demurrageDouble, BigInt.from(6));
 
       return l10n.proposalUpdateDemurrage(d.toStringAsFixed(2));
     case AddLocation:
-      return 'Add Location (unsupported)';
+      final cidPolkadart = (action as AddLocation).value0;
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final location = Location.fromPolkadart(action.value1);
+      return '${l10n.proposalAddLocation(cidStr)} (${location.latLongFmt()})';
     case RemoveLocation:
-      return 'Remove Location (unsupported)';
+      final cidPolkadart = (action as AddLocation).value0;
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final location = Location.fromPolkadart(action.value1);
+      return '${l10n.proposalRemoveLocation(cidStr)} (${location.latLongFmt()})';
     case SetInactivityTimeout:
-      return 'SetInactivity Timeout (unsupported)';
+      final timeout = (action as SetInactivityTimeout).value0;
+      return l10n.proposalSetInactivityTimeoutTo(timeout.toString());
     case Petition:
       final cidPolkadart = getCommunityIdentifierFromProposal(action);
       final cidStr = cidOrGlobal(cidPolkadart, store);
@@ -74,6 +83,16 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
           AddressUtils.pubKeyToAddress((action as SpendNative).value1, prefix: store.settings.currentNetwork.ss58()))!;
       final amount = Fmt.token(action.value2, ertDecimals);
       return l10n.proposalSpendNative(cidStr, amount, beneficiary);
+    case IssueSwapNativeOption:
+      final issueOption = action as IssueSwapNativeOption;
+      final cidPolkadart = getCommunityIdentifierFromProposal(action);
+      final cidStr = cidOrGlobal(cidPolkadart, store);
+      final beneficiary =
+          Fmt.address(AddressUtils.pubKeyToAddress(issueOption.value1, prefix: store.settings.currentNetwork.ss58()))!;
+      final swapNativeOption = issueOption.value2;
+      final allowance = Fmt.token(swapNativeOption.nativeAllowance, ertDecimals);
+      final rate = swapNativeOption.rate != null ? i64F64Parser.toDouble(swapNativeOption.rate!.bits) : null;
+      return l10n.proposalIssueSwapNativeOption(cidStr, beneficiary, allowance, rate.toString());
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }
@@ -123,6 +142,9 @@ et.CommunityIdentifier? getCommunityIdentifierFromProposal(ProposalAction action
     case SpendNative:
       // can be global or local
       return (action as SpendNative).value0;
+    case IssueSwapNativeOption:
+      // can be global or local
+      return (action as IssueSwapNativeOption).value0;
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }

@@ -3,7 +3,7 @@ import 'dart:async' as _i23;
 
 import 'package:polkadart/polkadart.dart' as _i1;
 
-import 'pallets/aura.dart' as _i21;
+import 'pallets/aura.dart' as _i22;
 import 'pallets/balances.dart' as _i6;
 import 'pallets/encointer_balances.dart' as _i15;
 import 'pallets/encointer_bazaar.dart' as _i16;
@@ -13,7 +13,7 @@ import 'pallets/encointer_democracy.dart' as _i19;
 import 'pallets/encointer_faucet.dart' as _i18;
 import 'pallets/encointer_reputation_commitments.dart' as _i17;
 import 'pallets/encointer_scheduler.dart' as _i12;
-import 'pallets/encointer_treasuries.dart' as _i22;
+import 'pallets/encointer_treasuries.dart' as _i20;
 import 'pallets/grandpa.dart' as _i8;
 import 'pallets/proxy.dart' as _i9;
 import 'pallets/randomness_collective_flip.dart' as _i3;
@@ -23,7 +23,7 @@ import 'pallets/system.dart' as _i2;
 import 'pallets/timestamp.dart' as _i4;
 import 'pallets/transaction_payment.dart' as _i7;
 import 'pallets/treasury.dart' as _i11;
-import 'pallets/utility.dart' as _i20;
+import 'pallets/utility.dart' as _i21;
 
 class Queries {
   Queries(_i1.StateApi api)
@@ -44,7 +44,8 @@ class Queries {
         encointerBazaar = _i16.Queries(api),
         encointerReputationCommitments = _i17.Queries(api),
         encointerFaucet = _i18.Queries(api),
-        encointerDemocracy = _i19.Queries(api);
+        encointerDemocracy = _i19.Queries(api),
+        encointerTreasuries = _i20.Queries(api);
 
   final _i2.Queries system;
 
@@ -81,6 +82,8 @@ class Queries {
   final _i18.Queries encointerFaucet;
 
   final _i19.Queries encointerDemocracy;
+
+  final _i20.Queries encointerTreasuries;
 }
 
 class Extrinsics {
@@ -96,7 +99,7 @@ class Extrinsics {
 
   final _i8.Txs grandpa = _i8.Txs();
 
-  final _i20.Txs utility = _i20.Txs();
+  final _i21.Txs utility = _i21.Txs();
 
   final _i9.Txs proxy = _i9.Txs();
 
@@ -119,6 +122,8 @@ class Extrinsics {
   final _i18.Txs encointerFaucet = _i18.Txs();
 
   final _i19.Txs encointerDemocracy = _i19.Txs();
+
+  final _i20.Txs encointerTreasuries = _i20.Txs();
 }
 
 class Constants {
@@ -132,11 +137,11 @@ class Constants {
 
   final _i7.Constants transactionPayment = _i7.Constants();
 
-  final _i21.Constants aura = _i21.Constants();
+  final _i22.Constants aura = _i22.Constants();
 
   final _i8.Constants grandpa = _i8.Constants();
 
-  final _i20.Constants utility = _i20.Constants();
+  final _i21.Constants utility = _i21.Constants();
 
   final _i9.Constants proxy = _i9.Constants();
 
@@ -156,7 +161,7 @@ class Constants {
 
   final _i19.Constants encointerDemocracy = _i19.Constants();
 
-  final _i22.Constants encointerTreasuries = _i22.Constants();
+  final _i20.Constants encointerTreasuries = _i20.Constants();
 }
 
 class Rpc {

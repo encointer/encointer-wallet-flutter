@@ -13,6 +13,7 @@ import '../pallet_encointer_democracy/pallet/call.dart' as _i19;
 import '../pallet_encointer_faucet/pallet/call.dart' as _i18;
 import '../pallet_encointer_reputation_commitments/pallet/call.dart' as _i17;
 import '../pallet_encointer_scheduler/pallet/call.dart' as _i12;
+import '../pallet_encointer_treasuries/pallet/call.dart' as _i20;
 import '../pallet_grandpa/pallet/call.dart' as _i7;
 import '../pallet_proxy/pallet/call.dart' as _i9;
 import '../pallet_scheduler/pallet/call.dart' as _i10;
@@ -115,6 +116,10 @@ class $RuntimeCall {
   EncointerDemocracy encointerDemocracy(_i19.Call value0) {
     return EncointerDemocracy(value0);
   }
+
+  EncointerTreasuries encointerTreasuries(_i20.Call value0) {
+    return EncointerTreasuries(value0);
+  }
 }
 
 class $RuntimeCallCodec with _i1.Codec<RuntimeCall> {
@@ -158,6 +163,8 @@ class $RuntimeCallCodec with _i1.Codec<RuntimeCall> {
         return EncointerFaucet._decode(input);
       case 67:
         return EncointerDemocracy._decode(input);
+      case 68:
+        return EncointerTreasuries._decode(input);
       default:
         throw Exception('RuntimeCall: Invalid variant index: "$index"');
     }
@@ -220,6 +227,9 @@ class $RuntimeCallCodec with _i1.Codec<RuntimeCall> {
       case EncointerDemocracy:
         (value as EncointerDemocracy).encodeTo(output);
         break;
+      case EncointerTreasuries:
+        (value as EncointerTreasuries).encodeTo(output);
+        break;
       default:
         throw Exception('RuntimeCall: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -262,6 +272,8 @@ class $RuntimeCallCodec with _i1.Codec<RuntimeCall> {
         return (value as EncointerFaucet)._sizeHint();
       case EncointerDemocracy:
         return (value as EncointerDemocracy)._sizeHint();
+      case EncointerTreasuries:
+        return (value as EncointerTreasuries)._sizeHint();
       default:
         throw Exception('RuntimeCall: Unsupported "$value" of type "${value.runtimeType}"');
     }
@@ -994,6 +1006,49 @@ class EncointerDemocracy extends RuntimeCall {
         other,
       ) ||
       other is EncointerDemocracy && other.value0 == value0;
+
+  @override
+  int get hashCode => value0.hashCode;
+}
+
+class EncointerTreasuries extends RuntimeCall {
+  const EncointerTreasuries(this.value0);
+
+  factory EncointerTreasuries._decode(_i1.Input input) {
+    return EncointerTreasuries(_i20.Call.codec.decode(input));
+  }
+
+  /// self::sp_api_hidden_includes_construct_runtime::hidden_include::dispatch
+  ///::CallableCallFor<EncointerTreasuries, Runtime>
+  final _i20.Call value0;
+
+  @override
+  Map<String, Map<String, Map<String, dynamic>>> toJson() => {'EncointerTreasuries': value0.toJson()};
+
+  int _sizeHint() {
+    int size = 1;
+    size = size + _i20.Call.codec.sizeHint(value0);
+    return size;
+  }
+
+  void encodeTo(_i1.Output output) {
+    _i1.U8Codec.codec.encodeTo(
+      68,
+      output,
+    );
+    _i20.Call.codec.encodeTo(
+      value0,
+      output,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(
+        this,
+        other,
+      ) ||
+      other is EncointerTreasuries && other.value0 == value0;
 
   @override
   int get hashCode => value0.hashCode;

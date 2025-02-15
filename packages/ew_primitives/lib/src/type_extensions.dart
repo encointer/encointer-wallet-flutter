@@ -21,11 +21,15 @@ extension KeyringAccountDataMultiAddressExt on Sr25519KeyPair {
 }
 
 FixedI128 fixedI128FromDouble(double value) {
-  return FixedI128(bits: u64F64Util.toFixed(value));
+  return FixedI128(bits: i64F64Util.toFixed(value));
 }
 
 FixedU128 fixedU128FromDouble(double value) {
-  return FixedU128(bits: u64F64Util.toFixed(value));
+  return FixedU128(bits: i64F64Util.toFixed(value));
+}
+
+double latLongToDouble(FixedI128 value) {
+  return i64F64Util.toDouble(value.bits);
 }
 
 abstract class LocationFactory {

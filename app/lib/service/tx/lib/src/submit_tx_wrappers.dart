@@ -338,7 +338,7 @@ Future<void> submitEncointerTransfer(
   final call = api.encointer.encointerKusama.tx.encointerBalances.transfer(
     dest: recipientAddress.pubkey,
     communityId: cid.toPolkadart(),
-    amount: FixedU128(bits: u64F64Util.toFixed(amount)),
+    amount: FixedU128(bits: i64F64Util.toFixed(amount)),
   );
   final xt = await TxBuilder(api.provider).createSignedExtrinsic(
     signer.pair,

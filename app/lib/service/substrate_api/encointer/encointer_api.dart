@@ -293,7 +293,7 @@ class EncointerApi {
     final offset = await encointerKusama.query.encointerCeremonies.meetupTimeOffset(at: at ?? store.chain.latestHash);
 
     final meetupTime = ew_utils.meetupTime(
-      double.parse(mLocation.lon),
+      mLocation.lon,
       attestingStart,
       offset,
       ew_utils.momentsPerDay,
