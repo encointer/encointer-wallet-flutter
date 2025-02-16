@@ -171,7 +171,8 @@ class _ProposePageState extends State<ProposePage> {
                 if (!isBootstrapperOrReputable(store, store.account.currentAddress))
                   Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
                 if (enactmentQueue.contains(selectedAction))
-                  const Text('Cannot submit a Proposal of this type, as there is already one pending enactment'),
+                  Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
+                const SizedBox(height: 5),
                 SubmitButton(
                   onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) && !enactmentQueue.contains(selectedAction)
                       ? (context) async {

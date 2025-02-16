@@ -243,6 +243,7 @@
     "proposalFieldErrorEnterInactivityTimeout": "Weka muda wa kutokufanya kazi",
     "proposalFieldErrorPositiveIntegerRange": "Lazima iwe namba kamili chanya",
     "proposalOnlyBootstrappersOrReputablesCanSubmit": "Ni bootstrappers au waheshimika pekee wanaoweza kuwasilisha pendekezo.",
+    "proposalCannotSubmitProposalTypePendingEnactment": "Haiwezi kuwasilisha pendekezo la aina hii kwa sababu tayari kuna moja linalosubiri kutekelezwa.",
     "proposalClose": "Funga",
     "proposalUpdateState": "Sasisha",
     "proposalUpdateExplanation": "Hii itasasisha hali ya pendekezo. Ikiwa ni la zamani sana na halina kura za kutosha za 'Ndio', litakataliwa. Ikiwa limekuwa likithibitishwa kwa muda wa kutosha, litakubaliwa.",
