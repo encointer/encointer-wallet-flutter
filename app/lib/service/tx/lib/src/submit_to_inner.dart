@@ -48,6 +48,7 @@ Future<void> submitTxInner(
       );
 
       if (report.isExtrinsicFailed) {
+        Log.e('[TX] Extrinsic Failed: ${report.dispatchError!.toJson()}');
         _onTxError(store);
         onError?.call(report.dispatchError!);
         final message = getLocalizedTxErrorMessage(l10n, report.dispatchError!);
@@ -85,6 +86,8 @@ void _onTxError(AppStore store) {
 void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
   final l10n = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
+
+  print('Should show error dialog');
 
   AppAlert.showDialog<void>(
     context,
