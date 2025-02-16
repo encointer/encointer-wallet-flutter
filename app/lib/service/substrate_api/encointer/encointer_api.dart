@@ -733,6 +733,24 @@ class EncointerApi {
     }
   }
 
+  Future<List<et.ProposalAction>> getProposalEnactmentQueue({BlockHash? at}) async {
+    try {
+      final prefix = encointerKusama.query.encointerDemocracy.enactmentQueueMapPrefix();
+      final pairs = await encointerKusama.rpc.state.getPairs(prefix);
+
+      // Keys including storage prefix.
+      Log.d("[getProposalEnactmentQueue] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
+      Log.d("[getProposalEnactmentQueue] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
+
+      final proposalActions = pairs.map((pair) => et.ProposalAction.decode(ByteInput(pair.value!)));
+
+      return proposalActions.toList();
+    } catch (e, s) {
+      Log.e('[getProposalEnactmentQueue]', '$e', s);
+      return List.of([]);
+    }
+  }
+
   Future<Map<BigInt, Proposal>> getProposals(List<BigInt> proposalIds, {BlockHash? at}) async {
     try {
       Log.d('[getProposals] ProposalIds: $proposalIds');

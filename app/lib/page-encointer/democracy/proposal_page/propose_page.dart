@@ -69,10 +69,13 @@ class _ProposePageState extends State<ProposePage> {
   // Beneficiary in for the spendNative/issueSwapNativeOption
   AccountData? beneficiary;
 
+  List<ProposalActionIdentifier> enactmentQueue = [];
+
   @override
   void initState() {
     super.initState();
     _updateAllowedScopes();
+    _updateEnactmentQueue();
 
     beneficiary = context.read<AppStore>().account.currentAccount;
   }
@@ -82,6 +85,13 @@ class _ProposePageState extends State<ProposePage> {
     setState(() {
       allowedScopes = selectedAction.allowedPolicies();
       selectedScope = allowedScopes.first; // Default to the first allowed scope
+    });
+  }
+
+  Future<void> _updateEnactmentQueue() async {
+    final queue = await webApi.encointer.getProposalEnactmentQueue();
+    setState(() {
+      enactmentQueue = queue.map(proposalActionIdentifierFromPolkadartAction).toList();
     });
   }
 
@@ -160,8 +170,10 @@ class _ProposePageState extends State<ProposePage> {
                 const Spacer(),
                 if (!isBootstrapperOrReputable(store, store.account.currentAddress))
                   Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
+                if (enactmentQueue.contains(selectedAction))
+                  const Text('Cannot submit a Proposal of this type, as there is already one pending enactment'),
                 SubmitButton(
-                  onPressed: isBootstrapperOrReputable(store, store.account.currentAddress)
+                  onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) && !enactmentQueue.contains(selectedAction)
                       ? (context) async {
                           _formKey.currentState!.validate();
                           await _submitProposal();
@@ -201,6 +213,8 @@ class _ProposePageState extends State<ProposePage> {
 
       case ProposalActionIdentifier.issueSwapNativeOption:
         return issueSwapNativeOptionInput();
+      case ProposalActionIdentifier.removeLocation:
+        throw UnimplementedError('remove location is unsupported');
     }
   }
 
@@ -603,6 +617,8 @@ class _ProposePageState extends State<ProposePage> {
         );
 
         return IssueSwapNativeOption(maybeCid!, hex.decode(ben.replaceFirst('0x', '')), issueOption);
+      case ProposalActionIdentifier.removeLocation:
+        throw UnimplementedError('removeLocation is unsupported');
     }
   }
 }

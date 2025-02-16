@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:encointer_wallet/l10n/l10.dart';
 
+import 'package:ew_polkadart/encointer_types.dart' as et;
+
 /// Enum for Scope selection
 enum ProposalScope { global, local }
 
@@ -21,12 +23,27 @@ extension ProposalScopeExt on ProposalScope {
 /// Enum representing different proposal actions
 enum ProposalActionIdentifier {
   addLocation,
+  removeLocation,
   updateDemurrage,
   updateNominalIncome,
   setInactivityTimeout,
   petition,
   spendNative,
   issueSwapNativeOption
+}
+
+ProposalActionIdentifier proposalActionIdentifierFromPolkadartAction(et.ProposalAction action) {
+  return switch (action.runtimeType) {
+    et.AddLocation => ProposalActionIdentifier.addLocation,
+    et.RemoveLocation => throw UnimplementedError('Remove location is unsupported'),
+    et.UpdateDemurrage => ProposalActionIdentifier.updateDemurrage,
+    et.UpdateNominalIncome => ProposalActionIdentifier.updateNominalIncome,
+    et.SetInactivityTimeout => ProposalActionIdentifier.setInactivityTimeout,
+    et.Petition => ProposalActionIdentifier.petition,
+    et.SpendNative => ProposalActionIdentifier.spendNative,
+    et.IssueSwapNativeOption => ProposalActionIdentifier.issueSwapNativeOption,
+    _ => throw UnimplementedError('Invalid Proposal Id Type'),
+  };
 }
 
 /// We still have to implement support for:
@@ -53,6 +70,7 @@ extension PropsalActionExt on ProposalActionIdentifier {
 
       // Only local proposals allowed
       ProposalActionIdentifier.addLocation => [ProposalScope.local],
+      ProposalActionIdentifier.removeLocation => [ProposalScope.local],
       ProposalActionIdentifier.updateDemurrage => [ProposalScope.local],
       ProposalActionIdentifier.updateNominalIncome => [ProposalScope.local],
       ProposalActionIdentifier.issueSwapNativeOption => [ProposalScope.local],
@@ -66,6 +84,7 @@ extension PropsalActionExt on ProposalActionIdentifier {
   String localizedStr(AppLocalizations l10n) {
     return switch (this) {
       ProposalActionIdentifier.addLocation => l10n.proposalTypeAddLocation,
+      ProposalActionIdentifier.removeLocation => throw UnimplementedError('Remove location is unsupported'),
       ProposalActionIdentifier.updateDemurrage => l10n.proposalTypeUpdateDemurrage,
       ProposalActionIdentifier.updateNominalIncome => l10n.proposalTypeUpdateNominalIncome,
       ProposalActionIdentifier.setInactivityTimeout => l10n.proposalTypeSetInactivityTimeout,
