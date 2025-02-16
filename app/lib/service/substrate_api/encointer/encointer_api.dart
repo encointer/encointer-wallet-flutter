@@ -808,7 +808,7 @@ class EncointerApi {
   }
 
   DemocracyParams democracyParams() {
-    return switch (store.settings.currentNetwork){
+    return switch (store.settings.currentNetwork) {
       Network.encointerKusama => encointerKusamaParams(),
       Network.encointerRococo => encointerKusamaParams(),
       Network.gesell => encointerSoloParams(),
@@ -818,7 +818,7 @@ class EncointerApi {
 
   DemocracyParams encointerSoloParams() {
     final minTurnout = BigInt.one;
-    final confirmationPeriod =  BigInt.from(300000);
+    final confirmationPeriod = BigInt.from(300000);
     final proposalLifetime = BigInt.from(1200000);
 
     return DemocracyParams(

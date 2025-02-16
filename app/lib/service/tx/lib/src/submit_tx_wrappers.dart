@@ -457,13 +457,13 @@ Future<void> submitDemocracyVote(
 }
 
 Future<void> submitDemocracyUpdateProposalState(
-    BuildContext context,
-    AppStore store,
-    Api api,
-    KeyringAccount signer,
-    BigInt proposalId, {
-      required CommunityIdentifier? txPaymentAsset,
-    }) async {
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  BigInt proposalId, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
   final call = api.encointer.encointerKusama.tx.encointerDemocracy.updateProposalState(
     proposalId: proposalId,
   );
@@ -482,7 +482,6 @@ Future<void> submitDemocracyUpdateProposalState(
     TxNotification.democracyVote(context.l10n),
   );
 }
-
 
 Future<void> submitDemocracyProposal(
   BuildContext context,

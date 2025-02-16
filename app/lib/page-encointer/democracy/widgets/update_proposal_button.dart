@@ -25,7 +25,6 @@ class UpdateProposalButton extends StatefulWidget {
 }
 
 class _UpdateProposalButtonState extends State<UpdateProposalButton> {
-
   @override
   void initState() {
     super.initState();
