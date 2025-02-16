@@ -80,17 +80,13 @@ class _ProposalTileState extends State<ProposalTile> {
           ListTile(
             contentPadding: const EdgeInsets.symmetric(),
             leading: Text(widget.proposalId.toString(), style: titleSmall),
-            subtitle: SizedBox(
-              // ensure constant height even for missing texts without turnout.
-              height: 60,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
-                  if (turnout != 0) Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
-                  if (turnout != 0) passingOrFailingText(context, proposal, tally, widget.params),
-                ],
-              ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
+                if (turnout != 0) Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
+                if (turnout != 0) passingOrFailingText(context, proposal, tally, widget.params),
+              ],
             ),
             trailing: voteButtonOrProposalStatus(context),
           ),
