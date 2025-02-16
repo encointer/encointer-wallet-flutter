@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/page-encointer/democracy/widgets/update_proposal_button.dart';
 import 'package:encointer_wallet/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -80,17 +81,13 @@ class _ProposalTileState extends State<ProposalTile> {
           ListTile(
             contentPadding: const EdgeInsets.symmetric(),
             leading: Text(widget.proposalId.toString(), style: titleSmall),
-            subtitle: SizedBox(
-              // ensure constant height even for missing texts without turnout.
-              height: 60,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
-                  if (turnout != 0) Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
-                  if (turnout != 0) passingOrFailingText(context, proposal, tally, widget.params),
-                ],
-              ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${l10n.proposalTurnout}: $turnout / $electorateSize'),
+                if (turnout != 0) Text(l10n.proposalApprovalThreshold((threshold * 100).toStringAsFixed(2))),
+                if (turnout != 0) passingOrFailingText(context, proposal, tally, widget.params),
+              ],
             ),
             trailing: voteButtonOrProposalStatus(context),
           ),
@@ -175,18 +172,55 @@ class _ProposalTileState extends State<ProposalTile> {
       case Approved:
         return Text(l10n.proposalApproved, style: const TextStyle(color: Colors.green));
       case Ongoing:
+        final proposalLifetime = Duration(milliseconds: widget.params.proposalLifetime.toInt());
+        if (proposal.isOlderThan(proposalLifetime)) {
+          // Proposal lifetime has passed; proposal has expired.
+          return SizedBox(
+            height: 50,
+            width: 60,
+            child: UpdateProposalButton(
+              proposalId: widget.proposalId,
+              onPressed: _updateState,
+            ),
+          );
+        } else {
+          return SizedBox(
+            height: 50,
+            width: 60,
+            child: VoteButton(
+              proposal: proposal,
+              proposalId: widget.proposalId,
+              purposeId: widget.purposeId,
+              democracyParams: widget.params,
+              onPressed: _updateState,
+            ),
+          );
+        }
       case Confirming:
-        return SizedBox(
-          height: 50,
-          width: 60,
-          child: VoteButton(
-            proposal: proposal,
-            proposalId: widget.proposalId,
-            purposeId: widget.purposeId,
-            democracyParams: widget.params,
-            onPressed: _updateState,
-          ),
-        );
+        final confirmDuration = Duration(milliseconds: widget.params.confirmationPeriod.toInt());
+        if (proposal.isConfirmingLongerThan(confirmDuration)!) {
+          // confirmation time has passed
+          return SizedBox(
+            height: 50,
+            width: 60,
+            child: UpdateProposalButton(
+              proposalId: widget.proposalId,
+              onPressed: _updateState,
+            ),
+          );
+        } else {
+          return SizedBox(
+            height: 50,
+            width: 60,
+            child: VoteButton(
+              proposal: proposal,
+              proposalId: widget.proposalId,
+              purposeId: widget.purposeId,
+              democracyParams: widget.params,
+              onPressed: _updateState,
+            ),
+          );
+        }
       default:
         // should never happen.
         return const Text('Unknown Proposal State');

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:convert/convert.dart' show hex;
 
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/config/networks/networks.dart';
 import 'package:encointer_wallet/mocks/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
 import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
@@ -807,6 +808,27 @@ class EncointerApi {
   }
 
   DemocracyParams democracyParams() {
+    return switch (store.settings.currentNetwork) {
+      Network.encointerKusama => encointerKusamaParams(),
+      Network.encointerRococo => encointerKusamaParams(),
+      Network.gesell => encointerSoloParams(),
+      Network.gesellDev => encointerSoloParams(),
+    };
+  }
+
+  DemocracyParams encointerSoloParams() {
+    final minTurnout = BigInt.one;
+    final confirmationPeriod = BigInt.from(300000);
+    final proposalLifetime = BigInt.from(1200000);
+
+    return DemocracyParams(
+      minTurnout: minTurnout,
+      confirmationPeriod: confirmationPeriod,
+      proposalLifetime: proposalLifetime,
+    );
+  }
+
+  DemocracyParams encointerKusamaParams() {
     final minTurnout = encointerKusama.constant.encointerDemocracy.minTurnout;
     final confirmationPeriod = encointerKusama.constant.encointerDemocracy.confirmationPeriod;
     final proposalLifetime = encointerKusama.constant.encointerDemocracy.proposalLifetime;

@@ -456,6 +456,33 @@ Future<void> submitDemocracyVote(
   );
 }
 
+Future<void> submitDemocracyUpdateProposalState(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  KeyringAccount signer,
+  BigInt proposalId, {
+  required CommunityIdentifier? txPaymentAsset,
+}) async {
+  final call = api.encointer.encointerKusama.tx.encointerDemocracy.updateProposalState(
+    proposalId: proposalId,
+  );
+
+  final xt = await TxBuilder(api.provider).createSignedExtrinsic(
+    signer.pair,
+    call,
+    paymentAsset: txPaymentAsset?.toPolkadart(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    api,
+    OpaqueExtrinsic(xt),
+    TxNotification.democracyUpdateProposalState(context.l10n),
+  );
+}
+
 Future<void> submitDemocracyProposal(
   BuildContext context,
   AppStore store,

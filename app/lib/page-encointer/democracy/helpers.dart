@@ -234,7 +234,23 @@ extension ProposalExt on Proposal {
     return state.runtimeType == SupersededBy || state.runtimeType == Rejected;
   }
 
+  /// Returns true if the proposal started after now - `duration`.
   bool isMoreRecentThan(Duration duration) {
     return DateTime.now().subtract(duration).isBefore(DateTime.fromMillisecondsSinceEpoch(start.toInt()));
+  }
+
+  /// Returns true if the proposal started before now - `duration`.
+  bool isOlderThan(Duration duration) {
+    return !isMoreRecentThan(duration);
+  }
+
+  /// Returns true if the proposal has been in `Confirming` for longer than `duration`.
+  ///
+  /// Returns null if the proposal is not in confirming state at all.
+  bool? isConfirmingLongerThan(Duration duration) {
+    if (state.runtimeType != Confirming) return null;
+
+    final confirmingSince = (state as Confirming).since;
+    return DateTime.now().subtract(duration).isAfter(DateTime.fromMillisecondsSinceEpoch(confirmingSince.toInt()));
   }
 }
