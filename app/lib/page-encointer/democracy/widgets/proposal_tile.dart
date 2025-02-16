@@ -174,7 +174,7 @@ class _ProposalTileState extends State<ProposalTile> {
       case Ongoing:
         final proposalLifetime = Duration(milliseconds: widget.params.proposalLifetime.toInt());
         if (proposal.isOlderThan(proposalLifetime)) {
-          // confirmation time has passed
+          // Proposal lifetime has passed; proposal has expired.
           return SizedBox(
             height: 50,
             width: 60,
