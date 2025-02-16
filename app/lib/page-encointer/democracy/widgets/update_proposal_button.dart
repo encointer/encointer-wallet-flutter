@@ -32,7 +32,7 @@ class _UpdateProposalButtonState extends State<UpdateProposalButton> {
 
   @override
   Widget build(BuildContext context) {
-    // final l10n = context.l10n;
+    final l10n = context.l10n;
     final store = context.read<AppStore>();
 
     return SubmitButtonSmall(
@@ -40,7 +40,7 @@ class _UpdateProposalButtonState extends State<UpdateProposalButton> {
         await _showSubmitUpdateProposalStateDialog(store, widget.proposalId);
         widget.onPressed();
       },
-      child: const Text('Update Proposal'),
+      child: Text(l10n.proposalClose),
     );
   }
 
@@ -50,9 +50,9 @@ class _UpdateProposalButtonState extends State<UpdateProposalButton> {
     return AppAlert.showDialog(
       context,
       title: Text('${l10n.proposal} $proposalId'),
-      content: const Padding(
-        padding: EdgeInsets.only(top: 10),
-        child: Text('Update Proposal State'),
+      content: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Text(l10n.proposalUpdateExplanation),
       ),
       actions: <Widget>[
         Column(
@@ -65,7 +65,7 @@ class _UpdateProposalButtonState extends State<UpdateProposalButton> {
                     await _submitUpdateProposalState(store);
                     Navigator.of(context).pop();
                   },
-                  child: const Text('submit', style: TextStyle(color: Colors.green)),
+                  child: Text(l10n.proposalUpdateState, style: const TextStyle(color: Colors.green)),
                 ),
                 CupertinoButton(
                   onPressed: () => Navigator.of(context).pop(),
