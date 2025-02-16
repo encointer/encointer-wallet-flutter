@@ -479,7 +479,7 @@ Future<void> submitDemocracyUpdateProposalState(
     store,
     api,
     OpaqueExtrinsic(xt),
-    TxNotification.democracyVote(context.l10n),
+    TxNotification.democracyUpdateProposalState(context.l10n),
   );
 }
 

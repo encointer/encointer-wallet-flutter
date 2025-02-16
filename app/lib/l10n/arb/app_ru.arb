@@ -93,6 +93,8 @@
     "democracyVotedNotificationTitle": "проголосовали",
     "democracySubmitProposalNotificationBody": "Вы внесли предложение, за которое люди могут проголосовать прямо сейчас.",
     "democracySubmitProposalNotificationTitle": "Предложение отправлено",
+    "democracyUpdatedProposalStateNotificationBody": "Вы обновили это предложение",
+    "democracyUpdatedProposalStateNotificationTitle": "Предложение обновлено",
     "detail": "Детали",
     "detailsEnter": "Введите свои данные",
     "developer": "Режим разработчика",

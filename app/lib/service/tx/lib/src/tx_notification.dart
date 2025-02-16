@@ -27,6 +27,11 @@ class TxNotification {
         body: l10n.democracyVotedNotificationBody,
       );
 
+  factory TxNotification.democracyUpdateProposalState(AppLocalizations l10n) => TxNotification(
+    title: l10n.democracyUpdatedProposalStateNotificationTitle,
+    body: l10n.democracyUpdatedProposalStateNotificationBody,
+  );
+
   factory TxNotification.democracySubmitProposal(AppLocalizations l10n) => TxNotification(
         title: l10n.democracySubmitProposalNotificationTitle,
         body: l10n.democracySubmitProposalNotificationBody,

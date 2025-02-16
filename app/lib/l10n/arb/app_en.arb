@@ -91,6 +91,8 @@
     "democracyDiscussion": "Discuss proposals in the Forum!",
     "democracyVotedNotificationBody": "You have voted for this proposal.",
     "democracyVotedNotificationTitle": "Voted",
+    "democracyUpdatedProposalStateNotificationBody": "You have updated this proposal",
+    "democracyUpdatedProposalStateNotificationTitle": "Proposal Updated",
     "democracySubmitProposalNotificationBody": "You made a proposal, which people can vote on now.",
     "democracySubmitProposalNotificationTitle": "Proposal submitted",
     "detail": "Detail",

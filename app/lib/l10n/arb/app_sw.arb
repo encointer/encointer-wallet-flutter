@@ -93,6 +93,8 @@
     "democracyVotedNotificationTitle": "Umepiga kura",
     "democracySubmitProposalNotificationBody": "Ulitoa pendekezo, ambalo watu wanaweza kulipigia kura sasa.",
     "democracySubmitProposalNotificationTitle": "Pendekezo limewasilishwa",
+    "democracyUpdatedProposalStateNotificationBody": "Umesasisha pendekezo hili",
+    "democracyUpdatedProposalStateNotificationTitle": "Pendekezo limesasishwa",
     "detail": "Taarifa",
     "detailsEnter": "ingiza taarifa zako.",
     "developer": "Developer mode",
