@@ -34,6 +34,27 @@ export 'generated/encointer_kusama/types/encointer_primitives/communities/commun
 export 'generated/encointer_kusama/types/encointer_primitives/communities/community_rules.dart' show CommunityRules;
 export 'generated/encointer_kusama/types/encointer_primitives/communities/location.dart' show Location;
 
+// export types from democracy
+export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal.dart' show Proposal;
+export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action.dart'
+    show
+        ProposalAction,
+        AddLocation,
+        RemoveLocation,
+        UpdateDemurrage,
+        UpdateNominalIncome,
+        SetInactivityTimeout,
+        Petition,
+        SpendNative,
+        IssueSwapNativeOption;
+export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action_identifier.dart'
+    show ProposalActionIdentifier;
+export 'generated/encointer_kusama/types/encointer_primitives/democracy/proposal_state.dart'
+    show ProposalState, Ongoing, Rejected, SupersededBy, Approved, Confirming, Enacted;
+export 'generated/encointer_kusama/types/encointer_primitives/democracy/tally.dart' show Tally;
+export 'generated/encointer_kusama/types/encointer_primitives/democracy/vote.dart' show Vote;
+export 'generated/encointer_kusama/types/encointer_primitives/treasuries/swap_native_option.dart' show SwapNativeOption;
+
 // export types from faucet
 export 'generated/encointer_kusama/types/encointer_primitives/faucet/faucet.dart' show Faucet;
 

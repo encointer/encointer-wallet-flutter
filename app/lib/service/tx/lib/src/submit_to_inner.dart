@@ -87,8 +87,6 @@ void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
   final l10n = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
 
-  print('Should show error dialog');
-
   AppAlert.showDialog<void>(
     context,
     title: Text(message.title),
