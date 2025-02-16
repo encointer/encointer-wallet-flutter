@@ -240,6 +240,7 @@
     "proposalFieldErrorPositiveNumberRange": "Muss eine positive Zahl sein",
     "proposalFieldErrorEnterInactivityTimeout": "Inaktivitätszeitlimit eingeben",
     "proposalFieldErrorPositiveIntegerRange": "Muss eine positive ganze Zahl sein",
+    "proposalOnlyBootstrappersOrReputablesCanSubmit": "Nur Bootstrappers oder Reputables können einen Vorschlag einreichen.",
     "proposalSubmit": "Vorschlag einreichen",
     "proposalSuperseded": "Verdrängt",
     "proposalRejected": "Abgelehnt",

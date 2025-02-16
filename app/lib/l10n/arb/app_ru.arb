@@ -240,6 +240,7 @@
     "proposalFieldErrorPositiveNumberRange": "Должно быть положительное число",
     "proposalFieldErrorEnterInactivityTimeout": "Введите тайм-аут неактивности",
     "proposalFieldErrorPositiveIntegerRange": "Должно быть положительное целое число",
+    "proposalOnlyBootstrappersOrReputablesCanSubmit": "Только бутстраперы или уважаемые участники могут подать предложение.",
     "proposalSubmit": "Подать предложение",
     "proposalRejected": "Отменено",
     "proposalSuperseded": "заменен",

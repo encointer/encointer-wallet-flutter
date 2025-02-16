@@ -240,6 +240,7 @@
     "proposalFieldErrorPositiveNumberRange": "Lazima iwe namba chanya",
     "proposalFieldErrorEnterInactivityTimeout": "Weka muda wa kutokufanya kazi",
     "proposalFieldErrorPositiveIntegerRange": "Lazima iwe namba kamili chanya",
+    "proposalOnlyBootstrappersOrReputablesCanSubmit": "Ni bootstrappers au waheshimika pekee wanaoweza kuwasilisha pendekezo.",
     "proposalSubmit": "Wasilisha Pendekezo",
     "proposalSuperseded": "Iliyopita",
     "proposalRejected": "Imekaataliwa",

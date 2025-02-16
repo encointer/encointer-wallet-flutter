@@ -92,7 +92,7 @@ class _ProposePageState extends State<ProposePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final store = context.read<AppStore>();
+    final store = context.read<AppStore>();
     final l10n = context.l10n;
 
     return Scaffold(
@@ -158,12 +158,16 @@ class _ProposePageState extends State<ProposePage> {
 
                 // Submit Button
                 const Spacer(),
+                if (!isBootstrapperOrReputable(store, store.account.currentAddress))
+                  Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
                 SubmitButton(
-                  onPressed: (context) async {
-                    _formKey.currentState!.validate();
-                    await _submitProposal();
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: isBootstrapperOrReputable(store, store.account.currentAddress)
+                      ? (context) async {
+                          _formKey.currentState!.validate();
+                          await _submitProposal();
+                          Navigator.of(context).pop();
+                        }
+                      : null, // disable button for non-bootstrappers/reputables
                   child: Text(l10n.proposalSubmit),
                 ),
               ],
@@ -504,6 +508,11 @@ class _ProposePageState extends State<ProposePage> {
         return null;
       }
     }
+  }
+
+  bool isBootstrapperOrReputable(AppStore store, String address) {
+    return store.encointer.community!.bootstrappers!.contains(address) ||
+        store.encointer.accountStores![address]!.verifiedReputations.isNotEmpty;
   }
 
   /// Validates Inactivity Timeout (Only positive integers)
