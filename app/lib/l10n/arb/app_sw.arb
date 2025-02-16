@@ -209,6 +209,7 @@
     "proposalNew": "Mapendekezo mapya",
     "proposalType": "Aina ya pendekezo",
     "proposalTypeAddLocation": "Ongeza eneo",
+    "proposalTypeRemoveLocation": "Ondoa eneo",
     "proposalTypeUpdateDemurrage": "Sasisha ada ya kuchelewesha",
     "proposalTypeUpdateNominalIncome": "Sasisha mapato ya kawaida",
     "proposalTypeSetInactivityTimeout": "Weka muda wa kutokufanya kazi",

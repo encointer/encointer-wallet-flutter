@@ -209,6 +209,7 @@
     "proposalNew": "New Proposal",
     "proposalType": "Proposal Type",
     "proposalTypeAddLocation": "Add location",
+    "proposalTypeRemoveLocation": "Remove location",
     "proposalTypeUpdateDemurrage": "Update Demurrage",
     "proposalTypeUpdateNominalIncome": "Update Nominal Income",
     "proposalTypeSetInactivityTimeout": "Set Inactivity Timeout",

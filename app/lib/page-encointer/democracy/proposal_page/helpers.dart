@@ -35,7 +35,7 @@ enum ProposalActionIdentifier {
 ProposalActionIdentifier proposalActionIdentifierFromPolkadartAction(et.ProposalAction action) {
   return switch (action.runtimeType) {
     et.AddLocation => ProposalActionIdentifier.addLocation,
-    et.RemoveLocation => throw UnimplementedError('Remove location is unsupported'),
+    et.RemoveLocation => ProposalActionIdentifier.removeLocation,
     et.UpdateDemurrage => ProposalActionIdentifier.updateDemurrage,
     et.UpdateNominalIncome => ProposalActionIdentifier.updateNominalIncome,
     et.SetInactivityTimeout => ProposalActionIdentifier.setInactivityTimeout,
@@ -84,7 +84,7 @@ extension PropsalActionExt on ProposalActionIdentifier {
   String localizedStr(AppLocalizations l10n) {
     return switch (this) {
       ProposalActionIdentifier.addLocation => l10n.proposalTypeAddLocation,
-      ProposalActionIdentifier.removeLocation => throw UnimplementedError('Remove location is unsupported'),
+      ProposalActionIdentifier.removeLocation => l10n.proposalTypeRemoveLocation,
       ProposalActionIdentifier.updateDemurrage => l10n.proposalTypeUpdateDemurrage,
       ProposalActionIdentifier.updateNominalIncome => l10n.proposalTypeUpdateNominalIncome,
       ProposalActionIdentifier.setInactivityTimeout => l10n.proposalTypeSetInactivityTimeout,

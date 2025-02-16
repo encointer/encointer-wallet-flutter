@@ -209,6 +209,7 @@
     "proposalNew": "Nouvelle Proposition",
     "proposalType": "Type de proposition",
     "proposalTypeAddLocation": "Ajouter un lieu",
+    "proposalTypeRemoveLocation": "Retrancher un lieu",
     "proposalTypeUpdateDemurrage": "Mettre à jour la démurrage",
     "proposalTypeUpdateNominalIncome": "Mettre à jour le revenu nominal",
     "proposalTypeSetInactivityTimeout": "Définir le délai d'inactivité",

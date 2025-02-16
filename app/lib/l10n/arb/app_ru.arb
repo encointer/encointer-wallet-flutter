@@ -209,6 +209,7 @@
     "proposalNew": "новое предложение",
     "proposalType": "Тип предложения",
     "proposalTypeAddLocation": "Добавить местоположение",
+    "proposalTypeRemoveLocation": "Удалить местоположение",
     "proposalTypeUpdateDemurrage": "Обновить демерредж",
     "proposalTypeUpdateNominalIncome": "Обновить номинальный доход",
     "proposalTypeSetInactivityTimeout": "Установить тайм-аут неактивности",
