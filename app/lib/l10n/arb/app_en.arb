@@ -240,6 +240,7 @@
     "proposalFieldErrorPositiveNumberRange": "Must be a positive number",
     "proposalFieldErrorEnterInactivityTimeout": "Enter inactivity timeout",
     "proposalFieldErrorPositiveIntegerRange": "Must be a positive integer",
+    "proposalOnlyBootstrappersOrReputablesCanSubmit": "Only bootstrappers or reputables can submit a proposal.",
     "proposalSubmit": "Submit Proposal",
     "proposalSuperseded": "Superseded",
     "proposalRejected": "Rejected",

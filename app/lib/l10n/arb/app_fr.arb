@@ -240,6 +240,7 @@
     "proposalFieldErrorPositiveNumberRange": "Doit être un nombre positif",
     "proposalFieldErrorEnterInactivityTimeout": "Entrez le délai d'inactivité",
     "proposalFieldErrorPositiveIntegerRange": "Doit être un entier positif",
+    "proposalOnlyBootstrappersOrReputablesCanSubmit": "Seuls les bootstrappers ou les Reputables peuvent soumettre une proposition.",
     "proposalSubmit": "Soumettre une proposition",
     "proposalSuperseded": "Epargné",
     "proposalRejected": "Refusé",
