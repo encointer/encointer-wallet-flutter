@@ -174,7 +174,8 @@ class _ProposePageState extends State<ProposePage> {
                   Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
                 const SizedBox(height: 5),
                 SubmitButton(
-                  onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) && !enactmentQueue.contains(selectedAction)
+                  onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
+                          !enactmentQueue.contains(selectedAction)
                       ? (context) async {
                           _formKey.currentState!.validate();
                           await _submitProposal();
