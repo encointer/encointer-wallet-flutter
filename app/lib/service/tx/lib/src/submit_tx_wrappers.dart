@@ -70,6 +70,8 @@ Future<void> submitClaimRewards(
   KeyringAccount signer,
   CommunityIdentifier chosenCid, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   // meetupIndex = null; the chain will figure out the meetup index.
   final call = api.encointer.encointerKusama.tx.encointerCeremonies.claimRewards(cid: chosenCid.toPolkadart());
@@ -128,6 +130,8 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier chosenCid,
   Address newbie, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerCeremonies.endorseNewcomer(
     cid: chosenCid.toPolkadart(),
@@ -160,6 +164,8 @@ Future<void> submitUnRegisterParticipant(
   CommunityIdentifier chosenCid, {
   required ProofOfAttendance? lastProofOfAttendance,
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final maybeReputationCommunityCeremony = (lastProofOfAttendance != null)
       ? Tuple2(
@@ -208,6 +214,8 @@ Future<void> submitRegisterParticipant(
   KeyringAccount signer,
   CommunityIdentifier chosenCid, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final proof = api.encointer.getProofOfAttendance();
 
@@ -263,6 +271,8 @@ Future<void> submitAttestAttendees(
   KeyringAccount signer,
   CommunityIdentifier chosenCid, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final attestations =
       store.encointer.communityAccount!.attendees!.map((address) => Address.decode(address).pubkey).toList();
@@ -301,6 +311,8 @@ Future<void> submitFaucetDrip(
   CommunityIdentifier cid,
   int cIndex, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerFaucet.drip(
     faucetAccount: AddressUtils.pubKeyHexToPubKey(faucetPubKey).toList(),
@@ -434,6 +446,8 @@ Future<void> submitDemocracyVote(
   Vote vote,
   Reputations reputations, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerDemocracy.vote(
     proposalId: proposalId,
@@ -463,6 +477,8 @@ Future<void> submitDemocracyUpdateProposalState(
   KeyringAccount signer,
   BigInt proposalId, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerDemocracy.updateProposalState(
     proposalId: proposalId,
@@ -480,6 +496,8 @@ Future<void> submitDemocracyUpdateProposalState(
     api,
     OpaqueExtrinsic(xt),
     TxNotification.democracyUpdateProposalState(context.l10n),
+    onFinish: onFinish,
+    onError: onError,
   );
 }
 
@@ -490,6 +508,8 @@ Future<void> submitDemocracyProposal(
   KeyringAccount signer,
   ProposalAction proposalAction, {
   required CommunityIdentifier? txPaymentAsset,
+  dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
+  void Function(DispatchError report)? onError,
 }) async {
   final call = api.encointer.encointerKusama.tx.encointerDemocracy.submitProposal(proposalAction: proposalAction);
 
