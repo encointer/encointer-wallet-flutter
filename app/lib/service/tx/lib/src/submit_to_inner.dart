@@ -51,8 +51,6 @@ Future<void> submitTxInner(
         Log.e('[TX] Extrinsic Failed: ${report.dispatchError!.toJson()}');
         _onTxError(store);
         onError?.call(report.dispatchError!);
-        final message = getLocalizedTxErrorMessage(l10n, report.dispatchError!);
-        _showErrorDialog(context, message);
       } else {
         _onTxFinish(context, store, report, onTxFinishFn);
       }
@@ -65,7 +63,7 @@ Future<void> submitTxInner(
       } else if (e.toString().contains(insufficientFundsError)) {
         msg = ErrorNotificationMsg(title: l10n.insufficientFundsErrorTitle, body: l10n.insufficientFundsErrorBody);
       }
-      _showErrorDialog(context, msg);
+      showTxErrorDialog(context, msg);
     }
   } else {
     _showTxStatusSnackBar(l10n.txQueuedOffline, null);
@@ -83,7 +81,7 @@ void _onTxError(AppStore store) {
   store.assets.setSubmitting(false);
 }
 
-void _showErrorDialog(BuildContext context, ErrorNotificationMsg message) {
+void showTxErrorDialog(BuildContext context, ErrorNotificationMsg message) {
   final l10n = context.l10n;
   final languageCode = Localizations.localeOf(context).languageCode;
 

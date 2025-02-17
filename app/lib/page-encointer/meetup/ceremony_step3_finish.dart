@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -94,13 +96,16 @@ class CeremonyStep3Finish extends StatelessWidget {
                         ],
                       ),
                       onPressed: (context) => submitAttestAttendees(
-                        context,
-                        store,
-                        api,
-                        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-                        store.encointer.chosenCid!,
-                        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-                      ),
+                          context,
+                          store,
+                          api,
+                          store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                          store.encointer.chosenCid!,
+                          txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                          onError: (dispatchError) {
+                        final message = getLocalizedTxErrorMessage(l10n, dispatchError);
+                        showTxErrorDialog(context, message);
+                      }),
                     );
                   } else {
                     return Column(

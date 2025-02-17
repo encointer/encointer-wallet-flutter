@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -261,13 +263,16 @@ class _AssetsViewState extends State<AssetsView> {
                                 key: const Key(EWTestKeys.claimPendingDev),
                                 child: Text(l10n.issuancePending, textAlign: TextAlign.center),
                                 onPressed: (context) => submitClaimRewards(
-                                  context,
-                                  store,
-                                  webApi,
-                                  store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-                                  widget.store.encointer.chosenCid!,
-                                  txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-                                ),
+                                    context,
+                                    store,
+                                    webApi,
+                                    store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                                    widget.store.encointer.chosenCid!,
+                                    txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                                    onError: (dispatchError) {
+                                  final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+                                  showTxErrorDialog(context, message);
+                                }),
                               );
                             } else {
                               return _appSettingsStore.developerMode

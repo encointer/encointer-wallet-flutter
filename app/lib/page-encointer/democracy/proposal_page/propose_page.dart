@@ -5,6 +5,8 @@ import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -550,18 +552,17 @@ class _ProposePageState extends State<ProposePage> {
   /// Handles form submission
   Future<void> _submitProposal() async {
     final store = context.read<AppStore>();
+    final l10n = context.l10n;
 
     if (_formKey.currentState!.validate()) {
       final action = getProposalAction(store);
 
       await submitDemocracyProposal(
-        context,
-        store,
-        webApi,
-        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-        action,
-        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-      );
+          context, store, webApi, store.account.getKeyringAccount(store.account.currentAccountPubKey!), action,
+          txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid), onError: (dispatchError) {
+        final message = getLocalizedTxErrorMessage(l10n, dispatchError);
+        showTxErrorDialog(context, message);
+      });
     }
   }
 

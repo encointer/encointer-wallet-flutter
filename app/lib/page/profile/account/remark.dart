@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/store/app.dart';
@@ -76,12 +78,10 @@ class Remarks extends StatelessWidget {
 
   Future<void> _submitRemarkTx(BuildContext context, String remark) async {
     return submitRemark(
-      context,
-      store,
-      webApi,
-      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-      remark,
-      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-    );
+        context, store, webApi, store.account.getKeyringAccount(store.account.currentAccountPubKey!), remark,
+        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid), onError: (dispatchError) {
+      final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+      showTxErrorDialog(context, message);
+    });
   }
 }

@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:ew_test_keys/ew_test_keys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,15 +35,13 @@ class _UnregisteredLinkButtonState extends State<UnregisteredLinkButton> {
             ?.lastProofOfAttendance // can still be null if the participant did not register on the same phone.
         : null;
 
-    await submitUnRegisterParticipant(
-      context,
-      store,
-      webApi,
-      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-      store.encointer.chosenCid!,
-      lastProofOfAttendance: lastProofOfAttendance,
-      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-    );
+    await submitUnRegisterParticipant(context, store, webApi,
+        store.account.getKeyringAccount(store.account.currentAccountPubKey!), store.encointer.chosenCid!,
+        lastProofOfAttendance: lastProofOfAttendance,
+        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid), onError: (dispatchError) {
+      final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+      showTxErrorDialog(context, message);
+    });
 
     setState(() {
       _submitting = false;

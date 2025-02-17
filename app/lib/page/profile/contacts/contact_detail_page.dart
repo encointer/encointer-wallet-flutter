@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -289,14 +291,16 @@ class EndorseButton extends StatelessWidget {
       await _popupDialog(context, l10n.canEndorseInRegisteringPhaseOnly);
     } else {
       await submitEndorseNewcomer(
-        context,
-        store,
-        api,
-        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-        store.encointer.chosenCid!,
-        Address.decode(address),
-        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-      );
+          context,
+          store,
+          api,
+          store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+          store.encointer.chosenCid!,
+          Address.decode(address),
+          txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid), onError: (dispatchError) {
+        final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+        showTxErrorDialog(context, message);
+      });
     }
   }
 }
