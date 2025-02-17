@@ -87,6 +87,7 @@ class _UpdateProposalButtonState extends State<UpdateProposalButton> {
       store.account.getKeyringAccount(store.account.currentAccountPubKey!),
       widget.proposalId,
       txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+      onError: (error) => Log.p('[updateProposal] error updating the proposal: ${error}'),
     );
 
     setState(() {});
