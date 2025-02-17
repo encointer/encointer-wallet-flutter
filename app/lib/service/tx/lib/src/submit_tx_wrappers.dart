@@ -70,7 +70,7 @@ Future<void> submitClaimRewards(
   KeyringAccount signer,
   CommunityIdentifier chosenCid, {
   required CommunityIdentifier? txPaymentAsset,
-  // todo: refactor to use the onFinish from the outside
+  // todo: #1763
   // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
@@ -136,7 +136,7 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier chosenCid,
   Address newbie, {
   required CommunityIdentifier? txPaymentAsset,
-  // todo: refactor to use the onFinish from the outside
+  // todo: #1763
   // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
@@ -172,7 +172,7 @@ Future<void> submitUnRegisterParticipant(
   CommunityIdentifier chosenCid, {
   required ProofOfAttendance? lastProofOfAttendance,
   required CommunityIdentifier? txPaymentAsset,
-  // todo: refactor to use onFinish from the outside
+  // todo: #1763
   // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
@@ -224,7 +224,7 @@ Future<void> submitRegisterParticipant(
   KeyringAccount signer,
   CommunityIdentifier chosenCid, {
   required CommunityIdentifier? txPaymentAsset,
-  // todo: refactor to use onFinish from the outside
+  // todo: #1763
   // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
@@ -283,7 +283,7 @@ Future<void> submitAttestAttendees(
   KeyringAccount signer,
   CommunityIdentifier chosenCid, {
   required CommunityIdentifier? txPaymentAsset,
-  // todo: refactor to pass onFinish from the outside
+  // todo: #1763
   // dynamic Function(BuildContext txPageContext, ExtrinsicReport report)? onFinish,
   void Function(DispatchError report)? onError,
 }) async {
