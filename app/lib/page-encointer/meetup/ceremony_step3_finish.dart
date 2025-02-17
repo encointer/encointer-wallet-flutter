@@ -96,16 +96,17 @@ class CeremonyStep3Finish extends StatelessWidget {
                         ],
                       ),
                       onPressed: (context) => submitAttestAttendees(
-                          context,
-                          store,
-                          api,
-                          store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-                          store.encointer.chosenCid!,
-                          txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-                          onError: (dispatchError) {
-                        final message = getLocalizedTxErrorMessage(l10n, dispatchError);
-                        showTxErrorDialog(context, message);
-                      }),
+                        context,
+                        store,
+                        api,
+                        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                        store.encointer.chosenCid!,
+                        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                        onError: (dispatchError) {
+                          final message = getLocalizedTxErrorMessage(l10n, dispatchError);
+                          showTxErrorDialog(context, message);
+                        },
+                      ),
                     );
                   } else {
                     return Column(

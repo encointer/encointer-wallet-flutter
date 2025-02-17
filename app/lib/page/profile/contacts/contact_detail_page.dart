@@ -291,16 +291,18 @@ class EndorseButton extends StatelessWidget {
       await _popupDialog(context, l10n.canEndorseInRegisteringPhaseOnly);
     } else {
       await submitEndorseNewcomer(
-          context,
-          store,
-          api,
-          store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-          store.encointer.chosenCid!,
-          Address.decode(address),
-          txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid), onError: (dispatchError) {
-        final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
-        showTxErrorDialog(context, message);
-      });
+        context,
+        store,
+        api,
+        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+        store.encointer.chosenCid!,
+        Address.decode(address),
+        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+        onError: (dispatchError) {
+          final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+          showTxErrorDialog(context, message);
+        },
+      );
     }
   }
 }

@@ -263,16 +263,17 @@ class _AssetsViewState extends State<AssetsView> {
                                 key: const Key(EWTestKeys.claimPendingDev),
                                 child: Text(l10n.issuancePending, textAlign: TextAlign.center),
                                 onPressed: (context) => submitClaimRewards(
-                                    context,
-                                    store,
-                                    webApi,
-                                    store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-                                    widget.store.encointer.chosenCid!,
-                                    txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-                                    onError: (dispatchError) {
-                                  final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
-                                  showTxErrorDialog(context, message);
-                                }),
+                                  context,
+                                  store,
+                                  webApi,
+                                  store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                                  widget.store.encointer.chosenCid!,
+                                  txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                                  onError: (dispatchError) {
+                                    final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+                                    showTxErrorDialog(context, message);
+                                  },
+                                ),
                               );
                             } else {
                               return _appSettingsStore.developerMode

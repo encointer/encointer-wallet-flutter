@@ -558,11 +558,17 @@ class _ProposePageState extends State<ProposePage> {
       final action = getProposalAction(store);
 
       await submitDemocracyProposal(
-          context, store, webApi, store.account.getKeyringAccount(store.account.currentAccountPubKey!), action,
-          txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid), onError: (dispatchError) {
-        final message = getLocalizedTxErrorMessage(l10n, dispatchError);
-        showTxErrorDialog(context, message);
-      });
+        context,
+        store,
+        webApi,
+        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+        action,
+        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+        onError: (dispatchError) {
+          final message = getLocalizedTxErrorMessage(l10n, dispatchError);
+          showTxErrorDialog(context, message);
+        },
+      );
     }
   }
 

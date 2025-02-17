@@ -80,16 +80,17 @@ class CeremonyBox extends StatelessWidget {
                             await awaitDataUpdateWithDialog(context, store);
                           }
                           await submitRegisterParticipant(
-                              context,
-                              store,
-                              api,
-                              store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-                              store.encointer.chosenCid!,
-                              txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-                              onError: (dispatchError) {
-                            final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
-                            showTxErrorDialog(context, message);
-                          });
+                            context,
+                            store,
+                            api,
+                            store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                            store.encointer.chosenCid!,
+                            txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                            onError: (dispatchError) {
+                              final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+                              showTxErrorDialog(context, message);
+                            },
+                          );
                         }),
                   ),
                 if (store.encointer.showRestartCeremonyButton)
@@ -130,16 +131,17 @@ class CeremonyBox extends StatelessWidget {
                         ],
                       ),
                       onPressed: () => submitAttestAttendees(
-                          context,
-                          store,
-                          api,
-                          store.account.getKeyringAccount(store.account.currentAccountPubKey!),
-                          store.encointer.chosenCid!,
-                          txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-                          onError: (dispatchError) {
-                        final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
-                        showTxErrorDialog(context, message);
-                      }),
+                        context,
+                        store,
+                        api,
+                        store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+                        store.encointer.chosenCid!,
+                        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+                        onError: (dispatchError) {
+                          final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+                          showTxErrorDialog(context, message);
+                        },
+                      ),
                     ),
                   )
               ],

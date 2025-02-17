@@ -35,13 +35,19 @@ class _UnregisteredLinkButtonState extends State<UnregisteredLinkButton> {
             ?.lastProofOfAttendance // can still be null if the participant did not register on the same phone.
         : null;
 
-    await submitUnRegisterParticipant(context, store, webApi,
-        store.account.getKeyringAccount(store.account.currentAccountPubKey!), store.encointer.chosenCid!,
-        lastProofOfAttendance: lastProofOfAttendance,
-        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid), onError: (dispatchError) {
-      final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
-      showTxErrorDialog(context, message);
-    });
+    await submitUnRegisterParticipant(
+      context,
+      store,
+      webApi,
+      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+      store.encointer.chosenCid!,
+      lastProofOfAttendance: lastProofOfAttendance,
+      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+      onError: (dispatchError) {
+        final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+        showTxErrorDialog(context, message);
+      },
+    );
 
     setState(() {
       _submitting = false;

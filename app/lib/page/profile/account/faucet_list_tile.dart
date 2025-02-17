@@ -137,11 +137,19 @@ class _FaucetListTileState extends State<FaucetListTile> {
   ) async {
     final store = widget.store;
     final e = ids.entries.first;
-    return submitFaucetDrip(context, store, webApi,
-        store.account.getKeyringAccount(store.account.currentAccountPubKey!), faucetAccount, e.value, e.key,
-        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid), onError: (dispatchError) {
-      final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
-      showTxErrorDialog(context, message);
-    });
+    return submitFaucetDrip(
+      context,
+      store,
+      webApi,
+      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+      faucetAccount,
+      e.value,
+      e.key,
+      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+      onError: (dispatchError) {
+        final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+        showTxErrorDialog(context, message);
+      },
+    );
   }
 }

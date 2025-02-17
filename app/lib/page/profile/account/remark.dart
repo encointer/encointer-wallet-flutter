@@ -78,10 +78,16 @@ class Remarks extends StatelessWidget {
 
   Future<void> _submitRemarkTx(BuildContext context, String remark) async {
     return submitRemark(
-        context, store, webApi, store.account.getKeyringAccount(store.account.currentAccountPubKey!), remark,
-        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid), onError: (dispatchError) {
-      final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
-      showTxErrorDialog(context, message);
-    });
+      context,
+      store,
+      webApi,
+      store.account.getKeyringAccount(store.account.currentAccountPubKey!),
+      remark,
+      txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+      onError: (dispatchError) {
+        final message = getLocalizedTxErrorMessage(context.l10n, dispatchError);
+        showTxErrorDialog(context, message);
+      },
+    );
   }
 }
