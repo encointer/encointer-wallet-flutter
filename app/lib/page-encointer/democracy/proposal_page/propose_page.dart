@@ -201,20 +201,20 @@ class _ProposePageState extends State<ProposePage> {
   /// Dynamically generates form fields based on selected proposal type
   Widget _getProposalExplainer(BuildContext context) {
     final theme = context.textTheme.bodyMedium;
-    return Card(child:
-    Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(4),
-            child: Icon(Iconsax.info_circle),
-          ),
-          Text(_explainerText(), style: theme),
-        ],
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(4),
+              child: Icon(Iconsax.info_circle),
+            ),
+            Text(_explainerText(), style: theme),
+          ],
+        ),
       ),
-    ));
-
+    );
   }
 
   String _explainerText() {
@@ -224,7 +224,7 @@ class _ProposePageState extends State<ProposePage> {
         return l10n.proposalExplainerAddLocation;
       case ProposalActionIdentifier.removeLocation:
         return l10n.proposalExplainerRemoveLocation;
-        case ProposalActionIdentifier.updateDemurrage:
+      case ProposalActionIdentifier.updateDemurrage:
         return l10n.proposalExplainerUpdateDemurrage;
       case ProposalActionIdentifier.updateNominalIncome:
         return l10n.proposalExplainerUpdateNominalIncome;
