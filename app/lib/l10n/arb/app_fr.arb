@@ -207,7 +207,7 @@
     "proposalAye": "Aye",
     "proposalNay": "Nay",
     "proposalNew": "Nouvelle Proposition",
-    "proposalExplainerAddLocation": "Cette proposition suggère un nouveau lieu de rencontre pour votre communauté. Assurez-vous que l'emplacement n'est pas trop éloigné des points de rencontre existants.",
+    "proposalExplainerAddLocation": "Cette proposition suggère un nouveau lieu de rencontre pour votre communauté. Assurez-vous qu'il soit situé à au moins 100 mètres et à pas plus de 1 kilomètre des lieux de rencontre existants.",
     "proposalExplainerRemoveLocation": "Cette proposition suggère de supprimer un lieu de rencontre existant pour votre communauté.",
     "proposalExplainerUpdateDemurrage": "Cette proposition suggère un nouveau taux de démurrage mensuel pour le jeton de votre communauté.",
     "proposalExplainerUpdateNominalIncome": "Cette proposition suggère un nouveau revenu nominal dans les cycles de rencontre pour votre communauté.",

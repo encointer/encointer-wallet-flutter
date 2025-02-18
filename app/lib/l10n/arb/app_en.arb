@@ -207,7 +207,7 @@
     "proposalAye": "Aye",
     "proposalNay": "Nay",
     "proposalNew": "New Proposal",
-    "proposalExplainerAddLocation": "This proposal suggests a new gathering location for your community. Ensure that the location is not closer than 100m and not further than 1km from existing gathering locations.",
+    "proposalExplainerAddLocation": "This proposal suggests a new gathering location for your community. Make sure it’s at least 100m away and no more than 1km from existing locations.",
     "proposalExplainerRemoveLocation": "This proposal suggests to remove an existing gathering location for your community.",
     "proposalExplainerUpdateDemurrage": "This proposal suggest a new monthly demurrage for your community token.",
     "proposalExplainerUpdateNominalIncome": "This proposal suggests a new nominal income in the gathering cycles for your community.",
