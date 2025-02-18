@@ -10,10 +10,12 @@ import 'package:encointer_wallet/service/tx/lib/src/submit_to_inner.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
 import 'package:flutter/services.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ew_polkadart/ew_polkadart.dart'
@@ -167,6 +169,8 @@ class _ProposePageState extends State<ProposePage> {
 
                 // Dynamic Fields Based on Selected Proposal Action
                 _buildDynamicFields(context),
+                const SizedBox(height: 10),
+                _getProposalExplainer(context),
 
                 // Submit Button
                 const Spacer(),
@@ -192,6 +196,47 @@ class _ProposePageState extends State<ProposePage> {
         ),
       ),
     );
+  }
+
+  /// Dynamically generates form fields based on selected proposal type
+  Widget _getProposalExplainer(BuildContext context) {
+    final theme = context.textTheme.bodyMedium;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(4),
+              child: Icon(Iconsax.info_circle),
+            ),
+            Text(_explainerText(), style: theme),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _explainerText() {
+    final l10n = context.l10n;
+    switch (selectedAction) {
+      case ProposalActionIdentifier.addLocation:
+        return l10n.proposalExplainerAddLocation;
+      case ProposalActionIdentifier.removeLocation:
+        return l10n.proposalExplainerRemoveLocation;
+      case ProposalActionIdentifier.updateDemurrage:
+        return l10n.proposalExplainerUpdateDemurrage;
+      case ProposalActionIdentifier.updateNominalIncome:
+        return l10n.proposalExplainerUpdateNominalIncome;
+      case ProposalActionIdentifier.setInactivityTimeout:
+        return l10n.proposalExplainerSetInactivityTimeout;
+      case ProposalActionIdentifier.petition:
+        return l10n.proposalExplainerPetition;
+      case ProposalActionIdentifier.spendNative:
+        return l10n.proposalExplainerSpendNative;
+      case ProposalActionIdentifier.issueSwapNativeOption:
+        return l10n.proposalExplainerIssueSwapNativeOption;
+    }
   }
 
   /// Dynamically generates form fields based on selected proposal type
