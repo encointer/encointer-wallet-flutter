@@ -213,7 +213,7 @@
     "proposalExplainerUpdateNominalIncome": "This proposal suggests a new nominal income in the gathering cycles for your community.",
     "proposalExplainerSetInactivityTimeout": "This proposal suggests a new global inactivity timeout. If a community has not been performing gatherings for the suggested number of gathering cycles, the community will be deleted.",
     "proposalExplainerPetition": "This proposal serves as a petition, either globally or within your community. While it has no direct on-chain effect, it signals intent, allowing the community to recognize and act upon it.",
-    "proposalExplainerSpendNative": "This proposal suggests spending KSM for a beneficiary, either through a global or community vote. These funds can reward community contributions or support community initiatives.",
+    "proposalExplainerSpendNative": "This proposal suggests spending KSM for a beneficiary from the community treasury, either through a global or community vote. These funds can reward community contributions or support community initiatives.",
     "proposalExplainerIssueSwapNativeOption": "This proposal allows the beneficiary to exchange community tokens for KSM at a defined rate, up to a set KSM limit. The beneficiary might be a local business that accepts community tokens and may accumulate a surplus.",
     "proposalType": "Proposal Type",
     "proposalTypeAddLocation": "Add location",

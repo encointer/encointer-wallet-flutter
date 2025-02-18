@@ -213,7 +213,7 @@
     "proposalExplainerUpdateNominalIncome": "Cette proposition suggère un nouveau revenu nominal dans les cycles de rencontre pour votre communauté.",
     "proposalExplainerSetInactivityTimeout": "Cette proposition suggère un nouveau délai global d'inactivité. Si une communauté n'organise pas de rencontres pendant le nombre de cycles suggéré, elle sera supprimée.",
     "proposalExplainerPetition": "Cette proposition sert de pétition, soit au niveau global, soit au sein de votre communauté. Bien qu'elle n'ait pas d'effet direct sur la blockchain, elle signale une intention permettant à la communauté de la reconnaître et d'y répondre.",
-    "proposalExplainerSpendNative": "Cette proposition suggère de dépenser des KSM pour un bénéficiaire, soit par un vote global, soit par un vote communautaire. Ces fonds peuvent récompenser des contributions ou soutenir des initiatives communautaires.",
+    "proposalExplainerSpendNative": "Cette proposition suggère de dépenser des KSM pour un bénéficiaire provenant du trésor de la communauté, soit par un vote global, soit par un vote de la communauté. Ces fonds peuvent récompenser les contributions à la communauté ou soutenir des initiatives communautaires.",
     "proposalExplainerIssueSwapNativeOption": "Cette proposition permet au bénéficiaire d'échanger des jetons communautaires contre des KSM à un taux défini, jusqu'à une limite de KSM. Le bénéficiaire pourrait être une entreprise locale acceptant les jetons communautaires et accumulant un surplus.",
     "proposalType": "Type de proposition",
     "proposalTypeAddLocation": "Ajouter un lieu",
