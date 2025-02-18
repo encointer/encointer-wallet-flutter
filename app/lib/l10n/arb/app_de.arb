@@ -497,7 +497,7 @@
             }
         }
     },
-    "proposalSpendNative": "{cid} Das Treasury soll {amount} KSM an {beneficiary} senden",
+    "proposalSpendNative": "{cid} Die Gemeinschaftsreserve soll {amount} KSM an {beneficiary} senden",
     "@proposalSpendNative": {
         "placeholders": {
             "cid": {
