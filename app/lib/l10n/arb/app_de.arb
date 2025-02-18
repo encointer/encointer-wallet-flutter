@@ -498,7 +498,7 @@
             }
         }
     },
-    "proposalSpendNative": "{cid} Kasse soll {amount} KSM an {beneficiary} senden",
+    "proposalSpendNative": "{cid} Das Treasury soll {amount} KSM an {beneficiary} senden",
     "@proposalSpendNative": {
         "placeholders": {
             "cid": {
