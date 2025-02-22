@@ -134,21 +134,21 @@ scripts:
     run: cd app && flutter drive --no-enable-impeller --target=test_driver/app.dart --flavor dev --dart-define=locales=en
     description: "Run integration test on Android with screenshot capturing enabled."
 
-  integration-app-test-ios:
-    run: cd app && flutter drive --target=test_driver/app.dart
-    description: "Run integration test on iOS"
-
-  integration-app-test-ios-screenshot:
-    run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=en
-    description: "Run integration test on IOS with screenshot capturing enabled."
-
-  integration-app-test-ios-screenshot-multi-language:
-    run: cd app && flutter drive --target=test_driver/app.dart --dart-define=locales=de,fr,ru,en
-    description: "Run integration test on IOS with screenshot multi language capturing enabled."
-
   integration-app-test-android-screenshot-multi-language:
     run: cd app && flutter drive --target=test_driver/app.dart --flavor dev --dart-define=locales=de,fr,ru,en
     description: "Run integration test on Android with screenshot multi language capturing enabled. "  
+  
+  integration-app-test-ios:
+    run: cd app && flutter drive --target=test_driver/app.dart --no-enable-impeller
+    description: "Run integration test on iOS"
+
+  integration-app-test-ios-screenshot:
+    run: cd app && flutter drive --target=test_driver/app.dart --no-enable-impeller --dart-define=locales=en
+    description: "Run integration test on IOS with screenshot capturing enabled."
+
+  integration-app-test-ios-screenshot-multi-language:
+    run: cd app && flutter drive --target=test_driver/app.dart --no-enable-impeller --dart-define=locales=de,fr,ru,en
+    description: "Run integration test on IOS with screenshot multi language capturing enabled."
 
   integration-scan-test-android:
     # screenshots are not possible with the impeller engine
@@ -156,7 +156,7 @@ scripts:
     description: "Run integration test for QR scan on Android"
 
   integration-scan-test-ios:
-    run: cd app && flutter drive --target=test_driver/scan_page.dart
+    run: cd app && flutter drive --target=test_driver/scan_page.dart --no-enable-impeller
     description: "Run integration test for QR scan on iOS"
 
   flutter-config-no-analytics:
