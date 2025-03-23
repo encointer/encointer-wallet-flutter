@@ -104,7 +104,7 @@ class _ProposalTileState extends State<ProposalTile> {
     if (proposal.state.runtimeType == Ongoing) {
       final ongoingUntil = DateTime.fromMillisecondsSinceEpoch((proposal.start + params.proposalLifetime).toInt());
 
-      if (DateTime.now().isAfter(ongoingUntil)){
+      if (DateTime.now().isAfter(ongoingUntil)) {
         // proposal failed and needs to be bumped
         return Text(l10n.proposalFailedAndNeedsBump);
       } else {
@@ -121,7 +121,8 @@ class _ProposalTileState extends State<ProposalTile> {
 
     if (proposal.state.runtimeType == Confirming) {
       final confirmingSince = (proposal.state as Confirming).since;
-      final confirmingUntil = DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.confirmationPeriod).toInt());
+      final confirmingUntil =
+          DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.confirmationPeriod).toInt());
 
       if (DateTime.now().isAfter(confirmingUntil)) {
         return Text(l10n.proposalPassedAndNeedsBump);
