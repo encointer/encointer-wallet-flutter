@@ -574,8 +574,15 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   bool isBootstrapperOrReputable(AppStore store, String address) {
-    return store.encointer.community!.bootstrappers!.contains(address) ||
-        store.encointer.accountStores![address]!.verifiedReputations.isNotEmpty;
+    if (store.encointer.community!.bootstrappers!.contains(address)) {
+      return true;
+    }
+
+    final verifiedReputations = store.encointer.accountStores![address]!.verifiedReputations;
+
+    return selectedScope == ProposalScope.global
+        ? verifiedReputations.isNotEmpty
+        : verifiedReputations.values.where((cr) => cr.communityIdentifier == store.encointer.chosenCid).isNotEmpty;
   }
 
   /// Validates Inactivity Timeout (Only positive integers)
@@ -666,7 +673,7 @@ class _ProposePageState extends State<ProposePage> {
         final issueOption = SwapNativeOption(
           cid: cid,
           nativeAllowance: BigInt.from(amount * pow(10, 12)),
-          rate: fixedU128FromDouble(rate),
+          rate: fixedU128FromDouble(rate * pow(10, 12)),
           doBurn: true,
         );
 
