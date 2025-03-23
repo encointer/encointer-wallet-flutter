@@ -52,7 +52,8 @@ class _ProposePageState extends State<ProposePage> {
   final TextEditingController lonController = TextEditingController();
   final TextEditingController demurrageController = TextEditingController();
   final TextEditingController nominalIncomeController = TextEditingController();
-  final TextEditingController inactivityTimeoutController = TextEditingController();
+  final TextEditingController inactivityTimeoutController =
+      TextEditingController();
   final TextEditingController petitionTextController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
   final TextEditingController allowanceController = TextEditingController();
@@ -95,7 +96,8 @@ class _ProposePageState extends State<ProposePage> {
   Future<void> _updateEnactmentQueue() async {
     final queue = await webApi.encointer.getProposalEnactmentQueue();
     setState(() {
-      enactmentQueue = queue.map(proposalActionIdentifierFromPolkadartAction).toList();
+      enactmentQueue =
+          queue.map(proposalActionIdentifierFromPolkadartAction).toList();
     });
   }
 
@@ -133,7 +135,8 @@ class _ProposePageState extends State<ProposePage> {
                       _updateAllowedScopes();
                     });
                   },
-                  items: supportedProposalIds().map((ProposalActionIdentifier action) {
+                  items: supportedProposalIds()
+                      .map((ProposalActionIdentifier action) {
                     return DropdownMenuItem<ProposalActionIdentifier>(
                       value: action,
                       child: Text(action.localizedStr(l10n)),
@@ -174,13 +177,17 @@ class _ProposePageState extends State<ProposePage> {
 
                 // Submit Button
                 const Spacer(),
-                if (!isBootstrapperOrReputable(store, store.account.currentAddress))
-                  Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
+                if (!isBootstrapperOrReputable(
+                    store, store.account.currentAddress))
+                  Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit,
+                      textAlign: TextAlign.center),
                 if (enactmentQueue.contains(selectedAction))
-                  Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
+                  Text(l10n.proposalCannotSubmitProposalTypePendingEnactment,
+                      textAlign: TextAlign.center),
                 const SizedBox(height: 5),
                 SubmitButton(
-                  onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
+                  onPressed: isBootstrapperOrReputable(
+                              store, store.account.currentAddress) &&
                           !enactmentQueue.contains(selectedAction)
                       ? (context) async {
                           _formKey.currentState!.validate();
@@ -574,8 +581,18 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   bool isBootstrapperOrReputable(AppStore store, String address) {
-    return store.encointer.community!.bootstrappers!.contains(address) ||
-        store.encointer.accountStores![address]!.verifiedReputations.isNotEmpty;
+    if (store.encointer.community!.bootstrappers!.contains(address)) {
+      return true;
+    }
+
+    final verifiedReputations =
+        store.encointer.accountStores![address]!.verifiedReputations;
+
+    return selectedScope == ProposalScope.global
+        ? verifiedReputations.isNotEmpty
+        : verifiedReputations.values
+            .where((cr) => cr.communityIdentifier == store.encointer.chosenCid)
+            .isNotEmpty;
   }
 
   /// Validates Inactivity Timeout (Only positive integers)
@@ -608,7 +625,8 @@ class _ProposePageState extends State<ProposePage> {
         webApi,
         store.account.getKeyringAccount(store.account.currentAccountPubKey!),
         action,
-        txPaymentAsset: store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
+        txPaymentAsset:
+            store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
         onError: (dispatchError) {
           final message = getLocalizedTxErrorMessage(l10n, dispatchError);
           showTxErrorDialog(context, message);
@@ -640,7 +658,8 @@ class _ProposePageState extends State<ProposePage> {
         return UpdateNominalIncome(cid, fixedU128FromDouble(ni));
 
       case ProposalActionIdentifier.setInactivityTimeout:
-        return SetInactivityTimeout(int.tryParse(inactivityTimeoutController.text)!);
+        return SetInactivityTimeout(
+            int.tryParse(inactivityTimeoutController.text)!);
 
       case ProposalActionIdentifier.petition:
         final maybeCid = selectedScope.isLocal ? cid : null;
@@ -666,11 +685,12 @@ class _ProposePageState extends State<ProposePage> {
         final issueOption = SwapNativeOption(
           cid: cid,
           nativeAllowance: BigInt.from(amount * pow(10, 12)),
-          rate: fixedU128FromDouble(rate *  pow(10, 12)),
+          rate: fixedU128FromDouble(rate * pow(10, 12)),
           doBurn: true,
         );
 
-        return IssueSwapNativeOption(maybeCid!, hex.decode(ben.replaceFirst('0x', '')), issueOption);
+        return IssueSwapNativeOption(
+            maybeCid!, hex.decode(ben.replaceFirst('0x', '')), issueOption);
       case ProposalActionIdentifier.removeLocation:
         throw UnimplementedError('removeLocation is unsupported');
     }
