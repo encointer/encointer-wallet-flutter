@@ -102,20 +102,34 @@ class _ProposalTileState extends State<ProposalTile> {
     final locale = context.read<AppSettings>().locale.toString();
 
     if (proposal.state.runtimeType == Ongoing) {
-      final date = DateTime.fromMillisecondsSinceEpoch((proposal.start + params.proposalLifetime).toInt());
-      return Text('${l10n.proposalOngoingUntil} ${mMMEdHm(date, locale)}');
-    }
+      final ongoingUntil = DateTime.fromMillisecondsSinceEpoch((proposal.start + params.proposalLifetime).toInt());
 
-    if (proposal.state.runtimeType == Confirming) {
-      final confirmingSince = (proposal.state as Confirming).since;
-      final date = DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.confirmationPeriod).toInt());
-      return Text('${l10n.proposalConfirmingUntil} ${mMMEdHm(date, locale)}');
+      if (DateTime.now().isAfter(ongoingUntil)) {
+        // proposal failed and needs to be bumped
+        return Text(l10n.proposalFailedAndNeedsBump);
+      } else {
+        // proposal still ongoing
+        return Text('${l10n.proposalOngoingUntil} ${mMMEdHm(ongoingUntil, locale)}');
+      }
     }
 
     if (proposal.state.runtimeType == Approved) {
       final enactmentDate = context.read<AppStore>().encointer.proposalEnactmentDate!;
       final date = DateTime.fromMillisecondsSinceEpoch(enactmentDate);
       return Text('${l10n.proposalPendingEnactmentAt} ${mMMEdHm(date, locale)}');
+    }
+
+    if (proposal.state.runtimeType == Confirming) {
+      final confirmingSince = (proposal.state as Confirming).since;
+      final confirmingUntil =
+          DateTime.fromMillisecondsSinceEpoch((confirmingSince + params.confirmationPeriod).toInt());
+
+      if (DateTime.now().isAfter(confirmingUntil)) {
+        return Text(l10n.proposalPassedAndNeedsBump);
+      } else {
+        // proposal still confirming
+        return Text('${l10n.proposalConfirmingUntil} ${mMMEdHm(confirmingUntil, locale)}');
+      }
     }
 
     // No widget for Enacted || Cancelled

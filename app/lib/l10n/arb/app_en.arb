@@ -271,6 +271,8 @@
     "proposalOngoingUntil": "Ongoing until",
     "proposalConfirmingUntil": "Confirming until",
     "proposalPendingEnactmentAt": "Pending enactment at",
+    "proposalFailedAndNeedsBump": "The proposal has failed and can be closed.",
+    "proposalPassedAndNeedsBump": "The proposal has passed and can be closed.",
     "qrScan": "Scan QR code",
     "qrScanHintAccount": "Ask the recipient to scan the QR-code in the encointer app.",
     "rawSeed": "Raw Seed",

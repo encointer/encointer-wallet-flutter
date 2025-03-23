@@ -271,6 +271,8 @@
     "proposalOngoingUntil": "Продолжается до",
     "proposalConfirmingUntil": "В подтверждение до",
     "proposalPendingEnactmentAt": "Выполнено на",
+    "proposalFailedAndNeedsBump": "Предложение не прошло и может быть закрыто.",
+    "proposalPassedAndNeedsBump": "Предложение принято и может быть закрыто.",
     "qrScan": "Сканируйте QR-код",
     "qrScanHintAccount": "Попросите получателя отсканировать QR-код в приложении Еncointer",
     "rawSeed": "Raw Seed",

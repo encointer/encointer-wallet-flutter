@@ -272,6 +272,8 @@
     "proposalOngoingUntil": "Inaendelea hadi",
     "proposalConfirmingUntil": "Inadhibitisha hadi",
     "proposalPendingEnactmentAt": "Inasubiri utekeleazaji kwenye",
+    "proposalFailedAndNeedsBump": "Pendekezo limekataliwa na linaweza kufungwa.",
+    "proposalPassedAndNeedsBump": "Pendekezo limepitishwa na linaweza kufungwa.",
     "qrScan": "Skani QR",
     "qrScanHintAccount": "Muombe mpokeaji askani QR kwenye app ya Encointer.",
     "rawSeed": "Mbegu za kriptografia",
