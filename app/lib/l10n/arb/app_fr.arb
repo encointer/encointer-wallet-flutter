@@ -271,6 +271,8 @@
     "proposalOngoingUntil": "En cours jusqu'à",
     "proposalConfirmingUntil": "En confirmation jusqu'à",
     "proposalPendingEnactmentAt": "Sera exécutée le",
+    "proposalFailedAndNeedsBump": "La proposition a échoué et peut être fermée.",
+    "proposalPassedAndNeedsBump": "La proposition a été adoptée et peut être fermée.",
     "qrScan": "Scannez le code QR",
     "qrScanHintAccount": "Demande au destinataire de scanner le code QR dans l'application Encointer.",
     "rawSeed": "Raw Seed",
