@@ -686,7 +686,7 @@
             }
         }
     },
-    "proposalIssueSwapNativeOption": "{cid}: Mruhusu {beneficiary} kubadilisha hadi {allowance} KSM kwa kiwango cha {cc} {cid}/KSM.",
+    "proposalIssueSwapNativeOption": "{cid}: Mruhusu {beneficiary} kubadilisha hadi {allowance} KSM kwa kiwango cha {rate} {cid}/KSM.",
     "@proposalIssueSwapNativeOption": {
         "placeholders": {
             "cid": {
@@ -701,7 +701,7 @@
                 "type": "String",
                 "example": "0.00"
             },
-            "cc": {
+            "rate: {
                 "type": "String",
                 "example": "1.2"
             }

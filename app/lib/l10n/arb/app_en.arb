@@ -685,7 +685,7 @@
             }
         }
     },
-    "proposalIssueSwapNativeOption": "{cid}: Let {beneficiary} exchange up to {allowance} KSM at a rate of {cc} {cid}/KSM",
+    "proposalIssueSwapNativeOption": "{cid}: Let {beneficiary} exchange up to {allowance} KSM at a rate of {rate} {cid}/KSM",
     "@proposalIssueSwapNativeOption": {
         "placeholders": {
             "cid": {
@@ -700,7 +700,7 @@
                 "type": "String",
                 "example": "0.00"
             },
-            "cc": {
+            "rate: {
                 "type": "String",
                 "example": "1.2"
             }

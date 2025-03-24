@@ -533,7 +533,7 @@
             }
         }
     },
-    "proposalIssueSwapNativeOption": "{cid} : Permet à {beneficiary} d'échanger jusqu'à {allowance} KSM à un taux de {cc} {cid}/KSM.",
+    "proposalIssueSwapNativeOption": "{cid} : Permet à {beneficiary} d'échanger jusqu'à {allowance} KSM à un taux de {rate} {cid}/KSM.",
     "@proposalIssueSwapNativeOption": {
         "placeholders": {
             "cid": {
@@ -548,7 +548,7 @@
                 "type": "String",
                 "example": "0.00"
             },
-            "cc": {
+            "rate: {
                 "type": "String",
                 "example": "1.2"
             }

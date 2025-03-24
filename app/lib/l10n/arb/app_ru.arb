@@ -533,7 +533,7 @@
             }
         }
     },
-    "proposalIssueSwapNativeOption": "{cid}: Разрешить {beneficiary} обменять до {allowance} KSM по курсу {cc} {cid}/KSM.",    "@proposalIssueSwapNativeOption": {
+    "proposalIssueSwapNativeOption": "{cid}: Разрешить {beneficiary} обменять до {allowance} KSM по курсу {rate} {cid}/KSM.",    "@proposalIssueSwapNativeOption": {
         "placeholders": {
             "cid": {
                 "type": "String",
@@ -547,7 +547,7 @@
                 "type": "String",
                 "example": "0.00"
             },
-            "cc": {
+            "rate: {
                 "type": "String",
                 "example": "1.2"
             }
