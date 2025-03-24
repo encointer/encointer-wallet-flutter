@@ -716,6 +716,10 @@ class EncointerApi {
       final prefix = encointerKusama.query.encointerTreasuries.swapNativeOptionsMapPrefix(cid.toPolkadart());
       final pairs = await encointerKusama.rpc.state.getPairs(prefix, at: at ?? store.chain.latestHash);
 
+      // Keys including storage prefix.
+      Log.d("[getSwapNativeOptions] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
+      Log.d("[getSwapNativeOptions] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
+
       final swapNativeOptions = pairs.map((pair) => et.SwapNativeOption.decode(ByteInput(pair.value!)));
       return swapNativeOptions.toList();
     } catch (e, s) {
@@ -752,7 +756,7 @@ class EncointerApi {
     }
   }
 
-  Future<List<et.ProposalAction>> getProposalEnactmentQueue({BlockHash? at}) async {
+  Future<List<et.ProposalActionIdentifier>> getProposalEnactmentQueue({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerDemocracy.enactmentQueueMapPrefix();
       final pairs = await encointerKusama.rpc.state.getPairs(prefix);
@@ -761,7 +765,7 @@ class EncointerApi {
       Log.d("[getProposalEnactmentQueue] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
       Log.d("[getProposalEnactmentQueue] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
 
-      final proposalActions = pairs.map((pair) => et.ProposalAction.decode(ByteInput(pair.value!)));
+      final proposalActions = pairs.map((pair) => et.ProposalActionIdentifier.decode(ByteInput(pair.value!)));
 
       return proposalActions.toList();
     } catch (e, s) {

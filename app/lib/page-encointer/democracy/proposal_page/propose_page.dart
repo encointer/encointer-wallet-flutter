@@ -119,23 +119,23 @@ class _ProposePageState extends State<ProposePage> {
     var globalSpends = BigInt.zero;
     var localSpends = BigInt.zero;
 
-    for (final action in queue) {
-      if (action is SpendNative) {
-        final a = action;
-
-        if (a.value0 == null) {
-          globalSpends += a.value2;
-        } else {
-          final cid = CommunityIdentifier.fromPolkadart(a.value0!);
-          if (cid == store.encointer.chosenCid!) {
-            localSpends += a.value2;
-          }
-        }
-      }
-    }
+    // for (final action in queue) {
+    //   if (action is SpendNative) {
+    //     final a = action;
+    //
+    //     if (a.value0 == null) {
+    //       globalSpends += a.value2;
+    //     } else {
+    //       final cid = CommunityIdentifier.fromPolkadart(a.value0!);
+    //       if (cid == store.encointer.chosenCid!) {
+    //         localSpends += a.value2;
+    //       }
+    //     }
+    //   }
+    // }
 
     setState(() {
-      enactmentQueue = queue.map(proposalActionIdentifierFromPolkadartAction).toList();
+      // enactmentQueue = queue.map(proposalActionIdentifierFromPolkadartAction).toList();
       globalTreasuryBalance = globalTreasuryAccountData.free;
       localTreasuryBalance = localTreasuryAccountData.free;
 
