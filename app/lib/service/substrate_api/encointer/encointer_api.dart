@@ -31,12 +31,13 @@ import 'package:ew_polkadart/ew_polkadart.dart'
         BlockHash,
         ByteInput,
         EncointerKusama,
-        Tally,
         Proposal,
         RuntimeVersion,
         SequenceCodec,
         StorageChangeSet,
-        Tuple2;
+        Tally,
+        Tuple2,
+        U128Codec;
 import 'package:ew_polkadart/generated/encointer_kusama/types/sp_core/crypto/account_id32.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:ew_substrate_fixed/substrate_fixed.dart';
@@ -756,7 +757,7 @@ class EncointerApi {
     }
   }
 
-  Future<List<et.ProposalActionIdentifier>> getProposalEnactmentQueue({BlockHash? at}) async {
+  Future<Map<et.ProposalActionIdentifier, BigInt>> getProposalEnactmentQueue({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerDemocracy.enactmentQueueMapPrefix();
       final pairs = await encointerKusama.rpc.state.getPairs(prefix);
@@ -765,12 +766,15 @@ class EncointerApi {
       Log.d("[getProposalEnactmentQueue] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
       Log.d("[getProposalEnactmentQueue] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
 
-      final proposalActions = pairs.map((pair) => et.ProposalActionIdentifier.decode(ByteInput(pair.value!)));
+      final proposalActions = pairs.map((pair) => et.ProposalActionIdentifier.decode(ByteInput(pair.key.sublist(32))));
+      final proposalActionIdentifiers = pairs.map((pair) => U128Codec.codec.decode(ByteInput(pair.value!)));
 
-      return proposalActions.toList();
+      final queue = Map.fromIterables(proposalActions, proposalActionIdentifiers);
+
+      return queue;
     } catch (e, s) {
       Log.e('[getProposalEnactmentQueue]', '$e', s);
-      return List.of([]);
+      return Map.of({});
     }
   }
 

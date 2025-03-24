@@ -21,6 +21,9 @@ import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
+import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action_identifier.dart'
+    as id;
+
 import 'package:ew_polkadart/ew_polkadart.dart'
     show
         AddLocation,
@@ -76,7 +79,7 @@ class _ProposePageState extends State<ProposePage> {
   // Beneficiary in for the spendNative/issueSwapNativeOption
   AccountData? beneficiary;
 
-  List<ProposalActionIdentifier> enactmentQueue = [];   
+  List<ProposalActionIdentifier> enactmentQueue = [];
   BigInt globalTreasuryBalance = BigInt.zero;
   BigInt localTreasuryBalance = BigInt.zero;
 
@@ -101,6 +104,7 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Future<void> _updateEnactmentQueue() async {
+    // Map<Action, ProposalId>
     final queue = await webApi.encointer.getProposalEnactmentQueue();
 
     final globalTreasuryAccountData =
@@ -111,7 +115,6 @@ class _ProposePageState extends State<ProposePage> {
         .getTreasuryAccount(store.encointer.chosenCid)
         .then((account) => webApi.assets.getBalanceOf(account));
 
-
     // Get all open swaps for this community
     final swapNativeOptions = await webApi.encointer.getSwapNativeOptions(store.encointer.chosenCid!);
     final openSwapAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
@@ -119,20 +122,30 @@ class _ProposePageState extends State<ProposePage> {
     var globalSpends = BigInt.zero;
     var localSpends = BigInt.zero;
 
-    // for (final action in queue) {
-    //   if (action is SpendNative) {
-    //     final a = action;
-    //
-    //     if (a.value0 == null) {
-    //       globalSpends += a.value2;
-    //     } else {
-    //       final cid = CommunityIdentifier.fromPolkadart(a.value0!);
-    //       if (cid == store.encointer.chosenCid!) {
-    //         localSpends += a.value2;
-    //       }
-    //     }
-    //   }
-    // }
+    final spendNativeIds = <BigInt>[];
+    for (final action in queue.entries) {
+      final actionId = action.key;
+      final proposalId = action.value;
+      if (actionId is id.SpendNative) {
+        spendNativeIds.add(proposalId);
+      }
+    }
+
+    final spendNativeProposals = await webApi.encointer.getProposals(spendNativeIds);
+
+    for (final proposal in spendNativeProposals.values) {
+      final action = proposal.action;
+      if (action is SpendNative) {
+        if (action.value0 == null) {
+          globalSpends += action.value2;
+        } else {
+          final cid = CommunityIdentifier.fromPolkadart(action.value0!);
+          if (cid == store.encointer.chosenCid!) {
+            localSpends += action.value2;
+          }
+        }
+      }
+    }
 
     setState(() {
       // enactmentQueue = queue.map(proposalActionIdentifierFromPolkadartAction).toList();
@@ -217,8 +230,10 @@ class _ProposePageState extends State<ProposePage> {
                 const SizedBox(height: 10),
                 _getProposalExplainer(context),
 
-                Text('Global Treasury Balance: ${Fmt.token(globalTreasuryBalance, ertDecimals)}. Pending Spends ${Fmt.token(pendingGlobalSpends, ertDecimals)}'),
-                Text('Local Treasury Balance: ${Fmt.token(localTreasuryBalance, ertDecimals)} Pending Spends ${Fmt.token(pendingLocalSpends, ertDecimals)}'),
+                Text(
+                    'Global Treasury Balance: ${Fmt.token(globalTreasuryBalance, ertDecimals)}. Pending Spends ${Fmt.token(pendingGlobalSpends, ertDecimals)}'),
+                Text(
+                    'Local Treasury Balance: ${Fmt.token(localTreasuryBalance, ertDecimals)} Pending Spends ${Fmt.token(pendingLocalSpends, ertDecimals)}'),
 
                 // Submit Button
                 const Spacer(),
