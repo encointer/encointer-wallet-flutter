@@ -214,7 +214,15 @@
     "proposalExplainerSetInactivityTimeout": "Pendekezo hili linapendekeza muda mpya wa kimataifa wa kutokufanya kazi. Ikiwa jamii haitafanya mikutano kwa idadi iliyopendekezwa ya mizunguko, itafutwa.",
     "proposalExplainerPetition": "Pendekezo hili linatumika kama ombi, iwe kimataifa au ndani ya jamii yako. Ingawa halina athari ya moja kwa moja kwenye mnyororo wa vizuizi, linaonyesha nia, kuruhusu jamii kuitambua na kuchukua hatua.",
     "proposalExplainerSpendNative": "Pendekezo hili linapendekeza kutumia KSM kwa faida ya mfaidi kutoka hazina ya jamii, ama kupitia kura za kimataifa au za jamii. Fedha hizi zinaweza kutumika kureward michango ya jamii au kusaidia mipango ya jamii.",
-    "proposalExplainerIssueSwapNativeOption": "Pendekezo hili linamruhusu mnufaika kubadilisha tokeni za jamii kwa KSM kwa kiwango kilichowekwa, hadi kikomo cha KSM kilichowekwa. Mnufaika anaweza kuwa biashara ya ndani inayokubali tokeni za jamii na inaweza kuwa imekusanya ziada.",
+    "proposalExplainerIssueSwapNativeOption": "Pendekezo hili linamruhusu mnufaika kubadilisha tokeni za jamii kuwa KSM kwa kiwango kilichowekwa mara nyingi hadi kikomo cha KSM kilichopangwa. Mnufaika anaweza kuwa biashara ya ndani inayokubali tokeni za jamii na inaweza kukusanya ziada.\n\nMfano kwa kiwango cha 2: 2 {currency} = 1 KSM\n\nIkiwa kikomo ni 2 KSM, mnufaika anaweza kubadilisha hadi 4 {currency} kuwa KSM.",
+    "@proposalExplainerIssueSwapNativeOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
     "proposalType": "Aina ya pendekezo",
     "proposalTypeAddLocation": "Ongeza eneo",
     "proposalTypeRemoveLocation": "Ondoa eneo",
@@ -236,7 +244,15 @@
     "proposalFieldAmount": "Kiasi (KSM)",
     "proposalFieldBeneficiary": "Mnufaika",
     "proposalFieldAllowance": "Kikomo (KSM)",
-    "proposalFieldRate": "Kiwango",
+    "proposalFieldRate": "Kiwango ({cc}/KSM)",
+    "@proposalFieldRate": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
     "proposalFieldBurn": "Teketeza",
     "proposalFieldValidity": "Uhalali",
     "proposalFieldErrorEnterPetitionText": "Weka maandishi ya ombi rasmi",
@@ -670,8 +686,8 @@
             }
         }
     },
-    "proposalIssueSwapNativeOption": "{cid}: inamruhusu {beneficiary} kubadilisha hadi {allowance} KSM kwa kiwango cha {rate}",
-    "@proposalIssueSwapNativeOption": {
+    "proposalIssueSwapNativeOption": "{cid}: Mruhusu {beneficiary} kubadilisha hadi {allowance} KSM kwa kiwango cha {cc} {cid}/KSM."0
+,    "@proposalIssueSwapNativeOption": {
         "placeholders": {
             "cid": {
                 "type": "String",
@@ -685,7 +701,7 @@
                 "type": "String",
                 "example": "0.00"
             },
-            "rate": {
+            "cc": {
                 "type": "String",
                 "example": "1.2"
             }

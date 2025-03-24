@@ -218,7 +218,9 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   String _explainerText() {
+    final store = context.read<AppStore>();
     final l10n = context.l10n;
+
     switch (selectedAction) {
       case ProposalActionIdentifier.addLocation:
         return l10n.proposalExplainerAddLocation;
@@ -235,7 +237,7 @@ class _ProposePageState extends State<ProposePage> {
       case ProposalActionIdentifier.spendNative:
         return l10n.proposalExplainerSpendNative;
       case ProposalActionIdentifier.issueSwapNativeOption:
-        return l10n.proposalExplainerIssueSwapNativeOption;
+        return l10n.proposalExplainerIssueSwapNativeOption(store.encointer.community!.symbol!);
     }
   }
 
@@ -293,7 +295,7 @@ class _ProposePageState extends State<ProposePage> {
       TextFormField(
         controller: rateController,
         decoration: InputDecoration(
-          labelText: l10n.proposalFieldRate,
+          labelText: l10n.proposalFieldRate(store.encointer.community!.symbol!),
           errorText: rateError,
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),

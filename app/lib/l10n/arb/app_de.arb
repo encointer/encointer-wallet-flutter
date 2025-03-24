@@ -214,7 +214,15 @@
     "proposalExplainerSetInactivityTimeout": "Dieser Vorschlag setzt eine neue globale Inaktivitätsfrist fest. Falls eine Gemeinschaft über die vorgeschriebene Anzahl an VersammlungsZyklen keine Treffen abhält, wird sie gelöscht.",
     "proposalExplainerPetition": "Dieser Vorschlag dient als Petition – entweder global oder innerhalb deiner Gemeinschaft. Er hat keine direkte Wirkung auf der Blockchain, signalisiert jedoch ein Anliegen, auf das die Gemeinschaft reagieren kann.",
     "proposalExplainerSpendNative": "Dieser Vorschlag schlägt vor, KSM aus der Gemeinschaftsreserve für einen Begünstigten auszugeben, entweder durch eine globale oder Gemeinschaftsabstimmung. Diese Mittel können zur Belohnung von Beiträgen oder zur Unterstützung von Gemeinschaftsprojekten verwendet werden.",
-    "proposalExplainerIssueSwapNativeOption": "Dieser Vorschlag erlaubt es einem Begünstigten, Lokalwährung zu einem festgelegten Wechselkurs gegen KSM einzutauschen, bis zu einem festgelegten KSM-Limit. Der Begünstigte könnte ein lokales Unternehmen sein, das Lokalwährung akzeptiert und möglicherweise einen Überschuss angesammelt hat.",
+    "proposalExplainerIssueSwapNativeOption": "Dieser Vorschlag ermöglicht es dem Begünstigten, Community-Token zu einem festgelegten Kurs mehrfach gegen KSM einzutauschen, bis zu einem bestimmten KSM-Limit. Der Begünstigte könnte ein lokales Unternehmen sein, das Community-Token akzeptiert und möglicherweise einen Überschuss ansammelt.\n\nBeispiel mit Kurs 2: 2 {currency} = 1 KSM\n\nWenn das Limit 2 KSM beträgt, kann der Begünstigte bis zu 4 {currency} in KSM umtauschen.",
+    "@proposalExplainerIssueSwapNativeOption": {
+        "placeholders": {
+            "currency": {
+                "type": "String",
+                "example": "0.5"
+            }
+        }
+    },
     "proposalType": "Vorschlagstyp",
     "proposalTypeAddLocation": "Standort hinzufügen",
     "proposalTypeRemoveLocation": "Standort entfernen",
@@ -236,7 +244,15 @@
     "proposalFieldAmount": "Betrag (KSM)",
     "proposalFieldBeneficiary": "Begünstigter",
     "proposalFieldAllowance": "Limit (KSM)",
-    "proposalFieldRate": "Rate",
+    "proposalFieldRate": "Kurs ({cc}/KSM)",
+    "@proposalFieldRate": {
+        "placeholders": {
+            "cc": {
+                "type": "String",
+                "example": "6"
+            }
+        }
+    },
     "proposalFieldBurn": "Verbrennen",
     "proposalFieldValidity": "Gültigkeit",
     "proposalFieldErrorEnterPetitionText": "Petitionstext eingeben",
@@ -517,7 +533,7 @@
             }
         }
     },
-    "proposalIssueSwapNativeOption": "{cid}: Erlaubt {beneficiary}, bis zu {allowance} KSM mit einem Kurs von {rate} zu tauschen",
+    "proposalIssueSwapNativeOption": "{cid}: Ermögliche {beneficiary}, bis zu {allowance} KSM zu einem Kurs von {cc} {cid}/KSM einzutauschen.",
     "@proposalIssueSwapNativeOption": {
         "placeholders": {
             "cid": {
@@ -532,7 +548,7 @@
                 "type": "String",
                 "example": "0.00"
             },
-            "rate": {
+            "cc": {
                 "type": "String",
                 "example": "1.2"
             }
