@@ -705,6 +705,25 @@ class EncointerApi {
     return 0;
   }
 
+  Future<String> getTreasuryAccount(CommunityIdentifier? cid, {BlockHash? at}) async {
+    final treasuryAccount = await _dartApi.getTreasuryAccount(cid, at: at ?? store.chain.latestHash);
+    Log.d('api: getTreasuryAccount: $treasuryAccount', 'EncointerApi');
+    return treasuryAccount;
+  }
+
+  Future<List<et.SwapNativeOption>> getSwapNativeOptions(CommunityIdentifier cid, {BlockHash? at}) async {
+    try {
+      final prefix = encointerKusama.query.encointerTreasuries.swapNativeOptionsMapPrefix(cid.toPolkadart());
+      final pairs = await encointerKusama.rpc.state.getPairs(prefix, at: at ?? store.chain.latestHash);
+
+      final swapNativeOptions = pairs.map((pair) => et.SwapNativeOption.decode(ByteInput(pair.value!)));
+      return swapNativeOptions.toList();
+    } catch (e, s) {
+      Log.e('[getSwapNativeOptions]', '$e', s);
+      return List.of([]);
+    }
+  }
+
   Future<Map<String, Faucet>> getAllFaucetsWithAccount({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerFaucet.faucetsMapPrefix();

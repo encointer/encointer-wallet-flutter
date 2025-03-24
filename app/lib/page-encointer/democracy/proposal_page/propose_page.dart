@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/democracy/proposal_page/helpers.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/error_notifications.dart';
@@ -11,6 +13,7 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/theme/custom/typography/typography_theme.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:ew_primitives/ew_primitives.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/l10n/l10.dart';
@@ -73,7 +76,12 @@ class _ProposePageState extends State<ProposePage> {
   // Beneficiary in for the spendNative/issueSwapNativeOption
   AccountData? beneficiary;
 
-  List<ProposalActionIdentifier> enactmentQueue = [];
+  List<ProposalActionIdentifier> enactmentQueue = [];   
+  BigInt globalTreasuryBalance = BigInt.zero;
+  BigInt localTreasuryBalance = BigInt.zero;
+
+  BigInt pendingGlobalSpends = BigInt.zero;
+  BigInt pendingLocalSpends = BigInt.zero;
 
   @override
   void initState() {
@@ -94,8 +102,45 @@ class _ProposePageState extends State<ProposePage> {
 
   Future<void> _updateEnactmentQueue() async {
     final queue = await webApi.encointer.getProposalEnactmentQueue();
+
+    final globalTreasuryAccountData =
+        await webApi.encointer.getTreasuryAccount(null).then((account) => webApi.assets.getBalanceOf(account));
+
+    final store = context.read<AppStore>();
+    final localTreasuryAccountData = await webApi.encointer
+        .getTreasuryAccount(store.encointer.chosenCid)
+        .then((account) => webApi.assets.getBalanceOf(account));
+
+
+    // Get all open swaps for this community
+    final swapNativeOptions = await webApi.encointer.getSwapNativeOptions(store.encointer.chosenCid!);
+    final openSwapAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
+
+    var globalSpends = BigInt.zero;
+    var localSpends = BigInt.zero;
+
+    for (final action in queue) {
+      if (action is SpendNative) {
+        final a = action;
+
+        if (a.value0 == null) {
+          globalSpends += a.value2;
+        } else {
+          final cid = CommunityIdentifier.fromPolkadart(a.value0!);
+          if (cid == store.encointer.chosenCid!) {
+            localSpends += a.value2;
+          }
+        }
+      }
+    }
+
     setState(() {
       enactmentQueue = queue.map(proposalActionIdentifierFromPolkadartAction).toList();
+      globalTreasuryBalance = globalTreasuryAccountData.free;
+      localTreasuryBalance = localTreasuryAccountData.free;
+
+      pendingGlobalSpends = globalSpends;
+      pendingLocalSpends = localSpends + openSwapAmount;
     });
   }
 
@@ -171,6 +216,9 @@ class _ProposePageState extends State<ProposePage> {
                 _buildDynamicFields(context),
                 const SizedBox(height: 10),
                 _getProposalExplainer(context),
+
+                Text('Global Treasury Balance: ${Fmt.token(globalTreasuryBalance, ertDecimals)}. Pending Spends ${Fmt.token(pendingGlobalSpends, ertDecimals)}'),
+                Text('Local Treasury Balance: ${Fmt.token(localTreasuryBalance, ertDecimals)} Pending Spends ${Fmt.token(pendingLocalSpends, ertDecimals)}'),
 
                 // Submit Button
                 const Spacer(),
