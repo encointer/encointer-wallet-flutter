@@ -700,7 +700,7 @@
                 "type": "String",
                 "example": "0.00"
             },
-            "rate: {
+            "rate": {
                 "type": "String",
                 "example": "1.2"
             }
