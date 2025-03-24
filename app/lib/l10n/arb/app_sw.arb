@@ -233,7 +233,7 @@
     "proposalFieldNominalIncome": "Mapato ya kawaida",
     "proposalFieldInactivityTimeoutCycles": "Muda wa kutokufanya kazi (mizunguko ya mikutano)",
     "proposalFieldPetitionText": "Maandishi ya ombi rasmi",
-    "proposalFieldAmount": "Kiasi",
+    "proposalFieldAmount": "Kiasi (KSM)",
     "proposalFieldBeneficiary": "Mnufaika",
     "proposalFieldAllowance": "Kikomo (KSM)",
     "proposalFieldRate": "Kiwango",

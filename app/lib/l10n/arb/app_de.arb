@@ -233,7 +233,7 @@
     "proposalFieldNominalIncome": "Grundeinkommen",
     "proposalFieldInactivityTimeoutCycles": "Inaktivitätszeitlimit (Versammlungszyklen)",
     "proposalFieldPetitionText": "Petitionstext",
-    "proposalFieldAmount": "Betrag",
+    "proposalFieldAmount": "Betrag (KSM)",
     "proposalFieldBeneficiary": "Begünstigter",
     "proposalFieldAllowance": "Limit (KSM)",
     "proposalFieldRate": "Rate",

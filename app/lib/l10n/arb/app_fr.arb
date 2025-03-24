@@ -233,7 +233,7 @@
     "proposalFieldNominalIncome": "Revenu nominal",
     "proposalFieldInactivityTimeoutCycles": "Délai d'inactivité (cycles de rencontre)",
     "proposalFieldPetitionText": "Texte de la pétition",
-    "proposalFieldAmount": "Montant",
+    "proposalFieldAmount": "Montant (KSM)",
     "proposalFieldBeneficiary": "Bénéficiaire",
     "proposalFieldAllowance": "Limite (KSM)",
     "proposalFieldRate": "Taux",

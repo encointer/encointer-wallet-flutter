@@ -233,7 +233,7 @@
     "proposalFieldNominalIncome": "Nominal Income",
     "proposalFieldInactivityTimeoutCycles": "Inactivity Timeout (gathering cycles)",
     "proposalFieldPetitionText": "Petition Text",
-    "proposalFieldAmount": "Amount",
+    "proposalFieldAmount": "Amount (KSM)",
     "proposalFieldBeneficiary": "Beneficiary",
     "proposalFieldAllowance": "Limit (KSM)",
     "proposalFieldRate": "Rate",

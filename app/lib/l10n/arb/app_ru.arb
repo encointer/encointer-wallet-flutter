@@ -233,7 +233,7 @@
     "proposalFieldNominalIncome": "Номинальный доход",
     "proposalFieldInactivityTimeoutCycles": "Тайм-аут неактивности (циклы встреч)",
     "proposalFieldPetitionText": "Текст петиции",
-    "proposalFieldAmount": "Сумма",
+    "proposalFieldAmount": "Сумма (KSM)",
     "proposalFieldBeneficiary": "Получатель",
     "proposalFieldAllowance": "Лимит (KSM)",
     "proposalFieldRate": "Ставка",
