@@ -90,9 +90,16 @@ String getProposalActionTitle(BuildContext context, ProposalAction action) {
       final beneficiary =
           Fmt.address(AddressUtils.pubKeyToAddress(issueOption.value1, prefix: store.settings.currentNetwork.ss58()))!;
       final swapNativeOption = issueOption.value2;
-      final allowance = Fmt.token(swapNativeOption.nativeAllowance, ertDecimals);
-      final rate = swapNativeOption.rate != null ? i64F64Parser.toDouble(swapNativeOption.rate!.bits) : null;
-      return l10n.proposalIssueSwapNativeOption(cidStr, beneficiary, allowance, rate.toString());
+
+      final allowance = Fmt.bigIntToDouble(swapNativeOption.nativeAllowance, ertDecimals);
+      final rate = swapNativeOption.rate != null
+          ? i64F64Parser.toDouble(swapNativeOption.rate!.bits) / pow(10, ertDecimals)
+          : null;
+
+      // This won't be null until we introduce oracle based rates.
+      final rateFmt = rate != null ? Fmt.doubleFormat(rate, length: 2) : 'no-rate-found';
+
+      return l10n.proposalIssueSwapNativeOption(cidStr, beneficiary, Fmt.doubleFormat(allowance, length: 2), rateFmt);
     default:
       throw Exception('ProposalAction: Invalid Type: "${action.runtimeType}"');
   }

@@ -41,8 +41,8 @@ class Fmt {
 
   /// number transform 2:
   /// from <BigInt> to <double>
-  static double bigIntToDouble(BigInt value, int? decimals) {
-    return value / BigInt.from(pow(10, decimals!));
+  static double bigIntToDouble(BigInt value, int decimals) {
+    return value / BigInt.from(pow(10, decimals));
   }
 
   /// number transform 3:
@@ -78,7 +78,7 @@ class Fmt {
   /// from raw <String> to <String> in token format of ",##0.000"
   static String balance(
     String? raw,
-    int? decimals, {
+    int decimals, {
     int? length = 3,
   }) {
     if (raw == null || raw.isEmpty) {
@@ -97,7 +97,7 @@ class Fmt {
   /// from <BigInt> to <String> in token format of ",##0.000"
   static String token(
     BigInt value,
-    int? decimals, {
+    int decimals, {
     int? length = 3,
   }) {
     return doubleFormat(bigIntToDouble(value, decimals), length: length);
