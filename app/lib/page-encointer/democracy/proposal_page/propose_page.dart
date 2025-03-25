@@ -177,78 +177,96 @@ class _ProposePageState extends State<ProposePage> {
           padding: const EdgeInsets.all(16),
           child: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                // Proposal Action Selector
-                DropdownButtonFormField<ProposalActionIdentifier>(
-                  value: selectedAction,
-                  onChanged: (ProposalActionIdentifier? newValue) {
-                    setState(() {
-                      selectedAction = newValue!;
-                      _updateAllowedScopes();
-                    });
-                  },
-                  items: supportedProposalIds().map((ProposalActionIdentifier action) {
-                    return DropdownMenuItem<ProposalActionIdentifier>(
-                      value: action,
-                      child: Text(action.localizedStr(l10n)),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(labelText: l10n.proposalType),
-                ),
-
-                const SizedBox(height: 10),
-
-                // Scope Selector
-                DropdownButtonFormField<ProposalScope>(
-                  value: selectedScope,
-                  onChanged: allowedScopes.length > 1
-                      ? (ProposalScope? newValue) {
-                          if (newValue != null) {
+            child: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight
+                  ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Proposal Action Selector
+                        DropdownButtonFormField<ProposalActionIdentifier>(
+                          value: selectedAction,
+                          onChanged: (ProposalActionIdentifier? newValue) {
                             setState(() {
-                              selectedScope = newValue;
+                              selectedAction = newValue!;
+                              _updateAllowedScopes();
                             });
-                          }
-                        }
-                      : null, // Disable dropdown if only one option
-                  items: allowedScopes.map((ProposalScope scope) {
-                    return DropdownMenuItem<ProposalScope>(
-                      value: scope,
-                      child: Text(scope.localizedStr(l10n)),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(labelText: l10n.proposalScope),
+                          },
+                          items: supportedProposalIds().map((ProposalActionIdentifier action) {
+                            return DropdownMenuItem<ProposalActionIdentifier>(
+                              value: action,
+                              child: Text(action.localizedStr(l10n)),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(labelText: l10n.proposalType),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        // Scope Selector
+                        DropdownButtonFormField<ProposalScope>(
+                          value: selectedScope,
+                          onChanged: allowedScopes.length > 1
+                              ? (ProposalScope? newValue) {
+                                  if (newValue != null) {
+                                    setState(() {
+                                      selectedScope = newValue;
+                                    });
+                                  }
+                                }
+                              : null, // Disable dropdown if only one option
+                          items: allowedScopes.map((ProposalScope scope) {
+                            return DropdownMenuItem<ProposalScope>(
+                              value: scope,
+                              child: Text(scope.localizedStr(l10n)),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(labelText: l10n.proposalScope),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        // Dynamic Fields Based on Selected Proposal Action
+                        _buildDynamicFields(context),
+                        const SizedBox(height: 10),
+                        _getProposalExplainer(context),
+
+                        // Submit Button
+                        const Spacer(),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+
+                            Text(l10n.treasuryGlobalBalanceAndPendingSpends(Fmt.token(globalTreasuryBalance, ertDecimals), Fmt.token(pendingGlobalSpends, ertDecimals))),
+                            Text(l10n.treasuryGlobalBalanceAndPendingSpends(Fmt.token(localTreasuryBalance, ertDecimals), Fmt.token(pendingLocalSpends, ertDecimals))),
+
+                            if (!isBootstrapperOrReputable(store, store.account.currentAddress))
+                              Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
+                            if (enactmentQueue.contains(selectedAction))
+                              Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
+                            const SizedBox(height: 5),
+                            SubmitButton(
+                              onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
+                                  !enactmentQueue.contains(selectedAction)
+                                  ? (context) async {
+                                _formKey.currentState!.validate();
+                                await _submitProposal();
+                                Navigator.of(context).pop();
+                              }
+                                  : null, // disable button for non-bootstrappers/reputables
+                              child: Text(l10n.proposalSubmit),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-
-                const SizedBox(height: 10),
-
-                // Dynamic Fields Based on Selected Proposal Action
-                _buildDynamicFields(context),
-                const SizedBox(height: 10),
-                _getProposalExplainer(context),
-
-                // Submit Button
-                const Spacer(),
-                Text(l10n.treasuryGlobalBalanceAndPendingSpends(Fmt.token(globalTreasuryBalance, ertDecimals), Fmt.token(pendingGlobalSpends, ertDecimals))),
-                Text(l10n.treasuryGlobalBalanceAndPendingSpends(Fmt.token(localTreasuryBalance, ertDecimals), Fmt.token(pendingLocalSpends, ertDecimals))),
-
-                if (!isBootstrapperOrReputable(store, store.account.currentAddress))
-                  Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
-                if (enactmentQueue.contains(selectedAction))
-                  Text(l10n.proposalCannotSubmitProposalTypePendingEnactment, textAlign: TextAlign.center),
-                const SizedBox(height: 5),
-                SubmitButton(
-                  onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
-                          !enactmentQueue.contains(selectedAction)
-                      ? (context) async {
-                          _formKey.currentState!.validate();
-                          await _submitProposal();
-                          Navigator.of(context).pop();
-                        }
-                      : null, // disable button for non-bootstrappers/reputables
-                  child: Text(l10n.proposalSubmit),
-                ),
-              ],
+              ),
             ),
           ),
         ),
