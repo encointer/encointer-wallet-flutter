@@ -180,9 +180,7 @@ class _ProposePageState extends State<ProposePage> {
             child: LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight
-                  ),
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: IntrinsicHeight(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -240,10 +238,18 @@ class _ProposePageState extends State<ProposePage> {
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-
-                            Text(l10n.treasuryGlobalBalanceAndPendingSpends(Fmt.token(globalTreasuryBalance, ertDecimals), Fmt.token(pendingGlobalSpends, ertDecimals))),
-                            Text(l10n.treasuryGlobalBalanceAndPendingSpends(Fmt.token(localTreasuryBalance, ertDecimals), Fmt.token(pendingLocalSpends, ertDecimals))),
-
+                            Text(
+                              l10n.treasuryGlobalBalanceAndPendingSpends(
+                                Fmt.token(globalTreasuryBalance, ertDecimals),
+                                Fmt.token(pendingGlobalSpends, ertDecimals),
+                              ),
+                            ),
+                            Text(
+                              l10n.treasuryLocalBalanceAndPendingSpends(
+                                Fmt.token(localTreasuryBalance, ertDecimals),
+                                Fmt.token(pendingLocalSpends, ertDecimals),
+                              ),
+                            ),
                             if (!isBootstrapperOrReputable(store, store.account.currentAddress))
                               Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
                             if (enactmentQueue.contains(selectedAction))
@@ -251,12 +257,12 @@ class _ProposePageState extends State<ProposePage> {
                             const SizedBox(height: 5),
                             SubmitButton(
                               onPressed: isBootstrapperOrReputable(store, store.account.currentAddress) &&
-                                  !enactmentQueue.contains(selectedAction)
+                                      !enactmentQueue.contains(selectedAction)
                                   ? (context) async {
-                                _formKey.currentState!.validate();
-                                await _submitProposal();
-                                Navigator.of(context).pop();
-                              }
+                                      _formKey.currentState!.validate();
+                                      await _submitProposal();
+                                      Navigator.of(context).pop();
+                                    }
                                   : null, // disable button for non-bootstrappers/reputables
                               child: Text(l10n.proposalSubmit),
                             ),
