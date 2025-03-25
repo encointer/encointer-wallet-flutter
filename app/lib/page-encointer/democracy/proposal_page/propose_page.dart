@@ -227,13 +227,11 @@ class _ProposePageState extends State<ProposePage> {
                 const SizedBox(height: 10),
                 _getProposalExplainer(context),
 
-                Text(
-                    'Global Treasury Balance: ${Fmt.token(globalTreasuryBalance, ertDecimals)}. Pending Spends ${Fmt.token(pendingGlobalSpends, ertDecimals)}'),
-                Text(
-                    'Local Treasury Balance: ${Fmt.token(localTreasuryBalance, ertDecimals)} Pending Spends ${Fmt.token(pendingLocalSpends, ertDecimals)}'),
-
                 // Submit Button
                 const Spacer(),
+                Text(l10n.treasuryGlobalBalanceAndPendingSpends(Fmt.token(globalTreasuryBalance, ertDecimals), Fmt.token(pendingGlobalSpends, ertDecimals))),
+                Text(l10n.treasuryGlobalBalanceAndPendingSpends(Fmt.token(localTreasuryBalance, ertDecimals), Fmt.token(pendingLocalSpends, ertDecimals))),
+
                 if (!isBootstrapperOrReputable(store, store.account.currentAddress))
                   Text(l10n.proposalOnlyBootstrappersOrReputablesCanSubmit, textAlign: TextAlign.center),
                 if (enactmentQueue.contains(selectedAction))

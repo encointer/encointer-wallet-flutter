@@ -356,6 +356,32 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "transferHistoryTop": "Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht",
+    "treasuryGlobalBalanceAndPendingSpends": "Globales Schatzkammerguthaben: {balance} KSM. Ausstehende Ausgaben: {spends} KSM.",
+    "@treasuryGlobalBalanceAndPendingSpends": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "spends": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryLocalBalanceAndPendingSpends": "Gemeinschaftsschatzkammerguthaben: {balance} KSM. Ausstehende Ausgaben: {spends} KSM.",
+    "@treasuryLocalBalanceAndPendingSpends": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "spends": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "txBroadcast": "Transaktion wurde im Netzwerk",
     "txError": "Transaktionsfehler",
     "txInBlock": "Transaction ist in einem Block",

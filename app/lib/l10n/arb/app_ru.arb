@@ -355,6 +355,32 @@
     "transferHistoryEnd": "Загрузка более старых транзакций пока не поддерживается",
     "transferHistoryTop": "Появление перевода может занять до 30 секунд",
     "transferHistory": "Транзакции",
+    "treasuryGlobalBalanceAndPendingSpends": "Глобальный баланс казначейства: {balance} KSM. Ожидающие расходы: {spends} KSM.",
+    "@treasuryGlobalBalanceAndPendingSpends": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "spends": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
+    "treasuryLocalBalanceAndPendingSpends": "Баланс казначейства сообщества: {balance} KSM. Ожидающие расходы: {spends} KSM.",
+    "@treasuryLocalBalanceAndPendingSpends": {
+        "placeholders": {
+            "balance": {
+                "type": "String",
+                "example": "10"
+            },
+            "spends": {
+                "type": "String",
+                "example": "10"
+            }
+        }
+    },
     "txBroadcast": "Транзакция передана в эфир",
     "txError": "Ошибка транзакции",
     "txInBlock": "Транзакция заблокирована",
