@@ -21,9 +21,6 @@ import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-import 'package:ew_polkadart/generated/encointer_kusama/types/encointer_primitives/democracy/proposal_action_identifier.dart'
-    as id;
-
 import 'package:ew_polkadart/ew_polkadart.dart'
     show
         AddLocation,
@@ -104,8 +101,7 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Future<void> _updateEnactmentQueue() async {
-    // Map<Action, ProposalId>
-    final queue = await webApi.encointer.getProposalEnactmentQueue();
+    final queuedProposalIds = await webApi.encointer.getProposalEnactmentQueue();
 
     final globalTreasuryAccountData =
         await webApi.encointer.getTreasuryAccount(null).then((account) => webApi.assets.getBalanceOf(account));
@@ -122,18 +118,9 @@ class _ProposePageState extends State<ProposePage> {
     var globalSpends = BigInt.zero;
     var localSpends = BigInt.zero;
 
-    final spendNativeIds = <BigInt>[];
-    for (final action in queue.entries) {
-      final actionId = action.key;
-      final proposalId = action.value;
-      if (actionId is id.SpendNative) {
-        spendNativeIds.add(proposalId);
-      }
-    }
+    final queuedProposals = await webApi.encointer.getProposals(queuedProposalIds);
 
-    final spendNativeProposals = await webApi.encointer.getProposals(spendNativeIds);
-
-    for (final proposal in spendNativeProposals.values) {
+    for (final proposal in queuedProposals.values) {
       final action = proposal.action;
       if (action is SpendNative) {
         if (action.value0 == null) {

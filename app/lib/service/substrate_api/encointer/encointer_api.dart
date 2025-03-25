@@ -757,7 +757,7 @@ class EncointerApi {
     }
   }
 
-  Future<Map<et.ProposalActionIdentifier, BigInt>> getProposalEnactmentQueue({BlockHash? at}) async {
+  Future<List<BigInt>> getProposalEnactmentQueue({BlockHash? at}) async {
     try {
       final prefix = encointerKusama.query.encointerDemocracy.enactmentQueueMapPrefix();
       final pairs = await encointerKusama.rpc.state.getPairs(prefix);
@@ -766,15 +766,14 @@ class EncointerApi {
       Log.d("[getProposalEnactmentQueue] storageKeys: ${pairs.map((pair) => '0x${hex.encode(pair.key)}')}");
       Log.d("[getProposalEnactmentQueue] storageValues: ${pairs.map((pair) => '0x${hex.encode(pair.value!)}')}");
 
-      final proposalActions = pairs.map((pair) => et.ProposalActionIdentifier.decode(ByteInput(pair.key.sublist(32))));
-      final proposalActionIdentifiers = pairs.map((pair) => U128Codec.codec.decode(ByteInput(pair.value!)));
+      // Todo: this does not work, probably because of the hashed keys.
+      // final proposalActions = pairs.map((pair) => et.ProposalActionIdentifier.decode(ByteInput(pair.key.sublist(32))));
+      final proposalIds = pairs.map((pair) => U128Codec.codec.decode(ByteInput(pair.value!)));
 
-      final queue = Map.fromIterables(proposalActions, proposalActionIdentifiers);
-
-      return queue;
+      return List.from(proposalIds);
     } catch (e, s) {
       Log.e('[getProposalEnactmentQueue]', '$e', s);
-      return Map.of({});
+      return List.of([]);
     }
   }
 
