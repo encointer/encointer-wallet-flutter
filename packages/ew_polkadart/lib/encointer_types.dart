@@ -5,6 +5,7 @@ library;
 export 'generated/encointer_kusama/types/sp_runtime/multiaddress/multi_address.dart'
     show MultiAddress, Index, Id, Raw, Address32;
 export 'generated/encointer_kusama/types/sp_runtime/multi_signature.dart' show MultiSignature, Sr25519;
+export 'generated/encointer_kusama/types/pallet_balances/types/account_data.dart' show AccountData;
 
 // export types from balances
 export 'generated/encointer_kusama/types/encointer_primitives/balances/balance_entry.dart' show BalanceEntry;

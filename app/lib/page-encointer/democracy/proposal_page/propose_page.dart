@@ -21,6 +21,8 @@ import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
+import 'package:ew_polkadart/encointer_types.dart' as et;
+
 import 'package:ew_polkadart/ew_polkadart.dart'
     show
         AddLocation,
@@ -101,18 +103,23 @@ class _ProposePageState extends State<ProposePage> {
   }
 
   Future<void> _updateEnactmentQueue() async {
-    final queuedProposalIds = await webApi.encointer.getProposalEnactmentQueue();
-
-    final globalTreasuryAccountData =
-        await webApi.encointer.getTreasuryAccount(null).then((account) => webApi.assets.getBalanceOf(account));
-
     final store = context.read<AppStore>();
-    final localTreasuryAccountData = await webApi.encointer
-        .getTreasuryAccount(store.encointer.chosenCid)
-        .then((account) => webApi.assets.getBalanceOf(account));
+    final chosenCid = store.encointer.chosenCid!;
+
+    final futures = await Future.wait([
+      webApi.encointer.getProposalEnactmentQueue(),
+      webApi.encointer.getTreasuryAccount(null).then((account) => webApi.assets.getBalanceOf(account)),
+      webApi.encointer.getTreasuryAccount(chosenCid).then((account) => webApi.assets.getBalanceOf(account)),
+      webApi.encointer.getSwapNativeOptions(chosenCid)
+    ]);
+
+    // cast object type from futures to target type.
+    final queuedProposalIds = futures[0] as List<BigInt>;
+    final globalTreasuryAccountData = futures[1] as et.AccountData;
+    final localTreasuryAccountData = futures[2] as et.AccountData;
+    final swapNativeOptions = futures[3] as List<et.SwapNativeOption>;
 
     // Get all open swaps for this community
-    final swapNativeOptions = await webApi.encointer.getSwapNativeOptions(store.encointer.chosenCid!);
     final openSwapAmount = swapNativeOptions.fold(BigInt.zero, (sum, swap) => sum + swap.nativeAllowance);
 
     var globalSpends = BigInt.zero;
@@ -120,6 +127,7 @@ class _ProposePageState extends State<ProposePage> {
 
     final queuedProposals = await webApi.encointer.getProposals(queuedProposalIds);
 
+    // Get pending spends from queued SpendNative and IssueSwapNativeOption proposals.
     for (final proposal in queuedProposals.values) {
       final action = proposal.action;
       if (action is SpendNative) {
@@ -131,6 +139,8 @@ class _ProposePageState extends State<ProposePage> {
             localSpends += action.value2;
           }
         }
+      } else if (action is IssueSwapNativeOption) {
+        localSpends += action.value2.nativeAllowance;
       }
     }
 
