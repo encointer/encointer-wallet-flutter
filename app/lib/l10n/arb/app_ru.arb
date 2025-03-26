@@ -355,7 +355,7 @@
     "transferHistoryEnd": "Загрузка более старых транзакций пока не поддерживается",
     "transferHistoryTop": "Появление перевода может занять до 30 секунд",
     "transferHistory": "Транзакции",
-    "treasuryGlobalBalance": "Глобальный баланс казначейства: {balance} KSM.",
+    "treasuryGlobalBalance": "Свободный баланс глобального казначейства: {balance} KSM.",
     "@treasuryGlobalBalance": {
         "placeholders": {
             "balance": {
@@ -364,7 +364,7 @@
             }
         }
     },
-    "treasuryLocalBalance": "Баланс казначейства сообщества: {balance} KSM.",
+    "treasuryLocalBalance": "Свободный баланс казначейства сообщества: {balance} KSM.",
     "@treasuryLocalBalance": {
         "placeholders": {
             "balance": {

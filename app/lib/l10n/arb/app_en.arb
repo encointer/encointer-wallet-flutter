@@ -356,7 +356,7 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Loading older transactions is not yet supported",
     "transferHistoryTop": "It may take up to 30 seconds for a transfer to appear here",
-    "treasuryGlobalBalance": "Global treasury balance: {balance} KSM.",
+    "treasuryGlobalBalance": "Free global treasury balance: {balance} KSM.",
     "@treasuryGlobalBalance": {
         "placeholders": {
             "balance": {
@@ -365,7 +365,7 @@
             }
         }
     },
-    "treasuryLocalBalance": "Community treasury balance: {balance} KSM.",
+    "treasuryLocalBalance": "Free community treasury balance: {balance} KSM.",
     "@treasuryLocalBalance": {
         "placeholders": {
             "balance": {

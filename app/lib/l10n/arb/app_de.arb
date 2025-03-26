@@ -356,7 +356,7 @@
     "transferHistory": "Transfers",
     "transferHistoryEnd": "Das Laden älterer Transaktionen wird noch nicht unterstützt",
     "transferHistoryTop": "Es kann bis zu 30 Sekunden dauern, bis der Transfer hier auftaucht",
-    "treasuryGlobalBalance": "Globales Schatzkammerguthaben: {balance} KSM.",
+    "treasuryGlobalBalance": "Freies globales Schatzkammerguthaben: {balance} KSM.",
     "@treasuryGlobalBalance": {
         "placeholders": {
             "balance": {
@@ -365,7 +365,7 @@
             }
         }
     },
-    "treasuryLocalBalance": "Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
+    "treasuryLocalBalance": "Freies Gemeinschaftsschatzkammerguthaben: {balance} KSM.",
     "@treasuryLocalBalance": {
         "placeholders": {
             "balance": {
