@@ -373,8 +373,8 @@
             }
         }
     },
-    "treasuryLocalPendingSpends": "Ожидающие расходы: {spends} KSM.",
-    "@treasuryLocalPendingSpends": {
+    "treasuryPendingSpends": "Ожидающие расходы: {spends} KSM.",
+    "@treasuryPendingSpends": {
         "placeholders": {
             "spends": {
                 "type": "String",
